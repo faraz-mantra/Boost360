@@ -3,6 +3,7 @@ package com.nowfloats.signup.UI;
 import android.content.Context;
 import android.os.Handler;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -11,12 +12,15 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nowfloats.signup.UI.UI.CustomRunnable;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -25,6 +29,7 @@ import java.util.Set;
 
 public class DomainAvailabilityCheck {
 
+    int regex;
     private Context mContext;
     private boolean domainCheck, firstCheck = true;
     private CustomRunnable r;
@@ -90,8 +95,6 @@ public class DomainAvailabilityCheck {
         }
 
     }
-
-    int regex;
 
     public boolean validate(String text) {
         regex = R.string.signup_subd;
@@ -166,7 +169,17 @@ public class DomainAvailabilityCheck {
                     }
                 }
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                // Basic Authentication
+                //String auth = "Basic " + Base64.encodeToString(CONSUMER_KEY_AND_SECRET.getBytes(), Base64.NO_WRAP);
+
+                headers.put("Authorization", Utils.getAuthToken());
+                return headers;
+            }
+        };
 
         queue.add(jsObjRequest);
     }

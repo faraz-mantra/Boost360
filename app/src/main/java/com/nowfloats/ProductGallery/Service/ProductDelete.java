@@ -10,6 +10,7 @@ import com.nowfloats.ProductGallery.Model.ProductListModel;
 import com.nowfloats.ProductGallery.Product_Gallery_Fragment;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import org.apache.http.HttpResponse;
@@ -57,11 +58,6 @@ public class ProductDelete extends AsyncTask<String, String, String> {
         flag = false;
     }
 
-    public interface DeleteProductGalleryInterface {
-        public void galleryProductDeleted();
-    }
-
-
     @Override
     protected void onPreExecute() {
         materialProgress = new MaterialDialog.Builder(activity)
@@ -78,7 +74,7 @@ public class ProductDelete extends AsyncTask<String, String, String> {
             materialProgress.dismiss();
         if (flag) {
             if (arrSelectedProducts != null && arrSelectedProducts.size() > 0) {
-                if(deleteProductGalleryInterface!=null){
+                if (deleteProductGalleryInterface != null) {
                     deleteProductGalleryInterface.galleryProductDeleted();
                 }
             } else {
@@ -126,6 +122,7 @@ public class ProductDelete extends AsyncTask<String, String, String> {
     private void deleteProduct(String values) {
         HttpClient httpclient = new DefaultHttpClient();
         HttpDeleteWithBody del = new HttpDeleteWithBody(url);
+        del.setHeader("Authorization", Utils.getAuthToken());
         StringEntity se;
         try {
             se = new StringEntity(values, HTTP.UTF_8);
@@ -146,5 +143,9 @@ public class ProductDelete extends AsyncTask<String, String, String> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public interface DeleteProductGalleryInterface {
+        public void galleryProductDeleted();
     }
 }

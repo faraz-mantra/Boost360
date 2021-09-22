@@ -3,6 +3,8 @@ package com.nowfloats.NavigationDrawer.API;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.nowfloats.util.Utils;
+
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,10 +18,9 @@ import java.net.URL;
 public class OfferImageUploadService extends AsyncTask<String, Void, String> {
 
 
-
     private OfferImageUploadComplete offerImageUploadComplete;
 
-    public OfferImageUploadService(OfferImageUploadComplete offerImageUploadComplete){
+    public OfferImageUploadService(OfferImageUploadComplete offerImageUploadComplete) {
         this.offerImageUploadComplete = offerImageUploadComplete;
     }
 
@@ -34,7 +35,7 @@ public class OfferImageUploadService extends AsyncTask<String, Void, String> {
         offerImageUploadComplete.onUploadCompletion(s);
     }
 
-    private String startUpload(String filename, String targetUrl){
+    private String startUpload(String filename, String targetUrl) {
         String response = "error";
 
         HttpURLConnection connection = null;
@@ -61,6 +62,7 @@ public class OfferImageUploadService extends AsyncTask<String, Void, String> {
             connection.setRequestMethod("PUT");
 
             connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
 
             outputStream = new DataOutputStream(connection.getOutputStream());
 
@@ -110,7 +112,7 @@ public class OfferImageUploadService extends AsyncTask<String, Void, String> {
 
     }
 
-    public interface OfferImageUploadComplete{
+    public interface OfferImageUploadComplete {
         void onUploadCompletion(String response);
     }
 

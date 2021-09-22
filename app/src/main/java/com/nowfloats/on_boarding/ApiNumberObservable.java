@@ -10,15 +10,15 @@ public class ApiNumberObservable extends Observable {
 
     private int n = 0;
     private String fpTag, fpId;
-    public void setValue(int n)
-    {
+
+    public int getValue() {
+        return n;
+    }
+
+    public void setValue(int n) {
         this.n = n;
         setChanged();
         notifyObservers();
-    }
-    public int getValue()
-    {
-        return n;
     }
 
     public String getFpTag() {

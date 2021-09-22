@@ -22,7 +22,7 @@ class WebSiteThemePublishBottomSheet : BaseBottomSheetDialog<BottomSheetPublishC
   }
 
   override fun onCreateView() {
-    setOnClickListener(binding?.rivCloseBottomSheet, binding?.btnDiscard,binding?.btnPublish)
+    setOnClickListener(binding?.rivCloseBottomSheet, binding?.btnDiscard, binding?.btnPublish)
     isCancelable = false
   }
 

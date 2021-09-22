@@ -71,7 +71,8 @@
                 app:riv_corner_radius="30dip"
                 app:riv_mutate_background="true"
                 app:riv_oval="true"
-                app:srcCompat="@drawable/business_edit_profile_icon_d" />
+                app:srcCompat="@drawable/business_edit_profile_icon_d"
+                tools:ignore="MissingClass" />
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/txt_business_name"
@@ -83,10 +84,10 @@
                 android:maxLines="1"
                 android:paddingStart="@dimen/size_2"
                 android:paddingEnd="@dimen/size_2"
-                tools:text="Test"
                 android:textColor="@color/white"
                 app:fontFamily="@font/bold"
-                app:textType="BODY_1" />
+                app:textType="BODY_1"
+                tools:text="Test" />
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/txt_domain_name"
@@ -100,9 +101,9 @@
                 android:paddingTop="@dimen/size_1"
                 android:paddingEnd="@dimen/size_2"
                 android:paddingBottom="@dimen/size_1"
-                tools:text="@string/www_sravansclinic_com"
                 android:textColor="@color/white"
-                app:textType="CAPTION" />
+                app:textType="CAPTION"
+                tools:text="@string/www_sravansclinic_com" />
             </LinearLayout>
 
 
@@ -171,15 +172,66 @@
                 app:autoSizeTextType="uniform" />
             </LinearLayout>
 
-            <ProgressBar
-              android:id="@+id/progressBar"
-              style="@style/CustomProgressBar"
+            <!--                        <ProgressBar-->
+            <!--                          android:id="@+id/progressBar"-->
+            <!--                          style="@style/CustomProgressBar"-->
+            <!--                          android:layout_width="match_parent"-->
+            <!--                          android:layout_height="@dimen/size_5"-->
+            <!--                          android:layout_marginTop="@dimen/size_6"-->
+            <!--                          android:max="100"-->
+            <!--                          android:progressDrawable="@drawable/ic_progress_bar_high_grey"-->
+            <!--                          tools:progress="50" />-->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+              android:id="@+id/progress_parent"
               android:layout_width="match_parent"
-              android:layout_height="@dimen/size_5"
-              android:progressDrawable="@drawable/ic_progress_bar_high_grey"
-              android:layout_marginTop="@dimen/size_6"
-              android:max="100"
-              tools:progress="50" />
+              android:layout_height="@dimen/size_8"
+              android:layout_gravity="center_vertical"
+              android:layout_marginTop="@dimen/size_6">
+
+              <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="0.8dp"
+                android:repeatCount="infinite"
+                android:repeatMode="restart"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="@dimen/size_4"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                tools:cardBackgroundColor="@color/colorAccent">
+
+                <com.airbnb.lottie.LottieAnimationView
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:layout_gravity="center_horizontal"
+                  android:repeatCount="infinite"
+                  android:repeatMode="restart"
+                  android:rotation="-180"
+                  android:scaleX="-1.5"
+                  app:lottie_autoPlay="true"
+                  app:lottie_loop="true"
+                  app:lottie_rawRes="@raw/progress_green" />
+              </androidx.cardview.widget.CardView>
+
+              <View
+                android:id="@+id/progressBar"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginVertical="0.4dp"
+                android:backgroundTint="@color/white_grey_progress"
+                android:background="@drawable/ic_dr_progress_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                tools:layout_constraintWidth_percent=".5" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
           </LinearLayout>
 
 

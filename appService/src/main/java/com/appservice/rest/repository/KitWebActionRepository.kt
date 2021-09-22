@@ -16,51 +16,88 @@ import io.reactivex.Observable
 import okhttp3.MultipartBody
 import retrofit2.Retrofit
 
+const val WA_KEY = "58ede4d4ee786c1604f6c535"
+
 object KitWebActionRepository : AppBaseRepository<KitWebActionRemoteData, AppBaseLocalService>() {
 
-    fun addProductGstDetail(request: ProductGstDetailRequest?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.addProductGstDetail("58ede4d4ee786c1604f6c535", request), TaskCode.ADD_PRODUCT_GST_DETAIL)
-    }
+  fun addProductGstDetail(request: ProductGstDetailRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.addProductGstDetail(
+        WA_KEY,
+        request
+      ), TaskCode.ADD_PRODUCT_GST_DETAIL
+    )
+  }
 
-    fun updateProductGstDetail(request: ProductUpdateRequest?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.updateProductGstDetail("58ede4d4ee786c1604f6c535", request), TaskCode.UPDATE_PRODUCT_GST_DETAIL)
-    }
+  fun updateProductGstDetail(request: ProductUpdateRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.updateProductGstDetail(
+        WA_KEY,
+        request
+      ), TaskCode.UPDATE_PRODUCT_GST_DETAIL
+    )
+  }
 
-    fun getProductGstDetail(query: String?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.getProductGstDetail("58ede4d4ee786c1604f6c535", query), TaskCode.GET_PRODUCT_GST_DETAIL)
-    }
+  fun getProductGstDetail(query: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getProductGstDetail(
+        WA_KEY,
+        query
+      ), TaskCode.GET_PRODUCT_GST_DETAIL
+    )
+  }
 
-    fun uploadImageProfile(assetFileName: String?, file: MultipartBody.Part?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.uploadImageProfile("58ede4d4ee786c1604f6c535", assetFileName, file), TaskCode.UPLOAD_FILE_PRODUCT_IMAGE)
-    }
+  fun uploadImageProfile(
+    assetFileName: String?,
+    file: MultipartBody.Part?
+  ): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.uploadImageProfile(
+        WA_KEY,
+        assetFileName,
+        file
+      ), TaskCode.UPLOAD_FILE_PRODUCT_IMAGE
+    )
+  }
 
-    fun addProductImage(request: ProductImageRequest?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.addProductImage("58ede4d4ee786c1604f6c535", request), TaskCode.ADD_PRODUCT_IMAGE)
-    }
+  fun addProductImage(request: ProductImageRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.addProductImage(WA_KEY, request),
+      TaskCode.ADD_PRODUCT_IMAGE
+    )
+  }
 
-    fun deleteProductImage(request: ProductImageDeleteRequest?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.deleteProductImage("58ede4d4ee786c1604f6c535", request), TaskCode.DELETE_PRODUCT_IMAGE)
-    }
+  fun deleteProductImage(request: ProductImageDeleteRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.deleteProductImage(
+        WA_KEY,
+        request
+      ), TaskCode.DELETE_PRODUCT_IMAGE
+    )
+  }
 
-    fun getProductImage(query: String?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.getProductImage("58ede4d4ee786c1604f6c535", query), TaskCode.GET_PRODUCT_IMAGE)
-    }
+  fun getProductImage(query: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getProductImage(WA_KEY, query),
+      TaskCode.GET_PRODUCT_IMAGE
+    )
+  }
 
 //    fun fpOnboardingUpdate(request: OnBoardingUpdateModel?): Observable<BaseResponse> {
 //        return makeRemoteRequest(remoteDataSource.fpOnboardingUpdate(request), TaskCode.FP_ONBOARDING_UPDATE)
 //    }
 
-    override fun getRemoteDataSourceClass(): Class<KitWebActionRemoteData> {
-        return KitWebActionRemoteData::class.java
-    }
+  override fun getRemoteDataSourceClass(): Class<KitWebActionRemoteData> {
+    return KitWebActionRemoteData::class.java
+  }
 
-    override fun getLocalDataSourceInstance(): AppBaseLocalService {
-        return AppBaseLocalService()
-    }
+  override fun getLocalDataSourceInstance(): AppBaseLocalService {
+    return AppBaseLocalService()
+  }
 
-    override fun getApiClient(): Retrofit {
-        return KitWebActionApiClient.shared.retrofit
-    }
+  override fun getApiClient(): Retrofit {
+    return KitWebActionApiClient.shared.retrofit
+  }
 
 //  fun productAddData(request: ProductDimensionRequest): Observable<BaseResponse> {
 //    return makeRemoteRequest(remoteDataSource.addProductDimensionDetails(request),TaskCode.POST_UPDATE_PRODUCT)

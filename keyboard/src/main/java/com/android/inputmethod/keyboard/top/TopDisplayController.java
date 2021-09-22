@@ -38,9 +38,25 @@ public class TopDisplayController {
     private final SuggestionStripView mSuggestionsStripView;
     private final ImageButton mVoiceKey;
     private final ImageView mServicesKey;
-    private ServiceResultsView mServiceResultsView;
     private final View mDimOtherView;
+    private ServiceResultsView mServiceResultsView;
     //private final View mActionRowContainer;
+
+    public TopDisplayController(View parent) {
+        hideSuggestionAfter = new C04611();
+        //mActionRowContainer = parent.findViewById(R.id.action_row_container);
+        holderLayout = (LinearLayout) parent.findViewById(R.id.keyboard_top_area);
+        mActionRowView = (ActionRowView) parent.findViewById(R.id.action_row);
+        mSuggestionsStripView = (SuggestionStripView) parent.findViewById(R.id.suggestion_strip_view);
+        mVoiceKey = (ImageButton) mSuggestionsStripView.findViewById(R.id.suggestions_strip_voice_key);
+        mServicesKey = (ImageView) mSuggestionsStripView.findViewById(R.id.suggestions_strip_services_key);
+        ColorManager.addObserverAndCall(mSuggestionsStripView);
+        mSuggestionsStripHackyContainer = parent.findViewById(R.id.suggestion_strip_hacky_container);
+        mSuggestionsStripHackyContainer.setVisibility(GONE);
+       /* mServiceResultsView = (ServiceResultsView) parent.findViewById(R.id.suggestion_source_results);
+        mServiceResultsView.setVisibility(GONE);*/
+        mDimOtherView = (View) parent.findViewById(R.id.dim_other_view);
+    }
 
     public int getHeight() {
         return holderLayout.getHeight();
@@ -84,16 +100,6 @@ public class TopDisplayController {
         }
     }
 
-    class C04611 implements Runnable {
-        C04611() {
-        }
-
-        public void run() {
-            mActionRowView.setVisibility(View.VISIBLE);
-            mSuggestionsStripHackyContainer.setVisibility(GONE);
-        }
-    }
-
     public void updateBarVisibility() {
         mActionRowView.setVisibility(View.GONE);
         mSuggestionsStripHackyContainer.setVisibility(View.VISIBLE);
@@ -116,22 +122,6 @@ public class TopDisplayController {
         if (mServiceResultsView != null) {
             mServiceResultsView.reset();
         }
-    }
-
-    public TopDisplayController(View parent) {
-        hideSuggestionAfter = new C04611();
-        //mActionRowContainer = parent.findViewById(R.id.action_row_container);
-        holderLayout = (LinearLayout) parent.findViewById(R.id.keyboard_top_area);
-        mActionRowView = (ActionRowView) parent.findViewById(R.id.action_row);
-        mSuggestionsStripView = (SuggestionStripView) parent.findViewById(R.id.suggestion_strip_view);
-        mVoiceKey = (ImageButton) mSuggestionsStripView.findViewById(R.id.suggestions_strip_voice_key);
-        mServicesKey = (ImageView) mSuggestionsStripView.findViewById(R.id.suggestions_strip_services_key);
-        ColorManager.addObserverAndCall(mSuggestionsStripView);
-        mSuggestionsStripHackyContainer = parent.findViewById(R.id.suggestion_strip_hacky_container);
-        mSuggestionsStripHackyContainer.setVisibility(GONE);
-       /* mServiceResultsView = (ServiceResultsView) parent.findViewById(R.id.suggestion_source_results);
-        mServiceResultsView.setVisibility(GONE);*/
-        mDimOtherView = (View) parent.findViewById(R.id.dim_other_view);
     }
 
     public void showSuggestions(boolean shouldAnimate) {
@@ -217,5 +207,15 @@ public class TopDisplayController {
 
     public boolean isActionViewVisible() {
         return mActionRowView.getVisibility() == View.VISIBLE;
+    }
+
+    class C04611 implements Runnable {
+        C04611() {
+        }
+
+        public void run() {
+            mActionRowView.setVisibility(View.VISIBLE);
+            mSuggestionsStripHackyContainer.setVisibility(GONE);
+        }
     }
 }

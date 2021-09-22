@@ -23,7 +23,7 @@ import java.io.FileNotFoundException
 
 class CropImageFragment : AppBaseFragment<FragmentImageCropBinding, BaseViewModel>(), CropImageView.OnSetImageUriCompleteListener, CropImageView.OnCropImageCompleteListener {
 
-  private var croppedImageFile: File = File(Environment.getExternalStorageDirectory(), "photo.jpg")
+  private var croppedImageFile: File? = null
   private var session: SessionData? = null
   private var isEdit: Boolean = false
 
@@ -46,6 +46,7 @@ class CropImageFragment : AppBaseFragment<FragmentImageCropBinding, BaseViewMode
 
   override fun onCreateView() {
     super.onCreateView()
+    croppedImageFile = File(context?.cacheDir, "photo.jpg")
     isEdit = arguments?.getBoolean(IntentConstant.IS_EDIT.name) ?: false
     session = arguments?.getSerializable(IntentConstant.SESSION_DATA.name) as? SessionData
     if (session == null) return
@@ -72,7 +73,11 @@ class CropImageFragment : AppBaseFragment<FragmentImageCropBinding, BaseViewMode
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnCropDone -> binding?.cropImageView?.saveCroppedImageAsync(Uri.fromFile(croppedImageFile))
+      binding?.btnCropDone -> binding?.cropImageView?.saveCroppedImageAsync(
+        Uri.fromFile(
+          croppedImageFile
+        )
+      )
     }
   }
 
@@ -91,11 +96,14 @@ class CropImageFragment : AppBaseFragment<FragmentImageCropBinding, BaseViewMode
         baseActivity.setResult(AppCompatActivity.RESULT_OK, output)
         baseActivity.finish()
       } else {
-        Log.d("Cropped Image", result?.toString()?:"")
+        Log.d("Cropped Image", result?.toString() ?: "")
         if (result?.uri != null) {
           Log.d("Cropped Image URI", result.uri.toString())
           val bundle = Bundle()
-          bundle.putBoolean("isInstaMojoAccount", arguments?.getBoolean("isInstaMojoAccount") ?: false)
+          bundle.putBoolean(
+            "isInstaMojoAccount",
+            arguments?.getBoolean("isInstaMojoAccount") ?: false
+          )
           bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
           bundle.putString(IntentConstant.PAN_CARD_IMAGE.name, result.uri.toString())
           startFragmentPaymentActivity(FragmentType.KYC_DETAILS, bundle)

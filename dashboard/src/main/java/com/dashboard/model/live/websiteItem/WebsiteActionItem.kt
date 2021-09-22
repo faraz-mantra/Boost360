@@ -7,20 +7,31 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class WebsiteActionItem(
-    @SerializedName("isLock")
-    var isLock: Boolean? = false,
-    @SerializedName("premiumCode")
-    var premiumCode: String? = "",
-    @SerializedName("title")
-    var title: String? = "",
-    @SerializedName("desc")
-    var desc: String? = "",
-    @SerializedName("type")
-    var type: String? = "",
+  @SerializedName("isLock")
+  var isLock: Boolean? = false,
+  @SerializedName("isFeature")
+  var isFeature: Boolean? = null,
+  @SerializedName("premiumCode")
+  var premiumCode: String? = "",
+  @SerializedName("title")
+  var title: String? = "",
+  @SerializedName("desc")
+  var desc: String? = "",
+  @SerializedName("countType")
+  var countType: String? = null,
+  var count: Int? = null,
+  @SerializedName("type")
+  var type: String? = "",
 ) : Serializable, AppBaseRecyclerViewItem {
+
+  fun getCountN(): Int {
+    return if (count != null) count!! else 0
+  }
 
   var recyclerViewItemType: Int = RecyclerViewItemType.BOOST_WEBSITE_ITEM_VIEW.getLayout()
   override fun getViewType(): Int {
+    if (this.isFeature == true)
+      return RecyclerViewItemType.BOOST_WEBSITE_ITEM_FEATURE_VIEW.getLayout()
     return recyclerViewItemType
   }
 
@@ -42,7 +53,8 @@ data class WebsiteActionItem(
     website_theme(R.drawable.ic_website_theme);
 
     companion object {
-      fun fromName(name: String?): IconType? = values().firstOrNull { it.name.equals(name, ignoreCase = true) }
+      fun fromName(name: String?): IconType? =
+        values().firstOrNull { it.name.equals(name, ignoreCase = true) }
     }
   }
 }

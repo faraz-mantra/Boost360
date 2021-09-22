@@ -90,6 +90,7 @@ abstract class BaseDialogFragment<T : ViewDataBinding, ViewModel : BaseViewModel
     val rootView: ViewGroup = decorView?.findViewById(android.R.id.content) as ViewGroup
     val windowBackground: Drawable = decorView.background
     this.setupWith(rootView)?.setFrameClearDrawable(windowBackground)
-        ?.setBlurAlgorithm(RenderScriptBlur(activity))?.setBlurRadius(value)?.setHasFixedTransformationMatrix(true)
+      ?.setBlurAlgorithm(RenderScriptBlur(activity))?.setBlurRadius(value)
+      ?.setHasFixedTransformationMatrix(true)
   }
 }

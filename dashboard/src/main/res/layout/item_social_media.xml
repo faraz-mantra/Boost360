@@ -56,15 +56,16 @@
             app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomButton
-            android:layout_width="wrap_content"
             android:id="@+id/btn_activate"
-            android:layout_marginTop="@dimen/size_10"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/size_30"
+            android:layout_marginTop="@dimen/size_10"
             android:background="@drawable/bg_rounded_accent_6"
             android:gravity="center"
             android:text="@string/activate_now"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/white"
+            app:fontFamily="@font/semi_bold"
             app:textType="BODY_1" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -113,6 +114,7 @@
               android:layout_alignParentEnd="true"
               android:layout_centerInParent="true"
               android:layout_marginStart="@dimen/size_4"
+              android:visibility="gone"
               app:srcCompat="@drawable/ic_arrow_left_channel" />
           </RelativeLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>

@@ -34,9 +34,6 @@ import io.separ.neural.inputmethod.indic.R;
 
 
 public final class EmojiconHandler {
-    private EmojiconHandler() {
-    }
-
     private static final SparseIntArray sEmojisMap = new SparseIntArray(1029);
     private static final SparseIntArray sSoftbanksMap = new SparseIntArray(471);
     private static Map<String, Integer> sEmojisModifiedMap = new HashMap<>();
@@ -1057,6 +1054,9 @@ public final class EmojiconHandler {
         sEmojisMap.put(0x1f566, R.drawable.emoji_1f566);
 
 
+    }
+
+    private EmojiconHandler() {
     }
 
     private static boolean isSoftBankEmoji(char c) {

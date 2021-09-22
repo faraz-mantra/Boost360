@@ -44,26 +44,36 @@ import java.util.List;
  */
 public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
 
+    static ProgressDialog pd;
     private final int VIEW_TYPE_WELCOME = 0;
     private final int VIEW_TYPE_IMAGE_TEXT = 1;
-    String imageUri = "";
-    private LayoutInflater mInflater;
     public Activity appContext;
+    String imageUri = "";
     FloatsMessageModel data;
     String msg = "", date = "";
-    private boolean imagePresent;
     UserSessionManager session;
     Target targetMap = null;
-    static ProgressDialog pd;
+    private LayoutInflater mInflater;
+    private boolean imagePresent;
     private ListenerMain listenerMain;
 
 
-    public CardAdapter_V3(Activity appContext, UserSessionManager session,ListenerMain listenerMain) {
+    public CardAdapter_V3(Activity appContext, UserSessionManager session, ListenerMain listenerMain) {
         Log.d("CardAdapter_V3", "Constructor");
-        this.appContext =  appContext;
+        this.appContext = appContext;
         this.session = session;
         mInflater = (LayoutInflater) appContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.listenerMain=listenerMain;
+        this.listenerMain = listenerMain;
+    }
+
+    public static void filterByPackageName(Context context, Intent intent, String prefix) {
+        List<ResolveInfo> matches = context.getPackageManager().queryIntentActivities(intent, 0);
+        for (ResolveInfo info : matches) {
+            if (info.activityInfo.packageName.toLowerCase().startsWith(prefix)) {
+                intent.setPackage(info.activityInfo.packageName);
+                return;
+            }
+        }
     }
 
     @Override
@@ -166,15 +176,16 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
             shareFacebook.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listenerMain!=null)listenerMain.sharePost("facebook", imageShare, position);
+                    if (listenerMain != null)
+                        listenerMain.sharePost("facebook", imageShare, position);
                 }
             });
             shareWhatsapp.setOnClickListener(v -> {
-                if (listenerMain!=null)listenerMain.sharePost("whatsapp", imageShare, position);
+                if (listenerMain != null) listenerMain.sharePost("whatsapp", imageShare, position);
             });
 
             shareImageView.setOnClickListener(v -> {
-                if (listenerMain!=null)listenerMain.sharePost("default", imageShare, position);
+                if (listenerMain != null) listenerMain.sharePost("default", imageShare, position);
             });
 
             if (Constants.isWelcomScreenToBeShown) {
@@ -261,18 +272,6 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
         }
     }
 
-
-    public static void filterByPackageName(Context context, Intent intent, String prefix) {
-        List<ResolveInfo> matches = context.getPackageManager().queryIntentActivities(intent, 0);
-        for (ResolveInfo info : matches) {
-            if (info.activityInfo.packageName.toLowerCase().startsWith(prefix)) {
-                intent.setPackage(info.activityInfo.packageName);
-                return;
-            }
-        }
-    }
-
-
     private List<String> getShareApplication() {
         List<String> mList = new ArrayList<String>();
         mList.add("com.facebook.katana");
@@ -326,7 +325,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
         }
     }
 
-    interface ListenerMain{
+    interface ListenerMain {
         void sharePost(String type, String imageShare, int position);
     }
 }

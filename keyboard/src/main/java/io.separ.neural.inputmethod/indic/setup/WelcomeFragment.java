@@ -3,9 +3,12 @@ package io.separ.neural.inputmethod.indic.setup;
 /**
  * Created by sepehr on 1/27/17.
  */
+
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

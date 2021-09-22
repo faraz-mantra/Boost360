@@ -10,13 +10,16 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 data class TokenResult(
-    @SerializedName("RefreshToken")
-    var refreshToken: String? = null, // expire in 30 days
-    @SerializedName("Token")
-    var token: String? = null, // expire in 1 days
-    var createDate: String = "",
+  @SerializedName("RefreshToken")
+  var refreshToken: String? = null, // expire in 30 days
+  @SerializedName("Token")
+  var token: String? = null, // expire in 1 days
+  var createDate: String = "",
 ) {
 
+  fun barrierToken(): String {
+    return "Bearer $token"
+  }
   fun isExpiredToken(): Boolean {
     val diffInMilliSec = getCurrentDate().time - (getCreateDate()?.time ?: 0L)
     val diffInDays = TimeUnit.MILLISECONDS.toDays(diffInMilliSec)

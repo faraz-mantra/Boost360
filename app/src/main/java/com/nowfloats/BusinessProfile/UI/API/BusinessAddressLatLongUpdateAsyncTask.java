@@ -16,6 +16,7 @@ import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
@@ -29,276 +30,273 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class BusinessAddressLatLongUpdateAsyncTask extends AsyncTask<Void,String, String>{
+public class BusinessAddressLatLongUpdateAsyncTask extends AsyncTask<Void, String, String> {
 
-	JSONObject obj;
-	ProgressDialog pd = null;
-	static Activity appcontext = null;
-	static Boolean success = false;
-	String[] arr = new String[20];
-	String FpAddress=null;
-	String latlongaddress=null;
-	double lat =0.0,lng =0.0;
-	LatLng latlong;
-	String fpTag ;
+    static Activity appcontext = null;
+    static Boolean success = false;
+    JSONObject obj;
+    ProgressDialog pd = null;
+    String[] arr = new String[20];
+    String FpAddress = null;
+    String latlongaddress = null;
+    double lat = 0.0, lng = 0.0;
+    LatLng latlong;
+    String fpTag;
 
-	public BusinessAddressLatLongUpdateAsyncTask(String address, String[] profilesattr,Activity context, String latlongAddress,String fpTag) {
-		//values are coming from the bussiness address fragment
-		this.appcontext = context;
-		this.FpAddress = address;
-		this.arr=profilesattr;
-		this.latlongaddress=latlongAddress;
-		this.fpTag = fpTag ;
-	}
+    public BusinessAddressLatLongUpdateAsyncTask(String address, String[] profilesattr, Activity context, String latlongAddress, String fpTag) {
+        //values are coming from the bussiness address fragment
+        this.appcontext = context;
+        this.FpAddress = address;
+        this.arr = profilesattr;
+        this.latlongaddress = latlongAddress;
+        this.fpTag = fpTag;
+    }
 
-	@Override
-	protected void onPreExecute() {
-		super.onPreExecute();
-		pd= ProgressDialog.show(appcontext, null, appcontext.getString(R.string.updating_your_address));
-		pd.show();
-	}
+    public static String getDataFromServer(String content,
+                                           String requestMethod, String serverUrl, String contentType) {
+        String response = "", responseMessage = "";
 
-	@Override
-	protected String doInBackground(Void... arg0) {
-		// TODO Auto-generated method stub
-		try {
-			setLatLong(latlongaddress);
-			if (lat == 0.0 && lng == 0.0) {
-				setLatLong(latlongaddress.replace(Business_Address_Activity.text1.replaceAll(" ", "+") + ",", ""));
-			}
-		}catch(Exception e){e.printStackTrace();}
+        DataOutputStream outputStream = null;
+        try {
 
-		String location = lat+","+lng;
-		JSONObject obj = new JSONObject();
-		JSONObject dataToBeUpdated = new JSONObject();
-		try {
+            URL new_url = new URL(serverUrl);
+            HttpURLConnection connection = (HttpURLConnection) new_url
+                    .openConnection();
 
-			obj.put("clientId", Constants.clientId);
-			obj.put("fpTag", fpTag);
-			JSONArray data = new JSONArray();
+            // Allow Inputs & Outputs
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+            connection.setUseCaches(true);
+            // Enable PUT method
+            connection.setRequestMethod(requestMethod);
+            connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
 
-			JSONObject myObj2 = new JSONObject();
-			myObj2.put("key", "GEOLOCATION");
-			myObj2.put("value", location);
-			data.put(myObj2);
+            connection.setRequestProperty("Content-Type", contentType);
 
-			JSONObject myObj3 = new JSONObject();
-			myObj3.put("key", "ADDRESS");
-			myObj3.put("value", FpAddress);
-			data.put(myObj3);
+            outputStream = new DataOutputStream(connection.getOutputStream());
 
-			for(int i=0;i<arr.length;i++)
-			{
-				if (arr[i] == "PINCODE") {
-					JSONObject myObj4 = new JSONObject();
-					myObj4.put("key", "PINCODE");
-					myObj4.put("value",Business_Address_Activity.pincodetext);
-					data.put(myObj4);
-				}
-				if (arr[i] == "CITY") {
-					JSONObject myObj5 = new JSONObject();
-					myObj5.put("key", "CITY");
+            byte[] BytesToBeSent = content.getBytes();
+            if (BytesToBeSent != null) {
+                outputStream.write(BytesToBeSent, 0, BytesToBeSent.length);
+            }
+            int responseCode = connection.getResponseCode();
 
-					myObj5.put("value", Business_Address_Activity.citytext);
-					data.put(myObj5);
-				}
-			}
+            responseMessage = connection.getResponseMessage();
 
-			obj.put("updates", data);
-			obj.put("updates", data);
-			getDataFromServer(obj.toString(), Constants.HTTP_POST, Constants.FpsUpdate, Constants.BG_SERVICE_CONTENT_TYPE_JSON);
+            if (responseCode == 200 || responseCode == 202) {
+                success = true;
+            }
 
+            InputStreamReader inputStreamReader = null;
+            BufferedReader bufferedReader = null;
+            try {
+                inputStreamReader = new InputStreamReader(
+                        connection.getInputStream());
+                bufferedReader = new BufferedReader(inputStreamReader);
 
-		} catch (Exception e) {
+                StringBuilder responseContent = new StringBuilder();
 
-		}
-		return null;
-	}
+                String temp = null;
 
+                boolean isFirst = true;
 
-	@Override
-	protected void onPostExecute(String result) {
-		String ch="";
-		if(pd!=null)
-			pd.dismiss();
+                while ((temp = bufferedReader.readLine()) != null) {
+                    if (!isFirst)
+                        responseContent.append(Constants.NEW_LINE);
+                    responseContent.append(temp);
+                    isFirst = false;
+                }
 
-		if(Util.isNetworkStatusAvialable(appcontext))
-		{
-			if(lat!=0.0 && lng != 0.0){
+                response = responseContent.toString();
 
+            } catch (Exception e) {
+            } finally {
+                try {
+                    inputStreamReader.close();
+                } catch (Exception e) {
+                }
+                try {
+                    bufferedReader.close();
+                } catch (Exception e) {
+                }
 
-				try{
+            }
 
-					for(int i=0;i<arr.length;i++)
-					{
-						if (arr[i] == "PINCODE") {Business_Address_Activity.areaCode.setText(Business_Address_Activity.pincodetext);
-						}
-						if (arr[i] == "CITY") {Business_Address_Activity.cityAutoText.setText(Business_Address_Activity.citytext);
-						}
+        } catch (Exception ex) {
+            success = false;
+        } finally {
+            try {
+                outputStream.flush();
+                outputStream.close();
+            } catch (Exception e) {
+            }
+        }
 
-					}
-					for(int i=0;i<arr.length;i++)
-					{
-						if(arr[i]=="ADDRESS" || arr[i]=="PINCODE" || arr[i]=="CITY"){
-							Business_Address_Activity.saveTextView.setVisibility(View.GONE);
-							break;
-						}
+        return response;
+    }
 
-					}
-					LatLng latlong = new LatLng(lat , lng);
-					String url = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lng + "&zoom=15&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + lat + "," + lng + "&key=" + "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
-					//holderItem.chatImage.setVisibility(View.VISIBLE);
-					try {
-						Picasso.get()
-								.load(url)
-								.placeholder(R.drawable.default_product_image)
-								.into(Business_Address_Activity.ivMap);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					//Business_Address_Activity.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 16));
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        pd = ProgressDialog.show(appcontext, null, appcontext.getString(R.string.updating_your_address));
+        pd.show();
+    }
 
-					//BuzzContactInfoFragment.Savetext.setVisibility(View.GONE);
-					Methods.showSnackBarPositive(appcontext,"Business Address Updated!");
-					pd.dismiss();
+    @Override
+    protected String doInBackground(Void... arg0) {
+        // TODO Auto-generated method stub
+        try {
+            setLatLong(latlongaddress);
+            if (lat == 0.0 && lng == 0.0) {
+                setLatLong(latlongaddress.replace(Business_Address_Activity.text1.replaceAll(" ", "+") + ",", ""));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        String location = lat + "," + lng;
+        JSONObject obj = new JSONObject();
+        JSONObject dataToBeUpdated = new JSONObject();
+        try {
 
+            obj.put("clientId", Constants.clientId);
+            obj.put("fpTag", fpTag);
+            JSONArray data = new JSONArray();
 
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		else{
-			//addressErrorDialog();
-		}
-	}
-	public static String getDataFromServer(String content,
-										   String requestMethod, String serverUrl, String contentType) {
-		String response = "", responseMessage = "";
+            JSONObject myObj2 = new JSONObject();
+            myObj2.put("key", "GEOLOCATION");
+            myObj2.put("value", location);
+            data.put(myObj2);
 
-		DataOutputStream outputStream = null;
-		try {
+            JSONObject myObj3 = new JSONObject();
+            myObj3.put("key", "ADDRESS");
+            myObj3.put("value", FpAddress);
+            data.put(myObj3);
 
-			URL new_url = new URL(serverUrl);
-			HttpURLConnection connection = (HttpURLConnection) new_url
-					.openConnection();
+            for (int i = 0; i < arr.length; i++) {
+                if (arr[i] == "PINCODE") {
+                    JSONObject myObj4 = new JSONObject();
+                    myObj4.put("key", "PINCODE");
+                    myObj4.put("value", Business_Address_Activity.pincodetext);
+                    data.put(myObj4);
+                }
+                if (arr[i] == "CITY") {
+                    JSONObject myObj5 = new JSONObject();
+                    myObj5.put("key", "CITY");
 
-			// Allow Inputs & Outputs
-			connection.setDoInput(true);
-			connection.setDoOutput(true);
-			connection.setUseCaches(true);
-			// Enable PUT method
-			connection.setRequestMethod(requestMethod);
-			connection.setRequestProperty("Connection", "Keep-Alive");
+                    myObj5.put("value", Business_Address_Activity.citytext);
+                    data.put(myObj5);
+                }
+            }
 
-			connection.setRequestProperty("Content-Type", contentType);
-
-			outputStream = new DataOutputStream(connection.getOutputStream());
-
-			byte[] BytesToBeSent = content.getBytes();
-			if (BytesToBeSent != null) {
-				outputStream.write(BytesToBeSent, 0, BytesToBeSent.length);
-			}
-			int responseCode = connection.getResponseCode();
-
-			responseMessage = connection.getResponseMessage();
-
-			if (responseCode == 200 || responseCode == 202) {
-				success = true;
-			}
-
-			InputStreamReader inputStreamReader = null;
-			BufferedReader bufferedReader = null;
-			try {
-				inputStreamReader = new InputStreamReader(
-						connection.getInputStream());
-				bufferedReader = new BufferedReader(inputStreamReader);
-
-				StringBuilder responseContent = new StringBuilder();
-
-				String temp = null;
-
-				boolean isFirst = true;
-
-				while ((temp = bufferedReader.readLine()) != null) {
-					if (!isFirst)
-						responseContent.append(Constants.NEW_LINE);
-					responseContent.append(temp);
-					isFirst = false;
-				}
-
-				response = responseContent.toString();
-
-			} catch (Exception e) {
-			} finally {
-				try {
-					inputStreamReader.close();
-				} catch (Exception e) {
-				}
-				try {
-					bufferedReader.close();
-				} catch (Exception e) {
-				}
-
-			}
-
-		} catch (Exception ex) {
-			success = false;
-		} finally {
-			try {
-				outputStream.flush();
-				outputStream.close();
-			} catch (Exception e) {
-			}
-		}
-
-		return response;
-	}
+            obj.put("updates", data);
+            obj.put("updates", data);
+            getDataFromServer(obj.toString(), Constants.HTTP_POST, Constants.FpsUpdate, Constants.BG_SERVICE_CONTENT_TYPE_JSON);
 
 
-	private void setLatLong(String fpAddress)
-	{
-		int requestCode;
-		String  responseMessage;
-		StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://maps.googleapis.com/maps/api/geocode/json?address="+fpAddress+"&sensor=false",
-				new Response.Listener<String>() {
-					@Override
-					public void onResponse(String response) {
-						try {
-							JSONObject store = new JSONObject(response);
-							lng = ((JSONArray) store.get("results"))
-									.getJSONObject(0).getJSONObject("geometry")
-									.getJSONObject("location").getDouble("lng");
+        } catch (Exception e) {
 
-							lat = ((JSONArray) store.get("results"))
-									.getJSONObject(0).getJSONObject("geometry")
-									.getJSONObject("location").getDouble("lat");
+        }
+        return null;
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+        String ch = "";
+        if (pd != null)
+            pd.dismiss();
+
+        if (Util.isNetworkStatusAvialable(appcontext)) {
+            if (lat != 0.0 && lng != 0.0) {
 
 
-							Constants.latitude = lat;
-							Constants.longitude = lng;
+                try {
 
-							if(lng!=0 && lat!=0){
-								latlong = new LatLng(lng , lat);
-							}
+                    for (int i = 0; i < arr.length; i++) {
+                        if (arr[i] == "PINCODE") {
+                            Business_Address_Activity.areaCode.setText(Business_Address_Activity.pincodetext);
+                        }
+                        if (arr[i] == "CITY") {
+                            Business_Address_Activity.cityAutoText.setText(Business_Address_Activity.citytext);
+                        }
 
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
+                    }
+                    for (int i = 0; i < arr.length; i++) {
+                        if (arr[i] == "ADDRESS" || arr[i] == "PINCODE" || arr[i] == "CITY") {
+                            Business_Address_Activity.saveTextView.setVisibility(View.GONE);
+                            break;
+                        }
 
-							e.printStackTrace();
-						}
-					}
-				}, new Response.ErrorListener() {
-			@Override
-			public void onErrorResponse(VolleyError error) {
+                    }
+                    LatLng latlong = new LatLng(lat, lng);
+                    String url = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lng + "&zoom=15&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + lat + "," + lng + "&key=" + "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
+                    //holderItem.chatImage.setVisibility(View.VISIBLE);
+                    try {
+                        Picasso.get()
+                                .load(url)
+                                .placeholder(R.drawable.default_product_image)
+                                .into(Business_Address_Activity.ivMap);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    //Business_Address_Activity.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 16));
 
-			}
-		});
-		RequestQueue queue = Volley.newRequestQueue(appcontext);
-		queue.add(stringRequest);
+                    //BuzzContactInfoFragment.Savetext.setVisibility(View.GONE);
+                    Methods.showSnackBarPositive(appcontext, "Business Address Updated!");
+                    pd.dismiss();
 
-	}
+
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            //addressErrorDialog();
+        }
+    }
+
+    private void setLatLong(String fpAddress) {
+        int requestCode;
+        String responseMessage;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://maps.googleapis.com/maps/api/geocode/json?address=" + fpAddress + "&sensor=false",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject store = new JSONObject(response);
+                            lng = ((JSONArray) store.get("results"))
+                                    .getJSONObject(0).getJSONObject("geometry")
+                                    .getJSONObject("location").getDouble("lng");
+
+                            lat = ((JSONArray) store.get("results"))
+                                    .getJSONObject(0).getJSONObject("geometry")
+                                    .getJSONObject("location").getDouble("lat");
+
+
+                            Constants.latitude = lat;
+                            Constants.longitude = lng;
+
+                            if (lng != 0 && lat != 0) {
+                                latlong = new LatLng(lng, lat);
+                            }
+
+                        } catch (JSONException e) {
+                            // TODO Auto-generated catch block
+
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        RequestQueue queue = Volley.newRequestQueue(appcontext);
+        queue.add(stringRequest);
+
+    }
 
 }

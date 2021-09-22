@@ -4,6 +4,7 @@ package com.nowfloats.manageinventory;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.framework.views.customViews.CustomToolbar;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.ProductGallery.ProductGalleryActivity;
 import com.nowfloats.util.MixPanelController;
@@ -23,14 +25,14 @@ import com.thinksity.R;
 public class ManageInventoryActivity extends AppCompatActivity {
 
     TextView tvPaymentSetting, tvProductGallery, tvTotalNoOfOrders, tvTotalRevenue;
-    Toolbar toolbar;
+    CustomToolbar toolbar;
     String category_code = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_inventory);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+         toolbar = (CustomToolbar) findViewById(R.id.toolbar);
         MixPanelController.track(MixPanelController.MANAGE_INVENTORY, null);
         setSupportActionBar(toolbar);
         UserSessionManager session = new UserSessionManager(getApplicationContext(), this);
@@ -68,7 +70,7 @@ public class ManageInventoryActivity extends AppCompatActivity {
 
     }
 
-    private String getFragmentTitle(){
+    private String getFragmentTitle() {
         return "";
     }
 

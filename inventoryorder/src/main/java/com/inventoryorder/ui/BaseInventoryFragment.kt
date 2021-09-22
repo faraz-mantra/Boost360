@@ -72,7 +72,8 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
 
   override fun onCreateView() {
     super.onCreateView()
-    preferenceData = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as? PreferenceData
+    preferenceData =
+      arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as? PreferenceData
   }
 
   override fun getViewModelClass(): Class<OrderCreateViewModel> {

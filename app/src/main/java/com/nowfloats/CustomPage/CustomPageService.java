@@ -18,9 +18,8 @@ import retrofit.client.Response;
 public class CustomPageService {
 
 
-
     public void GetPages(String tag, String id,
-                         CustomPageInterface anInterface, final Bus bus){
+                         CustomPageInterface anInterface, final Bus bus) {
         try {
             Log.i("CustomPAges data", "API call Started");
             anInterface.getPageList(tag, id, new Callback<ArrayList<CustomPageModel>>() {
@@ -36,7 +35,7 @@ public class CustomPageService {
                 }
             });
         } catch (Exception e) {
-            Log.i("CutomPages data","API Exception:"+e);
+            Log.i("CutomPages data", "API Exception:" + e);
             e.printStackTrace();
         }
     }

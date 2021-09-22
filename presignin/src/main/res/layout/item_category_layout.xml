@@ -1,83 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+  <data>
 
-    </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.framework.views.customViews.CustomCardView
+      android:id="@+id/card"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:checkable="true"
+      android:clickable="true"
+      android:layout_marginBottom="@dimen/_2sdp"
+      android:focusable="true"
+      android:orientation="vertical"
+      app:cardElevation="0dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintDimensionRatio="w,1:2"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardBg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <com.framework.views.customViews.CustomCardView
-            android:id="@+id/card"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/size_4"
-            android:layout_marginEnd="@dimen/size_6"
-            android:layout_marginBottom="@dimen/size_6"
-            android:checkable="true"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical"
-            android:padding="@dimen/size_4"
-            app:cardCornerRadius="@dimen/size_16"
-            app:cardElevation="@dimen/size_4"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="w,5.5:6"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/cardBg"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/icon"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/size_4"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    style="@style/category_text_style"
-                    tools:text="Doctors and\nHealth Specialists" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/name"
+          style="@style/category_text_style"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_centerHorizontal="true"
+          android:layout_marginTop="4dp"
+          android:layout_marginEnd="4dp"
+          android:ellipsize="end"
+          android:gravity="start"
+          android:fontFamily="@font/bold"
+          android:textColor="@color/black_4a4a4a"
+          app:layout_constraintEnd_toStartOf="@+id/category_image"
+          app:layout_constraintStart_toStartOf="@+id/image"
+          app:layout_constraintTop_toBottomOf="@+id/image"
+          tools:text="Doctors and\nHealth Specialists" />
 
 
-                <com.framework.views.customViews.CustomImageView
-                    android:id="@+id/image"
-                    android:layout_width="@dimen/size_56"
-                    android:layout_height="@dimen/size_56"
-                    android:padding="@dimen/size_4"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    tools:srcCompat="@drawable/ic_category_doctor" />
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/image"
+          android:layout_width="@dimen/size_56"
+          android:layout_height="@dimen/size_56"
+          android:layout_marginHorizontal="@dimen/_18sdp"
+          android:padding="@dimen/size_4"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="@+id/category_image"
+          tools:srcCompat="@drawable/ic_category_doctor" />
 
+        <com.framework.views.customViews.CustomImageView
+          android:id="@id/category_image"
+          android:layout_width="@dimen/_165sdp"
+          android:layout_height="@dimen/_90sdp"
+          android:layout_marginTop="10dp"
+          android:layout_marginEnd="20dp"
+          android:scaleType="centerCrop"
+          android:src="@drawable/business_registed_icon"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
+      </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.framework.views.customViews.CustomImageView
-                android:id="@+id/check"
-                android:layout_width="@dimen/size_32"
-                android:layout_height="@dimen/size_32"
-                android:layout_gravity="top|end"
-                android:layout_marginTop="@dimen/size_8"
-                android:layout_marginEnd="@dimen/size_8"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="4dp"
-                android:visibility="invisible"
-                app:srcCompat="@drawable/ic_check_circle_new" />
+      <com.framework.views.customViews.CustomRadioButton
+        android:id="@+id/check"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:buttonTint="#bbbbbb"
+        android:clickable="false"
+        android:focusable="true"
+        android:gravity="center"
+        android:visibility="visible" />
 
-        </com.framework.views.customViews.CustomCardView>
+    </com.framework.views.customViews.CustomCardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

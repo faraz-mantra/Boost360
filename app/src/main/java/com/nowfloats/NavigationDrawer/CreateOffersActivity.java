@@ -13,11 +13,15 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.provider.MediaStore;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.InputType;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -48,16 +52,15 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class CreateOffersActivity extends AppCompatActivity implements
-        OfferImageUploadService.OfferImageUploadComplete{
+public class CreateOffersActivity extends AppCompatActivity implements OfferImageUploadService.OfferImageUploadComplete {
 
+    private final int gallery_req_id = 6;
+    private final int media_req_id = 5;
     EditText etTitle, etDescription, etStartDate, etEndDate, etDiscount, etUri;
     ImageView ivOfferImage;
     Toolbar toolbar;
     private Bus mBus;
     private String mImageUri;
-    private final int gallery_req_id = 6;
-    private final int media_req_id = 5;
     private UserSessionManager mSession;
     private ProgressDialog pd;
 
@@ -76,7 +79,7 @@ public class CreateOffersActivity extends AppCompatActivity implements
         setSupportActionBar(toolbar);
         try {
             getSupportActionBar().setDisplayShowHomeEnabled(false);
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -92,7 +95,7 @@ public class CreateOffersActivity extends AppCompatActivity implements
         etStartDate.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     pickDate(etStartDate);
                 }
                 return true;
@@ -102,7 +105,7 @@ public class CreateOffersActivity extends AppCompatActivity implements
         etEndDate.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     pickDate(etEndDate);
                 }
                 return true;
@@ -150,7 +153,7 @@ public class CreateOffersActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if(id==android.R.id.home){
+        if (id == android.R.id.home) {
             finish();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }
@@ -158,10 +161,8 @@ public class CreateOffersActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
-    {
-        if(requestCode==media_req_id)
-        {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        if (requestCode == media_req_id) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] ==
                     PackageManager.PERMISSION_GRANTED) {
@@ -169,9 +170,7 @@ public class CreateOffersActivity extends AppCompatActivity implements
 
             }
 
-        }
-        else if(requestCode==gallery_req_id)
-        {
+        } else if (requestCode == gallery_req_id) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] ==
                     PackageManager.PERMISSION_GRANTED) {
@@ -198,50 +197,50 @@ public class CreateOffersActivity extends AppCompatActivity implements
                     ivOfferImage.setImageBitmap(CameraBitmap);
                 }
             }
-        }else if (resultCode == RESULT_OK && (Constants.CAMERA_PHOTO == requestCode)) {
+        } else if (resultCode == RESULT_OK && (Constants.CAMERA_PHOTO == requestCode)) {
             try {
                 Uri picUri = null;
-                if (picUri==null){
+                if (picUri == null) {
                     if (data != null) {
                         picUri = data.getData();
                         if (picUri == null) {
                             Bitmap CameraBitmap = (Bitmap) data.getExtras().get("data");
-                            mImageUri = Util.saveCameraBitmap(CameraBitmap,this, mSession.getFpTag()
+                            mImageUri = Util.saveCameraBitmap(CameraBitmap, this, mSession.getFpTag()
                                     + System.currentTimeMillis());
                             ivOfferImage.setImageBitmap(CameraBitmap);
-                        }else{
+                        } else {
                             mImageUri = getRealPathFromURI(picUri);
                             Bitmap CameraBitmap = Util.getBitmap(mImageUri, this);
                             ivOfferImage.setImageBitmap(CameraBitmap);
                         }
-                    }else{
-                        Methods.showSnackBar(this ,getString(R.string.try_again));
+                    } else {
+                        Methods.showSnackBar(this, getString(R.string.try_again));
                     }
-                }else{
+                } else {
                     mImageUri = getRealPathFromURI(picUri);
                     Bitmap CameraBitmap = Util.getBitmap(mImageUri, this);
                     ivOfferImage.setImageBitmap(CameraBitmap);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-            }catch(OutOfMemoryError E){
+            } catch (OutOfMemoryError E) {
                 E.printStackTrace();
                 System.gc();
-                Methods.showSnackBar(this,getString(R.string.try_again));
+                Methods.showSnackBar(this, getString(R.string.try_again));
             }
         }
     }
 
     @Override
     public void onUploadCompletion(String response) {
-        if(pd!=null && pd.isShowing()){
+        if (pd != null && pd.isShowing()) {
             pd.dismiss();
         }
-        if(response.equals("true")){
+        if (response.equals("true")) {
             Methods.showSnackBarPositive(this, getString(R.string.suucessfull_offer_post));
             finish();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-        }else {
+        } else {
             Methods.showSnackBarPositive(this, getString(R.string.error_offer_post));
         }
         finish();
@@ -254,7 +253,7 @@ public class CreateOffersActivity extends AppCompatActivity implements
         String startDate = etStartDate.getText().toString().trim();
         String endDate = etEndDate.getText().toString().trim();
         String discount = etDiscount.getText().toString().trim();
-        if(isOfferValidated(title, desc, startDate, endDate, discount, mImageUri)){
+        if (isOfferValidated(title, desc, startDate, endDate, discount, mImageUri)) {
             pd.show();
             HashMap<String, String> data = new HashMap<>();
             data.put("Description", desc);
@@ -274,20 +273,20 @@ public class CreateOffersActivity extends AppCompatActivity implements
     }
 
     @Subscribe
-    public void postOfferSuccess(PostOfferEvent e){
-        if(e.success){
-            if(pd!=null && pd.isShowing()){
+    public void postOfferSuccess(PostOfferEvent e) {
+        if (e.success) {
+            if (pd != null && pd.isShowing()) {
                 pd.dismiss();
             }
             pd.setMessage(getString(R.string.offer_image_upload_dialog_text));
             pd.show();
-            String imageUploadUrl =Constants.PictureFloatImgCreationURI+"?clientId="+
-                    Constants.clientId+"&bizMessageId="+e.result.replace("\"", "")+
+            String imageUploadUrl = Constants.PictureFloatImgCreationURI + "?clientId=" +
+                    Constants.clientId + "&bizMessageId=" + e.result.replace("\"", "") +
                     "&requestType=sequential&requestId=" + UUID.randomUUID().toString() +
-                    "&sendToSubscribers=false&"+ "totalChunks=1&currentChunkNumber=1";
+                    "&sendToSubscribers=false&" + "totalChunks=1&currentChunkNumber=1";
             new OfferImageUploadService(this).execute(mImageUri, imageUploadUrl);
-        }else {
-            if(pd!=null && pd.isShowing()){
+        } else {
+            if (pd != null && pd.isShowing()) {
                 pd.dismiss();
             }
             BoostLog.d("Offers Error Reason", e.result);
@@ -301,28 +300,28 @@ public class CreateOffersActivity extends AppCompatActivity implements
      */
     private boolean isOfferValidated(String title, String desc, String startDate, String endDate,
                                      String discount, String imageUri) {
-        if(Util.isNullOrEmpty(title)){
+        if (Util.isNullOrEmpty(title)) {
             Methods.showSnackBarNegative(this, getString(R.string.offers_title_error));
             return false;
-        }else if(Util.isNullOrEmpty(desc)){
+        } else if (Util.isNullOrEmpty(desc)) {
             Methods.showSnackBarNegative(this, getString(R.string.offers_desc_error));
-            return  false;
-        }else if(Util.isNullOrEmpty(startDate)){
+            return false;
+        } else if (Util.isNullOrEmpty(startDate)) {
             Methods.showSnackBarNegative(this, getString(R.string.offers_start_date_error));
-            return  false;
-        }else if(Util.isNullOrEmpty(endDate)){
+            return false;
+        } else if (Util.isNullOrEmpty(endDate)) {
             Methods.showSnackBarNegative(this, getString(R.string.offers_end_date_error));
-            return  false;
-        }else if(Util.isNullOrEmpty(imageUri)){
+            return false;
+        } else if (Util.isNullOrEmpty(imageUri)) {
             Methods.showSnackBarNegative(this, getString(R.string.offers_image_error));
-            return  false;
+            return false;
         }
 
         File file = new File(imageUri);
         long length = file.length() / 1024;
-        if(length>4000){
+        if (length > 4000) {
             Methods.showSnackBarNegative(this, getString(R.string.offers_image_size_error));
-            return  false;
+            return false;
         }
 
         return true;
@@ -331,7 +330,7 @@ public class CreateOffersActivity extends AppCompatActivity implements
 
     private void chooseImage() {
         final MaterialDialog dialog = new MaterialDialog.Builder(this)
-                .customView(R.layout.featuredimage_popup,true)
+                .customView(R.layout.featuredimage_popup, true)
                 .show();
         final PorterDuffColorFilter whiteLabelFilter_pop_ip =
                 new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor),
@@ -342,7 +341,7 @@ public class CreateOffersActivity extends AppCompatActivity implements
         header.setText(getString(R.string.upload_photo));
         LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
         LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
-        ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+        ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
         ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
         cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
         galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
@@ -368,16 +367,15 @@ public class CreateOffersActivity extends AppCompatActivity implements
     public void galleryIntent() {
         try {
             if (ActivityCompat.checkSelfPermission(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                     PackageManager.PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!=
-                    PackageManager.PERMISSION_GRANTED) {
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
+                            PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                 Manifest.permission.CAMERA},
                         gallery_req_id);
-            }
-            else {
+            } else {
                 Intent i = new Intent(
                         Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -386,7 +384,7 @@ public class CreateOffersActivity extends AppCompatActivity implements
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = getString(R.string.device_does_not_support_capturing_image);
-            Methods.showSnackBarNegative(this,errorMessage);
+            Methods.showSnackBarNegative(this, errorMessage);
         }
     }
 
@@ -394,16 +392,15 @@ public class CreateOffersActivity extends AppCompatActivity implements
         try {
             // use standard intent to capture an image
             if (ActivityCompat.checkSelfPermission(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                     PackageManager.PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!=
-                    PackageManager.PERMISSION_GRANTED) {
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
+                            PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                 Manifest.permission.CAMERA},
                         media_req_id);
-            }
-            else {
+            } else {
                 ContentValues cValues = new ContentValues();
                 Intent captureIntent;
                 cValues.put(MediaStore.Images.Media.TITLE, getString(R.string.new_picture));
@@ -417,26 +414,26 @@ public class CreateOffersActivity extends AppCompatActivity implements
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = getString(R.string.device_does_not_support_capturing_image);
-            Methods.showSnackBarNegative(this,errorMessage);
+            Methods.showSnackBarNegative(this, errorMessage);
         }
     }
 
     public String getRealPathFromURI(Uri contentUri) {
-        try{
-            String[] proj = { MediaStore.Images.Media.DATA };
+        try {
+            String[] proj = {MediaStore.Images.Media.DATA};
             Cursor cursor = managedQuery(contentUri, proj, null, null, null);
             int column_index = cursor
                     .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             return cursor.getString(column_index);
-        }catch (Exception e) {
+        } catch (Exception e) {
         }
         return null;
     }
 
-    public void pickDate(final EditText et){
+    public void pickDate(final EditText et) {
         Calendar calendar = Calendar.getInstance();
-        DatePickerDialog datePickerDialog  = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 et.setText(monthOfYear + "-" + dayOfMonth + "-" + year);

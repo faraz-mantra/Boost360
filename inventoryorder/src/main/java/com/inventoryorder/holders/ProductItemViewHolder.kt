@@ -15,7 +15,11 @@ class ProductItemViewHolder(binding: ItemProductBinding) : AppBaseRecyclerViewHo
     super.bind(position, item)
     val data = (item as? ProductItem) ?: return
 
-    if (data.ImageUri.isNullOrEmpty().not()) activity?.glideLoad(binding.itemImage, data.ImageUri!!, R.drawable.placeholder_image_n)
+    if (data.ImageUri.isNullOrEmpty().not()) activity?.glideLoad(
+      binding.itemImage,
+      data.ImageUri!!,
+      R.drawable.placeholder_image_n
+    )
     else binding.itemImage.setImageResource(R.drawable.placeholder_image_n)
     binding.tvProductName.text = data.Name ?: ""
     binding.tvProductPrice.text = "${data.getCurrencyCodeValue()} ${data.getPayablePrice()}"
@@ -31,10 +35,18 @@ class ProductItemViewHolder(binding: ItemProductBinding) : AppBaseRecyclerViewHo
       binding.layoutItemCounter.visibility = View.GONE
     }
     binding.tvIncrementCount.setOnClickListener {
-      listener?.onItemClick(adapterPosition, data, RecyclerViewActionType.PRODUCT_ITEM_INCREASE_COUNT.ordinal)
+      listener?.onItemClick(
+        adapterPosition,
+        data,
+        RecyclerViewActionType.PRODUCT_ITEM_INCREASE_COUNT.ordinal
+      )
     }
     binding.tvDecrementCount.setOnClickListener {
-      listener?.onItemClick(adapterPosition, data, RecyclerViewActionType.PRODUCT_ITEM_DECREASE_COUNT.ordinal)
+      listener?.onItemClick(
+        adapterPosition,
+        data,
+        RecyclerViewActionType.PRODUCT_ITEM_DECREASE_COUNT.ordinal
+      )
     }
   }
 }

@@ -44,12 +44,14 @@ interface GoogleLoginHelper {
 
   fun logoutGoogle(activity: Activity, type: String) {
     if (type == GMB_SIGN_IN && validClientID().not()) return
-    GoogleGraphManager.getClient(activity, GoogleGraphPath.SERVER_CLIENT_ID, type).signOut().addOnCompleteListener(activity) { onGoogleLogout() }
+    GoogleGraphManager.getClient(activity, GoogleGraphPath.SERVER_CLIENT_ID, type).signOut()
+      .addOnCompleteListener(activity) { onGoogleLogout() }
   }
 
   fun revokeAccess(activity: Activity, type: String) {
     if (type == GMB_SIGN_IN && validClientID().not()) return
-    GoogleGraphManager.getClient(activity, GoogleGraphPath.SERVER_CLIENT_ID, type).revokeAccess().addOnCompleteListener(activity) { onRevokeAccess() }
+    GoogleGraphManager.getClient(activity, GoogleGraphPath.SERVER_CLIENT_ID, type).revokeAccess()
+      .addOnCompleteListener(activity) { onRevokeAccess() }
   }
 
   fun validClientID(): Boolean {

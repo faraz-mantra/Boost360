@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -43,12 +44,12 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
     binding?.lifecycleOwner = this
     viewModel = ViewModelProviders.of(this).get(getViewModelClass())
     navigator = Navigator(this)
+    setToolbar()
     val observables = getObservables()
     for (observable in observables) {
       observable?.let { compositeDisposable.add(it) }
     }
     onCreateView()
-    setToolbar()
   }
 
   protected open fun getObservables(): List<Disposable?> {
@@ -77,11 +78,11 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
   }
 
   open fun getToolbarTitleTypeface(): Typeface? {
-    return null
+    return ResourcesCompat.getFont(this, R.font.semi_bold)
   }
 
   open fun getToolbarTitleSize(): Float? {
-    return null
+    return ConversionUtils.dp2px(16f).toFloat()
   }
 
   open fun getToolbarSubTitleSize(): Float? {
@@ -89,7 +90,7 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
   }
 
   open fun getNavIconScale(): Float {
-    return 1f
+    return 1.0f
   }
 
   open fun getToolbarTitleGravity(): Int {
@@ -141,9 +142,7 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
   private fun setToolbar() {
     val toolbar = getToolbar() ?: return
     if (!isHideToolbar()) {
-      toolbar.setNavigationOnClickListener {
-        onBackPressed()
-      }
+      toolbar.setNavigationOnClickListener { onBackPressed() }
       setToolbarTitle(getToolbarTitle())
       getToolbarSubTitle()?.let { setToolbarSubTitle(it) }
       toolbar.getNavImageButton()?.let {

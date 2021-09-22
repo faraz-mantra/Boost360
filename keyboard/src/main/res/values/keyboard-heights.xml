@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2012, The Android Open Source Project
@@ -19,19 +18,19 @@
 -->
 
 <resources>
-    <!-- Build condition,keyboard_height_in_dp -->
-    <string-array name="keyboard_heights" translatable="false">
+  <!-- Build condition,keyboard_height_in_dp -->
+  <string-array name="keyboard_heights" translatable="false">
     <!-- Preferable keyboard height in absolute scale: 1.285in -->
-        <!-- Droid -->
-        <item>HARDWARE=sholes,227.0167</item>
-        <!-- Nexus One -->
-        <item>HARDWARE=mahimahi,217.5932</item>
-        <!-- Nexus S -->
-        <item>HARDWARE=herring,200.8554</item>
-        <!-- Galaxy Nexus -->
-        <item>HARDWARE=tuna,202.5869</item>
+    <!-- Droid -->
+    <item>HARDWARE=sholes,227.0167</item>
+    <!-- Nexus One -->
+    <item>HARDWARE=mahimahi,217.5932</item>
+    <!-- Nexus S -->
+    <item>HARDWARE=herring,200.8554</item>
+    <!-- Galaxy Nexus -->
+    <item>HARDWARE=tuna,202.5869</item>
     <!-- Preferable keyboard height in absolute scale: 48.0mm -->
-        <!-- Xoom -->
-        <item>HARDWARE=stingray,283.1337</item>
-    </string-array>
+    <!-- Xoom -->
+    <item>HARDWARE=stingray,283.1337</item>
+  </string-array>
 </resources>

@@ -10,10 +10,10 @@ import java.io.Serializable
 const val TOTAL_MAP_VISIT = "TOTAL_MAP_VISIT"
 
 data class VisitsModelResponse(
-    @SerializedName("batchType")
-    var batchType: String? = null,
-    @SerializedName("uniqueVisitsList")
-    var uniqueVisitsList: ArrayList<UniqueVisitsList>? = null,
+  @SerializedName("batchType")
+  var batchType: String? = null,
+  @SerializedName("uniqueVisitsList")
+  var uniqueVisitsList: ArrayList<UniqueVisitsList>? = null,
 ) : BaseResponse(), Serializable {
 
   enum class BatchType(var value: Int) {
@@ -26,23 +26,23 @@ data class VisitsModelResponse(
     return count.toString()
   }
 
-  fun getTotalOMapVisit(key:String): String? {
+  fun getTotalOMapVisit(key: String): String? {
     return PreferencesUtils.instance.getData(key, "0")
   }
 
-  fun saveMapVisit(key:String) {
+  fun saveMapVisit(key: String) {
     PreferencesUtils.instance.saveData(key, getTotalCount())
   }
 }
 
 data class UniqueVisitsList(
-    @SerializedName("DataCount")
-    var dataCount: Int? = null,
-    @SerializedName("batchNumber")
-    var batchNumber: Int? = null,
-    @SerializedName("endDate")
-    var endDate: String? = null,
-    @SerializedName("startDate")
-    var startDate: String? = null,
+  @SerializedName("DataCount")
+  var dataCount: Int? = null,
+  @SerializedName("batchNumber")
+  var batchNumber: Int? = null,
+  @SerializedName("endDate")
+  var endDate: String? = null,
+  @SerializedName("startDate")
+  var startDate: String? = null,
 ) : Serializable
 

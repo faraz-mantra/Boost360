@@ -2,14 +2,19 @@
 
   <style name="BusinessOnboardingTheme" parent="AppBaseTheme" />
 
-  <style name="AppThemeChannel" parent="@style/Theme.AppCompat.NoActionBar">
+  <style name="AppThemeChannel" parent="Theme.MaterialComponents.Light.DarkActionBar">
     <item name="colorPrimary">@color/bg_dark_grey</item>
     <item name="colorPrimaryDark">@color/bg_dark_grey</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
     <item name="android:windowBackground">@color/white</item>
+    <item name="colorSecondary">@color/black_4a4a4a</item>
     <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     <item name="android:windowDisablePreview">true</item>
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    <item name="editTextStyle">@style/ComposeEditText</item>
+    <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
   </style>
 
 
@@ -96,12 +101,11 @@
   </style>
 
   <style name="Onboarding.TextFieldStyle">
-    <item name="backgroundTint">@color/edittext_focusable</item>
-    <!--    <item name="backgroundTint">#f89f18</item>-->
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
-    <item name="android:textColor">@color/black</item>
+    <item name="android:textColor">@color/black_4a4a4a</item>
     <item name="android:layout_marginBottom">@dimen/size_10</item>
+    <item name="backgroundTint">@color/edittext_color</item>
     <item name="textType">HEADING_7</item>
     <item name="android:maxLines">1</item>
     <item name="android:singleLine">true</item>
@@ -213,10 +217,10 @@
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_marginStart">@dimen/size_30</item>
     <item name="android:layout_marginBottom">@dimen/size_30</item>
+    <item name="fontFamily">@font/semi_bold</item>
     <item name="android:layout_marginEnd">@dimen/size_30</item>
-    <item name="android:fontFamily">@font/regular</item>
-    <item name="android:textColor">@color/greyish_brown</item>
-    <item name="android:background">@drawable/bg_button_rounded_greyish_brown_outlined</item>
+    <item name="android:textColor">@color/colorAccentLight</item>
+    <item name="android:background">@drawable/bg_button_rounded_accent_outlined</item>
   </style>
 
   <!-- media picker -->
@@ -242,21 +246,9 @@
     <item name="colorControlActivated">@color/colorAccent</item>
   </style>
 
-  <style name="DialogTheme" parent="Theme.AppCompat.Dialog.Alert">
-    <item name="colorAccent">@color/colorAccent</item>
-    <item name="colorControlNormal">@color/warm_grey</item>
-    <item name="colorControlActivated">@color/colorAccent</item>
-  </style>
-
   <style name="TextAppearance" parent="TextAppearance.Design.Tab">
     <item name="textAllCaps">false</item>
     <item name="android:textAllCaps">false</item>
-  </style>
-
-  <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
-    <item name="colorAccent">@color/colorAccent</item>
-    <item name="android:textColorPrimary">@color/black_4a4a4a</item>
-    <item name="android:background">@color/white</item>
   </style>
 
 </resources>

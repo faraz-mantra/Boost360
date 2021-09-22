@@ -39,40 +39,27 @@ import java.util.List;
  * Created by NowFloats on 16-10-2017.
  */
 
-public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapter.OnItemClickInterface{
+public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapter.OnItemClickInterface {
 
+    private final int DIRECT_REQUEST_CODE = 2013;
     CardView cvUpgradePlan;
     CardView cvActivePlans;
     ProgressBar pbActivePlans;
     TextView tvUpgradePlanText, plansHeaderText;
     RecyclerView rvActivePlans;
-
     private ActivePlansCallback mActivePlansCallback;
-
     private List<ActivePackage> mActivePlans = new ArrayList<>();
     private List<ActivePackage> mExpiredPlans = new ArrayList<>();
     private List<PackageDetails> mTopUps = new ArrayList<>();
     private List<String> mTopUpPlanNames = new ArrayList<>();
     private List<String> mPackageIds;
     private double mTotalAmount = 0;
-
-    private final int DIRECT_REQUEST_CODE = 2013;
-
     private ActivePlansRvAdapter mPlansRvAdapter;
-
-    public enum TopUpTypes
-    {
-        WILDFIRE_GOOGLE,
-        WILDFIRE_FACEBOOK,
-        BIZAPP_ANDROID,
-        BIZAPP_IPHONE,
-        DICTATE
-    }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if(activity instanceof ActivePlansCallback){
+        if (activity instanceof ActivePlansCallback) {
             mActivePlansCallback = (ActivePlansCallback) activity;
         } else {
             throw new RuntimeException("Implement ActivePlansCallback iin the Activity");
@@ -113,19 +100,18 @@ public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapte
         return view;
     }
 
-
-    public void setActivePlans(List<ActivePackage> activePlans){
+    public void setActivePlans(List<ActivePackage> activePlans) {
         this.mActivePlans = activePlans;
     }
 
-    public void showActivePlans(){
+    public void showActivePlans() {
 
-        if(!isAdded() || isDetached()){
+        if (!isAdded() || isDetached()) {
             return;
         }
         pbActivePlans.setVisibility(View.INVISIBLE);
-        if(mActivePlans!=null && mActivePlans.size() > 0){
-            if(mActivePlans.size() == 1 && mActivePlans.get(0).getName().toLowerCase().contains("demo")) {
+        if (mActivePlans != null && mActivePlans.size() > 0) {
+            if (mActivePlans.size() == 1 && mActivePlans.get(0).getName().toLowerCase().contains("demo")) {
                 cvActivePlans.setVisibility(View.GONE);
                 DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                 String date = df.format(getExpiryDate(mActivePlans.get(0).getToBeActivatedOn(),
@@ -151,22 +137,22 @@ public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapte
         long time = Long.parseLong(toBeActivatedOn.replaceAll("[^\\d]", ""));
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(time);
-        calendar.add(Calendar.MONTH, (int)Math.floor(totalMonthsValidity));
-        calendar.add(Calendar.DATE, (int) ((totalMonthsValidity-Math.floor(totalMonthsValidity))*30));
+        calendar.add(Calendar.MONTH, (int) Math.floor(totalMonthsValidity));
+        calendar.add(Calendar.DATE, (int) ((totalMonthsValidity - Math.floor(totalMonthsValidity)) * 30));
         return calendar.getTime();
     }
 
-    public void setExpiredPlans(List<ActivePackage> expiredPlans){
+    public void setExpiredPlans(List<ActivePackage> expiredPlans) {
         this.mExpiredPlans = expiredPlans;
     }
 
     public void showExpiredPlans() {
 
-        if(!isAdded() || isDetached()){
+        if (!isAdded() || isDetached()) {
             return;
         }
         pbActivePlans.setVisibility(View.INVISIBLE);
-        if(mExpiredPlans!=null && mExpiredPlans.size() > 0){
+        if (mExpiredPlans != null && mExpiredPlans.size() > 0) {
             cvUpgradePlan.setVisibility(View.GONE);
             cvActivePlans.setVisibility(View.VISIBLE);
             plansHeaderText.setText("PLANS ARCHIVE");
@@ -180,7 +166,7 @@ public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapte
 
     @Override
     public void onRenewOrUpdate() {
-        if(mActivePlansCallback!=null) {
+        if (mActivePlansCallback != null) {
             mActivePlansCallback.onRenewOrUpdate();
         }
     }
@@ -208,14 +194,14 @@ public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapte
             public void onAmountUpdated(double amount, List<String> packageIds) {
                 mTotalAmount = amount;
                 mPackageIds = packageIds;
-                tvAmount.setText(amount+"");
+                tvAmount.setText(amount + "");
             }
         }));
         rvTopUpPlans.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         topUpDialogView.findViewById(R.id.ll_purchase_plan).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mPackageIds == null || mPackageIds.size() == 0){
+                if (mPackageIds == null || mPackageIds.size() == 0) {
                     return;
                 }
                 dialog.dismiss();
@@ -231,7 +217,7 @@ public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapte
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                if(mPackageIds!=null && mPackageIds.size() > 0)
+                if (mPackageIds != null && mPackageIds.size() > 0)
                     mPackageIds.clear();
             }
         });
@@ -239,7 +225,7 @@ public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapte
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                if(mPackageIds!=null && mPackageIds.size() > 0)
+                if (mPackageIds != null && mPackageIds.size() > 0)
                     mPackageIds.clear();
             }
         });
@@ -254,9 +240,17 @@ public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapte
     public void setTopUps(List<PackageDetails> topUps) {
         this.mTopUps = topUps;
         mTopUpPlanNames.clear();
-        for(PackageDetails topUp : topUps){
+        for (PackageDetails topUp : topUps) {
             mTopUpPlanNames.add(topUp.getName());
         }
+    }
+
+    public enum TopUpTypes {
+        WILDFIRE_GOOGLE,
+        WILDFIRE_FACEBOOK,
+        BIZAPP_ANDROID,
+        BIZAPP_IPHONE,
+        DICTATE
     }
 
     public interface ActivePlansCallback {

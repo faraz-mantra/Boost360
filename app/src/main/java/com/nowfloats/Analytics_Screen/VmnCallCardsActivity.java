@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.boost.upgrades.UpgradeActivity;
+import com.framework.views.customViews.CustomToolbar;
 import com.google.gson.JsonObject;
 import com.nowfloats.Analytics_Screen.API.CallTrackerApis;
 import com.nowfloats.Analytics_Screen.model.VmnCallModel;
@@ -29,11 +30,13 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit.Callback;
@@ -53,36 +56,37 @@ import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 public class VmnCallCardsActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String TAG = "VmnCallCardsActivity";
     UserSessionManager sessionManager;
     CardView viewCallLogCard;
     TextView missedCountText, receivedCountText, allCountText, virtualNumberText, buyItemButton, potentialCallsText, trackAllCall, trackMissedCall, trackConnectedCall, webCallCount, phoneCallCount;
     Toolbar toolbar;
     ProgressDialog vmnProgressBar;
     ImageView seeMoreLessImage;
-    private LinearLayout seeMoreLess, mainLayout, userInfoLayout, secondaryLayout, websiteHelper, phoneHelper, websiteHelperInfo, phoneHelperInfo;
-    private UserSessionManager session;
     ConstraintLayout parentLayout, helpWebPhoneLayout, primaryLayout;
-    View backgroundLayout,dottedLine1,dottedLine2;
+    View backgroundLayout, dottedLine1, dottedLine2;
     boolean seeMoreLessStatus = false;
     int totalCallCount = 0;
     int totalPotentialCallCount = 0;
-    private int offset = 0;
     boolean stopApiCall;
     boolean allowCallPlayFlag; // This flag allows only one audio to play at a time. True means an audio can be played.
     ArrayList<VmnCallModel> headerList = new ArrayList<>();
     VmnCall_Adapter vmnCallAdapter;
     RecyclerView mRecyclerView;
-    String selectedViewType="ALL";
+    String selectedViewType = "ALL";
     LinearLayout noCallTrackLayout;
     LinearLayout secondLayout;
     LinearLayout firstLayout;
     TextView tvNoCallRecorded;
+    private LinearLayout seeMoreLess, mainLayout, userInfoLayout, secondaryLayout, websiteHelper, phoneHelper, websiteHelperInfo, phoneHelperInfo;
+    private UserSessionManager session;
+    private int offset = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vmn_call_cards);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        CustomToolbar toolbar = (CustomToolbar) findViewById(R.id.toolbar);
         MixPanelController.track(MixPanelController.VMN_CALL_TRACKER, null);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -126,7 +130,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         showTrackedCalls();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.call_recycler);
-        noCallTrackLayout =  findViewById(R.id.ll_no_call_tracker);
+        noCallTrackLayout = findViewById(R.id.ll_no_call_tracker);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
@@ -214,7 +218,9 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 
         secondaryLayout = (LinearLayout) findViewById(R.id.secondary_layout);
         buyItemButton = (TextView) findViewById(R.id.buy_item);
-        if (session.getStoreWidgets().contains("CALLTRACKER")) {
+        List<String> keys = session.getStoreWidgets();
+        Log.i(TAG, "store widgets: "+keys.toString());
+        if (keys != null && keys.contains("CALLTRACKER")) {
             //oldCode
 //            setVmnTotalCallCount();
             //newCode
@@ -259,7 +265,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 
     }
 
-    private void showTrackedCalls(){
+    private void showTrackedCalls() {
         trackAllCall = findViewById(R.id.track_all_call);
         trackMissedCall = findViewById(R.id.track_missed_call);
         trackConnectedCall = findViewById(R.id.track_connected_call);
@@ -270,7 +276,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
                 trackAllCall.setTextColor(getResources().getColor(R.color.primaryColor));
                 trackMissedCall.setTextColor(getResources().getColor(R.color.common_text_color));
                 trackConnectedCall.setTextColor(getResources().getColor(R.color.common_text_color));
-                if(!selectedViewType.equals("ALL")) {
+                if (!selectedViewType.equals("ALL")) {
                     selectedViewType = "ALL";
                     updateRecyclerData(null);
                 }
@@ -283,7 +289,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
                 trackAllCall.setTextColor(getResources().getColor(R.color.common_text_color));
                 trackMissedCall.setTextColor(getResources().getColor(R.color.primaryColor));
                 trackConnectedCall.setTextColor(getResources().getColor(R.color.common_text_color));
-                if(!selectedViewType.equals("MISSED")) {
+                if (!selectedViewType.equals("MISSED")) {
                     selectedViewType = "MISSED";
                     updateRecyclerData(null);
                 }
@@ -295,7 +301,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
                 trackAllCall.setTextColor(getResources().getColor(R.color.common_text_color));
                 trackMissedCall.setTextColor(getResources().getColor(R.color.common_text_color));
                 trackConnectedCall.setTextColor(getResources().getColor(R.color.primaryColor));
-                if(!selectedViewType.equals("CONNECTED")) {
+                if (!selectedViewType.equals("CONNECTED")) {
                     selectedViewType = "CONNECTED";
                     updateRecyclerData(null);
                 }
@@ -305,6 +311,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 
 
     private void getCalls() {
+        Log.i(TAG, "getCalls: function called");
         stopApiCall = true;
         showProgress();
         final String startOffset = String.valueOf(offset);
@@ -318,25 +325,26 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         trackerApis.trackerCalls(hashMap, new Callback<ArrayList<VmnCallModel>>() {
             @Override
             public void success(ArrayList<VmnCallModel> vmnCallModels, Response response) {
+                Log.i(TAG, "getCalls success: ");
                 hideProgress();
                 if (vmnCallModels == null || response.getStatus() != 200) {
                     Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 int size = vmnCallModels.size();
-                Log.v("getCalls"," "+ size);
+                Log.v("getCalls", " " + size);
                 stopApiCall = size < 100;
                 updateRecyclerData(vmnCallModels);
 
                 if (size != 0) {
                     offset += 100;
                 }
-                if(size < 1){
+                if (size < 1) {
                     mRecyclerView.setVisibility(View.GONE);
                     firstLayout.setVisibility(View.GONE);
                     secondLayout.setVisibility(View.GONE);
                     noCallTrackLayout.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     mRecyclerView.setVisibility(View.VISIBLE);
                     firstLayout.setVisibility(View.VISIBLE);
                     secondLayout.setVisibility(View.VISIBLE);
@@ -355,7 +363,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 
 
     private void updateRecyclerData(ArrayList<VmnCallModel> newItems) {
-        if(newItems!=null) {
+        if (newItems != null) {
             int sizeOfList = headerList.size();
             int listSize = newItems.size();
 
@@ -365,39 +373,40 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 //                vmnCallAdapter.notifyItemInserted(sizeOfList + i);
             }
         }
+        Log.i(TAG, "updateRecyclerData: header list size "+getSelectedTypeList(headerList).size());
         vmnCallAdapter.updateList(getSelectedTypeList(headerList));
-        if(getSelectedTypeList(headerList).size() == 0){
+        if (getSelectedTypeList(headerList).size() == 0) {
             noCallTrackLayout.setVisibility(View.VISIBLE);
-            if(selectedViewType.equals("CONNECTED")){
+            if (selectedViewType.equals("CONNECTED")) {
                 tvNoCallRecorded.setText("No calls connected yet");
-            } else if(selectedViewType.equals("MISSED")){
+            } else if (selectedViewType.equals("MISSED")) {
                 tvNoCallRecorded.setText("No missed calls yet");
             }
 
-        }else{
+        } else {
             noCallTrackLayout.setVisibility(View.GONE);
         }
 
     }
 
-    private ArrayList<VmnCallModel> getSelectedTypeList(ArrayList<VmnCallModel> list){
+    private ArrayList<VmnCallModel> getSelectedTypeList(ArrayList<VmnCallModel> list) {
         ArrayList<VmnCallModel> selectedItems = new ArrayList<>();
-        switch (selectedViewType){
+        switch (selectedViewType) {
             case "ALL": {
                 selectedItems = list;
                 break;
             }
-            case "MISSED":{
+            case "MISSED": {
                 for (int i = 0; i < list.size(); i++) {
-                    if(list.get(i).getCallStatus().equals("MISSED")) {
+                    if (list.get(i).getCallStatus().equals("MISSED")) {
                         selectedItems.add(list.get(i));
                     }
                 }
                 break;
             }
-            case "CONNECTED":{
+            case "CONNECTED": {
                 for (int i = 0; i < list.size(); i++) {
-                    if(list.get(i).getCallStatus().equals("CONNECTED")) {
+                    if (list.get(i).getCallStatus().equals("CONNECTED")) {
                         selectedItems.add(list.get(i));
                     }
                 }
@@ -491,12 +500,13 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 //        CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
         CallTrackerApis trackerApis = new RestAdapter.Builder()
                 .setEndpoint("https://riamemory.withfloats.com")
+                .setRequestInterceptor(Utils.getAuthRequestInterceptor())
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setLog(new AndroidLog("ggg"))
                 .build()
                 .create(CallTrackerApis.class);
 
-        trackerApis.getCallCountByType(session.getFpTag(),"POTENTIAL_CALLS","WEB", new Callback<JsonObject>() {
+        trackerApis.getCallCountByType(session.getFpTag(), "POTENTIAL_CALLS", "WEB", new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 hideProgress();
@@ -507,7 +517,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
                     String callCount = jsonObject.get("POTENTIAL_CALLS").getAsString();
                     webCallCount.setText(callCount);
                     totalPotentialCallCount += Integer.parseInt(callCount);
-                    potentialCallsText.setText("View potential calls ("+totalPotentialCallCount+")");
+                    potentialCallsText.setText("View potential calls (" + totalPotentialCallCount + ")");
                     getPhoneCallCount();
                 }
             }
@@ -528,12 +538,13 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 //        CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
         CallTrackerApis trackerApis = new RestAdapter.Builder()
                 .setEndpoint("https://riamemory.withfloats.com")
+                .setRequestInterceptor(Utils.getAuthRequestInterceptor())
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setLog(new AndroidLog("ggg"))
                 .build()
                 .create(CallTrackerApis.class);
 
-        trackerApis.getCallCountByType(session.getFpTag(),"POTENTIAL_CALLS","MOBILE", new Callback<JsonObject>() {
+        trackerApis.getCallCountByType(session.getFpTag(), "POTENTIAL_CALLS", "MOBILE", new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 hideProgress();
@@ -545,7 +556,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 //                    webCallCount.setText(callCount);
                     phoneCallCount.setText(callCount);
                     totalPotentialCallCount += Integer.parseInt(callCount);
-                    potentialCallsText.setText("View potential calls ("+totalPotentialCallCount+")");
+                    potentialCallsText.setText("View potential calls (" + totalPotentialCallCount + ")");
                 }
             }
 
@@ -557,8 +568,6 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
             }
         });
     }
-
-
 
 
     @Override
@@ -606,13 +615,13 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
-        if (session.getFPEmail() != null) {
-            intent.putExtra("email", session.getFPEmail());
+        if (session.getUserProfileEmail() != null) {
+            intent.putExtra("email", session.getUserProfileEmail());
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }
-        if (session.getFPPrimaryContactNumber() != null) {
-            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+        if (session.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
             intent.putExtra("mobileNo", "9160004303");
         }
@@ -621,7 +630,6 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         startActivity(intent);
         new Handler().postDelayed(() -> {
             progressDialog.dismiss();
-            finish();
         }, 1000);
     }
 }

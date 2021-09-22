@@ -11,4 +11,4 @@ data class AccessTokenRequest(
   var clientId: String? = null,
   @SerializedName("fpId")
   var fpId: String? = null
-):BaseRequest()
+) : BaseRequest()

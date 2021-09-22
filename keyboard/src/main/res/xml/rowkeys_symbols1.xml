@@ -18,54 +18,54 @@
 -->
 
 <merge xmlns:latin="http://schemas.android.com/apk/res-auto">
-    <Key
-        latin:additionalMoreKeys="!text/additional_morekeys_symbols_1"
-        latin:backgroundType="numKey"
-        latin:keySpec="!text/keyspec_symbols_1"
-        latin:moreKeys="!text/morekeys_symbols_1" />
-    <Key
-        latin:additionalMoreKeys="!text/additional_morekeys_symbols_2"
-        latin:backgroundType="numKey"
-        latin:keySpec="!text/keyspec_symbols_2"
-        latin:moreKeys="!text/morekeys_symbols_2" />
-    <Key
-        latin:additionalMoreKeys="!text/additional_morekeys_symbols_3"
-        latin:backgroundType="numKey"
-        latin:keySpec="!text/keyspec_symbols_3"
-        latin:moreKeys="!text/morekeys_symbols_3" />
-    <Key
-        latin:additionalMoreKeys="!text/additional_morekeys_symbols_4"
-        latin:backgroundType="numKey"
-        latin:keySpec="!text/keyspec_symbols_4"
-        latin:moreKeys="!text/morekeys_symbols_4" />
-    <Key
-        latin:additionalMoreKeys="!text/additional_morekeys_symbols_5"
-        latin:backgroundType="numKey"
-        latin:keySpec="!text/keyspec_symbols_5"
-        latin:moreKeys="!text/morekeys_symbols_5" />
-    <Key
-        latin:additionalMoreKeys="!text/additional_morekeys_symbols_6"
-        latin:backgroundType="numKey"
-        latin:keySpec="!text/keyspec_symbols_6"
-        latin:moreKeys="!text/morekeys_symbols_6" />
-    <Key
-        latin:additionalMoreKeys="!text/additional_morekeys_symbols_7"
-        latin:backgroundType="numKey"
-        latin:keySpec="!text/keyspec_symbols_7"
-        latin:moreKeys="!text/morekeys_symbols_7" />
-    <Key
-        latin:additionalMoreKeys="!text/additional_morekeys_symbols_8"
-        latin:backgroundType="numKey"
-        latin:keySpec="!text/keyspec_symbols_8"
-        latin:moreKeys="!text/morekeys_symbols_8" />
-    <Key
-        latin:additionalMoreKeys="!text/additional_morekeys_symbols_9"
-        latin:backgroundType="numKey"
-        latin:keySpec="!text/keyspec_symbols_9"
-        latin:moreKeys="!text/morekeys_symbols_9" />
-    <Key
-        latin:additionalMoreKeys="!text/additional_morekeys_symbols_0"
-        latin:backgroundType="numKey"
-        latin:keySpec="!text/keyspec_symbols_0"
-        latin:moreKeys="!text/morekeys_symbols_0" />
+  <Key
+    latin:additionalMoreKeys="!text/additional_morekeys_symbols_1"
+    latin:backgroundType="numKey"
+    latin:keySpec="!text/keyspec_symbols_1"
+    latin:moreKeys="!text/morekeys_symbols_1" />
+  <Key
+    latin:additionalMoreKeys="!text/additional_morekeys_symbols_2"
+    latin:backgroundType="numKey"
+    latin:keySpec="!text/keyspec_symbols_2"
+    latin:moreKeys="!text/morekeys_symbols_2" />
+  <Key
+    latin:additionalMoreKeys="!text/additional_morekeys_symbols_3"
+    latin:backgroundType="numKey"
+    latin:keySpec="!text/keyspec_symbols_3"
+    latin:moreKeys="!text/morekeys_symbols_3" />
+  <Key
+    latin:additionalMoreKeys="!text/additional_morekeys_symbols_4"
+    latin:backgroundType="numKey"
+    latin:keySpec="!text/keyspec_symbols_4"
+    latin:moreKeys="!text/morekeys_symbols_4" />
+  <Key
+    latin:additionalMoreKeys="!text/additional_morekeys_symbols_5"
+    latin:backgroundType="numKey"
+    latin:keySpec="!text/keyspec_symbols_5"
+    latin:moreKeys="!text/morekeys_symbols_5" />
+  <Key
+    latin:additionalMoreKeys="!text/additional_morekeys_symbols_6"
+    latin:backgroundType="numKey"
+    latin:keySpec="!text/keyspec_symbols_6"
+    latin:moreKeys="!text/morekeys_symbols_6" />
+  <Key
+    latin:additionalMoreKeys="!text/additional_morekeys_symbols_7"
+    latin:backgroundType="numKey"
+    latin:keySpec="!text/keyspec_symbols_7"
+    latin:moreKeys="!text/morekeys_symbols_7" />
+  <Key
+    latin:additionalMoreKeys="!text/additional_morekeys_symbols_8"
+    latin:backgroundType="numKey"
+    latin:keySpec="!text/keyspec_symbols_8"
+    latin:moreKeys="!text/morekeys_symbols_8" />
+  <Key
+    latin:additionalMoreKeys="!text/additional_morekeys_symbols_9"
+    latin:backgroundType="numKey"
+    latin:keySpec="!text/keyspec_symbols_9"
+    latin:moreKeys="!text/morekeys_symbols_9" />
+  <Key
+    latin:additionalMoreKeys="!text/additional_morekeys_symbols_0"
+    latin:backgroundType="numKey"
+    latin:keySpec="!text/keyspec_symbols_0"
+    latin:moreKeys="!text/morekeys_symbols_0" />
 </merge>

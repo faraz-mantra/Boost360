@@ -2,7 +2,9 @@ package com.nowfloats.CustomPage;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,14 +16,16 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -31,13 +35,19 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.boost.upgrades.UpgradeActivity;
+import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem;
+import com.framework.models.caplimit_feature.PropertiesItem;
 import com.framework.models.firestore.FirestoreManager;
+import com.google.firebase.FirebaseApp;
 import com.nowfloats.CustomPage.Model.CreatePageModel;
+import com.nowfloats.CustomPage.Model.CustomPageLink;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.CustomPage.Model.PageDetail;
 import com.nowfloats.CustomPage.Model.UploadImageToS3Model;
@@ -66,6 +76,9 @@ import retrofit.RetrofitError;
 import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 
+import static com.framework.models.caplimit_feature.CapLimitFeatureResponseItemKt.filterFeature;
+import static com.framework.models.caplimit_feature.CapLimitFeatureResponseItemKt.getCapData;
+import static com.framework.utils.UtilKt.hideKeyBoard;
 import static com.framework.webengageconstant.EventLabelKt.ENTER_DIFFERENT_TITLE_AND_TRY_AGAIN;
 import static com.framework.webengageconstant.EventLabelKt.FAILED_TO_UPDATE_CUSTOMPAGE;
 import static com.framework.webengageconstant.EventLabelKt.SOMETHING_WENT_WRONG_PLEASE_TRY_AGAIN;
@@ -73,44 +86,62 @@ import static com.framework.webengageconstant.EventLabelKt.SUCCESSFULLY_ADDED_CU
 import static com.framework.webengageconstant.EventLabelKt.UPDATE_A_CUSTOMPAGE;
 import static com.framework.webengageconstant.EventNameKt.POST_ACUSTOMPAGE;
 import static com.framework.webengageconstant.EventNameKt.UPDATE_CUSTOMPAGE;
+import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 
 /**
  * Created by guru on 09-06-2015.
  */
 public class CreateCustomPageActivity extends AppCompatActivity {
+  private final int gallery_req_id = 6;
+  private final int media_req_id = 5;
   public Toolbar toolbar;
   public ImageView save;
   public UserSessionManager session;
   Activity activity;
   EditText titleTxt;
   RichEditor richText;
+  String curName, curHtml, curPageid;
+  String imageTagName = "CustomePage";
+  boolean isNewDataAdded = false;
   private String mHtmlFormat = "";
   private Uri picUri;
   private HorizontalScrollView editor;
   private boolean editCheck = false;
-  String curName, curHtml, curPageid;
   private int curPos;
   private ImageView deletePage;
-
-  String imageTagName = "CustomePage";
-
   private int GALLERY_PHOTO = 5;
   private RiaNodeDataModel mRiaNodedata;
-
-  private final int gallery_req_id = 6;
-  private final int media_req_id = 5;
-
-  boolean isNewDataAdded = false;
 
   @Override
   protected void attachBaseContext(Context newBase) {
     super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
 
+  private String getProcessName(Context context) {
+    if (context == null) return null;
+    ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+    for (ActivityManager.RunningAppProcessInfo processInfo : manager.getRunningAppProcesses()) {
+      if (processInfo.pid == android.os.Process.myPid()) {
+        return processInfo.processName;
+      }
+    }
+    return null;
+  }
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    FirebaseApp.initializeApp(CreateCustomPageActivity.this);
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P&&!Constants.webViewInit) {
+      String process = getProcessName(this);
+      String packageName = this.getPackageName();
+      if (!packageName.equals(process)){
+        WebView.setDataDirectorySuffix(process);
+        Constants.webViewInit = true;
+      }
+    }
     setContentView(R.layout.create_custom_page);
 
     curPos = getIntent().getIntExtra("position", -1);
@@ -128,9 +159,10 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     deletePage.setVisibility(View.GONE);
     final TextView title = (TextView) toolbar.findViewById(R.id.titleProduct);
     title.setVisibility(View.VISIBLE);
-    title.setText("New page");
+    title.setText("New Page");
     save.setImageResource(R.drawable.checkmark_icon);
     session = new UserSessionManager(getApplicationContext(), activity);
+    capLimitCheck();
 
     editor = (HorizontalScrollView) findViewById(R.id.rich_editer);
     titleTxt = (EditText) findViewById(R.id.titleEdit);
@@ -193,7 +225,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
       richText.post(() -> {
         editor.setVisibility(View.VISIBLE);
         richText.focusEditor();
-        Utils.showKeyboard(activity,richText);
+        Utils.showKeyboard(activity, richText);
       });
       return false;
     });
@@ -490,11 +522,49 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     });
   }
 
+  private void capLimitCheck() {
+    CustomPageInterface pageInterface2 = Constants.restAdapter.create(CustomPageInterface.class);
+    pageInterface2.getPageUrl(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), 0, 10, 1, new Callback<CustomPageLink>() {
+      @Override
+      public void success(CustomPageLink pageDetail, Response response) {
+        CapLimitFeatureResponseItem data = filterFeature(getCapData(), CapLimitFeatureResponseItem.FeatureType.CUSTOMPAGES);
+        if (data != null && pageDetail != null) {
+          PropertiesItem capLimitCustomPage = data.filterProperty(PropertiesItem.KeyType.LIMIT);
+          if (pageDetail.getTotal() != null && capLimitCustomPage.getValueN() != null && pageDetail.getTotal() >= capLimitCustomPage.getValueN()) {
+            hideKeyBoard(activity);
+            showAlertCapLimit("Can't add the custom page, please activate your premium Add-ons plan.");
+          }
+        }
+      }
+
+      @Override
+      public void failure(RetrofitError error) {
+      }
+    });
+  }
+
+  void showAlertCapLimit(String msg) {
+    AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.CustomAlertDialogTheme));
+    builder.setCancelable(false);
+    builder.setTitle("You have exceeded limit!").setMessage(msg);
+    builder.setPositiveButton("Explore Add-ons", (dialog, which) -> {
+      dialog.dismiss();
+      initiateBuyFromMarketplace();
+      activity.finish();
+    });
+    builder.setNegativeButton("Close", (dialog, which) -> {
+      dialog.dismiss();
+      activity.finish();
+    });
+    builder.create().show();
+  }
+
   private void onCustomPageAddedOrUpdated() {
     FirestoreManager instance = FirestoreManager.INSTANCE;
-    if (instance.getDrScoreData().getMetricdetail() == null) return;
-    instance.getDrScoreData().getMetricdetail().setBoolean_create_custom_page(true);
-    instance.updateDocument();
+    if (instance.getDrScoreData() != null && instance.getDrScoreData().getMetricdetail() != null) {
+      instance.getDrScoreData().getMetricdetail().setBoolean_create_custom_page(true);
+      instance.updateDocument();
+    }
   }
 
   @Override
@@ -810,4 +880,32 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     }
   }
 
+  private void initiateBuyFromMarketplace() {
+    ProgressDialog progressDialog = new ProgressDialog(this);
+    String status = "Loading. Please wait...";
+    progressDialog.setMessage(status);
+    progressDialog.setCancelable(false);
+    progressDialog.show();
+    Intent intent = new Intent(this, UpgradeActivity.class);
+    intent.putExtra("expCode", session.getFP_AppExperienceCode());
+    intent.putExtra("fpName", session.getFPName());
+    intent.putExtra("fpid", session.getFPID());
+    intent.putExtra("fpTag", session.getFpTag());
+    intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
+    intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
+    if (session.getUserProfileEmail() != null) {
+      intent.putExtra("email", session.getUserProfileEmail());
+    } else {
+      intent.putExtra("email", "ria@nowfloats.com");
+    }
+    if (session.getUserPrimaryMobile() != null) {
+      intent.putExtra("mobileNo", session.getUserPrimaryMobile());
+    } else {
+      intent.putExtra("mobileNo", "9160004303");
+    }
+    intent.putExtra("profileUrl", session.getFPLogo());
+    intent.putExtra("buyItemKey", CapLimitFeatureResponseItem.FeatureType.CUSTOMPAGES.name());
+    startActivity(intent);
+    new Handler().postDelayed(() -> progressDialog.dismiss(), 1000);
+  }
 }

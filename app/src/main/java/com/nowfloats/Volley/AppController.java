@@ -37,6 +37,8 @@ import com.webengage.sdk.android.WebEngageConfig;
 import java.io.File;
 import java.lang.reflect.Method;
 
+import dev.patrickgold.florisboard.ime.core.FlorisApplication;
+
 public class AppController extends MultiDexApplication/* implements IAviaryClientCredentials*/ {
 
     public static final String TAG = AppController.class.getSimpleName();
@@ -118,12 +120,14 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         AppDashboardApplication.initModule(this);
         AppPreSignInApplication.instance = this;
         AppPreSignInApplication.initModule(this);
-        SharedPreferences pref =  BaseOrderApplication.instance.getSharedPreferences(Constants.PREF_NAME_REFERRAL, Context.MODE_PRIVATE);
+        FlorisApplication.instance = this;
+        FlorisApplication.initModule(this);
+        SharedPreferences pref = BaseOrderApplication.instance.getSharedPreferences(Constants.PREF_NAME_REFERRAL, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         initWebEngage();
         //Invite Referral
         InviteReferralsApplication.register(this);
-        if (!pref.getBoolean(Constants.IS_INSTALL_APP,false)) {
+        if (!pref.getBoolean(Constants.IS_INSTALL_APP, false)) {
             InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null);
             InviteReferralsApi.getInstance(this).getReferrerCode(code -> {
                 editor.putBoolean(Constants.IS_INSTALL_APP, true);

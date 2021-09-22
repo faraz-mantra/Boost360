@@ -2,6 +2,7 @@ package com.nowfloats.BusinessProfile.UI.API;
 
 import com.nowfloats.NavigationDrawer.API.GetAutoPull;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Utils;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -12,12 +13,13 @@ import retrofit.http.Path;
  * Created by NowFloatsDev on 16/04/2015.
  */
 
- public class Facebook_Auto_Publish_API {
-    public static autoPullApi getAdapter(){
+public class Facebook_Auto_Publish_API {
+    public static autoPullApi getAdapter() {
         RestAdapter adapter = new RestAdapter.Builder()
                 /*.setLog(new AndroidLog("ggg"))
                 .setLogLevel(RestAdapter.LogLevel.FULL)*/
                 .setEndpoint(Constants.NOW_FLOATS_API_URL)
+                .setRequestInterceptor(Utils.getAuthRequestInterceptor())
                 .build();
         return adapter.create(autoPullApi.class);
     }

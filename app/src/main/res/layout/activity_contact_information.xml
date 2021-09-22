@@ -35,7 +35,7 @@
 
             <TextView
               style="@style/ProductLabelTextStyle"
-              android:text="Registered Contact Number" />
+              android:text="Registered contact number" />
 
             <ImageButton
               android:id="@+id/ib_info_primary"
@@ -127,7 +127,7 @@
               android:minWidth="100dp"
               android:padding="3dp"
               android:text="@string/view_report"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="@color/primaryTextColor"
               android:textSize="12sp" />
 
@@ -405,8 +405,8 @@
                 android:id="@+id/edit_website_address"
                 style="@style/ProductEditTextStyle"
                 android:layout_weight="1"
-                android:textAllCaps="false"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textAllCaps="false" />
 
             </LinearLayout>
 
@@ -440,7 +440,6 @@
               style="@style/ProductEditTextStyle"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/margin_5"
-              android:enabled="false"
               android:hint="@string/xxxxxxxxxx"
               android:inputType="textEmailAddress" />
 
@@ -506,6 +505,7 @@
             android:layout_marginBottom="@dimen/margin_10"
             android:background="@drawable/rounded_button_enabled"
             android:onClick="onSaveClick"
+            android:textAllCaps="false"
             android:text="@string/save_contact_info"
             android:textColor="@android:color/white" />
 

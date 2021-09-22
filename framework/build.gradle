@@ -132,9 +132,16 @@ dependencies {
     api 'com.webengage:android-sdk:3.+'
 
     //exoplayer
-    api 'com.google.android.exoplayer:exoplayer:2.11.3'
+    api 'com.google.android.exoplayer:exoplayer:2.14.1'
 
     // sms receiver apis
-    implementation 'com.google.android.gms:play-services-auth:17.0.0'
-    implementation 'com.google.android.gms:play-services-auth-api-phone:17.4.0'
+    api 'com.google.android.gms:play-services-auth:19.2.0'
+    api 'com.google.android.gms:play-services-auth-api-phone:17.5.1'
+
+    //sentry for crash reporting
+    implementation 'io.sentry:sentry-android:5.0.1'
+
+    //smartlook heat map generator
+    implementation 'com.smartlook.recording:app:1.8.3-native'
+
 }

@@ -9,11 +9,13 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -51,31 +53,19 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
  */
 public class ManageCustomerFragmentV1 extends Fragment {
 
-    private SharedPreferences pref = null;
-
-    private UserSessionManager session;
-
-    private Activity activity;
-
-    private RecyclerView rvManageCustomers;
-
-    private ManageCustomerAdapter manageCustomerAdapter;
-
+    public static final String ACTION_KILL_DIALOG = "nowfloats.bubblebutton.bubble.ACTION_KILL_DIALOG";
     private static final int CI_WEBSITE = 0, FB_CHATS = 1,
             MULTI_CHANNEL_CUSTOMERS = 2;
-
-    private int customerList[] = {CI_WEBSITE, MULTI_CHANNEL_CUSTOMERS};
-
-    private Bus bus;
-
-    private MaterialDialog overLayDialog;
-
-    private LinearLayout bubbleOverlay;
-
     private static final int PERM_REQUEST_CODE_DRAW_OVERLAYS = 122;
-
-    public static final String ACTION_KILL_DIALOG = "nowfloats.bubblebutton.bubble.ACTION_KILL_DIALOG";
-
+    private SharedPreferences pref = null;
+    private UserSessionManager session;
+    private Activity activity;
+    private RecyclerView rvManageCustomers;
+    private ManageCustomerAdapter manageCustomerAdapter;
+    private int customerList[] = {CI_WEBSITE, MULTI_CHANNEL_CUSTOMERS};
+    private Bus bus;
+    private MaterialDialog overLayDialog;
+    private LinearLayout bubbleOverlay;
     private IntentFilter clickIntentFilters = new IntentFilter(ACTION_KILL_DIALOG);
 
     @Override
@@ -140,6 +130,347 @@ public class ManageCustomerFragmentV1 extends Fragment {
         if (headerText != null)
             headerText.setText(getResources().getString(R.string.manage_customers));
     }
+
+    private void showOverlay(ManageCustomerAdapter.ManageCustomerHolder manageCustomerHolder) {
+
+        int cx = (manageCustomerHolder.rlRevealLayout.getLeft() + manageCustomerHolder.rlRevealLayout.getRight());
+        int cy = manageCustomerHolder.rlRevealLayout.getTop();
+        int radius = Math.max(manageCustomerHolder.rlRevealLayout.getWidth(), manageCustomerHolder.rlRevealLayout.getHeight());
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            Animator animator =
+                    ViewAnimationUtils.createCircularReveal(manageCustomerHolder.rlRevealLayout, cx, cy, 0, radius);
+            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            animator.setDuration(700);
+
+            manageCustomerHolder.rlRevealLayout.setVisibility(View.VISIBLE);
+            manageCustomerHolder.rflOverLay.setBackgroundColor(Color.parseColor("#66000000"));
+            animator.start();
+        } else {
+            Animator anim = android.view.ViewAnimationUtils.
+                    createCircularReveal(manageCustomerHolder.rlRevealLayout, cx, cy, 0, radius);
+            manageCustomerHolder.rlRevealLayout.setVisibility(View.VISIBLE);
+            manageCustomerHolder.rflOverLay.setBackgroundColor(Color.parseColor("#66000000"));
+            anim.start();
+        }
+    }
+
+    private void closeOverlay(final ManageCustomerAdapter.ManageCustomerHolder manageCustomerHolder) {
+
+        int cx = (manageCustomerHolder.rlRevealLayout.getLeft() + manageCustomerHolder.rlRevealLayout.getRight());
+        int cy = manageCustomerHolder.rlRevealLayout.getTop();
+        int radius = Math.max(manageCustomerHolder.rlRevealLayout.getWidth(), manageCustomerHolder.rlRevealLayout.getHeight());
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+
+            Animator anim = ViewAnimationUtils.
+                    createCircularReveal(manageCustomerHolder.rlRevealLayout, cx, cy, radius, 0);
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    manageCustomerHolder.rlRevealLayout.setVisibility(View.INVISIBLE);
+                    manageCustomerHolder.rflOverLay.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.transparent));
+                }
+            });
+            anim.start();
+
+        } else {
+            Animator anim = android.view.ViewAnimationUtils.
+                    createCircularReveal(manageCustomerHolder.rlRevealLayout, cx, cy, radius, 0);
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    manageCustomerHolder.rlRevealLayout.setVisibility(View.INVISIBLE);
+                    manageCustomerHolder.rflOverLay.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.transparent));
+                }
+            });
+            anim.start();
+
+        }
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == PERM_REQUEST_CODE_DRAW_OVERLAYS) {
+//
+//            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if (android.os.Build.VERSION.SDK_INT >= 23) {
+//
+//                        if (getActivity() != null && Settings.canDrawOverlays(getActivity())) {
+//
+//                            if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
+//                                checkCustomerAssistantService();
+//                            }
+//
+//                            checkForAccessibility();
+//                        }
+//                    }
+//                }
+//            }, 1000);
+//        }
+    }
+
+    /*
+     *  Enable Customer Assistant Steps
+     */
+
+   /* private void enableCustomerAssistant() {
+
+        MixPanelController.track(EventKeysWL.SIDE_PANEL_WHATSAPP_BUBBLE, null);
+        MixPanelController.track(EventKeysWL.SIDE_PANEL_CUSTOMER_ASSISTANT, null);
+
+        if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
+            if (!Methods.isMyServiceRunning(activity, CustomerAssistantService.class)) {
+                activity.startService(new Intent(activity, CustomerAssistantService.class));
+            }
+            session.setCustomerAssistantStatus(true);
+        }
+
+        getProducts();
+
+        if ((android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity()))
+                || (!Methods.isAccessibilitySettingsOn(getActivity()))) {
+            session.setBubbleTime(-1);
+
+            if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") *//*&& "1".equals(paymentState)*//*) {
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        checkOverlay(Home_Fragment_Tab.DrawOverLay.FromHome);
+                    }
+                }, 1000);
+
+            }
+
+        } else {
+
+            session.setBubbleStatus(true);
+            if (Methods.hasOverlayPerm(getActivity())) {
+
+                if (!Methods.isMyServiceRunning(getActivity(), CustomerAssistantService.class)) {
+                    Intent bubbleIntent = new Intent(getActivity(), CustomerAssistantService.class);
+                    getActivity().startService(bubbleIntent);
+                }
+            }
+
+            manageCustomerAdapter.notifyDataSetChanged();
+
+            MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
+                    //.title(getString(R.string.book_a_new_domain))
+                    .customView(R.layout.dialog_ca_enable, false)
+//                    .positiveText(getString(R.string.ok))
+                    .positiveColorRes(R.color.primaryColor);
+            if (!activity.isFinishing()) {
+                final MaterialDialog materialDialog = builder.show();
+                materialDialog.setCanceledOnTouchOutside(false);
+
+                View caView = materialDialog.getCustomView();
+                TextView tvCrossPlatform = (TextView) caView.findViewById(R.id.tvCrossPlatform);
+                LinearLayout tvBubble = (LinearLayout) caView.findViewById(R.id.llBubble);
+                LinearLayout tvCustomerAssistant = (LinearLayout) caView.findViewById(R.id.llCustomerAssistant);
+                View vwSeperator = (View) caView.findViewById(R.id.vwSeperator);
+
+                if (!pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
+                    tvCustomerAssistant.setVisibility(View.GONE);
+                    vwSeperator.setVisibility(View.GONE);
+                }
+
+                tvCrossPlatform.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        materialDialog.dismiss();
+                    }
+                });
+                tvBubble.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        materialDialog.dismiss();
+                        if (!pref.getBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, false)) {
+                            startActivity(new Intent(getActivity(), BubbleInAppDialog.class));
+                        } else {
+                            MixPanelController.track(MixPanelController.WHATS_APP_DIALOG_CLICKED, null);
+                            try {
+                                Intent launchIntent = getActivity().getPackageManager().
+                                        getLaunchIntentForPackage(DataAccessibilityServiceV8.PK_NAME_WHATSAPP);
+                                startActivity(launchIntent);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Toast.makeText(getActivity(), "Problem to open WhatsApp", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+
+                tvCustomerAssistant.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        materialDialog.dismiss();
+                        Intent intent = new Intent(getActivity(), CustomerAssistantActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        startActivity(intent);
+                    }
+                });
+
+            }
+        }
+
+
+    }
+
+    private void disableCustomerAssistant() {
+        MixPanelController.track(EventKeysWL.SIDE_PANEL_WHATSAPP_BUBBLE_OFF, null);
+        MixPanelController.track(EventKeysWL.SIDE_PANEL_CUSTOMER_ASSISTANT_OFF, null);
+
+        session.setBubbleStatus(false);
+        session.setCustomerAssistantStatus(false);
+        activity.stopService(new Intent(activity, CustomerAssistantService.class));
+    }
+
+    private void getProducts() {
+        HashMap<String, String> values = new HashMap<>();
+        values.put("clientId", Constants.clientId);
+        values.put("skipBy", "0");
+        values.put("fpTag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
+        //invoke getProduct api
+        ProductGalleryInterface productInterface = Constants.restAdapter.create(ProductGalleryInterface.class);
+        productInterface.getProducts(values, new Callback<ArrayList<ProductListModel>>() {
+            @Override
+            public void success(ArrayList<ProductListModel> productListModels, Response response) {
+
+
+                if (productListModels == null || productListModels.size() == 0 || response.getStatus() != 200) {
+                    pref.edit().putBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, false).apply();
+
+                    return;
+                }
+                pref.edit().putBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, true).apply();
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+    }
+
+    public void checkOverlay(Home_Fragment_Tab.DrawOverLay from) {
+        if (!isAdded() || getActivity() == null) {
+            return;
+        }
+
+        boolean checkAccessibility = true;
+
+//        Calendar calendar = Calendar.getInstance();
+//        long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, -1);
+//        long newTime = calendar.getTimeInMillis();
+//        long diff = 3 * 24 * 60 * 60 * 1000;
+//
+//        if (oldTime != -1 && ((newTime - oldTime) < diff)) {
+//            return;
+//        } else {
+        if (!Methods.hasOverlayPerm(getActivity())) {
+            checkAccessibility = false;
+            dialogForOverlayPath(from);
+        }
+//        }
+
+        if (checkAccessibility)
+            checkForAccessibility();
+    }
+
+    private void checkForAccessibility() {
+        if (getActivity() == null) return;
+        if (!Methods.isAccessibilitySettingsOn(getActivity())) {
+            showBubble();
+        }
+    }
+
+    private void showBubble() {
+
+        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
+
+//        if (!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, false)) {
+        addOverlay();
+        pref.edit().putBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, true).apply();
+//        }
+
+        int px = Methods.dpToPx(80, getActivity());
+        Intent intent = new Intent(getActivity(), BubblesService.class);
+        intent.putExtra(Key_Preferences.BUBBLE_POS_Y, px);
+        intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.HOME_ACTIVITY);
+        activity.startService(intent);
+
+    }
+
+    private void addOverlay() {
+        bubbleOverlay.setVisibility(View.VISIBLE);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.bubble_pointing_sign, bubbleOverlay);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bubbleOverlay.removeAllViews();
+                bubbleOverlay.setVisibility(View.GONE);
+                //layout.setOnClickListener(null);
+            }
+        });
+    }
+
+    private void dialogForOverlayPath(Home_Fragment_Tab.DrawOverLay from) {
+        if (getActivity() == null || !isAdded()) return;
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_bubble_overlay_permission, null);
+        ImageView image = (ImageView) view.findViewById(R.id.gif_image);
+        try {
+            GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(image);
+            Glide.with(getContext()).load(R.drawable.overlay_gif).into(target);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (overLayDialog == null) {
+            overLayDialog = new MaterialDialog.Builder(getContext())
+                    .customView(view, false)
+                    .positiveColorRes(R.color.primary)
+                    .positiveText(getString(R.string.open_setting))
+                    .callback(new MaterialDialog.ButtonCallback() {
+
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                            try {
+                                requestOverlayPermission();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            dialog.dismiss();
+                        }
+                    }).show();
+        } else if (from == Home_Fragment_Tab.DrawOverLay.FromHome) {
+            overLayDialog.show();
+        }
+    }
+
+    private void requestOverlayPermission() {
+
+        if (getActivity() == null) {
+            return;
+        }
+
+        MixPanelController.track(MixPanelController.BUBBLE_OVERLAY_PERM, null);
+        if (android.os.Build.VERSION.SDK_INT >= 23) {
+
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getActivity().getPackageName()));
+            startActivityForResult(intent, PERM_REQUEST_CODE_DRAW_OVERLAYS);
+        } else {
+            startActivity(new Intent(Settings.ACTION_SETTINGS));
+        }
+    }*/
 
     private class ManageCustomerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -365,7 +696,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
             }
         }
 
-        private void dialogThirdPartyMessage(){
+        private void dialogThirdPartyMessage() {
             new MaterialDialog.Builder(getContext())
                     .content(R.string.we_are_currently_reworking_this_feature_to_enhance)
                     .title(R.string.whats_app_bubble)
@@ -461,347 +792,6 @@ public class ManageCustomerFragmentV1 extends Fragment {
 
 
         }
-    }
-
-    private void showOverlay(ManageCustomerAdapter.ManageCustomerHolder manageCustomerHolder) {
-
-        int cx = (manageCustomerHolder.rlRevealLayout.getLeft() + manageCustomerHolder.rlRevealLayout.getRight());
-        int cy = manageCustomerHolder.rlRevealLayout.getTop();
-        int radius = Math.max(manageCustomerHolder.rlRevealLayout.getWidth(), manageCustomerHolder.rlRevealLayout.getHeight());
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            Animator animator =
-                    ViewAnimationUtils.createCircularReveal(manageCustomerHolder.rlRevealLayout, cx, cy, 0, radius);
-            animator.setInterpolator(new AccelerateDecelerateInterpolator());
-            animator.setDuration(700);
-
-            manageCustomerHolder.rlRevealLayout.setVisibility(View.VISIBLE);
-            manageCustomerHolder.rflOverLay.setBackgroundColor(Color.parseColor("#66000000"));
-            animator.start();
-        } else {
-            Animator anim = android.view.ViewAnimationUtils.
-                    createCircularReveal(manageCustomerHolder.rlRevealLayout, cx, cy, 0, radius);
-            manageCustomerHolder.rlRevealLayout.setVisibility(View.VISIBLE);
-            manageCustomerHolder.rflOverLay.setBackgroundColor(Color.parseColor("#66000000"));
-            anim.start();
-        }
-    }
-
-    private void closeOverlay(final ManageCustomerAdapter.ManageCustomerHolder manageCustomerHolder) {
-
-        int cx = (manageCustomerHolder.rlRevealLayout.getLeft() + manageCustomerHolder.rlRevealLayout.getRight());
-        int cy = manageCustomerHolder.rlRevealLayout.getTop();
-        int radius = Math.max(manageCustomerHolder.rlRevealLayout.getWidth(), manageCustomerHolder.rlRevealLayout.getHeight());
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-
-            Animator anim = ViewAnimationUtils.
-                    createCircularReveal(manageCustomerHolder.rlRevealLayout, cx, cy, radius, 0);
-            anim.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    manageCustomerHolder.rlRevealLayout.setVisibility(View.INVISIBLE);
-                    manageCustomerHolder.rflOverLay.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.transparent));
-                }
-            });
-            anim.start();
-
-        } else {
-            Animator anim = android.view.ViewAnimationUtils.
-                    createCircularReveal(manageCustomerHolder.rlRevealLayout, cx, cy, radius, 0);
-            anim.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    manageCustomerHolder.rlRevealLayout.setVisibility(View.INVISIBLE);
-                    manageCustomerHolder.rflOverLay.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.transparent));
-                }
-            });
-            anim.start();
-
-        }
-
-    }
-
-    /*
-     *  Enable Customer Assistant Steps
-     */
-
-   /* private void enableCustomerAssistant() {
-
-        MixPanelController.track(EventKeysWL.SIDE_PANEL_WHATSAPP_BUBBLE, null);
-        MixPanelController.track(EventKeysWL.SIDE_PANEL_CUSTOMER_ASSISTANT, null);
-
-        if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
-            if (!Methods.isMyServiceRunning(activity, CustomerAssistantService.class)) {
-                activity.startService(new Intent(activity, CustomerAssistantService.class));
-            }
-            session.setCustomerAssistantStatus(true);
-        }
-
-        getProducts();
-
-        if ((android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity()))
-                || (!Methods.isAccessibilitySettingsOn(getActivity()))) {
-            session.setBubbleTime(-1);
-
-            if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") *//*&& "1".equals(paymentState)*//*) {
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        checkOverlay(Home_Fragment_Tab.DrawOverLay.FromHome);
-                    }
-                }, 1000);
-
-            }
-
-        } else {
-
-            session.setBubbleStatus(true);
-            if (Methods.hasOverlayPerm(getActivity())) {
-
-                if (!Methods.isMyServiceRunning(getActivity(), CustomerAssistantService.class)) {
-                    Intent bubbleIntent = new Intent(getActivity(), CustomerAssistantService.class);
-                    getActivity().startService(bubbleIntent);
-                }
-            }
-
-            manageCustomerAdapter.notifyDataSetChanged();
-
-            MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
-                    //.title(getString(R.string.book_a_new_domain))
-                    .customView(R.layout.dialog_ca_enable, false)
-//                    .positiveText(getString(R.string.ok))
-                    .positiveColorRes(R.color.primaryColor);
-            if (!activity.isFinishing()) {
-                final MaterialDialog materialDialog = builder.show();
-                materialDialog.setCanceledOnTouchOutside(false);
-
-                View caView = materialDialog.getCustomView();
-                TextView tvCrossPlatform = (TextView) caView.findViewById(R.id.tvCrossPlatform);
-                LinearLayout tvBubble = (LinearLayout) caView.findViewById(R.id.llBubble);
-                LinearLayout tvCustomerAssistant = (LinearLayout) caView.findViewById(R.id.llCustomerAssistant);
-                View vwSeperator = (View) caView.findViewById(R.id.vwSeperator);
-
-                if (!pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
-                    tvCustomerAssistant.setVisibility(View.GONE);
-                    vwSeperator.setVisibility(View.GONE);
-                }
-
-                tvCrossPlatform.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        materialDialog.dismiss();
-                    }
-                });
-                tvBubble.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        materialDialog.dismiss();
-                        if (!pref.getBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, false)) {
-                            startActivity(new Intent(getActivity(), BubbleInAppDialog.class));
-                        } else {
-                            MixPanelController.track(MixPanelController.WHATS_APP_DIALOG_CLICKED, null);
-                            try {
-                                Intent launchIntent = getActivity().getPackageManager().
-                                        getLaunchIntentForPackage(DataAccessibilityServiceV8.PK_NAME_WHATSAPP);
-                                startActivity(launchIntent);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Toast.makeText(getActivity(), "Problem to open whatsApp", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                });
-
-                tvCustomerAssistant.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        materialDialog.dismiss();
-                        Intent intent = new Intent(getActivity(), CustomerAssistantActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        startActivity(intent);
-                    }
-                });
-
-            }
-        }
-
-
-    }
-
-    private void disableCustomerAssistant() {
-        MixPanelController.track(EventKeysWL.SIDE_PANEL_WHATSAPP_BUBBLE_OFF, null);
-        MixPanelController.track(EventKeysWL.SIDE_PANEL_CUSTOMER_ASSISTANT_OFF, null);
-
-        session.setBubbleStatus(false);
-        session.setCustomerAssistantStatus(false);
-        activity.stopService(new Intent(activity, CustomerAssistantService.class));
-    }
-
-    private void getProducts() {
-        HashMap<String, String> values = new HashMap<>();
-        values.put("clientId", Constants.clientId);
-        values.put("skipBy", "0");
-        values.put("fpTag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-        //invoke getProduct api
-        ProductGalleryInterface productInterface = Constants.restAdapter.create(ProductGalleryInterface.class);
-        productInterface.getProducts(values, new Callback<ArrayList<ProductListModel>>() {
-            @Override
-            public void success(ArrayList<ProductListModel> productListModels, Response response) {
-
-
-                if (productListModels == null || productListModels.size() == 0 || response.getStatus() != 200) {
-                    pref.edit().putBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, false).apply();
-
-                    return;
-                }
-                pref.edit().putBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, true).apply();
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
-    }
-
-    public void checkOverlay(Home_Fragment_Tab.DrawOverLay from) {
-        if (!isAdded() || getActivity() == null) {
-            return;
-        }
-
-        boolean checkAccessibility = true;
-
-//        Calendar calendar = Calendar.getInstance();
-//        long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, -1);
-//        long newTime = calendar.getTimeInMillis();
-//        long diff = 3 * 24 * 60 * 60 * 1000;
-//
-//        if (oldTime != -1 && ((newTime - oldTime) < diff)) {
-//            return;
-//        } else {
-        if (!Methods.hasOverlayPerm(getActivity())) {
-            checkAccessibility = false;
-            dialogForOverlayPath(from);
-        }
-//        }
-
-        if (checkAccessibility)
-            checkForAccessibility();
-    }
-
-    private void checkForAccessibility() {
-        if (getActivity() == null) return;
-        if (!Methods.isAccessibilitySettingsOn(getActivity())) {
-            showBubble();
-        }
-    }
-
-    private void showBubble() {
-
-        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
-
-//        if (!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, false)) {
-        addOverlay();
-        pref.edit().putBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, true).apply();
-//        }
-
-        int px = Methods.dpToPx(80, getActivity());
-        Intent intent = new Intent(getActivity(), BubblesService.class);
-        intent.putExtra(Key_Preferences.BUBBLE_POS_Y, px);
-        intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.HOME_ACTIVITY);
-        activity.startService(intent);
-
-    }
-
-    private void addOverlay() {
-        bubbleOverlay.setVisibility(View.VISIBLE);
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.bubble_pointing_sign, bubbleOverlay);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bubbleOverlay.removeAllViews();
-                bubbleOverlay.setVisibility(View.GONE);
-                //layout.setOnClickListener(null);
-            }
-        });
-    }
-
-    private void dialogForOverlayPath(Home_Fragment_Tab.DrawOverLay from) {
-        if (getActivity() == null || !isAdded()) return;
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_bubble_overlay_permission, null);
-        ImageView image = (ImageView) view.findViewById(R.id.gif_image);
-        try {
-            GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(image);
-            Glide.with(getContext()).load(R.drawable.overlay_gif).into(target);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (overLayDialog == null) {
-            overLayDialog = new MaterialDialog.Builder(getContext())
-                    .customView(view, false)
-                    .positiveColorRes(R.color.primary)
-                    .positiveText(getString(R.string.open_setting))
-                    .callback(new MaterialDialog.ButtonCallback() {
-
-                        @Override
-                        public void onPositive(MaterialDialog dialog) {
-                            super.onPositive(dialog);
-                            try {
-                                requestOverlayPermission();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            dialog.dismiss();
-                        }
-                    }).show();
-        } else if (from == Home_Fragment_Tab.DrawOverLay.FromHome) {
-            overLayDialog.show();
-        }
-    }
-
-    private void requestOverlayPermission() {
-
-        if (getActivity() == null) {
-            return;
-        }
-
-        MixPanelController.track(MixPanelController.BUBBLE_OVERLAY_PERM, null);
-        if (android.os.Build.VERSION.SDK_INT >= 23) {
-
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getActivity().getPackageName()));
-            startActivityForResult(intent, PERM_REQUEST_CODE_DRAW_OVERLAYS);
-        } else {
-            startActivity(new Intent(Settings.ACTION_SETTINGS));
-        }
-    }*/
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == PERM_REQUEST_CODE_DRAW_OVERLAYS) {
-//
-//            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    if (android.os.Build.VERSION.SDK_INT >= 23) {
-//
-//                        if (getActivity() != null && Settings.canDrawOverlays(getActivity())) {
-//
-//                            if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
-//                                checkCustomerAssistantService();
-//                            }
-//
-//                            checkForAccessibility();
-//                        }
-//                    }
-//                }
-//            }, 1000);
-//        }
     }
 
     /*private void checkCustomerAssistantService() {

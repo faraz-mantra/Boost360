@@ -68,9 +68,9 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/_18sdp"
-          android:inputType="textCapWords"
           android:drawableStart="@drawable/ic_business_detail_user"
           android:hint="@string/enter_your_name"
+          android:inputType="textCapWords"
           app:layout_constraintTop_toBottomOf="@id/sub_heading_tv" />
 
         <com.framework.views.customViews.CustomEditText
@@ -78,10 +78,9 @@
           style="@style/psn_login_edittext_style"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/_16sdp"
-          android:inputType="textCapWords"
           android:drawableStart="@drawable/ic_business_detail_catelog"
           android:hint="@string/your_business_name_hint"
+          android:inputType="textCapWords"
           app:layout_constraintEnd_toEndOf="@id/endGuide"
           app:layout_constraintTop_toBottomOf="@id/namet_et" />
 
@@ -90,7 +89,6 @@
           style="@style/psn_login_edittext_style"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/_16sdp"
           android:drawableStart="@drawable/ic_business_detail_email"
           android:hint="@string/your_business_email_optional"
           android:inputType="textEmailAddress"
@@ -148,9 +146,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
-            android:textSize="@dimen/body_1"
             android:text="@string/use_this_as_my_whatsapp_contact_number"
             android:textColor="@color/psn_sub_heading_color"
+            android:textSize="@dimen/body_1"
             app:buttonTint="@color/checkbox_background"
             app:layout_constraintTop_toBottomOf="@id/phone_et" />
         </LinearLayout>
@@ -162,8 +160,8 @@
     <com.framework.views.customViews.CustomButton
       android:id="@+id/confirm_button"
       style="@style/psn_button_style"
-      android:enabled="true"
       android:text="@string/choose_website_address"
+      android:drawableEnd="@null"
       android:visibility="visible"
       app:layout_constraintBottom_toTopOf="@id/bottomGuide"
       tools:ignore="MissingConstraints,UnknownId" />

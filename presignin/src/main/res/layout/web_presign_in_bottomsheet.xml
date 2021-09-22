@@ -21,10 +21,10 @@
       <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_gravity="center"
         android:layout_marginHorizontal="@dimen/_12sdp"
         android:layout_marginTop="@dimen/_14sdp"
         android:layout_weight="1"
-        android:layout_gravity="center"
         android:orientation="vertical">
 
         <WebView
@@ -48,8 +48,7 @@
         android:layout_marginHorizontal="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_12sdp"
         android:drawableEnd="@null"
-        android:text="@string/i_agree_n"
-        android:textAllCaps="true" />
+        android:text="@string/i_agree_n" />
 
       <com.framework.views.customViews.CustomButton
         android:id="@+id/go_back_btn"
@@ -59,8 +58,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_14sdp"
         android:drawableEnd="@null"
-        android:text="@string/go_back"
-        android:textAllCaps="true"
+        android:text="@string/back"
         tools:ignore="UnknownId" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </FrameLayout>

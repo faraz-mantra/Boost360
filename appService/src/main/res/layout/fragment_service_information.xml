@@ -254,14 +254,14 @@
               android:layout_gravity="center"
               android:gravity="center"
               android:text="@string/add_secondary_images"
-              android:textColor="@color/yellow_ffb900"
+              android:textColor="@color/colorAccent"
               app:drawableLeftCompat="@drawable/ic_small_add_images"
               app:fontFamily="@font/semi_bold"
               app:layout_constraintBottom_toBottomOf="parent"
               app:layout_constraintLeft_toLeftOf="parent"
               app:layout_constraintRight_toRightOf="parent"
               app:layout_constraintTop_toTopOf="parent"
-              app:textAllCaps="true"
+              app:textAllCaps="false"
               app:textType="BODY_1" />
 
 
@@ -333,7 +333,6 @@
               android:includeFontPadding="false"
               android:text="@string/service_tags"
               android:textColor="@color/black_4a4a4a"
-              app:drawableEndCompat="@drawable/ic_question_circular_blue"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_3" />
 
@@ -377,17 +376,17 @@
               android:id="@+id/btn_add_tag"
               android:layout_width="@dimen/size_80"
               android:layout_height="0dp"
+              android:layout_margin="@dimen/size_4"
               android:background="@drawable/shape_blue_stroke_rect_title_bkg"
               android:clickable="true"
               android:gravity="center"
               android:text="@string/add"
-              android:layout_margin="@dimen/size_4"
-              android:textColor="@color/yellow_ffb900"
+              android:textColor="@color/colorAccent"
               app:fontFamily="@font/semi_bold"
               app:layout_constraintBottom_toBottomOf="@id/edt_service_tag"
               app:layout_constraintRight_toRightOf="parent"
               app:layout_constraintTop_toTopOf="@id/edt_service_tag"
-              app:textAllCaps="true"
+              app:textAllCaps="false"
               app:textType="BODY_1" />
 
           </androidx.constraintlayout.widget.ConstraintLayout>
@@ -401,7 +400,6 @@
             android:includeFontPadding="false"
             android:text="@string/key_specifications"
             android:textColor="@color/black_4a4a4a"
-            app:drawableEndCompat="@drawable/ic_question_circular_blue"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_3" />
 
@@ -468,7 +466,6 @@
             android:includeFontPadding="false"
             android:text="@string/service_specifications"
             android:textColor="@color/black_4a4a4a"
-            app:drawableEndCompat="@drawable/ic_question_circular_blue"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_3" />
 
@@ -496,12 +493,12 @@
             android:minWidth="@dimen/size_100"
             android:padding="@dimen/size_8"
             android:text="@string/add_specification"
-            android:textColor="@color/yellow_ffb900"
+            android:textColor="@color/colorAccent"
             app:fontFamily="@font/semi_bold"
             app:layout_constraintBottom_toBottomOf="@id/edt_service_tag"
             app:layout_constraintRight_toRightOf="@id/edt_service_tag"
             app:layout_constraintTop_toTopOf="@id/edt_service_tag"
-            app:textAllCaps="true"
+            app:textAllCaps="false"
             app:textType="BODY_1" />
 
           <com.framework.views.customViews.CustomTextView
@@ -514,7 +511,6 @@
             android:text="@string/external_url"
             android:textColor="@color/black_4a4a4a"
             android:visibility="visible"
-            app:drawableEndCompat="@drawable/ic_question_circular_blue"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_3" />
 
@@ -776,7 +772,6 @@
               android:text="@string/for_invoice"
               android:textColor="@color/warm_grey"
               android:textSize="12sp"
-              app:drawableEndCompat="@drawable/ic_question_circular_blue"
               app:fontFamily="@font/regular" />
 
           </androidx.appcompat.widget.LinearLayoutCompat>
@@ -867,7 +862,7 @@
               android:padding="@dimen/size_12"
               android:stateListAnimator="@null"
               android:text="@string/confirm"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="@color/white"
               app:textType="HEADING_6" />
           </androidx.appcompat.widget.LinearLayoutCompat>

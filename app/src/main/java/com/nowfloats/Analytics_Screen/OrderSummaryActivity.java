@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -13,6 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -69,6 +71,15 @@ import static com.framework.webengageconstant.EventValueKt.NULL;
 
 public class OrderSummaryActivity extends AppCompatActivity {
 
+    public static final String TODAY = "Today";
+    public static final String YESTERDAY = "Yesterday";
+    public static final String LAST_SEVEN_DAYS = "Last 7 days";
+    public static final String LAST_30_DAYS = "Last 30 days";
+    public static final String THIS_MONTH = "This month";
+    public static final String LAST_MONTH = "Last month";
+    public static final String LAST_SIX_MONTH = "Last 6 month";
+    public static final String LAST_YEAR = "Last year";
+    public static final String CUSTOM_RANGE = "Custom range";
     private ImageView spinner;
     private LinearLayout layout;
     private BarChart mChart;
@@ -78,9 +89,10 @@ public class OrderSummaryActivity extends AppCompatActivity {
     private TextView tvYear;
     private PopupWindow popup;
     private ImageView ivLeftNav, ivRightNav;
-
     private int count = 0;
     private OrderStatusSummary previousOrderSummary, currentOrderSummary;
+    private String startDate = "", endDate = "",
+            previousStartDate = "", previousEndDate = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -127,7 +139,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
             }
         });
 
-        tvYear.setText("Last 30 Days");
+        tvYear.setText("Last 30 days");
 
         ivLeftNav.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,13 +205,13 @@ public class OrderSummaryActivity extends AppCompatActivity {
                 final List<String> yearsList = new ArrayList<>();
                 yearsList.add("Today");
                 yearsList.add("Yesterday");
-                yearsList.add("Last 7 Days");
-                yearsList.add("Last 30 Days");
-                yearsList.add("This Month");
-//                yearsList.add("Last Month");
-//                yearsList.add("Last 6 Months");
-//                yearsList.add("Last Year");
-//                yearsList.add("Custom Range");
+                yearsList.add("Last 7 days");
+                yearsList.add("Last 30 days");
+                yearsList.add("This month");
+//                yearsList.add("Last month");
+//                yearsList.add("Last 6 months");
+//                yearsList.add("Last year");
+//                yearsList.add("Custom range");
 
                 popup = new PopupWindow(this);
                 View layout = LayoutInflater.from(this).inflate(R.layout.layout_drop_down_list, null);
@@ -234,7 +246,6 @@ public class OrderSummaryActivity extends AppCompatActivity {
             popup.showAsDropDown(image, 0, 5);
         }
     }
-
 
     private void initBarChart() {
 
@@ -273,32 +284,6 @@ public class OrderSummaryActivity extends AppCompatActivity {
 
     }
 
-    public class CustomXAxisRenderer extends XAxisRenderer {
-        public CustomXAxisRenderer(ViewPortHandler viewPortHandler, XAxis xAxis, Transformer trans) {
-            super(viewPortHandler, xAxis, trans);
-        }
-
-        @Override
-        protected void drawLabel(Canvas c, String formattedLabel, float x, float y, MPPointF anchor, float angleDegrees) {
-            String line[] = formattedLabel.split("\n");
-            Utils.drawXAxisValue(c, line[0], x, y, mAxisLabelPaint, anchor, angleDegrees);
-            Utils.drawXAxisValue(c, line[1], x + mAxisLabelPaint.getTextSize(), y + mAxisLabelPaint.getTextSize(), mAxisLabelPaint, anchor, angleDegrees);
-        }
-    }
-
-    public class MyYAxisValueFormatter implements IValueFormatter {
-        private DecimalFormat mFormat;
-
-        public MyYAxisValueFormatter() {
-            mFormat = new DecimalFormat("#########");
-        }
-
-        @Override
-        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-            return mFormat.format(value);
-        }
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -312,7 +297,6 @@ public class OrderSummaryActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     private void updatePager() {
 
@@ -416,7 +400,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
         }
 
         //visitsCount.setText(String.valueOf(totalCount));
-        BarDataSet barDataSet = new BarDataSet(valueEntryList, "Total Count");
+        BarDataSet barDataSet = new BarDataSet(valueEntryList, "Total count");
         barDataSet.setColor(Color.GRAY);
         barDataSet.setValueTextSize(14.0f);
         barDataSet.setValueTextColor(getResources().getColor(R.color.black));
@@ -459,39 +443,6 @@ public class OrderSummaryActivity extends AppCompatActivity {
         hideDialog();
     }
 
-    class PagerAdapter extends FragmentStatePagerAdapter {
-
-        private ArrayList<OrderStatusSummary.OrderStatus> currentOrderStatus;
-        private ArrayList<OrderStatusSummary.OrderStatus> previousOrderStatus;
-
-        public PagerAdapter(FragmentManager fm,
-                            ArrayList<OrderStatusSummary.OrderStatus> currentOrderStatus,
-                            ArrayList<OrderStatusSummary.OrderStatus> previousOrderStatus) {
-            super(fm);
-            this.currentOrderStatus = currentOrderStatus;
-            this.previousOrderStatus = previousOrderStatus;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            Bundle bundle = new Bundle();
-            bundle.putInt("pos", position);
-            bundle.putSerializable("curOrderStatus", currentOrderStatus);
-            bundle.putSerializable("prevOrderStatus", previousOrderStatus);
-            return OrderAnalyticsFragment.getInstance(bundle);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return "Page-" + position;
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-    }
-
     private void showDialog() {
         if (materialProgress == null) {
             materialProgress = new MaterialDialog.Builder(this)
@@ -514,20 +465,6 @@ public class OrderSummaryActivity extends AppCompatActivity {
             updatePager();
         }
     }
-
-
-    public static final String TODAY = "Today";
-    public static final String YESTERDAY = "Yesterday";
-    public static final String LAST_SEVEN_DAYS = "Last 7 Days";
-    public static final String LAST_30_DAYS = "Last 30 Days";
-    public static final String THIS_MONTH = "This Month";
-    public static final String LAST_MONTH = "Last Month";
-    public static final String LAST_SIX_MONTH = "Last 6 Month";
-    public static final String LAST_YEAR = "Last Year";
-    public static final String CUSTOM_RANGE = "Custom Range";
-
-    private String startDate = "", endDate = "",
-            previousStartDate = "", previousEndDate = "";
 
     private void getOrderSummary(String choice) {
 
@@ -598,6 +535,65 @@ public class OrderSummaryActivity extends AppCompatActivity {
         }
 
         syncData();
+    }
+
+    public class CustomXAxisRenderer extends XAxisRenderer {
+        public CustomXAxisRenderer(ViewPortHandler viewPortHandler, XAxis xAxis, Transformer trans) {
+            super(viewPortHandler, xAxis, trans);
+        }
+
+        @Override
+        protected void drawLabel(Canvas c, String formattedLabel, float x, float y, MPPointF anchor, float angleDegrees) {
+            String line[] = formattedLabel.split("\n");
+            Utils.drawXAxisValue(c, line[0], x, y, mAxisLabelPaint, anchor, angleDegrees);
+            Utils.drawXAxisValue(c, line[1], x + mAxisLabelPaint.getTextSize(), y + mAxisLabelPaint.getTextSize(), mAxisLabelPaint, anchor, angleDegrees);
+        }
+    }
+
+    public class MyYAxisValueFormatter implements IValueFormatter {
+        private DecimalFormat mFormat;
+
+        public MyYAxisValueFormatter() {
+            mFormat = new DecimalFormat("#########");
+        }
+
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+            return mFormat.format(value);
+        }
+    }
+
+    class PagerAdapter extends FragmentStatePagerAdapter {
+
+        private ArrayList<OrderStatusSummary.OrderStatus> currentOrderStatus;
+        private ArrayList<OrderStatusSummary.OrderStatus> previousOrderStatus;
+
+        public PagerAdapter(FragmentManager fm,
+                            ArrayList<OrderStatusSummary.OrderStatus> currentOrderStatus,
+                            ArrayList<OrderStatusSummary.OrderStatus> previousOrderStatus) {
+            super(fm);
+            this.currentOrderStatus = currentOrderStatus;
+            this.previousOrderStatus = previousOrderStatus;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("pos", position);
+            bundle.putSerializable("curOrderStatus", currentOrderStatus);
+            bundle.putSerializable("prevOrderStatus", previousOrderStatus);
+            return OrderAnalyticsFragment.getInstance(bundle);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "Page-" + position;
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
     }
 
 }

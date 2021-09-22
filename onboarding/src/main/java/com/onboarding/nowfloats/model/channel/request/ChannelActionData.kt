@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class ChannelActionData(
-    var active_whatsapp_number: String? = null
+  var active_whatsapp_number: String? = null
 ) : Parcelable {
 
   fun getNumberWithCode(): String? {

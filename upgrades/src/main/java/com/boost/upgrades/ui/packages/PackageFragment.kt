@@ -1,5 +1,6 @@
 package com.boost.upgrades.ui.packages
 
+import android.animation.Animator
 import android.annotation.SuppressLint
 import android.graphics.Color
 import androidx.lifecycle.ViewModelProviders
@@ -10,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -25,6 +27,7 @@ import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.ui.cart.CartFragment
+import com.boost.upgrades.utils.CircleAnimationUtil
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
@@ -37,7 +40,17 @@ import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.package_fragment.*
+import kotlinx.android.synthetic.main.package_fragment.badge121
+import kotlinx.android.synthetic.main.package_fragment.offer_price
+import kotlinx.android.synthetic.main.package_fragment.package_addons_recycler
+import kotlinx.android.synthetic.main.package_fragment.package_back
+import kotlinx.android.synthetic.main.package_fragment.package_cart_icon
+import kotlinx.android.synthetic.main.package_fragment.package_profile_image
+import kotlinx.android.synthetic.main.package_fragment.package_submit
+import kotlinx.android.synthetic.main.package_fragment.package_title
+import kotlinx.android.synthetic.main.package_fragment_layout.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -88,6 +101,9 @@ class PackageFragment : BaseFragment() {
         initializeRecycler()
 
         package_title.setText(bundleData!!.name)
+        package_desc.setText(bundleData!!.desc)
+
+
 
         if(requireArguments().containsKey("showCartIcon")){
             package_cart_icon.visibility = View.INVISIBLE
@@ -96,6 +112,7 @@ class PackageFragment : BaseFragment() {
 
         if(bundleData!!.primary_image != null && !bundleData!!.primary_image!!.url.isNullOrEmpty()){
             Glide.with(this).load(bundleData!!.primary_image!!.url).into(package_profile_image)
+            Glide.with(this).load(bundleData!!.primary_image!!.url).into(package_profile_image_copy)
         } else {
             package_profile_image.setImageResource(R.drawable.rectangle_copy_18)
         }
@@ -117,6 +134,8 @@ class PackageFragment : BaseFragment() {
 
                     //clear cartOrderInfo from SharedPref to requestAPI again
                     prefs.storeCartOrderInfo(null)
+
+                    makeFlyAnimation(package_profile_image_copy)
 
                     viewModel.addItemToCart(CartModel(
                             bundleData!!._kid,
@@ -149,8 +168,8 @@ class PackageFragment : BaseFragment() {
                     package_submit.setTextColor(Color.parseColor("#bbbbbb"))
                     package_submit.setText(getString(R.string.added_to_cart))
                     badgeNumber = badgeNumber + 1
-                    badge121.setText(badgeNumber.toString())
-                    badge121.visibility = View.VISIBLE
+//                    badge121.setText(badgeNumber.toString())
+//                    badge121.visibility = View.VISIBLE
                     Constants.CART_VALUE = badgeNumber
                 }
             }
@@ -320,6 +339,23 @@ class PackageFragment : BaseFragment() {
             layoutManager = gridLayoutManager
         }
         package_addons_recycler.adapter = packageAdaptor
+    }
+
+    private fun makeFlyAnimation(targetView: ImageView) {
+
+        CircleAnimationUtil().attachActivity(activity).setTargetView(targetView).setMoveDuration(600)
+            .setDestView(package_cart_icon).setAnimationListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator) {}
+                override fun onAnimationEnd(animation: Animator) {
+
+                  viewModel.getCartItems()
+                }
+
+
+                override fun onAnimationCancel(animation: Animator) {}
+                override fun onAnimationRepeat(animation: Animator) {}
+            }).startAnimation()
+
     }
 
 }

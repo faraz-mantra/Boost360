@@ -1,13 +1,10 @@
 package com.framework.views.customViews
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.TypedArray
 import android.os.Build
-import android.text.InputType
 import android.util.AttributeSet
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatEditText
 import com.framework.R
 import com.framework.enums.TextType
@@ -27,12 +24,10 @@ open class CustomEditText : AppCompatEditText {
     setCustomAttrs(context, attrs)
   }
 
-  @SuppressLint("CustomViewStyleable")
   private fun setCustomAttrs(context: Context, attrs: AttributeSet?) {
     if (attrs == null) return
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomTextView)
     setTextStyle(typedArray)
-//    inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO
     this.requestLayout()
     this.invalidate()

@@ -41,6 +41,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
     var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
+    var cartResultInCart: MutableLiveData<List<CartModel>> = MutableLiveData()
     var cartResultBack: MutableLiveData<List<CartModel>> = MutableLiveData()
 
     val compositeDisposable = CompositeDisposable()
@@ -50,6 +51,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var _fpTag: String = "ABC"
 
     var categoryResult: MutableLiveData<String> = MutableLiveData()
+    var bundleExistsBool: MutableLiveData<Boolean> = MutableLiveData()
 
     fun upgradeResult(): LiveData<List<WidgetModel>> {
         return updatesResult
@@ -125,6 +127,10 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         return categoryResult
     }
 
+    fun getBundleExxists(): LiveData<Boolean> {
+        return bundleExistsBool
+    }
+
     fun getCategoriesFromAssetJson(context: Context, expCode: String?) {
         val data: String? = Utils.getAssetJsonData(context)
         try {
@@ -143,7 +149,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    fun loadUpdates(fpid: String, clientId: String, expCode: String?, fpTag: String?) {
+    fun loadUpdates(auth:String,fpid: String, clientId: String, expCode: String?, fpTag: String?) {
         Log.v("loadUpdates ", " " + expCode + " " + fpTag)
         updatesLoader.postValue(true)
 
@@ -222,7 +228,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                                         updatesLoader.postValue(false)
 
                                                                         compositeDisposable.add(
-                                                                                ApiService.GetFloatingPointWebWidgets(fpid, clientId)
+                                                                                ApiService.GetFloatingPointWebWidgets(auth,fpid, clientId)
                                                                                         .subscribeOn(Schedulers.io())
                                                                                         .observeOn(AndroidSchedulers.mainThread())
                                                                                         .subscribe(
@@ -297,7 +303,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                     if (item.primary_image != null) item.primary_image.url else null,
                                                     Gson().toJson(item.included_features),
                                                     item.target_business_usecase,
-                                                    Gson().toJson(item.exclusive_to_categories)
+                                                    Gson().toJson(item.exclusive_to_categories),item.desc
                                             ))
                                         }
                                         Completable.fromAction {
@@ -419,7 +425,93 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                             if (item.cta_offer_identifier != null) item.cta_offer_identifier else null,
                                                     ))
                                                 }
-                                                Completable.fromAction {
+                                                if(marketOfferData.size == 0){
+                                                    Completable.fromAction {
+                                                        AppDatabase.getInstance(getApplication())!!
+                                                            .marketOffersDao()
+                                                            .emptyMarketOffers()
+                                                    }
+                                                        .subscribeOn(Schedulers.io())
+                                                        .observeOn(AndroidSchedulers.mainThread())
+                                                        .doOnComplete {
+                                                            Log.i("deleteMarketOffers", "Successfully")
+
+                                                        }
+                                                        .doOnError {
+
+                                                        }
+                                                        .subscribe()
+                                                }
+
+                                                /*start check*/
+                                                marketOfferData.forEach {
+                                                    val itemFeature = it
+                                                    val marketModel = MarketOfferModel(
+                                                        it.coupon_code,
+                                                        it.extra_information,
+                                                        it.createdon,
+                                                        it.updatedon,
+                                                        it._kid,
+                                                        it.websiteid,
+                                                        it.isarchived,
+                                                        it.expiry_date,
+                                                        it.title,
+                                                        if (it.exclusive_to_categories != null ) Gson().toJson(it.exclusive_to_categories) else null,
+                                                        if (it.image != null) it.image else null,
+                                                        if (it.cta_offer_identifier != null) it.cta_offer_identifier else null,
+                                                    )
+                                                    Log.d("itemFeature"," "+ itemFeature + " "+itemFeature.coupon_code)
+                                                    CompositeDisposable().add(
+                                                        AppDatabase.getInstance(getApplication())!!
+                                                            .marketOffersDao()
+                                                            .checkOffersIDExist(it._kid!!)
+                                                            .subscribeOn(Schedulers.io())
+                                                            .observeOn(AndroidSchedulers.mainThread())
+                                                            .subscribe({
+                                                                if (it == 0) {
+                                                                    Completable.fromAction {
+                                                                        AppDatabase.getInstance(getApplication())!!
+                                                                            .marketOffersDao()
+                                                                            .insertToMarketOffers(itemFeature)
+                                                                    }
+                                                                        .subscribeOn(Schedulers.io())
+                                                                        .observeOn(AndroidSchedulers.mainThread())
+                                                                        .doOnComplete {
+                                                                            Log.d("insertMarketOffers", "Successfully")
+
+                                                                        }
+                                                                        .doOnError {
+                                                                            updatesError.postValue(it.message)
+                                                                            updatesLoader.postValue(false)
+                                                                        }
+                                                                        .subscribe()
+                                                                }else{
+                                                                    Completable.fromAction {
+                                                                        AppDatabase.getInstance(getApplication())!!
+                                                                            .marketOffersDao()
+                                                                            .updateAllMarketOffers(marketModel)
+                                                                    }
+                                                                        .subscribeOn(Schedulers.io())
+                                                                        .observeOn(AndroidSchedulers.mainThread())
+                                                                        .doOnComplete {
+                                                                            Log.d("updateMarketOffers", "Successfully")
+
+                                                                        }
+                                                                        .doOnError {
+                                                                            updatesError.postValue(it.message)
+                                                                            updatesLoader.postValue(false)
+                                                                        }
+                                                                        .subscribe()
+                                                                }
+                                                            }, {
+                                                                it.printStackTrace()
+                                                            })
+                                                    )
+                                                }
+
+                                                /*end check*/
+
+                                                /*Completable.fromAction {
                                                     AppDatabase.getInstance(getApplication())!!
                                                             .marketOffersDao()
                                                             .insertAllMarketOffers(marketOfferData)
@@ -434,7 +526,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                             updatesError.postValue(it.message)
                                                             updatesLoader.postValue(false)
                                                         }
-                                                        .subscribe()
+                                                        .subscribe()*/
 
                                             } else {
                                                 promoBannersList.postValue(promoList)
@@ -526,7 +618,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                     if (item.primary_image != null) item.primary_image.url else null,
                                                     Gson().toJson(item.included_features),
                                                     item.target_business_usecase,
-                                                    Gson().toJson(item.exclusive_to_categories)
+                                                    Gson().toJson(item.exclusive_to_categories),item.desc
                                             ))
                                         }
                                         Completable.fromAction {
@@ -729,7 +821,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun addItemToCartPackage1(cartItem: CartModel) {
-        updatesLoader.postValue(true)
+        updatesLoader.postValue(false)
         Completable.fromAction {
             AppDatabase.getInstance(getApplication())!!.cartDao()
                     .insertToCart(cartItem)
@@ -748,7 +840,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     fun addItemToCartPackage(cartItem: CartModel) {
         Log.v("addItemToCartPackage", " " + cartItem.boost_widget_key + " " + cartItem.boost_widget_key)
-        updatesLoader.postValue(true)
+        updatesLoader.postValue(false)
 
 
         Completable.fromAction {
@@ -777,6 +869,25 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                             .subscribe()
                 }
                 .subscribe()
+    }
+
+    fun checkBundlePackExists(kid: String){
+        CompositeDisposable().add(
+            AppDatabase.getInstance(getApplication())!!
+                .cartDao()
+                .checkCartBundleExist(kid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (it == 0) {
+                        bundleExistsBool.postValue(false)
+                    }else{
+                        bundleExistsBool.postValue(true)
+                    }
+                }, {
+//                            Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
+                })
+        )
     }
 
 

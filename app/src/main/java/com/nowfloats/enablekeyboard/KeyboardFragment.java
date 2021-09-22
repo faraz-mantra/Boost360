@@ -50,9 +50,9 @@ import com.thinksity.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import dev.patrickgold.florisboard.ime.core.FlorisBoard;
 import io.codetail.animation.ViewAnimationUtils;
 import io.codetail.widget.RevealFrameLayout;
-import io.separ.neural.inputmethod.indic.LatinIME;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
@@ -106,8 +106,9 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     mainLayout = view.findViewById(R.id.main_layout);
     secondaryLayout = view.findViewById(R.id.secondary_layout);
     buyItemButton = view.findViewById(R.id.buy_item);
-    if ((Constants.StoreWidgets != null && Constants.StoreWidgets.contains("BOOSTKEYBOARD")) ||
-        (Constants.currentActivePackageId != null && Constants.currentActivePackageId.contains("59ce2ae56431a80b009cb1fa"))) {
+    List<String> storeKeys = session.getStoreWidgets();
+    if ((storeKeys != null && storeKeys.contains("BOOSTKEYBOARD")) || (Constants.currentActivePackageId != null &&
+        Constants.currentActivePackageId.contains("59ce2ae56431a80b009cb1fa"))) {
       mainLayout.setVisibility(View.VISIBLE);
       secondaryLayout.setVisibility(View.GONE);
     } else {
@@ -129,7 +130,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
       if (getContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
         tvBoostThemes.setText("RedTim Keyboard Themes");
       } else {
-        tvBoostThemes.setText("Boost Keyboard Themes");
+        tvBoostThemes.setText(getResources().getString(R.string.boost_keyboard_themes_n));
       }
       rvKeyboardThemes = view.findViewById(R.id.rv_keyboard_themes);
       rvKeyboardThemes.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
@@ -254,7 +255,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
 
   private boolean isInputMethodActivated() {
     List<InputMethodInfo> list = imeManager.getEnabledInputMethodList();
-    ComponentName myInputMethod = new ComponentName(mContext, LatinIME.class);
+    ComponentName myInputMethod = new ComponentName(mContext, FlorisBoard.class);
     for (InputMethodInfo info : list) {
       if (myInputMethod.equals(info.getComponent())) {
         return true;
@@ -268,7 +269,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
 
     ComponentName defaultInputMethod = ComponentName.unflattenFromString(id);
 
-    ComponentName myInputMethod = new ComponentName(mContext, LatinIME.class);
+    ComponentName myInputMethod = new ComponentName(mContext, FlorisBoard.class);
 
     return myInputMethod.equals(defaultInputMethod);
   }
@@ -323,7 +324,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     switch (v.getId()) {
       case R.id.keyboard_info:
         MixPanelController.track(EventKeysWL.MERCHANT_EDUCATION_BOOST_KEYBOARD, null);
-        showOverlay(overLayout1, getString(R.string.boost_keyboard), getString(R.string.keyboard_message));
+        showOverlay(overLayout1, getString(R.string.boost_keyboard_n), getString(R.string.keyboard_message));
         break;
       case R.id.ll_enable_keyboard:
         startActivity(new Intent(getActivity(), BoostKeyboardActivity.class));
@@ -411,13 +412,13 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     intent.putExtra("fpTag", session.getFpTag());
     intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
     intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
-    if (session.getFPEmail() != null) {
-      intent.putExtra("email", session.getFPEmail());
+    if (session.getUserProfileEmail() != null) {
+      intent.putExtra("email", session.getUserProfileEmail());
     } else {
       intent.putExtra("email", "ria@nowfloats.com");
     }
-    if (session.getFPPrimaryContactNumber() != null) {
-      intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+    if (session.getUserPrimaryMobile() != null) {
+      intent.putExtra("mobileNo", session.getUserPrimaryMobile());
     } else {
       intent.putExtra("mobileNo", "9160004303");
     }

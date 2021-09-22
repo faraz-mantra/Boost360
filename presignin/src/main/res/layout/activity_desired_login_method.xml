@@ -67,6 +67,7 @@
       style="@style/psn_subheading_style"
       android:layout_marginBottom="@dimen/_4sdp"
       android:gravity="center"
+      app:fontFamily="@font/bold"
       android:text="@string/something_doesnt_seem_right"
       app:layout_constraintBottom_toTopOf="@id/contact_support_tv"
       tools:ignore="MissingConstraints" />
@@ -75,12 +76,13 @@
       android:id="@+id/contact_support_tv"
       style="@style/psn_subheading_style"
       android:layout_width="wrap_content"
-      android:fontFamily="@font/open_sans_semibold"
+      android:fontFamily="@font/semi_bold"
       android:gravity="center"
       android:text="@string/contact_support"
-      android:textColor="@color/colorAccent"
+      app:fontFamily="@font/bold"
+      android:textColor="@color/colorAccentLight"
       app:layout_constraintBottom_toTopOf="@id/bottomGuide"
-      app:textAllCaps="true"
+      app:textAllCaps="false"
       tools:ignore="MissingConstraints,UnknownId" />
 
 

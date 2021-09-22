@@ -28,6 +28,7 @@
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/sub_heading_tv"
       style="@style/psn_subheading_style"
+      android:layout_marginTop="@dimen/size_4"
       android:text="@string/psn_username_or_email"
       app:layout_constraintTop_toBottomOf="@id/heading_tv"
       tools:ignore="MissingConstraints" />
@@ -58,6 +59,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="@string/forgot"
+      android:textColor="@color/black_4a4a4a"
       app:layout_constraintBottom_toBottomOf="@id/pass_et"
       app:layout_constraintTop_toTopOf="@id/pass_et"
       tools:ignore="MissingConstraints" />
@@ -67,8 +69,8 @@
       style="@style/material_button_style"
       android:layout_marginTop="28dp"
       android:enabled="false"
-      android:textAllCaps="true"
       android:text="@string/psn_login_to_boost_360"
+      android:textAllCaps="false"
       app:layout_constraintTop_toBottomOf="@+id/pass_et"
       tools:ignore="MissingConstraints" />
 
@@ -79,7 +81,6 @@
       android:layout_marginTop="@dimen/_20sdp"
       android:fontFamily="@font/semi_bold"
       android:text="@string/login_with_mobile_number"
-      android:textAllCaps="true"
       android:textColor="@color/colorPrimary"
       app:layout_constraintTop_toBottomOf="@id/login_bt"
       app:textType="BODY_1"
@@ -91,7 +92,9 @@
       android:layout_width="wrap_content"
       android:layout_marginTop="@dimen/_20sdp"
       android:fontFamily="@font/semi_bold"
-      android:text="@string/need_help"
+      android:text="@string/need_help_u"
+      app:fontFamily="@font/bold"
+      android:textColor="@color/primary_4a4a4a_jio"
       app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
       tools:ignore="MissingConstraints,UnknownId" />
   </androidx.constraintlayout.widget.ConstraintLayout>

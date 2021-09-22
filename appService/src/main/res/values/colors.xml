@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="gray_d1d1d1">#d1d1d1</color>
-    <color name="light_green_6dca07">#6dca07</color>
-    <color name="red_fe946f">#FE946F</color>
-    <color name="grey_787878">#787878</color>
-    <color name="gray_979797">#979797</color>
-    <color name="gray_bbb">#BBBBBB</color>
-    <color name="blue_4889f8">#4889F8</color>
-    <color name="gray_66666">#666666</color>
-    <color name="yellow_ffb900">#FFB900</color>
-    <color name="yellow_f5b200">#F5B200</color>
-    <color name="gray_4e4e4e">#4E4E4E</color>
-    <color name="gray_adadad">#ADADAD</color>
-    <color name="gray_828282">#828282</color>
-    <color name="green_6bc95c">#6BC95C</color>
-    <color name="error_red">#E39595</color>
+  <color name="gray_d1d1d1">#d1d1d1</color>
+  <color name="light_green_6dca07">#6dca07</color>
+  <color name="red_fe946f">#FE946F</color>
+  <color name="grey_787878">#787878</color>
+  <color name="gray_979797">#979797</color>
+  <color name="gray_bbb">#BBBBBB</color>
+  <color name="blue_4889f8">#4889F8</color>
+  <color name="gray_66666">#666666</color>
+  <color name="yellow_ffb900">#FFB900</color>
+  <color name="yellow_f5b200">#F5B200</color>
+  <color name="gray_4e4e4e">#4E4E4E</color>
+  <color name="gray_adadad">#ADADAD</color>
+  <color name="gray_828282">#828282</color>
+  <color name="green_6bc95c">#6BC95C</color>
+  <color name="error_red">#E39595</color>
+  <color name="red_dark">#D03F3F</color>
+  <color name="red_FF4200">#FF4200</color>
 </resources>

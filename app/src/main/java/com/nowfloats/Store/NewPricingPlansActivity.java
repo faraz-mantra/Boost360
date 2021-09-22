@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -34,6 +37,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import org.json.JSONException;
@@ -51,15 +55,14 @@ import retrofit.client.Response;
 
 public class NewPricingPlansActivity extends AppCompatActivity {
 
+    public static final int DIRECT_REQUEST_CODE = 2013;
+    private static final int NUM_OF_FEATURES = 5;
     TextView tvCategory, tvToolBarTitle;
     UserSessionManager mSession;
     Toolbar toolbar;
     ImageView ivHistory;
     List<PackageDetails> mBasePackages;
     List<PackageDetails> mTopUps;
-    private static final int NUM_OF_FEATURES = 5;
-    public static final int DIRECT_REQUEST_CODE = 2013;
-
     MaterialDialog materialProgress;
 
 
@@ -284,7 +287,18 @@ public class NewPricingPlansActivity extends AppCompatActivity {
                 materialProgress.dismiss();
                 Methods.showDialog(NewPricingPlansActivity.this, status, msg);
             }
-        });
+
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                // Basic Authentication
+                //String auth = "Basic " + Base64.encodeToString(CONSUMER_KEY_AND_SECRET.getBytes(), Base64.NO_WRAP);
+
+                headers.put("Authorization", Utils.getAuthToken());
+                return headers;
+            }
+        };
         AppController.getInstance().addToRequstQueue(request);
     }
 
@@ -300,7 +314,7 @@ public class NewPricingPlansActivity extends AppCompatActivity {
                             List<String> featuresList = new ArrayList<>();
                             int count = 0;
                             if (topUp.getWidgetPacks() != null
-                                    && topUp.getWidgetPacks().size()>0) {
+                                    && topUp.getWidgetPacks().size() > 0) {
                                 for (WidgetPacks widget : topUp.getWidgetPacks()) {
                                     if (widget.Name != null) {
                                         featuresList.add(widget.Name);

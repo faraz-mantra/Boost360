@@ -59,7 +59,7 @@ public class FacebookLeadsFragment extends Fragment {
         //show or hide if feature is available to user
         secondaryLayout = view.findViewById(R.id.secondary_layout);
         buyItemButton = view.findViewById(R.id.buy_item);
-        if (Constants.StoreWidgets.contains("WILDFIRE_FB_LEAD_ADS")) {
+        if (session.getStoreWidgets().contains("WILDFIRE_FB_LEAD_ADS")) {
             secondaryLayout.setVisibility(View.GONE);
         } else {
             secondaryLayout.setVisibility(View.VISIBLE);
@@ -93,13 +93,13 @@ public class FacebookLeadsFragment extends Fragment {
         intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
-        if (session.getFPEmail() != null) {
-            intent.putExtra("email", session.getFPEmail());
+        if (session.getUserProfileEmail() != null) {
+            intent.putExtra("email", session.getUserProfileEmail());
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }
-        if (session.getFPPrimaryContactNumber() != null) {
-            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+        if (session.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
             intent.putExtra("mobileNo", "9160004303");
         }
@@ -108,6 +108,6 @@ public class FacebookLeadsFragment extends Fragment {
         startActivity(intent);
         new Handler().postDelayed(() -> {
             progressDialog.dismiss();
-        },1000);
+        }, 1000);
     }
 }

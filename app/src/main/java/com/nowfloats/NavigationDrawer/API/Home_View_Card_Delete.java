@@ -16,6 +16,7 @@ import com.nowfloats.NavigationDrawer.Home_Main_Fragment;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 
 import org.apache.http.HttpResponse;
@@ -40,7 +41,7 @@ import static com.framework.webengageconstant.EventNameKt.DELETE_AN_UPDATE;
 /**
  * Created by Kamal on 17-02-2015.
  */
-public class Home_View_Card_Delete  extends AsyncTask<Void,String, String> {
+public class Home_View_Card_Delete extends AsyncTask<Void, String, String> {
     private static String url;
     private static JSONObject values;
     boolean flag = false;
@@ -51,44 +52,43 @@ public class Home_View_Card_Delete  extends AsyncTask<Void,String, String> {
     UserSessionManager session;
     int retryKey = 0;
     boolean isDashboard = false;
+    CardRefresh cardrefresh;
     private boolean dataExists = false;
 
-    public Home_View_Card_Delete(Activity activity,String Url,JSONObject Content,int position,View v,int key){
+    public Home_View_Card_Delete(Activity activity, String Url, JSONObject Content, int position, View v, int key) {
         this.url = Url;
         this.values = Content;
         this.activity = activity;
         this.position = position;
         this.v = v;
         this.retryKey = key;
-        flag =false;
+        flag = false;
         try {
             cardrefresh = (CardRefresh) activity;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        session = new UserSessionManager(activity.getApplicationContext(),activity);
+        session = new UserSessionManager(activity.getApplicationContext(), activity);
     }
 
     public void setDashboard(boolean isDashboard) {
-        this.isDashboard=isDashboard;
+        this.isDashboard = isDashboard;
     }
-    CardRefresh cardrefresh;
 
     @Override
-    protected void onPostExecute(final String result)
-    {
+    protected void onPostExecute(final String result) {
         String temp = null;
-        if(flag) {
-            try{
-                Log.i("IMAGE---","VISIBLE RETRY LayOut");
-                if (/*Home_Main_Fragment.progressBar!=null &&*/ Home_Main_Fragment.retryLayout!=null && retryKey!=0){
+        if (flag) {
+            try {
+                Log.i("IMAGE---", "VISIBLE RETRY LayOut");
+                if (/*Home_Main_Fragment.progressBar!=null &&*/ Home_Main_Fragment.retryLayout != null && retryKey != 0) {
                     //Home_Main_Fragment.progressBar.setVisibility(View.GONE);
                     Home_Main_Fragment.progressCrd.setVisibility(View.VISIBLE);
                     Home_Main_Fragment.retryLayout.setVisibility(View.VISIBLE);
                 }
 
-                if(Home_Main_Fragment.cAdapter != null ){/*&& Home_Main_Fragment.scaleAdapter != null*/
+                if (Home_Main_Fragment.cAdapter != null) {/*&& Home_Main_Fragment.scaleAdapter != null*/
                     Home_Main_Fragment.cAdapter.notifyDataSetChanged();
 //                    Home_Main_Fragment.scaleAdapter.notifyDataSetChanged();
                 }
@@ -102,38 +102,39 @@ public class Home_View_Card_Delete  extends AsyncTask<Void,String, String> {
                 refresh.notifyDataSetChanged();
 
                 getMessages(session.getFPID());
-                Log.i("Delete POST---",""+temp);
-            }catch(Exception e){
+                Log.i("Delete POST---", "" + temp);
+            } catch (Exception e) {
                 e.printStackTrace();
-                if (cardrefresh!=null) cardrefresh.error(true);
-                Log.i("Delete POST---","Exception");
+                if (cardrefresh != null) cardrefresh.error(true);
+                Log.i("Delete POST---", "Exception");
             }
         } else {
-            temp	=	"error";
+            temp = "error";
             Log.i("Delete POST---", "" + temp);
             WebEngageController.trackEvent(DELETE_AN_UPDATE, UNABLE_TO_DELETE_UPDATE, session.getFpTag());
 
             try {
-                Home_View_Card_Delete cardDelete = new Home_View_Card_Delete(activity, url, values, position, v,retryKey);
+                Home_View_Card_Delete cardDelete = new Home_View_Card_Delete(activity, url, values, position, v, retryKey);
                 cardDelete.execute();
-            } catch(Exception e ) {
+            } catch (Exception e) {
                 e.printStackTrace();
-                if (cardrefresh!=null) cardrefresh.error(true);
+                if (cardrefresh != null) cardrefresh.error(true);
             }
 
         }
     }
-    @Override
-    protected void onPreExecute() {}
 
-    public void getMessages(String fpId)
-    {
-        HashMap<String,String> map = new HashMap<>();
-        map.put("clientId",Constants.clientId);
-        map.put("skipBy","0");
-        map.put("fpId",fpId);
+    @Override
+    protected void onPreExecute() {
+    }
+
+    public void getMessages(String fpId) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("clientId", Constants.clientId);
+        map.put("skipBy", "0");
+        map.put("fpId", fpId);
         Login_Interface login_interface = Constants.restAdapter.create(Login_Interface.class);
-        login_interface.getMessages(map,new Callback<MessageModel>() {
+        login_interface.getMessages(map, new Callback<MessageModel>() {
             @Override
             public void success(MessageModel messageModel, retrofit.client.Response response) {
                 parseMessages(messageModel);
@@ -141,7 +142,7 @@ public class Home_View_Card_Delete  extends AsyncTask<Void,String, String> {
 
             @Override
             public void failure(RetrofitError error) {
-                if (cardrefresh!=null) cardrefresh.error(true);
+                if (cardrefresh != null) cardrefresh.error(true);
             }
         });
     }
@@ -152,61 +153,65 @@ public class Home_View_Card_Delete  extends AsyncTask<Void,String, String> {
 
         HttpClient httpclient = new DefaultHttpClient();
         HttpDeleteWithBody del = new HttpDeleteWithBody(url);
+        del.setHeader("Authorization", Utils.getAuthToken());
         StringEntity se;
         try {
             se = new StringEntity(values.toString(), HTTP.UTF_8);
             se.setContentType("application/json");
+
 
             del.setEntity(se);
 
             HttpResponse response = httpclient.execute(del);
 
             StatusLine status = response.getStatusLine();
-            Log.i("Delete POST---","status----"+status);
+            Log.i("Delete POST---", "status----" + status);
 
             if (status.getStatusCode() == 200) {
-                Log.i("Upload Delete msg...","Success");
+                Log.i("Upload Delete msg...", "Success");
                 flag = true;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  null;
+        return null;
     }
 
     public void parseMessages(MessageModel response) {
-        if (response!=null) {
-            ArrayList<FloatsMessageModel> bizData 	= response.floats;
-            Constants.moreStorebizFloatsAvailable 	= response.moreFloatsAvailable;
-            for(int i = 0 ; i < bizData.size() ;i++){
+        if (response != null) {
+            ArrayList<FloatsMessageModel> bizData = response.floats;
+            Constants.moreStorebizFloatsAvailable = response.moreFloatsAvailable;
+            for (int i = 0; i < bizData.size(); i++) {
                 FloatsMessageModel data = bizData.get(i);
-                if (Card_Full_View_MainActivity.getMessageList(isDashboard)!=null) {
+                if (Card_Full_View_MainActivity.getMessageList(isDashboard) != null) {
                     String formatted = Methods.getFormattedDate(data.createdOn);
                     data.createdOn = formatted;
 
                     for (int j = 0; j < Card_Full_View_MainActivity.getMessageList(isDashboard).size(); j++) {
                         if (Card_Full_View_MainActivity.getMessageList(isDashboard).get(j)._id.equals(data._id)) {
-                            dataExists = true; break;
-                        }else{
+                            dataExists = true;
+                            break;
+                        } else {
                             dataExists = false;
                         }
                     }
-                    if(!dataExists) {
+                    if (!dataExists) {
                         Card_Full_View_MainActivity.getMessageList(isDashboard).add(data);
                     }
                 }
             }
-            if(Card_Full_View_MainActivity.getMessageList(isDashboard)!=null && Card_Full_View_MainActivity.getMessageList(isDashboard).size()==0){
-                if (Home_Main_Fragment.emptyMsgLayout!=null && !Constants.isWelcomScreenToBeShown)
+            if (Card_Full_View_MainActivity.getMessageList(isDashboard) != null && Card_Full_View_MainActivity.getMessageList(isDashboard).size() == 0) {
+                if (Home_Main_Fragment.emptyMsgLayout != null && !Constants.isWelcomScreenToBeShown)
                     Home_Main_Fragment.emptyMsgLayout.setVisibility(View.VISIBLE);
             }
-            if (cardrefresh!=null) cardrefresh.cardrefresh(true);
-        }else  if (cardrefresh!=null) cardrefresh.error(true);
+            if (cardrefresh != null) cardrefresh.cardrefresh(true);
+        } else if (cardrefresh != null) cardrefresh.error(true);
     }
 
-    public interface CardRefresh{
+    public interface CardRefresh {
         public void cardrefresh(boolean flag);
-        default void error(boolean flag){
+
+        default void error(boolean flag) {
 
         }
     }

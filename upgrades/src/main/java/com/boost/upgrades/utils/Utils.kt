@@ -9,8 +9,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.boost.upgrades.data.api_model.GetAllWidgets.GetAllWidgets
 import com.boost.upgrades.utils.Constants.Companion.BASE_URL
+import com.framework.rest.ServiceInterceptor
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -19,6 +21,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.lang.Integer.parseInt
 import java.util.*
+import java.util.concurrent.TimeUnit
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
@@ -27,17 +30,26 @@ object Utils {
 
   //getting retrofit instance
   fun getRetrofit(): Retrofit {
-    return Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(ScalarsConverterFactory.create())
-        .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .build()
+    val client = Retrofit.Builder()
+    client.baseUrl(BASE_URL)
+    client.addConverterFactory(ScalarsConverterFactory.create())
+    client.addConverterFactory(GsonConverterFactory.create())
+    client.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+    client.client(httpClient())
+    return client.build()
+  }
+  fun httpClient(): OkHttpClient {
+    val httpClient = OkHttpClient.Builder()
+    httpClient.readTimeout(2, TimeUnit.MINUTES)
+      .connectTimeout(2, TimeUnit.MINUTES)
+      .writeTimeout(2, TimeUnit.MINUTES)
+    return httpClient.build()
   }
 
   fun hideSoftKeyboard(activity: Activity) {
     try {
-      val inputMethodManager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+      val inputMethodManager =
+        activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
       inputMethodManager.hideSoftInputFromWindow(activity.currentFocus?.windowToken, 0)
     } catch (e: Exception) {
       Log.e(Utils::class.java.name, e?.localizedMessage ?: "")
@@ -46,7 +58,8 @@ object Utils {
 
   fun isConnectedToInternet(context: Context): Boolean {
     val connectivity = context.getSystemService(
-        Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+      Context.CONNECTIVITY_SERVICE
+    ) as ConnectivityManager
     val info = connectivity.allNetworkInfo
     for (i in info.indices)
       if (info[i].state == NetworkInfo.State.CONNECTED) return true
@@ -73,7 +86,7 @@ object Utils {
       val listPersonType = object : TypeToken<List<GetAllWidgets>>() {}.type
       data = gson.fromJson(jsonString, listPersonType)
     } catch (ex: Exception) {
-        Log.e(Utils::class.java.name, ex?.localizedMessage ?: "")
+      Log.e(Utils::class.java.name, ex?.localizedMessage ?: "")
       return null
     }
     return data
@@ -112,20 +125,21 @@ object Utils {
 
   fun isValidMail(email: String): Boolean {
     return Pattern.compile(
-        "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
-            "\\@" +
-            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-            "(" +
-            "\\." +
-            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-            ")+"
+      "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+          "\\@" +
+          "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+          "(" +
+          "\\." +
+          "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+          ")+"
     ).matcher(email).matches()
   }
 
   fun isValidMobile(phone: String): Boolean {
     return Pattern.compile(
-        "^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}\$")
-        .matcher(phone).matches()
+      "^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}\$"
+    )
+      .matcher(phone).matches()
   }
 
   fun monthRange(): ArrayList<String> {
@@ -143,8 +157,8 @@ object Utils {
   }
 
   fun yearRange(
-      startYear: Int,
-      endYear: Int
+    startYear: Int,
+    endYear: Int
   ): ArrayList<String> {
     var cur = startYear
     val stop = endYear
@@ -211,13 +225,13 @@ object Utils {
     return json
   }
 
-  fun filterBraces(cartids: String): String{
-    var cartid = cartids.replace("[","").replace("]","")
+  fun filterBraces(cartids: String): String {
+    var cartid = cartids.replace("[", "").replace("]", "")
     return cartid
   }
 
-  fun filterQuotes(coupon: String): String{
-    var couponid = coupon.replace("\"","")
+  fun filterQuotes(coupon: String): String {
+    var couponid = coupon.replace("\"", "")
     return couponid
   }
 }

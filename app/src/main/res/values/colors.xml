@@ -1,130 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="color_trans">#20000000</color>
-    <color name="lt_black">#80000000</color>
-    <color name="black_20">#33000000</color>
+  <color name="color_trans">#20000000</color>
+  <color name="lt_black">#80000000</color>
+  <color name="black_20">#33000000</color>
 
-    <color name="divider">#D6D6D6</color>
+  <color name="divider">#D6D6D6</color>
 
-    <color name="colorAccent">#ffb900</color>
-    <color name="primaryColor">#ffb900</color>
-    <color name="primaryColorDark">#F9A825</color>
-    <color name="tabOnclickColor">#FFE5A0</color>
+  <color name="colorAccent">#ffb900</color>
+  <color name="primaryColor">#ffb900</color>
+  <color name="primaryColorDark">#F9A825</color>
+  <color name="tabOnclickColor">#FFE5A0</color>
 
-    <color name="screen_bg">#f6f6f6</color>
-    <color name="card_gray">#808080</color>
-    <color name="greenDark">#458b00</color>
-    <color name="product_delete_btn">#ff3f3f</color>
-    <color name="e0e0e0">#e0e0e0</color>
-    <color name="accentColor">#615b5b</color>
-    <color name="alert_count_color">@color/white</color>
-    <color name="alert_count_circle_color">@color/red</color>
-    <color name="snackbar_negative_color">#E02200</color>
-    <color name="snackbar_positive_color">#5DAC01</color>
-    <color name="percentage_text_color">#c5c5c5</color>
-    <color name="side_panel_progress_bar_blue">#289dd9</color>
-    <color name="side_panel_progress_bar_percentage">#616161</color>
-    <color name="side_panel_progress_bar_text">#8c8c8c</color>
+  <color name="screen_bg">#f6f6f6</color>
+  <color name="card_gray">#808080</color>
+  <color name="greenDark">#458b00</color>
+  <color name="product_delete_btn">#ff3f3f</color>
+  <color name="e0e0e0">#e0e0e0</color>
+  <color name="accentColor">#615b5b</color>
+  <color name="alert_count_color">@color/white</color>
+  <color name="alert_count_circle_color">@color/red</color>
+  <color name="snackbar_negative_color">#E02200</color>
+  <color name="snackbar_positive_color">#5DAC01</color>
+  <color name="percentage_text_color">#c5c5c5</color>
+  <color name="side_panel_progress_bar_blue">#289dd9</color>
+  <color name="side_panel_progress_bar_percentage">#616161</color>
+  <color name="side_panel_progress_bar_text">#8c8c8c</color>
 
-    <color name="dark_black_color">#6e6e6e</color>
-    <color name="business_button_black">#8c8c8c</color>
-    <color name="business_button_gray">#CACACA</color>
-    <color name="light_black_color">#a4a4a4</color>
-    <color name="search_date_color">#8c8c8c</color>
-    <color name="title_popup">#212121</color>
-    <color name="gray">#565656</color>
-    <color name="gray_transparent">#78636466</color>
-    <color name="light_gray">#a1a1a1</color>
-    <color name="ca_gray">#e6e7e8</color>
-    <color name="top_bar_color">#ffb900</color>
-    <color name="background_grey">#f0f0f0</color>
-    <color name="background_grey_onclick">#d0d0d0</color>
-    <color name="white">#ffffff</color>
-    <color name="black">#000000</color>
-    <color name="green">#23cf34</color>
-    <color name="blue">#0000FF</color>
-    <color name="grey">#a4a4a4</color>
-    <color name="zeroth_grey">#828282</color>
-    <color name="zeroth_grey_title">#828282</color>
-    <color name="zeroth_grey_icon">#828282</color>
-    <color name="transparent">#00ffffff</color>
-    <color name="light_black">#505050</color>
-    <color name="home_yellow">#FFB900</color>
+  <color name="dark_black_color">#6e6e6e</color>
+  <color name="business_button_black">#8c8c8c</color>
+  <color name="business_button_gray">#CACACA</color>
+  <color name="light_black_color">#a4a4a4</color>
+  <color name="search_date_color">#8c8c8c</color>
+  <color name="title_popup">#212121</color>
+  <color name="gray">#565656</color>
+  <color name="gray_transparent">#78636466</color>
+  <color name="light_gray">#a1a1a1</color>
+  <color name="ca_gray">#e6e7e8</color>
+  <color name="top_bar_color">#ffb900</color>
+  <color name="background_grey">#f0f0f0</color>
+  <color name="background_grey_onclick">#d0d0d0</color>
+  <color name="white">#ffffff</color>
+  <color name="black">#000000</color>
+  <color name="green">#23cf34</color>
+  <color name="blue">#0000FF</color>
+  <color name="grey">#a4a4a4</color>
+  <color name="zeroth_grey">#828282</color>
+  <color name="zeroth_grey_title">#828282</color>
+  <color name="zeroth_grey_icon">#828282</color>
+  <color name="transparent">#00ffffff</color>
+  <color name="light_black">#505050</color>
+  <color name="home_yellow">#FFB900</color>
 
-    <color name="pencil_shade">#aaaaaa</color>
-    <color name="biz_msg_txt_color">#3c3c3c</color>
-    <color name="text_color_brown">#5b5b5b</color>
-    <color name="title_grey">#464646</color>
-    <color name="text_color_roboto_lt_30_edittext">#383838</color>
-    <color name="hint_color_roboto_lt_30_edittext">#b6b6b6</color>
+  <color name="pencil_shade">#aaaaaa</color>
+  <color name="biz_msg_txt_color">#3c3c3c</color>
+  <color name="text_color_brown">#5b5b5b</color>
+  <color name="title_grey">#464646</color>
+  <color name="text_color_roboto_lt_30_edittext">#383838</color>
+  <color name="hint_color_roboto_lt_30_edittext">#b6b6b6</color>
 
-    <color name="main_text_color">#606060</color>
+  <color name="main_text_color">#606060</color>
 
-    <color name="dark_grey">#4d4d4d</color>
-    <color name="login_bkg">#787878</color>
-    <color name="retry_txt">#757575</color>
-    <color name="inactive_text">#adadad</color>
-    <color name="d9d9d9">#d9d9d9</color>
-    <color name="c_a3a3a3">#a3a3a3</color>
-    <color name="fafafa">#FAFAFA</color>
-
-
-    <color name="home_view_card_main_text_color">#606060</color>
-    <color name="home_view_card_date_text_color">#969696</color>
-
-    <color name="cell_background_color">#FAFAFA</color>
-    <color name="cell_text_color">#737373</color>
-    <color name="cell_onclick_text_color">#FFEB3B</color>
-
-    <color name="product_price">#6A6A6A</color>
-    <color name="very_light_gray">#ededed</color>
-
-    <!--  <color name="first_circle">#A25484</color>
-      <color name="second_circle">#24DFE8</color>
-      <color name="third_circle">#9DA0FF</color>
-      <color name="fourth_circle">#01C6B5</color>
-      <color name="first_background">#cc3399</color>
-      <color name="second_background">#18FFFF</color>
-      <color name="third_background">#9966ff</color>
-      <color name="fourth_background">#009999</color>-->
+  <color name="dark_grey">#4d4d4d</color>
+  <color name="login_bkg">#787878</color>
+  <color name="retry_txt">#757575</color>
+  <color name="inactive_text">#adadad</color>
+  <color name="d9d9d9">#d9d9d9</color>
+  <color name="c_a3a3a3">#a3a3a3</color>
+  <color name="fafafa">#FAFAFA</color>
 
 
-    <!--   <integer-array name="business_circle_colors">
-           <item>@color/first_circle</item>
-           <item>@color/second_circle</item>
-           <item>@color/third_circle</item>
-           <item>@color/fourth_circle</item>
-       </integer-array>-->
+  <color name="home_view_card_main_text_color">#606060</color>
+  <color name="home_view_card_date_text_color">#969696</color>
+
+  <color name="cell_background_color">#FAFAFA</color>
+  <color name="cell_text_color">#737373</color>
+  <color name="cell_onclick_text_color">#FFEB3B</color>
+
+  <color name="product_price">#6A6A6A</color>
+  <color name="very_light_gray">#ededed</color>
+
+  <!--  <color name="first_circle">#A25484</color>
+    <color name="second_circle">#24DFE8</color>
+    <color name="third_circle">#9DA0FF</color>
+    <color name="fourth_circle">#01C6B5</color>
+    <color name="first_background">#cc3399</color>
+    <color name="second_background">#18FFFF</color>
+    <color name="third_background">#9966ff</color>
+    <color name="fourth_background">#009999</color>-->
 
 
-    <!--  <integer-array name="business_colors">
-          <item>@color/first_background</item>
-          <item>@color/second_background</item>
-          <item>@color/third_background</item>
-          <item>@color/fourth_background</item>
-      </integer-array>-->
-    <color name="red">#F20A0A</color>
-    <color name="primary">@color/primaryColor</color>
+  <!--   <integer-array name="business_circle_colors">
+         <item>@color/first_circle</item>
+         <item>@color/second_circle</item>
+         <item>@color/third_circle</item>
+         <item>@color/fourth_circle</item>
+     </integer-array>-->
 
-    <color name="transluscent_background">#BF000000</color>
-    <color name="transparent_th">#80000000</color>
 
-    <color name="f3f3f3">#F3F3F3</color>
-    <color name="spinner_grey_background">#e9e9e9</color>
-    <color name="edittext_grey_background">#e9e9e9</color>
-    <color name="primaryTextColor">#4a4a4a</color>
-    <color name="secondaryTextColor">#7f7f7f</color>
-    <color name="secondaryLightTextColor">#bbbbbb</color>
-    <color name="hintTextColor">#c8c8c8</color>
+  <!--  <integer-array name="business_colors">
+        <item>@color/first_background</item>
+        <item>@color/second_background</item>
+        <item>@color/third_background</item>
+        <item>@color/fourth_background</item>
+    </integer-array>-->
+  <color name="red">#F20A0A</color>
+  <color name="primary">@color/primaryColor</color>
 
-    <color name="disableButtonColor">#ffd566</color>
+  <color name="transluscent_background">#BF000000</color>
+  <color name="transparent_th">#80000000</color>
 
-    <color name="customeNavyBlue">#9ABFFF</color>
-    <color name="grey_e4e4e4">#e4e4e4</color>
-    <color name="gray_80000000">#80000000</color>
-    <color name="gray_9e9e9e">#9E9E9E</color>
+  <color name="f3f3f3">#F3F3F3</color>
+  <color name="spinner_grey_background">#e9e9e9</color>
+  <color name="edittext_grey_background">#e9e9e9</color>
+  <color name="primaryTextColor">#4a4a4a</color>
+  <color name="secondaryTextColor">#7f7f7f</color>
+  <color name="secondaryLightTextColor">#bbbbbb</color>
+  <color name="hintTextColor">#c8c8c8</color>
 
-    <color name="ir_statusBarColor">@color/primaryColorDark</color>
-    <color name="ir_actionbarBackground">@color/primaryColor</color>
+  <color name="disableButtonColor">#ffd566</color>
+
+  <color name="customeNavyBlue">#9ABFFF</color>
+  <color name="grey_e4e4e4">#e4e4e4</color>
+  <color name="gray_80000000">#80000000</color>
+  <color name="gray_9e9e9e">#9E9E9E</color>
+
+  <color name="ir_statusBarColor">@color/primaryColorDark</color>
+  <color name="ir_actionbarBackground">@color/primaryColor</color>
+  <color name="gray_40">#66212121</color>
 </resources>

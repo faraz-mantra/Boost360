@@ -39,6 +39,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.manufacturing.API.ManufacturingAPIInterfaces;
 import com.nowfloats.manufacturing.API.UploadProjectImage;
 import com.nowfloats.manufacturing.API.UploadTeamsImage;
@@ -83,6 +84,11 @@ import retrofit.converter.GsonConverter;
 
 public class ProjectDetailsActivity extends AppCompatActivity implements ProjectDetailsListener {
 
+    private static final int GALLERY_PHOTO = 2;
+    private static final int CAMERA_PHOTO = 1;
+    final Calendar myCalendar = Calendar.getInstance();
+    private final int gallery_req_id = 0;
+    private final int media_req_id = 1;
     RecyclerView recyclerView;
     String ScreenType = "", itemId = "";
     ProjectDetailsImageAdapter adapter;
@@ -93,18 +99,11 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
     TextView saveButton, inProgressText, completedText, withdrawText;
     RelativeLayout addImageButton;
     View dummyView1, dummyView2, dummyView3;
-
-    private final int gallery_req_id = 0;
-    private final int media_req_id = 1;
-    private static final int GALLERY_PHOTO = 2;
-    private static final int CAMERA_PHOTO = 1;
     Uri imageUri;
     List<String> path = new ArrayList();
-    private ProgressDialog progressDialog;
-
     String projectResultStatus = "IN PROGRESS";
     LinearLayout inProgressButton, completedButton, withdrawButton;
-    final Calendar myCalendar = Calendar.getInstance();
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -153,21 +152,18 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        addImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (imageURLs.size() < 3) {
-                    showDialogToGetImage();
-                } else {
-                    Toast.makeText(ProjectDetailsActivity.this, getString(R.string.max_image_upload_is_three), Toast.LENGTH_LONG).show();
-                }
+        addImageButton.setOnClickListener(v -> {
+            if (imageURLs.size() < 3) {
+                showDialogToGetImage();
+            } else {
+                Toast.makeText(ProjectDetailsActivity.this, getString(R.string.max_image_upload_is_three), Toast.LENGTH_LONG).show();
             }
         });
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (path.size()>0) {
+                if (path.size() > 0) {
                     showLoader(getString(R.string.uploading_image_please_wait));
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -571,7 +567,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                     hideLoader();
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deleteTeams ->", response.getBody().toString());
-                        Methods.showSnackBarPositive(ProjectDetailsActivity.this,  getString(R.string.successfully_deleted_));
+                        Methods.showSnackBarPositive(ProjectDetailsActivity.this, getString(R.string.successfully_deleted_));
                         finish();
                     } else {
                         Methods.showSnackBarNegative(ProjectDetailsActivity.this, getString(R.string.something_went_wrong));
@@ -582,7 +578,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                 public void failure(RetrofitError error) {
                     hideLoader();
                     if (error.getResponse().getStatus() == 200) {
-                        Methods.showSnackBarPositive(ProjectDetailsActivity.this,  getString(R.string.successfully_deleted_));
+                        Methods.showSnackBarPositive(ProjectDetailsActivity.this, getString(R.string.successfully_deleted_));
                         finish();
                     } else {
                         Methods.showSnackBarNegative(ProjectDetailsActivity.this, getString(R.string.something_went_wrong));
@@ -635,38 +631,51 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
     }
 
     public void showDialogToGetImage() {
-        final MaterialDialog dialog = new MaterialDialog.Builder(ProjectDetailsActivity.this)
-                .customView(R.layout.featuredimage_popup, true)
-                .show();
-
-        PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY);
-        View view = dialog.getCustomView();
-        TextView title = (TextView) view.findViewById(R.id.textview_heading);
-        title.setText("Upload Image");
-        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
-        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
-        ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
-        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
-        cameraImg.setColorFilter(whiteLabelFilter);
-        galleryImg.setColorFilter(whiteLabelFilter);
-
-        takeCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cameraIntent();
-                dialog.dismiss();
-            }
-        });
-
-        takeGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                galleryIntent();
-                dialog.dismiss();
-
-            }
-        });
+        final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
+        imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
     }
+
+    private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
+        if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
+            cameraIntent();
+        } else if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())) {
+            galleryIntent();
+        }
+    }
+
+//    public void showDialogToGetImage() {
+//        final MaterialDialog dialog = new MaterialDialog.Builder(ProjectDetailsActivity.this)
+//                .customView(R.layout.featuredimage_popup, true)
+//                .show();
+//
+//        PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY);
+//        View view = dialog.getCustomView();
+//        TextView title = (TextView) view.findViewById(R.id.textview_heading);
+//        title.setText("Upload Image");
+//        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
+//        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
+//        ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+//        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+//        cameraImg.setColorFilter(whiteLabelFilter);
+//        galleryImg.setColorFilter(whiteLabelFilter);
+//
+//        takeCamera.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                cameraIntent();
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        takeGallery.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                galleryIntent();
+//                dialog.dismiss();
+//
+//            }
+//        });
+//    }
 
     public void cameraIntent() {
         try {
@@ -767,9 +776,9 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
     @Override
     public void uploadImageURL(String url) {
         imageURLs.add(url);
-        if(path.size() != imageURLs.size()){
+        if (path.size() != imageURLs.size()) {
             uploadImageToServer();
-        }else{
+        } else {
             uploadDataToServer();
         }
     }
@@ -779,14 +788,14 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
             if (validateInput()) {
                 String fname = "Project" + System.currentTimeMillis();
                 if (path.size() > 0) {
-                    if(path.get(imageURLs.size()).startsWith("https")){
+                    if (path.get(imageURLs.size()).startsWith("https")) {
                         imageURLs.add(path.get(imageURLs.size()));
-                        if(path.size() != imageURLs.size()){
+                        if (path.size() != imageURLs.size()) {
                             uploadImageToServer();
-                        }else{
+                        } else {
                             uploadDataToServer();
                         }
-                    }else {
+                    } else {
                         new UploadProjectImage(ProjectDetailsActivity.this, this, path.get(imageURLs.size()), fname).execute().get();
                     }
                 } else {

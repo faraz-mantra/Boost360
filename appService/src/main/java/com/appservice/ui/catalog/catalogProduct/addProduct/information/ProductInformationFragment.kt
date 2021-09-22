@@ -38,14 +38,15 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBinding, ServiceViewModel>(), RecyclerItemClickListener {
 
   private var product: CatalogProduct? = null
-  private var isEdit: Boolean? = null
+  private var isEdit: Boolean =false
   private var tagList = ArrayList<String>()
   private var specList: ArrayList<KeySpecification> = arrayListOf(KeySpecification())
   private var secondaryImage: ArrayList<FileModel> = ArrayList()
   private var adapterSpec: AppBaseRecyclerViewAdapter<KeySpecification>? = null
   private var adapterImage: AppBaseRecyclerViewAdapter<FileModel>? = null
   private var availableStock = 0;
-//  private var maxOrder = 0;
+  private var availableCODStock = 0
+  private var availableOnlineStock = 0
 
   private var secondaryDataImage: ArrayList<DataImage>? = null
   private var gstProductData: GstData? = null
@@ -67,37 +68,36 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(PRODUCT_INFORMATION_CATALOGUE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-
-    setOnClickListener(binding?.btnAddTag, binding?.btnAddSpecification, binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst, binding?.civDecreseStock, binding?.civIncreaseStock)
+    setOnClickListener(
+      binding?.btnAddTag, binding?.btnAddSpecification, binding?.btnConfirm, binding?.btnClickPhoto,
+      binding?.edtGst, binding?.civDecreseStock, binding?.civIncreaseStock, binding?.civDecreaseCodQty,
+      binding?.civIncreaseCodQty, binding?.civDecreaseOnlineQty, binding?.civIncreaseOnlineQty
+    )
     product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
     gstProductData = arguments?.getSerializable(IntentConstant.PRODUCT_GST_DETAIL.name) as? GstData
-    secondaryImage = (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>)
-        ?: ArrayList()
+    secondaryImage = (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>) ?: ArrayList()
     tagList = product?.tags ?: ArrayList()
     specList = if (product?.otherSpecification.isNullOrEmpty()) arrayListOf(KeySpecification()) else product?.otherSpecification!!
     if (isEdit == true) {
       secondaryDataImage = arguments?.getSerializable(IntentConstant.PRODUCT_IMAGE.name) as? ArrayList<DataImage>
-      if (secondaryImage.isNullOrEmpty()) secondaryDataImage?.forEach { secondaryImage.add(FileModel(pathUrl = it.image?.url)) }
+      if (secondaryImage.isNullOrEmpty()) secondaryDataImage?.forEach {
+        secondaryImage.add(FileModel(pathUrl = it.image?.url))
+      }
     }
     setUiText()
     serviceTagsSet()
     specificationAdapter()
-//    val rangeFilter = InputFilterIntRange(0, 100)
-//    binding?.edtGst?.filters = arrayOf<InputFilter>(rangeFilter)
-//    binding?.edtGst?.onFocusChangeListener = rangeFilter
   }
 
   private fun setUiText() {
-
-//    binding?.edtProductCategory?.setText(product?.category ?: "")
-//    maxOrder = product?.maxCodOrders!!
     binding?.specKey?.setText(product?.keySpecification?.key)
     binding?.specValue?.setText(product?.keySpecification?.value)
     availableStock = product?.availableUnits ?: 0
+    availableCODStock = product?.maxCodOrders ?: 0
+    availableOnlineStock = product?.maxPrepaidOnlineAvailable ?: 0
     binding?.edtBrand?.setText(product?.brandName ?: "")
     binding?.ctvCurrentStock?.text = product?.availableUnits.toString()
-//    binding?.ctvQuantityOrderStatus?.text = product?.maxCodOrders.toString()
     if (gstProductData != null) {
       binding?.edtGst?.setText("${(gstProductData?.gstSlab ?: 0.0).toInt()} %")
       binding?.cetLength?.setText("${gstProductData?.length ?: 0.0}")
@@ -106,37 +106,102 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
       binding?.cetWeight?.setText("${gstProductData?.weight ?: 0.0}")
     }
     setAdapter()
-    val stockAdapter = mutableListOf(SpinnerImageModel("Limited Stock" to true, R.drawable.ic_dot_green), SpinnerImageModel("Unlimited Stock" to false, R.drawable.ic_infinite))
+    stockAdapter()
+    stockCODAdapter()
+    stockOnlineAdapter()
+    binding?.specKey?.setText(product?.keySpecification?.key)
+    binding?.specValue?.setText(product?.keySpecification?.value)
+  }
+
+
+  private fun stockAdapter() {
+    val stockAdapter = mutableListOf(
+      SpinnerImageModel("Limited stock" to false, R.drawable.ic_dot_green),
+      SpinnerImageModel("Unlimited stock" to false, R.drawable.ic_infinite),
+      SpinnerImageModel("Out of stock" to false, R.drawable.ic_dot_red)
+    )
     binding?.spinnerStock?.adapter = CustomDropDownAdapter(baseActivity, stockAdapter)
-    when {
-      availableStock < 0 -> binding?.spinnerStock?.setSelection(1)
+    when (availableStock) {
+      -1 -> binding?.spinnerStock?.setSelection(1)
+      0 -> binding?.spinnerStock?.setSelection(2)
       else -> binding?.spinnerStock?.setSelection(0)
     }
     binding?.spinnerStock?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-      override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        return when (stockAdapter[p2] == stockAdapter[1]) {
-          true -> {
-            binding?.llStockChange?.visibility = View.INVISIBLE
-            availableStock = -1
-          }
-          else -> {
+      override fun onItemSelected(p0: AdapterView<*>?, p1: View?, pos: Int, p3: Long) {
+        when (pos) {
+          0 -> {
             binding?.llStockChange?.visibility = View.VISIBLE
             availableStock = product?.availableUnits ?: 0
             if (availableStock < 0) availableStock++
             binding?.ctvCurrentStock?.text = availableStock.toString()
-
-
+          }
+          1 -> {
+            binding?.llStockChange?.visibility = View.INVISIBLE
+            availableStock = -1
+          }
+          2 -> {
+            binding?.llStockChange?.visibility = View.INVISIBLE
+            availableStock = 0
+            binding?.spinnerCod?.setSelection(1)
+            binding?.spinnerOnline?.setSelection(1)
           }
         }
       }
 
       override fun onNothingSelected(p0: AdapterView<*>?) {
-        //implementation not required
       }
 
     }
-    binding?.specKey?.setText(product?.keySpecification?.key)
-    binding?.specValue?.setText(product?.keySpecification?.value)
+  }
+
+  private fun stockCODAdapter() {
+    val list = mutableListOf(
+      SpinnerImageModel("Yes" to true, R.drawable.ic_dot_green),
+      SpinnerImageModel("No" to false, R.drawable.ic_dot_red)
+    )
+    binding?.spinnerCod?.adapter = CustomDropDownAdapter(baseActivity, list)
+    if (product?.codAvailable == true) binding?.spinnerCod?.setSelection(0) else binding?.spinnerCod?.setSelection(1)
+    binding?.spinnerCod?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+      override fun onItemSelected(p0: AdapterView<*>?, p1: View?, pos: Int, p3: Long) {
+        if (pos == 0) {
+          binding?.llCodChange?.visibility = View.VISIBLE
+          product?.codAvailable = true
+          binding?.ctvCurrentCodQty?.text = availableCODStock.toString()
+        } else {
+          binding?.llCodChange?.visibility = View.INVISIBLE
+          product?.codAvailable = false
+        }
+      }
+
+      override fun onNothingSelected(p0: AdapterView<*>?) {
+      }
+
+    }
+  }
+
+  private fun stockOnlineAdapter() {
+    val list = mutableListOf(
+      SpinnerImageModel("Yes" to true, R.drawable.ic_dot_green),
+      SpinnerImageModel("No" to false, R.drawable.ic_dot_red)
+    )
+    binding?.spinnerOnline?.adapter = CustomDropDownAdapter(baseActivity, list)
+    if (product?.prepaidOnlineAvailable == true) binding?.spinnerOnline?.setSelection(0) else binding?.spinnerOnline?.setSelection(1)
+    binding?.spinnerOnline?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+      override fun onItemSelected(p0: AdapterView<*>?, p1: View?, pos: Int, p3: Long) {
+        if (pos == 0) {
+          binding?.llOnlineChange?.visibility = View.VISIBLE
+          product?.prepaidOnlineAvailable = true
+          binding?.ctvCurrentOnlineQty?.text = availableOnlineStock.toString()
+        } else {
+          binding?.llOnlineChange?.visibility = View.INVISIBLE
+          product?.prepaidOnlineAvailable = false
+        }
+      }
+
+      override fun onNothingSelected(p0: AdapterView<*>?) {
+      }
+
+    }
   }
 
 //  private fun setSpinners() {
@@ -231,7 +296,8 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 
   private fun specificationAdapter() {
     binding?.rvSpecification?.apply {
-      adapterSpec = AppBaseRecyclerViewAdapter(baseActivity, specList, this@ProductInformationFragment)
+      adapterSpec =
+        AppBaseRecyclerViewAdapter(baseActivity, specList, this@ProductInformationFragment)
       adapter = adapterSpec
     }
   }
@@ -256,17 +322,35 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
       }
       binding?.btnConfirm -> validateAnnGoBack()
       binding?.btnClickPhoto -> openImagePicker()
-      binding?.civDecreseStock -> when {
-        availableStock > 0 -> {
+      binding?.civDecreseStock -> {
+        if (availableStock > 0) {
           availableStock--
           binding?.ctvCurrentStock?.text = availableStock.toString()
-
         }
       }
       binding?.civIncreaseStock -> {
         availableStock++
         binding?.ctvCurrentStock?.text = availableStock.toString()
-
+      }
+      binding?.civDecreaseCodQty -> {
+        if (availableCODStock > 0) {
+          availableCODStock--
+          binding?.ctvCurrentCodQty?.text = availableCODStock.toString()
+        }
+      }
+      binding?.civIncreaseCodQty -> {
+        availableCODStock++
+        binding?.ctvCurrentCodQty?.text = availableCODStock.toString()
+      }
+      binding?.civDecreaseOnlineQty -> {
+        if (availableOnlineStock > 0) {
+          availableOnlineStock--
+          binding?.ctvCurrentOnlineQty?.text = availableOnlineStock.toString()
+        }
+      }
+      binding?.civIncreaseOnlineQty -> {
+        availableOnlineStock++
+        binding?.ctvCurrentOnlineQty?.text = availableOnlineStock.toString()
       }
     }
   }
@@ -275,17 +359,20 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
     val filterSheet = ImagePickerBottomSheet()
     filterSheet.isHidePdf(true)
     filterSheet.onClicked = { openImagePicker(it) }
-    filterSheet.show(this@ProductInformationFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
+    filterSheet.show(
+      this@ProductInformationFragment.parentFragmentManager,
+      ImagePickerBottomSheet::class.java.name
+    )
   }
 
   private fun openImagePicker(it: ClickType) {
     val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
     ImagePicker.Builder(baseActivity)
-        .mode(type)
-        .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
-        .extension(ImagePicker.Extension.PNG).allowMultipleImages(true)
-        .scale(800, 800)
-        .enableDebuggingMode(true).build()
+      .mode(type)
+      .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
+      .extension(ImagePicker.Extension.PNG).allowMultipleImages(true)
+      .scale(800, 800)
+      .enableDebuggingMode(true).build()
   }
 
   private fun validateAnnGoBack() {
@@ -301,8 +388,9 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
     val valueSpecification = binding?.specValue?.text?.toString() ?: ""
 
     val gst = (binding?.edtGst?.text?.toString() ?: "").replace("%", "").trim()
-    val otherSpec = (specList.filter { it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not() } as? ArrayList<KeySpecification>)
-        ?: ArrayList()
+    val otherSpec = (specList.filter {
+      it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not()
+    } as? ArrayList<KeySpecification>) ?: ArrayList()
     when {
 //      secondaryImage.isNullOrEmpty() -> {
 //        showLongToast("Please select at least one secondary image.")
@@ -328,21 +416,13 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
         WebEngageController.trackEvent(PRODUCT_INFORMATION_CONFIRM, CLICK, NO_EVENT_VALUE)
 //        product?.category = serviceCategory
         product?.brandName = brand
-//        product?.tags = tagList
-//        when (spinnerCod.state.first) {
-//          "YES" -> product?.codAvailable = true
-//          "NO" -> product?.codAvailable = false
-//        }
-//        when (spinnerOnlinePayment.state.first) {
-//          "YES" -> product?.prepaidOnlineAvailable = true
-//          "NO" -> product?.prepaidOnlineAvailable = false
-//        }
         if (product?.keySpecification == null) product?.keySpecification = KeySpecification()
         product?.keySpecification?.key = keySpecification
         product?.keySpecification?.value = valueSpecification
         product?.tags = tagList
-//        product?.maxCodOrders = maxOrder
         product?.availableUnits = availableStock
+        product?.maxCodOrders = if (product?.codAvailable == true) availableCODStock else 0
+        product?.maxPrepaidOnlineAvailable = if (product?.prepaidOnlineAvailable == true) availableOnlineStock else 0
         product?.otherSpecification = otherSpec
         if (gstProductData == null) gstProductData = GstData()
         gstProductData?.gstSlab = gst.toDoubleOrNull() ?: 0.0
@@ -409,13 +489,12 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
       RecyclerViewActionType.IMAGE_CLEAR_CLICK.ordinal -> {
         val data = item as? FileModel
         if (isEdit == true && data?.pathUrl.isNullOrEmpty().not()) {
-          val dataImage = secondaryDataImage?.firstOrNull { it.image?.url == data?.pathUrl }
-              ?: return
+          val dataImage = secondaryDataImage?.firstOrNull { it.image?.url == data?.pathUrl } ?: return
           showProgress(resources.getString(R.string.removing_image))
           val request = ProductImageDeleteRequest()
           request.setQueryData(dataImage.id)
           viewModel?.deleteProductImage(request)?.observeOnce(viewLifecycleOwner, Observer {
-            if (it.status == 200 || it.status == 201 || it.status == 202) {
+            if (it.isSuccess()) {
               secondaryDataImage?.remove(dataImage)
               secondaryImage.remove(data)
               setAdapter()
@@ -455,17 +534,14 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
     dialogLogout()
   }
 
-  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    super.onCreateOptionsMenu(menu, inflater)
-//    inflater.inflate(R.menu.menu_product_info, menu)
-  }
-
   private fun dialogLogout() {
     MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme)
-        .setTitle(resources.getString(R.string.information_not_saved)).setMessage(resources.getString(R.string.you_have_unsaved_info))
-        .setNegativeButton(getString(R.string.no)) { d, _ -> d.dismiss() }.setPositiveButton(getString(R.string.yes)) { d, _ ->
-          baseActivity.finish()
-          d.dismiss()
-        }.show()
+      .setTitle(resources.getString(R.string.information_not_saved))
+      .setMessage(resources.getString(R.string.you_have_unsaved_info))
+      .setNegativeButton(getString(R.string.no)) { d, _ -> d.dismiss() }
+      .setPositiveButton(getString(R.string.yes)) { d, _ ->
+        baseActivity.finish()
+        d.dismiss()
+      }.show()
   }
 }

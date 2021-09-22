@@ -50,7 +50,7 @@
       style="@style/started_button"
       android:layout_marginHorizontal="@dimen/size_20"
       android:layout_marginBottom="@dimen/size_10"
-      android:text="@string/psn_get_started"
+      android:text="@string/get_started"
       app:layout_constraintBottom_toTopOf="@id/btn_login"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />
@@ -60,10 +60,10 @@
       style="@style/started_button"
       android:layout_marginHorizontal="@dimen/size_20"
       android:layout_marginBottom="@dimen/size_10"
-      android:visibility="gone"
       android:background="@drawable/signin_button_bac"
       android:text="@string/login_to_existing_account"
       android:textColor="@color/colorAccent"
+      android:visibility="gone"
       app:layout_constraintBottom_toTopOf="@id/accept_tnc"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />

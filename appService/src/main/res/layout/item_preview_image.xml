@@ -28,9 +28,9 @@
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
-        app:srcCompat="@drawable/placeholder_image_n"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/placeholder_image_n" />
     </com.framework.views.customViews.CustomCardView>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -38,9 +38,9 @@
       android:layout_height="@dimen/size_26"
       android:layout_marginHorizontal="@dimen/size_6"
       android:background="@drawable/rounded_stroke_grey_service_information"
+      android:orientation="horizontal"
       android:paddingVertical="@dimen/size_2"
       android:paddingEnd="@dimen/size_8"
-      android:orientation="horizontal"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toStartOf="@+id/cb_change"
       app:layout_constraintStart_toEndOf="@+id/customCardView2"
@@ -52,13 +52,13 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center|center_vertical"
-        tools:text="Dr. John Doe.jpg (512kb)"
         android:maxLines="1"
+        android:textColor="@color/warm_grey_two"
         app:autoSizeMaxTextSize="14sp"
         app:autoSizeMinTextSize="10sp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
-        android:textColor="@color/warm_grey_two" />
+        tools:text="Dr. John Doe.jpg (512kb)" />
 
       <com.framework.views.customViews.CustomCardView
         android:id="@+id/crossIcon"
@@ -90,6 +90,7 @@
       android:paddingHorizontal="@dimen/size_4"
       android:stateListAnimator="@null"
       android:text="@string/change"
+      android:textAllCaps="false"
       android:textColor="@color/warm_grey_two"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"

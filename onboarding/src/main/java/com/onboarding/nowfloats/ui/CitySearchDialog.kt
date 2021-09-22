@@ -36,11 +36,12 @@ class CitySearchDialog : BaseDialogFragment<DialogCitySearchBinding, CityViewMod
   }
 
   override fun getTheme(): Int {
-    return R.style.MaterialDialogThemeFull
+    return R.style.CityDialogThemeFull
   }
 
   override fun onCreateView() {
-    viewModel?.getCities(baseActivity)?.observeOnce(viewLifecycleOwner, Observer { onGetCities(it) })
+    viewModel?.getCities(baseActivity)
+      ?.observeOnce(viewLifecycleOwner, Observer { onGetCities(it) })
     binding?.edtSearchText?.afterTextChanged { filterCity(it) }
     binding?.ivClearText?.setOnClickListener { binding?.edtSearchText?.setText("") }
     binding?.close?.setOnClickListener { dismiss() }
@@ -56,7 +57,8 @@ class CitySearchDialog : BaseDialogFragment<DialogCitySearchBinding, CityViewMod
       cityListFilter.clear()
       cityListFilter.addAll(cityList)
       val list = cityListFilter.filter {
-        it.getCityName().startsWith(query) || it.getCityName().contains(query) || it.getStateName().startsWith(query) || it.getStateName().contains(query)
+        it.getCityName().startsWith(query) || it.getCityName().contains(query) || it.getStateName()
+          .startsWith(query) || it.getStateName().contains(query)
       } as ArrayList<CityDataModel>
       baseAdapter?.notify(list)
     }

@@ -109,31 +109,29 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         LoadCountryData.LoadCountryData_Interface,
         Valid_Email.Valid_Email_Interface
         , DomainAvailabilityCheck.CallBack {
-    UserSessionManager sessionManager;
     private static final String TAG = "PreSignUp";
+    private static EditText businessNameEditText, emailEditText,
+            phoneEditText, etStreetAddress, etOTP;
+    private static TextView countryPhoneCode;
     public String[] cat = null;
+    //    HashMap<String, String> Country_CodeMap, Code_PhoneMap;
+//    private String Validate_Email_API_KEY = "e5f5fb5a-8e1f-422e-9d25-a67a16018d47";
+    public Activity activity;
+    public ProgressDialog pd;
+    UserSessionManager sessionManager;
     ListView l;
     HeaderText title;
     ImageView ivPhoneStatus;
     Bus bus;
-    private static EditText businessNameEditText, emailEditText,
-            phoneEditText, etStreetAddress, etOTP;
-
-    private static TextView countryPhoneCode;
     String data_businessName, data_businessCategory, data_city, data_country, data_email, data_phone, data_country_code,
             data_lat = "0", data_lng = "0";
-
     EditText otpEditText;
-    private MaterialDialog progressDialog, progressbar;
-    private boolean businessCategory_Selected = false;
-    //SharedPreferences sharedpreferences;
-    private boolean country_Selected = false;
-    //  private String[] businessCategoryList;
-
     boolean allFieldsValid = true;
+    //  private String[] businessCategoryList;
     //    private boolean goToNextScreen = false;
 //    private String tagName;
     String fpTag;
+    ArrayList<String> signUpCountryList = new ArrayList<>();
 //    private double lng, lat;
 //    private LatLng latlong;
 
@@ -152,20 +150,48 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
 //    public static Email_Validation_Model emailModel;
 //    String facebookPageURL;
-
-    //    HashMap<String, String> Country_CodeMap, Code_PhoneMap;
-//    private String Validate_Email_API_KEY = "e5f5fb5a-8e1f-422e-9d25-a67a16018d47";
-    public Activity activity;
-
-    ArrayList<String> signUpCountryList = new ArrayList<>();
+    private MaterialDialog progressDialog, progressbar;
+    private boolean businessCategory_Selected = false;
+    //SharedPreferences sharedpreferences;
+    private boolean country_Selected = false;
     private ArrayList<String> categories;
     private LinearLayout verify_button;
-
     private DataBase dataBase;
-
-    public ProgressDialog pd;
     private PopupWindow popup;
     private String existing_profile_id;
+    private MaterialDialog otpDialog, numberDialog;
+    private String contactName = "";
+    private BroadcastReceiver mSmsReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent == null) {
+                return;
+            }
+            String otp = intent.getStringExtra("OTP_CODE");
+            otp = otp.replaceAll("[^0-9]", "");
+            if (otpEditText != null) {
+                otpEditText.setText(otp);
+            }
+            stopProgressDialog();
+        }
+    };
+
+    public static Rect locateView(View v) {
+        int[] loc_int = new int[2];
+        if (v == null) return null;
+        try {
+            v.getLocationOnScreen(loc_int);
+        } catch (NullPointerException npe) {
+            //Happens when the view doesn't exist on screen anymore.
+            return null;
+        }
+        Rect location = new Rect();
+        location.left = loc_int[0];
+        location.top = loc_int[1];
+        location.right = location.left + v.getWidth();
+        location.bottom = location.top + v.getHeight();
+        return location;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -303,8 +329,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         setDetails();
     }
 
-    private MaterialDialog otpDialog, numberDialog;
-
     protected void makeLinkClickable(SpannableStringBuilder sp, CharSequence charSequence) {
 
         URLSpan[] spans = sp.getSpans(0, charSequence.length(), URLSpan.class);
@@ -363,6 +387,31 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         }
 
     }
+
+//    private void loadCountryCodeandCountryNameMap() {
+//        Country_CodeMap = new HashMap<>();
+//        Code_PhoneMap = new HashMap<>();
+//        String[] locales = Locale.getISOCountries();
+//        for (String countryCode : locales) {
+//            Locale obj = new Locale("", countryCode);
+//            signUpCountryList.add(obj.getDisplayCountry());
+//            Country_CodeMap.put(obj.getDisplayCountry(), obj.getCountry());
+//            //Log.v("ggg",obj.getCountry());
+//        }
+//        Country_CodeMap.put("USA", "US");
+//        Collections.sort(signUpCountryList);
+//        if (isFinishing()) {
+//            return;
+//        }
+//        hideProgressbar();
+//        String[] string_array = getResources().getStringArray(R.array.CountryCodes);
+//        for (int i = 0; i < string_array.length; i++) {
+//            String phoneCode = string_array[i].split(",")[0];
+//            String countryCode = string_array[i].split(",")[1];
+//            Code_PhoneMap.put(countryCode, phoneCode);
+//        }
+//
+//    }
 
     private void setDetails() {
 //        new Thread(new Runnable() {
@@ -489,31 +538,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
-//    private void loadCountryCodeandCountryNameMap() {
-//        Country_CodeMap = new HashMap<>();
-//        Code_PhoneMap = new HashMap<>();
-//        String[] locales = Locale.getISOCountries();
-//        for (String countryCode : locales) {
-//            Locale obj = new Locale("", countryCode);
-//            signUpCountryList.add(obj.getDisplayCountry());
-//            Country_CodeMap.put(obj.getDisplayCountry(), obj.getCountry());
-//            //Log.v("ggg",obj.getCountry());
-//        }
-//        Country_CodeMap.put("USA", "US");
-//        Collections.sort(signUpCountryList);
-//        if (isFinishing()) {
-//            return;
-//        }
-//        hideProgressbar();
-//        String[] string_array = getResources().getStringArray(R.array.CountryCodes);
-//        for (int i = 0; i < string_array.length; i++) {
-//            String phoneCode = string_array[i].split(",")[0];
-//            String countryCode = string_array[i].split(",")[1];
-//            Code_PhoneMap.put(countryCode, phoneCode);
-//        }
-//
-//    }
-
     private void initiatePopupWindow(View image) {
         Rect location = locateView(image);
         if (location == null) return;
@@ -544,23 +568,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         } else {
             popup.showAtLocation(image.getRootView(), Gravity.NO_GRAVITY, position_x, position_y);
         }
-    }
-
-    public static Rect locateView(View v) {
-        int[] loc_int = new int[2];
-        if (v == null) return null;
-        try {
-            v.getLocationOnScreen(loc_int);
-        } catch (NullPointerException npe) {
-            //Happens when the view doesn't exist on screen anymore.
-            return null;
-        }
-        Rect location = new Rect();
-        location.left = loc_int[0];
-        location.top = loc_int[1];
-        location.right = location.left + v.getWidth();
-        location.bottom = location.top + v.getHeight();
-        return location;
     }
 
     @Override
@@ -619,7 +626,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
     }
 
-
     @Override
     public void CheckUniqueNumber_preExecute(String value) {
         showLoader(getString(R.string.checking_contact_number));
@@ -675,8 +681,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 //            goToNextScreen = false;
         }
     }
-
-    private String contactName = "";
 
     private HashMap<String, String> getJSONData() {
         HashMap<String, String> store = new HashMap<String, String>();
@@ -736,7 +740,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     protected void onDestroy() {
         super.onDestroy();
     }
-
 
     @Override
     public void onBackPressed() {
@@ -964,36 +967,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         // sendSms(number);
     }
 
-    private void reSendOTPOverCall(String number) {
-        // showProgressbar();
-        Toast.makeText(PreSignUpActivityRia.this, getString(R.string.you_will_receive_a_call_shortly), Toast.LENGTH_SHORT).show();
-        Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
-        Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("PHONE", number);
-        hashMap.put("COUNTRY", "India");
-        smsApi.resendOTPOverCall(hashMap, new Callback<SmsVerifyModel>() {
-            @Override
-            public void success(SmsVerifyModel model, Response response) {
-                if (model == null) {
-                    Toast.makeText(PreSignUpActivityRia.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (model.isOTPSent()) {
-
-                } else {
-                    Toast.makeText(PreSignUpActivityRia.this, model.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                stopProgressDialog();
-                Toast.makeText(PreSignUpActivityRia.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
 //    private void sendSms(String number) {
 //        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
 //            startProgressDialog();
@@ -1028,6 +1001,36 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 //        });
 //    }
 
+    private void reSendOTPOverCall(String number) {
+        // showProgressbar();
+        Toast.makeText(PreSignUpActivityRia.this, getString(R.string.you_will_receive_a_call_shortly), Toast.LENGTH_SHORT).show();
+        Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("PHONE", number);
+        hashMap.put("COUNTRY", "India");
+        smsApi.resendOTPOverCall(hashMap, new Callback<SmsVerifyModel>() {
+            @Override
+            public void success(SmsVerifyModel model, Response response) {
+                if (model == null) {
+                    Toast.makeText(PreSignUpActivityRia.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (model.isOTPSent()) {
+
+                } else {
+                    Toast.makeText(PreSignUpActivityRia.this, model.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                stopProgressDialog();
+                Toast.makeText(PreSignUpActivityRia.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void verifySms(final String number, String otpCode) {
         showProgressbar();
         Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
@@ -1051,7 +1054,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
                 } else {
                     hideProgressbar();
-                    Toast.makeText(PreSignUpActivityRia.this,getString( R.string.please_enter_valid_otp), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PreSignUpActivityRia.this, getString(R.string.please_enter_valid_otp), Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -1120,21 +1123,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         }
 
     }
-
-    private BroadcastReceiver mSmsReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent == null) {
-                return;
-            }
-            String otp = intent.getStringExtra("OTP_CODE");
-            otp = otp.replaceAll("[^0-9]", "");
-            if (otpEditText != null) {
-                otpEditText.setText(otp);
-            }
-            stopProgressDialog();
-        }
-    };
 
     private void startProgressDialog() {
         if (progressDialog != null)

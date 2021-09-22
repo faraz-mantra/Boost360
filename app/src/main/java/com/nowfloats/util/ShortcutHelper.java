@@ -6,8 +6,9 @@ import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
 import android.graphics.drawable.Icon;
 import android.os.Build;
-import androidx.annotation.RequiresApi;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.nowfloats.NavigationDrawer.Create_Message_Activity;
 import com.nowfloats.PreSignUp.SplashScreen_Activity;
@@ -23,39 +24,41 @@ public class ShortcutHelper {
 
     private Context mContext;
     private ShortcutManager shortcutManager;
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1 && BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")) {
-            ShortcutHelper.get(this).publishShortcuts();
-        }*/
+
+    /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1 && BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")) {
+        ShortcutHelper.get(this).publishShortcuts();
+    }*/
     @RequiresApi(api = Build.VERSION_CODES.N_MR1)
-    private  ShortcutHelper(Context context){
+    private ShortcutHelper(Context context) {
         mContext = context;
         shortcutManager = context.getSystemService(ShortcutManager.class);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N_MR1)
-    public static ShortcutHelper get(Context context){
+    public static ShortcutHelper get(Context context) {
         return new ShortcutHelper(context);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N_MR1)
-    public void showShortcuts(){
-        if (shortcutManager.getDynamicShortcuts().size()>0){
-            for (ShortcutInfo info :shortcutManager.getDynamicShortcuts()){
-                Log.v("shortcuts",info.getId());
+    public void showShortcuts() {
+        if (shortcutManager.getDynamicShortcuts().size() > 0) {
+            for (ShortcutInfo info : shortcutManager.getDynamicShortcuts()) {
+                Log.v("shortcuts", info.getId());
             }
-        }else{
+        } else {
             publishShortcuts();
         }
     }
+
     @RequiresApi(api = Build.VERSION_CODES.N_MR1)
-    public void publishShortcuts(){
+    public void publishShortcuts() {
         Intent i = new Intent(mContext, SplashScreen_Activity.class);
-        i.putExtra("url","update");
-        i.putExtra("from","shortcut_app");
+        i.putExtra("url", "update");
+        i.putExtra("from", "shortcut_app");
         i.setAction(Create_Message_Activity.SHORTCUT_ID);
         ShortcutInfo shortcut = new ShortcutInfo.Builder(mContext, "create_update")
                 .setShortLabel("Add Update")
-                .setLongLabel("Post An Update")
+                .setLongLabel("Post an Update")
                 .setIcon(Icon.createWithResource(mContext, R.drawable.ria))
                 .setIntent(i)
                 .build();
@@ -63,12 +66,12 @@ public class ShortcutHelper {
         shortcutManager.setDynamicShortcuts(Arrays.asList(shortcut));
     }
 
-    public void updateShortcuts(){
+    public void updateShortcuts() {
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N_MR1)
-    public void removeShortcuts(){
+    public void removeShortcuts() {
         shortcutManager.removeAllDynamicShortcuts();
     }
 

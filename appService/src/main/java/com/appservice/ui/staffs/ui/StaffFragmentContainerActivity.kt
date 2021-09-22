@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -13,7 +12,6 @@ import androidx.fragment.app.Fragment
 import com.appservice.R
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
-import com.appservice.constant.IntentConstant
 import com.appservice.ui.staffs.ui.breaks.ScheduledBreaksFragmnt
 import com.appservice.ui.staffs.ui.breaks.StaffBreakConfirmFragment
 import com.appservice.ui.staffs.ui.details.StaffDetailsFragment
@@ -28,6 +26,8 @@ import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.framework.views.customViews.CustomToolbar
 
 class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
@@ -47,12 +47,6 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     return R.layout.activity_fragment_container
   }
 
-  override fun getToolbarTitleGravity(): Int {
-    return when (fragmentType) {
-      FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT, FragmentType.STAFF_TIMING_FRAGMENT, FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> Gravity.START
-      else -> super.getToolbarTitleGravity()
-    }
-  }
 
   override fun getViewModelClass(): Class<BaseViewModel> {
     return BaseViewModel::class.java
@@ -60,17 +54,15 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
   override fun onCreateView() {
     super.onCreateView()
-    getBundle()
+    getBundle(UserSessionManager(this))
     setFragment()
   }
 
-  private fun getBundle() {
-    intent.getStringExtra(IntentConstant.FP_TAG.name)?.let {
-      UserSession.apply {
-        fpTag = intent.getStringExtra(IntentConstant.FP_TAG.name)
-        fpId = intent.getStringExtra(IntentConstant.FP_ID.name)
-        clientId = intent.getStringExtra(IntentConstant.CLIENT_ID.name)
-      }
+  private fun getBundle(sessionManager: UserSessionManager) {
+    UserSession.apply {
+      fpTag = sessionManager.fpTag
+      fpId = sessionManager.fPID
+      clientIdN = clientId
     }
   }
 
@@ -93,10 +85,6 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
   override fun getToolbar(): CustomToolbar? {
     return binding?.appBarLayout?.toolbar
-  }
-
-  override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.heading_7)
   }
 
 
@@ -233,7 +221,10 @@ fun startStaffFragmentActivity(activity: Activity, type: FragmentType, bundle: B
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-  if (isResult.not()) activity.startActivity(intent) else activity.startActivityForResult(intent, requestCode)
+  if (isResult.not()) activity.startActivity(intent) else activity.startActivityForResult(
+    intent,
+    requestCode
+  )
 }
 
 fun AppCompatActivity.startStaffFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {

@@ -3,6 +3,8 @@ package com.dashboard.rest.services.local
 import android.content.Context
 import com.dashboard.R
 import com.dashboard.base.rest.AppBaseLocalService
+import com.dashboard.controller.ui.customisationnav.model.WebsiteNavModel
+import com.dashboard.controller.ui.more.model.MoreSettingsResponse
 import com.dashboard.model.live.addOns.ManageAddOnsBusinessResponse
 import com.dashboard.model.live.addOns.ManageBusinessDataResponse
 import com.dashboard.model.live.customerItem.BoostCustomerItemResponse
@@ -32,13 +34,20 @@ object DashboardLocalDataSource : AppBaseLocalService() {
   fun getBoostCustomerItem(context: Context): Observable<BaseResponse> {
     return fromJsonRes(context, R.raw.boost_cutomer_item, BoostCustomerItemResponse::class.java)
   }
+
   fun getBoostWebsiteItem(context: Context): Observable<BaseResponse> {
-    return fromJsonRes(context, R.raw.boost_website_item, WebsiteDataResponse::class.java)
+    return fromJsonRes(context, R.raw.boost_website_item_new, WebsiteDataResponse::class.java)
   }
+
   fun getNavDashboardData(context: Context): Observable<BaseResponse> {
     return fromJsonRes(context, R.raw.nav_dashboard_data, DrawerHomeDataResponse::class.java)
   }
-
+  fun getMoreSettings(context: Context): Observable<BaseResponse> {
+    return fromJsonRes(context, R.raw.more_settings, MoreSettingsResponse::class.java)
+  }
+  fun getWebsiteNavData(context: Context): Observable<BaseResponse> {
+    return fromJsonRes(context, R.raw.websitenav, WebsiteNavModel::class.java)
+  }
   fun getDrScoreUi(context: Context): Observable<BaseResponse> {
     return fromJsonRes(context, R.raw.dr_score_ui, DrScoreUiDataResponse::class.java)
   }
@@ -46,6 +55,7 @@ object DashboardLocalDataSource : AppBaseLocalService() {
   fun getQuickActionData(context: Context): Observable<BaseResponse> {
     return fromJsonRes(context, R.raw.quick_action_data, QuickActionResponse::class.java)
   }
+
   fun getWelcomeDashboardData(context: Context): Observable<BaseResponse> {
     return fromJsonRes(context, R.raw.welcome_dashboard_data, WelcomeDashboardResponse::class.java)
   }

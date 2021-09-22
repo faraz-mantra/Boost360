@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Utils;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -17,17 +18,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-public class UploadFaviconImage extends AsyncTask<Void, String, String>
-{
+public class UploadFaviconImage extends AsyncTask<Void, String, String> {
+    boolean isUploadingSuccess = false;
     private String path;
     private String url;
     private OnImageUpload listener;
-
-    boolean isUploadingSuccess = false;
     private String response;
 
-    public UploadFaviconImage(String path, String url)
-    {
+    public UploadFaviconImage(String path, String url) {
         this.path = path;
         this.url = url;
     }
@@ -42,20 +40,17 @@ public class UploadFaviconImage extends AsyncTask<Void, String, String>
     protected void onPostExecute(String result) {
 
         listener.onPostUpload(isUploadingSuccess, response);
-     }
+    }
 
     @Override
-    protected String doInBackground(Void... params)
-    {
+    protected String doInBackground(Void... params) {
         uploadImage(path);
         return null;
     }
 
 
-    private void uploadImage(String imagePath)
-    {
-        if(TextUtils.isEmpty(imagePath))
-        {
+    private void uploadImage(String imagePath) {
+        if (TextUtils.isEmpty(imagePath)) {
             return;
         }
 
@@ -63,30 +58,21 @@ public class UploadFaviconImage extends AsyncTask<Void, String, String>
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-        File f = new File(img.getAbsolutePath() + File.separator );
+        File f = new File(img.getAbsolutePath() + File.separator);
 
-        try
-        {
+        try {
             f.createNewFile();
-        }
-
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         BitmapFactory.Options options = new BitmapFactory.Options();
-        Bitmap bmp = BitmapFactory.decodeFile(imagePath,options);
+        Bitmap bmp = BitmapFactory.decodeFile(imagePath, options);
 
-        if(bmp != null)
-        {
-            if ((f.length() / 1024) > 100)
-            {
+        if (bmp != null) {
+            if ((f.length() / 1024) > 100) {
                 bmp.compress(Bitmap.CompressFormat.JPEG, 70, bos);
-            }
-
-            else
-            {
+            } else {
                 bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
             }
         }
@@ -95,12 +81,10 @@ public class UploadFaviconImage extends AsyncTask<Void, String, String>
     }
 
 
-    private void sendDataToServer(String url, byte[] BytesToBeSent)
-    {
+    private void sendDataToServer(String url, byte[] BytesToBeSent) {
         DataOutputStream outputStream = null;
 
-        try
-        {
+        try {
 
             URL new_url = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) new_url.openConnection();
@@ -112,19 +96,18 @@ public class UploadFaviconImage extends AsyncTask<Void, String, String>
             // Enable PUT method
             connection.setRequestMethod(Constants.HTTP_PUT);
             connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
 
             connection.setRequestProperty("Content-Type", Constants.BG_SERVICE_CONTENT_TYPE_OCTET_STREAM);
 
-            if (BytesToBeSent != null)
-            {
+            if (BytesToBeSent != null) {
                 outputStream = new DataOutputStream(connection.getOutputStream());
                 outputStream.write(BytesToBeSent, 0, BytesToBeSent.length);
             }
 
             int responseCode = connection.getResponseCode();
 
-            if (responseCode	== 200  || responseCode	== 202)
-            {
+            if (responseCode == 200 || responseCode == 202) {
                 isUploadingSuccess = true;
             }
 
@@ -136,14 +119,12 @@ public class UploadFaviconImage extends AsyncTask<Void, String, String>
 
             StringBuilder responseContent = new StringBuilder();
 
-            String temp ;
+            String temp;
 
             boolean isFirst = true;
 
-            while((temp = bufferedReader.readLine())!= null)
-            {
-                if(!isFirst)
-                {
+            while ((temp = bufferedReader.readLine()) != null) {
+                if (!isFirst) {
                     responseContent.append(Constants.NEW_LINE);
                 }
 
@@ -155,22 +136,18 @@ public class UploadFaviconImage extends AsyncTask<Void, String, String>
 
             outputStream.flush();
             outputStream.close();
-        }
-
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    public void setUploadListener(OnImageUpload listener)
-    {
+    public void setUploadListener(OnImageUpload listener) {
         this.listener = listener;
     }
 
-    public interface OnImageUpload
-    {
+    public interface OnImageUpload {
         void onPreUpload();
+
         void onPostUpload(boolean isSuccess, String response);
     }
 }

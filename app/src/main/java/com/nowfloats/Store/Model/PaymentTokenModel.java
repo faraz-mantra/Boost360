@@ -8,6 +8,9 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class PaymentTokenModel {
+    @SerializedName("PaymentMethodType")
+    @Expose
+    public String paymentMethodType;
     @SerializedName("AccessToken")
     @Expose
     private String accessToken;
@@ -17,59 +20,44 @@ public class PaymentTokenModel {
     @SerializedName("TargetPaymentCollectionUri")
     @Expose
     private String targetPaymentCollectionUri;
-    @SerializedName("PaymentMethodType")
-    @Expose
-    public String paymentMethodType;
 
     /**
-     *
-     * @return
-     * The accessToken
+     * @return The accessToken
      */
     public String getAccessToken() {
         return accessToken;
     }
 
     /**
-     *
-     * @param accessToken
-     * The AccessToken
+     * @param accessToken The AccessToken
      */
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
 
     /**
-     *
-     * @return
-     * The paymentRequestId
+     * @return The paymentRequestId
      */
     public String getPaymentRequestId() {
         return paymentRequestId;
     }
 
     /**
-     *
-     * @param paymentRequestId
-     * The PaymentRequestId
+     * @param paymentRequestId The PaymentRequestId
      */
     public void setPaymentRequestId(String paymentRequestId) {
         this.paymentRequestId = paymentRequestId;
     }
 
     /**
-     *
-     * @return
-     * The targetPaymentCollectionUri
+     * @return The targetPaymentCollectionUri
      */
     public String getTargetPaymentCollectionUri() {
         return targetPaymentCollectionUri;
     }
 
     /**
-     *
-     * @param targetPaymentCollectionUri
-     * The TargetPaymentCollectionUri
+     * @param targetPaymentCollectionUri The TargetPaymentCollectionUri
      */
     public void setTargetPaymentCollectionUri(String targetPaymentCollectionUri) {
         this.targetPaymentCollectionUri = targetPaymentCollectionUri;

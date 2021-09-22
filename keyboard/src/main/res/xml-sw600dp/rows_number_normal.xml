@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2012, The Android Open Source Project
@@ -18,142 +17,135 @@
 */
 -->
 
-<merge
-    xmlns:latin="http://schemas.android.com/apk/res-auto"
->
-    <Row>
+<merge xmlns:latin="http://schemas.android.com/apk/res-auto">
+  <Row>
+    <Key
+      latin:backgroundType="functional"
+      latin:keySpec="-"
+      latin:keyStyle="numKeyStyle"
+      latin:keyWidth="10%p" />
+    <Key
+      latin:backgroundType="functional"
+      latin:keySpec="+"
+      latin:keyStyle="numKeyStyle"
+      latin:keyWidth="10%p" />
+    <Key
+      latin:backgroundType="functional"
+      latin:keySpec="."
+      latin:keyStyle="numKeyStyle"
+      latin:keyWidth="10%p" />
+    <Key
+      latin:keySpec="1"
+      latin:keyStyle="numKeyStyle"
+      latin:keyXPos="31%p" />
+    <Key
+      latin:keySpec="2"
+      latin:keyStyle="numKeyStyle" />
+    <Key
+      latin:keySpec="3"
+      latin:keyStyle="numKeyStyle" />
+    <Key
+      latin:keyStyle="deleteKeyStyle"
+      latin:keyWidth="fillRight"
+      latin:keyXPos="-14%p" />
+  </Row>
+  <Row>
+    <Key
+      latin:backgroundType="functional"
+      latin:keyStyle="numStarKeyStyle"
+      latin:keyWidth="10%p" />
+    <Key
+      latin:backgroundType="functional"
+      latin:keySpec="/"
+      latin:keyStyle="numKeyStyle"
+      latin:keyWidth="10%p" />
+    <switch>
+      <case latin:mode="time|datetime">
         <Key
-            latin:keySpec="-"
-            latin:keyStyle="numKeyStyle"
-            latin:keyWidth="10%p"
-            latin:backgroundType="functional" />
+          latin:backgroundType="functional"
+          latin:keyLabelFlags="hasPopupHint"
+          latin:keySpec=","
+          latin:keyStyle="numKeyStyle"
+          latin:keyWidth="10%p"
+          latin:moreKeys="!text/morekeys_am_pm" />
+      </case>
+      <default>
         <Key
-            latin:keySpec="+"
-            latin:keyStyle="numKeyStyle"
-            latin:keyWidth="10%p"
-            latin:backgroundType="functional" />
+          latin:backgroundType="functional"
+          latin:keySpec=","
+          latin:keyStyle="numKeyStyle"
+          latin:keyWidth="10%p" />
+      </default>
+    </switch>
+    <Key
+      latin:keySpec="4"
+      latin:keyStyle="numKeyStyle"
+      latin:keyXPos="31%p" />
+    <Key
+      latin:keySpec="5"
+      latin:keyStyle="numKeyStyle" />
+    <Key
+      latin:keySpec="6"
+      latin:keyStyle="numKeyStyle" />
+    <Key
+      latin:keyStyle="enterKeyStyle"
+      latin:keyWidth="fillRight"
+      latin:keyXPos="-14%p" />
+  </Row>
+  <Row>
+    <Key
+      latin:backgroundType="functional"
+      latin:keySpec="("
+      latin:keyStyle="numKeyStyle"
+      latin:keyWidth="10%p" />
+    <Key
+      latin:backgroundType="functional"
+      latin:keySpec=")"
+      latin:keyStyle="numKeyStyle"
+      latin:keyWidth="10%p" />
+    <switch>
+      <case latin:mode="time|datetime">
         <Key
-            latin:keySpec="."
-            latin:keyStyle="numKeyStyle"
-            latin:keyWidth="10%p"
-            latin:backgroundType="functional" />
+          latin:backgroundType="functional"
+          latin:keySpec=":"
+          latin:keyStyle="numKeyStyle"
+          latin:keyWidth="10%p" />
+      </case>
+      <default>
         <Key
-            latin:keySpec="1"
-            latin:keyStyle="numKeyStyle"
-            latin:keyXPos="31%p" />
-        <Key
-            latin:keySpec="2"
-            latin:keyStyle="numKeyStyle" />
-        <Key
-            latin:keySpec="3"
-            latin:keyStyle="numKeyStyle" />
-        <Key
-            latin:keyStyle="deleteKeyStyle"
-            latin:keyXPos="-14%p"
-            latin:keyWidth="fillRight" />
-    </Row>
-    <Row>
-        <Key
-            latin:keyStyle="numStarKeyStyle"
-            latin:keyWidth="10%p"
-            latin:backgroundType="functional" />
-        <Key
-            latin:keySpec="/"
-            latin:keyStyle="numKeyStyle"
-            latin:keyWidth="10%p"
-            latin:backgroundType="functional" />
-        <switch>
-            <case
-                latin:mode="time|datetime"
-            >
-                <Key
-                    latin:keySpec=","
-                    latin:keyLabelFlags="hasPopupHint"
-                    latin:moreKeys="!text/morekeys_am_pm"
-                    latin:keyStyle="numKeyStyle"
-                    latin:keyWidth="10%p"
-                    latin:backgroundType="functional" />
-            </case>
-            <default>
-                <Key
-                    latin:keySpec=","
-                    latin:keyStyle="numKeyStyle"
-                    latin:keyWidth="10%p"
-                    latin:backgroundType="functional" />
-            </default>
-        </switch>
-        <Key
-            latin:keySpec="4"
-            latin:keyStyle="numKeyStyle"
-            latin:keyXPos="31%p" />
-        <Key
-            latin:keySpec="5"
-            latin:keyStyle="numKeyStyle" />
-        <Key
-            latin:keySpec="6"
-            latin:keyStyle="numKeyStyle" />
-        <Key
-            latin:keyStyle="enterKeyStyle"
-            latin:keyXPos="-14%p"
-            latin:keyWidth="fillRight" />
-    </Row>
-    <Row>
-        <Key
-            latin:keySpec="("
-            latin:keyStyle="numKeyStyle"
-            latin:keyWidth="10%p"
-            latin:backgroundType="functional" />
-        <Key
-            latin:keySpec=")"
-            latin:keyStyle="numKeyStyle"
-            latin:keyWidth="10%p"
-            latin:backgroundType="functional" />
-        <switch>
-            <case
-                latin:mode="time|datetime"
-            >
-                <Key
-                    latin:keySpec=":"
-                    latin:keyStyle="numKeyStyle"
-                    latin:keyWidth="10%p"
-                    latin:backgroundType="functional" />
-            </case>
-            <default>
-                <Key
-                    latin:keySpec="="
-                    latin:keyStyle="numKeyStyle"
-                    latin:keyWidth="10%p"
-                    latin:backgroundType="functional" />
-            </default>
-        </switch>
-        <Key
-            latin:keySpec="7"
-            latin:keyStyle="numKeyStyle"
-            latin:keyXPos="31%p" />
-        <Key
-            latin:keySpec="8"
-            latin:keyStyle="numKeyStyle" />
-        <Key
-            latin:keySpec="9"
-            latin:keyStyle="numKeyStyle" />
-        <!-- Note: This Spacer prevents the above key from being marked as a right edge key. -->
-        <Spacer />
-    </Row>
-    <Row>
-        <Key
-            latin:keyStyle="tabletNumSpaceKeyStyle"
-            latin:keyWidth="30%p" />
-        <Key
-            latin:keyStyle="numStarKeyStyle"
-            latin:keyXPos="31%p" />
-        <Key
-            latin:keySpec="0"
-            latin:keyStyle="numKeyStyle" />
-        <Key
-            latin:keySpec="\#"
-            latin:keyStyle="numKeyStyle" />
-        <!-- Note: This Spacer prevents the above key from being marked as a right edge key. -->
-        <Spacer
-            latin:keyWidth="fillRight" />
-    </Row>
+          latin:backgroundType="functional"
+          latin:keySpec="="
+          latin:keyStyle="numKeyStyle"
+          latin:keyWidth="10%p" />
+      </default>
+    </switch>
+    <Key
+      latin:keySpec="7"
+      latin:keyStyle="numKeyStyle"
+      latin:keyXPos="31%p" />
+    <Key
+      latin:keySpec="8"
+      latin:keyStyle="numKeyStyle" />
+    <Key
+      latin:keySpec="9"
+      latin:keyStyle="numKeyStyle" />
+    <!-- Note: This Spacer prevents the above key from being marked as a right edge key. -->
+    <Spacer />
+  </Row>
+  <Row>
+    <Key
+      latin:keyStyle="tabletNumSpaceKeyStyle"
+      latin:keyWidth="30%p" />
+    <Key
+      latin:keyStyle="numStarKeyStyle"
+      latin:keyXPos="31%p" />
+    <Key
+      latin:keySpec="0"
+      latin:keyStyle="numKeyStyle" />
+    <Key
+      latin:keySpec="\#"
+      latin:keyStyle="numKeyStyle" />
+    <!-- Note: This Spacer prevents the above key from being marked as a right edge key. -->
+    <Spacer latin:keyWidth="fillRight" />
+  </Row>
 </merge>

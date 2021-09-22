@@ -187,7 +187,7 @@ public class RoundedDrawable extends Drawable {
 
         mShaderMatrix.reset();
         mShaderMatrix.setTranslate((int) ((mBorderRect.width() - mBitmapWidth) * 0.5f + 0.5f),
-                (int) ((mBorderRect.height() - mBitmapHeight) * 0.5f + 0.5f));
+            (int) ((mBorderRect.height() - mBitmapHeight) * 0.5f + 0.5f));
         break;
 
       case CENTER_CROP:
@@ -209,7 +209,7 @@ public class RoundedDrawable extends Drawable {
 
         mShaderMatrix.setScale(scale, scale);
         mShaderMatrix.postTranslate((int) (dx + 0.5f) + mBorderWidth / 2,
-                (int) (dy + 0.5f) + mBorderWidth / 2);
+            (int) (dy + 0.5f) + mBorderWidth / 2);
         break;
 
       case CENTER_INSIDE:
@@ -219,7 +219,7 @@ public class RoundedDrawable extends Drawable {
           scale = 1.0f;
         } else {
           scale = Math.min(mBounds.width() / (float) mBitmapWidth,
-                  mBounds.height() / (float) mBitmapHeight);
+              mBounds.height() / (float) mBitmapHeight);
         }
 
         dx = (int) ((mBounds.width() - mBitmapWidth * scale) * 0.5f + 0.5f);

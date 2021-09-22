@@ -54,7 +54,7 @@
             android:text="@string/add_staff_image"
             android:textColor="@color/blue_4A90E2"
             android:visibility="gone"
-            app:textAllCaps="true"
+            app:textAllCaps="false"
             app:textType="CAPTION" />
         </FrameLayout>
 
@@ -246,7 +246,7 @@
               android:layout_height="wrap_content"
               android:layout_below="@id/ctv_service_provided_heading"
               android:layout_gravity="center_vertical"
-              android:fontFamily="@font/open_sans"
+              android:fontFamily="@font/regular"
               android:text="@string/map_the_employee_to_one_or_multiple_services"
               android:textFontWeight="600"
               android:textSize="10sp" />
@@ -258,7 +258,7 @@
               android:layout_below="@id/ctv_services_subheading"
               android:layout_gravity="center_vertical"
               android:layout_marginTop="@dimen/size_8"
-              android:fontFamily="@font/open_sans"
+              android:fontFamily="@font/regular"
               android:textColor="@color/blue_4A90E2"
               android:textFontWeight="600"
               android:textSize="10sp"
@@ -301,12 +301,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/size_8"
-                android:fontFamily="@font/open_sans"
+                android:fontFamily="@font/regular"
                 android:text="@string/is_the_staff_available_for_home_service"
                 android:textColor="@color/black_4a4a4a"
                 android:textFontWeight="600"
-                android:textSize="12sp"
-                android:textStyle="normal" />
+                android:textSize="12sp" />
 
               <com.appservice.views.toggle.widget.LabeledSwitch
                 android:id="@+id/toggle_is_available"
@@ -348,7 +347,7 @@
               android:layout_below="@id/tv_heading"
               android:layout_gravity="center_vertical"
               android:layout_marginTop="@dimen/size_5"
-              android:fontFamily="@font/open_sans"
+              android:fontFamily="@font/regular"
               android:text="@string/staff_will_available_for_clients"
               android:textFontWeight="600"
               android:textSize="10sp" />
@@ -360,7 +359,7 @@
               android:layout_below="@id/ctv_timing_subheading"
               android:layout_gravity="center_vertical"
               android:layout_marginTop="@dimen/size_8"
-              android:fontFamily="@font/open_sans"
+              android:fontFamily="@font/regular"
               android:textColor="@color/blue_4A90E2"
               android:textFontWeight="600"
               android:textSize="10sp"
@@ -376,6 +375,7 @@
               android:src="@drawable/ic_arrow_right_grey_staff" />
 
           </RelativeLayout>
+
           <RelativeLayout
             android:id="@+id/rl_scheduled_breaks"
             android:layout_width="match_parent"
@@ -390,7 +390,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginBottom="@dimen/size_5"
-              android:fontFamily="@font/open_sans"
+              android:fontFamily="@font/regular"
               android:text="@string/scheduled_break"
               android:textColor="@color/black_4a4a4a"
               android:textStyle="normal"
@@ -402,7 +402,7 @@
               android:layout_height="wrap_content"
               android:layout_below="@id/tv_scheduled_break_heading"
               android:layout_gravity="center_vertical"
-              android:fontFamily="@font/open_sans"
+              android:fontFamily="@font/regular"
               android:text="@string/leaves_to_be_taken_by_the_staff"
               android:textFontWeight="600"
               android:textSize="10sp" />
@@ -428,7 +428,7 @@
           android:gravity="center"
           android:stateListAnimator="@null"
           android:text="@string/save_amp_publish"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/white"
           android:textFontWeight="600" />
       </LinearLayout>

@@ -27,7 +27,10 @@ interface WithFloatTwoRemoteData {
   fun createUserProfile(@Body userProfileRequest: CreateProfileRequest?): Observable<Response<BusinessProfileResponse>>
 
   @GET(EndPoints.CHECK_MOBILE_IS_REGISTERED)
-  fun checkIfMobileNumberIsRegistered(@Query(value = "mobileNumber") mobileNumber: Long?, @Query(value = "clientId") clientId: String?): Observable<Response<ResponseMobileIsRegistered>>
+  fun checkIfMobileNumberIsRegistered(
+    @Query(value = "mobileNumber") mobileNumber: Long?,
+    @Query(value = "clientId") clientId: String?
+  ): Observable<Response<ResponseMobileIsRegistered>>
 
   @Headers("Content-Type: application/json")
   @POST(EndPoints.CONNECT_MERCHANT_AUTH_PROVIDER)
@@ -42,35 +45,45 @@ interface WithFloatTwoRemoteData {
   fun forgotPassword(@Body request: ForgotPassRequest): Observable<Response<ResponseBody>>
 
   @GET(EndPoints.GET_FP_DETAILS_BY_PHONE)
-  fun getFpDetailsByPhone(@Query("number") number: Long?, @Query(value = "clientId") clientId: String?): Observable<Response<Any>>
+  fun getFpDetailsByPhone(
+    @Query("number") number: Long?,
+    @Query(value = "clientId") clientId: String?
+  ): Observable<Response<Any>>
 
   @GET(EndPoints.SEND_OTP_INDIA)
-  fun sendOtpIndia(@Query("mobileNumber") number: Long?, @Query("messageTemplate") messageTemplate: String? = "Your Boost 360 verification code is [OTP] . Code valid for 10 minutes only, one-time use. Please DO NOT share this OTP with anyone to ensure account's security.", @Query(value = "clientId") clientId: String?): Observable<Response<ResponseBody>>
+  fun sendOtpIndia(
+    @Query("mobileNumber") number: Long?,
+    @Query("messageTemplate") messageTemplate: String? = "Your one time Boost 360 verification code is [OTP]. The code is valid for 10 minutes, Please DO NOT share this code with anyone.#W5izmPg6WcR",
+    @Query(value = "clientId") clientId: String?
+  ): Observable<Response<ResponseBody>>
 
   @GET(EndPoints.VERIFY_OTP)
   fun verifyOtp(
-          @Query("mobileNumber") number: String?, @Query("otp") otp: String?,
-          @Query(value = "clientId") clientId: String?,
+    @Query("mobileNumber") number: String?, @Query("otp") otp: String?,
+    @Query(value = "clientId") clientId: String?,
   ): Observable<Response<ResponseBody>>
 
   @GET(EndPoints.VERIFY_LOGIN_OTP)
   fun verifyLoginOtp(
-      @Query("mobileNumber") number: String?, @Query("otp") otp: String?,
-      @Query(value = "clientId") clientId: String?,
+    @Query("mobileNumber") number: String?, @Query("otp") otp: String?,
+    @Query(value = "clientId") clientId: String?,
   ): Observable<Response<VerifyOtpResponse>>
 
   @POST(EndPoints.CREATE_ACCESS_TOKEN)
   fun createAccessToken(
-      @Body request: AccessTokenRequest?
+    @Body request: AccessTokenRequest?
   ): Observable<Response<AccessTokenResponse>>
 
   @GET(EndPoints.FP_LIST_REGISTERED_MOBILE)
-  fun getFpListForRegisteredMobile(@Query("mobileNumber") number: String?, @Query(value = "clientId") clientId: String?): Observable<Response<FPListResponse>>
+  fun getFpListForRegisteredMobile(
+    @Query("mobileNumber") number: String?,
+    @Query(value = "clientId") clientId: String?
+  ): Observable<Response<FPListResponse>>
 
   @GET(EndPoints.GET_FP_DETAILS)
   fun getFpDetails(
-          @Path("fpid") fpid: String,
-          @QueryMap map: Map<String, String>,
+    @Path("fpid") fpid: String,
+    @QueryMap map: Map<String, String>,
   ): Observable<Response<UserFpDetailsResponse>>
 
   @Headers("Content-Type: application/json", "Accept: application/json")

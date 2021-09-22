@@ -22,8 +22,7 @@ import com.framework.models.BaseViewModel
 import com.onboarding.nowfloats.constant.PreferenceConstant
 
 
-abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> :
-  BaseFragment<Binding, ViewModel>() {
+abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseFragment<Binding, ViewModel>() {
 
 
   protected var appBaseActivity: AppBaseActivity<*, *>? = null
@@ -88,12 +87,11 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
   protected fun needHelp() {
     val s = SpannableString(resources.getString(R.string.need_help_desc))
     Linkify.addLinks(s, Linkify.ALL)
-    val alertDialog = AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.AlertDialogCustom))
+    val alertDialog = AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.CustomAlertDialogTheme))
     alertDialog.setTitle(getString(R.string.need_help_title)).setMessage(s).setPositiveButton(resources.getString(R.string.okay), null)
     val alert = alertDialog.create()
     alert.show()
     alert.findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
-    alert.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getColor(R.color.colorAccent))
+    alert.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getColor(R.color.colorAccentLight))
   }
-
 }

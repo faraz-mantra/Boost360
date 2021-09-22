@@ -48,11 +48,18 @@ class ServiceViewModelV1 : BaseViewModel() {
   }
 
   fun addUpdateImageProductService(
-      clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?, currentChunkNumber: Int?,
-      productId: String?, requestBody: RequestBody?,
+    clientId: String?,
+    requestType: String?,
+    requestId: String?,
+    totalChunks: Int?,
+    currentChunkNumber: Int?,
+    productId: String?,
+    requestBody: RequestBody?,
   ): LiveData<BaseResponse> {
-    return NowfloatsApiRepository.addUpdateImageProductService(clientId, requestType, requestId, totalChunks,
-        currentChunkNumber, productId, requestBody).toLiveData()
+    return NowfloatsApiRepository.addUpdateImageProductService(
+      clientId, requestType, requestId, totalChunks,
+      currentChunkNumber, productId, requestBody
+    ).toLiveData()
   }
 
   fun addProductGstDetail(request: ProductGstDetailRequest?): LiveData<BaseResponse> {
@@ -67,7 +74,10 @@ class ServiceViewModelV1 : BaseViewModel() {
     return KitWebActionRepository.getProductGstDetail(query).toLiveData()
   }
 
-  fun uploadImageProfile(assetFileName: String?, file: MultipartBody.Part?): LiveData<BaseResponse> {
+  fun uploadImageProfile(
+    assetFileName: String?,
+    file: MultipartBody.Part?
+  ): LiveData<BaseResponse> {
     return KitWebActionRepository.uploadImageProfile(assetFileName, file).toLiveData()
   }
 
@@ -106,4 +116,8 @@ class ServiceViewModelV1 : BaseViewModel() {
 //  fun addProductDetails(request:ProductDimensionRequest): LiveData<BaseResponse> {
 //    return KitWebActionRepository.productAddData(request).toLiveData()
 //  }
+
+  fun getSearchListings(fpTag: String?, fpId: String?, searchString: String? = "", offset: Int? = 0, limit: Int? = 0): LiveData<BaseResponse> {
+    return NowfloatsApiRepository.getServiceSearchListing(fpTag, fpId, searchString, offset, limit).toLiveData()
+  }
 }

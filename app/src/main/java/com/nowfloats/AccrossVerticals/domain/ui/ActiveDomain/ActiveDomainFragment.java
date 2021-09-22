@@ -33,6 +33,7 @@ import com.nowfloats.AccrossVerticals.domain.ui.Popup.EditEmailPopUpFragment;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import java.text.SimpleDateFormat;
@@ -49,6 +50,7 @@ import retrofit.client.Response;
 
 public class ActiveDomainFragment extends Fragment implements ActiveDomainListener {
 
+    GetDomainData data = null;
     private ActiveDomainViewModel mViewModel;
     private ProgressDialog vmnProgressBar;
     private UserSessionManager session;
@@ -58,7 +60,6 @@ public class ActiveDomainFragment extends Fragment implements ActiveDomainListen
     private TextView domainName, activeOnValue, expiryOnValue;
     private AddEmailPopUpFragment addEmailPopUpFragment = new AddEmailPopUpFragment();
     private EditEmailPopUpFragment editEmailPopUpFragment = new EditEmailPopUpFragment();
-    GetDomainData data = null;
 
     public static ActiveDomainFragment newInstance() {
         return new ActiveDomainFragment();
@@ -150,6 +151,7 @@ public class ActiveDomainFragment extends Fragment implements ActiveDomainListen
             showProgress();
             APIInterfaces APICalls = new RestAdapter.Builder()
                     .setEndpoint("http://plugin.withfloats.com")
+                    .setRequestInterceptor(Utils.getAuthRequestInterceptor())
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .setLog(new AndroidLog("ggg"))
                     .build()
@@ -187,7 +189,7 @@ public class ActiveDomainFragment extends Fragment implements ActiveDomainListen
             activeDate = activeDate.replace("/Date(", "").replace(")/", "");
             Date date = new Date(Long.parseLong(activeDate));
             activeOnValue.setText(sdf.format(date));
-        }else{
+        } else {
             activeOnValue.setText("null");
         }
         String expiryDate = data.getExpiresOn();
@@ -195,13 +197,13 @@ public class ActiveDomainFragment extends Fragment implements ActiveDomainListen
             expiryDate = activeDate.replace("/Date(", "").replace(")/", "");
             Date date = new Date(Long.parseLong(expiryDate));
             expiryOnValue.setText(sdf.format(date));
-        }else {
+        } else {
             expiryOnValue.setText("null");
         }
 
         if (data.getIsActive()) {
             domainStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_domain_active_status));
-        } else{
+        } else {
             domainStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_domain_expired_status));
         }
     }

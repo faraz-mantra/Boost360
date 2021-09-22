@@ -1,6 +1,7 @@
 package com.nowfloats.AccrossVerticals.Testimonials;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -23,13 +24,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.boost.upgrades.UpgradeActivity;
 import com.bumptech.glide.Glide;
+import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem;
+import com.framework.models.caplimit_feature.PropertiesItem;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.AccrossVerticals.API.APIInterfaces;
@@ -50,12 +56,15 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.WebEngageController;
+import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.GetTestimonialData;
 import com.thinksity.R;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -64,46 +73,53 @@ import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
+import static com.framework.models.caplimit_feature.CapLimitFeatureResponseItemKt.filterFeature;
+import static com.framework.models.caplimit_feature.CapLimitFeatureResponseItemKt.getCapData;
+import static com.framework.pref.Key_Preferences.GET_FP_DETAILS_CATEGORY;
+import static com.framework.utils.UtilKt.hideKeyBoard;
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_MANAGE_CONTENT;
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_TESTIMONIAL_ADDED;
 import static com.framework.webengageconstant.EventNameKt.TESTIMONIAL_ADDED;
 
 import static com.framework.webengageconstant.EventNameKt.TESTIMONIAL_UPDATED;
-import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity.allTestimonialType;
 import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialUtils.*;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class TestimonialsFeedbackActivity extends AppCompatActivity implements TestimonialsFeedbackListener {
 
-    private TextView saveButton, descriptionCharCount;
-    private String ScreenType = "", itemId = "";
-    Uri imageUri;
-    String path = null;
-    String uploadedImageURL = "";
-    UserSessionManager session;
-    TestimonialData existingItemData = null;
-    EditText userNameText, reviewTitleText, reviewDescriptionText, profileDescEdt;
+  private List<String> allTestimonialType = Arrays.asList("testimonials", "testimonial", "guestreviews");
+  private static final int GALLERY_PHOTO = 2;
+  private static final int CAMERA_PHOTO = 1;
+  private final int gallery_req_id = 0;
+  private final int media_req_id = 1;
+  Uri imageUri;
+  String path = null;
+  String uploadedImageURL = "";
+  UserSessionManager session;
+  TestimonialData existingItemData = null;
+  EditText userNameText, reviewTitleText, reviewDescriptionText, profileDescEdt;
   LinearLayout profileDescView, reviewTitleView;
   TextView titleProfileDesc, isFillProfileDesc;
-    CardView imageLayout;
-    ImageView profileImage;
-    ImageButton removeProfileImage;
-    TextView reviewDescriptionLabel;
-    TextView reviewTitleLabel;
-
-    private final int gallery_req_id = 0;
-    private final int media_req_id = 1;
-    private static final int GALLERY_PHOTO = 2;
-    private static final int CAMERA_PHOTO = 1;
-
-    private ProgressDialog progressDialog;
-    private boolean isNewDataAdded = false;
-    private String headerToken = "59c89bbb5d64370a04c9aea1";
-    private String testimonialType = "testimonials";
+  CardView imageLayout;
+  ImageView profileImage;
+  ImageButton removeProfileImage;
+  TextView reviewDescriptionLabel;
+  TextView reviewTitleLabel;
+  private TextView saveButton, descriptionCharCount;
+  private String ScreenType = "", itemId = "";
+  private ProgressDialog progressDialog;
+  private boolean isNewDataAdded = false;
+  private String headerToken = "59c89bbb5d64370a04c9aea1";
+  private String testimonialType = "testimonials";
+  private Activity activity;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_testimonials_feedback);
+    activity = this;
     setHeader();
     initialization();
     getHeaderAuthToken();
@@ -131,27 +147,27 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     progressDialog = new ProgressDialog(this);
     progressDialog.setCancelable(false);
 
-        reviewDescriptionText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    reviewDescriptionText.addTextChangedListener(new TextWatcher() {
+      @Override
+      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
+      }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int tempCount = 200 - s.length();
-                descriptionCharCount.setText("(" + tempCount + " Characters)");
-            }
+      @Override
+      public void onTextChanged(CharSequence s, int start, int before, int count) {
+        int tempCount = 200 - s.length();
+        descriptionCharCount.setText("(" + tempCount + " Characters)");
+      }
 
-            @Override
-            public void afterTextChanged(Editable s) {
+      @Override
+      public void afterTextChanged(Editable s) {
 
-            }
-        });
+      }
+    });
 
     saveButton.setOnClickListener(v -> {
       if (path != null) {
-          showLoader(getString(R.string.uploading_image_please_wait));
+        showLoader(getString(R.string.uploading_image_please_wait));
         new Handler().postDelayed(() -> uploadImageToServer(), 200);
       } else {
         uploadDataToServer();
@@ -175,10 +191,15 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
 
   }
 
+  private boolean isValide() {
+    return false;
+  }
+
   public void displayData() {
     existingItemData = new Gson().fromJson(getIntent().getStringExtra("data"), TestimonialData.class);
     itemId = existingItemData.getId();
-    if (existingItemData.getProfileimage() != null) uploadedImageURL = existingItemData.getProfileimage().getUrl();
+    if (existingItemData.getProfileimage() != null)
+      uploadedImageURL = existingItemData.getProfileimage().getUrl();
     reviewTitleView.setVisibility(isReviewSecondValue(session.getFP_AppExperienceCode()));
     reviewTitleText.setText(getReviewSecondValue(existingItemData, session.getFP_AppExperienceCode()));
     userNameText.setText(existingItemData.getUsername());
@@ -195,31 +216,31 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     }
   }
 
-    public void setHeader() {
-        LinearLayout rightButton, backButton;
-        ImageView rightIcon;
-        TextView title;
+  public void setHeader() {
+    LinearLayout rightButton, backButton;
+    ImageView rightIcon;
+    TextView title;
 
-        Bundle extra = getIntent().getExtras();
-        ScreenType = extra.getString("ScreenState");
+    Bundle extra = getIntent().getExtras();
+    ScreenType = extra.getString("ScreenState");
 
     title = findViewById(R.id.title);
     backButton = findViewById(R.id.back_button);
     rightButton = findViewById(R.id.right_icon_layout);
     rightIcon = findViewById(R.id.right_icon);
     if (ScreenType.equals("edit")) {
-      title.setText("Edit testimonial");
+      title.setText("Edit Testimonial");
       rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
       rightButton.setOnClickListener(v -> {
         if (ScreenType != null && ScreenType.equals("edit")) {
-            showLoader(getString(R.string.deleting_record_please_wait));
+          showLoader(getString(R.string.deleting_record_please_wait));
           deleteRecord(itemId);
           return;
         }
         onBackPressed();
       });
     } else {
-      title.setText("Add a testimonial");
+      title.setText("Add Testimonial");
     }
 
     backButton.setOnClickListener(v -> onBackPressed());
@@ -261,7 +282,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
               Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
               return;
             }
-              WebEngageController.trackEvent(TESTIMONIAL_ADDED, EVENT_LABEL_MANAGE_CONTENT, session.getFpTag());
+            WebEngageController.trackEvent(TESTIMONIAL_ADDED, EVENT_LABEL_MANAGE_CONTENT, session.getFpTag());
             Toast.makeText(getApplicationContext(), "Successfully Added Testimonials", Toast.LENGTH_LONG).show();
             isNewDataAdded = true;
             onBackPressed();
@@ -363,7 +384,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
               Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
               return;
             }
-              WebEngageController.trackEvent(TESTIMONIAL_UPDATED, EVENT_LABEL_TESTIMONIAL_ADDED, session.getFpTag());
+            WebEngageController.trackEvent(TESTIMONIAL_UPDATED, EVENT_LABEL_TESTIMONIAL_ADDED, session.getFpTag());
             Toast.makeText(getApplicationContext(), "Successfully Updated Testimonials", Toast.LENGTH_LONG).show();
             onBackPressed();
           }
@@ -372,7 +393,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
           public void failure(RetrofitError error) {
             hideLoader();
             if (error != null && error.getResponse() != null && error.getResponse().getStatus() == 200) {
-                Toast.makeText(getApplicationContext(), getString(R.string.successfully_updated_testimonials), Toast.LENGTH_LONG).show();
+              Toast.makeText(getApplicationContext(), getString(R.string.successfully_updated_testimonials), Toast.LENGTH_LONG).show();
               onBackPressed();
             } else {
               Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
@@ -387,14 +408,21 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
   }
 
   private boolean validateInput() {
-    if (!(userNameText.getText().toString().isEmpty() || reviewTitleText.getText().toString().isEmpty() || reviewDescriptionText.getText().toString().isEmpty()) ||
-        !(isProfileDescFill(session.getFP_AppExperienceCode()) == View.VISIBLE && profileDescEdt.getText().toString().isEmpty())) {
-      return true;
+    if (userNameText.getText().toString().isEmpty()) {
+      return messageInpute();
+    } else if (reviewTitleText.getText().toString().isEmpty()) {
+      return messageInpute();
+    } else if (reviewDescriptionText.getText().toString().isEmpty() || (isProfileDescFill(session.getFP_AppExperienceCode()) == View.VISIBLE && profileDescEdt.getText().toString().isEmpty())) {
+      return messageInpute();
     } else {
-      Toast.makeText(getApplicationContext(), "Fields are Empty...", Toast.LENGTH_SHORT).show();
-      hideLoader();
-      return false;
+      return true;
     }
+  }
+
+  private boolean messageInpute() {
+    Toast.makeText(getApplicationContext(), "Fields are empty...", Toast.LENGTH_SHORT).show();
+    hideLoader();
+    return false;
   }
 
   public void cameraIntent() {
@@ -476,7 +504,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
             path = Methods.getPath(this, picUri);
             updatePlaceProfileImage();
           } else {
-              Toast.makeText(this, getString(R.string.something_went_wrong_try_later), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.something_went_wrong_try_later), Toast.LENGTH_LONG).show();
           }
         }
       }
@@ -534,7 +562,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
           hideLoader();
           if (response != null && response.getStatus() == 200) {
             Log.d("deletePlacesAround ->", response.getBody().toString());
-              Toast.makeText(getApplicationContext(), getString( R.string.successfully_deleted_), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.successfully_deleted_), Toast.LENGTH_LONG).show();
             onBackPressed();
           } else {
             Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
@@ -545,7 +573,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         public void failure(RetrofitError error) {
           hideLoader();
           if (error != null && error.getResponse() != null && error.getResponse().getStatus() == 200) {
-              Toast.makeText(getApplicationContext(),getString( R.string.successfully_deleted_), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.successfully_deleted_), Toast.LENGTH_LONG).show();
             onBackPressed();
           } else {
             Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
@@ -568,10 +596,10 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
 
   private void uploadDataToServer() {
     if (ScreenType.equals("edit")) {
-        showLoader(getString(R.string.updating_record_please_wait));
+      showLoader(getString(R.string.updating_record_please_wait));
       updateExistingTestimonialsAPI();
     } else {
-        showLoader(getString(R.string.creating_record_please_wait));
+      showLoader(getString(R.string.creating_record_please_wait));
       createNewTestimonialsAPI();
       Methods.hideKeyboard(TestimonialsFeedbackActivity.this);
     }
@@ -605,47 +633,129 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
   }
 
   private void getHeaderAuthToken() {
-    try {
-      APIInterfaces APICalls = new RestAdapter.Builder().setEndpoint("https://developer.api.boostkit.dev")
-          .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build().create(APIInterfaces.class);
-      Log.v("newvlue", " " + session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID) + " " + session.getFpTag());
-      APICalls.getHeaderAuthorizationtoken(session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID), session.getFpTag(), new Callback<GetTokenData>() {
-        @Override
-        public void success(GetTokenData s, Response response) {
-          Log.v("experincecode1", " " + s.getToken() + " " + response.getReason() + " " + response.getBody());
-          int status = response.getStatus();
-          if ((status == 200 || status == 201 || status == 202) && s != null) {
+    testimonialType = session.getFPDetails(TestimonialType.TESTIMONIAL_TYPE.name());
+    headerToken = session.getFPDetails(TestimonialType.TESTIMONIAL_HEADER.name());
+    if (testimonialType.isEmpty() && headerToken.isEmpty()) {
+      try {
+        APIInterfaces APICalls = new RestAdapter.Builder().setEndpoint("https://developer.api.boostkit.dev")
+            .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build().create(APIInterfaces.class);
+        Log.v("newvlue", " " + session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID) + " " + session.getFpTag());
+        APICalls.getHeaderAuthorizationtoken(session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID), session.getFpTag(), new Callback<GetTokenData>() {
+          @Override
+          public void success(GetTokenData s, Response response) {
+            Log.v("experincecode1", " " + s.getToken() + " " + response.getReason() + " " + response.getBody());
+            int status = response.getStatus();
+            if ((status == 200 || status == 201 || status == 202) && s != null) {
 
-            if (s.getWebActions() != null && !s.getWebActions().isEmpty()) {
-              loopBreak:
-              for (WebActionsItem action : s.getWebActions()) {
-                for (String type : allTestimonialType) {
-                  if (action.getName().equalsIgnoreCase(type)) {
-                    testimonialType = action.getName();
-                    break loopBreak;
+              if (s.getWebActions() != null && !s.getWebActions().isEmpty()) {
+                loopBreak:
+                for (WebActionsItem action : s.getWebActions()) {
+                  for (String type : allTestimonialType) {
+                    if (action.getName().equalsIgnoreCase(type)) {
+                      testimonialType = action.getName();
+                      break loopBreak;
+                    }
                   }
                 }
               }
-            }
 
-            headerToken = s.getToken();
-          } else {
-            Toast.makeText(getApplicationContext(), response.getStatus(), Toast.LENGTH_SHORT).show();
-            headerToken = "";
+              headerToken = s.getToken();
+              session.storeFPDetails(TestimonialType.TESTIMONIAL_TYPE.name(), testimonialType);
+              session.storeFPDetails(TestimonialType.TESTIMONIAL_HEADER.name(), headerToken);
+              capLimitCheck(testimonialType, headerToken);
+            } else {
+              Toast.makeText(getApplicationContext(), response.getStatus(), Toast.LENGTH_SHORT).show();
+              headerToken = "";
+            }
+          }
+
+          @Override
+          public void failure(RetrofitError error) {
+            Log.v("experincecode2", " " + error.getBody() + " " + error.getMessage());
+            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
+          }
+        });
+      } catch (Exception e) {
+        Log.v("experincecode3", " " + e.getMessage() + " " + e.getStackTrace());
+        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        e.printStackTrace();
+      }
+    } else capLimitCheck(testimonialType, headerToken);
+  }
+
+  private void capLimitCheck(String testimonialType, String headerToken) {
+    try {
+      JSONObject query = new JSONObject();
+      query.put("WebsiteId", session.getFpTag());
+      APIInterfaces APICalls = new RestAdapter.Builder().setEndpoint("https://webaction.api.boostkit.dev")
+          .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build()
+          .create(APIInterfaces.class);
+      APICalls.getTestimonialsList(headerToken, testimonialType, query, 0, 2, new Callback<GetTestimonialData>() {
+        @Override
+        public void success(GetTestimonialData testimonialModel, Response response) {
+          CapLimitFeatureResponseItem data = filterFeature(getCapData(), CapLimitFeatureResponseItem.FeatureType.TESTIMONIALS);
+          if (data != null && testimonialModel.getExtra() != null) {
+            PropertiesItem capLimitTestimonial = data.filterProperty(PropertiesItem.KeyType.LIMIT);
+            if (testimonialModel.getExtra().getTotalCount() != null && capLimitTestimonial.getValueN() != null && testimonialModel.getExtra().getTotalCount() >= capLimitTestimonial.getValueN()) {
+              hideKeyBoard(activity);
+              showAlertCapLimit("Can't add the testimonial, please activate your premium Add-ons plan.");
+            }
           }
         }
 
         @Override
         public void failure(RetrofitError error) {
-          Log.v("experincecode2", " " + error.getBody() + " " + error.getMessage());
-          Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-          Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
+          Log.v("failure", " " + error.getMessage());
         }
       });
-    } catch (Exception e) {
-      Log.v("experincecode3", " " + e.getMessage() + " " + e.getStackTrace());
-      Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+    } catch (JSONException e) {
       e.printStackTrace();
     }
+  }
+
+  void showAlertCapLimit(String msg) {
+    AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.CustomAlertDialogTheme));
+    builder.setCancelable(false);
+    builder.setTitle("You have exceeded limit!").setMessage(msg);
+    builder.setPositiveButton("Explore Add-ons", (dialog, which) -> {
+      dialog.dismiss();
+      initiateBuyFromMarketplace();
+      activity.finish();
+    });
+    builder.setNegativeButton("Close", (dialog, which) -> {
+      dialog.dismiss();
+      activity.finish();
+    });
+    builder.create().show();
+  }
+
+  private void initiateBuyFromMarketplace() {
+    ProgressDialog progressDialog = new ProgressDialog(this);
+    String status = "Loading. Please wait...";
+    progressDialog.setMessage(status);
+    progressDialog.setCancelable(false);
+    progressDialog.show();
+    Intent intent = new Intent(activity, UpgradeActivity.class);
+    intent.putExtra("expCode", session.getFP_AppExperienceCode());
+    intent.putExtra("fpName", session.getFPName());
+    intent.putExtra("fpid", session.getFPID());
+    intent.putExtra("fpTag", session.getFpTag());
+    intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
+    intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
+    if (session.getUserProfileEmail() != null) {
+      intent.putExtra("email", session.getUserProfileEmail());
+    } else {
+      intent.putExtra("email", "ria@nowfloats.com");
+    }
+    if (session.getUserPrimaryMobile() != null) {
+      intent.putExtra("mobileNo", session.getUserPrimaryMobile());
+    } else {
+      intent.putExtra("mobileNo", "9160004303");
+    }
+    intent.putExtra("profileUrl", session.getFPLogo());
+    intent.putExtra("buyItemKey", CapLimitFeatureResponseItem.FeatureType.TESTIMONIALS.name());
+    startActivity(intent);
+    new Handler().postDelayed(() -> progressDialog.dismiss(), 1000);
   }
 }

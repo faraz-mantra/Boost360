@@ -20,6 +20,7 @@
       app:layout_constraintTop_toTopOf="parent">
 
       <com.framework.views.customViews.CustomEditText
+        android:id="@+id/edt_search"
         style="@style/match_wrap"
         android:background="@drawable/ic_rectangle_light_black_outline"
         android:drawableStart="@drawable/ic_search_grey"
@@ -29,7 +30,6 @@
         android:padding="@dimen/size_12"
         android:textColorHint="@color/black_202A2A2A"
         android:textSize="14sp"
-        android:id="@+id/edt_search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -135,7 +135,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:textAllCaps="true" />
+        app:textAllCaps="false" />
     </androidx.constraintlayout.widget.ConstraintLayout>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

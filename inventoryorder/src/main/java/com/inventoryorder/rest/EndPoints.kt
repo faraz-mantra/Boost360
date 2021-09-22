@@ -10,6 +10,7 @@ object EndPoints {
   const val SEND_SMS = "discover/v1/floatingpoint/CreateSMSHighPriorityIndia"
   const val GET_BIZ_FLOATS_MESSAGE = "/Discover/v1/floatingPoint/bizFloats"
   const val GET_PRODUCT_LIST = "Product/v1/GetListings"
+  const val GET_SERVICE_LISTING = "product/v13/GetAllServiceListings"
 
   // API with float
   const val BOOST_API_WITH_FLOAT = "https://api.withfloats.com"
@@ -24,6 +25,7 @@ object EndPoints {
   const val GET_DOCTORS_API = "Home/GetDoctorData"
   const val GET_PRODUCT_DETAILS = "Home/GetProductDetails"
   const val SEND_MAIL = "Home/SendEmail"
+  const val GET_STAFF_LISTING = "staff/v1/GetStaffListing"
 
   // NFX APIs
   const val ASSURED_PURCHASE_BASE_URL = "https://assuredpurchase.withfloats.com/"
@@ -43,16 +45,18 @@ object EndPoints {
   const val GET_ORDER_DETAIL = "api/assuredPurchase/v2/GetOrderDetails"
   const val GET_LIST_IN_COMPLETE_ORDER = "api/assuredPurchase/v2/ListIncompleteOrders"
 
-  const val POST_UPDATE_EXTRA_FIELD_ORDER = "api/assuredPurchase/v2/UpdateExtraPropertiesInformation"
+  const val POST_UPDATE_EXTRA_FIELD_ORDER =
+    "api/assuredPurchase/v2/UpdateExtraPropertiesInformation"
   const val GET_CONFIRM_ORDER = "api/assuredPurchase/v2/ConfirmOrder"
   const val GET_CANCEL_ORDER = "api/assuredPurchase/v2/CancelOrder"
   const val MARK_AS_DELIVERED = "api/assuredPurchase/v2/MarkOrderAsDelivered"
   const val MARK_AS_SHIPPED = "api/assuredPurchase/v2/MarkOrderAsShipped"
   const val SEND_PAYMENT_REMINDER = "api/assuredPurchase/v2/SendPaymentReminder"
   const val MARK_COD_PAYMENT_DONE = "api/assuredPurchase/v2/MarkPaymentReceivedForCODOrder"
-  const val MARK_PAYMENT_RECEIVED_MERCHANT = "api/assuredPurchase/v2/MarkPaymentReceivedForPlacedOrderByMerchant"
-  const val ORDER_FEEDBACK_REQUEST= "api/assuredPurchase/v2/RequestOrderFeedback"
-  const val ORDER_RE_BOOKING_REQUEST= "api/assuredPurchase/v2/SendRebookingReminder"
+  const val MARK_PAYMENT_RECEIVED_MERCHANT =
+    "api/assuredPurchase/v2/MarkPaymentReceivedForPlacedOrderByMerchant"
+  const val ORDER_FEEDBACK_REQUEST = "api/assuredPurchase/v2/RequestOrderFeedback"
+  const val ORDER_RE_BOOKING_REQUEST = "api/assuredPurchase/v2/SendRebookingReminder"
   //new API order
 
 

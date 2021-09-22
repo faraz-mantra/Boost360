@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.framework.views.fabButton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
@@ -43,10 +44,10 @@ import retrofit.converter.GsonConverter;
 
 public class ProjectActivity extends AppCompatActivity implements ProjectActivityListener {
 
-    private RecyclerView recyclerView;
-    private ProjectAdapter adapter;
     UserSessionManager session;
     List<Data> dataList;
+    private RecyclerView recyclerView;
+    private ProjectAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,9 +115,9 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
     @Override
     protected void onResume() {
         super.onResume();
-        if(Utils.isNetworkConnected(this)) {
+        if (Utils.isNetworkConnected(this)) {
             loadData();
-        }else{
+        } else {
             Methods.showSnackBarNegative(ProjectActivity.this, getString(R.string.no_internet_connection));
         }
     }
@@ -166,7 +167,7 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
                 public void success(String data, Response response) {
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deletePlacesAround ->", response.getBody().toString());
-                        Methods.showSnackBarPositive(ProjectActivity.this,  getString(R.string.successfully_deleted_));
+                        Methods.showSnackBarPositive(ProjectActivity.this, getString(R.string.successfully_deleted_));
                         loadData();
                     } else {
                         Methods.showSnackBarNegative(ProjectActivity.this, getString(R.string.something_went_wrong));
@@ -175,10 +176,10 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
 
                 @Override
                 public void failure(RetrofitError error) {
-                    if(error.getResponse().getStatus() == 200){
-                        Methods.showSnackBarPositive(ProjectActivity.this,  getString(R.string.successfully_deleted_));
+                    if (error.getResponse().getStatus() == 200) {
+                        Methods.showSnackBarPositive(ProjectActivity.this, getString(R.string.successfully_deleted_));
                         loadData();
-                    }else {
+                    } else {
                         Methods.showSnackBarNegative(ProjectActivity.this, getString(R.string.something_went_wrong));
                     }
                 }
@@ -190,17 +191,18 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
     }
 
     public void setHeader() {
-        LinearLayout rightButton, backButton;
+        LinearLayout  backButton;
         ImageView rightIcon;
         TextView title;
+        FloatingActionButton btnAdd;
 
         title = findViewById(R.id.title);
         backButton = findViewById(R.id.back_button);
-        rightButton = findViewById(R.id.right_icon_layout);
+        btnAdd = findViewById(R.id.btn_add);
         rightIcon = findViewById(R.id.right_icon);
         title.setText("Projects");
-        rightIcon.setImageResource(R.drawable.ic_add_white);
-        rightButton.setOnClickListener(new View.OnClickListener() {
+        rightIcon.setVisibility(View.INVISIBLE);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent projectIntent = new Intent(ProjectActivity.this, ProjectDetailsActivity.class);

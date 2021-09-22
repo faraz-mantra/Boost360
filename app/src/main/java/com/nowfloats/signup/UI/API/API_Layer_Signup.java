@@ -3,6 +3,7 @@ package com.nowfloats.signup.UI.API;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -11,9 +12,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Dell on 12-01-2015.
@@ -21,19 +26,6 @@ import org.json.JSONObject;
 public class API_Layer_Signup {
 
     static String tag = null;
-
-    public interface SignUp_Interface {
-
-        public void tagStatus(String status, String tag);
-
-        public void CheckUniqueNumber_preExecute(String value);
-
-        public void CheckUniqueNumber_postExecute(String value);
-
-        public void CheckUniqueNumber_postExecute(String value, String phoneNumber);
-
-    }
-
 
     public static String getTag(final Context context, String name, String country, String city, String category) {
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -88,15 +80,24 @@ public class API_Layer_Signup {
 
                 }
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                // Basic Authentication
+                //String auth = "Basic " + Base64.encodeToString(CONSUMER_KEY_AND_SECRET.getBytes(), Base64.NO_WRAP);
+
+                headers.put("Authorization", Utils.getAuthToken());
+                return headers;
+            }
+        };
 
         queue.add(jsObjRequest);
         return tag;
 
     }
 
-
-    public static void checkUniqueNumber(Context context, final String mobileNumber,final String countryCode) {
+    public static void checkUniqueNumber(Context context, final String mobileNumber, final String countryCode) {
 
         final SignUp_Interface checkUniqueNumberInterface = (SignUp_Interface) context;
 
@@ -154,6 +155,19 @@ public class API_Layer_Signup {
 
         }.execute((Void) null);
 
+
+    }
+
+
+    public interface SignUp_Interface {
+
+        public void tagStatus(String status, String tag);
+
+        public void CheckUniqueNumber_preExecute(String value);
+
+        public void CheckUniqueNumber_postExecute(String value);
+
+        public void CheckUniqueNumber_postExecute(String value, String phoneNumber);
 
     }
 

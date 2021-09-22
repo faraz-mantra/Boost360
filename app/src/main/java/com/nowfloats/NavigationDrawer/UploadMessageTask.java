@@ -17,6 +17,7 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.UploadLargeImage;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import org.json.JSONObject;
@@ -46,8 +47,8 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
     String subscribers = "false";
     PostTaskModel obj;
     UserSessionManager session;
-    private Activity appContext = null;
     String textId;
+    private Activity appContext = null;
 
     public UploadMessageTask(Activity context, String path, PostTaskModel offerObj, UserSessionManager session) {
         this.appContext = context;
@@ -106,7 +107,8 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
                             try {
                                 Thread.sleep(1000);
                                 Log.i("Text---wait", " for 2 SEconDS");
-                                if (Home_Main_Fragment.bus != null) Home_Main_Fragment.bus.post(new PostTextSuccessEvent(true));
+                                if (Home_Main_Fragment.bus != null)
+                                    Home_Main_Fragment.bus.post(new PostTextSuccessEvent(true));
                                 if (listenNew != null) listenNew.postUpdate(true, "Post Updated.");
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -179,6 +181,7 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
             // Enable PUT method
             connection.setRequestMethod(Constants.HTTP_PUT);
             connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
             if (!url.toLowerCase().contains("createbizimage"))
                 connection.setRequestProperty("Content-Type",
                         "application/x-www-form-urlencoded");
@@ -234,8 +237,10 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
                                 try {
                                     Thread.sleep(8000);
                                     //Log.i("IMAGE---wait"," for 8 SEconDS");
-                                    if (Home_Main_Fragment.bus != null) Home_Main_Fragment.bus.post(new PostImageSuccessEvent(txtId));
-                                    if (listenNew != null) listenNew.postUpdate(true, "Post Updated.");
+                                    if (Home_Main_Fragment.bus != null)
+                                        Home_Main_Fragment.bus.post(new PostImageSuccessEvent(txtId));
+                                    if (listenNew != null)
+                                        listenNew.postUpdate(true, "Post Updated.");
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -260,7 +265,8 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                if (listenNew != null) listenNew.postUpdate(false, appContext.getString(R.string.post_image_uploading_error));
+                if (listenNew != null)
+                    listenNew.postUpdate(false, appContext.getString(R.string.post_image_uploading_error));
             } finally {
                 try {
                     inputStreamReader.close();
@@ -274,7 +280,8 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
             }
         } catch (Exception ex) {
             success = false;
-            if (listenNew != null) listenNew.postUpdate(false, appContext.getString(R.string.post_image_uploading_error));
+            if (listenNew != null)
+                listenNew.postUpdate(false, appContext.getString(R.string.post_image_uploading_error));
         } finally {
             try {
                 outputStream.flush();
@@ -320,7 +327,8 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
                                 try {
                                     Thread.sleep(8000);
                                     Log.i("IMAGE---wait", " for 8 SEconDS");
-                                    if (Home_Main_Fragment.bus != null) Home_Main_Fragment.bus.post(new PostImageSuccessEvent(txtId));
+                                    if (Home_Main_Fragment.bus != null)
+                                        Home_Main_Fragment.bus.post(new PostImageSuccessEvent(txtId));
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

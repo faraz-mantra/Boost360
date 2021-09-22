@@ -18,30 +18,13 @@ public class FrequentEmojiHandler {
     private static final String PREFERENCE_NAME = "frequent_emoji";
     private static final String TAG;
     private static FrequentEmojiHandler sInstance;
-    private Context mContext;
-
-    /* renamed from: com.gamelounge.emojiLibrary.helper.FrequentEmojiHandler.1 */
-    static class C03781 implements Comparator<Object> {
-        C03781() {
-        }
-
-        public int compare(Object o1, Object o2) {
-            int value1 = ((Integer) ((Map.Entry) o1).getValue()).intValue();
-            int value2 = ((Integer) ((Map.Entry) o2).getValue()).intValue();
-            if (value1 < value2) {
-                return 1;
-            }
-            if (value1 > value2) {
-                return -1;
-            }
-            return 0;
-        }
-    }
 
     static {
         TAG = FrequentEmojiHandler.class.getSimpleName();
         DEFAULT_SUGGESTED_EMOJI = "\u2764,\ud83d\ude15,\ud83d\ude18,\ud83d\ude22,\ud83d\ude3b,\ud83d\ude0a,\ud83d\ude09,\ud83d\ude0d,\u2764,\ud83d\ude15,\ud83d\ude18,\ud83d\ude22,\ud83d\ude3b,\ud83d\ude0a,\ud83d\ude09,\ud83d\ude0d".split("\\s*,\\s*");
     }
+
+    private Context mContext;
 
     private FrequentEmojiHandler(Context context) {
         this.mContext = context.getApplicationContext();
@@ -52,6 +35,16 @@ public class FrequentEmojiHandler {
             sInstance = new FrequentEmojiHandler(context);
         }
         return sInstance;
+    }
+
+    private static <K, V> Map<K, V> sortByValue(Map<K, V> map) {
+        List<Map.Entry<K, V>> list = new LinkedList(map.entrySet());
+        Collections.sort(list, new C03781());
+        Map<K, V> result = new LinkedHashMap();
+        for (Map.Entry<K, V> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
     }
 
     private SharedPreferences getPreferences() {
@@ -75,13 +68,21 @@ public class FrequentEmojiHandler {
         return emojis;
     }
 
-    private static <K, V> Map<K, V> sortByValue(Map<K, V> map) {
-        List<Map.Entry<K, V>> list = new LinkedList(map.entrySet());
-        Collections.sort(list, new C03781());
-        Map<K, V> result = new LinkedHashMap();
-        for (Map.Entry<K, V> entry : list) {
-            result.put(entry.getKey(), entry.getValue());
+    /* renamed from: com.gamelounge.emojiLibrary.helper.FrequentEmojiHandler.1 */
+    static class C03781 implements Comparator<Object> {
+        C03781() {
         }
-        return result;
+
+        public int compare(Object o1, Object o2) {
+            int value1 = ((Integer) ((Map.Entry) o1).getValue()).intValue();
+            int value2 = ((Integer) ((Map.Entry) o2).getValue()).intValue();
+            if (value1 < value2) {
+                return 1;
+            }
+            if (value1 > value2) {
+                return -1;
+            }
+            return 0;
+        }
     }
 }

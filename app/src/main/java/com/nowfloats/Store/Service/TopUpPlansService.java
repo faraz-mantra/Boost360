@@ -18,24 +18,25 @@ import retrofit.client.Response;
  * Created by Admin on 14-02-2018.
  */
 
-public class TopUpPlansService{
+public class TopUpPlansService {
 
     private ServiceCallbackListener listener;
-    private TopUpPlansService(ServiceCallbackListener listener){
+
+    private TopUpPlansService(ServiceCallbackListener listener) {
         this.listener = listener;
     }
 
-    public static TopUpPlansService getTopUpService(ServiceCallbackListener listener){
+    public static TopUpPlansService getTopUpService(ServiceCallbackListener listener) {
         return new TopUpPlansService(listener);
     }
 
-    public void getTopUpPackages(Map<String,String> map){
+    public void getTopUpPackages(Map<String, String> map) {
         listener.startApiCall();
         Constants.restAdapter.create(StoreInterface.class).getStoreList(map, new Callback<PricingPlansModel>() {
             @Override
             public void success(PricingPlansModel storeMainModel, Response response) {
                 listener.endApiCall();
-                if(storeMainModel != null){
+                if (storeMainModel != null) {
                     findTopUpCalls(storeMainModel);
                 }
             }
@@ -48,7 +49,7 @@ public class TopUpPlansService{
         });
     }
 
-    private void findTopUpCalls(final PricingPlansModel storeMainModel){
+    private void findTopUpCalls(final PricingPlansModel storeMainModel) {
 
         for (AllPackage allPackage : storeMainModel.allPackages) {
             if (allPackage.getKey().equals("TopUp")) {
@@ -59,9 +60,11 @@ public class TopUpPlansService{
         listener.onDataReceived(null);
     }
 
-    public interface ServiceCallbackListener{
+    public interface ServiceCallbackListener {
         void onDataReceived(List<PackageDetails> packages);
+
         void startApiCall();
+
         void endApiCall();
     }
 

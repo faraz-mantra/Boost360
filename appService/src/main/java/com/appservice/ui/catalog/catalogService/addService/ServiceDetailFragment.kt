@@ -26,6 +26,7 @@ import com.appservice.ui.catalog.catalogService.listing.TypeSuccess
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.*
 import com.appservice.ui.model.ItemsItem
+import com.appservice.ui.model.ServiceSearchListingResponse
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.getBitmap
 import com.appservice.viewmodel.ServiceViewModelV1
@@ -36,6 +37,11 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.models.caplimit_feature.PropertiesItem
+import com.framework.models.caplimit_feature.filterFeature
+import com.framework.models.caplimit_feature.getCapData
+import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.File
@@ -77,21 +83,54 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     super.onCreateView()
     WebEngageController.trackEvent(SERVICE_CATALOGUE_ADD, ADDED, NO_EVENT_VALUE)
     getBundleData()
-    setOnClickListener(binding?.selectDeliveryConfig, binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo)
+    setOnClickListener(
+      binding?.selectDeliveryConfig,
+      binding?.vwSavePublish,
+      binding?.imageAddBtn,
+      binding?.clearImage,
+      binding?.btnOtherInfo
+    )
     binding?.payServiceView?.visibility = View.GONE
     binding?.toggleService?.setOnToggledListener { _, _ -> initServiceToggle() }
     initServiceToggle()
     listenerEditText()
+    capLimitCheck()
+  }
+
+  private fun capLimitCheck() {
+    val featureService = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureType.PRODUCTCATALOGUE)
+    val capLimitService = featureService?.filterProperty(PropertiesItem.KeyType.LIMIT)
+    if (isEdit.not() && capLimitService != null) {
+      viewModel?.getSearchListings(sessionLocal.fpTag, sessionLocal.fPID, "", 0, 5)?.observeOnce(viewLifecycleOwner, {
+        val data = (it as? ServiceSearchListingResponse)?.result?.paging
+        if (data?.count != null && capLimitService.getValueN() != null && data.count >= capLimitService.getValueN()!!) {
+          baseActivity.hideKeyBoard()
+          showAlertCapLimit("Can't add the service catalogue, please activate your premium Add-ons plan.",CapLimitFeatureResponseItem.FeatureType.PRODUCTCATALOGUE.name)
+        }
+      })
+    }
   }
 
   private fun initServiceToggle() {
-    binding?.payServiceView?.visibility = if (binding?.toggleService?.isOn!!) View.VISIBLE else View.GONE
-    binding?.freeServiceView?.visibility = if (binding?.toggleService?.isOn!!) View.GONE else View.VISIBLE
+    binding?.payServiceView?.visibility =
+      if (binding?.toggleService?.isOn!!) View.VISIBLE else View.GONE
+    binding?.freeServiceView?.visibility =
+      if (binding?.toggleService?.isOn!!) View.GONE else View.VISIBLE
   }
 
   private fun listenerEditText() {
-    binding?.amountEdt?.afterTextChanged { calculate(binding?.amountEdt?.text.toString(), binding?.discountEdt?.text.toString()) }
-    binding?.discountEdt?.afterTextChanged { calculate(binding?.amountEdt?.text.toString(), binding?.discountEdt?.text.toString()) }
+    binding?.amountEdt?.afterTextChanged {
+      calculate(
+        binding?.amountEdt?.text.toString(),
+        binding?.discountEdt?.text.toString()
+      )
+    }
+    binding?.discountEdt?.afterTextChanged {
+      calculate(
+        binding?.amountEdt?.text.toString(),
+        binding?.discountEdt?.text.toString()
+      )
+    }
   }
 
   private fun calculate(amount: String, dist: String) {
@@ -128,7 +167,13 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       binding?.imageAddBtn?.gone()
       binding?.clearImage?.visible()
       binding?.serviceImageView?.visible()
-      binding?.serviceImageView?.let { baseActivity.glideLoad(it, product?.image?.ActualImage, R.drawable.placeholder_image) }
+      binding?.serviceImageView?.let {
+        baseActivity.glideLoad(
+          it,
+          product?.image?.ActualImage,
+          R.drawable.placeholder_image
+        )
+      }
     }
   }
 
@@ -195,8 +240,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     showLongToast(getString(R.string.service_removed_successfully))
     val data = Intent()
     data.putExtra(IntentConstant.IS_UPDATED.name, true)
-    appBaseActivity?.setResult(Activity.RESULT_OK, data)
-    appBaseActivity?.finish()
+    baseActivity?.setResult(Activity.RESULT_OK, data)
+    baseActivity?.finish()
   }
 
   private fun onServiceDetailResponseReceived(it: BaseResponse) {
@@ -263,7 +308,9 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         viewModel?.addSecondaryImage(request)?.observeOnce(viewLifecycleOwner, Observer {
           checkPosition += 1
           if ((it.error is NoNetworkException).not()) {
-            if (it.isSuccess().not()) showError(resources.getString(R.string.secondary_service_image_upload_error))
+            if (it.isSuccess()
+                .not()
+            ) showError(resources.getString(R.string.secondary_service_image_upload_error))
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == images.size) addUpdateServiceTiming()
         })
@@ -272,8 +319,15 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun addUpdateServiceTiming() {
-    val request = AddServiceTimingRequest(product?.productId, product?.Duration, getTimingRequest(this.serviceTimingList))
-    val requestApi = if (isEdit.not()) viewModel?.addServiceTiming(request) else viewModel?.updateServiceTiming(request)
+    val request = AddServiceTimingRequest(
+      product?.productId,
+      product?.Duration,
+      getTimingRequest(this.serviceTimingList)
+    )
+    val requestApi =
+      if (isEdit.not()) viewModel?.addServiceTiming(request) else viewModel?.updateServiceTiming(
+        request
+      )
     requestApi?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         isRefresh = true
@@ -365,14 +419,20 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     val filterSheet = ImagePickerBottomSheet()
     filterSheet.isHidePdf(true)
     filterSheet.onClicked = { openImagePicker(it) }
-    filterSheet.show(this@ServiceDetailFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
+    filterSheet.show(
+      this@ServiceDetailFragment.parentFragmentManager,
+      ImagePickerBottomSheet::class.java.name
+    )
   }
 
   private fun openSuccessBottomSheet() {
     val createdSuccess = CreateServiceSuccessBottomSheet()
     createdSuccess.setData(isEdit)
     createdSuccess.onClicked = { clickSuccessCreate(it) }
-    createdSuccess.show(this@ServiceDetailFragment.parentFragmentManager, CreateServiceSuccessBottomSheet::class.java.name)
+    createdSuccess.show(
+      this@ServiceDetailFragment.parentFragmentManager,
+      CreateServiceSuccessBottomSheet::class.java.name
+    )
   }
 
   private fun clickSuccessCreate(it: String) {
@@ -380,8 +440,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       TypeSuccess.CLOSE.name -> {
         val data = Intent()
         data.putExtra(IntentConstant.IS_UPDATED.name, isRefresh)
-        appBaseActivity?.setResult(Activity.RESULT_OK, data)
-        appBaseActivity?.finish()
+        baseActivity?.setResult(Activity.RESULT_OK, data)
+        baseActivity?.finish()
       }
       TypeSuccess.VISIT_WEBSITE.name -> {
       }
@@ -391,11 +451,11 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   private fun openImagePicker(it: ClickType) {
     val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
     ImagePicker.Builder(baseActivity)
-        .mode(type)
-        .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
-        .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
-        .scale(800, 800)
-        .enableDebuggingMode(true).build()
+      .mode(type)
+      .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
+      .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
+      .scale(800, 800)
+      .enableDebuggingMode(true).build()
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -411,15 +471,20 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       }
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
       this.product = data?.getSerializableExtra(IntentConstant.PRODUCT_DATA.name) as? ServiceModelV1
-      this.serviceTimingList = data?.getSerializableExtra(IntentConstant.SERVICE_TIMING_DATA.name) as? ArrayList<ServiceTiming>
-      this.secondaryImage = (data?.getSerializableExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>) ?: ArrayList()
+      this.serviceTimingList =
+        data?.getSerializableExtra(IntentConstant.SERVICE_TIMING_DATA.name) as? ArrayList<ServiceTiming>
+      this.secondaryImage =
+        (data?.getSerializableExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>)
+          ?: ArrayList()
     }
   }
 
   private fun showServiceDeliveryConfigBottomSheet() {
     val dialog = ServiceDeliveryConfigBottomSheet()
     dialog.onClicked = { product?.prepaidOnlineAvailable = true }
-    if (product?.prepaidOnlineAvailable != null) dialog.isUpdate(product?.prepaidOnlineAvailable ?: true)
+    if (product?.prepaidOnlineAvailable != null) dialog.isUpdate(
+      product?.prepaidOnlineAvailable ?: true
+    )
     dialog.show(parentFragmentManager, ServiceDeliveryConfigBottomSheet::class.java.name)
   }
 
@@ -434,15 +499,17 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.id_delete -> {
-        MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme).setTitle(resources.getString(R.string.are_you_sure))
-            .setMessage(resources.getString(R.string.delete_record_not_undone))
-            .setNegativeButton(resources.getString(R.string.cancel)) { d, _ -> d.dismiss() }.setPositiveButton(resources.getString(R.string.delete_)) { d, _ ->
-              d.dismiss()
-              showProgress()
-              WebEngageController.trackEvent(DELETE_SERVICE_CATALOGUE, DELETE, NO_EVENT_VALUE)
-              val req = DeleteServiceRequest(this.fpTag, product?.productId)
-              hitApi(viewModel?.deleteService(req), R.string.removing_service_failed);
-            }.show()
+        MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme)
+          .setTitle(resources.getString(R.string.are_you_sure))
+          .setMessage(resources.getString(R.string.delete_record_not_undone))
+          .setNegativeButton(resources.getString(R.string.cancel)) { d, _ -> d.dismiss() }
+          .setPositiveButton(resources.getString(R.string.delete_)) { d, _ ->
+            d.dismiss()
+            showProgress()
+            WebEngageController.trackEvent(DELETE_SERVICE_CATALOGUE, DELETE, NO_EVENT_VALUE)
+            val req = DeleteServiceRequest(this.fpTag, product?.productId)
+            hitApi(viewModel?.deleteService(req), R.string.removing_service_failed);
+          }.show()
         true
       }
       else -> super.onOptionsItemSelected(item)
@@ -455,10 +522,12 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun dialogLogout() {
     MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme)
-        .setTitle(resources.getString(R.string.information_not_saved)).setMessage(resources.getString(R.string.you_have_unsaved_info))
-        .setNegativeButton(getString(R.string.no)) { d, _ -> d.dismiss() }.setPositiveButton(getString(R.string.yes)) { d, _ ->
-          baseActivity.finish()
-          d.dismiss()
-        }.show()
+      .setTitle(resources.getString(R.string.information_not_saved))
+      .setMessage(resources.getString(R.string.you_have_unsaved_info))
+      .setNegativeButton(getString(R.string.no)) { d, _ -> d.dismiss() }
+      .setPositiveButton(getString(R.string.yes)) { d, _ ->
+        baseActivity.finish()
+        d.dismiss()
+      }.show()
   }
 }

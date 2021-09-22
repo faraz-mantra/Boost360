@@ -169,8 +169,8 @@
           android:id="@+id/ctv_edit_leaves"
           style="@style/StaffProfileEditText"
           android:layout_below="@id/ll_timing_container"
-          android:visibility="gone"
           android:layout_alignBaseline="@id/ctv_heading_leaves"
+          android:visibility="gone"
           app:fontFamily="@font/semi_bold" />
 
         <com.framework.views.customViews.CustomTextView
@@ -179,7 +179,7 @@
           android:layout_height="wrap_content"
           android:layout_below="@id/ll_timing_container"
           android:layout_marginTop="@dimen/size_10"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:text="@string/upcoming_leaves"
           android:textColor="@color/black"
           android:textFontWeight="600"
@@ -204,7 +204,7 @@
           android:layout_height="wrap_content"
           android:layout_below="@id/ctv_leaves_subheading"
           android:layout_marginTop="@dimen/size_10"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:textColor="@color/gray_4e4e4e"
           android:textSize="14sp"
           android:visibility="gone"

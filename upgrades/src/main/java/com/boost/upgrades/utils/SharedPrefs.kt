@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.SharedPreferences
 import android.text.TextUtils
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
+import com.boost.upgrades.data.api_model.gst.Result
 import com.boost.upgrades.data.model.CouponsModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -28,12 +29,16 @@ class SharedPrefs(activity: Activity) {
     private val CART_IDS = "CART_IDS"
     private val COUPON_IDS = "COUPON_IDS"
     private val CART_COUPON_DETAILS = "CART_COUPON_DETAILS"
+    private val VALIDITY_MONTHS = "VALIDITY_MONTHS"
 
     private val temp_cartAmount = "Cart_Orig_Price"
     private val temp_couponDiscount = "Coupon_Discount"
     private val temp_monthsValidity = "Months_validity"
     private val compareStatus = "compareStatus"
     private val gstRegistered = "gstRegistered"
+    private val expertContact = "expertContact"
+    private val ADDED_PACK_DESC = "ADDED_PACK_DESC"
+    private val GST_API_RESULT = "GST API RESULT"
 
     private var editor: SharedPreferences.Editor? = null
 
@@ -129,6 +134,19 @@ class SharedPrefs(activity: Activity) {
             return null
         }
     }
+    fun storeGstApiResponse(result: Result?){
+        val gstResult = Gson().toJson(result)
+        editor!!.putString(GST_API_RESULT,gstResult).apply()
+    }
+
+    fun getGstApiResponse(): Result?{
+        val jsonString = pref!!.getString(GST_API_RESULT,null)
+        if(jsonString!=null) {
+            return Gson().fromJson<Result>(jsonString, object : TypeToken<Result>() {}.type)
+        }else{
+            return null
+        }
+    }
 
     fun storeCardIds(orderDetails: List<String?>?){
         val orderInfo = Gson().toJson(orderDetails)
@@ -138,6 +156,15 @@ class SharedPrefs(activity: Activity) {
     fun getCardIds(): List<String?>? {
         val str = pref!!.getString(CART_IDS, "")
         return if (TextUtils.isEmpty(str)) ArrayList() else Gson().fromJson(str, object : TypeToken<List<String?>?>() {}.type)
+    }
+
+    fun storeValidityMonths(orderDetails: String?){
+        editor!!.putString(VALIDITY_MONTHS, orderDetails).apply()
+    }
+
+    fun getValidityMonths(): String? {
+        val str = pref!!.getString(VALIDITY_MONTHS, "")
+        return str
     }
 
     fun storeCouponIds(couponCode: String?){
@@ -182,6 +209,14 @@ class SharedPrefs(activity: Activity) {
         return pref!!.getInt(temp_monthsValidity, 0)
     }
 
+    fun storeAddedPackageDesc(description: String){
+        editor!!.putString(ADDED_PACK_DESC,description).apply()
+    }
+
+    fun getStoreAddedPackageDesc():String?{
+        return pref!!.getString(ADDED_PACK_DESC,null)
+    }
+
     fun storeCompareState(value: Int){
         editor!!.putInt(compareStatus, value).apply()
     }
@@ -196,6 +231,14 @@ class SharedPrefs(activity: Activity) {
 
     fun getGstRegistered(): Boolean{
         return pref!!.getBoolean(gstRegistered, true)
+    }
+
+    fun storeExpertContact(value: String){
+        editor!!.putString(expertContact, value).apply()
+    }
+
+    fun getExpertContact(): String? {
+        return pref!!.getString(expertContact, null)
     }
 
 }

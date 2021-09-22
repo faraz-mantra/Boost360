@@ -7,9 +7,9 @@ import com.framework.base.BaseResponse
 import java.io.Serializable
 
 class QuickActionItem(
-    var title: String? = null,
-    var quickActionType: String = "",
-    var isNew: Boolean = false,
+  var title: String? = null,
+  var quickActionType: String = "",
+  var isNew: Boolean = false,
 ) : BaseResponse(), Serializable, AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {
@@ -20,7 +20,9 @@ class QuickActionItem(
     POST_STATUS_STORY(R.drawable.ic_post_new_story_d), POST_NEW_UPDATE(R.drawable.ic_post_edit_d),
     ADD_PHOTO_GALLERY(R.drawable.ic_add_photo_d), PLACE_CONSULT(R.drawable.ic_video_consulation_d),
     PLACE_APPOINTMENT(R.drawable.ic_book_appointment_d), PLACE_ORDER_BOOKING(R.drawable.ic_new_apt_d),
-    ADD_TESTIMONIAL(R.drawable.ic_add_testmonial_d), LIST_SERVICES(R.drawable.ic_add_service_d), ADD_CUSTOM_PAGE(R.drawable.ic_custom_page_d),
+    ADD_TESTIMONIAL(R.drawable.ic_add_testmonial_d), LIST_SERVICES(R.drawable.ic_add_service_d), ADD_CUSTOM_PAGE(
+      R.drawable.ic_custom_page_d
+    ),
     ADD_STAFF_MEMBER(R.drawable.ic_add_doctor_staff_member_d), ADD_TABLE_BOOKING(R.drawable.ic_add_table_booking_d),
     ADD_MENU(R.drawable.ic_add_menu_item_d), ADD_PROJECT(R.drawable.ic_add_project_d),
     UPLOAD_BROCHURE(R.drawable.ic_upload_brochure_d), ADD_TEAM_MEMBER(R.drawable.ic_add_doctor_staff_member_d),

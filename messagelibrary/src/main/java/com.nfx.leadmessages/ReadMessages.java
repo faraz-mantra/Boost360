@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.IBinder;
 import android.provider.CallLog;
+
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
@@ -13,10 +14,8 @@ import androidx.core.app.ActivityCompat;
  */
 
 public class ReadMessages extends Service {
-    private String fpId = null, mobileId = null;
     private static final Uri MESSAGE_URI = Uri.parse("content://sms/");
     private static final Uri CALL_LOG_URI = CallLog.Calls.CONTENT_URI;
-    private String[] projections = new String[]{"date", "address", "body", "seen"};
     String[] CALL_LOG_PROJECTIONS = new String[]{
             CallLog.Calls.CACHED_NAME,
             CallLog.Calls.NUMBER,
@@ -24,6 +23,8 @@ public class ReadMessages extends Service {
             CallLog.Calls.DURATION,
             CallLog.Calls.TYPE
     };
+    private String fpId = null, mobileId = null;
+    private String[] projections = new String[]{"date", "address", "body", "seen"};
     private String selection = "";
     private String order = "date DESC";
     private String CALL_order = CallLog.Calls.DATE + " DESC";

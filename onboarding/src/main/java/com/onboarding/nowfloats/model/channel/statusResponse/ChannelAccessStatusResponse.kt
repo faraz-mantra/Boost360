@@ -12,21 +12,22 @@ import java.io.Serializable
 
 
 data class ChannelAccessStatusResponse(
-    @SerializedName("channels")
-    var channels: ChannelsType? = null,
-    @SerializedName("connected_at")
-    var connectedAt: String? = null,
-    @SerializedName("last_activity_at")
-    var lastActivityAt: String? = null,
-    @SerializedName("nowfloats_id")
-    var nowfloatsId: String? = null,
-    @SerializedName("success")
-    var success: Boolean? = null,
+  @SerializedName("channels")
+  var channels: ChannelsType? = null,
+  @SerializedName("connected_at")
+  var connectedAt: String? = null,
+  @SerializedName("last_activity_at")
+  var lastActivityAt: String? = null,
+  @SerializedName("nowfloats_id")
+  var nowfloatsId: String? = null,
+  @SerializedName("success")
+  var success: Boolean? = null,
 ) : BaseResponse(), Serializable {
 
   companion object {
 
     const val CONNECTED_CHANNELS = "connected_channels"
+    const val CHANNEL_SHARE_URL = "channel_share_url"
 
     fun getConnectedChannel(): ArrayList<String> {
       val resp = PreferencesUtils.instance.getData(CONNECTED_CHANNELS, "") ?: ""
@@ -46,7 +47,10 @@ data class ChannelAccessStatusResponse(
     }
 
     fun saveDataConnectedChannel(connectedChannels: ArrayList<String>?) {
-      PreferencesUtils.instance.saveData(key = CONNECTED_CHANNELS, convertListObjToString(connectedChannels ?: ArrayList()) ?: "")
+      PreferencesUtils.instance.saveData(
+        key = CONNECTED_CHANNELS,
+        convertListObjToString(connectedChannels ?: ArrayList()) ?: ""
+      )
     }
   }
 }

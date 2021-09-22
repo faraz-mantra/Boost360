@@ -6,7 +6,8 @@ import com.appservice.databinding.BottomSheetServiceDeliveryConfigBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
-class ServiceDeliveryConfigBottomSheet : BaseBottomSheetDialog<BottomSheetServiceDeliveryConfigBinding, BaseViewModel>() {
+class ServiceDeliveryConfigBottomSheet :
+  BaseBottomSheetDialog<BottomSheetServiceDeliveryConfigBinding, BaseViewModel>() {
 
   var onClicked: (deliveryConfig: Boolean) -> Unit = { }
   var deliveryConfig: Boolean = true

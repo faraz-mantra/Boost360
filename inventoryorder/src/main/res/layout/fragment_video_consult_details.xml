@@ -172,7 +172,7 @@
                   android:paddingTop="@dimen/size_2"
                   android:paddingBottom="@dimen/size_2"
                   android:text="@string/payment_reminder"
-                  android:textColor="@color/colorAccent"
+                  android:textColor="@color/colorAccent_jio"
                   app:textType="HEADING_6" />
               </LinearLayout>
 
@@ -253,10 +253,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
-                android:drawableStart="@drawable/ic_call_phone"
+                android:drawableStart="@drawable/ic_phone"
                 android:drawablePadding="@dimen/size_4"
                 android:includeFontPadding="false"
-                android:textColor="@color/greyish_brown"
+                android:textColor="@color/colorAccent_jio"
                 app:fontFamily="@font/semi_bold"
                 app:textType="CAPTION"
                 tools:text="+91 9013268178" />
@@ -266,12 +266,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
-                android:drawableStart="@drawable/ic_inbox"
+                android:drawableStart="@drawable/ic_email"
                 android:drawablePadding="@dimen/size_4"
                 android:ellipsize="end"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:textColor="@color/greyish_brown"
+                android:textColor="@color/colorAccent_jio"
                 app:fontFamily="@font/semi_bold"
                 app:textType="CAPTION"
                 tools:text="rahul@cantech.co" />
@@ -355,7 +355,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_shipping_cost"
                 app:textType="BODY_1"
-                tools:text="Total Amount: ₹976" />
+                tools:text="Total amount: ₹976" />
 
             </LinearLayout>
           </androidx.appcompat.widget.LinearLayoutCompat>
@@ -442,7 +442,7 @@
           android:padding="@dimen/size_14">
 
           <LinearLayout
-              android:id="@+id/ll_countdown"
+            android:id="@+id/ll_countdown"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_2"

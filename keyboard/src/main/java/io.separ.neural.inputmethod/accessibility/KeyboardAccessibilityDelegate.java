@@ -18,9 +18,11 @@ package io.separ.neural.inputmethod.accessibility;
 
 import android.content.Context;
 import android.os.SystemClock;
+
 import androidx.core.view.AccessibilityDelegateCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
+
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,7 +37,7 @@ import com.android.inputmethod.keyboard.KeyboardView;
 /**
  * This class represents a delegate that can be registered in a class that extends
  * {@link KeyboardView} to enhance accessibility support via composition rather via inheritance.
- *
+ * <p>
  * To implement accessibility mode, the target keyboard view has to:<p>
  * - Call {@link #setKeyboard(Keyboard)} when a new keyboard is set to the keyboard view.
  * - Dispatch a hover event by calling {@link #onHoverEnter(MotionEvent)}.
@@ -44,16 +46,14 @@ import com.android.inputmethod.keyboard.KeyboardView;
  */
 public class KeyboardAccessibilityDelegate<KV extends KeyboardView>
         extends AccessibilityDelegateCompat {
-    private static final String TAG = KeyboardAccessibilityDelegate.class.getSimpleName();
+    public static final int HOVER_EVENT_POINTER_ID = 0;
     protected static final boolean DEBUG_HOVER = false;
-
+    private static final String TAG = KeyboardAccessibilityDelegate.class.getSimpleName();
     protected final KV mKeyboardView;
     protected final KeyDetector mKeyDetector;
     private Keyboard mKeyboard;
     private KeyboardAccessibilityNodeProvider<KV> mAccessibilityNodeProvider;
     private Key mLastHoverKey;
-
-    public static final int HOVER_EVENT_POINTER_ID = 0;
 
     public KeyboardAccessibilityDelegate(final KV keyboardView, final KeyDetector keyDetector) {
         super();
@@ -64,11 +64,16 @@ public class KeyboardAccessibilityDelegate<KV extends KeyboardView>
         ViewCompat.setAccessibilityDelegate(keyboardView, this);
     }
 
+    protected final Keyboard getKeyboard() {
+        return mKeyboard;
+    }
+
     /**
      * Called when the keyboard layout changes.
      * <p>
      * <b>Note:</b> This method will be called even if accessibility is not
      * enabled.
+     *
      * @param keyboard The keyboard that is being set to the wrapping view.
      */
     public void setKeyboard(final Keyboard keyboard) {
@@ -81,16 +86,12 @@ public class KeyboardAccessibilityDelegate<KV extends KeyboardView>
         mKeyboard = keyboard;
     }
 
-    protected final Keyboard getKeyboard() {
-        return mKeyboard;
+    protected final Key getLastHoverKey() {
+        return mLastHoverKey;
     }
 
     protected final void setLastHoverKey(final Key key) {
         mLastHoverKey = key;
-    }
-
-    protected final Key getLastHoverKey() {
-        return mLastHoverKey;
     }
 
     /**
@@ -159,8 +160,8 @@ public class KeyboardAccessibilityDelegate<KV extends KeyboardView>
      */
     protected final Key getHoverKeyOf(final MotionEvent event) {
         final int actionIndex = event.getActionIndex();
-        final int x = (int)event.getX(actionIndex);
-        final int y = (int)event.getY(actionIndex);
+        final int x = (int) event.getX(actionIndex);
+        final int y = (int) event.getY(actionIndex);
         return mKeyDetector.detectHitKey(x, y);
     }
 
@@ -172,18 +173,18 @@ public class KeyboardAccessibilityDelegate<KV extends KeyboardView>
      */
     public boolean onHoverEvent(final MotionEvent event) {
         switch (event.getActionMasked()) {
-        case MotionEvent.ACTION_HOVER_ENTER:
-            onHoverEnter(event);
-            break;
-        case MotionEvent.ACTION_HOVER_MOVE:
-            onHoverMove(event);
-            break;
-        case MotionEvent.ACTION_HOVER_EXIT:
-            onHoverExit(event);
-            break;
-        default:
-            Log.w(getClass().getSimpleName(), "Unknown hover event: " + event);
-            break;
+            case MotionEvent.ACTION_HOVER_ENTER:
+                onHoverEnter(event);
+                break;
+            case MotionEvent.ACTION_HOVER_MOVE:
+                onHoverMove(event);
+                break;
+            case MotionEvent.ACTION_HOVER_EXIT:
+                onHoverExit(event);
+                break;
+            default:
+                Log.w(getClass().getSimpleName(), "Unknown hover event: " + event);
+                break;
         }
         return true;
     }
@@ -266,7 +267,7 @@ public class KeyboardAccessibilityDelegate<KV extends KeyboardView>
      * Simulating a touch event by injecting a synthesized touch event into {@link KeyboardView}.
      *
      * @param touchAction The action of the synthesizing touch event.
-     * @param key The key that a synthesized touch event is on.
+     * @param key         The key that a synthesized touch event is on.
      */
     private void simulateTouchEvent(final int touchAction, final Key key) {
         final int x = key.getHitBox().centerX();
@@ -299,7 +300,8 @@ public class KeyboardAccessibilityDelegate<KV extends KeyboardView>
      *
      * @param key The currently hovered key.
      */
-    protected void onHoverMoveWithin(final Key key) { }
+    protected void onHoverMoveWithin(final Key key) {
+    }
 
     /**
      * Handles a hover exit event on a key.

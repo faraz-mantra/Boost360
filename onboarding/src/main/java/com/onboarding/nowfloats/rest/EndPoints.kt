@@ -12,6 +12,7 @@ object EndPoints {
   const val PUT_UPLOAD_BUSINESS_LOGO = "discover/v1/floatingpoint/createLogoImage"
   const val PUT_UPLOAD_PROFILE = "user/v9/floatingpoint/createUserProfileImage"
   const val POST_ACTIVATE_PURCHASED_ORDER = "Payment/v9/floatingpoint/ActivatePurchaseOrder"
+
   //todo validation email phone
   const val VERIFY_PHONE = "/discover/v1/floatingPoint/verifyPrimaryNumber"
   const val VERIFY_EMAIL = "/discover/v1/floatingPoint/verifyEmail"
@@ -44,4 +45,8 @@ object EndPoints {
   const val GET_GMB_ACCOUNT_LIST = "v4/accounts"
   const val GET_GMB_ACCOUNT_LOCATIONS = "v4/accounts/{user_id}/locations"
   const val POST_GOOGLE_AUTH_TOKENS = "oauth2/v4/token"
+
+  //FIREBASE TOKEN
+  const val GET_FIREBASE_TOKEN = "https://api2.withfloats.com/discover/v1/FloatingPoint/GetFirebaseAuthToken"
+
 }

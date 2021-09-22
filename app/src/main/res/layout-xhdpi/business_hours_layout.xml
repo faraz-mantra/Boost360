@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:background="@color/white"
   android:orientation="vertical"
   android:padding="10dp">
@@ -20,7 +20,7 @@
       android:text="@string/days"
       android:textColor="@color/black_4a4a4a"
       android:textSize="13sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
     <TextView
       android:layout_width="0dp"
@@ -31,7 +31,7 @@
       android:text="@string/open_"
       android:textColor="@color/black_4a4a4a"
       android:textSize="13sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
     <TextView
       android:layout_width="0dp"
@@ -42,15 +42,15 @@
       android:text="@string/close"
       android:textColor="@color/black_4a4a4a"
       android:textSize="13sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
     <androidx.appcompat.widget.SwitchCompat
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:textOff="@string/close"
       android:textOn="@string/open_"
-      app:theme="@style/ColorSwitchStyle"
-      android:visibility="invisible" />
+      android:visibility="invisible"
+      app:theme="@style/ColorSwitchStyle" />
 
   </LinearLayout>
 
@@ -100,9 +100,9 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:checked="true"
-      app:theme="@style/ColorSwitchStyle"
       android:textOff="@string/close"
-      android:textOn="@string/open_" />
+      android:textOn="@string/open_"
+      app:theme="@style/ColorSwitchStyle" />
 
   </LinearLayout>
 
@@ -151,9 +151,9 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:checked="true"
-      app:theme="@style/ColorSwitchStyle"
       android:textOff="@string/close"
-      android:textOn="@string/open_" />
+      android:textOn="@string/open_"
+      app:theme="@style/ColorSwitchStyle" />
 
   </LinearLayout>
 
@@ -202,9 +202,9 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:checked="true"
-      app:theme="@style/ColorSwitchStyle"
       android:textOff="@string/close"
-      android:textOn="@string/open_" />
+      android:textOn="@string/open_"
+      app:theme="@style/ColorSwitchStyle" />
 
   </LinearLayout>
 
@@ -253,9 +253,9 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:checked="true"
-      app:theme="@style/ColorSwitchStyle"
       android:textOff="@string/close"
-      android:textOn="@string/open_" />
+      android:textOn="@string/open_"
+      app:theme="@style/ColorSwitchStyle" />
 
   </LinearLayout>
 
@@ -304,9 +304,9 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:checked="true"
-      app:theme="@style/ColorSwitchStyle"
       android:textOff="@string/close"
-      android:textOn="@string/open_" />
+      android:textOn="@string/open_"
+      app:theme="@style/ColorSwitchStyle" />
 
   </LinearLayout>
 
@@ -355,9 +355,9 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:checked="true"
-      app:theme="@style/ColorSwitchStyle"
       android:textOff="@string/close"
-      android:textOn="@string/open_" />
+      android:textOn="@string/open_"
+      app:theme="@style/ColorSwitchStyle" />
   </LinearLayout>
 
   <LinearLayout
@@ -404,9 +404,9 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:checked="true"
-      app:theme="@style/ColorSwitchStyle"
       android:textOff="@string/close"
-      android:textOn="@string/open_" />
+      android:textOn="@string/open_"
+      app:theme="@style/ColorSwitchStyle" />
 
   </LinearLayout>
 

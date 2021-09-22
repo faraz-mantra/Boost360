@@ -8,17 +8,17 @@
   </data>
 
   <com.framework.views.customViews.CustomCardView
+    android:id="@+id/maim_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/maim_view"
     android:layout_marginStart="@dimen/size_15"
     android:layout_marginTop="@dimen/size_2"
     android:layout_marginEnd="@dimen/size_15"
     app:cardBackgroundColor="@android:color/transparent"
     app:cardCornerRadius="@dimen/size_10"
     app:cardElevation="0dp"
-    tools:layout_height="190dp"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    tools:layout_height="190dp">
 
     <com.framework.views.customViews.CustomImageView
       android:id="@+id/image"

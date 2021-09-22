@@ -35,12 +35,11 @@ import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 public class ProjectAndTermsActivity extends AppCompatActivity {
 
-    private ProgressDialog progressDialog;
     public UserSessionManager session;
     LinearLayout projectLayout, teamLayout;
     TextView projectTitle, teamTitle, buyItemButton;
-
     LinearLayout primaryLayout, secoundaryLayout;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +94,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
             }
         });
 
-        if (Constants.StoreWidgets.contains("PROJECTTEAM")) {
+        if (session.getStoreWidgets().contains("PROJECTTEAM")) {
             primaryLayout.setVisibility(View.VISIBLE);
             secoundaryLayout.setVisibility(View.GONE);
         } else {
@@ -108,7 +107,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if (Constants.StoreWidgets.contains("PROJECTTEAM")) {
+        if (session.getStoreWidgets().contains("PROJECTTEAM")) {
             if (Utils.isNetworkConnected(ProjectAndTermsActivity.this)) {
                 loadProjectsData();
                 loadTeamData();
@@ -118,7 +117,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
         }
     }
 
-    public void setHeader(){
+    public void setHeader() {
         LinearLayout backButton;
         TextView title;
 
@@ -153,7 +152,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
                         return;
                     }
 
-                    projectTitle.setText("Projects Listing (" + getProjectsData.getData().size() + ")");
+                    projectTitle.setText("Projects listing (" + getProjectsData.getData().size() + ")");
                 }
 
                 @Override
@@ -187,7 +186,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
                         return;
                     }
 
-                    teamTitle.setText("Team Listing (" + getTeamsData.getData().size() + ")");
+                    teamTitle.setText("Team listing (" + getTeamsData.getData().size() + ")");
                 }
 
                 @Override
@@ -215,13 +214,13 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
         intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
-        if (session.getFPEmail() != null) {
-            intent.putExtra("email", session.getFPEmail());
+        if (session.getUserProfileEmail() != null) {
+            intent.putExtra("email", session.getUserProfileEmail());
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }
-        if (session.getFPPrimaryContactNumber() != null) {
-            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+        if (session.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
             intent.putExtra("mobileNo", "9160004303");
         }
@@ -231,7 +230,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             progressDialog.dismiss();
             finish();
-        },1000);
+        }, 1000);
     }
 
 

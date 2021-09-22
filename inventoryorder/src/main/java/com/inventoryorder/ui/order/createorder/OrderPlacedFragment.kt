@@ -3,7 +3,9 @@ package com.inventoryorder.ui.order.createorder
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import com.framework.extensions.invisible
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.utils.NumbersToWords
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
@@ -67,12 +69,17 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
       binding?.textDeliveryType?.text = orderItem.LogisticsDetails?.DeliveryMode ?: ""
       binding?.textTotalAmount?.text = "${orderItem.BillingDetails?.getCurrencyCodeValue() ?: "INR"} ${orderItem?.BillingDetails?.GrossAmount ?: 0.0}"
     }
-
+    if (orderItem.BillingDetails?.InvoiceUrl.isNullOrEmpty().not()) binding?.invoiceView?.visible()
+    else binding?.invoiceView?.invisible()
   }
 
   fun getBundleData(): Bundle {
     val bundle = Bundle()
-    if (type.equals(AppConstant.TYPE_APPOINTMENT, true)) bundle.putBoolean(IntentConstant.IS_REFRESH.name, true)
+    if (type.equals(
+        AppConstant.TYPE_APPOINTMENT,
+        true
+      )
+    ) bundle.putBoolean(IntentConstant.IS_REFRESH.name, true)
     bundle.putBoolean(IntentConstant.SHOULD_RE_INITIATE.name, shouldReInitiate)
     if (!shouldReInitiate) bundle.putBoolean(IntentConstant.SHOULD_FINISH.name, true)
     return bundle
@@ -81,11 +88,11 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
   private fun getOrderDetails() {
     showProgress()
     viewModel?.assuredPurchaseGetOrderDetails(preferenceData?.clientId, orderId)?.observeOnce(viewLifecycleOwner, {
-      hideProgress()
       if (it.isSuccess()) {
         orderResponse = (it as? OrderDetailResponse)?.Data
         orderResponse?.let { it1 -> setData(it1) }
       } else showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
+      hideProgress()
     })
   }
 
@@ -106,7 +113,11 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
         bundle.putString(IntentConstant.ORDER_ID.name, orderResponse?._id)
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
         if (type.equals(AppConstant.TYPE_APPOINTMENT, true)) {
-          startFragmentOrderActivity(FragmentType.APPOINTMENT_SPA_DETAIL_VIEW, bundle, isResult = true)
+          startFragmentOrderActivity(
+            FragmentType.APPOINTMENT_SPA_DETAIL_VIEW,
+            bundle,
+            isResult = true
+          )
         } else {
           startFragmentOrderActivity(FragmentType.ORDER_DETAIL_VIEW, bundle, isResult = true)
         }

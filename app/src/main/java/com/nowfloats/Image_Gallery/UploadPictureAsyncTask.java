@@ -15,6 +15,7 @@ import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import org.apache.http.HttpEntity;
@@ -39,38 +40,29 @@ import java.util.UUID;
 
 public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String> {
 
-    private ArrayList<String> arrImagePaths;
-
-    public interface UploadPictureInterface {
-        public void uploadedPictureListener(String imageURL);
-    }
-
-
     private static final String TAG = "Image_Gallery";
     public static int uploadTypePrimary = 1;
     public static int uploadTypeGallery = 2;
     public static int uploadTypeLogo = 3;
     public static int uploadTypeBackground = 4;
-
-    private Activity appContext = null;
+    static int chunkLength = 30000;
     ProgressDialog pd = null;
     String path = null;
     ArrayList<String> arrPath = null;
-    private SharedPreferences pref = null;
-    private String backImg = null;
-    private Boolean IsbackImgDeleted = false;
-    private Boolean delImg = false;
-
     String responseMessage = "";
     Boolean success = false, isPrimary = false, isGallery = false, isLogo = false, isParallel, isGalleryImage = false, isBackgroundImage = false;
     String clientIdConcatedWithQoutes = "\"" + Constants.clientId + "\"";
     int size = 0;
     SharedPreferences.Editor prefsEditor;
-    static int chunkLength = 30000;
     UploadPictureInterface uploadInterface;
     UserSessionManager session;
-
     boolean isSilent = false;
+    private ArrayList<String> arrImagePaths;
+    private Activity appContext = null;
+    private SharedPreferences pref = null;
+    private String backImg = null;
+    private Boolean IsbackImgDeleted = false;
+    private Boolean delImg = false;
 
     public UploadPictureAsyncTask(Activity context, String path, Boolean isPrimary, Boolean isGallery) {
         this.appContext = context;
@@ -97,18 +89,13 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
         session = new UserSessionManager(context.getApplicationContext(), context);
     }
 
-
-    public void setOnUploadListener(UploadPictureInterface uploadInterface) {
-        // BoostLog.d("UploadPictureInterface","uploadInterface setOnUploadListener : "+uploadInterface);
-        this.uploadInterface = uploadInterface;
-    }
-
     public UploadPictureAsyncTask(String path, Boolean isPrimary, boolean isSilent) {
         this.path = path;
         this.isPrimary = isPrimary;
         isParallel = true;
         this.isSilent = isSilent;
     }
+
 
     public UploadPictureAsyncTask(Activity context, Boolean isbackgrndImg, Boolean delimg) {
         this.appContext = context;
@@ -140,6 +127,11 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
                 break;
         }
 
+    }
+
+    public void setOnUploadListener(UploadPictureInterface uploadInterface) {
+        // BoostLog.d("UploadPictureInterface","uploadInterface setOnUploadListener : "+uploadInterface);
+        this.uploadInterface = uploadInterface;
     }
 
     @Override
@@ -179,7 +171,6 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
         onPost();
 
     }
-
 
     public void onPost() {
         if (success && !isPrimary && !isBackgroundImage) {
@@ -320,7 +311,6 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
 //        }
     }
 
-
     @Override
     protected String doInBackground(Void... params) {
         String response = "";
@@ -356,7 +346,6 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
         }
         return response;
     }
-
 
     public String uploadImage(String imagePath) {
 
@@ -438,6 +427,42 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
         //IsbackImgDeleted=Util.deletebackgroundImg(Constants.storedBackgroundImage);
     }
 
+    public void Fp_bakgrnd_img_after_deletion() {
+        String serverUri = Constants.GetBackgroundImage +
+                "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID();
+        String backgroundimageurl = "";
+        String backgroundimgid = "";
+        try {
+            Thread.sleep(5000);
+            HttpClient client = new DefaultHttpClient();
+            HttpGet httpRequest = new HttpGet(serverUri);
+            httpRequest.setHeader("Authorization", Utils.getAuthToken());
+            org.apache.http.HttpResponse responseOfSite = client.execute(httpRequest);
+            HttpEntity entity = (HttpEntity) ((org.apache.http.HttpResponse) responseOfSite).getEntity();
+            if (entity != null) {
+                String str = (EntityUtils.toString(entity));
+                JSONArray bgjsonarray = new JSONArray(str);
+                if ((bgjsonarray) != null) {
+                    int len = bgjsonarray.length();
+                    if (len != 0) {
+                        String storedBackgroundImage = bgjsonarray.getString(len - 1);
+                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, storedBackgroundImage);
+                    } else {
+                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, "");
+
+                    }
+                }
+            }
+
+
+        } catch (Exception e) {
+            System.out.println();
+
+        }
+
+
+    }
+
 //	public void getFpData(){
 //		String response = "";
 //		try{
@@ -473,42 +498,6 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
 //	}
 //
 
-    public void Fp_bakgrnd_img_after_deletion() {
-        String serverUri = Constants.GetBackgroundImage +
-                "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID();
-        String backgroundimageurl = "";
-        String backgroundimgid = "";
-        try {
-            Thread.sleep(5000);
-            HttpClient client = new DefaultHttpClient();
-            HttpGet httpRequest = new HttpGet(serverUri);
-            org.apache.http.HttpResponse responseOfSite = client.execute(httpRequest);
-            HttpEntity entity = (HttpEntity) ((org.apache.http.HttpResponse) responseOfSite).getEntity();
-            if (entity != null) {
-                String str = (EntityUtils.toString(entity));
-                JSONArray bgjsonarray = new JSONArray(str);
-                if ((bgjsonarray) != null) {
-                    int len = bgjsonarray.length();
-                    if (len != 0) {
-                        String storedBackgroundImage = bgjsonarray.getString(len - 1);
-                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, storedBackgroundImage);
-                    } else {
-                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, "");
-
-                    }
-                }
-            }
-
-
-        } catch (Exception e) {
-            System.out.println();
-
-        }
-
-
-    }
-
-
     public String sendDataToServer(String filename, String targetUrl) {
         String response = "error";
         Log.e("Image filename", filename);
@@ -536,7 +525,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
             connection.setChunkedStreamingMode(1024);
             connection.setRequestMethod("PUT");
             connection.setRequestProperty("Content-Type", "application/octet-stream");
-
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
             connection.setRequestProperty("Connection", "Keep-Alive");
 
             outputStream = new DataOutputStream(connection.getOutputStream());
@@ -584,5 +573,10 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
             ex.printStackTrace();
         }
         return response;
+    }
+
+
+    public interface UploadPictureInterface {
+        public void uploadedPictureListener(String imageURL);
     }
 }

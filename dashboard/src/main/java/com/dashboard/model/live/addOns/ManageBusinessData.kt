@@ -11,11 +11,11 @@ import java.io.Serializable
 const val LAST_SEEN_DATA = "LAST_SEEN_DATA"
 
 class ManageBusinessData(
-    var title: String? = null,
-    var businessType: String? = null,
-    var premiumCode: String? = null,
-    var isLock: Boolean = false,
-    var isHide: Boolean = false,
+  var title: String? = null,
+  var businessType: String? = null,
+  var premiumCode: String? = null,
+  var isLock: Boolean = false,
+  var isHide: Boolean = false,
 ) : BaseResponse(), AppBaseRecyclerViewItem, Serializable {
 
   override fun getViewType(): Int {
@@ -44,7 +44,7 @@ class ManageBusinessData(
     featured_image_video("featured_image_video", R.drawable.picture_gallery),
     business_hours("business_hours", R.drawable.business_hours),
     contact_details("contact_details", R.drawable.contact_details),
-    business_kyc_verification("business_kyc_verification", R.drawable.boost_payment_gateway),
+    business_kyc_verification("business_kyc_verification", R.drawable.boost_business_kyc_d),
     boost_payment_gateway("boost_payment_gateway", R.drawable.boost_payment_gateway),
     domain_name_ssl("domain_name_ssl", R.drawable.domain_name_ssl),
     my_email_accounts("my_email_accounts", R.drawable.my_email_accounts),
@@ -72,7 +72,7 @@ class ManageBusinessData(
     ic_digital_brochures("ic_digital_brochures", R.drawable.ic_digital_brochures_d),
     ic_product_cataloge_d("ic_product_cataloge_d", R.drawable.ic_product_cataloge_d),
     project_portfolio_d("project_portfolio_d", R.drawable.ic_project_teams_d),
-    team_page_d("team_page_d", R.drawable.ic_project_teams_d),
+    team_page_d("team_page_d", R.drawable.ic_teams_d),
     ic_my_business_faqs("ic_my_business_faqs", R.drawable.ic_faqs_d),
     membership_plans("membership_plans", R.drawable.ic_memberships_d),
     upcoming_batches_d("upcoming_batches_d", R.drawable.ic_upcoming_batch_d),
@@ -91,7 +91,7 @@ class ManageBusinessData(
     table_reservations_d("table_reservations_d", R.drawable.table_reservations_d),
     ic_staff_profile_d("ic_staff_profile_d", R.drawable.ic_staff_profile_d);
 
-   //R.drawable.ic_project_terms_d
+    //R.drawable.ic_project_terms_d
 
     companion object {
       fun fromName(name: String?): BusinessType? = values().firstOrNull { it.name == name }
@@ -99,7 +99,8 @@ class ManageBusinessData(
   }
 
   fun getLastSeenData(): ArrayList<ManageBusinessData> {
-    return ArrayList(convertStringToList(PreferencesUtils.instance.getData(LAST_SEEN_DATA,"") ?: "") ?: ArrayList())
+    return ArrayList(convertStringToList(PreferencesUtils.instance.getData(LAST_SEEN_DATA, "") ?: "") ?: ArrayList()
+    )
   }
 
   fun saveLastSeenData(data: ManageBusinessData) {
@@ -114,12 +115,12 @@ class ManageBusinessData(
 }
 
 data class ManageBusinessDataResponse(
-    var data: ArrayList<ManageActionData>? = null,
+  var data: ArrayList<ManageActionData>? = null,
 ) : BaseResponse(), Serializable
 
 data class ManageActionData(
-    @SerializedName("action_item")
-    var actionItem: ArrayList<ManageBusinessData>? = null,
-    @SerializedName("type")
-    var type: String? = null,
+  @SerializedName("action_item")
+  var actionItem: ArrayList<ManageBusinessData>? = null,
+  @SerializedName("type")
+  var type: String? = null,
 ) : Serializable

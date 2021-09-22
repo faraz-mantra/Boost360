@@ -5,5 +5,5 @@ import org.json.JSONObject
 
 interface UpiPayListener {
 
-    fun upiSelected(data: JSONObject)
+  fun upiSelected(data: JSONObject)
 }

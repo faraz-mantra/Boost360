@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/action_menu_inactive"
-        android:title="MARK AS INACTIVE" />
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+  <item
+    android:id="@+id/action_menu_inactive"
+    android:title="MARK AS INACTIVE" />
 
-    <item
-        app:actionViewClass="com.framework.views.customViews.CustomTextView"
-        android:id="@+id/action_menu_remove_staff"
-        android:title="REMOVE STAFF"
-        />
+  <item
+    android:id="@+id/action_menu_remove_staff"
+    android:title="REMOVE STAFF"
+    app:actionViewClass="com.framework.views.customViews.CustomTextView" />
 
 </menu>

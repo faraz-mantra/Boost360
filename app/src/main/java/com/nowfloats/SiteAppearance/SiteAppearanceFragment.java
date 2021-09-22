@@ -42,11 +42,10 @@ public class SiteAppearanceFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    UserSessionManager session;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    UserSessionManager session;
     private Map<String, String> mfeedBack = new HashMap<>();
 
     //private CompoundButton.OnCheckedChangeListener checkedChangeListener;
@@ -132,27 +131,27 @@ public class SiteAppearanceFragment extends Fragment {
                     i.setData(Uri.parse(url));
                     startActivity(i);
                 }else {*/
-                        final ProgressDialog pg = ProgressDialog.show(getActivity(), "", getString(R.string.wait_for_new_look));
-                        new KitsuneApi(session.getFpTag()).setResultListener(new KitsuneApi.ResultListener() {
-                            @Override
-                            public void onResult(String response, boolean isError) {
-                                pg.dismiss();
-                                if (response.equals("true") && !isError) {
-                                    Methods.showSnackBarPositive(getActivity(), getString(R.string.your_website_appearance_changed));
-                                    tvHelpHeader.setText(getResources().getString(R.string.conv_sa_title));
-                                    tvHelpBody.setText(getResources().getString(R.string.conv_sa_body));
-                                    tvHelpFooter.setVisibility(View.GONE);
-                                    cvKitsuneSwitch.setVisibility(View.GONE);
-                                    tvKitsuneSwitch.setText(getString(R.string.learn_more_about_version));
-                                    tvKitsuneSwitch.setTextColor(Color.parseColor("#808080"));
-                                    ivKitsuneSwitch.setBackgroundColor(Color.parseColor("#00000000"));
-                                    ivKitsuneSwitch.setImageDrawable(getResources().getDrawable(R.drawable.ic_learn_more));
-                                    session.storeFpWebTempalteType("6");
-                                } else {
-                                    Methods.showSnackBarNegative(getActivity(), getString(R.string.can_not_change_appearance));
-                                }
-                            }
-                        }).enableKitsune();
+                final ProgressDialog pg = ProgressDialog.show(getActivity(), "", getString(R.string.wait_for_new_look));
+                new KitsuneApi(session.getFpTag()).setResultListener(new KitsuneApi.ResultListener() {
+                    @Override
+                    public void onResult(String response, boolean isError) {
+                        pg.dismiss();
+                        if (response.equals("true") && !isError) {
+                            Methods.showSnackBarPositive(getActivity(), getString(R.string.your_website_appearance_changed));
+                            tvHelpHeader.setText(getResources().getString(R.string.conv_sa_title));
+                            tvHelpBody.setText(getResources().getString(R.string.conv_sa_body));
+                            tvHelpFooter.setVisibility(View.GONE);
+                            cvKitsuneSwitch.setVisibility(View.GONE);
+                            tvKitsuneSwitch.setText(getString(R.string.learn_more_about_version));
+                            tvKitsuneSwitch.setTextColor(Color.parseColor("#808080"));
+                            ivKitsuneSwitch.setBackgroundColor(Color.parseColor("#00000000"));
+                            ivKitsuneSwitch.setImageDrawable(getResources().getDrawable(R.drawable.ic_learn_more));
+                            session.storeFpWebTempalteType("6");
+                        } else {
+                            Methods.showSnackBarNegative(getActivity(), getString(R.string.can_not_change_appearance));
+                        }
+                    }
+                }).enableKitsune();
             }
         });
         cvRevertBack.setOnClickListener(new View.OnClickListener() {
@@ -214,38 +213,38 @@ public class SiteAppearanceFragment extends Fragment {
                     Methods.showSnackBarNegative(getActivity(), getString(R.string.fill_reasons));
                     return;
                 }
-                if(dialog.isShowing()) {
+                if (dialog.isShowing()) {
                     dialog.dismiss();
                 }
                 JSONArray array = new JSONArray();
                 String[] feedbackContent = getResources().getStringArray(R.array.kitsune_feedback);
                 boolean checkBoxFlag = false;
-                for(CheckBox cb: checkBoxList){
-                    if(cb.isChecked()){
+                for (CheckBox cb : checkBoxList) {
+                    if (cb.isChecked()) {
                         checkBoxFlag = true;
                         int index = checkBoxList.indexOf(cb);
-                        if(index==4){
+                        if (index == 4) {
                             JSONObject obj = new JSONObject();
                             try {
                                 obj.put("Key", "FEEDBACK_CONTENT");
                                 obj.put("Value", et.getText().toString().trim());
                                 array.put(obj);
-                            }catch (JSONException e){
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                        }else {
+                        } else {
                             JSONObject obj = new JSONObject();
                             try {
                                 obj.put("Key", "FEEDBACK_CONTENT");
                                 obj.put("Value", feedbackContent[index]);
                                 array.put(obj);
-                            }catch (JSONException e){
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
                     }
                 }
-                if(!checkBoxFlag){
+                if (!checkBoxFlag) {
                     Methods.showSnackBarNegative(getActivity(), getString(R.string.check_any_checkbox));
                     return;
                 }
@@ -255,7 +254,7 @@ public class SiteAppearanceFragment extends Fragment {
         v.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(dialog.isShowing()) {
+                if (dialog.isShowing()) {
                     dialog.dismiss();
                 }
             }
@@ -264,13 +263,13 @@ public class SiteAppearanceFragment extends Fragment {
     }
 
     private void submitFeedBack(JSONArray array) {
-        final ProgressDialog pd= ProgressDialog.show(getActivity(), "", getString(R.string.wait_while_reverting));
+        final ProgressDialog pd = ProgressDialog.show(getActivity(), "", getString(R.string.wait_while_reverting));
         new KitsuneApi(session.getFpTag()).setResultListener(new KitsuneApi.ResultListener() {
             @Override
             public void onResult(String response, boolean isError) {
                 pd.dismiss();
-                if(!isError){
-                    if(response.equals("true")){
+                if (!isError) {
+                    if (response.equals("true")) {
                         Methods.showSnackBarPositive(getActivity(), getString(R.string.successfully_revert));
                         tvKitsuneSwitch.setText(getString(R.string.upgrade_now));
                         tvKitsuneSwitch.setTextColor(getResources().getColor(R.color.primaryColor));
@@ -291,10 +290,10 @@ public class SiteAppearanceFragment extends Fragment {
                                     setOldDesignVisibility();
                                     session.storeFpWebTempalteType("6");
                          */
-                    }else {
+                    } else {
                         Methods.showSnackBarNegative(getActivity(), getString(R.string.failed_to_revert));
                     }
-                }else {
+                } else {
                     Methods.showSnackBarNegative(getActivity(), getString(R.string.failed_to_revert));
                 }
             }

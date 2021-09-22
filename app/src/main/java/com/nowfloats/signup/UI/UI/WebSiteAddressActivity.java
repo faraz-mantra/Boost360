@@ -29,6 +29,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -51,6 +52,7 @@ import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -60,34 +62,36 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
-public class WebSiteAddressActivity extends AppCompatActivity  {
-    private Toolbar toolbar;
-    Button createButton ;
+public class WebSiteAddressActivity extends AppCompatActivity {
+    public static ProgressDialog pd;
+    Button createButton;
     boolean domainCheck, firstCheck = true;
-    String data_businessName,data_businessCategory,data_city,data_country,data_email,data_phone, websiteTag;
+    String data_businessName, data_businessCategory, data_city, data_country, data_email, data_phone, websiteTag;
     JSONObject businessDetails_jsonData;
-    EditText webSiteTextView ;
-    CardView webSiteCardView ;
-    public static ProgressDialog pd ;
+    EditText webSiteTextView;
+    CardView webSiteCardView;
     TextView label;
     Set<String> rTags, xTags;
-    private String contactName = "contact";
     String aTag, mtag, aName, val, beforeEdit, intialValue;
     ImageView domainCheckStatus;
     CustomRunnable r;
     Handler handler;
     int regex;
     boolean addressTagValid = false;
-    private String countrycodeTag;
     Bus bus;
-    UserSessionManager session ;
-    private DataBase dataBase;
+    UserSessionManager session;
     AppCompatCheckBox termAndPolicyCheckbox;
     TextView termAndPolicyTextView;
+    private Toolbar toolbar;
+    private String contactName = "contact";
+    private String countrycodeTag;
+    private DataBase dataBase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,16 +139,16 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final float scale = this.getResources().getDisplayMetrics().density;
-        termAndPolicyTextView.setText(Methods.fromHtml("By clicking Create My Website, you agree to our <a href=\""+getString(R.string.settings_tou_url)+"\"><u>Terms and Conditions</u></a>  and that you have read our <a href=\""+getString(R.string.settings_privacy_url)+"\"><u>Privacy Policy</u></a>."));
+        termAndPolicyTextView.setText(Methods.fromHtml("By clicking Create My Website, you agree to our <a href=\"" + getString(R.string.settings_tou_url) + "\"><u>Terms and Conditions</u></a>  and that you have read our <a href=\"" + getString(R.string.settings_privacy_url) + "\"><u>Privacy Policy</u></a>."));
         termAndPolicyTextView.setMovementMethod(LinkMovementMethod.getInstance());
         termAndPolicyCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    createButton.setBackgroundColor(ContextCompat.getColor(WebSiteAddressActivity.this,R.color.primary_color));
-                }else{
-                    MixPanelController.track(MixPanelController.TERM_AND_POLICY_CHECKBOX,null);
-                    createButton.setBackgroundColor(ContextCompat.getColor(WebSiteAddressActivity.this,R.color.gray_transparent));
+                if (isChecked) {
+                    createButton.setBackgroundColor(ContextCompat.getColor(WebSiteAddressActivity.this, R.color.primary_color));
+                } else {
+                    MixPanelController.track(MixPanelController.TERM_AND_POLICY_CHECKBOX, null);
+                    createButton.setBackgroundColor(ContextCompat.getColor(WebSiteAddressActivity.this, R.color.gray_transparent));
                 }
             }
         });
@@ -163,12 +167,10 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
             @Override
             public void afterTextChanged(final Editable s) {
                 domainCheck = true;
-                if(Util.isNetworkStatusAvialable(WebSiteAddressActivity.this))
-                {
+                if (Util.isNetworkStatusAvialable(WebSiteAddressActivity.this)) {
                     domainCheck();
 
-                }
-                else{
+                } else {
                     Toast.makeText(WebSiteAddressActivity.this, getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show();
                 }
 
@@ -185,11 +187,11 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
 
-                    if(!termAndPolicyCheckbox.isChecked()) {
+                    if (!termAndPolicyCheckbox.isChecked()) {
                         Toast.makeText(WebSiteAddressActivity.this, getString(R.string.you_must_agree_with_the_terms_and_conditions), Toast.LENGTH_LONG).show();
-                    }else if(addressTagValid){
+                    } else if (addressTagValid) {
                         MixPanelController.track("CreateMyWebsite", null);
-                         createStore_retrofit(WebSiteAddressActivity.this,getJSONData(),bus);
+                        createStore_retrofit(WebSiteAddressActivity.this, getJSONData(), bus);
                     }
                     return true;
                 }
@@ -202,21 +204,20 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
 
         pd = ProgressDialog.show(WebSiteAddressActivity.this, "", getString(R.string.creating_website));
         pd.setCancelable(false);
-        new Create_Tag_Service(webSiteAddressActivity,jsonData,bus);
+        new Create_Tag_Service(webSiteAddressActivity, jsonData, bus);
     }
 
     @Subscribe
-    public void put_createStore(Create_Store_Event response)
-    {
-        final String fpId = response.fpId ;
+    public void put_createStore(Create_Store_Event response) {
+        final String fpId = response.fpId;
 
         dataBase.insertLoginStatus(fpId);
-        UserSessionManager session = new UserSessionManager(getApplicationContext(),WebSiteAddressActivity.this);
+        UserSessionManager session = new UserSessionManager(getApplicationContext(), WebSiteAddressActivity.this);
         session.storeFPID(fpId);
         session.storeSourceClientId(Constants.clientId);
         //thinksity check
-        if(Constants.clientId.equals(Constants.clientIdThinksity)){
-              session.storeIsThinksity("true");
+        if (Constants.clientId.equals(Constants.clientIdThinksity)) {
+            session.storeIsThinksity("true");
         }
 
         // Give a Delay of 4 Seconds and Call this method
@@ -225,7 +226,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
             @Override
             public void run() {
                 // This method will be executed once the timer is over Start your app main activity
-                getFPDetails(WebSiteAddressActivity.this,fpId,Constants.clientId,bus);
+                getFPDetails(WebSiteAddressActivity.this, fpId, Constants.clientId, bus);
             }
         }, 8000);
 
@@ -234,29 +235,28 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
     }
 
     private void getFPDetails(WebSiteAddressActivity activity, String fpId, String clientId, Bus bus) {
-        new Get_FP_Details_Service(activity,fpId,clientId,bus);
+        new Get_FP_Details_Service(activity, fpId, clientId, bus);
     }
 
     @Subscribe
-    public void post_getFPDetails(Get_FP_Details_Event response)
-    {
+    public void post_getFPDetails(Get_FP_Details_Event response) {
         // Close of Progress Bar
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(pd!=null){
-                            pd.dismiss();
-                        }
-                    }
-                });
-        //VISITOR and SUBSCRIBER COUNT API
-        GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(WebSiteAddressActivity.this,session);
-        visit_subcribersCountAsyncTask.execute();
-        if(session.getIsSignUpFromFacebook().contains("true")) {
-            if (session.getFacebookName()!=null && session.getFacebookAccessToken()!=null){
-                dataBase.updateFacebookNameandToken(session.getFacebookName(),session.getFacebookAccessToken());
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (pd != null) {
+                    pd.dismiss();
+                }
             }
-            if (session.getFacebookPage()!=null && session.getFacebookPageID()!=null &&session.getPageAccessToken()!=null){
+        });
+        //VISITOR and SUBSCRIBER COUNT API
+        GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(WebSiteAddressActivity.this, session);
+        visit_subcribersCountAsyncTask.execute();
+        if (session.getIsSignUpFromFacebook().contains("true")) {
+            if (session.getFacebookName() != null && session.getFacebookAccessToken() != null) {
+                dataBase.updateFacebookNameandToken(session.getFacebookName(), session.getFacebookAccessToken());
+            }
+            if (session.getFacebookPage() != null && session.getFacebookPageID() != null && session.getPageAccessToken() != null) {
                 dataBase.updateFacebookPage(session.getFacebookPage(), session.getFacebookPageID(), session.getPageAccessToken());
             }
             new Download_Facebook_Image().execute(session.getFacebookPageURL(), session.getFPID());
@@ -304,36 +304,37 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
             beforeEdit = websiteTag.toLowerCase();
             webSiteTextView.setText(websiteTag.toLowerCase());
             webSiteTextView.setSelection(webSiteTextView.getText().length());
-        }catch (Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
-    private HashMap<String,String> getJSONData()
-    {
+    private HashMap<String, String> getJSONData() {
         HashMap<String, String> store = new HashMap<String, String>();
         try {
             store.put("clientId", Constants.clientId);
-            store.put("tag",websiteTag);
-            store.put("contactName",contactName);
-            store.put("name",data_businessName);
-            store.put("desc","");
-            store.put("address",data_city);
-            store.put("city",data_city);
-            store.put("pincode","");
-            store.put("country",data_country);
-            store.put("primaryNumber",data_phone);
-            store.put("email",data_email);
-            store.put("primaryNumberCountryCode",countrycodeTag);
-            store.put("Uri","");
-            store.put("fbPageName","");
-            store.put("primaryCategory",data_businessCategory);
-            store.put("lat","0");
-            store.put("lng","0");
+            store.put("tag", websiteTag);
+            store.put("contactName", contactName);
+            store.put("name", data_businessName);
+            store.put("desc", "");
+            store.put("address", data_city);
+            store.put("city", data_city);
+            store.put("pincode", "");
+            store.put("country", data_country);
+            store.put("primaryNumber", data_phone);
+            store.put("email", data_email);
+            store.put("primaryNumberCountryCode", countrycodeTag);
+            store.put("Uri", "");
+            store.put("fbPageName", "");
+            store.put("primaryCategory", data_businessCategory);
+            store.put("lat", "0");
+            store.put("lng", "0");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return store ;
+        return store;
 
         // {"clientId":"138440FB190A4CDA998274F52952B0657465B03A177C499DA495372764CE185F",
         //  "tag":"ANUPAMRETAIL",
@@ -354,19 +355,15 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
         // "lng":0}
     }
 
-    public void createStore()
-    {
+    public void createStore() {
 
         String error = uploadStore();
-        if(error.equals("OK"))
-        {
+        if (error.equals("OK")) {
             //ok
-        }
-        else
-        {
+        } else {
             AlertDialog.Builder builderInner = new AlertDialog.Builder(
                     this);
-            builderInner.setMessage(getString(R.string.try_again)+error);
+            builderInner.setMessage(getString(R.string.try_again) + error);
             builderInner.setTitle(getString(R.string.error));
             builderInner.setPositiveButton(getString(R.string.ok),
                     new DialogInterface.OnClickListener() {
@@ -388,7 +385,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
 
     public void verifyTag(String tagname) {
         RequestQueue queue = Volley.newRequestQueue(WebSiteAddressActivity.this);
-        String url = Constants.NOW_FLOATS_API_URL+"/Discover/v1/floatingPoint/verifyUniqueTag";
+        String url = Constants.NOW_FLOATS_API_URL + "/Discover/v1/floatingPoint/verifyUniqueTag";
         JSONObject obj = new JSONObject();
         try {
             obj.put("fpTag", tagname);
@@ -414,7 +411,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
             @Override
             public void onErrorResponse(VolleyError error) {
                 String mesg = error.getMessage();
-                if (mesg!=null && mesg.contains("org.json.JSONException: End of input at character 0 of")) {
+                if (mesg != null && mesg.contains("org.json.JSONException: End of input at character 0 of")) {
                     // invalid tag
                     xTags.add(mtag);
                     label.setText(getString(R.string.chosen_website_not_available));
@@ -423,14 +420,14 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
 
                     domainCheckStatus.setVisibility(View.VISIBLE);
                     domainCheckStatus.clearColorFilter();
-                    domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this,R.drawable.domain_not_available));
-                } else if (mesg!=null && mesg
+                    domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this, R.drawable.domain_not_available));
+                } else if (mesg != null && mesg
                         .contains("type java.lang.String cannot be converted to JSONObject")) {
                     mesg = mesg.replace(
                             "org.json.JSONException: Value ", "");
                     mesg = mesg.replace(
-                                    " of type java.lang.String cannot be converted to JSONObject",
-                                    "");
+                            " of type java.lang.String cannot be converted to JSONObject",
+                            "");
                     mesg = mesg.trim();
                     rTags.add(mtag);
                     if (mtag.equals(mesg)) {
@@ -443,8 +440,8 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                         domainCheck = false;
                         //domainCheckPD.setVisibility(View.GONE);
                         domainCheckStatus.setVisibility(View.VISIBLE);
-                        domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this,R.drawable.domain_available));
-                        PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(WebSiteAddressActivity.this,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+                        domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this, R.drawable.domain_available));
+                        PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(WebSiteAddressActivity.this, R.color.primaryColor), PorterDuff.Mode.SRC_IN);
                         domainCheckStatus.setColorFilter(porterDuffColorFilter);
 
                     } else {
@@ -456,13 +453,23 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                         // domainCheckPD.setVisibility(View.GONE);
                         domainCheckStatus.setVisibility(View.VISIBLE);
                         domainCheckStatus.clearColorFilter();
-                        domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this,R.drawable.domain_not_available));
+                        domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this, R.drawable.domain_not_available));
                         //PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(WebSiteAddressActivity.this,R.color.red), PorterDuff.Mode.SRC_IN);
 
                     }
                 }
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                // Basic Authentication
+                //String auth = "Basic " + Base64.encodeToString(CONSUMER_KEY_AND_SECRET.getBytes(), Base64.NO_WRAP);
+
+                headers.put("Authorization", Utils.getAuthToken());
+                return headers;
+            }
+        };
 
         queue.add(jsObjRequest);
     }
@@ -503,8 +510,8 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                                     domainCheck = false;
                                     // domainCheckPD.setVisibility(View.GONE);
                                     domainCheckStatus.setVisibility(View.VISIBLE);
-                                    domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this,R.drawable.domain_available));
-                                    PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(WebSiteAddressActivity.this,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+                                    domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this, R.drawable.domain_available));
+                                    PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(WebSiteAddressActivity.this, R.color.primaryColor), PorterDuff.Mode.SRC_IN);
                                     domainCheckStatus.setColorFilter(porterDuffColorFilter);
 
                                 } else if (xTags.contains(ttag)) {
@@ -515,11 +522,11 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                                     //domainCheckPD.setVisibility(View.GONE);
                                     domainCheckStatus.setVisibility(View.VISIBLE);
                                     domainCheckStatus.clearColorFilter();
-                                    domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this,R.drawable.domain_not_available));
+                                    domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this, R.drawable.domain_not_available));
                                 } else {
                                     mtag = ttag;
 
-                                   // verifyTag_RetroFit(WebSiteAddressActivity.this,mtag,bus);
+                                    // verifyTag_RetroFit(WebSiteAddressActivity.this,mtag,bus);
                                     verifyTag(ttag);
                                 }
                             } else {
@@ -528,7 +535,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                                 //domainCheckPD.setVisibility(View.GONE);
                                 domainCheckStatus.clearColorFilter();
                                 domainCheckStatus.setVisibility(View.VISIBLE);
-                                domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this,R.drawable.domain_not_available));
+                                domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this, R.drawable.domain_not_available));
                             }
                         }
 
@@ -546,7 +553,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
     }
 
     private void verifyTag_RetroFit(WebSiteAddressActivity webSiteAddressActivity, String mtag, Bus bus) {
-        new Verify_Tag_Service(webSiteAddressActivity,mtag,"",Constants.clientId,bus);
+        new Verify_Tag_Service(webSiteAddressActivity, mtag, "", Constants.clientId, bus);
     }
 
 
@@ -562,35 +569,28 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
         try {
             String error = "";
             JSONObject store = new JSONObject();
-            if(webSiteTextView != null)
-            {
-                store.put("tag",webSiteTextView.toString());
+            if (webSiteTextView != null) {
+                store.put("tag", webSiteTextView.toString());
             }
 
-            if(data_businessName != null)
-            {
+            if (data_businessName != null) {
                 store.put("name", data_businessName);
             }
-            if(data_city != null)
-            {
-                store.put("city",data_city);
+            if (data_city != null) {
+                store.put("city", data_city);
             }
-            if(data_country != null)
-            {
-                store.put("country",data_country);
+            if (data_country != null) {
+                store.put("country", data_country);
             }
-            if(data_phone != null )
-            {
-                store.put("phone",data_phone);
+            if (data_phone != null) {
+                store.put("phone", data_phone);
             }
-            if(data_email != null)
-            {
-                store.put("email",data_email);
+            if (data_email != null) {
+                store.put("email", data_email);
             }
 
-            if(data_businessCategory != null)
-            {
-                store.put("businessCategory",data_businessCategory);
+            if (data_businessCategory != null) {
+                store.put("businessCategory", data_businessCategory);
             }
 
 //            CreateStoreTask task = new CreateStoreTask(this,store);
@@ -598,14 +598,12 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
 //              task.execute();
 
 
-
-        } catch(Exception e)
-        {
+        } catch (Exception e) {
             return "error-csj001";
         }
 
 
-        return null ;
+        return null;
     }
 
 
@@ -623,7 +621,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if(id==android.R.id.home){
+        if (id == android.R.id.home) {
             finish();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }

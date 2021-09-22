@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -61,14 +62,15 @@ public class DomainPurchasedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 WebEngageController.trackEvent(DOMAIN_AND_EMAIL, CLICKED_ON_BOOK_A_NEW_DOMAIN, NULL);
-                ((DomainEmailActivity) requireActivity()).addFragment(new NewDomainFragment(), "NewDomain");
+//                ((DomainEmailActivity) requireActivity()).addFragment(new NewDomainFragment(), "NewDomain");
+                Toast.makeText(requireActivity(), "Please log into boost web application to use this feature.", Toast.LENGTH_LONG).show();
             }
         });
 
     }
 
 
-    public void setHeader(View view){
+    public void setHeader(View view) {
         LinearLayout backButton;
         TextView title;
 

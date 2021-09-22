@@ -72,19 +72,40 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(SERVICE_INFORMATION_CATALOGUE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    setOnClickListener(binding?.cbFacebookPage, binding?.cbGoogleMerchantCenter, binding?.cbTwitterPage,
-        binding?.civIncreaseQuantityOrder, binding?.civDecreseQuantityOrder, binding?.btnAddTag, binding?.btnAddSpecification,
-        binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst, binding?.weeklyAppointmentSchedule)
+    setOnClickListener(
+      binding?.cbFacebookPage,
+      binding?.cbGoogleMerchantCenter,
+      binding?.cbTwitterPage,
+      binding?.civIncreaseQuantityOrder,
+      binding?.civDecreseQuantityOrder,
+      binding?.btnAddTag,
+      binding?.btnAddSpecification,
+      binding?.btnConfirm,
+      binding?.btnClickPhoto,
+      binding?.edtGst,
+      binding?.weeklyAppointmentSchedule
+    )
     this.product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? ServiceModelV1
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
-    this.serviceTimingList = arguments?.getSerializable(IntentConstant.SERVICE_TIMING_DATA.name) as? ArrayList<ServiceTiming>
-    if (this.serviceTimingList.isNullOrEmpty()) this.serviceTimingList = ServiceTiming().getEmptyDataServiceTiming(isEdit)
-    secondaryImage = (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>) ?: ArrayList()
+    this.serviceTimingList =
+      arguments?.getSerializable(IntentConstant.SERVICE_TIMING_DATA.name) as? ArrayList<ServiceTiming>
+    if (this.serviceTimingList.isNullOrEmpty()) this.serviceTimingList =
+      ServiceTiming().getEmptyDataServiceTiming(isEdit)
+    secondaryImage =
+      (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>)
+        ?: ArrayList()
     tagList = product?.tags ?: ArrayList()
-    specList = if (product?.otherSpecification.isNullOrEmpty()) arrayListOf(KeySpecification()) else product?.otherSpecification!!
+    specList =
+      if (product?.otherSpecification.isNullOrEmpty()) arrayListOf(KeySpecification()) else product?.otherSpecification!!
     if (isEdit) {
       secondaryDataImage = product?.secondaryImages
-      if (secondaryImage.isNullOrEmpty()) secondaryDataImage?.forEach { secondaryImage.add(FileModel(pathUrl = it.ActualImage)) }
+      if (secondaryImage.isNullOrEmpty()) secondaryDataImage?.forEach {
+        secondaryImage.add(
+          FileModel(
+            pathUrl = it.ActualImage
+          )
+        )
+      }
     }
     setUiText()
     serviceTagsSet()
@@ -109,7 +130,10 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     }
     if (product?.GstSlab != null) binding?.edtGst?.setText("${(product?.GstSlab ?: 0.0)} %")
     setAdapter()
-    val listYesNo = mutableListOf(SpinnerImageModel("YES" to true, R.drawable.ic_dot_green), SpinnerImageModel("NO" to false, R.drawable.ic_dot_red))
+    val listYesNo = mutableListOf(
+      SpinnerImageModel("YES" to true, R.drawable.ic_dot_green),
+      SpinnerImageModel("NO" to false, R.drawable.ic_dot_red)
+    )
     binding?.spinnerOnlinePayment?.adapter = CustomDropDownAdapter(baseActivity, listYesNo)
     binding?.spinnerCod?.adapter = CustomDropDownAdapter(baseActivity, listYesNo)
     when (product?.codAvailable) {
@@ -126,42 +150,57 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     this.serviceTimingList?.forEach {
       when (ServiceTiming.WeekdayValue.fromFullName(it.day)) {
         ServiceTiming.WeekdayValue.SUNDAY -> {
-          val startSunday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_SUNDAY_START_TIME, "") ?: ""
-          val endSunday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_SUNDAY_END_TIME, "") ?: ""
+          val startSunday =
+            pref?.getString(PreferenceConstant.GET_FP_DETAILS_SUNDAY_START_TIME, "") ?: ""
+          val endSunday =
+            pref?.getString(PreferenceConstant.GET_FP_DETAILS_SUNDAY_END_TIME, "") ?: ""
           it.businessTiming = BusinessHourTiming(startTime = startSunday, endTime = endSunday)
         }
         ServiceTiming.WeekdayValue.MONDAY -> {
-          val startMonday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_MONDAY_START_TIME, "") ?: ""
-          val endMonday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_MONDAY_END_TIME, "") ?: ""
+          val startMonday =
+            pref?.getString(PreferenceConstant.GET_FP_DETAILS_MONDAY_START_TIME, "") ?: ""
+          val endMonday =
+            pref?.getString(PreferenceConstant.GET_FP_DETAILS_MONDAY_END_TIME, "") ?: ""
           it.businessTiming = BusinessHourTiming(startTime = startMonday, endTime = endMonday)
         }
         ServiceTiming.WeekdayValue.TUESDAY -> {
-          val startTuesday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_TUESDAY_START_TIME, "") ?: ""
-          val endTuesday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_TUESDAY_END_TIME, "") ?: ""
+          val startTuesday =
+            pref?.getString(PreferenceConstant.GET_FP_DETAILS_TUESDAY_START_TIME, "") ?: ""
+          val endTuesday =
+            pref?.getString(PreferenceConstant.GET_FP_DETAILS_TUESDAY_END_TIME, "") ?: ""
           it.businessTiming = BusinessHourTiming(startTime = startTuesday, endTime = endTuesday)
         }
         ServiceTiming.WeekdayValue.WEDNESDAY -> {
-          val startWednesday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_WEDNESDAY_START_TIME, "") ?: ""
-          val endWednesday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_WEDNESDAY_END_TIME, "") ?: ""
+          val startWednesday =
+            pref?.getString(PreferenceConstant.GET_FP_DETAILS_WEDNESDAY_START_TIME, "") ?: ""
+          val endWednesday =
+            pref?.getString(PreferenceConstant.GET_FP_DETAILS_WEDNESDAY_END_TIME, "") ?: ""
           it.businessTiming = BusinessHourTiming(startTime = startWednesday, endTime = endWednesday)
         }
         ServiceTiming.WeekdayValue.THURSDAY -> {
-          val startThursday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_THURSDAY_START_TIME, "") ?: ""
-          val endThursday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_THURSDAY_END_TIME, "") ?: ""
+          val startThursday =
+            pref?.getString(PreferenceConstant.GET_FP_DETAILS_THURSDAY_START_TIME, "") ?: ""
+          val endThursday =
+            pref?.getString(PreferenceConstant.GET_FP_DETAILS_THURSDAY_END_TIME, "") ?: ""
           it.businessTiming = BusinessHourTiming(startTime = startThursday, endTime = endThursday)
         }
         ServiceTiming.WeekdayValue.FRIDAY -> {
-          val startFriday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_FRIDAY_START_TIME, "") ?: ""
-          val endFriday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_FRIDAY_END_TIME, "") ?: ""
+          val startFriday =
+            pref?.getString(PreferenceConstant.GET_FP_DETAILS_FRIDAY_START_TIME, "") ?: ""
+          val endFriday =
+            pref?.getString(PreferenceConstant.GET_FP_DETAILS_FRIDAY_END_TIME, "") ?: ""
           it.businessTiming = BusinessHourTiming(startTime = startFriday, endTime = endFriday)
         }
         ServiceTiming.WeekdayValue.SATURDAY -> {
-          val startSaturday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_SATURDAY_START_TIME, "") ?: ""
-          val endSaturday = pref?.getString(PreferenceConstant.GET_FP_DETAILS_SATURDAY_END_TIME, "") ?: ""
+          val startSaturday =
+            pref?.getString(PreferenceConstant.GET_FP_DETAILS_SATURDAY_START_TIME, "") ?: ""
+          val endSaturday =
+            pref?.getString(PreferenceConstant.GET_FP_DETAILS_SATURDAY_END_TIME, "") ?: ""
           it.businessTiming = BusinessHourTiming(startTime = startSaturday, endTime = endSaturday)
         }
       }
-      if (it.time?.from.isNullOrEmpty() || it.time?.to.isNullOrEmpty()) it.time = ServiceTime(it.businessTiming?.startTime, it.businessTiming?.endTime)
+      if (it.time?.from.isNullOrEmpty() || it.time?.to.isNullOrEmpty()) it.time =
+        ServiceTime(it.businessTiming?.startTime, it.businessTiming?.endTime)
     }
     val serviceTimingTxt = ServiceTiming().getStringActive(this.serviceTimingList)
     if (serviceTimingTxt.isNotEmpty()) {
@@ -172,7 +211,8 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
   private fun specificationAdapter() {
     binding?.rvSpecification?.apply {
-      adapterSpec = AppBaseRecyclerViewAdapter(baseActivity, specList, this@ServiceInformationFragment)
+      adapterSpec =
+        AppBaseRecyclerViewAdapter(baseActivity, specList, this@ServiceInformationFragment)
       adapter = adapterSpec
     }
   }
@@ -218,7 +258,11 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.SERVICE_TIMING_DATA.name, this.serviceTimingList)
         bundle.putBoolean(IntentConstant.IS_EDIT.name, this.isEdit)
-        startFragmentActivity(FragmentType.SERVICE_TIMING_FRAGMENT, bundle = bundle, isResult = true)
+        startFragmentActivity(
+          FragmentType.SERVICE_TIMING_FRAGMENT,
+          bundle = bundle,
+          isResult = true
+        )
       }
     }
   }
@@ -227,17 +271,20 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     val filterSheet = ImagePickerBottomSheet()
     filterSheet.isHidePdf(true)
     filterSheet.onClicked = { openImagePicker(it) }
-    filterSheet.show(this@ServiceInformationFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
+    filterSheet.show(
+      this@ServiceInformationFragment.parentFragmentManager,
+      ImagePickerBottomSheet::class.java.name
+    )
   }
 
   private fun openImagePicker(it: ClickType) {
     val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
     ImagePicker.Builder(baseActivity)
-        .mode(type)
-        .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
-        .extension(ImagePicker.Extension.PNG).allowMultipleImages(true)
-        .scale(800, 800)
-        .enableDebuggingMode(true).build()
+      .mode(type)
+      .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
+      .extension(ImagePicker.Extension.PNG).allowMultipleImages(true)
+      .scale(800, 800)
+      .enableDebuggingMode(true).build()
   }
 
   private fun validateAnnGoBack() {
@@ -249,8 +296,10 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     val keySpecification = binding?.cetSpecKey?.text?.toString() ?: ""
     val valSpecification = binding?.cetSpecValue?.text?.toString() ?: ""
     val gst = (binding?.edtGst?.text?.toString() ?: "").replace("%", "").trim()
-    val otherSpec = (specList.filter { it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not() } as? ArrayList<KeySpecification>)
-        ?: ArrayList()
+    val otherSpec = (specList.filter {
+      it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not()
+    } as? ArrayList<KeySpecification>)
+      ?: ArrayList()
     when {
       else -> {
         WebEngageController.trackEvent(SERVICE_INFORMATION_CONFIRM, CLICK, NO_EVENT_VALUE)
@@ -269,7 +318,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         product?.keySpecification?.value = valSpecification
         product?.maxCodOrders = ordersQuantity
         product?.otherSpecification = otherSpec
-        product?.BuyOnlineLink = BuyOnlineLink(description = websiteName,url =  websiteValue)
+        product?.BuyOnlineLink = BuyOnlineLink(description = websiteName, url = websiteValue)
         product?.GstSlab = 18//gst.toIntOrNull() ?: 0;
         val output = Intent()
         output.putExtra(IntentConstant.PRODUCT_DATA.name, product)
@@ -284,7 +333,11 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   private fun serviceTagsSet() {
     binding?.chipsService?.removeAllViews()
     tagList.forEach { tag ->
-      val mChip: Chip = baseActivity.layoutInflater.inflate(R.layout.item_chip, binding?.chipsService, false) as Chip
+      val mChip: Chip = baseActivity.layoutInflater.inflate(
+        R.layout.item_chip,
+        binding?.chipsService,
+        false
+      ) as Chip
       mChip.text = tag
       mChip.setOnCloseIconClickListener {
         binding?.chipsService?.removeView(mChip)
@@ -300,7 +353,8 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
       secondaryImage(mPaths)
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
-      this.serviceTimingList = data?.getSerializableExtra(IntentConstant.SERVICE_TIMING_DATA.name) as? ArrayList<ServiceTiming>
+      this.serviceTimingList =
+        data?.getSerializableExtra(IntentConstant.SERVICE_TIMING_DATA.name) as? ArrayList<ServiceTiming>
       val serviceTimingTxt = ServiceTiming().getStringActive(this.serviceTimingList)
       if (serviceTimingTxt.isNotEmpty()) {
         binding?.txtDaysActive?.text = serviceTimingTxt
@@ -326,7 +380,8 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   private fun setAdapter() {
     if (adapterImage == null) {
       binding?.rvAdditionalDocs?.apply {
-        adapterImage = AppBaseRecyclerViewAdapter(baseActivity, secondaryImage, this@ServiceInformationFragment)
+        adapterImage =
+          AppBaseRecyclerViewAdapter(baseActivity, secondaryImage, this@ServiceInformationFragment)
         adapter = adapterImage
       }
     } else adapterImage?.notifyDataSetChanged()
@@ -338,7 +393,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         val data = item as? FileModel
         if (isEdit && data?.pathUrl.isNullOrEmpty().not()) {
           val dataImage = secondaryDataImage?.firstOrNull { it.ActualImage == data?.pathUrl }
-              ?: return
+            ?: return
           showProgress(resources.getString(R.string.removing_image))
           val request = DeleteSecondaryImageRequest(product?.productId, dataImage.ImageId);
           viewModel?.deleteSecondaryImage(request)?.observeOnce(viewLifecycleOwner, Observer {
@@ -359,7 +414,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         val data = item as? FileModel
         if (isEdit && data?.pathUrl.isNullOrEmpty().not()) {
           val dataImage = secondaryDataImage?.firstOrNull { it.ActualImage == data?.pathUrl }
-              ?: return
+            ?: return
           showProgress(resources.getString(R.string.removing_image))
           val request = DeleteSecondaryImageRequest(product?.productId, dataImage.ImageId);
           viewModel?.deleteSecondaryImage(request)?.observeOnce(viewLifecycleOwner, {
@@ -398,7 +453,10 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   private fun openGStDetail() {
     val gstSheet = GstDetailsBottomSheet()
     gstSheet.onClicked = { binding?.edtGst?.setText("$it %") }
-    gstSheet.show(this@ServiceInformationFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
+    gstSheet.show(
+      this@ServiceInformationFragment.parentFragmentManager,
+      ImagePickerBottomSheet::class.java.name
+    )
   }
 
   fun onNavPressed() {
@@ -407,15 +465,17 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
   private fun dialogLogout() {
     MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme)
-        .setTitle(resources.getString(R.string.information_not_saved)).setMessage(getString(R.string.you_have_unsaved_information_do_you_still_want_to_close))
-        .setNegativeButton(getString(R.string.no)) { d, _ -> d.dismiss() }.setPositiveButton(getString(R.string.yes)) { d, _ ->
-          baseActivity.finish()
-          d.dismiss()
-        }.show()
+      .setTitle(resources.getString(R.string.information_not_saved))
+      .setMessage(getString(R.string.you_have_unsaved_information_do_you_still_want_to_close))
+      .setNegativeButton(getString(R.string.no)) { d, _ -> d.dismiss() }
+      .setPositiveButton(getString(R.string.yes)) { d, _ ->
+        baseActivity.finish()
+        d.dismiss()
+      }.show()
   }
 
 }
 
-data class SpinnerImageModel(var state: Pair<String, Boolean>, var resId: Int) {
+data class SpinnerImageModel(var state: Pair<String, Boolean>, var resId: Int, var disable: Boolean = false) {
 
 }

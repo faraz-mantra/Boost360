@@ -1,526 +1,526 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="twitter_consumer_key">qhecWhz0QK6PcGcsrCL03K8V2</string>
-    <string name="twitter_consumer_secret">MMD73UQ3vvptgFYOtHSl7iZxnwxXguzffTgMSqLzYDElKXY5Ky</string>
-    <string name="website_domain_name">.redtim.com</string>
-    <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
-    <string name="app_name">RedTim</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="next">Next</string>
-    <string name="powered_by_company">RedTim</string>
-    <string name="allow_boost_to_read_your">Please allow RedTim to read your Facebook Page insights.</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_web_site_address">Website Address</string>
-    <string name="title_activity_login">Welcome Back</string>
-    <string name="title_activity_business_profile">BusinessProfileActivity</string>
-    <string name="title_activity_home">HomeActivity</string>
-    <string name="drawer_open">Open</string>
-    <string name="drawer_close">Close</string>
-    <string name="title_activity_business_profile__home">Business Profile</string>
-    <string name="title_activity_business__address_">Business Address</string>
-    <string name="title_activity_contact__info_">Contact Information</string>
-    <string name="title_activity_business__hours_">Business Hours</string>
-    <string name="title_activity_business__logo_">Business Logo</string>
-    <string name="title_activity_social__sharing_">Social Sharing</string>
-    <string name="title_activity_login__main">Welcome Back</string>
-    <string name="primary_number">Primary Number (To communicate with RedTim)</string>
-    <string name="to_communicate_with_nowfloats">To communicate with RedTim</string>
-    <string name="title_activity_pre_sign_up__main">PreSignUp_MainActivity</string>
-    <string name="ps_create_lbl">CREATE</string>
-    <string name="ps_login_lbl">LOG IN</string>
-    <string name="ps_create_lbl_tag">a website with RedTim</string>
-    <string name="ps_login_lbl_tag">to manage RedTim website</string>
-    <string name="ps_sc2_lbl1">Instant Website</string>
-    <string name="ps_sc2_lbl2">Creation</string>
-    <string name="ps_sc2_lbl3">Get a business website \nthat is instantly created and \neasily managed using this app.</string>
-    <string name="ps_sc3_lbl1">Connect to</string>
-    <string name="ps_sc3_lbl2">Facebook</string>
-    <string name="ps_sc3_lbl3">Sign in with your Facebook page to \ncreate and update your website instantly. \nHighly recommended!</string>
-    <string name="ps_sc4_lbl1">Discoverable</string>
-    <string name="ps_sc4_lbl2">On Search</string>
-    <string name="ps_sc4_lbl3">With Location-Based-SEO<sup><small>TM</small></sup>, get \ndiscovered for relevant keywords and \nimprove your ranking on search engines</string>
-    <string name="ps_sc5_lbl1">Get your own</string>
-    <string name="ps_sc5_lbl2">Domain</string>
-    <string name="ps_sc5_lbl3">Take the next step in growing your business. Give it an identity of its own</string>
-    <string name="ps_sc6_lbl1">Generate Business</string>
-    <string name="ps_sc6_lbl2">Leads</string>
-    <string name="ps_sc6_lbl3">Let customers contact you directly \nand reply to them instantly!</string>
-    <string name="ps_sc8_lbl1">Premium features in</string>
-    <string name="ps_sc8_lbl2">REDTIM</string>
-    <string name="ps_sc8_lbl3">Get additional features \nfor your business website \nfrom the in-app Store.</string>
-    <string name="ps_sc8_lbl4">Store</string>
-    <string name="ps_sc1_lbl1_tf">HN53exd.ttf</string>
-    <string name="ps_sc1_lbl2_tf">HN53exd.ttf</string>
-    <string name="ps_create_lbl_tf">HN75Bold.ttf</string>
-    <string name="ps_create_tag_tf">HN56IT.ttf</string>
-    <string name="to_buy_pricing_plans_please_contact">If you are interested in buying a plan, please drop a line at tim@redtim.com or call us at 1844&#8211;811&#8211;2065.</string>
+  <string name="twitter_consumer_key">qhecWhz0QK6PcGcsrCL03K8V2</string>
+  <string name="twitter_consumer_secret">MMD73UQ3vvptgFYOtHSl7iZxnwxXguzffTgMSqLzYDElKXY5Ky</string>
+  <string name="website_domain_name">.redtim.com</string>
+  <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
+  <string name="app_name">RedTim</string>
+  <string name="hello_world">Hello world!</string>
+  <string name="action_settings">Settings</string>
+  <string name="next">Next</string>
+  <string name="powered_by_company">RedTim</string>
+  <string name="allow_boost_to_read_your">Please allow RedTim to read your Facebook Page insights.</string>
+  <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="title_activity_web_site_address">Website Address</string>
+  <string name="title_activity_login">Welcome Back</string>
+  <string name="title_activity_business_profile">BusinessProfileActivity</string>
+  <string name="title_activity_home">HomeActivity</string>
+  <string name="drawer_open">Open</string>
+  <string name="drawer_close">Close</string>
+  <string name="title_activity_business_profile__home">Business Profile</string>
+  <string name="title_activity_business__address_">Business Address</string>
+  <string name="title_activity_contact__info_">Contact Information</string>
+  <string name="title_activity_business__hours_">Business Hours</string>
+  <string name="title_activity_business__logo_">Business Logo</string>
+  <string name="title_activity_social__sharing_">Social Sharing</string>
+  <string name="title_activity_login__main">Welcome Back</string>
+  <string name="primary_number">Primary Number (To communicate with RedTim)</string>
+  <string name="to_communicate_with_nowfloats">To communicate with RedTim</string>
+  <string name="title_activity_pre_sign_up__main">PreSignUp_MainActivity</string>
+  <string name="ps_create_lbl">CREATE</string>
+  <string name="ps_login_lbl">LOG IN</string>
+  <string name="ps_create_lbl_tag">a website with RedTim</string>
+  <string name="ps_login_lbl_tag">to manage RedTim website</string>
+  <string name="ps_sc2_lbl1">Instant Website</string>
+  <string name="ps_sc2_lbl2">Creation</string>
+  <string name="ps_sc2_lbl3">Get a business website \nthat is instantly created and \neasily managed using this app.</string>
+  <string name="ps_sc3_lbl1">Connect to</string>
+  <string name="ps_sc3_lbl2">Facebook</string>
+  <string name="ps_sc3_lbl3">Sign in with your Facebook page to \ncreate and update your website instantly. \nHighly recommended!</string>
+  <string name="ps_sc4_lbl1">Discoverable</string>
+  <string name="ps_sc4_lbl2">On Search</string>
+  <string name="ps_sc4_lbl3">With Location-Based-SEO<sup><small>TM</small></sup>, get \ndiscovered for relevant keywords and \nimprove your ranking on search engines</string>
+  <string name="ps_sc5_lbl1">Get your own</string>
+  <string name="ps_sc5_lbl2">Domain</string>
+  <string name="ps_sc5_lbl3">Take the next step in growing your business. Give it an identity of its own</string>
+  <string name="ps_sc6_lbl1">Generate Business</string>
+  <string name="ps_sc6_lbl2">Leads</string>
+  <string name="ps_sc6_lbl3">Let customers contact you directly \nand reply to them instantly!</string>
+  <string name="ps_sc8_lbl1">Premium features in</string>
+  <string name="ps_sc8_lbl2">REDTIM</string>
+  <string name="ps_sc8_lbl3">Get additional features \nfor your business website \nfrom the in-app Store.</string>
+  <string name="ps_sc8_lbl4">Store</string>
+  <string name="ps_sc1_lbl1_tf">HN53exd.ttf</string>
+  <string name="ps_sc1_lbl2_tf">HN53exd.ttf</string>
+  <string name="ps_create_lbl_tf">HN75Bold.ttf</string>
+  <string name="ps_create_tag_tf">HN56IT.ttf</string>
+  <string name="to_buy_pricing_plans_please_contact">If you are interested in buying a plan, please drop a line at tim@redtim.com or call us at 1844&#8211;811&#8211;2065.</string>
 
-    <string-array name="payment_options">
-        <item>OPC Online Pay</item>
-    </string-array>
+  <string-array name="payment_options">
+    <item>OPC Online Pay</item>
+  </string-array>
 
-    <string-array name="time_arrays">
-        <item>01:00</item>
-        <item>02:00</item>
-        <item>03:00</item>
-        <item>04:00</item>
-        <item>05:00</item>
-        <item>06:00</item>
-        <item>07:00</item>
-        <item>08:00</item>
-        <item>09:00</item>
-        <item>10:00</item>
-        <item>11:00</item>
-    </string-array>
-    <string-array name="weeks">
-        <item>Week 1</item>
-        <item>Week 2</item>
-        <item>Week 3</item>
-        <item>Week 4</item>
-        <item>Week 5</item>
-        <item>Week 6</item>
-    </string-array>
+  <string-array name="time_arrays">
+    <item>01:00</item>
+    <item>02:00</item>
+    <item>03:00</item>
+    <item>04:00</item>
+    <item>05:00</item>
+    <item>06:00</item>
+    <item>07:00</item>
+    <item>08:00</item>
+    <item>09:00</item>
+    <item>10:00</item>
+    <item>11:00</item>
+  </string-array>
+  <string-array name="weeks">
+    <item>Week 1</item>
+    <item>Week 2</item>
+    <item>Week 3</item>
+    <item>Week 4</item>
+    <item>Week 5</item>
+    <item>Week 6</item>
+  </string-array>
 
-    <string name="facebook_app_id">539836972828386</string>
-    <string name="title_activity_image__gallery__main">Image Gallery</string>
-    <string name="title_activity_home__main">Home_MainActivity</string>
-    <string name="title_activity_card__full__view__main">Home</string>
-    <string name="title_activity_create__message_">Post an update</string>
-    <string name="side_panel_row_one">Home</string>
-    <string name="side_panel_row_two">Manage Website</string>
-    <string name="side_panel_row_tenth">Manage Customers</string>
-    <string name="manage_inventory">E-Commerce</string>
-    <string name="side_panel_site_appearance">Site Appearance</string>
-    <string name="side_panel_row_csp">Custom Pages</string>
-    <string name="side_panel_row_three">Business Enquiries</string>
-    <string name="side_panel_row_four">Photo Gallery</string>
-    <string name="side_panel_row_five">Settings</string>
-    <string name="setting_change_pwd">Change Password</string>
-    <string name="setting_feedback">Feedback</string>
-    <string name="setting_rate_us_on_play_store">Rate us on Play Store</string>
-    <string name="Setting_like_us_on_facebook">Like us on Facebook</string>
-    <string name="setting_about_us">About Us</string>
-    <string name="setting_logout">Logout</string>
-    <string name="signup_subd">^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]$</string>
-
-
-    <!-- Deep Linking URLs  -->
-
-    <string name="deeplink_update">update</string>
-    <string name="deeplink_upgrade">upgrade</string>
-    <string name="deeplink_featuredimage">featuredimage</string>
-    <string name="deeplink_analytics">analytics</string>
-    <string name="deeplink_bizenquiry">ttb</string>
-    <string name="deeplink_store">nfstore</string>
-    <string name="deeplink_searchqueries">searchqueries</string>
-    <string name="deeplink_setings">settings</string>
-    <string name="deeplink_socailsharing">social</string>
-    <string name="deeplink_profile">profile</string>
-    <string name="deeplink_contact">contact</string>
-    <string name="deeplink_bizaddress">address</string>
-    <string name="deeplink_bizhours">hours</string>
-    <string name="deeplink_bizlogo">logo</string>
-    <string name="deeplink_nfstoreDomainTTBCombo">bookdomain</string>
-    <string name="deeplink_imageGallery">imagegallery</string>
-    <string name="deeplink_propack">proPack</string>
-    <string name="deeplink_nfstoreseo">nfstoreseo</string>
-    <string name="deeplink_nfstorettb">nfstorettb</string>
-    <string name="deeplink_nfstoreimage">nfstoreimage</string>
-    <string name="deeplink_gplaces">gplaces</string>
-    <string name="deeplink_nfstorebiztiming">nfstorebiztiming</string>
-    <string name="deeplink_nfstorenoads">nfstorenoads</string>
-    <string name="deeplink_ProductGallery">productGallery</string>
-
-    <!-- Deep Linking URLs  -->
+  <string name="facebook_app_id">539836972828386</string>
+  <string name="title_activity_image__gallery__main">Image Gallery</string>
+  <string name="title_activity_home__main">Home_MainActivity</string>
+  <string name="title_activity_card__full__view__main">Home</string>
+  <string name="title_activity_create__message_">Post an update</string>
+  <string name="side_panel_row_one">Home</string>
+  <string name="side_panel_row_two">Manage Website</string>
+  <string name="side_panel_row_tenth">Manage Customers</string>
+  <string name="manage_inventory">E-Commerce</string>
+  <string name="side_panel_site_appearance">Site Appearance</string>
+  <string name="side_panel_row_csp">Custom Pages</string>
+  <string name="side_panel_row_three">Business Enquiries</string>
+  <string name="side_panel_row_four">Photo Gallery</string>
+  <string name="side_panel_row_five">Settings</string>
+  <string name="setting_change_pwd">Change Password</string>
+  <string name="setting_feedback">Feedback</string>
+  <string name="setting_rate_us_on_play_store">Rate us on Play Store</string>
+  <string name="Setting_like_us_on_facebook">Like us on Facebook</string>
+  <string name="setting_about_us">About Us</string>
+  <string name="setting_logout">Logout</string>
+  <string name="signup_subd">^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]$</string>
 
 
-    <!-- SITE-Meter Percentage  -->
+  <!-- Deep Linking URLs  -->
 
-    <string name="buydomain_percentage">10</string>
-    <string name="phoneNumber_percentage">5</string>
-    <string name="businessCategory_percentage">5</string>
-    <string name="featuredImage_percentage">10</string>
-    <string name="businessName_percentage">5</string>
-    <string name="businessdescription_percentage">10</string>
-    <string name="social_percentage">10</string>
-    <string name="businessCategory">5</string>
-    <string name="address_percentage">10</string>
-    <string name="email_percentage">5</string>
-    <string name="postUpdate_percentage">20</string>
-    <string name="share_percentage">5</string>
+  <string name="deeplink_update">update</string>
+  <string name="deeplink_upgrade">upgrade</string>
+  <string name="deeplink_featuredimage">featuredimage</string>
+  <string name="deeplink_analytics">analytics</string>
+  <string name="deeplink_bizenquiry">ttb</string>
+  <string name="deeplink_store">nfstore</string>
+  <string name="deeplink_searchqueries">searchqueries</string>
+  <string name="deeplink_setings">settings</string>
+  <string name="deeplink_socailsharing">social</string>
+  <string name="deeplink_profile">profile</string>
+  <string name="deeplink_contact">contact</string>
+  <string name="deeplink_bizaddress">address</string>
+  <string name="deeplink_bizhours">hours</string>
+  <string name="deeplink_bizlogo">logo</string>
+  <string name="deeplink_nfstoreDomainTTBCombo">bookdomain</string>
+  <string name="deeplink_imageGallery">imagegallery</string>
+  <string name="deeplink_propack">proPack</string>
+  <string name="deeplink_nfstoreseo">nfstoreseo</string>
+  <string name="deeplink_nfstorettb">nfstorettb</string>
+  <string name="deeplink_nfstoreimage">nfstoreimage</string>
+  <string name="deeplink_gplaces">gplaces</string>
+  <string name="deeplink_nfstorebiztiming">nfstorebiztiming</string>
+  <string name="deeplink_nfstorenoads">nfstorenoads</string>
+  <string name="deeplink_ProductGallery">productGallery</string>
 
-    <string name="buydomain_text1">Get your own identity</string>
-    <string name="phoneNumber_text1">Phone number</string>
-    <string name="featuredImage_text1">Featured Image</string>
-    <string name="businessName_text1">Business Name</string>
-    <string name="businessdescription_text1">Business Description</string>
-    <string name="social_text1">Get Social</string>
-    <string name="businessCategory_text1">Business Category</string>
-    <string name="address_text1">Help your customers find you</string>
-    <string name="email_text1">Add Email</string>
-    <string name="postUpdate_text1">Post 5 Updates</string>
-    <string name="share_text1">Share</string>
+  <!-- Deep Linking URLs  -->
 
-    <string name="buydomain_text2">Buy a.com</string>
-    <string name="phoneNumber_text2">Help customers reach you instantly</string>
-    <string name="featuredImage_text2">Add relevant image</string>
-    <string name="businessName_text2">Add Business name</string>
-    <string name="businessdescription_text2">Describe your business</string>
-    <string name="social_text2">Connect to Facebook/Twitter</string>
-    <string name="businessCategory_text2">Choose a Business category</string>
-    <string name="address_text2">Add address</string>
-    <string name="email_text2">Add email</string>
-    <string name="postUpdate_text2">Message regularly and relevantly</string>
-    <string name="share_text2">Promote your website</string>
-    <string name="contact_us_number">18448112065</string>
 
-    <string name="currency_text">USD</string>
-    <string name="email_change_level">If you wish to change email address, please contact tim@redtim.com</string>
-    <string name="business_category_change_level">If you wish to change business category, please contact tim@redtim.com</string>
+  <!-- SITE-Meter Percentage  -->
 
-    <string-array name="CountryCodes">
-        <item>93,AF</item>
-        <item>355,AL</item>
-        <item>213,DZ</item>
-        <item>376,AD</item>
-        <item>244,AO</item>
-        <item>672,AQ</item>
-        <item>54,AR</item>
-        <item>374,AM</item>
-        <item>297,AW</item>
-        <item>61,AU</item>
-        <item>43,AT</item>
-        <item>994,AZ</item>
-        <item>973,BH</item>
-        <item>880,BD</item>
-        <item>375,BY</item>
-        <item>32,BE</item>
-        <item>501,BZ</item>
-        <item>229,BJ</item>
-        <item>975,BT</item>
-        <item>591,BO</item>
-        <item>387,BA</item>
-        <item>267,BW</item>
-        <item>55,BR</item>
-        <item>673,BN</item>
-        <item>359,BG</item>
-        <item>226,BF</item>
-        <item>95,MM</item>
-        <item>257,BI</item>
-        <item>855,KH</item>
-        <item>237,CM</item>
-        <item>1,CA</item>
-        <item>238,CV</item>
-        <item>236,CF</item>
-        <item>235,TD</item>
-        <item>56,CL</item>
-        <item>86,CN</item>
-        <item>61,CX</item>
-        <item>61,CC</item>
-        <item>57,CO</item>
-        <item>269,KM</item>
-        <item>242,CG</item>
-        <item>243,CD</item>
-        <item>682,CK</item>
-        <item>506,CR</item>
-        <item>385,HR</item>
-        <item>53,CU</item>
-        <item>357,CY</item>
-        <item>420,CZ</item>
-        <item>45,DK</item>
-        <item>253,DJ</item>
-        <item>670,TL</item>
-        <item>593,EC</item>
-        <item>20,EG</item>
-        <item>503,SV</item>
-        <item>240,GQ</item>
-        <item>291,ER</item>
-        <item>372,EE</item>
-        <item>251,ET</item>
-        <item>500,FK</item>
-        <item>298,FO</item>
-        <item>679,FJ</item>
-        <item>358,FI</item>
-        <item>33,FR</item>
-        <item>689,PF</item>
-        <item>241,GA</item>
-        <item>220,GM</item>
-        <item>995,GE</item>
-        <item>49,DE</item>
-        <item>233,GH</item>
-        <item>350,GI</item>
-        <item>30,GR</item>
-        <item>299,GL</item>
-        <item>502,GT</item>
-        <item>224,GN</item>
-        <item>245,GW</item>
-        <item>592,GY</item>
-        <item>509,HT</item>
-        <item>504,HN</item>
-        <item>852,HK</item>
-        <item>36,HU</item>
-        <item>91,IN</item>
-        <item>62,ID</item>
-        <item>98,IR</item>
-        <item>964,IQ</item>
-        <item>353,IE</item>
-        <item>44,IM</item>
-        <item>972,IL</item>
-        <item>39,IT</item>
-        <item>225,CI</item>
-        <item>81,JP</item>
-        <item>962,JO</item>
-        <item>7,KZ</item>
-        <item>254,KE</item>
-        <item>686,KI</item>
-        <item>965,KW</item>
-        <item>996,KG</item>
-        <item>856,LA</item>
-        <item>371,LV</item>
-        <item>961,LB</item>
-        <item>266,LS</item>
-        <item>231,LR</item>
-        <item>218,LY</item>
-        <item>423,LI</item>
-        <item>370,LT</item>
-        <item>352,LU</item>
-        <item>853,MO</item>
-        <item>389,MK</item>
-        <item>261,MG</item>
-        <item>265,MW</item>
-        <item>60,MY</item>
-        <item>960,MV</item>
-        <item>223,ML</item>
-        <item>356,MT</item>
-        <item>692,MH</item>
-        <item>222,MR</item>
-        <item>230,MU</item>
-        <item>262,YT</item>
-        <item>52,MX</item>
-        <item>691,FM</item>
-        <item>373,MD</item>
-        <item>377,MC</item>
-        <item>976,MN</item>
-        <item>382,ME</item>
-        <item>212,MA</item>
-        <item>258,MZ</item>
-        <item>264,NA</item>
-        <item>674,NR</item>
-        <item>977,NP</item>
-        <item>31,NL</item>
-        <item>599,AN</item>
-        <item>687,NC</item>
-        <item>64,NZ</item>
-        <item>505,NI</item>
-        <item>227,NE</item>
-        <item>234,NG</item>
-        <item>683,NU</item>
-        <item>850,KP</item>
-        <item>47,NO</item>
-        <item>968,OM</item>
-        <item>92,PK</item>
-        <item>680,PW</item>
-        <item>507,PA</item>
-        <item>675,PG</item>
-        <item>595,PY</item>
-        <item>51,PE</item>
-        <item>63,PH</item>
-        <item>870,PN</item>
-        <item>48,PL</item>
-        <item>351,PT</item>
-        <item>1,PR</item>
-        <item>974,QA</item>
-        <item>40,RO</item>
-        <item>7,RU</item>
-        <item>250,RW</item>
-        <item>590,BL</item>
-        <item>685,WS</item>
-        <item>378,SM</item>
-        <item>239,ST</item>
-        <item>966,SA</item>
-        <item>221,SN</item>
-        <item>381,RS</item>
-        <item>248,SC</item>
-        <item>232,SL</item>
-        <item>65,SG</item>
-        <item>421,SK</item>
-        <item>386,SI</item>
-        <item>677,SB</item>
-        <item>252,SO</item>
-        <item>27,ZA</item>
-        <item>82,KR</item>
-        <item>34,ES</item>
-        <item>94,LK</item>
-        <item>290,SH</item>
-        <item>508,PM</item>
-        <item>249,SD</item>
-        <item>597,SR</item>
-        <item>268,SZ</item>
-        <item>46,SE</item>
-        <item>41,CH</item>
-        <item>963,SY</item>
-        <item>886,TW</item>
-        <item>992,TJ</item>
-        <item>255,TZ</item>
-        <item>66,TH</item>
-        <item>228,TG</item>
-        <item>690,TK</item>
-        <item>676,TO</item>
-        <item>216,TN</item>
-        <item>90,TR</item>
-        <item>993,TM</item>
-        <item>688,TV</item>
-        <item>971,AE</item>
-        <item>256,UG</item>
-        <item>44,GB</item>
-        <item>380,UA</item>
-        <item>598,UY</item>
-        <item>1,US</item>
-        <item>998,UZ</item>
-        <item>678,VU</item>
-        <item>39,VA</item>
-        <item>58,VE</item>
-        <item>84,VN</item>
-        <item>681,WF</item>
-        <item>967,YE</item>
-        <item>260,ZM</item>
-        <item>263,ZW</item>
-    </string-array>
-    <string name="business_enquiries_title">Business Enquiries</string>
-    <string name="business_profile_title">Business Profile</string>
-    <string name="tag_for_partners">.redtim.com</string>
-    <string name="title_activity_splash_screen_">RedTim</string>
-    <string name="title_activity_edit__profile_">Edit_Profile_Activity</string>
-    <string name="pre_signup_screen_one_text">Now Create, Manage and Update A Business website that draws more Customers</string>
-    <string name="pre_signup_screen_two_text">Get a business website \nthat is instantly created and \neasily managed using this app</string>
-    <string name="pre_signup_screen_three_text">Sign in with your Facebook page to \ncreate and update your website instantly. \nHighly recommended!</string>
-    <string name="pre_signup_screen_four_text">With Location-Based-SEO<sup><small>TM</small></sup>, get \ndiscovered for relevant keywords and \nimprove your ranking on search engines</string>
-    <string name="pre_signup_screen_five_text">Take the next step in growing your \nbusiness. Give it an identity of its own</string>
-    <string name="pre_signup_screen_six_text">Let customers contact you directly \nand reply to them instantly!</string>
-    <string name="pre_signup_screen_seven_text">Get additional features \nfor your business website \nfrom the in-app Store..</string>
-    <string name="pre_signup_screen_eight_text">String belongs to Screen Eight</string>
-    <string name="title_activity_mobile__site_">Mobile_Site_Activity</string>
-    <string name="title_activity_site__meter__nf">Site_Meter_NF</string>
-    <string name="presignup_login_text">Already have a RedTim site?</string>
+  <string name="buydomain_percentage">10</string>
+  <string name="phoneNumber_percentage">5</string>
+  <string name="businessCategory_percentage">5</string>
+  <string name="featuredImage_percentage">10</string>
+  <string name="businessName_percentage">5</string>
+  <string name="businessdescription_percentage">10</string>
+  <string name="social_percentage">10</string>
+  <string name="businessCategory">5</string>
+  <string name="address_percentage">10</string>
+  <string name="email_percentage">5</string>
+  <string name="postUpdate_percentage">20</string>
+  <string name="share_percentage">5</string>
 
-    <string name="onboarding_screen_1_title">Congratulations!</string>
-    <string name="onboarding_screen_1_desc">We\'re here to help you through the way. Here are two most basic yet important things you should know.</string>
-    <string name="onboarding_screen_3_title">Discovery is Revenue</string>
-    <string name="onboarding_screen_3_desc">People around your business are searching for stuff you sell, so keep your updates relevant and fresh. This will you lead to attract more customers and generate more revenue.</string>
-    <string name="onboarding_screen_2_title">Content is King</string>
-    <string name="onboarding_screen_2_desc">Update your website twice a week. Just press the plus button at the bottom and simply tell your customers about your products, services or offers.</string>
-    <string name="drop_us_on_email_or_call">Please drop us a line at tim@redtim.com or call us at 1844&#8211;811&#8211;2065 if you\'d like to enable this feature.</string>
-    <string name="primary_contact_number_message">Please drop us a line at tim@redtim.com or call us at 1844&#8211;811&#8211;2065 if you\'d like to change this number.</string>
+  <string name="buydomain_text1">Get your own identity</string>
+  <string name="phoneNumber_text1">Phone number</string>
+  <string name="featuredImage_text1">Featured Image</string>
+  <string name="businessName_text1">Business Name</string>
+  <string name="businessdescription_text1">Business Description</string>
+  <string name="social_text1">Get Social</string>
+  <string name="businessCategory_text1">Business Category</string>
+  <string name="address_text1">Help your customers find you</string>
+  <string name="email_text1">Add Email</string>
+  <string name="postUpdate_text1">Post 5 Updates</string>
+  <string name="share_text1">Share</string>
 
-    <string name="your_site_health">Your Site Health</string>
+  <string name="buydomain_text2">Buy a.com</string>
+  <string name="phoneNumber_text2">Help customers reach you instantly</string>
+  <string name="featuredImage_text2">Add relevant image</string>
+  <string name="businessName_text2">Add Business name</string>
+  <string name="businessdescription_text2">Describe your business</string>
+  <string name="social_text2">Connect to Facebook/Twitter</string>
+  <string name="businessCategory_text2">Choose a Business category</string>
+  <string name="address_text2">Add address</string>
+  <string name="email_text2">Add email</string>
+  <string name="postUpdate_text2">Message regularly and relevantly</string>
+  <string name="share_text2">Promote your website</string>
+  <string name="contact_us_number">18448112065</string>
 
-    <string name="settings_feedback_link">tim@redtim.com</string>
-    <string name="settings_facebook_like_link">https://www.facebook.com/RedTimApp/</string>
-    <string name="settings_about_us_link">https://redtim.com/about-us</string>
+  <string name="currency_text">USD</string>
+  <string name="email_change_level">If you wish to change email address, please contact tim@redtim.com</string>
+  <string name="business_category_change_level">If you wish to change business category, please contact tim@redtim.com</string>
 
-    <string name="settings_tou_url">https://redtim.com/tnc</string>
-    <string name="settings_privacy_url">https://redtim.com/privacy</string>
-    <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.redtim</string>
-    <string name="package_name">com.redtim</string>
-    <!--this part is for FAQ harcoded strings -->
+  <string-array name="CountryCodes">
+    <item>93,AF</item>
+    <item>355,AL</item>
+    <item>213,DZ</item>
+    <item>376,AD</item>
+    <item>244,AO</item>
+    <item>672,AQ</item>
+    <item>54,AR</item>
+    <item>374,AM</item>
+    <item>297,AW</item>
+    <item>61,AU</item>
+    <item>43,AT</item>
+    <item>994,AZ</item>
+    <item>973,BH</item>
+    <item>880,BD</item>
+    <item>375,BY</item>
+    <item>32,BE</item>
+    <item>501,BZ</item>
+    <item>229,BJ</item>
+    <item>975,BT</item>
+    <item>591,BO</item>
+    <item>387,BA</item>
+    <item>267,BW</item>
+    <item>55,BR</item>
+    <item>673,BN</item>
+    <item>359,BG</item>
+    <item>226,BF</item>
+    <item>95,MM</item>
+    <item>257,BI</item>
+    <item>855,KH</item>
+    <item>237,CM</item>
+    <item>1,CA</item>
+    <item>238,CV</item>
+    <item>236,CF</item>
+    <item>235,TD</item>
+    <item>56,CL</item>
+    <item>86,CN</item>
+    <item>61,CX</item>
+    <item>61,CC</item>
+    <item>57,CO</item>
+    <item>269,KM</item>
+    <item>242,CG</item>
+    <item>243,CD</item>
+    <item>682,CK</item>
+    <item>506,CR</item>
+    <item>385,HR</item>
+    <item>53,CU</item>
+    <item>357,CY</item>
+    <item>420,CZ</item>
+    <item>45,DK</item>
+    <item>253,DJ</item>
+    <item>670,TL</item>
+    <item>593,EC</item>
+    <item>20,EG</item>
+    <item>503,SV</item>
+    <item>240,GQ</item>
+    <item>291,ER</item>
+    <item>372,EE</item>
+    <item>251,ET</item>
+    <item>500,FK</item>
+    <item>298,FO</item>
+    <item>679,FJ</item>
+    <item>358,FI</item>
+    <item>33,FR</item>
+    <item>689,PF</item>
+    <item>241,GA</item>
+    <item>220,GM</item>
+    <item>995,GE</item>
+    <item>49,DE</item>
+    <item>233,GH</item>
+    <item>350,GI</item>
+    <item>30,GR</item>
+    <item>299,GL</item>
+    <item>502,GT</item>
+    <item>224,GN</item>
+    <item>245,GW</item>
+    <item>592,GY</item>
+    <item>509,HT</item>
+    <item>504,HN</item>
+    <item>852,HK</item>
+    <item>36,HU</item>
+    <item>91,IN</item>
+    <item>62,ID</item>
+    <item>98,IR</item>
+    <item>964,IQ</item>
+    <item>353,IE</item>
+    <item>44,IM</item>
+    <item>972,IL</item>
+    <item>39,IT</item>
+    <item>225,CI</item>
+    <item>81,JP</item>
+    <item>962,JO</item>
+    <item>7,KZ</item>
+    <item>254,KE</item>
+    <item>686,KI</item>
+    <item>965,KW</item>
+    <item>996,KG</item>
+    <item>856,LA</item>
+    <item>371,LV</item>
+    <item>961,LB</item>
+    <item>266,LS</item>
+    <item>231,LR</item>
+    <item>218,LY</item>
+    <item>423,LI</item>
+    <item>370,LT</item>
+    <item>352,LU</item>
+    <item>853,MO</item>
+    <item>389,MK</item>
+    <item>261,MG</item>
+    <item>265,MW</item>
+    <item>60,MY</item>
+    <item>960,MV</item>
+    <item>223,ML</item>
+    <item>356,MT</item>
+    <item>692,MH</item>
+    <item>222,MR</item>
+    <item>230,MU</item>
+    <item>262,YT</item>
+    <item>52,MX</item>
+    <item>691,FM</item>
+    <item>373,MD</item>
+    <item>377,MC</item>
+    <item>976,MN</item>
+    <item>382,ME</item>
+    <item>212,MA</item>
+    <item>258,MZ</item>
+    <item>264,NA</item>
+    <item>674,NR</item>
+    <item>977,NP</item>
+    <item>31,NL</item>
+    <item>599,AN</item>
+    <item>687,NC</item>
+    <item>64,NZ</item>
+    <item>505,NI</item>
+    <item>227,NE</item>
+    <item>234,NG</item>
+    <item>683,NU</item>
+    <item>850,KP</item>
+    <item>47,NO</item>
+    <item>968,OM</item>
+    <item>92,PK</item>
+    <item>680,PW</item>
+    <item>507,PA</item>
+    <item>675,PG</item>
+    <item>595,PY</item>
+    <item>51,PE</item>
+    <item>63,PH</item>
+    <item>870,PN</item>
+    <item>48,PL</item>
+    <item>351,PT</item>
+    <item>1,PR</item>
+    <item>974,QA</item>
+    <item>40,RO</item>
+    <item>7,RU</item>
+    <item>250,RW</item>
+    <item>590,BL</item>
+    <item>685,WS</item>
+    <item>378,SM</item>
+    <item>239,ST</item>
+    <item>966,SA</item>
+    <item>221,SN</item>
+    <item>381,RS</item>
+    <item>248,SC</item>
+    <item>232,SL</item>
+    <item>65,SG</item>
+    <item>421,SK</item>
+    <item>386,SI</item>
+    <item>677,SB</item>
+    <item>252,SO</item>
+    <item>27,ZA</item>
+    <item>82,KR</item>
+    <item>34,ES</item>
+    <item>94,LK</item>
+    <item>290,SH</item>
+    <item>508,PM</item>
+    <item>249,SD</item>
+    <item>597,SR</item>
+    <item>268,SZ</item>
+    <item>46,SE</item>
+    <item>41,CH</item>
+    <item>963,SY</item>
+    <item>886,TW</item>
+    <item>992,TJ</item>
+    <item>255,TZ</item>
+    <item>66,TH</item>
+    <item>228,TG</item>
+    <item>690,TK</item>
+    <item>676,TO</item>
+    <item>216,TN</item>
+    <item>90,TR</item>
+    <item>993,TM</item>
+    <item>688,TV</item>
+    <item>971,AE</item>
+    <item>256,UG</item>
+    <item>44,GB</item>
+    <item>380,UA</item>
+    <item>598,UY</item>
+    <item>1,US</item>
+    <item>998,UZ</item>
+    <item>678,VU</item>
+    <item>39,VA</item>
+    <item>58,VE</item>
+    <item>84,VN</item>
+    <item>681,WF</item>
+    <item>967,YE</item>
+    <item>260,ZM</item>
+    <item>263,ZW</item>
+  </string-array>
+  <string name="business_enquiries_title">Business Enquiries</string>
+  <string name="business_profile_title">Business Profile</string>
+  <string name="tag_for_partners">.redtim.com</string>
+  <string name="title_activity_splash_screen_">RedTim</string>
+  <string name="title_activity_edit__profile_">Edit_Profile_Activity</string>
+  <string name="pre_signup_screen_one_text">Now Create, Manage and Update A Business website that draws more Customers</string>
+  <string name="pre_signup_screen_two_text">Get a business website \nthat is instantly created and \neasily managed using this app</string>
+  <string name="pre_signup_screen_three_text">Sign in with your Facebook page to \ncreate and update your website instantly. \nHighly recommended!</string>
+  <string name="pre_signup_screen_four_text">With Location-Based-SEO<sup><small>TM</small></sup>, get \ndiscovered for relevant keywords and \nimprove your ranking on search engines</string>
+  <string name="pre_signup_screen_five_text">Take the next step in growing your \nbusiness. Give it an identity of its own</string>
+  <string name="pre_signup_screen_six_text">Let customers contact you directly \nand reply to them instantly!</string>
+  <string name="pre_signup_screen_seven_text">Get additional features \nfor your business website \nfrom the in-app Store..</string>
+  <string name="pre_signup_screen_eight_text">String belongs to Screen Eight</string>
+  <string name="title_activity_mobile__site_">Mobile_Site_Activity</string>
+  <string name="title_activity_site__meter__nf">Site_Meter_NF</string>
+  <string name="presignup_login_text">Already have a RedTim site?</string>
 
-    <string name="email_id_to_request_plans">tim@redtim.com</string>
+  <string name="onboarding_screen_1_title">Congratulations!</string>
+  <string name="onboarding_screen_1_desc">We\'re here to help you through the way. Here are two most basic yet important things you should know.</string>
+  <string name="onboarding_screen_3_title">Discovery is Revenue</string>
+  <string name="onboarding_screen_3_desc">People around your business are searching for stuff you sell, so keep your updates relevant and fresh. This will you lead to attract more customers and generate more revenue.</string>
+  <string name="onboarding_screen_2_title">Content is King</string>
+  <string name="onboarding_screen_2_desc">Update your website twice a week. Just press the plus button at the bottom and simply tell your customers about your products, services or offers.</string>
+  <string name="drop_us_on_email_or_call">Please drop us a line at tim@redtim.com or call us at 1844&#8211;811&#8211;2065 if you\'d like to enable this feature.</string>
+  <string name="primary_contact_number_message">Please drop us a line at tim@redtim.com or call us at 1844&#8211;811&#8211;2065 if you\'d like to change this number.</string>
 
-    <string name="buy_in_capital">BUY</string>
-    <string name="later_in_capital">LATER</string>
-    <string name="renew_light_house_plan">Renew RedTim plan to get all the features</string>
-    <string name="light_house_plan_expired_some_features_visible">Your RedTim plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others</string>
-    <string name="renew_wildfire_plan">Renew Wildfire plan</string>
-    <string name="continue_auto_promoting_on_google">Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.</string>
-    <string name="renew_in_capital">RENEW</string>
-    <string name="ignore_in_capital">IGNORE</string>
-    <string name="buy_light_house_plan">Buy RedTim plan to get all the features</string>
-    <string name="demo_plan_expired">Your demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
-    <string name="buy_light_house">Your current plan is demo which does not have all features, to get all features buy RedTim plan.</string>
-    <string name="demo_plan_will_expire"><Data><![CDATA[Your Demo plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
-    <string name="light_house_pla_will_expire"><Data><![CDATA[Your RedTim plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
-    <string name="upgrade_base_plan_content"><Data><![CDATA[Your RedTim website runs on your base pack Once your base pack expires, all your features and functions will be disabled and you won\'t be able to update any content.]]></Data></string>
-    <string name="upgrade_base_plan_description"><Data><![CDATA[RedTim for web]]></Data></string>
+  <string name="your_site_health">Your Site Health</string>
 
-    <!--<string name="keyboard_message">The RedTim Keyboard allows you to share your products and updates without leaving a chat.</string>
-    -->
-    <string name="keyboard_message">The RedTim Keyboard is a customised business keyboard that allows you to share your updates and product offerings with the click of a button, without having to leave a chat.
+  <string name="settings_feedback_link">tim@redtim.com</string>
+  <string name="settings_facebook_like_link">https://www.facebook.com/RedTimApp/</string>
+  <string name="settings_about_us_link">https://redtim.com/about-us</string>
+
+  <string name="settings_tou_url">https://redtim.com/tnc</string>
+  <string name="settings_privacy_url">https://redtim.com/privacy</string>
+  <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.redtim</string>
+  <string name="package_name">com.redtim</string>
+  <!--this part is for FAQ harcoded strings -->
+
+  <string name="email_id_to_request_plans">tim@redtim.com</string>
+
+  <string name="buy_in_capital">BUY</string>
+  <string name="later_in_capital">LATER</string>
+  <string name="renew_light_house_plan">Renew RedTim plan to get all the features</string>
+  <string name="light_house_plan_expired_some_features_visible">Your RedTim plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others</string>
+  <string name="renew_wildfire_plan">Renew Wildfire plan</string>
+  <string name="continue_auto_promoting_on_google">Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.</string>
+  <string name="renew_in_capital">RENEW</string>
+  <string name="ignore_in_capital">IGNORE</string>
+  <string name="buy_light_house_plan">Buy RedTim plan to get all the features</string>
+  <string name="demo_plan_expired">Your demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
+  <string name="buy_light_house">Your current plan is demo which does not have all features, to get all features buy RedTim plan.</string>
+  <string name="demo_plan_will_expire"><Data><![CDATA[Your Demo plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
+  <string name="light_house_pla_will_expire"><Data><![CDATA[Your RedTim plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
+  <string name="upgrade_base_plan_content"><Data><![CDATA[Your RedTim website runs on your base pack Once your base pack expires, all your features and functions will be disabled and you won\'t be able to update any content.]]></Data></string>
+  <string name="upgrade_base_plan_description"><Data><![CDATA[RedTim for web]]></Data></string>
+
+  <!--<string name="keyboard_message">The RedTim Keyboard allows you to share your products and updates without leaving a chat.</string>
+  -->
+  <string name="keyboard_message">The RedTim Keyboard is a customised business keyboard that allows you to share your updates and product offerings with the click of a button, without having to leave a chat.
 (We do not store or share any data that you type on the RedTim Keyboard.)</string>
-    <string name="boost_keyboard">RedTim Keyboard</string>
-    <!--FAQ hardcoded string end-->
-    <string name="Logo_percentage">5</string>
-    <string name="business_hours">5</string>
-    <string name="setting_faq_url">https://redtim.com/faqs</string>
-    <string name="support_name">Tim</string>
-    <string name="fb_login_protocol_scheme">fb1641508162754092</string>
-    <string-array name="about_tab_items">
-        <item>About RedTim</item>
-        <item>FAQs</item>
-        <item>Feedback</item>
-        <item>Like us on Facebook</item>
-        <item>Follow us on Twitter</item>
-        <item>Rate us on Play Store</item>
-        <item>Terms of Use</item>
-        <item>Privacy Policy</item>
-    </string-array>
-    <string name="keyboard">Keyboard</string>
-    <string-array name="on_boarding_description">
-        <item>Hey, this is your website management dashboard. Let us tell you more about the product and how to use it to get discovered online. Visit our <a href="https://redtim.com/faqs">FAQ</a> section for more information.</item>
-        <item>Site health indicates readiness of your website for online discovery. These basic factors ensure that search engines take notice of your new website.</item>
-        <item>Now you are ready for getting discovered online, but your site is not optimized for website visitors. Your potential customers will lookout for more information. Take a look at these tips to add an "About Us" Page.</item>
-        <item>Your potential customers are looking for products or services. Showcase it to them to increase your revenues.</item>
-        <item>Manage your website on-the-go and get discovered online, real-time. Your business in your hands now.</item>
-        <item>Now your website experience is complete for website visitors to discover. Now, let us help you get 20 unique visitors. Why don\'t you broadcast your website on WhatsApp or share it with your Family and Friends group?</item>
-    </string-array>
-    <string-array name="on_boarding_titles">
-        <item>Welcome Aboard!</item>
-        <item>Your Site Health Score is %s!</item>
-        <item>Tell more about your Business!</item>
-        <item>Add your products!</item>
-        <item>Awesome, you are using RedTim App!</item>
-        <item>Let\'s get some of your friends to see your site!</item>
-    </string-array>
-    <string-array name="manage_content_tab_items">
-        <item>All Updates</item>
-        <item>Image Gallery</item>
-        <item>Custom Pages</item>
-        <item>Business Profile</item>
-        <item>Content Sharing Settings</item>
-    </string-array>
-    <!--<string-array name="account_setting_tab_items">
-        <item>Site Appearance</item>
-        <item>Your Plans</item>
-        <item>Change Password</item>
-        <item>Log out</item>
-    </string-array>-->
-    <string-array name="account_setting_tab_items">
-        <!--<item>Seller Profile</item>-->
-        <!--<item>Site Appearance</item>-->
-        <item>Account Info</item>
-        <item>Domain and Email</item>
-        <!--  <item>Your Plans</item>-->
-        <item>Change Password</item>
-        <item>Log out</item>
-    </string-array>
-    <string name="dictate_definition"><![CDATA[Dictate is a service by which, a <b>RedTim representative</b> gets in touch with you to understand your business well enough, and then regularly <b>updates</b> the content <b>on your behalf</b>.]]></string>
-    <string name="update_website_twice_week"><![CDATA[<font>Update your website </font>\" + \"<font color=\'#1F80AD\'>twice a week. </font>\"+\"<font>Just press the plus button at the bottom and simply tell your customers about your products, services or offers </font>]]></string>
-    <string name="people_are_searching_keep_your_updates"><![CDATA[<font>People around your business are searching for stuff you sell, so keep your updates </font>\" + \"<font color=\'#1F80AD\'>relevant and fresh.</font>\" + \"<font>This will you lead to attract more customers and generate more revenue.</font>]]></string>
-    <string name="onboarding_about_product_url">https://www.redtim.com/how-it-works</string>
-    <string name="update_nowfloats_app">You are using an old version of RedTim. Update the app to get new features and enhancements</string>
+  <string name="boost_keyboard">RedTim Keyboard</string>
+  <!--FAQ hardcoded string end-->
+  <string name="Logo_percentage">5</string>
+  <string name="business_hours">5</string>
+  <string name="setting_faq_url">https://redtim.com/faqs</string>
+  <string name="support_name">Tim</string>
+  <string name="fb_login_protocol_scheme">fb1641508162754092</string>
+  <string-array name="about_tab_items">
+    <item>About RedTim</item>
+    <item>FAQs</item>
+    <item>Feedback</item>
+    <item>Like us on Facebook</item>
+    <item>Follow us on Twitter</item>
+    <item>Rate us on play store</item>
+    <item>Terms of use</item>
+    <item>Privacy policy</item>
+  </string-array>
+  <string name="keyboard">Keyboard</string>
+  <string-array name="on_boarding_description">
+    <item>Hey, this is your website management dashboard. Let us tell you more about the product and how to use it to get discovered online. Visit our <a href="https://redtim.com/faqs">FAQ</a> section for more information.</item>
+    <item>Site health indicates readiness of your website for online discovery. These basic factors ensure that search engines take notice of your new website.</item>
+    <item>Now you are ready for getting discovered online, but your site is not optimized for website visitors. Your potential customers will lookout for more information. Take a look at these tips to add an "About Us" Page.</item>
+    <item>Your potential customers are looking for products or services. Showcase it to them to increase your revenues.</item>
+    <item>Manage your website on-the-go and get discovered online, real-time. Your business in your hands now.</item>
+    <item>Now your website experience is complete for website visitors to discover. Now, let us help you get 20 unique visitors. Why don\'t you broadcast your website on WhatsApp or share it with your Family and Friends group?</item>
+  </string-array>
+  <string-array name="on_boarding_titles">
+    <item>Welcome Aboard!</item>
+    <item>Your Site Health Score is %s!</item>
+    <item>Tell more about your Business!</item>
+    <item>Add your products!</item>
+    <item>Awesome, you are using RedTim App!</item>
+    <item>Let\'s get some of your friends to see your site!</item>
+  </string-array>
+  <string-array name="manage_content_tab_items">
+    <item>All Updates</item>
+    <item>Image Gallery</item>
+    <item>Custom Pages</item>
+    <item>Business Profile</item>
+    <item>Content Sharing Settings</item>
+  </string-array>
+  <!--<string-array name="account_setting_tab_items">
+      <item>Site Appearance</item>
+      <item>Your Plans</item>
+      <item>Change Password</item>
+      <item>Log out</item>
+  </string-array>-->
+  <string-array name="account_setting_tab_items">
+    <!--<item>Seller Profile</item>-->
+    <!--<item>Site Appearance</item>-->
+    <item>Account Info</item>
+    <item>Domain and Email</item>
+    <!--  <item>Your Plans</item>-->
+    <item>Change Password</item>
+    <item>Log out</item>
+  </string-array>
+  <string name="dictate_definition"><![CDATA[Dictate is a service by which, a <b>RedTim representative</b> gets in touch with you to understand your business well enough, and then regularly <b>updates</b> the content <b>on your behalf</b>.]]></string>
+  <string name="update_website_twice_week"><![CDATA[<font>Update your website </font>\" + \"<font color=\'#1F80AD\'>twice a week. </font>\"+\"<font>Just press the plus button at the bottom and simply tell your customers about your products, services or offers </font>]]></string>
+  <string name="people_are_searching_keep_your_updates"><![CDATA[<font>People around your business are searching for stuff you sell, so keep your updates </font>\" + \"<font color=\'#1F80AD\'>relevant and fresh.</font>\" + \"<font>This will you lead to attract more customers and generate more revenue.</font>]]></string>
+  <string name="onboarding_about_product_url">https://www.redtim.com/how-it-works</string>
+  <string name="update_nowfloats_app">You are using an old version of RedTim. Update the app to get new features and enhancements</string>
 
-    <string-array name="dictate_parent_0">
-        <item>A dedicated RedTim representative gets in touch with you regularly, to know your business properly and updates your website 2&#8211;3 times a week on your behalf, thereby saving your time.</item>
-    </string-array>
-    <string-array name="dictate_parent_1">
-        <item><![CDATA[Our representative will first understand your business so that the updates are highly relevant. More so because we fine-tune the messages to search trends yielding higher traffic per message.<br />Then the dedicated RedTim Dictate representative will be provided access to your website through the Manage Portal to update it regularly.]]></item>
-    </string-array>
-    <string-array name="dictate_parent_2">
-        <item><![CDATA[<b>For which plans can the RedTim Dictate be used?</b><br />RedTim Dictate can be used for Boost Lite customers.]]></item>
-    </string-array>
+  <string-array name="dictate_parent_0">
+    <item>A dedicated RedTim representative gets in touch with you regularly, to know your business properly and updates your website 2&#8211;3 times a week on your behalf, thereby saving your time.</item>
+  </string-array>
+  <string-array name="dictate_parent_1">
+    <item><![CDATA[Our representative will first understand your business so that the updates are highly relevant. More so because we fine-tune the messages to search trends yielding higher traffic per message.<br />Then the dedicated RedTim Dictate representative will be provided access to your website through the Manage Portal to update it regularly.]]></item>
+  </string-array>
+  <string-array name="dictate_parent_2">
+    <item><![CDATA[<b>For which plans can the RedTim Dictate be used?</b><br />RedTim Dictate can be used for Boost Lite customers.]]></item>
+  </string-array>
 
-    <string name="payment_config_acceptance_message">I agree that RedTim will charge %s of the total cart value as convenience fee(as part of your current boost plan)</string>
+  <string name="payment_config_acceptance_message">I agree that RedTim will charge %s of the total cart value as convenience fee(as part of your current boost plan)</string>
 
-    <string name="link_marketplace">boost.nowfloats.com/home/marketplace</string>
+  <string name="link_marketplace">boost.nowfloats.com/home/marketplace</string>
 
 </resources>

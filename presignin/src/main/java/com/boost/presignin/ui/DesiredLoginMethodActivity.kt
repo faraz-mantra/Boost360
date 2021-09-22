@@ -28,7 +28,11 @@ class DesiredLoginMethodActivity : BaseActivity<ActivityDesiredLoginMethodBindin
     WebEngageController.trackEvent(PS_DESIRED_LOGIN_SCREEN_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
 
     binding?.usernameOrEmailBt?.setOnClickListener {
-      WebEngageController.trackEvent(PS_DESIRED_LOGIN_USERNAME_CLICK, CLICK_LOGIN_USERNAME, NO_EVENT_VALUE)
+      WebEngageController.trackEvent(
+        PS_DESIRED_LOGIN_USERNAME_CLICK,
+        CLICK_LOGIN_USERNAME,
+        NO_EVENT_VALUE
+      )
       startActivity(Intent(this@DesiredLoginMethodActivity, LoginActivity::class.java))
     }
     backPressed()
@@ -40,7 +44,11 @@ class DesiredLoginMethodActivity : BaseActivity<ActivityDesiredLoginMethodBindin
     }
 
     binding?.anotherMethodBt?.setOnClickListener {
-      WebEngageController.trackEvent(PS_DESIRED_LOGIN_NUMBER_CLICK, CLICK_DIFFERENT_NUMBER, NO_EVENT_VALUE)
+      WebEngageController.trackEvent(
+        PS_DESIRED_LOGIN_NUMBER_CLICK,
+        CLICK_DIFFERENT_NUMBER,
+        NO_EVENT_VALUE
+      )
       navigator?.startActivity(MobileVerificationActivity::class.java)
     }
 

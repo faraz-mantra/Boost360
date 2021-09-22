@@ -25,6 +25,7 @@ import com.nowfloats.AccrossVerticals.API.model.ExistingDomain.ExistingDomainReq
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import retrofit.Callback;
@@ -35,13 +36,13 @@ import retrofit.client.Response;
 
 public class ExistingDomainFragment extends Fragment {
 
-    private ExistingDomainViewModel mViewModel;
     ProgressDialog vmnProgressBar;
-    private UserSessionManager session;
     TextView confirmButton, cancleButton;
     RadioButton radioButton1, radioButton2;
     EditText domainName, subdomainDescription;
     String subject = "", message = "";
+    private ExistingDomainViewModel mViewModel;
+    private UserSessionManager session;
 
     public static ExistingDomainFragment newInstance() {
         return new ExistingDomainFragment();
@@ -79,8 +80,8 @@ public class ExistingDomainFragment extends Fragment {
                     radioButton2.setChecked(false);
                     subject = getString(R.string.make_my_domain_as_my_boost) + session.getFpTag() + "]";
                     if (!domainName.getText().toString().isEmpty()) {
-                        message = getString(R.string.i_would_like_to_map_my_existing_domain_to_)+ domainName.getText().toString() + getString(R.string.please_reach_out_to_me_discuss_in_details);
-                    }else{
+                        message = getString(R.string.i_would_like_to_map_my_existing_domain_to_) + domainName.getText().toString() + getString(R.string.please_reach_out_to_me_discuss_in_details);
+                    } else {
                         message = "";
                     }
                 } else {
@@ -166,6 +167,7 @@ public class ExistingDomainFragment extends Fragment {
 
                 APIInterfaces APICalls = new RestAdapter.Builder()
                         .setEndpoint("https://ria.withfloats.com")
+                        .setRequestInterceptor(Utils.getAuthRequestInterceptor())
                         .setLogLevel(RestAdapter.LogLevel.FULL)
                         .setLog(new AndroidLog("ggg"))
                         .build()
@@ -198,21 +200,22 @@ public class ExistingDomainFragment extends Fragment {
 
     private void onDomainAddedOrUpdated(Boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if(instance.getDrScoreData().getMetricdetail()==null) return;
-        instance.getDrScoreData().getMetricdetail().setBoolean_add_custom_domain_name_and_ssl(isAdded);
-        instance.updateDocument();
+        if (instance.getDrScoreData() != null && instance.getDrScoreData().getMetricdetail() != null) {
+            instance.getDrScoreData().getMetricdetail().setBoolean_add_custom_domain_name_and_ssl(isAdded);
+            instance.updateDocument();
+        }
     }
 
     private boolean validate() {
-        if(radioButton1.isChecked()){
-            if(domainName.getText().toString().isEmpty()){
+        if (radioButton1.isChecked()) {
+            if (domainName.getText().toString().isEmpty()) {
                 Toast.makeText(getContext(), getString(R.string.domain_details_field_is_empty), Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
-        if(radioButton2.isChecked()){
-            if(subdomainDescription.getText().toString().isEmpty()){
-                Toast.makeText(getContext(),getString(R.string.message_field_is_empty), Toast.LENGTH_SHORT).show();
+        if (radioButton2.isChecked()) {
+            if (subdomainDescription.getText().toString().isEmpty()) {
+                Toast.makeText(getContext(), getString(R.string.message_field_is_empty), Toast.LENGTH_SHORT).show();
                 return false;
             }
         }

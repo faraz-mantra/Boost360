@@ -22,17 +22,17 @@
       tools:textColor="@color/dimgray" />
 
     <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tvSubTitle"
-        style="@style/BottomSheetSubTitleTextStyle"
-        android:layout_marginStart="@dimen/size_20"
-        android:layout_marginBottom="@dimen/size_8"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-        tools:text="@string/tools_text_appointment_id"
-        tools:textColor="@color/dimgray" />
+      android:id="@+id/tvSubTitle"
+      style="@style/BottomSheetSubTitleTextStyle"
+      android:layout_marginStart="@dimen/size_20"
+      android:layout_marginBottom="@dimen/size_8"
+      android:textColor="@color/white"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+      tools:text="@string/tools_text_appointment_id"
+      tools:textColor="@color/dimgray" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/coordinatorLayoutBottomSheet"
@@ -52,31 +52,31 @@
         android:orientation="vertical">
 
         <com.framework.views.customViews.CustomTextView
-            android:id="@+id/txt_customer_name"
-            style="@style/BottomSheetStartAptText"
-            android:drawableStart="@drawable/ic_customer_apt"
-            android:text="@string/delivery_mode_store_pickup" />
+          android:id="@+id/txt_customer_name"
+          style="@style/BottomSheetStartAptText"
+          android:drawableStart="@drawable/ic_customer_apt"
+          android:text="@string/delivery_mode_store_pickup" />
 
         <com.framework.views.customViews.CustomTextView
-            android:id="@+id/txt_phone_no"
-            style="@style/BottomSheetStartAptText"
-            android:layout_marginTop="@dimen/size_8"
-            android:drawableStart="@drawable/ic_phone_apt"
-            android:text="@string/delivery_mode_store_pickup" />
+          android:id="@+id/txt_phone_no"
+          style="@style/BottomSheetStartAptText"
+          android:layout_marginTop="@dimen/size_8"
+          android:drawableStart="@drawable/ic_phone_apt"
+          android:text="@string/delivery_mode_store_pickup" />
 
         <com.framework.views.customViews.CustomTextView
-            android:id="@+id/txt_services"
-            style="@style/BottomSheetStartAptText"
-            android:layout_marginTop="@dimen/size_8"
-            android:drawableStart="@drawable/ic_service_apt"
-            android:text="@string/delivery_mode_store_pickup" />
+          android:id="@+id/txt_services"
+          style="@style/BottomSheetStartAptText"
+          android:layout_marginTop="@dimen/size_8"
+          android:drawableStart="@drawable/ic_service_apt"
+          android:text="@string/delivery_mode_store_pickup" />
 
         <com.framework.views.customViews.CustomTextView
-            android:id="@+id/txt_staff_name"
-            style="@style/BottomSheetStartAptText"
-            android:layout_marginTop="@dimen/size_8"
-            android:drawableStart="@drawable/ic_staff_apt"
-            android:text="@string/delivery_mode_store_pickup" />
+          android:id="@+id/txt_staff_name"
+          style="@style/BottomSheetStartAptText"
+          android:layout_marginTop="@dimen/size_8"
+          android:drawableStart="@drawable/ic_staff_apt"
+          android:text="@string/delivery_mode_store_pickup" />
 
         <com.framework.views.customViews.CustomTextView
           style="@style/match_wrap"
@@ -114,17 +114,18 @@
       app:layout_constraintStart_toStartOf="parent">
 
       <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tvCancel"
-          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-          android:layout_marginEnd="@dimen/size_10"
-          android:background="@null"
-          android:text="@string/cancel" />
+        android:id="@+id/tvCancel"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:layout_marginEnd="@dimen/size_10"
+        android:background="@drawable/bg_rounded_yellow_light"
+        android:textColor="@color/colorAccentLight"
+        android:text="@string/cancel" />
 
       <com.framework.views.customViews.CustomButton
-          android:id="@+id/buttonDone"
-          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-          android:text="@string/start_appointment"
-          android:textColor="@color/white" />
+        android:id="@+id/buttonDone"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:text="@string/start_appointment"
+        android:textColor="@color/white" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,73 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <androidx.appcompat.widget.LinearLayoutCompat
-      style="@style/match_wrap"
-      android:orientation="vertical">
+    style="@style/match_wrap"
+    android:orientation="vertical">
 
     <com.framework.views.customViews.CustomTextView
-        style="@style/wrap_wrap"
-        android:layout_marginTop="@dimen/size_8"
-        android:text="@string/customer_street_address"
-        android:textColor="@color/black_4a4a4a"
-        app:fontFamily="@font/regular"
-        app:textType="BODY_1" />
+      style="@style/wrap_wrap"
+      android:layout_marginTop="@dimen/size_8"
+      android:text="@string/customer_street_address"
+      android:textColor="@color/black_4a4a4a"
+      app:fontFamily="@font/regular"
+      app:textType="BODY_1" />
 
 
     <com.framework.views.customViews.CustomEditText
-        android:id="@+id/edit_address"
-        style="@style/EditTextStyle"
-        android:layout_marginTop="@dimen/size_6"
-        android:layout_marginBottom="@dimen/size_10"
-        android:gravity="center_vertical"
-        android:hint="@string/type_address"
-        android:inputType="textCapWords"
-        android:maxLines="1"
-        android:padding="@dimen/size_2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_service_name" />
+      android:id="@+id/edit_address"
+      style="@style/EditTextStyle"
+      android:layout_marginTop="@dimen/size_6"
+      android:layout_marginBottom="@dimen/size_10"
+      android:gravity="center_vertical"
+      android:hint="@string/type_address"
+      android:textCursorDrawable="@drawable/cursor_drawable"
+      android:inputType="textCapWords"
+      android:maxLines="1"
+      android:padding="@dimen/size_2"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/text_service_name" />
 
     <com.framework.views.customViews.CustomTextView
-        style="@style/wrap_wrap"
-        android:layout_marginTop="@dimen/size_12"
-        android:text="@string/pincode"
-        android:textColor="@color/black_4a4a4a"
-        app:fontFamily="@font/regular"
-        app:textType="BODY_1" />
+      style="@style/wrap_wrap"
+      android:layout_marginTop="@dimen/size_12"
+      android:text="@string/pincode"
+      android:textColor="@color/black_4a4a4a"
+      app:fontFamily="@font/regular"
+      app:textType="BODY_1" />
 
     <com.framework.views.customViews.CustomEditText
-        android:id="@+id/edit_pin"
-        style="@style/EditTextStyle"
-        android:layout_marginTop="@dimen/size_6"
-        android:layout_marginBottom="@dimen/size_10"
-        android:gravity="center_vertical"
-        android:hint="@string/enter_customer_s_pincode"
-        android:imeOptions="actionDone"
-        android:inputType="number"
-        android:maxLength="6"
-        android:singleLine="true" />
+      android:id="@+id/edit_pin"
+      style="@style/EditTextStyle"
+      android:layout_marginTop="@dimen/size_6"
+      android:layout_marginBottom="@dimen/size_10"
+      android:gravity="center_vertical"
+      android:hint="@string/enter_customer_s_pincode"
+      android:textCursorDrawable="@drawable/cursor_drawable"
+      android:imeOptions="actionDone"
+      android:inputType="number"
+      android:maxLength="6"
+      android:singleLine="true" />
 
     <com.framework.views.customViews.CustomTextView
-        style="@style/wrap_wrap"
-        android:layout_marginTop="@dimen/size_12"
-        android:text="@string/city_name"
-        android:textColor="@color/black_4a4a4a"
-        app:fontFamily="@font/regular"
-        app:textType="BODY_1" />
+      style="@style/wrap_wrap"
+      android:layout_marginTop="@dimen/size_12"
+      android:text="@string/city_name"
+      android:textColor="@color/black_4a4a4a"
+      app:fontFamily="@font/regular"
+      app:textType="BODY_1" />
 
     <com.framework.views.customViews.CustomEditText
-        android:id="@+id/edit_city"
-        style="@style/EditTextStyle"
-        android:layout_marginTop="@dimen/size_6"
-        android:layout_marginBottom="@dimen/size_10"
-        android:clickable="true"
-        android:drawableTint="@color/grey_dark_2"
-        android:focusable="false"
-        android:gravity="center_vertical"
-        android:hint="@string/type_the_plot_number_and_street_address"
-        android:inputType="none"
-        android:singleLine="true" />
+      android:id="@+id/edit_city"
+      style="@style/EditTextStyle"
+      android:layout_marginTop="@dimen/size_6"
+      android:layout_marginBottom="@dimen/size_10"
+      android:clickable="true"
+      android:drawableTint="@color/grey_dark_2"
+      android:focusable="false"
+      android:gravity="center_vertical"
+      android:hint="@string/type_the_plot_number_and_street_address"
+      android:textCursorDrawable="@drawable/cursor_drawable"
+      android:inputType="none"
+      android:singleLine="true" />
 
     <LinearLayout
       android:id="@+id/status_view"
@@ -92,6 +95,7 @@
         android:focusable="false"
         android:gravity="center_vertical"
         android:hint="@string/select_customer_s_state"
+        android:textCursorDrawable="@drawable/cursor_drawable"
         android:inputType="none" />
     </LinearLayout>
 

@@ -49,6 +49,15 @@
                     android:layout_centerInParent="true"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:src="@drawable/rectangle_copy_18" />
+
+                <ImageView
+                    android:id="@+id/package_primary_image_copy"
+                    android:layout_width="50dp"
+                    android:visibility="gone"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:src="@drawable/rectangle_copy_18" />
             </RelativeLayout>
 
             <LinearLayout
@@ -137,6 +146,7 @@
                     android:id="@+id/package_button_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:id="@+id/getnow_button"
                         android:layout_width="wrap_content"
@@ -150,11 +160,12 @@
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingEnd="@dimen/_15sdp"
                         android:paddingBottom="@dimen/_5sdp"
-                        android:text="add to cart"
-                        android:textAllCaps="true"
+                        android:text="Add to cart"
+                        android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textFontWeight="800"
                         android:textSize="@dimen/txt_10sp" />
+
                     <TextView
                         android:id="@+id/details_button"
                         android:layout_width="wrap_content"
@@ -170,7 +181,7 @@
                         android:paddingEnd="@dimen/_15sdp"
                         android:paddingBottom="@dimen/_5sdp"
                         android:text="Details"
-                        android:textAllCaps="true"
+                        android:textAllCaps="false"
                         android:textColor="#FFB900"
                         android:textFontWeight="800"
                         android:textSize="@dimen/txt_10sp" />

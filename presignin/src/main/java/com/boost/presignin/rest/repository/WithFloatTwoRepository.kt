@@ -24,19 +24,31 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   }
 
   fun connectUserProfile(userProfileRequest: CreateProfileRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.connectUserProfile(userProfileRequest), TaskCode.CONNECT_USER_PROFILE)
+    return makeRemoteRequest(
+      remoteDataSource.connectUserProfile(userProfileRequest),
+      TaskCode.CONNECT_USER_PROFILE
+    )
   }
 
   fun createUserProfile(userProfileRequest: CreateProfileRequest?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.createUserProfile(userProfileRequest), TaskCode.CREATE_USER_PROFILE)
+    return makeRemoteRequest(
+      remoteDataSource.createUserProfile(userProfileRequest),
+      TaskCode.CREATE_USER_PROFILE
+    )
   }
 
   fun getFpDetailsByPhone(number: Long?, clientId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getFpDetailsByPhone(number, clientId = clientId), TaskCode.GET_FP_DETAILS_BY_PHONE)
+    return makeRemoteRequest(
+      remoteDataSource.getFpDetailsByPhone(number, clientId = clientId),
+      TaskCode.GET_FP_DETAILS_BY_PHONE
+    )
   }
 
   fun sendOtpIndia(number: Long?, clientId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.sendOtpIndia(number, clientId = clientId), TaskCode.SEND_OTP_INDIA)
+    return makeRemoteRequest(
+      remoteDataSource.sendOtpIndia(number, clientId = clientId),
+      TaskCode.SEND_OTP_INDIA
+    )
   }
 
   fun verifyOtp(number: String?, otp: String?, clientId: String?): Observable<BaseResponse> {
@@ -53,7 +65,9 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
 
 
   fun getFpListForRegisteredNumber(number: String?, clientId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getFpListForRegisteredMobile(number, clientId = clientId), TaskCode.GET_FP_LIST_FOR_REGISTERED_NUMBER)
+    return makeRemoteRequest(
+      remoteDataSource.getFpListForRegisteredMobile(number, clientId = clientId), TaskCode.GET_FP_LIST_FOR_REGISTERED_NUMBER
+    )
   }
 
   fun verifyUserProfile(request: UserProfileVerificationRequest): Observable<BaseResponse> {
@@ -67,8 +81,9 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   fun getFpDetails(fpId: String, map: Map<String, String>): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getFpDetails(fpId, map), TaskCode.GET_FP_USER_DETAILS)
   }
-  fun post_RegisterRia(@Body map: HashMap<String?, String?>?): Observable<BaseResponse>{
-    return makeRemoteRequest(remoteDataSource.post_RegisterRia(map),TaskCode.REGISTER_RIA);
+
+  fun post_RegisterRia(@Body map: HashMap<String?, String?>?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.post_RegisterRia(map), TaskCode.REGISTER_RIA);
   }
 
   override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {
@@ -82,6 +97,4 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   override fun getApiClient(): Retrofit {
     return WithFloatsApiTwoClient.shared.retrofit
   }
-
-
 }

@@ -1,11 +1,15 @@
 package com.dashboard.controller
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.StrictMode
 import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavArgument
@@ -23,30 +27,36 @@ import com.dashboard.controller.ui.dialog.WelcomeHomeDialog
 import com.dashboard.databinding.ActivityDashboardBinding
 import com.dashboard.model.live.drawerData.DrawerHomeData
 import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
-import com.dashboard.model.live.welcomeData.WelcomeDashboardResponse
-import com.dashboard.model.live.welcomeData.WelcomeData
-import com.dashboard.model.live.welcomeData.getIsShowWelcome
+import com.dashboard.model.live.welcomeData.*
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
+import com.dashboard.utils.DashboardTabs.Companion.fromUrl
 import com.dashboard.viewmodel.DashboardViewModel
-import com.framework.appreview.NFAppReviewManager
-import com.framework.autoupdate.NFAutoUpdateManager
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
-import com.framework.models.firestore.FirestoreManager
+import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.models.caplimit_feature.saveCapData
 import com.framework.models.firestore.FirestoreManager.initData
+import com.framework.models.firestore.badges.BadgesFirestoreManager
+import com.framework.models.firestore.badges.BadgesFirestoreManager.getBadgesData
+import com.framework.models.firestore.badges.BadgesFirestoreManager.initDataBadges
+import com.framework.models.firestore.badges.BadgesModel
 import com.framework.pref.*
-import com.framework.utils.AppsFlyerUtils
-import com.framework.utils.fromHtml
+import com.framework.pref.Key_Preferences.KEY_FP_CART_COUNT
+import com.framework.utils.*
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
 import com.framework.webengageconstant.*
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.iid.FirebaseInstanceId
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
+import com.onboarding.nowfloats.model.googleAuth.FirebaseTokenResponse
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.webengage.sdk.android.WebEngage
 import com.zopim.android.sdk.api.ZopimChat
@@ -57,10 +67,12 @@ import zendesk.core.Zendesk
 import zendesk.support.Support
 import java.io.File
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.concurrent.schedule
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
-  private var exitToast: Toast? = null
+  private var doubleBackToExitPressedOnce = false
   private var mDeepLinkUrl: String? = null;
   private var mPayload: String? = null
   private var deepLinkUtil: DeepLinkUtil? = null
@@ -70,6 +82,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private var isSecondaryImage = false
   var isLoadShimmer = true
   var count = 0
+  var activePreviousItem = 0
   private val navHostFragment: NavHostFragment?
     get() {
       return supportFragmentManager.fragments.first() as? NavHostFragment
@@ -80,7 +93,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       return navHostFragment?.childFragmentManager?.fragments
     }
 
-  private var welcomeData: ArrayList<WelcomeData>? = null
+  private val welcomeData: List<WelcomeData>?
+    get() {
+      return getWelcomeList()
+    }
 
   override fun getLayout(): Int {
     return R.layout.activity_dashboard
@@ -97,32 +113,54 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     navControllerListener()
     binding?.navView?.setOnItemSelectedListener(this)
     toolbarPropertySet(0)
-    setDrawerHome()
-    val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
-    binding?.drawerView?.txtVersion?.text = "Version $versionName"
-    intentDataCheckAndDeepLink()
+//    setDrawerHome()
+//    val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
+//    binding?.drawerView?.txtVersion?.text = "Version $versionName"
+//    binding?.drawerView?.imgBusinessLogo, binding?.drawerView?.backgroundImage, binding?.drawerView?.txtDomainName
+    setOnClickListener(binding?.drawerView?.btnSiteMeter, binding?.viewCartCount)
     getWelcomeData()
+    intentDataCheckAndDeepLink(intent)
     session?.initializeWebEngageLogin()
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
-
-    // to test the in app review
-    testInAppReview()
-    // to test the in app auto updates
-    testInAppUpdates()
+    session?.let { initDataBadges(it.fpTag ?: "", it.fPID ?: "", clientId) }
+    registerFirebaseToken()
+    reloadCapLimitData()
   }
 
-  private fun testInAppReview(){
-    NFAppReviewManager.requestReview(this)
+  private fun reloadCapLimitData() {
+    viewModel.getCapLimitFeatureDetails(session?.fPID ?: "", clientId).observeOnce(this, {
+      if (it.isSuccess()) {
+        val capLimitList = it.arrayResponse as? Array<CapLimitFeatureResponseItem>
+        capLimitList?.toCollection(ArrayList())?.saveCapData()
+      }
+    })
   }
 
-  private fun testInAppUpdates(){
-    NFAutoUpdateManager.checkUpdate(this)
+  private fun registerFirebaseToken() {
+    viewModel.getFirebaseToken().observe(this, {
+      val response = it as? FirebaseTokenResponse
+      val token = response?.Result
+      Log.i(TAG, "registerFirebaseToken: $token")
+      token?.let { it1 ->
+        FirebaseAuth.getInstance().signInWithCustomToken(it1).addOnCompleteListener(this) { task ->
+          if (task.isSuccessful) {
+            // Sign in success, update UI with the signed-in user's information
+            Log.d(TAG, "signInWithCustomToken:success")
+          } else {
+            // If sign in fails, display a message to the user.
+            Log.w(TAG, "signInWithCustomToken:failure", task.exception)
+          }
+        }
+      }
+    })
   }
 
   private fun UserSessionManager.initializeWebEngageLogin() {
     WebEngageController.setUserContactInfoProperties(this)
+    WebEngageController.setUserContactInfoProperties(this)
     WebEngageController.setFPTag(this.fpTag)
+    WebEngageController.trackAttribute(this)
   }
 
   private fun initialize() {
@@ -130,36 +168,44 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitAll().build())
     FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
       val token = instanceIdResult.token
-      if (token.isNullOrEmpty().not()) {
+      if (token.isNotEmpty()) {
         WebEngage.get().setRegistrationID(token)
-        AnaCore.saveFcmToken(this, FirebaseInstanceId.getInstance().token ?: "")
+        AnaCore.saveFcmToken(this, token)
         AnaCore.registerUser(this, session?.fpTag ?: "", ANA_BUSINESS_ID, ANA_CHAT_API_URL)
       }
     }
     initialiseZendeskSupportSdk()
   }
 
-  private fun intentDataCheckAndDeepLink() {
-    if (intent.extras != null) {
+  override fun onNewIntent(intent: Intent?) {
+    super.onNewIntent(intent)
+    intentDataCheckAndDeepLink(intent)
+  }
+
+  private fun intentDataCheckAndDeepLink(intent: Intent?) {
+    Log.i(TAG, "intentDataCheckAndDeepLink: ")
+    if (intent?.extras != null) {
       if (intent.extras!!.containsKey("url")) mDeepLinkUrl = intent.extras!!.getString("url")
       if (intent.extras!!.containsKey("payload")) mPayload = intent.extras!!.getString("payload")
     }
     if (intent != null && intent.data != null) {
       val action = intent.action
       val data = intent.dataString
-      val uri = intent.data
-      Log.d("Data: ", "$data  $action $uri")
+      val url = intent.data
+      mDeepLinkUrl = url.toString()
+      Log.d("Data: ", "$data  $action $mDeepLinkUrl")
       if (session?.isLoginCheck == true) {
-        if (uri != null && uri.toString().contains("onelink", true)) {
+        if (mDeepLinkUrl != null && mDeepLinkUrl.toString().contains("onelink", true)) {
           isAppFlyerLink()
         } else {
-          //Default Deep Link..
-          val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(uri)
-          if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
-            val viewType = deepHashMap[DynamicLinkParams.viewType]
-            val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
-            if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
-          } else deepLinkUtil?.deepLinkPage(data?.substring(data.lastIndexOf("/") + 1) ?: "", "", false)
+          if (!checkIsHomeDeepLink()) {
+            val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(url)
+            if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
+              val viewType = deepHashMap[DynamicLinkParams.viewType]
+              val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
+              if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
+            } else deepLinkUtil?.deepLinkPage(data?.substring(data.lastIndexOf("/") + 1) ?: "", "", false)
+          }
         }
       } else {
         this.startPreSignUp(session, true)
@@ -169,49 +215,84 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun isAppFlyerLink() {
-    if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
-      val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
-      val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
-      if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType, buyItemKey, false)
+    if (!checkIsHomeDeepLink()) {
+      if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
+        val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
+        val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
+        if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType, buyItemKey, false)
+      } else {
+        if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", "", false)
+      }
       AppsFlyerUtils.sAttributionData = mapOf()
-    } else {
-      if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", "", false)
     }
+  }
+
+  private fun checkIsHomeDeepLink(): Boolean {
+    val value = fromUrl(mDeepLinkUrl)
+    return if (value != null) {
+      if (binding?.navView?.getActiveItem() != value.position) {
+        Timer().schedule(50) {
+          binding?.navView?.post {
+            binding?.navView?.setActiveItem(value.position)
+            onItemSelect(value.position)
+          }
+        }
+      }
+      true
+    } else false
   }
 
   override fun onResume() {
     super.onResume()
     setUserData()
-    setOnClickListener(binding?.drawerView?.btnSiteMeter, binding?.drawerView?.imgBusinessLogo, binding?.drawerView?.backgroundImage, binding?.drawerView?.txtDomainName)
   }
 
   override fun getToolbar(): CustomToolbar? {
     return binding?.toolbar
   }
 
+  override fun getToolbarTitleTypeface(): Typeface? {
+    return ResourcesCompat.getFont(this, R.font.bold)
+  }
+
+  override fun getToolbarTitleSize(): Float {
+    return ConversionUtils.dp2px(22f).toFloat()
+  }
 
   fun setPercentageData(score: Int) {
     val isHigh = (score >= 85)
     binding?.drawerView?.txtPercentage?.text = "$score% "
-    binding?.drawerView?.progressBar?.progress = score
-//    binding?.drawerView?.txtSiteHelth?.setTextColor(ContextCompat.getColor(this, if (isHigh) R.color.light_green_3 else R.color.accent_dark))
-//    binding?.drawerView?.progressBar?.progressDrawable = ContextCompat.getDrawable(this, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
+    val percentage = ((100 - score).toDouble() / 100).roundToFloat(2)
+    (binding?.drawerView?.progressBar?.layoutParams as? ConstraintLayout.LayoutParams)?.matchConstraintPercentWidth = percentage
+    binding?.drawerView?.progressBar?.requestLayout()
   }
 
   private fun setUserData() {
-    binding?.drawerView?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
-    binding?.drawerView?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(false)}</u>")
-    setPercentageData(FirestoreManager.getDrScoreData()?.getDrsTotal() ?: 0)
+    val cartCount = session?.getIntDetails(KEY_FP_CART_COUNT) ?: 0
+    if ((getFragment(DashboardFragment::class.java) != null) && cartCount > 0) binding?.viewCartCount?.visible() else binding?.viewCartCount?.gone()
+    binding?.cartCountTxt?.text = "$cartCount ${if (cartCount > 1) "items" else "item"} waiting in cart"
+//    binding?.drawerView?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
+//    binding?.drawerView?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(false)}</u>")
+//    setPercentageData(FirestoreManager.getDrScoreData()?.getDrsTotal() ?: 0)
     var imageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
     if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) {
       imageUri = BASE_IMAGE_URL + imageUri
     }
-    binding?.drawerView?.imgBusinessLogo?.let { glideLoad(it, imageUri ?: "", R.drawable.business_edit_profile_icon_d) }
+//    binding?.drawerView?.imgBusinessLogo?.let { glideLoad(it, imageUri ?: "", R.drawable.business_edit_profile_icon_d) }
     var bgImageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)
     if (bgImageUri.isNullOrEmpty().not() && bgImageUri!!.contains("http").not()) {
       bgImageUri = BASE_IMAGE_URL + bgImageUri
     }
-    binding?.drawerView?.bgImage?.let { glideLoad(it, bgImageUri ?: "", R.drawable.general_services_background_img_d) }
+    binding?.drawerView?.bgImage?.let {
+      glideLoad(it, bgImageUri ?: "", R.drawable.general_services_background_img_d)
+    }
+  }
+
+  private fun cartDataLoad(pos: Int) {
+    val cartCount = session?.getIntDetails(KEY_FP_CART_COUNT) ?: 0
+    if (pos == 0 && cartCount > 0) {
+      binding?.viewCartCount?.visible()
+    } else binding?.viewCartCount?.gone()
   }
 
   private fun setDrawerHome() {
@@ -256,6 +337,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       0 -> openDashboard(false)
       1 -> checkWelcomeShowScreen(pos)
       2 -> checkWelcomeShowScreen(pos)
+      4 -> checkWelcomeShowScreen(pos)
       else -> {
         mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
         toolbarPropertySet(0)
@@ -284,9 +366,14 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       }
       3 -> {
         val dataAddOns = welcomeData?.get(2)
-        if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let { showWelcomeDialog(it) }
+        if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let {
+          showWelcomeDialog(it)
+        }
         else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
-
+      }
+      4 -> {
+        mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
+        toolbarPropertySet(pos)
       }
     }
   }
@@ -313,9 +400,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun toolbarPropertySet(pos: Int) {
+    cartDataLoad(pos)
     when (pos) {
-      1 -> showToolbar(getString(R.string.my_website))
-      2 -> showToolbar(getString(R.string.my_enquiry))
+      1 -> showToolbar(getString(R.string.website))
+      2 -> showToolbar(getString(R.string.enquiry))
+      4 -> showToolbar(getString(R.string.more))
       else -> {
         changeTheme(R.color.colorPrimary, R.color.colorPrimary)
         getToolbar()?.apply { visibility = View.GONE }
@@ -327,28 +416,36 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     changeTheme(R.color.black_4a4a4a, R.color.black_4a4a4a)
     getToolbar()?.apply {
       visibility = View.VISIBLE
-      setTitle(title)
       supportActionBar?.setDisplayHomeAsUpEnabled(false)
+      setToolbarTitle(title)
     }
   }
 
-  override fun getNavIconScale(): Float {
-    return 1f
-  }
 
   override fun onItemClick(pos: Int) {
     super.onItemClick(pos)
     when (pos) {
       3 -> checkWelcomeShowScreen(pos)
       4 -> {
-        binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
-        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
+//        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
+//        binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
       }
     }
   }
 
   private fun getNavOptions(): NavOptions {
-    return NavOptions.Builder().setExitAnim(R.anim.slide_out_left).setEnterAnim(R.anim.slide_in_right).setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right).setLaunchSingleTop(true).build()
+    val activeItem = binding?.navView?.getActiveItem() ?: 0
+    return if (activePreviousItem > activeItem) {
+      activePreviousItem = activeItem
+      NavOptions.Builder().setExitAnim(R.anim.slide_out_right)
+        .setEnterAnim(R.anim.slide_in_left).setPopEnterAnim(R.anim.slide_in_right)
+        .setPopExitAnim(R.anim.slide_out_left).setLaunchSingleTop(true).build()
+    } else {
+      activePreviousItem = activeItem
+      NavOptions.Builder().setExitAnim(R.anim.slide_out_left)
+        .setEnterAnim(R.anim.slide_in_right).setPopEnterAnim(R.anim.slide_in_left)
+        .setPopExitAnim(R.anim.slide_out_right).setLaunchSingleTop(true).build()
+    }
   }
 
   private fun openDashboard(isSet: Boolean = true) {
@@ -362,21 +459,21 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK && isSecondaryImage) {
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
-      if (mPaths.isNullOrEmpty().not()) uploadSecondaryImage(mPaths[0])
-    } else childFragments?.forEach { fragment -> fragment.onActivityResult(requestCode, resultCode, data) }
+//      if (mPaths.isNullOrEmpty().not()) uploadSecondaryImage(mPaths[0])
+    } else childFragments?.forEach { fragment ->
+      fragment.onActivityResult(requestCode, resultCode, data)
+    }
   }
 
   override fun onBackPressed() {
     when {
       (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) -> binding?.drawerLayout?.closeDrawers()
       (mNavController.currentDestination?.id == R.id.navigation_dashboard) -> {
-        if (exitToast == null || exitToast?.view == null || exitToast?.view?.windowToken == null) {
-          exitToast = Toast.makeText(this, resources.getString(R.string.press_again_exit), Toast.LENGTH_SHORT)
-          exitToast?.show()
-        } else {
-          exitToast?.cancel()
-          this.finish()
-        }
+        if (!doubleBackToExitPressedOnce) {
+          this.doubleBackToExitPressedOnce = true
+          showShortToast(resources.getString(R.string.press_again_exit))
+          Handler(Looper.getMainLooper()).postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
+        } else this.finish()
       }
       else -> openDashboard()
     }
@@ -398,6 +495,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
       binding?.drawerView?.backgroundImage -> openImagePicker(true)
+      binding?.viewCartCount -> session?.let { this.initiateAddonMarketplace(it, true, "", "") }
     }
   }
 
@@ -417,7 +515,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       DrawerHomeData.NavType.NAV_MANAGE_CONTENT -> session?.let { this.startManageContentActivity(it) }
       DrawerHomeData.NavType.NAV_CALLS -> this.startVmnCallCard(session)
       DrawerHomeData.NavType.NAV_ENQUIRY -> this.startBusinessEnquiry(session)
-      DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING -> session?.let { this.startManageInventoryActivity(it) }
+      DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING -> session?.let {
+        this.startManageInventoryActivity(
+          it
+        )
+      }
       DrawerHomeData.NavType.NAV_NEWS_LETTER_SUB -> this.startSubscriber(session)
       DrawerHomeData.NavType.NAV_BOOST_KEYBOARD -> session?.let { this.startKeyboardActivity(it) }
       DrawerHomeData.NavType.NAV_ADD_ONS_MARKET -> session?.let {
@@ -430,6 +532,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     }
     if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
   }
+
 
   private fun openImagePicker(isSecondaryImage: Boolean) {
     this.isSecondaryImage = isSecondaryImage
@@ -453,7 +556,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     val imageFile = File(path)
     isSecondaryImage = false
     showProgress()
-    viewModel.putUploadSecondaryImage(getRequestImageDate(imageFile)).observeOnce(this, androidx.lifecycle.Observer {
+    viewModel.putUploadSecondaryImage(getRequestImageDate(imageFile)).observeOnce(this, {
       if (it.isSuccess()) {
         if (it.stringResponse.isNullOrEmpty().not()) {
           session?.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, it.stringResponse)
@@ -466,8 +569,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   private fun getRequestImageDate(businessImage: File): UploadFileBusinessRequest {
     val responseBody = RequestBody.create("image/png".toMediaTypeOrNull(), businessImage.readBytes())
-    val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name }
-      ?: "bg_${UUID.randomUUID()}.png"
+    val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name } ?: "bg_${UUID.randomUUID()}.png"
     return UploadFileBusinessRequest(clientId, session?.fPID, UploadFileBusinessRequest.Type.SINGLE.name, fileName, responseBody)
   }
 
@@ -489,13 +591,55 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun getWelcomeData() {
-    viewModel.getWelcomeDashboardData(this).observeOnce(this, androidx.lifecycle.Observer {
+    viewModel.getWelcomeDashboardData(this).observeOnce(this, {
       val response = it as? WelcomeDashboardResponse
       val data = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }?.actionItem
       if (response?.isSuccess() == true && data.isNullOrEmpty().not()) {
-        this.welcomeData = data
+        data?.saveWelcomeList()
       }
     })
+  }
+
+  override fun onStop() {
+    super.onStop()
+    BadgesFirestoreManager.listenerBadges = null
+  }
+
+  override fun onStart() {
+    super.onStart()
+    BadgesFirestoreManager.listenerBadges = {
+      val dataBadges = getBadgesData()
+      setBadgesData(dataBadges)
+    }
+  }
+
+  private fun setBadgesData(dataBadges: ArrayList<BadgesModel>?) {
+    binding?.navView?.post {
+      dataBadges?.forEach {
+        when (it.badgesType) {
+          BadgesModel.BadgesType.HOMEBADGE.name -> {
+            if (it.getMessageN() > 0) binding?.navView?.setBadge(0, it.getMessageText())
+            else binding?.navView?.removeBadge(0)
+          }
+          BadgesModel.BadgesType.WEBSITEBADGE.name -> {
+            if (it.getMessageN() > 0) binding?.navView?.setBadge(1, it.getMessageText())
+            else binding?.navView?.removeBadge(1)
+          }
+          BadgesModel.BadgesType.ENQUIRYBADGE.name -> {
+            if (it.getMessageN() > 0) binding?.navView?.setBadge(2, it.getMessageText())
+            else binding?.navView?.removeBadge(2)
+          }
+          BadgesModel.BadgesType.MARKETPLACEBADGE.name -> {
+            if (it.getMessageN() > 0) binding?.navView?.setBadge(3, it.getMessageText())
+            else binding?.navView?.removeBadge(3)
+          }
+          BadgesModel.BadgesType.MENUBADGE.name -> {
+            if (it.getMessageN() > 0) binding?.navView?.setBadge(4, it.getMessageText())
+            else binding?.navView?.removeBadge(4)
+          }
+        }
+      }
+    }
   }
 }
 

@@ -48,7 +48,15 @@ class MarkPaymentDoneAptSheetDialog : BaseBottomSheetDialog<BottomSheetMarkPayme
     dismiss()
     when (v) {
       binding?.buttonDone -> {
-        onClicked(PaymentReceivedRequest(paymentProvider, "", orderItem?.PaymentDetails?.method(), orderItem?._id, orderItem?.PaymentDetails?.TransactionId ?: ""))
+        onClicked(
+          PaymentReceivedRequest(
+            paymentProvider,
+            "",
+            orderItem?.PaymentDetails?.method(),
+            orderItem?._id,
+            orderItem?.PaymentDetails?.TransactionId ?: ""
+          )
+        )
       }
     }
   }

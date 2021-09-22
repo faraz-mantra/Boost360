@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.nowfloats.managecustomers.models.FacebookChatDataModel;
 import com.nowfloats.managecustomers.models.FacebookChatUsersModel;
 import com.nowfloats.managecustomers.models.FacebookMessageModel;
+import com.nowfloats.util.Utils;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -20,11 +21,15 @@ import retrofit.http.Query;
 public class FacebookChatApis {
 
     static String ENDPOINT = "https://nfxmessenger.withfloats.com";
-    static final RestAdapter adapter = new RestAdapter.Builder()/*.setLog(new AndroidLog("ggg")).setLogLevel(RestAdapter.LogLevel.FULL)*/.setEndpoint(ENDPOINT).build();
-    public static FacebookApis getFacebookChatApis(){
+    static final RestAdapter adapter = new RestAdapter.Builder()
+            .setRequestInterceptor(Utils.getAuthRequestInterceptor())
+            /*.setLog(new AndroidLog("ggg")).setLogLevel(RestAdapter.LogLevel.FULL)*/.setEndpoint(ENDPOINT).build();
+
+    public static FacebookApis getFacebookChatApis() {
         return adapter.create(FacebookApis.class);
     }
-    public interface FacebookApis{
+
+    public interface FacebookApis {
         @GET("/api/messages")
         void getAllUsers(@Query("identifier") String identifier, @Query("nowfloats_id") String fpId, Callback<FacebookChatUsersModel> response);
 

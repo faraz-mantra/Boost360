@@ -1,10 +1,5 @@
 package com.nowfloats.hotel.seasonalOffers;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,17 +11,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.boost.upgrades.UpgradeActivity;
+import com.framework.views.fabButton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.hotel.API.HotelAPIInterfaces;
 import com.nowfloats.hotel.API.model.DeleteOffer.DeleteOfferRequest;
-import com.nowfloats.hotel.API.model.DeletePlacesAround.DeletePlacesAroundRequest;
 import com.nowfloats.hotel.API.model.GetOffers.Data;
 import com.nowfloats.hotel.API.model.GetOffers.GetOffersResponse;
 import com.nowfloats.hotel.Interfaces.SeasonalOffersListener;
-import com.nowfloats.hotel.placesnearby.PlacesNearByDetailsActivity;
 import com.nowfloats.hotel.seasonalOffers.adapter.SeasonalOffersAdapter;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
@@ -162,34 +161,27 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
 
 
     public void setHeader() {
-        LinearLayout rightButton, backButton;
+        LinearLayout  backButton;
         ImageView rightIcon;
         TextView title;
+        FloatingActionButton btnAdd;
 
         title = findViewById(R.id.title);
         backButton = findViewById(R.id.back_button);
-        rightButton = findViewById(R.id.right_icon_layout);
+        btnAdd = findViewById(R.id.btn_add);
         rightIcon = findViewById(R.id.right_icon);
-        title.setText("Seasonal Offers");
+        rightIcon.setVisibility(View.INVISIBLE);
+        title.setText(R.string.seasional_offer_n);
         //this feature is free to use
 //        if (Constants.StoreWidgets.contains("OFFERS")) {
-        rightIcon.setImageResource(R.drawable.ic_add_white);
-        rightButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SeasonalOffersDetailsActivity.class);
-                intent.putExtra("ScreenState", "new");
-                startActivity(intent);
-            }
+        btnAdd.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), SeasonalOffersDetailsActivity.class);
+            intent.putExtra("ScreenState", "new");
+            startActivity(intent);
         });
 //        }
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        backButton.setOnClickListener(v -> onBackPressed());
     }
 
 
@@ -228,7 +220,7 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
                 public void success(String s, Response response) {
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deletePlacesAround ->", response.getBody().toString());
-                        Methods.showSnackBarPositive(SeasonalOffersActivity.this,  getString(R.string.successfully_deleted_));
+                        Methods.showSnackBarPositive(SeasonalOffersActivity.this, getString(R.string.successfully_deleted_));
                         loadData();
                     } else {
                         Methods.showSnackBarNegative(SeasonalOffersActivity.this, getString(R.string.something_went_wrong));
@@ -238,7 +230,7 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
                 @Override
                 public void failure(RetrofitError error) {
                     if (error.getResponse().getStatus() == 200) {
-                        Methods.showSnackBarPositive(SeasonalOffersActivity.this,  getString(R.string.successfully_deleted_));
+                        Methods.showSnackBarPositive(SeasonalOffersActivity.this, getString(R.string.successfully_deleted_));
                         loadData();
                     } else {
                         Methods.showSnackBarNegative(SeasonalOffersActivity.this, getString(R.string.something_went_wrong));
@@ -264,13 +256,13 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
         intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
-        if (session.getFPEmail() != null) {
-            intent.putExtra("email", session.getFPEmail());
+        if (session.getUserProfileEmail() != null) {
+            intent.putExtra("email", session.getUserProfileEmail());
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }
-        if (session.getFPPrimaryContactNumber() != null) {
-            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+        if (session.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
             intent.putExtra("mobileNo", "9160004303");
         }

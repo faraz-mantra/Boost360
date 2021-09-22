@@ -40,7 +40,8 @@ import com.nowfloats.facebook.graph.FacebookGraphManager
 import com.nowfloats.facebook.models.BaseFacebookGraphResponse
 import kotlinx.android.synthetic.main.curve_popup_layout.view.*
 
-class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraphManager.GraphRequestUserAccountCallback {
+class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper,
+  FacebookGraphManager.GraphRequestUserAccountCallback {
 
   lateinit var root: View
   val RC_SIGN_IN = 1
@@ -57,7 +58,11 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
     setStyle(STYLE_NORMAL, R.style.FullScreenDialogStyle)
   }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
     root = inflater.inflate(R.layout.curve_popup_layout, container, false)
     //webview
     popUpWebViewFragment = PopUpWebViewFragment()
@@ -68,29 +73,34 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
     // Configure Google Sign In
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
 //        .requestIdToken(getString(R.string.default_web_client_id))
-        .requestIdToken(getString(R.string.server_client_id))
-        .requestEmail()
-        .build()
+      .requestIdToken(getString(R.string.server_client_id))
+      .requestEmail()
+      .build()
 
     // Build a GoogleSignInClient with the options specified by gso.
     mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
 
     //email authentication
     actionCodeSettings = ActionCodeSettings.newBuilder()
-        // URL you want to redirect back to. The domain (www.example.com) for this
-        // URL must be whitelisted in the Firebase Console.
-        .setUrl("boost.nowfloats.com")
-        // This must be true
-        .setHandleCodeInApp(true)
-        .setIOSBundleId("com.example.ios")
-        .setAndroidPackageName(
-            "com.example.android",
-            true, /* installIfNotAvailable */
-            "12" /* minimumVersion */)
-        .build()
+      // URL you want to redirect back to. The domain (www.example.com) for this
+      // URL must be whitelisted in the Firebase Console.
+      .setUrl("boost.nowfloats.com")
+      // This must be true
+      .setHandleCodeInApp(true)
+      .setIOSBundleId("com.example.ios")
+      .setAndroidPackageName(
+        "com.example.android",
+        true, /* installIfNotAvailable */
+        "12" /* minimumVersion */
+      )
+      .build()
 
     root.popup_layout.setOnClickListener {
-      WebEngageController.trackEvent(PS_CLICKED_OUTLIDE_THE_POP_UP_AREA, CLICKED_OUTLIDE_THE_POP_UP_AREA, NO_EVENT_VALUE)
+      WebEngageController.trackEvent(
+        PS_CLICKED_OUTLIDE_THE_POP_UP_AREA,
+        CLICKED_OUTLIDE_THE_POP_UP_AREA,
+        NO_EVENT_VALUE
+      )
       dialog?.dismiss()
     }
     root.view.setOnClickListener {
@@ -154,22 +164,32 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
     Log.d(TAG, "firebaseAuthWithGoogle:" + acct?.id)
     val credential = GoogleAuthProvider.getCredential(acct?.idToken, null)
     mAuth.signInWithCredential(credential)
-        .addOnCompleteListener(requireActivity()) { task ->
-          root.progress.gone()
-          if (task.isSuccessful) {
-            // Sign in success, update UI with the signed-in user's information
-            Log.d(TAG, "signInWithCredential:success")
-            val user = mAuth.currentUser
-            AuthorizedGoogleUser(user, acct)
-            WebEngageController.trackEvent(PS_AUTH_PROVIDER_SUCCESS_GOOGLE, PROVIDER_SUCCESS_GOOGLE, NO_EVENT_VALUE)
-          } else {
-            // If sign in fails, display a message to the user.
-            Log.w(TAG, "signInWithCredential:failure", task.exception)
-            Toast.makeText(context, "Authentication failed.",
-                    Toast.LENGTH_SHORT).show()
-            WebEngageController.trackEvent(PS_AUTH_PROVIDER_FAILED_GOOGLE, PROVIDER_FAILED_GOOGLE, NO_EVENT_VALUE)
-          }
+      .addOnCompleteListener(requireActivity()) { task ->
+        root.progress.gone()
+        if (task.isSuccessful) {
+          // Sign in success, update UI with the signed-in user's information
+          Log.d(TAG, "signInWithCredential:success")
+          val user = mAuth.currentUser
+          AuthorizedGoogleUser(user, acct)
+          WebEngageController.trackEvent(
+            PS_AUTH_PROVIDER_SUCCESS_GOOGLE,
+            PROVIDER_SUCCESS_GOOGLE,
+            NO_EVENT_VALUE
+          )
+        } else {
+          // If sign in fails, display a message to the user.
+          Log.w(TAG, "signInWithCredential:failure", task.exception)
+          Toast.makeText(
+            context, "Authentication failed.",
+            Toast.LENGTH_SHORT
+          ).show()
+          WebEngageController.trackEvent(
+            PS_AUTH_PROVIDER_FAILED_GOOGLE,
+            PROVIDER_FAILED_GOOGLE,
+            NO_EVENT_VALUE
+          )
         }
+      }
   }
 
   fun spannableString() {
@@ -183,7 +203,10 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
         args.putString("link", "https://www.getboost360.com/tnc?src=android&stage=presignup")
         args.putString("title", "Boost360 - Terms & Conditions")
         popUpWebViewFragment.arguments = args
-        popUpWebViewFragment.show(requireActivity().supportFragmentManager, "popUpWebViewFragment_tag")
+        popUpWebViewFragment.show(
+          requireActivity().supportFragmentManager,
+          "popUpWebViewFragment_tag"
+        )
       }
 
       override fun updateDrawState(ds: TextPaint) {
@@ -200,7 +223,10 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
         args.putString("link", "https://www.getboost360.com/privacy?src=android&stage=presignup")
         args.putString("title", "Boost360 - Privacy Policy")
         popUpWebViewFragment.arguments = args
-        popUpWebViewFragment.show(requireActivity().supportFragmentManager, "popUpWebViewFragment_tag")
+        popUpWebViewFragment.show(
+          requireActivity().supportFragmentManager,
+          "popUpWebViewFragment_tag"
+        )
       }
 
       override fun updateDrawState(ds: TextPaint) {
@@ -212,16 +238,16 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
     ss.setSpan(termsOfUseClicked, 44, 56, 0)
     ss.setSpan(privacyPolicyClicked, 61, ss.length, 0)
     ss.setSpan(
-        ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.common_text_color)),
-        44,
-        56,
-        0
+      ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.common_text_color)),
+      44,
+      56,
+      0
     )
     ss.setSpan(
-        ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.common_text_color)),
-        61,
-        ss.length,
-        0
+      ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.common_text_color)),
+      61,
+      ss.length,
+      0
     )
     ss.setSpan(UnderlineSpan(), 44, 56, 0)
     ss.setSpan(UnderlineSpan(), 61, ss.length, 0)
@@ -232,8 +258,11 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
 
   fun AuthorizedGoogleUser(currentUser: FirebaseUser?, acct: GoogleSignInAccount?) {
     if (currentUser != null) {
-      val personName = if (currentUser.displayName.isNullOrEmpty().not()) currentUser.displayName else acct?.displayName
-      val personEmail = if (currentUser.email.isNullOrEmpty().not()) currentUser.email else acct?.email
+      val personName = if (currentUser.displayName.isNullOrEmpty()
+          .not()
+      ) currentUser.displayName else acct?.displayName
+      val personEmail =
+        if (currentUser.email.isNullOrEmpty().not()) currentUser.email else acct?.email
       val token = currentUser.getIdToken(true).toString()
       val personIdToken = if (token.isNotEmpty()) token else acct?.idToken
       val personPhoto = if (currentUser.photoUrl != null) currentUser.photoUrl else acct?.photoUrl
@@ -257,10 +286,13 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
       var userInfo: UserInfo? = null
       if (userInfoList.isNullOrEmpty().not() && userInfoList.size >= 2) userInfo = userInfoList[1]
 
-      val personName = if (currentUser.displayName.isNullOrEmpty() && userInfo != null) userInfo.displayName else currentUser.displayName
-      val personEmail = if (currentUser.email.isNullOrEmpty() && userInfo != null) userInfo.email else currentUser.email
+      val personName =
+        if (currentUser.displayName.isNullOrEmpty() && userInfo != null) userInfo.displayName else currentUser.displayName
+      val personEmail =
+        if (currentUser.email.isNullOrEmpty() && userInfo != null) userInfo.email else currentUser.email
       val personIdToken = currentUser.getIdToken(true).toString()
-      val personPhoto = if (currentUser.photoUrl == null && userInfo != null) userInfo.photoUrl else currentUser.photoUrl
+      val personPhoto =
+        if (currentUser.photoUrl == null && userInfo != null) userInfo.photoUrl else currentUser.photoUrl
 
       Log.d(TAG, "updateUI: photo = " + personPhoto)
 
@@ -276,7 +308,11 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
   }
 
   private fun createNewJioSecureIdSignUp() {
-    WebEngageController.trackEvent(PS_AUTH_PROVIDER_SUCCESS_JIO_ID, PROVIDER_SUCCESS_JIO_ID, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(
+      PS_AUTH_PROVIDER_SUCCESS_JIO_ID,
+      PROVIDER_SUCCESS_JIO_ID,
+      NO_EVENT_VALUE
+    )
     val intent = Intent(requireContext(), JioSignupActivity::class.java)
     startActivity(intent)
     dialog!!.dismiss()
@@ -286,7 +322,11 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
     val intent = Intent(requireContext(), SignUpActivity::class.java)
     intent.putExtra("provider", "EMAIL")
     startActivity(intent)
-    WebEngageController.trackEvent(PS_AUTH_PROVIDER_SUCCESS_EMAIL, PROVIDER_SUCCESS_EMAIL, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(
+      PS_AUTH_PROVIDER_SUCCESS_EMAIL,
+      PROVIDER_SUCCESS_EMAIL,
+      NO_EVENT_VALUE
+    )
     dialog!!.dismiss()
   }
 
@@ -294,22 +334,32 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
     Log.d(TAG, "handleFacebookAccessToken:$token")
     val credential = FacebookAuthProvider.getCredential(token.token)
     mAuth.signInWithCredential(credential)
-        .addOnCompleteListener(requireActivity()) { task ->
-          if (task.isSuccessful) {
-            // Sign in success, update UI with the signed-in user's information
-            Log.d(TAG, "signInWithCredential:success")
-            AuthorizedFacebookUser(mAuth.currentUser)
-            WebEngageController.trackEvent(PS_AUTH_PROVIDER_SUCCESS_FACEBOOK, PROVIDER_SUCCESS_FACEBOOK, NO_EVENT_VALUE)
-          } else {
-            // If sign in fails, display a message to the user.
-            Log.w(TAG, "signInWithCredential:failure", task.exception)
-            Toast.makeText(context, "SignIn Failed: " + task.exception!!.message,
-                    Toast.LENGTH_LONG).show()
-            WebEngageController.trackEvent(PS_AUTH_PROVIDER_FAILED_FACEBOOK , PROVIDER_FAILED_FACEBOOK, NO_EVENT_VALUE)
-            mAuth.signOut()
-            LoginManager.getInstance().logOut()
-          }
+      .addOnCompleteListener(requireActivity()) { task ->
+        if (task.isSuccessful) {
+          // Sign in success, update UI with the signed-in user's information
+          Log.d(TAG, "signInWithCredential:success")
+          AuthorizedFacebookUser(mAuth.currentUser)
+          WebEngageController.trackEvent(
+            PS_AUTH_PROVIDER_SUCCESS_FACEBOOK,
+            PROVIDER_SUCCESS_FACEBOOK,
+            NO_EVENT_VALUE
+          )
+        } else {
+          // If sign in fails, display a message to the user.
+          Log.w(TAG, "signInWithCredential:failure", task.exception)
+          Toast.makeText(
+            context, "SignIn Failed: " + task.exception!!.message,
+            Toast.LENGTH_LONG
+          ).show()
+          WebEngageController.trackEvent(
+            PS_AUTH_PROVIDER_FAILED_FACEBOOK,
+            PROVIDER_FAILED_FACEBOOK,
+            NO_EVENT_VALUE
+          )
+          mAuth.signOut()
+          LoginManager.getInstance().logOut()
         }
+      }
   }
 
   override fun onStart() {
@@ -335,6 +385,9 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
     Toast.makeText(activity, error?.localizedMessage, Toast.LENGTH_SHORT).show()
   }
 
-  override fun onCompleted(type: FacebookGraphRequestType, facebookGraphResponse: BaseFacebookGraphResponse?) {
+  override fun onCompleted(
+    type: FacebookGraphRequestType,
+    facebookGraphResponse: BaseFacebookGraphResponse?
+  ) {
   }
 }

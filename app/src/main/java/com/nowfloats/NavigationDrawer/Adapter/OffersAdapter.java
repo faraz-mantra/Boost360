@@ -9,8 +9,10 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
+
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,8 @@ import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
+import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.thinksity.R;
@@ -41,7 +45,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
     Activity activity;
     OnItemClickListener mItemClickListener;
 
-    public OffersAdapter(List<OfferFloatsModel> floatsModelList, Activity activity){
+    public OffersAdapter(List<OfferFloatsModel> floatsModelList, Activity activity) {
         this.mListOfferFloatsModel = floatsModelList;
         this.activity = activity;
     }
@@ -87,7 +91,9 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
                         } else {
                             url = imageShare;
                         }
-                        Picasso.get()
+                        new Picasso.Builder(v.getContext())
+                                .downloader(new OkHttp3Downloader(Utils.getAuthClient()))
+                                .build()
                                 .load(url)
                                 .into(new Target() {
                                     @Override
@@ -120,7 +126,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
                                                 Methods.showSnackBarNegative(activity,
                                                         activity.getString(R.string.no_app_available_for_action));
                                             }
-                                        }catch (Exception e){
+                                        } catch (Exception e) {
                                             ActivityCompat.requestPermissions(activity,
                                                     new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                                             android.Manifest.permission.CAMERA}, 2);
@@ -128,7 +134,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
                                     }
 
                                     @Override
-                                    public void onBitmapFailed(Exception e,Drawable errorDrawable) {
+                                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
                                         pd.dismiss();
                                         Methods.showSnackBarNegative(activity,
                                                 activity.getString(R.string.failed_to_download_image));
@@ -155,7 +161,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mItemClickListener!=null){
+                if (mItemClickListener != null) {
                     mItemClickListener.onItemClick(v, position);
                 }
             }
@@ -168,28 +174,28 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
         return mListOfferFloatsModel.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mItemClickListener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView ivMainOffer, ivShareOffer;
         public TextView tvOfferTitle, tvOfferContent, tvOfferTimeLine, tvOfferCreatedOn;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            ivMainOffer = (ImageView) itemView.findViewById(R.id.imageView);
-            ivShareOffer = (ImageView) itemView.findViewById(R.id.shareData);
-            tvOfferTitle = (TextView) itemView.findViewById(R.id.tv_title);
-            tvOfferContent = (TextView) itemView.findViewById(R.id.tv_offer_message);
-            tvOfferTimeLine = (TextView) itemView.findViewById(R.id.tv_offer_date);
-            tvOfferCreatedOn = (TextView) itemView.findViewById(R.id.textViewEmail);
+            ivMainOffer = itemView.findViewById(R.id.imageView);
+            ivShareOffer = itemView.findViewById(R.id.shareData);
+            tvOfferTitle = itemView.findViewById(R.id.tv_title);
+            tvOfferContent = itemView.findViewById(R.id.tv_offer_message);
+            tvOfferTimeLine = itemView.findViewById(R.id.tv_offer_date);
+            tvOfferCreatedOn = itemView.findViewById(R.id.textViewEmail);
         }
 
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener){
-        this.mItemClickListener = listener;
-    }
-
-    public interface OnItemClickListener{
-        public void onItemClick(View view, int position);
     }
 }

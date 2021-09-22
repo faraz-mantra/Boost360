@@ -19,8 +19,7 @@ class PreferencesUtils {
   companion object {
     val instance = PreferencesUtils()
     fun initSharedPreferences(context: Context) {
-      instance.sharedPref = context.getSharedPreferences("prefs", Activity.MODE_PRIVATE
-      )
+      instance.sharedPref = context.getSharedPreferences("prefs", Activity.MODE_PRIVATE)
       instance.editor = instance.sharedPref.edit()
     }
   }
@@ -118,7 +117,7 @@ fun PreferencesUtils.getData(key: String, defaultValue: Float): Float {
 }
 
 @Synchronized
-fun PreferencesUtils.getData(key: String, defaultValue: Int=0): Int {
+fun PreferencesUtils.getData(key: String, defaultValue: Int = 0): Int {
   return sharedPref.getInt(key, defaultValue)
 }
 

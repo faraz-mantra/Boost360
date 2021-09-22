@@ -34,7 +34,11 @@ class PaymentConfigBottomSheet : BaseBottomSheetDialog<BottomShettPaymentConfigu
     val content = SpannableString(getString(R.string.a_premium_service_by_boost_for_secure_payment_collection_learn_more_here))
     content.setSpan(UnderlineSpan(), content.indexOf("here"), content.length, 0)
     binding?.tvBoostPaymentGatewayDesc?.text = content
-    setOnClickListener(binding?.vwBoostPaymentGateway, binding?.vwExternalUrl, binding?.changeBankDetail)
+    setOnClickListener(
+      binding?.vwBoostPaymentGateway,
+      binding?.vwExternalUrl,
+      binding?.changeBankDetail
+    )
     setOnClickListener(binding?.btnDone, binding?.btnCancel)
     binding?.changeBankDetail?.text = resources.getString(if (bankAccountDetail != null) R.string.update_bank_detail else R.string.add_bank_account)
     binding?.rbBoostPaymentGateway?.isChecked = (paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value)
@@ -67,5 +71,4 @@ class PaymentConfigBottomSheet : BaseBottomSheetDialog<BottomShettPaymentConfigu
       binding?.btnCancel -> dismiss()
     }
   }
-
 }

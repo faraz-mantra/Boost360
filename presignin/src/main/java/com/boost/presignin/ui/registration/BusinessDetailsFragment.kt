@@ -17,10 +17,21 @@ import com.framework.base.BaseResponse
 import com.framework.extensions.observeOnce
 import com.framework.pref.clientId
 import com.framework.pref.clientId2
+import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
 import okio.Buffer
 import okio.BufferedSource
 import java.nio.charset.Charset
+import android.graphics.PorterDuff
+
+import android.graphics.drawable.Drawable
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import android.graphics.PorterDuffColorFilter
+
+
+
+
 
 class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, LoginSignUpViewModel>() {
 
@@ -49,22 +60,72 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
 
   override fun onCreateView() {
     WebEngageController.trackEvent(PS_BUSINESS_PROFILE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    baseActivity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+    binding?.nametEt?.post{ baseActivity.showKeyBoard(binding?.nametEt) }
     floatsRequest = requireArguments().getSerializable("request") as? CategoryFloatsRequest
     binding?.phoneEt?.setText(floatsRequest?.userBusinessMobile)
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
     backButton?.setOnClickListener { goBack() }
-    activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-      override fun handleOnBackPressed() {
-        parentFragmentManager.popBackStack()
-      }
-    })
+    activity?.onBackPressedDispatcher?.addCallback(
+      viewLifecycleOwner,
+      object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+          parentFragmentManager.popBackStack()
+        }
+      })
     binding?.phoneEt?.setOnFocusChangeListener { v, hasFocus ->
       when (hasFocus) {
         true -> binding?.civPhone?.setTintColor(getColor(R.color.orange))
         else -> binding?.civPhone?.setTintColor(getColor(R.color.et_unselected_color))
       }
     }
+    binding?.nametEt?.setOnFocusChangeListener { v, hasFocus ->
+      var drawable: Drawable? = ContextCompat.getDrawable(requireActivity(),R.drawable.ic_business_detail_user)
+      when (hasFocus) {
+        true ->{
+          drawable?.colorFilter =
+            PorterDuffColorFilter(resources.getColor(R.color.orange), PorterDuff.Mode.SRC_IN)
+        }
+        else -> {
+          drawable?.colorFilter =
+            PorterDuffColorFilter(resources.getColor(R.color.et_unselected_color), PorterDuff.Mode.SRC_IN)
+        }
+
+      }
+      binding?.nametEt?.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable,null,null,null)
+    }
+
+    binding?.businessNameEt?.setOnFocusChangeListener { v, hasFocus ->
+      var drawable: Drawable? = ContextCompat.getDrawable(requireActivity(),R.drawable.ic_business_detail_catelog)
+      when (hasFocus) {
+        true ->{
+          drawable?.colorFilter =
+            PorterDuffColorFilter(resources.getColor(R.color.orange), PorterDuff.Mode.SRC_IN)
+        }
+        else -> {
+          drawable?.colorFilter =
+            PorterDuffColorFilter(resources.getColor(R.color.et_unselected_color), PorterDuff.Mode.SRC_IN)
+        }
+
+      }
+      binding?.businessNameEt?.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable,null,null,null)
+    }
+
+    binding?.emailEt?.setOnFocusChangeListener { v, hasFocus ->
+      var drawable: Drawable? = ContextCompat.getDrawable(requireActivity(),R.drawable.ic_business_detail_email)
+      when (hasFocus) {
+        true ->{
+          drawable?.colorFilter =
+            PorterDuffColorFilter(resources.getColor(R.color.orange), PorterDuff.Mode.SRC_IN)
+        }
+        else -> {
+          drawable?.colorFilter =
+            PorterDuffColorFilter(resources.getColor(R.color.et_unselected_color), PorterDuff.Mode.SRC_IN)
+        }
+
+      }
+      binding?.emailEt?.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable,null,null,null)
+    }
+
     binding?.confirmButton?.setOnClickListener {
       val name = binding?.nametEt?.text?.toString()
       val businessName = binding?.businessNameEt?.text?.toString();
@@ -87,15 +148,16 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
       floatsRequest?.requestProfile?.ProfileProperties?.userName = name
       floatsRequest?.userBusinessMobile = phone
       if (email.isNullOrEmpty().not()) {
-        if (email.isEmailValid()){
-        floatsRequest?.requestProfile?.ProfileProperties?.userEmail = email
-        floatsRequest?.userBusinessEmail = email}
-        else{
+        if (email.isEmailValid()) {
+          floatsRequest?.requestProfile?.ProfileProperties?.userEmail = email
+          floatsRequest?.userBusinessEmail = email
+        } else {
           showLongToast(getString(R.string.email_invalid))
           return@setOnClickListener
         }
       } else {
-        floatsRequest?.requestProfile?.ProfileProperties?.userEmail = "noemail-${floatsRequest?.requestProfile?.ProfileProperties?.userMobile}@noemail.com"
+        floatsRequest?.requestProfile?.ProfileProperties?.userEmail =
+          "noemail-${floatsRequest?.requestProfile?.ProfileProperties?.userMobile}@noemail.com"
         floatsRequest?.userBusinessEmail = null
       }
       floatsRequest?.businessName = businessName
@@ -116,7 +178,13 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
       hideProgress()
       validateEmail()
     } else {
-      viewModel?.validateUsersPhone(RequestValidatePhone(clientId2, "+91", binding?.phoneEt?.text.toString()))?.observeOnce(viewLifecycleOwner, {
+      viewModel?.validateUsersPhone(
+        RequestValidatePhone(
+          clientId2,
+          "+91",
+          binding?.phoneEt?.text.toString()
+        )
+      )?.observeOnce(viewLifecycleOwner, {
         hideProgress()
         if (it.isSuccess()) {
           if (parseResponse(it)) {
@@ -133,21 +201,35 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
     showProgress()
     if (binding?.emailEt?.text.isNullOrEmpty()) {
       hideProgress()
-      addFragmentReplace(com.framework.R.id.container, BusinessWebsiteFragment.newInstance(floatsRequest!!), true)
+      addFragmentReplace(
+        com.framework.R.id.container,
+        BusinessWebsiteFragment.newInstance(floatsRequest!!),
+        true
+      )
     } else {
-      viewModel?.validateUsersEmail(RequestValidateEmail(clientId2, floatsRequest?.userBusinessEmail))?.observeOnce(viewLifecycleOwner, {
+      viewModel?.validateUsersEmail(
+        RequestValidateEmail(
+          clientId2,
+          floatsRequest?.userBusinessEmail
+        )
+      )?.observeOnce(viewLifecycleOwner, {
         hideProgress()
         if (it.isSuccess()) {
           if (parseResponse(it)) {
             showShortToast(getString(R.string.this_email_is_already_in_use))
           } else {
-            addFragmentReplace(com.framework.R.id.container, BusinessWebsiteFragment.newInstance(floatsRequest!!), true)
+            addFragmentReplace(
+              com.framework.R.id.container,
+              BusinessWebsiteFragment.newInstance(floatsRequest!!),
+              true
+            )
           }
         }
       })
 
     }
   }
+
   private fun parseResponse(it: BaseResponse): Boolean {
     return try {
       val source: BufferedSource? = it.responseBody?.source()

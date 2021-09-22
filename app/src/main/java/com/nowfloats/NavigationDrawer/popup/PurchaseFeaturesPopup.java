@@ -38,7 +38,7 @@ public class PurchaseFeaturesPopup extends DialogFragment {
         super.onStart();
         int width = ViewGroup.LayoutParams.MATCH_PARENT;
         int height = ViewGroup.LayoutParams.MATCH_PARENT;
-        getDialog().getWindow().setLayout(width,height);
+        getDialog().getWindow().setLayout(width, height);
         getDialog().getWindow().setBackgroundDrawableResource(R.color.fullscreen_color);
 
     }
@@ -93,12 +93,12 @@ public class PurchaseFeaturesPopup extends DialogFragment {
         intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         if (session.getFPEmail() != null) {
-            intent.putExtra("email", session.getFPEmail());
+            intent.putExtra("email", session.getUserProfileEmail());
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }
-        if (session.getFPPrimaryContactNumber() != null) {
-            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+        if (session.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
             intent.putExtra("mobileNo", "9160004303");
         }

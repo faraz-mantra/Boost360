@@ -41,65 +41,75 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      * Default encoding for POST or PUT parameters. See {@link #getParamsEncoding()}.
      */
     private static final String DEFAULT_PARAMS_ENCODING = "UTF-8";
-
     /**
-     * Supported request methods.
+     * Threshold at which we should log the request (even when debug logging is not enabled).
      */
-    public interface Method {
-        int DEPRECATED_GET_OR_POST = -1;
-        int GET = 0;
-        int POST = 1;
-        int PUT = 2;
-        int DELETE = 3;
-    }
-
-    /** An event log tracing the lifetime of this request; for debugging. */
+    private static final long SLOW_REQUEST_THRESHOLD_MS = 3000;
+    /**
+     * An event log tracing the lifetime of this request; for debugging.
+     */
     private final MarkerLog mEventLog = MarkerLog.ENABLED ? new MarkerLog() : null;
 
-    /** Request method of this request.  Currently supports GET, POST, PUT, and DELETE. */
+    /**
+     * Request method of this request.  Currently supports GET, POST, PUT, and DELETE.
+     */
     private final int mMethod;
 
-    /** URL of this request. */
+    /**
+     * URL of this request.
+     */
     private final String mUrl;
 
-    /** Default tag for {@link TrafficStats}. */
+    /**
+     * Default tag for {@link TrafficStats}.
+     */
     private final int mDefaultTrafficStatsTag;
 
-    /** Listener interface for errors. */
+    /**
+     * Listener interface for errors.
+     */
     private final Response.ErrorListener mErrorListener;
 
-    /** Sequence number of this request, used to enforce FIFO ordering. */
+    /**
+     * Sequence number of this request, used to enforce FIFO ordering.
+     */
     private Integer mSequence;
 
-    /** The request queue this request is associated with. */
+    /**
+     * The request queue this request is associated with.
+     */
     private RequestQueue mRequestQueue;
 
-    /** Whether or not responses to this request should be cached. */
+    /**
+     * Whether or not responses to this request should be cached.
+     */
     private boolean mShouldCache = true;
 
-    /** Whether or not this request has been canceled. */
+    /**
+     * Whether or not this request has been canceled.
+     */
     private boolean mCanceled = false;
 
-    /** Whether or not a response has been delivered for this request yet. */
+    /**
+     * Whether or not a response has been delivered for this request yet.
+     */
     private boolean mResponseDelivered = false;
 
     // A cheap variant of request tracing used to dump slow requests.
     private long mRequestBirthTime = 0;
-
-    /** Threshold at which we should log the request (even when debug logging is not enabled). */
-    private static final long SLOW_REQUEST_THRESHOLD_MS = 3000;
-
-    /** The retry policy for this request. */
+    /**
+     * The retry policy for this request.
+     */
     private RetryPolicy mRetryPolicy;
-
     /**
      * When a request can be retrieved from cache but must be refreshed from
      * the network, the cache entry will be stored here so that in the event of
      * a "Not Modified" response, we can be sure it hasn't been evicted from cache.
      */
     private Cache.Entry mCacheEntry = null;
-
-    /** An opaque token tagging this request; used for bulk cancellation. */
+    /**
+     * An opaque token tagging this request; used for bulk cancellation.
+     */
     private Object mTag;
 
     /**
@@ -126,7 +136,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
         mErrorListener = listener;
         setRetryPolicy(new DefaultRetryPolicy());
 
-        mDefaultTrafficStatsTag = TextUtils.isEmpty(url) ? 0: Uri.parse(url).getHost().hashCode();
+        mDefaultTrafficStatsTag = TextUtils.isEmpty(url) ? 0 : Uri.parse(url).getHost().hashCode();
     }
 
     /**
@@ -134,6 +144,15 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      */
     public int getMethod() {
         return mMethod;
+    }
+
+    /**
+     * Returns this request's tag.
+     *
+     * @see Request#setTag(Object)
+     */
+    public Object getTag() {
+        return mTag;
     }
 
     /**
@@ -145,25 +164,10 @@ public abstract class Request<T> implements Comparable<Request<T>> {
     }
 
     /**
-     * Returns this request's tag.
-     * @see Request#setTag(Object)
-     */
-    public Object getTag() {
-        return mTag;
-    }
-
-    /**
      * @return A tag for use with {@link TrafficStats#setThreadStatsTag(int)}
      */
     public int getTrafficStatsTag() {
         return mDefaultTrafficStatsTag;
-    }
-
-    /**
-     * Sets the retry policy for this request.
-     */
-    public void setRetryPolicy(RetryPolicy retryPolicy) {
-        mRetryPolicy = retryPolicy;
     }
 
     /**
@@ -221,13 +225,6 @@ public abstract class Request<T> implements Comparable<Request<T>> {
     }
 
     /**
-     * Sets the sequence number of this request.  Used by {@link RequestQueue}.
-     */
-    public final void setSequence(int sequence) {
-        mSequence = sequence;
-    }
-
-    /**
      * Returns the sequence number of this request.
      */
     public final int getSequence() {
@@ -235,6 +232,13 @@ public abstract class Request<T> implements Comparable<Request<T>> {
             throw new IllegalStateException("getSequence called before setSequence");
         }
         return mSequence;
+    }
+
+    /**
+     * Sets the sequence number of this request.  Used by {@link RequestQueue}.
+     */
+    public final void setSequence(int sequence) {
+        mSequence = sequence;
     }
 
     /**
@@ -252,18 +256,18 @@ public abstract class Request<T> implements Comparable<Request<T>> {
     }
 
     /**
+     * Returns the annotated cache entry, or null if there isn't one.
+     */
+    public Cache.Entry getCacheEntry() {
+        return mCacheEntry;
+    }
+
+    /**
      * Annotates this request with an entry retrieved for it from cache.
      * Used for cache coherency support.
      */
     public void setCacheEntry(Cache.Entry entry) {
         mCacheEntry = entry;
-    }
-
-    /**
-     * Returns the annotated cache entry, or null if there isn't one.
-     */
-    public Cache.Entry getCacheEntry() {
-        return mCacheEntry;
     }
 
     /**
@@ -284,6 +288,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      * Returns a list of extra HTTP headers to go along with this request. Can
      * throw {@link AuthFailureError} as authentication may be required to
      * provide these values.
+     *
      * @throws AuthFailureError In the event of auth failure
      */
     public Map<String, String> getHeaders() throws AuthFailureError {
@@ -297,8 +302,8 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      *
      * <p>Note that only one of getPostParams() and getPostBody() can return a non-null
      * value.</p>
-     * @throws AuthFailureError In the event of auth failure
      *
+     * @throws AuthFailureError In the event of auth failure
      * @deprecated Use {@link #getParams()} instead.
      */
     protected Map<String, String> getPostParams() throws AuthFailureError {
@@ -334,7 +339,6 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      * Returns the raw POST body to be sent.
      *
      * @throws AuthFailureError In the event of auth failure
-     *
      * @deprecated Use {@link #getBody()} instead.
      */
     public byte[] getPostBody() throws AuthFailureError {
@@ -427,17 +431,6 @@ public abstract class Request<T> implements Comparable<Request<T>> {
     }
 
     /**
-     * Priority values.  Requests will be processed from higher priorities to
-     * lower priorities, in FIFO order.
-     */
-    public enum Priority {
-        LOW,
-        NORMAL,
-        HIGH,
-        IMMEDIATE
-    }
-
-    /**
      * Returns the {@link Priority} of this request; {@link Priority#NORMAL} by default.
      */
     public Priority getPriority() {
@@ -461,6 +454,13 @@ public abstract class Request<T> implements Comparable<Request<T>> {
     }
 
     /**
+     * Sets the retry policy for this request.
+     */
+    public void setRetryPolicy(RetryPolicy retryPolicy) {
+        mRetryPolicy = retryPolicy;
+    }
+
+    /**
      * Mark this request as having a response delivered on it.  This can be used
      * later in the request's lifetime for suppressing identical responses.
      */
@@ -480,6 +480,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      * and return an appropriate response type. This method will be
      * called from a worker thread.  The response will not be delivered
      * if you return null.
+     *
      * @param response Response from the network
      * @return The parsed response, or null in the case of an error
      */
@@ -501,8 +502,9 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      * Subclasses must implement this to perform delivery of the parsed
      * response to their listeners.  The given response is guaranteed to
      * be non-null; responses that fail to parse are not delivered.
+     *
      * @param response The parsed response returned by
-     * {@link #parseNetworkResponse(NetworkResponse)}
+     *                 {@link #parseNetworkResponse(NetworkResponse)}
      */
     abstract protected void deliverResponse(T response);
 
@@ -539,5 +541,27 @@ public abstract class Request<T> implements Comparable<Request<T>> {
         String trafficStatsTag = "0x" + Integer.toHexString(getTrafficStatsTag());
         return (mCanceled ? "[X] " : "[ ] ") + getUrl() + " " + trafficStatsTag + " "
                 + getPriority() + " " + mSequence;
+    }
+
+    /**
+     * Priority values.  Requests will be processed from higher priorities to
+     * lower priorities, in FIFO order.
+     */
+    public enum Priority {
+        LOW,
+        NORMAL,
+        HIGH,
+        IMMEDIATE
+    }
+
+    /**
+     * Supported request methods.
+     */
+    public interface Method {
+        int DEPRECATED_GET_OR_POST = -1;
+        int GET = 0;
+        int POST = 1;
+        int PUT = 2;
+        int DELETE = 3;
     }
 }

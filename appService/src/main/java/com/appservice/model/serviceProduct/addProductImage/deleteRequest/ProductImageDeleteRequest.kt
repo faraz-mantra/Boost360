@@ -6,10 +6,10 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class ProductImageDeleteRequest(
-    @SerializedName("Multi")
-    var multi: Boolean = false,
-    @SerializedName("Query")
-    var query: String? = null
+  @SerializedName("Multi")
+  var multi: Boolean = false,
+  @SerializedName("Query")
+  var query: String? = null
 ) : BaseRequest(), Serializable {
 
   fun setQueryData(id: String?) {

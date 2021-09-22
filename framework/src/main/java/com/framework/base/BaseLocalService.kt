@@ -19,6 +19,14 @@ open class BaseLocalService {
     }
   }
 
+  fun <T : BaseResponse> fromJsonResNew(context: Context, @RawRes id: Int, classOfT: Class<T>): BaseResponse {
+    return try {
+      Gson().fromJson(getLocalJsonReader(context, id), classOfT).apply { status = 200 }
+    } catch (e: Exception) {
+      BaseResponse().apply { status = 404;error = e }
+    }
+  }
+
   private fun getLocalJsonReader(context: Context, @RawRes id: Int): BufferedReader {
     return BufferedReader(InputStreamReader(context.resources.openRawResource(id)))
   }

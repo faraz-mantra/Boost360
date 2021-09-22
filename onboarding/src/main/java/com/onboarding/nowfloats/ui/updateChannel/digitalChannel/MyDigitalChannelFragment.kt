@@ -1,8 +1,8 @@
 package com.onboarding.nowfloats.ui.updateChannel.digitalChannel
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.SpannableString
@@ -12,6 +12,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.view.ContextThemeWrapper
 import com.framework.base.BaseResponse
@@ -57,6 +58,7 @@ import io.reactivex.Completable
 import java.util.*
 import kotlin.collections.ArrayList
 
+
 class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, CategoryViewModel>(), RecyclerItemClickListener {
 
   private var connectedChannels: ArrayList<String> = arrayListOf()
@@ -68,7 +70,10 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
 
   private val mPrefTwitter: SharedPreferences?
     get() {
-      return baseActivity.getSharedPreferences(PreferenceConstant.PREF_NAME_TWITTER, Context.MODE_PRIVATE)
+      return baseActivity.getSharedPreferences(
+        PreferenceConstant.PREF_NAME_TWITTER,
+        Context.MODE_PRIVATE
+      )
     }
 
   private var requestFloatsModel: RequestFloatsModel? = null
@@ -82,7 +87,8 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
 
   private val selectedChannels: ArrayList<ChannelModel>
     get() {
-      return (listDisconnect?.filter { it -> it.isSelected == true } ?: ArrayList()) as ArrayList<ChannelModel>
+      return (listDisconnect?.filter { it -> it.isSelected == true }
+        ?: ArrayList()) as ArrayList<ChannelModel>
     }
 
   companion object {
@@ -123,10 +129,13 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         val fpTag = bundle.getString(PreferenceConstant.GET_FP_DETAILS_TAG)
         showProgress(context?.getString(R.string.refreshing_your_channels), false)
         viewModel?.getCategories(baseActivity)?.observeOnce(viewLifecycleOwner, {
-          if (it?.error != null) errorMessage(it.error?.localizedMessage ?: resources.getString(R.string.error_getting_category_data))
+          if (it?.error != null) errorMessage(
+            it.error?.localizedMessage ?: resources.getString(R.string.error_getting_category_data)
+          )
           else {
             val categoryList = (it as? ResponseDataCategory)?.data
-            val categoryData = categoryList?.singleOrNull { c -> c.experienceCode() == experienceCode }
+            val categoryData =
+              categoryList?.singleOrNull { c -> c.experienceCode() == experienceCode }
             if (categoryData != null) {
               getChannelAccessToken(categoryData, floatingPoint, fpTag)
             } else errorMessage(resources.getString(R.string.error_getting_category_data))
@@ -136,7 +145,11 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     }
   }
 
-  private fun getChannelAccessToken(categoryData: CategoryDataModel?, floatingPoint: String?, fpTag: String?) {
+  private fun getChannelAccessToken(
+    categoryData: CategoryDataModel?,
+    floatingPoint: String?,
+    fpTag: String?
+  ) {
     viewModel?.getChannelsAccessTokenStatus(floatingPoint)?.observeOnce(viewLifecycleOwner, { it1 ->
       when {
         it1.error is NoNetworkException -> errorMessage(resources.getString(R.string.internet_connection_not_available))
@@ -144,13 +157,23 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
           val response = it1 as? ChannelAccessStatusResponse
           setDataRequestChannels(categoryData, response?.channels, floatingPoint, fpTag)
         }
-        it1.status == 404 || it1.status == 400 -> setDataRequestChannels(categoryData, null, floatingPoint, fpTag)
+        it1.status == 404 || it1.status == 400 -> setDataRequestChannels(
+          categoryData,
+          null,
+          floatingPoint,
+          fpTag
+        )
         else -> errorMessage(it1.message())
       }
     })
   }
 
-  private fun setDataRequestChannels(categoryData: CategoryDataModel?, channelsAccessToken: ChannelsType?, floatingPoint: String?, fpTag: String?) {
+  private fun setDataRequestChannels(
+    categoryData: CategoryDataModel?,
+    channelsAccessToken: ChannelsType?,
+    floatingPoint: String?,
+    fpTag: String?
+  ) {
     val requestFloatsNew = RequestFloatsModel()
     requestFloatsNew.categoryDataModel = categoryData
     requestFloatsNew.isUpdate = true
@@ -158,7 +181,9 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     requestFloatsNew.fpTag = fpTag
     requestFloatsNew.websiteUrl = websiteUrl
     requestFloatsNew.categoryDataModel?.resetIsSelect()
-    requestFloatsNew.categoryDataModel?.channels?.map { if (it.isGoogleSearch()) it.websiteUrl = websiteUrl }
+    requestFloatsNew.categoryDataModel?.channels?.map {
+      if (it.isGoogleSearch()) it.websiteUrl = websiteUrl
+    }
     if (channelsAccessToken != null) {
       connectedChannels.clear()
       requestFloatsNew.categoryDataModel?.channels?.forEach { it1 ->
@@ -167,8 +192,12 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
           it1.getAccessTokenType() == ChannelsType.AccountType.facebookpage.name -> {
             val fbPage = channelsAccessToken.facebookpage
             if (fbPage?.status?.equals(CHANNEL_STATUS_SUCCESS, true) == true) {
-              data = ChannelAccessToken(type = ChannelsType.AccountType.facebookpage.name, userAccessTokenKey = null,
-                  userAccountId = fbPage.account?.accountId, userAccountName = fbPage.account?.accountName)
+              data = ChannelAccessToken(
+                type = ChannelsType.AccountType.facebookpage.name,
+                userAccessTokenKey = null,
+                userAccountId = fbPage.account?.accountId,
+                userAccountName = fbPage.account?.accountName
+              )
               requestFloatsNew.channelAccessTokens?.add(data)
               it1.isSelected = true
               it1.channelAccessToken = data
@@ -177,10 +206,20 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
           }
           it1.getAccessTokenType() == ChannelsType.AccountType.facebookshop.name -> {
             val fpShop = channelsAccessToken.facebookshop
-            if (channelsAccessToken.facebookshop?.status?.equals(CHANNEL_STATUS_SUCCESS, true) == true) {
-              data = ChannelAccessToken(type = ChannelsType.AccountType.facebookshop.name, userAccessTokenKey = null,
-                  userAccountId = fpShop?.account?.userAccountId, userAccountName = null, pixelId = null,
-                  catalogId = fpShop?.account?.catalogId, merchantSettingsId = fpShop?.account?.merchantSettingsId)
+            if (channelsAccessToken.facebookshop?.status?.equals(
+                CHANNEL_STATUS_SUCCESS,
+                true
+              ) == true
+            ) {
+              data = ChannelAccessToken(
+                type = ChannelsType.AccountType.facebookshop.name,
+                userAccessTokenKey = null,
+                userAccountId = fpShop?.account?.userAccountId,
+                userAccountName = null,
+                pixelId = null,
+                catalogId = fpShop?.account?.catalogId,
+                merchantSettingsId = fpShop?.account?.merchantSettingsId
+              )
               requestFloatsNew.channelAccessTokens?.add(data)
               it1.isSelected = true
               it1.channelAccessToken = data
@@ -190,8 +229,12 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
           it1.getAccessTokenType() == ChannelsType.AccountType.twitter.name -> {
             val twitter = channelsAccessToken.twitter
             if (channelsAccessToken.twitter?.status?.equals(CHANNEL_STATUS_SUCCESS, true) == true) {
-              data = ChannelAccessToken(type = ChannelsType.AccountType.twitter.name, userAccessTokenKey = null,
-                  userAccountId = twitter?.account?.accountId, userAccountName = twitter?.account?.accountName)
+              data = ChannelAccessToken(
+                type = ChannelsType.AccountType.twitter.name,
+                userAccessTokenKey = null,
+                userAccountId = twitter?.account?.accountId,
+                userAccountName = twitter?.account?.accountName
+              )
               requestFloatsNew.channelAccessTokens?.add(data)
               it1.isSelected = true
               it1.channelAccessToken = data
@@ -200,10 +243,24 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
           }
           it1.getAccessTokenType() == ChannelsType.AccountType.googlemybusiness.name -> {
             val gmb = channelsAccessToken.googlemybusiness
-            if (channelsAccessToken.googlemybusiness?.status?.equals(CHANNEL_STATUS_SUCCESS, true) == true) {
-              data = ChannelAccessToken(type = ChannelsType.AccountType.googlemybusiness.name, token_expiry = null, invalid = null,
-                  token_response = ChannelTokenResponse(), refresh_token = null, userAccountName = gmb?.account?.accountName, userAccountId = gmb?.account?.accountId,
-                  LocationId = gmb?.account?.locationId, LocationName = gmb?.account?.locationName, userAccessTokenKey = null, verified_location = null)
+            if (channelsAccessToken.googlemybusiness?.status?.equals(
+                CHANNEL_STATUS_SUCCESS,
+                true
+              ) == true
+            ) {
+              data = ChannelAccessToken(
+                type = ChannelsType.AccountType.googlemybusiness.name,
+                token_expiry = null,
+                invalid = null,
+                token_response = ChannelTokenResponse(),
+                refresh_token = null,
+                userAccountName = gmb?.account?.accountName,
+                userAccountId = gmb?.account?.accountId,
+                LocationId = gmb?.account?.locationId,
+                LocationName = gmb?.account?.locationName,
+                userAccessTokenKey = null,
+                verified_location = null
+              )
               requestFloatsNew.channelAccessTokens?.add(data)
               it1.isSelected = true
               it1.channelAccessToken = data
@@ -216,27 +273,31 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     getWhatsAppData(requestFloatsNew, channelsAccessToken)
   }
 
-  private fun getWhatsAppData(requestFloatsNew: RequestFloatsModel, channelsAccessToken: ChannelsType?) {
-    viewModel?.getWhatsappBusiness(request = requestFloatsNew.fpTag, auth = WA_KEY)?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
-        if (response != null && response.active_whatsapp_number.isNullOrEmpty().not()) {
-          val channelActionData = ChannelActionData(response.active_whatsapp_number?.trim())
-          requestFloatsNew.channelActionDatas?.add(channelActionData)
-          connectedChannels.add(ChannelsType.AccountType.WAB.name)
-          requestFloatsNew.categoryDataModel?.channels?.forEach { it1 ->
-            if (it1.isWhatsAppChannel()) {
-              it1.isSelected = true
-              it1.channelActionData = channelActionData
+  private fun getWhatsAppData(
+    requestFloatsNew: RequestFloatsModel,
+    channelsAccessToken: ChannelsType?
+  ) {
+    viewModel?.getWhatsappBusiness(request = requestFloatsNew.fpTag, auth = WA_KEY)
+      ?.observeOnce(viewLifecycleOwner, {
+        if (it.isSuccess()) {
+          val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
+          if (response != null && response.active_whatsapp_number.isNullOrEmpty().not()) {
+            val channelActionData = ChannelActionData(response.active_whatsapp_number?.trim())
+            requestFloatsNew.channelActionDatas?.add(channelActionData)
+            connectedChannels.add(ChannelsType.AccountType.WAB.name)
+            requestFloatsNew.categoryDataModel?.channels?.forEach { it1 ->
+              if (it1.isWhatsAppChannel()) {
+                it1.isSelected = true
+                it1.channelActionData = channelActionData
+              }
             }
           }
         }
-      }
-      ChannelAccessStatusResponse.saveDataConnectedChannel(connectedChannels)
-      NavigatorManager.updateRequest(requestFloatsNew)
-      setViewChannels(channelsAccessToken)
-      hideProgress()
-    })
+        ChannelAccessStatusResponse.saveDataConnectedChannel(connectedChannels)
+        NavigatorManager.updateRequest(requestFloatsNew)
+        setViewChannels(channelsAccessToken)
+        hideProgress()
+      })
   }
 
   private fun errorMessage(message: String) {
@@ -249,18 +310,23 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     listDisconnect = requestFloatsModel?.categoryDataModel?.channels?.filter { it.isSelected == false } as? ArrayList<ChannelModel>
     listConnect = requestFloatsModel?.categoryDataModel?.channels?.filter { it.isSelected == true } as? ArrayList<ChannelModel>
     binding?.connectedTxt?.text = "Connected (${listConnect?.size}/${requestFloatsModel?.categoryDataModel?.channels?.size})"
-    binding?.notConnectedTxt?.text = "Not Connected (${listDisconnect?.size}/${requestFloatsModel?.categoryDataModel?.channels?.size})"
+    binding?.notConnectedTxt?.text = "Not connected (${listDisconnect?.size}/${requestFloatsModel?.categoryDataModel?.channels?.size})"
 
     binding?.disconnectedBg?.post {
       var animObserver: Completable? = null
       animObserver = if (listDisconnect.isNullOrEmpty()) {
         changeView(true)
-        binding?.connectedRiya?.fadeIn(200L)?.andThen(binding?.imageRiya?.fadeIn(200L))?.andThen(binding?.riyaConnectedTxt?.fadeIn(200L))
+        binding?.connectedRiya?.fadeIn(200L)?.andThen(binding?.imageRiya?.fadeIn(200L))
+          ?.andThen(binding?.riyaConnectedTxt?.fadeIn(200L))
       } else {
         changeView(false)
-        binding?.viewDisconnect?.fadeIn(200L)?.doOnComplete { setAdapterDisconnected(listDisconnect) }?.andThen(binding?.viewConnect?.fadeIn(500L))
+        binding?.viewDisconnect?.fadeIn(200L)
+          ?.doOnComplete { setAdapterDisconnected(listDisconnect) }
+          ?.andThen(binding?.viewConnect?.fadeIn(500L))
       }
-      animObserver?.doOnComplete { setAdapterConnected(listConnect) }?.andThen(binding?.noteTxt?.fadeIn(100L)?.mergeWith(binding?.noteAboutTxt?.fadeIn(100L)))?.subscribe()
+      animObserver?.doOnComplete { setAdapterConnected(listConnect) }
+        ?.andThen(binding?.noteTxt?.fadeIn(100L)?.mergeWith(binding?.noteAboutTxt?.fadeIn(100L)))
+        ?.subscribe()
     }
     setSharePrefDataFpPageAndTwitter(channelsAccessToken)
   }
@@ -287,7 +353,9 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     val timeLine = channelsAccessToken?.facebookusertimeline
     if (timeLine != null && timeLine.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
       editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, timeLine.account?.accountName)
-      if (timeLine.account?.accountName.isNullOrEmpty().not()) editorFp?.putBoolean("fbShareEnabled", true)
+      if (timeLine.account?.accountName.isNullOrEmpty()
+          .not()
+      ) editorFp?.putBoolean("fbShareEnabled", true)
       editorFp?.putString("fbAccessId", timeLine.account?.accountId)
     }
     editorFp?.apply()
@@ -317,7 +385,6 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   private fun onDigitalChannelAddedOrUpdated(isAdded: Boolean) {
     binding?.root?.post {
       val instance = FirestoreManager
-      if (instance.getDrScoreData()?.metricdetail == null) return@post
       instance.getDrScoreData()?.metricdetail?.boolean_social_channel_connected = isAdded
       instance.updateDocument()
     }
@@ -343,7 +410,9 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
 
   private fun setAdapterConnected(list: ArrayList<ChannelModel>?) {
     binding?.recycleConnect?.post {
-      listConnect = list?.map { it.recyclerViewType = RecyclerViewItemType.CHANNEL_ITEM_CONNECT.getLayout(); it } as? ArrayList<ChannelModel>
+      listConnect = list?.map {
+        it.recyclerViewType = RecyclerViewItemType.CHANNEL_ITEM_CONNECT.getLayout(); it
+      } as? ArrayList<ChannelModel>
       listConnect?.let {
         adapterConnect = AppBaseRecyclerViewAdapter(baseActivity, it, this)
         binding?.recycleConnect?.adapter = adapterConnect
@@ -352,7 +421,6 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     }
   }
 
-  @SuppressLint("SetTextI18n")
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     val channel = item as ChannelModel
     when (actionType) {
@@ -360,11 +428,12 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         if (channel.isFacebookShop()) {
           val s = SpannableString(resources.getString(R.string.fp_shop_awaited_desc))
           Linkify.addLinks(s, Linkify.ALL)
-          AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.AlertDialogCustom))
-              .setTitle(getString(R.string.fp_shop_awaited_title))
-              .setMessage(s)
-              .setPositiveButton(resources.getString(R.string.okay), null).show()
-              .findViewById<TextView>(android.R.id.message).movementMethod = LinkMovementMethod.getInstance()
+          val builder = AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.CustomAlertDialogTheme))
+          builder.setTitle(getString(R.string.fp_shop_awaited_title)).setMessage(s).setPositiveButton(resources.getString(R.string.okay), null)
+          val alert: AlertDialog = builder.create()
+          alert.show()
+          alert.findViewById<TextView>(android.R.id.message).movementMethod = LinkMovementMethod.getInstance()
+          alert.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getColor(R.color.colorAccentLight))
           return
         }
         listDisconnect?.map {
@@ -376,10 +445,8 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         adapterDisconnect?.notifyItemChanged(position)
         val count = listDisconnect?.filter { it.isSelected == true }?.size ?: 0
         if (count > 0) {
-          if (count == 1)
-            binding?.syncBtn?.text = "${resources.getString(R.string.continue_syncing)} $count ${resources.getString(R.string.string_channel)}"
-          else
-            binding?.syncBtn?.text = "${resources.getString(R.string.continue_syncing)} $count ${resources.getString(R.string.string_channels)}"
+          if (count == 1) binding?.syncBtn?.text = "${resources.getString(R.string.continue_syncing)} $count ${resources.getString(R.string.string_channel)}"
+          else binding?.syncBtn?.text = "${resources.getString(R.string.continue_syncing)} $count ${resources.getString(R.string.string_channels)}"
           binding?.syncBtn?.visible()
         } else binding?.syncBtn?.gone()
         if (channelTypeClick.isNotEmpty()) {
@@ -397,7 +464,11 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
 
   private fun responseManage(it: BaseResponse) {
     if (it.isSuccess()) {
-      getChannelAccessToken(requestFloatsModel?.categoryDataModel, requestFloatsModel?.floatingPointId, requestFloatsModel?.fpTag)
+      getChannelAccessToken(
+        requestFloatsModel?.categoryDataModel,
+        requestFloatsModel?.floatingPointId,
+        requestFloatsModel?.fpTag
+      )
     } else {
       showLongToast(context?.getString(R.string.failed_to_disconnecting))
       hideProgress()
@@ -428,11 +499,26 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
       bundle.addInt(IntentConstant.TOTAL_PAGES, totalPages).addInt(IntentConstant.CURRENT_PAGES, 1)
       val channels = requestFloatsModel?.channels ?: return
       when {
-        channels.haveGoogleBusinessChannel() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_GOOGLE_PAGE, bundle)
-        channels.haveFacebookPage() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE, bundle)
-        channels.haveFacebookShop() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP, bundle)
-        channels.haveTwitterChannels() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS, bundle)
-        channels.haveWhatsAppChannels() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_WHATSAPP, bundle)
+        channels.haveGoogleBusinessChannel() -> startFragmentActivity(
+          FragmentType.REGISTRATION_BUSINESS_GOOGLE_PAGE,
+          bundle
+        )
+        channels.haveFacebookPage() -> startFragmentActivity(
+          FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE,
+          bundle
+        )
+        channels.haveFacebookShop() -> startFragmentActivity(
+          FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP,
+          bundle
+        )
+        channels.haveTwitterChannels() -> startFragmentActivity(
+          FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS,
+          bundle
+        )
+        channels.haveWhatsAppChannels() -> startFragmentActivity(
+          FragmentType.REGISTRATION_BUSINESS_WHATSAPP,
+          bundle
+        )
       }
     } else showShortToast(resources.getString(R.string.at_least_one_channel_selected))
   }
@@ -463,7 +549,10 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   }
 
   private fun digitalChannelBottomSheet() {
-    DigitalChannelSheetDialog().show(this.parentFragmentManager, DigitalChannelSheetDialog::class.java.name)
+    DigitalChannelSheetDialog().show(
+      this.parentFragmentManager,
+      DigitalChannelSheetDialog::class.java.name
+    )
   }
 
   private fun openInfoChannelDialog(channel: ChannelModel) {
@@ -478,10 +567,16 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     showProgress(context?.getString(R.string.disconnecting_your_channel), false)
     if (channel.isWhatsAppChannel()) {
       val request = UpdateChannelActionDataRequest(ChannelActionData(), requestFloatsModel?.getWebSiteId())
-      viewModel?.postUpdateWhatsappRequest(request = request, auth = WA_KEY)?.observeOnce(viewLifecycleOwner, { responseManage(it) })
+      viewModel?.postUpdateWhatsappRequest(request = request, auth = WA_KEY)
+        ?.observeOnce(viewLifecycleOwner, { responseManage(it) })
     } else {
-      val request = UpdateChannelAccessTokenRequest(ChannelAccessToken(type = channel.getAccessTokenType()), clientId, requestFloatsModel?.floatingPointId!!)
-      viewModel?.updateChannelAccessToken(request)?.observeOnce(viewLifecycleOwner, { responseManage(it) })
+      val request = UpdateChannelAccessTokenRequest(
+        ChannelAccessToken(type = channel.getAccessTokenType()),
+        clientId,
+        requestFloatsModel?.floatingPointId!!
+      )
+      viewModel?.updateChannelAccessToken(request)
+        ?.observeOnce(viewLifecycleOwner, { responseManage(it) })
     }
   }
 }

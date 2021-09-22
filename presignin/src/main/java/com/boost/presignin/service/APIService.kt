@@ -19,6 +19,7 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.clientId2
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.gson.Gson
 import com.onboarding.nowfloats.constant.PreferenceConstant
 import com.onboarding.nowfloats.model.channel.isFacebookPage
 import com.onboarding.nowfloats.model.channel.isTwitterChannel
@@ -42,7 +43,10 @@ class APIService : Service() {
 
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     userSessionManager = UserSessionManager(this.baseContext)
-    mPrefTwitter = this.baseContext.getSharedPreferences(PreferenceConstant.PREF_NAME_TWITTER, Context.MODE_PRIVATE)
+    mPrefTwitter = this.baseContext.getSharedPreferences(
+      PreferenceConstant.PREF_NAME_TWITTER,
+      Context.MODE_PRIVATE
+    )
     userId = userSessionManager?.fPID
     hitAPIs()
     return START_STICKY
@@ -56,20 +60,25 @@ class APIService : Service() {
   }
 
   private fun checkUserAccountDetails() {
-    WithFloatRepository.checkUserAccount(userSessionManager?.fPID, clientId).toLiveData().observeForever {
-      val data = it as? AccountDetailsResponse
-      if (it.isSuccess()) {
-        if (!(data?.result != null && data.result?.bankAccountDetails != null)) userSessionManager?.setAccountSave(false) else userSessionManager?.setAccountSave(true)
+    WithFloatRepository.checkUserAccount(userSessionManager?.fPID, clientId).toLiveData()
+      .observeForever {
+        val data = it as? AccountDetailsResponse
+        if (it.isSuccess()) {
+          if (!(data?.result != null && data.result?.bankAccountDetails != null)) userSessionManager?.setAccountSave(
+            false
+          ) else userSessionManager?.setAccountSave(true)
+        }
       }
-    }
   }
 
   private fun hitSelfBrandedKycAPI() {
-    WebActionBoostKitRepository.getSelfBrandedKyc(getQuery()).toLiveData().observeForever {
+    WebActionBoostKitRepository.getSelfBrandedKyc(query = getQuery()).toLiveData().observeForever {
       val paymentKycDataResponse = it as? PaymentKycDataResponse
       paymentKycDataResponse?.data
+      Log.i("hitSelfBrandedKycAPI: ", Gson().toJson(paymentKycDataResponse))
       if (it.isSuccess()) {
-        userSessionManager?.isSelfBrandedKycAdd = paymentKycDataResponse != null || paymentKycDataResponse?.data.isNullOrEmpty().not()
+        userSessionManager?.isSelfBrandedKycAdd =
+          paymentKycDataResponse != null && paymentKycDataResponse?.data.isNullOrEmpty().not()
       }
     }
   }
@@ -118,7 +127,9 @@ class APIService : Service() {
     val timeLine = channelsAccessToken?.facebookusertimeline
     if (timeLine != null && timeLine.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
       editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, timeLine.account?.accountName)
-      if (timeLine.account?.accountName.isNullOrEmpty().not()) editorFp?.putBoolean("fbShareEnabled", true)
+      if (timeLine.account?.accountName.isNullOrEmpty()
+          .not()
+      ) editorFp?.putBoolean("fbShareEnabled", true)
       editorFp?.putString("fbAccessId", timeLine.account?.accountId)
     }
     editorFp?.apply()

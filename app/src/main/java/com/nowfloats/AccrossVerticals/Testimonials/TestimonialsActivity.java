@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dashboard.utils.CodeUtilsKt;
 import com.framework.utils.ContentSharing;
+import com.framework.views.fabButton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.AccrossVerticals.API.APIInterfaces;
@@ -43,17 +44,19 @@ import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
+
 public class TestimonialsActivity extends AppCompatActivity implements TestimonialsListener {
 
+    private List<String> allTestimonialType = Arrays.asList("testimonials", "testimonial", "guestreviews");
     TextView addTestimonialsButton;
     ProgressDialog vmnProgressBar;
     List<TestimonialData> dataList = new ArrayList<>();
-    LinearLayout rightButton, backButton;
+    LinearLayout backButton;
+    FloatingActionButton rightButton;
     ImageView rightIcon;
     TextView title;
     private String headerToken = "59c89bbb5d64370a04c9aea1";
     private String testimonialType = "testimonials";
-    public static List<String> allTestimonialType = Arrays.asList("testimonials", "testimonial", "guestreviews");
     private LinearLayout mainLayout, secondaryLayout;
     private com.framework.pref.UserSessionManager session;
     private TestimonialsAdapter testimonialsAdapter;
@@ -116,10 +119,8 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     public void setHeader() {
         title = findViewById(R.id.title);
         backButton = findViewById(R.id.back_button);
-        rightButton = findViewById(R.id.right_icon_layout);
-        rightIcon = findViewById(R.id.right_icon);
-        title.setText("Testimonials");
-        rightIcon.setImageResource(R.drawable.ic_add_white);
+        rightButton = findViewById(R.id.btn_add);
+        title.setText(getResources().getString(R.string.testimonials));
         rightButton.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), TestimonialsFeedbackActivity.class);
             intent.putExtra("ScreenState", "new");
@@ -254,7 +255,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         } else {
             subDomain = "all-services";
         }
-        ContentSharing.Companion.shareTestimonial(this,data.getDescription(), data.getUsername(), session.getRootAliasURI() + "/testimonials", session.getRootAliasURI() + "/"+subDomain, session.getFPPrimaryContactNumber(), false);
+        ContentSharing.Companion.shareTestimonial(this, data.getDescription(), data.getUsername(), session.getRootAliasURI() + "/testimonials", session.getRootAliasURI() + "/" + subDomain, session.getFPPrimaryContactNumber(), false);
     }
 
     void updateRecyclerMenuOption(int pos, boolean status) {
@@ -283,49 +284,63 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     }
 
     private void getHeaderAuthToken() {
-        try {
-            APIInterfaces APICalls = new RestAdapter.Builder().setEndpoint("https://developer.api.boostkit.dev")
+        String type = session.getFPDetails(TestimonialType.TESTIMONIAL_TYPE.name());
+        String hToken = session.getFPDetails(TestimonialType.TESTIMONIAL_HEADER.name());
+        if (type.isEmpty() || hToken.isEmpty()) {
+            try {
+                APIInterfaces APICalls = new RestAdapter.Builder().setEndpoint("https://developer.api.boostkit.dev")
                     .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))
                     .build().create(APIInterfaces.class);
-            Log.v("newvlue", " " + session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID) + " " + session.getFpTag());
-            APICalls.getHeaderAuthorizationtoken(session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID), session.getFpTag(), new Callback<GetTokenData>() {
-                @Override
-                public void success(GetTokenData s, Response response) {
-                    Log.v("experincecode1", " " + s.getToken());
-                    int status = response.getStatus();
-                    if ((status == 200 || status == 201 || status == 202) && s != null) {
-                        Log.v("experincecode", " " + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY) + " headerToken: " + headerToken);
+                Log.v("newvlue", " " + session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID) + " " + session.getFpTag());
+                APICalls.getHeaderAuthorizationtoken(session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID), session.getFpTag(), new Callback<GetTokenData>() {
+                    @Override
+                    public void success(GetTokenData s, Response response) {
+                        Log.v("experincecode1", " " + s.getToken());
+                        int status = response.getStatus();
+                        if ((status == 200 || status == 201 || status == 202) && s != null) {
+                            Log.v("experincecode", " " + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY) + " headerToken: " + headerToken);
 
-                        if (s.getWebActions() != null && !s.getWebActions().isEmpty()) {
-                            loopBreak:
-                            for (WebActionsItem action : s.getWebActions()) {
-                                for (String type : allTestimonialType) {
-                                    if (action.getName().equalsIgnoreCase(type)) {
-                                        testimonialType = action.getName();
-                                        break loopBreak;
+                            if (s.getWebActions() != null && !s.getWebActions().isEmpty()) {
+                                loopBreak:
+                                for (WebActionsItem action : s.getWebActions()) {
+                                    for (String type : allTestimonialType) {
+                                        if (action.getName().equalsIgnoreCase(type)) {
+                                            testimonialType = action.getName();
+                                            break loopBreak;
+                                        }
                                     }
                                 }
                             }
+
+                            headerToken = s.getToken();
+                            session.storeFPDetails(TestimonialType.TESTIMONIAL_TYPE.name(), testimonialType);
+                            session.storeFPDetails(TestimonialType.TESTIMONIAL_HEADER.name(), headerToken);
+                            loadData();
+                        } else {
+                            Toast.makeText(getApplicationContext(), response.getStatus(), Toast.LENGTH_SHORT).show();
+                            headerToken = "";
                         }
-
-                        headerToken = s.getToken();
-                        loadData();
-                    } else {
-                        Toast.makeText(getApplicationContext(), response.getStatus(), Toast.LENGTH_SHORT).show();
-                        headerToken = "";
                     }
-                }
 
-                @Override
-                public void failure(RetrofitError error) {
-                    Log.v("experincecode2", " " + error.getBody() + " " + error.getMessage());
-                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (Exception e) {
-            Log.v("experincecode3", " " + e.getMessage() + " " + e.getStackTrace());
-            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.v("experincecode2", " " + error.getBody() + " " + error.getMessage());
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } catch (Exception e) {
+                Log.v("experincecode3", " " + e.getMessage() + " " + e.getStackTrace());
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        } else {
+            this.testimonialType = type;
+            this.headerToken = hToken;
+            loadData();
         }
     }
+}
+
+enum TestimonialType{
+    TESTIMONIAL_TYPE,TESTIMONIAL_HEADER
 }

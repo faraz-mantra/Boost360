@@ -62,7 +62,10 @@ open class DigitalChannelActivity : AppBaseActivity<ActivityFragmentContainerUpd
   }
 
   private fun getFragments(bundle: Bundle?): ArrayList<BaseFragment<*, *>> {
-    return arrayListOf(MyDigitalChannelFragment.newInstance(bundle), MyVisitingCardFragment.newInstance(bundle))
+    return arrayListOf(
+      MyDigitalChannelFragment.newInstance(bundle),
+      MyVisitingCardFragment.newInstance(bundle)
+    )
   }
 
   override fun onBackPressed() {
@@ -87,7 +90,12 @@ open class DigitalChannelActivity : AppBaseActivity<ActivityFragmentContainerUpd
   }
 }
 
-fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+fun Fragment.startFragmentActivity(
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean = false,
+  isResult: Boolean = false
+) {
   val intent = Intent(activity, DigitalChannelActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -95,7 +103,12 @@ fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle()
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
-fun startFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean) {
+fun startFragmentActivityNew(
+  activity: Activity,
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean
+) {
   val intent = Intent(activity, DigitalChannelActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -103,7 +116,11 @@ fun startFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bun
   activity.startActivity(intent)
 }
 
-fun AppCompatActivity.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
+fun AppCompatActivity.startFragmentActivity(
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean = false
+) {
   val intent = Intent(this, DigitalChannelActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)

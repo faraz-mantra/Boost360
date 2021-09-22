@@ -62,7 +62,7 @@
           android:id="@+id/ctv_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:textColor="@color/black"
           app:fontFamily="@font/regular"
           app:textType="HEADING_7"
@@ -72,10 +72,9 @@
           android:id="@+id/ctv_specialization"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:maxLines="1"
           android:textColor="@color/grey_dark_2"
-          android:textStyle="normal"
           android:visibility="visible"
           app:textType="CAPTION"
           tools:text="Anti-aging Expert" />
@@ -105,7 +104,7 @@
         android:letterSpacing="0.04"
         android:stateListAnimator="@null"
         android:text="@string/view_info"
-        android:textColor="@color/orange" />
+        android:textColor="@color/colorAccentLight" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.cardview.widget.CardView>
 

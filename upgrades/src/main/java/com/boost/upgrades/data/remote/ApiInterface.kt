@@ -13,6 +13,7 @@ import com.boost.upgrades.data.api_model.couponSystem.redeem.RedeemCouponRespons
 import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
 import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse
+import com.boost.upgrades.data.api_model.gst.GSTApiResponse
 import com.boost.upgrades.data.renewalcart.CreateCartResponse
 import com.boost.upgrades.data.renewalcart.CreateCartStateRequest
 import com.boost.upgrades.data.renewalcart.RenewalPurchasedResponse
@@ -27,15 +28,19 @@ interface ApiInterface {
 
   @Headers("Content-Type: application/json")
   @GET("Payment/v9/floatingpoint/CustomerPaymentProfile/{internalSourceId}")
-  fun getCustomerId(@Path("internalSourceId") internalSourceId: String, @Query("clientId") clientId: String): Observable<GetCustomerIDResponse>
+  fun getCustomerId(
+    @Header("Authorization") auth: String,
+    @Path("internalSourceId") internalSourceId: String,
+    @Query("clientId") clientId: String
+  ): Observable<GetCustomerIDResponse>
 
   @Headers("Content-Type: application/json")
   @POST("Payment/v9/floatingpoint/CreateCustomerPaymentProfile")
-  fun createCustomerId(@Body customerData: CreateCustomerInfoRequest): Observable<CreateCustomerIDResponse>
+  fun createCustomerId(@Header("Authorization") auth: String, @Body customerData: CreateCustomerInfoRequest): Observable<CreateCustomerIDResponse>
 
   @Headers("Content-Type: application/json")
   @PUT("Payment/v9/floatingpoint/UpdateCustomerPaymentProfile")
-  fun updateCustomerId(@Body customerData: CreateCustomerInfoRequest): Observable<CreateCustomerIDResponse>
+  fun updateCustomerId(@Header("Authorization") auth: String, @Body customerData: CreateCustomerInfoRequest): Observable<CreateCustomerIDResponse>
 
 //    @Headers("Content-Type: application/json")
 //    @POST("Payment/v9/floatingpoint/CreatePurchaseOrder")
@@ -43,48 +48,77 @@ interface ApiInterface {
 
   @Headers("Content-Type: application/json")
   @POST("http://api2.withfloats.com/Payment/v10/floatingpoint/CreatePurchaseOrder")
-  fun CreatePurchaseOrder(@Body createPurchaseOrderV2: CreatePurchaseOrderV2): Observable<CreatePurchaseOrderResponse>
+  fun CreatePurchaseOrder(@Header("Authorization") auth: String, @Body createPurchaseOrderV2: CreatePurchaseOrderV2): Observable<CreatePurchaseOrderResponse>
 
   @Headers("Content-Type: application/json")
   @POST("http://api2.withfloats.com/Payment/v11/floatingpoint/CreatePurchaseOrder")
-  fun CreatePurchaseAutoRenewOrder(@Body createPurchaseOrderV2: CreatePurchaseOrderV2): Observable<CreatePurchaseOrderResponse>
+  fun CreatePurchaseAutoRenewOrder(@Header("Authorization") auth: String, @Body createPurchaseOrderV2: CreatePurchaseOrderV2): Observable<CreatePurchaseOrderResponse>
 
   @Headers("Content-Type: application/json")
   @GET("discover/v9/floatingPoint/FloatingPointWebWidgets/{floatingPointId}")
-  fun GetFloatingPointWebWidgets(@Path("floatingPointId") floatingPointId: String, @Query("clientId") clientId: String): Observable<GetFloatingPointWebWidgetsResponse>
+  fun GetFloatingPointWebWidgets(
+    @Header("Authorization") auth: String,
+    @Path("floatingPointId") floatingPointId: String,
+    @Query("clientId") clientId: String
+  ): Observable<GetFloatingPointWebWidgetsResponse>
 
   @Headers("Content-Type: application/json")
   @GET("https://api.razorpay.com/v1/customers/{customer_id}/tokens")
-  fun getRazorPayTokens(@Header("Authorization") authHeader: String, @Path("customer_id") customerId: String): Observable<RazorpayTokenResponse>
+  fun getRazorPayTokens(
+    @Header("Authorization") authHeader: String,
+    @Path("customer_id") customerId: String
+  ): Observable<RazorpayTokenResponse>
 
   @Headers("Content-Type: application/json")
   @GET("https://api.withfloats.com/Payment/v10/floatingpoint/PurchaseOrders/{floatingPointId}")
-  fun getPurchasedOrders(@Path("floatingPointId") floatingPointId: String, @Query("clientId") clientId: String): Observable<GetPurchaseOrderResponse>
+  fun getPurchasedOrders(
+    @Header("Authorization") auth: String,
+    @Path("floatingPointId") floatingPointId: String,
+    @Query("clientId") clientId: String
+  ): Observable<GetPurchaseOrderResponse>
 
-    @Headers("Content-Type: application/json")
-    @POST("https://api2.withfloats.com/Internal/v1/PushEmailToQueue/{clientId}")
-    fun createPaymentThroughEmail(@Path("clientId") clientId: String, @Body data: PaymentThroughEmailRequestBody): Observable<String?>
+  @Headers("Content-Type: application/json")
+  @POST("https://api2.withfloats.com/Internal/v1/PushEmailToQueue/{clientId}")
+  fun createPaymentThroughEmail(
+    @Header("Authorization") auth: String,
+    @Path("clientId") clientId: String,
+    @Body data: PaymentThroughEmailRequestBody
+  ): Observable<String?>
 
-    @Headers("Content-Type: application/json")
-    @POST("https://api.withfloats.com/discover/v1/FloatingPoint/SendEmailWithPriority/")
-    fun createPaymentThroughEmailPriority(@Body data: PaymentPriorityEmailRequestBody): Observable<String?>
+  @Headers("Content-Type: application/json")
+  @POST("https://api.withfloats.com/discover/v1/FloatingPoint/SendEmailWithPriority/")
+  fun createPaymentThroughEmailPriority(@Header("Authorization") auth: String, @Body data: PaymentPriorityEmailRequestBody): Observable<String?>
 
   @Headers("Content-Type: application/json")
   @GET("Payment/v9/floatingpoint/AllPurchasedWidgets/{floatingPointId}")
-  fun allPurchasedWidgets(@Path("floatingPointId") floatingPointId: String?,
-                          @Query("clientId") clientId: String?,
-                          @Query("widgetStatus") widgetStatus: String?,
-                          @Query("widgetKey") widgetKey: String?,
-                          @Query("nextWidgetStatus") nextWidgetStatus: String?,
-                          @Query("dateFilter") dateFilter: String?,
-                          @Query("startDate") startDate: String?,
-                          @Query("endDate") endDate: String?): Observable<RenewalPurchasedResponse>
+  fun allPurchasedWidgets(
+    @Header("Authorization") auth: String,
+    @Path("floatingPointId") floatingPointId: String?,
+    @Query("clientId") clientId: String?,
+    @Query("widgetStatus") widgetStatus: String?,
+    @Query("widgetKey") widgetKey: String?,
+    @Query("nextWidgetStatus") nextWidgetStatus: String?,
+    @Query("dateFilter") dateFilter: String?,
+    @Query("startDate") startDate: String?,
+    @Query("endDate") endDate: String?
+  ): Observable<RenewalPurchasedResponse>
 
   @Headers("Content-Type: application/json")
   @POST("Payment/v9/floatingpoint/widgets/CartState")
-  fun createCartStateRenewal(@Body request: CreateCartStateRequest): Observable<CreateCartResponse>
+  fun createCartStateRenewal(@Header("Authorization") auth: String, @Body request: CreateCartStateRequest): Observable<CreateCartResponse>
 
-  @Headers("Authorization: Basic YXBpbW9kaWZpZXI6dkVFQXRudF9yJ0RWZzcofg==", "Content-Type: application/json")
+  @Headers(
+    "Authorization: Basic YXBpbW9kaWZpZXI6dkVFQXRudF9yJ0RWZzcofg==",
+    "Content-Type: application/json"
+  )
   @POST("https://si-withfloats-coupons-api-appservice.azurewebsites.net/v1/coupons/redeem")
   fun redeemCoupon(@Body redeemCouponRequest: RedeemCouponRequest): Observable<RedeemCouponResponse>
+
+  @Headers("Content-Type: application/json")
+  @GET("https://api2.withfloats.com/api/v1/Business/GetGSTINInformation")
+  fun getGSTDetails(
+    @Header("Authorization") auth: String,
+    @Query("gstin") gstIN: String?,
+    @Query("clientId") clientId: String?,
+  ): Observable<GSTApiResponse>
 }

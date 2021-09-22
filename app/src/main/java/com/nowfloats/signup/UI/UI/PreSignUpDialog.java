@@ -23,18 +23,13 @@ import java.util.Arrays;
 public class PreSignUpDialog {
 
 
-    private static final String TAG = "PreSignUpDialog" ;
-
-    interface Dialog_Activity_Interface{
-       public void onItemClick(String item);
-   }
-
+    private static final String TAG = "PreSignUpDialog";
     static ListView elementList;
     static CustomFilterableAdapter adapter;
     static HeaderText title;
 
-    public static void showDialog(final Context context, String[] elements, String dialogTitle){
-        Log.d(TAG, "dialogTitle : "+dialogTitle);
+    public static void showDialog(final Context context, String[] elements, String dialogTitle) {
+        Log.d(TAG, "dialogTitle : " + dialogTitle);
 
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -66,11 +61,9 @@ public class PreSignUpDialog {
         });
 
 
-
     }
 
-    public static void showDialog_WebSiteCreation(final Context context, String message, String dialogTitle)
-    {
+    public static void showDialog_WebSiteCreation(final Context context, String message, String dialogTitle) {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.website_creation_dialog);
@@ -84,5 +77,9 @@ public class PreSignUpDialog {
         dialog.show();
 
 
+    }
+
+    interface Dialog_Activity_Interface {
+        public void onItemClick(String item);
     }
 }

@@ -23,7 +23,7 @@ import java.lang.reflect.Method;
 /**
  * Helper to call Looper#quitSafely, which was introduced in API
  * level 18 (Build.VERSION_CODES.JELLY_BEAN_MR2).
- *
+ * <p>
  * In unit tests, we create lots of instances of LatinIME, which means we need to clean up
  * some Loopers lest we leak file descriptors. In normal use on a device though, this is never
  * necessary (although it does not hurt).

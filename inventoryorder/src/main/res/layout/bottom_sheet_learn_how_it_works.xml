@@ -25,30 +25,31 @@
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
       <androidx.appcompat.widget.LinearLayoutCompat
+        style="@style/wrap_wrap"
+        android:layout_marginStart="@dimen/size_10"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@+id/customImageView"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_fragment_title"
           style="@style/wrap_wrap"
-          android:layout_marginStart="@dimen/size_10"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          android:orientation="vertical"
-          app:layout_constraintHorizontal_bias="0"
-          app:layout_constraintStart_toEndOf="@+id/customImageView"
-          app:layout_constraintTop_toTopOf="parent">
+          android:fontFamily="@font/lato"
+          android:text="@string/learning_about"
+          android:textColor="@color/white" />
 
         <com.framework.views.customViews.CustomTextView
-            android:id="@+id/ctv_fragment_title"
-            style="@style/wrap_wrap"
-            android:fontFamily="@font/lato"
-            android:text="@string/learning_about"
-            android:textColor="@color/white" />
-
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/ctv_fragment_subject"
-            style="@style/wrap_wrap"
-            android:fontFamily="@font/lato"
-            android:text="@string/staff_profile"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+          android:id="@+id/ctv_fragment_subject"
+          style="@style/wrap_wrap"
+          android:fontFamily="@font/lato"
+          android:text="@string/staff_profile"
+          android:textColor="@color/white"
+          android:textSize="16sp" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
       <com.framework.views.customViews.CustomImageView
@@ -63,8 +64,10 @@
 
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/civ_close"
-        style="@style/wrap_wrap"
+        android:layout_width="@dimen/size_30"
+        android:layout_height="@dimen/size_30"
         android:src="@drawable/ic_close_grey_bottom_sheet"
+        android:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.93"
@@ -93,15 +96,15 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/ctv_how_it_works_heading"
-              style="@style/wrap_wrap"
-              android:text="@string/how_it_works_staff"
-              android:textColor="@color/black_4a4a4a"
+            style="@style/wrap_wrap"
+            android:text="@string/how_it_works_staff"
+            android:textColor="@color/black_4a4a4a"
             android:textSize="16sp"
-            android:textStyle="bold"
+             android:fontFamily="@font/semi_bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:textAllCaps="true" />
+            app:textAllCaps="false" />
 
           <com.framework.views.customViews.CustomImageView
             android:id="@+id/civ_speak_how_it_works"
@@ -137,11 +140,11 @@
             android:text="@string/videos_3"
             android:textColor="@color/black_4a4a4a"
             android:textSize="16sp"
-            android:textStyle="bold"
+             android:fontFamily="@font/semi_bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:textAllCaps="true" />
+            app:textAllCaps="false" />
 
           <com.framework.views.dotsindicator.DotsIndicator
             android:id="@+id/di_pager_indicator"
@@ -174,11 +177,11 @@
             android:text="@string/tips"
             android:textColor="@color/black_4a4a4a"
             android:textSize="16sp"
-            android:textStyle="bold"
+             android:fontFamily="@font/semi_bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:textAllCaps="true" />
+            app:textAllCaps="false" />
 
           <com.framework.views.customViews.CustomImageView
             android:id="@+id/civ_speak_tips"
@@ -211,8 +214,8 @@
           <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:background="@color/light_grey_5">
+            android:background="@color/light_grey_5"
+            android:visibility="gone">
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/customTextView3"
@@ -250,8 +253,8 @@
           <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-              android:visibility="gone"
-              android:background="@color/light_grey_5">
+            android:background="@color/light_grey_5"
+            android:visibility="gone">
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_contact_support"
@@ -265,14 +268,14 @@
               app:layout_constraintTop_toTopOf="parent" />
 
             <com.framework.views.customViews.CustomImageView
-                android:layout_width="@dimen/size_15"
-                android:layout_height="@dimen/size_15"
-                android:src="@drawable/ic_arrow_right_small_orange"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.95"
-                app:layout_constraintStart_toEndOf="@id/ctv_contact_support"
-                app:layout_constraintTop_toTopOf="parent" />
+              android:layout_width="@dimen/size_15"
+              android:layout_height="@dimen/size_15"
+              android:src="@drawable/ic_arrow_right_small_orange"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintHorizontal_bias="0.95"
+              app:layout_constraintStart_toEndOf="@id/ctv_contact_support"
+              app:layout_constraintTop_toTopOf="parent" />
           </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.framework.views.customViews.CustomCardView>
