@@ -1,6 +1,7 @@
 package com.framework.autoupdate
 
 import android.app.Activity
+import android.util.Log
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateInfo
@@ -22,6 +23,7 @@ object NFAutoUpdateManager {
 
 
     fun checkUpdate(activity: Activity) {
+        Log.i(TAG, "checkUpdate: ")
         appUpdateManager = AppUpdateManagerFactory.create(activity)
 
 // Returns an intent object that you use to check for an update.

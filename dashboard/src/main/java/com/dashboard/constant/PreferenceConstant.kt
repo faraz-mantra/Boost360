@@ -7,4 +7,5 @@ object PreferenceConstant {
   const val AUTHORIZATION = "Authorization"
   const val KEY_FP_ID = "fpid"
   const val CHANNEL_SHARE_URL = "channel_share_url"
+  const val UPDATE_DIALOG_SKIP_TIME="update_dialog_skip_time"
 }

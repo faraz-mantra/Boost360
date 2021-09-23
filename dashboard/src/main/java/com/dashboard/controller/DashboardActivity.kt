@@ -21,6 +21,7 @@ import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
+import com.dashboard.constant.PreferenceConstant
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.dashboard.DashboardFragment
 import com.dashboard.controller.ui.dialog.WelcomeHomeDialog
@@ -69,6 +70,7 @@ import zendesk.core.Zendesk
 import zendesk.support.Support
 import java.io.File
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 import kotlin.concurrent.schedule
 
@@ -128,8 +130,19 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     session?.let { initDataBadges(it.fpTag ?: "", it.fPID ?: "", clientId) }
     registerFirebaseToken()
     reloadCapLimitData()
-    NFAutoUpdateManager.checkUpdate(this)
+    checkAppUpdate()
     NFAppReviewManager.requestReview(this)
+  }
+
+  private fun checkAppUpdate() {
+
+    val skip_update_time = PreferencesUtils.instance.getData(PreferenceConstant.UPDATE_DIALOG_SKIP_TIME,0L)
+
+    val diff = TimeUnit.MILLISECONDS.toHours(System.currentTimeMillis().minus(skip_update_time))
+    Log.i(TAG, "checkAppUpdate: hour ago "+diff)
+    if (diff>=24L){
+      NFAutoUpdateManager.checkUpdate(this)
+    }
   }
 
   private fun reloadCapLimitData() {
@@ -469,6 +482,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         showLongToast("Done")
       }else{
         showLongToast("Cancel")
+        PreferencesUtils.instance.saveData(PreferenceConstant.UPDATE_DIALOG_SKIP_TIME,System.currentTimeMillis())
       }
     }else{
        childFragments?.forEach { fragment ->
