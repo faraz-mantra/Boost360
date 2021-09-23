@@ -57,6 +57,7 @@ class BusinessDetailsFragment : DialogFragment() {
   lateinit var prefs: SharedPrefs
   private var session: UserSessionManager? = null
   private var gstInfoResult: com.boost.upgrades.data.api_model.gst.Result? = null
+  private var isGstApiCalled :Boolean = false
 
 
   companion object {
@@ -163,7 +164,7 @@ class BusinessDetailsFragment : DialogFragment() {
             )
           } else {
             //update customer payment profile
-            if(gst_business_name_value.text.isEmpty() && gst_business_address_value.text.isEmpty()){
+            if(gst_business_name_value.visibility == View.GONE && gst_business_address_value.visibility == View.GONE){
               viewModel.updateCustomerInfo(
                 (activity as? UpgradeActivity)?.getAccessToken() ?: "",
                 CreateCustomerInfoRequest(
@@ -196,16 +197,50 @@ class BusinessDetailsFragment : DialogFragment() {
 
                 )
               )
-            }else{
+            }else if(isGstApiCalled){
               viewModel.updateCustomerInfo(
                 (activity as? UpgradeActivity)?.getAccessToken() ?: "",
                 CreateCustomerInfoRequest(
                   AddressDetails(
-                    gstInfoResult!!.address!!.city,
+                    gstInfoResult?.address?.city,
                     "india",
                     gst_business_address_value.text.toString(),
                     null,
-                    gstInfoResult!!.address!!.state,
+                    gstInfoResult?.address?.state,
+                    gstInfoResult?.address?.pincode
+                  ),
+                  BusinessDetails(
+                    "+91",
+                    if (business_email_address.text.isEmpty()) null else business_email_address.text.toString(),
+                    if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString()
+                  ),
+                  (activity as UpgradeActivity).clientid,
+                  "+91",
+                  "ANDROID",
+                  "",
+                  (activity as UpgradeActivity).fpid,
+                  if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString(),
+                  gst_business_name_value.text.toString(),
+                  TaxDetails(
+                    if (business_gstin_number.text.isEmpty()) null else business_gstin_number.text.toString(),
+                    null,
+                    null,
+                    null
+                  )
+
+                )
+              )
+            }
+            else{
+              viewModel.updateCustomerInfo(
+                (activity as? UpgradeActivity)?.getAccessToken() ?: "",
+                CreateCustomerInfoRequest(
+                  AddressDetails(
+                    if (business_city_name.text.isEmpty()) null else business_city_name.text.toString(),
+                    "india",
+                    gst_business_address_value.text.toString(),
+                    null,
+                    if (business_city_name.text.isEmpty()) null else business_city_name.text.toString(),
                     null
                   ),
                   BusinessDetails(
@@ -323,6 +358,7 @@ class BusinessDetailsFragment : DialogFragment() {
         if(gstInfoResult!=null){
           gst_business_name_value.text = gstInfoResult!!.legalName
           gst_business_address_value.text = gstInfoResult!!.address!!.addressLine1 + gstInfoResult!!.address!!.addressLine2 + gstInfoResult!!.address!!.city + gstInfoResult!!.address!!.pincode + gstInfoResult!!.address!!.district + gstInfoResult!!.address!!.state
+          isGstApiCalled = true
         } else {
           Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
         }
@@ -663,7 +699,8 @@ class BusinessDetailsFragment : DialogFragment() {
     viewModel.getGstApiInfo(
       (activity as? UpgradeActivity)?.getAccessToken() ?: "",
       gstIn,
-      (activity as UpgradeActivity).clientid
+      (activity as UpgradeActivity).clientid,
+      progress_bar
     )
   }
 
