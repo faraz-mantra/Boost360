@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/semi_bold"
-                android:text="@string/type_the_domain_you_own"
+                android:text="@string/select_how_you_want_to_integrate"
                 android:textColor="@color/black_4a4a4a"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +55,6 @@
                     android:background="@drawable/rounded_border_black"
                     android:button="@drawable/check_selector_domain_booking"
                     android:fontFamily="@font/regular"
-                    android:paddingLeft="8dp"
                     android:paddingVertical="@dimen/size_8"
                     android:layout_marginVertical="8dp"
                     android:text="@string/use_it_as_my_business_website_address" />
@@ -75,12 +74,14 @@
             <com.framework.views.customViews.CustomMaterialButton
                 android:id="@+id/btn_continue"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/size_60"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:text="@string/continue_txt"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
+                android:fontFamily="@font/regular"
+                android:textSize="@dimen/text_14"
                 app:cornerRadius="@dimen/size_15"
                 app:layout_constraintTop_toBottomOf="@+id/radioGroup2"
                 tools:layout_editor_absoluteX="24dp" />
