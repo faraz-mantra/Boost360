@@ -5,6 +5,7 @@ import android.view.View
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.controller.ui.business.bottomsheet.BusinessNameBottomSheet
+import com.dashboard.controller.ui.profile.sheet.EditChangeWhatsappNumberSheet
 import com.dashboard.controller.ui.profile.sheet.VerifiedEmailMobileSheet
 import com.dashboard.databinding.FragmentUserProfileBinding
 import com.framework.models.BaseViewModel
@@ -44,7 +45,7 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, BaseView
     super.onClick(v)
     when (v) {
       binding?.imgEdit -> {
-        VerifiedEmailMobileSheet().show(parentFragmentManager, VerifiedEmailMobileSheet::javaClass.name)
+        EditChangeWhatsappNumberSheet().show(parentFragmentManager, EditChangeWhatsappNumberSheet::javaClass.name)
       }
       binding?.viewEmptyProfile -> {
       }

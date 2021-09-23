@@ -254,6 +254,7 @@
   <string name="click_a_selfie">Click a selfie</string>
   <string name="enter_your_full_name">Enter your full name</string>
   <string name="full_name">Full name*</string>
+  <string name="full_name_">Full name</string>
   <string name="registered_email">Registered email</string>
   <string name="enter_your_email_id">Enter your email ID</string>
   <string name="enter_your_mobile_number">Enter your mobile number</string>
@@ -266,5 +267,17 @@
   <string name="choose_profile_photo">Choose profile photo</string>
   <string name="dummy_text_verified">Your mobile number\n<b>+91 9876543210</b> is verified</string>
   <string name="hello_worldBlue">Your mobile number +91 9876543210 is verified</string>
+  <string name="edit_your_full_name">Edit your full name</string>
+  <string name="changing_email_id">Changing email ID</string>
+  <string name="new_email_id">New email ID</string>
+  <string name="send_otp">Send OTP</string>
+  <string name="new_mobile_number">New mobile number</string>
+  <string name="xxxxxxxxxx">XXXXXXXXXX</string>
+  <string name="changing_mobile_number">Changing mobile number</string>
+  <string name="save_amp_opt_in_for_updates"><![CDATA[Save & opt-in for updates]]></string>
+  <string name="i_agree_to_receive_important_business_updates_from_boost_360_via_whatsapp">I agree to receive important business updates from Boost 360 via WhatsApp.</string>
+  <string name="remove_whatsapp_number">Remove Whatsapp number</string>
+  <string name="changing_whatsapp_number">Changing Whatsapp number?</string>
+  <string name="your_whatsapp_number">Your WhatsApp number</string>
 
 </resources>
