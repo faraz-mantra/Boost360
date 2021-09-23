@@ -35,5 +35,9 @@ class SearchDomainActivity: BaseActivity<ActivitySearchDomainBinding, BaseViewMo
             bSheet.show()
 
         }
+
+        binding?.include?.customImageView4?.setOnClickListener{
+            this.onNavPressed()
+        }
     }
 }

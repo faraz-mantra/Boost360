@@ -8,6 +8,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
 import android.net.Uri
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.webkit.MimeTypeMap
 import java.io.File
 import java.util.*
@@ -91,6 +93,12 @@ fun File.getBitmap(): Bitmap? {
 
 fun String.getBitmap(): Bitmap? {
   return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(this), 400, 400)
+}
+
+fun View.openSoftKeyboard(){
+  //this.requestFocus()
+  val imm = this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+  imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
 }
 
 fun File.getMimeType(): String? {

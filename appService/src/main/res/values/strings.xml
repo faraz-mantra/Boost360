@@ -602,7 +602,8 @@
     <string name="money_refund_till_date">Money refund till date</string>
     <string name="years_of_experience_n">Years of experience</string>
     <string name="select_years_of_experience_this_staff_member_has">Select, years of experience this staff member has.</string>
-    <string name="search_a_new_domain">Search a new domain</string>
+    <string name="search_a_new_domain">Search a New Domain</string>
+    <string name="search_a_new_domain_lowercase">Search a new domain</string>
     <string name="write_a_domain_name">Write a domain name...</string>
     <string name="select_amp_continue"><![CDATA[Select & Continue]]></string>
     <string name="domain_confirm_msg">Once confirmed, this domain will replace your website address (URL) <u>samplestorewebsite.nowfloats.com.</u> Don’t worry, anyone clicking on old URL will still be able to see your website on this new domain.</string>
@@ -667,8 +668,8 @@
     <string name="this_is_your_current_website_address">This is your current website address.</string>
     <string name="website_domain">Website Domain</string>
     <string name="confirming_domain">Confirming Domain</string>
-    <string name="book_a_domain_ssl">Book a domain + SSL</string>
-    <string name="adding_existing_domain">Adding existing domain</string>
+    <string name="book_a_domain_ssl">Book a Domain + SSL</string>
+    <string name="adding_existing_domain">Adding Existing Domain</string>
     <string name="other_suggestions">Other suggestions</string>
     <string name="suggested_domain">Suggested domain</string>
     <string name="login_to_your_provider">Login to your domain provider</string>
@@ -710,4 +711,5 @@
     <string name="confirming_domain_instructions">Once confirmed, above domain will replace your website address (URL) samplestorewebsite.nowfloats.com. Don’t worry, anyone clicking on old URL will still be able to see your website on this new domain.</string>
     <string name="confirm_and_apply_domain"><![CDATA[Confirm & apply domain]]></string>
     <string name="domain_renewal_info">Your domain will be automatically renewed based\non your active BOOST package</string>
+  <string name="select_how_you_want_to_integrate">Select how you want to integrate</string>
 </resources>

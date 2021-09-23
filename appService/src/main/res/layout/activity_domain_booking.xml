@@ -75,12 +75,22 @@
                                 app:srcCompat="@drawable/ic_custome_domain" />
 
                             <TextView
-                                android:id="@+id/tv_domain"
+                                android:id="@+id/tv_domain_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/size_10"
                                 android:gravity="center"
-                                android:textSize="@dimen/size_15" />
+                                tools:text="ksnfksfbsjkdf"
+                                android:textColor="@color/orange"
+                                android:textSize="@dimen/text_22" />
+
+                            <TextView
+                                android:id="@+id/tv_domain_assigned"
+                                android:layout_width="wrap_content"
+                                tools:text="ksnfksfbsjkdf"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textSize="@dimen/text_16" />
                         </LinearLayout>
 
                         <com.framework.views.customViews.CustomTextView
@@ -140,7 +150,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_lock_grey" />
+                            android:src="@drawable/ic_lock_gray_filled" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -182,14 +192,15 @@
             android:id="@+id/btn_book_old_domain"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_60"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginStart="@dimen/size_44"
+            android:layout_marginEnd="@dimen/size_36"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/colorPrimary"
             android:text="@string/add_a_domain_you_own"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textStyle="bold"
+            android:fontFamily="@font/regular"
+            android:textSize="@dimen/text_14"
             android:visibility="visible"
             app:cornerRadius="@dimen/size_15"
             app:layout_constraintBottom_toTopOf="@+id/btn_book_new_domain"
@@ -201,13 +212,15 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_60"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginStart="@dimen/size_44"
+            android:layout_marginEnd="@dimen/size_36"
             android:layout_marginBottom="24dp"
             android:text="@string/book_a_new_domain"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimary"
             android:visibility="visible"
+            android:fontFamily="@font/regular"
+            android:textSize="@dimen/text_14"
             app:cornerRadius="@dimen/size_15"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

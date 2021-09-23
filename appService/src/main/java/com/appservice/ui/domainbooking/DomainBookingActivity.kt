@@ -1,5 +1,6 @@
 package com.appservice.ui.domainbooking
 
+import android.content.Context
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
@@ -20,6 +21,9 @@ import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getDomainName
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import android.view.inputmethod.InputMethodManager
+import com.appservice.utils.openSoftKeyboard
+
 
 class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseViewModel>(),
     RecyclerItemClickListener {
@@ -45,7 +49,9 @@ class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseVie
     override fun onCreateView() {
         baseActivity = this
         session = UserSessionManager(this)
-        binding?.tvDomain?.text = session?.getDomainName(true)
+        val domainSplit = session?.getDomainName(true)?.split(".", limit = 2)
+        binding?.tvDomainTitle?.text = domainSplit?.get(0)
+        binding?.tvDomainAssigned?.text = ".${domainSplit?.get(1)}"
         setupUI()
         onClickListeners()
     }
@@ -67,6 +73,10 @@ class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseVie
                 clearTop = false
             )
         }
+
+        binding?.appBar?.customImageView4?.setOnClickListener{
+            this.onNavPressed()
+        }
     }
 
     private fun showBsheetInputOwnDomain() {
@@ -78,10 +88,11 @@ class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseVie
             false
         )
         bSheet.setContentView(sheetBinding.root)
-        bSheet.show()
         sheetBinding.btnContinue.setOnClickListener {
             showBsheetIntegrationOption()
         }
+        sheetBinding.etDomain.openSoftKeyboard()
+        bSheet.show()
     }
 
     private fun showBsheetIntegrationOption() {
@@ -156,7 +167,7 @@ class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseVie
         val whatsSubdomainIndex = secondStep.indexOf(whatsSubdomain)
 
         val stepsList = arrayListOf(
-            DomainStepsModel(SpannableString("Since search engines recognize a domain that’s already in use, we recommend integrating any relatable domain name that you currently own")),
+            DomainStepsModel(SpannableString("Since search engines recognize a domain that’s already in use, we recommend integrating any relatable domain name that you currently own.")),
             DomainStepsModel(SpannableString(secondStep)
                 .apply {
                     setSpan(

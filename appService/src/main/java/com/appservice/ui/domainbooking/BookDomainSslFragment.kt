@@ -58,7 +58,7 @@ class BookDomainSslFragment : AppBaseFragment<FragmentBookADomainSslBinding, Bas
         arrayDomainSuggestions.add(DomainSuggestionModel("samplebizsite.co.in"))
         arrayDomainSuggestions.add(DomainSuggestionModel("samplebizco.co.in"))
 
-        val adapter = AppBaseRecyclerViewAdapter(baseActivity, arrayDomainSuggestions, this)
+        val adapter = AppBaseRecyclerViewAdapter(baseActivity, arrayDomainSuggestions, itemClickListener = this@BookDomainSslFragment)
         binding?.rvSuggestedDomains?.adapter = adapter
         binding?.rvSuggestedDomains?.layoutManager = LinearLayoutManager(requireContext())
     }
