@@ -323,7 +323,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
       }*/
 
-      WebEngageController.trackEvent(event_name = EVENT_NAME_ADDONS_MARKETPLACE_CART_CONTINUE, NO_EVENT_LABLE, event_attributes)
 
     }
 
@@ -337,6 +336,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         cart_main_scroller.fullScroll(View.FOCUS_DOWN)
       }
     }
+
 
 /*        cart_apply_coupon.setOnClickListener {
             if(couponDiwaliRedundant.contains("WILDFIRE_FB_LEAD_ADS") ){
@@ -678,6 +678,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
   }
 
+
+
   fun speakToExpert(phone: String?) {
     Log.d("callExpertContact", " " + phone)
     if (phone != null) {
@@ -744,6 +746,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       viewModel.renewalResult().observeOnce(Observer { result ->
         renewalList = result?.filter { it.renewalStatus() == RenewalResult.RenewalStatus.PENDING.name }
           ?: ArrayList()
+//        renewalList = emptyList()
         if (renewalList.isNotEmpty()) {
           val list = arrayListOf<CartModel>()
           renewalList.forEach { renewal -> list.add(saveRenewalData(renewal)) }
@@ -1920,6 +1923,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
   fun proceedToPayment(result: CreatePurchaseOrderResponse) {
 //        var cartItems: ArrayList<String>? =  null
+    WebEngageController.trackEvent(event_name = EVENT_NAME_ADDONS_MARKETPLACE_CART_CONTINUE, NO_EVENT_LABLE, event_attributes)
     Log.v("createPurchaseOrder3", " " + result.toString())
     cartList.forEach {
 //            if(it!!.item_id != null) it!!.item_id!! else it.boost_widget_key?.let { it1 -> cartItems?.add(it1) }

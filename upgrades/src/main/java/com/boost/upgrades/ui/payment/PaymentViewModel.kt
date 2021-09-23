@@ -3,7 +3,10 @@ package com.boost.upgrades.ui.payment
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.OneShotPreDrawListener.add
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -298,7 +301,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
       )
     }
   }
-  fun getGstApiInfo(auth: String,gstIn:String,clientId: String){
+  fun getGstApiInfo(auth: String,gstIn:String,clientId: String,progressBar: ProgressBar){
     if(Utils.isConnectedToInternet(getApplication())){
       CompositeDisposable().add(
         ApiService.getGSTDetails(auth,gstIn,clientId)
@@ -312,6 +315,8 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
             {
               val temp = (it as HttpException).response()!!.errorBody()!!.string()
               val errorBody : Error = Gson().fromJson(temp,object : TypeToken<Error>() {}.type)
+              progressBar.visibility = View.GONE
+              Toasty.error(getApplication(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
             }
           )
       )
