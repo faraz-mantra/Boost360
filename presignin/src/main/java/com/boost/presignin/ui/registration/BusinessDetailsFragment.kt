@@ -30,9 +30,6 @@ import androidx.core.graphics.drawable.DrawableCompat
 import android.graphics.PorterDuffColorFilter
 
 
-
-
-
 class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, LoginSignUpViewModel>() {
 
   private var floatsRequest: CategoryFloatsRequest? = null
