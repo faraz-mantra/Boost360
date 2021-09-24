@@ -1,5 +1,7 @@
 package com.dashboard.controller.ui.profile.sheet
 
+import android.view.View
+import androidx.core.widget.addTextChangedListener
 import com.dashboard.R
 import com.dashboard.databinding.SheetChangeMobileNumberBinding
 import com.framework.base.BaseBottomSheetDialog
@@ -16,6 +18,26 @@ class EditChangeMobileNumberSheet : BaseBottomSheetDialog<SheetChangeMobileNumbe
   }
 
   override fun onCreateView() {
+    setOnClickListener(binding?.btnPublish)
+
+    binding?.cetPhone?.addTextChangedListener {
+      binding?.btnPublish?.isEnabled=it?.length==10
+    }
+  }
+
+
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when(v){
+      binding?.btnPublish->{
+        showVerifyMobileSheet()
+      }
+    }
+  }
+
+  private fun showVerifyMobileSheet() {
+    VerifyOtpEmailMobileSheet().show(parentFragmentManager,VerifyOtpEmailMobileSheet::javaClass.name)
+
 
   }
 }
