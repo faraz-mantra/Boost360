@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -59,6 +60,7 @@ class BookDomainSslFragment : AppBaseFragment<FragmentBookADomainSslBinding, Bas
         arrayDomainSuggestions.add(DomainSuggestionModel("samplebizco.co.in"))
 
         val adapter = AppBaseRecyclerViewAdapter(baseActivity, arrayDomainSuggestions, itemClickListener = this@BookDomainSslFragment)
+        binding?.rvSuggestedDomains?.addItemDecoration(DividerItemDecoration(baseActivity, R.drawable.adapter_divider_white_3))
         binding?.rvSuggestedDomains?.adapter = adapter
         binding?.rvSuggestedDomains?.layoutManager = LinearLayoutManager(requireContext())
     }

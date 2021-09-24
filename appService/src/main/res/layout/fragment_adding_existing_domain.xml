@@ -21,6 +21,7 @@
                 android:layout_marginEnd="@dimen/size_22"
                 app:cardBackgroundColor="@color/view_background_1"
                 app:cardCornerRadius="20dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_step_1">
@@ -79,7 +80,7 @@
                 android:layout_marginStart="@dimen/size_22"
                 android:layout_marginTop="@dimen/size_10"
                 android:layout_marginEnd="@dimen/size_22"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:cardBackgroundColor="@color/view_background_1"
                 app:cardCornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -112,6 +113,15 @@
                         android:textSize="@dimen/text_24"
                         app:fontFamily="@font/regular" />
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvStepTwo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginTop="@dimen/size_16"
+                        android:layout_marginEnd="@dimen/size_22"
+                        android:layout_marginBottom="@dimen/size_24"/>
+
                     <com.framework.views.customViews.CustomTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -121,6 +131,7 @@
                         android:layout_marginBottom="@dimen/size_24"
                         android:fontFamily="@font/barlow_regular"
                         android:gravity="start"
+                        android:visibility="gone"
                         android:text="@string/step_2_instructions"
                         android:textAlignment="gravity"
                         android:textColor="@color/colorLightBlack"
@@ -263,12 +274,21 @@
 
             </androidx.cardview.widget.CardView>
 
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier_cards_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:barrierDirection="top"
+                app:constraint_referenced_ids="card_step_1, card_step_2, card_step_3, card_step_final" />
+
             <com.framework.views.customViews.CustomImageView
                 android:id="@+id/iv_step_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_48"
                 android:layout_marginStart="@dimen/size_24"
+                android:visibility="gone"
                 android:elevation="@dimen/size_12"
                 android:src="@drawable/ic_domain_step_1"
                 app:layout_constraintStart_toStartOf="parent"
@@ -280,6 +300,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_32"
                 android:elevation="@dimen/size_12"
+                android:visibility="visible"
                 android:src="@drawable/ic_domain_step_2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -291,6 +312,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_40"
                 android:elevation="@dimen/size_12"
+                android:visibility="gone"
                 android:src="@drawable/ic_domain_step_3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -303,6 +325,7 @@
                 android:layout_marginTop="@dimen/size_48"
                 android:layout_marginEnd="@dimen/size_20"
                 android:elevation="@dimen/size_12"
+                android:visibility="gone"
                 android:src="@drawable/ic_domain_final_step"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -318,7 +341,7 @@
                 android:textColor="@color/colorLightBlack"
                 android:textSize="@dimen/text_12"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/card_step_1"
+                app:layout_constraintBottom_toTopOf="@+id/barrier_cards_top"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.constraintlayout.widget.Barrier

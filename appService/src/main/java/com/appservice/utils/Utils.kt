@@ -95,12 +95,6 @@ fun String.getBitmap(): Bitmap? {
   return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(this), 400, 400)
 }
 
-fun View.openSoftKeyboard(){
-  //this.requestFocus()
-  val imm = this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-  imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
-}
-
 fun File.getMimeType(): String? {
   var mimeType: String? = null
   val extension: String? = absolutePath?.getExtension()

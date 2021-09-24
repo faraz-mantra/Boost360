@@ -233,7 +233,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <com.framework.views.customViews.CustomMaterialButton
-            android:id="@+id/btn_book_new_domain"
+            android:id="@+id/btn_go_back"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_60"

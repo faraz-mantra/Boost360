@@ -81,6 +81,7 @@
                                 android:layout_marginTop="@dimen/size_10"
                                 android:gravity="center"
                                 tools:text="ksnfksfbsjkdf"
+                                android:fontFamily="@font/bold"
                                 android:textColor="@color/orange"
                                 android:textSize="@dimen/text_22" />
 
@@ -178,7 +179,7 @@
                         android:layout_height="@dimen/size_60"
                         android:layout_marginTop="16dp"
                         android:backgroundTint="@color/colorPrimary"
-                        android:text="@string/buy_add_on"
+                        android:text="@string/buy_add_on_lowercase"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textStyle="bold"
