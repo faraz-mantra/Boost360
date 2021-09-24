@@ -64,6 +64,8 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
   var cityValue: String? = null
   var selectedState: String? = null
   var selectedStateResult: MutableLiveData<String> = MutableLiveData()
+  var selectedStateResult1: MutableLiveData<String> = MutableLiveData()
+  var selectedStateTinResult: MutableLiveData<String> = MutableLiveData()
   private var APIRequestStatus: String? = null
   private var gstApiInfo : MutableLiveData<GSTApiResponse> = MutableLiveData()
   private var statesInfo :MutableLiveData<GetStates> = MutableLiveData()
@@ -169,8 +171,24 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
     selectedStateResult.postValue(state)
   }
 
+
   fun getSelectedStateResult(): LiveData<String> {
     return selectedStateResult
+  }
+
+  fun selectedStateResult1(state: String) {
+    selectedStateResult1.postValue(state)
+  }
+
+  fun getSelectedStateResult1(): LiveData<String> {
+    return selectedStateResult1
+  }
+
+  fun selectedStateTinResult(stateTin :String){
+      selectedStateTinResult.postValue(stateTin)
+  }
+  fun getSelectedStateTinResult():LiveData<String>{
+    return selectedStateTinResult
   }
 
   fun updatesError(): LiveData<String> {
@@ -337,6 +355,8 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
             {
               val temp = (it as HttpException).response()!!.errorBody()!!.string()
               val errorBody : Error = Gson().fromJson(temp,object : TypeToken<com.boost.upgrades.data.api_model.stateCode.Error>() {}.type)
+              Toasty.error(getApplication(), errorBody.toString(), Toast.LENGTH_LONG).show()
+
             }
           )
       )

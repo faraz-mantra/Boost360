@@ -53,6 +53,7 @@ class BusinessDetailsFragment : DialogFragment() {
 
   var customerInfoState = false
   private var setStates: String? = null
+  private var setStateTin: String? = null
   val stateFragment = StateListPopFragment()
   lateinit var prefs: SharedPrefs
   private var session: UserSessionManager? = null
@@ -320,9 +321,10 @@ class BusinessDetailsFragment : DialogFragment() {
       }
       false
     }
-    business_city_name.setOnClickListener {
+    place_of_supply_cl.setOnClickListener {
       val args = Bundle()
       args.putString("state", setStates)
+      args.putString("stateTin",setStateTin)
       stateFragment.arguments = args
       stateFragment.show(
         (activity as UpgradeActivity).supportFragmentManager,
@@ -685,12 +687,25 @@ class BusinessDetailsFragment : DialogFragment() {
 
     })
 
-    viewModel.getSelectedStateResult().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-      if (it != null) {
+//    viewModel.getSelectedStateResult().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+//      if (it != null) {
+//        business_city_name.text = it
+//        setStates = it
+//      }
+//
+//    })
+
+    viewModel.getSelectedStateResult1().observe(viewLifecycleOwner,{
+      if(it!= null){
         business_city_name.text = it
         setStates = it
       }
-
+    })
+    viewModel.getSelectedStateTinResult().observe(viewLifecycleOwner,{
+      if(it!=null){
+        state_tin_value.text = "(" + it + ")"
+        setStateTin = it
+      }
     })
 
   }
