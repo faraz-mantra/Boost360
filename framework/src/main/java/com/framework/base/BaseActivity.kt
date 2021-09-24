@@ -252,12 +252,16 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
     }
   }
 
-  fun showLongToast(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+  fun showLongToast(string: String?) {
+    string?.let {
+      Toast.makeText(this, string, Toast.LENGTH_LONG).show()
+    }
   }
 
-  fun showShortToast(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+  fun showShortToast(string: String?) {
+    string?.let {
+      Toast.makeText(this, string, Toast.LENGTH_SHORT).show()
+    }
   }
 
 }
