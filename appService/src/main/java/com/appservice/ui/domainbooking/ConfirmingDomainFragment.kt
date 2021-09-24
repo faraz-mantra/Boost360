@@ -1,13 +1,8 @@
 package com.appservice.ui.domainbooking
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
-import com.appservice.databinding.FragmentActiveDomainBinding
 import com.appservice.databinding.FragmentConfirmingDomainBinding
 import com.framework.models.BaseViewModel
 
@@ -40,13 +35,17 @@ class ConfirmingDomainFragment : AppBaseFragment<FragmentConfirmingDomainBinding
     }
 
     private fun setOnClickListeners() {
-        binding?.btnConfirmApplyDomain?.setOnClickListener{
+        binding?.btnConfirmApplyDomain?.setOnClickListener {
             startFragmentDomainBookingActivity(
                 activity = baseActivity,
                 type = com.appservice.constant.FragmentType.ACTIVE_NEW_DOMAIN_FRAGMENT,
                 bundle = Bundle(),
                 clearTop = false
             )
+        }
+
+        binding?.btnGoBack?.setOnClickListener {
+            baseActivity.onNavPressed()
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.appservice.ui.domainbooking
 
-import android.content.Context
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
@@ -9,7 +8,9 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
-import com.appservice.databinding.*
+import com.appservice.databinding.ActivityDomainBookingBinding
+import com.appservice.databinding.BsheetDomainIntegrationOptionsBinding
+import com.appservice.databinding.BsheetInputOwnDomainBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
@@ -20,9 +21,8 @@ import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getDomainName
+import com.framework.utils.showKeyBoard
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import android.view.inputmethod.InputMethodManager
-import com.appservice.utils.openSoftKeyboard
 
 
 class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseViewModel>(),
@@ -74,24 +74,30 @@ class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseVie
             )
         }
 
-        binding?.appBar?.customImageView4?.setOnClickListener{
+        binding?.appBar?.customImageView4?.setOnClickListener {
             this.onNavPressed()
         }
     }
 
     private fun showBsheetInputOwnDomain() {
         val bSheet = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
-        val sheetBinding = DataBindingUtil.inflate<BsheetInputOwnDomainBinding>(
-            layoutInflater,
-            R.layout.bsheet_input_own_domain,
-            null,
-            false
-        )
+        val sheetBinding =
+            DataBindingUtil.inflate<BsheetInputOwnDomainBinding>(
+                layoutInflater,
+                R.layout.bsheet_input_own_domain,
+                null,
+                false
+            )
         bSheet.setContentView(sheetBinding.root)
+        bSheet.setCancelable(false)
         sheetBinding.btnContinue.setOnClickListener {
             showBsheetIntegrationOption()
+            bSheet.dismiss()
         }
-        sheetBinding.etDomain.openSoftKeyboard()
+        sheetBinding.ivClose.setOnClickListener {
+            bSheet.dismiss()
+        }
+        this.showKeyBoard(sheetBinding.etDomain)
         bSheet.show()
     }
 
@@ -102,6 +108,8 @@ class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseVie
             R.layout.bsheet_domain_integration_options, null, false
         )
         bSheet.setContentView(sheetBinding.root)
+        bSheet.setCancelable(false)
+
         domainIntegrationUserSelection = 0
         sheetBinding.radioAsBusinessWebsite.isChecked = true
         sheetBinding.radioGroup2.setOnCheckedChangeListener { group, checkedId ->
@@ -123,7 +131,11 @@ class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseVie
                     bundle = Bundle(),
                     clearTop = false
                 )
+            bSheet.dismiss()
+        }
 
+        sheetBinding.ivClose.setOnClickListener {
+            bSheet.dismiss()
         }
         bSheet.show()
 
@@ -167,7 +179,7 @@ class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseVie
         val whatsSubdomainIndex = secondStep.indexOf(whatsSubdomain)
 
         val stepsList = arrayListOf(
-            DomainStepsModel(SpannableString("Since search engines recognize a domain that’s already in use, we recommend integrating any relatable domain name that you currently own.")),
+            DomainStepsModel(SpannableString("Since search engines recognize a domain that’s already in use, we recommend integrating any relatable domain name that you currently own."), false),
             DomainStepsModel(SpannableString(secondStep)
                 .apply {
                     setSpan(
@@ -181,8 +193,8 @@ class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseVie
                         whatsSubdomainIndex + whatsSubdomain.length,
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                     )
-                }),
-            DomainStepsModel(SpannableString("If you don’t have any other domain, click on ‘book a new domain’ and choose a domain you like for your business website."))
+                }, false),
+            DomainStepsModel(SpannableString("If you don’t have any other domain, click on ‘book a new domain’ and choose a domain you like for your business website."), false)
         )
 
         val adapter = AppBaseRecyclerViewAdapter(this, stepsList, this)

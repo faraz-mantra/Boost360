@@ -42,6 +42,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
             SERVICE_LISTING_VIEW -> ServiceListingViewHolder(binding as RecyclerItemServiceListingBinding)
             DOMAIN_STEPS -> DomainStepsViewHolder(binding as ListItemStepsDomainBinding)
             DOMAIN_NAME_SUGGESTIONS -> DomainSuggestionsViewHolder(binding as ItemDomainSuggestionsBinding)
+            SIMILAR_DOMAIN_SUGGESTIONS -> SimilarDomainSuggestionViewHolder(binding as ItemSimilarDomainSuggestionsBinding)
 
         }
     }

@@ -1,5 +1,6 @@
 package com.appservice.holder
 
+import android.text.Html
 import android.text.method.LinkMovementMethod
 import com.appservice.databinding.ItemPdfFileBinding
 import com.appservice.databinding.ListItemStepsDomainBinding
@@ -15,7 +16,7 @@ class DomainStepsViewHolder(binding: ListItemStepsDomainBinding) :
     super.bind(position, item)
     val model = item as DomainStepsModel
     binding.tvDesc.movementMethod = LinkMovementMethod.getInstance()
-    binding.tvDesc.text = model.desc
-    binding.tvCount.text=(position.plus(1)).toString()+"."
+    binding.tvDesc.text = Html.fromHtml(model.desc.toString())
+    binding.tvCount.text= if(model.isBulletIndicated) "\u2022" else (position.plus(1)).toString()+"."
   }
 }

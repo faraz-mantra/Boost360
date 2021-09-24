@@ -19,7 +19,8 @@ enum class RecyclerViewItemType {
     SERVICE_LISTING_VIEW,
     STAFF_FILTER_VIEW,
     DOMAIN_STEPS,
-    DOMAIN_NAME_SUGGESTIONS;
+    DOMAIN_NAME_SUGGESTIONS,
+    SIMILAR_DOMAIN_SUGGESTIONS;
 
 
     @LayoutRes
@@ -41,6 +42,7 @@ enum class RecyclerViewItemType {
             STAFF_FILTER_VIEW -> R.layout.recycler_item_staff_filter
             DOMAIN_STEPS -> R.layout.list_item_steps_domain
             DOMAIN_NAME_SUGGESTIONS -> R.layout.item_domain_suggestions
+            SIMILAR_DOMAIN_SUGGESTIONS -> R.layout.item_similar_domain_suggestions
         }
     }
 }
