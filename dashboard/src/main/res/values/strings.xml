@@ -279,5 +279,11 @@
   <string name="remove_whatsapp_number">Remove Whatsapp number</string>
   <string name="changing_whatsapp_number">Changing Whatsapp number?</string>
   <string name="your_whatsapp_number">Your WhatsApp number</string>
+    <string name="verify_mobile_number">Verify mobile number</string>
+    <string name="we_have_sent_a_4_digit_otp_to">We have sent a 4-digit OTP to</string>
+    <string name="enter_pin_below">Enter PIN below</string>
+    <string name="didn_t_get_the_code">Didn’t get the code?</string>
+  <string name="resend"><u>Resend</u></string>
+    <string name="image_should_be_in_jpeg_or_png_with_size_500x500px_or_bigger_with_similar_aspect_ratio">Image should be in Jpeg or png with size 500x500px or bigger with similar aspect ratio.</string>
 
 </resources>

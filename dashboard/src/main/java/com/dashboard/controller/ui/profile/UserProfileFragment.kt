@@ -5,8 +5,7 @@ import android.view.View
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.controller.ui.business.bottomsheet.BusinessNameBottomSheet
-import com.dashboard.controller.ui.profile.sheet.EditChangeWhatsappNumberSheet
-import com.dashboard.controller.ui.profile.sheet.VerifiedEmailMobileSheet
+import com.dashboard.controller.ui.profile.sheet.*
 import com.dashboard.databinding.FragmentUserProfileBinding
 import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
@@ -45,22 +44,55 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, BaseView
     super.onClick(v)
     when (v) {
       binding?.imgEdit -> {
-        EditChangeWhatsappNumberSheet().show(parentFragmentManager, EditChangeWhatsappNumberSheet::javaClass.name)
+        showImagePickerSheet()
       }
       binding?.viewEmptyProfile -> {
       }
       binding?.viewName -> {
+        showEditUserNameSheet()
       }
       binding?.viewEmail -> {
+        showEditEmailSheet()
+
       }
       binding?.verifyEmail -> {
+        showVerifyEmailSheet()
+
       }
       binding?.viewMobileNumber -> {
+        showEditMobileSheet()
       }
       binding?.viewWhatsappNo -> {
+        showEditWhatsappSheet()
+
       }
       binding?.verifyWhatsappNo -> {
+        showEditWhatsappSheet()
       }
     }
+  }
+
+  private fun showImagePickerSheet() {
+    ImagePickerSheet().show(parentFragmentManager, ImagePickerSheet::javaClass.name)
+  }
+
+  private fun showEditMobileSheet() {
+    EditChangeMobileNumberSheet().show(parentFragmentManager, EditChangeMobileNumberSheet::javaClass.name)
+  }
+
+  private fun showEditEmailSheet() {
+    EditChangeEmailSheet().show(parentFragmentManager, EditChangeEmailSheet::javaClass.name)
+  }
+
+  private fun showEditWhatsappSheet() {
+    EditChangeWhatsappNumberSheet().show(parentFragmentManager, EditChangeWhatsappNumberSheet::javaClass.name)
+  }
+
+  private fun showVerifyEmailSheet() {
+    VerifyOtpEmailMobileSheet().show(parentFragmentManager, VerifyOtpEmailMobileSheet::javaClass.name)
+  }
+
+  private fun showEditUserNameSheet() {
+    EditChangeUserNameSheet().show(parentFragmentManager, EditChangeUserNameSheet::javaClass.name)
   }
 }

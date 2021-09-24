@@ -45,7 +45,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
       <com.framework.views.customViews.PrefixEditText
-        android:id="@+id/cet_business_name"
+        android:id="@+id/cet_phone"
         style="@style/BusinessProfileTextField"
         android:digits="0123456789"
         android:drawableEnd="@null"
