@@ -1,16 +1,21 @@
 package com.inventoryorder.model.services
 
 import com.framework.base.BaseResponse
+import com.framework.utils.*
 import com.google.gson.annotations.SerializedName
+import com.inventoryorder.model.doctorsData.DOCTOR_STAFF_LIST_DATA
+import com.inventoryorder.model.doctorsData.DataItem
 import java.io.Serializable
+
+const val DOCTOR_SERVICE_LIST_DATA="DOCTOR_SERVICE_LIST_DATA"
+
 
 data class ServiceListingResponse(
 
   @field:SerializedName("StatusCode")
   val statusCode: Int? = null,
-
   @field:SerializedName("Result")
-  val result: List<ResultItem?>? = null,
+  val result: ArrayList<ResultItem>? = null,
 ) : BaseResponse(), Serializable
 
 data class ItemsItem(
@@ -25,7 +30,7 @@ data class ItemsItem(
   val description: String? = null,
 
   @field:SerializedName("SecondaryTileImages")
-  val secondaryTileImages: List<String>? = null,
+  val secondaryTileImages: ArrayList<String>? = null,
 
   @field:SerializedName("DiscountedPrice")
   val discountedPrice: Double? = null,
@@ -67,7 +72,7 @@ data class ItemsItem(
   val id: String? = null,
 
   @field:SerializedName("SecondaryImages")
-  val secondaryImages: List<String>? = null,
+  val secondaryImages: ArrayList<String>? = null,
 
   ) : BaseResponse(), Serializable {
 
@@ -87,19 +92,24 @@ data class ItemsItem(
 }
 
 data class ResultItem(
-
   @field:SerializedName("Services")
   val services: Services? = null,
-
   @field:SerializedName("Category")
   val category: String? = null,
 )
 
 data class Services(
-
   @field:SerializedName("Items")
-  val items: List<ItemsItem?>? = null,
-
+  val items: ArrayList<ItemsItem>? = null,
   @field:SerializedName("Count")
   val count: Int? = null,
 )
+
+fun ArrayList<ItemsItem>.saveDoctorServiceList() {
+  PreferencesUtils.instance.saveData(DOCTOR_SERVICE_LIST_DATA, convertListObjToString(this) ?: "")
+}
+
+fun getDoctorServiceList(): ArrayList<ItemsItem> {
+  val resp = PreferencesUtils.instance.getData(DOCTOR_SERVICE_LIST_DATA, "") ?: ""
+  return ArrayList(convertStringToList(resp) ?: ArrayList())
+}

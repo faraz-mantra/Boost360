@@ -65,16 +65,9 @@ data class ItemN(
   private fun getFormattedScheduleDate(): String? {
     val extraConsultation = Product?.extraItemProductConsultation()
     return if (extraConsultation != null) {
-      var dateString = parseDate(
-        extraConsultation.scheduledDateTime,
-        DateUtils.FORMAT_SERVER_DATE,
-        DateUtils.FORMAT_DD_MM_YYYY_N
-      )
-      if (dateString.isNullOrEmpty()) dateString = parseDate(
-        extraConsultation.scheduledDateTime,
-        DateUtils.FORMAT_SERVER_1_DATE,
-        DateUtils.FORMAT_DD_MM_YYYY_N
-      )
+      var dateString = parseDate(extraConsultation.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_DD_MM_YYYY_N)
+      if (dateString.isNullOrEmpty()) dateString = parseDate(extraConsultation.scheduledDateTime, DateUtils.FORMAT_SERVER_1_DATE, DateUtils.FORMAT_DD_MM_YYYY_N)
+      if (dateString.isNullOrEmpty()) dateString = parseDate(extraConsultation.scheduledDateTime, DateUtils.FORMAT_YYYY_MM_DD, DateUtils.FORMAT_DD_MM_YYYY_N)
       dateString ?: ""
     } else ""
   }
@@ -85,19 +78,7 @@ data class ItemN(
       val date = scheduledDate?.parseDate(DateUtils.FORMAT_DD_MM_YYYY_N)
       var dateDiff = date?.getDateDifference()
       if (dateDiff.isNullOrEmpty()) dateDiff = scheduledDate ?: ""
-      "$dateDiff ${
-        parseDate(
-          Product?.extraItemProductConsultation()?.startTime(),
-          DateUtils.FORMAT_HH_MM,
-          DateUtils.FORMAT_HH_MM_A
-        )
-      }-${
-        parseDate(
-          Product?.extraItemProductConsultation()?.endTime(),
-          DateUtils.FORMAT_HH_MM,
-          DateUtils.FORMAT_HH_MM_A
-        )
-      }"
+      "$dateDiff ${parseDate(Product?.extraItemProductConsultation()?.startTime(), DateUtils.FORMAT_HH_MM, DateUtils.FORMAT_HH_MM_A)}-${parseDate(Product?.extraItemProductConsultation()?.endTime(), DateUtils.FORMAT_HH_MM, DateUtils.FORMAT_HH_MM_A)}"
     } catch (e: Exception) {
       ""
     }

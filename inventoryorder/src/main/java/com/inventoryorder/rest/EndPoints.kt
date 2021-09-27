@@ -70,6 +70,7 @@ object EndPoints {
   //Now FLoats Api
   const val API_NOW_FLOATS = "https://api.nowfloats.com/"
   const val GET_SEARCH_LISTING = "Service/v1/GetSearchListings"
-  const val GET_BOOKING_SLOTS = "staff/v1/GetBookingSlots"
+  const val GET_BOOKING_SLOTS = "Staff/v1/GetBookingSlots"
+  const val GET_BOOKING_SLOTS_STAFF = "Staff/v1/GetBookingSlotsForStaff/{staffId}"
 }
 
