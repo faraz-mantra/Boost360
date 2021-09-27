@@ -1,80 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+<layout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_height="match_parent">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:layout_marginVertical="@dimen/size_10"
-                android:layout_marginHorizontal="@dimen/size_20"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_20"
+                android:layout_marginVertical="@dimen/size_10"
+                android:orientation="horizontal">
 
                 <com.framework.views.customViews.CustomImageView
                     android:layout_width="wrap_content"
-                    android:src="@drawable/ic_info_black"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_info_black" />
 
                 <com.framework.views.customViews.CustomTextView
 
-                    android:layout_marginLeft="@dimen/size_8"
-                    android:text="@string/image_should_be_in_jpeg_or_png_with_size_500x500px_or_bigger_with_similar_aspect_ratio"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_8"
+                    android:text="@string/image_should_be_in_jpeg_or_png_with_size_500x500px_or_bigger_with_similar_aspect_ratio" />
             </LinearLayout>
 
             <com.theartofdev.edmodo.cropper.CropImageView
                 android:layout_width="match_parent"
-                android:layout_height="300dp"/>
+                android:id="@+id/crop_img"
+                android:layout_marginTop="8dp"
+                app:cropScaleType="centerCrop"
+                android:layout_height="250dp" />
 
             <LinearLayout
-                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/size_32"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <com.framework.views.customViews.CustomImageView
-                    android:src="@drawable/ic_img"
                     android:layout_width="@dimen/size_15"
-                    android:layout_height="@dimen/size_15"/>
+                    android:layout_height="@dimen/size_15"
+                    android:src="@drawable/ic_img" />
 
-                <ProgressBar
-                    android:layout_marginLeft="@dimen/size_8"
-                    style="?android:attr/progressBarStyleHorizontal"
+                <com.google.android.material.slider.Slider
                     android:layout_width="@dimen/size_200"
-                    android:layout_height="wrap_content"/>
+                    app:thumbColor="@color/colorPrimary"
+                    android:id="@+id/slider"
+                    app:trackColorInactive="@color/grey"
+                    app:trackColorActive="@color/colorPrimary"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_8" />
 
                 <com.framework.views.customViews.CustomImageView
-                    android:layout_marginLeft="@dimen/size_8"
-                    android:src="@drawable/ic_img"
                     android:layout_width="@dimen/size_20"
-                    android:layout_height="@dimen/size_20"/>
+                    android:layout_height="@dimen/size_20"
+                    android:layout_marginLeft="@dimen/size_8"
+                    android:src="@drawable/ic_img" />
 
 
             </LinearLayout>
 
         </LinearLayout>
 
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/btn_done"
+            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+            android:layout_width="match_parent"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:drawableStart="@drawable/ic_camera_d"
+            android:enabled="true"
+            android:text="@string/done"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.framework.views.customViews.CustomButton
-        android:id="@+id/btn_take_photo"
-        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-        android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/size_16"
-        android:drawableStart="@drawable/ic_camera_d"
-        android:enabled="true"
-        android:text="@string/take_photo"
-        android:textColor="@color/white" />
-</androidx.core.widget.NestedScrollView>
+</layout>

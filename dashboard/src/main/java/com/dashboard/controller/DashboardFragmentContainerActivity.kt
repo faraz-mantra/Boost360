@@ -17,6 +17,7 @@ import com.dashboard.controller.ui.allAddOns.AllBoostAddonsFragment
 import com.dashboard.controller.ui.business.BusinessProfileFragment
 import com.dashboard.controller.ui.customisationnav.CustomisationNavFragment
 import com.dashboard.controller.ui.drScore.DigitalReadinessScoreFragment
+import com.dashboard.controller.ui.profile.CropProfileImageFragment
 import com.dashboard.controller.ui.profile.UserProfileFragment
 import com.dashboard.controller.ui.website_theme.FragmentWebsiteTheme
 import com.framework.base.BaseFragment
@@ -57,7 +58,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   override fun customTheme(): Int? {
     return when (type) {
       FragmentType.DIGITAL_READINESS_SCORE -> R.style.DashboardThemeNew
-      FragmentType.FRAGMENT_WEBSITE_THEME, FragmentType.FRAGMENT_WEBSITE_NAV, FragmentType.FRAGMENT_USER_PROFILE -> R.style.DashboardThemeNew
+      FragmentType.FRAGMENT_WEBSITE_THEME, FragmentType.FRAGMENT_WEBSITE_NAV, FragmentType.FRAGMENT_USER_PROFILE,FragmentType.FRAGMENT_USER_PROFILE_IMAGE_CROP -> R.style.DashboardThemeNew
       FragmentType.FRAGMENT_BUSINESS_PROFILE -> R.style.BusinessProfileTheme
       else -> super.customTheme()
     }
@@ -66,7 +67,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.ALL_BOOST_ADD_ONS -> ContextCompat.getColor(this, R.color.colorPrimary)
-      FragmentType.FRAGMENT_WEBSITE_THEME, FragmentType.FRAGMENT_WEBSITE_NAV, FragmentType.FRAGMENT_USER_PROFILE,
+      FragmentType.FRAGMENT_WEBSITE_THEME, FragmentType.FRAGMENT_WEBSITE_NAV, FragmentType.FRAGMENT_USER_PROFILE,FragmentType.FRAGMENT_USER_PROFILE_IMAGE_CROP,
       FragmentType.FRAGMENT_BUSINESS_PROFILE -> ContextCompat.getColor(this, R.color.gray_4e4e4e)
       else -> super.getToolbarBackgroundColor()
     }
@@ -85,6 +86,8 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
       FragmentType.FRAGMENT_WEBSITE_NAV -> getString(R.string.website_style_customisation)
       FragmentType.FRAGMENT_BUSINESS_PROFILE -> getString(R.string.business_profile_)
       FragmentType.FRAGMENT_USER_PROFILE -> getString(R.string.my_profile_d)
+      FragmentType.FRAGMENT_USER_PROFILE_IMAGE_CROP -> getString(R.string.crop_your_profile_photo)
+
       else -> super.getToolbarTitle()
     }
   }
@@ -93,6 +96,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
     return when (type) {
       FragmentType.ALL_BOOST_ADD_ONS, FragmentType.FRAGMENT_WEBSITE_THEME, FragmentType.FRAGMENT_WEBSITE_NAV,
       FragmentType.FRAGMENT_BUSINESS_PROFILE, FragmentType.FRAGMENT_USER_PROFILE -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_toolbar_d)
+      FragmentType.FRAGMENT_USER_PROFILE_IMAGE_CROP->ContextCompat.getDrawable(this, R.drawable.ic_cross_white)
       else -> super.getNavigationIcon()
     }
   }
@@ -138,6 +142,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
       FragmentType.FRAGMENT_BUSINESS_PROFILE -> BusinessProfileFragment.newInstance()
       FragmentType.FRAGMENT_WEBSITE_NAV -> CustomisationNavFragment.newInstance()
       FragmentType.FRAGMENT_USER_PROFILE -> UserProfileFragment.newInstance()
+      FragmentType.FRAGMENT_USER_PROFILE_IMAGE_CROP->CropProfileImageFragment.newInstance()
       else -> throw IllegalFragmentTypeException()
     }
   }
