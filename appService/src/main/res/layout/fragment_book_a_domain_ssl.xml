@@ -127,6 +127,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="@+id/layout_suggest_domain_select"
                     app:layout_constraintStart_toStartOf="@+id/tv_other_suggestions_title"
                     app:layout_constraintTop_toBottomOf="@+id/tv_other_suggestions_title" />

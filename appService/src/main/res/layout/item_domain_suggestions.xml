@@ -8,20 +8,20 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/layout_suggest_domain_select"
+            app:cardCornerRadius="@dimen/size_12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tv_domain_name"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_40"
+                android:layout_height="@dimen/size_52"
                 android:background="@color/white"
                 app:cornerRadius="@dimen/size_16"
                 android:drawableStart="@drawable/ic_globe_yellow"
                 android:drawableEnd="@drawable/ic_arrow_right_black"
                 android:drawablePadding="8dp"
                 android:drawableTint="@color/colorPrimary"
-                android:elevation="8dp"
                 android:gravity="center_vertical|start"
                 android:paddingStart="4dp"
                 android:paddingEnd="4dp"

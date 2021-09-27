@@ -19,6 +19,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
+            android:focusable="true"
             android:background="@drawable/domain_et_bg"
             android:hint="@string/write_a_domain_name"
             android:padding="@dimen/size_8"
