@@ -331,16 +331,13 @@
               android:layout_height="wrap_content"
               android:fontFamily="@font/open_sans"
               android:gravity="bottom"
-              android:hint="Select your state"
               android:imeOptions="actionNext"
               android:inputType="text"
               android:textColor="@color/common_bold_text_color"
               android:textColorHint="@color/globaLightSuperText"
-              android:textFontWeight="400"
               android:textSize="@dimen/txt_14sp"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintBottom_toBottomOf="parent"
-              app:layout_constraintEnd_toEndOf="@+id/state_tin_value"
               app:layout_constraintEnd_toStartOf="@+id/state_tin_value"
               app:layout_constraintTop_toTopOf="parent"/>
 

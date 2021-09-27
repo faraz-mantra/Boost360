@@ -6,11 +6,8 @@ import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.view.OneShotPreDrawListener.add
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
 import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
@@ -31,7 +28,6 @@ import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.internal.util.BackpressureHelper.add
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Credentials
 import org.json.JSONArray
@@ -64,7 +60,6 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
   var cityValue: String? = null
   var selectedState: String? = null
   var selectedStateResult: MutableLiveData<String> = MutableLiveData()
-  var selectedStateResult1: MutableLiveData<String> = MutableLiveData()
   var selectedStateTinResult: MutableLiveData<String> = MutableLiveData()
   private var APIRequestStatus: String? = null
   private var gstApiInfo : MutableLiveData<GSTApiResponse> = MutableLiveData()
@@ -167,21 +162,13 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
     return cityValueResult
   }
 
+
   fun selectedStateResult(state: String) {
     selectedStateResult.postValue(state)
   }
 
-
   fun getSelectedStateResult(): LiveData<String> {
     return selectedStateResult
-  }
-
-  fun selectedStateResult1(state: String) {
-    selectedStateResult1.postValue(state)
-  }
-
-  fun getSelectedStateResult1(): LiveData<String> {
-    return selectedStateResult1
   }
 
   fun selectedStateTinResult(stateTin :String){
@@ -341,7 +328,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
     }
   }
 
-  fun getStatesWithCodes(auth: String,clientId: String){
+  fun getStatesWithCodes(auth: String,clientId: String,progressBar: ProgressBar){
     if(Utils.isConnectedToInternet(getApplication())){
       CompositeDisposable().add(
         ApiService.getStates(auth,clientId)
@@ -351,12 +338,13 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
             {
               Log.i("getStates",it.toString())
               statesInfo.postValue(it)
+              progressBar.visibility = View.GONE
             },
             {
               val temp = (it as HttpException).response()!!.errorBody()!!.string()
               val errorBody : Error = Gson().fromJson(temp,object : TypeToken<com.boost.upgrades.data.api_model.stateCode.Error>() {}.type)
+              progressBar.visibility = View.GONE
               Toasty.error(getApplication(), errorBody.toString(), Toast.LENGTH_LONG).show()
-
             }
           )
       )
