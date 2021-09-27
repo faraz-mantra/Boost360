@@ -18,14 +18,9 @@ import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.CardPaymentAdapter
-import com.boost.upgrades.adapter.StateListAdapter
 import com.boost.upgrades.adapter.UPIAdapter
 import com.boost.upgrades.adapter.WalletAdapter
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
-import com.boost.upgrades.data.api_model.customerId.customerInfo.AddressDetails
-import com.boost.upgrades.data.api_model.customerId.customerInfo.BusinessDetails
-import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
-import com.boost.upgrades.data.api_model.customerId.customerInfo.TaxDetails
 import com.boost.upgrades.data.api_model.customerId.get.Result
 import com.boost.upgrades.datamodule.SingleNetBankData
 import com.boost.upgrades.interfaces.*
@@ -33,20 +28,18 @@ import com.boost.upgrades.ui.checkoutkyc.BusinessDetailsFragment
 import com.boost.upgrades.ui.confirmation.OrderConfirmationFragment
 import com.boost.upgrades.ui.popup.*
 import com.boost.upgrades.ui.razorpay.RazorPayWebView
-import com.boost.upgrades.ui.webview.WebViewFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Constants.Companion.ADD_CARD_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.BUSINESS_DETAILS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.EXTERNAL_EMAIL_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.NETBANKING_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_WEBVIEW_POPUP_FRAGMENT
-import com.boost.upgrades.utils.Constants.Companion.STATE_LIST_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.UPI_POPUP_FRAGMENT
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
 import com.boost.upgrades.utils.observeOnce
 import com.bumptech.glide.Glide
-import com.framework.models.firestore.FirestoreManager
+import com.framework.analytics.SentryController
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
@@ -57,13 +50,11 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.checkoutkyc_fragment.*
 import kotlinx.android.synthetic.main.payment_fragment.*
 import org.json.JSONObject
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
@@ -361,17 +352,6 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     )
   }
 
-  private fun loadGstDetails() {
-    Log.v("loadGstDetails","3")
-    if (prefs.getGstApiResponse() != null) {
-      gstResult = prefs.getGstApiResponse()
-      val address = gstResult!!.address
-      business_name_value.text = gstResult!!.legalName
-      business_gstin_value.text = gstResult!!.gSTIN
-      business_supply_place_value.text = gstResult!!.address!!.state
-      business_address_value.text = address!!.addressLine1 +", "+ address!!.addressLine2 +", " + address!!.city +", "+ address!!.state +", "+ address!!.pincode
-    }
-  }
 
   fun loadData() {
     viewModel.loadpaymentMethods(razorpay)

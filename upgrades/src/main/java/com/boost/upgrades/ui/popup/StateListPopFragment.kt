@@ -14,17 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.StateListAdapter
-import com.boost.upgrades.data.api_model.customerId.StateModel
 import com.boost.upgrades.data.api_model.customerId.get.Result
 import com.boost.upgrades.data.api_model.stateCode.Data
 import com.boost.upgrades.interfaces.StateListener
 import com.boost.upgrades.ui.payment.PaymentViewModel
-import com.boost.upgrades.utils.observeOnce
 import kotlinx.android.synthetic.main.businessdetails_fragment.*
 import kotlinx.android.synthetic.main.businessdetails_fragment.close
 import kotlinx.android.synthetic.main.checkoutkyc_fragment.*
-import kotlinx.android.synthetic.main.checkoutkyc_fragment.business_email_address
-import kotlinx.android.synthetic.main.checkoutkyc_fragment.confirm_btn
 import kotlinx.android.synthetic.main.free_addons_fragment.*
 import kotlinx.android.synthetic.main.statelist_fragment.*
 import java.io.*
@@ -47,7 +43,6 @@ class StateListPopFragment : DialogFragment(), StateListener {
     fun newInstance() = StateListPopFragment()
   }
 
-  //    private lateinit var viewModel: CheckoutKycViewModel
   private lateinit var viewModel: PaymentViewModel
 
   override fun onStart() {
@@ -67,15 +62,13 @@ class StateListPopFragment : DialogFragment(), StateListener {
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
-//        viewModel = ViewModelProviders.of(requireActivity()).get(CheckoutKycViewModel::class.java)
     viewModel = ViewModelProviders.of(requireActivity()).get(PaymentViewModel::class.java)
-    stateListAdapter = StateListAdapter((activity as UpgradeActivity), ArrayList(), ArrayList(),this)
+    stateListAdapter = StateListAdapter((activity as UpgradeActivity), ArrayList(),this)
     getState = requireArguments().getString("state")
     getStateTin = requireArguments().getString("stateTin")
-    loadStatesList()
+    showProgressBar()
     initializeFreeAddonsRecyclerView()
     initMvvm()
-    viewModel.getStatesFromAssetJson(requireActivity())
 
 
     close.setOnClickListener {
@@ -95,45 +88,33 @@ class StateListPopFragment : DialogFragment(), StateListener {
 
   @SuppressLint("FragmentLiveDataObserve")
   private fun initMvvm() {
-
-//    viewModel.stateResult().observeOnce(this, androidx.lifecycle.Observer {
-//      if (it != null) {
-//        var data = arrayListOf<StateModel>()
-//        it.forEach {
-//          if (!data.contains(StateModel(it, "", 0))) {
-//            data.add(StateModel(it, "", 0))
-//          }
-////                    data.add(StateModel(it,"",0))
-//        }
-//
-//
-//        stateListAdapter.addupdates(data, getState)
-//        stateListAdapter.notifyDataSetChanged()
-//      }
-//
-//    })
+    loadStatesList()
     viewModel.getStatesResult().observe(this,{
       if(it != null){
         var stateData = arrayListOf<Data>()
         it.result!!.data!!.forEach {
-          if(!stateData.contains(Data(it.id,it.state,it.stateCode,it.stateTin))){
             stateData.add(Data(it.id,it.state,it.stateCode,it.stateTin))
-          }
         }
-        stateListAdapter.addupdates1(stateData,getState,getStateTin)
+        stateListAdapter.addupdates(stateData,getState,getStateTin)
         stateListAdapter.notifyDataSetChanged()
     }
-
+      hideProgressBar()
     })
 
   }
   private fun loadStatesList(){
     viewModel.getStatesWithCodes(
       (activity as? UpgradeActivity)?.getAccessToken() ?: "",
-      (activity as UpgradeActivity).clientid
+      (activity as UpgradeActivity).clientid,
+      states_progress_bar
     )
   }
-
+  private fun showProgressBar(){
+    states_progress_bar.visibility = View.VISIBLE
+  }
+  private fun hideProgressBar(){
+    states_progress_bar.visibility = View.GONE
+  }
   override fun onDestroy() {
     super.onDestroy()
 //        requireActivity().viewModelStore.clear()
@@ -149,19 +130,11 @@ class StateListPopFragment : DialogFragment(), StateListener {
     recycler_state.adapter = stateListAdapter
   }
 
-//  override fun stateSelected(data: StateModel) {
-//    getState = data.state
-////        stateListAdapter.notifyDataSetChanged()
-//    viewModel.selectedStateResult(data.state)
-//    Handler().postDelayed({
-//      dismiss()
-//    }, 300)
-//  }
 
-  override fun stateSelected1(data: Data) {
+  override fun stateSelected(data: Data) {
     getState = data.state
     getStateTin = data.stateTin
-    viewModel.selectedStateResult1(data.state.toString())
+    viewModel.selectedStateResult(data.state.toString())
     viewModel.selectedStateTinResult(data.stateTin.toString())
     Handler().postDelayed({
       dismiss()

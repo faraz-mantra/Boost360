@@ -1,7 +1,6 @@
 package com.boost.upgrades.ui.checkoutkyc
 
 import android.annotation.SuppressLint
-import android.app.ProgressDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,9 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -34,7 +31,6 @@ import com.boost.upgrades.utils.Utils.isValidMail
 import com.boost.upgrades.utils.Utils.isValidMobile
 import com.boost.upgrades.utils.WebEngageController
 import com.boost.upgrades.utils.observeOnce
-import com.framework.extensions.isVisible
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
@@ -90,7 +86,6 @@ class BusinessDetailsFragment : DialogFragment() {
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
-//        viewModel = ViewModelProviders.of(requireActivity()).get(CheckoutKycViewModel::class.java)
     viewModel = ViewModelProviders.of(requireActivity()).get(PaymentViewModel::class.java)
 
     prefs = SharedPrefs(activity as UpgradeActivity)
@@ -105,7 +100,6 @@ class BusinessDetailsFragment : DialogFragment() {
     }else if(gstin_off.visibility == View.VISIBLE){
       reverseVisibility()
     }
-//        business_gst_number.setFilters(business_gst_number.filters + InputFilter.AllCaps())
 
     business_gstin_number.addTextChangedListener(object : TextWatcher {
       override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -127,6 +121,11 @@ class BusinessDetailsFragment : DialogFragment() {
 
 
     confirm_btn.setOnClickListener {
+      if(gstin_off.visibility == View.VISIBLE && gstin_on.visibility == View.GONE){
+        prefs.storeGstRegistered(false)
+      }else{
+        prefs.storeGstRegistered(true)
+      }
       if(progress_bar.visibility == View.GONE){
         if (validateAgreement()) {
           if (!customerInfoState) { //no customer available
@@ -295,7 +294,7 @@ class BusinessDetailsFragment : DialogFragment() {
     }
 
     gstin_on.setOnClickListener {
-      prefs.storeGstRegistered(false)
+//      prefs.storeGstRegistered(false)
       gstFlag = false
       business_gstin_number.visibility = View.GONE
       gstin_on.visibility = View.GONE
@@ -305,7 +304,7 @@ class BusinessDetailsFragment : DialogFragment() {
     }
 
     gstin_off.setOnClickListener {
-      prefs.storeGstRegistered(true)
+//      prefs.storeGstRegistered(true)
       gstFlag = true
       business_gstin_number.visibility = View.VISIBLE
       gstin_off.visibility = View.GONE
@@ -334,23 +333,6 @@ class BusinessDetailsFragment : DialogFragment() {
     WebEngageController.trackEvent(ADDONS_MARKETPLACE_BUSINESS_DETAILS_LOAD, GSTIN, NO_EVENT_VALUE)
   }
 
-  private fun saveGstResponse() {
-    if (business_gstin_number.text.isNullOrEmpty().not()) {
-      if (isValidGSTIN(business_gstin_number.text.toString())) {
-        loadGSTInfo(business_gstin_number.text.toString())
-        viewModel.getGstApiResult().observe(viewLifecycleOwner, Observer {
-          gstInfoResult = it.result
-          if (gstInfoResult != null) {
-            prefs.storeGstApiResponse(gstInfoResult)
-          } else {
-            Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
-          }
-        })
-      } else {
-        Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
-      }
-    }
-  }
 
   private fun callGSTApi(gstNo:String){
     if(isValidGSTIN(gstNo)){
@@ -386,7 +368,7 @@ class BusinessDetailsFragment : DialogFragment() {
     complete_business_address.visibility = View.GONE
     business_address.visibility = View.GONE
     state_of_supply.visibility = View.GONE
-    business_city_name.visibility = View.GONE
+    place_of_supply_cl.visibility = View.GONE
     gst_business_name_tv.visibility = View.VISIBLE
     gst_business_name_value.visibility = View.VISIBLE
     gst_business_address_tv.visibility = View.VISIBLE
@@ -398,7 +380,7 @@ class BusinessDetailsFragment : DialogFragment() {
     complete_business_address.visibility = View.VISIBLE
     business_address.visibility = View.VISIBLE
     state_of_supply.visibility = View.VISIBLE
-    business_city_name.visibility = View.VISIBLE
+    place_of_supply_cl.visibility = View.VISIBLE
     gst_business_name_tv.visibility = View.GONE
     gst_business_name_value.visibility = View.GONE
     gst_business_address_tv.visibility = View.GONE
@@ -695,7 +677,7 @@ class BusinessDetailsFragment : DialogFragment() {
 //
 //    })
 
-    viewModel.getSelectedStateResult1().observe(viewLifecycleOwner,{
+    viewModel.getSelectedStateResult().observe(viewLifecycleOwner,{
       if(it!= null){
         business_city_name.text = it
         setStates = it
