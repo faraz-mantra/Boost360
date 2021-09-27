@@ -2,24 +2,16 @@ package com.appservice.ui.domainbooking
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
-import com.appservice.databinding.FragmentBankAccountDetailsBinding
 import com.appservice.databinding.FragmentBookADomainSslBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.ui.bankaccount.AccountFragmentContainerActivity
-import com.appservice.ui.bankaccount.BankAccountFragment
 import com.appservice.ui.domainbooking.model.DomainSuggestionModel
-import com.appservice.viewmodel.AccountViewModel
-import com.framework.base.BaseFragment
 import com.framework.models.BaseViewModel
 
 class BookDomainSslFragment : AppBaseFragment<FragmentBookADomainSslBinding, BaseViewModel>(),
@@ -44,9 +36,10 @@ class BookDomainSslFragment : AppBaseFragment<FragmentBookADomainSslBinding, Bas
 
     override fun onCreateView() {
         (baseActivity as? DomainBookingContainerActivity)?.setToolbarTitleNew(
-        resources.getString(
-            R.string.book_a_domain_ssl
-        ), resources.getDimensionPixelSize(R.dimen.size_44))
+            resources.getString(
+                R.string.book_a_domain_ssl
+            ), resources.getDimensionPixelSize(R.dimen.size_44)
+        )
         setOnClickListeners()
         setData()
     }
@@ -59,18 +52,27 @@ class BookDomainSslFragment : AppBaseFragment<FragmentBookADomainSslBinding, Bas
         arrayDomainSuggestions.add(DomainSuggestionModel("samplebizsite.co.in"))
         arrayDomainSuggestions.add(DomainSuggestionModel("samplebizco.co.in"))
 
-        val adapter = AppBaseRecyclerViewAdapter(baseActivity, arrayDomainSuggestions, itemClickListener = this@BookDomainSslFragment)
-        binding?.rvSuggestedDomains?.addItemDecoration(DividerItemDecoration(baseActivity, R.drawable.adapter_divider_white_3))
+        val adapter = AppBaseRecyclerViewAdapter(
+            baseActivity,
+            arrayDomainSuggestions,
+            itemClickListener = this@BookDomainSslFragment
+        )
+        val linearLayoutManager =
+            LinearLayoutManager(baseActivity, LinearLayoutManager.VERTICAL, false)
+        val dividerItemDecoration =
+            DividerItemDecoration(baseActivity, linearLayoutManager.orientation)
+        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(baseActivity, R.drawable.adapter_divider_white_3)!!)
+        binding?.rvSuggestedDomains?.layoutManager = linearLayoutManager
+        binding?.rvSuggestedDomains?.addItemDecoration(dividerItemDecoration)
         binding?.rvSuggestedDomains?.adapter = adapter
-        binding?.rvSuggestedDomains?.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun setOnClickListeners() {
-        binding?.btnSearchANewDomain?.setOnClickListener{
+        binding?.btnSearchANewDomain?.setOnClickListener {
             startActivity(Intent(activity, SearchDomainActivity::class.java))
         }
 
-        binding?.btnSelectSuggestedDomain?.setOnClickListener{
+        binding?.btnSelectSuggestedDomain?.setOnClickListener {
             startFragmentDomainBookingActivity(
                 activity = baseActivity,
                 type = com.appservice.constant.FragmentType.CONFIRMING_DOMAIN_FRAGMENT,
