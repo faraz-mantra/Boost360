@@ -40,6 +40,29 @@ object WithFloatTwoRepository :
     )
   }
 
+  fun uploadUserProfileImage(
+    clientId: String?,loginId:String?,fileName:String, file: RequestBody?
+  ): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.uploadUserProfileImage(
+        clientId = clientId,
+        loginId=loginId,
+        fileName=fileName,
+        file = file
+      ), TaskCode.UPLOAD_USER_PROFILE_IMAGE
+    )
+  }
+
+  fun getUserProfileData(
+    loginId:String?
+  ): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.useProfileData(
+        loginId=loginId,
+      ), TaskCode.GET_USER_PROFILE_DETAILS
+    )
+  }
+
   override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {
     return WithFloatTwoRemoteData::class.java
   }

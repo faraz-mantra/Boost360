@@ -143,4 +143,8 @@ dependencies {
     //smartlook heat map generator
     implementation 'com.smartlook.recording:app:1.8.3-native'
 
+    //image picker
+    api 'com.github.dhaval2404:imagepicker:2.1'
+
+
 }

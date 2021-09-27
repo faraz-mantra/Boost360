@@ -39,5 +39,9 @@ object EndPoints {
   //TODO FP UPADTE API
   const val FLOATING_POINT_UPDATE = "Discover/v1/FloatingPoint/update/"
 
+  //upload user profile image
+  const val UPLOAD_USER_PROFILE_IMAGE="/user/v9/floatingpoint/createUserProfileImage"
+  //get user profile details
+  const val GET_USER_PROFILE_DETAILS="/user/v9/floatingpoint/GetUserProfileDetails"
 }
 
