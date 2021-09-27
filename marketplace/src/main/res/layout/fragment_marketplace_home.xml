@@ -719,7 +719,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/expert_title"
-            android:background="@drawable/mp_home_expert_guidance_bg">
+            android:background="@drawable/ic_expert_call_bg">
 
 
             <LinearLayout
@@ -738,7 +738,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="19dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="15dp"
                 android:visibility="visible"
@@ -751,19 +751,18 @@
               android:id="@+id/callnow_layout"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_alignParentEnd="true"
-              android:layout_marginLeft="10dp"
+              android:layout_marginStart="10dp"
+              android:layout_toEndOf="@+id/mp_home_expert_guidance_image_ll"
               android:layout_marginEnd="40dp"
-              android:gravity="center_horizontal"
+              android:layout_marginTop="19dp"
               android:orientation="vertical">
 
               <TextView
                 android:id="@+id/callnow_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:text="Need help to decide?"
-                android:textColor="@color/black"
+                android:textColor="#FFFFFF"
                 android:textSize="12sp" />
 
               <TextView
@@ -772,7 +771,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
                 android:text="Speak to our expert!"
-                android:textColor="@color/black"
+                android:textColor="#FFFFFF"
                 android:textFontWeight="700"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -782,21 +781,15 @@
                 android:id="@+id/callnow_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/recycler"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:drawableStart="@drawable/ic_baseline_call_24"
-                android:drawablePadding="5dp"
-                android:fontFamily="@font/regular"
+                android:fontFamily="@font/bold"
                 android:gravity="center"
-                android:paddingStart="10dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="20dp"
-                android:paddingBottom="5dp"
+                android:background="@drawable/ic_callnowbg"
                 android:text="Call Now"
                 android:textAllCaps="true"
                 android:textColor="@color/orange"
-                android:textFontWeight="800"
-                android:textSize="10sp"
+                android:textSize="11sp"
                 android:textStyle="bold" />
 
             </LinearLayout>
@@ -936,7 +929,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/footer"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="25dp"
             android:layout_marginBottom="30dp"
             android:elevation="2dp"
