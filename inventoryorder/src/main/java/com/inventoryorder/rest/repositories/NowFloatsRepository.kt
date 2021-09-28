@@ -44,4 +44,8 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsDataSource, AppBaseLocal
   fun getDoctorsListing(request: GetStaffListingRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.fetchStaffList(request = request), TaskCode.GET_DOCTOR_API_DATA)
   }
+
+  fun getGeneralService(fpTag: String?, fpId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getGeneralService(fpTag, fpId), TaskCode.GET_GENERAL_SERVICE)
+  }
 }

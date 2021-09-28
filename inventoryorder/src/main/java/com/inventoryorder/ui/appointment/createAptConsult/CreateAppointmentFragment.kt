@@ -1,7 +1,7 @@
 package com.inventoryorder.ui.appointment.createAptConsult
 
-import FilterBy
 import GetStaffListingRequest
+import StaffFilterBy
 import android.app.Activity
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -53,7 +53,6 @@ import com.inventoryorder.model.ordersdetails.PaymentDetailsN
 import com.inventoryorder.model.ordersdetails.ProductN
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.model.services.*
-import com.inventoryorder.model.services.ItemsItem
 import com.inventoryorder.model.spaAppointment.bookingslot.request.BookingSlotsRequest
 import com.inventoryorder.model.spaAppointment.bookingslot.request.DateRange
 import com.inventoryorder.model.spaAppointment.bookingslot.response.ResultSlot
@@ -76,6 +75,7 @@ import java.util.*
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
+@Deprecated("New fragment replace with new API logic")
 class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBinding>(), PopupMenu.OnMenuItemClickListener {
 
   private var timeSlots: ArrayList<Slots>? = null
@@ -98,16 +98,16 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
 
   private var selectPositionService: Int = -1
   private var selectPositionDoctor: Int = -1
-  private var serviceList: ArrayList<ItemsItem>? = null
+  private var serviceList: ArrayList<com.inventoryorder.model.services.ItemsItemService>? = null
 
-  private val serviceListFilter: List<ItemsItem>?
+  private val serviceListFilter: List<com.inventoryorder.model.services.ItemsItemService>?
     get() {
       return this.serviceList?.findByIds(doctorData?.serviceIds ?: arrayListOf())
     }
 
-  private var serviceData: ItemsItem? = null
+  private var serviceData: com.inventoryorder.model.services.ItemsItemService? = null
   private var scheduledDateTime: String = ""
-  private var orderInitiateRequest = OrderInitiateRequestNew()
+  private var orderInitiateRequest = OrderInitiateRequest()
   private val calendar = Calendar.getInstance()
   private var currentMonth = 0
 
@@ -205,7 +205,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
 
   private fun serviceListView() {
     serviceData = if (isUpdate) {
-      selectPositionService = this.serviceList?.indexOfFirst {  it.id == product?._id } ?: 0
+      selectPositionService = this.serviceList?.indexOfFirst { it.id == product?._id } ?: 0
       this.serviceList?.get(selectPositionService)
     } else {
       selectPositionService = 0
@@ -451,10 +451,10 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         } catch (e: Exception) {
           e.printStackTrace()
         }
-        val extra = ExtraPropertieN(
+        val extra = ExtraProperties(
           patientName = patientName!!,
           gender = gender,
-          age = age.toIntOrNull() ?: 0,
+          age = (age.toIntOrNull() ?: 0).toString(),
           patientMobileNumber = patientMobile!!,
           patientEmailId = patientEmail!!,
           startTime = startTime24,
@@ -479,19 +479,19 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
           )
         } else {
           val method = if (serviceData?.discountedPrice == 0.0) PaymentDetailsN.METHOD.FREE.type else PaymentDetailsN.METHOD.COD.type
-          val paymentDetails = com.inventoryorder.model.orderRequest.PaymentDetailsN(method)
-          val buyerDetail = BuyerDetailsN(
-            address = AddressN(),
-            contactDetails = ContactDetailsN(emailId = patientEmail!!, fullName = patientName!!, primaryContactNumber = patientMobile!!)
+          val paymentDetails = PaymentDetails(method)
+          val buyerDetail = BuyerDetails(
+            address = Address(),
+            contactDetails = ContactDetails(emailId = patientEmail!!, fullName = patientName!!, primaryContactNumber = patientMobile!!)
           )
           val delMode = if (isVideoConsult) OrderItem.DeliveryMode.ONLINE.name else OrderSummaryRequest.DeliveryMode.OFFLINE.name
           val delProvider = if (isVideoConsult) ShippingDetails.DeliveryProvider.NF_VIDEO_CONSULATION.name else ""
-          val shippingDetails = ShippingDetailsN(
+          val shippingDetails = ShippingDetails(
             shippedBy = ShippingDetails.ShippedBy.SELLER.name, deliveryMode = delMode, shippingCost = 0.0, currencyCode = "INR"
           )
-          val items = ArrayList<ItemsItemNew>()
+          val items = ArrayList<ItemsItem>()
 
-          val productDetails = ProductDetailsN(
+          val productDetails = ProductDetails(
 //            id = serviceData?.id ?: "NO_ITEM",
 //            name = serviceData?.name ?: "NO_ITEM",
 //            description = serviceData?.description ?: "NO_ITEM",
@@ -505,7 +505,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
           )
 
           items.add(
-            ItemsItemNew(
+            ItemsItem(
               type = serviceData?.getCategoryValue() ?: "NO_ITEM", productOrOfferId = serviceData?.id ?: "NO_ITEM",
               quantity = 1, productDetails = productDetails
             )
@@ -516,7 +516,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
           orderInitiateRequest.buyerDetails = buyerDetail
           orderInitiateRequest.mode = OrderItem.OrderMode.APPOINTMENT.name
           orderInitiateRequest.shippingDetails = shippingDetails
-          orderInitiateRequest.transactionCharges = 0
+          orderInitiateRequest.transactionCharges = 0.0
           orderInitiateRequest.items = items
           orderInitiateRequest.isVideoConsult = isVideoConsult
         }
@@ -538,7 +538,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     })
   }
 
-  private fun hitApiUpdateAptConsult(updateExtra: ExtraPropertieN?) {
+  private fun hitApiUpdateAptConsult(updateExtra: ExtraProperties?) {
     val request = UpdateConsultRequest()
     request.setQueryData(aptData?.id)
     val dateTimeSlot = "#${updateExtra?.getScheduledDateN()}#${updateExtra?.startTime()},${updateExtra?.endTime()}#"
@@ -746,8 +746,8 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
 
   override fun onMenuItemClick(item: MenuItem?): Boolean {
     when (item?.itemId) {
-      R.id.male -> binding?.edtGender?.text = item.title.toString()
-      R.id.female -> binding?.edtGender?.text = item.title.toString()
+      R.id.male -> binding?.edtGender?.setText(item.title.toString())
+      R.id.female -> binding?.edtGender?.setText(item.title.toString())
       else -> false
     }
     return false
@@ -883,7 +883,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     binding?.edtPatientName?.isFocusable = false
     binding?.edtPatientPhone?.isFocusable = false
     binding?.edtPatientEmail?.isFocusable = false
-    binding?.edtGender?.text = extraItemConsult?.gender ?: ""
+    binding?.edtGender?.setText(extraItemConsult?.gender ?: "")
     binding?.edtAge?.setText(extraItemConsult?.age ?: "")
     binding?.edtPatientName?.setText(extraItemConsult?.patientName ?: "")
     binding?.edtPatientPhone?.setText(extraItemConsult?.getNumberPatient() ?: "")
@@ -898,7 +898,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   }
 
   fun getFilterRequest(offSet: Int, limit: Int): GetStaffListingRequest {
-    return GetStaffListingRequest(FilterBy(offset = offSet, limit = limit), fpTag, "")
+    return GetStaffListingRequest(StaffFilterBy(offset = offSet, limit = limit), fpTag, "")
   }
 
   private fun getDateTime(): String {
@@ -922,7 +922,6 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     }
   }
 
-  private fun List<ItemsItem>.findByIds(fooApiList: List<String>) = filter { fooApiList.any { v -> v == it.id } }
 }
 
 

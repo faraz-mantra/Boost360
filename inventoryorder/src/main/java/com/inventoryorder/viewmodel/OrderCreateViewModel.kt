@@ -10,7 +10,6 @@ import com.inventoryorder.model.UpdateOrderNPropertyRequest
 import com.inventoryorder.model.apointmentData.addRequest.AddAptConsultRequest
 import com.inventoryorder.model.apointmentData.updateRequest.UpdateConsultRequest
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
-import com.inventoryorder.model.orderRequest.OrderInitiateRequestNew
 import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
 import com.inventoryorder.model.orderRequest.feedback.FeedbackRequest
 import com.inventoryorder.model.orderRequest.paymentRequest.PaymentReceivedRequest
@@ -99,15 +98,20 @@ class OrderCreateViewModel : BaseViewModel() {
   fun getAllServiceList(clientId: String?, skipBy: Int?, fpTag: String?, identifierType: String?): LiveData<BaseResponse> {
     return ApiTwoWithFloatRepository.getAllServiceList(clientId, skipBy, fpTag, identifierType).toLiveData()
   }
+
   fun getServiceListing(request: ServiceListingRequest): LiveData<BaseResponse> {
     return NowFloatsRepository.getServiceListing(request).toLiveData()
+  }
+
+  fun getGeneralService(fpTag: String?, fpId: String?): LiveData<BaseResponse> {
+    return NowFloatsRepository.getGeneralService(fpTag,fpId).toLiveData()
   }
 
   fun getDoctorData(fpTag: String?): LiveData<BaseResponse> {
     return ProductOrderRepository.getDoctorData(fpTag).toLiveData()
   }
 
-  fun postOrderInitiate(clientId: String?, request: OrderInitiateRequestNew?): LiveData<BaseResponse> {
+  fun postOrderInitiate(clientId: String?, request: OrderInitiateRequest?): LiveData<BaseResponse> {
     return AssuredPurchaseRepository.postOrderInitiate(clientId, request).toLiveData()
   }
 

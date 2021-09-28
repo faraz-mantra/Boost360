@@ -38,5 +38,4 @@ data class SpaAppointmentStaff(
   fun endTime(): String {
     return endTime ?: ""
   }
-
 }

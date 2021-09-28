@@ -21,9 +21,8 @@ data class Slots(
     return "$StartTime - $EndTime"
   }
 
-  fun getIcon(): Int? {
-    return takeIf { isSelected }?.let { R.drawable.ic_option_selected }
-      ?: R.drawable.ic_option_unselected
+  fun getIcon(): Int {
+    return takeIf { isSelected }?.let { R.drawable.ic_option_selected } ?: R.drawable.ic_option_unselected
   }
 
   fun getColor(): Int {

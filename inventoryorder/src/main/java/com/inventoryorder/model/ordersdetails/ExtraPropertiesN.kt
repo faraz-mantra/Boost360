@@ -28,10 +28,12 @@ data class ExtraPropertiesN(
   val referenceId: String? = null,
   val scheduledDateTime: String? = null,
   val startTime: String? = null,
+  val scheduledDay: String? = null,
+  val staffId: String? = null,
+  val staffName: String? = null,
+  val Appointment: ArrayList<SpaAppointmentStaff>? = null,
   //ExtraItemProductConsultation model value
 
-  //additional items for SPA
-  val Appointment: ArrayList<SpaAppointmentStaff>? = null,
 ) : Serializable {
 
   fun durationTxt(): String? {
@@ -54,10 +56,7 @@ data class ExtraPropertiesN(
   }
 
   fun getNumberPatient(): String? {
-    return if (patientMobileNumber?.contains("+91") == true) patientMobileNumber.replace(
-      "+91",
-      ""
-    ) else patientMobileNumber
+    return if (patientMobileNumber?.contains("+91") == true) patientMobileNumber.replace("+91", "") else patientMobileNumber
   }
 
   fun getSpaAptStaffDetail(): SpaAppointmentStaff? {
