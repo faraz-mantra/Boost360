@@ -11,25 +11,32 @@ import com.appservice.R
 import com.appservice.databinding.ActivityDomainBookingBinding
 import com.appservice.databinding.BsheetDomainIntegrationOptionsBinding
 import com.appservice.databinding.BsheetInputOwnDomainBinding
+import com.appservice.model.domainBooking.DomainDetailsResponse
+import com.appservice.model.domainBooking.request.ExistingDomainRequest
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.domainbooking.model.DomainStepsModel
+import com.appservice.utils.Validations
+import com.appservice.viewmodel.DomainBookingViewModel
 import com.framework.base.BaseActivity
 import com.framework.extensions.gone
+import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.framework.pref.getDomainName
 import com.framework.utils.showKeyBoard
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 
-class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseViewModel>(),
+class DomainBookingActivity :
+    BaseActivity<ActivityDomainBookingBinding, DomainBookingViewModel>(),
     RecyclerItemClickListener {
 
     var session: UserSessionManager? = null
     private lateinit var baseActivity: BaseActivity<*, *>
+    private lateinit var existingDomainRequest: ExistingDomainRequest
 
     /**
      * Bottom Sheet : function "showBsheetIntegrationOption"
@@ -42,8 +49,8 @@ class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseVie
         return R.layout.activity_domain_booking
     }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
+    override fun getViewModelClass(): Class<DomainBookingViewModel> {
+        return DomainBookingViewModel::class.java
     }
 
     override fun onCreateView() {
@@ -58,7 +65,7 @@ class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseVie
 
     private fun onClickListeners() {
         binding?.btnBuyAddon?.setOnClickListener {
-            premiumMode()
+            //premiumMode()
         }
 
         binding?.btnBookOldDomain?.setOnClickListener {
@@ -90,15 +97,39 @@ class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseVie
             )
         bSheet.setContentView(sheetBinding.root)
         bSheet.setCancelable(false)
+
         sheetBinding.btnContinue.setOnClickListener {
-            showBsheetIntegrationOption()
-            bSheet.dismiss()
+            sheetBinding.progressBottomSheet.visible()
+            if (validateData(sheetBinding)) {
+                existingDomainRequest = ExistingDomainRequest(
+                    clientId,
+                    session?.fpTag,
+                    sheetBinding.etDomain.text.toString(),
+                    ""
+                )
+                viewModel.addExistingDomain(
+                    clientId,
+                    session?.fpTag,
+                    existingDomainRequest
+                ).observeOnce(this, {
+                    sheetBinding.progressBottomSheet.gone()
+                    showBsheetIntegrationOption()
+                    bSheet.dismiss()
+                })
+            } else {
+                sheetBinding.progressBottomSheet.gone()
+                showShortToast(getString(R.string.error_wrong_domain_entered))
+            }
         }
         sheetBinding.ivClose.setOnClickListener {
             bSheet.dismiss()
         }
         this.showKeyBoard(sheetBinding.etDomain)
         bSheet.show()
+    }
+
+    private fun validateData(sheetBinding: BsheetInputOwnDomainBinding): Boolean {
+        return Validations.isDomainValid(sheetBinding.etDomain.text.toString())
     }
 
     private fun showBsheetIntegrationOption() {
@@ -142,8 +173,8 @@ class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseVie
     }
 
     private fun setupUI() {
-        if (isPremium()) {
-            premiumMode()
+        if (true) {
+            domainDetailsApi()
         } else {
             nonPremiumMode()
         }
@@ -164,7 +195,27 @@ class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseVie
         binding?.btnBookNewDomain?.visible()
         binding?.btnBookOldDomain?.visible()
         binding?.rvSteps?.visible()
+    }
 
+    private fun domainDetailsApi() {
+        viewModel.domainDetails(session?.fpTag, clientId).observeOnce(this, {
+            if (!it.isSuccess() || it == null) {
+                showShortToast(getString(R.string.something_went_wrong))
+                return@observeOnce
+            }
+
+            val domainDetailsResponse = it as DomainDetailsResponse
+            if (domainDetailsResponse.domainName != null && domainDetailsResponse.domainName.isNotEmpty()) {
+                startFragmentDomainBookingActivity(
+                    activity = this,
+                    type = com.appservice.constant.FragmentType.ACTIVE_NEW_DOMAIN_FRAGMENT,
+                    bundle = Bundle(),
+                    clearTop = false
+                )
+            } else {
+                premiumMode()
+            }
+        })
     }
 
 
@@ -179,22 +230,30 @@ class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseVie
         val whatsSubdomainIndex = secondStep.indexOf(whatsSubdomain)
 
         val stepsList = arrayListOf(
-            DomainStepsModel(SpannableString("Since search engines recognize a domain that’s already in use, we recommend integrating any relatable domain name that you currently own."), false),
-            DomainStepsModel(SpannableString(secondStep)
-                .apply {
-                    setSpan(
-                        object : ClickableSpan() {
-                            override fun onClick(widget: View) {
+            DomainStepsModel(
+                SpannableString("Since search engines recognize a domain that’s already in use, we recommend integrating any relatable domain name that you currently own."),
+                false
+            ),
+            DomainStepsModel(
+                SpannableString(secondStep)
+                    .apply {
+                        setSpan(
+                            object : ClickableSpan() {
+                                override fun onClick(widget: View) {
 
-                            }
+                                }
 
-                        },
-                        whatsSubdomainIndex,
-                        whatsSubdomainIndex + whatsSubdomain.length,
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                }, false),
-            DomainStepsModel(SpannableString("If you don’t have any other domain, click on ‘book a new domain’ and choose a domain you like for your business website."), false)
+                            },
+                            whatsSubdomainIndex,
+                            whatsSubdomainIndex + whatsSubdomain.length,
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    }, false
+            ),
+            DomainStepsModel(
+                SpannableString("If you don’t have any other domain, click on ‘book a new domain’ and choose a domain you like for your business website."),
+                false
+            )
         )
 
         val adapter = AppBaseRecyclerViewAdapter(this, stepsList, this)
