@@ -91,6 +91,23 @@ object WithFloatTwoRepository :
     )
   }
 
+  fun updateEmail(
+    email:String?,
+    otp:String?,
+    loginId:String?
+  ): Observable<BaseResponse> {
+    val jsonObject = JsonObject().apply {
+      addProperty("Email",email)
+      addProperty("OTP",otp)
+      addProperty("LoginId",loginId)
+    }
+    return makeRemoteRequest(
+      remoteDataSource.updateEmail(
+        jsonObject=jsonObject
+      ), TaskCode.UPDATE_USER_NAME
+    )
+  }
+
   override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {
     return WithFloatTwoRemoteData::class.java
   }

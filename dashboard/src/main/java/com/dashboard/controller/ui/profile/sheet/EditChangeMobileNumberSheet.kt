@@ -18,7 +18,7 @@ class EditChangeMobileNumberSheet : BaseBottomSheetDialog<SheetChangeMobileNumbe
   }
 
   override fun onCreateView() {
-    setOnClickListener(binding?.btnPublish)
+    setOnClickListener(binding?.btnPublish,binding?.rivCloseBottomSheet)
 
     binding?.cetPhone?.addTextChangedListener {
       binding?.btnPublish?.isEnabled=it?.length==10
@@ -32,6 +32,7 @@ class EditChangeMobileNumberSheet : BaseBottomSheetDialog<SheetChangeMobileNumbe
       binding?.btnPublish->{
         showVerifyMobileSheet()
       }
+      binding?.rivCloseBottomSheet->dismiss()
     }
   }
 

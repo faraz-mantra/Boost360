@@ -23,6 +23,14 @@ class UserProfileViewModel : BaseViewModel() {
     }
 
     fun sendEmailOTP(email:String?): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.sendOtpEmail(userName).toLiveData()
+        return WithFloatTwoRepository.sendOtpEmail(email).toLiveData()
+    }
+
+    fun updateEmail(
+        email:String?,
+        otp:String?,
+        loginId:String?
+    ): LiveData<BaseResponse> {
+        return WithFloatTwoRepository.updateEmail(email,otp,loginId).toLiveData()
     }
 }
