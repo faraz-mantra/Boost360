@@ -45,7 +45,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
       <com.framework.views.customViews.CustomEditText
-        android:id="@+id/cet_business_name"
+        android:id="@+id/cet_email"
         style="@style/BusinessProfileTextField"
         android:drawableEnd="@null"
         android:inputType="textEmailAddress"

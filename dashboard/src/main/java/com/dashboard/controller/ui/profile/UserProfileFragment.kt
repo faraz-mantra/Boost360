@@ -1,6 +1,7 @@
 package com.dashboard.controller.ui.profile
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
@@ -11,6 +12,8 @@ import com.dashboard.controller.ui.profile.sheet.*
 import com.dashboard.databinding.FragmentUserProfileBinding
 import com.dashboard.model.live.user_profile.UserProfileData
 import com.dashboard.viewmodel.UserProfileViewModel
+import com.framework.extensions.gone
+import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId2
@@ -20,6 +23,7 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
 
   private lateinit var session: UserSessionManager
   private val TAG = "UserProfileFragment"
+  private var userProfileData:UserProfileData?=null
   companion object {
     @JvmStatic
     fun newInstance(bundle: Bundle? = null): UserProfileFragment {
@@ -48,16 +52,31 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
   }
 
   private fun fetchUserData() {
+    showProgress()
     viewModel?.getUserProfileData(session.userProfileId)
       ?.observe(viewLifecycleOwner,{
         Log.i(TAG, "fetchUserData: "+Gson().toJson(it))
         if (it.status==200){
-          it as UserProfileData
+          userProfileData =it as UserProfileData
           Glide.with(this).load(it.Result.ImageUrl).into(binding!!.imgProfile)
           binding?.txtName?.setText(it.Result.UserName)
           binding?.txtEmail?.setText(it.Result.Email)
           binding?.txtMobileNumber?.setText(it.Result.MobileNo)
           binding?.txtWhatsappNo?.setText(it.Result.FloatingPointDetails.first().WhatsAppNumber)
+
+          if (it.Result.Email!=null){
+            binding?.verifyEmail?.visible()
+            if (it.Result.IsEmailVerfied){
+              binding?.verifyEmail?.text = getString(R.string.verified)
+              binding?.edtEmail?.gone()
+            }else{
+              binding?.verifyEmail?.text=getString(R.string.verify_cap)
+              binding?.edtEmail?.visible()
+            }
+          }
+
+
+
         }
 
         hideProgress()
@@ -107,6 +126,12 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
 
   private fun showEditEmailSheet() {
     EditChangeEmailSheet().show(parentFragmentManager, EditChangeEmailSheet::javaClass.name)
+    val dialog = EditChangeEmailSheet().apply {
+      arguments = Bundle().apply {  putString(EditChangeEmailSheet.IK_EMAIL,userProfileData?.Result?.Email)}
+    }
+    dialog.show(parentFragmentManager, EditChangeEmailSheet::javaClass.name)
+
+
   }
 
   private fun showEditWhatsappSheet() {
@@ -118,6 +143,19 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
   }
 
   private fun showEditUserNameSheet() {
-    EditChangeUserNameSheet().show(parentFragmentManager, EditChangeUserNameSheet::javaClass.name)
+    val dialog = EditChangeUserNameSheet().apply {
+      arguments = Bundle().apply {  putString(EditChangeUserNameSheet.IK_NAME,userProfileData?.Result?.UserName)}
+    }
+    dialog.show(parentFragmentManager, EditChangeUserNameSheet::javaClass.name)
+
+    Handler().postDelayed({
+      dialog.dialog?.setOnDismissListener {
+        fetchUserData()
+      }
+    }, 1000)
+  }
+
+  override fun onResume() {
+    super.onResume()
   }
 }

@@ -43,5 +43,9 @@ object EndPoints {
   const val UPLOAD_USER_PROFILE_IMAGE="/user/v9/floatingpoint/createUserProfileImage"
   //get user profile details
   const val GET_USER_PROFILE_DETAILS="/user/v9/floatingpoint/GetUserProfileDetails"
+  //update user name
+  const val UPDATE_USER_NAME="/user/v9/floatingpoint/updateUserName"
+  //update email
+  const val SEND_OTP_EMAIL="discover/v1/floatingpoint/SendOTPToEmail"
 }
 

@@ -17,4 +17,12 @@ class UserProfileViewModel : BaseViewModel() {
     fun getUserProfileData(loginId:String?): LiveData<BaseResponse> {
         return WithFloatTwoRepository.getUserProfileData(loginId).toLiveData()
     }
+
+    fun updateUserName(userName:String?,loginId:String?): LiveData<BaseResponse> {
+        return WithFloatTwoRepository.updateUserName(userName,loginId).toLiveData()
+    }
+
+    fun sendEmailOTP(email:String?): LiveData<BaseResponse> {
+        return WithFloatTwoRepository.sendOtpEmail(userName).toLiveData()
+    }
 }
