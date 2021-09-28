@@ -52,9 +52,15 @@ interface WithFloatTwoRemoteData {
     @Body jsonObject: JsonObject
   ): Observable<Response<BaseResponse>>
 
-  @POST(EndPoints.SEND_OTP_EMAIL)
+  @GET(EndPoints.SEND_OTP_EMAIL)
   fun sendOTPEmail(
     @Query("emailId") emailId: String?,
     @Query("clientId") clientId: String?= clientId2,
+  ): Observable<Response<ResponseBody>>
+
+  @POST(EndPoints.UPDATE_EMAIL)
+  fun updateEmail(
+    @Query("clientId") clientId: String?= clientId2,
+    @Body jsonObject: JsonObject
   ): Observable<Response<BaseResponse>>
 }

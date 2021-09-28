@@ -47,5 +47,6 @@ object EndPoints {
   const val UPDATE_USER_NAME="/user/v9/floatingpoint/updateUserName"
   //update email
   const val SEND_OTP_EMAIL="discover/v1/floatingpoint/SendOTPToEmail"
+  const val UPDATE_EMAIL="/user/v9/floatingPoint/updateRegisteredEmail"
 }
 

@@ -47,7 +47,7 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
     fetchUserData()
     setOnClickListener(
       binding?.imgEdit, binding?.viewEmptyProfile, binding?.edtEmail, binding?.viewName, binding?.verifyEmail,
-      binding?.verifyWhatsappNo, binding?.viewWhatsappNo, binding?.viewEmail, binding?.viewMobileNumber
+      binding?.verifyWhatsappNo, binding?.viewWhatsappNo, binding?.viewEmail, binding?.viewMobileNumber,binding?.txtEmail
     )
   }
 
@@ -63,16 +63,21 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
           binding?.txtEmail?.setText(it.Result.Email)
           binding?.txtMobileNumber?.setText(it.Result.MobileNo)
           binding?.txtWhatsappNo?.setText(it.Result.FloatingPointDetails.first().WhatsAppNumber)
+          binding?.txtEmail?.isEnabled = true
 
           if (it.Result.Email!=null){
             binding?.verifyEmail?.visible()
             if (it.Result.IsEmailVerfied){
               binding?.verifyEmail?.text = getString(R.string.verified)
+              binding?.verifyEmail?.setTextColor(getColor(R.color.green_6FCF97))
               binding?.edtEmail?.gone()
             }else{
               binding?.verifyEmail?.text=getString(R.string.verify_cap)
               binding?.edtEmail?.visible()
+              binding?.verifyEmail?.setTextColor(getColor(R.color.colorAccentLight))
             }
+          }else{
+
           }
 
 
@@ -98,6 +103,9 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
       binding?.viewEmail -> {
         showEditEmailSheet()
 
+      }
+      binding?.txtEmail->{
+        showEditEmailSheet()
       }
       binding?.verifyEmail -> {
         showVerifyEmailSheet()
@@ -125,7 +133,6 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
   }
 
   private fun showEditEmailSheet() {
-    EditChangeEmailSheet().show(parentFragmentManager, EditChangeEmailSheet::javaClass.name)
     val dialog = EditChangeEmailSheet().apply {
       arguments = Bundle().apply {  putString(EditChangeEmailSheet.IK_EMAIL,userProfileData?.Result?.Email)}
     }

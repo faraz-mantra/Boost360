@@ -35,10 +35,11 @@ class ImagePickerSheet : BaseBottomSheetDialog<SheetImagePickerBinding, BaseView
       binding?.btnGallery->{
         ImagePicker.with(this).galleryOnly().start(RC_GALLERY)
       }
+      binding?.rivCloseBottomSheet->dismiss()
     }
   }
   override fun onCreateView() {
-      setOnClickListener(binding?.btnTakePhoto,binding?.btnGallery)
+      setOnClickListener(binding?.btnTakePhoto,binding?.btnGallery,binding?.rivCloseBottomSheet)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

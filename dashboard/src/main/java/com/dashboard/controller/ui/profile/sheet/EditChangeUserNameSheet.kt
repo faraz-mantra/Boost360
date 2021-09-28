@@ -28,7 +28,7 @@ class EditChangeUserNameSheet : BaseBottomSheetDialog<SheetChangeUsernameBinding
   override fun onCreateView() {
     userName = arguments?.getString(IK_NAME)
     binding?.cetBusinessName?.setText(userName)
-    setOnClickListener(binding?.btnPublish)
+    setOnClickListener(binding?.btnPublish,binding?.rivCloseBottomSheet)
     viewListeners()
   }
 
@@ -45,6 +45,7 @@ class EditChangeUserNameSheet : BaseBottomSheetDialog<SheetChangeUsernameBinding
       binding?.btnPublish->{
         updateUserNameApi()
       }
+      binding?.rivCloseBottomSheet->dismiss()
     }
   }
 
