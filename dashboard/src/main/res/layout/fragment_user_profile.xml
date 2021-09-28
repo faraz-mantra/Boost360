@@ -174,7 +174,9 @@
             android:id="@+id/edt_email"
             android:layout_width="@dimen/size_30"
             android:layout_height="@dimen/size_30"
-            android:layout_marginEnd="@dimen/size_6"
+              android:visibility="gone"
+
+              android:layout_marginEnd="@dimen/size_6"
             app:srcCompat="@drawable/ic_pencil_d" />
 
           <com.framework.views.customViews.CustomTextView
@@ -183,11 +185,12 @@
             android:layout_height="match_parent"
             android:background="@drawable/ic_rounded_left_verify"
             android:gravity="center"
+              android:visibility="gone"
             android:clickable="true"
             android:focusable="true"
             android:includeFontPadding="false"
             android:paddingHorizontal="@dimen/size_10"
-            android:text="@string/verify"
+            android:text="@string/verify_cap"
             android:textColor="@color/colorAccentLight"
             app:fontFamily="@font/semi_bold"
             app:textType="CAPTION" />
@@ -225,19 +228,21 @@
             android:textColor="@color/black_4a4a4a"
             app:textType="HEADING_6" />
 
+
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/verify_mobile_number"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:drawableEnd="@drawable/ic_check_circle_d"
-            android:drawablePadding="@dimen/size_6"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:paddingHorizontal="@dimen/size_10"
-            android:text="@string/verified"
-            android:textColor="@color/green_6FCF97"
-            app:fontFamily="@font/semi_bold"
-            app:textType="CAPTION" />
+              android:id="@+id/verify_mobile"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:background="@drawable/ic_rounded_left_verify"
+              android:gravity="center"
+              android:clickable="true"
+              android:focusable="true"
+              android:includeFontPadding="false"
+              android:paddingHorizontal="@dimen/size_10"
+              android:text="@string/verified"
+              android:textColor="@color/green_6FCF97"
+              app:fontFamily="@font/semi_bold"
+              app:textType="CAPTION" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.framework.views.customViews.CustomTextView
@@ -278,11 +283,12 @@
             android:layout_height="match_parent"
             android:background="@drawable/ic_rounded_left_verify"
             android:gravity="center"
-            android:includeFontPadding="false"
+              android:includeFontPadding="false"
             android:paddingHorizontal="@dimen/size_10"
-            android:text="@string/not_opted_d"
+            android:text="@string/not_opted_cap"
             android:clickable="true"
             android:focusable="true"
+              android:visibility="gone"
             android:textColor="@color/colorAccentLight"
             app:fontFamily="@font/semi_bold"
             app:textType="CAPTION" />

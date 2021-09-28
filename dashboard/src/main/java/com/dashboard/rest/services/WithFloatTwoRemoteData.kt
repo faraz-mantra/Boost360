@@ -5,9 +5,11 @@ import com.dashboard.model.live.user_profile.UserProfileData
 import com.dashboard.rest.EndPoints
 import com.framework.base.BaseResponse
 import com.framework.pref.clientId2
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.*
 import java.io.File
@@ -39,8 +41,20 @@ interface WithFloatTwoRemoteData {
   ): Observable<Response<ResponseBody>>
 
   @GET(EndPoints.GET_USER_PROFILE_DETAILS+"/{loginId}")
-  fun useProfileData(
+  fun userProfileData(
     @Path("loginId") loginId: String?,
     @Query("clientId") clientId: String?= clientId2,
     ): Observable<Response<UserProfileData>>
+
+  @POST(EndPoints.UPDATE_USER_NAME)
+  fun updateUserName(
+    @Query("clientId") clientId: String?= clientId2,
+    @Body jsonObject: JsonObject
+  ): Observable<Response<BaseResponse>>
+
+  @POST(EndPoints.SEND_OTP_EMAIL)
+  fun sendOTPEmail(
+    @Query("emailId") emailId: String?,
+    @Query("clientId") clientId: String?= clientId2,
+  ): Observable<Response<BaseResponse>>
 }

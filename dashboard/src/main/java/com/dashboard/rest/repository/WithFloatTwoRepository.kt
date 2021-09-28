@@ -7,8 +7,10 @@ import com.dashboard.rest.apiClients.WithFloatsTwoApiClient
 import com.dashboard.rest.services.WithFloatTwoRemoteData
 import com.dashboard.rest.services.local.DashboardLocalDataSource
 import com.framework.base.BaseResponse
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Retrofit
 
 object WithFloatTwoRepository :
@@ -57,9 +59,35 @@ object WithFloatTwoRepository :
     loginId:String?
   ): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.useProfileData(
+      remoteDataSource.userProfileData(
         loginId=loginId,
       ), TaskCode.GET_USER_PROFILE_DETAILS
+    )
+  }
+
+  fun updateUserName(
+    userName:String?,
+    loginId:String?
+  ): Observable<BaseResponse> {
+    val jsonObject = JsonObject().apply {
+      addProperty("UserName",userName)
+      addProperty("LoginId",loginId)
+    }
+    return makeRemoteRequest(
+      remoteDataSource.updateUserName(
+        jsonObject=jsonObject
+      ), TaskCode.UPDATE_USER_NAME
+    )
+  }
+
+  fun sendOtpEmail(
+    emailId:String?,
+  ): Observable<BaseResponse> {
+
+    return makeRemoteRequest(
+      remoteDataSource.sendOTPEmail(
+        emailId
+      ), TaskCode.SEND_OTP_EMAIL
     )
   }
 
