@@ -32,6 +32,7 @@ data class OrderItem(
   var Status: String? = null,
   val UpdatedOn: String? = null,
   val _id: String? = null,
+  val SellerId: Any? = null,
   val PlacedOrderStatus: Int? = null,
 ) : AppBaseRecyclerViewItem, Serializable {
 
@@ -74,8 +75,8 @@ data class OrderItem(
   fun cancelledText(): String {
     return if (CancellationDetails != null) {
       when (CancellationDetails.cancelledBy().trim().toUpperCase(Locale.ROOT)) {
-        CancellingEntity.SELLER.name -> return " You"
-        CancellingEntity.BUYER.name, CancellingEntity.NF.name -> return " Customer"
+        CancellingEntity.SELLER.name -> return " you"
+        CancellingEntity.BUYER.name, CancellingEntity.NF.name -> return " customer"
         else -> " ${CancellationDetails.cancelledBy()}"
       }
     } else ""
@@ -84,8 +85,8 @@ data class OrderItem(
   fun cancelledTextVideo(): String {
     return if (CancellationDetails != null) {
       when (CancellationDetails.cancelledBy().trim().toUpperCase(Locale.ROOT)) {
-        CancellingEntity.SELLER.name -> return " You"
-        CancellingEntity.BUYER.name, CancellingEntity.NF.name -> return " Patient"
+        CancellingEntity.SELLER.name -> return " you"
+        CancellingEntity.BUYER.name, CancellingEntity.NF.name -> return " patient"
         else -> " ${CancellationDetails.cancelledBy()}"
       }
     } else ""

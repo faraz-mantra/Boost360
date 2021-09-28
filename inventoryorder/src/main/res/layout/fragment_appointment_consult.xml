@@ -7,45 +7,34 @@
 
   </data>
 
-  <androidx.constraintlayout.widget.ConstraintLayout
-    style="@style/match_match"
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
     android:background="@color/grey_f9f9f9">
 
-    <com.framework.views.customViews.CustomTextView
-      android:id="@+id/error"
-      style="@style/match_match"
-      android:gravity="center"
-      android:textColor="@color/scarlet_40"
-      android:visibility="gone"
-      app:fontFamily="@font/bold"
-      app:textType="BODY_1"
-      tools:ignore="MissingConstraints"
-      tools:text="Error" />
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
 
-    <androidx.core.widget.NestedScrollView
-      android:id="@+id/main_view"
-      style="@style/match_match"
-      android:fillViewport="true"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintBottom_toBottomOf="parent">
-
-      <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/match_match"
-        android:background="@color/grey_f9f9f9">
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/main_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <com.framework.views.customViews.CustomCardView
           android:id="@+id/card_date_range_selector"
           style="@style/match_wrap"
           app:cardBackgroundColor="@color/white"
           app:cardElevation="@dimen/size_8"
-          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintEnd_toEndOf="parent">
+          app:layout_constraintTop_toTopOf="parent">
 
-          <androidx.constraintlayout.widget.ConstraintLayout
+          <androidx.appcompat.widget.LinearLayoutCompat
             style="@style/match_wrap"
+            android:orientation="horizontal"
             android:paddingHorizontal="@dimen/size_16"
             android:paddingVertical="@dimen/size_12">
 
@@ -54,20 +43,17 @@
               android:layout_width="@dimen/size_16"
               android:layout_height="@dimen/size_16"
               android:layout_marginVertical="@dimen/size_2"
-              app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toTopOf="parent"
               app:srcCompat="@drawable/ic_arrow_down_blue" />
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/tv_month_date_range"
               style="@style/wrap_wrap"
               android:layout_marginStart="@dimen/size_8"
+              android:layout_weight="1"
               android:fontFamily="@font/semi_bold"
               android:includeFontPadding="false"
               android:text="@string/aug_sep_2020"
-              android:textColor="@color/light_blue_1"
-              app:layout_constraintStart_toEndOf="@id/btn_month_range"
-              app:layout_constraintTop_toTopOf="parent" />
+              android:textColor="@color/light_blue_1" />
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/btn_goto_current_week"
@@ -75,10 +61,8 @@
               android:text="@string/go_to_current_week"
               android:textAllCaps="false"
               android:textColor="@color/orange"
-              android:visibility="invisible"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintTop_toTopOf="parent" />
-          </androidx.constraintlayout.widget.ConstraintLayout>
+              android:visibility="gone" />
+          </androidx.appcompat.widget.LinearLayoutCompat>
         </com.framework.views.customViews.CustomCardView>
 
         <com.framework.views.customViews.CustomCardView
@@ -86,8 +70,8 @@
           style="@style/match_wrap"
           app:cardBackgroundColor="@color/white"
           app:cardElevation="@dimen/size_4"
-          app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@id/card_date_range_selector">
 
           <LinearLayout style="@style/match_wrap">
@@ -107,9 +91,7 @@
           android:layout_marginStart="@dimen/size_16"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/select_doctor"
-          android:textColor="@color/warm_light"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/card_calendar_single_row" />
+          android:textColor="@color/warm_light" />
 
         <com.framework.views.customViews.CustomEditText
           android:id="@+id/edt_doctor"
@@ -127,9 +109,6 @@
           android:padding="@dimen/size_8"
           android:textColor="@color/black"
           android:textCursorDrawable="@null"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/tv_doctor"
           app:textType="HEADING_6"
           tools:ignore="KeyboardInaccessibleWidget" />
 
@@ -140,18 +119,14 @@
           android:layout_marginStart="@dimen/size_16"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/consultation_type_camel_case"
-          android:textColor="@color/warm_grey_two"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/edt_doctor" />
+          android:textColor="@color/warm_grey_two" />
 
         <RadioGroup
           android:id="@+id/radio_group"
           style="@style/wrap_wrap"
           android:layout_marginStart="@dimen/size_10"
           android:layout_marginTop="@dimen/size_6"
-          android:orientation="horizontal"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/tv_consultation_type">
+          android:orientation="horizontal">
 
           <com.framework.views.customViews.CustomRadioButton
             android:id="@+id/radio_in_clinic"
@@ -178,6 +153,7 @@
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_consulting_service"
           style="@style/wrap_wrap"
+          android:layout_marginStart="@dimen/size_16"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/consulting_service"
           android:textColor="@color/warm_light"
@@ -200,8 +176,8 @@
           android:padding="@dimen/size_8"
           android:textColor="@color/black"
           android:textCursorDrawable="@null"
-          app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@id/tv_consulting_service"
           app:textType="HEADING_6"
           tools:ignore="KeyboardInaccessibleWidget" />
@@ -209,6 +185,7 @@
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_time_text"
           style="@style/wrap_wrap"
+          android:layout_marginStart="@dimen/size_16"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/time_slot"
           android:textColor="@color/warm_light"
@@ -244,8 +221,8 @@
           android:layout_marginTop="@dimen/size_14"
           android:orientation="horizontal"
           android:weightSum="2"
-          app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@id/edt_start_time">
 
           <LinearLayout
@@ -311,11 +288,10 @@
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_patient_name"
           style="@style/wrap_wrap"
+          android:layout_marginStart="@dimen/size_16"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/patient_name_camel_case"
-          android:textColor="@color/warm_light"
-          app:layout_constraintStart_toStartOf="@id/radio_group"
-          app:layout_constraintTop_toBottomOf="@id/ll_consultation_timings" />
+          android:textColor="@color/warm_light" />
 
         <com.framework.views.customViews.CustomEditText
           android:id="@+id/edt_patient_name"
@@ -323,14 +299,12 @@
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginVertical="@dimen/size_8"
           android:background="@drawable/et_bg"
+          android:focusable="true"
           android:inputType="textCapWords"
           android:maxLines="1"
-          android:focusable="true"
           android:padding="@dimen/size_8"
           android:textColor="@color/black"
           android:textCursorDrawable="@null"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/tv_patient_name"
           app:textType="HEADING_6" />
 
         <LinearLayout
@@ -339,10 +313,7 @@
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginTop="@dimen/size_8"
           android:orientation="horizontal"
-          android:weightSum="2"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/edt_patient_name">
+          android:weightSum="2">
 
           <LinearLayout
             android:layout_width="0dp"
@@ -394,27 +365,24 @@
               style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_8"
               android:background="@drawable/et_bg"
+              android:focusable="true"
               android:inputType="number"
               android:maxLength="3"
               android:maxLines="1"
-              android:focusable="true"
               android:padding="@dimen/size_8"
               android:textColor="@color/black"
               android:textCursorDrawable="@null"
               app:textType="HEADING_6" />
-
           </LinearLayout>
-
         </LinearLayout>
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_patient_phone"
           style="@style/wrap_wrap"
+          android:layout_marginStart="@dimen/size_16"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/patient_mobile_number"
-          android:textColor="@color/warm_light"
-          app:layout_constraintStart_toStartOf="@id/radio_group"
-          app:layout_constraintTop_toBottomOf="@id/ll_gender_age" />
+          android:textColor="@color/warm_light" />
 
         <com.framework.views.customViews.CustomEditText
           android:id="@+id/edt_patient_phone"
@@ -422,25 +390,22 @@
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginVertical="@dimen/size_8"
           android:background="@drawable/et_bg"
+          android:focusable="true"
           android:inputType="number"
           android:maxLength="10"
           android:maxLines="1"
-          android:focusable="true"
           android:padding="@dimen/size_8"
           android:textColor="@color/black"
           android:textCursorDrawable="@null"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/tv_patient_phone"
           app:textType="HEADING_6" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_patient_email"
           style="@style/wrap_wrap"
+          android:layout_marginStart="@dimen/size_16"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/patient_email_id_optional"
-          android:textColor="@color/warm_light"
-          app:layout_constraintStart_toStartOf="@id/radio_group"
-          app:layout_constraintTop_toBottomOf="@id/edt_patient_phone" />
+          android:textColor="@color/warm_light" />
 
         <com.framework.views.customViews.CustomEditText
           android:id="@+id/edt_patient_email"
@@ -448,14 +413,12 @@
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginVertical="@dimen/size_8"
           android:background="@drawable/et_bg"
+          android:focusable="true"
           android:inputType="textEmailAddress"
           android:maxLines="1"
-          android:focusable="true"
           android:padding="@dimen/size_8"
           android:textColor="@color/black"
           android:textCursorDrawable="@null"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/tv_patient_email"
           app:textType="HEADING_6" />
 
         <LinearLayout
@@ -463,10 +426,7 @@
           android:layout_marginTop="@dimen/size_30"
           android:background="@color/white"
           android:orientation="vertical"
-          android:padding="@dimen/size_16"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/edt_patient_email">
+          android:padding="@dimen/size_16">
 
           <com.framework.views.customViews.CustomTextView
             style="@style/wrap_wrap"
@@ -481,16 +441,26 @@
             android:background="@drawable/bg_button_rounded_blue"
             android:gravity="center"
             android:padding="@dimen/size_16"
+            android:stateListAnimator="@null"
             android:text="@string/confirm"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
 
         </LinearLayout>
+      </androidx.appcompat.widget.LinearLayoutCompat>
 
-      </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/error"
+        style="@style/match_match"
+        android:gravity="center"
+        android:textColor="@color/scarlet_40"
+        android:visibility="gone"
+        app:fontFamily="@font/bold"
+        app:textType="BODY_1"
+        tools:ignore="MissingConstraints"
+        tools:text="Error" />
+    </FrameLayout>
 
-
-  </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.core.widget.NestedScrollView>
 </layout>

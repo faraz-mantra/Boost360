@@ -106,7 +106,6 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     when (v) {
       binding?.btnAdd, binding?.buttonAddApt -> {
         val bundle = Bundle()
-        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
         bundle.putBoolean(IntentConstant.IS_VIDEO.name, false)
         startFragmentOrderActivity(FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
       }

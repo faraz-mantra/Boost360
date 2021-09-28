@@ -4,6 +4,7 @@ import GetStaffListingRequest
 import com.inventoryorder.model.doctorsData.GetStaffListingResponse
 import com.inventoryorder.model.services.ServiceListingRequest
 import com.inventoryorder.model.services.ServiceListingResponse
+import com.inventoryorder.model.services.general.GeneralServiceResponse
 import com.inventoryorder.model.spaAppointment.GetServiceListingResponse
 import com.inventoryorder.model.spaAppointment.bookingslot.request.BookingSlotsRequest
 import com.inventoryorder.model.spaAppointment.bookingslot.response.BookingSlotResponse
@@ -35,4 +36,10 @@ interface NowFloatsDataSource {
 
   @POST(EndPoints.GET_STAFF_LISTING)
   fun fetchStaffList(@Body request: GetStaffListingRequest?): Observable<Response<GetStaffListingResponse>>
+
+  @GET(EndPoints.GET_GENERAL_SERVICE)
+  fun getGeneralService(
+    @Query("fpTag") fpTag: String?,
+    @Query("fpId") fpId: String?
+  ): Observable<Response<GeneralServiceResponse>>
 }
