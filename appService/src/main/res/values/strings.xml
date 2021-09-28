@@ -54,6 +54,8 @@
     <string name="view_in_add_on_store">View in Add-ons store</string>
     <string name="self_branded_payment_gateway_camel_case">Self Branded Payment Gateway</string>
     <string name="add_on_terms_and_condition">Add-on terms and condition</string>
+    <string name="active">Active</string>
+    <string name="expired">Expired</string>
 
     <string name="payment_gateway_terms_content">
     <li>First item</li>\n
@@ -712,6 +714,6 @@
     <string name="confirming_domain_instructions">Once confirmed, above domain will replace your website address (URL) samplestorewebsite.nowfloats.com. Don’t worry, anyone clicking on old URL will still be able to see your website on this new domain.</string>
     <string name="confirm_and_apply_domain"><![CDATA[Confirm & apply domain]]></string>
     <string name="domain_renewal_info">Your domain will be automatically renewed based\non your active BOOST package</string>
-  <string name="select_how_you_want_to_integrate">Select how you want to integrate</string>
-  <string name="error_wrong_domain_entered">Please enter a valid domain name!</string>
+    <string name="select_how_you_want_to_integrate">Select how you want to integrate</string>
+    <string name="error_wrong_domain_entered">Please enter a valid domain name!</string>
 </resources>

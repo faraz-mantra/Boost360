@@ -8,6 +8,7 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
+import com.appservice.base.AppBaseActivity
 import com.appservice.databinding.ActivityDomainBookingBinding
 import com.appservice.databinding.BsheetDomainIntegrationOptionsBinding
 import com.appservice.databinding.BsheetInputOwnDomainBinding
@@ -31,10 +32,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 
 
 class DomainBookingActivity :
-    BaseActivity<ActivityDomainBookingBinding, DomainBookingViewModel>(),
+    AppBaseActivity<ActivityDomainBookingBinding, DomainBookingViewModel>(),
     RecyclerItemClickListener {
 
-    var session: UserSessionManager? = null
     private lateinit var baseActivity: BaseActivity<*, *>
     private lateinit var existingDomainRequest: ExistingDomainRequest
 
@@ -56,7 +56,7 @@ class DomainBookingActivity :
     override fun onCreateView() {
         baseActivity = this
         session = UserSessionManager(this)
-        val domainSplit = session?.getDomainName(true)?.split(".", limit = 2)
+        val domainSplit = session.getDomainName(true)?.split(".", limit = 2)
         binding?.tvDomainTitle?.text = domainSplit?.get(0)
         binding?.tvDomainAssigned?.text = ".${domainSplit?.get(1)}"
         setupUI()
@@ -173,7 +173,9 @@ class DomainBookingActivity :
     }
 
     private fun setupUI() {
-        if (true) {
+        setupSteps()
+        if (isPremium()) {
+            showProgress()
             domainDetailsApi()
         } else {
             nonPremiumMode()
@@ -189,7 +191,6 @@ class DomainBookingActivity :
     }
 
     private fun premiumMode() {
-        setupSteps()
         binding?.layoutBuyAddon?.gone()
         binding?.ivRiaSteps?.visible()
         binding?.btnBookNewDomain?.visible()
@@ -199,6 +200,7 @@ class DomainBookingActivity :
 
     private fun domainDetailsApi() {
         viewModel.domainDetails(session?.fpTag, clientId).observeOnce(this, {
+            hideProgress()
             if (!it.isSuccess() || it == null) {
                 showShortToast(getString(R.string.something_went_wrong))
                 return@observeOnce
