@@ -397,14 +397,14 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
   private void saveTokenToPreferenceAndUpload(String refreshedToken) {
     SharedPreferences pref = getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE);
     if (pref.getString("fpid", null) != null) {
-      registerChat(pref.getString("fpid", null));
+      registerChat(pref.getString("fpid", null),refreshedToken);
     }
   }
 
-  private void registerChat(String userId) {
+  private void registerChat(String userId, String refreshedToken) {
     try {
       final HashMap<String, String> params = new HashMap<>();
-      params.put("Channel", FirebaseInstanceId.getInstance().getToken());
+      params.put("Channel", refreshedToken);
       params.put("UserId", userId);
       params.put("DeviceType", "ANDROID");
       params.put("clientId", Constants.clientId);
