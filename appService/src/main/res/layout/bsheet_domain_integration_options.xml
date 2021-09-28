@@ -93,6 +93,8 @@
                     android:backgroundTint="@color/colorPrimary"
                     android:fontFamily="@font/regular"
                     android:text="@string/continue_txt"
+                    android:textFontWeight="700"
+                    android:textStyle="bold"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_14"
