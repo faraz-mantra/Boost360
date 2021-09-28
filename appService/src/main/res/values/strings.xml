@@ -713,4 +713,5 @@
     <string name="confirm_and_apply_domain"><![CDATA[Confirm & apply domain]]></string>
     <string name="domain_renewal_info">Your domain will be automatically renewed based\non your active BOOST package</string>
   <string name="select_how_you_want_to_integrate">Select how you want to integrate</string>
+  <string name="error_wrong_domain_entered">Please enter a valid domain name!</string>
 </resources>

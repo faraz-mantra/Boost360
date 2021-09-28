@@ -9,8 +9,11 @@ import androidx.databinding.ViewDataBinding
 import com.appservice.R
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
+import com.onboarding.nowfloats.base.ProgressDialog
 
 abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseActivity<Binding, ViewModel>() {
+
+  private var progressView: ProgressDialog? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -18,9 +21,18 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
   }
 
   override fun onCreateView() {
-
+    progressView = ProgressDialog.newInstance()
   }
 
+  open fun hideProgress() {
+    progressView?.hideProgress()
+  }
+
+  open fun showProgress(title: String? = "Please wait...", cancelable: Boolean? = false) {
+    title?.let { progressView?.setTitle(it) }
+    cancelable?.let { progressView?.isCancelable = it }
+    progressView?.showProgress(supportFragmentManager)
+  }
 
   override fun getToolbarBackgroundColor(): Int? {
     return ContextCompat.getColor(this,R.color.colorPrimary)

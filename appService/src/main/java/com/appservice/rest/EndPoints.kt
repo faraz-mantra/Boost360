@@ -98,5 +98,13 @@ object EndPoints {
   const val ADD_TESTIMONIAL = "api/v1/{testimonials}/add-data"
   const val UPDATE_TESTIMONIAL = "api/v1/{testimonials}/update-data"
   const val DELETE_TESTIMONIAL = "api/v1/{testimonials}/update-data"
+
+  //TODO BOOST PLUGIN with floats APIs
+  const val BOOST_KIT_PLUGIN_WITH_FLOATS_NEW_BASE = "https://plugin.withfloats.com/"
+  const val DOMAIN_DETAILS = "DomainService/v3/GetDomainDetailsForFloatingPoint/{fpTag}"
+
+  //TODO RIA WITH FLOATS APIs
+  const val RIA_WITH_FLOATS_BASE = "https://ria.withfloats.com"
+  const val ADD_EXISTING_DOMAIN_DETAILS = "api/Service/EmailRIASupportTeamV2"
 }
 
