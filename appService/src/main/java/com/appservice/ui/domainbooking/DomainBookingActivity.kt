@@ -56,6 +56,7 @@ class DomainBookingActivity :
     override fun onCreateView() {
         baseActivity = this
         session = UserSessionManager(this)
+        showProgress()
         val domainSplit = session.getDomainName(true)?.split(".", limit = 2)
         binding?.tvDomainTitle?.text = domainSplit?.get(0)
         binding?.tvDomainAssigned?.text = ".${domainSplit?.get(1)}"
@@ -175,7 +176,6 @@ class DomainBookingActivity :
     private fun setupUI() {
         setupSteps()
         if (isPremium()) {
-            showProgress()
             domainDetailsApi()
         } else {
             nonPremiumMode()
