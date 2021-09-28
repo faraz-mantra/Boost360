@@ -16,7 +16,7 @@ data class DomainDetailsResponse(
     val domainType: Any? = null,
 
     @field:SerializedName("ExpiresOn")
-    val expiresOn: Any? = null,
+    val expiresOn: String? = null,
 
     @field:SerializedName("isActive")
     val isActive: Boolean? = null,
@@ -40,7 +40,7 @@ data class DomainDetailsResponse(
     val isExpired: Boolean? = null,
 
     @field:SerializedName("ActivatedOn")
-    val activatedOn: Any? = null,
+    val activatedOn: String? = null,
 
     @field:SerializedName("NameServers")
     val nameServers: Any? = null

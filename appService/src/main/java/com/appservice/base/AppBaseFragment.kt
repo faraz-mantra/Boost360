@@ -40,9 +40,13 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
       )
     }
 
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    sessionLocal = UserSessionManager(baseActivity)
+  }
+
   override fun onCreateView() {
     progressView = ProgressDialog.newInstance()
-    sessionLocal = UserSessionManager(baseActivity)
   }
 
   protected open fun hideProgress() {

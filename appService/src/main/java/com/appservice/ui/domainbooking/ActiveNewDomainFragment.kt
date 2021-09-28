@@ -52,13 +52,34 @@ class ActiveNewDomainFragment :
 
     private fun setAndParseData(domainDetailsResponse: DomainDetailsResponse) {
         val string = domainDetailsResponse.domainName + domainDetailsResponse.domainType
-        binding?.layoutDomainDetails?.tvDomainValue?.text =string
+        binding?.layoutDomainDetails?.tvDomainValue?.text = string
+
+        var activatedOn = domainDetailsResponse.activatedOn
+        if (activatedOn?.contains("/Date")!!)
+            activatedOn = activatedOn.replace("/Date(", "").replace(")/", "")
+
+        var expiryOn = domainDetailsResponse.expiresOn
+        if (expiryOn?.contains("/Date")!!)
+            expiryOn = expiryOn.replace("/Date(", "").replace(")/", "")
+
 
         binding?.layoutDomainDetails?.tvBookedValue?.text = getMillisecondsToDate(
-            domainDetailsResponse.activatedOn as Long, "dd-MM-YYYY"
+            activatedOn.toLong(), "dd-MM-YYYY"
         )
         binding?.layoutDomainDetails?.tvExpireValue?.text = getMillisecondsToDate(
-            domainDetailsResponse.expiresOn as Long, "dd-MM-YYYY"
+            expiryOn.toLong(), "dd-MM-YYYY"
+        )
+
+        binding?.layoutDomainDetails?.tvDomainStatus?.text = if (domainDetailsResponse.isActive!!)
+            getString(R.string.active)
+        else
+            getString(R.string.expired)
+
+        binding?.layoutDomainDetails?.tvDomainStatus?.setBackgroundColor(
+            if (domainDetailsResponse.isActive)
+                getColor(R.color.green_light_1)
+            else
+                getColor(R.color.black_4a4a4a)
         )
     }
 }
