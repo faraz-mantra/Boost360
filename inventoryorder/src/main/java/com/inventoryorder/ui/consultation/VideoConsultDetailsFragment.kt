@@ -345,6 +345,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   private fun rescheduledConsult(orderItem: OrderItem?) {
     val bundle = Bundle()
     bundle.putSerializable(IntentConstant.ORDER_ITEM.name, orderItem)
+    bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
     bundle.putBoolean(IntentConstant.IS_VIDEO.name, true)
     startFragmentOrderActivity(FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
   }
