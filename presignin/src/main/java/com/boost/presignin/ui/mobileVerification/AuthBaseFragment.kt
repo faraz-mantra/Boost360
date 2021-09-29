@@ -3,6 +3,7 @@ package com.boost.presignin.ui.mobileVerification
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.ViewDataBinding
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
@@ -15,6 +16,7 @@ import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.service.APIService
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
+import com.framework.analytics.SentryController
 import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
@@ -90,6 +92,7 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
       val response = it as? UserFpDetailsResponse
       if (it.isSuccess() && response != null) {
         ProcessFPDetails(session).storeFPDetails(response)
+        SentryController.setUser(UserSessionManager(baseActivity))
         startService()
         startDashboard()
       } else {
