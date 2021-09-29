@@ -110,7 +110,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   /* Paging */
   private var isFirstPage = true
   private var isLoadingD = false
-  private var TOTAL_ELEMENTS = 0
+  private var PAGING_TOTAL_ELEMENTS = 0
   private var offSet: Int = PAGE_START
   private var limit: Int = PAGE_SIZE
   private var isLastPageD = false
@@ -185,7 +185,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       }
 
       override val totalPageCount: Int
-        get() = TOTAL_ELEMENTS
+        get() = PAGING_TOTAL_ELEMENTS
       override val isLastPage: Boolean
         get() = isLastPageD
       override val isLoading: Boolean
@@ -385,6 +385,19 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     }
   }
 
+  /*private fun apiObserveMerchantSummary() {
+    viewModel.merchantSummary.observeForever {
+      Log.i(TAG, "apiObserveMerchantSummary: " + Gson().toJson(it))
+
+      val productCount = it.getCount(if (session?.isNonPhysicalProductExperienceCode == true)
+        "NoOfServices" else "NoOfProducts")
+      SmartbarView.getSmartViewBinding().
+      businessFeatureTabLayout.getTabAt(1)?.text =
+        "${getProductType(session?.fP_AppExperienceCode ?: "")}" +
+                " (${productCount})"
+
+    }
+  }*/
   private fun apiObserveUserDetails() {
     viewModel.details.observeForever {
       Log.i(TAG, "apiObserveUserDetails: " + Gson().toJson(it.FPWebWidgets))
@@ -423,15 +436,15 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       Timber.i("products - $it.")
       binding.businessFeatureProgress.gone()
       this.adapterProductService.removeLoaderN()
-      if (it.isNullOrEmpty().not()) {
+      if (it.Products.isNullOrEmpty().not()) {
         if (isFirstPage) {
-          this.adapterProductService.notifyNewList(it)
+          it.Products?.let { it1 -> this.adapterProductService.notifyNewList(it1) }
         }
         else{
-          this.adapterProductService.addItems(it)
+          it.Products?.let { it1 -> this.adapterProductService.addItems(it1) }
         }
-        TOTAL_ELEMENTS = this.adapterProductService.getListData().size
-        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(1)?.text = "${getProductType(session?.fP_AppExperienceCode ?: "")} (${this.adapterProductService.getListData().size})"
+        PAGING_TOTAL_ELEMENTS = this.adapterProductService.getListData().size
+        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(1)?.text = "${getProductType(session?.fP_AppExperienceCode ?: "")} (${it.TotalCount})"
       } else {
         if (businessFeatureEnum == BusinessFeatureEnum.INVENTORY_SERVICE&&isFirstPage) {
           this.adapterProductService.notifyNewList(arrayListOf())
@@ -447,10 +460,10 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       binding.businessFeatureProgress.gone()
       this.adapterStaff.removeLoaderN()
       if (it.data.isNullOrEmpty().not()) {
-        TOTAL_ELEMENTS = it.paging?.count ?: 0
+        PAGING_TOTAL_ELEMENTS = it.paging?.count ?: 0
         if (isFirstPage) this.adapterStaff.notifyNewList(it.data!!)
         else this.adapterStaff.addItems(it.data!!)
-        isLastPageD = (this.adapterStaff.getListData().size == TOTAL_ELEMENTS)
+        isLastPageD = (this.adapterStaff.getListData().size == PAGING_TOTAL_ELEMENTS)
         SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text = BusinessFeatureEnum.STAFF.name + " (${it.paging?.count})"
       } else {
         if (businessFeatureEnum == BusinessFeatureEnum.STAFF&&isFirstPage) {
@@ -467,10 +480,10 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       binding.businessFeatureProgress.gone()
       this.adapterUpdates.removeLoaderN()
       if (it.floats.isNullOrEmpty().not()) {
-        TOTAL_ELEMENTS = it.totalCount ?: 0
+        PAGING_TOTAL_ELEMENTS = it.totalCount ?: 0
         if (isFirstPage) this.adapterUpdates.notifyNewList(it.floats!!)
         else this.adapterUpdates.addItems(it.floats!!)
-        isLastPageD = (this.adapterUpdates.getListData().size == TOTAL_ELEMENTS)
+        isLastPageD = (this.adapterUpdates.getListData().size == PAGING_TOTAL_ELEMENTS)
         SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text = BusinessFeatureEnum.UPDATES.name + " (${it.totalCount})"
       } else {
         if (businessFeatureEnum == BusinessFeatureEnum.UPDATES&&isFirstPage) {
@@ -839,7 +852,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   private fun initializePaging() {
     this.isFirstPage = true
     this.isLoadingD = false
-    this.TOTAL_ELEMENTS = 0
+    this.PAGING_TOTAL_ELEMENTS = 0
     this.offSet = PAGE_START
     this.limit = PAGE_SIZE + 1
     this.isLastPageD = false
