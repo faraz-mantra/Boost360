@@ -40,6 +40,7 @@ import kotlinx.android.synthetic.main.businessdetails_fragment.business_address
 import kotlinx.android.synthetic.main.businessdetails_fragment.business_name_value
 import kotlinx.android.synthetic.main.payment_fragment.*
 import java.io.*
+import java.lang.StringBuilder
 import java.util.*
 
 
@@ -341,7 +342,9 @@ class BusinessDetailsFragment : DialogFragment() {
         gstInfoResult = it.result
         if(gstInfoResult!=null){
           gst_business_name_value.text = gstInfoResult!!.legalName
-          gst_business_address_value.text = gstInfoResult!!.address!!.addressLine1 + gstInfoResult!!.address!!.addressLine2 + gstInfoResult!!.address!!.city + gstInfoResult!!.address!!.pincode + gstInfoResult!!.address!!.district + gstInfoResult!!.address!!.state
+          val addressDetails = arrayOf(gstInfoResult!!.address!!.addressLine1, gstInfoResult!!.address!!.addressLine2, gstInfoResult!!.address!!.city, gstInfoResult!!.address!!.pincode, gstInfoResult!!.address!!.district, gstInfoResult!!.address!!.state)
+          val businessAddressDetails = joinNonBlankStringArray(addressDetails,",")
+          gst_business_address_value.text = businessAddressDetails
           isGstApiCalled = true
         } else {
           Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
@@ -352,6 +355,18 @@ class BusinessDetailsFragment : DialogFragment() {
       Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
       hideProgress()
     }
+  }
+  private fun joinNonBlankStringArray(s: Array<String?>?, separator: String?): String? {
+    val sb = StringBuilder()
+    if (s != null && s.size > 0) {
+      for (w in s) {
+        if (w != null && !w.trim { it <= ' ' }.isEmpty()) {
+          sb.append(w)
+          sb.append(separator)
+        }
+      }
+    }
+    return sb.substring(0, sb.length - 1) // length() - 1 to cut-down last extra separator
   }
 
   private fun showProgress() {
