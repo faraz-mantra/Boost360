@@ -43,20 +43,13 @@ fun View.getRequestOptionImage(placeholder: Int): RequestOptions {
 
 fun Context.glideLoad(mImageView: CustomImageView?, url: String?) {
   if (mImageView == null) return
-  Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.DATA)
-    .into(mImageView)
+  Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.DATA).into(mImageView)
 }
 
-fun Context.glideLoad(
-  mImageView: CircularImageView,
-  url: String?,
-  placeholder: Int?,
-  isCrop: Boolean = false
-) {
+fun Context.glideLoad(mImageView: CircularImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
   try {
     if (url.isNullOrEmpty()) return
-    val glide = Glide.with(this).load(url).skipMemoryCache(true)
-      .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+    val glide = Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
     placeholder?.let { glide.placeholder(it) }
     if (isCrop) glide.centerCrop()
     glide.into(mImageView)
@@ -76,19 +69,13 @@ fun Context.glideLoad(mImageView: RoundedImageView?, url: String?) {
   }
 }
 
-fun Context.glideLoad(
-  mImageView: RoundedImageView,
-  url: String?,
-  placeholder: Int?,
-  isCrop: Boolean = false
-) {
+fun Context.glideLoad(mImageView: RoundedImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
   try {
     if (url.isNullOrEmpty()) {
       Glide.with(this).load(placeholder).into(mImageView)
       return
     }
-    val glide = Glide.with(this).load(url).skipMemoryCache(true)
-      .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+    val glide = Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
     placeholder?.let { glide.placeholder(it) }
     if (isCrop) glide.centerCrop()
     glide.into(mImageView)
@@ -97,16 +84,10 @@ fun Context.glideLoad(
   }
 }
 
-fun Context.glideLoad(
-  mImageView: CustomImageView,
-  url: String?,
-  placeholder: Int?,
-  isCrop: Boolean = false
-) {
+fun Context.glideLoad(mImageView: CustomImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
   try {
     if (url.isNullOrEmpty()) return
-    val glide = Glide.with(this).load(url).skipMemoryCache(true).thumbnail(0.1f)
-      .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+    val glide = Glide.with(this).load(url).skipMemoryCache(true).thumbnail(0.1f).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
     placeholder?.let { glide.placeholder(it) }
     if (isCrop) glide.centerCrop()
     glide.into(mImageView)
@@ -125,30 +106,20 @@ fun Context.loadGifGlide(mImageView: CustomImageView, gif_file: Int?, placeholde
   }
 }
 
-fun Activity.glideLoad(
-  mImageView: CustomImageView,
-  url: String,
-  placeholder: Int,
-  isCenterCrop: Boolean = false,
-  isLoadBitmap: Boolean = false
-) {
+fun Activity.glideLoad(mImageView: CustomImageView, url: String, placeholder: Int, isCenterCrop: Boolean = false, isLoadBitmap: Boolean = false) {
   try {
     val options: RequestOptions = mImageView.getRequestOptionImage(placeholder)
     var glideImage:RequestBuilder<Drawable> ?=null
     glideImage = if (url.contains("nowfloats.com")||url.contains("withfloats.com")){
-      val gurl = GlideUrl(
-        url, LazyHeaders.Builder()
-            .addHeader("Authorization",UserSessionManager(this).getAccessTokenAuth()?.token?:"")
-          .build()
-      )
+      val gurl = GlideUrl(url, LazyHeaders.Builder().addHeader("Authorization",UserSessionManager(this).getAccessTokenAuth()?.token?:"").build())
       Glide.with(this).load(gurl).apply(options)
     }else{
       Glide.with(this).load(url).apply(options)
     }
 
-    if (isCenterCrop) glideImage?.centerCrop()
+    if (isCenterCrop) glideImage.centerCrop()
     if (isLoadBitmap) {
-      glideImage?.into(object : CustomTarget<Drawable>() {
+      glideImage.into(object : CustomTarget<Drawable>() {
         override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
           mImageView.setImageDrawable(resource)
         }
@@ -156,7 +127,7 @@ fun Activity.glideLoad(
         override fun onLoadCleared(placeholder: Drawable?) {
         }
       })
-    } else glideImage?.into(mImageView)
+    } else glideImage.into(mImageView)
   } catch (e: Exception) {
     Log.e("GlideUtil", "Error: ${e.localizedMessage}")
   }
@@ -178,23 +149,12 @@ fun Context.glideLoadColor(mImageView: CustomImageView, url: String, view: View)
     .asBitmap().load(url)
     .diskCacheStrategy(DiskCacheStrategy.ALL)
     .listener(object : RequestListener<Bitmap> {
-      override fun onLoadFailed(
-        e: GlideException?,
-        model: Any?,
-        target: Target<Bitmap>?,
-        isFirstResource: Boolean,
-      ): Boolean {
+      override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean, ): Boolean {
         return false
       }
 
       @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-      override fun onResourceReady(
-        resource: Bitmap?,
-        model: Any,
-        target: Target<Bitmap>,
-        dataSource: DataSource,
-        isFirstResource: Boolean,
-      ): Boolean {
+      override fun onResourceReady(resource: Bitmap?, model: Any, target: Target<Bitmap>, dataSource: DataSource, isFirstResource: Boolean, ): Boolean {
         if (resource != null) {
           val p = Palette.from(resource).generate()
           // Use generated instance
