@@ -2,22 +2,32 @@ package com.dashboard.controller.ui.profile.sheet
 
 import android.view.View
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.observe
 import com.dashboard.R
 import com.dashboard.databinding.SheetChangeMobileNumberBinding
+import com.dashboard.viewmodel.UserProfileViewModel
 import com.framework.base.BaseBottomSheetDialog
+import com.framework.extensions.gone
+import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 
-class EditChangeMobileNumberSheet : BaseBottomSheetDialog<SheetChangeMobileNumberBinding, BaseViewModel>() {
+class EditChangeMobileNumberSheet : BaseBottomSheetDialog<SheetChangeMobileNumberBinding, UserProfileViewModel>() {
 
+  private var mobile:String?=null
+  companion object{
+    val IK_MOB:String="IK_MOB"
+  }
   override fun getLayout(): Int {
     return R.layout.sheet_change_mobile_number
   }
 
-  override fun getViewModelClass(): Class<BaseViewModel> {
-    return BaseViewModel::class.java
+  override fun getViewModelClass(): Class<UserProfileViewModel> {
+    return UserProfileViewModel::class.java
   }
 
   override fun onCreateView() {
+    mobile =arguments?.getString(IK_MOB)
+    binding?.cetPhone?.setText(mobile)
     setOnClickListener(binding?.btnPublish,binding?.rivCloseBottomSheet)
 
     binding?.cetPhone?.addTextChangedListener {
@@ -30,15 +40,19 @@ class EditChangeMobileNumberSheet : BaseBottomSheetDialog<SheetChangeMobileNumbe
     super.onClick(v)
     when(v){
       binding?.btnPublish->{
-        showVerifyMobileSheet()
+        val mobile =binding?.cetPhone?.text.toString()
+        binding?.progressBar?.visible()
+        viewModel?.sendMobileOTP(mobile)?.observe(viewLifecycleOwner,{
+          if (it.isSuccess()){
+            startVerifyMobEmailSheet(VerifyOtpEmailMobileSheet.SheetType.MOBILE.name,mobile)
+
+          }
+          binding?.progressBar?.gone()
+          dismiss()
+        })
       }
       binding?.rivCloseBottomSheet->dismiss()
     }
   }
 
-  private fun showVerifyMobileSheet() {
-    VerifyOtpEmailMobileSheet().show(parentFragmentManager,VerifyOtpEmailMobileSheet::javaClass.name)
-
-
-  }
 }

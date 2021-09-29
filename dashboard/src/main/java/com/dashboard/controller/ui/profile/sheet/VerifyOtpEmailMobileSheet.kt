@@ -37,11 +37,13 @@ class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumbe
     sheetType = arguments?.getString(IK_TYPE)
     emailOrMob = arguments?.getString(IK_EMAIL_OR_MOB)
     if (sheetType==SheetType.EMAIL.name){
+      binding?.tvMobOrEmail?.text = emailOrMob
       binding?.tvHeading?.text = getString(R.string.verify_email)
     }else{
       binding?.tvHeading?.text = getString(R.string.verify_mobile_number)
+      binding?.tvMobOrEmail?.text = "+91 "+emailOrMob
+
     }
-    binding?.tvMobOrEmail?.text = emailOrMob
 
     viewListeners()
     setOnClickListener(binding?.btnPublish,binding?.btnResend,binding?.rivCloseBottomSheet)
@@ -66,7 +68,7 @@ class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumbe
     super.onClick(v)
     when(v){
       binding?.btnPublish->{
-        updateEmailApi()
+        updateEmailMobApi()
       }
       binding?.btnResend->{
         sendOtp()
@@ -75,7 +77,7 @@ class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumbe
     }
   }
 
-  private fun updateEmailApi() {
+  private fun updateEmailMobApi() {
     binding?.progressBar?.visible()
     if (sheetType==SheetType.EMAIL.name){
       viewModel?.updateEmail(emailOrMob,binding?.pinTv?.otp,
@@ -90,15 +92,35 @@ class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumbe
 
       })
 
+    }else{
+      viewModel?.updateMobile(emailOrMob,binding?.pinTv?.otp,
+        UserSessionManager(requireContext()).userProfileId)?.observe(viewLifecycleOwner,{
+        if (it.isSuccess()){
+          dismiss()
+        }else{
+          binding?.tvInvalidOtp?.visible()
+        }
+
+        binding?.progressBar?.gone()
+
+      })
     }
   }
 
   private fun sendOtp() {
+    binding?.progressBar?.visible()
+
     if (sheetType==SheetType.EMAIL.name){
-      binding?.progressBar?.visible()
       viewModel?.sendEmailOTP(emailOrMob)?.observe(viewLifecycleOwner,{
         if (it.isSuccess()){
             showLongToast(getString(R.string.otp_resent))
+        }
+        binding?.progressBar?.gone()
+      })
+    }else{
+      viewModel?.sendMobileOTP(emailOrMob)?.observe(viewLifecycleOwner,{
+        if (it.isSuccess()){
+          showLongToast(getString(R.string.otp_resent))
         }
         binding?.progressBar?.gone()
       })

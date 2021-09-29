@@ -21,35 +21,35 @@
         android:textColor="@color/black_4a4a4a"
         app:fontFamily="@font/bold"
         app:textType="HEADING_5"
-        android:text="@string/don_t_want_latest_updates_about_your_business" />
+        android:text="Logging out?" />
 
     <com.framework.views.customViews.CustomTextView
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/size_8"
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"
-        android:text="@string/remove_whatsapp_desc"
+        android:text="@string/logout_desc"
         android:textColor="@color/black_4a4a4a"
         app:textType="CAPTION" />
 
     <com.framework.views.customViews.CustomMaterialButton
-        android:id="@+id/btn_dont_remove"
+        android:id="@+id/btn_switch"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:textAllCaps="false"
         android:layout_marginTop="@dimen/size_20"
         android:enabled="false"
-        android:textAllCaps="false"
         android:textSize="@dimen/size_16"
         app:cornerRadius="@dimen/size_15"
         app:strokeColor="@color/grey_A1A1A1"
         app:strokeWidth="2dp"
         android:fontFamily="@font/bold"
-        android:text="@string/don_t_remove_whatsapp_number"
+        android:text="@string/switch_to_a_different_business"
         android:textColor="@color/grey_A1A1A1" />
 
     <com.framework.views.customViews.CustomMaterialButton
-        android:id="@+id/btn_remove"
+        android:id="@+id/btn_logout"
         android:layout_width="match_parent"
         app:cornerRadius="@dimen/size_15"
         android:layout_height="55dp"
@@ -60,7 +60,7 @@
         android:textAllCaps="false"
         app:strokeWidth="2dp"
         android:fontFamily="@font/bold"
-        android:text="@string/don_t_remove_whatsapp_number"
+        android:text="@string/logout"
         android:textColor="@color/white" />
   </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

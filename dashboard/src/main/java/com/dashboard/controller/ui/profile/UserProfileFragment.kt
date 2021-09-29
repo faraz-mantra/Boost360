@@ -47,7 +47,8 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
     fetchUserData()
     setOnClickListener(
       binding?.imgEdit, binding?.viewEmptyProfile, binding?.edtEmail, binding?.viewName, binding?.verifyEmail,
-      binding?.verifyWhatsappNo, binding?.viewWhatsappNo, binding?.viewEmail, binding?.viewMobileNumber,binding?.txtEmail
+      binding?.verifyWhatsappNo, binding?.viewWhatsappNo, binding?.viewEmail, binding?.viewMobileNumber,binding?.txtEmail,
+      binding?.txtMobileNumber,binding?.txtWhatsappNo,binding?.btnLogout
     )
   }
 
@@ -58,12 +59,14 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
         Log.i(TAG, "fetchUserData: "+Gson().toJson(it))
         if (it.status==200){
           userProfileData =it as UserProfileData
-          Glide.with(this).load(it.Result.ImageUrl).into(binding!!.imgProfile)
+          Glide.with(this).load(it.Result.ImageUrl).placeholder(R.drawable.placeholder_image_n).into(binding!!.imgProfile)
           binding?.txtName?.setText(it.Result.UserName)
           binding?.txtEmail?.setText(it.Result.Email)
           binding?.txtMobileNumber?.setText(it.Result.MobileNo)
           binding?.txtWhatsappNo?.setText(it.Result.FloatingPointDetails.first().WhatsAppNumber)
           binding?.txtEmail?.isEnabled = true
+          binding?.txtMobileNumber?.isEnabled = true
+          binding?.txtWhatsappNo?.isEnabled = true
 
           if (it.Result.Email!=null){
             binding?.verifyEmail?.visible()
@@ -76,9 +79,8 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
               binding?.edtEmail?.visible()
               binding?.verifyEmail?.setTextColor(getColor(R.color.colorAccentLight))
             }
-          }else{
-
           }
+          binding?.verifyWhatsappNo?.visible()
 
 
 
@@ -101,25 +103,34 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
         showEditUserNameSheet()
       }
       binding?.viewEmail -> {
-        showEditEmailSheet()
+        startProfileEditEmailSheet(userProfileData?.Result?.Email)
 
       }
       binding?.txtEmail->{
-        showEditEmailSheet()
+        startProfileEditEmailSheet(userProfileData?.Result?.Email)
       }
       binding?.verifyEmail -> {
-        showVerifyEmailSheet()
+        startVerifiedMobEmailSheet(VerifyOtpEmailMobileSheet.SheetType.EMAIL.name,userProfileData?.Result?.Email)
 
       }
       binding?.viewMobileNumber -> {
-        showEditMobileSheet()
+        startVerifiedMobEmailSheet(VerifyOtpEmailMobileSheet.SheetType.MOBILE.name,userProfileData?.Result?.MobileNo)
+      }
+      binding?.txtMobileNumber->{
+        startVerifiedMobEmailSheet(VerifyOtpEmailMobileSheet.SheetType.MOBILE.name,userProfileData?.Result?.MobileNo)
       }
       binding?.viewWhatsappNo -> {
-        showEditWhatsappSheet()
+        startProfileEditWhatsappSheet(userProfileData?.Result?.FloatingPointDetails?.first()?.WhatsAppNumber)
 
       }
       binding?.verifyWhatsappNo -> {
-        showEditWhatsappSheet()
+        startProfileEditWhatsappSheet(userProfileData?.Result?.FloatingPointDetails?.first()?.WhatsAppNumber)
+      }
+      binding?.txtWhatsappNo -> {
+        startProfileEditWhatsappSheet(userProfileData?.Result?.FloatingPointDetails?.first()?.WhatsAppNumber)
+      }
+      binding?.btnLogout->{
+        startLogoutSheet()
       }
     }
   }
@@ -128,22 +139,7 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
     ImagePickerSheet().show(parentFragmentManager, ImagePickerSheet::javaClass.name)
   }
 
-  private fun showEditMobileSheet() {
-    EditChangeMobileNumberSheet().show(parentFragmentManager, EditChangeMobileNumberSheet::javaClass.name)
-  }
 
-  private fun showEditEmailSheet() {
-    val dialog = EditChangeEmailSheet().apply {
-      arguments = Bundle().apply {  putString(EditChangeEmailSheet.IK_EMAIL,userProfileData?.Result?.Email)}
-    }
-    dialog.show(parentFragmentManager, EditChangeEmailSheet::javaClass.name)
-
-
-  }
-
-  private fun showEditWhatsappSheet() {
-    EditChangeWhatsappNumberSheet().show(parentFragmentManager, EditChangeWhatsappNumberSheet::javaClass.name)
-  }
 
   private fun showVerifyEmailSheet() {
     VerifyOtpEmailMobileSheet().show(parentFragmentManager, VerifyOtpEmailMobileSheet::javaClass.name)

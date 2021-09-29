@@ -63,4 +63,22 @@ interface WithFloatTwoRemoteData {
     @Query("clientId") clientId: String?= clientId2,
     @Body jsonObject: JsonObject
   ): Observable<Response<BaseResponse>>
+
+  @GET(EndPoints.SEND_OTP_MOBILE)
+  fun sendOTPMobile(
+    @Query("mobileNumber") mobileNumber: String?,
+    @Query("clientId") clientId: String?= clientId2,
+  ): Observable<Response<ResponseBody>>
+
+  @POST(EndPoints.UPDATE_MOBILE)
+  fun updateMobile(
+    @Query("clientId") clientId: String?= clientId2,
+    @Body jsonObject: JsonObject
+  ): Observable<Response<BaseResponse>>
+
+  @POST(EndPoints.UPDATE_WHATSAPP)
+  fun updateWhatsapp(
+    @Query("clientId") clientId: String?= clientId2,
+    @Body jsonObject: JsonObject
+  ): Observable<Response<BaseResponse>>
 }

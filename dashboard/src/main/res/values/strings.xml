@@ -266,7 +266,9 @@
   <string name="upload_from_gallery">Upload from gallery</string>
   <string name="choose_profile_photo">Choose profile photo</string>
   <string name="dummy_text_verified">Your mobile number\n<b>+91 9876543210</b> is verified</string>
-  <string name="hello_worldBlue">Your mobile number +91 9876543210 is verified</string>
+  <string name="hello_worldBlue">Your mobile number %1$s is verified</string>
+  <string name="your_email_verified">Your email %1$s is verified</string>
+
   <string name="edit_your_full_name">Edit your full name</string>
   <string name="changing_email_id">Changing email ID</string>
   <string name="new_email_id">New email ID</string>
@@ -290,5 +292,10 @@
   <string name="not_opted_cap">NOT OPTED</string>
     <string name="verify_email">Verify email</string>
     <string name="invalid_code_entered_please_re_enter_again">Invalid code entered. Please re-enter again.</string>
+  <string name="don_t_want_latest_updates_about_your_business">Don’t want latest updates about your business?</string>
+  <string name="remove_whatsapp_desc">We use WhatsApp to provide you timely updates about how your business is doing online. These can include your weekly ROI summary, your purchase incoices etc.</string>
+  <string name="don_t_remove_whatsapp_number">Don’t remove WhatsApp number</string>
+  <string name="logout_desc">No need to log-out if you want to login back with another business acccount of yours. Instead, you can switch to a different business right here.</string>
+  <string name="switch_to_a_different_business">Switch to a different business</string>
 
 </resources>

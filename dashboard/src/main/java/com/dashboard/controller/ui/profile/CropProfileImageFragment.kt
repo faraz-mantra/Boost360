@@ -58,7 +58,6 @@ class CropProfileImageFragment : AppBaseFragment<FragmentCropProfileImageBinding
     super.onCreateView()
     userSessionManager = UserSessionManager(requireActivity())
     setOnClickListener(binding?.btnDone)
-    showProgress()
     imagePath = arguments?.getString(BK_IMAGE_PATH)
     bitmap = BitmapFactory.decodeFile(imagePath)
     binding?.cropImg?.setImageBitmap(bitmap)

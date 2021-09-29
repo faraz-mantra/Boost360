@@ -48,5 +48,14 @@ object EndPoints {
   //update email
   const val SEND_OTP_EMAIL="discover/v1/floatingpoint/SendOTPToEmail"
   const val UPDATE_EMAIL="/user/v9/floatingPoint/updateRegisteredEmail"
+
+  //update mobile
+  const val SEND_OTP_MOBILE="discover/v1/floatingpoint/SendOTPIndia"
+  const val UPDATE_MOBILE="/user/v9/floatingPoint/updateRegisteredMobile"
+
+  //update whatsapp
+  const val UPDATE_WHATSAPP="/user/v9/floatingPoint/updateWhatsapp"
+
+
 }
 
