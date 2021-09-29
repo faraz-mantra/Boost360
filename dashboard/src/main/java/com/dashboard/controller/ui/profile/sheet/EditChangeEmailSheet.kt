@@ -47,14 +47,7 @@ class EditChangeEmailSheet : BaseBottomSheetDialog<SheetChangeEmailBinding, User
     binding?.progressBar?.visible()
     viewModel?.sendEmailOTP(email)?.observe(viewLifecycleOwner,{
       if (it.status==200){
-        val dialog = VerifyOtpEmailMobileSheet().apply {
-          arguments = Bundle().apply {
-            putString(VerifyOtpEmailMobileSheet.IK_TYPE,VerifyOtpEmailMobileSheet.SheetType.EMAIL.name)
-            putString(VerifyOtpEmailMobileSheet.IK_EMAIL_OR_MOB,email)
-
-          }
-        }
-        dialog.show(parentFragmentManager,VerifyOtpEmailMobileSheet::javaClass.name)
+        startVerifyMobEmailSheet(VerifyOtpEmailMobileSheet.SheetType.EMAIL.name,email)
       }
       binding?.progressBar?.gone()
       dismiss()

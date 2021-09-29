@@ -33,4 +33,24 @@ class UserProfileViewModel : BaseViewModel() {
     ): LiveData<BaseResponse> {
         return WithFloatTwoRepository.updateEmail(email,otp,loginId).toLiveData()
     }
+
+    fun sendMobileOTP(mobile:String?): LiveData<BaseResponse> {
+        return WithFloatTwoRepository.sendOtpMobile(mobile).toLiveData()
+    }
+
+    fun updateMobile(
+        mobile:String?,
+        otp:String?,
+        loginId:String?
+    ): LiveData<BaseResponse> {
+        return WithFloatTwoRepository.updateMobile(mobile,otp,loginId).toLiveData()
+    }
+
+    fun updateWhatsappNo(
+        mobile:String?,
+        optIn: Boolean?,
+        loginId:String?
+    ): LiveData<BaseResponse> {
+        return WithFloatTwoRepository.updateWhatsapp(mobile,optIn,loginId).toLiveData()
+    }
 }

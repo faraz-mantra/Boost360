@@ -104,7 +104,52 @@ object WithFloatTwoRepository :
     return makeRemoteRequest(
       remoteDataSource.updateEmail(
         jsonObject=jsonObject
-      ), TaskCode.UPDATE_USER_NAME
+      ), TaskCode.UPDATE_USER_EMAIL
+    )
+  }
+
+  fun sendOtpMobile(
+    mobile:String?,
+  ): Observable<BaseResponse> {
+
+    return makeRemoteRequest(
+      remoteDataSource.sendOTPMobile(
+        mobile
+      ), TaskCode.SEND_OTP_MOBILE
+    )
+  }
+
+  fun updateMobile(
+    mobile:String?,
+    otp:String?,
+    loginId:String?
+  ): Observable<BaseResponse> {
+    val jsonObject = JsonObject().apply {
+      addProperty("MobileNo",mobile)
+      addProperty("OTP",otp)
+      addProperty("LoginId",loginId)
+    }
+    return makeRemoteRequest(
+      remoteDataSource.updateMobile(
+        jsonObject=jsonObject
+      ), TaskCode.UPDATE_USER_MOBILE
+    )
+  }
+
+  fun updateWhatsapp(
+    mobile:String?,
+    optIn:Boolean?,
+    loginId:String?
+  ): Observable<BaseResponse> {
+    val jsonObject = JsonObject().apply {
+      addProperty("WhatsappNo",mobile)
+      addProperty("OptIn",optIn)
+      addProperty("LoginId",loginId)
+    }
+    return makeRemoteRequest(
+      remoteDataSource.updateWhatsapp(
+        jsonObject=jsonObject
+      ), TaskCode.UPDATE_USER_WHATSAPP
     )
   }
 

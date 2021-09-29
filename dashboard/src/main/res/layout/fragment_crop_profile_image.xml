@@ -59,6 +59,7 @@
                     android:layout_width="@dimen/size_200"
                     app:thumbColor="@color/colorPrimary"
                     android:id="@+id/slider"
+                    app:thumbRadius="6dp"
                     app:trackColorInactive="@color/grey"
                     app:trackColorActive="@color/colorPrimary"
                     android:layout_height="wrap_content"

@@ -45,7 +45,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
       <com.framework.views.customViews.PrefixEditText
-        android:id="@+id/cet_business_name"
+        android:id="@+id/cet_wa_no"
         style="@style/BusinessProfileTextField"
         android:digits="0123456789"
         android:drawableEnd="@null"
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="-4dp"
         android:layout_marginTop="@dimen/size_16"
-        android:checked="false"
+          android:checked="true"
         android:text="@string/i_agree_to_receive_important_business_updates_from_boost_360_via_whatsapp"
         android:textColor="@color/psn_sub_heading_color"
         android:textSize="@dimen/body_1"
@@ -96,9 +96,17 @@
           android:background="@color/white"
           android:text="@string/remove_whatsapp_number"
           android:textColor="@color/wrongOTPColor" />
+
+
       </com.framework.views.customViews.CustomCardView>
 
-
+      <ProgressBar
+          android:visibility="gone"
+          android:id="@+id/progressBar"
+          android:layout_marginTop="@dimen/size_8"
+          android:theme="@style/progressBar"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
   </androidx.appcompat.widget.LinearLayoutCompat>
