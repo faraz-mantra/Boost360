@@ -148,7 +148,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           || url.contains(order_fragment) || url.contains(consultation_fragment)
         ) {
           when (getAptType(session.fP_AppExperienceCode)) {
-            "DOC_HOS" -> baseActivity.startOrderAptConsultList(session, isConsult = true)
+            "DOC_HOS" -> baseActivity.startOrderAptConsultList(session, isConsult = url.contains(consultation_fragment))
             "SPA_SAL_SVC" -> baseActivity.startOrderAptConsultList(session)
             else -> baseActivity.startOrderAptConsultList(session, isOrder = true)
           }
