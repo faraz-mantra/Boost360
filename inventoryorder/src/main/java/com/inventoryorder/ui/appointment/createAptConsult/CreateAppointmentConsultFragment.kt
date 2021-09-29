@@ -15,8 +15,6 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
-import com.framework.utils.DateUtils.FORMAT_HH_MM
-import com.framework.utils.DateUtils.FORMAT_HH_MM_A
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_2
 import com.framework.utils.DateUtils.FORMAT_YYYY_MM_DD
@@ -471,14 +469,14 @@ class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointme
         return false
       }
       else -> {
-        var startTime24 = ""
-        var endTime24 = ""
-        try {
-          startTime24 = parseDate(timeSlotData?.StartTime, FORMAT_HH_MM_A, FORMAT_HH_MM) ?: ""
-          endTime24 = parseDate(timeSlotData?.EndTime, FORMAT_HH_MM_A, FORMAT_HH_MM) ?: ""
-        } catch (e: Exception) {
-          e.printStackTrace()
-        }
+//        var startTime24 = ""
+//        var endTime24 = ""
+//        try {
+//          startTime24 = parseDate(timeSlotData?.StartTime, FORMAT_HH_MM_A, FORMAT_HH_MM) ?: ""
+//          endTime24 = parseDate(timeSlotData?.EndTime, FORMAT_HH_MM_A, FORMAT_HH_MM) ?: ""
+//        } catch (e: Exception) {
+//          e.printStackTrace()
+//        }
         val scheduledDateTimeN = parseDate(scheduledDateTime, FORMAT_SERVER_DATE, FORMAT_YYYY_MM_DD)
         val aptModel = AppointmentRequestModel(
           _id = timeSlotData?._id, duration = duration, startTime = timeSlotData?.StartTime, endTime = timeSlotData?.EndTime,
@@ -487,7 +485,7 @@ class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointme
         val extra = ExtraProperties(
           patientName = patientName, gender = gender, age = (age.toIntOrNull() ?: 0).toString(),
           patientMobileNumber = patientMobile, patientEmailId = patientEmail,
-          startTime = startTime24, endTime = endTime24, scheduledDateTime = scheduledDateTime,
+          startTime = timeSlotData?.StartTime?:"", endTime = timeSlotData?.EndTime?:"", scheduledDateTime = scheduledDateTime,
           consultationFor = serviceData?.name ?: "", doctorName = doctorData?.name ?: "",
           doctorId = doctorData?.id ?: "", doctorQualification = doctorData?.education ?: "",
           doctorSpeciality = doctorData?.speciality ?: "", duration = duration?.toIntOrNull() ?: 0,
