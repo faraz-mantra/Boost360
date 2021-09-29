@@ -20,6 +20,7 @@ import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_SECREAT
 import com.boost.upgrades.utils.Utils
+import com.framework.analytics.SentryController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.luminaire.apolloar.base_class.BaseViewModel
