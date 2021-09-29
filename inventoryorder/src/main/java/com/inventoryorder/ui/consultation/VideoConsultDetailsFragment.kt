@@ -154,8 +154,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
 
   private fun isOpenForConsultation(order: OrderItem) {
     val isOpen = order.isConfirmConsultBtn()
-    binding?.bookingDate?.setTextColor(takeIf { isOpen }?.let { getColor(R.color.light_green) }
-      ?: getColor(R.color.primary_grey))
+    binding?.bookingDate?.setTextColor(takeIf { isOpen }?.let { getColor(R.color.light_green) } ?: getColor(R.color.primary_grey))
     if (isOpen) isVisible(binding?.btnPaymentReminder, binding?.btnCopyLink, binding?.bottomView)
     else isGone(binding?.btnPaymentReminder, binding?.btnCopyLink, binding?.bottomView)
   }

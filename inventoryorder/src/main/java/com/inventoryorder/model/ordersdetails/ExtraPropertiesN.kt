@@ -36,6 +36,10 @@ data class ExtraPropertiesN(
 
 ) : Serializable {
 
+  fun scheduledDateTime(): String? {
+   return if (scheduledDateTime.isNullOrEmpty() && Appointment.isNullOrEmpty().not()) Appointment?.firstOrNull()?.scheduledDateTime else scheduledDateTime
+  }
+
   fun durationTxt(): String? {
     return duration?.toDoubleOrNull()?.let { convertMinutesToDays(it) }
   }
