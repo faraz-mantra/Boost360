@@ -21,10 +21,7 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
 
   protected abstract fun getApiClient(): Retrofit
 
-  fun <T> makeRemoteRequest(
-    observable: Observable<Response<T>>,
-    taskCode: Int
-  ): Observable<BaseResponse> {
+  fun <T> makeRemoteRequest(observable: Observable<Response<T>>, taskCode: Int): Observable<BaseResponse> {
     if (!NetworkUtils.isNetworkConnected()) {
       val response = BaseResponse(
         error = NoNetworkException(),
@@ -74,10 +71,7 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
     }
   }
 
-  fun makeLocalResponse(
-    observable: Observable<BaseResponse>,
-    taskcode: Int
-  ): Observable<BaseResponse> {
+  fun makeLocalResponse(observable: Observable<BaseResponse>, taskcode: Int): Observable<BaseResponse> {
     return observable.map {
       if (it.error != null) {
         it.status = 400
