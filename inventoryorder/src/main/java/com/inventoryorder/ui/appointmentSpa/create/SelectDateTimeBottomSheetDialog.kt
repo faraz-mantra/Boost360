@@ -119,6 +119,7 @@ class SelectDateTimeBottomSheetDialog(
 
   private fun getSlotsAndStaff(): BookingSlotsRequest {
     return BookingSlotsRequest(
+      BatchType = "DAILY",
       ServiceId = selectedService._id ?: "",
       DateRange = DateRange(StartDate = getDateTime(), EndDate = getDateTime())
     )

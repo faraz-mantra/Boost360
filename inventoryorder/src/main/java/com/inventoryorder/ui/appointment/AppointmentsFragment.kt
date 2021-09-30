@@ -56,6 +56,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
+
 class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(), RecyclerItemClickListener {
 
   private lateinit var requestFilter: OrderFilterRequest
@@ -105,7 +106,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     when (v) {
       binding?.btnAdd, binding?.buttonAddApt -> {
         val bundle = Bundle()
-        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
+        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
         bundle.putBoolean(IntentConstant.IS_VIDEO.name, false)
         startFragmentOrderActivity(FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
       }
@@ -297,7 +298,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     val searchItem = menu.findItem(R.id.menu_item_search)
     if (searchItem != null) {
       searchView = searchItem.actionView as? SearchView
-      val searchEditText: EditText? = searchView?.findViewById(androidx.appcompat.R.id.search_src_text)
+      val searchEditText:EditText? = searchView?.findViewById(androidx.appcompat.R.id.search_src_text)
       searchEditText?.setTextColor(Color.WHITE)
       searchEditText?.setHintTextColor(getColor(R.color.white_50))
       searchView?.queryHint = resources.getString(R.string.queryHintAppointment)

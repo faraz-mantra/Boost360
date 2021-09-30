@@ -31,7 +31,6 @@ import com.boost.presignin.model.plan.Plan15DaysResponse
 import com.boost.presignin.service.APIService
 import com.boost.presignin.ui.WebPreviewActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
-import com.framework.analytics.SentryController
 import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
@@ -159,8 +158,6 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
         val response = it as? UserFpDetailsResponse
         if (it.isSuccess() && response != null) {
           ProcessFPDetails(session!!).storeFPDetails(response)
-          SentryController.setUser(UserSessionManager(baseActivity))
-
           startService()
           startDashboard()
         } else {
@@ -184,8 +181,6 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
       baseActivity.finish()
       hideProgress()
     } catch (e: Exception) {
-      SentryController.captureException(e)
-
       e.printStackTrace()
     }
   }

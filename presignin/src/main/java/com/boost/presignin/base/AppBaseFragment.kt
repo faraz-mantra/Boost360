@@ -11,12 +11,12 @@ import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.databinding.ViewDataBinding
 import com.boost.presignin.R
-import com.framework.analytics.SentryController
 import com.framework.base.BaseFragment
 import com.framework.models.BaseViewModel
 import com.onboarding.nowfloats.constant.PreferenceConstant
@@ -66,7 +66,10 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
     progressView?.hideProgress()
   }
 
-  protected open fun showProgress(title: String? = "Please wait...", cancelable: Boolean? = false) {
+  protected open fun showProgress(
+    title: String? = "Please wait...",
+    cancelable: Boolean? = false
+  ) {
     title?.let { progressView?.setTitle(it) }
     cancelable?.let { progressView?.isCancelable = it }
     activity?.let { progressView?.showProgress(it.supportFragmentManager) }
@@ -78,8 +81,6 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
       startActivity(i)
     } catch (e: Exception) {
       e.printStackTrace()
-      SentryController.captureException(e)
-
     }
   }
 

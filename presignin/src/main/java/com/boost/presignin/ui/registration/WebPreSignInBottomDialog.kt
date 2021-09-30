@@ -9,7 +9,6 @@ import android.view.View
 import android.webkit.*
 import com.boost.presignin.R
 import com.boost.presignin.databinding.WebPresignInBottomsheetBinding
-import com.framework.analytics.SentryController
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.visible
@@ -79,8 +78,6 @@ class WebPreSignInBottomDialog : BaseBottomSheetDialog<WebPresignInBottomsheetBi
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
           } catch (e: Exception) {
-            SentryController.captureException(e)
-
             e.printStackTrace()
             view.loadUrl(url)
             false

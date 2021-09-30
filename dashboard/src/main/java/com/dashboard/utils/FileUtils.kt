@@ -11,7 +11,6 @@ import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.text.TextUtils
 import android.util.Log
-import com.framework.pref.clientId
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -21,7 +20,6 @@ class FileUtils(var context: Activity) {
 
   fun getPath(uri: Uri): String? {
     // check here to KITKAT or new version
-    clientId
     val isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
     var selection: String? = null
     var selectionArgs: Array<String>? = null

@@ -14,7 +14,6 @@ import dev.patrickgold.florisboard.customization.BusinessFeatureEnum;
 import dev.patrickgold.florisboard.customization.model.response.DigitalCardDataKeyboard;
 import dev.patrickgold.florisboard.customization.model.response.Photo;
 import dev.patrickgold.florisboard.customization.model.response.Product;
-import dev.patrickgold.florisboard.customization.model.response.ProductResponse;
 import dev.patrickgold.florisboard.customization.model.response.Updates;
 import dev.patrickgold.florisboard.customization.model.response.staff.StaffResult;
 
@@ -213,9 +212,9 @@ public class SharedPrefUtil {
     }
   }
 
-  public ProductResponse getProductList(){
+  public List<Product> getProductList(){
     if (sBoostPref!=null){
-      return new Gson().fromJson(sBoostPref.getString(PrefConstants.INSTANCE.getPREF_PRODUCTS(),null),new TypeToken<ProductResponse>(){}.getType());
+      return new Gson().fromJson(sBoostPref.getString(PrefConstants.INSTANCE.getPREF_PRODUCTS(),null),new TypeToken<List<Product>>(){}.getType());
     }else {
       return null;
     }

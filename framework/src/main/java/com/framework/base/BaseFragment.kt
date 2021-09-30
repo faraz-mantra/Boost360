@@ -148,15 +148,11 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
   }
 
   fun showLongToast(string: String?) {
-    string?.let {
-      Toast.makeText(activity, string, Toast.LENGTH_LONG).show()
-    }
+    Toast.makeText(activity, string, Toast.LENGTH_LONG).show()
   }
 
   fun showShortToast(string: String?) {
-    string?.let {
-      Toast.makeText(activity, string, Toast.LENGTH_SHORT).show()
-    }
+    Toast.makeText(activity, string, Toast.LENGTH_SHORT).show()
   }
 
   protected fun getColor(@ColorRes color: Int): Int {

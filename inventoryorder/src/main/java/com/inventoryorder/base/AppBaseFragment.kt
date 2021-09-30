@@ -8,12 +8,18 @@ import androidx.databinding.ViewDataBinding
 import com.framework.base.BaseFragment
 import com.framework.models.BaseViewModel
 
-abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseFragment<Binding, ViewModel>() {
+abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> :
+  BaseFragment<Binding, ViewModel>() {
+
 
   protected var appBaseActivity: AppBaseActivity<*, *>? = null
   private var progressView: ProgressDialog? = null
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
     appBaseActivity = activity as? AppBaseActivity<*, *>
     progressView = ProgressDialog.newInstance()
     return super.onCreateView(inflater, container, savedInstanceState)

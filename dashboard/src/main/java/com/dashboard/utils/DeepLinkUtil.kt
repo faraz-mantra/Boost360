@@ -144,13 +144,31 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startAddServiceProduct(session)
         } else if (url.contains(addCustomPage)) {
           baseActivity.startCustomPage(session, true)
-        } else if (url.contains(myorders) || url.contains(myorderdetail) || url.contains(appointment_fragment)
-          || url.contains(order_fragment) || url.contains(consultation_fragment)
-        ) {
-          when (getAptType(session.fP_AppExperienceCode)) {
-            "DOC_HOS" -> baseActivity.startOrderAptConsultList(session, isConsult = url.contains(consultation_fragment))
-            "SPA_SAL_SVC" -> baseActivity.startOrderAptConsultList(session)
-            else -> baseActivity.startOrderAptConsultList(session, isOrder = true)
+        } else if (url.contains(myorders)) {
+          baseActivity.startOrderAptConsultList(session, isOrder = true)
+        } else if (url.contains(myorderdetail)) {
+          if (session.fP_AppExperienceCode.equals("SVC") || session.fP_AppExperienceCode.equals("SPA") ||
+            session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")
+          ) {
+            baseActivity.startOrderAptConsultList(session)
+          } else baseActivity.startOrderAptConsultList(session, isOrder = true)
+        } else if (url.contains(appointment_fragment)) {
+          if (session.fP_AppExperienceCode.equals("SVC") || session.fP_AppExperienceCode.equals("SPA") ||
+            session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")
+          ) {
+            baseActivity.startOrderAptConsultList(session)
+          }
+        } else if (url.contains(order_fragment)) {
+          if ((session.fP_AppExperienceCode.equals("SVC") || session.fP_AppExperienceCode.equals("SPA") ||
+                session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")).not()
+          ) {
+            baseActivity.startOrderAptConsultList(session, isOrder = true)
+          }
+        } else if (url.contains(consultation_fragment)) {
+          if (session.fP_AppExperienceCode.equals("SVC") || session.fP_AppExperienceCode.equals("SPA") ||
+            session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")
+          ) {
+            baseActivity.startOrderAptConsultList(session, isConsult = true)
           }
         } else if (url.contains(deeplink_upgrade)) {
           baseActivity.upgradeApp()
@@ -194,7 +212,10 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startBusinessLogo(session)
         } else if (url.contains(deeplink_nfstoreDomainTTBCombo)) {
           baseActivity.startBusinessProfileDetailEdit(session)
-        } else if (url.contains(deeplink_sitemeter) || url.contains(deeplink_site_health) || url.contains(deeplink_DR_SCORE)) {
+        } else if (url.contains(deeplink_sitemeter) || url.contains(deeplink_site_health) || url.contains(
+            deeplink_DR_SCORE
+          )
+        ) {
           baseActivity.startReadinessScoreView(session, 0)
         } else if (url.contains(deeplink_imageGallery)) {
           baseActivity.startAddImageGallery(session, isCreate = false)
@@ -266,7 +287,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_website_theme)) {
           baseActivity.startWebsiteTheme(session)
         } else if (url.contains(deeplink_expert_contact)) {
-          Log.v("deeplink_expert_contact", " $url $buyItemKey")
+          Log.v("deeplink_expert_contact", " " + url + " " + buyItemKey)
           baseActivity.initiateAddonMarketplace(session, false, "expertContact", "")
         }
       }
@@ -296,10 +317,18 @@ fun AppCompatActivity.upgradeApp() {
   try {
     val appPackageName: String = this.packageName
     try {
-      this.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName"))
+      this.startActivity(
+        Intent(
+          Intent.ACTION_VIEW,
+          Uri.parse("market://details?id=$appPackageName")
+        )
       )
     } catch (anfe: ActivityNotFoundException) {
-      this.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName"))
+      this.startActivity(
+        Intent(
+          Intent.ACTION_VIEW,
+          Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+        )
       )
     }
   } catch (e: Exception) {
@@ -313,7 +342,8 @@ fun AppCompatActivity.startBlog(urlN: String, session: UserSessionManager) {
     url = if (url.isNotEmpty()) {
       "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)
     } else {
-      ("http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT) + tag_for_partners)
+      ("http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)
+        ?.toLowerCase(Locale.ROOT) + tag_for_partners)
     }
     val uri = Uri.parse(url)
     val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -331,7 +361,8 @@ fun AppCompatActivity.shareWebsite(session: UserSessionManager) {
       visit_to_new_website + eol + url!!.toLowerCase(Locale.ROOT)
     } else {
       val eol = System.getProperty("line.separator")
-      (visit_to_new_website + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT) + tag_for_partners)
+      (visit_to_new_website + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)
+        ?.toLowerCase(Locale.ROOT) + tag_for_partners)
     }
     val intent = Intent(Intent.ACTION_SEND)
     intent.type = "text/plain"

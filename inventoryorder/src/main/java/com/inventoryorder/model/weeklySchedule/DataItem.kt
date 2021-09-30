@@ -44,7 +44,12 @@ data class DataItem(
             if (timeList.size >= 2) {
               val startTime = timeList[0].trim()
               val endTime = timeList[1].trim()
-              if (startTime != "0" && endTime != "0") displayTimeSlots(startTime, endTime, duration, timeSlotData)
+              if (startTime != "0" && endTime != "0") displayTimeSlots(
+                startTime,
+                endTime,
+                duration,
+                timeSlotData
+              )
             }
           }
         }
@@ -54,7 +59,10 @@ data class DataItem(
   }
 
   enum class DayName(val value: String) {
-    SUNDAY("Sunday"), MONDAY("Monday"), TUESDAY("Tuesday"), WEDNESDAY("Wednesday"), THURSDAY("Thursday"), FRIDAY("Friday"), SATURDAY("Saturday");
+    SUNDAY("Sunday"), MONDAY("Monday"), TUESDAY("Tuesday"), WEDNESDAY("Wednesday"), THURSDAY("Thursday"), FRIDAY(
+      "Friday"
+    ),
+    SATURDAY("Saturday");
 
     companion object {
       fun fromValue(value: String): DayName? =
@@ -62,7 +70,12 @@ data class DataItem(
     }
   }
 
-  private fun displayTimeSlots(time1: String, time2: String, duration: Long, timeSlotData: ArrayList<TimeSlotData>) {
+  private fun displayTimeSlots(
+    time1: String,
+    time2: String,
+    duration: Long,
+    timeSlotData: ArrayList<TimeSlotData>
+  ) {
     try {
       val dateObj1: Date? = time1.parseDate(FORMAT_HH_MM)
       val dateObj2: Date? = time2.parseDate(FORMAT_HH_MM)
@@ -74,7 +87,13 @@ data class DataItem(
           val slot2 = Date(dif)
           val startTimeSlot = slot1.parseDate(FORMAT_HH_MM_A)
           val endTimeSlot = slot2.parseDate(FORMAT_HH_MM_A)
-          timeSlotData.add(TimeSlotData(day = day, startTime = startTimeSlot, endTime = endTimeSlot))
+          timeSlotData.add(
+            TimeSlotData(
+              day = day,
+              startTime = startTimeSlot,
+              endTime = endTimeSlot
+            )
+          )
           Log.d("TAG", "Hour slot =  $startTimeSlot - $endTimeSlot")
         }
       }
@@ -84,7 +103,13 @@ data class DataItem(
   }
 }
 
-fun isTimeBetweenTwoHours(startC: Calendar?, endC: Calendar?, testC: Calendar, startTime: Boolean, isCurrentDate: Boolean): Boolean {
+fun isTimeBetweenTwoHours(
+  startC: Calendar?,
+  endC: Calendar?,
+  testC: Calendar,
+  startTime: Boolean,
+  isCurrentDate: Boolean
+): Boolean {
   if (startC == null && endC == null) return false
   return try {
     when {

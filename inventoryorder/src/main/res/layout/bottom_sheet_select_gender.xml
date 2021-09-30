@@ -31,7 +31,7 @@
           <com.framework.views.customViews.CustomTextView
             style="@style/wrap_wrap"
             android:includeFontPadding="false"
-            android:text="@string/select_gender_"
+            android:text="@string/select_gender"
             android:textColor="@color/grey_text_color"
             app:fontFamily="@font/bold"
             app:textType="HEADING_4" />

@@ -4,14 +4,15 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.framework.base.BaseResponse
 import com.framework.utils.NetworkUtils
 import com.google.gson.Gson
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
 import com.onboarding.nowfloats.model.profile.MerchantProfileResponse
-import com.onboarding.nowfloats.rest.apiClients.WithFloatsApiClient
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
-import dev.patrickgold.florisboard.customization.model.response.*
+import dev.patrickgold.florisboard.customization.model.response.CustomerDetails
+import dev.patrickgold.florisboard.customization.model.response.Photo
+import dev.patrickgold.florisboard.customization.model.response.Product
+import dev.patrickgold.florisboard.customization.model.response.Updates
 import dev.patrickgold.florisboard.customization.model.response.shareUser.ShareUserDetailResponse
 import dev.patrickgold.florisboard.customization.model.response.staff.DataItem
 import dev.patrickgold.florisboard.customization.model.response.staff.GetStaffListingRequest
@@ -40,39 +41,6 @@ class BusinessFeaturesViewModel(context: Context) {
   val updates: LiveData<Updates>
     get() = _updates
 
-  private val _merchantSummary = MutableLiveData<MerchantSummaryResponse>()
-  val merchantSummary: LiveData<MerchantSummaryResponse>
-    get() = _merchantSummary
-
-  fun getMerchantSummary(clientId: String?,fpTag: String?) {
-    val prefMerchant = MerchantSummaryResponse.getMerchantSummaryWebsite()
-      prefMerchant?.let {
-        _merchantSummary.postValue(it)
-      }
-    try {
-
-      CoroutineScope(Dispatchers.IO).launch {
-        val response = BusinessFeatureRepository.getMerchantSummary(clientId,fpTag)
-
-        if (response.isSuccessful&&response.body()!=null){
-          _merchantSummary.postValue(response.body())
-          response.body()?.saveMerchantSummary()
-        }else{
-          if (response.code()==Constants.UNAUTHORIZED_STATUS_CODE){
-            _error.value = Constants.TOKEN_EXPIRED_MESSAGE
-          }else{
-            _error.value = "Summary getting error!"
-          }
-        }
-      }
-    }catch (e:Exception){
-      Log.e(TAG, "getMerchantData: "+e.localizedMessage )
-      if (prefMerchant==null){
-        _error.postValue(e.localizedMessage)
-      }
-    }
-
-  }
   fun getUpdates(fpId: String?, clientId: String, skipBy: Int, limit: Int) {
     val prefUpdates = sharedPref.updateList
     if (prefUpdates!=null&&skipBy==0){
@@ -106,8 +74,8 @@ class BusinessFeaturesViewModel(context: Context) {
     }
   }
 
-  private val _products = MutableLiveData<ProductResponse>()
-  val products: LiveData<ProductResponse>
+  private val _products = MutableLiveData<List<Product>>()
+  val products: LiveData<List<Product>>
     get() = _products
 
   fun getProducts(fpTag: String?, clientId: String, skipBy: Int, identifierType: String) {
@@ -123,7 +91,7 @@ class BusinessFeaturesViewModel(context: Context) {
           Log.i(TAG, "getProducts: "+products.code())
 
           if (products.isSuccessful){
-            _products.postValue(products.body())
+            _products.postValue(products.body() ?: arrayListOf())
             sharedPref.save(PrefConstants.PREF_PRODUCTS,Gson().toJson(products.body()))
           }
           else {

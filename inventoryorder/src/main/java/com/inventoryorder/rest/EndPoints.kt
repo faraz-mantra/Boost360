@@ -30,9 +30,7 @@ object EndPoints {
   // NFX APIs
   const val ASSURED_PURCHASE_BASE_URL = "https://assuredpurchase.withfloats.com/"
 
-  @Deprecated("Use v2.5")
   const val POST_INITIATE_ORDER = "api/assuredPurchase/v2/InitiateOrder"
-
   const val POST_INITIATE_APPOINTMENT = "api/assuredPurchase/v2.5/InitiateOrder"
   const val GET_CONFIRM_ORDER_2_5 = "api/assuredPurchase/v2.5/ConfirmOrder"
   const val GET_ORDER_DETAIL_2_5 = "api/assuredPurchase/v2.5/GetOrderDetails"
@@ -47,14 +45,16 @@ object EndPoints {
   const val GET_ORDER_DETAIL = "api/assuredPurchase/v2/GetOrderDetails"
   const val GET_LIST_IN_COMPLETE_ORDER = "api/assuredPurchase/v2/ListIncompleteOrders"
 
-  const val POST_UPDATE_EXTRA_FIELD_ORDER = "api/assuredPurchase/v2/UpdateExtraPropertiesInformation"
+  const val POST_UPDATE_EXTRA_FIELD_ORDER =
+    "api/assuredPurchase/v2/UpdateExtraPropertiesInformation"
   const val GET_CONFIRM_ORDER = "api/assuredPurchase/v2/ConfirmOrder"
   const val GET_CANCEL_ORDER = "api/assuredPurchase/v2/CancelOrder"
   const val MARK_AS_DELIVERED = "api/assuredPurchase/v2/MarkOrderAsDelivered"
   const val MARK_AS_SHIPPED = "api/assuredPurchase/v2/MarkOrderAsShipped"
   const val SEND_PAYMENT_REMINDER = "api/assuredPurchase/v2/SendPaymentReminder"
   const val MARK_COD_PAYMENT_DONE = "api/assuredPurchase/v2/MarkPaymentReceivedForCODOrder"
-  const val MARK_PAYMENT_RECEIVED_MERCHANT = "api/assuredPurchase/v2/MarkPaymentReceivedForPlacedOrderByMerchant"
+  const val MARK_PAYMENT_RECEIVED_MERCHANT =
+    "api/assuredPurchase/v2/MarkPaymentReceivedForPlacedOrderByMerchant"
   const val ORDER_FEEDBACK_REQUEST = "api/assuredPurchase/v2/RequestOrderFeedback"
   const val ORDER_RE_BOOKING_REQUEST = "api/assuredPurchase/v2/SendRebookingReminder"
   //new API order
@@ -70,8 +70,6 @@ object EndPoints {
   //Now FLoats Api
   const val API_NOW_FLOATS = "https://api.nowfloats.com/"
   const val GET_SEARCH_LISTING = "Service/v1/GetSearchListings"
-  const val GET_BOOKING_SLOTS = "Staff/v1/GetBookingSlots"
-  const val GET_BOOKING_SLOTS_STAFF = "Staff/v1/GetBookingSlotsForStaff/{staffId}"
-  const val GET_GENERAL_SERVICE= "Service/v1/GetGeneralServiceDetails"
+  const val GET_BOOKING_SLOTS = "staff/v1/GetBookingSlots"
 }
 

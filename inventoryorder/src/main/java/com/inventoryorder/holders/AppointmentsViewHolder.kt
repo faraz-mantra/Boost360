@@ -198,7 +198,11 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
     binding.payment.value.text = fromHtml(order.PaymentDetails?.paymentWithColor(colorCode)?.trim() ?: "")
 
     val doctorName = order.firstItemForAptConsult()?.product()?.extraItemProductConsultation()?.doctorName
-    binding.txtScheduledDate.text = fromHtml("${order.firstItemForAptConsult()?.getScheduleDateAndTime()}${if (doctorName.isNullOrEmpty()) "" else " by <b><u>$doctorName</u></b>"}")
+    binding.txtScheduledDate.text = fromHtml(
+      "${
+        order.firstItemForAptConsult()?.getScheduleDateAndTime()
+      }${if (doctorName.isNullOrEmpty()) "" else " by <b><u>$doctorName</u></b>"}"
+    )
 
 
     //----------------------------

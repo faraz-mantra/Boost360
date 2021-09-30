@@ -168,10 +168,8 @@
                   android:id="@+id/btn_payment_reminder"
                   style="@style/match_wrap"
                   android:layout_marginTop="@dimen/size_14"
-                  android:layout_height="@dimen/size_40"
                   android:background="@drawable/btn_rounded_orange_border"
                   android:paddingTop="@dimen/size_2"
-                  android:textAllCaps="false"
                   android:paddingBottom="@dimen/size_2"
                   android:text="@string/payment_reminder"
                   android:textColor="@color/colorAccent_jio"
@@ -456,9 +454,10 @@
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/status_time"
               style="@style/wrap_wrap"
+              android:layout_marginStart="@dimen/size_1"
               android:text="@string/time_elapsed"
               android:textColor="@color/primary_grey"
-              app:textType="OVERLINE" />
+              app:textType="SUBTITLE_2" />
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/time_elapsed"
@@ -467,16 +466,14 @@
               android:drawablePadding="@dimen/size_3"
               android:text="@string/_00_00_00"
               android:textColor="@color/watermelon_light_10"
-              app:textType="CAPTION" />
+              app:textType="BODY_1" />
           </LinearLayout>
 
           <com.framework.views.customViews.CustomButton
             android:id="@+id/btn_open_consult"
             style="@style/wrap_wrap"
-            android:layout_height="@dimen/size_38"
             android:background="@drawable/button_confirm_order"
             android:shadowRadius="0"
-            android:textAllCaps="false"
             android:stateListAnimator="@null"
             android:text="@string/open_consultation_window"
             android:textColor="@color/white"

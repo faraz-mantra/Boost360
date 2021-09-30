@@ -1,7 +1,6 @@
 package com.boost.presignin.helper
 
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
-import com.framework.analytics.SentryController
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.utils.convertListObjToString
@@ -83,8 +82,6 @@ class ProcessFPDetails(var session: UserSessionManager) {
         }
       } catch (e: Exception) {
         e.printStackTrace()
-        SentryController.captureException(e)
-
         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY, "GENERAL")
 
       }
@@ -129,8 +126,6 @@ class ProcessFPDetails(var session: UserSessionManager) {
         )
       } catch (e: Exception) {
         e.printStackTrace()
-        SentryController.captureException(e)
-
       }
       session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE, get_fp_details_model.uri)
       session.storeFPDetails(
@@ -205,8 +200,6 @@ class ProcessFPDetails(var session: UserSessionManager) {
         }
       } catch (e: Exception) {
         e.printStackTrace()
-        SentryController.captureException(e)
-
       }
       val widgetsList: ArrayList<String> = get_fp_details_model.fPWebWidgets ?: ArrayList()
       session.storeFPDetails(Key_Preferences.STORE_WIDGETS, convertListObjToString(widgetsList))
@@ -270,8 +263,6 @@ class ProcessFPDetails(var session: UserSessionManager) {
       session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl, get_fp_details_model.logoUrl)
     } catch (e: Exception) {
       e.printStackTrace()
-      SentryController.captureException(e)
-
     }
     try {
       if (get_fp_details_model.timings != null) {
@@ -372,8 +363,6 @@ class ProcessFPDetails(var session: UserSessionManager) {
       )
     } catch (e: Exception) {
       e.printStackTrace()
-      SentryController.captureException(e)
-
     }
   }
 }

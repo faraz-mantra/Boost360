@@ -12,7 +12,6 @@ import com.boost.presignin.model.other.PaymentKycDataResponse
 import com.boost.presignin.rest.repository.WebActionBoostKitRepository
 import com.boost.presignin.rest.repository.WithFloatRepository
 import com.boost.presignin.rest.repository.WithFloatTwoRepository
-import com.framework.analytics.SentryController
 import com.framework.models.toLiveData
 import com.framework.pref.Key_Preferences.PREF_KEY_TWITTER_LOGIN
 import com.framework.pref.Key_Preferences.PREF_USER_NAME
@@ -20,7 +19,6 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.clientId2
 import com.google.firebase.iid.FirebaseInstanceId
-import com.google.gson.Gson
 import com.onboarding.nowfloats.constant.PreferenceConstant
 import com.onboarding.nowfloats.model.channel.isFacebookPage
 import com.onboarding.nowfloats.model.channel.isTwitterChannel
@@ -76,10 +74,9 @@ class APIService : Service() {
     WebActionBoostKitRepository.getSelfBrandedKyc(query = getQuery()).toLiveData().observeForever {
       val paymentKycDataResponse = it as? PaymentKycDataResponse
       paymentKycDataResponse?.data
-      Log.i("hitSelfBrandedKycAPI: ", Gson().toJson(paymentKycDataResponse))
       if (it.isSuccess()) {
         userSessionManager?.isSelfBrandedKycAdd =
-          paymentKycDataResponse != null && paymentKycDataResponse?.data.isNullOrEmpty().not()
+          paymentKycDataResponse != null || paymentKycDataResponse?.data.isNullOrEmpty().not()
       }
     }
   }
@@ -151,8 +148,6 @@ class APIService : Service() {
     return try {
       JSONObject().apply { put("fpTag", userSessionManager?.fpTag) }.toString()
     } catch (e: JSONException) {
-      SentryController.captureException(e)
-
       ""
     }
   }

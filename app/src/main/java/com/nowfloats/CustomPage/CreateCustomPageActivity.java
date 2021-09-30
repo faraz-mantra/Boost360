@@ -46,7 +46,6 @@ import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem;
 import com.framework.models.caplimit_feature.PropertiesItem;
 import com.framework.models.firestore.FirestoreManager;
 import com.google.firebase.FirebaseApp;
-import com.google.gson.GsonBuilder;
 import com.nowfloats.CustomPage.Model.CreatePageModel;
 import com.nowfloats.CustomPage.Model.CustomPageLink;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
@@ -66,10 +65,8 @@ import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import jp.wasabeef.richeditor.RichEditor;
@@ -115,7 +112,6 @@ public class CreateCustomPageActivity extends AppCompatActivity {
   private ImageView deletePage;
   private int GALLERY_PHOTO = 5;
   private RiaNodeDataModel mRiaNodedata;
-  public ArrayList<CustomPageModel> dataModel = new ArrayList();
 
   @Override
   protected void attachBaseContext(Context newBase) {
@@ -138,10 +134,10 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     FirebaseApp.initializeApp(CreateCustomPageActivity.this);
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && !Constants.webViewInit) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P&&!Constants.webViewInit) {
       String process = getProcessName(this);
       String packageName = this.getPackageName();
-      if (!packageName.equals(process)) {
+      if (!packageName.equals(process)){
         WebView.setDataDirectorySuffix(process);
         Constants.webViewInit = true;
       }
@@ -149,10 +145,6 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     setContentView(R.layout.create_custom_page);
 
     curPos = getIntent().getIntExtra("position", -1);
-    String jsonData = getIntent().getStringExtra("data");
-    if (jsonData != null) {
-      dataModel = new ArrayList(Arrays.asList(new GsonBuilder().create().fromJson(jsonData, CustomPageModel[].class)));
-    }
 
     mRiaNodedata = getIntent().getParcelableExtra(Constants.RIA_NODE_DATA);
 
@@ -243,7 +235,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     deletePage.setOnClickListener(v -> {
       String url = Constants.NOW_FLOATS_API_URL + "/Discover/v1/floatingpoint/custompage/delete";
       new SinglePageDeleteAsyncTask(url, CreateCustomPageActivity.this, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),
-          dataModel, curPos).execute();
+          CustomPageFragment.dataModel.get(curPos).PageId, curPos).execute();
     });
 
     save.setOnClickListener(v -> {
@@ -289,7 +281,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                     //Log.d("Create page success", "");
                     MixPanelController.track("CreateCustomPage", null);
                     long time = System.currentTimeMillis();
-                    dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
+                    CustomPageFragment.dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
                     WebEngageController.trackEvent(POST_ACUSTOMPAGE, SUCCESSFULLY_ADDED_CUSTOMPAGE, session.getFpTag());
                     Methods.showSnackBarPositive(activity, getString(R.string.page_successfully_created));
                     isNewDataAdded = true;
@@ -324,7 +316,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                   MixPanelController.track("UpdateCustomPage", null);
                   WebEngageController.trackEvent(UPDATE_CUSTOMPAGE, UPDATE_A_CUSTOMPAGE, session.getFpTag());
                   //Log.d("Update page success", "");
-                  dataModel.get(curPos).DisplayName = name;
+                  CustomPageFragment.dataModel.get(curPos).DisplayName = name;
                   Methods.showSnackBarPositive(activity, getString(R.string.page_updated));
                   onBackPressed();
                 }

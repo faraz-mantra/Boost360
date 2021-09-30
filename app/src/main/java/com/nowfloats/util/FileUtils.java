@@ -1,6 +1,5 @@
 package com.nowfloats.util;
 
-import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -282,11 +281,6 @@ public class FileUtils {
             );
         }
 
-        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
-            Log.i(TAG, "getPath: version equal to or greater than r");
-            return getRealPathFromURI_API19(context,uri);
-        }
-
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
         // DocumentProvider
@@ -379,30 +373,6 @@ public class FileUtils {
         return null;
     }
 
-    @SuppressLint("NewApi")
-    public static String getRealPathFromURI_API19(Context context, Uri uri){
-        String filePath = "";
-        String wholeID = DocumentsContract.getDocumentId(uri);
-
-        // Split at colon, use second item in the array
-        String id = wholeID.split(":")[1];
-
-        String[] column = { MediaStore.Images.Media.DATA };
-
-        // where id is equal to
-        String sel = MediaStore.Images.Media._ID + "=?";
-
-        Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                column, sel, new String[]{ id }, null);
-
-        int columnIndex = cursor.getColumnIndex(column[0]);
-
-        if (cursor.moveToFirst()) {
-            filePath = cursor.getString(columnIndex);
-        }
-        cursor.close();
-        return filePath;
-    }
     /**
      * Convert Uri into File, if possible.
      *

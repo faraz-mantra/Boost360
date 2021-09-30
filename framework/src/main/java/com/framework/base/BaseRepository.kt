@@ -1,7 +1,5 @@
 package com.framework.base
 
-import android.util.Log
-import com.framework.analytics.SentryController
 import com.framework.exceptions.BaseException
 import com.framework.exceptions.NoNetworkException
 import com.framework.utils.NetworkUtils
@@ -23,7 +21,10 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
 
   protected abstract fun getApiClient(): Retrofit
 
-  fun <T> makeRemoteRequest(observable: Observable<Response<T>>, taskCode: Int): Observable<BaseResponse> {
+  fun <T> makeRemoteRequest(
+    observable: Observable<Response<T>>,
+    taskCode: Int
+  ): Observable<BaseResponse> {
     if (!NetworkUtils.isNetworkConnected()) {
       val response = BaseResponse(
         error = NoNetworkException(),
@@ -44,14 +45,12 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
         val response = getResponseValue(it, "Error")
         response.status = it.code()
         response.error = BaseException(it.errorBody()?.string() ?: "")
-        SentryController.captureException(Exception(it.raw().toString()))
         response.error?.localizedMessage?.let { it1 -> response.message = it1 }
         response.taskcode = taskCode
         onFailure(response, taskCode)
         return@map response
       }
     }.onErrorReturn {
-      SentryController.captureException(Exception(it.localizedMessage))
       it.printStackTrace()
       val response = BaseResponse()
       response.error = it
@@ -75,7 +74,10 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
     }
   }
 
-  fun makeLocalResponse(observable: Observable<BaseResponse>, taskcode: Int): Observable<BaseResponse> {
+  fun makeLocalResponse(
+    observable: Observable<BaseResponse>,
+    taskcode: Int
+  ): Observable<BaseResponse> {
     return observable.map {
       if (it.error != null) {
         it.status = 400

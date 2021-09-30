@@ -14,7 +14,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.boost.presignin.R
 import com.boost.presignin.databinding.DialogWebviewPresignupBinding
-import com.framework.analytics.SentryController
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 
@@ -100,8 +99,6 @@ class WebViewDialog : DialogFragment() {
             startActivity(intent)
           } catch (e: Exception) {
             e.printStackTrace()
-            SentryController.captureException(e)
-
             view.loadUrl(url)
             false
           }

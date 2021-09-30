@@ -1,6 +1,7 @@
 package com.inventoryorder.model.orderRequest
 
 import com.framework.base.BaseRequest
+import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -26,6 +27,8 @@ data class OrderInitiateRequest(
   var orderId: String? = null,
   @SerializedName("Status")
   var status: String? = null,
+
+
 ) : BaseRequest(), Serializable {
   var isVideoConsult: Boolean = false
 

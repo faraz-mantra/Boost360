@@ -71,11 +71,10 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // Not working because this activity create custom page process boost
-//        if (resultCode == RESULT_OK && requestCode == 202) {
-//            if (!(data != null && data.getBooleanExtra("IS_REFRESH", false))) onBackPressed();
-//            else if (customPageFragment != null) customPageFragment.isRefreshList();
-//        }
+        if (resultCode == RESULT_OK && requestCode == 202) {
+            if (!(data != null && data.getBooleanExtra("IS_REFRESH", false))) onBackPressed();
+            else if (customPageFragment != null) customPageFragment.isRefreshList();
+        }
     }
 
     @Override

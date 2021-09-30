@@ -21,13 +21,13 @@ import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.ui.appointment.AppointmentDetailsFragment
 import com.inventoryorder.ui.appointment.AppointmentsFragment
-import com.inventoryorder.ui.appointment.createAptConsult.CreateAppointmentConsultFragment
 import com.inventoryorder.ui.appointmentSpa.create.ReviewAndConfirmFragment
 import com.inventoryorder.ui.appointmentSpa.create.SpaAppointmentFragment
-import com.inventoryorder.ui.appointmentSpa.list.AppointmentSpaDetailsFragment
-import com.inventoryorder.ui.appointmentSpa.list.AppointmentSpaFragment
 import com.inventoryorder.ui.consultation.VideoConsultDetailsFragment
 import com.inventoryorder.ui.consultation.VideoConsultFragment
+import com.inventoryorder.ui.appointment.createAptConsult.CreateAppointmentFragment
+import com.inventoryorder.ui.appointmentSpa.list.AppointmentSpaDetailsFragment
+import com.inventoryorder.ui.appointmentSpa.list.AppointmentSpaFragment
 import com.inventoryorder.ui.createAptOld.BookingSuccessfulFragment
 import com.inventoryorder.ui.createAptOld.NewBookingFragmentOne
 import com.inventoryorder.ui.createAptOld.NewBookingFragmentTwo
@@ -49,7 +49,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   private var appointmentsFragment: AppointmentsFragment? = null
   private var appointmentSpaFragment: AppointmentSpaFragment? = null
   private var appointmentSpaDetailsFragment: AppointmentSpaDetailsFragment? = null
-  private var createAppointmentFragmentN: CreateAppointmentConsultFragment? = null
+  private var createAppointmentFragment: CreateAppointmentFragment? = null
   private var newBookingFragmentOne: NewBookingFragmentOne? = null
   private var newBookingFragmentTwo: NewBookingFragmentTwo? = null
   private var bookingSuccessfulFragment: BookingSuccessfulFragment? = null
@@ -108,11 +108,53 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   }
 
   override fun getToolbarBackgroundColor(): Int? {
-    return ContextCompat.getColor(this, R.color.colorPrimary)
+    return when (type) {
+      FragmentType.ALL_ORDER_VIEW,
+      FragmentType.ORDER_DETAIL_VIEW,
+      FragmentType.APPOINTMENT_DETAIL_VIEW,
+      FragmentType.ALL_APPOINTMENT_VIEW,
+      FragmentType.CREATE_NEW_BOOKING,
+      FragmentType.CREATE_NEW_BOOKING_PAGE_2,
+      FragmentType.ALL_VIDEO_CONSULT_VIEW,
+      FragmentType.VIDEO_CONSULT_DETAIL_VIEW,
+      FragmentType.ADD_CUSTOMER,
+      FragmentType.ADD_PRODUCT,
+      FragmentType.BILLING_DETAIL,
+      FragmentType.CREATE_APPOINTMENT_VIEW,
+      FragmentType.ORDER_INVOICE_VIEW,
+      FragmentType.ORDER_PLACED,
+      FragmentType.CREATE_SPA_APPOINTMENT,
+      FragmentType.REVIEW_SPA_DETAILS,
+      FragmentType.ALL_APPOINTMENT_SPA_VIEW,
+      FragmentType.APPOINTMENT_SPA_DETAIL_VIEW,
+      -> ContextCompat.getColor(this, R.color.colorPrimary)
+      else -> super.getToolbarBackgroundColor()
+    }
   }
 
   override fun getToolbarTitleColor(): Int? {
-    return ContextCompat.getColor(this, R.color.white)
+    return when (type) {
+      FragmentType.ALL_ORDER_VIEW,
+      FragmentType.ORDER_DETAIL_VIEW,
+      FragmentType.APPOINTMENT_DETAIL_VIEW,
+      FragmentType.ALL_APPOINTMENT_VIEW,
+      FragmentType.CREATE_NEW_BOOKING,
+      FragmentType.CREATE_NEW_BOOKING_PAGE_2,
+      FragmentType.ALL_VIDEO_CONSULT_VIEW,
+      FragmentType.VIDEO_CONSULT_DETAIL_VIEW,
+      FragmentType.ADD_CUSTOMER,
+      FragmentType.ADD_PRODUCT,
+      FragmentType.BILLING_DETAIL,
+      FragmentType.CREATE_APPOINTMENT_VIEW,
+      FragmentType.ORDER_INVOICE_VIEW,
+      FragmentType.ORDER_PLACED,
+      FragmentType.CREATE_SPA_APPOINTMENT,
+      FragmentType.REVIEW_SPA_DETAILS,
+      FragmentType.ALL_APPOINTMENT_SPA_VIEW,
+      FragmentType.APPOINTMENT_SPA_DETAIL_VIEW,
+      -> ContextCompat.getColor(this, R.color.white)
+      else -> super.getToolbarTitleColor()
+    }
   }
 
   override fun isHideToolbar(): Boolean {
@@ -128,10 +170,16 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   override fun getToolbarTitle(): String? {
     return when (type) {
       FragmentType.ALL_ORDER_VIEW -> resources.getString(R.string.orders)
-      FragmentType.ALL_APPOINTMENT_SPA_VIEW, FragmentType.ALL_APPOINTMENT_VIEW -> resources.getString(R.string.appointments)
+      FragmentType.ALL_APPOINTMENT_SPA_VIEW,
+      FragmentType.ALL_APPOINTMENT_VIEW,
+      -> resources.getString(R.string.appointments)
       FragmentType.ALL_VIDEO_CONSULT_VIEW -> resources.getString(R.string.video_consultation)
-      FragmentType.APPOINTMENT_SPA_DETAIL_VIEW, FragmentType.APPOINTMENT_DETAIL_VIEW -> getString(R.string.appointment_details_n)
-      FragmentType.ORDER_DETAIL_VIEW, FragmentType.VIDEO_CONSULT_DETAIL_VIEW -> getString(R.string.hash_xxxxxxxx)
+      FragmentType.APPOINTMENT_SPA_DETAIL_VIEW,
+      FragmentType.APPOINTMENT_DETAIL_VIEW,
+      -> getString(R.string.appointment_details_n)
+      FragmentType.ORDER_DETAIL_VIEW,
+      FragmentType.VIDEO_CONSULT_DETAIL_VIEW,
+      -> getString(R.string.hash_xxxxxxxx)
       FragmentType.CREATE_NEW_BOOKING -> resources.getString(R.string.new_booking_n)
       FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> resources.getString(R.string.new_booking_n)
       FragmentType.CREATE_APPOINTMENT_VIEW -> getString(R.string.appointment_new_title)
@@ -159,7 +207,27 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   }
 
   override fun getNavigationIcon(): Drawable? {
-    return ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_left)
+    return when (type) {
+      FragmentType.ALL_ORDER_VIEW,
+      FragmentType.ORDER_DETAIL_VIEW,
+      FragmentType.APPOINTMENT_DETAIL_VIEW,
+      FragmentType.ALL_APPOINTMENT_VIEW,
+      FragmentType.CREATE_NEW_BOOKING,
+      FragmentType.CREATE_NEW_BOOKING_PAGE_2,
+      FragmentType.ALL_VIDEO_CONSULT_VIEW,
+      FragmentType.VIDEO_CONSULT_DETAIL_VIEW,
+      FragmentType.ADD_CUSTOMER,
+      FragmentType.ADD_PRODUCT,
+      FragmentType.BILLING_DETAIL,
+      FragmentType.CREATE_APPOINTMENT_VIEW,
+      FragmentType.ORDER_INVOICE_VIEW,
+      FragmentType.CREATE_SPA_APPOINTMENT,
+      FragmentType.REVIEW_SPA_DETAILS,
+      FragmentType.ALL_APPOINTMENT_SPA_VIEW,
+      FragmentType.APPOINTMENT_SPA_DETAIL_VIEW,
+      -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_left)
+      else -> super.getNavigationIcon()
+    }
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -251,8 +319,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
         videoConsultDetailsFragment
       }
       FragmentType.CREATE_APPOINTMENT_VIEW -> {
-        createAppointmentFragmentN = CreateAppointmentConsultFragment.newInstance()
-        createAppointmentFragmentN
+        createAppointmentFragment = CreateAppointmentFragment.newInstance()
+        createAppointmentFragment
       }
       FragmentType.ORDER_INVOICE_VIEW -> {
         orderInvoiceFragment = OrderInvoiceFragment.newInstance()
@@ -276,9 +344,16 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    for (fragment in supportFragmentManager.fragments) {
-      fragment.onActivityResult(requestCode, resultCode, data)
-    }
+    ordersFragment?.onActivityResult(requestCode, resultCode, data)
+    appointmentsFragment?.onActivityResult(requestCode, resultCode, data)
+    videoConsultFragment?.onActivityResult(requestCode, resultCode, data)
+    createAppointmentFragment?.onActivityResult(requestCode, resultCode, data)
+    videoConsultDetailsFragment?.onActivityResult(requestCode, resultCode, data)
+    orderInvoiceFragment?.onActivityResult(requestCode, resultCode, data)
+    addCustomerFragment?.onActivityResult(requestCode, resultCode, data)
+    billingDetailFragment?.onActivityResult(requestCode, resultCode, data)
+    reviewAndConfirmFragment?.onActivityResult(requestCode, resultCode, data)
+    spaAppointmentFragment?.onActivityResult(requestCode, resultCode, data)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -308,7 +383,12 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   }
 }
 
-fun Fragment.startFragmentOrderActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+fun Fragment.startFragmentOrderActivity(
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean = false,
+  isResult: Boolean = false
+) {
   val intent = Intent(activity, FragmentContainerOrderActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -316,7 +396,12 @@ fun Fragment.startFragmentOrderActivity(type: FragmentType, bundle: Bundle = Bun
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
-fun startFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean) {
+fun startFragmentActivityNew(
+  activity: Activity,
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean
+) {
   val intent = Intent(activity, FragmentContainerOrderActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -324,7 +409,12 @@ fun startFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bun
   activity.startActivity(intent)
 }
 
-fun AppCompatActivity.startFragmentOrderActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+fun AppCompatActivity.startFragmentOrderActivity(
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean = false,
+  isResult: Boolean = false
+) {
   val intent = Intent(this, FragmentContainerOrderActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
