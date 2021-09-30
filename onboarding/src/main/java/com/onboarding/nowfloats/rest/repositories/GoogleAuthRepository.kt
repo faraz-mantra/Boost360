@@ -23,21 +23,7 @@ object GoogleAuthRepository : AppBaseRepository<GoogleAuthRemoteDataSource, AppB
 
   fun getGoogleAuthToken(req: GoogleAuthTokenRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.getGoogleAuthToken(
-        req?.client_id,
-        req?.client_secret,
-        req?.auth_code,
-        req?.grant_type,
-        req?.redirect_uri
-      ), Taskcode.POST_GOOGLE_AUTH_TOKEN
-    )
-  }
-
-  fun getFirebaseAuthToken(): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.getFirebaseToken(
-       client_id= clientId
-      ), Taskcode.GET_FIREBASE_TOKEN
+      remoteDataSource.getGoogleAuthToken(req?.client_id, req?.client_secret, req?.auth_code, req?.grant_type, req?.redirect_uri), Taskcode.POST_GOOGLE_AUTH_TOKEN
     )
   }
 
