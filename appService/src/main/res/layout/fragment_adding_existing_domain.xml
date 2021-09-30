@@ -16,15 +16,15 @@
                 android:id="@+id/card_step_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_58"
                 android:layout_marginStart="@dimen/size_22"
+                android:layout_marginTop="@dimen/size_8"
                 android:layout_marginEnd="@dimen/size_22"
+                android:visibility="gone"
                 app:cardBackgroundColor="@color/view_background_1"
                 app:cardCornerRadius="20dp"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_step_1">
+                app:layout_constraintTop_toBottomOf="@+id/tv_step_identity_1">
 
                 <LinearLayout
                     android:id="@+id/linear_step_1"
@@ -47,12 +47,21 @@
                         android:layout_marginTop="@dimen/size_24"
                         android:layout_marginEnd="@dimen/size_22"
                         android:gravity="start"
-                        android:textStyle="bold"
                         android:text="@string/login_to_your_provider"
                         android:textAlignment="gravity"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_24"
+                        android:textStyle="bold"
                         app:fontFamily="@font/regular" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvStepOne"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginTop="@dimen/size_16"
+                        android:layout_marginEnd="@dimen/size_22"
+                        android:layout_marginBottom="@dimen/size_24" />
 
                     <com.framework.views.customViews.CustomTextView
                         android:id="@+id/tv_suggested_domain_value"
@@ -68,6 +77,7 @@
                         android:textAlignment="gravity"
                         android:textColor="@color/colorLightBlack"
                         android:textSize="@dimen/text_14"
+                        android:visibility="gone"
                         app:fontFamily="@font/regular" />
 
                 </LinearLayout>
@@ -79,14 +89,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_22"
-                android:layout_marginTop="@dimen/size_310"
+                android:layout_marginTop="@dimen/size_8"
                 android:layout_marginEnd="@dimen/size_22"
                 android:visibility="gone"
                 app:cardBackgroundColor="@color/view_background_1"
                 app:cardCornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/tv_step_identity_2">
 
                 <LinearLayout
                     android:id="@+id/linear_step_2"
@@ -106,13 +116,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/size_22"
                         android:layout_marginTop="@dimen/size_24"
-                        android:textStyle="bold"
                         android:layout_marginEnd="@dimen/size_22"
                         android:gravity="start"
                         android:text="@string/find_your_domain_settings_page"
                         android:textAlignment="gravity"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_24"
+                        android:textStyle="bold"
                         app:fontFamily="@font/regular" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -122,7 +132,7 @@
                         android:layout_marginStart="@dimen/size_22"
                         android:layout_marginTop="@dimen/size_16"
                         android:layout_marginEnd="@dimen/size_22"
-                        android:layout_marginBottom="@dimen/size_24"/>
+                        android:layout_marginBottom="@dimen/size_24" />
 
                     <com.framework.views.customViews.CustomTextView
                         android:layout_width="match_parent"
@@ -133,11 +143,11 @@
                         android:layout_marginBottom="@dimen/size_24"
                         android:fontFamily="@font/barlow_regular"
                         android:gravity="start"
-                        android:visibility="gone"
                         android:text="@string/step_2_instructions"
                         android:textAlignment="gravity"
                         android:textColor="@color/colorLightBlack"
                         android:textSize="@dimen/text_14"
+                        android:visibility="gone"
                         app:fontFamily="@font/regular" />
 
                 </LinearLayout>
@@ -149,14 +159,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_22"
-                android:layout_marginTop="@dimen/size_46"
+                android:layout_marginTop="@dimen/size_8"
                 android:layout_marginEnd="@dimen/size_22"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:cardBackgroundColor="@color/view_background_1"
                 app:cardCornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_step_3">
+                app:layout_constraintTop_toBottomOf="@id/tv_step_identity_3">
 
                 <LinearLayout
                     android:id="@+id/linear_step_3"
@@ -178,12 +188,21 @@
                         android:layout_marginTop="@dimen/size_24"
                         android:layout_marginEnd="@dimen/size_22"
                         android:gravity="start"
-                        android:textStyle="bold"
                         android:text="@string/find_your_nameservers"
                         android:textAlignment="gravity"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_24"
+                        android:textStyle="bold"
                         app:fontFamily="@font/regular" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvStepThree"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginTop="@dimen/size_16"
+                        android:layout_marginEnd="@dimen/size_22"
+                        android:layout_marginBottom="@dimen/size_24" />
 
                     <com.framework.views.customViews.CustomTextView
                         android:layout_width="match_parent"
@@ -198,6 +217,7 @@
                         android:textAlignment="gravity"
                         android:textColor="@color/colorLightBlack"
                         android:textSize="@dimen/text_14"
+                        android:visibility="gone"
                         app:fontFamily="@font/regular" />
 
                 </LinearLayout>
@@ -209,14 +229,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_22"
-                android:layout_marginTop="@dimen/size_300"
+                android:layout_marginTop="@dimen/size_8"
                 android:layout_marginEnd="@dimen/size_22"
                 android:visibility="visible"
                 app:cardBackgroundColor="@color/view_background_1"
                 app:cardCornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/tv_step_identity_4">
 
                 <LinearLayout
                     android:id="@+id/linear_step_final"
@@ -234,13 +254,131 @@
                         android:layout_marginStart="@dimen/size_22"
                         android:layout_marginTop="@dimen/size_24"
                         android:layout_marginEnd="@dimen/size_22"
-                        android:textStyle="bold"
                         android:gravity="start"
                         android:text="@string/replace_your_nameserver"
                         android:textAlignment="gravity"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_24"
+                        android:textStyle="bold"
                         app:fontFamily="@font/regular" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvStepFour_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginTop="@dimen/size_16"
+                        android:layout_marginEnd="@dimen/size_22"
+                        android:layout_marginBottom="@dimen/size_24" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginTop="@dimen/size_12"
+                        android:layout_marginEnd="@dimen/size_22"
+                        android:layout_marginBottom="@dimen/size_12"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_40"
+                            android:background="@drawable/rounded_border_black"
+                            android:backgroundTint="@color/white_f8f8f8"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginEnd="@dimen/size_4"
+                                android:layout_toStartOf="@+id/copy1"
+                                android:background="@drawable/rounded_border_black"
+                                android:backgroundTint="@color/white_f8f8f8"
+                                android:gravity="start|center_vertical"
+                                android:paddingStart="@dimen/size_16"
+                                android:text="@string/ns3_net"
+                                android:textAlignment="gravity"
+                                android:textColor="@color/black_333333"
+                                android:textSize="@dimen/text_12"
+                                app:fontFamily="@font/regular" />
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:id="@+id/copy1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="@dimen/size_4"
+                                android:layout_marginEnd="@dimen/size_4"
+                                android:layout_marginBottom="@dimen/size_4"
+                                android:background="@drawable/bg_text_rounded"
+                                android:backgroundTint="@color/colorPrimary"
+                                android:drawableStart="@drawable/ic_copy_white"
+                                android:fontFamily="@font/regular"
+                                android:gravity="center"
+                                android:paddingStart="@dimen/size_4"
+                                android:paddingEnd="@dimen/size_4"
+                                android:text="@string/copy"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_40"
+                            android:layout_marginTop="@dimen/size_12"
+                            android:background="@drawable/rounded_border_black"
+                            android:backgroundTint="@color/white_f8f8f8"
+                            android:gravity="center_vertical">
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginEnd="@dimen/size_4"
+                                android:layout_toStartOf="@+id/copy2"
+                                android:gravity="start|center_vertical"
+                                android:paddingStart="@dimen/size_16"
+                                android:text="@string/ns3_net"
+                                android:textAlignment="gravity"
+                                android:textColor="@color/black_333333"
+                                android:textSize="@dimen/text_12"
+                                app:fontFamily="@font/regular" />
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:id="@+id/copy2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="@dimen/size_4"
+                                android:layout_marginEnd="@dimen/size_4"
+                                android:layout_marginBottom="@dimen/size_4"
+                                android:background="@drawable/bg_text_rounded"
+                                android:backgroundTint="@color/colorPrimary"
+                                android:drawableStart="@drawable/ic_copy_white"
+                                android:fontFamily="@font/regular"
+                                android:gravity="center"
+                                android:paddingStart="@dimen/size_4"
+                                android:paddingEnd="@dimen/size_4"
+                                android:text="@string/copy"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvStepFour_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginTop="@dimen/size_16"
+                        android:layout_marginEnd="@dimen/size_22"
+                        android:layout_marginBottom="@dimen/size_32"
+                        android:background="@drawable/rounded_border_black"
+                        android:backgroundTint="@color/white_e2e2e2" />
 
                     <com.framework.views.customViews.CustomTextView
                         android:layout_width="match_parent"
@@ -255,6 +393,7 @@
                         android:textAlignment="gravity"
                         android:textColor="@color/colorLightBlack"
                         android:textSize="@dimen/text_14"
+                        android:visibility="gone"
                         app:fontFamily="@font/regular" />
 
                     <com.framework.views.customViews.CustomTextView
@@ -269,6 +408,7 @@
                         android:textAlignment="gravity"
                         android:textColor="@color/colorLightBlack"
                         android:textSize="@dimen/text_14"
+                        android:visibility="gone"
                         app:fontFamily="@font/regular" />
 
                 </LinearLayout>
@@ -287,11 +427,11 @@
                 android:id="@+id/iv_step_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_48"
                 android:layout_marginStart="@dimen/size_24"
-                android:visibility="gone"
+                android:layout_marginTop="@dimen/size_48"
                 android:elevation="@dimen/size_12"
                 android:src="@drawable/ic_domain_step_1"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -301,8 +441,8 @@
                 android:layout_height="292dp"
                 android:layout_marginTop="@dimen/size_32"
                 android:elevation="@dimen/size_12"
-                android:visibility="gone"
                 android:src="@drawable/ic_domain_step_2"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -313,8 +453,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_40"
                 android:elevation="@dimen/size_12"
-                android:visibility="gone"
                 android:src="@drawable/ic_domain_step_3"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -326,24 +466,67 @@
                 android:layout_marginTop="@dimen/size_48"
                 android:layout_marginEnd="@dimen/size_20"
                 android:elevation="@dimen/size_12"
-                android:visibility="visible"
                 android:src="@drawable/ic_domain_final_step"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
             <com.framework.views.customViews.CustomTextView
-                android:id="@+id/tv_step_identity"
+                android:id="@+id/tv_step_identity_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_42"
-                android:layout_marginBottom="@dimen/size_10"
+                android:layout_marginStart="@dimen/size_20"
+                android:layout_marginTop="@dimen/size_300"
+                android:elevation="@dimen/size_4"
                 android:text="@string/step_1_4"
                 android:textColor="@color/colorLightBlack"
                 android:textSize="@dimen/text_12"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/barrier_cards_top"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="@id/card_step_1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_step_identity_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_20"
+                android:layout_marginTop="@dimen/size_300"
+                android:elevation="@dimen/size_4"
+                android:text="@string/step_2_4"
+                android:textColor="@color/colorLightBlack"
+                android:textSize="@dimen/text_12"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/card_step_2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_step_identity_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_20"
+                android:layout_marginTop="@dimen/size_260"
+                android:elevation="@dimen/size_4"
+                android:text="@string/step_3_4"
+                android:textColor="@color/colorLightBlack"
+                android:textSize="@dimen/text_12"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/card_step_3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_step_identity_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_20"
+                android:layout_marginTop="280dp"
+                android:elevation="@dimen/size_4"
+                android:text="@string/step_final"
+                android:textColor="@color/colorLightBlack"
+                android:textSize="@dimen/text_12"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/card_step_final"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/barrier_cards"
@@ -355,7 +538,7 @@
 
             <com.framework.views.customViews.CustomMaterialButton
                 android:id="@+id/btn_next_step"
-                style="@style/ButtonStyleRoundedColorPrimary"
+                style="@style/CustomYellowButton"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="@dimen/size_42"
                 android:layout_marginEnd="24dp"
@@ -370,12 +553,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_32"
+                android:layout_marginBottom="@dimen/size_28"
                 android:drawableStart="@drawable/ic_info_color_primary"
                 android:drawablePadding="@dimen/size_12"
                 android:gravity="center"
                 android:text="@string/not_sure_provide_is"
                 android:textAlignment="gravity"
-                android:layout_marginBottom="@dimen/size_28"
                 android:textColor="@color/black_4a4a4a"
                 android:textSize="@dimen/text_12"
                 app:fontFamily="@font/regular"

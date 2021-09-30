@@ -2,10 +2,6 @@ package com.appservice.ui.domainbooking
 
 import android.os.Bundle
 import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.ClickableSpan
-import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -19,9 +15,11 @@ import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 
 class AddingExistingDomainFragment :
-    AppBaseFragment<FragmentAddingExistingDomainBinding, BaseViewModel>(), RecyclerItemClickListener {
+    AppBaseFragment<FragmentAddingExistingDomainBinding, BaseViewModel>(),
+    RecyclerItemClickListener {
 
     var addingExistingDomainStepStatus = 0
+    var domainNameString = ""
 
     companion object {
         @JvmStatic
@@ -67,9 +65,10 @@ class AddingExistingDomainFragment :
     }
 
     private fun setUiStepStatus() {
+        domainNameString = arguments?.getString("domainName")!!
         when (addingExistingDomainStepStatus) {
             0 -> {
-                binding?.tvStepIdentity?.text = getString(R.string.step_1_4)
+                setupStringOnCards(1)
                 binding?.tvInfo?.text = getString(R.string.not_sure_provide_is)
                 binding?.btnNextStep?.text = getString(R.string.i_logged_in)
                 binding?.cardStep1?.visible()
@@ -80,10 +79,13 @@ class AddingExistingDomainFragment :
                 binding?.ivStep2?.gone()
                 binding?.ivStep3?.gone()
                 binding?.ivStepFinal?.gone()
+                binding?.tvStepIdentity1?.visible()
+                binding?.tvStepIdentity2?.gone()
+                binding?.tvStepIdentity3?.gone()
+                binding?.tvStepIdentity4?.gone()
             }
             1 -> {
                 setupStringOnCards(2)
-                binding?.tvStepIdentity?.text = getString(R.string.step_2_4)
                 binding?.tvInfo?.text = getString(R.string.cant_find_domain_settings)
                 binding?.btnNextStep?.text = getString(R.string.i_found_my_domain_settings)
                 binding?.cardStep1?.gone()
@@ -94,9 +96,13 @@ class AddingExistingDomainFragment :
                 binding?.ivStep2?.visible()
                 binding?.ivStep3?.gone()
                 binding?.ivStepFinal?.gone()
+                binding?.tvStepIdentity1?.gone()
+                binding?.tvStepIdentity2?.visible()
+                binding?.tvStepIdentity3?.gone()
+                binding?.tvStepIdentity4?.gone()
             }
             2 -> {
-                binding?.tvStepIdentity?.text = getString(R.string.step_3_4)
+                setupStringOnCards(3)
                 binding?.tvInfo?.text = getString(R.string.cant_find_nameservers)
                 binding?.btnNextStep?.text = getString(R.string.i_found_the_nameservers)
                 binding?.cardStep1?.gone()
@@ -107,9 +113,13 @@ class AddingExistingDomainFragment :
                 binding?.ivStep2?.gone()
                 binding?.ivStep3?.visible()
                 binding?.ivStepFinal?.gone()
+                binding?.tvStepIdentity1?.gone()
+                binding?.tvStepIdentity2?.gone()
+                binding?.tvStepIdentity3?.visible()
+                binding?.tvStepIdentity4?.gone()
             }
             3 -> {
-                binding?.tvStepIdentity?.text = getString(R.string.step_final)
+                setupStringOnCards(4)
                 binding?.tvInfo?.text = getString(R.string.need_help)
                 binding?.btnNextStep?.text = getString(R.string.i_replaced_the_nameservers)
                 binding?.cardStep1?.gone()
@@ -120,6 +130,10 @@ class AddingExistingDomainFragment :
                 binding?.ivStep2?.gone()
                 binding?.ivStep3?.gone()
                 binding?.ivStepFinal?.visible()
+                binding?.tvStepIdentity1?.gone()
+                binding?.tvStepIdentity2?.gone()
+                binding?.tvStepIdentity3?.gone()
+                binding?.tvStepIdentity4?.visible()
             }
         }
     }
@@ -130,6 +144,9 @@ class AddingExistingDomainFragment :
         when (stepNumber) {
             1 -> {
                 stepsList = stepOneData()
+                val adapter = AppBaseRecyclerViewAdapter(baseActivity, stepsList, this)
+                binding?.rvStepOne?.adapter = adapter
+                binding?.rvStepOne?.layoutManager = LinearLayoutManager(baseActivity)
             }
             2 -> {
                 stepsList = stepTwoData()
@@ -139,37 +156,34 @@ class AddingExistingDomainFragment :
             }
             3 -> {
                 stepsList = stepThreeData()
+                val adapter = AppBaseRecyclerViewAdapter(baseActivity, stepsList, this)
+                binding?.rvStepThree?.adapter = adapter
+                binding?.rvStepThree?.layoutManager = LinearLayoutManager(baseActivity)
             }
             4 -> {
-                stepsList = stepFourData()
+                stepsList = stepFourData1()
+                val adapter1 = AppBaseRecyclerViewAdapter(baseActivity, stepsList, this)
+                binding?.rvStepFour1?.adapter = adapter1
+                binding?.rvStepFour1?.layoutManager = LinearLayoutManager(baseActivity)
+
+                stepsList = stepFourData2()
+                val adapter2 = AppBaseRecyclerViewAdapter(baseActivity, stepsList, this)
+                binding?.rvStepFour2?.adapter = adapter2
+                binding?.rvStepFour2?.layoutManager = LinearLayoutManager(baseActivity)
             }
         }
     }
 
     private fun stepOneData(): ArrayList<DomainStepsModel> {
-        val secondStep =
-            "In case you have a different website (for same business) connected to the domain that you own, you can integrate this website also as a sub-domain on that domain. (what’s subdomain?)"
-        val whatsSubdomain = "(what’s subdomain?)"
-        val whatsSubdomainIndex = secondStep.indexOf(whatsSubdomain)
-
         val stepsList = arrayListOf(
             DomainStepsModel(
-                SpannableString("Since search engines recognize a domain that’s already in use, we recommend integrating any relatable domain name that you currently own."),
-                true
+                SpannableString("Open a new tab in your browser"), true
             ),
-            DomainStepsModel(SpannableString(secondStep).apply {
-                setSpan(
-                    object : ClickableSpan() {
-                        override fun onClick(widget: View) {}
-                    },
-                    whatsSubdomainIndex,
-                    whatsSubdomainIndex + whatsSubdomain.length,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-            }, true),
             DomainStepsModel(
-                SpannableString("If you don’t have any other domain, click on ‘book a new domain’ and choose a domain you like for your business website."),
-                true
+                SpannableString("Go to domain provider’s setting and log in"), true
+            ),
+            DomainStepsModel(
+                SpannableString("Come back here for next steps"), true
             )
         )
 
@@ -178,70 +192,58 @@ class AddingExistingDomainFragment :
 
     private fun stepTwoData(): ArrayList<DomainStepsModel> {
         val stepsList = arrayListOf(
-            DomainStepsModel(SpannableString("On your domain provider’s site, go to ‘domains’ page."), true),
-            DomainStepsModel(SpannableString("Find <b><u>‘samplebusiness.com’</u></b> and go to it’s control panel or settings panel."), true),
-            DomainStepsModel(SpannableString("Find where you manage the domain’s settings. <b>Look for a button or link with the words Manage, Manage settings, domain settings or something similar</b>."), true)
+            DomainStepsModel(
+                SpannableString("On your domain provider’s site, go to ‘domains’ page."),
+                true
+            ),
+            DomainStepsModel(
+                SpannableString("Find <b><u>‘$domainNameString’</u></b> and go to it’s control panel or settings panel."),
+                true
+            ),
+            DomainStepsModel(
+                SpannableString("Find where you manage the domain’s settings. <b>Look for a button or link with the words Manage, Manage settings, domain settings or something similar</b>."),
+                true
+            )
         )
         return stepsList
     }
 
     private fun stepThreeData(): ArrayList<DomainStepsModel> {
-        val secondStep =
-            "In case you have a different website (for same business) connected to the domain that you own, you can integrate this website also as a sub-domain on that domain. (what’s subdomain?)"
-        val whatsSubdomain = "(what’s subdomain?)"
-        val whatsSubdomainIndex = secondStep.indexOf(whatsSubdomain)
-
         val stepsList = arrayListOf(
             DomainStepsModel(
-                SpannableString("Since search engines recognize a domain that’s already in use, we recommend integrating any relatable domain name that you currently own."),
+                SpannableString("In your domain settings, find the area where you manage or edit nameserver records, (help).\n<b>This area could be called DNS settings, Nameservers, NS or similar. If you don’t see it immidiately, try looking for a menu at the top or on the side of this page.</b>"),
                 true
             ),
-            DomainStepsModel(SpannableString(secondStep).apply {
-                setSpan(
-                    object : ClickableSpan() {
-                        override fun onClick(widget: View) {}
-                    },
-                    whatsSubdomainIndex,
-                    whatsSubdomainIndex + whatsSubdomain.length,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-            }, true),
             DomainStepsModel(
-                SpannableString("If you don’t have any other domain, click on ‘book a new domain’ and choose a domain you like for your business website."),
+                SpannableString("Find your current nameservers. They look like this:\n<b>ns-cloud-d1.googleomains.com\nns-cloud-d2.googleomains.com\nns-cloud-d3.googleomains.com\nns-cloud-d4.googleomains.com</b>"),
                 true
-            )
+            ),
         )
-
         return stepsList
     }
 
-    private fun stepFourData(): ArrayList<DomainStepsModel> {
-        val secondStep =
-            "In case you have a different website (for same business) connected to the domain that you own, you can integrate this website also as a sub-domain on that domain. (what’s subdomain?)"
-        val whatsSubdomain = "(what’s subdomain?)"
-        val whatsSubdomainIndex = secondStep.indexOf(whatsSubdomain)
-
+    private fun stepFourData1(): ArrayList<DomainStepsModel> {
         val stepsList = arrayListOf(
             DomainStepsModel(
-                SpannableString("Since search engines recognize a domain that’s already in use, we recommend integrating any relatable domain name that you currently own."),
+                SpannableString("On your domain provider’s site, replace your current nameservers with the <____> nameservers below, one at a time."),
                 true
             ),
-            DomainStepsModel(SpannableString(secondStep).apply {
-                setSpan(
-                    object : ClickableSpan() {
-                        override fun onClick(widget: View) {}
-                    },
-                    whatsSubdomainIndex,
-                    whatsSubdomainIndex + whatsSubdomain.length,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-            }, true),
             DomainStepsModel(
-                SpannableString("If you don’t have any other domain, click on ‘book a new domain’ and choose a domain you like for your business website."),
+                SpannableString("Remove previously written nameservers and add below shown 2 nameservers."),
                 true
             )
         )
+        return stepsList
+    }
 
+    private fun stepFourData2(): ArrayList<DomainStepsModel> {
+        val stepsList = arrayListOf(
+            DomainStepsModel(
+                SpannableString("Now you should have two above mentioned nameserver records. If you have others, just remove them."),
+                true
+            ),
+            DomainStepsModel(SpannableString("Save your changes."), true),
+        )
         return stepsList
     }
 

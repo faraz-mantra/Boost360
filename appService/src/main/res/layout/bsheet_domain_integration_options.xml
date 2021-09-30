@@ -22,7 +22,7 @@
             android:background="@drawable/bg_rounded_top_f8f8f8">
 
             <com.framework.views.customViews.CustomTextView
-                android:id="@+id/customTextView8"
+                android:id="@+id/tv_domain_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -41,7 +41,7 @@
                 android:background="@drawable/bg_rounded_top_white"
                 android:elevation="4dp"
                 android:padding="@dimen/size_24"
-                app:layout_constraintTop_toBottomOf="@+id/customTextView8">
+                app:layout_constraintTop_toBottomOf="@+id/tv_domain_name">
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/customTextView7"
@@ -67,6 +67,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="8dp"
+                        android:background="@drawable/rounded_border_black"
                         android:buttonTint="@color/radio_tint_selector"
                         android:fontFamily="@font/regular"
                         android:padding="4dp"
@@ -77,6 +78,7 @@
                         android:id="@+id/radioCreateASubdomain"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_border_black"
                         android:buttonTint="@color/radio_tint_selector"
                         android:layout_marginVertical="8dp"
                         android:fontFamily="@font/regular"
@@ -87,20 +89,12 @@
 
                 <com.framework.views.customViews.CustomMaterialButton
                     android:id="@+id/btn_continue"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_60"
+                    style="@style/CustomYellowButton"
                     android:layout_marginTop="16dp"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:fontFamily="@font/regular"
                     android:text="@string/continue_txt"
-                    android:textFontWeight="700"
-                    android:textStyle="bold"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_14"
-                    app:cornerRadius="@dimen/size_15"
-                    app:layout_constraintTop_toBottomOf="@+id/radioGroup2"
-                    tools:layout_editor_absoluteX="24dp" />
+                    app:layout_constraintEnd_toEndOf="@+id/customTextView7"
+                    app:layout_constraintStart_toStartOf="@+id/customTextView7"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup2" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

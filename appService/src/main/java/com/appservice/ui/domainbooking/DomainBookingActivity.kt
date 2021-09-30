@@ -1,10 +1,12 @@
 package com.appservice.ui.domainbooking
 
+import android.graphics.Typeface
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
+import android.text.*
 import android.text.style.ClickableSpan
+import android.text.style.StyleSpan
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
@@ -12,6 +14,7 @@ import com.appservice.base.AppBaseActivity
 import com.appservice.databinding.ActivityDomainBookingBinding
 import com.appservice.databinding.BsheetDomainIntegrationOptionsBinding
 import com.appservice.databinding.BsheetInputOwnDomainBinding
+import com.appservice.databinding.BsheetInputSubDomainBinding
 import com.appservice.model.domainBooking.DomainDetailsResponse
 import com.appservice.model.domainBooking.request.ExistingDomainRequest
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
@@ -21,6 +24,7 @@ import com.appservice.ui.domainbooking.model.DomainStepsModel
 import com.appservice.utils.Validations
 import com.appservice.viewmodel.DomainBookingViewModel
 import com.framework.base.BaseActivity
+import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -100,27 +104,7 @@ class DomainBookingActivity :
         bSheet.setCancelable(false)
 
         sheetBinding.btnContinue.setOnClickListener {
-            sheetBinding.progressBottomSheet.visible()
-            if (validateData(sheetBinding)) {
-                existingDomainRequest = ExistingDomainRequest(
-                    clientId,
-                    session?.fpTag,
-                    sheetBinding.etDomain.text.toString(),
-                    ""
-                )
-                viewModel.addExistingDomain(
-                    clientId,
-                    session?.fpTag,
-                    existingDomainRequest
-                ).observeOnce(this, {
-                    sheetBinding.progressBottomSheet.gone()
-                    showBsheetIntegrationOption()
-                    bSheet.dismiss()
-                })
-            } else {
-                sheetBinding.progressBottomSheet.gone()
-                showShortToast(getString(R.string.error_wrong_domain_entered))
-            }
+            validateDomainAndCallApi(sheetBinding, bSheet)
         }
         sheetBinding.ivClose.setOnClickListener {
             bSheet.dismiss()
@@ -129,11 +113,51 @@ class DomainBookingActivity :
         bSheet.show()
     }
 
+    private fun validateDomainAndCallApi(
+        sheetBinding: BsheetInputOwnDomainBinding,
+        bSheet: BottomSheetDialog
+    ) {
+        if (validateData(sheetBinding)) {
+            showBsheetIntegrationOption(sheetBinding.etDomain.text.toString())
+            bSheet.dismiss()
+        } else {
+            showShortToast(getString(R.string.error_wrong_domain_entered))
+        }
+    }
+
+    /**
+     * Api Call for Adding Existing Domain to Boost
+     * */
+    private fun addExistingDomainApiCall(enteredDomainName: String, subDomainName: String) {
+        showProgress()
+        existingDomainRequest = ExistingDomainRequest(
+            clientId,
+            session.fpTag,
+            enteredDomainName,
+            subDomainName
+        )
+        viewModel.addExistingDomain(
+            clientId,
+            session.fpTag,
+            existingDomainRequest
+        ).observeOnce(this, {
+            hideProgress()
+            val bundle = Bundle()
+            bundle.putString("domainName", enteredDomainName)
+            startFragmentDomainBookingActivity(
+                activity = this,
+                type = com.appservice.constant.FragmentType.ADDING_EXISTING_DOMAIN_FRAGMENT,
+                bundle = bundle,
+                clearTop = false
+            )
+        })
+    }
+
     private fun validateData(sheetBinding: BsheetInputOwnDomainBinding): Boolean {
         return Validations.isDomainValid(sheetBinding.etDomain.text.toString())
     }
 
-    private fun showBsheetIntegrationOption() {
+    private fun showBsheetIntegrationOption(enteredDomainName: String) {
         val bSheet = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
         val sheetBinding = DataBindingUtil.inflate<BsheetDomainIntegrationOptionsBinding>(
             layoutInflater,
@@ -142,6 +166,7 @@ class DomainBookingActivity :
         bSheet.setContentView(sheetBinding.root)
         bSheet.setCancelable(false)
 
+        sheetBinding.tvDomainName.text = enteredDomainName
         domainIntegrationUserSelection = 0
         sheetBinding.radioAsBusinessWebsite.isChecked = true
         sheetBinding.radioGroup2.setOnCheckedChangeListener { group, checkedId ->
@@ -157,12 +182,12 @@ class DomainBookingActivity :
 
         sheetBinding.btnContinue.setOnClickListener {
             if (domainIntegrationUserSelection == 0)
-                startFragmentDomainBookingActivity(
-                    activity = this,
-                    type = com.appservice.constant.FragmentType.ADDING_EXISTING_DOMAIN_FRAGMENT,
-                    bundle = Bundle(),
-                    clearTop = false
+                addExistingDomainApiCall(
+                    enteredDomainName,
+                    ""
                 )
+            else
+                showSubDomainBottomSheet(enteredDomainName)
             bSheet.dismiss()
         }
 
@@ -171,6 +196,46 @@ class DomainBookingActivity :
         }
         bSheet.show()
 
+    }
+
+    private fun showSubDomainBottomSheet(enteredDomainName: String) {
+        val bSheet = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
+        val sheetBinding =
+            DataBindingUtil.inflate<BsheetInputSubDomainBinding>(
+                layoutInflater,
+                R.layout.bsheet_input_sub_domain,
+                null,
+                false
+            )
+        bSheet.setContentView(sheetBinding.root)
+        bSheet.setCancelable(false)
+
+        sheetBinding.tvDomainName.text = Html.fromHtml("<u>.$enteredDomainName</u>")
+        sheetBinding.tvSubDomain.hint = Html.fromHtml("<u>${getString(R.string.example)}</u>")
+
+        sheetBinding.etSubDomain.afterTextChanged {
+            var buttonColor: Int
+            if (it.isEmpty()) {
+                buttonColor = R.color.white_e2e2e2
+                sheetBinding.btnContinue.isEnabled = false
+            } else {
+                buttonColor = R.color.colorPrimary
+                sheetBinding.btnContinue.isEnabled = true
+            }
+            sheetBinding.btnContinue.setBackgroundColor(
+                ContextCompat.getColor(baseActivity, buttonColor)
+            )
+            sheetBinding.tvSubDomain.text = Html.fromHtml("<u>$it</u>")
+        }
+
+        sheetBinding.btnContinue.setOnClickListener {
+            addExistingDomainApiCall(enteredDomainName, sheetBinding.etSubDomain.text.toString())
+        }
+        sheetBinding.ivClose.setOnClickListener {
+            bSheet.dismiss()
+        }
+        this.showKeyBoard(sheetBinding.etSubDomain)
+        bSheet.show()
     }
 
     private fun setupUI() {
@@ -210,10 +275,11 @@ class DomainBookingActivity :
             if (domainDetailsResponse.domainName != null && domainDetailsResponse.domainName.isNotEmpty()) {
                 startFragmentDomainBookingActivity(
                     activity = this,
-                    type = com.appservice.constant.FragmentType.ACTIVE_NEW_DOMAIN_FRAGMENT,
+                    type = com.appservice.constant.FragmentType.ACTIVE_DOMAIN_FRAGMENT,
                     bundle = Bundle(),
                     clearTop = false
                 )
+                finish()
             } else {
                 premiumMode()
             }
@@ -222,12 +288,12 @@ class DomainBookingActivity :
 
 
     private fun isPremium(): Boolean {
-        return session?.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false
+        return true//session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false
     }
 
     private fun setupSteps() {
         val secondStep =
-            "In case you have a different website (for same business) connected to the domain that you own, you can integrate this website also as a sub-domain on that domain. (what’s subdomain?)"
+            getString(R.string.domain_second_step_text)
         val whatsSubdomain = "(what’s subdomain?)"
         val whatsSubdomainIndex = secondStep.indexOf(whatsSubdomain)
 
@@ -242,7 +308,7 @@ class DomainBookingActivity :
                         setSpan(
                             object : ClickableSpan() {
                                 override fun onClick(widget: View) {
-
+                                    showLongToast("A subdomain is a subdivision of a domain")
                                 }
 
                             },
@@ -250,6 +316,8 @@ class DomainBookingActivity :
                             whatsSubdomainIndex + whatsSubdomain.length,
                             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
+                        val styleSpan = StyleSpan(Typeface.BOLD)
+                        setSpan(styleSpan, whatsSubdomainIndex, whatsSubdomainIndex + whatsSubdomain.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
                     }, false
             ),
             DomainStepsModel(

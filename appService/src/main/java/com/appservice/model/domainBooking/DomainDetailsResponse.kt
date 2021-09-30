@@ -45,7 +45,4 @@ data class DomainDetailsResponse(
     @field:SerializedName("NameServers")
     val nameServers: Any? = null
 
-) : BaseResponse(), Serializable {
-
-
-}
+) : BaseResponse(), Serializable

@@ -27,7 +27,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <include layout="@layout/active_domain_details_card"
+                <include
+                    android:id="@+id/layout_include_domain_card"
+                    layout="@layout/active_domain_details_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/size_24"
@@ -66,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_lock_grey" />
+                    android:src="@drawable/ic_lock_gray_filled" />
 
             </androidx.cardview.widget.CardView>
 

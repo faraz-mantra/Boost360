@@ -2,6 +2,7 @@ package com.appservice.holder
 
 import android.text.Html
 import android.text.method.LinkMovementMethod
+import android.widget.TextView
 import com.appservice.databinding.ItemPdfFileBinding
 import com.appservice.databinding.ListItemStepsDomainBinding
 import com.appservice.model.FileModel

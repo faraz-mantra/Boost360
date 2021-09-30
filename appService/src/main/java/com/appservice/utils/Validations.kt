@@ -6,12 +6,15 @@ import java.util.regex.Pattern
 object Validations {
 
     fun isDomainValid(domainString: CharSequence?): Boolean {
-        val patternDomain: Pattern = Pattern.compile(DOMAIN_FORMAT)
-        val matcher: Matcher = patternDomain.matcher(domainString!!)
+        var domainWithoutWWW = ""
+        if (domainString.isNullOrEmpty() || domainString.isNullOrBlank())
+            return false
 
-        return if (domainString.isNullOrEmpty())
-            false
-        else matcher.matches()
+        domainWithoutWWW = if (domainString.startsWith("www"))
+            domainString.toString().replace("www.", "")
+        else
+            domainString.toString()
 
+        return Pattern.compile(DOMAIN_FORMAT).matcher(domainWithoutWWW).matches()
     }
 }
