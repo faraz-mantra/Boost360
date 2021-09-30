@@ -211,7 +211,7 @@ class AddingExistingDomainFragment :
     private fun stepThreeData(): ArrayList<DomainStepsModel> {
         val stepsList = arrayListOf(
             DomainStepsModel(
-                SpannableString("In your domain settings, find the area where you manage or edit nameserver records, (help).\n<b>This area could be called DNS settings, Nameservers, NS or similar. If you don’t see it immidiately, try looking for a menu at the top or on the side of this page.</b>"),
+                SpannableString("In your domain settings, find the area where you manage or edit nameserver records, <b><u>(help)</u>.\n\nThis area could be called DNS settings, Nameservers, NS or similar. If you don’t see it immediately, try looking for a menu at the top or on the side of this page.</b>"),
                 true
             ),
             DomainStepsModel(

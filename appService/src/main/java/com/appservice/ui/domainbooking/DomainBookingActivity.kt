@@ -181,12 +181,12 @@ class DomainBookingActivity :
         }
 
         sheetBinding.btnContinue.setOnClickListener {
-            if (domainIntegrationUserSelection == 0)
+            if (domainIntegrationUserSelection == 0) {
                 addExistingDomainApiCall(
                     enteredDomainName,
                     ""
                 )
-            else
+            }else
                 showSubDomainBottomSheet(enteredDomainName)
             bSheet.dismiss()
         }
@@ -288,12 +288,11 @@ class DomainBookingActivity :
 
 
     private fun isPremium(): Boolean {
-        return true//session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false
+        return session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false
     }
 
     private fun setupSteps() {
-        val secondStep =
-            getString(R.string.domain_second_step_text)
+        val secondStep = "In case you have a different website (for same business) connected to the domain that you own, you can integrate this website also as a sub-domain on that domain. <b><u>(what’s subdomain?)</u></b>"
         val whatsSubdomain = "(what’s subdomain?)"
         val whatsSubdomainIndex = secondStep.indexOf(whatsSubdomain)
 
