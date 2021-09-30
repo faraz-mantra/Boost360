@@ -21,7 +21,9 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 
 class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding, AppointmentSettingsViewModel>() {
+
   var addBankAccountRequest: AddBankAccountRequest? = null
+
   override fun getLayout(): Int {
     return R.layout.fragment_add_bank_details
   }
@@ -77,7 +79,7 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
 
   private fun addBankAccount() {
     showProgress()
-    hitApi(viewModel?.addBankAccount(sessionLocal.fPID,clientId = clientId, addBankAccountRequest!!), R.string.error_adding_bank_account)
+    hitApi(viewModel?.addBankAccount(sessionLocal.fPID, clientId = clientId, addBankAccountRequest!!), R.string.error_adding_bank_account)
   }
 
   override fun onSuccess(it: BaseResponse) {
@@ -122,6 +124,10 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
     }
     if (accountNumber.isEmpty()) {
       showLongToast(getString(R.string.enter_account_number))
+      return false
+    }
+    if (accountNumber.length < 9) {
+      showShortToast(getString(R.string.account_less_than_nine))
       return false
     }
     if (accountNumberConfirm.isEmpty()) {

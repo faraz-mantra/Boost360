@@ -119,7 +119,7 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
     } else {
       binding?.upiIdHeading?.visible()
       binding?.upiId?.visible()
-      binding?.upiId?.text = data?.result?.uPIId
+      binding?.upiId?.text = data?.result?.getUpiId()
       binding?.divider3?.visible()
 
     }

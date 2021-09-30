@@ -93,15 +93,15 @@
         android:background="@drawable/bg_button_proceed_4"
         android:drawableEnd="@drawable/ic_arrow_top_right"
         android:drawablePadding="@dimen/size_8"
-        android:fontFamily="@font/regular"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
+        android:textAllCaps="false"
         android:paddingHorizontal="@dimen/size_20"
         android:stateListAnimator="@null"
         android:text="@string/view_on_website"
         android:textColor="@color/white"
         android:textSize="14sp"
-        android:layout_marginBottom="@dimen/size_20"
-        android:textStyle="bold" />
+        android:layout_marginBottom="@dimen/size_20" />
 
       <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"

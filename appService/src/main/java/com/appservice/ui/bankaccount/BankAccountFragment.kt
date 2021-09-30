@@ -151,11 +151,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
         (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimaryDark)
       } else {
         if (isPendingToastShow) showLongToast(resources.getString(R.string.account_verification_pending))
-        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(
-          resources.getString(
-            R.string.my_bank_account
-          ), resources.getDimensionPixelSize(R.dimen.size_10)
-        )
+        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.my_bank_account_), resources.getDimensionPixelSize(R.dimen.size_10))
       }
       onBankAccountAddedOrUpdated(true)
     } else {

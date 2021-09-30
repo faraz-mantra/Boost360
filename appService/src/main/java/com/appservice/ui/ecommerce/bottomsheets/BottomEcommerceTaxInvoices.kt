@@ -41,7 +41,7 @@ class BottomEcommerceTaxInvoices : BaseBottomSheetDialog<BottomSheetSetupTaxInvo
     val parent = (requireParentFragment() as? FragmentEcommerceCustomerInvoiceSetup)
     this.paymentProfileDetails = arguments?.getSerializable(IntentConstant.PAYMENT_PROFILE_DETAILS.name) as? PaymentResult
     isEdit = paymentProfileDetails != null
-    binding?.cetUpiId?.setText(paymentProfileDetails?.uPIId)
+    binding?.cetUpiId?.setText(paymentProfileDetails?.getUpiId())
     val images = arguments?.getSerializable(IntentConstant.IMAGE_SIGNATURE.name) as ArrayList<FileModel>
     if (images.isNullOrEmpty().not()) setImage(images, parent = parent) else setImage(parent!!)
     if (paymentProfileDetails?.uPIId.isNullOrEmpty().not()) binding?.checkboxUpiId?.isChecked = true

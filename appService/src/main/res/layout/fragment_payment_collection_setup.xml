@@ -51,15 +51,16 @@
         <com.framework.views.customViews.CustomTextView
           style="@style/AppointmentSetting_Text_Heading"
           android:text="@string/payment_gateway"
-          android:visibility="visible" />
+          android:visibility="gone" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
           style="@style/match_wrap"
           android:layout_marginTop="@dimen/size_5"
+          android:layout_marginBottom="@dimen/size_16"
           android:background="@drawable/bg_rect_white_rounded_4"
           android:orientation="vertical"
           android:paddingVertical="@dimen/size_16"
-          android:visibility="visible">
+          android:visibility="gone">
 
           <com.framework.views.customViews.CustomTextField
             android:id="@+id/boost_payment_gateway"
@@ -128,7 +129,6 @@
 
         <com.framework.views.customViews.CustomTextView
           style="@style/AppointmentSetting_Text_Heading"
-          android:layout_marginTop="@dimen/size_16"
           android:text="@string/accept_cod_payments" />
 
         <com.framework.views.customViews.CustomTextView
@@ -231,7 +231,7 @@
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/bank_name_account_number"
             style="@style/Appointment_Text_Subheading"
-            android:layout_marginTop="-5dp"
+            android:layout_marginTop="-2dp"
             android:fontFamily="@font/semi_bold"
             android:paddingHorizontal="@dimen/size_16"
             android:textColor="@color/yellow_ffb900"

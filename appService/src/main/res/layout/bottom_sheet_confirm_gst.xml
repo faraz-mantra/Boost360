@@ -49,16 +49,18 @@
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/txt_payment_mode"
           style="@style/match_wrap"
-          android:layout_marginVertical="@dimen/size_6"
+          android:layout_marginVertical="@dimen/size_10"
           android:layout_marginStart="@dimen/size_20"
           android:drawablePadding="@dimen/size_10"
           android:text="@string/is_this_correct"
+          app:fontFamily="@font/semi_bold"
           android:textColor="@color/black_3333"
           app:textType="HEADING_6" />
 
 
         <LinearLayout
           style="@style/match_wrap"
+          android:id="@+id/note_view"
           android:background="@color/yellow_orange_22"
           android:orientation="horizontal"
           android:paddingHorizontal="@dimen/size_20"
@@ -75,6 +77,7 @@
             style="@style/wrap_wrap"
             android:layout_marginTop="@dimen/size_10"
             android:orientation="vertical"
+            app:textType="BODY_1"
             android:text="@string/note_gst_is_a_legal_identity_that_will_be_printed_in_your_invoice_boost_does_not_take_responsiblity_if_you_enter_invalid_gstin"
             android:textColor="@color/black_3333" />
 

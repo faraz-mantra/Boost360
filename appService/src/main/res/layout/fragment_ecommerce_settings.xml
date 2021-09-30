@@ -20,7 +20,6 @@
         style="@style/SearchView.WhiteBackground"
         android:layout_height="@dimen/size_40"
         android:gravity="center_vertical"
-        android:textSize="12sp"
         app:iconifiedByDefault="false"
         app:queryHint="@string/search_in_the_ecommerce_settings"
         app:searchIcon="@null" />

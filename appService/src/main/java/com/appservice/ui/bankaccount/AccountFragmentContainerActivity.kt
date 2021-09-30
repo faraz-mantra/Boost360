@@ -110,7 +110,7 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
 
   override fun getToolbarTitle(): String? {
    return when (type){
-     FragmentType.ADD_BANK_ACCOUNT_START->getString(R.string.my_bank_account)
+     FragmentType.ADD_BANK_ACCOUNT_START->getString(R.string.my_bank_account_)
      else -> super.getToolbarTitle()
    }
 

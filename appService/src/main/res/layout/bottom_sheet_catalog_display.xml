@@ -64,12 +64,33 @@
 
       </RadioGroup>
 
-      <com.framework.views.customViews.CustomTextField
-        android:id="@+id/ctv_custom_display_hint"
-        style="@style/Appointment_Text_Field"
+      <FrameLayout
+        android:id="@+id/custom_display_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/size_20"
-        android:hint="@string/enter_custom_display_text"
-        android:visibility="gone" />
+        android:visibility="gone">
+
+        <com.framework.views.customViews.CustomTextField
+          android:id="@+id/ctv_custom_display_hint"
+          style="@style/Appointment_Text_Field"
+          android:hint="@string/enter_custom_display_text"
+          android:maxLength="12"
+          android:maxLines="1"
+          android:paddingEnd="@dimen/size_30"
+          tools:ignore="RtlSymmetry" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/text_count"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="right|center_vertical"
+          android:layout_marginEnd="@dimen/size_10"
+          android:text="12"
+          android:textColor="@color/black_4a4a4a"
+          app:textType="BODY_1" />
+      </FrameLayout>
+
 
       <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/match_wrap"

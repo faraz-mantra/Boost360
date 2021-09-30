@@ -33,7 +33,8 @@
   <string name="write_the_name_as_mentioned_in_bank_account">Write the name as mentioned in bank account</string>
   <string name="xxxxxxxxxxxxxxxxxx">XXXXXXXXXXXXXXXXXX</string>
 
-  <string name="my_bank_account">My Bank Account</string>
+  <string name="my_bank_account">My bank account</string>
+  <string name="my_bank_account_">My Bank Account</string>
   <string name="adding_bank_account">Adding Bank Account</string>
   <string name="link_bank_account">Link Bank Account</string>
 
@@ -560,11 +561,11 @@
   <string name="gstin">GSTIN</string>
   <string name="enter_you_business_gstin">Enter you business GSTIN</string>
   <string name="this_bank_account_will_be_used_for_monentary_transactions_in_case_of_online_payment"><b>Note:</b> This bank account will be used for monetary transactions in case of online payment.</string>
-  <string name="enter_account_holder_name">enter account holder name</string>
-  <string name="enter_account_number">enter account number</string>
-  <string name="please_confirm_account_number">please confirm account number</string>
-  <string name="account_number_is_not_same">account number and confirm account number must be same</string>
-  <string name="enter_bank_ifcs">enter bank ifcs code</string>
+  <string name="enter_account_holder_name">Enter account holder name</string>
+  <string name="enter_account_number">Enter account number</string>
+  <string name="please_confirm_account_number">Please confirm account number</string>
+  <string name="account_number_is_not_same">Account number and confirm account number must be same</string>
+  <string name="enter_bank_ifcs">Enter bank ifcs code</string>
   <string name="company_name_">Company Name</string>
   <string name="nowfloats_technologies_pvt_ltd">Nowfloats Technologies Pvt Ltd.</string>
   <string name="upi_id">UPI ID</string>
@@ -573,7 +574,7 @@
   <string name="uploaded">Uploaded</string>
   <string name="press_enter_on_keyboard_to_add_more_categories">Press enter on keyboard to add more categories</string>
   <string name="enter_categories">Enter categories</string>
-  <string name="fli_p_covers">fli p covers</string>
+  <string name="fli_p_covers">Flip covers</string>
   <string name="add_another_category">Add another category</string>
   <string name="add_new_category">Add new category</string>
   <string name="_18">18 %</string>

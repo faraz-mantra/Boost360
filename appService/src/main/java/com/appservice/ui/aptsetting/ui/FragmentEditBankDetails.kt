@@ -1,4 +1,5 @@
 package com.appservice.ui.aptsetting.ui
+
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -21,113 +22,115 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 
 class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, AppointmentSettingsViewModel>() {
-    var addBankAccountRequest: AddBankAccountRequest? = null
-    override fun getLayout(): Int {
-        return R.layout.fragment_edit_bank_details
+
+  var addBankAccountRequest: AddBankAccountRequest? = null
+
+  override fun getLayout(): Int {
+    return R.layout.fragment_edit_bank_details
+  }
+
+  override fun getViewModelClass(): Class<AppointmentSettingsViewModel> {
+    return AppointmentSettingsViewModel::class.java
+  }
+
+  companion object {
+    fun newInstance(): FragmentEditBankDetails {
+      return FragmentEditBankDetails()
+    }
+  }
+
+  override fun onCreateView() {
+    super.onCreateView()
+    setOnClickListener(binding?.submitBtn, binding?.layoutAccountUnderProcess?.verificationBtn)
+    getAccountDetails()
+    sessionLocal = UserSessionManager(requireActivity())
+  }
+
+  private fun getAccountDetails() {
+    showProgress()
+    hitApi(viewModel?.getPaymentProfileDetails(sessionLocal.fPID, clientId = clientId), (R.string.error_getting_bank_details))
+  }
+
+
+  private fun showAccountVerificationStatus() {
+    binding?.layoutAccountUnderProcess?.root?.visible()
+    binding?.layoutAccountVerified?.root?.gone()
+
+  }
+
+  private fun showSuccessVerificationStatus() {
+    binding?.layoutAccountUnderProcess?.root?.gone()
+    binding?.layoutAccountVerified?.root?.visible()
+  }
+
+
+  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    inflater.inflate(R.menu.ic_menu_appointment_edit, menu)
+    super.onCreateOptionsMenu(menu, inflater)
+
+  }
+
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when (v) {
+      binding?.layoutAccountUnderProcess?.verificationBtn -> {
+        baseActivity.onNavPressed()
+      }
+    }
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when (item.itemId) {
+      R.id.menu_edit -> {
+        val bundle = Bundle()
+        bundle.putBoolean(IntentConstant.EDIT_ACCOUNT.name, true)
+        startFragmentActivity(FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS, bundle, false, isResult = false)
+      }
+      else -> {
+      }
+    }
+    return super.onOptionsItemSelected(item)
+  }
+
+  private fun addBankAccount() {
+    showProgress()
+    hitApi(viewModel?.addBankAccount(sessionLocal.fPID, clientId = clientId, addBankAccountRequest!!), R.string.error_adding_bank_account)
+
+  }
+
+  override fun onSuccess(it: BaseResponse) {
+    super.onSuccess(it)
+    when (it.taskcode) {
+      TaskCode.ADD_BANK_ACCOUNT.ordinal -> onAddingBankAccount(it)
+      TaskCode.GET_PAYMENT_PROFILE_DETAILS.ordinal -> onReceivedBankDetails(it)
+    }
+  }
+
+  private fun onReceivedBankDetails(it: BaseResponse) {
+    hideProgress()
+    val paymentProfileResponse = it as PaymentProfileResponse
+    binding?.edtBankName?.text = paymentProfileResponse.result?.bankAccountDetails?.bankName
+    binding?.edtAccountName?.text = paymentProfileResponse.result?.bankAccountDetails?.accountName
+    binding?.edtAlias?.text = paymentProfileResponse.result?.bankAccountDetails?.accountAlias
+    binding?.edtAccountNumber?.text = paymentProfileResponse.result?.bankAccountDetails?.accountNumber
+    binding?.edtConfirmNumber?.text = paymentProfileResponse.result?.bankAccountDetails?.accountNumber
+    binding?.edtIfsc?.text = paymentProfileResponse.result?.bankAccountDetails?.iFSC
+    val verifyText = it.result?.bankAccountDetails?.getVerifyText()
+    if (verifyText == "unverified") {
+      showAccountVerificationStatus()
+    } else {
+      showSuccessVerificationStatus()
     }
 
-    override fun getViewModelClass(): Class<AppointmentSettingsViewModel> {
-        return AppointmentSettingsViewModel::class.java
+  }
+
+  private fun onAddingBankAccount(it: BaseResponse) {
+    hideProgress()
+    if (it.isSuccess()) {
+      val bundle = Bundle()
+      bundle.putBoolean(IntentConstant.IS_EDIT.name, false)
+      startFragmentActivity(FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS, bundle, false, isResult = false)
     }
-
-    companion object {
-        fun newInstance(): FragmentEditBankDetails {
-            return FragmentEditBankDetails()
-        }
-    }
-
-    override fun onCreateView() {
-        super.onCreateView()
-        setOnClickListener(binding?.submitBtn,binding?.layoutAccountUnderProcess?.verificationBtn)
-        getAccountDetails()
-        sessionLocal = UserSessionManager(requireActivity())
-    }
-
-    private fun getAccountDetails() {
-        showProgress()
-        hitApi(viewModel?.getPaymentProfileDetails(sessionLocal.fPID,clientId = clientId), (R.string.error_getting_bank_details))
-    }
-
-
-    private fun showAccountVerificationStatus() {
-        binding?.layoutAccountUnderProcess?.root?.visible()
-        binding?.layoutAccountVerified?.root?.gone()
-
-    }
-
-    private fun showSuccessVerificationStatus() {
-        binding?.layoutAccountUnderProcess?.root?.gone()
-        binding?.layoutAccountVerified?.root?.visible()
-    }
-
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.ic_menu_appointment_edit, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-
-    }
-
-    override fun onClick(v: View) {
-        super.onClick(v)
-        when(v){
-            binding?.layoutAccountUnderProcess?.verificationBtn->{
-                baseActivity.onNavPressed()
-            }
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menu_edit -> {
-                val bundle = Bundle()
-                bundle.putBoolean(IntentConstant.EDIT_ACCOUNT.name, true)
-                startFragmentActivity(FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS, bundle, false, isResult = false)
-            }
-            else -> {
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun addBankAccount() {
-        showProgress()
-        hitApi(viewModel?.addBankAccount(sessionLocal.fPID,clientId = clientId,addBankAccountRequest!!), R.string.error_adding_bank_account)
-
-    }
-
-    override fun onSuccess(it: BaseResponse) {
-        super.onSuccess(it)
-        when (it.taskcode) {
-            TaskCode.ADD_BANK_ACCOUNT.ordinal -> onAddingBankAccount(it)
-            TaskCode.GET_PAYMENT_PROFILE_DETAILS.ordinal -> onReceivedBankDetails(it)
-        }
-    }
-
-    private fun onReceivedBankDetails(it: BaseResponse) {
-        hideProgress()
-        val paymentProfileResponse = it as PaymentProfileResponse
-        binding?.edtBankName?.setText(paymentProfileResponse.result?.bankAccountDetails?.bankName)
-        binding?.edtAccountName?.setText(paymentProfileResponse.result?.bankAccountDetails?.accountName)
-        binding?.edtAlias?.setText(paymentProfileResponse.result?.bankAccountDetails?.accountAlias)
-        binding?.edtAccountNumber?.setText(paymentProfileResponse.result?.bankAccountDetails?.accountNumber)
-        binding?.edtConfirmNumber?.setText(paymentProfileResponse.result?.bankAccountDetails?.accountNumber)
-        binding?.edtIfsc?.setText(paymentProfileResponse.result?.bankAccountDetails?.iFSC)
-        val verifyText = it.result?.bankAccountDetails?.getVerifyText()
-        if (verifyText == "unverified") {
-            showAccountVerificationStatus()
-        } else {
-            showSuccessVerificationStatus()
-        }
-
-    }
-
-    private fun onAddingBankAccount(it: BaseResponse) {
-        hideProgress()
-        if (it.isSuccess()) {
-            val bundle = Bundle()
-            bundle.putBoolean(IntentConstant.IS_EDIT.name, false)
-            startFragmentActivity(FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS, bundle, false, isResult = false)
-        }
-    }
+  }
 
 }

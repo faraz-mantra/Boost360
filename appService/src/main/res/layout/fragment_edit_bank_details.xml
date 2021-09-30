@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_match_root">
 
@@ -9,6 +10,7 @@
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:fillViewport="true"
+      app:layout_constraintBottom_toTopOf="@+id/bottom_view"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent">
@@ -146,37 +148,41 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <include
-          android:id="@+id/layout_account_verified"
-          layout="@layout/bottom_sheet_bank_account_verified"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/size_20"
-          android:visibility="gone" />
-
-        <include
-          android:id="@+id/layout_account_under_process"
-          layout="@layout/bottom_sheet_verification_under_process"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/size_20"
-          android:visibility="visible" />
-
       </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-
-    <com.framework.views.customViews.CustomButton
-      android:id="@+id/submit_btn"
-      style="@style/Appointment.ButtonStyle"
+    <FrameLayout
+      android:id="@+id/bottom_view"
       android:layout_width="match_parent"
-      android:layout_marginHorizontal="@dimen/size_20"
-      android:text="@string/submit_for_verification"
-      android:visibility="gone"
+      android:layout_height="wrap_content"
       app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/nestedScrollView2"
-      app:layout_constraintVertical_bias="0.851" />
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent">
 
+      <include
+        android:id="@+id/layout_account_verified"
+        layout="@layout/bottom_sheet_bank_account_verified"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+      <include
+        android:id="@+id/layout_account_under_process"
+        layout="@layout/bottom_sheet_verification_under_process"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/submit_btn"
+        style="@style/Appointment.ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginBottom="@dimen/size_20"
+        android:text="@string/submit_for_verification"
+        android:visibility="gone" />
+    </FrameLayout>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 
