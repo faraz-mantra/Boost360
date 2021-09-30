@@ -95,6 +95,19 @@
                     app:layout_constraintEnd_toEndOf="@+id/customTextView7"
                     app:layout_constraintStart_toStartOf="@+id/customTextView7"
                     app:layout_constraintTop_toBottomOf="@+id/radioGroup2" />
+
+
+                <ProgressBar
+                    android:id="@+id/progress_bottom_sheet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:visibility="gone"
+                    android:indeterminateTint="@color/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
