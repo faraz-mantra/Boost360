@@ -12,6 +12,7 @@ import com.boost.presignin.model.other.PaymentKycDataResponse
 import com.boost.presignin.rest.repository.WebActionBoostKitRepository
 import com.boost.presignin.rest.repository.WithFloatRepository
 import com.boost.presignin.rest.repository.WithFloatTwoRepository
+import com.framework.analytics.SentryController
 import com.framework.models.toLiveData
 import com.framework.pref.Key_Preferences.PREF_KEY_TWITTER_LOGIN
 import com.framework.pref.Key_Preferences.PREF_USER_NAME
@@ -150,6 +151,8 @@ class APIService : Service() {
     return try {
       JSONObject().apply { put("fpTag", userSessionManager?.fpTag) }.toString()
     } catch (e: JSONException) {
+      SentryController.captureException(e)
+
       ""
     }
   }

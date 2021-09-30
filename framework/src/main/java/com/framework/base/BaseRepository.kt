@@ -1,5 +1,7 @@
 package com.framework.base
 
+import android.util.Log
+import com.framework.analytics.SentryController
 import com.framework.exceptions.BaseException
 import com.framework.exceptions.NoNetworkException
 import com.framework.utils.NetworkUtils
@@ -45,12 +47,14 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
         val response = getResponseValue(it, "Error")
         response.status = it.code()
         response.error = BaseException(it.errorBody()?.string() ?: "")
+        SentryController.captureException(Exception(it.raw().toString()))
         response.error?.localizedMessage?.let { it1 -> response.message = it1 }
         response.taskcode = taskCode
         onFailure(response, taskCode)
         return@map response
       }
     }.onErrorReturn {
+      SentryController.captureException(Exception(it.localizedMessage))
       it.printStackTrace()
       val response = BaseResponse()
       response.error = it
