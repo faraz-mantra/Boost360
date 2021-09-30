@@ -24,6 +24,7 @@ import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.service.APIService
 import com.boost.presignin.ui.intro.IntroActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
+import com.framework.analytics.SentryController
 import com.framework.extensions.observeOnce
 import com.framework.pref.*
 import com.google.android.material.snackbar.Snackbar
@@ -177,6 +178,8 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
       }
     } catch (e: ClassNotFoundException) {
       Log.e("Home Page", e.localizedMessage)
+      SentryController.captureException(e)
+
       session.logoutUser()
     }
   }
@@ -239,6 +242,8 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
 
     } catch (e: Exception) {
       e.printStackTrace()
+      SentryController.captureException(e)
+
       return false
     }
     return status
@@ -254,6 +259,8 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
             flags = Intent.FLAG_ACTIVITY_NEW_TASK;
           })
         } catch (e: Exception) {
+          SentryController.captureException(e)
+
           Toast.makeText(this@LoaderActivity, "Unable to find network settings. Please do it manually from phone's settings", Toast.LENGTH_LONG).show()
           Log.e(TAG, "updateUiInternetNotAvailable: " + e.localizedMessage)
         }

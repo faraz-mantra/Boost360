@@ -119,7 +119,10 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
       startActivity(dashboardIntent)
       baseActivity.finish()
       hideProgress()
+
     } catch (e: Exception) {
+      SentryController.captureException(e)
+
       e.printStackTrace()
     }
   }

@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import com.boost.presignin.R
 import com.boost.presignin.views.otptextview.Utils
+import com.framework.analytics.SentryController
 
 class ItemView : FrameLayout {
 
@@ -122,6 +123,7 @@ class ItemView : FrameLayout {
         val tf = Typeface.createFromAsset(context.assets, otpTextTypeFace)
         textView?.typeface = tf
       } catch (e: Exception) {
+        SentryController.captureException(e)
         e.printStackTrace()
       }
 
