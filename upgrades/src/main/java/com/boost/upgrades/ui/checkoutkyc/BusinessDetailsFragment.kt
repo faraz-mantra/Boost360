@@ -145,14 +145,14 @@ class BusinessDetailsFragment : DialogFragment() {
                 BusinessDetails(
                   "+91",
                   if (business_email_address.text.isEmpty()) null else business_email_address.text.toString(),
-                  if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString()
+                  if (business_contact_number.text!!.isEmpty()) null else business_contact_number.text.toString()
                 ),
                 (activity as UpgradeActivity).clientid,
                 "+91",
                 "ANDROID",
                 "",
                 (activity as UpgradeActivity).fpid!!,
-                if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString(),
+                if (business_contact_number.text!!.isEmpty()) null else business_contact_number.text.toString(),
                 if (business_name_value.text.isEmpty()) null else business_name_value.text.toString(),
                 TaxDetails(
                   if (business_gstin_number.text.isEmpty()) null else business_gstin_number.text.toString(),
@@ -180,14 +180,14 @@ class BusinessDetailsFragment : DialogFragment() {
                   BusinessDetails(
                     "+91",
                     if (business_email_address.text.isEmpty()) null else business_email_address.text.toString(),
-                    if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString()
+                    if (business_contact_number.text!!.isEmpty()) null else business_contact_number.text.toString()
                   ),
                   (activity as UpgradeActivity).clientid,
                   "+91",
                   "ANDROID",
                   "",
                   (activity as UpgradeActivity).fpid,
-                  if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString(),
+                  if (business_contact_number.text!!.isEmpty()) null else business_contact_number.text.toString(),
                   if (business_name_value.text.isEmpty()) null else business_name_value.text.toString(),
                   TaxDetails(
                     if (business_gstin_number.text.isEmpty()) null else business_gstin_number.text.toString(),
@@ -213,14 +213,14 @@ class BusinessDetailsFragment : DialogFragment() {
                   BusinessDetails(
                     "+91",
                     if (business_email_address.text.isEmpty()) null else business_email_address.text.toString(),
-                    if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString()
+                    if (business_contact_number.text!!.isEmpty()) null else business_contact_number.text.toString()
                   ),
                   (activity as UpgradeActivity).clientid,
                   "+91",
                   "ANDROID",
                   "",
                   (activity as UpgradeActivity).fpid,
-                  if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString(),
+                  if (business_contact_number.text!!.isEmpty()) null else business_contact_number.text.toString(),
                   gst_business_name_value.text.toString(),
                   TaxDetails(
                     if (business_gstin_number.text.isEmpty()) null else business_gstin_number.text.toString(),
@@ -247,14 +247,14 @@ class BusinessDetailsFragment : DialogFragment() {
                   BusinessDetails(
                     "+91",
                     if (business_email_address.text.isEmpty()) null else business_email_address.text.toString(),
-                    if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString()
+                    if (business_contact_number.text!!.isEmpty()) null else business_contact_number.text.toString()
                   ),
                   (activity as UpgradeActivity).clientid,
                   "+91",
                   "ANDROID",
                   "",
                   (activity as UpgradeActivity).fpid,
-                  if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString(),
+                  if (business_contact_number.text!!.isEmpty()) null else business_contact_number.text.toString(),
                   gst_business_name_value.text.toString(),
                   TaxDetails(
                     if (business_gstin_number.text.isEmpty()) null else business_gstin_number.text.toString(),
@@ -403,7 +403,7 @@ class BusinessDetailsFragment : DialogFragment() {
   }
 
   private fun validateAgreement(): Boolean {
-    if (business_contact_number.text.isEmpty() || business_email_address.text.isEmpty() || business_city_name.text.isEmpty()
+    if (business_contact_number.text!!.isEmpty() || business_email_address.text.isEmpty() || business_city_name.text.isEmpty()
       || business_name_value.text.isEmpty() || business_address.text.isEmpty() || (gstFlag && business_gstin_number.text.isEmpty())
     ) {
       Log.v("business_name_value", " " + business_name_value.text.toString())
@@ -416,7 +416,7 @@ class BusinessDetailsFragment : DialogFragment() {
         business_gstin_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
       }
 
-      if (business_contact_number.text.isEmpty()) {
+      if (business_contact_number.text!!.isEmpty()) {
         business_contact_number.setBackgroundResource(R.drawable.et_validity_error)
         Toasty.error(requireContext(), "Please enter Mobile no.", Toast.LENGTH_LONG).show()
         return false
@@ -427,7 +427,7 @@ class BusinessDetailsFragment : DialogFragment() {
             .show()
           return false
         } else {
-          business_contact_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
+//          business_contact_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
         }
       }
 
@@ -491,7 +491,7 @@ class BusinessDetailsFragment : DialogFragment() {
         .show()
       return false
     } else {
-      business_contact_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
+//      business_contact_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
     }
 
     /*if (!confirm_checkbox.isChecked) {
