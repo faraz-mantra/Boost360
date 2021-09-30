@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.databinding.ViewDataBinding
 import com.boost.presignin.R
+import com.framework.analytics.SentryController
 import com.framework.base.BaseFragment
 import com.framework.models.BaseViewModel
 import com.onboarding.nowfloats.constant.PreferenceConstant
@@ -77,6 +78,8 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
       startActivity(i)
     } catch (e: Exception) {
       e.printStackTrace()
+      SentryController.captureException(e)
+
     }
   }
 
