@@ -100,23 +100,23 @@ open class DomainBookingContainerActivity :
     private fun getFragmentInstance(type: FragmentType?): BaseFragment<*, *>? {
         return when (type) {
             FragmentType.BOOK_A_DOMAIN_SSL_FRAGMENT -> {
-                bookDomainSslFragment = BookDomainSslFragment.newInstance()
+                bookDomainSslFragment = BookDomainSslFragment.newInstance(intent.extras)
                 bookDomainSslFragment
             }
             FragmentType.ADDING_EXISTING_DOMAIN_FRAGMENT -> {
-                addingExistingDomainFragment = AddingExistingDomainFragment.newInstance()
+                addingExistingDomainFragment = AddingExistingDomainFragment.newInstance(intent.extras)
                 addingExistingDomainFragment
             }
             FragmentType.ACTIVE_DOMAIN_FRAGMENT -> {
-                activeExistingDomainFragment = ActiveExistingDomainFragment.newInstance()
+                activeExistingDomainFragment = ActiveExistingDomainFragment.newInstance(intent.extras)
                 activeExistingDomainFragment
             }
             FragmentType.CONFIRMING_DOMAIN_FRAGMENT -> {
-                confirmingDomainFragment = ConfirmingDomainFragment.newInstance()
+                confirmingDomainFragment = ConfirmingDomainFragment.newInstance(intent.extras)
                 confirmingDomainFragment
             }
             FragmentType.ACTIVE_NEW_DOMAIN_FRAGMENT -> {
-                activeNewDomainFragment = ActiveNewDomainFragment.newInstance()
+                activeNewDomainFragment = ActiveNewDomainFragment.newInstance(intent.extras)
                 activeNewDomainFragment
             }
             else -> throw IllegalFragmentTypeException()
