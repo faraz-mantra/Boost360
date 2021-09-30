@@ -177,7 +177,7 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
       session.logoutUser(this)
       SentryController.captureException(e)
 
-      session.logoutUser()
+      session.logoutUser(this)
     }
   }
 
