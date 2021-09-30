@@ -101,6 +101,7 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/size_16"
             android:paddingVertical="@dimen/size_12"
+            app:textType="CAPTION"
             android:text="@string/url_https_sravansclinics_com_products"
             app:layout_constraintTop_toBottomOf="parent" />
         </androidx.appcompat.widget.LinearLayoutCompat>

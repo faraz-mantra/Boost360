@@ -4,6 +4,7 @@ import com.appservice.model.accountDetails.BankAccountDetails
 import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import java.util.*
 
 data class PaymentProfileResponse(
 
@@ -103,7 +104,11 @@ data class PaymentResult(
 
   @field:SerializedName("PaymentConfiguration")
   var paymentConfiguration: PaymentConfiguration? = null,
-) : Serializable{
+) : Serializable {
+
+  fun getUpiId(): String? {
+    return if (uPIId.isNullOrEmpty() || uPIId?.toLowerCase(Locale.ROOT)?.equals("null") == true) "" else uPIId
+  }
 }
 
 data class AdditionalKYCDocumentsItem(

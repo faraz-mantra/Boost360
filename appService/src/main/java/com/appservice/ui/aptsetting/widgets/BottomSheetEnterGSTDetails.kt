@@ -21,6 +21,7 @@ import java.util.regex.Pattern
 class BottomSheetEnterGSTDetails : BaseBottomSheetDialog<BottomSheetEnterGstDetailsBinding, AppointmentSettingsViewModel>() {
 
   var isEdit = false
+  var isECommerce = false
   private var paymentProfileDetails: PaymentResult? = null
   var gstIn: (gst: String?) -> Unit = { }
   var businessName: (name: String?) -> Unit = { }
@@ -30,6 +31,9 @@ class BottomSheetEnterGSTDetails : BaseBottomSheetDialog<BottomSheetEnterGstDeta
     SAVECHANGES, CANCEL, NO_GST
   }
 
+  fun setType(isECommerce: Boolean) {
+    this.isECommerce = isECommerce
+  }
 
   companion object {
     fun isValidGSTNo(str: String?): Boolean {
@@ -84,20 +88,22 @@ class BottomSheetEnterGSTDetails : BaseBottomSheetDialog<BottomSheetEnterGstDeta
   private fun gstNotRegistered(isChecked: Boolean) {
     if (isChecked) {
       binding?.edtView?.gone()
-      binding?.txtNote?.gone()
       binding?.btnSaveChanges?.isEnabled = true
-      binding?.gstRegisterCheck?.visible()
       binding?.btnSaveChanges?.text = getString(R.string.continue_)
+      binding?.txtNote?.gone()
+      binding?.rcmView?.gone()
+      binding?.gstRegisterCheck?.visible()
     }
   }
 
   private fun gstRegistered(isChecked: Boolean) {
     if (isChecked) {
       binding?.edtView?.visible()
-      binding?.txtNote?.visible()
       binding?.btnSaveChanges?.isEnabled = true
-      binding?.gstRegisterCheck?.gone()
       binding?.btnSaveChanges?.text = getString(R.string.save_changes)
+      binding?.gstRegisterCheck?.gone()
+      binding?.txtNote?.visible()
+      if (this.isECommerce) binding?.rcmView?.visible() else binding?.rcmView?.gone()
     }
   }
 

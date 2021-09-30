@@ -11,12 +11,13 @@ import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
+import com.onboarding.nowfloats.extensions.afterTextChanged
 
 class BottomSheetCatalogDisplayName : BaseBottomSheetDialog<BottomSheetCatalogDisplayBinding, BaseViewModel>() {
 
   private var fpDetails: UserFpDetailsResponse? = null
   var customText: String? = null
-  var onClicked: (customText: String?,fpDetails: UserFpDetailsResponse?) -> Unit = { _: String?, _: UserFpDetailsResponse? -> }
+  var onClicked: (customText: String?, fpDetails: UserFpDetailsResponse?) -> Unit = { _: String?, _: UserFpDetailsResponse? -> }
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_catalog_display
@@ -31,6 +32,7 @@ class BottomSheetCatalogDisplayName : BaseBottomSheetDialog<BottomSheetCatalogDi
     binding?.radioService?.text = getProductType(sessionManager?.fP_AppExperienceCode)
     dialog.setCancelable(false)
     this.fpDetails = arguments?.getSerializable(IntentConstant.CATALOG_DATA.name) as? UserFpDetailsResponse
+    binding?.ctvCustomDisplayHint?.afterTextChanged { binding?.textCount?.text = "${12 - it.length}" }
     if (this.fpDetails?.productCategoryVerb.isNullOrEmpty().not()) {
       binding?.radioGroup?.check(R.id.radio_custom_text)
       radioCustomText()
@@ -50,14 +52,14 @@ class BottomSheetCatalogDisplayName : BaseBottomSheetDialog<BottomSheetCatalogDi
   }
 
   private fun radioCustomText() {
-    binding?.ctvCustomDisplayHint?.visible()
+    binding?.customDisplayView?.visible()
     binding?.btnCancel?.visible()
     binding?.btnProceed?.text = getString(R.string.proceed)
     binding?.ctvCustomDisplayHint?.setText(fpDetails?.productCategoryVerb)
   }
 
   private fun initRadio() {
-    binding?.ctvCustomDisplayHint?.gone()
+    binding?.customDisplayView?.gone()
     if (this.fpDetails?.productCategoryVerb.isNullOrEmpty().not()) {
       binding?.btnCancel?.visible()
       binding?.btnProceed?.text = getString(R.string.proceed)
@@ -75,7 +77,7 @@ class BottomSheetCatalogDisplayName : BaseBottomSheetDialog<BottomSheetCatalogDi
         customText = if (binding?.radioGroup?.checkedRadioButtonId != R.id.radio_service) {
           binding?.ctvCustomDisplayHint?.text.toString()
         } else getProductType(sessionManager?.fP_AppExperienceCode)
-        if (binding?.btnProceed?.text?.equals(getString(R.string.proceed)) == true) onClicked(customText,fpDetails)
+        if (binding?.btnProceed?.text?.equals(getString(R.string.proceed)) == true) onClicked(customText, fpDetails)
         dismiss()
       }
     }

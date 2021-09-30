@@ -112,7 +112,7 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
       binding?.hintEnterGst?.gone()
 
     }
-    if (data?.result?.uPIId.isNullOrEmpty()) {
+    if (data?.result?.uPIId.isNullOrEmpty() || data?.result?.uPIId == "null") {
       binding?.upiIdHeading?.gone()
       binding?.upiId?.gone()
       binding?.divider3?.gone()
@@ -120,7 +120,7 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
     } else {
       binding?.upiIdHeading?.visible()
       binding?.upiId?.visible()
-      binding?.upiId?.text = data?.result?.uPIId
+      binding?.upiId?.text = data?.result?.getUpiId()
       binding?.divider3?.visible()
 
     }
@@ -189,6 +189,7 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
 
   private fun showEnterBusinessGSTIN() {
     val bottomSheetEnterGSTDetails = BottomSheetEnterGSTDetails()
+    bottomSheetEnterGSTDetails.setType(true)
     bottomSheetEnterGSTDetails.businessName = {
       binding?.ctvCompanyName?.text = it
       binding?.ctvCompanyName?.visible()
@@ -214,6 +215,7 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
 
   private fun openConfirmGstBottomSheet() {
     val bottomSheetConfirmGST = BottomSheetConfirmGST()
+    bottomSheetConfirmGST.setType(true)
     val bundle = Bundle()
     bundle.putString(IntentConstant.GSTIN.name, data?.result?.taxDetails?.gSTDetails?.gSTIN)
     bundle.putString(IntentConstant.BUSINESSNAME.name, data?.result?.taxDetails?.gSTDetails?.businessName)
@@ -224,8 +226,8 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
         hitApi(viewModel?.invoiceSetup(InvoiceSetupRequest(panDetails = null, gSTDetails = data?.result?.taxDetails?.gSTDetails, tanDetails = null, clientId = clientId, floatingPointId = sessionLocal.fPID)), (R.string.error_updating_gst_details))
       }
       if (it == BottomSheetConfirmGST.ClickType.CANCEL) {
-//                data?.result?.taxDetails?.gSTDetails?.gSTIN = ""
-//                data?.result?.taxDetails?.gSTDetails?.businessName = ""
+//        data?.result?.taxDetails?.gSTDetails?.gSTIN = ""
+//        data?.result?.taxDetails?.gSTDetails?.businessName = ""
       }
     }
     bottomSheetConfirmGST.show(childFragmentManager, BottomSheetConfirmGST::class.java.name)

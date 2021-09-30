@@ -7,11 +7,13 @@
 
   </data>
 
-  <androidx.constraintlayout.widget.ConstraintLayout
+  <androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/size_8"
     android:background="@drawable/rounded_stroke_grey"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
     android:paddingVertical="@dimen/_6dp"
     android:paddingStart="@dimen/size_6"
     android:paddingEnd="@dimen/size_4">
@@ -22,9 +24,7 @@
       android:layout_height="@dimen/size_34"
       android:layout_gravity="start"
       app:cardBackgroundColor="@color/white_smoke_1"
-      app:cardCornerRadius="@dimen/size_2"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
+      app:cardCornerRadius="@dimen/size_2">
 
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/image"
@@ -38,14 +38,11 @@
       android:layout_width="0dp"
       android:layout_height="@dimen/size_26"
       android:layout_marginHorizontal="@dimen/size_4"
+      android:layout_weight="1"
       android:background="@drawable/rounded_stroke_grey_service_information"
       android:orientation="horizontal"
       android:paddingVertical="@dimen/size_2"
-      android:paddingEnd="@dimen/size_8"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toStartOf="@+id/cb_change"
-      app:layout_constraintStart_toEndOf="@+id/customCardView2"
-      app:layout_constraintTop_toTopOf="parent">
+      android:paddingEnd="@dimen/size_8">
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/ctv_size"
@@ -94,10 +91,6 @@
       android:text="@string/change"
       android:textAllCaps="false"
       android:textColor="@color/warm_grey_two"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.932"
-      app:layout_constraintTop_toTopOf="parent"
       app:textType="OVERLINE" />
-  </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
