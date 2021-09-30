@@ -26,7 +26,10 @@ class ProductViewModel : BaseViewModel() {
 
   fun getProductListing(fpTag: String?, clientId: String?, skipBy: Int?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getProductListing(fpTag, clientId, skipBy).toLiveData()
+  }
 
+  fun getProductListingCount(fpTag: String?, clientId: String?, skipBy: Int?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getProductListingCount(fpTag, clientId, skipBy).toLiveData()
   }
 
   fun updateProduct(request: ProductUpdate?): LiveData<BaseResponse> {

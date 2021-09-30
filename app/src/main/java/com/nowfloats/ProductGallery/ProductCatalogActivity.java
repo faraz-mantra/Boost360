@@ -4,12 +4,7 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -37,14 +32,12 @@ import com.nowfloats.ProductGallery.Adapter.ProductCategoryRecyclerAdapter;
 import com.nowfloats.ProductGallery.Model.ImageListModel;
 import com.nowfloats.ProductGallery.Model.Product;
 import com.nowfloats.ProductGallery.Service.ProductGalleryInterface;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.nowfloats.widget.WidgetKey;
-import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityProductCatalogBinding;
@@ -459,7 +452,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         newProduct.setPrepaidOnlineAvailable(p.prepaidOnlineAvailable);
         newProduct.setMaxPrepaidOnlineAvailable(p.maxPrepaidOnlineAvailable);
         if (p.BuyOnlineLink != null) {
-            newProduct.setBuyOnlineLink(new com.appservice.model.serviceProduct.BuyOnlineLink(p.BuyOnlineLink.url, p.BuyOnlineLink.description));
+            newProduct.setUniquePaymentUrl(new com.appservice.model.serviceProduct.UniquePaymentUrlN(p.BuyOnlineLink.url, p.BuyOnlineLink.description));
         }
         if (p.keySpecification != null) {
             newProduct.setKeySpecification(new com.appservice.model.KeySpecification(p.keySpecification.key, p.keySpecification.value));

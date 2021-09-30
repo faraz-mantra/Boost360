@@ -7,20 +7,12 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.TextPaint
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.text.style.ForegroundColorSpan
-import android.text.style.UnderlineSpan
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -29,6 +21,7 @@ import com.appservice.constant.IntentConstant
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentProductListingBinding
 import com.appservice.model.serviceProduct.CatalogProduct
+import com.appservice.model.serviceProduct.CatalogProductCountResponse
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.PaginationScrollListener
@@ -48,7 +41,6 @@ import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
-import com.squareup.picasso.Target
 import java.util.*
 
 class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, ProductViewModel>(), RecyclerItemClickListener, AppOnZeroCaseClicked {
@@ -71,7 +63,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
   /* Paging */
   private var isLoadingD = false
   private var TOTAL_ELEMENTS = 0
-  private var limit: Int = PaginationScrollListener.PAGE_SIZE
+  private var skip: Int = PaginationScrollListener.PAGE_START
   private var isLastPageD = false
 
   override fun getLayout(): Int {
@@ -111,8 +103,8 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     sessionLocal = UserSessionManager(requireActivity())
     layoutManagerN = LinearLayoutManager(baseActivity)
     layoutManagerN?.let { scrollPagingListener(it) }
-    getProductListing(isFirst = true, skipBy = limit)
     setOnClickListener(binding?.cbAddProduct)
+    getProductListing(isFirst = true, skipBy = skip)
     this.fragmentZeroCase = AppRequestZeroCaseBuilder(AppZeroCases.PRODUCT, this, baseActivity).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, fragmentZeroCase, false)
   }
@@ -134,8 +126,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
         if (!isLastPageD) {
           isLoadingD = true
           adapterProduct?.addLoadingFooter(CatalogProduct().getLoaderItem())
-          TOTAL_ELEMENTS = finalList.size
-          getProductListing(skipBy = limit)
+          getProductListing(skipBy = finalList.size)
         }
       }
 
@@ -150,38 +141,39 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
 
   private fun getProductListing(isFirst: Boolean = false, skipBy: Int? = null) {
     if (isFirst) showProgress()
-    viewModel?.getProductListing(fpTag, clientId, skipBy)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getProductListingCount(fpTag, clientId, skipBy)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
-        setProductDataItems((it.anyResponse as? ArrayList<CatalogProduct>), isFirst)
+        val data = it as? CatalogProductCountResponse
+        setProductDataItems(data?.Products, data?.TotalCount, isFirst)
       } else if (isFirst) showShortToast(it.message())
       if (isFirst) hideProgress()
     })
   }
 
-  private fun setProductDataItems(resultProduct: ArrayList<CatalogProduct>?, isFirstLoad: Boolean) {
-    if (isFirstLoad) finalList.clear()
-    when {
-      resultProduct.isNullOrEmpty().not() -> {
-        removeLoader()
+  private fun setProductDataItems(resultProduct: ArrayList<CatalogProduct>?, totalCount: Int?, isFirstLoad: Boolean) {
+    if (isFirstLoad) {
+      finalList.clear()
+      if (resultProduct.isNullOrEmpty().not()) {
         setEmptyView(View.GONE)
-        finalList.addAll(resultProduct!!)
-        limit = finalList.size
-        list.clear()
-        list.addAll(finalList)
-        isLastPageD = (finalList.size == TOTAL_ELEMENTS)
-        setAdapterNotify()
-        var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
-        if (fpDetails.isNullOrEmpty()) fpDetails = "Products"
-        setToolbarTitle("$fpDetails (${limit})".capitalizeUtil())
-      }
-      isFirstLoad -> setEmptyView(View.VISIBLE)
-      resultProduct.isNullOrEmpty().not() -> {
-        list.clear()
-        list.addAll(resultProduct!!)
-        setAdapterNotify()
-      }
-      else -> removeLoader()
+        setListProduct(resultProduct, totalCount)
+      } else setEmptyView(View.VISIBLE)
+    } else if (resultProduct.isNullOrEmpty().not()) {
+      removeLoader()
+      setListProduct(resultProduct, totalCount)
     }
+  }
+
+  private fun setListProduct(resultProduct: ArrayList<CatalogProduct>?, totalCount: Int?) {
+    finalList.addAll(resultProduct!!)
+    skip = finalList.size
+    list.clear()
+    list.addAll(finalList)
+    TOTAL_ELEMENTS = totalCount ?: 0
+    isLastPageD = (finalList.size == TOTAL_ELEMENTS)
+    setAdapterNotify()
+    var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
+    if (fpDetails.isNullOrEmpty()) fpDetails = "Products"
+    setToolbarTitle("$fpDetails ${if (TOTAL_ELEMENTS > 0) "(${TOTAL_ELEMENTS})" else ""}".capitalizeUtil())
   }
 
 
@@ -281,8 +273,8 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
       val isRefresh = data?.getBooleanExtra(IntentConstant.IS_UPDATED.name, false) ?: false
       if (isRefresh) {
-        this.limit = PaginationScrollListener.PAGE_SIZE
-        getProductListing(isFirst = true, skipBy = limit)
+        this.skip = PaginationScrollListener.PAGE_START
+        getProductListing(isFirst = true, skipBy = skip)
       }
     }
   }
@@ -291,7 +283,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     super.onResume()
     var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
     if (fpDetails.isNullOrEmpty()) fpDetails = "Products"
-    setToolbarTitle("$fpDetails (${limit})".capitalizeUtil())
+    setToolbarTitle("$fpDetails ${if (TOTAL_ELEMENTS > 0) "(${TOTAL_ELEMENTS})" else ""}".capitalizeUtil())
   }
 
   override fun showProgress(title: String?, cancelable: Boolean?) {
@@ -345,6 +337,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
   }
 
   override fun secondaryButtonClicked() {
+    startFragmentActivity(FragmentType.ECOMMERCE_SETTINGS)
   }
 
   override fun ternaryButtonClicked() {

@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import com.framework.R
 import com.framework.databinding.FragmentZeroCaseBinding
 import com.framework.extensions.gone
+import com.framework.extensions.visible
 import com.framework.views.zero.FragmentZeroCase
 import com.framework.views.zero.ZeroCases
 import com.framework.views.zero.old.AppZeroCases.*
@@ -122,6 +123,7 @@ class AppFragmentZeroCase : Fragment() {
     if (button != null) {
       // primary button properties
       if (button.primaryButtonTitle != null) {
+        binding.cvPrimary.visible()
         if (button.primaryButtonBackground != null)
           binding.btnPrimary.setBackgroundColor(getColor(button.primaryButtonBackground))
         else binding.btnPrimary.setBackgroundColor(getColor(R.color.white))
@@ -133,6 +135,7 @@ class AppFragmentZeroCase : Fragment() {
       }
       // secondary button properties
       if (button.secondaryButtonTitle != null) {
+        binding.cvSecondary.visible()
         if (button.secondaryButtonBackground != null)
           binding.btnSecondary.setBackgroundColor(getColor(R.color.white))
         else binding.btnSecondary.background = ContextCompat.getDrawable(requireContext(), R.drawable.stroke_accent)
@@ -144,6 +147,7 @@ class AppFragmentZeroCase : Fragment() {
       }
       // tertiary button properties
       if (button.tertiaryButtonTitle != null) {
+        binding.cvTertiary.visible()
         if (button.tertiaryButtonBackground != null)
           binding.btnTertiary.setBackgroundColor(getColor(button.tertiaryButtonBackground))
         else binding.btnTertiary.setBackgroundColor(getColor(R.color.white))
@@ -327,9 +331,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
               primaryButtonBackground = R.color.colorPrimary,
               primaryButtonIconLeft = R.drawable.ic_create_white,
               secondaryButtonIconLeft = R.drawable.ic_appointment_settings_secondary,
-              secondaryButtonTitle = context.getString(
-                R.string.setup_ecommerce
-              ),
+              secondaryButtonTitle = context.getString(R.string.setup_ecommerce),
               tertiaryButtonIconLeft = R.drawable.ic_services_tutorial_tertiary_icon,
               tertiaryButtonTitle = context.getString(R.string.watch_how_it_works)
             )

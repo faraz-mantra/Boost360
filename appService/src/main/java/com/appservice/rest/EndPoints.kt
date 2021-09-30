@@ -77,6 +77,7 @@ object EndPoints {
   const val UPDATE_PRODUCT = "Product/v1/Update"
   const val DELETE_PRODUCT = "Product/v1/Delete"
   const val GET_PRODUCT_LISTING = "Product/v1/GetListings"
+  const val GET_PRODUCT_LISTING_COUNT = "Product/v1/GetListingsWithCount"
 
 
   //TODO Appointment Settings API 2 WITH FLOAT

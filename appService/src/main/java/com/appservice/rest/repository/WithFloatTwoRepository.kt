@@ -66,6 +66,10 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.getProductListing(fptag, clientId, skipBy), TaskCode.GET_PRODUCT_LISTING)
   }
 
+  fun getProductListingCount(fptag: String?, clientId: String?, skipBy: Int?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getProductListingCount(fptag, clientId, skipBy), TaskCode.GET_PRODUCT_LISTING)
+  }
+
   override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {
     return WithFloatTwoRemoteData::class.java
   }
