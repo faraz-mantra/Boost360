@@ -24,7 +24,7 @@ import com.appservice.model.deviceId
 import com.appservice.model.pickUpAddress.PickUpAddressResponse
 import com.appservice.model.pickUpAddress.PickUpData
 import com.appservice.model.product.ProductItemsResponseItem
-import com.appservice.model.serviceProduct.BuyOnlineLink
+import com.appservice.model.serviceProduct.UniquePaymentUrlN
 import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.addProductImage.ActionDataI
 import com.appservice.model.serviceProduct.addProductImage.ImageI
@@ -60,8 +60,6 @@ import com.framework.models.caplimit_feature.getCapData
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_TAG
 import com.framework.pref.clientId
 import com.framework.utils.hideKeyBoard
-import com.framework.pref.clientId
-import com.framework.pref.clientId1
 import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
@@ -266,8 +264,8 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     when (product?.paymentType) {
       CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value -> {
         binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
-        binding?.edtUrl?.setText(product?.BuyOnlineLink?.url ?: "")
-        binding?.edtNameDesc?.setText(product?.BuyOnlineLink?.description ?: "")
+        binding?.edtUrl?.setText(product?.uniquePaymentUrl?.url ?: "")
+        binding?.edtNameDesc?.setText(product?.uniquePaymentUrl?.description ?: "")
         binding?.bankAccountView?.gone()
         binding?.externalUrlView?.visible()
       }
@@ -549,8 +547,8 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     product?.Price = if (toggle) amount else 0.0
     product?.DiscountAmount = if (toggle) discount else 0.0
     if (toggle && (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value)) {
-      product?.BuyOnlineLink = BuyOnlineLink(url = externalUrl, description = externalUrlName)
-    } else product?.BuyOnlineLink = BuyOnlineLink()
+      product?.uniquePaymentUrl = UniquePaymentUrlN(url = externalUrl, description = externalUrlName)
+    } else product?.uniquePaymentUrl = UniquePaymentUrlN()
 
     if (isEdit == false) {
       product?.category = product?.category ?: ""

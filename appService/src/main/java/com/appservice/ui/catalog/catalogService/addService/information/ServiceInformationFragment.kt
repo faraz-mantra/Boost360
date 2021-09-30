@@ -14,7 +14,7 @@ import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentServiceInformationBinding
 import com.appservice.model.FileModel
 import com.appservice.model.KeySpecification
-import com.appservice.model.serviceProduct.BuyOnlineLink
+import com.appservice.model.serviceProduct.UniquePaymentUrlN
 import com.appservice.model.serviceTiming.BusinessHourTiming
 import com.appservice.model.serviceTiming.ServiceTime
 import com.appservice.model.serviceTiming.ServiceTiming
@@ -312,7 +312,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         product?.keySpecification?.value = valSpecification
         product?.maxCodOrders = ordersQuantity
         product?.otherSpecification = otherSpec
-        product?.BuyOnlineLink = BuyOnlineLink(description = websiteName, url = websiteValue)
+        product?.BuyOnlineLink = UniquePaymentUrlN(description = websiteName, url = websiteValue)
         product?.GstSlab = 18//gst.toIntOrNull() ?: 0;
         val output = Intent()
         output.putExtra(IntentConstant.PRODUCT_DATA.name, product)

@@ -4,6 +4,7 @@ import com.appservice.model.MerchantSummaryResponse
 import com.appservice.model.aptsetting.*
 import com.appservice.model.product.ProductItemsResponseItem
 import com.appservice.model.serviceProduct.CatalogProduct
+import com.appservice.model.serviceProduct.CatalogProductCountResponse
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.model.updateBusiness.BusinessUpdateResponse
@@ -44,6 +45,9 @@ interface WithFloatTwoRemoteData {
 
   @GET(EndPoints.GET_PRODUCT_LISTING)
   fun getProductListing(@Query("fpTag") fpTag: String?, @Query("clientId") clientId: String?, @Query("skipBy") skipBy: Int?): Observable<Response<List<CatalogProduct>>>
+
+  @GET(EndPoints.GET_PRODUCT_LISTING_COUNT)
+  fun getProductListingCount(@Query("fpTag") fpTag: String?, @Query("clientId") clientId: String?, @Query("skipBy") skipBy: Int?): Observable<Response<CatalogProductCountResponse>>
 
   @GET(EndPoints.GET_NOTIFICATION)
   fun getNotificationCount(

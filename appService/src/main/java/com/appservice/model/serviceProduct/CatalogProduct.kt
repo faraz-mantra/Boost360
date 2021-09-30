@@ -67,6 +67,15 @@ class CatalogProduct(
   var brandName: String? = null,
   var category: String? = null,
 
+  @SerializedName("sharedPlatforms")
+  var sharedPlatforms: List<Any>? = null,
+
+  @SerializedName("GroupProductId")
+  var groupProductId: Any? = null,
+
+  @SerializedName("CustomWidgets")
+  var customWidgets: Any? = null,
+
   @SerializedName("isCodAvailable")
   var codAvailable: Boolean = false,
   @SerializedName("maxCodOrders")
@@ -77,7 +86,10 @@ class CatalogProduct(
   var maxPrepaidOnlineAvailable: Int = 1,
 
   @SerializedName("uniquePaymentUrl")
-  var BuyOnlineLink: BuyOnlineLink? = null,
+  var uniquePaymentUrl: UniquePaymentUrlN? = null,
+
+  @SerializedName("BuyOnlineLink")
+  var buyOnlineLink: Any? = null,
   @SerializedName("keySpecification")
   var keySpecification: KeySpecification? = null,
 
@@ -91,6 +103,12 @@ class CatalogProduct(
     return recyclerViewItem
   }
 
+  fun getCategoryWithBrand():String{
+   return if (category.isNullOrEmpty().not()) "$category ${if (brandName.isNullOrEmpty().not()) "by $brandName" else ""}" else "No category"
+  }
+  fun getBrand():String{
+    return if (brandName.isNullOrEmpty().not()) "$brandName" else "No brand"
+  }
   fun getLoaderItem(): CatalogProduct {
     this.recyclerViewItem = RecyclerViewItemType.PAGINATION_LOADER.getLayout()
     return this
