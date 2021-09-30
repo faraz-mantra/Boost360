@@ -30,6 +30,7 @@ import com.framework.extensions.visible
 import com.framework.webengageconstant.*
 import android.content.Intent
 import android.net.Uri
+import com.framework.analytics.SentryController
 
 class CategoryFragment : AppBaseFragment<FragmentCategoryBinding, CategoryVideoModel>(), RecyclerItemClickListener {
 
@@ -112,6 +113,8 @@ class CategoryFragment : AppBaseFragment<FragmentCategoryBinding, CategoryVideoM
           val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + getString(R.string.expert_contact_number)))
           startActivity(intent)
         }catch (e:Exception){
+          SentryController.captureException(e)
+
           e.printStackTrace()
         }
       }
