@@ -65,8 +65,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
-
 class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(), RecyclerItemClickListener, AppOnZeroCaseClicked {
+
   private lateinit var zeroCaseFragment: AppFragmentZeroCase
   private lateinit var requestFilter: OrderFilterRequest
   private var orderAdapter: AppBaseRecyclerViewAdapter<OrderItem>? = null
@@ -99,7 +99,6 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   override fun onCreateView() {
     super.onCreateView()
-    Log.i(TAG, "onCreateView: ")
     WebEngageController.trackEvent(APPOINTMENT_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd)
@@ -164,12 +163,10 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     isSearch: Boolean = false
   ) {
     if (isFirst || isSearch) showProgressLoad()
-
     viewModel?.getSellerOrdersFilter(request)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgressLoad()
       if (it.isSuccess()) {
         val response = (it as? InventoryOrderListResponse)?.Data
-        Log.i(TAG, "getSellerOrdersFilterApi: "+response?.Items?.size)
         if (isSearch.not()) {
           if (isRefresh) orderListFinalList.clear()
           val isDataNotEmpty = (response != null && response.Items.isNullOrEmpty().not())

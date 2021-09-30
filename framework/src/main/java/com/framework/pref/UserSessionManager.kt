@@ -1,6 +1,8 @@
 package com.framework.pref
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.database.Cursor
 import android.text.TextUtils
@@ -741,8 +743,13 @@ class UserSessionManager(var activity: Context) {
   /**
    * Clear session details
    */
-  fun logoutUser() {
-
+  fun logoutUser(activity: Activity) {
+    try {
+      val i = Intent(activity, Class.forName("com.nowfloats.helper.LogoutActivity"))
+      activity.startActivity(i)
+    } catch (e: Exception) {
+      e.printStackTrace()
+    }
   }
 
   var isSiteAppearanceShown: Boolean

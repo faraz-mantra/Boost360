@@ -1,7 +1,9 @@
 package com.appservice.ui.paymentgateway
 
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -177,8 +179,9 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
       ?: "pan_card_${Date()}.jpg"
     val mimType = panCarImage?.getMimeType() ?: "multipart/form-data"
     val requestBody = panCarImage?.let { it.asRequestBody(mimType.toMediaTypeOrNull()) }
-    val bodyPanCard = requestBody?.let { MultipartBody.Part.createFormData("file", filePancard, it) }
-    viewModel?.putUploadFile(session?.auth_1, bodyPanCard, filePancard)
+    val bodyPanCard =
+      requestBody?.let { MultipartBody.Part.createFormData("file", filePancard, it) }
+    viewModel?.putUploadFile(session?.auth_2, bodyPanCard, filePancard)
       ?.observeOnce(viewLifecycleOwner, Observer {
         if ((it.error is NoNetworkException).not()) {
           if (it.status == 200 || it.status == 201 || it.status == 202) {
@@ -205,7 +208,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     val requestBody = bankStatementImage?.let { it.asRequestBody(mimType.toMediaTypeOrNull()) }
     val bodyStatement =
       requestBody?.let { MultipartBody.Part.createFormData("file", fileStatement, it) }
-    viewModel?.putUploadFile(session?.auth_1, bodyStatement, fileStatement)
+    viewModel?.putUploadFile(session?.auth_2, bodyStatement, fileStatement)
       ?.observeOnce(viewLifecycleOwner, Observer {
         if ((it.error is NoNetworkException).not()) {
           if (it.status == 200 || it.status == 201 || it.status == 202) {
@@ -244,7 +247,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
           val requestBody = file.asRequestBody(mimType.toMediaTypeOrNull())
           val bodyAdditional =
             MultipartBody.Part.createFormData("file", fileAdditional, requestBody)
-          viewModel?.putUploadFile(session?.auth_1, bodyAdditional, fileAdditional)
+          viewModel?.putUploadFile(session?.auth_2, bodyAdditional, fileAdditional)
             ?.observeOnce(viewLifecycleOwner, Observer {
               checkPosition += 1
               if ((it.error is NoNetworkException).not()) {

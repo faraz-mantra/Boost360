@@ -10,6 +10,7 @@ import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.ui.appointment.AppointmentDetailsFragment
 import com.inventoryorder.ui.appointment.AppointmentsFragment
+import com.inventoryorder.ui.appointment.createAptConsult.CreateAppointmentConsultFragment
 import com.inventoryorder.ui.appointment.createAptConsult.CreateAppointmentFragment
 import com.inventoryorder.ui.appointmentSpa.create.ReviewAndConfirmFragment
 import com.inventoryorder.ui.appointmentSpa.create.SpaAppointmentFragment
@@ -58,6 +59,7 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
       is NewBookingFragmentTwo -> R.layout.fragment_new_booking_two
       is BookingSuccessfulFragment -> R.layout.fragment_booking_successful
       is CreateAppointmentFragment -> R.layout.fragment_new_appointment
+      is CreateAppointmentConsultFragment -> R.layout.fragment_appointment_consult
       is CreateOrderOnBoardingFragment -> R.layout.fragment_order_on_boarding
       is AddCustomerFragment -> R.layout.fragment_add_customer
       is AddProductFragment -> R.layout.fragment_add_product
@@ -72,8 +74,7 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
 
   override fun onCreateView() {
     super.onCreateView()
-    preferenceData =
-      arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as? PreferenceData
+    preferenceData = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as? PreferenceData
   }
 
   override fun getViewModelClass(): Class<OrderCreateViewModel> {

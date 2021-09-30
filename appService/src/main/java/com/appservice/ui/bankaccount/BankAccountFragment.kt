@@ -113,6 +113,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       }
       val response = it as? AccountDetailsResponse
       if ((it.status == 200 || it.status == 201 || it.status == 202) && response != null) {
+        isUpdated = it.status==200
         if (isServiceCreation && response.result?.bankAccountDetails != null) {
           goBackFragment(response.result?.bankAccountDetails!!)
         } else checkBankAccountDetail(response.result, isPendingToastShow)
@@ -122,7 +123,6 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
             R.string.adding_bank_account
           ), resources.getDimensionPixelSize(R.dimen.size_36)
         )
-        isUpdated = false
       }
     })
   }
@@ -136,7 +136,6 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
   private fun checkBankAccountDetail(result: AccountResult?, isPendingToastShow: Boolean) {
     if (result?.bankAccountDetails != null) {
-      isUpdated = true
       uiUpdate(false)
       menuClose?.isVisible = true
       setEditTextAll(result.bankAccountDetails)
@@ -162,7 +161,6 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     } else {
       (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.adding_bank_account), resources.getDimensionPixelSize(R.dimen.size_36))
       uiUpdate(true)
-      isUpdated = false
       onBankAccountAddedOrUpdated(false)
     }
   }
@@ -287,6 +285,9 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
         val response = it as? AccountCreateResponse
         if (response?.status == 200 || response?.status == 201 || response?.status == 202) {
           getUserDetails(isServiceCreation = isServiceCreation)
+          val editor = pref?.edit()
+          editor?.putBoolean(PreferenceConstant.IS_ACCOUNT_SAVE, true)
+          editor?.apply()
           WebEngageController.trackEvent(
             BANK_ACCOUNT_DETAILS_UPDATED,
             BANK_ACCOUNT,
