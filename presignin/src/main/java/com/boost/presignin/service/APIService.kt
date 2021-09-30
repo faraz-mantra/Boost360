@@ -19,6 +19,7 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.clientId2
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.gson.Gson
 import com.onboarding.nowfloats.constant.PreferenceConstant
 import com.onboarding.nowfloats.model.channel.isFacebookPage
 import com.onboarding.nowfloats.model.channel.isTwitterChannel
@@ -74,9 +75,10 @@ class APIService : Service() {
     WebActionBoostKitRepository.getSelfBrandedKyc(query = getQuery()).toLiveData().observeForever {
       val paymentKycDataResponse = it as? PaymentKycDataResponse
       paymentKycDataResponse?.data
+      Log.i("hitSelfBrandedKycAPI: ", Gson().toJson(paymentKycDataResponse))
       if (it.isSuccess()) {
         userSessionManager?.isSelfBrandedKycAdd =
-          paymentKycDataResponse != null || paymentKycDataResponse?.data.isNullOrEmpty().not()
+          paymentKycDataResponse != null && paymentKycDataResponse?.data.isNullOrEmpty().not()
       }
     }
   }

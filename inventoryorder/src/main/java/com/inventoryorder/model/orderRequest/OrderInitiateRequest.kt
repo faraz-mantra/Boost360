@@ -26,8 +26,6 @@ data class OrderInitiateRequest(
   var orderId: String? = null,
   @SerializedName("Status")
   var status: String? = null,
-
-
 ) : BaseRequest(), Serializable {
   var isVideoConsult: Boolean = false
 

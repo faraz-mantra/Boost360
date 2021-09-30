@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.palette.graphics.Palette
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
+import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -61,7 +62,8 @@ fun Context.glideLoad(mImageView: CircularImageView, url: String?, placeholder: 
 fun Context.glideLoad(mImageView: RoundedImageView?, url: String?) {
   try {
     if (mImageView == null) return
-    Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.DATA).into(mImageView)
+    Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.DATA)
+      .into(mImageView)
   } catch (e: Exception) {
     Log.e("GlideUtil", "Error: ${e.localizedMessage}")
   }
@@ -107,9 +109,14 @@ fun Context.loadGifGlide(mImageView: CustomImageView, gif_file: Int?, placeholde
 fun Activity.glideLoad(mImageView: CustomImageView, url: String, placeholder: Int, isCenterCrop: Boolean = false, isLoadBitmap: Boolean = false) {
   try {
     val options: RequestOptions = mImageView.getRequestOptionImage(placeholder)
-    val token = if (url.contains("withfloats.com") || url.contains("nowfloats.com")) UserSessionManager(this).getAccessTokenAuth()?.token ?: "" else ""
-    val url = GlideUrl(url, LazyHeaders.Builder().addHeader("Authorization",token).build())
-    val glideImage = Glide.with(this).load(url).apply(options)
+    var glideImage:RequestBuilder<Drawable> ?=null
+    glideImage = if (url.contains("nowfloats.com")||url.contains("withfloats.com")){
+      val gurl = GlideUrl(url, LazyHeaders.Builder().addHeader("Authorization",UserSessionManager(this).getAccessTokenAuth()?.token?:"").build())
+      Glide.with(this).load(gurl).apply(options)
+    }else{
+      Glide.with(this).load(url).apply(options)
+    }
+
     if (isCenterCrop) glideImage.centerCrop()
     if (isLoadBitmap) {
       glideImage.into(object : CustomTarget<Drawable>() {
@@ -142,12 +149,12 @@ fun Context.glideLoadColor(mImageView: CustomImageView, url: String, view: View)
     .asBitmap().load(url)
     .diskCacheStrategy(DiskCacheStrategy.ALL)
     .listener(object : RequestListener<Bitmap> {
-      override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
+      override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean, ): Boolean {
         return false
       }
 
       @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-      override fun onResourceReady(resource: Bitmap?, model: Any, target: Target<Bitmap>, dataSource: DataSource, isFirstResource: Boolean): Boolean {
+      override fun onResourceReady(resource: Bitmap?, model: Any, target: Target<Bitmap>, dataSource: DataSource, isFirstResource: Boolean, ): Boolean {
         if (resource != null) {
           val p = Palette.from(resource).generate()
           // Use generated instance

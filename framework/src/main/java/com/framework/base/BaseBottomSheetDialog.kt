@@ -148,12 +148,16 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     for (view in views) view.setOnClickListener(null)
   }
 
-  fun showLongToast(string: String) {
-    Toast.makeText(activity, string, Toast.LENGTH_LONG).show()
+  fun showLongToast(string: String?) {
+    string?.let {
+      Toast.makeText(activity, string, Toast.LENGTH_LONG).show()
+    }
   }
 
-  fun showShortToast(string: String) {
-    Toast.makeText(activity, string, Toast.LENGTH_SHORT).show()
+  fun showShortToast(string: String?) {
+    string?.let {
+      Toast.makeText(activity, string, Toast.LENGTH_SHORT).show()
+    }
   }
 
   fun getBehaviour(): BottomSheetBehavior<FrameLayout> {
