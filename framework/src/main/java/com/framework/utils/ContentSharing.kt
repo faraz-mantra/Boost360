@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Toast
 import com.framework.BaseApplication
 import com.framework.R
+import com.framework.analytics.SentryController
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 
@@ -82,6 +83,7 @@ class ContentSharing {
           activity.startActivity(Intent.createChooser(share, intentChooserTitle))
         } catch (e: ActivityNotFoundException) {
           activity.startActivity(Intent.createChooser(share, intentChooserTitle))
+          SentryController.captureException(e)
         }
       }
     }
@@ -113,6 +115,7 @@ class ContentSharing {
               shareTextService(activity, uri, shareText, isWhatsApp, isFb, isLinkedin, isTwitter)
             } catch (e: OutOfMemoryError) {
             } catch (e: Exception) {
+              SentryController.captureException(e)
             }
           }
 

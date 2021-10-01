@@ -1,5 +1,10 @@
 package com.nowfloats.Image_Gallery;
 
+import static com.framework.webengageconstant.EventLabelKt.MANAGE_CONTENT;
+import static com.framework.webengageconstant.EventLabelKt.UPDATE_GALLERY_IMAGES;
+import static com.framework.webengageconstant.EventNameKt.GALLERY_IMAGE_ADDED;
+import static com.framework.webengageconstant.EventNameKt.UPLOAD_GALLERY_IMAGE;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -33,6 +38,7 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.framework.analytics.SentryController;
 import com.framework.models.firestore.FirestoreManager;
 import com.framework.views.zero.old.AppFragmentZeroCase;
 import com.framework.views.zero.old.AppOnZeroCaseClicked;
@@ -54,11 +60,6 @@ import com.thinksity.databinding.FragmentImageGalleryBinding;
 
 import java.util.ArrayList;
 
-import static com.framework.webengageconstant.EventLabelKt.MANAGE_CONTENT;
-import static com.framework.webengageconstant.EventLabelKt.UPDATE_GALLERY_IMAGES;
-import static com.framework.webengageconstant.EventNameKt.GALLERY_IMAGE_ADDED;
-import static com.framework.webengageconstant.EventNameKt.UPLOAD_GALLERY_IMAGE;
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -69,7 +70,7 @@ public class Image_Gallery_Fragment extends Fragment implements
         GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface, AppOnZeroCaseClicked {
 
 
-    public interface ImageChangeListener{
+    public interface ImageChangeListener {
         void onImagePicked();
     }
 
@@ -230,9 +231,9 @@ public class Image_Gallery_Fragment extends Fragment implements
             otherImagesAdapter.notifyDataSetChanged();
 
 
-        if (Constants.storeSecondaryImages==null||Constants.storeSecondaryImages.isEmpty()){
+        if (Constants.storeSecondaryImages == null || Constants.storeSecondaryImages.isEmpty()) {
             emptyView();
-        }else {
+        } else {
             nonEmptyView();
         }
 
@@ -246,15 +247,15 @@ public class Image_Gallery_Fragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_image__gallery,container,false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_image__gallery, container, false);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        appFragmentZeroCase =new AppRequestZeroCaseBuilder(AppZeroCases.IMAGE_GALLERY,this,getActivity()).getRequest().build();
-        getActivity().getSupportFragmentManager().beginTransaction().add(binding.childContainer.getId(),appFragmentZeroCase).commit();
+        appFragmentZeroCase = new AppRequestZeroCaseBuilder(AppZeroCases.IMAGE_GALLERY, this, getActivity()).getRequest().build();
+        getActivity().getSupportFragmentManager().beginTransaction().add(binding.childContainer.getId(), appFragmentZeroCase).commit();
         initializeControls(view);
     }
 
@@ -294,7 +295,7 @@ public class Image_Gallery_Fragment extends Fragment implements
             if (otherImagesAdapter != null) otherImagesAdapter.notifyDataSetChanged();
             if (otherImagesAdapter.getCount() != 0) {
                 nonEmptyView();
-            }else {
+            } else {
                 emptyView();
             }
         }
@@ -349,6 +350,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 startActivityForResult(captureIntent, PICK_FROM_CAMERA);
             }
         } catch (ActivityNotFoundException anfe) {
+            SentryController.INSTANCE.captureException(anfe);
             // display an error message
             String errorMessage = getString(R.string.device_does_not_support_capturing_image);
             // Util.toast(errorMessage, FloatAnImage.this);
@@ -430,6 +432,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                         PICK_FROM_GALLERY);
             }
         } catch (ActivityNotFoundException anfe) {
+            SentryController.INSTANCE.captureException(anfe);
             // display an error message
             String errorMessage = getString(R.string.device_does_not_support_capturing_image);
             Toast toast = Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT);
@@ -463,6 +466,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 path = Util.saveCameraBitmap(path, activity, 720,
                         session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG) + System.currentTimeMillis());
             } catch (Exception e) {
+                SentryController.INSTANCE.captureException(e);
                 e.printStackTrace();
                 //Util.toast(""+e.toString(), this);
             } catch (OutOfMemoryError E) {
@@ -485,6 +489,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    SentryController.INSTANCE.captureException(e);
                 } catch (OutOfMemoryError E) {
                     E.printStackTrace();
                     System.gc();
@@ -510,6 +515,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 // CHEQUE if the specified image exists.
             } catch (Exception e) {
                 e.printStackTrace();
+                SentryController.INSTANCE.captureException(e);
             } catch (OutOfMemoryError E) {
                 E.printStackTrace();
                 System.gc();
@@ -530,6 +536,7 @@ public class Image_Gallery_Fragment extends Fragment implements
             return cursor.getString(column_index);
         } catch (Exception e) {
             e.printStackTrace();
+            SentryController.INSTANCE.captureException(e);
         }
         return null;
     }

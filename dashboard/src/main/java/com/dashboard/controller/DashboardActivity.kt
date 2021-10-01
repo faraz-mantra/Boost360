@@ -34,6 +34,7 @@ import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.utils.DashboardTabs.Companion.fromUrl
 import com.dashboard.viewmodel.DashboardViewModel
+import com.framework.analytics.SentryController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -587,6 +588,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       Support.INSTANCE.init(Zendesk.INSTANCE)
       ZopimChat.init("MJwgUJn9SKy2m9ooxsQgJSeTSR5hU3A5")
     } catch (e: Exception) {
+      SentryController.captureException(e)
     }
   }
 
