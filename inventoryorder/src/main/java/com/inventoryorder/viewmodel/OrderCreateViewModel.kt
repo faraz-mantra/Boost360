@@ -1,5 +1,6 @@
 package com.inventoryorder.viewmodel
 
+import GetStaffListingRequest
 import androidx.lifecycle.LiveData
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
@@ -9,14 +10,17 @@ import com.inventoryorder.model.UpdateOrderNPropertyRequest
 import com.inventoryorder.model.apointmentData.addRequest.AddAptConsultRequest
 import com.inventoryorder.model.apointmentData.updateRequest.UpdateConsultRequest
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
+import com.inventoryorder.model.orderRequest.OrderInitiateRequestNew
 import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
 import com.inventoryorder.model.orderRequest.feedback.FeedbackRequest
 import com.inventoryorder.model.orderRequest.paymentRequest.PaymentReceivedRequest
 import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
+import com.inventoryorder.model.services.ServiceListingRequest
 import com.inventoryorder.model.spaAppointment.bookingslot.request.BookingSlotsRequest
 import com.inventoryorder.rest.repositories.*
+import retrofit2.http.Body
 
 class OrderCreateViewModel : BaseViewModel() {
 
@@ -111,12 +115,15 @@ class OrderCreateViewModel : BaseViewModel() {
     return ApiTwoWithFloatRepository.getAllServiceList(clientId, skipBy, fpTag, identifierType)
       .toLiveData()
   }
+  fun getServiceListing(request: ServiceListingRequest): LiveData<BaseResponse> {
+    return NowFloatsRepository.getServiceListing(request).toLiveData()
+  }
 
   fun getDoctorData(fpTag: String?): LiveData<BaseResponse> {
     return ProductOrderRepository.getDoctorData(fpTag).toLiveData()
   }
 
-  fun postOrderInitiate(clientId: String?, request: OrderInitiateRequest?): LiveData<BaseResponse> {
+  fun postOrderInitiate(clientId: String?, request: OrderInitiateRequestNew?): LiveData<BaseResponse> {
     return AssuredPurchaseRepository.postOrderInitiate(clientId, request).toLiveData()
   }
 
@@ -192,5 +199,9 @@ class OrderCreateViewModel : BaseViewModel() {
 
   fun getBookingSlots(bookingSlotsRequest: BookingSlotsRequest): LiveData<BaseResponse> {
     return NowFloatsRepository.getBookingSlots(bookingSlotsRequest).toLiveData()
+  }
+
+  fun getDoctorsListing(@Body request: GetStaffListingRequest?): LiveData<BaseResponse> {
+    return NowFloatsRepository.getDoctorsListing(request = request).toLiveData()
   }
 }

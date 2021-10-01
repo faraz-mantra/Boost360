@@ -23,50 +23,49 @@
       android:background="@color/white"
       android:minHeight="@dimen/size_100"
       android:orientation="horizontal"
-      android:paddingStart="@dimen/size_16"
       android:paddingEnd="@dimen/size_14">
 
-      <!--    <com.framework.views.customViews.CustomCardView-->
-      <!--      android:id="@+id/customCardView6"-->
-      <!--      android:layout_width="@dimen/size_50"-->
-      <!--      android:layout_height="@dimen/size_50"-->
-      <!--      android:layout_gravity="center|center_horizontal"-->
-      <!--      android:layout_margin="@dimen/size_2"-->
-      <!--      app:cardBackgroundColor="@color/white"-->
-      <!--      app:cardCornerRadius="@dimen/size_6"-->
-      <!--      app:layout_constraintEnd_toEndOf="parent"-->
-      <!--      app:layout_constraintTop_toTopOf="parent"-->
-      <!--      tools:srcCompat="@drawable/ic_customer_call_d">-->
-
-      <com.framework.views.customViews.CustomImageView
-        android:id="@+id/imageViewIcon"
+      <com.framework.views.customViews.CustomCardView
+        android:id="@+id/customCardView"
         android:layout_width="@dimen/size_50"
         android:layout_height="@dimen/size_50"
         android:layout_gravity="center|center_horizontal"
-        android:layout_margin="@dimen/size_2"
-        android:padding="@dimen/size_8"
+        android:layout_marginStart="@dimen/size_8"
+        android:layout_marginTop="@dimen/size_2"
+        android:layout_marginBottom="@dimen/size_2"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/size_6"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/ic_custom_page_add" />
+        tools:srcCompat="@drawable/ic_customer_call_d">
 
-      <!--    </com.framework.views.customViews.CustomCardView>-->
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/imageViewIcon"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_gravity="center|center_horizontal"
+          android:padding="@dimen/size_8"
+          tools:srcCompat="@drawable/ic_custom_page_add" />
+
+      </com.framework.views.customViews.CustomCardView>
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/tv_count"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="324"
         android:textColor="@color/black_4a4a4a"
         android:visibility="gone"
         app:fontFamily="@font/barlow_regular"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewIcon"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewIcon"
+        app:layout_constraintBottom_toBottomOf="@+id/customCardView"
+        app:layout_constraintEnd_toStartOf="@+id/customCardView"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:textType="HEADING_2" />
+        app:textType="HEADING_2"
+        tools:text="324" />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/textViewName"
@@ -74,31 +73,35 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="2"
+        android:paddingStart="@dimen/size_16"
         android:textColor="@color/black_4a4a4a"
+        android:textFontWeight="500"
         app:fontFamily="@font/regular"
         app:layout_constraintBottom_toTopOf="@+id/txt_desc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewIcon"
+        app:layout_constraintTop_toBottomOf="@+id/customCardView"
         app:textType="HEADING_6"
+        tools:ignore="RtlSymmetry"
+        tools:targetApi="p"
         tools:text="Updates" />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/txt_desc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
         android:includeFontPadding="false"
-        android:maxLines="2"
+        android:paddingStart="@dimen/size_16"
         android:textColor="@color/grey_dark_2"
         app:fontFamily="@font/regular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/customImageView4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewIcon"
+        app:layout_constraintTop_toBottomOf="@+id/customCardView"
         app:layout_constraintVertical_bias="1"
         app:textType="CAPTION"
+        tools:ignore="RtlSymmetry"
         tools:text="Description of this asset Description of this assetDescription of this asset" />
 
       <com.framework.views.customViews.CustomImageView

@@ -780,7 +780,18 @@
       <meta-data
         android:name="android.support.PARENT_ACTIVITY"
         android:value="com.nowfloats.PreSignUp.SplashScreen_Activity" />
-    </activity> <!-- PreSignUp module -->
+    </activity>
+
+    <activity
+        android:name="com.boost.presignin.ui.LoaderActivity"
+        android:label="@string/app_name"
+        android:launchMode="singleTask"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="adjustResize">
+    </activity>
+
+    <!-- PreSignUp module -->
+
     <activity
       android:name="com.boost.presignup.SplashActivity"
       android:label="@string/title_activity_splash_screen_"
