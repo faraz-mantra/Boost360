@@ -3,11 +3,11 @@ package com.boost.upgrades.ui.payment
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.core.view.OneShotPreDrawListener.add
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
 import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
@@ -15,10 +15,12 @@ import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerI
 import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse
 import com.boost.upgrades.data.api_model.gst.Error
 import com.boost.upgrades.data.api_model.gst.GSTApiResponse
+import com.boost.upgrades.data.api_model.stateCode.GetStates
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_SECREAT
 import com.boost.upgrades.utils.Utils
+import com.framework.analytics.SentryController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.luminaire.apolloar.base_class.BaseViewModel
@@ -27,7 +29,6 @@ import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.internal.util.BackpressureHelper.add
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Credentials
 import org.json.JSONArray
@@ -60,8 +61,10 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
   var cityValue: String? = null
   var selectedState: String? = null
   var selectedStateResult: MutableLiveData<String> = MutableLiveData()
+  var selectedStateTinResult: MutableLiveData<String> = MutableLiveData()
   private var APIRequestStatus: String? = null
   private var gstApiInfo : MutableLiveData<GSTApiResponse> = MutableLiveData()
+  private var statesInfo :MutableLiveData<GetStates> = MutableLiveData()
 
   var updatesError: MutableLiveData<String> = MutableLiveData()
   var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
@@ -140,6 +143,9 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
   fun getGstApiResult(): LiveData<GSTApiResponse>{
     return gstApiInfo
   }
+  fun getStatesResult(): LiveData<GetStates>{
+    return statesInfo
+  }
 
   fun cityResult(): LiveData<List<String>> {
     return cityResult
@@ -157,12 +163,20 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
     return cityValueResult
   }
 
+
   fun selectedStateResult(state: String) {
     selectedStateResult.postValue(state)
   }
 
   fun getSelectedStateResult(): LiveData<String> {
     return selectedStateResult
+  }
+
+  fun selectedStateTinResult(stateTin :String){
+      selectedStateTinResult.postValue(stateTin)
+  }
+  fun getSelectedStateTinResult():LiveData<String>{
+    return selectedStateTinResult
   }
 
   fun updatesError(): LiveData<String> {
@@ -293,7 +307,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
       )
     }
   }
-  fun getGstApiInfo(auth: String,gstIn:String,clientId: String){
+  fun getGstApiInfo(auth: String,gstIn:String,clientId: String,progressBar: ProgressBar){
     if(Utils.isConnectedToInternet(getApplication())){
       CompositeDisposable().add(
         ApiService.getGSTDetails(auth,gstIn,clientId)
@@ -307,6 +321,31 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
             {
               val temp = (it as HttpException).response()!!.errorBody()!!.string()
               val errorBody : Error = Gson().fromJson(temp,object : TypeToken<Error>() {}.type)
+              progressBar.visibility = View.GONE
+              Toasty.error(getApplication(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
+            }
+          )
+      )
+    }
+  }
+
+  fun getStatesWithCodes(auth: String,clientId: String,progressBar: ProgressBar){
+    if(Utils.isConnectedToInternet(getApplication())){
+      CompositeDisposable().add(
+        ApiService.getStates(auth,clientId)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(
+            {
+              Log.i("getStates",it.toString())
+              statesInfo.postValue(it)
+              progressBar.visibility = View.GONE
+            },
+            {
+              val temp = (it as HttpException).response()!!.errorBody()!!.string()
+              val errorBody : Error = Gson().fromJson(temp,object : TypeToken<com.boost.upgrades.data.api_model.stateCode.Error>() {}.type)
+              progressBar.visibility = View.GONE
+              Toasty.error(getApplication(), errorBody.toString(), Toast.LENGTH_LONG).show()
             }
           )
       )
