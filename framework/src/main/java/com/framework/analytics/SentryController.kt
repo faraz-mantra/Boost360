@@ -1,15 +1,22 @@
 package com.framework.analytics
 
+import android.util.Log
+import com.framework.pref.UserSessionManager
 import io.sentry.Sentry
+import io.sentry.protocol.User
 
 object SentryController {
 
-    fun captureException(){
-        try {
-            throw Exception("This is a test.")
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Sentry.captureException(e)
-        }
+    private const val TAG = "SentryController"
+    fun captureException(e:Exception){
+        Sentry.captureException(e)
+    }
+
+
+    fun setUser(session:UserSessionManager){
+        val user = User()
+        user.id=session.fPID
+        user.username =session.fpTag
+        Sentry.setUser(user)
     }
 }

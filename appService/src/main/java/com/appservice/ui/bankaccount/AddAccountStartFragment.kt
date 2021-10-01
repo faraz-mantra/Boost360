@@ -59,6 +59,7 @@ class AddAccountStartFragment : AppBaseFragment<FragmentAddAccountStartBinding, 
           isResult = true,
           requestCode = 202
         )
+        requireActivity().finish()
       }
     }
   }

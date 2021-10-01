@@ -4,6 +4,7 @@ import android.content.Intent
 import com.boost.presignin.AppPreSignInApplication
 import com.boost.presignin.rest.TaskCode
 import com.boost.presignin.rest.apiClients.WithFloatsApiClient
+import com.framework.analytics.SentryController
 import com.framework.base.BaseRepository
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
@@ -43,6 +44,8 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
           startActivity(i)
         } catch (e: Exception) {
           e.printStackTrace()
+          SentryController.captureException(e)
+
         }
       }
     }
