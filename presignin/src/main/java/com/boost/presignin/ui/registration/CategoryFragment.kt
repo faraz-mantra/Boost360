@@ -5,7 +5,6 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
@@ -23,7 +22,6 @@ import com.boost.presignin.recyclerView.BaseRecyclerViewItem
 import com.boost.presignin.recyclerView.RecyclerItemClickListener
 import com.boost.presignin.rest.response.ResponseDataCategory
 import com.boost.presignin.viewmodel.CategoryVideoModel
-import com.framework.base.BaseFragment
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible

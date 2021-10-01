@@ -13,6 +13,7 @@ import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.analytics.SentryController
 import com.framework.webengageconstant.*
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.order_confirmation_fragment.*
@@ -84,6 +85,7 @@ class OrderConfirmationFragment : BaseFragment() {
       order_id_details.text = "Order placed on " + formatter.format(date) +
           "\nOrder ID #" + prefs.getLatestPurchaseOrderId() + "\nTransaction ID #" + prefs.getTransactionIdFromCart()
     } catch (e: Exception) {
+      SentryController.captureException(e)
       Log.e("Error", e.message ?: "")
     }
 

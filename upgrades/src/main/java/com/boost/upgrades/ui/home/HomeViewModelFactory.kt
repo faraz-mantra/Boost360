@@ -3,6 +3,7 @@ package com.boost.upgrades.ui.home
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.framework.analytics.SentryController
 import java.lang.IllegalArgumentException
 
 

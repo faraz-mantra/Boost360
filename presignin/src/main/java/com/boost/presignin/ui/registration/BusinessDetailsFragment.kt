@@ -1,7 +1,6 @@
 package com.boost.presignin.ui.registration
 
 import android.os.Bundle
-import android.view.WindowManager
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
@@ -26,7 +25,6 @@ import android.graphics.PorterDuff
 
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import android.graphics.PorterDuffColorFilter
 import com.framework.analytics.SentryController
 
