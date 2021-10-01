@@ -370,19 +370,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/bold"
-                    tools:text="6 items waiting in cart"
                     android:textColor="#333333"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:text="6 items waiting in cart" />
 
                   <TextView
                     android:id="@+id/mp_items_name_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/mp_no_of_cart_items_tv"
+                    android:ellipsize="end"
                     android:fontFamily="@font/regular"
                     android:lines="2"
                     android:scrollHorizontally="true"
-                    android:ellipsize="end"
                     android:textAlignment="viewStart"
                     android:textSize="14sp"
                     tools:text="unlimited content, IVR, call\ntracker and staff profiles +1 more" />

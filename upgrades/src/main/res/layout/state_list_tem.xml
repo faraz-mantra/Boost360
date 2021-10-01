@@ -35,7 +35,7 @@
       android:layout_height="50dp"
       android:layout_marginStart="@dimen/_10sdp"
       android:gravity="center_vertical"
-      android:orientation="vertical"
+      android:orientation="horizontal"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toEndOf="@+id/imageLayout"
@@ -52,6 +52,14 @@
         android:textSize="@dimen/_12sdp"
         tools:text="Andhra Pradesh" />
 
+      <TextView
+        android:id="@+id/state_tin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        tools:text="37"
+        android:textSize="12sp"
+        android:layout_marginStart="3dp"/>
 
     </LinearLayout>
 
