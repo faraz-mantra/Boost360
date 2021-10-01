@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -22,6 +23,7 @@ import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
+import com.festive.poster.ui.PosterPackListingActivity
 import com.framework.pref.*
 import com.framework.webengageconstant.*
 import com.inventoryorder.constant.IntentConstant
@@ -37,6 +39,7 @@ import java.util.*
 const val VISITS_TYPE_STRING = "visits_type_string"
 
 const val RIA_NODE_DATA = "riaNodeDatas"
+private const val TAG = "ActivityUtils"
 
 fun AppCompatActivity.startDigitalChannel(session: UserSessionManager, channelType: String = "") {
   try {
@@ -987,6 +990,11 @@ fun AppCompatActivity.startDownloadUri(url: String, isToast: Boolean = false) {
 }
 
 fun AppCompatActivity.startFestivePosterActivity(){
-  val intent = Intent(this, Class.forName("com.festive.poster.ui.PosterPackListingActivity"))
-  startActivity(intent)
+  try {
+    val intent = Intent(this, PosterPackListingActivity::class.java)
+    startActivity(intent)
+  }catch (e:Exception){
+    e.printStackTrace()
+  }
+ 
 }
