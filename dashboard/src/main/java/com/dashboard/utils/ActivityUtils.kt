@@ -985,3 +985,8 @@ fun AppCompatActivity.startDownloadUri(url: String, isToast: Boolean = false) {
     e.printStackTrace()
   }
 }
+
+fun AppCompatActivity.startFestivePosterActivity(){
+  val intent = Intent(this, Class.forName("com.festive.poster.ui.PosterPackListingActivity"))
+  startActivity(intent)
+}

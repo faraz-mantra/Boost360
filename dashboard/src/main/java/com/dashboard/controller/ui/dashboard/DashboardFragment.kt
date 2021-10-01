@@ -139,7 +139,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport, binding?.retryDrScore,
       binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.viewEmptyEnquiries?.btnWhatsappEnquiries,
       binding?.viewEmptyEnquiries?.btnInstagramEnquiries, binding?.viewEmptyEnquiries?.btnTelegramEnquiries, binding?.viewEmptyEnquiries?.btnMessangerEnquiries,
-      binding?.viewEmptyEnquiries?.btnEmailEnquiries, binding?.viewEmptyEnquiries?.btnOtherShareEnquiries
+      binding?.viewEmptyEnquiries?.btnEmailEnquiries, binding?.viewEmptyEnquiries?.btnOtherShareEnquiries,binding?.btnSharePoster
     )
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion1?.text = "Version $versionName"
@@ -783,6 +783,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     super.onClick(v)
     // Track the share_business_card_initiated even in Firebase & Webengage
     when (v) {
+      binding?.btnSharePoster->baseActivity.startFestivePosterActivity()
       binding?.filterBusinessReport -> bottomSheetFilter(BUSINESS_REPORT, FilterDateModel().getDateFilter(FILTER_BUSINESS_REPORT))
       binding?.filterWebsiteReport -> bottomSheetFilter(WEBSITE_REPORT, FilterDateModel().getDateFilter(FILTER_WEBSITE_REPORT))
       binding?.btnNotofication -> session?.let { baseActivity.startNotification(it) }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <com.framework.views.customViews.CustomCardView
+        app:cardCornerRadius="@dimen/size_20"
+        android:layout_marginEnd="@dimen/size_16"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="270dp"
+        android:layout_height="@dimen/size_400"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+        <com.framework.views.customViews.CustomCardView
+            android:layout_margin="@dimen/size_16"
+            app:cardCornerRadius="@dimen/size_20"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.framework.views.customViews.CustomMaterialButton
+                    android:layout_width="@dimen/size_100"
+                    app:cornerRadius="@dimen/size_20"
+                    app:icon="@drawable/ic_tap_to_edit"
+                    android:textSize="@dimen/size_12"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:layout_marginStart="@dimen/size_16"
+                    android:text="@string/tap_to_edit"
+                    android:backgroundTint="@color/black_opacity30"
+                    android:layout_height="@dimen/size_50"/>
+                <com.caverock.androidsvg.SVGImageView
+                    android:layout_width="match_parent"
+                    android:id="@+id/iv_svg"
+                    android:layout_height="match_parent"/>
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/iv_watermark"
+                    android:src="@drawable/ic_fposter_boost_360_watermark"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </RelativeLayout>
+
+        </com.framework.views.customViews.CustomCardView>
+    </com.framework.views.customViews.CustomCardView>
+</layout>
