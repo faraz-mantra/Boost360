@@ -3,8 +3,10 @@ package com.nowfloats.AccrossVerticals.Testimonials;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,13 +14,23 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.boost.upgrades.UpgradeActivity;
 import com.dashboard.utils.CodeUtilsKt;
 import com.framework.utils.ContentSharing;
 import com.framework.views.fabButton.FloatingActionButton;
+import com.framework.views.zero.FragmentZeroCase;
+import com.framework.views.zero.OnZeroCaseClicked;
+import com.framework.views.zero.RequestZeroCaseBuilder;
+import com.framework.views.zero.ZeroCases;
+import com.framework.views.zero.old.AppFragmentZeroCase;
+import com.framework.views.zero.old.AppOnZeroCaseClicked;
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
+import com.framework.views.zero.old.AppZeroCases;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.AccrossVerticals.API.APIInterfaces;
@@ -27,9 +39,11 @@ import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.GetTestimonialDa
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.TestimonialData;
 import com.nowfloats.AccrossVerticals.API.model.GetToken.GetTokenData;
 import com.nowfloats.AccrossVerticals.API.model.GetToken.WebActionsItem;
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
+import com.thinksity.databinding.ActivityTestimonialsBinding;
 
 import org.json.JSONObject;
 
@@ -44,11 +58,10 @@ import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
+public class TestimonialsActivity extends AppCompatActivity implements TestimonialsListener, AppOnZeroCaseClicked {
 
-public class TestimonialsActivity extends AppCompatActivity implements TestimonialsListener {
-
-    private List<String> allTestimonialType = Arrays.asList("testimonials", "testimonial", "guestreviews");
-    TextView addTestimonialsButton;
+    public static List<String> allTestimonialType = Arrays.asList("testimonials", "testimonial", "guestreviews");
+//    TextView addTestimonialsButton;
     ProgressDialog vmnProgressBar;
     List<TestimonialData> dataList = new ArrayList<>();
     LinearLayout backButton;
@@ -57,23 +70,43 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     TextView title;
     private String headerToken = "59c89bbb5d64370a04c9aea1";
     private String testimonialType = "testimonials";
-    private LinearLayout mainLayout, secondaryLayout;
-    private com.framework.pref.UserSessionManager session;
+    private UserSessionManager session;
     private TestimonialsAdapter testimonialsAdapter;
     private RecyclerView recyclerView;
     private boolean isLoad = false;
+    private AppFragmentZeroCase appFragmentZeroCase;
+    private String WIDGET_KEY="TESTIMONIALS";
+    private static final String TAG = "TestimonialsActivity";
+    private ActivityTestimonialsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_testimonials);
-        session = new com.framework.pref.UserSessionManager(this);
+        Log.i(TAG, "onCreate: ");
+        session = new UserSessionManager(this,this);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_testimonials);
+        appFragmentZeroCase = new AppRequestZeroCaseBuilder(AppZeroCases.TESTIMONIAL,
+                TestimonialsActivity.this  , getApplicationContext(),isPremium()).getRequest().build();
+        getSupportFragmentManager().beginTransaction().add(binding.childContainer.getId(),appFragmentZeroCase).commit();
         setHeader();
         initialization();
         checkIsAdd();
         Log.v("experincecode", " themeID: " + session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID) + " FpTag: " + session.getFpTag() + " exp: " + session.getFPDetails(Key_Preferences.GET_FP_EXPERIENCE_CODE));
     }
 
+
+
+    private void nonEmptyView() {
+        binding.mainlayout.setVisibility(View.VISIBLE);
+        binding.childContainer.setVisibility(View.GONE);
+    }
+
+
+    private void emptyView() {
+        binding.mainlayout.setVisibility(View.GONE);
+        binding.childContainer.setVisibility(View.VISIBLE);
+
+    }
     private void checkIsAdd() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -89,33 +122,40 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     @Override
     protected void onResume() {
         super.onResume();
-        getHeaderAuthToken();
+        if (isPremium()) {
+            nonEmptyView();
+            getHeaderAuthToken();
+        }else {
+            emptyView();
+        }
     }
 
     void initialization() {
+
         vmnProgressBar = new ProgressDialog(this);
         vmnProgressBar.setIndeterminate(true);
         vmnProgressBar.setMessage(getString(R.string.please_wait));
         vmnProgressBar.setCancelable(false);
-
-        addTestimonialsButton = findViewById(R.id.add_testimonials);
+//        addTestimonialsButton = findViewById(R.id.add_testimonials);
         recyclerView = findViewById(R.id.testimonials_recycler);
         testimonialsAdapter = new TestimonialsAdapter(new ArrayList(), this, session, this);
         initialiseRecycler();
 
         //show or hide if feature is available to user
-        mainLayout = (LinearLayout) findViewById(R.id.main_layout);
-        secondaryLayout = (LinearLayout) findViewById(R.id.secondary_layout);
+//        secondaryLayout = (LinearLayout) findViewById(R.id.secondary_layout);
 
-        mainLayout.setOnClickListener(v -> updateRecyclerMenuOption(-1, false));
+        binding.mainlayout.setOnClickListener(v -> updateRecyclerMenuOption(-1, false));
 
-        addTestimonialsButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), TestimonialsFeedbackActivity.class);
-            intent.putExtra("ScreenState", "new");
-            startActivity(intent);
-        });
+//        addTestimonialsButton.setOnClickListener(v -> {
+//            Intent intent = new Intent(getApplicationContext(), TestimonialsFeedbackActivity.class);
+//            intent.putExtra("ScreenState", "new");
+//            startActivity(intent);
+//        });
     }
 
+    private Boolean isPremium(){
+        return /*session.getStoreWidgets().contains(WIDGET_KEY);*/ true;
+    }
     public void setHeader() {
         title = findViewById(R.id.title);
         backButton = findViewById(R.id.back_button);
@@ -127,7 +167,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
             startActivity(intent);
         });
 
-        backButton.setOnClickListener(v -> onBackPressed());
+        backButton.setOnClickListener(v ->finishAfterTransition());
     }
 
     private void initialiseRecycler() {
@@ -161,12 +201,11 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                         isLoad = true;
                         dataList = testimonialModel.getData();
                         updateRecyclerView();
-                        mainLayout.setVisibility(View.VISIBLE);
-                        secondaryLayout.setVisibility(View.GONE);
                         rightButton.setVisibility(View.VISIBLE);
+                        nonEmptyView();
+                        Log.i(TAG, "success api testimonial: ");
                     } else {
-                        mainLayout.setVisibility(View.GONE);
-                        secondaryLayout.setVisibility(View.VISIBLE);
+                        emptyView();
                         rightButton.setVisibility(View.INVISIBLE);
                     }
                 }
@@ -338,6 +377,69 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
             this.headerToken = hToken;
             loadData();
         }
+    }
+
+    @Override
+    public void primaryButtonClicked() {
+        if (isPremium()) {
+            Intent intent = new Intent(getApplicationContext(), TestimonialsFeedbackActivity.class);
+            intent.putExtra("ScreenState", "new");
+            startActivity(intent);
+        }else {
+            initiateBuyFromMarketplace();
+        }
+    }
+
+    @Override
+    public void secondaryButtonClicked() {
+
+    }
+
+    @Override
+    public void ternaryButtonClicked() {
+
+    }
+
+    @Override
+    public void appOnBackPressed() {
+        finishAfterTransition();
+    }
+
+    private void initiateBuyFromMarketplace() {
+
+        ProgressDialog progressDialog = new android.app.ProgressDialog((this));
+        String status = "Loading. Please wait...";
+        progressDialog.setMessage(status);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        Intent intent =new Intent(this, UpgradeActivity.class);
+        intent.putExtra("expCode", session.getFP_AppExperienceCode());
+        intent.putExtra("fpName", session.getFPName());
+        intent.putExtra("fpid", session.getFPID());
+        intent.putExtra("loginid", session.getUserProfileId());
+        intent.putStringArrayListExtra("userPurchsedWidgets", com.nowfloats.util.Constants.StoreWidgets);
+        intent.putExtra("fpTag", session.getFpTag());
+        if (session.getUserProfileEmail() != null) {
+            intent.putExtra("email", session.getUserProfileEmail());
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com");
+        }
+        if (session.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
+        } else {
+            intent.putExtra("mobileNo", "9160004303");
+        }
+        intent.putExtra("profileUrl", session.getFPLogo());
+        intent.putExtra("buyItemKey", WIDGET_KEY);
+        startActivity(intent);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.dismiss();
+                finish();
+            }
+        }, 1000);
+
     }
 }
 

@@ -1,6 +1,5 @@
 package com.appservice.rest.repository
 
-import com.appservice.base.rest.AppBaseLocalService
 import com.appservice.base.rest.AppBaseRepository
 import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
@@ -12,17 +11,24 @@ import com.appservice.model.servicev1.UploadImageRequest
 import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.NowfloatsApiClient
 import com.appservice.rest.services.NowfloatsRemoteData
-import com.appservice.ui.model.ServiceListingRequest
+import com.appservice.model.serviceProduct.service.ServiceListingRequest
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.Retrofit
 
-object NowfloatsApiRepository : AppBaseRepository<NowfloatsRemoteData, AppBaseLocalService>() {
+object NowfloatsApiRepository : AppBaseRepository<NowfloatsRemoteData, CatalogLocalDataSource>() {
 
   fun createService(request: ServiceModelV1?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.createService(request), TaskCode.POST_CREATE_SERVICE)
   }
+
+//  fun getSettingsTiles(context: Context): Observable<BaseResponse> {
+//    return makeLocalRequest(localDataSource.getSettingsTiles(context =context ),TaskCode.GET_CATALOG_SETTINGS_TILES)
+//  }
+//  fun getEcommerceSettingsTiles(context: Context): Observable<BaseResponse> {
+//    return makeLocalRequest(localDataSource.getSettingsTiles(context =context ),TaskCode.GET_CATALOG_SETTINGS_TILES)
+//  }
 
   fun updateService(request: ServiceModelV1?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.updateService(request), TaskCode.POST_UPDATE_SERVICE)
@@ -81,8 +87,8 @@ object NowfloatsApiRepository : AppBaseRepository<NowfloatsRemoteData, AppBaseLo
     return NowfloatsRemoteData::class.java
   }
 
-  override fun getLocalDataSourceInstance(): AppBaseLocalService {
-    return AppBaseLocalService()
+  override fun getLocalDataSourceInstance(): CatalogLocalDataSource{
+    return CatalogLocalDataSource
   }
 
   override fun getApiClient(): Retrofit {

@@ -243,6 +243,11 @@ class UserSessionManager(var activity: Context) {
     editor.apply()
   }
 
+  fun storeProductVerb(`val`: String?) {
+    editor.putString(KEY_sourceClientId, `val`)
+    editor.apply()
+  }
+
   fun getStoreWidgets(): List<String>? {
     val str = pref.getString(Key_Preferences.STORE_WIDGETS, "")
     return if (str.isNullOrEmpty()) ArrayList<String>() else convertStringToList(str)
@@ -804,18 +809,10 @@ class UserSessionManager(var activity: Context) {
 }
 
 fun UserSessionManager.getDomainName(isRemoveHttp: Boolean = false): String? {
-  val rootAliasUri =
-    getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?.toLowerCase(Locale.ROOT)
-  val normalUri =
-    "https://${getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.nowfloats.com"
+  val rootAliasUri = getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?.toLowerCase(Locale.ROOT)
+  val normalUri = "https://${getFPDetails(GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.nowfloats.com"
   return if (rootAliasUri.isNullOrEmpty().not() && rootAliasUri != "null") {
-    return if (isRemoveHttp && rootAliasUri!!.contains("http://")) rootAliasUri.replace(
-      "http://",
-      ""
-    )
-    else if (isRemoveHttp && rootAliasUri!!.contains("https://")) rootAliasUri.replace(
-      "https://",
-      ""
-    ) else rootAliasUri
+    return if (isRemoveHttp && rootAliasUri!!.contains("http://")) rootAliasUri.replace("http://", "")
+    else if (isRemoveHttp && rootAliasUri!!.contains("https://")) rootAliasUri.replace("https://", "") else rootAliasUri
   } else normalUri
 }

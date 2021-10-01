@@ -21,6 +21,7 @@ import com.appservice.ui.updatesBusiness.startUpdateFragmentActivity
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
+import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
 import com.framework.pref.*
 import com.framework.webengageconstant.*
 import com.inventoryorder.constant.IntentConstant
@@ -448,9 +449,11 @@ fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
       }
     } else {
       WebEngageController.trackEvent(PRODUCT_INVENTORY, CLICK, TO_BE_ADDED)
-      val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
-      startActivity(webIntent)
-      overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+      session.let {
+        startFragmentActivity(com.appservice.constant.FragmentType.FRAGMENT_PRODUCT_LISTING, bundle = getBundleData(it))
+
+      }
+
     }
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
@@ -460,6 +463,14 @@ fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
 fun AppCompatActivity.startListStaff(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(LIST_STAFF_DASHBOARD, CLICK, TO_BE_ADDED)
+    startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = getBundleData(session))
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startListDoctors(session: UserSessionManager?) {
+  try {
     startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = getBundleData(session))
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
@@ -864,6 +875,12 @@ fun AppCompatActivity.startWebsiteTheme(session: UserSessionManager?) {
     e.printStackTrace()
   }
 }
+
+fun AppCompatActivity.startOwnersInfo(session: UserSessionManager?) {
+  WebEngageController.trackEvent(OWNER_INFO_CLICK, CLICK, TO_BE_ADDED)
+  startOwnersInfoNewActivity(com.dashboard.constant.FragmentType.OWNER_INFO)
+}
+
 
 fun AppCompatActivity.startWebsiteNav(session: UserSessionManager?) {
   try {

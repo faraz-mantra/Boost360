@@ -1,6 +1,7 @@
 package com.appservice.ui.testimonial
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -14,16 +15,22 @@ import com.appservice.rest.TaskCode
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.views.zero.OnZeroCaseClicked
+import com.framework.views.zero.RequestZeroCaseBuilder
+import com.framework.views.zero.ZeroCases
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 import org.json.JSONObject
 import java.util.ArrayList
 
-class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListBinding>() {
+class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListBinding>(), AppOnZeroCaseClicked {
 
   private var isEdit: Boolean = false
   private var headerToken = "59c89bbb5d64370a04c9aea1"
   private var testimonialType = "testimonials"
   private val allTestimonialType = listOf("testimonials", "testimonial", "guestreviews")
-
+  private val TAG = "TestimonialListFragment"
   companion object {
     @JvmStatic
     fun newInstance(bundle: Bundle? = null): TestimonialListFragment {
@@ -35,6 +42,7 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
 
   override fun onCreateView() {
     super.onCreateView()
+    Log.i(TAG, "onCreateView: ")
     hitApi(viewModel?.getWebActionList(webTemplateId, fpTag), R.string.error_getting_web_action)
   }
 
@@ -63,12 +71,14 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
       TaskCode.GET_TESTIMONIAL.ordinal -> {
         val response = (it as? TestimonialDataResponse)
         if (response?.data.isNullOrEmpty().not()) {
-          binding?.emptyLayout?.gone()
+//          binding?.emptyLayout?.gone()
           binding?.rvTestimonial?.visible()
           setTestimonialAdapter(response?.data!!)
         } else {
           binding?.rvTestimonial?.gone()
-          binding?.emptyLayout?.visible()
+//          binding?.emptyLayout?.visible()
+         
+
         }
       }
     }
@@ -90,16 +100,36 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.menu_add -> {
-        val bundle: Bundle = Bundle.EMPTY
-        startTestimonialFragmentActivity(
-          FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT,
-          bundle,
-          clearTop = false,
-          isResult = true
-        )
+        addTestimonial()
         true
       }
       else -> super.onOptionsItemSelected(item)
     }
   }
+
+  private fun addTestimonial() {
+    val bundle: Bundle = Bundle.EMPTY
+    startTestimonialFragmentActivity(
+      FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT,
+      bundle,
+      clearTop = false,
+      isResult = true
+    )
+  }
+
+  override fun primaryButtonClicked() {
+    addTestimonial()
+  }
+
+  override fun secondaryButtonClicked() {
+  }
+
+  override fun ternaryButtonClicked() {
+  }
+
+  override fun appOnBackPressed() {
+
+  }
+
+
 }

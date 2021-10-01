@@ -7,14 +7,10 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.TextPaint
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.text.style.ForegroundColorSpan
-import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
@@ -29,6 +25,9 @@ import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentServiceListingBinding
+import com.appservice.model.serviceProduct.service.ItemsItem
+import com.appservice.model.serviceProduct.service.Result
+import com.appservice.model.serviceProduct.service.ServiceSearchListingResponse
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.PaginationScrollListener
@@ -37,16 +36,22 @@ import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_START
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
-import com.appservice.ui.model.*
 import com.appservice.utils.WebEngageController
+import com.appservice.utils.capitalizeUtil
 import com.appservice.viewmodel.ServiceViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getDomainName
 import com.framework.utils.ContentSharing
+import com.framework.views.zero.*
+import com.framework.views.zero.old.AppFragmentZeroCase
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.*
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Target
@@ -55,8 +60,10 @@ import kotlinx.android.synthetic.main.fragment_service_detail.*
 import kotlinx.android.synthetic.main.recycler_item_service_timing.*
 import java.util.*
 
-class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, ServiceViewModel>(), RecyclerItemClickListener {
+class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, ServiceViewModel>(), RecyclerItemClickListener, AppOnZeroCaseClicked {
 
+  private val TAG = "ServiceListingFragment"
+  private var fragmentZeroCase: AppFragmentZeroCase? = null
   private lateinit var domainName: String
   private var session: UserSessionManager? = null
   private val list: ArrayList<ItemsItem> = arrayListOf()
@@ -106,10 +113,11 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     getListServiceFilterApi(isFirst = true, offSet = offSet, limit = limit)
     WebEngageController.trackEvent(SERVICE_CATALOGUE_LIST, PAGE_VIEW, NO_EVENT_VALUE)
     layoutManagerN?.let { scrollPagingListener(it) }
-    setOnClickListener(binding?.cbAddService, binding?.serviceListingEmpty?.cbAddService)
+    setOnClickListener(binding?.cbAddService)
     this.session = UserSessionManager(requireContext())
-    this.domainName = session?.getDomainName()!!
-
+    this.domainName = session?.getDomainName() ?: ""
+    this.fragmentZeroCase = AppRequestZeroCaseBuilder(AppZeroCases.SERVICES, this, baseActivity).getRequest().build()
+    addFragment(containerID = binding?.childContainer?.id, fragmentZeroCase, false)
   }
 
   private fun getBundleData() {
@@ -145,36 +153,32 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     })
   }
 
-  private fun getListServiceFilterApi(
-    searchString: String = "",
-    isFirst: Boolean = false,
-    offSet: Int? = null,
-    limit: Int? = null
-  ) {
+  private fun getListServiceFilterApi(searchString: String = "", isFirst: Boolean = false, offSet: Int? = null, limit: Int? = null) {
     if (isFirst || searchString.isNotEmpty()) showProgress()
-    viewModel?.getSearchListings(fpTag, fpId, searchString, offSet, limit)
-      ?.observeOnce(viewLifecycleOwner, {
-        if (it.isSuccess()) {
-          setServiceDataItems(
-            (it as? ServiceSearchListingResponse)?.result,
-            searchString.isNotEmpty(),
-            isFirst
-          )
-        } else if (isFirst) showShortToast(it.message())
-        if (isFirst || searchString.isNotEmpty()) hideProgress()
-      })
+    viewModel?.getSearchListings(fpTag, fpId, searchString, offSet, limit)?.observeOnce(baseActivity, {
+      if (it.isSuccess()) {
+        setServiceDataItems((it as? ServiceSearchListingResponse)?.result, searchString.isNotEmpty(), isFirst)
+      } else if (isFirst) showShortToast(it.message())
+      if (isFirst || searchString.isNotEmpty()) hideProgress()
+    })
   }
 
-  private fun setServiceDataItems(
-    resultService: Result?,
-    isSearchString: Boolean,
-    isFirstLoad: Boolean
-  ) {
+
+  override fun onResume() {
+    super.onResume()
+    var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
+    if (fpDetails.isNullOrEmpty()) fpDetails = "Services"
+    setToolbarTitle("$fpDetails ${if (TOTAL_ELEMENTS > 0) "(${TOTAL_ELEMENTS})" else ""}".capitalizeUtil())
+  }
+
+  private fun setServiceDataItems(resultService: Result?, isSearchString: Boolean, isFirstLoad: Boolean) {
     val listService = resultService?.data as? ArrayList<ItemsItem>
     if (isSearchString.not()) {
+      Log.i(TAG, "setServiceDataItems: " + listService?.size + " " + isFirstLoad + " ")
       onServiceAddedOrUpdated(listService?.size ?: 0)
       if (isFirstLoad) finalList.clear()
       if (listService.isNullOrEmpty().not()) {
+        Log.i(TAG, "setServiceDataItems: list is null or empty not")
         removeLoader()
         setEmptyView(View.GONE)
         TOTAL_ELEMENTS = resultService?.paging?.count ?: 0
@@ -183,7 +187,9 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         list.addAll(finalList)
         isLastPageD = (finalList.size == TOTAL_ELEMENTS)
         setAdapterNotify()
-        setToolbarTitle("${resources.getString(R.string.services)} (${TOTAL_ELEMENTS})")
+        var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
+        if (fpDetails.isNullOrEmpty()) fpDetails = "Services"
+        setToolbarTitle("$fpDetails ${if (TOTAL_ELEMENTS > 0) "(${TOTAL_ELEMENTS})" else ""}".capitalizeUtil())
       } else if (isFirstLoad) setEmptyView(View.VISIBLE)
     } else {
       if (listService.isNullOrEmpty().not()) {
@@ -194,6 +200,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     }
   }
 
+
   private fun onServiceAddedOrUpdated(count: Int) {
     val instance = FirestoreManager
     instance.getDrScoreData()?.metricdetail?.number_services_added = count
@@ -202,8 +209,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   private fun setAdapterNotify() {
     if (adapterService == null) {
-      adapterService =
-        AppBaseRecyclerViewAdapter(baseActivity, list, this@ServiceListingFragment)
+      adapterService = AppBaseRecyclerViewAdapter(baseActivity, list, this@ServiceListingFragment)
       binding?.baseRecyclerView?.layoutManager = layoutManagerN
       binding?.baseRecyclerView?.adapter = adapterService
       adapterService?.runLayoutAnimation(binding?.baseRecyclerView)
@@ -222,14 +228,9 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     inflater.inflate(R.menu.menu_service_listing, menu)
     val searchItem = menu.findItem(R.id.action_search)
     val searchView = searchItem.actionView as? SearchView
-    val searchAutoComplete =
-      searchView?.findViewById<SearchView.SearchAutoComplete>(androidx.appcompat.R.id.search_src_text)
-    val searchCloseIcon =
-      searchView?.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
-    searchCloseIcon?.setColorFilter(
-      resources.getColor(R.color.white),
-      android.graphics.PorterDuff.Mode.SRC_IN
-    )
+    val searchAutoComplete = searchView?.findViewById<SearchView.SearchAutoComplete>(androidx.appcompat.R.id.search_src_text)
+    val searchCloseIcon = searchView?.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
+    searchCloseIcon?.setColorFilter(resources.getColor(R.color.white), android.graphics.PorterDuff.Mode.SRC_IN)
     searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
     searchAutoComplete?.setTextColor(getColor(R.color.white))
     searchView?.setIconifiedByDefault(true)
@@ -248,9 +249,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   private fun startFilter(query: String?) {
     when {
-      query.isNullOrEmpty().not() && query!!.length > 2 -> getListServiceFilterApi(
-        searchString = query
-      )
+      query.isNullOrEmpty().not() && query!!.length > 2 -> getListServiceFilterApi(searchString = query)
       finalList.isNullOrEmpty().not() -> {
         list.clear()
         list.addAll(finalList)
@@ -260,10 +259,32 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     }
   }
 
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.action_service_configuration -> {
+        startFragmentActivity(FragmentType.APPOINTMENT_SETTINGS)
+        return true
+      }
+      else -> super.onOptionsItemSelected(item)
+    }
+  }
+
+
   private fun setEmptyView(visibility: Int) {
-    binding?.serviceListingEmpty?.root?.visibility = visibility
+    Log.i(TAG, "setEmptyView: ")
+    when (visibility) {
+      View.GONE -> {
+        setHasOptionsMenu(true)
+        binding?.mainlayout?.visible()
+        binding?.childContainer?.gone()
+      }
+      View.VISIBLE -> {
+        setHasOptionsMenu(false)
+        binding?.mainlayout?.gone()
+        binding?.childContainer?.visible()
+      }
+    }
     if (visibility == View.VISIBLE) setListingView(View.GONE) else setListingView(View.VISIBLE)
-    setEmptyView()
   }
 
   private fun setListingView(visibility: Int) {
@@ -271,81 +292,25 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     binding?.cbAddService?.visibility = visibility
   }
 
-  private fun setEmptyView() {
-    val spannableString = SpannableString(resources.getString(R.string.you_don_t_have_any_service_added_to_your_digital_catalog_as_of_yet_watch_video))
-//    val clickableSpan = object : ClickableSpan() {
-//      override fun onClick(widget: View) {
-//        showShortToast("video link")
-//      }
-//
-//      override fun updateDrawState(ds: TextPaint) {
-//        super.updateDrawState(ds)
-//        ds.isUnderlineText = false
-//      }
-//    }
-//    spannableString.setSpan(
-//      clickableSpan,
-//      spannableString.length.minus(11),
-//      spannableString.length,
-//      0
-//    )
-//    spannableString.setSpan(
-//      ForegroundColorSpan(
-//        ContextCompat.getColor(
-//          requireActivity(),
-//          R.color.black_4a4a4a
-//        )
-//      ), spannableString.length.minus(11), spannableString.length, 0
-//    )
-//    spannableString.setSpan(
-//      UnderlineSpan(),
-//      spannableString.length.minus(11),
-//      spannableString.length,
-//      0
-//    )
-    binding?.serviceListingEmpty?.ctvAddServiceSubheading?.text = spannableString
-    binding?.serviceListingEmpty?.ctvAddServiceSubheading?.movementMethod =
-      LinkMovementMethod.getInstance()
-    binding?.serviceListingEmpty?.ctvAddServiceSubheading?.highlightColor =
-      resources.getColor(android.R.color.transparent)
-  }
-
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     if (actionType == RecyclerViewActionType.SERVICE_ITEM_CLICK.ordinal) {
-      startFragmentActivity(
-        FragmentType.SERVICE_DETAIL_VIEW,
-        sendBundleData(item as? ItemsItem),
-        false,
-        isResult = true
-      )
+      startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, sendBundleData(item as? ItemsItem), false, isResult = true)
     }
     if (actionType == RecyclerViewActionType.SERVICE_WHATS_APP_SHARE.ordinal) {
       shareProduct = item as? ItemsItem
       shareType = true
-      if (checkStoragePermission()) ContentSharing.shareProduct(
-
-        shareProduct?.name,
-        shareProduct?.price.toString(),
-        "${domainName}/all-services",
-        session?.fPPrimaryContactNumber,
-        shareProduct?.image,
-        true,
-        isService = true,
-        activity = requireActivity()
-      )
+      if (checkStoragePermission())
+        ContentSharing.shareProduct(
+          shareProduct?.name, shareProduct?.price.toString(), "${domainName}/all-services", session?.fPPrimaryContactNumber,
+          shareProduct?.image, true, isService = true, activity = requireActivity()
+        )
     }
     if (actionType == RecyclerViewActionType.SERVICE_DATA_SHARE_CLICK.ordinal) {
       shareProduct = item as? ItemsItem
       shareType = false
       if (checkStoragePermission()) ContentSharing.shareProduct(
-        shareProduct?.name,
-        shareProduct?.price.toString(),
-        "${domainName}/all-services",
-        session?.fPPrimaryContactNumber,
-        shareProduct?.image,
-        isService = true,
-        activity = requireActivity()
-
+        shareProduct?.name, shareProduct?.price.toString(), "${domainName}/all-services", session?.fPPrimaryContactNumber,
+        shareProduct?.image, isService = true, activity = requireActivity()
       )
     }
   }
@@ -353,10 +318,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   private fun sendBundleData(itemsItem: ItemsItem?): Bundle {
     val bundle = Bundle()
     bundle.putSerializable(IntentConstant.PRODUCT_DATA.name, itemsItem)
-    bundle.putBoolean(
-      IntentConstant.NON_PHYSICAL_EXP_CODE.name,
-      isNonPhysicalExperience ?: false
-    )
+    bundle.putBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name, isNonPhysicalExperience ?: false)
     bundle.putString(IntentConstant.CURRENCY_TYPE.name, currencyType)
     bundle.putString(IntentConstant.FP_ID.name, fpId)
     bundle.putString(IntentConstant.FP_TAG.name, fpTag)
@@ -369,11 +331,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   private fun checkStoragePermission(): Boolean {
     if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-      showDialog(
-        requireActivity(),
-        "Storage Permission",
-        "To share the image we need storage permission."
-      ) { _: DialogInterface?, _: Int ->
+      showDialog(requireActivity(), "Storage Permission", "To share the image we need storage permission.") { _: DialogInterface?, _: Int ->
         requestPermissions(
           arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
           STORAGE_CODE
@@ -384,11 +342,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     return true
   }
 
-  override fun onRequestPermissionsResult(
-    requestCode: Int,
-    permissions: Array<String>,
-    grantResults: IntArray
-  ) {
+  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     if (requestCode == STORAGE_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
       if (shareProduct != null) ContentSharing.shareProduct(
@@ -397,7 +351,6 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         imageUri = shareProduct?.image,
         isWhatsApp = shareType,
         activity = requireActivity()
-
       )
     }
   }
@@ -415,37 +368,23 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.cbAddService, binding?.serviceListingEmpty?.cbAddService -> {
-        startFragmentActivity(
-          FragmentType.SERVICE_DETAIL_VIEW,
-          bundle = sendBundleData(null),
-          isResult = true
-        )
-      }
+      binding?.cbAddService -> addService()
     }
+  }
+
+  private fun addService() {
+    startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, bundle = sendBundleData(null), isResult = true)
   }
 
   private fun openSortingBottomSheet() {
     val sortSheet = SortAndFilterBottomSheet()
     sortSheet.onClicked = { }
-    sortSheet.show(
-      this@ServiceListingFragment.parentFragmentManager,
-      ImagePickerBottomSheet::class.java.name
-    )
+    sortSheet.show(this@ServiceListingFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
 
   private fun sandbarNoInternet(context: Activity) {
-    val snackBar = Snackbar.make(
-      context.findViewById(android.R.id.content),
-      context.getString(R.string.noInternet),
-      Snackbar.LENGTH_LONG
-    )
-    snackBar.view.setBackgroundColor(
-      ContextCompat.getColor(
-        context,
-        R.color.snackbar_negative_color
-      )
-    )
+    val snackBar = Snackbar.make(context.findViewById(android.R.id.content), context.getString(R.string.noInternet), Snackbar.LENGTH_LONG)
+    snackBar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color))
     snackBar.show()
   }
 
@@ -468,6 +407,24 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   override fun hideProgress() {
     binding?.progress?.gone()
   }
+
+
+  override fun primaryButtonClicked() {
+    addService()
+  }
+
+  override fun secondaryButtonClicked() {
+    startFragmentActivity(FragmentType.APPOINTMENT_SETTINGS)
+  }
+
+  override fun ternaryButtonClicked() {
+
+  }
+
+  override fun appOnBackPressed() {
+
+  }
+
 }
 
 

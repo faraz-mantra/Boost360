@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.Uri
 import android.view.*
 import android.widget.PopupWindow
@@ -237,6 +238,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.menu_more, menu)
+    menu.findItem(R.id.menu_more)?.icon?.setTint(Color.WHITE)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {

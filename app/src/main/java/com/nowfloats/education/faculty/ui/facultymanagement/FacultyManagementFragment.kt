@@ -1,6 +1,10 @@
 package com.nowfloats.education.faculty.ui.facultymanagement
 
+import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,24 +12,35 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.boost.upgrades.UpgradeActivity
+import com.framework.extensions.gone
+import com.framework.extensions.visible
 import com.framework.views.fabButton.FloatingActionButton
+import com.framework.views.zero.old.AppFragmentZeroCase
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
+import com.nowfloats.Login.UserSessionManager
 import com.nowfloats.education.faculty.FacultyActivity
 import com.nowfloats.education.faculty.adapter.FacultyManagementAdapter
 import com.nowfloats.education.faculty.model.Data
 import com.nowfloats.education.faculty.ui.facultydetails.FacultyDetailsFragment
 import com.nowfloats.education.helper.BaseFragment
+import com.nowfloats.education.helper.Constants
 import com.nowfloats.education.helper.Constants.FACULTY_DETAILS_FRAGMENT
 import com.nowfloats.education.helper.Constants.SUCCESS
 import com.nowfloats.education.helper.ItemClickEventListener
 import com.nowfloats.util.Utils
 import com.thinksity.R
+import com.thinksity.databinding.FacultyManagementFragmentBinding
 import org.koin.android.ext.android.inject
 
-class FacultyManagementFragment : BaseFragment(), ItemClickEventListener {
+class FacultyManagementFragment : BaseFragment(), ItemClickEventListener,AppOnZeroCaseClicked {
 
   private val viewModel by inject<FacultyManagementViewModel>()
   private val facultyManagementAdapter: FacultyManagementAdapter by lazy {
@@ -33,22 +48,54 @@ class FacultyManagementFragment : BaseFragment(), ItemClickEventListener {
       this
     )
   }
-
+  private lateinit var fragmentZeroCase:AppFragmentZeroCase
+  private lateinit var binding:FacultyManagementFragmentBinding
+  private lateinit var userSessionManager: UserSessionManager
+  private val TAG = "FacultyManagementFragme"
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    return inflater.inflate(R.layout.faculty_management_fragment, container, false)
+    binding = DataBindingUtil.inflate(inflater,R.layout.faculty_management_fragment,container,false)
+    return binding.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    Log.i(TAG, "onViewCreated: ")
+    userSessionManager = UserSessionManager(requireActivity(),requireActivity())
+    this.fragmentZeroCase = AppRequestZeroCaseBuilder(AppZeroCases.FACULTY_MANAGEMENT
+      , this, requireActivity(),isPremium()).getRequest().build()
+    requireActivity().supportFragmentManager.beginTransaction().replace(
+      binding.childContainer.id,fragmentZeroCase
+    ).commit()
 
     setHeader(view)
     initLiveDataObservers()
-    initBatchesRecyclerview(view)
+    if (isPremium()){
+      nonEmptyView()
+      initBatchesRecyclerview(view)
+    }else{
+      emptyView()
+    }
   }
 
+
+  private fun isPremium():Boolean{
+    return userSessionManager.storeWidgets?.contains(Constants.FACULTY_MANAGEMENT_FEATURE)==true
+  }
+  private fun nonEmptyView() {
+    setHasOptionsMenu(true)
+    binding.mainlayout.visible()
+    binding.childContainer.gone()
+  }
+
+  private fun emptyView() {
+    setHasOptionsMenu(false)
+    binding.mainlayout.gone()
+    binding.childContainer.visible()
+
+  }
   private fun initBatchesRecyclerview(view: View) {
     val recyclerview = view.findViewById<RecyclerView>(R.id.faculty_recycler)
     val gridLayoutManager = GridLayoutManager(requireContext(), 1)
@@ -70,8 +117,13 @@ class FacultyManagementFragment : BaseFragment(), ItemClickEventListener {
     viewModel.apply {
       ourFacultyResponse.observe(viewLifecycleOwner, Observer {
         if (!it.Data.isNullOrEmpty()) {
+          nonEmptyView()
+          Log.i(TAG, "data not empty")
           setRecyclerviewAdapter(it.Data)
-        } else showToast("Faculty data not found!")
+        } else {
+          Log.i(TAG, "data empty")
+          emptyView()
+        }
         hideLoader()
       })
 
@@ -140,4 +192,59 @@ class FacultyManagementFragment : BaseFragment(), ItemClickEventListener {
   companion object {
     fun newInstance(): FacultyManagementFragment = FacultyManagementFragment()
   }
+
+  override fun primaryButtonClicked() {
+    if (isPremium()){
+      (activity as FacultyActivity).addFragment(
+        FacultyDetailsFragment.newInstance(),
+        FACULTY_DETAILS_FRAGMENT
+      )
+    }else{
+      initiateBuyFromMarketplace()
+    }
+  }
+
+  override fun secondaryButtonClicked() {
+  }
+
+  override fun ternaryButtonClicked() {
+  }
+
+  override fun appOnBackPressed() {
+  }
+
+  private fun initiateBuyFromMarketplace() {
+    userSessionManager.let {
+      val progressDialog = ProgressDialog(requireActivity())
+      val status = "Loading. Please wait..."
+      progressDialog.setMessage(status)
+      progressDialog.setCancelable(false)
+      progressDialog.show()
+      val intent = Intent(requireActivity(), UpgradeActivity::class.java)
+      intent.putExtra("expCode", it.fP_AppExperienceCode)
+      intent.putExtra("fpName", it.fpName)
+      intent.putExtra("fpid", it.fpid)
+      intent.putExtra("loginid", it.userProfileId)
+      intent.putStringArrayListExtra("userPurchsedWidgets", com.nowfloats.util.Constants.StoreWidgets)
+      intent.putExtra("fpTag", it.fpTag)
+      if (it.userProfileEmail != null) {
+        intent.putExtra("email", it.userProfileEmail)
+      } else {
+        intent.putExtra("email", "ria@nowfloats.com")
+      }
+      if (it.userPrimaryMobile != null) {
+        intent.putExtra("mobileNo", it.userPrimaryMobile)
+      } else {
+        intent.putExtra("mobileNo", "9160004303")
+      }
+      intent.putExtra("profileUrl", it.fpLogo)
+      intent.putExtra("buyItemKey", Constants.FACULTY_MANAGEMENT_FEATURE)
+      startActivity(intent)
+      Handler().postDelayed({
+        progressDialog.dismiss()
+        requireActivity().finish()
+      }, 1000)
+    }
+  }
+
 }

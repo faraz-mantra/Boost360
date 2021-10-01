@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data></data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottoms_sheet_top20dp_white"
+    android:orientation="vertical">
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/civ_cancel"
+      android:layout_width="@dimen/size_38"
+      android:layout_height="@dimen/size_38"
+      android:layout_alignParentEnd="true"
+      android:layout_gravity="end"
+      android:layout_marginTop="@dimen/size_6"
+      android:layout_marginEnd="@dimen/size_6"
+      android:background="?attr/selectableItemBackgroundBorderless"
+      android:clickable="true"
+      android:focusable="true"
+      android:includeFontPadding="false"
+      android:padding="@dimen/size_10"
+      android:tint="@color/grey_dark_2"
+      app:srcCompat="@drawable/ic_cross_grey" />
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_horizontal"
+      android:orientation="vertical">
+
+      <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="@dimen/size_70"
+        android:layout_height="@dimen/size_70"
+        android:layout_gravity="center_horizontal"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/green_success" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/txt_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/size_4"
+        android:fontFamily="@font/regular"
+        android:text="@string/successfully_published"
+        android:textColor="@color/yellow_ffb900"
+        app:fontFamily="@font/semi_bold"
+        app:textType="HEADING_5" />
+
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/txt_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_8"
+        android:fontFamily="@font/regular"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/your_catalog_display_name_is_successfully_saved_and_"
+        android:textAlignment="center"
+        android:textColor="@color/black_4a4a4a"
+        android:textSize="12sp" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_8"
+        android:fontFamily="@font/regular"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        tools:text="@string/https_sravansclinics_com_packages"
+        android:textAlignment="center"
+        android:textColor="@color/black_4a4a4a"
+        android:textSize="14sp"
+        app:fontFamily="@font/semi_bold" />
+
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/visit_website"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_36"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/size_16"
+        android:background="@drawable/bg_button_proceed_4"
+        android:drawableEnd="@drawable/ic_arrow_top_right"
+        android:drawablePadding="@dimen/size_8"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:paddingHorizontal="@dimen/size_20"
+        android:stateListAnimator="@null"
+        android:text="@string/view_on_website"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:layout_marginBottom="@dimen/size_20" />
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/size_20"
+        android:layout_marginBottom="@dimen/size_20"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10"
+        android:visibility="gone">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@id/btn_cancel"
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/size_36"
+          android:layout_gravity="center_horizontal"
+          android:gravity="center"
+          android:text="@string/share_"
+          android:textColor="@color/warm_grey"
+          app:textType="HEADING_6" />
+
+        <com.framework.views.customViews.CustomCardView
+          android:id="@+id/btn_copy_message"
+          android:layout_width="@dimen/size_30"
+          android:layout_height="@dimen/size_30"
+          android:layout_marginStart="@dimen/size_20"
+          app:cardBackgroundColor="@color/white_one"
+          app:cardCornerRadius="@dimen/size_15"
+          app:cardElevation="0dp">
+
+          <com.framework.views.customViews.CustomImageView
+            android:layout_width="@dimen/size_16"
+            android:layout_height="@dimen/size_16"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/ic_copy_service" />
+        </com.framework.views.customViews.CustomCardView>
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/btn_fb"
+          android:layout_width="@dimen/size_36"
+          android:layout_height="@dimen/size_36"
+          android:layout_marginStart="@dimen/size_4"
+          android:padding="@dimen/size_3"
+          app:srcCompat="@drawable/ic_facebook_service" />
+
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/btn_twitter"
+          android:layout_width="@dimen/size_36"
+          android:layout_height="@dimen/size_36"
+          android:layout_marginStart="@dimen/size_4"
+          android:padding="@dimen/size_3"
+          app:srcCompat="@drawable/ic_twitter_service" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/btn_whatsapp"
+          android:layout_width="@dimen/size_36"
+          android:layout_height="@dimen/size_36"
+          android:layout_marginStart="@dimen/size_4"
+          android:padding="@dimen/size_3"
+          app:srcCompat="@drawable/ic_whats_app_service" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/btn_linkedin"
+          android:layout_width="@dimen/size_36"
+          android:layout_height="@dimen/size_36"
+          android:layout_marginStart="@dimen/size_4"
+          android:padding="@dimen/size_3"
+          app:srcCompat="@drawable/ic_linkedin_service" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/btn_mail"
+          android:layout_width="@dimen/size_36"
+          android:layout_height="@dimen/size_36"
+          android:layout_marginStart="@dimen/size_4"
+          android:padding="@dimen/size_3"
+          app:srcCompat="@drawable/ic_email_service" />
+
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>
