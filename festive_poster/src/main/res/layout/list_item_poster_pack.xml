@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <com.framework.views.customViews.CustomCardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardCornerRadius="@dimen/size_15"
+        android:layout_marginVertical="@dimen/size_8"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:paddingVertical="@dimen/size_24"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_poster_heading"
+                android:layout_width="match_parent"
+                app:textType="HEADING_4"
+                android:layout_marginStart="@dimen/size_24"
+                android:text="Navatri"
+                android:layout_height="wrap_content"/>
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_marginTop="@dimen/size_8"
+                android:layout_marginStart="@dimen/size_24"
+                android:layout_width="match_parent"
+                android:id="@+id/tv_price"
+                android:layout_height="wrap_content"/>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginStart="@dimen/size_8"
+                android:id="@+id/vp_poster"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.tabs.TabLayout
+                android:layout_gravity="center"
+                android:id="@+id/tabLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_8"
+                android:layout_marginTop="16dp"
+                app:tabBackground="@drawable/tab_selector"
+                app:tabGravity="fill"
+                app:tabIndicatorHeight="0dp"
+                app:tabMode="fixed" />
+
+            <com.framework.views.customViews.CustomMaterialButton
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/size_16"
+                app:cornerRadius="@dimen/size_15"
+                android:textAllCaps="false"
+                android:text="Get Navratri posters pack"
+                android:layout_marginHorizontal="@dimen/size_32"
+                android:layout_height="@dimen/size_60"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </com.framework.views.customViews.CustomCardView>
+</layout>
