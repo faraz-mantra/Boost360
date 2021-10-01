@@ -2,6 +2,8 @@ package com.appservice.ui.domainbooking
 
 import android.os.Bundle
 import android.text.SpannableString
+import android.util.Log
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -12,6 +14,7 @@ import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.domainbooking.model.DomainStepsModel
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.imagepicker.ImageTags.Tags.TAG
 import com.framework.models.BaseViewModel
 
 class AddingExistingDomainFragment :
@@ -62,6 +65,21 @@ class AddingExistingDomainFragment :
                 )
             }
         }
+
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (addingExistingDomainStepStatus >= 0 ) {
+                        --addingExistingDomainStepStatus
+                        setUiStepStatus()
+                    } else if (isEnabled) {
+                        isEnabled = false
+                        requireActivity().onBackPressed()
+                    }
+                }
+            }
+            )
     }
 
     private fun setUiStepStatus() {
@@ -249,4 +267,5 @@ class AddingExistingDomainFragment :
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     }
+
 }
