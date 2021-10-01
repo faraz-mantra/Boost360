@@ -22,6 +22,7 @@ import com.boost.upgrades.data.renewalcart.*
 import com.boost.upgrades.utils.SingleLiveEvent
 import com.boost.upgrades.utils.Utils
 import com.dashboard.model.live.coupon.CouponServiceModel
+import com.framework.analytics.SentryController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.luminaire.apolloar.base_class.BaseViewModel
@@ -210,6 +211,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
       out.close()
     } catch (e: IOException) {
       println("exception  $e")
+      SentryController.captureException(e)
     }
   }
 
@@ -652,6 +654,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
       cityResult.postValue(cityNames)
     } catch (ioException: JSONException) {
       ioException.printStackTrace()
+      SentryController.captureException(ioException)
     }
   }
 
@@ -671,6 +674,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
       stateResult.postValue(stateNames)
     } catch (ioException: JSONException) {
       ioException.printStackTrace()
+      SentryController.captureException(ioException)
     }
   }
 

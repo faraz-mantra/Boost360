@@ -3,6 +3,7 @@ package com.boost.upgrades.utils
 import android.text.Spanned
 
 import android.text.InputFilter
+import com.framework.analytics.SentryController
 import java.lang.NumberFormatException
 
 
@@ -32,6 +33,7 @@ class MinMaxFilter : InputFilter {
       val input = (dest.toString() + source.toString()).toInt()
       if (isInRange(mIntMin, mIntMax, input)) return null
     } catch (e: NumberFormatException) {
+      SentryController.captureException(e)
       e.printStackTrace()
     }
     return ""
