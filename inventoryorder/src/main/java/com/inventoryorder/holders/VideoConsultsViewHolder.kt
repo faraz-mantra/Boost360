@@ -24,8 +24,7 @@ import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import java.util.*
 
 
-class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) :
-  AppBaseRecyclerViewHolder<ItemVideoConsultOrderBinding>(binding) {
+class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRecyclerViewHolder<ItemVideoConsultOrderBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -48,12 +47,8 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) :
 
   private fun setDataResponse(order: OrderItem) {
     val statusValue = OrderStatusValue.fromStatusConsultation(order.status())?.value
-    if (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status()
-        .toUpperCase(Locale.ROOT)
-    ) {
-      if (order.PaymentDetails?.status()
-          ?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name
-      ) {
+    if (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status().toUpperCase(Locale.ROOT)) {
+      if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
         binding.orderType.text = OrderStatusValue.ESCALATED_3.value
       } else binding.orderType.text = statusValue.plus(order.cancelledTextVideo())
     } else if (order.isConfirmConsultBtn()) binding.orderType.text = "Upcoming Consult"
@@ -61,25 +56,15 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) :
 
     binding.bookingId.text = "# ${order.ReferenceNumber}"
     order.BillingDetails?.let { bill ->
-      val currency =
-        takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() }
-          ?: "INR"
+      val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
       binding.txtRupees.text = "$currency ${bill.AmountPayableByBuyer}"
     }
-    binding.createDate.value.text = parseDate(
-      order.CreatedOn,
-      FORMAT_SERVER_DATE,
-      FORMAT_SERVER_TO_LOCAL,
-      timeZone = TimeZone.getTimeZone("IST")
-    )
+    binding.createDate.value.text = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL, timeZone = TimeZone.getTimeZone("IST"))
     binding.payment.value.text = order.PaymentDetails?.payment()?.trim()
-    binding.duration.value.text =
-      order.firstItemForAptConsult()?.Product?.extraItemProductConsultation()?.durationTxt()
-        ?: "0 Minute"
+    binding.duration.value.text = order.firstItemForAptConsult()?.Product?.extraItemProductConsultation()?.durationTxt() ?: "0 Minute"
     val sizeItem = if (order.firstItemForAptConsult() != null) 1 else 0
     binding.itemCount.text = takeIf { sizeItem > 1 }?.let { "Details" } ?: "Detail"
-    val details =
-      order.firstItemForAptConsult()?.Product?.extraItemProductConsultation()?.detailsConsultation()
+    val details = order.firstItemForAptConsult()?.Product?.extraItemProductConsultation()?.detailsConsultation()
     binding.itemDesc.text = details
 
     val scheduleDate = order.firstItemForAptConsult()?.scheduledStartDate()
