@@ -101,7 +101,7 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
     hideProgress()
     val paymentProfileResponse = it as? PaymentProfileResponse
     if (paymentProfileResponse != null) {
-      isEdit = paymentProfileResponse.result?.bankAccountDetails != null
+      isEdit = paymentProfileResponse.result?.bankAccountDetails != null && (paymentProfileResponse.result?.bankAccountDetails?.isValidAccount() == true)
       if (isEdit) {
         binding?.btnAddAccount?.gone()
         binding?.llBankStatus?.visible()

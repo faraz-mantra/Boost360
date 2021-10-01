@@ -86,7 +86,7 @@
       android:layout_height="@dimen/size_26"
       android:background="@drawable/rounded_stroke_grey_service_information"
       android:gravity="center_vertical|center"
-      android:paddingHorizontal="@dimen/size_8"
+      android:paddingHorizontal="@dimen/size_4"
       android:stateListAnimator="@null"
       android:text="@string/change"
       android:textAllCaps="false"

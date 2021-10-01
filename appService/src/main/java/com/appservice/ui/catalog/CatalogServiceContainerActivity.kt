@@ -199,7 +199,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
         ServiceTimingFragment.newInstance()
       }
       FragmentType.ECOMMERCE_DELIVERY_CONFIG -> {
-        FragmentEcomDeliveryConfig.newInstance()
+        FragmentEcommerceDeliveryConfig.newInstance()
 
       }
 
