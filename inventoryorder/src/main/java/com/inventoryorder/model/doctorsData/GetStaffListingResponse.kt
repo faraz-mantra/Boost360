@@ -1,6 +1,10 @@
 package com.inventoryorder.model.doctorsData
 
+import com.framework.utils.*
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
+
+const val DOCTOR_STAFF_LIST_DATA="DOCTOR_STAFF_LIST_DATA"
 
 data class GetStaffListingResponse(
 
@@ -12,16 +16,24 @@ data class GetStaffListingResponse(
 
 	@field:SerializedName("Result")
 	var result: Result? = null
-)
+):Serializable
 
 data class Result(
 
 	@field:SerializedName("Paging")
 	var paging: Paging? = null,
-
 	@field:SerializedName("Data")
 	var data: ArrayList<DataItem>? = null
-)
+):Serializable
+
+fun List<DataItem>.saveDoctorList() {
+	PreferencesUtils.instance.saveData(DOCTOR_STAFF_LIST_DATA, convertListObjToString(this ?: ArrayList()) ?: "")
+}
+
+fun getDoctorStaffList(): List<DataItem>? {
+	return convertStringToList(PreferencesUtils.instance.getData(DOCTOR_STAFF_LIST_DATA, "") ?: "")
+}
+
 
 data class DataItem(
 
@@ -29,7 +41,7 @@ data class DataItem(
 	var timings: List<TimingsItem?>? = null,
 
 	@field:SerializedName("ServiceIds")
-	var serviceIds: List<String?>? = null,
+	var serviceIds: List<String>? = null,
 
 	@field:SerializedName("Memberships")
 	var memberships: String? = null,
@@ -87,7 +99,7 @@ data class DataItem(
 
 	@field:SerializedName("Age")
 	var age: Int? = null
-)
+):Serializable
 
 data class TimingsItem(
 
@@ -96,7 +108,7 @@ data class TimingsItem(
 
 	@field:SerializedName("Day")
 	var day: String? = null
-)
+):Serializable
 
 data class TimingItem(
 
@@ -105,7 +117,7 @@ data class TimingItem(
 
 	@field:SerializedName("To")
 	var to: String? = null
-)
+):Serializable
 
 data class Paging(
 
@@ -117,7 +129,7 @@ data class Paging(
 
 	@field:SerializedName("Count")
 	var count: Int? = null
-)
+):Serializable
 
 data class SpecialisationsItem(
 
@@ -126,4 +138,4 @@ data class SpecialisationsItem(
 
 	@field:SerializedName("Graduated")
 	var graduated: String? = null
-)
+):Serializable
