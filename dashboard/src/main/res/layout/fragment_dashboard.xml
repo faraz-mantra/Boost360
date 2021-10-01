@@ -60,10 +60,10 @@
                 android:id="@+id/low_readiness_score_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_190"
+                android:layout_marginTop="@dimen/size_240"
                 android:background="@drawable/ic_bg_dark_white_top_round"
                 android:orientation="vertical"
-                android:visibility="gone">
+                >
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                   android:id="@+id/btn_show_digital_score"
@@ -619,6 +619,7 @@
                 android:id="@+id/btn_share_poster"
                 android:textAllCaps="false"
                 app:iconGravity="textEnd"
+
                 app:icon="@drawable/ic_new_txt"
                 android:textColor="@color/yellow_ffb900"
                 android:backgroundTint="@color/white"

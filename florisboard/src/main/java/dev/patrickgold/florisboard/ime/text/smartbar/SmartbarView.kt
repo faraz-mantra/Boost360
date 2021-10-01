@@ -278,8 +278,8 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
           binding.businessFeatureToggleAction.visibility = View.VISIBLE
         }
       }
-      binding.actionStartArea.displayedChild =
-        indexedActionStartArea.indexOf(actionStartAreaId).coerceAtLeast(0)
+      /*binding.actionStartArea.displayedChild =
+        indexedActionStartArea.indexOf(actionStartAreaId).coerceAtLeast(0)*/
     }
     binding.mainArea.visibility = when (mainAreaId) {
       null -> View.INVISIBLE
