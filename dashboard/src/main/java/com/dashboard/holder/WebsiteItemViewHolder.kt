@@ -17,6 +17,8 @@ class WebsiteItemViewHolder(binding: ItemWebsiteItemBinding) : AppBaseRecyclerVi
     val data = item as? WebsiteActionItem ?: return
     binding.textViewName.text = data.title
     binding.txtDesc.text = data.desc
+    binding.tvCount.text = data.getCountN().toString()
+    getColor(if (data.getCountN() == 0) R.color.gray_e2e2e2e2 else R.color.black_4a4a4a)?.let { binding.tvCount.setTextColor(it) }
     ContextCompat.getColorStateList(activity!!, R.color.white)?.let { binding.mainContent.backgroundTintList = it }
     val iconType = data.type?.let { WebsiteActionItem.IconType.fromName(it) }
     iconType?.let { binding.imageViewIcon.setImageResource(iconType.icon) }

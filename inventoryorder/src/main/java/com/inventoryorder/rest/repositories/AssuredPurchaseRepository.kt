@@ -5,6 +5,7 @@ import com.inventoryorder.base.rest.AppBaseLocalService
 import com.inventoryorder.base.rest.AppBaseRepository
 import com.inventoryorder.model.UpdateOrderNPropertyRequest
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
+import com.inventoryorder.model.orderRequest.OrderInitiateRequestNew
 import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
 import com.inventoryorder.rest.TaskCode
 import com.inventoryorder.rest.apiClients.AssuredPurchaseClient
@@ -17,7 +18,7 @@ object AssuredPurchaseRepository :
 
   fun postOrderInitiate(
     clientId: String?,
-    request: OrderInitiateRequest?
+    request: OrderInitiateRequestNew?
   ): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.initiateOrder(clientId, request),

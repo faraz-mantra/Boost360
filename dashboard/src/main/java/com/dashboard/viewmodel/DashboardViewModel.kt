@@ -214,6 +214,10 @@ class DashboardViewModel : BaseViewModel() {
   ): LiveData<BaseResponse> {
     return PluginFloatRepository.getDomainDetailsForFloatingPoint(fpTag, map).toLiveData()
   }
+
+  fun getMerchantSummary(clientId: String?,fpTag: String?): LiveData<BaseResponse> {
+   return WithFloatTwoRepository.getMerchantSummary(clientId,fpTag).toLiveData()
+  }
 }
 
 

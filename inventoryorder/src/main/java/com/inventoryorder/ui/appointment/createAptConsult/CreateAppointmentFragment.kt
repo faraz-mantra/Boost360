@@ -1,5 +1,7 @@
 package com.inventoryorder.ui.appointment.createAptConsult
 
+import FilterBy
+import GetStaffListingRequest
 import android.app.Activity
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -30,6 +32,7 @@ import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
+import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.databinding.FragmentNewAppointmentBinding
 import com.inventoryorder.model.AUTHORIZATION_3
 import com.inventoryorder.model.OrderInitiateResponse
@@ -42,7 +45,9 @@ import com.inventoryorder.model.apointmentData.addRequest.CustomerInfo
 import com.inventoryorder.model.apointmentData.updateRequest.SetField
 import com.inventoryorder.model.apointmentData.updateRequest.UpdateConsultField
 import com.inventoryorder.model.apointmentData.updateRequest.UpdateConsultRequest
+import com.inventoryorder.model.doctorsData.DataItem
 import com.inventoryorder.model.doctorsData.DoctorDataResponse
+import com.inventoryorder.model.doctorsData.GetStaffListingResponse
 import com.inventoryorder.model.orderRequest.*
 import com.inventoryorder.model.ordersdetails.ExtraPropertiesN
 import com.inventoryorder.model.ordersdetails.OrderItem
@@ -51,8 +56,13 @@ import com.inventoryorder.model.ordersdetails.ProductN
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.model.services.InventoryServicesResponse
 import com.inventoryorder.model.services.InventoryServicesResponseItem
+import com.inventoryorder.model.services.ServiceListingRequest
+import com.inventoryorder.model.services.ServiceListingResponse
+import com.inventoryorder.model.spaAppointment.bookingslot.request.BookingSlotsRequest
+import com.inventoryorder.model.spaAppointment.bookingslot.request.DateRange
+import com.inventoryorder.model.spaAppointment.bookingslot.response.BookingSlotResponse
+import com.inventoryorder.model.spaAppointment.bookingslot.response.Slots
 import com.inventoryorder.model.timeSlot.TimeSlotData
-import com.inventoryorder.model.weeklySchedule.DataItem
 import com.inventoryorder.model.weeklySchedule.GetDoctorWeeklySchedule
 import com.inventoryorder.model.weeklySchedule.isTimeBetweenTwoHours
 import com.inventoryorder.ui.BaseInventoryFragment
@@ -65,13 +75,15 @@ import com.michalsvec.singlerowcalendar.calendar.SingleRowCalendarAdapter
 import com.michalsvec.singlerowcalendar.selection.CalendarSelectionManager
 import com.michalsvec.singlerowcalendar.utils.DateUtils
 import kotlinx.android.synthetic.main.item_unavailable_calendar.view.*
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
-class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBinding>(),
-  PopupMenu.OnMenuItemClickListener {
+class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBinding>(), PopupMenu.OnMenuItemClickListener {
+
+  private var timeSlots: ArrayList<Slots>?=null
 
   //TODO update value
   private var orderItem: OrderItem? = null
@@ -85,21 +97,22 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     }
   private var aptData: AptData? = null
   private var updateExtraPropertyRequest: UpdateExtraPropertyRequest? = null
+  private var bookingSlotResponse: BookingSlotResponse? = null
   private var isUpdate: Boolean = false
   //TODO update value
 
   private var selectPositionService: Int = -1
   private var selectPositionDoctor: Int = 0
-  private var serviceList: ArrayList<InventoryServicesResponseItem>? = null
-  private var serviceData: InventoryServicesResponseItem? = null
+  private var serviceList: ArrayList<com.inventoryorder.model.services.ItemsItem?>? = null
+  private var serviceData: com.inventoryorder.model.services.ItemsItem? = null
   private var scheduledDateTime: String = ""
-  private var orderInitiateRequest = OrderInitiateRequest()
+  private var orderInitiateRequest = OrderInitiateRequestNew()
   private val calendar = Calendar.getInstance()
   private var currentMonth = 0
 
   var session: PreferenceData? = null
-  var doctorDataList: ArrayList<DoctorDataResponse>? = null
-  var doctorData: DoctorDataResponse? = null
+  var doctorDataList: ArrayList<DataItem>? = null
+  var doctorData: DataItem? = null
   var isVideoConsult: Boolean = false
   var patientName: String? = null
 
@@ -107,9 +120,9 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   var patientEmail: String? = null
   var patientMobile: String? = null
   var duration: String? = null
-  var doctorWeeklySchedule: ArrayList<DataItem>? = null
+//  var doctorWeeklySchedule: ArrayList<com.inventoryorder.model.weeklySchedule.DataItem>? = null
   var timeSlotList = ArrayList<TimeSlotData>()
-  var timeSlotData: TimeSlotData? = null
+  var timeSlotData: Slots? = null
 
   companion object {
     fun newInstance(bundle: Bundle? = null): CreateAppointmentFragment {
@@ -126,7 +139,6 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     orderItem = arguments?.getSerializable(IntentConstant.ORDER_ITEM.name) as? OrderItem
     isUpdate = (orderItem != null)
     setToolbarTitle(getString(if (isUpdate) R.string.update_apt_consult else R.string.new_apppointment_camel_case))
-
     // Remove video consultation based on experience code.
     if (session?.experienceCode == "DOC" || session?.experienceCode == "HOS") binding?.radioVideoConsultation?.isVisible =
       true
@@ -150,32 +162,28 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
 
   private fun getDoctorDetailApi() {
     showProgress()
-    viewModel?.getDoctorData(session?.fpTag)
+    viewModel?.getDoctorsListing(getFilterRequest(0,50))
       ?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
         if (it.error is NoNetworkException) {
           errorUi(resources.getString(R.string.internet_connection_not_available))
           return@Observer
         }
         if (it.status == 200 || it.status == 201 || it.status == 202) {
-          val response = it.anyResponse as? ArrayList<DoctorDataResponse>
+          val response = (it.anyResponse as? GetStaffListingResponse?)?.result?.data
           if (response.isNullOrEmpty().not()) {
             doctorDataList = response
-            doctorData =
-              if (isUpdate) response?.firstOrNull { data -> data.Id == extraItemConsult?.doctorId } else response?.get(
-                0
-              )
+            doctorData = if (isUpdate) response?.firstOrNull { data -> data.id == extraItemConsult?.doctorId } else response?.get(0)
             setDatDoctor()
             getServiceList()
-          } else errorUi(getErrorMessage())
+          } else errorUi(getString(R.string.doctor_weekly_schedule_not_available))
         } else errorUi(getErrorMessage())
       })
   }
 
   private fun setDatDoctor() {
-    val mobile = doctorData?.mobile?.replace("+91", "")?.trim()
+    val mobile = doctorData?.contactNumber?.replace("+91", "")?.trim()
     if (isMobileNumberValid(mobile ?: "")) session?.userPrimaryMobile = mobile
-    binding?.edtDuration?.setText(doctorData?.duration)
-    binding?.edtDoctor?.setText(doctorData?.username)
+    binding?.edtDoctor?.setText(doctorData?.name)
   }
 
   private fun getErrorMessage(): String {
@@ -196,28 +204,40 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   }
 
   private fun getServiceList() {
-    viewModel?.getAllServiceList(
-      AppConstant.CLIENT_ID,
-      0,
-      session?.fpTag,
-      InventoryServicesResponse.IdentifierType.SINGLE.name
-    )?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-      if (it.error is NoNetworkException) {
+    viewModel?.getServiceListing(
+      ServiceListingRequest( floatingPointTag = session?.fpTag)
+    )?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer { response ->
+      if (response.error is NoNetworkException) {
         errorUi(resources.getString(R.string.internet_connection_not_available))
         return@Observer
       }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
-        val resp = (it.arrayResponse as? Array<InventoryServicesResponseItem>)
-        serviceList =
-          if (resp.isNullOrEmpty().not()) resp?.toCollection(ArrayList()) else ArrayList()
-        serviceList?.add(InventoryServicesResponseItem().getGeneralData())
+      if (response.status == 200 || response.status == 201 || response.status == 202) {
+        val resp = (response as ServiceListingResponse).result?.flatMap { resultItem -> resultItem?.services?.items!! }
+        serviceList = if (resp.isNullOrEmpty().not()) resp?.toCollection(arrayListOf()) else ArrayList()
+//        serviceList?.add(InventoryServicesResponseItem().getGeneralData())
         if (isUpdate) {
-          serviceData = this.serviceList?.firstOrNull { service -> service.id == product?._id }
+          serviceData = this.serviceList?.firstOrNull { service -> service?.id == product?._id }
           selectDatServiceDataSet()
           updateUiConsult()
         }
-        getWeeklyScheduleList(doctorData?.Id ?: "")
-      } else errorUi(it.message())
+//        getWeeklyScheduleList(doctorData?.id ?: "")
+        when (serviceList?.firstOrNull()!=null) {
+          true -> {
+            val startDate = getDateTime()
+            val endDate = getDateTime()
+            val bookingSlotsRequest = BookingSlotsRequest(
+              BatchType = "WEEKLY",
+              ServiceId = serviceList?.firstOrNull()?.id?:"",
+              DateRange = DateRange(StartDate = startDate, EndDate = endDate)
+            )
+            getBookingSlots(bookingSlotsRequest)
+          }
+          else -> {
+            hideProgress()
+          }
+        }
+
+      } else errorUi(response.message())
     })
   }
 
@@ -273,7 +293,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         if (isSelected) {
           showProgress()
           getAllAptConsultDoctor(
-            doctorData?.Id,
+            doctorData?.id,
             date.parseDate(FORMAT_YYYY_MM_DD),
             DateUtils.getDayName(date)
           )
@@ -320,11 +340,11 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   }
 
   private fun consultingOnService() {
-    val singleItems = this.serviceList?.map { it.name }?.toTypedArray()
+    val singleItems = this.serviceList?.map { it?.name }?.toTypedArray()
     MaterialAlertDialogBuilder(baseActivity).setTitle(getString(R.string.consult_service))
       .setPositiveButton(getString(R.string.ok)) { d, _ ->
         serviceData =
-          this.serviceList?.firstOrNull { it.name == singleItems?.get(selectPositionService) }
+          this.serviceList?.firstOrNull { it?.name == singleItems?.get(selectPositionService) }
         selectDatServiceDataSet()
         d.dismiss()
       }.setNeutralButton(getString(R.string.cancel)) { d, _ ->
@@ -337,8 +357,25 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   private fun selectDatServiceDataSet() {
     serviceData?.let {
       binding?.edtConsultingService?.setText(it.name)
-      binding?.edtFees?.setText(it.discountedPrice().toString())
+      binding?.edtDuration?.setText(it.duration?.toString()?:"0")
+      binding?.edtFees?.setText(it.discountedPrice?.toString())
     }
+    when (serviceData!=null) {
+      true -> {
+        val startDate = getDateTime()
+        val endDate = getDateTime()
+        val bookingSlotsRequest = BookingSlotsRequest(
+          BatchType = "WEEKLY",
+          ServiceId = serviceData?.id?:"",
+          DateRange = DateRange(StartDate = startDate, EndDate = endDate)
+        )
+        getBookingSlots(bookingSlotsRequest)
+      }
+      else -> {
+        hideProgress()
+      }
+    }
+
   }
 
   override fun onClick(v: View) {
@@ -355,7 +392,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         //setTime(binding?.edtStartTime!!)
         when {
           scheduledDateTime.isEmpty() -> showLongToast(getString(R.string.first_select_consultation_date))
-          timeSlotList.isEmpty() -> showLongToast(getString(R.string.time_slot_not_available))
+          timeSlots?.isEmpty() == true -> showLongToast(getString(R.string.time_slot_not_available))
           else -> timeSlotBottomSheet()
         }
       }
@@ -369,11 +406,11 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   }
 
   private fun doctorListDialog() {
-    val singleItems = this.doctorDataList?.map { it.username }?.toTypedArray()
+    val singleItems = this.doctorDataList?.map { it.name }?.toTypedArray()
     MaterialAlertDialogBuilder(baseActivity).setTitle(getString(R.string.select_doctor))
       .setPositiveButton(getString(R.string.ok)) { d, _ ->
         doctorData =
-          this.doctorDataList?.firstOrNull { it.username == singleItems?.get(selectPositionDoctor) }
+          this.doctorDataList?.firstOrNull { it.name== singleItems?.get(selectPositionDoctor) }
         changeDoctor()
         d.dismiss()
       }.setNeutralButton(getString(R.string.cancel)) { d, _ ->
@@ -385,7 +422,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
 
   private fun changeDoctor() {
     serviceData = null
-    timeSlotData = null
+    timeSlots = null
     binding?.edtConsultingService?.setText("")
     binding?.edtFees?.setText("")
     binding?.edtStartTime?.setText("")
@@ -408,7 +445,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         showLongToast(getString(R.string.please_select_consultation_date))
         return false
       }
-      timeSlotList.isEmpty() -> {
+      timeSlots?.isEmpty()==true -> {
         showLongToast(getString(R.string.time_slot_not_available))
         return false
       }
@@ -436,6 +473,10 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         showLongToast(getString(R.string.patient_phone_number_field_must_not_be_empty))
         return false
       }
+      !isMobileNumberValid(patientMobile.toString()) -> {
+        showLongToast(getString(R.string.phone_number_invalid))
+        return false
+      }
       checkStringContainsDigits(patientName!!) -> {
         showLongToast(getString(R.string.please_enter_valid_patient_name))
         return false
@@ -455,36 +496,36 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         var endTime24 = ""
         try {
           startTime24 = parseDate(
-            timeSlotData?.startTime,
+            timeSlotData?.StartTime,
             com.framework.utils.DateUtils.FORMAT_HH_MM_A,
             com.framework.utils.DateUtils.FORMAT_HH_MM
           ) ?: ""
           endTime24 = parseDate(
-            timeSlotData?.endTime,
+            timeSlotData?.EndTime,
             com.framework.utils.DateUtils.FORMAT_HH_MM_A,
             com.framework.utils.DateUtils.FORMAT_HH_MM
           ) ?: ""
         } catch (e: Exception) {
           e.printStackTrace()
         }
-        val extra = ExtraProperties(
+        val extra = ExtraPropertieN(
           patientName = patientName!!,
           gender = gender,
-          age = age,
+          age = age.toIntOrNull()?:0,
           patientMobileNumber = patientMobile!!,
           patientEmailId = patientEmail!!,
           startTime = startTime24,
           endTime = endTime24,
           scheduledDateTime = scheduledDateTime,
           consultationFor = serviceData?.name ?: "",
-          doctorName = doctorData?.username ?: "",
-          doctorId = doctorData?.Id ?: "",
-          doctorQualification = doctorData?.degrees ?: "",
+          doctorName = doctorData?.name ?: "",
+          doctorId = doctorData?.id ?: "",
+          doctorQualification = doctorData?.education ?: "",
           doctorSpeciality = doctorData?.speciality ?: "",
           duration = duration?.toIntOrNull() ?: 0,
-          businessLicense = doctorData?.businessLicense ?: "",
-          doctorSignature = doctorData?.doctorsignature?.url ?: "",
-          referenceId = serviceData?.pickupAddressReferenceId() ?: "",
+          businessLicense = doctorData?.businessLicence ?: "",
+          doctorSignature = doctorData?.signature?.toString()?: "",
+          referenceId = serviceData?.id ?: "",
           businessLogo = ""
         )
 
@@ -496,11 +537,11 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
           )
         } else {
           val method =
-            if (serviceData?.discountedPrice() == 0.0) PaymentDetailsN.METHOD.FREE.type else PaymentDetailsN.METHOD.COD.type
-          val paymentDetails = PaymentDetails(method)
-          val buyerDetail = BuyerDetails(
-            address = Address(),
-            contactDetails = ContactDetails(
+            if (serviceData?.discountedPrice == 0.0) PaymentDetailsN.METHOD.FREE.type else PaymentDetailsN.METHOD.COD.type
+          val paymentDetails = com.inventoryorder.model.orderRequest.PaymentDetailsN(method)
+          val buyerDetail = BuyerDetailsN(
+            address = AddressN(),
+            contactDetails = ContactDetailsN(
               emailId = patientEmail!!,
               fullName = patientName!!,
               primaryContactNumber = patientMobile!!
@@ -510,31 +551,30 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
             if (isVideoConsult) OrderItem.DeliveryMode.ONLINE.name else OrderSummaryRequest.DeliveryMode.OFFLINE.name
           val delProvider =
             if (isVideoConsult) ShippingDetails.DeliveryProvider.NF_VIDEO_CONSULATION.name else ""
-          val shippingDetails = ShippingDetails(
+          val shippingDetails = ShippingDetailsN(
             shippedBy = ShippingDetails.ShippedBy.SELLER.name,
             deliveryMode = delMode,
-            deliveryProvider = delProvider,
             shippingCost = 0.0,
             currencyCode = "INR"
           )
-          val items = ArrayList<ItemsItem>()
+          val items = ArrayList<ItemsItemNew>()
 
-          val productDetails = ProductDetails(
-            id = serviceData?.id ?: "NO_ITEM",
-            name = serviceData?.name ?: "NO_ITEM",
-            description = serviceData?.description ?: "NO_ITEM",
-            currencyCode = "INR",
-            isAvailable = serviceData?.isAvailable(),
-            price = serviceData?.discountedPrice(),
-            shippingCost = 0.0,
-            discountAmount = serviceData?.discountAmount(),
-            extraProperties = extra,
-            imageUri = serviceData?.imageUri ?: ""
+          val productDetails = ProductDetailsN(
+//            id = serviceData?.id ?: "NO_ITEM",
+//            name = serviceData?.name ?: "NO_ITEM",
+//            description = serviceData?.description ?: "NO_ITEM",
+//            currencyCode = "INR",
+////            isAvailable = serviceData?.,
+//            price = serviceData?.discountedPrice,
+//            shippingCost = 0.0,
+//            discountAmount = serviceData?.discountAmount,
+            extraProperties = extra
+//            imageUri = serviceData?.image ?: ""
           )
 
           items.add(
-            ItemsItem(
-              type = serviceData?.getType() ?: "NO_ITEM",
+            ItemsItemNew(
+              type = serviceData?.getCategoryValue() ?: "NO_ITEM",
               productOrOfferId = serviceData?.id ?: "NO_ITEM",
               quantity = 1,
               productDetails = productDetails
@@ -546,8 +586,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
           orderInitiateRequest.buyerDetails = buyerDetail
           orderInitiateRequest.mode = OrderItem.OrderMode.APPOINTMENT.name
           orderInitiateRequest.shippingDetails = shippingDetails
-          orderInitiateRequest.transactionCharges = 0.0
-          orderInitiateRequest.gstCharges = 0.0
+          orderInitiateRequest.transactionCharges = 0
           orderInitiateRequest.items = items
           orderInitiateRequest.isVideoConsult = isVideoConsult
         }
@@ -585,7 +624,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     })
   }
 
-  private fun hitApiUpdateAptConsult(updateExtra: ExtraProperties?) {
+  private fun hitApiUpdateAptConsult(updateExtra: ExtraPropertieN?) {
     val request = UpdateConsultRequest()
     request.setQueryData(aptData?.id)
     val dateTimeSlot =
@@ -593,7 +632,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     val setField = SetField(
       bookingRef = orderItem?._id,
       dateTimeSlot = dateTimeSlot,
-      doctorId = doctorData?.Id,
+      doctorId = doctorData?.id,
       serviceId = serviceData?.id ?: "NO_ITEM"
     )
     setField.setCustomerInfo(
@@ -656,7 +695,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
       "#${item?.getScheduledDate()}#${itemExtra?.startTime()},${itemExtra?.endTime()}#"
 
     val actionData = ActionData(
-      bookingRef = response?._id, doctorId = doctorData?.Id, serviceId = serviceData?.id,
+      bookingRef = response?._id, doctorId = doctorData?.id, serviceId = serviceData?.id,
       category = "General", status = "booked", notes = "", dateTimeSlot = dateTimeSlot
     )
 
@@ -843,30 +882,56 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   private fun checkValidEmail(email: String): Boolean {
     return Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$").matcher(email).find()
   }
-
-  private fun getWeeklyScheduleList(doctorId: String) {
-    val requestQuery =
-      "{\$and:[{WebsiteId: \'${preferenceData?.fpTag}\'}, {doctorId: \'${doctorId}\'}]}"
-    viewModel?.getWeeklyScheduleList(AUTHORIZATION_3, requestQuery)
-      ?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-        if (it.error is NoNetworkException) {
-          errorUi(resources.getString(R.string.internet_connection_not_available))
-          return@Observer
-        }
-        if (it.status == 200 || it.status == 201 || it.status == 202) {
-          val resp = it as? GetDoctorWeeklySchedule
-          if (resp?.data.isNullOrEmpty().not()) {
-            doctorWeeklySchedule = resp?.data
+  private fun getBookingSlots(bookingSlotsRequest: BookingSlotsRequest) {
+    viewModel?.getBookingSlots(bookingSlotsRequest)?.observeOnce(viewLifecycleOwner,{
+      hideProgress()
+      if (it.error is NoNetworkException) {
+        showLongToast(resources.getString(R.string.internet_connection_not_available))
+        return@observeOnce
+      }
+      if (it.isSuccess()) {
+        bookingSlotResponse = (it as? BookingSlotResponse)
+        if (bookingSlotResponse?.Result.isNullOrEmpty().not()) {
+          if (bookingSlotResponse?.Result?.get(0)?.Staff.isNullOrEmpty().not()) {
+            this.timeSlots = bookingSlotResponse?.Result?.first()?.Staff?.first()?.AppointmentSlots?.first()?.Slots
+            bookingSlotResponse?.Result?.get(0)?.Staff?.get(0)?.isSelected = true
             if (isUpdate) getAptConsultDoctor() else hideProgress()
-          } else errorUi(getString(R.string.doctor_weekly_schedule_not_available))
-        } else errorUi(it.message())
-      })
+
+          }
+        }
+//        selectedDateTimeBottomSheetDialog?.setData(bookingSlotResponse!!, selectedService!!)
+//        binding?.groupTiming?.visibility = View.VISIBLE
+//        binding?.layoutShowSelectedSlot?.visibility = View.GONE
+      } else {
+        showShortToast(getString(R.string.doctor_weekly_schedule_not_available))
+//        binding?.groupTiming?.visibility = View.GONE
+      }
+    })
   }
+
+//  private fun getWeeklyScheduleList(doctorId: String) {
+//    val requestQuery =
+//      "{\$and:[{WebsiteId: \'${preferenceData?.fpTag}\'}, {doctorId: \'${doctorId}\'}]}"
+//    viewModel?.getWeeklyScheduleList(AUTHORIZATION_3, requestQuery)
+//      ?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+//        if (it.error is NoNetworkException) {
+//          errorUi(resources.getString(R.string.internet_connection_not_available))
+//          return@Observer
+//        }
+//        if (it.status == 200 || it.status == 201 || it.status == 202) {
+//          val resp = it as? GetDoctorWeeklySchedule
+//          if (resp?.data.isNullOrEmpty().not()) {
+//            doctorWeeklySchedule = resp?.data
+//            if (isUpdate) getAptConsultDoctor() else hideProgress()
+//          } else errorUi(getString(R.string.doctor_weekly_schedule_not_available))
+//        } else errorUi(it.message())
+//      })
+//  }
 
   private fun getAptConsultDoctor() {
     val dateTimeSlot = orderItem?.firstItemForAptConsult()?.getScheduledDate()
     val requestQuery =
-      "{\$and:[{WebsiteId: \'${preferenceData?.fpTag}\'}, {doctorId: \'${doctorData?.Id}\'}, {status: {\$ne: 'cancelled'}}, {dateTimeSlot: /$dateTimeSlot/}]}"
+      "{\$and:[{WebsiteId: \'${preferenceData?.fpTag}\'}, {doctorId: \'${doctorData?.id}\'}, {status: {\$ne: 'cancelled'}}, {dateTimeSlot: /$dateTimeSlot/}]}"
     viewModel?.getAllAptConsultDoctor(AUTHORIZATION_3, requestQuery)
       ?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
         if (it.error is NoNetworkException) {
@@ -882,7 +947,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   }
 
   private fun getAllAptConsultDoctor(doctorId: String?, dateTimeSlot: String?, day: String) {
-    timeSlotList = ArrayList()
+    timeSlots = ArrayList()
     binding?.edtStartTime?.hint = resources.getString(R.string.please_select_time_slot)
     this.timeSlotData = null
     val requestQuery =
@@ -903,14 +968,14 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   }
 
   private fun setTimeSlot(allPreviousAptConsult: ArrayList<AptData>, day: String) {
-    val dataWeekDay = doctorWeeklySchedule?.firstOrNull {
-      DataItem.DayName.fromValue(it.day)?.value == DataItem.DayName.fromValue(day)?.value
-    }
-    val durMin = doctorData?.duration?.toLongOrNull() ?: 0
-    if (durMin >= 0) {
-      val durMillis = TimeUnit.MINUTES.toMillis(durMin)
-      timeSlotList = dataWeekDay?.getTimeSlot(durMillis) ?: ArrayList()
-    }
+//    val dataWeekDay = doctorWeeklySchedule?.firstOrNull {
+//      com.inventoryorder.model.weeklySchedule.DataItem.DayName.fromValue(it.day)?.value == com.inventoryorder.model.weeklySchedule.DataItem.DayName.fromValue(day)?.value
+//    }
+//    val durMin = doctorData?.timings?.toLongOrNull() ?: 0
+//    if (durMin >= 0) {
+//      val durMillis = TimeUnit.MINUTES.toMillis(durMin)
+//      timeSlotList = dataWeekDay?.getTimeSlot(durMillis) ?: ArrayList()
+//    }
     removeAfterTime(Calendar.getInstance(), startTime = true, b = true)
     allPreviousAptConsult.forEach {
       if (it.dateTimeSlot.isNullOrEmpty().not()) {
@@ -930,24 +995,24 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   }
 
   private fun removeAfterTime(now: Calendar, startTime: Boolean, b: Boolean) {
-    val newList = ArrayList<TimeSlotData>()
-    timeSlotList.forEach {
+    val newList = ArrayList<Slots>()
+    timeSlots?.forEach {
       val date = parseDate(scheduledDateTime, FORMAT_SERVER_DATE, FORMAT_DD_MM_YYYY)
-      val startTime1 = "$date ${it.startTime}".parseDate(FORMAT_SERVER_TO_LOCAL)?.toCalendar()
-      val endTime1 = "$date ${it.endTime}".parseDate(FORMAT_SERVER_TO_LOCAL)?.toCalendar()
+      val startTime1 = "$date ${it.StartTime}".parseDate(FORMAT_SERVER_TO_LOCAL)?.toCalendar()
+      val endTime1 = "$date ${it.EndTime}".parseDate(FORMAT_SERVER_TO_LOCAL)?.toCalendar()
       if (isTimeBetweenTwoHours(startTime1, endTime1, now, startTime, b).not()) newList.add(it)
     }
-    timeSlotList = newList
+    timeSlots = newList
   }
 
   private fun timeSlotBottomSheet() {
     val timeSlotBottom = TimeSlotBottomSheetDialog()
     timeSlotBottom.onDoneClicked = { clickTimeItem(it) }
-    timeSlotBottom.setList(timeSlotList)
+    timeSlotBottom.setList(timeSlots?: arrayListOf())
     timeSlotBottom.show(this.parentFragmentManager, TimeSlotBottomSheetDialog::class.java.name)
   }
 
-  private fun clickTimeItem(timeSlotData: TimeSlotData?) {
+  private fun clickTimeItem(timeSlotData: Slots?) {
     this.timeSlotData = timeSlotData
     binding?.edtStartTime?.setText(this.timeSlotData?.getTimeSlotText())
   }
@@ -973,5 +1038,13 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     else instance.getDrScoreData()?.metricdetail?.boolean_create_sample_in_clinic_appointment =
       isAdded
     instance.updateDocument()
+  }
+  fun getFilterRequest(offSet: Int, limit: Int): GetStaffListingRequest {
+    return GetStaffListingRequest(FilterBy(offset = offSet, limit = limit), fpTag, "")
+  }
+  private fun getDateTime(): String {
+    val c = Calendar.getInstance().time
+    val df = SimpleDateFormat(FORMAT_YYYY_MM_DD, Locale.getDefault())
+    return df.format(c)
   }
 }

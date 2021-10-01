@@ -17,17 +17,20 @@ data class WebsiteActionItem(
   var title: String? = "",
   @SerializedName("desc")
   var desc: String? = "",
-  @SerializedName("count")
+  @SerializedName("countType")
+  var countType: String? = null,
   var count: Int? = null,
   @SerializedName("type")
   var type: String? = "",
 ) : Serializable, AppBaseRecyclerViewItem {
 
-
+  fun getCountN(): Int {
+    return if (count != null) count!! else 0
+  }
 
   var recyclerViewItemType: Int = RecyclerViewItemType.BOOST_WEBSITE_ITEM_VIEW.getLayout()
   override fun getViewType(): Int {
-    if (this.isFeature==true)
+    if (this.isFeature == true)
       return RecyclerViewItemType.BOOST_WEBSITE_ITEM_FEATURE_VIEW.getLayout()
     return recyclerViewItemType
   }

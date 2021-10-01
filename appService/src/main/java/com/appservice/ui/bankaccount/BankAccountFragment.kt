@@ -151,9 +151,11 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
         (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimaryDark)
       } else {
         if (isPendingToastShow) showLongToast(resources.getString(R.string.account_verification_pending))
-        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(
+        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(
+          resources.getString(
             R.string.my_bank_account
-          ), resources.getDimensionPixelSize(R.dimen.size_10))
+          ), resources.getDimensionPixelSize(R.dimen.size_10)
+        )
       }
       onBankAccountAddedOrUpdated(true)
     } else {
@@ -305,7 +307,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
   private fun isValid(): Boolean {
     val nameAccount = binding?.edtAccountName?.text?.toString()
-    val accountNumber = binding?.edtAccountNumber?.text?.toString()
+    val accountNumber = binding?.edtAccountNumber?.text?.toString() ?: ""
     val confirmNumber = binding?.edtConfirmNumber?.text?.toString()
     val bankName = binding?.edtBankName?.text?.toString()
     val alias = binding?.edtAlias?.text?.toString()
@@ -315,6 +317,9 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       return false
     } else if (accountNumber.isNullOrEmpty()) {
       showShortToast(getString(R.string.bank_number_can_not_empty))
+      return false
+    } else if (accountNumber.length < 9) {
+      showShortToast(getString(R.string.account_less_than_nine))
       return false
     } else if (confirmNumber.isNullOrEmpty()) {
       showShortToast(getString(R.string.confirm_bank_account_cannot_empty))

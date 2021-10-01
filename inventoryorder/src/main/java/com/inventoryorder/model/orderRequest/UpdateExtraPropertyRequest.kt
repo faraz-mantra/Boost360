@@ -8,7 +8,7 @@ data class UpdateExtraPropertyRequest(
   @SerializedName("existingKeyName")
   var existingKeyName: String? = null,
   @SerializedName("extraProperties")
-  var extraProperties: ExtraProperties? = null,
+  var extraProperties: ExtraPropertieN? = null,
   @SerializedName("orderId")
   var orderId: String? = null,
   @SerializedName("updateExtraPropertyType")

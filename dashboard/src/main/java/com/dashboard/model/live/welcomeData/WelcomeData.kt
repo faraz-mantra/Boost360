@@ -1,10 +1,10 @@
 package com.dashboard.model.live.welcomeData
 
 import com.dashboard.R
-import com.framework.utils.PreferencesUtils
-import com.framework.utils.getData
-import com.framework.utils.saveData
+import com.framework.utils.*
 import java.io.Serializable
+
+const val WELCOME_LIST = "welcome_list"
 
 class WelcomeData(
   var title: String? = null,
@@ -23,6 +23,14 @@ class WelcomeData(
     }
   }
 
+}
+
+fun getWelcomeList(): List<WelcomeData>? {
+  return convertStringToList(PreferencesUtils.instance.getData(WELCOME_LIST, "") ?: "")
+}
+
+fun ArrayList<WelcomeData>.saveWelcomeList() {
+  PreferencesUtils.instance.saveData(WELCOME_LIST, convertListObjToString(this))
 }
 
 fun getIsShowWelcome(type: String): Boolean {
