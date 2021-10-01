@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="dashboard">Dashboard</string>
   <string name="website">Website</string>
   <string name="my_website">My Website</string>
@@ -59,7 +59,7 @@
   <string name="Logo_percentage">5</string>
   <string name="business_hours">5</string>
   <!-- SITE-Meter Percentage  -->
-
+  <string name="add_owners_image" tools:ignore="ExtraTranslation">add owner image</string>
   <string name="add_missing_info_better_online_traction">Add missing info and improve your website readiness score above <b>%s</b> for better online traction.</string>
   <string name="site_completed">Site completed</string>
   <string name="your_site_health">Your site health</string>
@@ -250,4 +250,55 @@
   <string name="fonts_and_color_styles">Font &amp; Color Styles</string>
   <string name="manage_your_current_plan_or_upgrade_to_a_recommended_plan_with_better_features">Upgrade website with great features, offers for you, current plan, purchase history, invoice and more.</string>
   <string name="google_form_help_business_boost">https://forms.gle/F1tj5tETRHBdR2AaA</string>
+  <string name="save_details">Save details</string>
+  <string name="owner_s_description">Owner’s description</string>
+  <string name="type_owner_s_description_in_around_2000_characters_at_max">Type owner’s description in around 2000 characters at max…</string>
+  <string name="type_owner_s_designation_e_g_founder">Type owner’s designation. e.g. Founder</string>
+  <string name="owner_s_name">Owner’s name*</string>
+  <string name="type_the_owner_s_name">Type the owner’s name</string>
+  <string name="owner_s_designation">Owner’s designation*</string>
+  <string name="change_image">Change image</string>
+  <string name="type_the_doctor_s_name">Type the doctor’s name</string>
+  <string name="name">Name*</string>
+  <string name="description">Description*</string>
+  <string name="type_doctor_s_description_in_around_2000_characters_at_max">Type doctor’s description in around 2000 characters at max…</string>
+  <string name="speciality">Speciality*</string>
+  <string name="type_doctor_s_speciality_e_g_physician">Type doctor’s speciality. e.g. Physician</string>
+  <string name="business_license">Business License*</string>
+  <string name="type_doctor_s_business_license">Type doctor’s business license</string>
+  <string name="upload_signature">Upload signature</string>
+  <string name="avg_duration_of_consultaton">Avg duration of consultaton*</string>
+  <string name="_15_min">15 min</string>
+  <string name="appointment_booking_window_for_patients">Appointment booking window for patients*</string>
+  <string name="select_services">Select services</string>
+  <string name="select_services_that_the_doctor_provide">Select services that the doctor provide</string>
+  <string name="additional_info">Additional Information</string>
+  <string name="education_years_of_experience_mobile_number_etc">Education, years of experience, mobile number, etc.</string>
+  <string name="education">Education</string>
+  <string name="doctors_education">Type doctor’s education</string>
+  <string name="year_of_experience">Years of experience</string>
+  <string name="select_years_of_experience">Select years of experience</string>
+  <string name="mobile_number">Mobile number</string>
+  <string name="enter_doctor_s_mobile_number">Enter doctor’s mobile number</string>
+  <string name="memberships">Memberships</string>
+  <string name="enter_doctors_membership">Enter doctor’s membership</string>
+  <string name="registration">Registration</string>
+  <string name="enter_doctor_s_registration">Enter doctor’s registration</string>
+  <string name="allowed_appointment_type">Allowed appointment type</string>
+  <string name="select_appointment_type">Select appointment type</string>
+  <string name="add_owners_info">Add Owner’s Info</string>
+  <string name="please_enter_name">Please enter name</string>
+  <string name="please_enter_designation">Please enter designation</string>
+  <string name="error_adding_owners_data">Error adding owners data!</string>
+  <string name="owners_data_added_successfully">Owners data added successfully!</string>
+  <string name="loading">Loading...</string>
+  <string name="updated_owners_data">Updated owners data!</string>
+  <string name="error_getting_owners_data">Error getting owners data!</string>
+  <string name="error_getting_owners_info">Error getting owners info!</string>
+  <string name="image_uploaded">Image uploaded!</string>
+  <string name="error_uploading_image">Error uploading image!</string>
+  <string name="uploading_image">Uploading image...</string>
+  <string name="updating">Updating...</string>
+  <string name="update_details">Update details</string>
+  <string name="add_profile_image">Add profile image*</string>
 </resources>

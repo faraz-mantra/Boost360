@@ -1,8 +1,6 @@
 package com.appservice.ui.catalog.catalogProduct.addProduct.information
 
 import android.content.Intent
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity

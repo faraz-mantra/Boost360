@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView2"
+        style="@style/match_match"
+        android:layout_height="@dimen/size_0"
+        android:background="@color/white_snow"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/btn_save_details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/match_wrap"
+            android:layout_marginStart="@dimen/size_20"
+            android:layout_marginEnd="@dimen/size_20"
+            android:orientation="vertical">
+
+            <com.framework.views.customViews.CustomTextView
+                style="@style/DashBoard_Text_Title"
+                android:layout_marginTop="@dimen/size_36"
+                android:text="@string/education" />
+
+            <com.framework.views.customViews.CustomTextField
+                style="@style/DashBoard_Text_Field"
+                android:hint="@string/doctors_education" />
+
+            <com.framework.views.customViews.CustomTextView
+                style="@style/DashBoard_Text_Title"
+                android:layout_marginTop="@dimen/size_20"
+                android:text="@string/year_of_experience" />
+
+            <com.framework.views.customViews.CustomTextField
+                style="@style/DashBoard_Text_Field"
+                android:hint="@string/select_years_of_experience" />
+
+            <com.framework.views.customViews.CustomTextView
+                style="@style/DashBoard_Text_Title"
+                android:layout_marginTop="@dimen/size_26"
+                android:text="@string/mobile_number" />
+
+            <com.framework.views.customViews.CustomTextField
+                style="@style/DashBoard_Text_Field"
+                android:hint="@string/enter_doctor_s_mobile_number" />
+
+            <com.framework.views.customViews.CustomTextView
+                style="@style/DashBoard_Text_Title"
+                android:layout_marginTop="@dimen/size_26"
+                android:text="@string/memberships" />
+
+            <com.framework.views.customViews.CustomTextField
+                style="@style/DashBoard_Text_Field"
+                android:hint="@string/enter_doctors_membership" />
+
+            <com.framework.views.customViews.CustomTextView
+                style="@style/DashBoard_Text_Title"
+                android:layout_marginTop="@dimen/size_26"
+                android:text="@string/registration" />
+
+            <com.framework.views.customViews.CustomTextField
+                style="@style/DashBoard_Text_Field"
+                android:hint="@string/enter_doctor_s_registration" />
+
+            <com.framework.views.customViews.CustomTextView
+                style="@style/DashBoard_Text_Title"
+                android:layout_marginTop="@dimen/size_26"
+                android:text="@string/allowed_appointment_type" />
+
+            <com.framework.views.customViews.CustomTextField
+                style="@style/DashBoard_Text_Field"
+                android:drawableEnd="@drawable/ic_arrow_down_d"
+                android:hint="@string/select_appointment_type" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.framework.views.customViews.CustomButton
+        android:id="@+id/btn_save_details"
+        style="@style/DashBoard.ButtonStyle"
+        android:layout_height="@dimen/size_44"
+        android:layout_gravity="bottom"
+        android:layout_marginHorizontal="@dimen/size_16"
+        android:layout_marginBottom="@dimen/size_10"
+        android:text="@string/save_details"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

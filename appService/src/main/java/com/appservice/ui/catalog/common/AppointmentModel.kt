@@ -38,7 +38,7 @@ data class AppointmentModel(
   private fun isDayTurnedOn() {
     timeSlots = ArrayList()
     this.isTurnedOn = true
-    timeSlots.add(TimeSlot.getDefaultTimeSlotObject());
+    timeSlots.add(TimeSlot.getDefaultTimeSlotObject())
   }
 
 
@@ -65,20 +65,20 @@ data class AppointmentModel(
   }
 
   fun removeSession(index: Int) {
-    timeSlots.removeAt(index);
+    timeSlots.removeAt(index)
   }
 
   fun removeApplyOnAllDays(data: AppointmentModel) {
-    getDefaultTimings().forEach { if (it != data) it?.isTurnedOn = false }
+    getDefaultTimings().forEach { if (it != data) it.isTurnedOn = false }
   }
 
   companion object {
     fun getDefaultTimings(): ArrayList<AppointmentModel> {
       val list = ArrayList<AppointmentModel>()
-      val monday = AppointmentModel(day = "Monday", isTurnedOn = false, isAppliedOnAllDays = false);
-      monday.isAppliedOnAllDaysViewVisible = true;
-      list.add(monday);
-      list.add(AppointmentModel(day = "Tuesday", isTurnedOn = false, isAppliedOnAllDays = false))
+      val monday = AppointmentModel(day = "Monday", isTurnedOn = false, isAppliedOnAllDays = false)
+        monday.isAppliedOnAllDaysViewVisible = true
+        list.add(monday)
+        list.add(AppointmentModel(day = "Tuesday", isTurnedOn = false, isAppliedOnAllDays = false))
       list.add(AppointmentModel(day = "Wednesday", isTurnedOn = false, isAppliedOnAllDays = false))
       list.add(AppointmentModel(day = "Thursday", isTurnedOn = false, isAppliedOnAllDays = false))
       list.add(AppointmentModel(day = "Friday", isTurnedOn = false, isAppliedOnAllDays = false))
@@ -134,10 +134,10 @@ data class TimeSlot(
 
   companion object {
     fun getDefaultTimeSlotObject(): TimeSlot {
-      val timeSlot = TimeSlot();
-      timeSlot.from = "09:30AM"
+      val timeSlot = TimeSlot()
+        timeSlot.from = "09:30AM"
       timeSlot.to = "07:00PM"
-      return timeSlot;
+      return timeSlot
     }
   }
 }
