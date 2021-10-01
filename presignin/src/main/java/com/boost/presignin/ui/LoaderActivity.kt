@@ -2,34 +2,31 @@ package com.boost.presignin.ui
 
 import android.app.AlertDialog
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
-import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.view.ContextThemeWrapper
 import com.airbnb.lottie.LottieDrawable
+import com.auth0.android.jwt.JWT
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseActivity
 import com.boost.presignin.databinding.ActivityLoaderBinding
 import com.boost.presignin.helper.ProcessFPDetails
-import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.accessToken.AccessTokenRequest
 import com.boost.presignin.model.authToken.AccessTokenResponse
-import com.boost.presignin.model.authToken.AuthTokenDataItem
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
-import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.service.APIService
 import com.boost.presignin.ui.intro.IntroActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
+import com.framework.analytics.SentryController
 import com.framework.extensions.observeOnce
 import com.framework.pref.*
+import com.framework.utils.NetworkUtils
 import com.google.android.material.snackbar.Snackbar
-
-import java.lang.Exception
-import java.util.HashMap
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.set
 
 class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewModel>() {
 
@@ -59,7 +56,7 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
   }
 
   private fun handleApis() {
-    if (isOnline()) {
+    if (NetworkUtils.isNetworkConnected()) {
       if (!session.isLoginCheck) {
         signUpStart()
       } else {
@@ -75,10 +72,12 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
         }
         initLottieAnimation()
         val tokenResult = getAccessTokenAuth1(session)
-        if (tokenResult != null && tokenResult.isExpiredToken()) {
-          createAccessToken(tokenResult.refreshToken!!, clientId2, session.fPID!!)
-        } else {
-          storeFpDetails()
+        val jwt = JWT(tokenResult?.token ?: "")
+        val isExpired = jwt.isExpired(10)
+        when {
+          tokenResult == null -> session.logoutUser(this)
+          isExpired -> createAccessToken(tokenResult.refreshToken!!, clientId2, session.fPID!!)
+          else -> storeFpDetails()
         }
       }
     } else {
@@ -115,9 +114,7 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
     val view = findViewById<View>(android.R.id.content)
     val snackbar = Snackbar
       .make(view, getString(R.string.error_getting_fp_detail), Snackbar.LENGTH_INDEFINITE)
-      .setAction(getString(R.string.retry)) {
-        handleApis()
-      }
+      .setAction(getString(R.string.retry)) { handleApis() }
     snackbar.show()
   }
 
@@ -170,14 +167,17 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
           i.putExtras(intent)
           startActivity(i)
           finish()
-        } else session.logoutUser()
+        } else session.logoutUser(this)
       } else {
         startActivity(i)
         finish()
       }
     } catch (e: ClassNotFoundException) {
       Log.e("Home Page", e.localizedMessage)
-      session.logoutUser()
+      session.logoutUser(this)
+      SentryController.captureException(e)
+
+      session.logoutUser(this)
     }
   }
 
@@ -191,17 +191,12 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
     request.clientId = clientID
     request.fpId = fpId
     viewModel.createAccessToken(request).observe(this, {
-      val data = it as AccessTokenResponse
-      if (it.isSuccess() && data != null) {
-        val res = data.result
-        if (res != null && (res.refreshToken == null || res.refreshToken!!.isEmpty())) {
-          res.refreshToken = refreshToken
-        }
-        saveAccessTokenAuth1(session, res)
+      val result = (it as? AccessTokenResponse)?.result
+      if (it.isSuccess() && result != null && result.token.isNullOrEmpty().not()) {
+        if (result.refreshToken.isNullOrEmpty()) result.refreshToken = refreshToken
+        saveAccessTokenAuth1(session, result)
         storeFpDetails()
-      } else {
-        session.logoutUser()
-      }
+      } else session.logoutUser(this)
     })
   }
 
@@ -220,40 +215,16 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
     finish()
   }
 
-  fun isOnline(): Boolean {
-    var status = false
-    try {
-      val connectivityManager =
-        getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-      var netInfo = connectivityManager.getNetworkInfo(0)
-      if (netInfo != null
-        && netInfo.state == NetworkInfo.State.CONNECTED
-      ) {
-        status = true
-      } else {
-        netInfo = connectivityManager.getNetworkInfo(1)
-        if (netInfo != null
-          && netInfo.state == NetworkInfo.State.CONNECTED
-        ) status = true
-      }
-
-    } catch (e: Exception) {
-      e.printStackTrace()
-      return false
-    }
-    return status
-  }
-
   private fun snackbarNoInternet() {
     val view = findViewById<View>(android.R.id.content)
     val snackbar = Snackbar
       .make(view, getString(R.string.no_internet_connection), Snackbar.LENGTH_INDEFINITE)
       .setAction(getString(R.string.settings)) {
         try {
-          startActivity(Intent(Settings.ACTION_DATA_ROAMING_SETTINGS).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK;
-          })
+          startActivity(Intent(Settings.ACTION_DATA_ROAMING_SETTINGS).apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK; })
         } catch (e: Exception) {
+          SentryController.captureException(e)
+
           Toast.makeText(this@LoaderActivity, "Unable to find network settings. Please do it manually from phone's settings", Toast.LENGTH_LONG).show()
           Log.e(TAG, "updateUiInternetNotAvailable: " + e.localizedMessage)
         }
