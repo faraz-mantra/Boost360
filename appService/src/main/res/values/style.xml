@@ -606,6 +606,7 @@
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">match_parent</item>
     <item name="android:background">@color/white_smoke_1</item>
+    <item name="android:fillViewport">true</item>
   </style>
 
   <style name="ll_match_wrap_vertical" parent="match_wrap">

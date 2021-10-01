@@ -119,9 +119,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
-            app:buttonTint="@color/material_check_tin_state"
             android:text="@string/my_upi_id"
             android:textColor="@color/black_4a4a4a"
+            app:buttonTint="@color/material_check_tin_state"
             app:textType="HEADING_6" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -167,8 +167,8 @@
           style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
           android:layout_marginEnd="@dimen/size_30"
           android:background="@null"
-          android:textAllCaps="false"
-          android:text="@string/cancel" />
+          android:text="@string/cancel"
+          android:textAllCaps="false" />
 
         <com.framework.views.customViews.CustomButton
           android:id="@+id/btn_save_changes"

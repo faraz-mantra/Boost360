@@ -19,13 +19,13 @@ import com.framework.pref.clientId
 import com.framework.utils.fromHtml
 import com.framework.views.customViews.CustomTextView
 
-class FragmentEcomDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigurationBinding, AppointmentSettingsViewModel>() {
+class FragmentEcommerceDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigurationBinding, AppointmentSettingsViewModel>() {
 
   private var wareHouseAddress: GetWareHouseResponse? = null
 
   companion object {
-    fun newInstance(): FragmentEcomDeliveryConfig {
-      return FragmentEcomDeliveryConfig()
+    fun newInstance(): FragmentEcommerceDeliveryConfig {
+      return FragmentEcommerceDeliveryConfig()
     }
   }
 
@@ -79,7 +79,7 @@ class FragmentEcomDeliveryConfig : AppBaseFragment<FragmentDeliveryConfiguration
           wareHouseAddress?.result?.data?.forEachIndexed { index, dataItem ->
             binding?.ccbWarehouseAddress?.isChecked = true
             binding?.addWareHouseAddress?.visible()
-            binding?.containerWareHouseAddress?.addView(inflateWareHouseView(index, dataItem?.name, dataItem?.fullAddress, dataItem?.contactNumber))
+            binding?.containerWareHouseAddress?.addView(inflateWareHouseView(index, dataItem?.name, dataItem?.fullAddress, dataItem?.contactNumberWith91()))
           }
         }
       }
@@ -90,7 +90,7 @@ class FragmentEcomDeliveryConfig : AppBaseFragment<FragmentDeliveryConfiguration
     val itemView = LayoutInflater.from(context).inflate(R.layout.item_warehouse_address, null, false)
     val warehouseName = itemView.findViewById<CustomTextView>(R.id.ctv_warehouse_name)
     val wareHouseAddressPhone = itemView.findViewById<CustomTextView>(R.id.ctv_warehouse_address_phone)
-    warehouseName.text = "#${index + 1}. ${name}"
+    warehouseName.text = "#${index + 1}. $name"
     wareHouseAddressPhone.text = fromHtml("$fullAddress <u>$contactNumber</u>")
     return itemView
   }
@@ -169,11 +169,7 @@ class FragmentEcomDeliveryConfig : AppBaseFragment<FragmentDeliveryConfiguration
         showAddWareHouse()
       }
       binding?.btnSaveCharges -> {
-        updateDeliveryStatus(
-          binding?.toggleAllowPickup?.isOn
-            ?: true, binding?.toggleHomeDelivery?.isOn
-            ?: true, binding?.etdFlatCharges?.text.toString()
-        )
+        updateDeliveryStatus(binding?.toggleAllowPickup?.isOn ?: true, binding?.toggleHomeDelivery?.isOn ?: true, binding?.etdFlatCharges?.text.toString())
       }
 
     }

@@ -157,11 +157,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     if (isFirst || searchString.isNotEmpty()) showProgress()
     viewModel?.getSearchListings(fpTag, fpId, searchString, offSet, limit)?.observeOnce(baseActivity, {
       if (it.isSuccess()) {
-        setServiceDataItems(
-          (it as? ServiceSearchListingResponse)?.result,
-          searchString.isNotEmpty(),
-          isFirst
-        )
+        setServiceDataItems((it as? ServiceSearchListingResponse)?.result, searchString.isNotEmpty(), isFirst)
       } else if (isFirst) showShortToast(it.message())
       if (isFirst || searchString.isNotEmpty()) hideProgress()
     })
@@ -172,7 +168,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     super.onResume()
     var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
     if (fpDetails.isNullOrEmpty()) fpDetails = "Services"
-    setToolbarTitle("$fpDetails (${TOTAL_ELEMENTS})".capitalizeUtil())
+    setToolbarTitle("$fpDetails ${if (TOTAL_ELEMENTS > 0) "(${TOTAL_ELEMENTS})" else ""}".capitalizeUtil())
   }
 
   private fun setServiceDataItems(resultService: Result?, isSearchString: Boolean, isFirstLoad: Boolean) {
@@ -193,7 +189,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         setAdapterNotify()
         var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
         if (fpDetails.isNullOrEmpty()) fpDetails = "Services"
-        setToolbarTitle("$fpDetails (${TOTAL_ELEMENTS})".capitalizeUtil())
+        setToolbarTitle("$fpDetails ${if (TOTAL_ELEMENTS > 0) "(${TOTAL_ELEMENTS})" else ""}".capitalizeUtil())
       } else if (isFirstLoad) setEmptyView(View.VISIBLE)
     } else {
       if (listService.isNullOrEmpty().not()) {
@@ -418,7 +414,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   }
 
   override fun secondaryButtonClicked() {
-
+    startFragmentActivity(FragmentType.APPOINTMENT_SETTINGS)
   }
 
   override fun ternaryButtonClicked() {

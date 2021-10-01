@@ -154,16 +154,21 @@ interface WithFloatTwoRemoteData {
   fun addWareHouse(@Body request: RequestAddWareHouseAddress): Observable<Response<ResponseBody>>
 
   @GET(EndPoints.GET_WARE_HOUSE + "/{fpId}/")
-  fun getWareHouseAddress(@Path("fpId") fpId: String?, @Query("clientId") clientId: String?): Observable<Response<GetWareHouseResponse>>
+  fun getWareHouseAddress(
+    @Path("fpId") fpId: String?,
+    @Query("clientId") clientId: String?,
+    @Query("offset") offset: Int? = 0,
+    @Query("limit") limit: Int? = 200
+  ): Observable<Response<GetWareHouseResponse>>
 
   @GET(EndPoints.GET_PRODUCT_LIST)
   fun getAllProducts(@QueryMap map: Map<String, String>): Observable<Response<Array<ProductItemsResponseItem>>>
 
 
   @GET(EndPoints.GET_MERCHANT_SUMMARY)
-    fun getMerchantSummary(
-      @Query("clientId") clientId:String?,
-      @Query("fpTag") fpTag:String?
+  fun getMerchantSummary(
+    @Query("clientId") clientId: String?,
+    @Query("fpTag") fpTag: String?
   ): Observable<Response<MerchantSummaryResponse>>
 
 }
