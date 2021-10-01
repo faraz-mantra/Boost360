@@ -51,6 +51,7 @@ import androidx.core.content.ContextCompat;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.framework.analytics.SentryController;
 import com.google.android.material.snackbar.Snackbar;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -113,6 +114,7 @@ public class Methods {
                 snackbarNoInternet(context);
             }
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
             snackbarNoInternet(context);
             return false;
@@ -144,6 +146,7 @@ public class Methods {
             context.getPackageManager().getPackageInfo(context.getString(R.string.facebook_package), 0);
             facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL + review));
         }
        /* }else{
@@ -154,6 +157,7 @@ public class Methods {
         try {
             context.startActivity(facebookIntent);
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             Toast.makeText(context, context.getString(R.string.unable_to_open_facebook), Toast.LENGTH_SHORT).show();
         }
 
@@ -353,7 +357,7 @@ public class Methods {
             return cursor.getString(column_index);
 
         } catch (Exception e) {
-
+            SentryController.INSTANCE.captureException(e);
         }
         return null;
     }
@@ -443,6 +447,7 @@ public class Methods {
             InputMethodManager imm = (InputMethodManager) context.getSystemService(Service.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
     }
@@ -457,6 +462,7 @@ public class Methods {
                 }
             }
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
     }
@@ -478,6 +484,7 @@ public class Methods {
                     .build()
                     .show();
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
     }
@@ -508,6 +515,7 @@ public class Methods {
             return AppOpsManager.MODE_ALLOWED == mode;
 
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             return false;
         }
 
@@ -522,6 +530,7 @@ public class Methods {
             dateFormat.setTimeZone(TimeZone.getDefault());
             value = dateFormat.format(date);
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
         return value;
@@ -537,6 +546,7 @@ public class Methods {
             else return false;
 
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
         return false;
@@ -631,6 +641,7 @@ public class Methods {
             simpleDateFormat.setTimeZone(TimeZone.getDefault());
             parsedDate = simpleDateFormat.format(date);
         } catch (ParseException e) {
+            SentryController.INSTANCE.captureException(e);
             parsedDate = createdOn;
         }
 
@@ -646,6 +657,7 @@ public class Methods {
             timeInMilliseconds = mDate.getTime();
             System.out.println("Date in milli :: " + timeInMilliseconds);
         } catch (ParseException e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
         return timeInMilliseconds;

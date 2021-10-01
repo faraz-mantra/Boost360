@@ -22,6 +22,7 @@ import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
+import com.framework.analytics.SentryController
 import com.framework.pref.*
 import com.framework.webengageconstant.*
 import com.inventoryorder.constant.IntentConstant
@@ -155,6 +156,7 @@ fun AppCompatActivity.startBackgroundImageGallery(session: UserSessionManager?) 
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
     e.printStackTrace()
+    SentryController.captureException(e)
   }
 }
 
@@ -167,6 +169,7 @@ fun AppCompatActivity.startFeviconImage(session: UserSessionManager?) {
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
     e.printStackTrace()
+    SentryController.captureException(e)
   }
 }
 
@@ -400,6 +403,7 @@ fun AppCompatActivity.startAddImageGallery(session: UserSessionManager?, isCreat
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
+    SentryController.captureException(e)
   }
 }
 
@@ -411,6 +415,7 @@ fun AppCompatActivity.startProductGallery(session: UserSessionManager?) {
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
+    SentryController.captureException(e)
   }
 }
 
@@ -626,6 +631,7 @@ fun AppCompatActivity.startFeatureLogo(session: UserSessionManager?) {
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
+    SentryController.captureException(e)
   }
 }
 
@@ -659,6 +665,7 @@ fun AppCompatActivity.startAllImage(session: UserSessionManager?) {
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
+    SentryController.captureException(e)
   }
 }
 
