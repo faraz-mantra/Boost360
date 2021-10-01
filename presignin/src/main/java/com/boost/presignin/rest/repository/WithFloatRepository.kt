@@ -18,24 +18,15 @@ object WithFloatRepository : AppBaseRepository<WithFloatsRemoteDataSource, AppBa
   }
 
   fun checkUserAccount(fpId: String?, clientId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.userAccountDetail(fpId, clientId),
-      TaskCode.CHECK_USER_ACCOUNT
-    )
+    return makeRemoteRequest(remoteDataSource.userAccountDetail(fpId, clientId), TaskCode.CHECK_USER_ACCOUNT)
   }
 
   fun validateUsersPhone(requestValidatePhone: RequestValidatePhone?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.validateUserPhone(requestValidatePhone),
-      TaskCode.VALIDATE_USERS_PHONE
-    )
+    return makeRemoteRequest(remoteDataSource.validateUserPhone(requestValidatePhone), TaskCode.VALIDATE_USERS_PHONE)
   }
 
   fun validateUsersEmail(requestValidateEmail: RequestValidateEmail?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.validateUserEmail(requestValidateEmail),
-      TaskCode.VALIDATE_USERS_EMAIL
-    )
+    return makeRemoteRequest(remoteDataSource.validateUserEmail(requestValidateEmail), TaskCode.VALIDATE_USERS_EMAIL)
   }
 
   override fun getLocalDataSourceInstance(): AppBaseLocalService {
