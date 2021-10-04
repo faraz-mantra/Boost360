@@ -619,8 +619,6 @@
                 android:id="@+id/btn_share_poster"
                 android:textAllCaps="false"
                 app:iconGravity="textEnd"
-
-                app:icon="@drawable/ic_new_txt"
                 android:textColor="@color/yellow_ffb900"
                 android:backgroundTint="@color/white"
                 android:text="@string/share_navratri_poster"

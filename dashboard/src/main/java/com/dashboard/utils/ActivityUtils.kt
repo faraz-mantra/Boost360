@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -23,7 +22,8 @@ import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
-import com.festive.poster.ui.PosterPackListingActivity
+import com.festive.poster.ui.FestivePosterContainerActivity
+import com.festive.poster.ui.PosterPackListingFragment
 import com.framework.pref.*
 import com.framework.webengageconstant.*
 import com.inventoryorder.constant.IntentConstant
@@ -991,7 +991,7 @@ fun AppCompatActivity.startDownloadUri(url: String, isToast: Boolean = false) {
 
 fun AppCompatActivity.startFestivePosterActivity(){
   try {
-    val intent = Intent(this, PosterPackListingActivity::class.java)
+    val intent = Intent(this, FestivePosterContainerActivity::class.java)
     startActivity(intent)
   }catch (e:Exception){
     e.printStackTrace()
