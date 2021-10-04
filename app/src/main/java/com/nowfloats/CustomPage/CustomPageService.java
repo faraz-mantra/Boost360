@@ -2,6 +2,7 @@ package com.nowfloats.CustomPage;
 
 import android.util.Log;
 
+import com.framework.analytics.SentryController;
 import com.nowfloats.CustomPage.Model.CustomPageEvent;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.squareup.otto.Bus;
@@ -35,6 +36,7 @@ public class CustomPageService {
                 }
             });
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             Log.i("CutomPages data", "API Exception:" + e);
             e.printStackTrace();
         }

@@ -43,6 +43,7 @@ import com.boost.upgrades.utils.Constants.Companion.WEB_VIEW_FRAGMENT
 import com.boost.upgrades.utils.Utils.longToast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.framework.analytics.SentryController
 import com.framework.webengageconstant.*
 import com.google.android.material.appbar.AppBarLayout
 import com.google.gson.Gson
@@ -297,6 +298,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         money.text = "Free Forever"
       }
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
     }
   }

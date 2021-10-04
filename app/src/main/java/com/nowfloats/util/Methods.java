@@ -676,6 +676,7 @@ public class Methods {
         try {
             epochTime = Long.parseLong(Sdate);
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
 
             UTC = TimeZone.getTimeZone("UTC");
@@ -684,6 +685,7 @@ public class Methods {
             try {
                 epochTime = sdf.parse(Sdate).getTime();
             } catch (ParseException parseExecption) {
+                SentryController.INSTANCE.captureException(parseExecption);
                 parseExecption.printStackTrace();
             }
         }
@@ -771,6 +773,7 @@ public class Methods {
         try {
             epochTime = Long.parseLong(Sdate);
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
 
             UTC = TimeZone.getTimeZone("UTC");
@@ -779,6 +782,7 @@ public class Methods {
             try {
                 epochTime = sdf.parse(Sdate).getTime();
             } catch (ParseException parseExecption) {
+                SentryController.INSTANCE.captureException(parseExecption);
                 parseExecption.printStackTrace();
             }
         }
@@ -808,6 +812,7 @@ public class Methods {
             try {
                 epochTime = sdf.parse(Stime).getTime();
             } catch (ParseException parseExecption) {
+                SentryController.INSTANCE.captureException(parseExecption);
                 parseExecption.printStackTrace();
             }
         }
@@ -823,6 +828,7 @@ public class Methods {
         try {
             f.createNewFile();
         } catch (IOException e1) {
+            SentryController.INSTANCE.captureException(e1);
             e1.printStackTrace();
         }
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -842,6 +848,7 @@ public class Methods {
             dateFormat.setTimeZone(TimeZone.getDefault());
             result = dateFormat.format(Calendar.getInstance().getTime());
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
         return result;
@@ -933,6 +940,7 @@ public class Methods {
             callIntent.setData(Uri.parse("tel:" + number));
             mContext.startActivity(Intent.createChooser(callIntent, "Call by:"));
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             Toast.makeText(mContext, "Unable to make call", Toast.LENGTH_SHORT).show();
         }
 
@@ -1088,6 +1096,7 @@ public class Methods {
             df.setTimeZone(TimeZone.getDefault());
             return df.format(date);
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
 
@@ -1102,6 +1111,7 @@ public class Methods {
             dateFormatter.setTimeZone(/*TimeZone.getDefault()*/TimeZone.getTimeZone("UTC"));
             return dateFormatter.format(date);
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
 

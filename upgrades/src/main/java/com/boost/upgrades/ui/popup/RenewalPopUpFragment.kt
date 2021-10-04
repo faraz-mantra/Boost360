@@ -22,6 +22,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import androidx.lifecycle.Observer
+import com.framework.analytics.SentryController
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_GSTIN_LOADED
 import com.framework.webengageconstant.AUTO_RENEW
 import com.framework.webengageconstant.NO_EVENT_VALUE
@@ -147,6 +148,7 @@ class RenewalPopUpFragment : DialogFragment() {
     try {
       todayDate.setTime(sdf.parse(formattedDate))
     } catch (e: ParseException) {
+      SentryController.captureException(e)
       e.printStackTrace()
     }
 //        todayDate.add(Calendar.DATE, 365) // number of days to add, can also use Calendar.DAY_OF_MONTH in place of Calendar.DATE

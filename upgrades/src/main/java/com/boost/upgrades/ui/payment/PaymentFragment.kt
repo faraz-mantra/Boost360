@@ -891,6 +891,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         )
       )
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
     }
   }
@@ -918,6 +919,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
       paymentData = JSONObject()
 
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
     }
   }
@@ -947,6 +949,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
       paymentData = JSONObject()
 
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
     }
   }
