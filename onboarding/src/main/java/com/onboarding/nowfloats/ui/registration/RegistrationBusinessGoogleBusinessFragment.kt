@@ -11,6 +11,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
+import com.framework.utils.BuildConfigUtil
 import com.framework.utils.NetworkUtils
 import com.framework.webengageconstant.*
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -187,11 +188,9 @@ class RegistrationBusinessGoogleBusinessFragment :
   override fun onGoogleLoginSuccess(result: GoogleSignInAccount?) {
     showProgress()
     val userId = result?.id
-    val request = GoogleAuthTokenRequest(
-      GoogleGraphPath.SERVER_CLIENT_ID,
-      GoogleGraphPath.SERVER_CLIENT_SECRET,
-      result?.serverAuthCode
-    )
+    val clientIdGoogle=  BuildConfigUtil.getBuildConfigField("GOOGLE_SERVER_CLIENT_ID") ?: ""
+    val clientSecretGoogle=  BuildConfigUtil.getBuildConfigField("GOOGLE_SERVER_CLIENT_SECRET") ?: ""
+    val request = GoogleAuthTokenRequest(clientIdGoogle, clientSecretGoogle, result?.serverAuthCode)
     viewModel?.getGoogleAuthToken(request)?.observeOnce(viewLifecycleOwner, Observer {
       val response = it as? GoogleAuthResponse
       if (response != null && response.access_token.isNullOrEmpty().not()) {

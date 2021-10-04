@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="twitter_consumer_key">GGkgBfPCRL9LPN9uVBM21OZoA</string>
-  <string name="twitter_consumer_secret">5hSo9EpkWlFH8WMmgRYoF6v9T2QyRPiSC4yY379qrpHTOK1HTD</string>
+<!--  <string name="twitter_consumer_key">GGkgBfPCRL9LPN9uVBM21OZoA</string>-->
+<!--  <string name="twitter_consumer_secret">5hSo9EpkWlFH8WMmgRYoF6v9T2QyRPiSC4yY379qrpHTOK1HTD</string>-->
 
   <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
   <string name="app_name">Kitsune</string>

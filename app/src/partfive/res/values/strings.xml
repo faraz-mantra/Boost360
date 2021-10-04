@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="twitter_consumer_key">CSFV2FjjKBxrQ3MJFXLqhKgMV</string>
-  <string name="twitter_consumer_secret">o6jyVudLU6DjyfQ9vfrIijm8SHkJOGoY5Hbv0IJKbswliAJY8E</string>
+<!--  <string name="twitter_consumer_key">CSFV2FjjKBxrQ3MJFXLqhKgMV</string>-->
+<!--  <string name="twitter_consumer_secret">o6jyVudLU6DjyfQ9vfrIijm8SHkJOGoY5Hbv0IJKbswliAJY8E</string>-->
   <string name="website_domain_name">.aecasiainc.com</string>
   <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
   <string name="app_name">Capture</string>

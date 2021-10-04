@@ -139,3 +139,13 @@ fun LottieAnimationView.changeLayersColor(
   val callback: LottieValueCallback<ColorFilter> = LottieValueCallback(filter)
   addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
 }
+
+inline fun <reified T> read() : T {
+  val value: String = readLine()!!
+  return when (T::class) {
+    Int::class -> value.toInt() as T
+    String::class -> value as T
+    // add other types here if need
+    else -> throw IllegalStateException("Unknown Generic Type")
+  }
+}
