@@ -4,7 +4,7 @@ import com.festive.poster.R
 import com.festive.poster.recyclerView.AppBaseRecyclerViewItem
 
 
-data class PosterPackModel(
+open class PosterPackModel(
     var title:String?=null,
     var price:Int?=null,
     var posterList:ArrayList<PosterModel>?=null

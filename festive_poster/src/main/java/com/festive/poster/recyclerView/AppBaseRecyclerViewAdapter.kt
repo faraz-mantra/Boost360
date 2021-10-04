@@ -3,8 +3,10 @@ package com.festive.poster.recyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.festive.poster.constant.RecyclerViewItemType
+import com.festive.poster.databinding.ListItemDownloadsPosterBinding
 import com.festive.poster.databinding.ListItemPosterBinding
 import com.festive.poster.databinding.ListItemPosterPackBinding
+import com.festive.poster.recyclerView.viewholders.PosterPackDownloadsViewHolder
 import com.festive.poster.recyclerView.viewholders.PosterPackViewHolder
 import com.festive.poster.recyclerView.viewholders.PosterViewHolder
 import com.framework.base.BaseActivity
@@ -24,6 +26,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     return when (recyclerViewItemType) {
       RecyclerViewItemType.POSTER_PACK->PosterPackViewHolder(binding as ListItemPosterPackBinding)
       RecyclerViewItemType.POSTER->PosterViewHolder(binding as ListItemPosterBinding)
+      RecyclerViewItemType.POSTER_PACK_DOWNLOADS->PosterPackDownloadsViewHolder(binding as ListItemDownloadsPosterBinding)
 
 
     }

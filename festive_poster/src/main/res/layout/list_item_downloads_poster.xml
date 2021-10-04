@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_marginVertical="@dimen/size_8"
+        android:layout_marginHorizontal="@dimen/size_16"
+        android:background="@drawable/white_background"
+        android:padding="@dimen/size_16"
+        android:layout_height="wrap_content">
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/iv_poster_pack"
+            android:layout_width="@dimen/size_50"
+            android:src="@drawable/placeholder_image"
+            android:layout_height="@dimen/size_50"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:orientation="vertical"
+            android:layout_marginStart="16dp"
+            android:layout_width="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_poster_pack"
+            app:layout_constraintStart_toEndOf="@+id/iv_poster_pack"
+            app:layout_constraintTop_toTopOf="@+id/iv_poster_pack"
+            android:layout_height="wrap_content">
+
+            <com.framework.views.customViews.CustomTextView
+                android:text="Navratri"
+                app:textType="HEADING_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                />
+
+            <com.framework.views.customViews.CustomTextView
+                android:text="3 Posters"
+                app:textType="BODY_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

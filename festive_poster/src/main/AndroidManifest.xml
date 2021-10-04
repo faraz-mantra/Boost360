@@ -7,6 +7,6 @@
         >
         <activity
             android:theme="@style/PosterTheme"
-            android:name=".ui.PosterPackListingActivity"/>
+            android:name=".ui.FestivePosterContainerActivity"/>
     </application>
 </manifest>
