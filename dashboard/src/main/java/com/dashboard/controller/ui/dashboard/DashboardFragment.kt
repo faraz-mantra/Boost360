@@ -44,6 +44,7 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
+import com.framework.base.BaseActivity
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -108,6 +109,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var adapterAcademy: AppBaseRecyclerViewAdapter<DashboardAcademyBanner>? = null
   private var adapterQuickAction: AppBaseRecyclerViewAdapter<QuickActionItem>? = null
   private var adapterBusinessData: AppBaseRecyclerViewAdapter<ManageBusinessData>? = null
+  private var adapterFestiveBanner: AppBaseRecyclerViewAdapter<DashboardFestiveBanner>? = null
+
   private var ctaFileLink: String? = null
   private var mCurrentPage: Int = 0
 
@@ -192,6 +195,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun getPremiumBanner() {
+    setFestiveBanner()
     setDataMarketBanner(getMarketPlaceBanners() ?: ArrayList())
     setDataRiaAcademy(getAcademyBanners() ?: ArrayList())
     viewModel?.getUpgradeDashboardBanner()?.observeOnce(viewLifecycleOwner, {
@@ -684,6 +688,13 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         } else adapterMarketBanner?.notify(marketBannerFilter)
       } else binding?.boostPremiumView?.gone()
     }
+  }
+
+  fun setFestiveBanner(){
+    val list = arrayListOf(DashboardFestiveBanner(),DashboardFestiveBanner(),DashboardFestiveBanner())
+    adapterFestiveBanner = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,list,this)
+    binding?.festiveBanner?.vpBanner?.adapter = adapterFestiveBanner
+    binding?.festiveBanner?.vpBanner?.let { binding?.festiveBanner?.dotIndicator?.setViewPager2(it) }
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {

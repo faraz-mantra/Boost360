@@ -36,22 +36,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="500dp"/>
 
-            <com.google.android.material.tabs.TabLayout
+            <com.framework.views.dotsindicator.DotsIndicator
+                app:dotsColor="@color/colorLightGrey"
+                app:dotsCornerRadius="@dimen/_6dp"
+                app:dotsSize="@dimen/size_20"
+                app:dotsSpacing="@dimen/size_2"
+                app:selectedDotColor="@color/colorPrimary"
+                app:progressMode="false"
+                app:dotsStrokeWidth="0dp"
+                app:dotsWidthFactor="2.5"
+
                 android:layout_gravity="center"
-                android:id="@+id/tabLayout"
+                android:id="@+id/dots"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="5dp"
                 android:layout_marginStart="@dimen/size_8"
                 android:layout_marginTop="8dp"
-                app:tabBackground="@drawable/tab_selector"
-                app:tabGravity="fill"
-                app:tabIndicatorHeight="0dp"
-                app:tabMode="fixed" />
+                />
 
             <com.framework.views.customViews.CustomMaterialButton
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/size_8"
                 app:cornerRadius="@dimen/size_15"
+                android:id="@+id/btn_get_pack"
                 android:backgroundTint="@color/colorPrimary"
                 android:textAllCaps="false"
                 android:text="Get Navratri posters pack"

@@ -139,7 +139,7 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
     if (addToBackStack) {
       fragmentTransaction?.addToBackStack(fragment.javaClass.name)
     }
-    fragmentTransaction?.replace(containerID, fragment)?.commit()
+    fragmentTransaction?.replace(containerID, fragment,fragment.javaClass.name)?.commit()
   }
 
   open fun addFragment(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean) {

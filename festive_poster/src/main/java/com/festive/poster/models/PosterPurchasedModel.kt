@@ -4,10 +4,10 @@ import com.festive.poster.R
 import com.festive.poster.recyclerView.AppBaseRecyclerViewItem
 
 
-open class PosterModel(
-    var imgUrl:String?=null,
-): AppBaseRecyclerViewItem {
+class PosterPurchasedModel(
+    imageUrl:String?
+): AppBaseRecyclerViewItem, PosterModel(imageUrl) {
     override fun getViewType(): Int {
-        return R.layout.list_item_poster
+        return R.layout.list_item_purchased_poster
     }
 }

@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.ListItemPosterPackBinding
 import com.festive.poster.models.PosterPackModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
@@ -27,10 +28,13 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding):
         model.posterList?.let {
             val adapter = AppBaseRecyclerViewAdapter(binding.root.context as BaseActivity<*, *>,it)
             binding.vpPoster.adapter = adapter
-            TabLayoutMediator(binding.tabLayout,binding.vpPoster){
-                    tab,position->
-            }.attach()
+            binding.dots.setViewPager2(binding.vpPoster)
         }
+
+        binding.btnGetPack.setOnClickListener {
+            listener?.onItemClick(position,item,RecyclerViewActionType.GET_POSTER_PACK_CLICK.ordinal)
+        }
+
 
 
         super.bind(position, item)

@@ -28,7 +28,8 @@ enum class RecyclerViewItemType {
   BOOST_WEBSITE_ITEM_FEATURE_VIEW,
   RECYCLER_WEBSITE_NAV,
   CONSULTATION_VIEW,
-  FILTER_DATE_VIEW;
+  FILTER_DATE_VIEW,
+  FESTIVE_BANNER;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -58,6 +59,7 @@ enum class RecyclerViewItemType {
       RECYCLER_ABOUT_APP -> R.layout.recycler_item_about_app
       RECYCLER_WEBSITE_NAV -> R.layout.recycler_item_website_nav
       CHANNEL_STATUS_ITEM_VIEW -> R.layout.item_social_media
+      FESTIVE_BANNER->R.layout.list_item_festive_banner
     }
     }
 }
