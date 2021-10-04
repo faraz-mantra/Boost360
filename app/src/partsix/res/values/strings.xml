@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="twitter_consumer_key">4CiUg5gcIbvYre8XjGd8GsElV</string>
-  <string name="twitter_consumer_secret">4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9</string>
+<!--  <string name="twitter_consumer_key">4CiUg5gcIbvYre8XjGd8GsElV</string>-->
+<!--  <string name="twitter_consumer_secret">4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9</string>-->
   <string name="website_domain_name">.trivone.com</string>
   <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
   <string name="app_name">Trivone Assist</string>
