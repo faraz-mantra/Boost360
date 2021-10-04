@@ -28,6 +28,7 @@
                         app:cornerRadius="@dimen/size_20"
                         app:icon="@drawable/ic_tap_to_edit"
                         android:textSize="@dimen/size_12"
+                        android:id="@+id/btn_tap_edit"
                         android:layout_marginTop="@dimen/size_8"
                         android:layout_marginStart="@dimen/size_16"
                         android:textAllCaps="false"

@@ -63,7 +63,7 @@
                 android:layout_marginTop="@dimen/size_240"
                 android:background="@drawable/ic_bg_dark_white_top_round"
                 android:orientation="vertical"
-                >
+                android:visibility="gone">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                   android:id="@+id/btn_show_digital_score"
@@ -619,6 +619,7 @@
                 android:id="@+id/btn_share_poster"
                 android:textAllCaps="false"
                 app:iconGravity="textEnd"
+                app:icon="@drawable/ic_new_txt"
                 android:textColor="@color/yellow_ffb900"
                 android:backgroundTint="@color/white"
                 android:text="@string/share_navratri_poster"
@@ -646,9 +647,14 @@
               android:id="@+id/recommended_task"
               layout="@layout/item_recommended_task_view" />
 
+
             <include
               android:id="@+id/manage_business"
               layout="@layout/item_manage_business_view" />
+
+            <include
+                android:id="@+id/festive_banner"
+                layout="@layout/item_festive_banner_slider_view" />
           </LinearLayout>
 
           <androidx.appcompat.widget.LinearLayoutCompat
