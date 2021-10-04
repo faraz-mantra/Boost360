@@ -32,6 +32,7 @@ import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.RecyclerItemClickListener
+import com.framework.analytics.SentryController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -227,6 +228,7 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
                     } catch (e: OutOfMemoryError) {
                         showShortToast(getString(R.string.image_size_is_large))
                     } catch (e: Exception) {
+                        SentryController.captureException(e)
                         showShortToast(getString(R.string.image_not_able_to_share))
                     }
                     hideProgress()
