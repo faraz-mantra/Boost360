@@ -26,8 +26,7 @@ open class BaseApiClient protected constructor(isAuthRemove: Boolean = false) {
     httpClient.readTimeout(2, TimeUnit.MINUTES)
       .connectTimeout(2, TimeUnit.MINUTES)
       .writeTimeout(2, TimeUnit.MINUTES)
-    httpClient.addInterceptor(authInterceptor).addInterceptor(logging)
-
+    httpClient.addInterceptor(logging).addInterceptor(authInterceptor)
     gson = GsonBuilder().setLenient().create()
   }
 
