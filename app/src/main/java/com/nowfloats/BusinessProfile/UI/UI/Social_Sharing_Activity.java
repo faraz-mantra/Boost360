@@ -42,6 +42,7 @@ import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.framework.utils.BuildConfigUtil;
 import com.framework.views.customViews.CustomToolbar;
 import com.nowfloats.BusinessProfile.UI.Model.FacebookFeedPullModel;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
@@ -1072,15 +1073,14 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             try {
 
                 String username = twitterSession.getUserName();
-
                 NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
                         .setmFpId(session.getFPID())
                         .setmType("twitter")
                         .setmUserAccessTokenKey(twitterSession.getAuthToken().token)
                         .setmUserAccessTokenSecret(twitterSession.getAuthToken().secret)
                         .setmUserAccountId(String.valueOf(twitterSession.getUserId()))
-                        .setmAppAccessTokenKey(Constants.TWITTER_TOK)
-                        .setmAppAccessTokenSecret(Constants.TWITTER_SEC)
+                        .setmAppAccessTokenKey(BuildConfigUtil.INSTANCE.getBuildConfigFieldN("twitter_consumer_key"))
+                        .setmAppAccessTokenSecret(BuildConfigUtil.INSTANCE.getBuildConfigFieldN("twitter_consumer_secret"))
                         .setmCallType(TWITTERTYPE)
                         .setmName(username);
                 requestClient.connectNfx();
