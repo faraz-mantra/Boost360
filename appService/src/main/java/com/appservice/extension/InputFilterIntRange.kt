@@ -4,6 +4,7 @@ import android.text.InputFilter
 import android.text.Spanned
 import android.view.View
 import android.widget.EditText
+import com.framework.analytics.SentryController
 
 
 class InputFilterIntRange(min: Int, max: Int) : InputFilter, View.OnFocusChangeListener {
@@ -29,6 +30,7 @@ class InputFilterIntRange(min: Int, max: Int) : InputFilter, View.OnFocusChangeL
       val input = inputString.toInt()
       if (mightBeInRange(input)) return null
     } catch (nfe: NumberFormatException) {
+      SentryController.captureException(nfe)
     }
     return ""
   }
@@ -78,6 +80,7 @@ class InputFilterIntRange(min: Int, max: Int) : InputFilter, View.OnFocusChangeL
         valueText.setText(value.toString())
       }
     } catch (nfe: NumberFormatException) {
+      SentryController.captureException(nfe)
       valueText.setText("")
     }
   }

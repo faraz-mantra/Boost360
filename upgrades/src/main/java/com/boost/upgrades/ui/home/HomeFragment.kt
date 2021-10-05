@@ -82,8 +82,7 @@ import android.view.ViewTreeObserver
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 
 import android.widget.TextView
-
-
+import com.framework.analytics.SentryController
 
 
 class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
@@ -235,6 +234,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             try {
                 startActivity(sendIntent)
             } catch (ex: ActivityNotFoundException) {
+                SentryController.captureException(ex)
                 Toasty.error(
                     requireContext(),
                     "Failed to share the referral code. Please try again.",
@@ -2404,6 +2404,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             startActivity(webIntent)
 //            overridePendingTransition(0, 0)
         } catch (e: ClassNotFoundException) {
+            SentryController.captureException(e)
             e.printStackTrace()
         }
     }
