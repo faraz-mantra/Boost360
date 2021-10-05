@@ -9,7 +9,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.boost.upgrades.data.api_model.GetAllWidgets.GetAllWidgets
 import com.boost.upgrades.utils.Constants.Companion.BASE_URL
-import com.framework.rest.ServiceInterceptor
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
@@ -19,12 +18,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.IOException
 import java.io.InputStream
-import java.lang.Integer.parseInt
-import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import kotlin.collections.ArrayList
 
 object Utils {
 
