@@ -1,6 +1,7 @@
 package com.festive.poster.recyclerView.viewholders
 
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -11,6 +12,8 @@ import com.festive.poster.models.PosterPackModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
+import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.framework.adapters.RecyclerViewItemClickListener
 import com.framework.base.BaseActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlin.math.abs
@@ -26,14 +29,21 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding):
         setupVp(binding.vpPoster)
 
         model.posterList?.let {
-            val adapter = AppBaseRecyclerViewAdapter(binding.root.context as BaseActivity<*, *>,it)
+            val adapter = AppBaseRecyclerViewAdapter(binding.root.context as BaseActivity<*, *>,it,object :RecyclerItemClickListener{
+                override fun onItemClick(
+                    c_position: Int,
+                    c_item: BaseRecyclerViewItem?,
+                    actionType: Int
+                ) {
+                    listener?.onChildClick(c_position,position,c_item,item,actionType)
+                }
+
+
+            })
             binding.vpPoster.adapter = adapter
             binding.dots.setViewPager2(binding.vpPoster)
         }
 
-        binding.btnGetPack.setOnClickListener {
-            listener?.onItemClick(position,item,RecyclerViewActionType.GET_POSTER_PACK_CLICK.ordinal)
-        }
 
 
 
@@ -52,4 +62,6 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding):
         vpPdfs.setPageTransformer(compositePageTransformer);
 
     }
+
+
 }

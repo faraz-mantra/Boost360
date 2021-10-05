@@ -54,8 +54,18 @@ class PosterPackListingFragment:
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+
+    }
+
+    override fun onChildClick(
+        childPosition: Int,
+        parentPosition: Int,
+        childItem: BaseRecyclerViewItem?,
+        parentItem: BaseRecyclerViewItem?,
+        actionType: Int
+    ) {
         when(actionType){
-            RecyclerViewActionType.GET_POSTER_PACK_CLICK.ordinal->{
+            RecyclerViewActionType.POSTER_TAP_TO_EDIT_CLICK.ordinal->{
                 CustomizePosterSheet().show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
             }
         }

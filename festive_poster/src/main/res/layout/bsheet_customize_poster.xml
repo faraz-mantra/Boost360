@@ -72,6 +72,7 @@
                             android:textColor="@color/colorAccentLight"
                             app:fontFamily="@font/semi_bold"
                             app:textType="BODY_1"
+                            android:id="@+id/upload_selfie"
                             android:gravity="center"
                             android:background="@color/white"
                             android:padding="@dimen/size_4"
@@ -87,9 +88,9 @@
                         android:layout_height="@dimen/size_140">
 
                         <com.framework.views.customViews.CustomImageView
-                            android:padding="@dimen/size_30"
+                            android:scaleType="fitXY"
+                            android:id="@+id/iv_user_img"
                             android:layout_width="match_parent"
-                            android:src="@drawable/ic_fposter_profile_img_placeholder"
                             android:layout_height="match_parent"/>
 
                         <com.framework.views.customViews.CustomImageView

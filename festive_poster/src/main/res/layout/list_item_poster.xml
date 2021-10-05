@@ -35,8 +35,8 @@
                         android:text="@string/tap_to_edit"
                         android:backgroundTint="@color/black_opacity30"
                         android:layout_height="@dimen/size_50"/>
-                    <com.caverock.androidsvg.SVGImageView
-                        android:scaleType="centerCrop"
+                    <com.festive.poster.customviews.CustomSvgImageView
+                        android:scaleType="fitCenter"
                         android:layout_width="match_parent"
                         android:id="@+id/iv_svg"
                         android:layout_height="match_parent"/>

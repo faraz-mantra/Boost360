@@ -93,6 +93,7 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
       val response = it1 as? UserFpDetailsResponse
       if (it1.isSuccess() && response != null) {
         ProcessFPDetails(session).storeFPDetails(response)
+        
         startService()
         if (
           deepLinkViewType != null && deepLinkViewType.equals("CART_FRAGMENT", ignoreCase = true)
