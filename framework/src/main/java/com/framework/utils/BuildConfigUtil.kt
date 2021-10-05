@@ -16,4 +16,7 @@ object BuildConfigUtil {
       null
     }
   }
+  fun getBuildConfigFieldN(key: String): String {
+   return getBuildConfigField(key)?:""
+  }
 }
