@@ -6,6 +6,7 @@ import java.io.File
 import java.io.InputStreamReader
 
 object RootUtil {
+
   val isDeviceRooted: Boolean
     get() = checkRootMethod1() || checkRootMethod2() || checkRootMethod3()
 

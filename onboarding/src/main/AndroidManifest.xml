@@ -3,12 +3,10 @@
   xmlns:tools="http://schemas.android.com/tools"
   package="com.onboarding.nowfloats">
 
-  <uses-permission android:name="android.permission.CALL_PHONE" />
-
   <application
     android:largeHeap="true"
     android:requestLegacyExternalStorage="true"
-    android:usesCleartextTraffic="true"
+    android:usesCleartextTraffic="false"
     tools:ignore="UnusedAttribute">
 
     <activity

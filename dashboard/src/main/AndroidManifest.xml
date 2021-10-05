@@ -29,12 +29,17 @@
           android:scheme="http" />
 
         <data
-            android:host="boost.nowfloats.com"
-            android:pathPrefix="/"
-            android:scheme="http" />
+          android:host="boost.nowfloats.com"
+          android:pathPrefix="/"
+          android:scheme="http" />
+
+        <data
+          android:host="nowfloat.onelink.me"
+          android:pathPrefix="/FX0L"
+          android:scheme="https" />
       </intent-filter>
       <intent-filter>
-        <action android:name="com.dashboard.controller.DashboardActivity"/>
+        <action android:name="com.dashboard.controller.DashboardActivity" />
         <category android:name="android.intent.category.DEFAULT" />
       </intent-filter>
     </activity>

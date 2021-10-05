@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="twitter_consumer_key">Xx4v6Ak52csfHNOn41BAkJmww</string>
-  <string name="twitter_consumer_secret">er7oOIMdUqxK7pBmg8SFwS8NZuI2RVXt3bgZj77cv7IGqKSGtQ</string>
+<!--  <string name="twitter_consumer_key">Xx4v6Ak52csfHNOn41BAkJmww</string>-->
+<!--  <string name="twitter_consumer_secret">er7oOIMdUqxK7pBmg8SFwS8NZuI2RVXt3bgZj77cv7IGqKSGtQ</string>-->
   // to be replaced
   <string name="website_domain_name">.sukere.com</string>
   <string name="package_name">com.sukere</string>
