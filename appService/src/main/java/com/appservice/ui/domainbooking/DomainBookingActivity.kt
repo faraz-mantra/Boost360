@@ -288,7 +288,7 @@ class DomainBookingActivity :
 
 
     private fun isPremium(): Boolean {
-        return session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false
+        return true//session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false
     }
 
     private fun setupSteps() {
