@@ -8,8 +8,6 @@ public class Specific {
     public static final String CONTACT_EMAIL_ID = "ria@nowfloats.com";
     public static final String FACEBOOK_API_KEY = "539836972828386";  // Boost
     public static final String RIA_FIREBASE_COLLECTION_NAME = "RIAUserActivityLog";  // Boost
-    public static final String TWITTER_TOK = "4CiUg5gcIbvYre8XjGd8GsElV";
-    public static final String TWITTER_SEC = "4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9";
     public static final String FACEBOOK_URL = "https://www.facebook.com/nowfloats";
     public static final String PACKAGE_NAME = "com.biz2.nowfloats";
     public static final String[] FACEBOOK_READ_PERMISSIONS = {"email", "public_profile", "read_insights", "business_management"};
@@ -25,8 +23,6 @@ public class Specific {
     public static String client_ID_4_biznowfloatscom = "4DB87D953727422DA36B4977BD12E37A92EEB23119DC4152AAEB6B22BDB575EF";
     public static String client_ID_5_nfcom = "5DB87D953727422DA36B4977BD12E37A92EEB23119DC4152AAEB6B22BDB575EE";
 
-//    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
-//    public static String TWITTER_SEC 				= "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";
     public static String client_ID_6_bizmanagementclientapp = "DB96EA35A6E44C0F8FB4A6BAA94DB017C0DFBE6F9944B14AA6C3C48641B3D70";
     public static String client_ID_7_bizmanagementandroidclientapp = "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5";
     public static String client_ID_8_fpweb = "AC16E0892F2F45388F439BDE9F6F3FB5C31F0FAA628D40CD9814A79D8841397E";

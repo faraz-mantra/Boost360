@@ -5,8 +5,6 @@
   <string name="noti_msg_orders" translatable="false">New order details, click to take action!</string>
   <string name="gmb_integration_Successful" translatable="false">Your business has been synced with Google My Business</string>
   <string name="gmb_upload_data" translatable="false">Google My Business Profile updated.</string>
-<!--  <string name="twitter_consumer_key" translatable="false">4CiUg5gcIbvYre8XjGd8GsElV</string>-->
-<!--  <string name="twitter_consumer_secret" translatable="false">4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9</string>-->
   <string name="google_map_key" translatable="false">AIzaSyD6mt4XepThpyfQg7AtV9WX25SnLlfBwnc</string>
   <string name="app_name">Thinksity</string>
   <string name="action_settings">Settings</string>
