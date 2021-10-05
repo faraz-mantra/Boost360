@@ -12,7 +12,9 @@ import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.LinearLayoutCompat
+import com.appservice.model.accountDetails.getBankDetail
 import com.appservice.ui.updatesBusiness.showDialog
+import com.boost.presignin.model.other.KYCDetails
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.RecyclerViewActionType
@@ -33,13 +35,13 @@ import com.framework.pref.Key_Preferences.GET_FP_DETAILS_DESCRIPTION
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_IMAGE_URI
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
 import com.framework.webengageconstant.*
-import java.util.*
 
 class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
   val TWITTER_URL = "https://twitter.com/Nowfloats"
   val TWITTER_ID_URL = "twitter://user?screen_name=nowfloats"
+  private var usefulLinks: ArrayList<UsefulLinksItem>? = null
 
   override fun getLayout(): Int {
     return R.layout.fragment_more
@@ -92,11 +94,42 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
   }
 
   private fun setRecyclerView() {
-    viewModel?.getMoreSettings(baseActivity)?.observeOnce(viewLifecycleOwner, {
-      val data = it as? MoreSettingsResponse
-      binding?.rvUsefulLinks?.adapter = AppBaseRecyclerViewAdapter(baseActivity, data?.usefulLinks as ArrayList<UsefulLinksItem>, this)
-      binding?.rvAbout?.adapter = AppBaseRecyclerViewAdapter(baseActivity, data.aboutAppSection as ArrayList<AboutAppSectionItem>, this)
+    viewModel?.getMoreSettings(baseActivity)?.observeOnce(viewLifecycleOwner, { it0 ->
+      val data = it0 as? MoreSettingsResponse
+      if (data != null) {
+        usefulLinks = data.usefulLinks
+        setHelpfulResources()
+        binding?.rvAbout?.adapter = AppBaseRecyclerViewAdapter(baseActivity, data.aboutAppSection ?: arrayListOf(), this)
+      } else showShortToast(getString(R.string.error_loading_more_page))
     })
+  }
+
+  override fun onResume() {
+    super.onResume()
+    setHelpfulResources()
+  }
+
+  private fun setHelpfulResources() {
+    if (usefulLinks.isNullOrEmpty().not()) {
+      val bankData = getBankDetail()
+      if (bankData?.isValidAccount() == true) {
+        usefulLinks?.map {
+          if (it.icon.equals(UsefulLinksItem.IconType.my_bank_acccount.name)) {
+            if (bankData.kYCDetails?.verificationStatus == KYCDetails.Status.PENDING.name) {
+              it.actionBtn?.color = "#EB5757"
+              it.actionBtn?.textColor = "#FFFFFF"
+              it.actionBtn?.title = "Unverified"
+            } else {
+              it.actionBtn?.color = "#F2FBE9"
+              it.actionBtn?.textColor = "#7ED321"
+              it.actionBtn?.title = "Verified"
+            }
+            it
+          } else it
+        }
+      }
+      binding?.rvUsefulLinks?.adapter = AppBaseRecyclerViewAdapter(baseActivity, usefulLinks ?: arrayListOf(), this)
+    }
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -122,7 +155,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       UsefulLinksItem.IconType.refer_and_earn -> baseActivity.startReferralView(session!!)
       UsefulLinksItem.IconType.ria_digital_assistant -> baseActivity.startHelpAndSupportActivity(session!!)
       UsefulLinksItem.IconType.training_and_certification -> trainingCertification()
-      UsefulLinksItem.IconType.custom_website_domain->baseActivity.startDomainDetail(session)
+      UsefulLinksItem.IconType.custom_website_domain -> baseActivity.startDomainDetail(session)
     }
   }
 
