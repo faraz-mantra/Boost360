@@ -26,6 +26,7 @@ import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.getBitmap
 import com.appservice.viewmodel.UpdatesViewModel
+import com.framework.analytics.SentryController
 import com.framework.extensions.*
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
@@ -304,6 +305,7 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
       startActivityForResult(intent, REQ_CODE_SPEECH_INPUT)
     } catch (a: ActivityNotFoundException) {
       showShortToast(getString(R.string.speech_not_supported))
+      SentryController.captureException(a)
     }
   }
 
@@ -487,5 +489,6 @@ fun AppCompatActivity.startDigitalChannel(session: UserSessionManager, channelTy
     startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
   } catch (e: Exception) {
     e.printStackTrace()
+    SentryController.captureException(e)
   }
 }

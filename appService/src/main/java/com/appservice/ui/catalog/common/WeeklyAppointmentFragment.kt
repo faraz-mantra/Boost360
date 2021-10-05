@@ -183,6 +183,7 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
       d1 = sdf.parse(startTime)
       d2 = sdf.parse(endTime)
     } catch (e: Exception) {
+
     }
 
     return d2.before(d1)

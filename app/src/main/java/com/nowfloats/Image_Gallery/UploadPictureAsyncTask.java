@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.framework.analytics.SentryController;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
@@ -332,6 +333,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
                 try {
                     Thread.sleep(2000);
                 } catch (Exception e) {
+                    SentryController.INSTANCE.captureException(e);
                     System.out.println();
 
                 }
@@ -412,6 +414,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            SentryController.INSTANCE.captureException(e);
             response = null;
         } catch (OutOfMemoryError e) {
             e.printStackTrace();
@@ -457,7 +460,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
 
         } catch (Exception e) {
             System.out.println();
-
+            SentryController.INSTANCE.captureException(e);
         }
 
 
@@ -551,6 +554,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+                SentryController.INSTANCE.captureException(e);
                 response = "error";
                 return response;
             }
@@ -571,6 +575,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
             response = "error";
             Log.e("Send file Exception", ex.getMessage() + "");
             ex.printStackTrace();
+            SentryController.INSTANCE.captureException(ex);
         }
         return response;
     }

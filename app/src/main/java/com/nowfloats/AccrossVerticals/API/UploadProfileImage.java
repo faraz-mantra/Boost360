@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
+import com.framework.analytics.SentryController;
 import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsFeedbackListener;
 import com.nowfloats.hotel.Interfaces.PlaceNearByDetailsListener;
 import com.nowfloats.util.Methods;
@@ -60,6 +61,7 @@ public class UploadProfileImage extends AsyncTask<Void, String, String> {
                 try {
                     listener.uploadImageURL(result);
                 } catch (Exception e) {
+                    SentryController.INSTANCE.captureException(e);
                     e.printStackTrace();
                 }
             }
@@ -104,6 +106,7 @@ public class UploadProfileImage extends AsyncTask<Void, String, String> {
             buf = null;
 
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
         return null;

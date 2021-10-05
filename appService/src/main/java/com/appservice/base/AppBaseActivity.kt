@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import com.appservice.R
 import com.appservice.utils.WebEngageController
+import com.framework.analytics.SentryController
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
@@ -72,5 +73,6 @@ fun AppCompatActivity.startWebViewPageLoad(session: UserSessionManager?, url: St
     startActivity(intent)
   } catch (e: Exception) {
     e.printStackTrace()
+    SentryController.captureException(e)
   }
 }

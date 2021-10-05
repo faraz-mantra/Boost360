@@ -73,6 +73,7 @@ import java.lang.NumberFormatException
 import android.text.InputFilter
 import android.text.TextUtils
 import com.boost.upgrades.ui.compare.ComparePackageFragment
+import com.framework.analytics.SentryController
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_title
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_value
 import kotlinx.android.synthetic.main.cart_fragment.igst_value
@@ -670,7 +671,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           }
 
         } catch (nfe: NumberFormatException) {
-
+          SentryController.captureException(nfe)
         }
 
       }
@@ -827,6 +828,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
             }
           } catch (ex: Exception) {
+            SentryController.captureException(ex)
             ex.printStackTrace()
           }
         }
@@ -872,6 +874,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
             }
           } catch (ex: Exception) {
+            SentryController.captureException(ex)
             ex.printStackTrace()
           }
         }
@@ -1177,6 +1180,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
             }
           } catch (ex: Exception) {
+            SentryController.captureException(ex)
             ex.printStackTrace()
           }
         }
@@ -1980,6 +1984,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         progressDialog.show()
       }
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
     }
   }
@@ -1989,6 +1994,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //      if (progressDialog.isShowing) progressDialog.hide()
       if (progressDialog.isShowing) progressDialog.cancel()
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
     }
   }

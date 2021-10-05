@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.boost.upgrades.UpgradeActivity;
 import com.dashboard.utils.CodeUtilsKt;
+import com.framework.analytics.SentryController;
 import com.framework.utils.ContentSharing;
 import com.framework.views.fabButton.FloatingActionButton;
 import com.framework.views.zero.FragmentZeroCase;
@@ -217,6 +218,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                 }
             });
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
 
@@ -281,6 +283,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
             });
 
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
     }
@@ -368,6 +371,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                     }
                 });
             } catch (Exception e) {
+                SentryController.INSTANCE.captureException(e);
                 Log.v("experincecode3", " " + e.getMessage() + " " + e.getStackTrace());
                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
