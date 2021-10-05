@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.location.Address;
 import android.util.DisplayMetrics;
 
+import com.framework.utils.BuildConfigUtil;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
@@ -178,8 +179,6 @@ public class Constants {
     public final static String BG_SERVICE_DATA_ROW_ID = "rowId_bizApp";
     public final static String NEW_LINE = "\n";
     public static final String CLIENT_ID_KEY = "clientId_bizAPP";
-    public static final String CONSUMER_KEY = Specific.TWITTER_TOK;
-    public static final String CONSUMER_SECRET = Specific.TWITTER_SEC;
     public static final String FACEBOOK_API_KEY = Specific.FACEBOOK_API_KEY;
     public static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
     public static final String PREF_KEY_OAUTH_SECRET = "oauth_token_secret";
@@ -268,8 +267,6 @@ public class Constants {
     public static String GMBAccountName = "jalskdh987.aksdjklakdsjasd9a8sd7";
     public static String GMBAccountId = "lkjasjdsaldalskjdslaksjd";
     public static String ChangePassword = NOW_FLOATS_API_URL + "/discover/v1/floatingpoint/changePassword";
-    //public static String TWITTER_TOK 				= "";
-    //public static String TWITTER_SEC 				= "";
     public static String domainSearch = NOW_FLOATS_API_URL + "/DomainService/v1/checkAvailability/";
     public static String domainPurchase = NOW_FLOATS_API_URL + "/domainservice/v1/requestdomainpurchase";
     public static String googlePlaces = NOW_FLOATS_API_URL + "/Discover/v1/floatingPoint/CreateGooglePlaces/";
@@ -298,8 +295,6 @@ public class Constants {
     public static String FACEBOOK_USER_ID = "";
     public static String FACEBOOK_USER_ACCESS_ID = "";
     public static String FACEBOOK_PAGE_ACCESS_ID = "";
-    public static String TWITTER_TOK = Specific.TWITTER_TOK;
-    public static String TWITTER_SEC = Specific.TWITTER_SEC;
     // for referral
     public static String PREF_NAME_REFERRAL = "nowfloatsPrefsReferral";
     public static String IS_INSTALL_APP = "isInstallApp";
