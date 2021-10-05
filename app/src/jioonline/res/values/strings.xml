@@ -597,9 +597,6 @@
   <string name="boost_keyboard_themes_n">Business Keyboard Themes</string>
   <string name="facebook_url_message">If your Facebook page URL is facebook.com/jioonline; then your user name is JioOnline</string>
 
-  <string name="twitter_consumer_key">TE20KJRCg35Sg3o8lM7OvTGRM</string>
-  <string name="twitter_consumer_secret">mvHwpYzH4y2nJFdZfIHsyyEBnaZibMmtg3P5VnKKwGgIwFAn0M</string>
-
   <string name="intro_video_url">https://cdn.nowfloats.com/jioonline/android/videos/JioOnlineHighResolution.mp4</string>
 
   <string name="boost_send_reason_for_cancellation_desc">JioOnline will send an email and an SMS to the customer on your behalf, informing them of the cancellation of this order and the reason for cancellation, if any.</string>
