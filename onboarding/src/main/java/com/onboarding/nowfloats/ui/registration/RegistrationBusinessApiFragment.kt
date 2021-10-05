@@ -1,10 +1,5 @@
 package com.onboarding.nowfloats.ui.registration
 
-import android.Manifest.permission.CALL_PHONE
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -17,8 +12,8 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.pref.WA_KEY
 import com.framework.utils.NetworkUtils
+import com.framework.utils.makeCall
 import com.framework.views.DotProgressBar
-
 import com.framework.webengageconstant.DIGITAL_CHANNELS
 import com.framework.webengageconstant.WHATS_APP_CONNECTED
 import com.invitereferrals.invitereferrals.InviteReferralsApi
@@ -49,8 +44,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class RegistrationBusinessApiFragment :
-  BaseRegistrationFragment<FragmentRegistrationBusinessApiBinding>(), RecyclerItemClickListener {
+class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistrationBusinessApiBinding>(), RecyclerItemClickListener {
 
   private var list = ArrayList<ProcessApiSyncModel>()
   private val connectedChannels = ArrayList<ChannelModel>()
@@ -443,26 +437,18 @@ class RegistrationBusinessApiFragment :
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
   }
+
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
       binding?.next -> if ((binding?.textBtn?.visibility == View.VISIBLE)) {
         if (binding?.textBtn?.text == resources.getString(R.string.digital_channel)) backToDigitalChannelUpdate() else gotoRegistrationComplete()
       }
-      binding?.supportCustomer -> {
-        try {
-          val intent = Intent(Intent.ACTION_CALL)
-          intent.data = Uri.parse("tel:${resources.getString(R.string.contact_us_number)}")
-          if (ContextCompat.checkSelfPermission(baseActivity, CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-            baseActivity.startActivity(intent)
-          } else requestPermissions(arrayOf(CALL_PHONE), 1)
-        } catch (e: ActivityNotFoundException) {
-          showLongToast(getString(R.string.error_in_your_phone_call))
-        }
-      }
+      binding?.supportCustomer -> baseActivity.makeCall(getString(R.string.contact_us_number_n))
       binding?.retry -> apiHitBusiness()
     }
   }
+
 
 
   override fun getViewModelClass(): Class<BusinessCreateViewModel> {
@@ -484,15 +470,12 @@ class RegistrationBusinessApiFragment :
     createRequest.email = requestFloatsModel?.contactInfo?.getEmailN()
     createRequest.primaryNumberCountryCode = "+91"
     createRequest.uri = ""
-    createRequest.fbPageName = requestFloatsModel?.getConnectedAccessToken()
-      ?.firstOrNull { it.getType() == ChannelAccessToken.AccessTokenType.facebookpage }?.userAccountName
+    createRequest.fbPageName = requestFloatsModel?.getConnectedAccessToken()?.firstOrNull { it.getType() == ChannelAccessToken.AccessTokenType.facebookpage }?.userAccountName
     createRequest.primaryCategory = requestFloatsModel?.categoryDataModel?.category_key
     createRequest.appExperienceCode = requestFloatsModel?.categoryDataModel?.experience_code
-    createRequest.whatsAppNumber =
-      requestFloatsModel?.channelActionDatas?.firstOrNull()?.getNumberWithCode()
+    createRequest.whatsAppNumber = requestFloatsModel?.channelActionDatas?.firstOrNull()?.getNumberWithCode()
     createRequest.whatsAppNotificationOptIn = requestFloatsModel?.whatsappEntransactional ?: false
-    createRequest.boostXWebsiteUrl =
-      "www.${requestFloatsModel?.contactInfo?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com"
+    createRequest.boostXWebsiteUrl = "www.${requestFloatsModel?.contactInfo?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com"
     return createRequest
   }
 

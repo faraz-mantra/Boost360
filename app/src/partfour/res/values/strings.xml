@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="twitter_consumer_key">VSfjudvcrSvfOesMgaHzlq8eG</string>
-  <string name="twitter_consumer_secret">jM656pIF5dSjyNI09I8OrAl1hdZ20oaPbAaYtMqHAarA025Xy9</string>
+<!--  <string name="twitter_consumer_key">VSfjudvcrSvfOesMgaHzlq8eG</string>-->
+<!--  <string name="twitter_consumer_secret">jM656pIF5dSjyNI09I8OrAl1hdZ20oaPbAaYtMqHAarA025Xy9</string>-->
   <string name="website_domain_name">.digitalseoz.com</string>
   <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
   <string name="app_name">Digitalseoz</string>

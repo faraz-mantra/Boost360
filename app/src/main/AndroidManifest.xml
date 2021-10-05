@@ -12,7 +12,6 @@
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
   <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
   <uses-permission android:name="android.permission.ACCOUNT_MANAGER" />
-  <uses-permission android:name="android.permission.GET_ACCOUNTS" />
   <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
   <uses-permission android:name="android.permission.INTERNET" />
@@ -28,19 +27,16 @@
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
   <uses-permission android:name="com.android.vending.BILLING" />
-  <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-  <uses-permission android:name="android.permission.GET_TASKS" />
   <uses-permission
     android:name="android.permission.PACKAGE_USAGE_STATS"
     tools:ignore="ProtectedPermissions" />
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-  <uses-permission android:name="android.permission.READ_PROFILE" />
 
   <uses-feature
     android:name="android.hardware.camera"
     android:required="true" />
 
-  <!--    requestLegacyExternalStorage="true" using this to access external storage
+  <!--requestLegacyExternalStorage="true" using this to access external storage
   in api 29 for ImagePicker library in ManageProductFragment-->
 
   <application
@@ -51,9 +47,10 @@
     android:icon="@drawable/app_launcher"
     android:label="@string/app_name"
     android:largeHeap="true"
+    android:networkSecurityConfig="@xml/network_security_config"
     android:requestLegacyExternalStorage="true"
     android:theme="@style/AppTheme"
-    android:usesCleartextTraffic="true"
+    android:usesCleartextTraffic="false"
     tools:ignore="UnusedAttribute"
     tools:replace="android:name,android:theme,android:appComponentFactory">
 
@@ -132,19 +129,8 @@
     <activity
       android:name="com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
+      android:screenOrientation="portrait" />
 
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.UI.ContactInformationActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
     <activity
       android:name="com.nowfloats.Image_Gallery.ImageViewerActivity"
       android:screenOrientation="portrait" />
@@ -153,19 +139,7 @@
       android:launchMode="singleTask"
       android:screenOrientation="portrait"
       android:theme="@style/MyTheme"
-      android:windowSoftInputMode="adjustPan">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.ProductGallery.PickupAddressActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:windowSoftInputMode="adjustPan" />
     <activity
       android:name="com.nowfloats.ProductGallery.ManageProductActivity"
       android:screenOrientation="portrait"
@@ -175,19 +149,7 @@
       android:name="com.nowfloats.ProductGallery.ProductCatalogActivity"
       android:launchMode="singleTask"
       android:screenOrientation="portrait"
-      android:theme="@style/AppThemeActionBar">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.ProductGallery.ProductCatalogActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:theme="@style/AppThemeActionBar" />
 
     <uses-library
       android:name="org.apache.http.legacy"
@@ -246,22 +208,11 @@
     <activity
       android:name="com.nowfloats.managecustomers.FacebookChatActivity"
       android:screenOrientation="portrait" />
+
     <activity
       android:name="com.nowfloats.BusinessProfile.UI.UI.BusinessDetailsActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.UI.BusinessDetailsActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.managecustomers.FacebookChatDetailActivity"
       android:screenOrientation="portrait" />
@@ -280,23 +231,7 @@
       android:label="@string/app_name"
       android:launchMode="singleTask"
       android:screenOrientation="portrait"
-      android:windowSoftInputMode="adjustResize">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.UI.PreSignUpActivityRia"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-
-      <meta-data
-        android:name="android.support.PARENT_ACTIVITY"
-        android:value="com.nowfloats.PreSignUp.PreSignUp_MainActivity" />
-    </activity>
+      android:windowSoftInputMode="adjustResize" />
     <activity
       android:name="com.nowfloats.Analytics_Screen.SocialAnalytics"
       android:label="Social Analytics"
@@ -310,65 +245,17 @@
       android:name="com.nowfloats.Analytics_Screen.OrderSummaryActivity"
       android:label="Order Analytics"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.Analytics_Screen.OrderSummaryActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-
-      <meta-data
-        android:name="android.support.PARENT_ACTIVITY"
-        android:value="com.nowfloats.Analytics_Screen.OrderSummaryActivity" />
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.Analytics_Screen.OrderAnalyticsActivity"
       android:label="Order Analytics"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.Analytics_Screen.OrderAnalyticsActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-
-      <meta-data
-        android:name="android.support.PARENT_ACTIVITY"
-        android:value="com.nowfloats.Analytics_Screen.OrderAnalyticsActivity" />
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.Analytics_Screen.RevenueSummaryActivity"
       android:label="Order Analytics"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.Analytics_Screen.RevenueSummaryActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-
-      <meta-data
-        android:name="android.support.PARENT_ACTIVITY"
-        android:value="com.nowfloats.Analytics_Screen.RevenueSummaryActivity" />
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.signup.UI.UI.WebSiteAddressActivity"
       android:clearTaskOnLaunch="true"
@@ -382,19 +269,7 @@
       android:name="com.nowfloats.Analytics_Screen.SearchQueriesActivity"
       android:label=""
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.SearchQueriesActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.Analytics_Screen.SubscriberDetailsActivity"
       android:label=""
@@ -410,23 +285,7 @@
     <activity
       android:name="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.Business_Enquiries.BusinessEnquiryActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-
-      <meta-data
-        android:name="android.support.PARENT_ACTIVITY"
-        android:value="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity" />
-    </activity>
+      android:screenOrientation="portrait" />
 
     <service
       android:name="com.nowfloats.bubble.CustomerAssistantService"
@@ -438,170 +297,50 @@
       android:name="com.nowfloats.NavigationDrawer.HomeActivity"
       android:label="@string/title_activity_home"
       android:screenOrientation="portrait"
-      android:windowSoftInputMode="stateAlwaysHidden">
-      <!--            <intent-filter android:label="Queries">-->
-      <!--                <action android:name="android.intent.action.VIEW" />-->
-
-      <!--                <category android:name="android.intent.category.DEFAULT" />-->
-      <!--                <category android:name="android.intent.category.BROWSABLE" />-->
-
-      <!--                <data-->
-      <!--                    android:host="${applicationId}.keyboard.home"-->
-      <!--                    android:pathPrefix="/"-->
-      <!--                    android:scheme="http" />-->
-      <!--            </intent-filter>-->
-    </activity>
+      android:windowSoftInputMode="stateAlwaysHidden" />
     <activity
       android:name="com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity"
       android:label="@string/title_activity_business__address_"
       android:launchMode="singleTask"
       android:screenOrientation="portrait"
-      android:windowSoftInputMode="stateVisible|adjustPan">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.UI.Business_Address_Activity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:windowSoftInputMode="stateVisible|adjustPan" />
     <activity
       android:name="com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity"
       android:label="@string/title_activity_contact__info_"
       android:launchMode="singleTask"
       android:screenOrientation="portrait"
-      android:windowSoftInputMode="stateHidden">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.riasdk.UI.Contact_Info_Activity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:windowSoftInputMode="stateHidden" />
     <activity
       android:name="com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.Graph.AnalyticsActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.BusinessProfile.UI.UI.LinkedinWebView"
       android:label="Linkedin Login"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.riasdk.UI.LinkedinWebView"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity"
       android:label="@string/title_activity_business__logo_"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.UI.Business_Logo_Activity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"
       android:label="@string/title_activity_background_image_gallery"
       android:launchMode="singleTask"
-      android:theme="@style/AppTheme.NoActionBar">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.Image_Gallery.BackgroundImageGalleryActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:theme="@style/AppTheme.NoActionBar" />
     <activity
       android:name="com.nowfloats.BusinessProfile.UI.UI.FeaturedImageActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.UI.FeaturedImageActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.UI.FaviconImageActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.NavigationDrawer.ImageMenuActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.NavigationDrawer.ImageMenuActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity"
       android:label="@string/title_activity_social__sharing_"
@@ -623,60 +362,16 @@
       android:label="@string/title_activity_login__main"
       android:launchMode="singleTask"
       android:screenOrientation="portrait"
-      android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
-      <meta-data
-        android:name="android.support.PARENT_ACTIVITY"
-        android:value="com.nowfloats.PreSignUp.PreSignUp_MainActivity" />
-
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.LoginMainActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
     <activity
       android:name="com.nowfloats.PreSignUp.PreSignUp_MainActivity"
       android:label="@string/title_activity_pre_sign_up__main"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.PreSignUp_MainActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.signup.UI.UI.PreSignUpActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.riasdk.presignup"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-
-      <meta-data
-        android:name="android.support.PARENT_ACTIVITY"
-        android:value="com.nowfloats.PreSignUp.PreSignUp_MainActivity" />
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.BusinessProfile.UI.UI.QuikrGuidelinesActivity"
       android:screenOrientation="portrait" />
@@ -687,19 +382,7 @@
       android:name="com.nowfloats.NavigationDrawer.businessApps.BusinessAppTipsActivity"
       android:launchMode="singleTask"
       android:screenOrientation="portrait"
-      android:windowSoftInputMode="stateAlwaysHidden">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.businessApps.BusinessAppTipsActivit"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:windowSoftInputMode="stateAlwaysHidden" />
     <activity
       android:name="com.nowfloats.Image_Gallery.FullScreen_Gallery_Image"
       android:label="Gallery Image"
@@ -708,19 +391,7 @@
       android:name="com.nowfloats.Image_Gallery.FullScreenImage"
       android:label="Gallery Image"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.Image_Gallery.FullScreenImage"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.NavigationDrawer.Card_Full_View_MainActivity"
       android:label="@string/title_activity_card__full__view__main"
@@ -736,50 +407,15 @@
     </activity>
     <activity
       android:name="com.nowfloats.Login.ForgotPassword"
-      android:screenOrientation="portrait" /> <!-- <activity -->
-    <!-- android:name="com.nowfloats.PreSignUp.SplashScreen_Activity" -->
-    <!-- android:label="@string/title_activity_splash_screen_" -->
-    <!-- android:screenOrientation="portrait" -->
-    <!-- android:theme="@style/AppTheme.Splash"> -->
-    <!-- <intent-filter> -->
-    <!-- <action android:name="android.intent.action.MAIN" /> -->
-    <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-    <!-- </intent-filter> -->
-    <!-- </activity> -->
+      android:screenOrientation="portrait" />
+
     <activity
       android:name="com.nowfloats.PreSignUp.SplashScreen_Activity"
       android:label="@string/app_name"
       android:launchMode="singleTask"
       android:screenOrientation="portrait"
-      android:windowSoftInputMode="adjustResize">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
+      android:windowSoftInputMode="adjustResize" />
 
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.PreSignUp.SplashScreen_Activity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="nowfloat.onelink.me"
-          android:pathPrefix="/FX0L"
-          android:scheme="https" />
-      </intent-filter>
-
-      <meta-data
-        android:name="android.support.PARENT_ACTIVITY"
-        android:value="com.nowfloats.PreSignUp.SplashScreen_Activity" />
-    </activity> <!-- PreSignUp module -->
     <activity
       android:name="com.boost.presignup.SplashActivity"
       android:label="@string/app_name"
@@ -787,69 +423,26 @@
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.Splash"
       tools:replace="android:theme">
-      <intent-filter tools:ignore="AppLinkUrlError">
+      <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.LAUNCHER" />
 
         <action android:name="android.intent.action.VIEW" />
-
         <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-      </intent-filter>
-      <intent-filter
-        android:autoVerify="true"
-        tools:ignore="UnusedAttribute">
-        <data android:scheme="anton" />
-
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.UI.SplashActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
       </intent-filter>
     </activity>
     <activity
       android:name="com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity"
       android:launchMode="singleTop"
-      android:screenOrientation="portrait">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.UI.BusinessHoursActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity"
       android:label="@string/title_activity_edit__profile_"
       android:launchMode="singleTask"
       android:screenOrientation="portrait"
-      android:windowSoftInputMode="stateHidden">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.UI.Edit_Profile_Activity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:windowSoftInputMode="stateHidden" />
 
     <meta-data
       android:name="com.facebook.sdk.ApplicationId"
@@ -875,19 +468,7 @@
     <activity
       android:name="com.nowfloats.Store.DomainLookup"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.Store.DomainLookup"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.ProductGallery.Product_Detail_Activity"
       android:screenOrientation="portrait"
@@ -896,93 +477,29 @@
       android:name="com.nowfloats.ProductGallery.Product_Detail_Activity_V45"
       android:launchMode="singleTask"
       android:screenOrientation="portrait"
-      android:windowSoftInputMode="stateHidden">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.ProductGallery.Product_Detail_Activity_V45"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:windowSoftInputMode="stateHidden" />
     <activity
       android:name="com.nowfloats.NavigationDrawer.EditImageActivity"
       android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.AccountDetails.AccountInfoActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.AccountDetails.AccountInfoActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.CustomPage.CreateCustomPageActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.CustomPage.CreateCustomPageActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.NavigationDrawer.SocialSharingActivity"
       android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.NavigationDrawer.AccountInfoActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.NavigationDrawer.AccountInfoActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.NavigationDrawer.Boost360ExtensionsActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.NavigationDrawer.Boost360ExtensionsActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
-    <!--
-        <activity android:name="com.nowfloats.CustomPage.CustomPageFragment"
-        android:screenOrientation="portrait" ></activity>
-    -->
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.Business_Enquiries.BusinessEnqUpdateDetails"
       android:screenOrientation="portrait" />
@@ -1012,71 +529,23 @@
     <activity
       android:name="com.nowfloats.Analytics_Screen.SubscribersActivity"
       android:launchMode="singleTask"
-      android:theme="@style/AppThemeSubscribe"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.Analytics_Screen.SubscribersActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait"
+      android:theme="@style/AppThemeSubscribe" />
     <activity
       android:name="com.nowfloats.Analytics_Screen.ShowVmnCallActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.Analytics_Screen.ShowVmnCallActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.customerassistant.ThirdPartyQueriesActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.customerassistant.ThirdPartyQueriesActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.customerassistant.ThirdPartySuggestionDetailActivity"
       android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.Analytics_Screen.VmnCallCardsActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.Analytics_Screen.VmnCallCardsActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
 
     <provider
       android:name="com.nowfloats.sync.ContentProvider.BoostContentProvider"
@@ -1094,86 +563,26 @@
     <activity
       android:name="com.nowfloats.ProductGallery.ProductGalleryActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.ProductGallery.ProductGalleryActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.CustomPage.CustomPageActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.CustomPage.CustomPageActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.Image_Gallery.ImageGalleryActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.Image_Gallery.ImageGalleryActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.NavigationDrawer.CreateOffersActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.NavigationDrawer.CreateOffersActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.NavigationDrawer.OffersFullScreenActivity"
       android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.sellerprofile.SellerProfileActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.sellerprofile.SellerProfileActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.PreSignUp.KitsunePreSignUpActivity"
       android:launchMode="singleInstance"
@@ -1189,19 +598,7 @@
     <activity
       android:name="com.nowfloats.Analytics_Screen.SearchRankingActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.Analytics_Screen.SearchRankingActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.managenotification.CallerInfoDialog"
       android:autoRemoveFromRecents="true"
@@ -1217,19 +614,7 @@
     <activity
       android:name="com.nowfloats.manageinventory.SellerAnalyticsActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.manageinventory.SellerAnalyticsActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.manageinventory.PaymentSettingsActivity"
       android:launchMode="singleTop"
@@ -1243,19 +628,7 @@
     <activity
       android:name="com.nowfloats.Store.NewPricingPlansActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.Store.NewPricingPlansActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.NavigationDrawer.FacebookWildFireActivity"
       android:launchMode="singleTop"
@@ -1274,53 +647,17 @@
     <activity
       android:name="com.nowfloats.NavigationDrawer.WildFireAdsActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.NavigationDrawer.WildFireAdsActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity"
       android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.Store.YourPurchasedPlansActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.Store.YourPurchasedPlansActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:screenOrientation="portrait" />
     <activity
       android:name="com.nowfloats.Store.TopUpPlansActivity"
-      android:launchMode="singleTask">
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-        <data
-          android:host="${applicationId}.Store.TopUpPlansActivity"
-          android:pathPrefix="/"
-          android:scheme="http" />
-      </intent-filter>
-    </activity>
+      android:launchMode="singleTask" />
     <activity
       android:name="com.nowfloats.on_boarding.OnBoardingActivity"
       android:launchMode="singleTop"
@@ -1367,7 +704,7 @@
 
     <activity
       android:name="com.nowfloats.helper.AppFragmentContainerActivity"
-      android:screenOrientation="portrait"/>
+      android:screenOrientation="portrait" />
 
     <activity
       android:name="com.nowfloats.helper.ReferralTransActivity"
@@ -1394,10 +731,12 @@
         android:resource="@xml/provider_paths" />
     </provider>
 
-    <activity android:name="zendesk.support.guide.HelpCenterActivity"
+    <activity
+      android:name="zendesk.support.guide.HelpCenterActivity"
       android:theme="@style/ZendeskSdkTheme.Light" />
 
-    <activity android:name="zendesk.support.requestlist.RequestListActivity"
+    <activity
+      android:name="zendesk.support.requestlist.RequestListActivity"
       android:theme="@style/ZendeskSdkTheme.Light" />
   </application>
 
