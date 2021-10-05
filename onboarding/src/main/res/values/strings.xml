@@ -218,6 +218,7 @@
   <string name="this_number_is_already_in_use">This number is already in use.</string>
   <string name="this_email_is_already_in_use">This email is already in use.</string>
   <string name="validation_error_try_again">Validation error, please try again.</string>
-  <string name="contact_us_number_n">18601231233</string>
+  <string name="contact_us_number">18601231233</string>
+
 </resources>
 
