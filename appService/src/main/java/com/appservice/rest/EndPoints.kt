@@ -102,6 +102,8 @@ object EndPoints {
   //TODO BOOST PLUGIN with floats APIs
   const val BOOST_KIT_PLUGIN_WITH_FLOATS_NEW_BASE = "https://plugin.withfloats.com/"
   const val DOMAIN_DETAILS = "DomainService/v3/GetDomainDetailsForFloatingPoint/{fpTag}"
+  const val SEARCH_DOMAIN = "DomainService/v1/checkAvailability/{domain}"
+  const val CREATE_DOMAIN = "DomainService/v2/domainWithWebsite/create"
 
   //TODO RIA WITH FLOATS APIs
   const val RIA_WITH_FLOATS_BASE = "https://ria.withfloats.com"

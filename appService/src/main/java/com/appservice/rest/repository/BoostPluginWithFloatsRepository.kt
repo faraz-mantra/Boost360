@@ -29,4 +29,21 @@ object BoostPluginWithFloatsRepository : AppBaseRepository<BoostPluginWithFloats
             TaskCode.DOMAIN_DETAILS
         )
     }
+
+    fun searchDomain(domain: String, clientId: String, domainType: String): Observable<BaseResponse>{
+        return makeRemoteRequest(
+            remoteDataSource.getSearchDomain(domain = domain, clientId = clientId, domainType = domainType),
+            TaskCode.SEARCH_DOMAIN
+        )
+    }
+
+    fun createDomain(clientId: String, domainName: String, domainType: String,
+                     existingFPTag: String, validityInYears: String, domainOrderType: Int) : Observable<BaseResponse>{
+        return makeRemoteRequest(
+            remoteDataSource.createDomain(clientId, domainName, domainType,
+                existingFPTag, 1, 0,
+                validityInYears, domainOrderType),
+            TaskCode.CREATE_DOMAIN
+        )
+    }
 }
