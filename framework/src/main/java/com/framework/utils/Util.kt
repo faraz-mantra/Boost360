@@ -2,7 +2,9 @@ package com.framework.utils
 
 import android.app.Activity
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.content.Intent
 import android.graphics.ColorFilter
+import android.net.Uri
 import android.os.Build
 import android.os.SystemClock
 import android.text.*
@@ -36,7 +38,7 @@ fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis:
   }
 }
 
-fun Double.roundToFloat(numFractionDigits: Int):Float = "%.${numFractionDigits}f".format(this, Locale.ENGLISH).toFloat()
+fun Double.roundToFloat(numFractionDigits: Int): Float = "%.${numFractionDigits}f".format(this, Locale.ENGLISH).toFloat()
 
 fun Activity.hideKeyBoard() {
   val view = this.currentFocus
@@ -140,7 +142,7 @@ fun LottieAnimationView.changeLayersColor(
   addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
 }
 
-inline fun <reified T> read() : T {
+inline fun <reified T> read(): T {
   val value: String = readLine()!!
   return when (T::class) {
     Int::class -> value.toInt() as T
@@ -148,4 +150,11 @@ inline fun <reified T> read() : T {
     // add other types here if need
     else -> throw IllegalStateException("Unknown Generic Type")
   }
+}
+
+fun Activity.makeCall(number: String) {
+  val callIntent = Intent(Intent.ACTION_DIAL)
+  callIntent.addCategory(Intent.CATEGORY_DEFAULT)
+  callIntent.data = Uri.parse("tel:$number")
+  this.startActivity(Intent.createChooser(callIntent, "Call by:"))
 }
