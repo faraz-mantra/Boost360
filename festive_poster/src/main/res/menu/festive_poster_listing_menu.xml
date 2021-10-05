@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:id="@+id/menu_downloads"
         android:title="Download"
         android:icon="@drawable/ic_fposter_download_menu_grey"
         />
 
     <item
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
 
         android:id="@+id/menu_search"
         android:title="search"
@@ -18,7 +18,7 @@
         />
 
     <item
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
 
         android:id="@+id/menu_help"
         android:title="help"
