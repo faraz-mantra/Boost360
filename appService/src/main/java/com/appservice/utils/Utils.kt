@@ -131,4 +131,9 @@ fun getMillisecondsToDate(milliSeconds: Long, dateFormat: String?): String? {
     return formatter.format(calendar.time)
 }
 
+fun getDomainSplitValues(domainValue: String): DomainAttributes {
+    val split = domainValue.split(".", limit = 2)
+    return DomainAttributes(split[0], ".${split[1]}")
+}
+
 

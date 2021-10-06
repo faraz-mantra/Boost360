@@ -608,7 +608,8 @@
     <string name="search_a_new_domain_lowercase">Search a new domain</string>
     <string name="write_a_domain_name">Write a domain name...</string>
     <string name="select_amp_continue"><![CDATA[Select & Continue]]></string>
-    <string name="domain_confirm_msg">Once confirmed, this domain will replace your website address (URL) <u>samplestorewebsite.nowfloats.com.</u> Don’t worry, anyone clicking on old URL will still be able to see your website on this new domain.</string>
+    <string name="domain_confirm_msg_1">Once confirmed, this domain will replace your website address (URL) </string>
+    <string name="domain_confirm_msg_2">Don’t worry, anyone clicking on old URL will still be able to see your website on this new domain.</string>
     <string name="confirm_amp_apply_domain"><![CDATA[Confirm & apply domain]]></string>
 
 
@@ -722,4 +723,6 @@
     <string name="domain_second_step_text">In case you have a different website (for same business) connected to the domain that you own, you can integrate this website also as a sub-domain on that domain. <b><u>(what’s subdomain?)</u></b></string>
     <string name="ns3_net"><![CDATA[ns3.--------.net]]></string>
     <string name="copy">Copy</string>
+    <string name="is_not_available">is not available.</string>
+  <string name="is_available_new">is available!</string>
 </resources>

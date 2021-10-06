@@ -22,6 +22,7 @@ import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.domainbooking.model.DomainStepsModel
 import com.appservice.utils.Validations
+import com.appservice.utils.getDomainSplitValues
 import com.appservice.viewmodel.DomainBookingViewModel
 import com.framework.base.BaseActivity
 import com.framework.extensions.afterTextChanged
@@ -61,9 +62,9 @@ class DomainBookingActivity :
         baseActivity = this
         session = UserSessionManager(this)
         showProgress()
-        val domainSplit = session.getDomainName(true)?.split(".", limit = 2)
-        binding?.tvDomainTitle?.text = domainSplit?.get(0)
-        binding?.tvDomainAssigned?.text = ".${domainSplit?.get(1)}"
+        val domainSplit = getDomainSplitValues(session.getDomainName(true)!!)
+        binding?.tvDomainTitle?.text = domainSplit?.domainName
+        binding?.tvDomainAssigned?.text = domainSplit?.domainExtension
         setupUI()
         onClickListeners()
     }
