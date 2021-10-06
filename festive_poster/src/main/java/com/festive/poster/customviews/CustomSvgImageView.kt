@@ -1,19 +1,25 @@
 package com.festive.poster.customviews
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.util.AttributeSet
 import android.util.Log
+import com.bumptech.glide.Glide
 import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SVGImageView
+import com.festive.poster.models.KeyModel
+import com.festive.poster.utils.FileUtils
 import com.festive.poster.utils.SvgUtils
 import kotlinx.coroutines.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
 
 class CustomSvgImageView: SVGImageView {
 
-    private var map: Map<String, String>?=null
+    private var loadAndReplaceJob: Deferred<Any?>?=null
+    private var keys:List<KeyModel>?=null
     private var url: String?=null
-    private var downloadJob: Deferred<Any>?=null
-    private var replaceJob: Deferred<Any>?=null
     private val TAG = "CustomSvgImageView"
     private var svgString:String?=null
 
@@ -36,37 +42,20 @@ class CustomSvgImageView: SVGImageView {
 
 
 
-    fun loadFromUrl(url:String){
+
+
+    fun loadAndReplace(url:String,keys:List<KeyModel>?=null){
         this.url = url
-        downloadJob = CoroutineScope(Dispatchers.IO).async{
-            try {
-                svgString = SvgUtils.getSvgAsAString(url)
-                val svg = SVG.getFromString(svgString)
-                withContext(Dispatchers.Main){
-                    setSVG(svg)
-                }
-            }catch (e:Exception){
-                if(e !is CancellationException)
-                Log.e(TAG, "loadFromUrl: $e", )
+        this.keys = keys
+        loadAndReplaceJob = CoroutineScope(Dispatchers.IO).async {
+            svgString = SvgUtils.getSvgAsAString(url)
+            if (keys!=null){
+                svgString =  SvgUtils.replace(svgString,keys)
             }
-
-
-        }
-    }
-
-    fun replace(map: Map<String,String>){
-        this.map=map
-        replaceJob = CoroutineScope(Dispatchers.Default).async {
-
-            if (downloadJob==null){
-                return@async
-            }
-
-            downloadJob?.await()
-            svgString=SvgUtils.replace(svgString,map)
             withContext(Dispatchers.Main){
                 setSVG(SVG.getFromString(svgString))
             }
+
         }
 
     }
@@ -75,20 +64,16 @@ class CustomSvgImageView: SVGImageView {
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        downloadJob?.cancel()
-        replaceJob?.cancel()
+        loadAndReplaceJob?.cancel()
 
     }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         if (url!=null){
-            loadFromUrl(url!!)
-
-            if (map!=null){
-                replace(map!!)
-            }
-
+            loadAndReplace(url!!,keys)
         }
     }
+
+
 }

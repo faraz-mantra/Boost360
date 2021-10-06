@@ -14,7 +14,7 @@ class SvgFileResolver: SVGExternalFileResolver() {
     private val TAG = "SvgFileResolver"
     override fun resolveImage(filename: String?): Bitmap {
         Log.i(TAG, "resolveImage: ")
-        val file = File(FestivePosterApplication.instance.cacheDir,filename)
+        val file = File(FileUtils.getPathOfImages()+filename)
         if (file.exists()){
             val myBitmap = BitmapFactory.decodeFile(file.absolutePath)
             return myBitmap

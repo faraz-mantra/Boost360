@@ -3,6 +3,8 @@ package com.festive.poster
 import androidx.multidex.MultiDexApplication
 import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SVGExternalFileResolver
+import com.festive.poster.reset.EndPoints
+import com.festive.poster.reset.apiClients.NowFloatsApiClient
 import com.festive.poster.utils.SvgFileResolver
 
 import com.framework.BaseApplication
@@ -20,7 +22,11 @@ open class FestivePosterApplication : BaseApplication() {
       BaseApplication.initModule(application)
       PreferencesUtils.initSharedPreferences(application)
       SVG.registerExternalFileResolver(SvgFileResolver())
+      apiInit()
+    }
 
+    private fun apiInit() {
+      NowFloatsApiClient.shared.init(EndPoints.NOW_FLOATS_BASE)
     }
 
   }

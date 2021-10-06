@@ -10,23 +10,28 @@ import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.FragmentPosterPackListingBinding
+import com.festive.poster.models.KeyModel
 import com.festive.poster.models.PosterModel
 import com.festive.poster.models.PosterPackModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
+import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
+import com.framework.pref.UserSessionManager
+import com.google.gson.Gson
 import java.io.File
 
 class PosterPackListingFragment:
-    AppBaseFragment<FragmentPosterPackListingBinding, BaseViewModel>(),RecyclerItemClickListener {
+    AppBaseFragment<FragmentPosterPackListingBinding, FestivePosterViewModel>(),RecyclerItemClickListener {
 
     private  val TAG = "PosterPackListingFragme"
     private var adapter: AppBaseRecyclerViewAdapter<PosterPackModel>?=null
     private var sharedViewModel:FestivePosterSharedViewModel?=null
     private var dataList:ArrayList<PosterPackModel>?=null
+    private var session:UserSessionManager?=null
     companion object {
         @JvmStatic
         fun newInstance(): PosterPackListingFragment {
@@ -37,12 +42,13 @@ class PosterPackListingFragment:
         return R.layout.fragment_poster_pack_listing
     }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
+    override fun getViewModelClass(): Class<FestivePosterViewModel> {
+        return FestivePosterViewModel::class.java
     }
 
     override fun onCreateView() {
         super.onCreateView()
+        session = UserSessionManager(requireActivity())
         sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
         setObserver()
         setupList()
@@ -52,8 +58,7 @@ class PosterPackListingFragment:
         sharedViewModel?.customizationDetails?.observe(viewLifecycleOwner,{
 
             Log.i(TAG, "customizationDetails Observer: ")
-            dataList?.get(0)?.posterList?.get(0)?.map = mapOf("IMAGE_PATH" to File(it.imgPath).name,
-                "Beautiful Smiles" to it.name)
+
 
             adapter?.notifyDataSetChanged()
 
@@ -63,12 +68,24 @@ class PosterPackListingFragment:
 
     private fun setupList() {
 
+        viewModel?.getTemplateConfig(session?.fPID,session?.fpTag)
+            ?.observe(viewLifecycleOwner,{
+                Log.i(TAG, "template config: ${Gson().toJson(it)}")
+            })
+
+        val keyList = arrayListOf(KeyModel(
+            "https://file-examples-com.github.io/uploads/2017/10/file_example_JPG_100kB.jpg","",10,"IMAGE_PATH","Image"),
+            KeyModel(
+                "Hello boost 36","",10,"Beautiful Smiles","Text"))
+
 
         dataList = arrayListOf(
-            PosterPackModel("Navratri",10, arrayListOf(PosterModel(null),PosterModel(null))),
-            PosterPackModel("Navratri",10, arrayListOf(PosterModel(null))),
-            PosterPackModel("Navratri",10, arrayListOf(PosterModel(null))),
+            PosterPackModel("Navratri",10, arrayListOf(PosterModel(null,Keys = keyList),PosterModel(null,Keys = keyList))),
+            PosterPackModel("Navratri",10, arrayListOf(PosterModel(null,Keys = keyList))),
+            PosterPackModel("Navratri",10, arrayListOf(PosterModel(null,Keys = keyList))),
             )
+
+
 
         adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,
             dataList!!,this)
