@@ -745,6 +745,7 @@ class UserSessionManager(var activity: Context) {
   fun logoutUser(context: Context) {
     try {
       val i = Intent(context, Class.forName("com.nowfloats.helper.LogoutActivity"))
+      i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
       context.startActivity(i)
     } catch (e: Exception) {
       e.printStackTrace()
