@@ -26,15 +26,15 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
 
   override fun onFailure(response: BaseResponse, taskCode: Int) {
     super.onFailure(response, taskCode)
-    unauthorizedUserCheck(taskCode)
+    unauthorizedUserCheck(response.status)
   }
 
   override fun onSuccess(response: BaseResponse, taskCode: Int) {
     super.onSuccess(response, taskCode)
-    unauthorizedUserCheck(taskCode)
+    unauthorizedUserCheck(response.status)
   }
 
-  private fun unauthorizedUserCheck(taskCode: Int) {
+  private fun unauthorizedUserCheck(taskCode: Int?) {
     if (taskCode == 401) {
       BaseOrderApplication.instance.apply {
         try {
