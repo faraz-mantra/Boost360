@@ -247,6 +247,7 @@
 
         <com.framework.views.customViews.CustomTextView
           android:layout_width="wrap_content"
+            android:visibility="gone"
           android:layout_height="wrap_content"
           android:layout_marginHorizontal="@dimen/size_2"
           android:layout_marginTop="@dimen/size_14"
@@ -256,7 +257,9 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/view_whatsapp_no"
-          android:layout_width="match_parent"
+            android:visibility="gone"
+
+            android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginHorizontal="@dimen/size_2"
           android:layout_marginTop="@dimen/size_6"
