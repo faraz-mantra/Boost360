@@ -1,6 +1,9 @@
 package com.festive.poster
 
 import androidx.multidex.MultiDexApplication
+import com.caverock.androidsvg.SVG
+import com.caverock.androidsvg.SVGExternalFileResolver
+import com.festive.poster.utils.SvgFileResolver
 
 import com.framework.BaseApplication
 import com.framework.utils.PreferencesUtils
@@ -16,6 +19,8 @@ open class FestivePosterApplication : BaseApplication() {
     fun initModule(application: MultiDexApplication) {
       BaseApplication.initModule(application)
       PreferencesUtils.initSharedPreferences(application)
+      SVG.registerExternalFileResolver(SvgFileResolver())
+
     }
 
   }

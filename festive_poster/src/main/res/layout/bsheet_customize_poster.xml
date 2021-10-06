@@ -121,6 +121,7 @@
 
                     <com.framework.views.customViews.CustomEditText
                         android:padding="@dimen/size_10"
+                        android:id="@+id/et_name"
                         android:hint="@string/write_your_name"
                         android:background="@drawable/shape_fposter_grey_stroke_rect"
                         android:layout_marginTop="@dimen/size_4"

@@ -10,11 +10,12 @@ import kotlinx.coroutines.*
 
 class CustomSvgImageView: SVGImageView {
 
+    private var map: Map<String, String>?=null
+    private var url: String?=null
     private var downloadJob: Deferred<Any>?=null
     private var replaceJob: Deferred<Any>?=null
     private val TAG = "CustomSvgImageView"
     private var svgString:String?=null
-    private var url:String?=null
 
     constructor(context: Context) : super(context) {
 //    setCustomAttrs(context, null)
@@ -33,8 +34,10 @@ class CustomSvgImageView: SVGImageView {
 
     }
 
+
+
     fun loadFromUrl(url:String){
-        this.url=url
+        this.url = url
         downloadJob = CoroutineScope(Dispatchers.IO).async{
             try {
                 svgString = SvgUtils.getSvgAsAString(url)
@@ -43,6 +46,7 @@ class CustomSvgImageView: SVGImageView {
                     setSVG(svg)
                 }
             }catch (e:Exception){
+                if(e !is CancellationException)
                 Log.e(TAG, "loadFromUrl: $e", )
             }
 
@@ -51,7 +55,7 @@ class CustomSvgImageView: SVGImageView {
     }
 
     fun replace(map: Map<String,String>){
-
+        this.map=map
         replaceJob = CoroutineScope(Dispatchers.Default).async {
 
             if (downloadJob==null){
@@ -67,6 +71,8 @@ class CustomSvgImageView: SVGImageView {
 
     }
 
+
+
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         downloadJob?.cancel()
@@ -74,4 +80,15 @@ class CustomSvgImageView: SVGImageView {
 
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        if (url!=null){
+            loadFromUrl(url!!)
+
+            if (map!=null){
+                replace(map!!)
+            }
+
+        }
+    }
 }
