@@ -9,6 +9,7 @@ import com.festive.poster.models.PosterModel
 import com.festive.poster.models.PosterPackPurchasedModel
 import com.festive.poster.models.PosterPurchasedModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
+import com.festive.poster.utils.SvgCaching
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 
@@ -52,6 +53,8 @@ class PosterListFragment: AppBaseFragment<FragmentPosterListBinding, BaseViewMod
         val adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList)
         binding?.rvPosters?.adapter = adapter
         binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
+
+
     }
 
 }

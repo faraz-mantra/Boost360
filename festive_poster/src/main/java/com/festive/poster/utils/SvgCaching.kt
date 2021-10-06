@@ -1,10 +1,12 @@
 package com.festive.poster.utils
 
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.collection.LruCache
 
 class SvgCaching private constructor() {
 
+    private  val TAG = "SvgCaching"
     private object HOLDER {
         val INSTANCE = SvgCaching()
     }
@@ -12,13 +14,19 @@ class SvgCaching private constructor() {
     companion object {
         val instance: SvgCaching by lazy { HOLDER.INSTANCE }
     }
-    val lru: LruCache<Any, Any> = LruCache(1024)
+    val maxMemory = (Runtime.getRuntime().maxMemory() / 1024).toInt()
+
+    // Use 1/8th of the available memory for this memory cache.
+    val cacheSize = maxMemory / 8
+    val lru: LruCache<String, String> = LruCache(cacheSize)
 
     fun saveToCache(key: String, svgString: String) {
 
+        Log.i(TAG, "saveToCache: ")
         try {
             SvgCaching.instance.lru.put(key, svgString)
         } catch (e: Exception) {
+            Log.e(TAG, "saveToCache: $e", )
         }
 
     }

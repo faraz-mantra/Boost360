@@ -19,9 +19,13 @@ class PosterViewHolder(binding: ListItemPosterBinding):
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as PosterModel
-        binding.ivSvg.
-        loadFromUrl("https://2015.filemail.com/api/file/get?filekey=ZiqN8Sn9fudJ0vCV6Hscr2WFGwTXae21Uz2wVXUYWUh9C7a6tXvJnA8KnjwW0Q")
-        model.map?.let { binding.ivSvg.replace(it/*mapOf("IMAGE_PATH" to "image_picker.png","Beautiful Smiles" to "Hello Boost","SMILEY DENTAL CLINIC" to "Boost Clinic")*/) }
+        model.Keys?.let {
+            binding.ivSvg.loadAndReplace("https://2015.filemail.com/api/file/get?filekey=ZiqN8Sn9fudJ0vCV6Hscr2WFGwTXae21Uz2wVXUYWUh9C7a6tXvJnA8KnjwW0Q",
+                it
+            )
+        }
+       // model.map?.let { binding.ivSvg.replace(it/*mapOf("IMAGE_PATH" to "image_picker.png","Beautiful Smiles" to "Hello Boost","SMILEY DENTAL CLINIC" to "Boost Clinic")*/) }
+
 
         binding.btnTapEdit.setOnClickListener {
             listener?.onItemClick(position,item,RecyclerViewActionType.POSTER_TAP_TO_EDIT_CLICK.ordinal)

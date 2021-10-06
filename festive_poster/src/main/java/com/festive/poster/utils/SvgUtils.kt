@@ -4,9 +4,11 @@ import android.util.Log
 import com.bumptech.glide.Glide
 import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SVGImageView
+import com.festive.poster.models.KeyModel
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.BufferedReader
+import java.io.File
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -78,16 +80,27 @@ object SvgUtils {
         return null
     }
 
-    fun replace(svgString:String?,map: Map<String,String>): String? {
-        var result =svgString
-        map.keys.forEach {key->
-            Log.i(TAG, "replace: key $key value ${map[key]}")
 
-            map[key]?.let {
-                    value ->result=  result?.replace(key, value)
+
+    suspend fun replace(svgString: String?,keys: List<KeyModel>): String? {
+        var result =svgString
+
+        keys.forEach {
+            if (it.Type=="Image"){
+                Log.i(TAG, "replace: ${it.CustomValue}")
+
+                val fileName = it.CustomValue.substring(it.CustomValue.lastIndexOf("/")+1)
+                val file = File(FileUtils.getPathOfImages()+fileName)
+                if (!file.exists()){
+                    FileUtils.saveImage(it.CustomValue,file)
+                    Log.i(TAG, "image saved: ${file.path}")
+
+                }
+               result = result?.replace(it.Name,fileName)
+            }else{
+                result = result?.replace(it.Name,it.CustomValue)
             }
         }
-
         return result
     }
 }
