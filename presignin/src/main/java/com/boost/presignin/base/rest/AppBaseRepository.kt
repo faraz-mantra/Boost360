@@ -45,7 +45,6 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
         } catch (e: Exception) {
           e.printStackTrace()
           SentryController.captureException(e)
-
         }
       }
     }
