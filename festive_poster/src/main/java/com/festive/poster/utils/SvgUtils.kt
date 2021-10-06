@@ -21,6 +21,11 @@ object SvgUtils {
     suspend fun getSvgAsAString(url:String): String? {
 
         try {
+            val cacheString = SvgCaching.instance.retrieveFromCache(url)
+
+            if (cacheString!=null){
+                return cacheString
+            }
             getInputStream(url)?.let {
                 val  reader = BufferedReader(
                     InputStreamReader(it)
@@ -37,6 +42,7 @@ object SvgUtils {
                 }
 
                 var result =mLine.toString()
+                SvgCaching.instance.saveToCache(url,result)
                 Log.i(TAG, "downloadSvg: $result")
                 return result
             }

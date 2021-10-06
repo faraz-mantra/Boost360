@@ -2,9 +2,13 @@ package com.festive.poster.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import com.festive.poster.R
 import com.festive.poster.databinding.BsheetCustomizePosterBinding
+import com.festive.poster.models.PosterCustomizationModel
+import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.visible
@@ -14,7 +18,11 @@ import com.github.dhaval2404.imagepicker.util.FileUtil
 
 class CustomizePosterSheet: BaseBottomSheetDialog<BsheetCustomizePosterBinding, BaseViewModel>() {
 
+    private val TAG = "CustomizePosterSheet"
+    private var path: String?=null
     private val RC_IMAGE_PCIKER=422
+    private var sharedViewModel:FestivePosterSharedViewModel?=null
+
     override fun getLayout(): Int {
         return R.layout.bsheet_customize_poster
     }
@@ -24,7 +32,9 @@ class CustomizePosterSheet: BaseBottomSheetDialog<BsheetCustomizePosterBinding, 
     }
 
     override fun onCreateView() {
-        setOnClickListener(binding?.ivCancel,binding?.uploadSelfie)
+        sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
+
+        setOnClickListener(binding?.ivCancel,binding?.uploadSelfie,binding?.tvUpdateInfo)
     }
 
     override fun onClick(v: View) {
@@ -36,6 +46,11 @@ class CustomizePosterSheet: BaseBottomSheetDialog<BsheetCustomizePosterBinding, 
             binding?.uploadSelfie->{
 
                 ImagePicker.with(this).start(RC_IMAGE_PCIKER)
+            }
+            binding?.tvUpdateInfo->{
+                Log.i(TAG, "path: $path")
+                sharedViewModel?.customizationDetails?.value  = PosterCustomizationModel(path!!,binding?.etName?.text.toString())
+                dismiss()
             }
         }
     }
@@ -49,7 +64,7 @@ class CustomizePosterSheet: BaseBottomSheetDialog<BsheetCustomizePosterBinding, 
 
     private fun openCropFragment(data: Intent?) {
         val uri = data?.data!!
-        val path = FileUtil.getTempFile(requireContext(),uri)?.path
+        path = FileUtil.getTempFile(requireContext(),uri)?.path
         binding?.ivUserImg?.setImageURI(uri)
         showUserImage()
 
