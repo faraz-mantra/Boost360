@@ -12,6 +12,7 @@ import com.dashboard.base.AppBaseFragment
 import com.dashboard.viewmodel.OwnersViewModel
 import com.dashboard.databinding.FragmentOwnerInfoBinding
 import com.dashboard.model.*
+import com.dashboard.utils.WebEngageController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -19,6 +20,7 @@ import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.pref.UserSessionManager
 import com.framework.utils.convertObjToString
+import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -55,6 +57,7 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
 
   override fun onCreateView() {
     super.onCreateView()
+    WebEngageController.trackEvent(OWNER_INFO_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.btnSaveDetails, binding?.clearImage, binding?.btnChangeImage, binding?.imageAddBtn)
     hitGetOwnersInfo()
   }
@@ -75,6 +78,7 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
 
   private fun updateOwnersInfo() {
     showProgress(getString(R.string.updating))
+    WebEngageController.trackEvent(OWNER_INFO_UPDATE, CLICK, NO_EVENT_VALUE)
     val query = "{_id:'" + ownersDataResponse?.data?.get(0)?.id + "'}"
     val actionData = ActionData(binding?.ctfDescription?.text.toString(), binding?.ctfOwnerName?.text.toString(), binding?.ctfDesignation?.text.toString(), Profileimage(url = imageUrl ?: "", description = ""))
     val updateValue = "{\$set :" + convertObjToString(actionData) + "}"
@@ -92,6 +96,7 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
 
   private fun hitAddOwnersInfo() {
     showLongToast(getString(R.string.loading))
+    WebEngageController.trackEvent(OWNER_INFO_ADD, CLICK, NO_EVENT_VALUE)
     this.requestAddOwnersInfo?.actionData?.profileimage?.url = this.imageUrl ?: ""
     viewModel?.addOwnersData(request = requestAddOwnersInfo!!)?.observeOnce(viewLifecycleOwner, {
       hideProgress()
