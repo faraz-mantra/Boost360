@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.boost.upgrades.data.api_model.GetAllWidgets.GetAllWidgets
 import com.boost.upgrades.utils.Constants.Companion.BASE_URL
 import com.framework.analytics.SentryController
+import com.framework.rest.TokenAuthenticator
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
@@ -26,21 +27,27 @@ import kotlin.collections.ArrayList
 
 object Utils {
 
+
   //getting retrofit instance
-  fun getRetrofit(): Retrofit {
+  fun getRetrofit(
+    isAuthRemove: Boolean = false
+  ): Retrofit {
     val client = Retrofit.Builder()
     client.baseUrl(BASE_URL)
     client.addConverterFactory(ScalarsConverterFactory.create())
     client.addConverterFactory(GsonConverterFactory.create())
     client.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-    client.client(httpClient())
+    client.client(httpClient(isAuthRemove))
     return client.build()
   }
-  fun httpClient(): OkHttpClient {
+
+  fun httpClient(isAuthRemove: Boolean): OkHttpClient {
+    val tokenAuthenticator = TokenAuthenticator(isAuthRemove)
     val httpClient = OkHttpClient.Builder()
     httpClient.readTimeout(2, TimeUnit.MINUTES)
       .connectTimeout(2, TimeUnit.MINUTES)
       .writeTimeout(2, TimeUnit.MINUTES)
+    httpClient.authenticator(tokenAuthenticator)
     return httpClient.build()
   }
 
