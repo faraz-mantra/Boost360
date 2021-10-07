@@ -60,7 +60,7 @@ class APIService : Service() {
         val data = it as? AccountDetailsResponse
         if (it.isSuccess()) {
           if (data?.result?.bankAccountDetails != null) {
-            data.result?.bankAccountDetails?.saveBanKDetail()
+            data?.result?.bankAccountDetails?.saveBanKDetail()
             userSessionManager?.setAccountSave(true)
           } else userSessionManager?.setAccountSave(false)
         }

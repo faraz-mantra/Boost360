@@ -268,6 +268,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
   }
 
   override fun secondaryButtonClicked() {
+    showShortToast(getString(R.string.coming_soon))
   }
 
   override fun ternaryButtonClicked() {

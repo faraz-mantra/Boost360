@@ -2,12 +2,8 @@ package com.nowfloats.education.toppers.ui.topperhome
 
 import android.app.ProgressDialog
 import android.content.Intent
-import android.os.Bundle
 import android.os.Handler
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -21,17 +17,11 @@ import com.framework.base.BaseFragment
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
-import com.framework.models.firestore.FirestoreManager
 import com.framework.views.fabButton.FloatingActionButton
-import com.framework.views.zero.FragmentZeroCase
-import com.framework.views.zero.OnZeroCaseClicked
-import com.framework.views.zero.RequestZeroCaseBuilder
-import com.framework.views.zero.ZeroCases
 import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
-import com.inventoryorder.model.ordersdetails.OrderItem
 import com.nowfloats.Login.UserSessionManager
 import com.nowfloats.education.helper.Constants
 import com.nowfloats.education.helper.Constants.SUCCESS
@@ -218,6 +208,7 @@ class ToppersFragment : BaseFragment<ToppersFragmentBinding, BaseViewModel>(), I
 
 
   override fun secondaryButtonClicked() {
+    Toast.makeText(activity, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
   }
 
   override fun ternaryButtonClicked() {

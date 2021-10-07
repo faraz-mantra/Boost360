@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,10 +23,6 @@ import com.dashboard.utils.CodeUtilsKt;
 import com.framework.analytics.SentryController;
 import com.framework.utils.ContentSharing;
 import com.framework.views.fabButton.FloatingActionButton;
-import com.framework.views.zero.FragmentZeroCase;
-import com.framework.views.zero.OnZeroCaseClicked;
-import com.framework.views.zero.RequestZeroCaseBuilder;
-import com.framework.views.zero.ZeroCases;
 import com.framework.views.zero.old.AppFragmentZeroCase;
 import com.framework.views.zero.old.AppOnZeroCaseClicked;
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
@@ -396,7 +391,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
 
     @Override
     public void secondaryButtonClicked() {
-
+        Toast.makeText(this, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
     }
 
     @Override

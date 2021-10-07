@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -79,17 +80,12 @@ class AddAccountStartFragment : AppBaseFragment<FragmentAddAccountStartBinding, 
 
   override fun primaryButtonClicked() {
     arguments?.let {
-      startFragmentAccountActivity(
-        FragmentType.BANK_ACCOUNT_DETAILS,
-        it,
-        isResult = true,
-        requestCode = 202
-      )
+      startFragmentAccountActivity(FragmentType.BANK_ACCOUNT_DETAILS, it, isResult = true, requestCode = 202)
     }
   }
 
   override fun secondaryButtonClicked() {
-    Log.i(TAG, "secondaryButtonClicked: ")
+    Toast.makeText(activity, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
   }
 
   override fun ternaryButtonClicked() {
