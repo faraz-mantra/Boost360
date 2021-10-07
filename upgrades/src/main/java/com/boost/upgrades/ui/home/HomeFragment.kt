@@ -6,11 +6,9 @@ import android.app.ProgressDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
-import android.text.Layout
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -21,7 +19,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
@@ -76,10 +73,6 @@ import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Retrofit
 import java.util.*
 import kotlin.collections.ArrayList
-import android.text.style.StyleSpan
-
-import android.view.ViewTreeObserver
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
 
 import android.widget.TextView
 import com.framework.analytics.SentryController
@@ -2406,6 +2399,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         } catch (e: ClassNotFoundException) {
             SentryController.captureException(e)
             e.printStackTrace()
+            SentryController.captureException(e)
         }
     }
 

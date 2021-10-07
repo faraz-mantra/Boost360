@@ -20,13 +20,15 @@ open class BaseApiClient protected constructor(isAuthRemove: Boolean = false) {
 
   init {
     val authInterceptor = ServiceInterceptor(isAuthRemove)
+    val tokenAuthenticator = TokenAuthenticator(isAuthRemove)
     val logging = HttpLoggingInterceptor()
     logging.level = HttpLoggingInterceptor.Level.BODY
     httpClient = OkHttpClient.Builder()
     httpClient.readTimeout(2, TimeUnit.MINUTES)
       .connectTimeout(2, TimeUnit.MINUTES)
       .writeTimeout(2, TimeUnit.MINUTES)
-    httpClient.addInterceptor(logging).addInterceptor(authInterceptor)
+    httpClient.addInterceptor(authInterceptor).addInterceptor(logging).authenticator(tokenAuthenticator)
+
     gson = GsonBuilder().setLenient().create()
   }
 
