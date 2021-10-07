@@ -2,6 +2,7 @@ package com.boost.upgrades.utils
 
 import android.text.TextUtils
 import android.text.format.DateUtils
+import com.framework.analytics.SentryController
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -52,6 +53,7 @@ object DateUtils {
       return SimpleDateFormat(required, locale).format(date)
     } catch (e: Exception) {
       e.printStackTrace()
+      SentryController.captureException(e)
     }
     return ""
   }
@@ -70,6 +72,7 @@ object DateUtils {
       timeZone?.let { timeFormat.timeZone = it }
       timeFormat.parse(this)
     } catch (e: Exception) {
+      SentryController.captureException(e)
       null
     }
   }

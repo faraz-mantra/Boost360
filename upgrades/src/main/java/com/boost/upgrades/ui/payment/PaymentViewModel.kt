@@ -207,6 +207,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
       out.close()
     } catch (e: IOException) {
       println("exception  $e")
+      SentryController.captureException(e)
     }
   }
 
@@ -368,6 +369,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
       cityResult.postValue(cityNames)
     } catch (ioException: JSONException) {
       ioException.printStackTrace()
+      SentryController.captureException(ioException)
     }
   }
 
@@ -391,6 +393,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
       cityResult.postValue(cityNames)
     } catch (ioException: JSONException) {
       ioException.printStackTrace()
+      SentryController.captureException(ioException)
     }
   }
 
@@ -408,6 +411,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
       stateResult.postValue(stateNames)
     } catch (ioException: JSONException) {
       ioException.printStackTrace()
+      SentryController.captureException(ioException)
     }
   }
 
@@ -428,6 +432,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
       stateValueResult.postValue(stateValue)
     } catch (ioException: JSONException) {
       ioException.printStackTrace()
+      SentryController.captureException(ioException)
     }
   }
 

@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.boost.upgrades.R
+import com.framework.analytics.SentryController
 import com.google.gson.JsonParser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -99,6 +100,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
       errorMessage = message
       _apiStatus.postValue(ApiStatus.ERROR)
     } catch (e: Exception) {
+      SentryController.captureException(e)
       Log.i("parseError >>>>", e.toString())
     }
   }
