@@ -575,8 +575,8 @@ fun AppCompatActivity.startOrderAptConsultList(session: UserSessionManager?, isO
     val bundle = getSessionOrder(session)
     val fragmentType = when {
       isOrder -> com.inventoryorder.constant.FragmentType.ALL_ORDER_VIEW
-      isConsult -> com.inventoryorder.constant.FragmentType.ALL_VIDEO_CONSULT_VIEW
       (getAptType(session?.fP_AppExperienceCode) == "SPA_SAL_SVC") -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_SPA_VIEW
+      isConsult -> com.inventoryorder.constant.FragmentType.ALL_VIDEO_CONSULT_VIEW
       else -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_VIEW
     }
     this.startFragmentOrderActivity(type = fragmentType, bundle = bundle, isResult = true)
