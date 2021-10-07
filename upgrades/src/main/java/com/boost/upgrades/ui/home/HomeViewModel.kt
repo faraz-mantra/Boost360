@@ -11,6 +11,7 @@ import com.boost.upgrades.data.api_model.GetAllFeatures.response.*
 import com.boost.upgrades.data.model.*
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.utils.Utils
+import com.framework.analytics.SentryController
 import com.google.gson.Gson
 import com.luminaire.apolloar.base_class.BaseViewModel
 import io.reactivex.Completable
@@ -146,6 +147,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
             }
         } catch (ioException: JSONException) {
             ioException.printStackTrace()
+          SentryController.captureException(ioException)
         }
     }
 
