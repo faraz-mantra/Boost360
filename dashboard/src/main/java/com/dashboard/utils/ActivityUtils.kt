@@ -447,19 +447,14 @@ fun AppCompatActivity.startCustomPage(session: UserSessionManager?, isAdd: Boole
 
 fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
   try {
-    if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
+    val type = if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
       WebEngageController.trackEvent(SERVICE_INVENTORY, CLICK, TO_BE_ADDED)
-      session?.let {
-        startFragmentActivity(com.appservice.constant.FragmentType.SERVICE_LISTING, bundle = getBundleData(it))
-      }
+      com.appservice.constant.FragmentType.SERVICE_LISTING
     } else {
       WebEngageController.trackEvent(PRODUCT_INVENTORY, CLICK, TO_BE_ADDED)
-      session.let {
-        startFragmentActivity(com.appservice.constant.FragmentType.FRAGMENT_PRODUCT_LISTING, bundle = getBundleData(it))
-
-      }
-
+      com.appservice.constant.FragmentType.FRAGMENT_PRODUCT_LISTING
     }
+    startFragmentActivity(type, bundle = getBundleData(session))
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
@@ -538,18 +533,21 @@ fun AppCompatActivity.startPreSignUp(session: UserSessionManager?, isClearTask: 
 
 fun AppCompatActivity.startAddServiceProduct(session: UserSessionManager?) {
   try {
-    if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
+    val type = if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
       WebEngageController.trackEvent(ADD_SERVICE_PAGE, CLICK, TO_BE_ADDED)
-      session?.let {
-        startFragmentActivity(com.appservice.constant.FragmentType.SERVICE_DETAIL_VIEW, bundle = getBundleData(it))
-      }
+      com.appservice.constant.FragmentType.SERVICE_DETAIL_VIEW
     } else {
       WebEngageController.trackEvent(ADD_PRODUCT_PAGE, CLICK, TO_BE_ADDED)
-      val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
-      webIntent.putExtra("IS_ADD", true)
-      startActivity(webIntent)
-      overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+      com.appservice.constant.FragmentType.PRODUCT_DETAIL_VIEW
     }
+    session?.let { startFragmentActivity(type, bundle = getBundleData(it)) }
+//    } else {
+//      WebEngageController.trackEvent(ADD_PRODUCT_PAGE, CLICK, TO_BE_ADDED)
+//      val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
+//      webIntent.putExtra("IS_ADD", true)
+//      startActivity(webIntent)
+//      overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+//    }
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
