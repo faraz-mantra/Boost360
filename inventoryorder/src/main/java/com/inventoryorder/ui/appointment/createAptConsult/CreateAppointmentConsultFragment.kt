@@ -212,11 +212,16 @@ class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointme
     val resp1 = getDoctorStaffList()
     if (resp1.isNullOrEmpty().not()) setDoctorView(resp1)
     viewModel?.getDoctorsListing(session.getFilterRequest(0, 20))?.observeOnce(viewLifecycleOwner, {
-      val resp2 = (it.anyResponse as? GetStaffListingResponse?)?.result?.data?.filter { it1 -> it1.isAvailable == true }
-      if (it.isSuccess() && resp2.isNullOrEmpty().not()) {
-        resp2?.saveDoctorList()
-        setDoctorView(resp2)
-      } else errorUi(session.getErrorMessage(baseActivity))
+      val resultData = (it.anyResponse as? GetStaffListingResponse?)?.result?.data
+      val resultDataFilter = resultData?.filter { it1 -> it1.isAvailable == true }
+      if (it.isSuccess()) {
+        if (resultData.isNullOrEmpty().not()) {
+          if (resultDataFilter.isNullOrEmpty().not()) {
+            resultDataFilter?.saveDoctorList()
+            setDoctorView(resultDataFilter)
+          } else errorUi(baseActivity.resources.getString(R.string.doctor_inactive))
+        } else errorUi(baseActivity.resources.getString(R.string.please_add_doctor_first))
+      } else errorUi(baseActivity.resources.getString(R.string.error_getting_doctor_data))
     })
   }
 
@@ -485,7 +490,7 @@ class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointme
         val extra = ExtraProperties(
           patientName = patientName, gender = gender, age = (age.toIntOrNull() ?: 0).toString(),
           patientMobileNumber = patientMobile, patientEmailId = patientEmail,
-          startTime = timeSlotData?.StartTime?:"", endTime = timeSlotData?.EndTime?:"", scheduledDateTime = scheduledDateTime,
+          startTime = timeSlotData?.StartTime ?: "", endTime = timeSlotData?.EndTime ?: "", scheduledDateTime = scheduledDateTime,
           consultationFor = serviceData?.name ?: "", doctorName = doctorData?.name ?: "",
           doctorId = doctorData?.id ?: "", doctorQualification = doctorData?.education ?: "",
           doctorSpeciality = doctorData?.speciality ?: "", duration = duration?.toIntOrNull() ?: 0,
@@ -620,21 +625,6 @@ class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointme
       baseActivity.setResult(AppCompatActivity.RESULT_OK, intent)
       baseActivity.finish()
     }
-  }
-}
-
-fun UserSessionManager.getErrorMessage(activity: Activity): String {
-  return when (this.fP_AppExperienceCode) {
-    "DOC", "HOS" -> activity.resources.getString(R.string.please_add_doctor_first)
-    "EDU" -> activity.getString(R.string.please_add_teacher_first)
-    "SPA" -> activity.getString(R.string.masseur_masseuse_not_added)
-    "HOT" -> activity.getString(R.string.please_add_hotel_room_first)
-    "CAF" -> activity.getString(R.string.please_add_table_first)
-    "SAL" -> activity.getString(R.string.please_add_barber_first)
-    "MFG" -> activity.getString(R.string.please_add_commodity_first)
-    "RTL" -> activity.getString(R.string.please_add_retail_commodity_first)
-    "SVC" -> activity.getString(R.string.please_add_service_first)
-    else -> ""
   }
 }
 
