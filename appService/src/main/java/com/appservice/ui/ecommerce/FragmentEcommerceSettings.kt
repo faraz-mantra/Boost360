@@ -12,10 +12,15 @@ import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.catalog.startFragmentActivity
+import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.webengageconstant.APPOINTMENT_SETTING_PAGE_LOAD
+import com.framework.webengageconstant.ECOMMERCE_SETTING_PAGE_LOAD
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.PAGE_VIEW
 import java.util.*
 
 class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBinding, AppointmentSettingsViewModel>(), RecyclerItemClickListener {
@@ -43,6 +48,7 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
   override fun onCreateView() {
     super.onCreateView()
     sessionLocal = UserSessionManager(requireActivity())
+    WebEngageController.trackEvent(ECOMMERCE_SETTING_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     clearSearchFocus()
     binding?.svSettings?.setOnQueryTextListener(object : SearchView.OnQueryTextListener, androidx.appcompat.widget.SearchView.OnQueryTextListener {
       override fun onQueryTextSubmit(query: String?): Boolean {

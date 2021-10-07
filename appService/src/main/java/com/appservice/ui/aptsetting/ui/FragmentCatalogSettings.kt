@@ -10,6 +10,7 @@ import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentCatalogSettingBinding
 import com.appservice.ui.aptsetting.widgets.BottomSheetConfirmingChange
 import com.appservice.ui.aptsetting.widgets.BottomSheetSuccessfullyUpdated
+import com.appservice.utils.WebEngageController
 import com.appservice.utils.capitalizeUtil
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.extensions.observeOnce
@@ -18,6 +19,8 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.getDomainName
 import com.framework.utils.fromHtml
+import com.framework.webengageconstant.*
+import com.framework.webengageconstant.APPOINTMENT_CATLOG_SETUP_PAGE_LOAD
 import java.util.*
 
 class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, AppointmentSettingsViewModel>() {
@@ -41,6 +44,7 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
   override fun onCreateView() {
     super.onCreateView()
     sessionLocal = UserSessionManager(baseActivity)
+    WebEngageController.trackEvent(APPOINTMENT_CATLOG_SETUP_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.ctvChangeServices, binding?.ctvWebsiteUrl)
     getFpDetails()
   }
@@ -63,7 +67,10 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.ctvChangeServices -> showCatalogDisplayName()
+      binding?.ctvChangeServices -> {
+        WebEngageController.trackEvent(CATLOG_SETUP_CHANGE_SERVICE, CLICK, NO_EVENT_VALUE)
+        showCatalogDisplayName()
+      }
     }
   }
 

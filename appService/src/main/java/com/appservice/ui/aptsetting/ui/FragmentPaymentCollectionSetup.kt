@@ -11,12 +11,15 @@ import com.appservice.constant.FragmentType
 import com.appservice.databinding.FragmentPaymentCollectionSetupBinding
 import com.appservice.rest.TaskCode
 import com.appservice.ui.catalog.startFragmentActivity
+import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.webengageconstant.*
+import com.framework.webengageconstant.PAYMENT_COLLECTION_SETUP_PAGE_LOAD
 
 class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollectionSetupBinding, AppointmentSettingsViewModel>() {
 
@@ -39,6 +42,7 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
   override fun onCreateView() {
     super.onCreateView()
     sessionLocal = UserSessionManager(requireActivity())
+    WebEngageController.trackEvent(PAYMENT_COLLECTION_SETUP_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.boostPaymentGateway, binding?.btnAddAccount, binding?.btnConfirm)
     getDeliveryStatus()
     grayScaleImage()
@@ -81,6 +85,7 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
     super.onClick(v)
     when (v) {
       binding?.btnAddAccount -> {
+        WebEngageController.trackEvent(PAYMENT_COLLECTION_BANK_ACCOUNT_CLICK, CLICK, NO_EVENT_VALUE)
         if (!isEdit) startFragmentActivity(FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME)
       }
       binding?.btnConfirm -> {
