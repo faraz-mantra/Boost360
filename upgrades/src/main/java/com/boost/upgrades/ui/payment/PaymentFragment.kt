@@ -893,6 +893,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     } catch (e: Exception) {
       SentryController.captureException(e)
       e.printStackTrace()
+      SentryController.captureException(e)
     }
   }
 
@@ -921,6 +922,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     } catch (e: Exception) {
       SentryController.captureException(e)
       e.printStackTrace()
+      SentryController.captureException(e)
     }
   }
 
@@ -951,6 +953,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     } catch (e: Exception) {
       SentryController.captureException(e)
       e.printStackTrace()
+      SentryController.captureException(e)
     }
   }
 

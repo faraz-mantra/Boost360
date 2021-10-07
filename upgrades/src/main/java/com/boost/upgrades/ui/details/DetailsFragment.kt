@@ -40,7 +40,6 @@ import com.boost.upgrades.utils.*
 import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.IMAGE_PREVIEW_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.WEB_VIEW_FRAGMENT
-import com.boost.upgrades.utils.Utils.longToast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.framework.analytics.SentryController
@@ -51,7 +50,6 @@ import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.details_fragment.*
 import kotlinx.android.synthetic.main.details_fragment.app_bar_layout
-import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Retrofit
 import java.text.NumberFormat
 import java.util.*
@@ -300,6 +298,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     } catch (e: Exception) {
       SentryController.captureException(e)
       e.printStackTrace()
+      SentryController.captureException(e)
     }
   }
 

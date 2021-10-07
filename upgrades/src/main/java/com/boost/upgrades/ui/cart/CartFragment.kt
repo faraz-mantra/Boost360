@@ -1,7 +1,6 @@
 package com.boost.upgrades.ui.cart
 
 //import com.boost.upgrades.data.api_model.PurchaseOrder.request.*
-import android.R.attr
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -12,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -49,10 +47,8 @@ import com.boost.upgrades.ui.popup.RenewalPopUpFragment
 import com.boost.upgrades.ui.popup.TANPopUpFragment
 import com.boost.upgrades.ui.splash.SplashFragment
 import com.boost.upgrades.utils.*
-import com.boost.upgrades.utils.Constants.Companion.CHECKOUT_KYC_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.COUPON_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.GSTIN_POPUP_FRAGEMENT
-import com.boost.upgrades.utils.Constants.Companion.RENEW_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.TAN_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.DateUtils.parseDate
 import com.dashboard.model.live.coupon.CouponServiceModel
@@ -61,12 +57,10 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.cart_fragment.*
-import kotlinx.android.synthetic.main.coupon_popup.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-import android.R.attr.editable
 import android.content.Intent
 import android.net.Uri
 import java.lang.NumberFormatException
@@ -78,8 +72,6 @@ import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_title
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_value
 import kotlinx.android.synthetic.main.cart_fragment.igst_value
 import kotlinx.android.synthetic.main.cart_fragment.package_layout
-import kotlinx.android.synthetic.main.home_fragment.*
-import kotlinx.android.synthetic.main.payment_fragment.*
 
 
 class CartFragment : BaseFragment(), CartFragmentListener {
@@ -830,6 +822,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           } catch (ex: Exception) {
             SentryController.captureException(ex)
             ex.printStackTrace()
+            SentryController.captureException(ex)
           }
         }
         val widget = Widget(
@@ -876,6 +869,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           } catch (ex: Exception) {
             SentryController.captureException(ex)
             ex.printStackTrace()
+            SentryController.captureException(ex)
           }
         }
 
@@ -1135,6 +1129,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             }
           } catch (ex: Exception) {
             ex.printStackTrace()
+            SentryController.captureException(ex)
           }
         }
 
@@ -1182,6 +1177,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           } catch (ex: Exception) {
             SentryController.captureException(ex)
             ex.printStackTrace()
+            SentryController.captureException(ex)
           }
         }
 
@@ -1986,6 +1982,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     } catch (e: Exception) {
       SentryController.captureException(e)
       e.printStackTrace()
+      SentryController.captureException(e)
     }
   }
 
@@ -1996,6 +1993,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     } catch (e: Exception) {
       SentryController.captureException(e)
       e.printStackTrace()
+      SentryController.captureException(e)
     }
   }
 }
