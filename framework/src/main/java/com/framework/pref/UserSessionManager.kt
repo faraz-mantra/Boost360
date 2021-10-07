@@ -739,9 +739,14 @@ class UserSessionManager(var activity: Context) {
    * Clear session details
    */
   fun logoutUser(activity: Activity) {
+    logoutUser(activity.applicationContext)
+  }
+
+  fun logoutUser(context: Context) {
     try {
-      val i = Intent(activity, Class.forName("com.nowfloats.helper.LogoutActivity"))
-      activity.startActivity(i)
+      val i = Intent(context, Class.forName("com.nowfloats.helper.LogoutActivity"))
+      i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+      context.startActivity(i)
     } catch (e: Exception) {
       e.printStackTrace()
     }
