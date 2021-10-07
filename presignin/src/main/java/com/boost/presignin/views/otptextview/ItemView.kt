@@ -12,7 +12,6 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import com.boost.presignin.R
-import com.boost.presignin.views.otptextview.Utils
 import com.framework.analytics.SentryController
 
 class ItemView : FrameLayout {
