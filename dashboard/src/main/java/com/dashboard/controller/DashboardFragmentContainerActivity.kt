@@ -166,6 +166,10 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
 
 }
 
+fun fetchUserProfileData(){
+
+}
+
 fun Fragment.startFragmentDashboardActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false, requestCode: Int = 101) {
   val intent = Intent(activity, DashboardFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
