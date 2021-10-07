@@ -1,18 +1,19 @@
 package com.festive.poster.utils
 
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.net.Uri
 import android.util.Log
-import com.bumptech.glide.Glide
-import com.caverock.androidsvg.SVG
-import com.caverock.androidsvg.SVGImageView
-import com.festive.poster.models.KeyModel
+import android.view.View
+import androidx.core.content.FileProvider
+import com.festive.poster.FestivePosterApplication
+import com.festive.poster.models.PosterKeyModel
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import java.io.BufferedReader
-import java.io.File
-import java.io.InputStream
-import java.io.InputStreamReader
+import java.io.*
 import java.net.HttpURLConnection
-import java.util.concurrent.TimeUnit
 
 
 object SvgUtils {
@@ -82,25 +83,30 @@ object SvgUtils {
 
 
 
-    suspend fun replace(svgString: String?,keys: List<KeyModel>): String? {
+    suspend fun replace(svgString: String?, posterKeys: List<PosterKeyModel>): String? {
         var result =svgString
 
-        keys.forEach {
-            if (it.Type=="Image"){
-                Log.i(TAG, "replace: ${it.CustomValue}")
+        posterKeys.forEach {
+            val replaceVal = if (it.Custom==null) it.Default else it.Custom
 
-                val fileName = it.CustomValue.substring(it.CustomValue.lastIndexOf("/")+1)
+            if (it.Type=="Image"){
+                Log.i(TAG, "replace: $replaceVal")
+
+                val fileName = replaceVal?.substring(replaceVal.lastIndexOf("/")+1)
                 val file = File(FileUtils.getPathOfImages()+fileName)
                 if (!file.exists()){
-                    FileUtils.saveImage(it.CustomValue,file)
+                    FileUtils.saveImage(replaceVal,file)
                     Log.i(TAG, "image saved: ${file.path}")
-
                 }
-               result = result?.replace(it.Name,fileName)
+                if (file.exists())
+                    result = result?.replace(it.Name,fileName.toString())
             }else{
-                result = result?.replace(it.Name,it.CustomValue)
+                result = result?.replace(it.Name,replaceVal.toString())
             }
         }
         return result
     }
+
+
+
 }

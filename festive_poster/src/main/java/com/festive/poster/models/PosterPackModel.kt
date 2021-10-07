@@ -5,8 +5,7 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewItem
 
 
 open class PosterPackModel(
-    var title:String?=null,
-    var price:Int?=null,
+    val tagsModel: PosterPackTagModel,
     var posterList:ArrayList<PosterModel>?=null
 ): AppBaseRecyclerViewItem {
     override fun getViewType(): Int {

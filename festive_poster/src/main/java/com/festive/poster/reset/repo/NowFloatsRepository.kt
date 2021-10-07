@@ -9,6 +9,7 @@ import com.festive.poster.reset.apiClients.NowFloatsApiClient
 import com.festive.poster.reset.services.NowFloatsRemoteData
 import com.framework.base.BaseResponse
 import com.google.gson.Gson
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import retrofit2.Retrofit
@@ -22,7 +23,7 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
     val body = JsonObject().apply {
       addProperty("floatingPointId",floatingPointId)
       addProperty("floatingPointTag",floatingPointTag)
-      addProperty("tags", Gson().toJson(tags))
+      add("tags", Gson().toJsonTree(tags).asJsonArray)
       addProperty("showFavourites",false)
     }
     return NowFloatsRepository.makeRemoteRequest(

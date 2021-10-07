@@ -24,8 +24,8 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding):
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as PosterPackModel
-        binding.tvPosterHeading.text = model.title
-        binding.tvPrice.text = "Pack of ${model.posterList?.size} posters for ${model.price}"
+        binding.tvPosterHeading.text = model.tagsModel.Name
+        binding.btnGetPack.text = "Get ${model.tagsModel.Name} Poster Pack"
         setupVp(binding.vpPoster)
 
         model.posterList?.let {

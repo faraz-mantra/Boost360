@@ -6,7 +6,7 @@ import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.FragmentPosterPackPurchasedBinding
 import com.festive.poster.models.PosterModel
-import com.festive.poster.models.PosterPackPurchasedModel
+import com.festive.poster.models.PosterPackModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
@@ -37,15 +37,15 @@ class PosterPackPurchasedFragment: AppBaseFragment<FragmentPosterPackPurchasedBi
     private fun setupList() {
 
 
-        val dataList = arrayListOf(
-            PosterPackPurchasedModel("Navratri",10, arrayListOf(PosterModel(null), PosterModel(null))),
-            PosterPackPurchasedModel("Navratri",10, arrayListOf(PosterModel(null))),
-            PosterPackPurchasedModel("Navratri",10, arrayListOf(PosterModel(null))),
+      /*  val dataList = arrayListOf(
+            PosterPackModel("Navratri",10, null),
+            PosterPackModel("Navratri",10, null),
+            PosterPackModel("Navratri",10, null),
         )
 
         val adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList,this)
         binding?.rvPosters?.adapter = adapter
-        binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
+        binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())*/
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {

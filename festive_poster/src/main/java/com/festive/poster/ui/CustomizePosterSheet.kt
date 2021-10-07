@@ -22,6 +22,20 @@ class CustomizePosterSheet: BaseBottomSheetDialog<BsheetCustomizePosterBinding, 
     private var path: String?=null
     private val RC_IMAGE_PCIKER=422
     private var sharedViewModel:FestivePosterSharedViewModel?=null
+    private var packTag:String?=null
+
+    companion object{
+        val BK_TAG="BK_TITLE"
+        @JvmStatic
+        fun newInstance(tag:String): CustomizePosterSheet {
+            val bundle = Bundle().apply {
+                putString(BK_TAG,tag)
+            }
+            val fragment =CustomizePosterSheet()
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
 
     override fun getLayout(): Int {
         return R.layout.bsheet_customize_poster
@@ -32,6 +46,7 @@ class CustomizePosterSheet: BaseBottomSheetDialog<BsheetCustomizePosterBinding, 
     }
 
     override fun onCreateView() {
+        packTag = arguments?.getString(BK_TAG)
         sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
 
         setOnClickListener(binding?.ivCancel,binding?.uploadSelfie,binding?.tvUpdateInfo)
@@ -49,7 +64,15 @@ class CustomizePosterSheet: BaseBottomSheetDialog<BsheetCustomizePosterBinding, 
             }
             binding?.tvUpdateInfo->{
                 Log.i(TAG, "path: $path")
-                sharedViewModel?.customizationDetails?.value  = PosterCustomizationModel(path!!,binding?.etName?.text.toString())
+                sharedViewModel?.customizationDetails?.value  = PosterCustomizationModel(
+                    packTag!!,
+                    binding?.etName?.text.toString(),
+                    binding?.etEmail?.text.toString(),
+                    binding?.etWhatsapp?.text.toString(),
+                    binding?.etDesc?.text.toString(),
+                    binding?.etWebsite?.text.toString(),
+                    path
+                    )
                 dismiss()
             }
         }
