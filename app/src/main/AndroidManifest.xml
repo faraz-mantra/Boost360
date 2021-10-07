@@ -1044,8 +1044,9 @@
       </intent-filter>
     </activity>
 
+    <!--android:name="com.nowfloats.RiaFCM.RiaFirebaseMessagingService"-->
     <service
-      android:name="com.nowfloats.RiaFCM.RiaFirebaseMessagingService"
+      android:name="com.dashboard.firebase.RiaFirebaseMessagingServiceNew"
       android:enabled="true"
       android:exported="true">
       <intent-filter>

@@ -40,6 +40,15 @@ object WithFloatTwoRepository :
     )
   }
 
+  fun postRegisterRIA(
+    paramsMap: HashMap<String, String?>
+  ):Observable<BaseResponse>{
+    return makeRemoteRequest(
+      remoteDataSource.postRegisterRIA(hashMap = paramsMap),
+      TaskCode.POST_REGISTER_RIA
+    )
+  }
+
   override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {
     return WithFloatTwoRemoteData::class.java
   }

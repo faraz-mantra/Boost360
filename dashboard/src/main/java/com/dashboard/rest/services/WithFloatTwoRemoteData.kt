@@ -31,4 +31,9 @@ interface WithFloatTwoRemoteData {
     @Body profileUpdateRequest: BusinessProfileUpdateRequest
   ): Observable<Response<ResponseBody>>
 
+  @POST(EndPoints.POST_REGISTER_RIA)
+  fun postRegisterRIA(
+    @Body hashMap: HashMap<String, String?>
+  ):Observable<Response<Any>>
+
 }

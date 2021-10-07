@@ -139,9 +139,16 @@ dependencies {
     api 'com.google.android.gms:play-services-auth-api-phone:17.5.1'
 
     //sentry for crash reporting
-    implementation 'io.sentry:sentry-android:5.2.0'
+    api 'io.sentry:sentry-android:5.2.0'
 
     //smartlook heat map generator
-    implementation 'com.smartlook.recording:app:1.8.3-native'
+    api 'com.smartlook.recording:app:1.8.3-native'
+
+    //noinspection OutdatedLibrary
+    api('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
+        transitive = true
+    }
+    api 'com.google.firebase:firebase-crashlytics:17.4.0'
+    api 'com.google.firebase:firebase-analytics:18.0.2'
 
 }
