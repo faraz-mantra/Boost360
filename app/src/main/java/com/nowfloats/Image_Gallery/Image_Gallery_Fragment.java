@@ -637,6 +637,7 @@ public class Image_Gallery_Fragment extends Fragment implements
 
     @Override
     public void secondaryButtonClicked() {
+        Toast.makeText(getActivity(), getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
 
     }
 

@@ -58,10 +58,10 @@
           "quickActionType": "ADD_TESTIMONIAL",
           "title": "Add patient\ntestimonial"
         },
-        {
-          "quickActionType": "ADD_FACULTY_MEMBER",
-          "title": "Add a\ndoctor"
-        },
+//        {
+//          "quickActionType": "ADD_FACULTY_MEMBER",
+//          "title": "Add a\ndoctor"
+//        },
         {
           "quickActionType": "ADD_SERVICE",
           "title": "Add a\nservice"
