@@ -18,6 +18,7 @@ import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.CouponsModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.remote.ApiInterface
+import com.boost.upgrades.data.remote.NewApiInterface
 import com.boost.upgrades.data.renewalcart.*
 import com.boost.upgrades.utils.SingleLiveEvent
 import com.boost.upgrades.utils.Utils
@@ -69,6 +70,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   var _updateProceedClick: MutableLiveData<Boolean> = MutableLiveData()
 
   var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
+  var NewApiService = Utils.getRetrofit(true).create(NewApiInterface::class.java)
+
 
   val compositeDisposable = CompositeDisposable()
 
@@ -684,7 +687,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 //            updatesLoader.postValue(true)
 //            APIRequestStatus = "Order registration in progress..."
       compositeDisposable.add(
-        ApiService.redeemCoupon(redeemCouponRequest)
+        NewApiService.redeemCoupon(redeemCouponRequest)
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(
