@@ -1,13 +1,15 @@
 package com.dashboard.model.live.user_profile
 
 import com.framework.base.BaseResponse
-import java.io.Serializable
+import com.framework.pref.UserSessionManager
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 data class UserProfileData(
     val Error: Error,
     val Result: UserProfileDataResult,
     val StatusCode: Int
-):BaseResponse()
+) : BaseResponse()
 
 data class UserProfileDataResult(
     val Email: String,
@@ -18,7 +20,23 @@ data class UserProfileDataResult(
     val LoginId: String,
     val MobileNo: String,
     val UserName: String
-)
+) {
+    companion object {
+        fun saveMerchantProfileDetails(sessionManager: UserSessionManager, userProfileDataResult: UserProfileDataResult) {
+            val stringMerchantData = Gson().toJson(userProfileDataResult)
+            sessionManager.merchantUserProfileData = stringMerchantData
+            sessionManager.isMerchantUserDetailsSaved = true
+        }
+
+        fun getMerchantProfileDetails(sessionManager: UserSessionManager): UserProfileDataResult {
+            val stringMerchantData = sessionManager.merchantUserProfileData
+            return Gson().fromJson(
+                stringMerchantData,
+                object : TypeToken<UserProfileDataResult>() {}.type
+            )
+        }
+    }
+}
 
 data class FloatingPointDetail(
     val AccountManagerId: String,
@@ -28,7 +46,7 @@ data class FloatingPointDetail(
     val AppExperienceCode: String,
     val ApplicationId: String,
     val BoostXWebsiteUrl: String,
-    val Category: HashMap<String,String>,
+    val Category: HashMap<String, String>,
     val City: String,
     val Contact: UserProfileContact,
     val ContactName: String,
