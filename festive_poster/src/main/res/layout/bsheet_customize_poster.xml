@@ -136,6 +136,7 @@
 
                     <com.framework.views.customViews.CustomEditText
                         android:padding="@dimen/size_10"
+                        android:id="@+id/et_email"
                         android:hint="@string/write_your_email_id"
                         android:background="@drawable/shape_fposter_grey_stroke_rect"
                         android:layout_marginTop="@dimen/size_4"
@@ -150,6 +151,8 @@
 
                     <com.framework.views.customViews.CustomEditText
                         android:padding="@dimen/size_10"
+                        android:id="@+id/et_whatsapp"
+
                         android:background="@drawable/shape_fposter_grey_stroke_rect"
                         android:layout_marginTop="@dimen/size_4"
                         android:layout_width="match_parent"
@@ -163,6 +166,7 @@
 
                     <com.framework.views.customViews.CustomEditText
                         android:padding="@dimen/size_10"
+                        android:id="@+id/et_desc"
                         android:background="@drawable/shape_fposter_grey_stroke_rect"
                         android:layout_marginTop="@dimen/size_4"
                         android:layout_width="match_parent"
@@ -177,6 +181,8 @@
 
                     <com.framework.views.customViews.CustomEditText
                         android:padding="@dimen/size_10"
+                        android:id="@+id/et_website"
+
                         android:background="@drawable/shape_fposter_grey_rounded_rect"
                         android:layout_marginTop="@dimen/size_4"
                         android:layout_width="match_parent"

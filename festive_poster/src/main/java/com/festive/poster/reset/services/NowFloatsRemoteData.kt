@@ -1,5 +1,8 @@
 package com.festive.poster.reset.services
 
+import com.festive.poster.models.PosterModel
+import com.festive.poster.models.response.GetTemplateViewConfigResponse
+import com.festive.poster.models.response.GetTemplatesResponse
 import com.festive.poster.reset.EndPoints
 import com.framework.base.BaseResponse
 import com.google.gson.JsonObject
@@ -16,10 +19,10 @@ interface NowFloatsRemoteData {
   @POST(EndPoints.TEMPLATE_VIEW_CONFIG)
   fun getTemplateViewConfig(
     @Body body:JsonObject?,
-    ): Observable<Response<BaseResponse>>
+    ): Observable<Response<GetTemplateViewConfigResponse>>
 
   @POST(EndPoints.GET_TEMPLATES)
   fun getTemplates(
     @Body body:JsonObject?,
-    ): Observable<Response<BaseResponse>>
+    ): Observable<Response<GetTemplatesResponse>>
 }

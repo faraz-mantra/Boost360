@@ -15,7 +15,7 @@ object FileUtils {
         return FestivePosterApplication.instance.getExternalFilesDir(null)?.path+ "/"+"SVGIMAGES/"
     }
 
-    suspend fun saveImage(url: String,dest:File){
+    suspend fun saveImage(url: String?,dest:File){
 
         val bmp= Glide.with(FestivePosterApplication.instance).asBitmap()
             .load(url)
