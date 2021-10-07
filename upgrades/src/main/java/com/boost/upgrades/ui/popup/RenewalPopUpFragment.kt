@@ -11,17 +11,15 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.ui.cart.CartViewModel
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
-import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.cart_fragment.*
 import kotlinx.android.synthetic.main.renewal_popup.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import androidx.lifecycle.Observer
+import com.framework.analytics.SentryController
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_GSTIN_LOADED
 import com.framework.webengageconstant.AUTO_RENEW
 import com.framework.webengageconstant.NO_EVENT_VALUE
@@ -148,6 +146,7 @@ class RenewalPopUpFragment : DialogFragment() {
       todayDate.setTime(sdf.parse(formattedDate))
     } catch (e: ParseException) {
       e.printStackTrace()
+      SentryController.captureException(e)
     }
 //        todayDate.add(Calendar.DATE, 365) // number of days to add, can also use Calendar.DAY_OF_MONTH in place of Calendar.DATE
     todayDate.add(
