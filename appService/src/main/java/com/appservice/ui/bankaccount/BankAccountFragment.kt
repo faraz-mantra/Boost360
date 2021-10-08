@@ -268,13 +268,16 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     val alias = binding?.edtAlias?.text?.toString()
     val ifsc = binding?.edtIfsc?.text?.toString()
     if (nameAccount.isNullOrEmpty()) {
-      showShortToast(string = getString(R.string.bank_account_cannot_empty))
+      showShortToast(getString(R.string.bank_account_cannot_empty))
       return false
     } else if (accountNumber.isNullOrEmpty()) {
       showShortToast(getString(R.string.bank_number_can_not_empty))
       return false
     } else if (accountNumber.length < 9) {
       showShortToast(getString(R.string.account_less_than_nine))
+      return false
+    } else if (accountNumber.length > 18) {
+      showShortToast(getString(R.string.account_greater_than_nine))
       return false
     } else if (confirmNumber.isNullOrEmpty()) {
       showShortToast(getString(R.string.confirm_bank_account_cannot_empty))

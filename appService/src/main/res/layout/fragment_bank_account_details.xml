@@ -61,6 +61,7 @@
           android:background="@drawable/rounded_edit_stroke"
           android:hint="@string/xxxxxxxxxxxxxxxxxx"
           android:inputType="number"
+          android:maxLength="18"
           android:singleLine="true" />
 
 
@@ -83,6 +84,7 @@
           android:background="@drawable/rounded_edit_stroke"
           android:hint="@string/xxxxxxxxxxxxxxxxxx"
           android:inputType="numberPassword"
+          android:maxLength="18"
           android:singleLine="true" />
 
         <com.framework.views.customViews.CustomTextView
@@ -207,12 +209,12 @@
           android:id="@+id/why_btn"
           style="@style/ButtonStyle.Rounded"
           android:layout_width="match_parent"
-          android:gravity="center"
+          android:layout_marginTop="@dimen/size_10"
           android:background="@drawable/bg_transparent_orange"
+          android:gravity="center"
           android:text="@string/why_do_we_need_your_bank_account_required"
           android:textAlignment="gravity"
           android:textAllCaps="false"
-          android:layout_marginTop="@dimen/size_10"
           android:textColor="@color/colorAccentLight"
           app:fontFamily="@font/semi_bold" />
       </LinearLayout>
