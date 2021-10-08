@@ -36,8 +36,27 @@ class OrderConfirmationFragment : BaseFragment() {
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    val jsonString = requireArguments().getString("data")
-    data = JSONObject(jsonString!!)
+//    if(requireArguments().getBoolean("payViaLink")){
+//      try {
+//        val jsonString = requireArguments().getString("data")
+//        data = JSONObject(jsonString!!)
+//        val revenue = data["amount"] as Int
+//
+//        val event_attributes: HashMap<String, Any> = HashMap()
+//        event_attributes.put("revenue",(revenue / 100))
+//        event_attributes.put("rev",(revenue / 100))
+//        event_attributes.put("cartIds", Utils.filterBraces(prefs.getCardIds().toString()))
+//        event_attributes.put("couponIds", Utils.filterQuotes(prefs.getCouponIds().toString()))
+//        event_attributes.put("validity",prefs.getValidityMonths().toString())
+//
+//        WebEngageController.trackEvent(
+//          EVENT_NAME_ADDONS_MARKETPLACE_ORDER_CONFIRM,
+//          PAGE_VIEW,
+//          event_attributes
+//        )
+//      } catch (e: Exception) {
+//      }
+//    }
     prefs = SharedPrefs(activity as UpgradeActivity)
     return inflater.inflate(R.layout.order_confirmation_fragment, container, false)
   }
@@ -45,20 +64,6 @@ class OrderConfirmationFragment : BaseFragment() {
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
 
-    val revenue = data["amount"] as Int
-
-    val event_attributes: HashMap<String, Any> = HashMap()
-    event_attributes.put("revenue",(revenue / 100))
-    event_attributes.put("rev",(revenue / 100))
-    event_attributes.put("cartIds", Utils.filterBraces(prefs.getCardIds().toString()))
-    event_attributes.put("couponIds", Utils.filterQuotes(prefs.getCouponIds().toString()))
-    event_attributes.put("validity",prefs.getValidityMonths().toString())
-
-    WebEngageController.trackEvent(
-      EVENT_NAME_ADDONS_MARKETPLACE_ORDER_CONFIRM,
-      PAGE_VIEW,
-      event_attributes
-    )
     viewModel = ViewModelProviders.of(this).get(OrderConfirmationViewModel::class.java)
     viewModel.emptyCurrentCart((activity as UpgradeActivity).application);
 
