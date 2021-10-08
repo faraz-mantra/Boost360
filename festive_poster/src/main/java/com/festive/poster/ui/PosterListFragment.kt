@@ -26,18 +26,18 @@ class PosterListFragment: AppBaseFragment<FragmentPosterListBinding, FestivePost
     private var sharedViewModel: FestivePosterSharedViewModel?=null
 
     companion object {
-        val BK_TITLE="BK_TITLE"
+        val BK_TAG="BK_TAG"
         @JvmStatic
-        fun newInstance(title:String): PosterListFragment {
+        fun newInstance(tag:String): PosterListFragment {
             val bundle = Bundle().apply {
-                putString(BK_TITLE,title)
+                putString(BK_TAG,tag)
             }
             val fragment =PosterListFragment()
             fragment.arguments = bundle
             return fragment
         }
     }
-    var title:String?=null
+    var packTag:String?=null
     private var session:UserSessionManager?=null
     private var dataList:ArrayList<PosterModel>?=null
     override fun getLayout(): Int {
@@ -50,9 +50,10 @@ class PosterListFragment: AppBaseFragment<FragmentPosterListBinding, FestivePost
 
     override fun onCreateView() {
         super.onCreateView()
+        packTag= arguments?.getString(BK_TAG)
+
         sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
         session = UserSessionManager(requireActivity())
-        title = arguments?.getString(BK_TITLE)
         setupList()
         observeCustomization()
     }
@@ -70,11 +71,12 @@ class PosterListFragment: AppBaseFragment<FragmentPosterListBinding, FestivePost
         viewModel?.getTemplates(
             session?.fPID,
             session?.fpTag,
-            arrayListOf("Offer")
+            arrayListOf(packTag!!)
         )?.observe(viewLifecycleOwner,{
             val response = it as? GetTemplatesResponse
             response?.let {
                 dataList = response.Result.Templates.toArrayList()
+                dataList?.forEach { posterModel -> posterModel.isPurchased=true }
 
                 adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList!!,this)
                 binding?.rvPosters?.adapter = adapter

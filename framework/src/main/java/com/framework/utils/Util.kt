@@ -194,7 +194,7 @@ fun Bitmap.shareAsImage(packageName:String?=null){
         intent.`package`= packageName
       }
       BaseApplication.instance.startActivity(intent)
-    } catch (e: IOException) {
+    } catch (e: Exception) {
       Log.d("IOException: " , e.message.toString())
     }
 

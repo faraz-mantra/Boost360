@@ -26,7 +26,7 @@ class PosterPurchasedViewHolder(binding: ListItemPurchasedPosterBinding):
             listener?.onItemClick(position,item,RecyclerViewActionType.POSTER_TAP_TO_EDIT_CLICK.ordinal)
         }
         binding.ivOther.setOnClickListener {
-            binding.ivSvg.toBitmap()?.shareAsImage(PackageNames.WHATSAPP)
+            binding.ivSvg.toBitmap()?.shareAsImage()
         }
 
         super.bind(position, item)
