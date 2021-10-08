@@ -130,7 +130,7 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
 
   private fun hitGetOwnersInfo() {
     showProgress(getString(R.string.loading))
-    viewModel?.getOwnersData(query = session?.fpTag)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getOwnersData(fpTag = session?.fpTag)?.observeOnce(viewLifecycleOwner, {
       hideProgress()
       if (it.isSuccess()) {
         this.ownersDataResponse = (it as? OwnersDataResponse) ?: OwnersDataResponse()

@@ -19,5 +19,5 @@ interface WebActionBoostKitRemoteData {
 
     //String.format({"$and:[{ WebsiteId : 'TANZO'}]}", websiteId)
     @GET(EndPoints.OWNER_INFO_DATA)
-    fun getOwnersDataPost(@Header("Authorization") token: String?, @Query("WebsiteId") websiteId: String?, @Query("limit") limit: Int?): Observable<Response<OwnersDataResponse>>
+    fun getOwnersDataPost(@Header("Authorization") token: String?, @Query("query") query: String?, @Query("limit") limit: Int?): Observable<Response<OwnersDataResponse>>
 }

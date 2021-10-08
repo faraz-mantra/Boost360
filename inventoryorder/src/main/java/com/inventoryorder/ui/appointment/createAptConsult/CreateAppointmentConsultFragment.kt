@@ -229,6 +229,7 @@ class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointme
     doctorDataList = ArrayList(response ?: arrayListOf())
     doctorData = if (isUpdate) {
       selectPositionDoctor = doctorDataList?.indexOfFirst { data -> data.id == extraItemConsult?.doctorId } ?: 0
+      if (selectPositionDoctor == -1) selectPositionDoctor = 0
       doctorDataList?.get(selectPositionDoctor)
     } else {
       selectPositionDoctor = 0
@@ -284,6 +285,7 @@ class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointme
     serviceData = when {
       isUpdate -> {
         selectPositionService = this.serviceListFilter?.indexOfFirst { it.id == product?._id } ?: 0
+        if (selectPositionService == -1) selectPositionService = 0
         this.serviceListFilter?.get(selectPositionService)
       }
       else -> {

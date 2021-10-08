@@ -14,7 +14,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.LinearLayoutCompat
 import com.appservice.model.accountDetails.getBankDetail
 import com.appservice.ui.updatesBusiness.showDialog
+import com.boost.presignin.model.other.DataKyc
 import com.boost.presignin.model.other.KYCDetails
+import com.boost.presignin.model.other.getBusinessKycDetail
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.RecyclerViewActionType
@@ -111,21 +113,39 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
 
   private fun setHelpfulResources() {
     if (usefulLinks.isNullOrEmpty().not()) {
-      val bankData = getBankDetail()
-      if (bankData?.isValidAccount() == true) {
-        usefulLinks?.map {
-          if (it.icon.equals(UsefulLinksItem.IconType.my_bank_acccount.name)) {
-            if (bankData.kYCDetails?.verificationStatus == KYCDetails.Status.PENDING.name) {
-              it.actionBtn?.color = "#EB5757"
-              it.actionBtn?.textColor = "#FFFFFF"
-              it.actionBtn?.title = "Unverified"
-            } else {
-              it.actionBtn?.color = "#F2FBE9"
-              it.actionBtn?.textColor = "#7ED321"
-              it.actionBtn?.title = "Verified"
+      usefulLinks?.map {
+        when(it.icon) {
+          UsefulLinksItem.IconType.my_bank_acccount.name -> {
+            val bankData = getBankDetail()
+            if (bankData?.isValidAccount() == true) {
+              if (bankData.kYCDetails?.verificationStatus == KYCDetails.Status.PENDING.name) {
+                it.actionBtn?.color = "#EB5757"
+                it.actionBtn?.textColor = "#FFFFFF"
+                it.actionBtn?.title = "Unverified"
+              } else {
+                it.actionBtn?.color = "#F2FBE9"
+                it.actionBtn?.textColor = "#7ED321"
+                it.actionBtn?.title = "Verified"
+              }
             }
             it
-          } else it
+          }
+          UsefulLinksItem.IconType.business_kyc.name -> {
+            val dataKyc = getBusinessKycDetail()
+            if (dataKyc != null) {
+              if (dataKyc.isVerified == DataKyc.Verify.YES.name) {
+                it.actionBtn?.color = "#F2FBE9"
+                it.actionBtn?.textColor = "#7ED321"
+                it.actionBtn?.title = "Verified"
+              } else {
+                it.actionBtn?.color = "#EB5757"
+                it.actionBtn?.textColor = "#FFFFFF"
+                it.actionBtn?.title = "Unverified"
+              }
+            }
+            it
+          }
+          else -> it
         }
       }
       binding?.rvUsefulLinks?.adapter = AppBaseRecyclerViewAdapter(baseActivity, usefulLinks ?: arrayListOf(), this)
