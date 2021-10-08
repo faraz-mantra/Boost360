@@ -54,12 +54,19 @@ class PosterPackListingFragment:
     private fun setObserver() {
         sharedViewModel?.customizationDetails?.observe(viewLifecycleOwner,{
 
-            Log.i(TAG, "customizationDetails Observer: ")
+           val posterPack = dataList?.find { posterPackModel -> posterPackModel.tagsModel.Tag==it.tag }
+            Log.i(TAG, "poster pack: ${Gson().toJson(posterPack?.tagsModel)}")
+            posterPack?.posterList?.forEach {posterModel ->
+                Log.i(TAG, "poster model: ${Gson().toJson(posterModel)}")
+                posterModel.Keys.forEach { posterKeyModel ->
+                    if (posterKeyModel.Name=="Title"){
+                        posterKeyModel.Custom = it.name
+                    }
+                }
 
-            dataList?.find {posterPack-> posterPack.tagsModel.Name==it.tag }?.posterList?.forEach {
-                
             }
 
+            Log.i(TAG, "result: ${Gson().toJson(dataList?.get(1))}")
             adapter?.notifyDataSetChanged()
 
         })
@@ -78,18 +85,6 @@ class PosterPackListingFragment:
                 }
             })
 
-     /*   val keyList = arrayListOf(PosterKeyModel(
-            "https://file-examples-com.github.io/uploads/2017/10/file_example_JPG_100kB.jpg",10,"IMAGE_PATH","Image"),
-            PosterKeyModel(
-                "Hello boost 36",10,"Beautiful Smiles","Text"))*/
-
-
-       /* dataList = arrayListOf(
-            PosterPackModel("Navratri",10, arrayListOf(PosterModel(null,posterKeys = keyList),PosterModel(null,posterKeys = keyList))),
-            PosterPackModel("Navratri",10, arrayListOf(PosterModel(null,posterKeys = keyList))),
-            PosterPackModel("Navratri",10, arrayListOf(PosterModel(null,posterKeys = keyList))),
-            )
-*/
 
 
 
@@ -104,10 +99,17 @@ class PosterPackListingFragment:
                 templates_response?.let {
                     response.Result.TodaysPicks.Tags.forEach {pack_tag->
 
-                        val template =   templates_response.Result.Templates.filter {template->
-                            template.Tags.find { posterTag-> posterTag ==pack_tag.Tag }!=null }
+                        val templateList = ArrayList<PosterModel>()
 
-                        dataList?.add(PosterPackModel(pack_tag,template.toArrayList()))
+                        templates_response.Result.Templates.forEach { template->
+                            if (template.Tags.find { posterTag-> posterTag ==pack_tag.Tag }!=null){
+                                templateList.add(
+                                    template.clone()!!)
+                            }
+                        }
+
+
+                        dataList?.add(PosterPackModel(pack_tag,templateList.toArrayList()))
                     }
 
                     adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,

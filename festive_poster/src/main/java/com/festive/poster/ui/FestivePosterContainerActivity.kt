@@ -12,6 +12,7 @@ import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.databinding.ActivityFestivePoterContainerBinding
 import com.festive.poster.utils.SvgUtils
 import com.framework.models.BaseViewModel
+import kotlinx.android.synthetic.main.mtemplate_progress_dialog.*
 
 class FestivePosterContainerActivity:
     AppBaseActivity<ActivityFestivePoterContainerBinding, BaseViewModel>() {
@@ -28,17 +29,14 @@ class FestivePosterContainerActivity:
     override fun onCreateView() {
         super.onCreateView()
 
-       /* setSupportActionBar(binding?.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)*/
+        binding?.toolbar?.inflateMenu(R.menu.festive_poster_help_menu)
+
         handleBackStack()
         menuClickListener()
-/*
-        supportActionBar?.setHomeAsUpIndicator(ContextCompat.getDrawable(this,R.drawable.ic_fposter_back_poster_pack_listing))
-*/
+
         addFragmentReplace(binding?.container?.id,PosterPackListingFragment.newInstance(),true)
 
         lifecycleScope.launchWhenCreated {
-           // SvgUtils.downloadSvg("https://www.learningcontainer.com/wp-content/uploads/2020/08/Sample-SVG-Image-File-Download.svg")
         }
 
     }
@@ -59,6 +57,9 @@ class FestivePosterContainerActivity:
                     )
 
                 }
+                R.id.menu_help->{
+                    PosterHelpSheet().show(supportFragmentManager,PosterHelpSheet::class.java.name)
+                }
             }
 
             true
@@ -70,8 +71,8 @@ class FestivePosterContainerActivity:
         supportFragmentManager.addOnBackStackChangedListener {
 
 
-            binding?.toolbar?.menu?.clear()
-            binding?.toolbar?.inflateMenu(R.menu.festive_poster_help_menu)
+            //binding?.toolbar?.menu?.clear()
+       //     binding?.toolbar?.inflateMenu(R.menu.festive_poster_help_menu)
 
             val topFragment = getTopFragment()
             Log.i(TAG, "handleBackStack: top ${topFragment?.tag}")
@@ -80,15 +81,15 @@ class FestivePosterContainerActivity:
                 when(topFragment){
                     is  PosterPackListingFragment->{
                         supportActionBar?.title = getString(R.string.festival_poster)
-                        binding?.toolbar?.menu?.clear()
-                        binding?.toolbar?.inflateMenu(R.menu.festive_poster_listing_menu)
+                      //  binding?.toolbar?.menu?.clear()
+                       // binding?.toolbar?.inflateMenu(R.menu.festive_poster_listing_menu)
                     }
 
                     is PosterPackPurchasedFragment->{
                         supportActionBar?.title = getString(R.string.purchased_posters)
                     }
                     is PosterListFragment->{
-                        supportActionBar?.title =topFragment.title
+                        supportActionBar?.title =topFragment.packTag
                     }
                 }
 
@@ -101,16 +102,6 @@ class FestivePosterContainerActivity:
     }
 
 
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.menu_downloads->{
-                addFragmentReplace(binding?.container?.id,PosterPackPurchasedFragment.newInstance(),true)
-
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
 
     override fun onBackPressed() {

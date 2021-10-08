@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.appcompat.widget.LinearLayoutCompat android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_fposter_white_top_rounded_rect"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+        <com.framework.views.customViews.CustomImageView
+            android:layout_marginTop="@dimen/size_16"
+            android:layout_width="@dimen/size_80"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_fposter_yellow_tick"
+            android:layout_height="@dimen/size_80"/>
+
+
+        <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            app:textType="HEADING_4"
+            android:fontFamily="@font/bold"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/size_16"
+            android:textColor="@color/orange"
+            android:text="@string/order_confirmed"
+            android:layout_height="wrap_content"/>
+
+
+        <com.framework.views.customViews.CustomTextView
+            android:gravity="center"
+            android:layout_marginHorizontal="@dimen/size_24"
+            android:layout_marginTop="@dimen/size_16"
+            android:text="Navratri pack of 5 posters.
+Feel free to edit &amp; share them with all your customers with your custom messages. You can make payment of ₹51 after you receive the payment link."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.framework.views.customViews.CustomTextView
+            android:layout_marginTop="@dimen/size_24"
+            android:gravity="center"
+            android:textSize="@dimen/size_18"
+            android:fontFamily="@font/bold"
+            android:textColor="@color/white"
+            android:id="@+id/btn_confirm"
+
+            android:background="@drawable/bg_button_orange_gradient"
+            android:layout_width="match_parent"
+            android:text="@string/confirm_order"
+            android:layout_height="@dimen/size_50"/>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

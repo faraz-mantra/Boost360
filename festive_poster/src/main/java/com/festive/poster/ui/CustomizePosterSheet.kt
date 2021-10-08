@@ -73,6 +73,7 @@ class CustomizePosterSheet: BaseBottomSheetDialog<BsheetCustomizePosterBinding, 
                     binding?.etWebsite?.text.toString(),
                     path
                     )
+                PosterPaymentSheet().show(parentFragmentManager,PosterPaymentSheet::class.java.name)
                 dismiss()
             }
         }

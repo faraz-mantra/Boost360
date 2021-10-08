@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.appcompat.widget.LinearLayoutCompat android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/size_24"
+        android:background="@drawable/shape_fposter_white_top_rounded_rect"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+        <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            app:textType="HEADING_5"
+            android:fontFamily="@font/bold"
+            android:layout_marginTop="@dimen/size_16"
+            android:textColor="@color/grey_dark_1"
+            android:text="@string/what_are_the_festival_posters"
+            android:layout_height="wrap_content"/>
+
+
+        <com.framework.views.customViews.CustomTextView
+            android:layout_marginTop="@dimen/size_16"
+            android:textSize="@dimen/size_14"
+            android:lineSpacingExtra="6dp"
+            android:text="@string/festive_poster_help_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.framework.views.customViews.CustomMaterialButton
+            android:layout_marginTop="@dimen/size_24"
+            android:gravity="center"
+            android:id="@+id/btn_confirm"
+            style="@style/PrimaryButton"
+            android:layout_width="match_parent"
+            android:text="@string/understood"
+            android:layout_height="@dimen/size_50"/>
+
+        <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:paddingVertical="@dimen/size_16"
+            android:text="@string/contact_support"
+            android:textSize="@dimen/size_18"
+            android:fontFamily="@font/bold"
+            android:textColor="@color/orange"
+            android:layout_height="wrap_content"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.appcompat.widget.LinearLayoutCompat android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_fposter_white_top_rounded_rect"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <RelativeLayout
+            android:padding="@dimen/size_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_heading"
+                android:fontFamily="@font/bold"
+                android:text="Paying 51"
+                android:textColor="@color/black"
+                app:textType="HEADING_5" />
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/iv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_fposter_bsheet_close" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_below="@+id/tv_heading"
+                android:text="for pack of 5 posters"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/size_24"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:textColor="@color/grey_light_2"
+                    android:textSize="@dimen/size_18"
+                    android:text="@string/pay_using_debit_credit_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_marginStart="@dimen/size_25"
+                    android:textColor="@color/red_300"
+                    android:layout_width="match_parent"
+                    android:text="@string/currently_unavailable"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_marginTop="@dimen/size_16"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:textColor="@color/grey_light_2"
+                    android:textSize="@dimen/size_18"
+                    android:text="@string/pay_using_upi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_marginStart="@dimen/size_25"
+                    android:textColor="@color/red_300"
+                    android:layout_width="match_parent"
+                    android:text="@string/currently_unavailable"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_marginTop="@dimen/size_16"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/size_18"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/pay_later"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_marginStart="@dimen/size_25"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/black"
+                    android:text="@string/get_the_poster_pack_now_amp_pay_51_later"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_marginTop="@dimen/size_16"
+                android:paddingVertical="@dimen/size_8"
+                android:paddingHorizontal="@dimen/size_16"
+                android:background="@drawable/shape_fposter_grey_stroke_grey_rect"
+                android:layout_width="match_parent"
+                android:text="We’ll send you a secure payment link on your registered email ID abcdfff@gmail.com &amp; +918142558406 to make the payment or ₹51."
+                android:layout_height="wrap_content"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <com.framework.views.customViews.CustomTextView
+            android:gravity="center"
+            android:textSize="@dimen/size_18"
+            android:id="@+id/btn_confirm"
+            android:fontFamily="@font/bold"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_button_orange_gradient"
+            android:layout_width="match_parent"
+            android:text="@string/confirm_order"
+            android:layout_height="@dimen/size_50"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
