@@ -161,6 +161,8 @@ class RazorPayWebView : androidx.fragment.app.DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(PaymentViewModel::class.java)
+        appState = null.toString()
+        paymentFailure = null
 
         if(isOnSaveInstanceStateCalled && savedInstanceState == null) {
 
