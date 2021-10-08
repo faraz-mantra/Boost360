@@ -310,7 +310,7 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
 
     @Override
     public void secondaryButtonClicked() {
-
+        Toast.makeText(this, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
     }
 
     @Override
