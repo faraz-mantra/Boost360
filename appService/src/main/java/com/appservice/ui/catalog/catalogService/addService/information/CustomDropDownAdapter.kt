@@ -36,11 +36,11 @@ class CustomDropDownAdapter(val context: Context, var dataSource: List<SpinnerIm
   }
 
   override fun getCount(): Int {
-    return dataSource.size;
+    return dataSource.size
   }
 
   override fun getItemId(position: Int): Long {
-    return position.toLong();
+    return position.toLong()
   }
 
   private class ItemHolder(row: View?) {

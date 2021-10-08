@@ -160,7 +160,6 @@ dependencies {
     //presignup library old flow
     implementation project(path: ':presignup')
     //presignup library new flow
-    implementation project(path: ':presignin')
     api project(path: ':dashboard')
 
     //upgrade library

@@ -4,6 +4,7 @@ import android.content.Intent
 import com.appservice.AppServiceApplication
 import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.WithFloatsApiTwoClient
+import com.framework.analytics.SentryController
 import com.framework.base.BaseRepository
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
@@ -42,6 +43,7 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
           i.putExtra("isAuthErrorToast",true)
           startActivity(i)
         } catch (e: Exception) {
+          SentryController.captureException(e)
           e.printStackTrace()
         }
       }

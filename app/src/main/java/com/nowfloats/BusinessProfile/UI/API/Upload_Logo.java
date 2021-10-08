@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
+import com.framework.analytics.SentryController;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.RoundCorners_image;
@@ -83,6 +84,7 @@ public class Upload_Logo extends AsyncTask<Void, String, String> {
                     Business_Logo_Activity.logoimageView.setImageBitmap(bmp);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    SentryController.INSTANCE.captureException(e);
                 }
             });
 
@@ -122,6 +124,7 @@ public class Upload_Logo extends AsyncTask<Void, String, String> {
             String temp = uri + "totalChunks=1&currentChunkNumber=1";
             sendDataToServer(temp, Methods.compressToByte(imagePath, appContext));
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             Methods.showSnackBarNegative(appContext, e.getMessage());
             e.printStackTrace();
             System.gc();
@@ -193,26 +196,31 @@ public class Upload_Logo extends AsyncTask<Void, String, String> {
                 else
                     Constants.serviceResponse = "";
             } catch (Exception e) {
+                SentryController.INSTANCE.captureException(e);
             } finally {
                 try {
                     inputStreamReader.close();
                 } catch (Exception e) {
+                    SentryController.INSTANCE.captureException(e);
                 }
                 try {
                     bufferedReader.close();
                 } catch (Exception e) {
+                    SentryController.INSTANCE.captureException(e);
                 }
 
             }
 
 
         } catch (Exception ex) {
+            SentryController.INSTANCE.captureException(ex);
             isUploadingSuccess = false;
         } finally {
             try {
                 outputStream.flush();
                 outputStream.close();
             } catch (Exception e) {
+                SentryController.INSTANCE.captureException(e);
             }
         }
     }

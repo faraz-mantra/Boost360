@@ -2397,6 +2397,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             startActivity(webIntent)
 //            overridePendingTransition(0, 0)
         } catch (e: ClassNotFoundException) {
+            SentryController.captureException(e)
             e.printStackTrace()
             SentryController.captureException(e)
         }

@@ -8,6 +8,7 @@ import io.sentry.protocol.User
 object SentryController {
 
     private const val TAG = "SentryController"
+
     fun captureException(e:Exception){
         Sentry.captureException(e)
     }

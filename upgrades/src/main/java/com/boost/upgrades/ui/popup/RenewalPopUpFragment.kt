@@ -145,6 +145,7 @@ class RenewalPopUpFragment : DialogFragment() {
     try {
       todayDate.setTime(sdf.parse(formattedDate))
     } catch (e: ParseException) {
+      SentryController.captureException(e)
       e.printStackTrace()
       SentryController.captureException(e)
     }

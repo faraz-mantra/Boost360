@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data />
+
+    <com.framework.views.customViews.CustomCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cv_root"
+        android:layout_marginTop="@dimen/size_12"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="@dimen/size_4">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/item_category_root"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingTop="@dimen/size_10"
+            android:paddingRight="@dimen/size_15"
+            android:paddingBottom="@dimen/size_10">
+
+            <com.framework.views.roundedimageview.RoundedImageView
+                android:id="@+id/riv_offer_image"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_150"
+                android:layout_marginBottom="@dimen/size_15"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toTopOf="@+id/ctv_offers_heading"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:riv_border_color="@color/gray_light_3"
+                app:riv_border_width="1dp"
+                app:riv_corner_radius="@dimen/size_3"
+                app:riv_mutate_background="true"
+                app:riv_oval="false"
+                app:srcCompat="@drawable/placeholder_image_n" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ctv_offers_heading"
+                style="@style/Offers_Text_Heading.RecyclerItem"
+                app:layout_constraintBottom_toTopOf="@id/ctv_offers_heading"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Christmas Offer 2020" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ctv_offers_pricing"
+                style="@style/Offers_Text_Subheading"
+                android:textColor="@color/black_4a4a4a"
+                android:layout_marginTop="@dimen/size_5"
+                android:fontFamily="@font/semi_bold"
+                android:textAllCaps="true"
+                android:includeFontPadding="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ctv_offers_heading"
+                tools:text="₹ 5,000 OFF" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ctv_offers_category"
+                style="@style/Offers_Text_Subheading"
+                android:layout_marginTop="@dimen/size_5"
+                android:layout_marginStart="@dimen/size_5"
+                android:textColor="@color/black_4a4a4a"
+                app:layout_constraintStart_toEndOf="@+id/ctv_offers_pricing"
+                app:layout_constraintTop_toBottomOf="@+id/ctv_offers_heading"
+                tools:text="on Simple Massage" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/cv_status"
+                style="@style/Offers_Custom_Radio_Button"
+                android:text="@string/active"
+                android:padding="@dimen/size_1"
+                android:drawablePadding="@dimen/size_5"
+                android:layout_marginTop="@dimen/size_5"
+                android:gravity="center_vertical"
+                android:drawableStart="@drawable/ic_dot_green"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/ctv_offers_pricing"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ctv_offers_heading" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ll_share_buttons"
+                style="@style/match_wrap"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="@dimen/size_2"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ctv_offers_pricing"
+                app:layout_constraintVertical_bias="0.0">
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_offers_description"
+                    style="@style/Offers_TextDescription"
+                    android:layout_width="@dimen/size_0"
+                    android:gravity="start"
+                    android:maxLines="2"
+                    android:paddingEnd="@dimen/size_15"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/shareData"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/this_is_the_cristmas_offer_of_this_year" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/shareData"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="@dimen/size_10"
+                    android:background="@drawable/rounded_stroke_grey_4_solid_gray"
+                    android:padding="@dimen/size_4"
+                    android:src="@drawable/ic_share_normal"
+                    app:iconPadding="@dimen/size_3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/share_whatsapp"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/share_whatsapp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:background="@drawable/bg_button_proceed_4"
+                    android:backgroundTint="#6BC95C"
+                    android:drawableStart="@drawable/ic_whatsapp_for_business_active"
+                    android:drawablePadding="@dimen/size_2"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/size_16"
+                    android:text="@string/share"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.framework.views.customViews.CustomCardView>
+</layout>

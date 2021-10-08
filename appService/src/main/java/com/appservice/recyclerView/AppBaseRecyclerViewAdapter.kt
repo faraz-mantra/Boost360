@@ -8,10 +8,6 @@ import com.appservice.R
 import com.appservice.constant.RecyclerViewItemType.*
 import com.appservice.databinding.*
 import com.appservice.holder.*
-import com.appservice.holder.StaffExperienceViewHolder
-import com.appservice.holder.StaffFilterViewHolder
-import com.appservice.holder.StaffListingViewHolder
-import com.appservice.holder.StaffServiceViewHolder
 import com.framework.base.BaseActivity
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
@@ -40,6 +36,12 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       STAFF_LISTING_VIEW -> StaffListingViewHolder(binding as RecyclerItemStaffListingBinding)
       STAFF_FILTER_VIEW -> StaffFilterViewHolder(binding as RecyclerItemStaffFilterBinding)
       SERVICE_LISTING_VIEW -> ServiceListingViewHolder(binding as RecyclerItemServiceListingBinding)
+      OFFER_LISTING_VIEW -> OfferListingViewHolder(binding as RecyclerItemOfferBinding)
+      OFFER_SELECT_SERVICES -> SelectOfferListingViewHolder(binding as RecyclerItemServiceSelectOfferBinding)
+      SERVICE_CATEGORY_ITEM_VIEW -> ServiceCategoryViewHolder(binding = binding as RecyclerItemServiceCategoryBinding)
+      PRODUCT_CATEGORY_ITEM_VIEW -> ProductCategoryViewHolder(binding = binding as RecyclerItemProductCategoryBinding)
+      PRODUCT_LISTING -> ProductListingViewHolder(binding = binding as RecyclerItemProductListingBinding)
+      CATALOG_SETTING_TILES -> CatalogTileViewHolder(binding as RecyclerItemEcomAptSettingsBinding)
     }
   }
 

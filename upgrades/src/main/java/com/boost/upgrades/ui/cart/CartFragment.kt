@@ -820,6 +820,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
             }
           } catch (ex: Exception) {
+            SentryController.captureException(ex)
             ex.printStackTrace()
             SentryController.captureException(ex)
           }
@@ -866,6 +867,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
             }
           } catch (ex: Exception) {
+            SentryController.captureException(ex)
             ex.printStackTrace()
             SentryController.captureException(ex)
           }
@@ -1173,6 +1175,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
             }
           } catch (ex: Exception) {
+            SentryController.captureException(ex)
             ex.printStackTrace()
             SentryController.captureException(ex)
           }
@@ -1977,6 +1980,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         progressDialog.show()
       }
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
       SentryController.captureException(e)
     }
@@ -1987,6 +1991,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //      if (progressDialog.isShowing) progressDialog.hide()
       if (progressDialog.isShowing) progressDialog.cancel()
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
       SentryController.captureException(e)
     }

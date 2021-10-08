@@ -1,30 +1,18 @@
 package com.nowfloats.manufacturing.projectandteams.ui.project;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
@@ -35,6 +23,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -42,25 +38,16 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.manufacturing.API.ManufacturingAPIInterfaces;
 import com.nowfloats.manufacturing.API.UploadProjectImage;
-import com.nowfloats.manufacturing.API.UploadTeamsImage;
 import com.nowfloats.manufacturing.API.model.AddProject.ActionData;
 import com.nowfloats.manufacturing.API.model.AddProject.AddProjectData;
 import com.nowfloats.manufacturing.API.model.AddProject.FeaturedImage;
 import com.nowfloats.manufacturing.API.model.AddProject.ProjectImage2;
 import com.nowfloats.manufacturing.API.model.AddProject.ProjectImage3;
-import com.nowfloats.manufacturing.API.model.AddTeams.FbURL;
-import com.nowfloats.manufacturing.API.model.AddTeams.ProfileImage;
-import com.nowfloats.manufacturing.API.model.AddTeams.SkypeHandle;
-import com.nowfloats.manufacturing.API.model.AddTeams.TwitterURL;
 import com.nowfloats.manufacturing.API.model.DeleteProject.DeleteProjectData;
-import com.nowfloats.manufacturing.API.model.DeleteTeams.DeleteTeamsData;
 import com.nowfloats.manufacturing.API.model.GetProjects.Data;
 import com.nowfloats.manufacturing.API.model.UpdateProject.UpdateProjectData;
-import com.nowfloats.manufacturing.API.model.UpdateTeams.UpdateTeamsData;
 import com.nowfloats.manufacturing.projectandteams.Interfaces.ProjectDetailsListener;
 import com.nowfloats.manufacturing.projectandteams.adapter.ProjectDetailsImageAdapter;
-import com.nowfloats.manufacturing.projectandteams.ui.teams.TeamsDetailsActivity;
-import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
