@@ -25,6 +25,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.pref.clientId
 import com.framework.webengageconstant.BANK_ACCOUNT
 import com.framework.webengageconstant.BANK_ACCOUNT_DETAILS_UPDATED
 import com.framework.webengageconstant.BANK_ACCOUNT_SUBMITTED_FOR_VERIFICATION
@@ -33,8 +34,6 @@ import com.framework.webengageconstant.FLOATING_POINT_ID
 class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, AccountViewModel>() {
 
   private var isUpdated = true
-  private var fpId: String = ""
-  private var clientId: String = ""
   private var menuClose: MenuItem? = null
   private var request: AccountCreateRequest? = null
   private var requestAccount: BankAccountDetailsN? = null
@@ -63,8 +62,6 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
   override fun onCreateView() {
     super.onCreateView()
     setOnClickListener(binding?.submitBtn, binding?.whyBtn, binding?.verificationBtn)
-    fpId = arguments?.getString(IntentConstant.FP_ID.name) ?: ""
-    clientId = arguments?.getString(IntentConstant.CLIENT_ID.name) ?: ""
     isServiceCreation = arguments?.getBoolean(IntentConstant.IS_SERVICE_CREATION.name) ?: false
     binding?.edtIfsc?.afterTextChanged { isIfscValid(binding?.edtIfsc?.text.toString().trim()) }
     getUserDetails()
@@ -98,7 +95,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
   private fun getUserDetails(isPendingToastShow: Boolean = false, isServiceCreation: Boolean = false) {
     showProgress()
-    viewModel?.userAccountDetails(fpId, clientId)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.userAccountDetails(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
       val response = it as? AccountDetailsResponse
       if (it.isSuccess() && response?.result?.bankAccountDetails != null) {
@@ -223,7 +220,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
   private fun createApiAccount() {
     showProgress()
     request = AccountCreateRequest(
-      clientId = clientId, floatingPointId = fpId, bankAccountDetails = requestAccount, additionalKYCDocuments = AccountCreateRequest().setKYCBlankValue(),
+      clientId = clientId, floatingPointId = sessionLocal.fPID, bankAccountDetails = requestAccount, additionalKYCDocuments = AccountCreateRequest().setKYCBlankValue(),
       registeredBusinessAddress = AccountCreateRequest().setAddressBlankValue(), registeredBusinessContactDetails = AccountCreateRequest().setContactDetailBlankValue(),
       taxDetails = AccountCreateRequest().setTaxBlankValue()
     )
@@ -241,7 +238,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
   private fun updateApiAccount() {
     showProgress()
-    viewModel?.updateAccount(fpId, clientId, requestAccount)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.updateAccount(sessionLocal.fPID, clientId, requestAccount)?.observeOnce(viewLifecycleOwner, {
       val response = it as? AccountCreateResponse
       if (response?.isSuccess() == true) {
         getUserDetails(isServiceCreation = isServiceCreation)

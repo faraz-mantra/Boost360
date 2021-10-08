@@ -22,8 +22,9 @@ import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
 
 class AddAccountStartFragment : AppBaseFragment<FragmentAddAccountStartBinding, BaseViewModel>(), AppOnZeroCaseClicked {
-  private  val TAG = "AddAccountStartFragment"
-  private lateinit var appZeroCases:AppFragmentZeroCase
+  private val TAG = "AddAccountStartFragment"
+  private lateinit var appZeroCases: AppFragmentZeroCase
+
   companion object {
     @JvmStatic
     fun newInstance(bundle: Bundle? = null): AddAccountStartFragment {
@@ -45,18 +46,15 @@ class AddAccountStartFragment : AppBaseFragment<FragmentAddAccountStartBinding, 
     super.onCreateView()
     setOnClickListener(binding?.closeBtn, binding?.startBtn)
     (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(getString(R.string.my_bank_acccount))
-    appZeroCases = AppRequestZeroCaseBuilder(AppZeroCases.MY_BANK_ACCOUNT,this,baseActivity).getRequest().build()
-    addFragmentReplace(R.id.child_container,appZeroCases,false)
+    appZeroCases = AppRequestZeroCaseBuilder(AppZeroCases.MY_BANK_ACCOUNT, this, baseActivity).getRequest().build()
+    addFragmentReplace(R.id.child_container, appZeroCases, false)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 202) {
       val output = Intent()
-      output.putExtra(
-        IntentConstant.USER_BANK_DETAIL.name,
-        data?.getSerializableExtra(IntentConstant.USER_BANK_DETAIL.name)
-      )
+      output.putExtra(IntentConstant.USER_BANK_DETAIL.name, data?.getSerializableExtra(IntentConstant.USER_BANK_DETAIL.name))
       baseActivity.setResult(AppCompatActivity.RESULT_OK, output)
       baseActivity.finish()
     }
@@ -67,12 +65,7 @@ class AddAccountStartFragment : AppBaseFragment<FragmentAddAccountStartBinding, 
     when (v) {
       binding?.closeBtn -> baseActivity.onNavPressed()
       binding?.startBtn -> arguments?.let {
-        startFragmentAccountActivity(
-          FragmentType.BANK_ACCOUNT_DETAILS,
-          it,
-          isResult = true,
-          requestCode = 202
-        )
+        startFragmentAccountActivity(FragmentType.BANK_ACCOUNT_DETAILS, it, isResult = true, requestCode = 202)
         requireActivity().finish()
       }
     }
@@ -81,6 +74,7 @@ class AddAccountStartFragment : AppBaseFragment<FragmentAddAccountStartBinding, 
   override fun primaryButtonClicked() {
     arguments?.let {
       startFragmentAccountActivity(FragmentType.BANK_ACCOUNT_DETAILS, it, isResult = true, requestCode = 202)
+      requireActivity().finish()
     }
   }
 

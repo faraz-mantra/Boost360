@@ -9,6 +9,7 @@ import android.util.Log
 import com.appservice.model.accountDetails.saveBanKDetail
 import com.boost.presignin.model.other.AccountDetailsResponse
 import com.boost.presignin.model.other.PaymentKycDataResponse
+import com.boost.presignin.model.other.saveBusinessKycDetail
 import com.boost.presignin.rest.repository.WebActionBoostKitRepository
 import com.boost.presignin.rest.repository.WithFloatRepository
 import com.boost.presignin.rest.repository.WithFloatTwoRepository
@@ -17,7 +18,6 @@ import com.framework.models.toLiveData
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.google.firebase.iid.FirebaseInstanceId
-import com.google.gson.Gson
 import com.onboarding.nowfloats.constant.PreferenceConstant
 import com.onboarding.nowfloats.model.channel.statusResponse.CHANNEL_STATUS_SUCCESS
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
@@ -57,23 +57,22 @@ class APIService : Service() {
 
   private fun checkUserAccountDetails() {
     WithFloatRepository.checkUserAccount(userSessionManager?.fPID, clientId).toLiveData().observeForever {
-        val data = it as? AccountDetailsResponse
-        if (it.isSuccess()) {
-          if (data?.result?.bankAccountDetails != null) {
-            data?.result?.bankAccountDetails?.saveBanKDetail()
-            userSessionManager?.setAccountSave(true)
-          } else userSessionManager?.setAccountSave(false)
-        }
+      val data = it as? AccountDetailsResponse
+      if (it.isSuccess()) {
+        if (data?.result?.bankAccountDetails != null) {
+          data?.result?.bankAccountDetails?.saveBanKDetail()
+          userSessionManager?.setAccountSave(true)
+        } else userSessionManager?.setAccountSave(false)
       }
+    }
   }
 
   private fun hitSelfBrandedKycAPI() {
     WebActionBoostKitRepository.getSelfBrandedKyc(query = getQuery()).toLiveData().observeForever {
       val paymentKycDataResponse = it as? PaymentKycDataResponse
-      paymentKycDataResponse?.data
-      Log.i("hitSelfBrandedKycAPI: ", Gson().toJson(paymentKycDataResponse))
-      if (it.isSuccess()) {
-        userSessionManager?.isSelfBrandedKycAdd = paymentKycDataResponse != null && paymentKycDataResponse.data.isNullOrEmpty().not()
+      if (it.isSuccess() && paymentKycDataResponse?.data.isNullOrEmpty().not()) {
+        userSessionManager?.isSelfBrandedKycAdd = true
+        paymentKycDataResponse?.data?.first()?.saveBusinessKycDetail()
       }
     }
   }

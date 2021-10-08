@@ -10,7 +10,7 @@
       "icon": "business_kyc",
       "actionBtn": {
         "color": "#EB5757",
-        "title": "Need action",
+        "title": "Add",
         "text_color": "#FFFFFF"
       },
       "isActionButtonEnabled": true,
