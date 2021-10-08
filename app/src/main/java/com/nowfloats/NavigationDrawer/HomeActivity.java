@@ -60,6 +60,7 @@ import com.boost.upgrades.UpgradeActivity;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.dashboard.controller.DashboardFragmentContainerActivityKt;
+import com.framework.analytics.SentryController;
 import com.framework.utils.AppsFlyerUtils;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -353,6 +354,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 }
             });
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             Log.i("Ria_Register ", "API Exception:" + e);
             e.printStackTrace();
         }
@@ -372,6 +374,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 }
             });
         }catch(Exception e){
+        SentryController.INSTANCE.captureException(e);
             BoostLog.i("GCM chat ","reg exp");
             e.printStackTrace();
         }*/
@@ -536,6 +539,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 try {
                     HomeActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
                 } catch (android.content.ActivityNotFoundException anfe) {
+                    SentryController.INSTANCE.captureException(anfe);
                     HomeActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                 }
             } else if (url.contains(getResources().getString(R.string.deeplink_analytics))) {
@@ -761,8 +765,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             store.put("FpId", session.getFPID());
             MixPanelController.identify(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), store, session.getFPID());
         } catch (JSONException e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         } catch (Exception ex) {
+            SentryController.INSTANCE.captureException(ex);
             ex.printStackTrace();
         }
     }
@@ -848,7 +854,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
             ZopimChat.init("MJwgUJn9SKy2m9ooxsQgJSeTSR5hU3A5");
         } catch (Exception e) {
-
+            SentryController.INSTANCE.captureException(e);
         }
     }
 
@@ -868,6 +874,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
                             mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
                         } catch (android.content.ActivityNotFoundException anfe) {
+                            SentryController.INSTANCE.captureException(anfe);
                             mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                         }
                     }
@@ -887,6 +894,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 App_Update_Async_Task obj = new App_Update_Async_Task(this, String.valueOf(curVersion));
                 obj.execute();
             } catch (PackageManager.NameNotFoundException e) {
+                SentryController.INSTANCE.captureException(e);
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -1085,6 +1093,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         try {
                             YoYo.with(Techniques.ZoomIn).duration(1000).playOn(cardView);
                         } catch (Exception e) {
+                            SentryController.INSTANCE.captureException(e);
                             e.printStackTrace();
                         }
                     }
@@ -1140,6 +1149,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                                 }
                             }).duration(1000).playOn(cardView);
                         } catch (Exception e) {
+                            SentryController.INSTANCE.captureException(e);
                             e.printStackTrace();
                         }
                     }
@@ -1186,6 +1196,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         try {
             fileInputStream = new FileInputStream(cacheFile);
         } catch (FileNotFoundException e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
@@ -1530,6 +1541,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         Toast.makeText(getApplicationContext(), getString(R.string.auth_failed_please_try_again_later), Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
+                    SentryController.INSTANCE.captureException(e);
 //                                e.printStackTrace();
                     Toast.makeText(getApplicationContext(), getString(R.string.auth_failed_please_try_again_later), Toast.LENGTH_SHORT).show();
                 }
@@ -1585,6 +1597,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     .get(3).child(1).child(0).child(0).ownText();
             return newer_version_available(getPackageManager().getPackageInfo(getPackageName(), 0).versionName, new_version);
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             return false;
         }
     }
@@ -1657,6 +1670,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
 
@@ -1723,7 +1737,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     @Subscribe
     public void post_getFPDetails(Get_FP_Details_Event response) {
-        Log.i(TAG, "post_getFPDetails: ");
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null && bundle.containsKey("Username")) {
@@ -1842,6 +1855,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         }
                     });
                 } catch (Exception e) {
+                    SentryController.INSTANCE.captureException(e);
                     e.printStackTrace();
                 }
             }
@@ -1868,6 +1882,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         headerText.setSingleLine(true);
                     }
                 } catch (Exception e) {
+                    SentryController.INSTANCE.captureException(e);
                     e.printStackTrace();
                 }
             }
@@ -1917,6 +1932,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         if (CustomPageFragment.recyclerView != null)
                             CustomPageFragment.recyclerView.invalidate();
                     } catch (Exception e) {
+                        SentryController.INSTANCE.captureException(e);
                         e.printStackTrace();
                     }
                 }
@@ -1991,6 +2007,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             return AppOpsManager.MODE_ALLOWED == mode;
 
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             return false;
         }
 

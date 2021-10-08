@@ -910,14 +910,6 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   private fun getErrorMessage(): String {
     return when (session?.experienceCode) {
       "DOC", "HOS" -> resources.getString(R.string.please_add_doctor_first)
-      "EDU" -> getString(R.string.please_add_teacher_first)
-      "SPA" -> getString(R.string.masseur_masseuse_not_added)
-      "HOT" -> getString(R.string.please_add_hotel_room_first)
-      "CAF" -> getString(R.string.please_add_table_first)
-      "SAL" -> getString(R.string.please_add_barber_first)
-      "MFG" -> getString(R.string.please_add_commodity_first)
-      "RTL" -> getString(R.string.please_add_retail_commodity_first)
-      "SVC" -> getString(R.string.please_add_service_first)
       else -> ""
     }
   }

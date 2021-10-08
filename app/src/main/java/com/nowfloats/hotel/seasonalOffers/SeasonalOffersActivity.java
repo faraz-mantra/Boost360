@@ -12,12 +12,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.boost.upgrades.UpgradeActivity;
 import com.framework.views.fabButton.FloatingActionButton;
+import com.framework.views.zero.old.AppFragmentZeroCase;
+import com.framework.views.zero.old.AppOnZeroCaseClicked;
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
+import com.framework.views.zero.old.AppZeroCases;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
@@ -30,6 +35,7 @@ import com.nowfloats.hotel.seasonalOffers.adapter.SeasonalOffersAdapter;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
+import com.thinksity.databinding.ActivitySeasonalOffersBinding;
 
 import org.json.JSONObject;
 
@@ -45,31 +51,49 @@ import retrofit.converter.GsonConverter;
 
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
-public class SeasonalOffersActivity extends AppCompatActivity implements SeasonalOffersListener {
+public class SeasonalOffersActivity extends AppCompatActivity implements SeasonalOffersListener, AppOnZeroCaseClicked {
 
     UserSessionManager session;
     SeasonalOffersAdapter adapter;
     RecyclerView recyclerView;
-    LinearLayout secondaryLayout;
-    TextView buyItemButton;
     List<Data> dataList;
+    ActivitySeasonalOffersBinding binding;
+    String WIDGET_KEY="OFFERS";
+    private AppFragmentZeroCase appFragmentZeroCase;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_seasonal_offers);
+        session = new UserSessionManager(this, this);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_seasonal_offers);
+        appFragmentZeroCase =new AppRequestZeroCaseBuilder(AppZeroCases.SEASONAL_OFFERS,this,this,isPremium()).getRequest().build();
+        getSupportFragmentManager().beginTransaction().add(binding.childContainer.getId(),appFragmentZeroCase).commit();
+
 
         initView();
     }
 
+    private Boolean isPremium(){
+        return /*session.getStoreWidgets().contains(WIDGET_KEY);*/ true;
+    }
+
+    private void nonEmptyView() {
+        binding.mainlayout.setVisibility(View.VISIBLE);
+        binding.childContainer.setVisibility(View.GONE);
+    }
+
+
+    private void emptyView() {
+        binding.mainlayout.setVisibility(View.GONE);
+        binding.childContainer.setVisibility(View.VISIBLE);
+
+    }
     private void initView() {
 
-        session = new UserSessionManager(this, this);
         adapter = new SeasonalOffersAdapter(new ArrayList(), this);
         recyclerView = findViewById(R.id.recycler_view);
-        secondaryLayout = findViewById(R.id.secondary_layout);
-        buyItemButton = findViewById(R.id.buy_item);
+
 
         //setHeader
         setHeader();
@@ -77,7 +101,6 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
         //this feature is free to use
 //        if (Constants.StoreWidgets.contains("OFFERS")) {
         recyclerView.setVisibility(View.VISIBLE);
-        secondaryLayout.setVisibility(View.GONE);
         initialiseRecycler();
 //        }else{
 //            recyclerView.setVisibility(View.GONE);
@@ -91,18 +114,17 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
         super.onResume();
         //this feature is free to use
 //        if (Constants.StoreWidgets.contains("OFFERS")) {
-        loadData();
 //        }
+
+        if (isPremium()){
+            nonEmptyView();
+            loadData();
+        }else {
+            emptyView();
+        }
     }
 
-    void showSecondaryLayout() {
-        buyItemButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initiateBuyFromMarketplace();
-            }
-        });
-    }
+
 
     void loadData() {
         try {
@@ -126,11 +148,11 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
                     dataList = getOffersResponse.getData();
                     if (dataList.size() > 0) {
                         updateRecyclerView();
+                        nonEmptyView();
                         recyclerView.setVisibility(View.VISIBLE);
-                        secondaryLayout.setVisibility(View.GONE);
                     } else {
+                        emptyView();
                         recyclerView.setVisibility(View.GONE);
-                        secondaryLayout.setVisibility(View.VISIBLE);
                     }
                 }
 
@@ -267,11 +289,37 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
             intent.putExtra("mobileNo", "9160004303");
         }
         intent.putExtra("profileUrl", session.getFPLogo());
-        intent.putExtra("buyItemKey", "OFFERS");
+        intent.putExtra("buyItemKey", WIDGET_KEY);
         startActivity(intent);
         new Handler().postDelayed(() -> {
             progressDialog.dismiss();
             finish();
         }, 1000);
+    }
+
+    @Override
+    public void primaryButtonClicked() {
+        if (isPremium()){
+            Intent intent = new Intent(getApplicationContext(), SeasonalOffersDetailsActivity.class);
+            intent.putExtra("ScreenState", "new");
+            startActivity(intent);
+        }else {
+            initiateBuyFromMarketplace();
+        }
+    }
+
+    @Override
+    public void secondaryButtonClicked() {
+
+    }
+
+    @Override
+    public void ternaryButtonClicked() {
+
+    }
+
+    @Override
+    public void appOnBackPressed() {
+
     }
 }

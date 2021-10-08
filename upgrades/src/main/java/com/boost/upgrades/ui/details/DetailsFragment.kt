@@ -296,6 +296,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         money.text = "Free Forever"
       }
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
       SentryController.captureException(e)
     }

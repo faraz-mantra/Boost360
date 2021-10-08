@@ -226,7 +226,7 @@ public class Card_Full_View_Fragment extends Fragment {
                 };
 
                 new Picasso.Builder(getActivity())
-                        .downloader(new OkHttp3Downloader(Utils.getAuthClient()))
+                        .downloader(new OkHttp3Downloader(Utils.getAuthClient(url)))
                         .build()
                         .load(url)
                         .into(target);
@@ -300,7 +300,7 @@ public class Card_Full_View_Fragment extends Fragment {
                             url = imageUri;
                         }
                         new Picasso.Builder(getActivity())
-                                .downloader(new OkHttp3Downloader(Utils.getAuthClient()))
+                                .downloader(new OkHttp3Downloader(Utils.getAuthClient(url)))
                                 .build()
                                 .load(url)
                                 .into(new Target() {

@@ -42,6 +42,7 @@ import androidx.core.content.ContextCompat;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.boost.upgrades.UpgradeActivity;
+import com.framework.analytics.SentryController;
 import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem;
 import com.framework.models.caplimit_feature.PropertiesItem;
 import com.framework.models.firestore.FirestoreManager;
@@ -218,6 +219,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
               }
             });
       } catch (Exception e) {
+        SentryController.INSTANCE.captureException(e);
         e.printStackTrace();
         Methods.showSnackBarNegative(this, getString(R.string.something_went_wrong_try_again));
         materialProgress.dismiss();
@@ -339,6 +341,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
               });
             }
           } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
             Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
             materialProgress.dismiss();
@@ -728,6 +731,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
         }
 
       } catch (Exception e) {
+        SentryController.INSTANCE.captureException(e);
         e.printStackTrace();
       } catch (OutOfMemoryError E) {
         E.printStackTrace();
@@ -797,6 +801,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
         startActivityForResult(captureIntent, Constants.CAMERA_PHOTO);
       }
     } catch (ActivityNotFoundException anfe) {
+      SentryController.INSTANCE.captureException(anfe);
       // display an error message
       String errorMessage = getString(R.string.device_does_not_support_capturing_image);
       Methods.showSnackBarNegative(activity, errorMessage);
@@ -822,6 +827,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
         startActivityForResult(i, Constants.GALLERY_PHOTO);
       }
     } catch (ActivityNotFoundException anfe) {
+      SentryController.INSTANCE.captureException(anfe);
       // display an error message
       String errorMessage = getString(R.string.device_does_not_support_capturing_image);
       Methods.showSnackBarNegative(activity, errorMessage);

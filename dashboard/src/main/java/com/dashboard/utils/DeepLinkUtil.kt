@@ -103,6 +103,7 @@ const val deeplink_dashboard_tab = "dashboard_tab"
 const val deeplink_website_tab = "website_tab"
 const val deeplink_enquiries_tab = "enquiries_tab"
 const val deeplink_more_tab = "more_tab"
+const val deeplink_owner_info = "owner_info"
 const val visit_to_new_website = "Woohoo! We have a new website. Visit it at"
 const val tag_for_partners = ".nowfloats.com"
 
@@ -268,6 +269,8 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_expert_contact)) {
           Log.v("deeplink_expert_contact", " $url $buyItemKey")
           baseActivity.initiateAddonMarketplace(session, false, "expertContact", "")
+        } else if (url.contains(deeplink_owner_info)) {
+          baseActivity.startOwnersInfo(session)
         }
       }
     } catch (e: Exception) {

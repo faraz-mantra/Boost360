@@ -1,230 +1,338 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-  <data>
+    <data>
 
-  </data>
+    </data>
 
-  <androidx.core.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
-
-
-    <RelativeLayout
-      android:id="@+id/rl_staff_container"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/yellow_ffb900">
-
-      <LinearLayout
-        android:id="@+id/ll_name_age"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/civ_staff_profile_img"
-        android:layout_marginStart="@dimen/size_16"
-        android:layout_marginBottom="@dimen/size_40"
-        android:layout_toEndOf="@id/civ_staff_profile_img"
-        android:orientation="vertical">
-
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_staff_name"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:ellipsize="end"
-          android:maxLines="1"
-          android:textColor="@color/white"
-          app:textType="HEADING_7"
-          tools:text="Gaurav Singh" />
-
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_staff_gender_age"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:textColor="@color/white"
-          app:textType="CAPTION"
-          tools:text="Male ,26" />
-      </LinearLayout>
-
-      <com.framework.views.customViews.CustomImageView
-        android:id="@+id/civ_menu"
-        android:layout_width="@dimen/size_25"
-        android:layout_height="@dimen/size_25"
-        android:layout_alignBottom="@id/civ_staff_profile_img"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="@dimen/size_16"
-        android:layout_marginEnd="@dimen/size_16"
-        android:layout_marginBottom="@dimen/size_50"
-        android:background="?selectableItemBackgroundBorderless"
-        android:paddingVertical="@dimen/size_4"
-        android:src="@drawable/ic_menu_dotted" />
-
-      <RelativeLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/civ_staff_profile_img"
-        android:layout_marginTop="-25dp"
-        android:background="@drawable/bg_rounded_top_white"
-        android:paddingVertical="@dimen/size_16"
-        android:paddingStart="@dimen/size_25"
-        android:paddingEnd="@dimen/size_30">
+        android:background="@color/white">
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_edit"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignParentEnd="true"
-          android:text="@string/u_edit_info_u"
-          android:textColor="@color/blue_4889f8"
-          app:fontFamily="@font/semi_bold" />
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_about_heading"
-          style="@style/TextStaffProfileHeadings"
-          android:layout_below="@id/ctv_edit"
-          android:layout_marginTop="@dimen/size_10"
-          tools:text="About Gaurav Singh" />
+        <RelativeLayout
+            android:id="@+id/rl_staff_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/yellow_ffb900">
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_about_staff"
-          style="@style/StaffProfileTextContent"
-          android:layout_below="@id/ctv_about_heading"
-          android:layout_marginTop="@dimen/size_5"
-          tools:text="Gaurav is from Mumbai, Maharashtra. He works full-time at All in one  Spa. He is 24 years old. He likes to play table tennis and Cricket. His hobbies are playing gittar and singing songs." />
+            <LinearLayout
+                android:id="@+id/ll_name_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/civ_staff_profile_img"
+                android:layout_marginStart="@dimen/size_16"
+                android:layout_marginBottom="@dimen/size_40"
+                android:layout_toEndOf="@id/civ_staff_profile_img"
+                android:orientation="vertical">
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_heading_specialization"
-          style="@style/TextStaffProfileHeadings"
-          android:layout_below="@id/ctv_about_staff"
-          android:layout_marginTop="@dimen/size_16"
-          android:text="@string/special" />
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_staff_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    app:textType="HEADING_7"
+                    tools:text="Gaurav Singh" />
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_specialization"
-          style="@style/StaffProfileTextContent"
-          android:layout_below="@id/ctv_heading_specialization"
-          android:layout_marginTop="@dimen/size_5"
-          tools:text="Ani-aging Therapy, Hair fall treatment, face massage therapy." />
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_staff_gender_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    app:textType="CAPTION"
+                    tools:text="Male ,26" />
+            </LinearLayout>
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_heading_experience"
-          style="@style/TextStaffProfileHeadings"
-          android:layout_below="@id/ctv_specialization"
-          android:layout_marginTop="@dimen/size_16"
-          android:text="@string/year_of_experience" />
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/civ_menu"
+                android:layout_width="@dimen/size_25"
+                android:layout_height="@dimen/size_25"
+                android:layout_alignBottom="@id/civ_staff_profile_img"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/size_16"
+                android:layout_marginEnd="@dimen/size_16"
+                android:layout_marginBottom="@dimen/size_50"
+                android:background="?selectableItemBackgroundBorderless"
+                android:paddingVertical="@dimen/size_4"
+                android:src="@drawable/ic_menu_dotted" />
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_experience"
-          style="@style/StaffProfileTextContent"
-          android:layout_below="@id/ctv_heading_experience"
-          android:layout_marginTop="@dimen/size_5"
-          tools:text="2-3 Years" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/civ_staff_profile_img"
+                android:layout_marginTop="-25dp"
+                android:background="@drawable/bg_rounded_top_white"
+                android:paddingVertical="@dimen/size_16"
+                android:paddingStart="@dimen/size_25"
+                android:paddingEnd="@dimen/size_30">
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_heading_services"
-          style="@style/TextStaffProfileHeadings"
-          android:layout_below="@id/ctv_experience"
-          android:layout_marginTop="@dimen/size_16"
-          android:text="@string/services_provided" />
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/u_edit_info_u"
+                    android:textColor="@color/blue_4889f8"
+                    app:fontFamily="@font/semi_bold" />
 
-        <LinearLayout
-          android:id="@+id/ll_services"
-          style="@style/ll_match_wrap_vertical"
-          android:layout_below="@id/ctv_heading_services"
-          android:layout_marginTop="@dimen/size_5"
-          android:orientation="vertical" />
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_about_heading"
+                    style="@style/TextStaffProfileHeadings"
+                    android:layout_below="@id/ctv_edit"
+                    android:layout_marginTop="@dimen/size_10"
+                    tools:text="About Gaurav Singh" />
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_edit_timing"
-          style="@style/StaffProfileEditText"
-          android:layout_alignBaseline="@id/ctv_heading_timing"
-          android:visibility="visible"
-          app:fontFamily="@font/semi_bold" />
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_about_staff"
+                    style="@style/StaffProfileTextContent"
+                    android:layout_below="@id/ctv_about_heading"
+                    android:layout_marginTop="@dimen/size_5"
+                    tools:text="Gaurav is from Mumbai, Maharashtra. He works full-time at All in one  Spa. He is 24 years old. He likes to play table tennis and Cricket. His hobbies are playing gittar and singing songs." />
+                <!--doctor profile-->
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_business_license_heading"
+                    style="@style/TextStaffProfileHeadings"
+                    android:layout_below="@id/ctv_about_staff"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:text="@string/business_license_" />
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_heading_timing"
-          style="@style/TextStaffProfileHeadings"
-          android:layout_below="@id/ll_services"
-          android:layout_marginTop="@dimen/size_16"
-          android:text="@string/staff_timing"
-          android:visibility="visible" />
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_business_license"
+                    style="@style/StaffProfileTextContent"
+                    android:visibility="gone"
+                    android:layout_below="@id/ctv_business_license_heading"
+                    android:layout_marginTop="@dimen/size_5"
+                    tools:text="dajsdbasjkdbaskjdas" />
+              <com.framework.views.customViews.CustomTextView
+                  android:id="@+id/ctv_business_appointment_heading"
+                  style="@style/TextStaffProfileHeadings"
+                  android:visibility="gone"
+                  android:layout_below="@id/ctv_business_license"
+                  android:layout_marginTop="@dimen/size_10"
+                  android:text="@string/appointment_booking_window_for_patients" />
 
-        <LinearLayout
-          android:id="@+id/ll_timing_container"
-          style="@style/ll_match_wrap_vertical"
-          android:layout_below="@id/ctv_heading_timing"
-          android:layout_marginTop="@dimen/size_5"
-          android:layout_toStartOf="@+id/ctv_edit_timing" />
+              <com.framework.views.customViews.CustomTextView
+                  android:id="@+id/ctv_business_appointment"
+                  style="@style/StaffProfileTextContent"
+                  android:visibility="gone"
+                  android:layout_below="@id/ctv_business_appointment_heading"
+                  android:layout_marginTop="@dimen/size_5"
+                  tools:text="dajsdbasjkdbaskjdas" />
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_edit_services"
-          style="@style/StaffProfileEditText"
-          android:layout_below="@id/ctv_experience"
-          android:layout_alignBaseline="@id/ctv_heading_services"
-          app:fontFamily="@font/semi_bold" />
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_heading_specialization"
+                    style="@style/TextStaffProfileHeadings"
+                    android:layout_below="@id/ctv_business_appointment"
+                    android:layout_marginTop="@dimen/size_16"
+                    android:visibility="visible"
+                    android:text="@string/special" />
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_edit_leaves"
-          style="@style/StaffProfileEditText"
-          android:layout_below="@id/ll_timing_container"
-          android:layout_alignBaseline="@id/ctv_heading_leaves"
-          android:visibility="gone"
-          app:fontFamily="@font/semi_bold" />
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_specialization"
+                    style="@style/StaffProfileTextContent"
+                    android:layout_below="@id/ctv_heading_specialization"
+                    android:layout_marginTop="@dimen/size_5"
+                    tools:text="Ani-aging Therapy, Hair fall treatment, face massage therapy." />
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_heading_leaves"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_below="@id/ll_timing_container"
-          android:layout_marginTop="@dimen/size_10"
-          android:fontFamily="@font/regular"
-          android:text="@string/upcoming_leaves"
-          android:textColor="@color/black"
-          android:textFontWeight="600"
-          android:textSize="14sp"
-          android:visibility="gone" />
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_heading_experience"
+                    style="@style/TextStaffProfileHeadings"
+                    android:layout_below="@id/ctv_specialization"
+                    android:layout_marginTop="@dimen/size_16"
+                    android:text="@string/year_of_experience" />
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_leaves_subheading"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_below="@id/ctv_heading_leaves"
-          android:layout_marginTop="@dimen/size_5"
-          android:text="@string/upcoming_leave_s"
-          android:textColor="#4A90E2"
-          android:textSize="12sp"
-          android:visibility="gone"
-          app:fontFamily="@font/semi_bold" />
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_experience"
+                    style="@style/StaffProfileTextContent"
+                    android:layout_below="@id/ctv_heading_experience"
+                    android:layout_marginTop="@dimen/size_5"
+                    tools:text="2-3 Years" />
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_leaves"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_below="@id/ctv_leaves_subheading"
-          android:layout_marginTop="@dimen/size_10"
-          android:fontFamily="@font/regular"
-          android:textColor="@color/gray_4e4e4e"
-          android:textSize="14sp"
-          android:visibility="gone"
-          tools:text="🔵 Mon, 23 Dec 2020 - Wed, 25 Dec 2020" />
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_heading_services"
+                    style="@style/TextStaffProfileHeadings"
+                    android:layout_below="@id/ctv_experience"
+                    android:layout_marginTop="@dimen/size_16"
+                    android:text="@string/services_provided" />
 
-      </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/ll_services"
+                    style="@style/ll_match_wrap_vertical"
+                    android:layout_below="@id/ctv_heading_services"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:orientation="vertical" />
 
-      <com.framework.views.roundedimageview.RoundedImageView
-        android:id="@+id/civ_staff_profile_img"
-        android:layout_width="@dimen/size_100"
-        android:layout_height="@dimen/size_100"
-        android:layout_marginStart="@dimen/size_20"
-        android:scaleType="centerCrop"
-        app:riv_border_color="@color/white"
-        app:riv_border_width="2dip"
-        app:riv_corner_radius="@dimen/size_8"
-        app:riv_mutate_background="true"
-        app:riv_oval="false"
-        tools:srcCompat="@drawable/dummy_staff_img" />
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_edit_timing"
+                    style="@style/StaffProfileEditText"
+                    android:layout_alignBaseline="@id/ctv_heading_timing"
+                    android:visibility="visible"
+                    app:fontFamily="@font/semi_bold" />
 
-    </RelativeLayout>
-  </androidx.core.widget.NestedScrollView>
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_heading_timing"
+                    style="@style/TextStaffProfileHeadings"
+                    android:layout_below="@id/ll_services"
+                    android:layout_marginTop="@dimen/size_16"
+                    android:text="@string/staff_timing"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/ll_timing_container"
+                    style="@style/ll_match_wrap_vertical"
+                    android:layout_below="@id/ctv_heading_timing"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:layout_toStartOf="@+id/ctv_edit_timing" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_edit_services"
+                    style="@style/StaffProfileEditText"
+                    android:layout_below="@id/ctv_experience"
+                    android:layout_alignBaseline="@id/ctv_heading_services"
+                    app:fontFamily="@font/semi_bold" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_edit_leaves"
+                    style="@style/StaffProfileEditText"
+                    android:layout_below="@id/ll_timing_container"
+                    android:layout_alignBaseline="@id/ctv_heading_leaves"
+                    android:visibility="gone"
+                    app:fontFamily="@font/semi_bold" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_heading_leaves"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ll_timing_container"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/upcoming_leaves"
+                    android:textColor="@color/black"
+                    android:textFontWeight="600"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_leaves_subheading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ctv_heading_leaves"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:text="@string/upcoming_leave_s"
+                    android:textColor="#4A90E2"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    app:fontFamily="@font/semi_bold" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_leaves"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ctv_leaves_subheading"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="@color/gray_4e4e4e"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    tools:text="🔵 Mon, 23 Dec 2020 - Wed, 25 Dec 2020" />
+              <androidx.appcompat.widget.LinearLayoutCompat
+                  android:layout_width="match_parent"
+                  android:orientation="vertical"
+                  android:visibility="gone"
+                  android:id="@+id/ll_doctors_additional_info"
+                  android:layout_marginTop="@dimen/size_16"
+                  android:layout_below="@id/ctv_leaves"
+                  android:layout_height="wrap_content">
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_education_heading"
+                    style="@style/TextStaffProfileHeadings"
+                    android:text="@string/education" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_education"
+                    style="@style/StaffProfileTextContent"
+                    android:layout_marginTop="@dimen/size_5"
+                    tools:text="MMBS" />
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_mob_heading"
+                    style="@style/TextStaffProfileHeadings"
+                    android:layout_marginTop="@dimen/size_16"
+                    android:text="@string/business_mob_number" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_mob_no"
+                    style="@style/StaffProfileTextContent"
+                    android:layout_marginTop="@dimen/size_5"
+                    tools:text="9792445096" />
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_membership_heading"
+                    style="@style/TextStaffProfileHeadings"
+                    android:layout_marginTop="@dimen/size_16"
+                    android:text="@string/membership" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_membership"
+                    style="@style/StaffProfileTextContent"
+                    android:layout_marginTop="@dimen/size_5"
+                    tools:text="Hydrabad association of medical council" />
+                 <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_registration_heading"
+                    style="@style/TextStaffProfileHeadings"
+                    android:layout_marginTop="@dimen/size_16"
+                    android:text="@string/registration" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_registration"
+                    style="@style/StaffProfileTextContent"
+                    android:layout_marginTop="@dimen/size_5"
+                    tools:text="MCI" />
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_appointment_type_heading"
+                    style="@style/TextStaffProfileHeadings"
+                    android:layout_marginTop="@dimen/size_16"
+                    android:text="@string/appointment_type" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_appointment_type"
+                    style="@style/StaffProfileTextContent"
+                    android:layout_marginTop="@dimen/size_5"
+                    tools:text="In-person consultation" />
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_doctors_signature_heading"
+                    style="@style/TextStaffProfileHeadings"
+                    android:layout_marginTop="@dimen/size_16"
+                    android:text="@string/doctor_s_signature" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/civ_doctors_signature"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:layout_width="177dp"
+                    android:layout_height="@dimen/size_68"
+                   android:src="@drawable/placeholder_image_n" />
+
+              </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </RelativeLayout>
+
+            <com.framework.views.roundedimageview.RoundedImageView
+                android:id="@+id/civ_staff_profile_img"
+                android:layout_width="@dimen/size_100"
+                android:layout_height="@dimen/size_100"
+                android:layout_marginStart="@dimen/size_20"
+                android:scaleType="centerCrop"
+                app:riv_border_color="@color/white"
+                app:riv_border_width="2dip"
+                app:riv_corner_radius="@dimen/size_8"
+                app:riv_mutate_background="true"
+                app:riv_oval="false"
+                tools:srcCompat="@drawable/dummy_staff_img" />
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

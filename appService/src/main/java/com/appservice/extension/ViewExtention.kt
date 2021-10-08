@@ -11,6 +11,7 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Base64
 import android.util.Log
+import com.framework.analytics.SentryController
 import com.framework.views.customViews.CustomTextField
 import java.io.File
 import java.security.MessageDigest
@@ -65,9 +66,9 @@ fun Context.Get_hash_key() {
       Log.e("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT))
     }
   } catch (e: PackageManager.NameNotFoundException) {
-
+    SentryController.captureException(e)
   } catch (e: NoSuchAlgorithmException) {
-
+    SentryController.captureException(e)
   }
 }
 

@@ -16,6 +16,7 @@ import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.text.TextUtils
 import android.util.Log
+import com.framework.analytics.SentryController
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -82,6 +83,7 @@ class FileUtils(var context: Activity) {
                 )
                 getDataColumn(context, contentUri, null, null)
               } catch (e: NumberFormatException) {
+                SentryController.captureException(e)
                 //In Android 8 and Android P the id is not a number
                 uri.path?.replaceFirst("^/document/raw:", "")?.replaceFirst("^raw:", "")
               }
@@ -97,6 +99,7 @@ class FileUtils(var context: Activity) {
               Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id)
             )
           } catch (e: NumberFormatException) {
+            SentryController.captureException(e)
             e.printStackTrace()
           }
           if (contentUri != null) {
@@ -157,6 +160,7 @@ class FileUtils(var context: Activity) {
             return cursor.getString(columnIndex)
           }
         } catch (e: Exception) {
+          SentryController.captureException(e)
           e.printStackTrace()
         }
       }
@@ -234,6 +238,7 @@ class FileUtils(var context: Activity) {
       Log.e("File Path", "Path " + file.path)
       Log.e("File Size", "Size " + file.length())
     } catch (e: Exception) {
+      SentryController.captureException(e)
       Log.e("Exception", e.message ?: "")
     }
     return file.path
@@ -287,6 +292,7 @@ class FileUtils(var context: Activity) {
       inputStream?.close()
       outputStream.close()
     } catch (e: Exception) {
+      SentryController.captureException(e)
       Log.e("Exception", e.message ?: "")
     }
     return output.path
@@ -379,6 +385,7 @@ class FileUtils(var context: Activity) {
       `in`?.close()
       b
     } catch (e: IOException) {
+      SentryController.captureException(e)
       null
     } catch (e: OutOfMemoryError) {
       e.printStackTrace()
@@ -404,6 +411,7 @@ class FileUtils(var context: Activity) {
         ) as? Int
         return rotation?.toFloat() ?: 0F
       } catch (e: IOException) {
+        SentryController.captureException(e)
         e.printStackTrace()
       }
     }

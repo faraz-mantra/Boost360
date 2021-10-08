@@ -19,20 +19,14 @@ class CustomCheckBox : MaterialCheckBox {
     setCustomAttrs(context, attrs)
   }
 
-  constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
-    context,
-    attrs,
-    defStyle
-  ) {
+  constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
     setCustomAttrs(context, attrs)
   }
 
   private fun setCustomAttrs(context: Context, attrs: AttributeSet?) {
     if (attrs == null) return
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomTextView)
-
     setTextStyle(typedArray)
-
     this.requestLayout()
     this.invalidate()
     typedArray.recycle()
@@ -42,7 +36,6 @@ class CustomCheckBox : MaterialCheckBox {
     val textType = TextType.values().firstOrNull {
       it.type == typedArray?.getInt(R.styleable.CustomTextView_textType, -1)
     }
-
     this.setTextStyle(textType ?: TextType.BODY_1)
   }
 }

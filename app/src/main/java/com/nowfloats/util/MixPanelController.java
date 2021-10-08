@@ -2,6 +2,8 @@ package com.nowfloats.util;
 
 import android.app.Activity;
 
+import com.framework.analytics.SentryController;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -172,6 +174,7 @@ public class MixPanelController {
 //                mixPanel.track(event, props);
         } catch (Exception e) {
             e.printStackTrace();
+            SentryController.INSTANCE.captureException(e);
         }
     }
 
@@ -246,6 +249,7 @@ public class MixPanelController {
 
         } catch (Exception e) {
             e.printStackTrace();
+            SentryController.INSTANCE.captureException(e);
         }
     }
 
@@ -264,6 +268,7 @@ public class MixPanelController {
             store.put("$Created On", dateTime);
         } catch (Exception e) {
             e.printStackTrace();
+            SentryController.INSTANCE.captureException(e);
         }
         MixPanelController.createUser(fpTAG.toUpperCase(), store);
     }
@@ -275,6 +280,7 @@ public class MixPanelController {
 //                mixPanel.getPeople().set(plan, status);
         } catch (Exception e) {
             e.printStackTrace();
+            SentryController.INSTANCE.captureException(e);
         }
     }
 
@@ -294,6 +300,7 @@ public class MixPanelController {
             //people.initPushHandling("276987746927");
             // people.withIdentity(Constants.Store_id);
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             //e.printStackTrace();
         }
     }

@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
+import com.framework.analytics.SentryController;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Utils;
 
@@ -63,6 +64,7 @@ public class UploadFaviconImage extends AsyncTask<Void, String, String> {
         try {
             f.createNewFile();
         } catch (IOException e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
 
@@ -137,6 +139,7 @@ public class UploadFaviconImage extends AsyncTask<Void, String, String> {
             outputStream.flush();
             outputStream.close();
         } catch (Exception ex) {
+            SentryController.INSTANCE.captureException(ex);
             ex.printStackTrace();
         }
     }

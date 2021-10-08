@@ -9,10 +9,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.UpgradeActivity
+import com.framework.extensions.gone
+import com.framework.extensions.visible
+import com.framework.views.zero.FragmentZeroCase
+import com.framework.views.zero.OnZeroCaseClicked
+import com.framework.views.zero.RequestZeroCaseBuilder
+import com.framework.views.zero.ZeroCases
+import com.framework.views.zero.old.AppFragmentZeroCase
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.nowfloats.Login.UserSessionManager
@@ -27,6 +38,7 @@ import com.nowfloats.Restaurants.Interfaces.BookTableFragmentListener
 import com.nowfloats.util.Constants
 import com.nowfloats.util.Methods
 import com.thinksity.R
+import com.thinksity.databinding.BookATableFragmentBinding
 import kotlinx.android.synthetic.main.book_a_table_fragment.*
 import kotlinx.android.synthetic.main.new_custome_app_bar.*
 import org.json.JSONObject
@@ -38,11 +50,13 @@ import retrofit.client.Response
 import retrofit.converter.GsonConverter
 
 
-class BookATableFragment : BaseFragment(), BookTableFragmentListener {
+class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroCaseClicked {
 
   lateinit var adapter: BookTableAdapter
   var session: UserSessionManager? = null
   var dataList: List<Data>? = null
+  lateinit var zerothCaseFragmentZeroCase: AppFragmentZeroCase
+  lateinit var binding: BookATableFragmentBinding
 
   companion object {
     fun newInstance() = BookATableFragment()
@@ -54,8 +68,9 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
   ): View? {
 
     adapter = BookTableAdapter(ArrayList(), this)
+    binding = DataBindingUtil.inflate(inflater, R.layout.book_a_table_fragment, container, false)
 
-    return inflater.inflate(R.layout.book_a_table_fragment, container, false)
+    return binding.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,23 +78,42 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
 
     book_table_recycler.adapter = adapter
     session = UserSessionManager(requireContext(), requireActivity())
+    zerothCaseFragmentZeroCase = AppRequestZeroCaseBuilder(AppZeroCases.TABLE_BOOKING, this, requireActivity(), isPremium()).getRequest().build()
+    requireActivity().supportFragmentManager.beginTransaction().replace(binding.childContainer.id, zerothCaseFragmentZeroCase).commit()
 
-    buy_item.setOnClickListener {
-      initiateBuyFromMarketplace()
-    }
+//
+//    buy_item.setOnClickListener {
+//      initiateBuyFromMarketplace()
+//    }
 
     //setheader
     setHeader()
     initializeRecycler()
 
-    if (session?.storeWidgets?.contains("BOOKTABLE") == true) {
+    if (isPremium()) {
       book_table_recycler.visibility = View.VISIBLE
-      empty_layout.setVisibility(View.GONE)
       loadData()
     } else {
       book_table_recycler.visibility = View.GONE
-      empty_layout.setVisibility(View.VISIBLE)
+      emptyView()
     }
+  }
+
+  private fun isPremium(): Boolean {
+    return session?.storeWidgets?.contains("BOOKTABLE") == true
+  }
+
+  private fun nonEmptyView() {
+    setHasOptionsMenu(true)
+    binding.mainlayout?.visible()
+    binding.childContainer?.gone()
+  }
+
+  private fun emptyView() {
+    setHasOptionsMenu(false)
+    binding.mainlayout?.gone()
+    binding.childContainer?.visible()
+
   }
 
   private fun initializeRecycler() {
@@ -95,8 +129,9 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
     back_button.setOnClickListener {
       (activity as? BookATableActivity)?.onBackPressed()
     }
-    if (session?.storeWidgets?.contains("BOOKTABLE") == true) {
+    if (isPremium()) {
       btn_add.visibility = View.VISIBLE
+      nonEmptyView()
       btn_add.setOnClickListener {
         val bookATableDetailsFragment = BookATableDetailsFragment.newInstance()
         val arg = Bundle()
@@ -107,7 +142,10 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
           "BOOK_A_TABLE_DETAILS_FRAGMENT"
         )
       }
-    } else btn_add.visibility = View.GONE
+    } else {
+      btn_add.visibility = View.GONE
+      emptyView()
+    }
 
   }
 
@@ -139,7 +177,12 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
             return
           }
           dataList = getBookTableData.Data
-          updateRecyclerView()
+          if (dataList?.isEmpty() == true) {
+            emptyView()
+          } else {
+            updateRecyclerView()
+            nonEmptyView()
+          }
         }
 
         override fun failure(error: RetrofitError) {
@@ -260,5 +303,31 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
       progressDialog.dismiss()
       requireActivity().onBackPressed()
     }, 1000)
+  }
+
+  override fun primaryButtonClicked() {
+    if (isPremium()) {
+      val bookATableDetailsFragment = BookATableDetailsFragment.newInstance()
+      val arg = Bundle()
+      arg.putString("ScreenState", "new")
+      bookATableDetailsFragment.arguments = arg
+      (activity as BookATableActivity).addFragment(
+        bookATableDetailsFragment,
+        "BOOK_A_TABLE_DETAILS_FRAGMENT"
+      )
+    } else {
+      initiateBuyFromMarketplace()
+    }
+  }
+
+  override fun secondaryButtonClicked() {
+    Toast.makeText(activity, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
+  }
+
+  override fun ternaryButtonClicked() {
+  }
+
+  override fun appOnBackPressed() {
+
   }
 }

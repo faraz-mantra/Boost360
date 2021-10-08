@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.framework.analytics.SentryController;
 import com.framework.models.firestore.FirestoreManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nowfloats.CustomPage.Model.CustomPageEvent;
@@ -309,6 +310,7 @@ public class CustomPageFragment extends Fragment {
                                         customPageDeleteCheck = false;
                                         CustomPageAdapter.deleteCheck = false;
                                     } catch (Exception e) {
+                                        SentryController.INSTANCE.captureException(e);
                                         e.printStackTrace();
                                         posList = new ArrayList<String>();
                                         deleteInterface.DeletePageTrigger(0, false, null);
