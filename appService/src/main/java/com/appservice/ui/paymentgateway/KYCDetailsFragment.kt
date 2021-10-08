@@ -401,19 +401,25 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
       }
       binding?.addDifferent?.isChecked == true -> {
         if (accountNumber.isNullOrEmpty()) {
-          showShortToast("Bank account number can't empty.")
+          showShortToast(getString(R.string.bank_number_can_not_empty))
+          return false
+        } else if (accountNumber.length < 9) {
+          showShortToast(getString(R.string.account_less_than_nine))
+          return false
+        } else if (accountNumber.length > 18) {
+          showShortToast(getString(R.string.account_greater_than_nine))
           return false
         } else if (nameAccount.isNullOrEmpty()) {
-          showShortToast("Bank account name can't empty.")
+          showShortToast(getString(R.string.bank_account_cannot_empty))
           return false
         } else if (ifsc.isNullOrEmpty()) {
-          showShortToast("Bank IFSC can't empty.")
+          showShortToast(getString(R.string.bank_ifcs_cannot_empty))
           return false
         } else if (ifsc.length < 11 || !isValidIfsc) {
-          showLongToast("Please enter valid IFSC code")
+          showLongToast(getString(R.string.please_enter_valid_ifcs))
           return false
         } else if (bankName.isNullOrEmpty()) {
-          showShortToast("Bank name can't empty.")
+          showShortToast(getString(R.string.bank_name_cant_empty))
           return false
         }
       }
