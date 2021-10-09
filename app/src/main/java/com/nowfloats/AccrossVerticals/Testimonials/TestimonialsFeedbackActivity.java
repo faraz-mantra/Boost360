@@ -413,7 +413,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
   private boolean validateInput() {
     if (userNameText.getText().toString().isEmpty()) {
       return messageInpute();
-    } else if (reviewTitleText.getText().toString().isEmpty()) {
+    } else if (reviewTitleView.getVisibility() != View.GONE && reviewTitleText.getText().toString().isEmpty()) {
       return messageInpute();
     } else if (reviewDescriptionText.getText().toString().isEmpty() || (isProfileDescFill(session.getFP_AppExperienceCode()) == View.VISIBLE && profileDescEdt.getText().toString().isEmpty())) {
       return messageInpute();

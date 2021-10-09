@@ -316,7 +316,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
       RecyclerViewActionType.PRODUCT_WHATS_APP_SHARE.ordinal -> {
         shareProduct(
           product?.Name, product?.Price.toString(), product?.ProductUrl, sessionLocal.userPrimaryMobile, product?.ImageUri,
-          isWhatsApp = true, isService = false, isFb = true, activity = requireActivity()
+          isWhatsApp = true, isService = false, isFb = false, activity = requireActivity()
         )
       }
     }

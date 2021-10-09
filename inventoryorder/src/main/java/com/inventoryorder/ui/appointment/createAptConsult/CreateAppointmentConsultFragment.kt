@@ -254,7 +254,7 @@ class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointme
 
   private fun getServiceList() {
     serviceList = getDoctorServiceList()
-    if (serviceList.isNullOrEmpty()) serviceListView()
+    if (serviceList.isNullOrEmpty().not()) serviceListView()
     viewModel?.getGeneralService(session.fpTag, session.fPID)?.observeOnce(viewLifecycleOwner, { it0 ->
       val data = it0 as? GeneralServiceResponse
       var generalService: ItemsItemService? = null
