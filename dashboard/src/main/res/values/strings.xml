@@ -302,4 +302,5 @@
   <string name="update_details">Update details</string>
   <string name="add_profile_image">Add profile image*</string>
   <string name="error_loading_more_page">Error loading more data, please try again!</string>
+  <string name="add_owner_image">Add owner image.</string>
 </resources>
