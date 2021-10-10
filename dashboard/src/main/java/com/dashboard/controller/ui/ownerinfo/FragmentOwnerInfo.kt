@@ -9,10 +9,10 @@ import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
-import com.dashboard.viewmodel.OwnersViewModel
 import com.dashboard.databinding.FragmentOwnerInfoBinding
 import com.dashboard.model.*
 import com.dashboard.utils.WebEngageController
+import com.dashboard.viewmodel.OwnersViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -21,7 +21,6 @@ import com.framework.imagepicker.ImagePicker
 import com.framework.pref.UserSessionManager
 import com.framework.utils.convertObjToString
 import com.framework.webengageconstant.*
-import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -79,7 +78,7 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
   private fun updateOwnersInfo() {
     showProgress(getString(R.string.updating))
     WebEngageController.trackEvent(OWNER_INFO_UPDATE, CLICK, NO_EVENT_VALUE)
-    val query = "{_id:'" + ownersDataResponse?.data?.get(0)?.id + "'}"
+    val query = "{_id:'" + ownersDataResponse?.data?.firstOrNull()?.id + "'}"
     val actionData = ActionData(binding?.ctfDescription?.text.toString(), binding?.ctfOwnerName?.text.toString(), binding?.ctfDesignation?.text.toString(), Profileimage(url = imageUrl ?: "", description = ""))
     val updateValue = "{\$set :" + convertObjToString(actionData) + "}"
     val request = UpdateOwnersDataRequest(query = query, updateValue = updateValue)
@@ -171,8 +170,7 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
     binding?.btnChangeImage?.gone()
     binding?.civOwnerImage?.gone()
     ownerImage = null
-    ownersDataResponse?.data?.get(0)?.profileimage?.url = null
-
+    ownersDataResponse?.data?.firstOrNull()?.profileimage?.url = null
   }
 
   private fun openImagePicker() {
@@ -197,8 +195,8 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
     val designation = binding?.ctfDesignation?.text.toString()
     val name = binding?.ctfOwnerName?.text.toString()
     val description = binding?.ctfDescription?.text.toString()
-    if (ownersDataResponse?.data?.get(0)?.profileimage?.url == null && ownerImage == null) {
-      showLongToast("Add owner image.")
+    if (ownersDataResponse?.data?.firstOrNull()?.profileimage?.url == null && ownerImage == null) {
+      showLongToast(getString(R.string.add_owner_image))
       return false
     }
     if (name.isEmpty()) {
