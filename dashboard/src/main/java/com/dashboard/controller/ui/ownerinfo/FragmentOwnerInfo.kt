@@ -95,6 +95,7 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
     showProgress()
     WebEngageController.trackEvent(OWNER_INFO_ADD, CLICK, NO_EVENT_VALUE)
     this.requestAddOwnersInfo?.actionData?.profileimage?.url = this.imageUrl ?: ""
+    this.requestAddOwnersInfo?.actionData?.profileimage?.description = ""
     viewModel?.addOwnersData(request = requestAddOwnersInfo!!)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         showShortToast(getString(R.string.owners_data_added_successfully))
