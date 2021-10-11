@@ -188,6 +188,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     viewModel = ViewModelProviders.of(requireActivity()).get(CartViewModel::class.java)
     Constants.COMPARE_BACK_VALUE = 1
     prefs.storeCompareState(1)
+//    val isfestivePoster = requireArguments().getBoolean("isFestivePoster")
+//    val festiveWidgets =requireArguments().getStringArrayList("userPurchsedWidgets")
 //        showpopup()
     initializePackageRecycler()
     initializeAddonsRecycler()

@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
+import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.interfaces.CompareBackListener
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.details.DetailsFragment
@@ -49,6 +50,7 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -76,6 +78,7 @@ class UpgradeActivity : AppCompatActivity() {
   var isDeepLink: Boolean = false
   var isOpenCardFragment: Boolean = false
   var isBackCart: Boolean = false
+  var isFestivePoster :Boolean = false
 
   var deepLinkViewType: String = ""
   var deepLinkDay: Int = 7
@@ -89,6 +92,7 @@ class UpgradeActivity : AppCompatActivity() {
   private var loadingStatus: Boolean = true
   var userPurchsedWidgets = ArrayList<String>()
   var timerCallbackConst: Long = 1000
+  private var festivePosterWidgets = ArrayList<String>()
 
   @RequiresApi(Build.VERSION_CODES.O)
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -108,9 +112,11 @@ class UpgradeActivity : AppCompatActivity() {
     profileUrl = intent.getStringExtra("profileUrl")
     accountType = intent.getStringExtra("accountType")
     isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
+//    isFestivePoster = intent.getBooleanExtra("isFestivePoster",false)
     //user buying item directly
     widgetFeatureCode = intent.getStringExtra("buyItemKey")
     userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
+//    festivePosterWidgets = intent.getStringArrayListExtra("festivePosterWidgets")?: ArrayList()
 
     progressDialog = ProgressDialog(this)
 
@@ -118,7 +124,19 @@ class UpgradeActivity : AppCompatActivity() {
 //    WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, NO_EVENT_VALUE)
     initView()
     initRazorPay()
+//    festivePosterOpenCart()
+
   }
+
+//  private fun festivePosterOpenCart() {
+//    if (isFestivePoster) {
+//      val bundle = Bundle()
+//      bundle.putStringArrayList("festivePosterWidgets", festivePosterWidgets)
+//      bundle.putBoolean("isFestivePoster", isFestivePoster)
+//      cartFragment = CartFragment.newInstance()
+//      cartFragment?.let { addFragmentHome(it, CART_FRAGMENT, bundle) }
+//    }
+//  }
 
   infix fun setBackListener(compareBackListener: CompareBackListener?) {
     this.compareBackListener = compareBackListener
