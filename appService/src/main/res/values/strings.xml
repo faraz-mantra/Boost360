@@ -642,8 +642,8 @@
   <string name="product_image_uploading_error">Product image uploading error, please try again.</string>
   <string name="secondary_product_image_uploading_error_please">Secondary Product image uploading error, please try again.</string>
   <string name="add_secondary_image_data_error_please_try_again">Add secondary image data error, please try again.</string>
-  <string name="product_updated_successfully">Product updated successfully.</string>
-  <string name="product_saved_successfully">Product saved successfully.</string>
+  <string name="product_updated_successfully">Product updated successfully</string>
+  <string name="product_saved_successfully">Product saved successfully</string>
   <string name="you_have_unsaved_information_do_you_still_want_to_close">You have unsaved information. Do you still want to close?</string>
   <string name="service_image_uploading_error">Service image uploading error, please try again.</string>
   <string name="account_number_required">Account number*</string>

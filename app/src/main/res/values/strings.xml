@@ -2863,9 +2863,9 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="seller_profile_updated">Seller profile updated</string>
   <string name="failed_to_update_seller_profile">Failed to update seller profile</string>
   <string name="failed_to_save_bank_information">Failed to save bank information</string>
-  <string name="failed_to_update_product">Failed to update product.</string>
-  <string name="product_saved_successfully">\"Product saved successfully : \"</string>
-  <string name="failed_to_save_product">Failed to save product.</string>
+  <string name="failed_to_update_product">Failed to update product</string>
+  <string name="product_saved_successfully">Product saved successfully</string>
+  <string name="failed_to_save_product">Failed to save product</string>
   <string name="deleted_successfully">Deleted successfully</string>
   <string name="failed_to_delete">Failed to delete</string>
   <string name="image_removed_successfully" translatable="false">Image removed successfully</string>
