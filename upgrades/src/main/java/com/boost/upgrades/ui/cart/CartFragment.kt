@@ -89,6 +89,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   lateinit var bundlesList: List<BundlesModel>
 
   lateinit var renewalList: List<RenewalResult>
+  var singleWidgetKey: String? = null
+
 
   var bundles_in_cart = false
   var default_validity_months = 1
@@ -147,6 +149,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
   private var event_attributes: HashMap<String, Any> = HashMap()
 
+  var addonDetails: FeaturesModel? = null
+
+
 
   companion object {
     fun newInstance() = CartFragment()
@@ -191,10 +196,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //    val isfestivePoster = requireArguments().getBoolean("isFestivePoster")
 //    val festiveWidgets =requireArguments().getStringArrayList("userPurchsedWidgets")
 //        showpopup()
+    addFestivePoster()
     initializePackageRecycler()
     initializeAddonsRecycler()
     initializeRenewalRecycler()
     initializeErrorObserver()
+    addFestivePosterAddOn()
     initMvvM()
     checkRenewalItemDeepLinkClick()
     gst_layout.visibility = View.GONE
@@ -229,6 +236,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
       totalCalculationAfterCoupon()
     }
+
+//    festive_poster.setOnClickListener {
+//      addFestivePosterAddOn()
+//    }
 
     cart_continue_submit.setOnClickListener {
 
@@ -671,6 +682,24 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       }
     })
 
+  }
+
+  @SuppressLint("FragmentLiveDataObserve")
+  private fun addFestivePoster() {
+    loadFestiveData()
+    viewModel.addonsResult().observe(viewLifecycleOwner,{
+      addonDetails = it
+    })
+  }
+
+  private fun addFestivePosterAddOn(){
+    if (addonDetails != null){
+      viewModel.addFestivePosterToCart(addonDetails!!)
+    }
+  }
+
+  fun loadFestiveData() {
+    viewModel.loadAddonsFromDB("TESTIMONIALS")
   }
 
 

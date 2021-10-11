@@ -85,6 +85,7 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
     notifyItemRangeInserted(initPosition, list.size)
   }
 
+
   class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     var image = itemView.findViewById<ImageView>(R.id.addons_profile_image)!!

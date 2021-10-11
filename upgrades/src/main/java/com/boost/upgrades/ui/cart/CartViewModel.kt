@@ -44,6 +44,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
   var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
   var allFeatures: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
+  var updatesResult: MutableLiveData<FeaturesModel> = MutableLiveData()
+
 
   var renewalPurchaseList: MutableLiveData<List<RenewalResult>> = MutableLiveData()
   var allBundles: MutableLiveData<List<BundlesModel>> = MutableLiveData()
@@ -89,6 +91,10 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
   var _updateCheckoutClose: MutableLiveData<Boolean> = MutableLiveData()
 
+
+  fun addonsResult(): LiveData<FeaturesModel> {
+    return updatesResult
+  }
   fun updatesError(): LiveData<String> {
     return updatesError
   }
@@ -217,6 +223,29 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
       SentryController.captureException(e)
     }
   }
+
+  fun loadAddonsFromDB(boostKey: String) {
+    updatesLoader.postValue(true)
+    compositeDisposable.add(
+      AppDatabase.getInstance(getApplication())!!
+        .featuresDao()
+        .getFeaturesItemByFeatureCode(boostKey)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .doOnSuccess {
+          updatesResult.postValue(it)
+          updatesLoader.postValue(false)
+        }
+        .doOnError {
+          updatesError.postValue(it.message)
+          updatesLoader.postValue(false)
+        }
+//                        .subscribe(),
+        .subscribe({}, {e -> Log.e("TAG", "Empty DB")}
+        )
+    )
+  }
+
 
   fun InitiatePurchaseOrder(auth: String,createPurchaseOrderV2: CreatePurchaseOrderV2) {
     Log.d("InitiatePurchaseOld", " " + createPurchaseOrderV2)
@@ -406,6 +435,42 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
       }.subscribe()
   }
 
+  fun addFestivePosterToCart(updatesModel: FeaturesModel) {
+    updatesLoader.postValue(false)
+    val discount = 100 - updatesModel.discount_percent
+    val paymentPrice = (discount * updatesModel.price) / 100.0
+    val cartItem = CartModel(
+      updatesModel.feature_id,
+      updatesModel.boost_widget_key,
+      updatesModel.feature_code,
+      updatesModel.name,
+      updatesModel.description,
+      updatesModel.primary_image,
+      paymentPrice,
+      updatesModel.price.toDouble(),
+      updatesModel.discount_percent,
+      1,
+      1,
+      "features",
+      updatesModel.extended_properties
+    )
+
+
+    Completable.fromAction {
+      AppDatabase.getInstance(getApplication())!!.cartDao()
+        .insertToCart(cartItem)
+    }
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .doOnComplete {
+        updatesLoader.postValue(false)
+      }
+      .doOnError {
+        updatesError.postValue(it.message)
+        updatesLoader.postValue(false)
+      }
+      .subscribe()
+  }
   fun getCartsByIds(itemIds: List<String>) {
     updatesLoader.postValue(true)
     compositeDisposable.add(

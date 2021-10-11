@@ -1105,6 +1105,7 @@
             app:layout_constraintTop_toBottomOf="@id/cart_subscription_full_amount_layout" />
 
           <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
@@ -1142,6 +1143,15 @@
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintTop_toTopOf="parent" />
           </androidx.constraintlayout.widget.ConstraintLayout>
+
+          <Button
+            android:id="@+id/festive_poster"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add to cart"
+            app:layout_constraintTop_toBottomOf="@+id/test"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
