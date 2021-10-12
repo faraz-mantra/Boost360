@@ -699,6 +699,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
+      RecyclerViewActionType.FESTIVE_BANNER_CLICK.ordinal->{
+        WebEngageController.trackEvent(SHARE_FESTIVE_POSTER_BANNER)
+        baseActivity.startFestivePosterActivity()
+      }
       RecyclerViewActionType.READING_SCORE_CLICK.ordinal -> {
 //        WebEngageController.trackEvent(SITE_HEALTH_PAGE, SITE_HEALTH, session?.fpTag);
 //        session?.let { baseActivity.startOldSiteMeter(it) }
@@ -794,7 +798,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     super.onClick(v)
     // Track the share_business_card_initiated even in Firebase & Webengage
     when (v) {
-      binding?.btnSharePoster->baseActivity.startFestivePosterActivity()
+      binding?.btnSharePoster-> {
+        WebEngageController.trackEvent(SHARE_FESTIVE_POSTER_BUTTON)
+        baseActivity.startFestivePosterActivity()
+      }
       binding?.filterBusinessReport -> bottomSheetFilter(BUSINESS_REPORT, FilterDateModel().getDateFilter(FILTER_BUSINESS_REPORT))
       binding?.filterWebsiteReport -> bottomSheetFilter(WEBSITE_REPORT, FilterDateModel().getDateFilter(FILTER_WEBSITE_REPORT))
       binding?.btnNotofication -> session?.let { baseActivity.startNotification(it) }

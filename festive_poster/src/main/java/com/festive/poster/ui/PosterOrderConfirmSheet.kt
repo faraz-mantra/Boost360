@@ -10,11 +10,15 @@ import com.festive.poster.databinding.BsheetCustomizePosterBinding
 import com.festive.poster.databinding.SheetOrderConfirmBinding
 import com.festive.poster.databinding.SheetPosterPaymentBinding
 import com.festive.poster.models.PosterCustomizationModel
+import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.framework.webengageconstant.FESTIVAL_POSTER_ORDER_SUCCESS
+import com.framework.webengageconstant.FESTIVAL_POSTER_PAY_LATER_SCREEN
+import com.framework.webengageconstant.FESTIVAL_POSTER_PURCHASED
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.github.dhaval2404.imagepicker.util.FileUtil
 
@@ -22,6 +26,8 @@ class PosterOrderConfirmSheet: BaseBottomSheetDialog<SheetOrderConfirmBinding, B
 
 
     private var packTag: String?=null
+    private var sharedViewModel: FestivePosterSharedViewModel?=null
+
 
     companion object{
         val BK_TAG="BK_TAG"
@@ -45,6 +51,9 @@ class PosterOrderConfirmSheet: BaseBottomSheetDialog<SheetOrderConfirmBinding, B
     }
 
     override fun onCreateView() {
+        sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
+
+        WebEngageController.trackEvent(FESTIVAL_POSTER_ORDER_SUCCESS)
         packTag= arguments?.getString(PosterListFragment.BK_TAG)
         setOnClickListener(binding?.btnConfirm)
     }
@@ -53,7 +62,8 @@ class PosterOrderConfirmSheet: BaseBottomSheetDialog<SheetOrderConfirmBinding, B
         super.onClick(v)
         when(v){
             binding?.btnConfirm->{
-                addFragmentReplace(R.id.container,PosterListFragment.newInstance("Offer"),true)
+                WebEngageController.trackEvent(FESTIVAL_POSTER_PURCHASED)
+                addFragmentReplace(R.id.container,PosterListFragment.newInstance(sharedViewModel?.customizationDetails?.value?.tag!!),true)
                 dismiss()
             }
         }

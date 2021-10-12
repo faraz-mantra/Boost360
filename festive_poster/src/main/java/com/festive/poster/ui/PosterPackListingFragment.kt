@@ -2,23 +2,28 @@ package com.festive.poster.ui
 
 import android.os.Bundle
 import android.util.Log
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.FragmentPosterPackListingBinding
+import com.festive.poster.databinding.SheetEditShareMessageBinding
 import com.festive.poster.models.*
 import com.festive.poster.models.response.GetTemplateViewConfigResponse
 import com.festive.poster.models.response.GetTemplatesResponse
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.base.BaseActivity
 import com.framework.pref.UserSessionManager
 import com.framework.utils.toArrayList
+import com.framework.webengageconstant.GET_FESTIVAL_POSTER_PACK
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 
 class PosterPackListingFragment:
@@ -29,6 +34,7 @@ class PosterPackListingFragment:
     private var sharedViewModel:FestivePosterSharedViewModel?=null
     private var dataList:ArrayList<PosterPackModel>?=null
     private var session:UserSessionManager?=null
+
     companion object {
         @JvmStatic
         fun newInstance(): PosterPackListingFragment {
@@ -54,7 +60,7 @@ class PosterPackListingFragment:
     private fun setObserver() {
         sharedViewModel?.customizationDetails?.observe(viewLifecycleOwner,{
 
-           val posterPack = dataList?.find { posterPackModel -> posterPackModel.tagsModel.Tag==it.tag }
+           /*val posterPack = dataList?.find { posterPackModel -> posterPackModel.tagsModel.Tag==it.tag }
             Log.i(TAG, "poster pack: ${Gson().toJson(posterPack?.tagsModel)}")
             posterPack?.posterList?.forEach {posterModel ->
                 Log.i(TAG, "poster model: ${Gson().toJson(posterModel)}")
@@ -67,7 +73,7 @@ class PosterPackListingFragment:
             }
 
             Log.i(TAG, "result: ${Gson().toJson(dataList?.get(1))}")
-            adapter?.notifyDataSetChanged()
+            adapter?.notifyDataSetChanged()*/
 
         })
     }
@@ -75,6 +81,7 @@ class PosterPackListingFragment:
 
     private fun getTemplateViewConfig() {
 
+        showProgress()
         viewModel?.getTemplateConfig(session?.fPID,session?.fpTag)
             ?.observe(viewLifecycleOwner,{
                 Log.i(TAG, "template config: ${Gson().toJson(it)}")
@@ -93,6 +100,7 @@ class PosterPackListingFragment:
     private fun fetchTemplates(tagArray: ArrayList<String>, response: GetTemplateViewConfigResponse) {
         viewModel?.getTemplates(session?.fPID,session?.fpTag,tagArray)
             ?.observe(viewLifecycleOwner,{
+                hideProgress()
                 dataList = ArrayList()
                 val templates_response = it as? GetTemplatesResponse
 
@@ -134,7 +142,18 @@ class PosterPackListingFragment:
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
 
+        when(actionType){
+            RecyclerViewActionType.GET_POSTER_PACK_CLICK.ordinal->{
+                WebEngageController.trackEvent(GET_FESTIVAL_POSTER_PACK)
+                item as PosterPackModel
+                CustomizePosterSheet.newInstance(item.tagsModel.Tag,true).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
+            }
+
+
+        }
     }
+
+
 
     override fun onChildClick(
         childPosition: Int,
@@ -145,9 +164,12 @@ class PosterPackListingFragment:
     ) {
         when(actionType){
             RecyclerViewActionType.POSTER_TAP_TO_EDIT_CLICK.ordinal->{
+                WebEngageController.trackEvent(GET_FESTIVAL_POSTER_PACK)
                 parentItem as PosterPackModel
-                CustomizePosterSheet.newInstance(parentItem.tagsModel.Tag).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
+                CustomizePosterSheet.newInstance(parentItem.tagsModel.Tag,true).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
             }
+
+
         }
     }
 

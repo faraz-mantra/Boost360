@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:orientation="vertical"
+        android:background="@drawable/shape_fposter_white_top_rounded_rect"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.framework.views.customViews.CustomTextView
+            android:layout_marginTop="@dimen/size_24"
+            android:layout_marginHorizontal="@dimen/size_24"
+            android:id="@+id/customTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/greeting_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.framework.views.customViews.CustomEditText
+            android:id="@+id/et_desc"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/size_24"
+
+            android:layout_height="@dimen/size_80"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/shape_fposter_grey_stroke_rect"
+            android:padding="@dimen/size_10"
+            app:layout_constraintTop_toBottomOf="@+id/customTextView"
+            tools:layout_editor_absoluteX="24dp" />
+
+
+        <com.framework.views.customViews.CustomTextView
+            android:layout_marginTop="@dimen/size_24"
+
+            android:id="@+id/tv_update_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bg_button_orange_gradient"
+            android:gravity="center"
+            android:paddingVertical="@dimen/size_8"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            app:textType="HEADING_5" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

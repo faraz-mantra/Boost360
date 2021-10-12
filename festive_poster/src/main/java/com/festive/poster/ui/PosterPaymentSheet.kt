@@ -9,11 +9,13 @@ import com.festive.poster.R
 import com.festive.poster.databinding.BsheetCustomizePosterBinding
 import com.festive.poster.databinding.SheetPosterPaymentBinding
 import com.festive.poster.models.PosterCustomizationModel
+import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.framework.webengageconstant.FESTIVAL_POSTER_PAY_LATER_SCREEN
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.github.dhaval2404.imagepicker.util.FileUtil
 
@@ -40,6 +42,7 @@ class PosterPaymentSheet: BaseBottomSheetDialog<SheetPosterPaymentBinding, BaseV
     }
 
     override fun onCreateView() {
+        WebEngageController.trackEvent(FESTIVAL_POSTER_PAY_LATER_SCREEN)
         setOnClickListener(binding?.btnConfirm)
     }
 

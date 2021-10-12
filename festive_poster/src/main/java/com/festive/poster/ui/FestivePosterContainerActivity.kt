@@ -11,7 +11,9 @@ import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.databinding.ActivityFestivePoterContainerBinding
 import com.festive.poster.utils.SvgUtils
+import com.festive.poster.utils.WebEngageController
 import com.framework.models.BaseViewModel
+import com.framework.webengageconstant.SHARE_FESTIVE_POSTER_BUTTON
 import kotlinx.android.synthetic.main.mtemplate_progress_dialog.*
 
 class FestivePosterContainerActivity:
@@ -28,6 +30,7 @@ class FestivePosterContainerActivity:
 
     override fun onCreateView() {
         super.onCreateView()
+        WebEngageController.trackEvent(SHARE_FESTIVE_POSTER_BUTTON)
 
         binding?.toolbar?.inflateMenu(R.menu.festive_poster_help_menu)
 
@@ -80,16 +83,16 @@ class FestivePosterContainerActivity:
             if (topFragment!=null){
                 when(topFragment){
                     is  PosterPackListingFragment->{
-                        supportActionBar?.title = getString(R.string.festival_poster)
+                        binding?.toolbar?.title = getString(R.string.festival_poster)
                       //  binding?.toolbar?.menu?.clear()
                        // binding?.toolbar?.inflateMenu(R.menu.festive_poster_listing_menu)
                     }
 
                     is PosterPackPurchasedFragment->{
-                        supportActionBar?.title = getString(R.string.purchased_posters)
+                        binding?.toolbar?.title = getString(R.string.purchased_posters)
                     }
                     is PosterListFragment->{
-                        supportActionBar?.title =topFragment.packTag
+                        binding?.toolbar?.title =topFragment.packTag
                     }
                 }
 

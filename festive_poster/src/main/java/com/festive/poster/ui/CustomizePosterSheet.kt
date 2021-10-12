@@ -23,13 +23,16 @@ class CustomizePosterSheet: BaseBottomSheetDialog<BsheetCustomizePosterBinding, 
     private val RC_IMAGE_PCIKER=422
     private var sharedViewModel:FestivePosterSharedViewModel?=null
     private var packTag:String?=null
+    private var isAlreadyPurchased:Boolean=false
 
     companion object{
         val BK_TAG="BK_TITLE"
+        val BK_IS_PURCHASED="BK_IS_PURCHASED"
         @JvmStatic
-        fun newInstance(tag:String): CustomizePosterSheet {
+        fun newInstance(tag:String,isAlreadyPurchased:Boolean): CustomizePosterSheet {
             val bundle = Bundle().apply {
                 putString(BK_TAG,tag)
+                putBoolean(BK_IS_PURCHASED,isAlreadyPurchased)
             }
             val fragment =CustomizePosterSheet()
             fragment.arguments = bundle
@@ -47,9 +50,10 @@ class CustomizePosterSheet: BaseBottomSheetDialog<BsheetCustomizePosterBinding, 
 
     override fun onCreateView() {
         packTag = arguments?.getString(BK_TAG)
+        isAlreadyPurchased = arguments?.getBoolean(BK_IS_PURCHASED) == true
         sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
 
-        setOnClickListener(binding?.ivCancel,binding?.uploadSelfie,binding?.tvUpdateInfo)
+        setOnClickListener(binding?.ivCancel,binding?.uploadSelfie,binding?.tvUpdateInfo,binding?.imgEdit)
     }
 
     override fun onClick(v: View) {
@@ -64,19 +68,69 @@ class CustomizePosterSheet: BaseBottomSheetDialog<BsheetCustomizePosterBinding, 
             }
             binding?.tvUpdateInfo->{
                 Log.i(TAG, "path: $path")
-                sharedViewModel?.customizationDetails?.value  = PosterCustomizationModel(
-                    packTag!!,
-                    binding?.etName?.text.toString(),
-                    binding?.etEmail?.text.toString(),
-                    binding?.etWhatsapp?.text.toString(),
-                    binding?.etDesc?.text.toString(),
-                    binding?.etWebsite?.text.toString(),
-                    path
-                    )
-                PosterPaymentSheet().show(parentFragmentManager,PosterPaymentSheet::class.java.name)
-                dismiss()
+                if (validation()){
+                    submitDetails()
+                }
+
             }
+            binding?.imgEdit->{
+                ImagePicker.with(this).start(RC_IMAGE_PCIKER)
+
+            }
+
         }
+    }
+
+    private fun submitDetails() {
+        sharedViewModel?.customizationDetails?.value  = PosterCustomizationModel(
+            packTag!!,
+            binding?.etName?.text.toString(),
+            binding?.etEmail?.text.toString(),
+            binding?.etWhatsapp?.text.toString(),
+            binding?.etDesc?.text.toString(),
+            binding?.etWebsite?.text.toString(),
+            path
+        )
+
+        if (isAlreadyPurchased){
+            PosterPaymentSheet().show(parentFragmentManager,PosterPaymentSheet::class.java.name)
+        }
+        dismiss()
+    }
+
+    private fun validation(): Boolean {
+        if (path==null){
+            showLongToast("Please Upload Image")
+            return false
+        }
+        if (binding?.etName?.text.toString().isEmpty()){
+            showLongToast("Please Enter Name")
+            return false
+        }
+        if (binding?.etEmail?.text.toString().isEmpty()){
+            showLongToast("Please Enter Email")
+            return false
+        }
+        if (binding?.etWhatsapp?.text.toString().isEmpty()){
+            showLongToast("Please Enter Whatsapp")
+            return false
+        }
+        if (binding?.etDesc?.text.toString().isEmpty()){
+            showLongToast("Please Enter Greeting Message")
+            return false
+        }
+
+        if (binding?.etWebsite?.text.toString().isEmpty()){
+            showLongToast("Please Enter Website Address")
+            return false
+        }
+        if (binding?.etWhatsapp?.text.toString().isEmpty()){
+            showLongToast("Please Enter Whatsapp")
+            return false
+        }
+
+        return true
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
