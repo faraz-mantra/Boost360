@@ -67,8 +67,16 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
     }
 
     private fun setDataFromPref(merchantProfileDetails: UserProfileDataResult?) {
-        Glide.with(this).load(merchantProfileDetails?.ImageUrl)
-            .placeholder(R.drawable.placeholder_image_n).into(binding!!.imgProfile)
+        if (merchantProfileDetails?.ImageUrl.isNullOrEmpty()){
+            binding?.viewEmptyProfile?.visible()
+            binding?.viewProfile?.gone()
+        }else{
+            binding?.viewEmptyProfile?.gone()
+            binding?.viewProfile?.visible()
+            Glide.with(this).load(merchantProfileDetails?.ImageUrl)
+                .placeholder(R.drawable.placeholder_image_n).into(binding!!.imgProfile)
+        }
+
         binding?.txtName?.setText(merchantProfileDetails?.UserName)
         binding?.txtEmail?.setText(merchantProfileDetails?.Email)
         binding?.txtMobileNumber?.setText(merchantProfileDetails?.MobileNo)

@@ -81,7 +81,7 @@
                   android:layout_height="@dimen/size_70"
                   android:layout_gravity="center"
                   android:scaleType="centerCrop"
-                  app:srcCompat="@drawable/ic_user_circle_plus_d" />
+                  app:srcCompat="@drawable/ic_user_circle_plus_gray" />
 
                 <com.framework.views.customViews.CustomTextView
                   android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
                   android:layout_marginBottom="@dimen/size_6"
                   android:text="@string/click_a_selfie"
                   android:textColor="@color/colorAccentLight"
-                  app:fontFamily="@font/semi_bold"
+                  app:fontFamily="@font/bold"
                   app:textType="BODY_1" />
               </FrameLayout>
             </FrameLayout>
