@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:background="@color/black_4a4a4a"
         android:orientation="vertical"
+          android:visibility="visible"
         android:paddingHorizontal="@dimen/size_16"
         android:paddingBottom="@dimen/size_16">
 

@@ -7,13 +7,14 @@ import com.dashboard.R
 import com.dashboard.constant.FragmentType
 import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.controller.ui.profile.CropProfileImageFragment
+import com.dashboard.controller.ui.profile.UpdateProfileUiListener
 import com.dashboard.databinding.SheetImagePickerBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.github.dhaval2404.imagepicker.util.FileUtil
 
-class ImagePickerSheet : BaseBottomSheetDialog<SheetImagePickerBinding, BaseViewModel>() {
+class ImagePickerSheet(val updateProfileUiListener: UpdateProfileUiListener) : BaseBottomSheetDialog<SheetImagePickerBinding, BaseViewModel>() {
 
   private val RC_CAMERA=100
   private val RC_GALLERY=100

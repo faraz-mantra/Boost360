@@ -218,6 +218,10 @@ class DashboardViewModel : BaseViewModel() {
   fun getMerchantSummary(clientId: String?,fpTag: String?): LiveData<BaseResponse> {
    return WithFloatTwoRepository.getMerchantSummary(clientId,fpTag).toLiveData()
   }
+
+  fun getUserProfileData(loginId:String?): LiveData<BaseResponse> {
+    return com.dashboard.rest.repository.WithFloatTwoRepository.getUserProfileData(loginId).toLiveData()
+  }
 }
 
 

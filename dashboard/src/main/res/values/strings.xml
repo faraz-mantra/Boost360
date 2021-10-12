@@ -297,5 +297,6 @@
   <string name="don_t_remove_whatsapp_number">Don’t remove WhatsApp number</string>
   <string name="logout_desc">No need to log-out if you want to login back with another business acccount of yours. Instead, you can switch to a different business right here.</string>
   <string name="switch_to_a_different_business">Switch to a different business</string>
+    <string name="profile_info_content"><![CDATA[Your email, mobile no., username & password, payment info etc.]]></string>
 
 </resources>

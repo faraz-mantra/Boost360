@@ -79,6 +79,7 @@ class UserSessionManager(var activity: Context) {
 
     //Merchant profile Tags
     private val KEY_IS_MERCHANT_DETAILS_SAVED = "isMerchantUserDetailsSaved"
+    private val KEY_IS_MERCHANT_DETAILS_UPDATE_UI_NEEDED = "isMerchantUserDetailsSaved"
     private val KEY_MERCHANT_USER_DATA = "merchantUserData"
   /*
     private val KEY_MERCHANT_USER_IMAGE_URL = "merchantUserImageUrl"
@@ -803,6 +804,13 @@ class UserSessionManager(var activity: Context) {
         get() = pref.getBoolean(KEY_IS_MERCHANT_DETAILS_SAVED, false)
         set(isSavedMerchant) {
             editor.putBoolean(KEY_IS_MERCHANT_DETAILS_SAVED, isSavedMerchant)
+            editor.commit()
+        }
+
+    var isMerchantDetailsUpdateUiNeeded: Boolean
+        get() = pref.getBoolean(KEY_IS_MERCHANT_DETAILS_UPDATE_UI_NEEDED, false)
+        set(isUpdateUI) {
+            editor.putBoolean(KEY_IS_MERCHANT_DETAILS_UPDATE_UI_NEEDED, isUpdateUI)
             editor.commit()
         }
 
