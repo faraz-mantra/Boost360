@@ -88,7 +88,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
     }
   private var shouldSuggestClipboardContents: Boolean = false
 
-  private var indexedActionStartArea: MutableList<Int> = mutableListOf()
+  private var indexedActionStartArea = mutableListOf<Int>()
   private var indexedMainArea: MutableList<Int> = mutableListOf()
   private var indexedActionEndArea: MutableList<Int> = mutableListOf()
 
