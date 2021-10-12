@@ -36,8 +36,9 @@
                         android:layout_marginStart="@dimen/size_16"
                         android:textAllCaps="false"
                         android:text="@string/tap_to_edit"
-                        android:backgroundTint="@color/black_opacity30"
+                        android:backgroundTint="@android:color/transparent"
                         android:layout_height="@dimen/size_50"/>
+
                     <com.festive.poster.customviews.CustomSvgImageView
                         android:scaleType="fitCenter"
                         android:layout_width="match_parent"

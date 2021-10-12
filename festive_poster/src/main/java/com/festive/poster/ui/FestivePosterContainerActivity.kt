@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.festive.poster.R
@@ -12,6 +13,7 @@ import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.databinding.ActivityFestivePoterContainerBinding
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
+import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.framework.models.BaseViewModel
 import com.framework.webengageconstant.SHARE_FESTIVE_POSTER_BUTTON
 import kotlinx.android.synthetic.main.mtemplate_progress_dialog.*
@@ -20,6 +22,8 @@ class FestivePosterContainerActivity:
     AppBaseActivity<ActivityFestivePoterContainerBinding, BaseViewModel>() {
 
      override var TAG = "FestivePosterContainerA"
+    private var sharedViewModel: FestivePosterSharedViewModel?=null
+
     override fun getLayout(): Int {
         return R.layout.activity_festive_poter_container
     }
@@ -31,6 +35,7 @@ class FestivePosterContainerActivity:
     override fun onCreateView() {
         super.onCreateView()
         WebEngageController.trackEvent(SHARE_FESTIVE_POSTER_BUTTON)
+        sharedViewModel = ViewModelProvider(this).get(FestivePosterSharedViewModel::class.java)
 
         binding?.toolbar?.setTitleTextAppearance(this,R.style.BoldTextAppearance)
         binding?.toolbar?.inflateMenu(R.menu.festive_poster_help_menu)
@@ -93,7 +98,9 @@ class FestivePosterContainerActivity:
                         binding?.toolbar?.title = getString(R.string.purchased_posters)
                     }
                     is PosterListFragment->{
-                        binding?.toolbar?.title =topFragment.packTag
+                        binding?.toolbar?.title =
+                            sharedViewModel?.selectedPosterPack?.tagsModel?.Name+
+                                    " (${sharedViewModel?.selectedPosterPack?.posterList?.size})"
                     }
                 }
 
