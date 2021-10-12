@@ -19,6 +19,7 @@
                 android:id="@+id/tv_poster_heading"
                 android:layout_width="match_parent"
                 app:textType="HEADING_4"
+                android:textColor="@color/black_4a4a4a"
                 android:layout_marginStart="@dimen/size_24"
                 android:layout_height="wrap_content"/>
 
@@ -40,12 +41,11 @@
                 app:dotsColor="@color/colorLightGrey"
                 app:dotsCornerRadius="@dimen/_6dp"
                 app:dotsSize="@dimen/size_20"
-                app:dotsSpacing="@dimen/size_2"
+                app:dotsSpacing="@dimen/size_4"
                 app:selectedDotColor="@color/colorPrimary"
                 app:progressMode="false"
                 app:dotsStrokeWidth="0dp"
-                app:dotsWidthFactor="2.5"
-
+                app:dotsWidthFactor="0"
                 android:layout_gravity="center"
                 android:id="@+id/dots"
                 android:layout_width="wrap_content"

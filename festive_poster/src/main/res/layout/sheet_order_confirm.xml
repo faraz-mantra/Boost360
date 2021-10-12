@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"/>
         <com.framework.views.customViews.CustomTextView
             android:gravity="center"
+            android:id="@+id/tv_desc"
             android:layout_marginHorizontal="@dimen/size_24"
             android:layout_marginTop="@dimen/size_16"
             android:text="@string/order_confirm_message"
