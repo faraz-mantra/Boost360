@@ -13,11 +13,11 @@
             android:layout_height="wrap_content">
 
             <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_heading"
                 android:fontFamily="@font/bold"
-                android:text="Paying 51"
+                android:text="@string/paying_"
                 android:textColor="@color/black"
                 app:textType="HEADING_5" />
 
@@ -29,12 +29,17 @@
                 android:src="@drawable/ic_fposter_bsheet_close" />
 
             <com.framework.views.customViews.CustomTextView
-                android:layout_below="@+id/tv_heading"
-                android:text="for pack of 5 posters"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_subheading"
+                android:layout_below="@+id/tv_heading"
+                 />
         </RelativeLayout>
 
+        <View
+            android:background="@color/grey_dark_1"
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"/>
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -92,6 +97,7 @@
                 android:layout_height="wrap_content">
 
                 <RadioButton
+                    android:checked="true"
                     android:textColor="@color/black"
                     android:textSize="@dimen/size_18"
                     android:fontFamily="@font/bold"
@@ -103,7 +109,7 @@
                     android:layout_marginStart="@dimen/size_25"
                     android:layout_width="match_parent"
                     android:textColor="@color/black"
-                    android:text="@string/get_the_poster_pack_now_amp_pay_51_later"
+                    android:id="@+id/tv_pay_later"
                     android:layout_height="wrap_content"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -114,7 +120,7 @@
                 android:paddingHorizontal="@dimen/size_16"
                 android:background="@drawable/shape_fposter_grey_stroke_grey_rect"
                 android:layout_width="match_parent"
-                android:text="We’ll send you a secure payment link on your registered email ID abcdfff@gmail.com &amp; +918142558406 to make the payment or ₹51."
+                android:id="@+id/tv_pay_later_msg"
                 android:layout_height="wrap_content"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 

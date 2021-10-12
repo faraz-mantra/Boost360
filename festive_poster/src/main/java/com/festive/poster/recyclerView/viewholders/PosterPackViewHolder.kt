@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.festive.poster.R
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.ListItemPosterPackBinding
 import com.festive.poster.models.PosterPackModel
@@ -25,9 +26,15 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding):
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as PosterPackModel
         binding.tvPosterHeading.text = model.tagsModel.Name
-        binding.btnGetPack.text = "Get ${model.tagsModel.Name} Poster Pack"
+        binding.tvPrice.text ="Pack of ${model.posterList?.size} posters for ₹${model.price}"
         setupVp(binding.vpPoster)
 
+        if (model.isPurchased){
+            binding.btnGetPack.text=getResources()?.getString(R.string.view_pack)
+        }else{
+            binding.btnGetPack.text = "Get ${model.tagsModel.Name} Poster Pack"
+
+        }
         binding.btnGetPack.setOnClickListener {
             listener?.onItemClick(position,item,RecyclerViewActionType.GET_POSTER_PACK_CLICK.ordinal)
         }

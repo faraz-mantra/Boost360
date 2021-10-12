@@ -15,12 +15,16 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.FESTIVAL_POSTER_PAY_LATER_SCREEN
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.github.dhaval2404.imagepicker.util.FileUtil
 
 class PosterPaymentSheet: BaseBottomSheetDialog<SheetPosterPaymentBinding, BaseViewModel>() {
 
+
+    private var sharedViewModel:FestivePosterSharedViewModel?=null
+    private var session:UserSessionManager?=null
 
     companion object{
         @JvmStatic
@@ -42,8 +46,30 @@ class PosterPaymentSheet: BaseBottomSheetDialog<SheetPosterPaymentBinding, BaseV
     }
 
     override fun onCreateView() {
+        sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
+        session = UserSessionManager(requireActivity())
+        setupUi()
         WebEngageController.trackEvent(FESTIVAL_POSTER_PAY_LATER_SCREEN)
         setOnClickListener(binding?.btnConfirm)
+    }
+
+    private fun setupUi() {
+        val posterPack = sharedViewModel?.selectedPosterPack
+        posterPack?.let {
+            binding?.tvHeading?.text=getString(R.string.paying_,it.price.toString())
+            binding?.tvSubheading?.text=getString(R.string.for_pack_of_posters,it.posterList?.size.toString())
+            binding?.tvPayLater?.text =getString(R.string.get_the_poster_pack_now_amp_pay_later,it.price.toString())
+
+            if (session?.userProfileEmail.isNullOrEmpty()){
+                binding?.tvPayLaterMsg?.text = "We’ll send you a secure payment" +
+                        " link on your registered mobile ${session?.userProfileMobile} to make the payment for ₹${it.price}."
+            }else{
+                binding?.tvPayLaterMsg?.text =  "We’ll send you a secure payment" +
+                        " link on your registered email ID ${session?.userProfileEmail} & ${session?.userProfileMobile} to make the payment for ₹${it.price}."
+            }
+
+
+        }
     }
 
     override fun onClick(v: View) {

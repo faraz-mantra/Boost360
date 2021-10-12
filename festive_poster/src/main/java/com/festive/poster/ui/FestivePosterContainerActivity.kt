@@ -32,6 +32,7 @@ class FestivePosterContainerActivity:
         super.onCreateView()
         WebEngageController.trackEvent(SHARE_FESTIVE_POSTER_BUTTON)
 
+        binding?.toolbar?.setTitleTextAppearance(this,R.style.BoldTextAppearance)
         binding?.toolbar?.inflateMenu(R.menu.festive_poster_help_menu)
 
         handleBackStack()

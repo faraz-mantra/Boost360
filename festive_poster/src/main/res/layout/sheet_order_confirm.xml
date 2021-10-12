@@ -26,13 +26,19 @@
             android:text="@string/order_confirmed"
             android:layout_height="wrap_content"/>
 
-
+        <com.framework.views.customViews.CustomTextView
+            android:gravity="center"
+            android:id="@+id/tv_poster_pack_name"
+            android:fontFamily="@font/bold"
+            android:layout_marginHorizontal="@dimen/size_24"
+            android:layout_marginTop="@dimen/size_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
         <com.framework.views.customViews.CustomTextView
             android:gravity="center"
             android:layout_marginHorizontal="@dimen/size_24"
             android:layout_marginTop="@dimen/size_16"
-            android:text="Navratri pack of 5 posters.
-Feel free to edit &amp; share them with all your customers with your custom messages. You can make payment of ₹51 after you receive the payment link."
+            android:text="@string/order_confirm_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
