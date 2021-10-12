@@ -1293,7 +1293,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             facebookAutoPullConnect(false);
         }
         if (!isAuthenticated()) {
-            //twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
+            //twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_n_inactive));
             // String fbUName = pref.getString(TwitterConnection.PREF_USER_NAME, "");
             twitterProfileConnect(false);
             //twitterStatus.setText("Disconnected");
@@ -1310,7 +1310,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             twitter.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.twitter_icon_active));
             twitter.setColorFilter(ContextCompat.getColor(getActivity(), R.color.primaryColor));
         } else {
-            twitter.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.twitter_icon_inactive));
+            twitter.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.twitter_icon_n_inactive));
             twitter.setColorFilter(ContextCompat.getColor(getActivity(), R.color.light_gray));
             twitterStatus.setVisibility(View.GONE);
         }
