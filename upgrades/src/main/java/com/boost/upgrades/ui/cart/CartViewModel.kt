@@ -225,7 +225,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   }
 
   fun loadAddonsFromDB(boostKey: String) {
-    updatesLoader.postValue(true)
+//    updatesLoader.postValue(true)
     compositeDisposable.add(
       AppDatabase.getInstance(getApplication())!!
         .featuresDao()
@@ -234,11 +234,11 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         .observeOn(AndroidSchedulers.mainThread())
         .doOnSuccess {
           updatesResult.postValue(it)
-          updatesLoader.postValue(false)
+//          updatesLoader.postValue(false)
         }
         .doOnError {
           updatesError.postValue(it.message)
-          updatesLoader.postValue(false)
+//          updatesLoader.postValue(false)
         }
 //                        .subscribe(),
         .subscribe({}, {e -> Log.e("TAG", "Empty DB")}

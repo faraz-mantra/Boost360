@@ -201,7 +201,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     initializeAddonsRecycler()
     initializeRenewalRecycler()
     initializeErrorObserver()
-    addFestivePosterAddOn()
     initMvvM()
     checkRenewalItemDeepLinkClick()
     gst_layout.visibility = View.GONE
@@ -689,17 +688,17 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     loadFestiveData()
     viewModel.addonsResult().observe(viewLifecycleOwner,{
       addonDetails = it
+      if (addonDetails != null){
+        viewModel.addFestivePosterToCart(addonDetails!!)
+      }
+
     })
   }
 
-  private fun addFestivePosterAddOn(){
-    if (addonDetails != null){
-      viewModel.addFestivePosterToCart(addonDetails!!)
-    }
-  }
+
 
   fun loadFestiveData() {
-    viewModel.loadAddonsFromDB("TESTIMONIALS")
+    viewModel.loadAddonsFromDB("EMAILACCOUNTS3")
   }
 
 

@@ -1046,22 +1046,6 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
   }
 
-  private void clearAppData() {
-    try {
-      // clearing app data
-      if (Build.VERSION_CODES.KITKAT <= Build.VERSION.SDK_INT) {
-        ((ActivityManager)_context.getSystemService(ACTIVITY_SERVICE)).clearApplicationUserData(); // note: it has a return value!
-      } else {
-        String packageName = _context.getApplicationContext().getPackageName();
-        Runtime runtime = Runtime.getRuntime();
-        runtime.exec("pm clear "+packageName);
-      }
-
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
   private void clearAuth() {
     try {
       BaseOrderApplication.apiInitialize();
