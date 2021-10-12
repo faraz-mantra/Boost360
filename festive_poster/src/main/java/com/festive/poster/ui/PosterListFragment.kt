@@ -89,7 +89,7 @@ class PosterListFragment: AppBaseFragment<FragmentPosterListBinding, FestivePost
             response?.let {
                 dataList = response.Result.Templates.toArrayList()
                 dataList?.forEach { posterModel -> posterModel.isPurchased=true }
-                dataList?.forEach { posterModel -> posterModel.greeting_message=sharedViewModel?.customizationDetails?.value?.greetingMessage }
+                dataList?.forEach { posterModel -> posterModel.greeting_message="Happy Navratri. Enjoy black friday sale upto 50% discount on our postselected merchandise." }
                 observeCustomization()
 
                 adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList!!,this)

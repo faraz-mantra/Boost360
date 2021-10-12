@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="PosterTheme" parent="BaseTheme"/>
+    <style name="PosterTheme" parent="BaseTheme">
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+    </style>
 
+    <style name="BoldTextAppearance">
+        <item name="android:fontFamily">@font/semi_bold</item>
+    </style>
 </resources>

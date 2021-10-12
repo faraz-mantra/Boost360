@@ -13,6 +13,7 @@ import com.festive.poster.databinding.SheetEditShareMessageBinding
 import com.festive.poster.models.*
 import com.festive.poster.models.response.GetTemplateViewConfigResponse
 import com.festive.poster.models.response.GetTemplatesResponse
+import com.festive.poster.models.response.UpgradeGetDataResponse
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
@@ -21,6 +22,7 @@ import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.base.BaseActivity
 import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.GET_FESTIVAL_POSTER_PACK
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -100,7 +102,6 @@ class PosterPackListingFragment:
     private fun fetchTemplates(tagArray: ArrayList<String>, response: GetTemplateViewConfigResponse) {
         viewModel?.getTemplates(session?.fPID,session?.fpTag,tagArray)
             ?.observe(viewLifecycleOwner,{
-                hideProgress()
                 dataList = ArrayList()
                 val templates_response = it as? GetTemplatesResponse
 
@@ -118,16 +119,51 @@ class PosterPackListingFragment:
 
 
                         dataList?.add(PosterPackModel(pack_tag,templateList.toArrayList()))
+
                     }
 
-                    adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,
-                        dataList!!,this)
-                    binding?.rvPosters?.adapter = adapter
-                    binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
+                  //  checkPurchasedOrNot()
+                    getPriceOfPosterPacks()
+
 
 
                 }
             })
+    }
+
+    private fun getPriceOfPosterPacks() {
+        viewModel?.getUpgradeData()?.observe(viewLifecycleOwner,{
+            val response = it as? UpgradeGetDataResponse
+            response?.let {
+                val feature_festive=response.Data.firstOrNull()?.features?.find{ feature->
+                    feature.boost_widget_key=="FESTIVAL_POSTERS" }
+
+                dataList?.forEach {pack-> pack.price= feature_festive?.price?:0.0 }
+
+                adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,
+                    dataList!!,this)
+                binding?.rvPosters?.adapter = adapter
+                binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
+                hideProgress()
+            }
+
+        })
+    }
+
+    private fun checkPurchasedOrNot() {
+        viewModel?.getFeatureDetails(session?.fPID, clientId)?.observe(viewLifecycleOwner,{
+           val featureList =  it.arrayResponse as? Array<GetFeatureDetailsItem>
+            featureList?.let {
+                dataList?.forEach {posterPackModel ->
+                    posterPackModel.isPurchased=it.find { feature->feature.featureKey==posterPackModel.tagsModel.Tag }?.featureState==1
+                    Log.i(TAG, "checkPurchasedOrNot: ${posterPackModel.isPurchased}")
+                }
+            }
+
+
+
+
+        })
     }
 
 
@@ -146,6 +182,7 @@ class PosterPackListingFragment:
             RecyclerViewActionType.GET_POSTER_PACK_CLICK.ordinal->{
                 WebEngageController.trackEvent(GET_FESTIVAL_POSTER_PACK)
                 item as PosterPackModel
+                sharedViewModel?.selectedPosterPack=item
                 CustomizePosterSheet.newInstance(item.tagsModel.Tag,true).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
             }
 
@@ -166,6 +203,8 @@ class PosterPackListingFragment:
             RecyclerViewActionType.POSTER_TAP_TO_EDIT_CLICK.ordinal->{
                 WebEngageController.trackEvent(GET_FESTIVAL_POSTER_PACK)
                 parentItem as PosterPackModel
+                sharedViewModel?.selectedPosterPack=parentItem
+
                 CustomizePosterSheet.newInstance(parentItem.tagsModel.Tag,true).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
             }
 

@@ -7,6 +7,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_marginVertical="@dimen/size_8"
+
         android:layout_marginHorizontal="@dimen/size_24"
         app:cardCornerRadius="@dimen/size_20"
         app:cardUseCompatPadding="true">
@@ -20,6 +21,8 @@
             <com.framework.views.customViews.CustomCardView
                 android:layout_height="@dimen/size_400"
                 android:layout_margin="@dimen/size_16"
+                app:cardElevation="0dp"
+
                 android:layout_width="match_parent"
                 app:cardCornerRadius="@dimen/size_20">
 

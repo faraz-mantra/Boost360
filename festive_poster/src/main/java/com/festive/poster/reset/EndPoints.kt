@@ -7,4 +7,11 @@ object EndPoints {
 
     const val TEMPLATE_VIEW_CONFIG="Templates/v1/GetTemplatesViewConfig"
     const val GET_TEMPLATES="Templates/v1/GetTemplates"
+
+    const val FEATURE_PROCESSOR_BASE = "https://featureprocessor.withfloats.com/"
+    const val GET_FEATURE_DETAILS="Features/v1/GetFeatureDetils"
+
+    const val BOOST_KIT_DEV_BASE = "https://developer.api.boostkit.dev/"
+    const val GET_UPGRADE_DATA="language/v1/upgrade/get-data"
+
 }
