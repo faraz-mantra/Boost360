@@ -1,12 +1,15 @@
 package com.festive.poster.ui
 
 import android.os.Bundle
+import android.util.Log
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.FragmentPosterListBinding
+import com.festive.poster.databinding.SheetEditShareMessageBinding
 import com.festive.poster.models.PosterKeyModel
 import com.festive.poster.models.PosterModel
 import com.festive.poster.models.response.GetTemplatesResponse
@@ -19,11 +22,14 @@ import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.utils.toArrayList
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.Gson
 
 class PosterListFragment: AppBaseFragment<FragmentPosterListBinding, FestivePosterViewModel>(),RecyclerItemClickListener {
 
     private var adapter: AppBaseRecyclerViewAdapter<PosterModel>?=null
     private var sharedViewModel: FestivePosterSharedViewModel?=null
+    private val TAG = "PosterListFragment"
 
     companion object {
         val BK_TAG="BK_TAG"
@@ -55,13 +61,19 @@ class PosterListFragment: AppBaseFragment<FragmentPosterListBinding, FestivePost
         sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
         session = UserSessionManager(requireActivity())
         setupList()
-        observeCustomization()
     }
 
     private fun observeCustomization() {
         sharedViewModel?.customizationDetails?.observe(viewLifecycleOwner,{
+            Log.i(TAG, "observeCustomization: ${Gson().toJson(it)}")
+
+
             dataList?.forEach { template->
-                template.Keys.find {key-> key.Name=="Title" }?.Custom= it.name
+                template.Keys.forEach { posterKeyModel ->
+                    if (posterKeyModel.Name=="Title"){
+                        posterKeyModel.Custom = it.name
+                    }
+                }
             }
             adapter?.notifyDataSetChanged()
         })
@@ -77,6 +89,8 @@ class PosterListFragment: AppBaseFragment<FragmentPosterListBinding, FestivePost
             response?.let {
                 dataList = response.Result.Templates.toArrayList()
                 dataList?.forEach { posterModel -> posterModel.isPurchased=true }
+                dataList?.forEach { posterModel -> posterModel.greeting_message=sharedViewModel?.customizationDetails?.value?.greetingMessage }
+                observeCustomization()
 
                 adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList!!,this)
                 binding?.rvPosters?.adapter = adapter
@@ -95,7 +109,23 @@ class PosterListFragment: AppBaseFragment<FragmentPosterListBinding, FestivePost
                 CustomizePosterSheet().show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
 
             }
+            RecyclerViewActionType.POSTER_GREETING_MSG_CLICKED.ordinal->{
+                item as PosterModel
+                showEditGreetingMessageSheet(position)
+
+            }
         }
     }
 
+    private fun showEditGreetingMessageSheet(position: Int) {
+        val sheet = BottomSheetDialog(requireActivity(),R.style.BottomSheetTheme)
+        val sheetBinding = DataBindingUtil.inflate<SheetEditShareMessageBinding>(layoutInflater,R.layout.sheet_edit_share_message,null,false)
+        sheet.setContentView(sheetBinding.root)
+        sheetBinding.tvUpdateInfo.setOnClickListener {
+            dataList?.get(position)?.greeting_message=sheetBinding.etDesc.text.toString()
+            adapter?.notifyItemChanged(position)
+            sheet.dismiss()
+        }
+        sheet.show()
+    }
 }

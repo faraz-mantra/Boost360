@@ -28,6 +28,10 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding):
         binding.btnGetPack.text = "Get ${model.tagsModel.Name} Poster Pack"
         setupVp(binding.vpPoster)
 
+        binding.btnGetPack.setOnClickListener {
+            listener?.onItemClick(position,item,RecyclerViewActionType.GET_POSTER_PACK_CLICK.ordinal)
+        }
+
         model.posterList?.let {
             val adapter = AppBaseRecyclerViewAdapter(binding.root.context as BaseActivity<*, *>,it,object :RecyclerItemClickListener{
                 override fun onItemClick(

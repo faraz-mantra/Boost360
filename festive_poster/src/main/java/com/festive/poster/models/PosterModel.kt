@@ -14,7 +14,8 @@ open class PosterModel(
     val Tags: List<String>,
     val UpdatedOn: String,
     val Variants: List<PosterVariantModel>,
-    var isPurchased:Boolean=false
+    var isPurchased:Boolean=false,
+    var greeting_message:String?
 ): AppBaseRecyclerViewItem {
     override fun getViewType(): Int {
         return if (isPurchased)

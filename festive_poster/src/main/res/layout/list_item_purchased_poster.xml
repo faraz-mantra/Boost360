@@ -52,6 +52,9 @@
 
             <com.framework.views.customViews.CustomTextView
                 app:textType="BODY_2"
+                android:id="@+id/tv_greeting_msg"
+                android:padding="@dimen/size_8"
+                android:background="@drawable/shape_fposter_grey_stroke_rect"
                 android:text="Happy Navratri. Enjoy black friday sale upto 50% discount on our postselected merchandise."
                 android:layout_marginHorizontal="@dimen/size_16"
                 android:layout_width="match_parent"
@@ -108,13 +111,14 @@
 
                     <com.framework.views.customViews.CustomImageView
                         android:layout_width="wrap_content"
-                        android:src="@drawable/ic_fposter_instagram"
+                        android:id="@+id/iv_whatsapp"
+                        android:src="@drawable/ic_fposter_whatsapp"
                         android:layout_height="wrap_content"/>
 
                     <com.framework.views.customViews.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_marginTop="@dimen/size_4"
-                        android:text="@string/insta_dm"
+                        android:text="@string/whatsapp"
                         android:layout_height="wrap_content"/>
 
                 </LinearLayout>
@@ -128,6 +132,7 @@
 
 
                     <com.framework.views.customViews.CustomImageView
+                        android:id="@+id/iv_instagram"
                         android:layout_width="wrap_content"
                         android:src="@drawable/ic_fposter_instagram"
                         android:layout_height="wrap_content"/>
@@ -162,6 +167,7 @@
 
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/iv_download"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:layout_weight="1"

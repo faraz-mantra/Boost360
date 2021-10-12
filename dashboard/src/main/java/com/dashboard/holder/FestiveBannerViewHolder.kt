@@ -17,6 +17,9 @@ class FestiveBannerViewHolder(binding: ListItemFestiveBannerBinding) :
     super.bind(position, item)
     val data = item as? DashboardFestiveBanner ?: return
 
+    binding.root.setOnClickListener {
+      listener?.onItemClick(position,item,RecyclerViewActionType.FESTIVE_BANNER_CLICK.ordinal)
+    }
   }
 
 }

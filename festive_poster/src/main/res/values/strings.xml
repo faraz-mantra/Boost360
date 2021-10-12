@@ -5,6 +5,7 @@
     <string name="purchased_posters">Purchased posters</string>
     <string name="share_via">Share via</string>
     <string name="insta_dm">Insta DM</string>
+    <string name="whatsapp">Whatsapp</string>
     <string name="others">Others</string>
     <string name="download">Download</string>
     <string name="customise_poster">Customise poster</string>
@@ -30,4 +31,5 @@
     <string name="festive_poster_help_msg"><![CDATA[Festival posters are premium customisable digital greetings that you can share with your friends, family and specifically with your new & potential customers. Each such festival pack comes with 5 poster designs, available at a fixed price. Go ahead, use festive occasions to connect with those who matter the most to you and your business.]]></string>
     <string name="understood">Understood</string>
     <string name="contact_support">Contact support</string>
+    <string name="save">Save</string>
 </resources>
