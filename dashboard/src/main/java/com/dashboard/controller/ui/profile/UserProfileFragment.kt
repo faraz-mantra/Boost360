@@ -4,20 +4,21 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import com.boost.presignin.model.userprofile.UserProfileData
+import com.boost.presignin.model.userprofile.UserProfileDataResult
 import com.bumptech.glide.Glide
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.controller.ui.profile.sheet.*
 import com.dashboard.databinding.FragmentUserProfileBinding
-import com.dashboard.model.live.user_profile.UserProfileData
-import com.dashboard.model.live.user_profile.UserProfileDataResult
 import com.dashboard.viewmodel.UserProfileViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.pref.UserSessionManager
 import com.google.gson.Gson
 
-class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProfileViewModel>() {
+class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProfileViewModel>(),
+    UpdateProfileUiListener {
 
     private lateinit var session: UserSessionManager
     private val TAG = "UserProfileFragment"
@@ -163,7 +164,10 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
     }
 
     private fun showImagePickerSheet() {
-        ImagePickerSheet().show(parentFragmentManager, ImagePickerSheet::javaClass.name)
+        ImagePickerSheet(this@UserProfileFragment).show(
+            parentFragmentManager,
+            ImagePickerSheet::javaClass.name
+        )
     }
 
 
@@ -175,7 +179,7 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
     }
 
     private fun showEditUserNameSheet() {
-        val dialog = EditChangeUserNameSheet().apply {
+        val dialog = EditChangeUserNameSheet(this@UserProfileFragment).apply {
             arguments = Bundle().apply {
                 putString(
                     EditChangeUserNameSheet.IK_NAME,
@@ -190,6 +194,10 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
                 fetchUserData()
             }
         }, 1000)
+    }
+
+    override fun onUpdateProfile() {
+        fetchUserData()
     }
 
 }

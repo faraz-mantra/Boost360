@@ -1,7 +1,7 @@
 package com.dashboard.rest.services
 
 import com.dashboard.controller.ui.business.model.BusinessProfileUpdateRequest
-import com.dashboard.model.live.user_profile.UserProfileData
+import com.boost.presignin.model.userprofile.UserProfileData
 import com.dashboard.rest.EndPoints
 import com.framework.base.BaseResponse
 import com.framework.pref.clientId2
@@ -9,10 +9,8 @@ import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
-import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.*
-import java.io.File
 
 interface WithFloatTwoRemoteData {
   @PUT(EndPoints.CREATE_BUSINESS_LOGO)

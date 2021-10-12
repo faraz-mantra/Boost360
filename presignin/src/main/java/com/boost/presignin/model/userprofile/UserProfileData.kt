@@ -1,4 +1,4 @@
-package com.dashboard.model.live.user_profile
+package com.boost.presignin.model.userprofile
 
 import com.framework.base.BaseResponse
 import com.framework.pref.UserSessionManager
@@ -26,6 +26,7 @@ data class UserProfileDataResult(
             val stringMerchantData = Gson().toJson(userProfileDataResult)
             sessionManager.merchantUserProfileData = stringMerchantData
             sessionManager.isMerchantUserDetailsSaved = true
+            sessionManager.isMerchantDetailsUpdateUiNeeded = true
         }
 
         fun getMerchantProfileDetails(sessionManager: UserSessionManager): UserProfileDataResult {
