@@ -130,6 +130,10 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
       showShortToast(getString(R.string.account_less_than_nine))
       return false
     }
+    if (accountNumber.length > 18) {
+      showShortToast(getString(R.string.account_greater_than_nine))
+      return false
+    }
     if (accountNumberConfirm.isEmpty()) {
       showLongToast(getString(R.string.please_confirm_account_number))
       return false

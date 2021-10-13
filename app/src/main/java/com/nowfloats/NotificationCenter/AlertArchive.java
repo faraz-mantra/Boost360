@@ -2,6 +2,7 @@ package com.nowfloats.NotificationCenter;
 
 import android.util.Log;
 
+import com.framework.analytics.SentryController;
 import com.nowfloats.util.Constants;
 
 import org.json.JSONObject;
@@ -36,6 +37,7 @@ public class AlertArchive {
                 }
             });
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
     }

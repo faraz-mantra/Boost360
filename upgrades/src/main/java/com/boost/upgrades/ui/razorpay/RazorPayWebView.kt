@@ -6,10 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.data.api_model.Razorpay.PaymentErrorModule
@@ -17,12 +14,11 @@ import com.boost.upgrades.ui.confirmation.OrderConfirmationFragment
 import com.boost.upgrades.ui.payment.PaymentViewModel
 import com.boost.upgrades.ui.popup.FailedTransactionPopUpFragment
 import com.boost.upgrades.utils.Constants
-import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_WEBVIEW_POPUP_FRAGMENT
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.analytics.SentryController
 import com.framework.webengageconstant.*
-import com.google.android.material.circularreveal.CircularRevealHelper
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
@@ -35,7 +31,6 @@ import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.razor_pay_web_view_fragment.*
 import org.json.JSONObject
 import java.lang.IllegalStateException
-import java.util.*
 import kotlin.collections.HashMap
 
 
@@ -149,20 +144,25 @@ class RazorPayWebView : androidx.fragment.app.DialogFragment() {
             redirectTransactionFailure(data.toString())
         } catch (e: Exception) {
             Log.e("onPayError",paymentFailure.toString())
+            SentryController.captureException(e)
             e.printStackTrace()
         }
         catch (e:IllegalStateException){
             Log.e("onPayError",paymentFailure.toString())
+            SentryController.captureException(e)
             e.printStackTrace()
         }
         catch (e:JsonSyntaxException){
             Log.e("onPayError",paymentFailure.toString())
+            SentryController.captureException(e)
             e.printStackTrace()
         }
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(PaymentViewModel::class.java)
+        appState = null.toString()
+        paymentFailure = null
 
         if(isOnSaveInstanceStateCalled && savedInstanceState == null) {
 
@@ -193,6 +193,7 @@ class RazorPayWebView : androidx.fragment.app.DialogFragment() {
                 })
             } catch (e: Exception) {
                 e.printStackTrace()
+                SentryController.captureException(e)
             }
 
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_RAZOR_PAY_VIEW_LOADED, RAZOR_PAY_VIEW, NO_EVENT_VALUE)

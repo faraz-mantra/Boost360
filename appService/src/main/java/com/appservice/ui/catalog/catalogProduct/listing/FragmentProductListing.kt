@@ -28,6 +28,7 @@ import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.model.serviceProduct.service.ItemsItem
+import com.appservice.utils.WebEngageController
 import com.appservice.utils.capitalizeUtil
 import com.appservice.viewmodel.ProductViewModel
 import com.framework.extensions.gone
@@ -41,6 +42,7 @@ import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
+import com.framework.webengageconstant.*
 import java.util.*
 
 class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, ProductViewModel>(), RecyclerItemClickListener, AppOnZeroCaseClicked {
@@ -101,6 +103,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     super.onCreateView()
     getBundleData()
     sessionLocal = UserSessionManager(requireActivity())
+    WebEngageController.trackEvent(PRODUCT_CATALOGUE_LIST, PAGE_VIEW, EVENT_VALUE_MANAGE_CONTENT);
     layoutManagerN = LinearLayoutManager(baseActivity)
     layoutManagerN?.let { scrollPagingListener(it) }
     setOnClickListener(binding?.cbAddProduct)
@@ -265,6 +268,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
   }
 
   private fun addProduct() {
+    WebEngageController.trackEvent(CLICKED_ON_PRODUCTS_CATALOGUE_ADD_NEW, CLICK, NO_EVENT_VALUE);
     startFragmentActivity(FragmentType.PRODUCT_DETAIL_VIEW, bundle = sendBundleData(null), isResult = true)
   }
 
@@ -298,6 +302,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     this.product = item as? CatalogProduct
     when (actionType) {
       RecyclerViewActionType.PRODUCT_ITEM_CLICK.ordinal -> {
+        WebEngageController.trackEvent(CLICKED_ON_PRODUCTS_CATALOGUE_ITEM, CLICK, NO_EVENT_VALUE);
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PRODUCT_DATA.name, product)
         startFragmentActivity(FragmentType.PRODUCT_DETAIL_VIEW, bundle, clearTop = false, isResult = true)
@@ -311,7 +316,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
       RecyclerViewActionType.PRODUCT_WHATS_APP_SHARE.ordinal -> {
         shareProduct(
           product?.Name, product?.Price.toString(), product?.ProductUrl, sessionLocal.userPrimaryMobile, product?.ImageUri,
-          isWhatsApp = true, isService = false, isFb = true, activity = requireActivity()
+          isWhatsApp = true, isService = false, isFb = false, activity = requireActivity()
         )
       }
     }

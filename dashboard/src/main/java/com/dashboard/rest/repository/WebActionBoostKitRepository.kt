@@ -13,30 +13,30 @@ import retrofit2.Retrofit
 
 object WebActionBoostKitRepository : AppBaseRepository<WebActionBoostKitRemoteData, AppBaseLocalService>() {
 
-    override fun getRemoteDataSourceClass(): Class<WebActionBoostKitRemoteData> {
-        return WebActionBoostKitRemoteData::class.java
-    }
+  override fun getRemoteDataSourceClass(): Class<WebActionBoostKitRemoteData> {
+    return WebActionBoostKitRemoteData::class.java
+  }
 
-    fun addOwnersDataPost(auth: String?, body: RequestAddOwnersInfo?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.addOwnersDataPost(auth, body), TaskCode.ADD_OWNERS_DATA)
+  fun addOwnersDataPost(auth: String?, body: RequestAddOwnersInfo?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.addOwnersDataPost(auth, body), TaskCode.ADD_OWNERS_DATA)
 
-    }
+  }
 
-    fun updateOwnersDataPost(auth: String?, body: UpdateOwnersDataRequest?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.updateOwnersDataPost(auth, body), TaskCode.UPDATE_OWNERS_DATA)
+  fun updateOwnersDataPost(auth: String?, body: UpdateOwnersDataRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.updateOwnersDataPost(auth, body), TaskCode.UPDATE_OWNERS_DATA)
 
-    }
+  }
 
-    fun getOwnersDataPost(auth: String?, query: String?, limit: Int?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.getOwnersDataPost(auth, query, limit), TaskCode.GET_OWNERS_DATA)
+  fun getOwnersDataPost(auth: String?, fpTag: String?, limit: Int?): Observable<BaseResponse> {
+    val query = String.format("{'WebsiteId' : '$fpTag'}")
+    return makeRemoteRequest(remoteDataSource.getOwnersDataPost(auth, query, limit), TaskCode.GET_OWNERS_DATA)
+  }
 
-    }
+  override fun getLocalDataSourceInstance(): AppBaseLocalService {
+    return AppBaseLocalService()
+  }
 
-    override fun getLocalDataSourceInstance(): AppBaseLocalService {
-        return AppBaseLocalService()
-    }
-
-    override fun getApiClient(): Retrofit {
-        return WebActionApiBoostKitClientN.shared.retrofit
-    }
+  override fun getApiClient(): Retrofit {
+    return WebActionApiBoostKitClientN.shared.retrofit
+  }
 }

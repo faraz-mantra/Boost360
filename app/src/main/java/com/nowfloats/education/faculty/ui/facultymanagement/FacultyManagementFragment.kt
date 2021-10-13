@@ -40,7 +40,7 @@ import com.thinksity.R
 import com.thinksity.databinding.FacultyManagementFragmentBinding
 import org.koin.android.ext.android.inject
 
-class FacultyManagementFragment : BaseFragment(), ItemClickEventListener,AppOnZeroCaseClicked {
+class FacultyManagementFragment : BaseFragment(), ItemClickEventListener, AppOnZeroCaseClicked {
 
   private val viewModel by inject<FacultyManagementViewModel>()
   private val facultyManagementAdapter: FacultyManagementAdapter by lazy {
@@ -48,42 +48,44 @@ class FacultyManagementFragment : BaseFragment(), ItemClickEventListener,AppOnZe
       this
     )
   }
-  private lateinit var fragmentZeroCase:AppFragmentZeroCase
-  private lateinit var binding:FacultyManagementFragmentBinding
+  private lateinit var fragmentZeroCase: AppFragmentZeroCase
+  private lateinit var binding: FacultyManagementFragmentBinding
   private lateinit var userSessionManager: UserSessionManager
   private val TAG = "FacultyManagementFragme"
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    binding = DataBindingUtil.inflate(inflater,R.layout.faculty_management_fragment,container,false)
+    binding = DataBindingUtil.inflate(inflater, R.layout.faculty_management_fragment, container, false)
     return binding.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     Log.i(TAG, "onViewCreated: ")
-    userSessionManager = UserSessionManager(requireActivity(),requireActivity())
-    this.fragmentZeroCase = AppRequestZeroCaseBuilder(AppZeroCases.FACULTY_MANAGEMENT
-      , this, requireActivity(),isPremium()).getRequest().build()
+    userSessionManager = UserSessionManager(requireActivity(), requireActivity())
+    this.fragmentZeroCase = AppRequestZeroCaseBuilder(
+      AppZeroCases.FACULTY_MANAGEMENT, this, requireActivity(), isPremium()
+    ).getRequest().build()
     requireActivity().supportFragmentManager.beginTransaction().replace(
-      binding.childContainer.id,fragmentZeroCase
+      binding.childContainer.id, fragmentZeroCase
     ).commit()
 
     setHeader(view)
     initLiveDataObservers()
-    if (isPremium()){
+    if (isPremium()) {
       nonEmptyView()
       initBatchesRecyclerview(view)
-    }else{
+    } else {
       emptyView()
     }
   }
 
 
-  private fun isPremium():Boolean{
-    return userSessionManager.storeWidgets?.contains(Constants.FACULTY_MANAGEMENT_FEATURE)==true
+  private fun isPremium(): Boolean {
+    return userSessionManager.storeWidgets?.contains(Constants.FACULTY_MANAGEMENT_FEATURE) == true
   }
+
   private fun nonEmptyView() {
     setHasOptionsMenu(true)
     binding.mainlayout.visible()
@@ -96,6 +98,7 @@ class FacultyManagementFragment : BaseFragment(), ItemClickEventListener,AppOnZe
     binding.childContainer.visible()
 
   }
+
   private fun initBatchesRecyclerview(view: View) {
     val recyclerview = view.findViewById<RecyclerView>(R.id.faculty_recycler)
     val gridLayoutManager = GridLayoutManager(requireContext(), 1)
@@ -194,17 +197,18 @@ class FacultyManagementFragment : BaseFragment(), ItemClickEventListener,AppOnZe
   }
 
   override fun primaryButtonClicked() {
-    if (isPremium()){
+    if (isPremium()) {
       (activity as FacultyActivity).addFragment(
         FacultyDetailsFragment.newInstance(),
         FACULTY_DETAILS_FRAGMENT
       )
-    }else{
+    } else {
       initiateBuyFromMarketplace()
     }
   }
 
   override fun secondaryButtonClicked() {
+    Toast.makeText(activity, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
   }
 
   override fun ternaryButtonClicked() {

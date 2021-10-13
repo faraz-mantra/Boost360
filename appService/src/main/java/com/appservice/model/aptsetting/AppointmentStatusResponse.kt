@@ -177,8 +177,12 @@ data class CustomerInvoicesSetup(
   var isPending: Boolean? = null
 ) {
   fun getTitle(): Spanned? {
-    return if (isGSTDeclarationComplete == false) fromHtml("<pre>GST declaration: <span style=\"color: #EB5757;\"><em>incomplete</em></span></pre>")
-    else fromHtml("<pre>GST declaration: <strong>$gSTIN</strong>&nbsp;</pre>")
+    return if (isGSTDeclarationComplete == false || getGstin().isEmpty()) fromHtml("<pre>GST declaration: <span style=\"color: #EB5757;\"><em>incomplete</em></span></pre>")
+    else fromHtml("<pre>GST declaration: <strong>${getGstin()}</strong>&nbsp;</pre>")
+  }
+
+  fun getGstin():String{
+   return if (gSTIN.isNullOrEmpty() || gSTIN.equals("null")) "" else gSTIN!!
   }
 
   fun getSubtitle(): Spanned? {

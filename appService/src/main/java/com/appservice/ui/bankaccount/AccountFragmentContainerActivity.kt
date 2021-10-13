@@ -18,14 +18,9 @@ import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 
-
 open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerAccountBinding, BaseViewModel>() {
 
   private var type: FragmentType? = null
-
-  private var bankAccountFragment: BankAccountFragment? = null
-  private var addAccountStartFragment: AddAccountStartFragment? = null
-
 
   override fun getLayout(): Int {
     return R.layout.activity_fragment_container_account
@@ -59,7 +54,7 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.BANK_ACCOUNT_DETAILS -> ContextCompat.getColor(this, R.color.color_primary)
-      FragmentType.ADD_BANK_ACCOUNT_START->ContextCompat.getColor(this,R.color.colorAccent)
+      FragmentType.ADD_BANK_ACCOUNT_START -> ContextCompat.getColor(this, R.color.colorAccent)
       else -> super.getToolbarBackgroundColor()
     }
   }
@@ -74,10 +69,7 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.BANK_ACCOUNT_DETAILS,FragmentType.ADD_BANK_ACCOUNT_START -> ContextCompat.getDrawable(
-        this,
-        R.drawable.ic_back_arrow_new
-      )
+      FragmentType.BANK_ACCOUNT_DETAILS, FragmentType.ADD_BANK_ACCOUNT_START -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
       else -> super.getNavigationIcon()
     }
   }
@@ -109,10 +101,10 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
   }
 
   override fun getToolbarTitle(): String? {
-   return when (type){
-     FragmentType.ADD_BANK_ACCOUNT_START->getString(R.string.my_bank_account_)
-     else -> super.getToolbarTitle()
-   }
+    return when (type) {
+      FragmentType.ADD_BANK_ACCOUNT_START -> getString(R.string.my_bank_account_)
+      else -> super.getToolbarTitle()
+    }
 
   }
 
@@ -131,12 +123,10 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
   private fun getFragmentInstance(type: FragmentType?): BaseFragment<*, *>? {
     return when (type) {
       FragmentType.BANK_ACCOUNT_DETAILS -> {
-        bankAccountFragment = BankAccountFragment.newInstance()
-        bankAccountFragment
+        BankAccountFragment.newInstance()
       }
       FragmentType.ADD_BANK_ACCOUNT_START -> {
-        addAccountStartFragment = AddAccountStartFragment.newInstance()
-        addAccountStartFragment
+        AddAccountStartFragment.newInstance()
       }
       else -> throw IllegalFragmentTypeException()
     }
@@ -144,15 +134,13 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    bankAccountFragment?.onActivityResult(requestCode, resultCode, data)
-    addAccountStartFragment?.onActivityResult(requestCode, resultCode, data)
+    for (fragment in supportFragmentManager.fragments) {
+      fragment.onActivityResult(requestCode, resultCode, data)
+    }
   }
 }
 
-fun Fragment.startFragmentAccountActivity(
-  type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false,
-  isResult: Boolean = false, requestCode: Int = 101
-) {
+fun Fragment.startFragmentAccountActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false, requestCode: Int = 101) {
   val intent = Intent(activity, AccountFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -160,12 +148,7 @@ fun Fragment.startFragmentAccountActivity(
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, requestCode)
 }
 
-fun startFragmentAccountActivityNew(
-  activity: Activity,
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean
-) {
+fun startFragmentAccountActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean) {
   val intent = Intent(activity, AccountFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -173,11 +156,7 @@ fun startFragmentAccountActivityNew(
   activity.startActivity(intent)
 }
 
-fun AppCompatActivity.startFragmentAccountActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false
-) {
+fun AppCompatActivity.startFragmentAccountActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
   val intent = Intent(this, AccountFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)

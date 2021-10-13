@@ -768,6 +768,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
   }
 
   override fun secondaryButtonClicked() {
+    showShortToast(getString(R.string.coming_soon))
   }
 
   override fun ternaryButtonClicked() {

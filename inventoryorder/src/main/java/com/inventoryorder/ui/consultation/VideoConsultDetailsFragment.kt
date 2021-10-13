@@ -337,7 +337,10 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
-      data?.getStringExtra(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
+      data?.getStringExtra(IntentConstant.ORDER_ID.name)?.let {
+        isRefresh = true
+        apiGetOrderDetails(it)
+      }
     }
   }
 

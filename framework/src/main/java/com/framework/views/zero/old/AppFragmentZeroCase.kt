@@ -288,7 +288,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
               primaryButtonTitle = context.getString(R.string.post_an_update),
               primaryButtonBackground = R.color.colorPrimary,
               primaryButtonIconLeft = R.drawable.ic_create_white,
-             secondaryButtonIconLeft = R.drawable.exo_icon_play,
+              secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
               )

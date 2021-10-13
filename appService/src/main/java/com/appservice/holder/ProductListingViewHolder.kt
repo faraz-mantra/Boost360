@@ -36,8 +36,8 @@ class ProductListingViewHolder(binding: RecyclerItemProductListingBinding) : App
         binding.ctvStock.text = activity?.getString(R.string.out_of_stock)
       }
     }
-    if (data.Price <= data.DiscountAmount) binding.labelBasePrice.gone() else binding.labelBasePrice.visible()
-    binding.labelPrice.text = "${data.CurrencyCode ?: "INR"} ${data.DiscountAmount}"
+    if (data.DiscountAmount <= 0.0) binding.labelBasePrice.gone() else binding.labelBasePrice.visible()
+    binding.labelPrice.text = "${data.CurrencyCode ?: "INR"} ${data.Price - data.DiscountAmount}"
     binding.labelBasePrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
     binding.labelBasePrice.text = "${data.CurrencyCode ?: "INR"} ${data.Price}"
     binding.labelDescription.text = "${data.Description}"

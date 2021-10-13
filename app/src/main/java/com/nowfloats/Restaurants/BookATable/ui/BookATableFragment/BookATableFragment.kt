@@ -56,7 +56,8 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
   var session: UserSessionManager? = null
   var dataList: List<Data>? = null
   lateinit var zerothCaseFragmentZeroCase: AppFragmentZeroCase
-  lateinit var binding:BookATableFragmentBinding
+  lateinit var binding: BookATableFragmentBinding
+
   companion object {
     fun newInstance() = BookATableFragment()
   }
@@ -67,7 +68,7 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
   ): View? {
 
     adapter = BookTableAdapter(ArrayList(), this)
-    binding = DataBindingUtil.inflate(inflater,R.layout.book_a_table_fragment,container,false)
+    binding = DataBindingUtil.inflate(inflater, R.layout.book_a_table_fragment, container, false)
 
     return binding.root
   }
@@ -77,8 +78,8 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
 
     book_table_recycler.adapter = adapter
     session = UserSessionManager(requireContext(), requireActivity())
-    zerothCaseFragmentZeroCase =AppRequestZeroCaseBuilder(AppZeroCases.TABLE_BOOKING, this, requireActivity(),isPremium()).getRequest().build()
-    requireActivity().supportFragmentManager.beginTransaction().replace(binding.childContainer.id,zerothCaseFragmentZeroCase).commit()
+    zerothCaseFragmentZeroCase = AppRequestZeroCaseBuilder(AppZeroCases.TABLE_BOOKING, this, requireActivity(), isPremium()).getRequest().build()
+    requireActivity().supportFragmentManager.beginTransaction().replace(binding.childContainer.id, zerothCaseFragmentZeroCase).commit()
 
 //
 //    buy_item.setOnClickListener {
@@ -101,6 +102,7 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
   private fun isPremium(): Boolean {
     return session?.storeWidgets?.contains("BOOKTABLE") == true
   }
+
   private fun nonEmptyView() {
     setHasOptionsMenu(true)
     binding.mainlayout?.visible()
@@ -140,7 +142,7 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
           "BOOK_A_TABLE_DETAILS_FRAGMENT"
         )
       }
-    } else{
+    } else {
       btn_add.visibility = View.GONE
       emptyView()
     }
@@ -175,9 +177,9 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
             return
           }
           dataList = getBookTableData.Data
-          if (dataList?.isEmpty() == true){
+          if (dataList?.isEmpty() == true) {
             emptyView()
-          }else{
+          } else {
             updateRecyclerView()
             nonEmptyView()
           }
@@ -319,6 +321,7 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
   }
 
   override fun secondaryButtonClicked() {
+    Toast.makeText(activity, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
   }
 
   override fun ternaryButtonClicked() {

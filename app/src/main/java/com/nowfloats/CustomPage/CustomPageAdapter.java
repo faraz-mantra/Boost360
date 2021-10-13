@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dashboard.utils.CodeUtilsKt;
 import com.framework.BaseApplication;
+import com.framework.analytics.SentryController;
 import com.framework.utils.ContentSharing;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.CustomPage.Model.CustomPageLink;
@@ -114,6 +115,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
           String dateString = storeData.get(position).CreatedOn;
           holder.dateText.setText(Methods.getFormattedDate(dateString));
         } catch (Exception e) {
+          SentryController.INSTANCE.captureException(e);
           e.printStackTrace();
         }
 
@@ -215,6 +217,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                 });*/
       }
     } catch (Exception e) {
+      SentryController.INSTANCE.captureException(e);
       e.printStackTrace();
     }
   }
@@ -246,6 +249,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
           break;
         }
       } catch (Exception ignored) {
+        SentryController.INSTANCE.captureException(ignored);
         url = session.getRootAliasURI();
       }
     }
