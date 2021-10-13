@@ -11,17 +11,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
-import com.appservice.ui.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.setFragmentType
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
+import com.appservice.ui.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.updatesBusiness.startUpdateFragmentActivity
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
+import com.festive.poster.ui.FestivePosterContainerActivity
 import com.framework.analytics.SentryController
 import com.framework.pref.*
 import com.framework.webengageconstant.*
@@ -987,6 +988,15 @@ fun AppCompatActivity.startDownloadUri(url: String, isToast: Boolean = false) {
     downloader.enqueue(request)
     if (isToast) Toast.makeText(this, "File downloading.. ", Toast.LENGTH_SHORT).show()
   } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startFestivePosterActivity(){
+  try {
+    val intent = Intent(this, FestivePosterContainerActivity::class.java)
+    startActivity(intent)
+  }catch (e:Exception){
     e.printStackTrace()
   }
 }

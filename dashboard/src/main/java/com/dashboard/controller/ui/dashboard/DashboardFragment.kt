@@ -44,7 +44,6 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
-import com.framework.base.BaseActivity
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -109,8 +108,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var adapterAcademy: AppBaseRecyclerViewAdapter<DashboardAcademyBanner>? = null
   private var adapterQuickAction: AppBaseRecyclerViewAdapter<QuickActionItem>? = null
   private var adapterBusinessData: AppBaseRecyclerViewAdapter<ManageBusinessData>? = null
-  private var adapterFestiveBanner: AppBaseRecyclerViewAdapter<DashboardFestiveBanner>? = null
-
   private var ctaFileLink: String? = null
   private var mCurrentPage: Int = 0
 
@@ -142,7 +139,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport, binding?.retryDrScore,
       binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.viewEmptyEnquiries?.btnWhatsappEnquiries,
       binding?.viewEmptyEnquiries?.btnInstagramEnquiries, binding?.viewEmptyEnquiries?.btnTelegramEnquiries, binding?.viewEmptyEnquiries?.btnMessangerEnquiries,
-      binding?.viewEmptyEnquiries?.btnEmailEnquiries, binding?.viewEmptyEnquiries?.btnOtherShareEnquiries,binding?.btnSharePoster
+      binding?.viewEmptyEnquiries?.btnEmailEnquiries, binding?.viewEmptyEnquiries?.btnOtherShareEnquiries, binding?.btnFestive
     )
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion1?.text = "Version $versionName"
@@ -195,7 +192,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun getPremiumBanner() {
-    setFestiveBanner()
     setDataMarketBanner(getMarketPlaceBanners() ?: ArrayList())
     setDataRiaAcademy(getAcademyBanners() ?: ArrayList())
     viewModel?.getUpgradeDashboardBanner()?.observeOnce(viewLifecycleOwner, {
@@ -690,19 +686,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
-  fun setFestiveBanner(){
-    val list = arrayListOf(DashboardFestiveBanner(),DashboardFestiveBanner(),DashboardFestiveBanner())
-    adapterFestiveBanner = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,list,this)
-    binding?.festiveBanner?.vpBanner?.adapter = adapterFestiveBanner
-    binding?.festiveBanner?.vpBanner?.let { binding?.festiveBanner?.dotIndicator?.setViewPager2(it) }
-  }
-
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
-      RecyclerViewActionType.FESTIVE_BANNER_CLICK.ordinal->{
-        WebEngageController.trackEvent(SHARE_FESTIVE_POSTER_BANNER)
-        baseActivity.startFestivePosterActivity()
-      }
       RecyclerViewActionType.READING_SCORE_CLICK.ordinal -> {
 //        WebEngageController.trackEvent(SITE_HEALTH_PAGE, SITE_HEALTH, session?.fpTag);
 //        session?.let { baseActivity.startOldSiteMeter(it) }
@@ -798,10 +783,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     super.onClick(v)
     // Track the share_business_card_initiated even in Firebase & Webengage
     when (v) {
-      binding?.btnSharePoster-> {
-        WebEngageController.trackEvent(SHARE_FESTIVE_POSTER_BUTTON)
-        baseActivity.startFestivePosterActivity()
-      }
       binding?.filterBusinessReport -> bottomSheetFilter(BUSINESS_REPORT, FilterDateModel().getDateFilter(FILTER_BUSINESS_REPORT))
       binding?.filterWebsiteReport -> bottomSheetFilter(WEBSITE_REPORT, FilterDateModel().getDateFilter(FILTER_WEBSITE_REPORT))
       binding?.btnNotofication -> session?.let { baseActivity.startNotification(it) }
@@ -865,6 +846,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           shareType = null
         )
         else getChannelAccessToken(isEnquiriesShare = true, shareType = null)
+      }
+      binding?.btnFestive -> {
+        WebEngageController.trackEvent(SHARE_FESTIVE_POSTER_BUTTON)
+        baseActivity.startFestivePosterActivity()
       }
     }
   }
