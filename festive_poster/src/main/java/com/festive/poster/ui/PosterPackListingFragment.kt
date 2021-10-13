@@ -89,7 +89,7 @@ class PosterPackListingFragment:
                 Log.i(TAG, "template config: ${Gson().toJson(it)}")
                 val response = it as? GetTemplateViewConfigResponse
                 response?.let {
-                    val tagArray = prepareTagForApi(response.Result.TodaysPicks.Tags)
+                    val tagArray = prepareTagForApi(response.Result.templatePacks.tags)
                     fetchTemplates(tagArray,response)
                 }
             })
@@ -106,12 +106,12 @@ class PosterPackListingFragment:
                 val templates_response = it as? GetTemplatesResponse
 
                 templates_response?.let {
-                    response.Result.TodaysPicks.Tags.forEach {pack_tag->
+                    response.Result.templatePacks.tags.forEach {pack_tag->
 
                         val templateList = ArrayList<PosterModel>()
 
-                        templates_response.Result.Templates.forEach { template->
-                            if (template.Tags.find { posterTag-> posterTag ==pack_tag.Tag }!=null){
+                        templates_response.Result.templates.forEach { template->
+                            if (template.tags.find { posterTag-> posterTag ==pack_tag.tag }!=null){
                                 templateList.add(
                                     template.clone()!!)
                             }
@@ -155,7 +155,7 @@ class PosterPackListingFragment:
            val featureList =  it.arrayResponse as? Array<GetFeatureDetailsItem>
             featureList?.let {
                 dataList?.forEach {posterPackModel ->
-                    posterPackModel.isPurchased=it.find { feature->feature.featureKey==posterPackModel.tagsModel.Tag }?.featureState==1
+                    posterPackModel.isPurchased=it.find { feature->feature.featureKey==posterPackModel.tagsModel.tag }?.featureState==1
                     Log.i(TAG, "checkPurchasedOrNot: ${posterPackModel.isPurchased}")
                 }
             }
@@ -171,7 +171,7 @@ class PosterPackListingFragment:
 
         val list = ArrayList<String>()
         tags.forEach {
-            list.add(it.Tag)
+            list.add(it.tag)
         }
         return list
     }
@@ -183,7 +183,7 @@ class PosterPackListingFragment:
                 WebEngageController.trackEvent(GET_FESTIVAL_POSTER_PACK)
                 item as PosterPackModel
                 sharedViewModel?.selectedPosterPack=item
-                CustomizePosterSheet.newInstance(item.tagsModel.Tag,true).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
+                CustomizePosterSheet.newInstance(item.tagsModel.tag,true).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
             }
 
 
@@ -205,7 +205,7 @@ class PosterPackListingFragment:
                 parentItem as PosterPackModel
                 sharedViewModel?.selectedPosterPack=parentItem
 
-                CustomizePosterSheet.newInstance(parentItem.tagsModel.Tag,true).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
+                CustomizePosterSheet.newInstance(parentItem.tagsModel.tag,true).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
             }
 
 

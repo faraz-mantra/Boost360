@@ -99,7 +99,7 @@ class FestivePosterContainerActivity:
                     }
                     is PosterListFragment->{
                         binding?.toolbar?.title =
-                            sharedViewModel?.selectedPosterPack?.tagsModel?.Name+
+                            sharedViewModel?.selectedPosterPack?.tagsModel?.name+
                                     " (${sharedViewModel?.selectedPosterPack?.posterList?.size})"
                     }
                 }

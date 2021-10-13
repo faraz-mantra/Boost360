@@ -1,7 +1,7 @@
 package com.festive.poster.models
 
 data class PosterVariantModel(
-    val Active: Boolean,
-    val Link: String,
-    val Name: String
+    val active: Boolean,
+    val svgUrl: String,
+    val name: String
 )

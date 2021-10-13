@@ -13,9 +13,9 @@ class PosterViewHolder(binding: ListItemPosterBinding):
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as PosterModel
-        model.Keys.let {
+        model.keys.let {
             binding.ivSvg.loadAndReplace(
-                model.Variants.firstOrNull()?.Link,
+                model.variants.firstOrNull()?.svgUrl,
                 it
             )
         }
