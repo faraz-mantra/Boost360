@@ -37,9 +37,6 @@ class FestivePosterContainerActivity:
         WebEngageController.trackEvent(SHARE_FESTIVE_POSTER_BUTTON)
         sharedViewModel = ViewModelProvider(this).get(FestivePosterSharedViewModel::class.java)
 
-        binding?.toolbar?.setTitleTextAppearance(this,R.style.BoldTextAppearance)
-        binding?.toolbar?.inflateMenu(R.menu.festive_poster_help_menu)
-
         handleBackStack()
         menuClickListener()
 
@@ -52,27 +49,14 @@ class FestivePosterContainerActivity:
 
     private fun menuClickListener() {
 
-        binding?.toolbar?.navigationIcon = ContextCompat.getDrawable(this,R.drawable.ic_fposter_back_poster_pack_listing)
-        binding?.toolbar?.setNavigationOnClickListener {
+        binding?.ivBack?.setOnClickListener {
             onBackPressed()
         }
-        binding?.toolbar?.setOnMenuItemClickListener { item ->
-            when (item?.itemId) {
-                R.id.menu_downloads -> {
-                    addFragmentReplace(
-                        binding?.container?.id,
-                        PosterPackPurchasedFragment.newInstance(),
-                        true
-                    )
+        binding?.ivHelp?.setOnClickListener {
+            PosterHelpSheet().show(supportFragmentManager,PosterHelpSheet::class.java.name)
 
-                }
-                R.id.menu_help->{
-                    PosterHelpSheet().show(supportFragmentManager,PosterHelpSheet::class.java.name)
-                }
-            }
-
-            true
         }
+
 
     }
 
@@ -89,16 +73,16 @@ class FestivePosterContainerActivity:
             if (topFragment!=null){
                 when(topFragment){
                     is  PosterPackListingFragment->{
-                        binding?.toolbar?.title = getString(R.string.festival_poster)
+                        binding?.tvTitle?.text = getString(R.string.festival_poster)
                       //  binding?.toolbar?.menu?.clear()
                        // binding?.toolbar?.inflateMenu(R.menu.festive_poster_listing_menu)
                     }
 
                     is PosterPackPurchasedFragment->{
-                        binding?.toolbar?.title = getString(R.string.purchased_posters)
+                        binding?.tvTitle?.text  = getString(R.string.purchased_posters)
                     }
                     is PosterListFragment->{
-                        binding?.toolbar?.title =
+                        binding?.tvTitle?.text  =
                             sharedViewModel?.selectedPosterPack?.tagsModel?.name+
                                     " (${sharedViewModel?.selectedPosterPack?.posterList?.size})"
                     }

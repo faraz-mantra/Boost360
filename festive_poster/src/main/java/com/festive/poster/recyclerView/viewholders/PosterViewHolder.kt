@@ -13,12 +13,12 @@ class PosterViewHolder(binding: ListItemPosterBinding):
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as PosterModel
-        model.keys.let {
+       /* model.keys.let {
             binding.ivSvg.loadAndReplace(
                 model.variants.firstOrNull()?.svgUrl,
                 it
             )
-        }
+        }*/
         // model.map?.let { binding.ivSvg.replace(it/*mapOf("IMAGE_PATH" to "image_picker.png","Beautiful Smiles" to "Hello Boost","SMILEY DENTAL CLINIC" to "Boost Clinic")*/) }
 
 

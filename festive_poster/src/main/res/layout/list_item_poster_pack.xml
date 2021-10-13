@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
     <com.framework.views.customViews.CustomCardView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         app:cardElevation="0dp"
@@ -18,7 +18,9 @@
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tv_poster_heading"
                 android:layout_width="match_parent"
-                app:textType="HEADING_4"
+                android:textSize="@dimen/size_18"
+                tools:text="Durgapuja"
+                android:fontFamily="@font/regular"
                 android:textColor="@color/black_4a4a4a"
                 android:layout_marginStart="@dimen/size_24"
                 android:layout_height="wrap_content"/>
@@ -27,6 +29,8 @@
                 android:layout_marginStart="@dimen/size_24"
                 android:layout_width="match_parent"
                 android:id="@+id/tv_price"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/color_888888"
                 android:layout_height="wrap_content"/>
 
             <androidx.viewpager2.widget.ViewPager2
@@ -56,11 +60,13 @@
                 app:cornerRadius="@dimen/size_15"
                 android:elevation="0dp"
                 android:translationZ="0dp"
+                android:fontFamily="@font/regular"
                 android:id="@+id/btn_get_pack"
+                android:textColor="@color/white"
                 android:backgroundTint="@color/colorPrimary"
                 android:textAllCaps="false"
-                android:textSize="@dimen/_14dp"
-                android:text="Get Navratri posters pack"
+                android:textSize="@dimen/size_16"
+                tools:text="Get Navratri posters pack"
                 android:layout_marginHorizontal="@dimen/size_32"
                 android:layout_height="@dimen/size_60"/>
 

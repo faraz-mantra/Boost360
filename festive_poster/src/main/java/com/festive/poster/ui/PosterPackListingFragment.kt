@@ -27,6 +27,8 @@ import com.framework.utils.toArrayList
 import com.framework.webengageconstant.GET_FESTIVAL_POSTER_PACK
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PosterPackListingFragment:
     AppBaseFragment<FragmentPosterPackListingBinding, FestivePosterViewModel>(),RecyclerItemClickListener {
@@ -135,10 +137,20 @@ class PosterPackListingFragment:
         viewModel?.getUpgradeData()?.observe(viewLifecycleOwner,{
             val response = it as? UpgradeGetDataResponse
             response?.let {
-                val feature_festive=response.Data.firstOrNull()?.features?.find{ feature->
-                    feature.boost_widget_key=="FESTIVAL_POSTERS" }
+                dataList?.forEach {
+                    pack->
 
-                dataList?.forEach {pack-> pack.price= feature_festive?.price?:0.0 }
+                    val feature_festive=response.Data.firstOrNull()?.features?.find{ feature->
+                        feature.feature_code==pack.tagsModel.tag }
+
+                    pack.price=feature_festive?.price?:0.0
+
+                    Log.i(TAG, "festive price: ${feature_festive?.price}")
+
+                }
+
+                rearrangeList()
+
 
                 adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,
                     dataList!!,this)
@@ -148,6 +160,14 @@ class PosterPackListingFragment:
             }
 
         })
+    }
+
+    private fun rearrangeList() {
+        if (dataList?.size?:0>=3){
+            Collections.swap(dataList,0,1)
+            Collections.swap(dataList,2,0)
+        }
+
     }
 
     private fun checkPurchasedOrNot() {
