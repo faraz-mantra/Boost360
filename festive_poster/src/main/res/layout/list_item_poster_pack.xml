@@ -60,6 +60,7 @@
                 app:cornerRadius="@dimen/size_15"
                 android:elevation="0dp"
                 android:translationZ="0dp"
+                android:stateListAnimator="@null"
                 android:fontFamily="@font/regular"
                 android:id="@+id/btn_get_pack"
                 android:textColor="@color/white"

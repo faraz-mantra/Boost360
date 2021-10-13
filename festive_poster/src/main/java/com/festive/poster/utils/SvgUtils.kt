@@ -1,5 +1,6 @@
 package com.festive.poster.utils
 
+import android.R.attr
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -14,6 +15,12 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.*
 import java.net.HttpURLConnection
+import android.R.attr.label
+
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import androidx.core.content.ContextCompat.getSystemService
 
 
 object SvgUtils {
@@ -50,7 +57,7 @@ object SvgUtils {
                 return result
             }
         }catch (e:Exception){
-            Log.e(TAG, "getSvgAsAString: $e", )
+            Log.e(TAG, "getSvgAsAString: $e")
         }
 
 
@@ -76,7 +83,7 @@ object SvgUtils {
             }
 
         }catch (e:Exception){
-            Log.e(TAG, "getInputStream: $e", )
+            Log.e(TAG, "getInputStream: $e")
         }
         return null
     }
@@ -114,6 +121,7 @@ object SvgUtils {
                 result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
             }
         }
+
         return result
     }
 

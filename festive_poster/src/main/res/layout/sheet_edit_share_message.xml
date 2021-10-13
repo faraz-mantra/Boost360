@@ -14,6 +14,8 @@
             android:layout_marginHorizontal="@dimen/size_24"
             android:id="@+id/customTextView"
             android:layout_width="match_parent"
+            android:textSize="@dimen/size_12"
+            android:fontFamily="@font/regular"
             android:layout_height="wrap_content"
             android:text="@string/greeting_description"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,6 +46,7 @@
             android:gravity="center"
             android:paddingVertical="@dimen/size_8"
             android:text="@string/save"
+            android:fontFamily="@font/semi_bold"
             android:textColor="@color/white"
             app:textType="HEADING_5" />
     </androidx.appcompat.widget.LinearLayoutCompat>

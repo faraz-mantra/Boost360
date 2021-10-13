@@ -44,7 +44,7 @@ class PosterOrderConfirmSheet: BaseBottomSheetDialog<SheetOrderConfirmBinding, B
     override fun onCreateView() {
         sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
         val selectedPosterPack =sharedViewModel?.selectedPosterPack
-        binding?.tvPosterPackName?.text = selectedPosterPack?.tagsModel?.name+" pack of ${selectedPosterPack?.posterList?.size}"
+        binding?.tvPosterPackName?.text = selectedPosterPack?.tagsModel?.name+" pack of ${selectedPosterPack?.posterList?.size} posters"
         binding?.tvDesc?.text =getString(R.string.order_confirm_message,selectedPosterPack?.price.toString())
         WebEngageController.trackEvent(FESTIVAL_POSTER_ORDER_SUCCESS,event_value = HashMap())
         packTag= arguments?.getString(PosterListFragment.BK_TAG)

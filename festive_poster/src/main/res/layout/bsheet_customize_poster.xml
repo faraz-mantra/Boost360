@@ -27,7 +27,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:fontFamily="@font/semi_bold"
+                        android:fontFamily="@font/bold"
                         android:text="@string/customise_poster"
                         android:textColor="@color/black_4a4a4a"
                         android:textSize="@dimen/size_16" />
@@ -116,7 +116,7 @@
 
                     <com.framework.views.customViews.CustomTextView
                         android:layout_width="match_parent"
-                        android:text="@string/your_name"
+                        android:text="@string/your_name_star"
                         android:textSize="@dimen/size_12"
                         android:fontFamily="@font/regular"
                         android:layout_height="wrap_content"/>
@@ -224,9 +224,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@drawable/bg_button_orange_gradient"
+            android:fontFamily="@font/semi_bold"
             android:gravity="center"
-            android:paddingVertical="@dimen/size_8"
-            android:fontFamily="@font/regular"
+            android:paddingVertical="@dimen/size_12"
             android:text="@string/update_info"
             android:textColor="@color/white"
             app:textType="HEADING_5" />

@@ -15,7 +15,7 @@
             app:textType="HEADING_5"
             android:fontFamily="@font/bold"
             android:layout_marginTop="@dimen/size_16"
-            android:textColor="@color/grey_dark_1"
+            android:textColor="@color/black_4a4a4a"
             android:text="@string/what_are_the_festival_posters"
             android:layout_height="wrap_content"/>
 
@@ -23,7 +23,9 @@
         <com.framework.views.customViews.CustomTextView
             android:layout_marginTop="@dimen/size_16"
             android:textSize="@dimen/size_14"
-            android:lineSpacingExtra="6dp"
+            android:textColor="@color/color_747474"
+            android:lineSpacingExtra="3dp"
+            android:fontFamily="@font/regular"
             android:text="@string/festive_poster_help_msg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -32,7 +34,9 @@
             android:layout_marginTop="@dimen/size_24"
             android:gravity="center"
             android:id="@+id/btn_confirm"
+            android:stateListAnimator="@null"
             style="@style/PrimaryButton"
+            android:fontFamily="@font/semi_bold"
             android:layout_width="match_parent"
             android:text="@string/understood"
             android:layout_height="@dimen/size_50"/>
@@ -43,7 +47,7 @@
             android:paddingVertical="@dimen/size_16"
             android:text="@string/contact_support"
             android:textSize="@dimen/size_18"
-            android:fontFamily="@font/bold"
+            android:fontFamily="@font/semi_bold"
             android:textColor="@color/orange"
             android:layout_height="wrap_content"/>
 

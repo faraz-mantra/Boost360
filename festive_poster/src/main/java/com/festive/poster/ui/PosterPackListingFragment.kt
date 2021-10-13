@@ -7,6 +7,7 @@ import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.FragmentPosterPackListingBinding
+import com.festive.poster.models.*
 import com.festive.poster.models.GetFeatureDetailsItem
 import com.festive.poster.models.PosterModel
 import com.festive.poster.models.PosterPackModel
@@ -112,7 +113,7 @@ class PosterPackListingFragment:
                         val templateList = ArrayList<PosterModel>()
 
                         templates_response.Result.templates.forEach { template->
-                            if (template.tags.find { posterTag-> posterTag ==pack_tag.tag }!=null){
+                            if (template.tags.find { posterTag-> posterTag ==pack_tag.tag }!=null&&template.active){
                                 templateList.add(
                                     template.clone()!!)
                             }
@@ -202,7 +203,10 @@ class PosterPackListingFragment:
                 WebEngageController.trackEvent(GET_FESTIVAL_POSTER_PACK_CLICK,event_value = HashMap())
                 item as PosterPackModel
                 sharedViewModel?.selectedPosterPack=item
-                CustomizePosterSheet.newInstance(item.tagsModel.tag,item.isPurchased).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
+                CustomizePosterSheet.newInstance(
+                    item.tagsModel.tag,
+                    item.isPurchased,
+                ).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
             }
 
 
@@ -224,7 +228,10 @@ class PosterPackListingFragment:
                 parentItem as PosterPackModel
                 sharedViewModel?.selectedPosterPack=parentItem
 
-                CustomizePosterSheet.newInstance(parentItem.tagsModel.tag,parentItem.isPurchased).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
+                CustomizePosterSheet.newInstance(
+                    parentItem.tagsModel.tag,
+                    parentItem.isPurchased,
+                ).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
             }
 
 

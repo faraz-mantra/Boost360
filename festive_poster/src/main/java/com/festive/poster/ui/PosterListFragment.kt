@@ -156,7 +156,7 @@ class PosterListFragment: AppBaseFragment<FragmentPosterListBinding, FestivePost
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
         when(actionType){
             RecyclerViewActionType.POSTER_TAP_TO_EDIT_CLICK.ordinal->{
-                CustomizePosterSheet.newInstance(packTag!!,true).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
+                CustomizePosterSheet.newInstance(packTag!!,true,PosterListFragment::class.java.name).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
 
             }
             RecyclerViewActionType.POSTER_GREETING_MSG_CLICKED.ordinal->{
@@ -171,6 +171,7 @@ class PosterListFragment: AppBaseFragment<FragmentPosterListBinding, FestivePost
         val sheet = BottomSheetDialog(requireActivity(),R.style.BottomSheetTheme)
         val sheetBinding = DataBindingUtil.inflate<SheetEditShareMessageBinding>(layoutInflater,R.layout.sheet_edit_share_message,null,false)
         sheet.setContentView(sheetBinding.root)
+        sheetBinding.etDesc.setText(dataList?.get(position)?.greeting_message)
         sheetBinding.tvUpdateInfo.setOnClickListener {
             dataList?.get(position)?.greeting_message=sheetBinding.etDesc.text.toString()
             adapter?.notifyItemChanged(position)
