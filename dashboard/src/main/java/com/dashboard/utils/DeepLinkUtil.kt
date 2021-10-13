@@ -273,7 +273,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_owner_info)) {
           baseActivity.startOwnersInfo(session)
         }else if (url.contains(deeplink_festive_poster)){
-          baseActivity.startFestivePosterActivity()
+          baseActivity.startFestivePosterActivity(true)
         }
       }
     } catch (e: Exception) {

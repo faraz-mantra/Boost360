@@ -50,7 +50,6 @@
             android:fontFamily="@font/bold"
             android:textColor="@color/white"
             android:id="@+id/btn_confirm"
-
             android:background="@drawable/bg_button_orange_gradient"
             android:layout_width="match_parent"
             android:text="@string/confirm_order"

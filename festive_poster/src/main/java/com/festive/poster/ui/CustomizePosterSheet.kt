@@ -8,11 +8,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.festive.poster.R
 import com.festive.poster.databinding.BsheetCustomizePosterBinding
 import com.festive.poster.models.PosterCustomizationModel
+import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.framework.webengageconstant.FESTIVAL_POSTER_UPDATE_INFO
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.github.dhaval2404.imagepicker.util.FileUtil
 
@@ -69,6 +71,7 @@ class CustomizePosterSheet: BaseBottomSheetDialog<BsheetCustomizePosterBinding, 
             binding?.tvUpdateInfo->{
                 Log.i(TAG, "path: $path")
                 if (validation()){
+                    WebEngageController.trackEvent(FESTIVAL_POSTER_UPDATE_INFO,event_value = HashMap())
                     submitDetails()
                 }
 

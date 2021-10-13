@@ -2,25 +2,16 @@ package com.festive.poster.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.festive.poster.R
-import com.festive.poster.databinding.BsheetCustomizePosterBinding
 import com.festive.poster.databinding.SheetOrderConfirmBinding
-import com.festive.poster.databinding.SheetPosterPaymentBinding
-import com.festive.poster.models.PosterCustomizationModel
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.framework.base.BaseBottomSheetDialog
-import com.framework.extensions.gone
-import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.framework.webengageconstant.FESTIVAL_POSTER_ORDER_SUCCESS
-import com.framework.webengageconstant.FESTIVAL_POSTER_PAY_LATER_SCREEN
-import com.framework.webengageconstant.FESTIVAL_POSTER_PURCHASED
-import com.github.dhaval2404.imagepicker.ImagePicker
-import com.github.dhaval2404.imagepicker.util.FileUtil
+import com.framework.webengageconstant.FESTIVAL_POSTER_VIEW_PACK_CLICK
 
 class PosterOrderConfirmSheet: BaseBottomSheetDialog<SheetOrderConfirmBinding, BaseViewModel>() {
 
@@ -52,11 +43,10 @@ class PosterOrderConfirmSheet: BaseBottomSheetDialog<SheetOrderConfirmBinding, B
 
     override fun onCreateView() {
         sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
-
         val selectedPosterPack =sharedViewModel?.selectedPosterPack
         binding?.tvPosterPackName?.text = selectedPosterPack?.tagsModel?.name+" pack of ${selectedPosterPack?.posterList?.size}"
         binding?.tvDesc?.text =getString(R.string.order_confirm_message,selectedPosterPack?.price.toString())
-        WebEngageController.trackEvent(FESTIVAL_POSTER_ORDER_SUCCESS)
+        WebEngageController.trackEvent(FESTIVAL_POSTER_ORDER_SUCCESS,event_value = HashMap())
         packTag= arguments?.getString(PosterListFragment.BK_TAG)
         setOnClickListener(binding?.btnConfirm)
     }
@@ -65,7 +55,7 @@ class PosterOrderConfirmSheet: BaseBottomSheetDialog<SheetOrderConfirmBinding, B
         super.onClick(v)
         when(v){
             binding?.btnConfirm->{
-                WebEngageController.trackEvent(FESTIVAL_POSTER_PURCHASED)
+                WebEngageController.trackEvent(FESTIVAL_POSTER_VIEW_PACK_CLICK,event_value = HashMap())
                 addFragmentReplace(R.id.container,PosterListFragment.newInstance(sharedViewModel?.customizationDetails?.value?.tag!!),true)
                 dismiss()
             }
