@@ -34,6 +34,7 @@ import androidx.core.content.FileProvider;
 
 import com.boost.upgrades.UpgradeActivity;
 import com.bumptech.glide.Glide;
+import com.framework.analytics.SentryController;
 import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem;
 import com.framework.models.caplimit_feature.PropertiesItem;
 import com.google.gson.Gson;
@@ -298,6 +299,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
 
       }
     } catch (Exception e) {
+      SentryController.INSTANCE.captureException(e);
       e.printStackTrace();
     }
 
@@ -402,6 +404,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         });
       }
     } catch (Exception e) {
+      SentryController.INSTANCE.captureException(e);
       e.printStackTrace();
     }
 
@@ -410,7 +413,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
   private boolean validateInput() {
     if (userNameText.getText().toString().isEmpty()) {
       return messageInpute();
-    } else if (reviewTitleText.getText().toString().isEmpty()) {
+    } else if (reviewTitleView.getVisibility() != View.GONE && reviewTitleText.getText().toString().isEmpty()) {
       return messageInpute();
     } else if (reviewDescriptionText.getText().toString().isEmpty() || (isProfileDescFill(session.getFP_AppExperienceCode()) == View.VISIBLE && profileDescEdt.getText().toString().isEmpty())) {
       return messageInpute();
@@ -443,6 +446,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         try {
           photoFile = createImageFile();
         } catch (IOException ex) {
+          SentryController.INSTANCE.captureException(ex);
           ex.printStackTrace();
         }
         // Continue only if the File was successfully created
@@ -454,9 +458,11 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
       }
 
     } catch (ActivityNotFoundException e) {
+      SentryController.INSTANCE.captureException(e);
       String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
       Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, errorMessage);
     } catch (Exception e) {
+      SentryController.INSTANCE.captureException(e);
       e.printStackTrace();
     }
   }
@@ -485,6 +491,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
       Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
       startActivityForResult(i, GALLERY_PHOTO);
     } catch (ActivityNotFoundException anfe) {
+      SentryController.INSTANCE.captureException(anfe);
       // display an error message
       String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
       Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, errorMessage);
@@ -509,6 +516,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         }
       }
     } catch (Exception e) {
+      SentryController.INSTANCE.captureException(e);
       Log.e("onActivityResult ->", "Failed ->" + e.getMessage());
       e.printStackTrace();
     }
@@ -527,6 +535,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         }
       }
     } catch (Exception e) {
+      SentryController.INSTANCE.captureException(e);
       Log.e("uploadImageToServer ->", "Failed ->" + e.getMessage());
       e.printStackTrace();
     } catch (OutOfMemoryError E) {
@@ -582,6 +591,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
       });
 
     } catch (Exception e) {
+      SentryController.INSTANCE.captureException(e);
       hideLoader();
       e.printStackTrace();
     }
@@ -677,6 +687,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
           }
         });
       } catch (Exception e) {
+        SentryController.INSTANCE.captureException(e);
         Log.v("experincecode3", " " + e.getMessage() + " " + e.getStackTrace());
         Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         e.printStackTrace();
@@ -710,6 +721,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         }
       });
     } catch (JSONException e) {
+      SentryController.INSTANCE.captureException(e);
       e.printStackTrace();
     }
   }

@@ -21,6 +21,7 @@ import com.appservice.model.FileModel
 import com.appservice.rest.TaskCode
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
@@ -28,6 +29,7 @@ import com.framework.extensions.visible
 import com.framework.imagepicker.ImagePicker
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.webengageconstant.*
 
 class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceCustomerInvoiceSetupBinding, AppointmentSettingsViewModel>() {
 
@@ -56,6 +58,7 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
   override fun onCreateView() {
     super.onCreateView()
     sessionLocal = UserSessionManager(requireActivity())
+    WebEngageController.trackEvent(CUSTOMER_INVOICE_SETUP_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.editPurchases?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     binding?.editPurchases?.text = getString(R.string.edit_)
     setOnClickListener(binding?.gstinContainer, binding?.invoiceSetupContainer)
@@ -149,9 +152,11 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
     super.onClick(v)
     when (v) {
       binding?.gstinContainer -> {
+        WebEngageController.trackEvent(BUSINESS_GSTIN_CLICK, CLICK, NO_EVENT_VALUE)
         showEnterBusinessGSTIN()
       }
       binding?.invoiceSetupContainer -> {
+        WebEngageController.trackEvent(TAX_INVOICE_CUSTOMER, CLICK, NO_EVENT_VALUE)
         showTaxInvoicesForPurchases()
       }
     }

@@ -23,6 +23,7 @@ import com.appservice.model.updateBusiness.UpdateFloat
 import com.appservice.utils.FileUtils
 import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.UpdatesViewModel
+import com.framework.analytics.SentryController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -133,6 +134,7 @@ class DetailUpdateBusinessFragment : AppBaseFragment<DetailBusinessFragmentBindi
           binding?.messagetag?.text = tags.substring(1)
         } catch (e: Exception) {
           e.printStackTrace()
+          SentryController.captureException(e)
         }
       }
     })

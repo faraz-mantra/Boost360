@@ -1,8 +1,10 @@
 package com.appservice.model.accountDetails
 
-
+import com.framework.utils.*
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+
+const val BANK_ACCOUNT_SAVE = "BANK_ACCOUNT_SAVE"
 
 data class BankAccountDetails(
   @SerializedName("AccountAlias")
@@ -31,4 +33,12 @@ data class BankAccountDetails(
   fun getVerifyText(): String {
     return if (kYCDetails?.verificationStatus == KYCDetails.Status.PENDING.name) "unverified" else "verified"
   }
+}
+
+fun getBankDetail(): BankAccountDetails? {
+  return convertStringToObj(PreferencesUtils.instance.getData(BANK_ACCOUNT_SAVE, "") ?: "")
+}
+
+fun BankAccountDetails.saveBanKDetail() {
+  PreferencesUtils.instance.saveData(BANK_ACCOUNT_SAVE, convertObjToString(this))
 }

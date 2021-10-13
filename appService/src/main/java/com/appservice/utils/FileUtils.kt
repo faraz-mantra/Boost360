@@ -16,6 +16,7 @@ import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.text.TextUtils
 import android.util.Log
+import com.framework.analytics.SentryController
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -49,13 +50,7 @@ class FileUtils(var context: Activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
           var cursor: Cursor? = null
           try {
-            cursor = context.contentResolver.query(
-              uri,
-              arrayOf(MediaStore.MediaColumns.DISPLAY_NAME),
-              null,
-              null,
-              null
-            )
+            cursor = context.contentResolver.query(uri, arrayOf(MediaStore.MediaColumns.DISPLAY_NAME), null, null, null)
             if (!(cursor == null || !cursor.moveToFirst())) {
               val fileName: String = cursor.getString(0)
               val path: String = Environment.getExternalStorageDirectory().toString()
@@ -72,8 +67,11 @@ class FileUtils(var context: Activity) {
             if (id.startsWith("raw:")) {
               return id.replaceFirst("raw:".toRegex(), "")
             }
-            val contentUriPrefixesToTry =
-              arrayOf("content://downloads/public_downloads", "content://downloads/my_downloads")
+            val contentUriPrefixesToTry = arrayOf(
+              "content://downloads/public_downloads",
+              "content://downloads/my_downloads",
+              "content://downloads/all_downloads"
+            )
             for (contentUriPrefix in contentUriPrefixesToTry) {
               return try {
                 val contentUri: Uri = ContentUris.withAppendedId(
@@ -82,6 +80,7 @@ class FileUtils(var context: Activity) {
                 )
                 getDataColumn(context, contentUri, null, null)
               } catch (e: NumberFormatException) {
+                SentryController.captureException(e)
                 //In Android 8 and Android P the id is not a number
                 uri.path?.replaceFirst("^/document/raw:", "")?.replaceFirst("^raw:", "")
               }
@@ -97,6 +96,7 @@ class FileUtils(var context: Activity) {
               Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id)
             )
           } catch (e: NumberFormatException) {
+            SentryController.captureException(e)
             e.printStackTrace()
           }
           if (contentUri != null) {
@@ -109,11 +109,11 @@ class FileUtils(var context: Activity) {
         val docId = DocumentsContract.getDocumentId(uri)
         val split = docId.split(":".toRegex()).toTypedArray()
         val type = split[0]
-        var contentUri: Uri? = null
-        when (type) {
-          "image" -> contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-          "video" -> contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-          "audio" -> contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+        val contentUri: Uri? = when (type) {
+          "image" -> MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+          "video" -> MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+          "audio" -> MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+          else -> MediaStore.Files.getContentUri("external");
         }
         selection = "_id=?"
         selectionArgs = arrayOf(split[1])
@@ -157,6 +157,7 @@ class FileUtils(var context: Activity) {
             return cursor.getString(columnIndex)
           }
         } catch (e: Exception) {
+          SentryController.captureException(e)
           e.printStackTrace()
         }
       }
@@ -234,6 +235,7 @@ class FileUtils(var context: Activity) {
       Log.e("File Path", "Path " + file.path)
       Log.e("File Size", "Size " + file.length())
     } catch (e: Exception) {
+      SentryController.captureException(e)
       Log.e("Exception", e.message ?: "")
     }
     return file.path
@@ -287,6 +289,7 @@ class FileUtils(var context: Activity) {
       inputStream?.close()
       outputStream.close()
     } catch (e: Exception) {
+      SentryController.captureException(e)
       Log.e("Exception", e.message ?: "")
     }
     return output.path
@@ -296,26 +299,20 @@ class FileUtils(var context: Activity) {
     return copyFileToInternalStorage(uri, "whatsapp")
   }
 
-  private fun getDataColumn(
-    context: Activity,
-    uri: Uri?,
-    selection: String?,
-    selectionArgs: Array<String>?
-  ): String? {
-    var cursor: Cursor? = null
-    val column = "_data"
-    val projection = arrayOf(column)
-    try {
-      cursor = context.contentResolver.query(
-        uri!!, projection,
-        selection, selectionArgs, null
-      )
-      if (cursor != null && cursor.moveToFirst()) {
-        val index: Int = cursor.getColumnIndexOrThrow(column)
-        return cursor.getString(index)
+  private fun getDataColumn(context: Activity, uri: Uri?, selection: String?, selectionArgs: Array<String>?): String? {
+    if (uri != null) {
+      var cursor: Cursor? = null
+      val column = "_data"
+      val projection = arrayOf(column)
+      try {
+        cursor = context.contentResolver.query(uri, projection, selection, selectionArgs, null)
+        if (cursor != null && cursor.moveToFirst()) {
+          val index: Int = cursor.getColumnIndexOrThrow(column)
+          return cursor.getString(index)
+        }
+      } finally {
+        cursor?.close()
       }
-    } finally {
-      cursor?.close()
     }
     return null
   }
@@ -379,6 +376,7 @@ class FileUtils(var context: Activity) {
       `in`?.close()
       b
     } catch (e: IOException) {
+      SentryController.captureException(e)
       null
     } catch (e: OutOfMemoryError) {
       e.printStackTrace()
@@ -404,6 +402,7 @@ class FileUtils(var context: Activity) {
         ) as? Int
         return rotation?.toFloat() ?: 0F
       } catch (e: IOException) {
+        SentryController.captureException(e)
         e.printStackTrace()
       }
     }

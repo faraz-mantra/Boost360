@@ -11,6 +11,7 @@ import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.PartnerZone
 import com.boost.upgrades.interfaces.HomeListener
 import com.bumptech.glide.Glide
+import com.framework.analytics.SentryController
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -99,6 +100,7 @@ class PartnerViewPagerAdapter(
               }
             } catch (e: Exception) {
               e.printStackTrace()
+              SentryController.captureException(e)
             }
           }, {
             it.printStackTrace()
@@ -144,6 +146,7 @@ class PartnerViewPagerAdapter(
               }
             } catch (e: Exception) {
               e.printStackTrace()
+              SentryController.captureException(e)
             }
           }, {
             it.printStackTrace()

@@ -21,8 +21,6 @@ import com.boost.presignup.datamodel.userprofile.UserProfileRequest
 import com.boost.presignup.datamodel.userprofile.UserProfileResponse
 import com.boost.presignup.utils.Utils.hideKeyBoard
 import com.boost.presignup.utils.WebEngageController
-import com.framework.pref.UserSessionManager
-import com.framework.pref.getAccessTokenAuth
 import com.framework.rest.ServiceInterceptor
 import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*

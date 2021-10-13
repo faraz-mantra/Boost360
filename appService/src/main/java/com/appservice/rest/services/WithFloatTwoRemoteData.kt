@@ -47,7 +47,7 @@ interface WithFloatTwoRemoteData {
   fun getProductListing(@Query("fpTag") fpTag: String?, @Query("clientId") clientId: String?, @Query("skipBy") skipBy: Int?): Observable<Response<List<CatalogProduct>>>
 
   @GET(EndPoints.GET_PRODUCT_LISTING_COUNT)
-  fun getProductListingCount(@Query("fpTag") fpTag: String?, @Query("clientId") clientId: String?, @Query("skipBy") skipBy: Int?): Observable<Response<CatalogProductCountResponse>>
+  fun getProductListingCount(@Query("fpTag") fpTag: String?, @Query("clientId") clientId: String?, @Query("skipBy") skipBy: Int?, @Query("identifierType") identifierType: String? = "SINGLE"): Observable<Response<CatalogProductCountResponse>>
 
   @GET(EndPoints.GET_NOTIFICATION)
   fun getNotificationCount(

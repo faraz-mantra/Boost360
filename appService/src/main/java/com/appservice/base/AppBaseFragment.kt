@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.constant.PreferenceConstant
 import com.appservice.model.StatusKyc
+import com.framework.analytics.SentryController
 import com.framework.base.BaseFragment
 import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
@@ -126,6 +127,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
       Handler().postDelayed({ hideProgress() }, 1000)
     } catch (e: Exception) {
       showLongToast("Unable to start upgrade activity.")
+      SentryController.captureException(e)
     }
   }
 

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.database.Cursor
 import android.text.TextUtils
+import com.framework.analytics.SentryController
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_TAG
 import com.framework.pref.Key_Preferences.GET_FP_EXPERIENCE_CODE
@@ -557,6 +558,7 @@ class UserSessionManager(var activity: Context) {
       editor.putBoolean(packegeId, `val`)
       editor.apply()
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
     }
   }
@@ -586,6 +588,7 @@ class UserSessionManager(var activity: Context) {
       editor.putString(key.trim { it <= ' ' }, value?.trim { it <= ' ' } ?: "")
       editor.apply()
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
     }
   }
@@ -744,10 +747,16 @@ class UserSessionManager(var activity: Context) {
    * Clear session details
    */
   fun logoutUser(activity: Activity) {
+    logoutUser(activity.applicationContext)
+  }
+
+  fun logoutUser(context: Context) {
     try {
-      val i = Intent(activity, Class.forName("com.nowfloats.helper.LogoutActivity"))
-      activity.startActivity(i)
+      val i = Intent(context, Class.forName("com.nowfloats.helper.LogoutActivity"))
+      i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+      context.startActivity(i)
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
     }
   }

@@ -17,6 +17,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.framework.analytics.SentryController
 import com.nowfloats.BusinessProfile.UI.API.Upload_Logo
 import com.nowfloats.Login.UserSessionManager
 import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog
@@ -79,6 +80,7 @@ class EditImageActivity : AppCompatActivity() {
         error.printStackTrace()
         System.gc()
       } catch (e: Exception) {
+        SentryController.captureException(e)
         e.printStackTrace()
       }
     }
@@ -117,6 +119,7 @@ class EditImageActivity : AppCompatActivity() {
           }
         }
       } catch (e: Exception) {
+        SentryController.captureException(e)
         System.gc()
         e.printStackTrace()
       }
@@ -138,6 +141,7 @@ class EditImageActivity : AppCompatActivity() {
           finish()
         }
       } catch (e: Exception) {
+        SentryController.captureException(e)
         System.gc()
         e.printStackTrace()
       }
@@ -162,6 +166,7 @@ class EditImageActivity : AppCompatActivity() {
             "ImageFloat" + System.currentTimeMillis()
           )
         } catch (e: java.lang.Exception) {
+          SentryController.captureException(e)
           e.printStackTrace()
           //  Util.toast("Uh oh. Something went wrong. Please try again", this);
         } catch (E: OutOfMemoryError) {
@@ -212,6 +217,7 @@ class EditImageActivity : AppCompatActivity() {
         }
       }
     } catch (e: java.lang.Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
     }
   }
@@ -266,11 +272,13 @@ class EditImageActivity : AppCompatActivity() {
       // we will handle the returned data in onActivityResult
       startActivityForResult(captureIntent, CAMERA_PHOTO)
     } catch (anfe: ActivityNotFoundException) {
+      SentryController.captureException(anfe)
       // display an error message
       val errorMessage = resources.getString(R.string.device_does_not_support_capturing_image)
       Methods.showSnackBarNegative(this@EditImageActivity, errorMessage)
     } catch (e: java.lang.Exception) {
       e.printStackTrace()
+      SentryController.captureException(e)
     }
   }
 
@@ -294,6 +302,7 @@ class EditImageActivity : AppCompatActivity() {
       )
       startActivityForResult(i, GALLERY_PHOTO)
     } catch (anfe: ActivityNotFoundException) {
+      SentryController.captureException(anfe)
       // display an error message
       val errorMessage = resources.getString(R.string.device_does_not_support_capturing_image)
       Methods.showSnackBarNegative(this@EditImageActivity, errorMessage)
