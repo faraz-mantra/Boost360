@@ -10,18 +10,18 @@ import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.FragmentPosterListBinding
 import com.festive.poster.databinding.SheetEditShareMessageBinding
-import com.festive.poster.models.PosterKeyModel
 import com.festive.poster.models.PosterModel
 import com.festive.poster.models.response.GetTemplatesResponse
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.base.BaseActivity
-import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.utils.toArrayList
+import com.framework.webengageconstant.FESTIVAL_POSTER_PURCHASED_GALLERY
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 
@@ -57,7 +57,7 @@ class PosterListFragment: AppBaseFragment<FragmentPosterListBinding, FestivePost
     override fun onCreateView() {
         super.onCreateView()
         packTag= arguments?.getString(BK_TAG)
-
+        WebEngageController.trackEvent(FESTIVAL_POSTER_PURCHASED_GALLERY,event_value = HashMap())
         sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
         session = UserSessionManager(requireActivity())
         setupList()

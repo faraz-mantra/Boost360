@@ -15,7 +15,7 @@ import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.framework.models.BaseViewModel
-import com.framework.webengageconstant.SHARE_FESTIVE_POSTER_BUTTON
+import com.framework.webengageconstant.FESTIVE_POSTER_PAGE_LOAD
 import kotlinx.android.synthetic.main.mtemplate_progress_dialog.*
 
 class FestivePosterContainerActivity:
@@ -34,7 +34,7 @@ class FestivePosterContainerActivity:
 
     override fun onCreateView() {
         super.onCreateView()
-        WebEngageController.trackEvent(SHARE_FESTIVE_POSTER_BUTTON)
+        WebEngageController.trackEvent(FESTIVE_POSTER_PAGE_LOAD,event_value = HashMap())
         sharedViewModel = ViewModelProvider(this).get(FestivePosterSharedViewModel::class.java)
 
         handleBackStack()

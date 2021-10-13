@@ -1,16 +1,16 @@
 package com.festive.poster.ui
 
-import android.os.Bundle
 import android.util.Log
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.FragmentPosterPackListingBinding
-import com.festive.poster.databinding.SheetEditShareMessageBinding
-import com.festive.poster.models.*
+import com.festive.poster.models.GetFeatureDetailsItem
+import com.festive.poster.models.PosterModel
+import com.festive.poster.models.PosterPackModel
+import com.festive.poster.models.PosterPackTagModel
 import com.festive.poster.models.response.GetTemplateViewConfigResponse
 import com.festive.poster.models.response.GetTemplatesResponse
 import com.festive.poster.models.response.UpgradeGetDataResponse
@@ -24,8 +24,7 @@ import com.framework.base.BaseActivity
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.toArrayList
-import com.framework.webengageconstant.GET_FESTIVAL_POSTER_PACK
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.framework.webengageconstant.GET_FESTIVAL_POSTER_PACK_CLICK
 import com.google.gson.Gson
 import java.util.*
 import kotlin.collections.ArrayList
@@ -200,7 +199,7 @@ class PosterPackListingFragment:
 
         when(actionType){
             RecyclerViewActionType.GET_POSTER_PACK_CLICK.ordinal->{
-                WebEngageController.trackEvent(GET_FESTIVAL_POSTER_PACK)
+                WebEngageController.trackEvent(GET_FESTIVAL_POSTER_PACK_CLICK,event_value = HashMap())
                 item as PosterPackModel
                 sharedViewModel?.selectedPosterPack=item
                 CustomizePosterSheet.newInstance(item.tagsModel.tag,item.isPurchased).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
@@ -221,7 +220,7 @@ class PosterPackListingFragment:
     ) {
         when(actionType){
             RecyclerViewActionType.POSTER_TAP_TO_EDIT_CLICK.ordinal->{
-                WebEngageController.trackEvent(GET_FESTIVAL_POSTER_PACK)
+                WebEngageController.trackEvent(GET_FESTIVAL_POSTER_PACK_CLICK,event_value = HashMap())
                 parentItem as PosterPackModel
                 sharedViewModel?.selectedPosterPack=parentItem
 

@@ -1,6 +1,6 @@
 package com.festive.poster.models
 
-import com.festive.poster.R
+import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.recyclerView.AppBaseRecyclerViewItem
 import com.google.gson.Gson
 
@@ -18,10 +18,7 @@ open class PosterModel(
     var greeting_message:String?
 ): AppBaseRecyclerViewItem {
     override fun getViewType(): Int {
-        return if (isPurchased)
-            R.layout.list_item_purchased_poster
-        else
-            R.layout.list_item_poster
+        return if (isPurchased) RecyclerViewItemType.POSTER_PURCHASED.getLayout() else RecyclerViewItemType.POSTER.getLayout()
     }
 
     fun clone(): PosterModel? {
