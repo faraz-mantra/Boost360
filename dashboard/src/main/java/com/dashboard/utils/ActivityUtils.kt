@@ -22,8 +22,7 @@ import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
-import com.festive.poster.ui.FestivePosterContainerActivity
-import com.festive.poster.ui.PosterPackListingFragment
+import com.framework.analytics.SentryController
 import com.framework.pref.*
 import com.framework.webengageconstant.*
 import com.inventoryorder.constant.IntentConstant
@@ -39,7 +38,6 @@ import java.util.*
 const val VISITS_TYPE_STRING = "visits_type_string"
 
 const val RIA_NODE_DATA = "riaNodeDatas"
-private const val TAG = "ActivityUtils"
 
 fun AppCompatActivity.startDigitalChannel(session: UserSessionManager, channelType: String = "") {
   try {
@@ -158,6 +156,7 @@ fun AppCompatActivity.startBackgroundImageGallery(session: UserSessionManager?) 
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
     e.printStackTrace()
+    SentryController.captureException(e)
   }
 }
 
@@ -170,6 +169,7 @@ fun AppCompatActivity.startFeviconImage(session: UserSessionManager?) {
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
     e.printStackTrace()
+    SentryController.captureException(e)
   }
 }
 
@@ -403,6 +403,7 @@ fun AppCompatActivity.startAddImageGallery(session: UserSessionManager?, isCreat
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
+    SentryController.captureException(e)
   }
 }
 
@@ -414,6 +415,7 @@ fun AppCompatActivity.startProductGallery(session: UserSessionManager?) {
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
+    SentryController.captureException(e)
   }
 }
 
@@ -445,19 +447,14 @@ fun AppCompatActivity.startCustomPage(session: UserSessionManager?, isAdd: Boole
 
 fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
   try {
-    if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
+    val type = if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
       WebEngageController.trackEvent(SERVICE_INVENTORY, CLICK, TO_BE_ADDED)
-      session?.let {
-        startFragmentActivity(com.appservice.constant.FragmentType.SERVICE_LISTING, bundle = getBundleData(it))
-      }
+      com.appservice.constant.FragmentType.SERVICE_LISTING
     } else {
       WebEngageController.trackEvent(PRODUCT_INVENTORY, CLICK, TO_BE_ADDED)
-      session.let {
-        startFragmentActivity(com.appservice.constant.FragmentType.FRAGMENT_PRODUCT_LISTING, bundle = getBundleData(it))
-
-      }
-
+      com.appservice.constant.FragmentType.FRAGMENT_PRODUCT_LISTING
     }
+    startFragmentActivity(type, bundle = getBundleData(session))
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
@@ -536,18 +533,21 @@ fun AppCompatActivity.startPreSignUp(session: UserSessionManager?, isClearTask: 
 
 fun AppCompatActivity.startAddServiceProduct(session: UserSessionManager?) {
   try {
-    if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
+    val type = if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
       WebEngageController.trackEvent(ADD_SERVICE_PAGE, CLICK, TO_BE_ADDED)
-      session?.let {
-        startFragmentActivity(com.appservice.constant.FragmentType.SERVICE_DETAIL_VIEW, bundle = getBundleData(it))
-      }
+      com.appservice.constant.FragmentType.SERVICE_DETAIL_VIEW
     } else {
       WebEngageController.trackEvent(ADD_PRODUCT_PAGE, CLICK, TO_BE_ADDED)
-      val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
-      webIntent.putExtra("IS_ADD", true)
-      startActivity(webIntent)
-      overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+      com.appservice.constant.FragmentType.PRODUCT_DETAIL_VIEW
     }
+    session?.let { startFragmentActivity(type, bundle = getBundleData(it)) }
+//    } else {
+//      WebEngageController.trackEvent(ADD_PRODUCT_PAGE, CLICK, TO_BE_ADDED)
+//      val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
+//      webIntent.putExtra("IS_ADD", true)
+//      startActivity(webIntent)
+//      overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+//    }
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
@@ -589,8 +589,8 @@ fun AppCompatActivity.startOrderAptConsultList(session: UserSessionManager?, isO
     val bundle = getSessionOrder(session)
     val fragmentType = when {
       isOrder -> com.inventoryorder.constant.FragmentType.ALL_ORDER_VIEW
-      isConsult -> com.inventoryorder.constant.FragmentType.ALL_VIDEO_CONSULT_VIEW
       (getAptType(session?.fP_AppExperienceCode) == "SPA_SAL_SVC") -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_SPA_VIEW
+      isConsult -> com.inventoryorder.constant.FragmentType.ALL_VIDEO_CONSULT_VIEW
       else -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_VIEW
     }
     this.startFragmentOrderActivity(type = fragmentType, bundle = bundle, isResult = true)
@@ -629,6 +629,7 @@ fun AppCompatActivity.startFeatureLogo(session: UserSessionManager?) {
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
+    SentryController.captureException(e)
   }
 }
 
@@ -662,6 +663,7 @@ fun AppCompatActivity.startAllImage(session: UserSessionManager?) {
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
+    SentryController.captureException(e)
   }
 }
 
@@ -987,14 +989,4 @@ fun AppCompatActivity.startDownloadUri(url: String, isToast: Boolean = false) {
   } catch (e: Exception) {
     e.printStackTrace()
   }
-}
-
-fun AppCompatActivity.startFestivePosterActivity(){
-  try {
-    val intent = Intent(this, FestivePosterContainerActivity::class.java)
-    startActivity(intent)
-  }catch (e:Exception){
-    e.printStackTrace()
-  }
- 
 }

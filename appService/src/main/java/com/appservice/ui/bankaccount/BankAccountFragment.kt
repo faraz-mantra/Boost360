@@ -1,7 +1,6 @@
 package com.appservice.ui.bankaccount
 
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -9,12 +8,10 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
-import com.appservice.constant.PreferenceConstant
 import com.appservice.databinding.FragmentBankAccountDetailsBinding
 import com.appservice.model.account.AccountCreateRequest
 import com.appservice.model.account.BankAccountDetailsN
@@ -23,12 +20,12 @@ import com.appservice.model.accountDetails.*
 import com.appservice.model.razor.RazorDataResponse
 import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.AccountViewModel
-import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.pref.clientId
 import com.framework.webengageconstant.BANK_ACCOUNT
 import com.framework.webengageconstant.BANK_ACCOUNT_DETAILS_UPDATED
 import com.framework.webengageconstant.BANK_ACCOUNT_SUBMITTED_FOR_VERIFICATION
@@ -37,8 +34,6 @@ import com.framework.webengageconstant.FLOATING_POINT_ID
 class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, AccountViewModel>() {
 
   private var isUpdated = true
-  private var fpId: String = ""
-  private var clientId: String = ""
   private var menuClose: MenuItem? = null
   private var request: AccountCreateRequest? = null
   private var requestAccount: BankAccountDetailsN? = null
@@ -67,8 +62,6 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
   override fun onCreateView() {
     super.onCreateView()
     setOnClickListener(binding?.submitBtn, binding?.whyBtn, binding?.verificationBtn)
-    fpId = arguments?.getString(IntentConstant.FP_ID.name) ?: ""
-    clientId = arguments?.getString(IntentConstant.CLIENT_ID.name) ?: ""
     isServiceCreation = arguments?.getBoolean(IntentConstant.IS_SERVICE_CREATION.name) ?: false
     binding?.edtIfsc?.afterTextChanged { isIfscValid(binding?.edtIfsc?.text.toString().trim()) }
     getUserDetails()
@@ -100,29 +93,19 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     binding?.edtBankBranch?.gone()
   }
 
-  private fun getUserDetails(
-    isPendingToastShow: Boolean = false,
-    isServiceCreation: Boolean = false
-  ) {
+  private fun getUserDetails(isPendingToastShow: Boolean = false, isServiceCreation: Boolean = false) {
     showProgress()
-    viewModel?.userAccountDetails(fpId, clientId)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.userAccountDetails(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
-      if (it.error is NoNetworkException) {
-        showLongToast(resources.getString(R.string.internet_connection_not_available))
-        return@Observer
-      }
       val response = it as? AccountDetailsResponse
-      if ((it.status == 200 || it.status == 201 || it.status == 202) && response != null) {
-        isUpdated = it.status==200
-        if (isServiceCreation && response.result?.bankAccountDetails != null) {
-          goBackFragment(response.result?.bankAccountDetails!!)
-        } else checkBankAccountDetail(response.result, isPendingToastShow)
+      if (it.isSuccess() && response?.result?.bankAccountDetails != null) {
+        isUpdated = true
+        response.result?.bankAccountDetails?.saveBanKDetail()
+        sessionLocal.setAccountSave(true)
+        if (isServiceCreation) goBackFragment(response.result?.bankAccountDetails!!)
+         else checkBankAccountDetail(response.result, isPendingToastShow)
       } else {
-        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(
-          resources.getString(
-            R.string.adding_bank_account
-          ), resources.getDimensionPixelSize(R.dimen.size_36)
-        )
+        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.adding_bank_account), resources.getDimensionPixelSize(R.dimen.size_3))
       }
     })
   }
@@ -237,31 +220,15 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
   private fun createApiAccount() {
     showProgress()
     request = AccountCreateRequest(
-      clientId = clientId,
-      floatingPointId = fpId,
-      bankAccountDetails = requestAccount,
-      additionalKYCDocuments = AccountCreateRequest().setKYCBlankValue(),
-      registeredBusinessAddress = AccountCreateRequest().setAddressBlankValue(),
-      registeredBusinessContactDetails = AccountCreateRequest().setContactDetailBlankValue(),
-      taxDetails = AccountCreateRequest().setTaxBlankValue()/*, paymentGatewayDetails = AccountCreateRequest().setPaymentsGateway()*/
+      clientId = clientId, floatingPointId = sessionLocal.fPID, bankAccountDetails = requestAccount, additionalKYCDocuments = AccountCreateRequest().setKYCBlankValue(),
+      registeredBusinessAddress = AccountCreateRequest().setAddressBlankValue(), registeredBusinessContactDetails = AccountCreateRequest().setContactDetailBlankValue(),
+      taxDetails = AccountCreateRequest().setTaxBlankValue()
     )
-    viewModel?.createAccount(request)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        hideProgress()
-        showLongToast(resources.getString(R.string.internet_connection_not_available))
-        return@Observer
-      }
+    viewModel?.createAccount(request)?.observeOnce(viewLifecycleOwner, {
       val response = it as? AccountCreateResponse
-      if (response?.status == 200 || response?.status == 201 || response?.status == 202) {
+      if (response?.isSuccess() == true) {
         getUserDetails(isServiceCreation = isServiceCreation)
-        val editor = pref?.edit()
-        editor?.putBoolean(PreferenceConstant.IS_ACCOUNT_SAVE, true)
-        editor?.apply()
-        WebEngageController.trackEvent(
-          BANK_ACCOUNT_SUBMITTED_FOR_VERIFICATION,
-          BANK_ACCOUNT,
-          event_value = FLOATING_POINT_ID
-        )
+        WebEngageController.trackEvent(BANK_ACCOUNT_SUBMITTED_FOR_VERIFICATION, BANK_ACCOUNT, event_value = FLOATING_POINT_ID)
       } else {
         hideProgress()
         showLongToast(response?.errorN?.getMessage())
@@ -271,29 +238,16 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
   private fun updateApiAccount() {
     showProgress()
-    viewModel?.updateAccount(fpId, clientId, requestAccount)
-      ?.observeOnce(viewLifecycleOwner, Observer {
-        if (it.error is NoNetworkException) {
-          hideProgress()
-          showLongToast(resources.getString(R.string.internet_connection_not_available))
-          return@Observer
-        }
-        val response = it as? AccountCreateResponse
-        if (response?.status == 200 || response?.status == 201 || response?.status == 202) {
-          getUserDetails(isServiceCreation = isServiceCreation)
-          val editor = pref?.edit()
-          editor?.putBoolean(PreferenceConstant.IS_ACCOUNT_SAVE, true)
-          editor?.apply()
-          WebEngageController.trackEvent(
-            BANK_ACCOUNT_DETAILS_UPDATED,
-            BANK_ACCOUNT,
-            FLOATING_POINT_ID
-          )
-        } else {
-          hideProgress()
-          showLongToast(response?.errorN?.getMessage())
-        }
-      })
+    viewModel?.updateAccount(sessionLocal.fPID, clientId, requestAccount)?.observeOnce(viewLifecycleOwner, {
+      val response = it as? AccountCreateResponse
+      if (response?.isSuccess() == true) {
+        getUserDetails(isServiceCreation = isServiceCreation)
+        WebEngageController.trackEvent(BANK_ACCOUNT_DETAILS_UPDATED, BANK_ACCOUNT, FLOATING_POINT_ID)
+      } else {
+        hideProgress()
+        showLongToast(response?.errorN?.getMessage())
+      }
+    })
   }
 
   private fun bottomSheetWhy() {
@@ -311,13 +265,16 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     val alias = binding?.edtAlias?.text?.toString()
     val ifsc = binding?.edtIfsc?.text?.toString()
     if (nameAccount.isNullOrEmpty()) {
-      showShortToast(string = getString(R.string.bank_account_cannot_empty))
+      showShortToast(getString(R.string.bank_account_cannot_empty))
       return false
     } else if (accountNumber.isNullOrEmpty()) {
       showShortToast(getString(R.string.bank_number_can_not_empty))
       return false
     } else if (accountNumber.length < 9) {
       showShortToast(getString(R.string.account_less_than_nine))
+      return false
+    } else if (accountNumber.length > 18) {
+      showShortToast(getString(R.string.account_greater_than_nine))
       return false
     } else if (confirmNumber.isNullOrEmpty()) {
       showShortToast(getString(R.string.confirm_bank_account_cannot_empty))
@@ -336,14 +293,9 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       return false
     }
     requestAccount = BankAccountDetailsN(
-      accountName = nameAccount,
-      accountNumber = accountNumber,
-      iFSC = ifsc,
-      bankName = bankName,
-      accountAlias = alias,
-      kYCDetails = BankAccountDetailsN().kycObj()
+      accountName = nameAccount, accountNumber = accountNumber, iFSC = ifsc, bankName = bankName,
+      accountAlias = alias, kYCDetails = BankAccountDetailsN().kycObj()
     )
-//    requestPayment = PaymentGatewayDetails(configType = "", accountId = "", paymentConfig = PaymentGatewayDetails().payObj())
     return true
   }
 

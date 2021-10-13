@@ -807,8 +807,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   }
 
   override fun secondaryButtonClicked() {
-    val sheet = LearnHowItWorkBottomSheet()
-    sheet.show(parentFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
+    showShortToast(getString(R.string.coming_soon))
   }
 
   override fun ternaryButtonClicked() {

@@ -2,6 +2,8 @@ package com.framework.utils
 
 import android.text.TextUtils
 import android.text.format.DateUtils
+import android.util.Log
+import com.framework.analytics.SentryController
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -57,7 +59,7 @@ object DateUtils {
       val date = timeFormat.parse(time)
       return SimpleDateFormat(required, locale).format(date)
     } catch (e: Exception) {
-      e.printStackTrace()
+      Log.d("parseDate",e.localizedMessage?:"")
     }
     return ""
   }
@@ -74,6 +76,7 @@ object DateUtils {
       timeZone?.let { timeFormat.timeZone = it }
       timeFormat.parse(this)
     } catch (e: Exception) {
+      Log.d("parseDate",e.localizedMessage?:"")
       null
     }
   }

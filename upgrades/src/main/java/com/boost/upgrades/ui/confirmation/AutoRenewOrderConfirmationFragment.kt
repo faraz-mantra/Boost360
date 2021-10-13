@@ -12,6 +12,7 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.analytics.SentryController
 import com.framework.webengageconstant.*
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.auto_renew_order_confirmation_fragment.*
@@ -69,6 +70,7 @@ class AutoRenewOrderConfirmationFragment : BaseFragment() {
       order_details_feature_count.text = "Order placed on " + formatter.format(date) +
           "\nTransaction ID #" + prefs.getTransactionIdFromCart() //"\nOrder ID #" + prefs.getLatestPurchaseOrderId() +
     } catch (e: Exception) {
+      SentryController.captureException(e)
       Log.e("Error", e.message ?: "")
     }
 
@@ -113,6 +115,7 @@ class AutoRenewOrderConfirmationFragment : BaseFragment() {
       todayDate.time = sdf.parse(formattedDate)
     } catch (e: ParseException) {
       e.printStackTrace()
+      SentryController.captureException(e)
     }
     todayDate.add(
       Calendar.DATE,

@@ -76,7 +76,7 @@ class BatchesFragment : BaseFragment<BatchesFragmentBinding, BaseViewModel>(), I
         if (!it.Data.isNullOrEmpty()) {
           nonEmptyView()
           setRecyclerviewAdapter(it.Data)
-        }else emptyView()
+        } else emptyView()
         hideLoader()
       })
 
@@ -151,11 +151,13 @@ class BatchesFragment : BaseFragment<BatchesFragmentBinding, BaseViewModel>(), I
     binding?.mainlayout?.visible()
     binding?.childContainer?.gone()
   }
+
   private fun emptyView() {
     setHasOptionsMenu(false)
     binding?.mainlayout?.gone()
     binding?.childContainer?.visible()
   }
+
   override fun primaryButtonClicked() {
     (activity as BatchesActivity).addFragment(
       BatchesDetailsFragment.newInstance(),
@@ -164,6 +166,7 @@ class BatchesFragment : BaseFragment<BatchesFragmentBinding, BaseViewModel>(), I
   }
 
   override fun secondaryButtonClicked() {
+    Toast.makeText(activity, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
   }
 
   override fun ternaryButtonClicked() {
@@ -184,7 +187,7 @@ class BatchesFragment : BaseFragment<BatchesFragmentBinding, BaseViewModel>(), I
 
   override fun onCreateView() {
     zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.UPCOMING_BATCHES, this, requireActivity()).getRequest().build()
-    addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
+    addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment, false)
 
     binding?.root?.let {
       setHeader(it)

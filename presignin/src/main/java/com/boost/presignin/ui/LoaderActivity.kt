@@ -8,13 +8,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.view.ContextThemeWrapper
 import com.airbnb.lottie.LottieDrawable
-import com.auth0.android.jwt.JWT
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseActivity
 import com.boost.presignin.databinding.ActivityLoaderBinding
 import com.boost.presignin.helper.ProcessFPDetails
-import com.boost.presignin.model.accessToken.AccessTokenRequest
-import com.boost.presignin.model.authToken.AccessTokenResponse
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 import com.boost.presignin.service.APIService
 import com.boost.presignin.ui.intro.IntroActivity
@@ -71,14 +68,7 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
           deepLinkDay = bundle.getString("deepLinkDay")
         }
         initLottieAnimation()
-        val tokenResult = getAccessTokenAuth1(session)
-        val jwt = JWT(tokenResult?.token ?: "")
-        val isExpired = jwt.isExpired(10)
-        when {
-          tokenResult == null -> session.logoutUser(this)
-          isExpired -> createAccessToken(tokenResult.refreshToken!!, clientId2, session.fPID!!)
-          else -> storeFpDetails()
-        }
+        storeFpDetails()
       }
     } else {
       binding?.preDashboardAnimation?.pauseAnimation()
@@ -93,7 +83,7 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
       val response = it1 as? UserFpDetailsResponse
       if (it1.isSuccess() && response != null) {
         ProcessFPDetails(session).storeFPDetails(response)
-        
+        setFPDetailsToSentry(session)
         startService()
         if (
           deepLinkViewType != null && deepLinkViewType.equals("CART_FRAGMENT", ignoreCase = true)
@@ -101,14 +91,18 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
         ) {
           initiateAddonMarketplace()
         } else {
-          if (deepLinkViewType != null && deepLinkViewType.equals("CART_FRAGMENT", ignoreCase = true)
-          ) showAlertDialog() else goHomePage()
+          if (deepLinkViewType != null && deepLinkViewType.equals("CART_FRAGMENT", ignoreCase = true)) showAlertDialog()
+          else goHomePage()
         }
       } else {
         binding?.preDashboardAnimation?.pauseAnimation()
         snackBarUnableToGetFp()
       }
     })
+  }
+
+  private fun setFPDetailsToSentry(session: UserSessionManager) {
+    SentryController.setUser(session)
   }
 
   private fun snackBarUnableToGetFp() {
@@ -177,28 +171,12 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
       Log.e("Home Page", e.localizedMessage)
       session.logoutUser(this)
       SentryController.captureException(e)
-
       session.logoutUser(this)
     }
   }
 
   private fun startService() {
     startService(Intent(this, APIService::class.java))
-  }
-
-  private fun createAccessToken(refreshToken: String, clientID: String, fpId: String) {
-    val request = AccessTokenRequest()
-    request.authToken = refreshToken
-    request.clientId = clientID
-    request.fpId = fpId
-    viewModel.createAccessToken(request).observe(this, {
-      val result = (it as? AccessTokenResponse)?.result
-      if (it.isSuccess() && result != null && result.token.isNullOrEmpty().not()) {
-        if (result.refreshToken.isNullOrEmpty()) result.refreshToken = refreshToken
-        saveAccessTokenAuth1(session, result)
-        storeFpDetails()
-      } else session.logoutUser(this)
-    })
   }
 
   private fun initLottieAnimation() {

@@ -30,6 +30,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
+import com.framework.analytics.SentryController;
 import com.framework.models.firestore.FirestoreManager;
 import com.nowfloats.BusinessProfile.UI.API.uploadIMAGEURI;
 import com.nowfloats.Login.UserSessionManager;
@@ -153,6 +154,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
             }*/
         } catch (Exception e) {
             e.printStackTrace();
+            SentryController.INSTANCE.captureException(e);
             System.gc();
         }
         /*logoimageView.setOnClickListener(new View.OnClickListener() {
@@ -334,11 +336,13 @@ public class FeaturedImageActivity extends AppCompatActivity {
             // we will handle the returned data in onActivityResult
             startActivityForResult(captureIntent, CAMERA_PHOTO);
         } catch (ActivityNotFoundException anfe) {
+            SentryController.INSTANCE.captureException(anfe);
             // display an error message
             String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(FeaturedImageActivity.this, errorMessage);
         } catch (Exception e) {
             e.printStackTrace();
+            SentryController.INSTANCE.captureException(e);
         }
     }
 
@@ -356,6 +360,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
 
             startActivityForResult(i, GALLERY_PHOTO);
         } catch (ActivityNotFoundException anfe) {
+            SentryController.INSTANCE.captureException(anfe);
             // display an error message
             String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(FeaturedImageActivity.this, errorMessage);
@@ -375,6 +380,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
                     path = Util.saveBitmap(path, FeaturedImageActivity.this, "ImageFloat" + System.currentTimeMillis());
                     WebEngageController.trackEvent(UPLOAD_FEATURED_IMAGE, UPDATED_FEATURED_IMAGE, session.getFpTag());
                 } catch (Exception e) {
+                    SentryController.INSTANCE.captureException(e);
                     e.printStackTrace();
                     //  Util.toast("Uh oh. Something went wrong. Please try again", this);
                 } catch (OutOfMemoryError E) {
@@ -419,6 +425,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            SentryController.INSTANCE.captureException(e);
         }
     }
 
@@ -472,6 +479,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
                 bitmap = BitmapFactory.decodeStream(input);
             } catch (Exception e) {
                 e.printStackTrace();
+                SentryController.INSTANCE.captureException(e);
             }
             path = Util.saveCameraBitmap(bitmap, FeaturedImageActivity.this, "ImageFloat" + System.currentTimeMillis());
             return path;

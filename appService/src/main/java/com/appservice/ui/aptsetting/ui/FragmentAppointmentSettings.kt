@@ -2,19 +2,23 @@ package com.appservice.ui.aptsetting.ui
 
 import android.widget.SearchView
 import com.appservice.R
-import com.appservice.model.aptsetting.AppointmentStatusResponse
-import com.appservice.model.aptsetting.IconType
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.databinding.FragmentAppointmentSettingsBinding
+import com.appservice.model.aptsetting.AppointmentStatusResponse
+import com.appservice.model.aptsetting.IconType
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.catalog.startFragmentActivity
+import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.webengageconstant.APPOINTMENT_SETTING_PAGE_LOAD
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.PAGE_VIEW
 import java.util.*
 
 class FragmentAppointmentSettings : AppBaseFragment<FragmentAppointmentSettingsBinding, AppointmentSettingsViewModel>(), RecyclerItemClickListener {
@@ -42,6 +46,7 @@ class FragmentAppointmentSettings : AppBaseFragment<FragmentAppointmentSettingsB
   override fun onCreateView() {
     super.onCreateView()
     sessionLocal = UserSessionManager(requireActivity())
+    WebEngageController.trackEvent(APPOINTMENT_SETTING_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     clearSearchFocus()
     binding?.svSettings?.setOnQueryTextListener(object : SearchView.OnQueryTextListener, androidx.appcompat.widget.SearchView.OnQueryTextListener {
       override fun onQueryTextSubmit(query: String?): Boolean {

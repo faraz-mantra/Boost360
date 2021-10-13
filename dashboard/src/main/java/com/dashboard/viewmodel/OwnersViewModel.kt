@@ -11,8 +11,8 @@ import com.framework.models.toLiveData
 import okhttp3.MultipartBody
 
 class OwnersViewModel : BaseViewModel() {
-    fun getOwnersData(auth: String? ="5b34c22334afc405180cb70e", query: String?, limit: Int?=1): LiveData<BaseResponse> {
-        return WebActionBoostKitRepository.getOwnersDataPost(auth, query, limit).toLiveData()
+    fun getOwnersData(auth: String? ="5b34c22334afc405180cb70e", fpTag: String?, limit: Int?=1): LiveData<BaseResponse> {
+        return WebActionBoostKitRepository.getOwnersDataPost(auth, fpTag, limit).toLiveData()
     }
 
     fun addOwnersData(auth: String?="5b34c22334afc405180cb70e", request: RequestAddOwnersInfo): LiveData<BaseResponse> {

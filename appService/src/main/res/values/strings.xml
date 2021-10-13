@@ -830,6 +830,7 @@
   <string name="allow_cod">Allow COD</string>
   <string name="allow_online_pre_pay">Allow Online Pre-Pay</string>
   <string name="account_less_than_nine">Bank account number can\'t less than 9.</string>
+  <string name="account_greater_than_nine">Bank account number can\'t greater than 18.</string>
 
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>

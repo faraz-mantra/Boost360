@@ -40,6 +40,7 @@
           android:id="@+id/edt_account_number"
           style="@style/Appointment_Text_Field"
           android:layout_marginTop="@dimen/size_2"
+          android:maxLength="18"
           android:hint="@string/xxxxxxxxxxxxxxxxxx"
           android:inputType="number" />
 
@@ -49,6 +50,7 @@
           style="@style/AppointmentSetting_Text_Heading"
           android:layout_marginStart="@dimen/size_1"
           android:layout_marginTop="@dimen/size_10"
+          android:maxLength="18"
           android:text="@string/confirm_account_number" />
 
         <com.framework.views.customViews.CustomEditText
