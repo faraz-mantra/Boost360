@@ -156,7 +156,7 @@ class PosterListFragment: AppBaseFragment<FragmentPosterListBinding, FestivePost
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
         when(actionType){
             RecyclerViewActionType.POSTER_TAP_TO_EDIT_CLICK.ordinal->{
-                CustomizePosterSheet().show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
+                CustomizePosterSheet.newInstance(packTag!!,true).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
 
             }
             RecyclerViewActionType.POSTER_GREETING_MSG_CLICKED.ordinal->{

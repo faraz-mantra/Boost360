@@ -183,7 +183,7 @@ class PosterPackListingFragment:
                 WebEngageController.trackEvent(GET_FESTIVAL_POSTER_PACK)
                 item as PosterPackModel
                 sharedViewModel?.selectedPosterPack=item
-                CustomizePosterSheet.newInstance(item.tagsModel.tag,true).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
+                CustomizePosterSheet.newInstance(item.tagsModel.tag,item.isPurchased).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
             }
 
 
@@ -205,7 +205,7 @@ class PosterPackListingFragment:
                 parentItem as PosterPackModel
                 sharedViewModel?.selectedPosterPack=parentItem
 
-                CustomizePosterSheet.newInstance(parentItem.tagsModel.tag,true).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
+                CustomizePosterSheet.newInstance(parentItem.tagsModel.tag,parentItem.isPurchased).show(requireActivity().supportFragmentManager,CustomizePosterSheet::class.java.name)
             }
 
 
