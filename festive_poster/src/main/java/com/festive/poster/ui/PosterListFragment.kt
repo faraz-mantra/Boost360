@@ -70,9 +70,31 @@ class PosterListFragment: AppBaseFragment<FragmentPosterListBinding, FestivePost
 
             dataList?.forEach { template->
                 template.keys.forEach { posterKeyModel ->
-                    if (posterKeyModel.name=="Title"){
-                        posterKeyModel.custom = it.name
+                    when(posterKeyModel.name){
+                        "user_name"->{
+                            posterKeyModel.custom = it.name
+                        }
+                        "business_website"->{
+                            posterKeyModel.custom = it.website
+                        }
+                        "business_email"->{
+                            posterKeyModel.custom = it.email
+                        }
+                        "business_name"->{
+                            posterKeyModel.custom = session?.fPName
+                        }
+                        "user_contact"->{
+                            posterKeyModel.custom = it.whatsapp
+                        }
+                        "user_image"->{
+                            posterKeyModel.custom = it.imgPath
+                        }
+                        "business_logo"->{
+                            posterKeyModel.custom = session?.fPLogo
+                        }
+
                     }
+
                 }
             }
             adapter?.notifyDataSetChanged()
@@ -80,6 +102,7 @@ class PosterListFragment: AppBaseFragment<FragmentPosterListBinding, FestivePost
     }
 
     private fun setupList() {
+        showProgress()
         viewModel?.getTemplates(
             session?.fPID,
             session?.fpTag,
@@ -89,7 +112,8 @@ class PosterListFragment: AppBaseFragment<FragmentPosterListBinding, FestivePost
             response?.let {
                 dataList = response.Result.templates.toArrayList()
                 dataList?.forEach { posterModel -> posterModel.isPurchased=true }
-                dataList?.forEach { posterModel -> posterModel.greeting_message="Happy Navratri. Enjoy black friday sale upto 50% discount on our postselected merchandise." }
+                setGreetingMessages()
+
                 observeCustomization()
 
                 adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList!!,this)
@@ -97,8 +121,34 @@ class PosterListFragment: AppBaseFragment<FragmentPosterListBinding, FestivePost
                 binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
 
             }
+            hideProgress()
+
         })
 
+
+
+    }
+
+    private fun setGreetingMessages() {
+        dataList?.forEach { posterModel ->
+            if (posterModel.tags.contains("DURGAPUJA2021")) {
+
+                posterModel.greeting_message = "May Maa Durga strengthen you to fight all evils, " +
+                        "may she give you the courage to face all upheavals.\n" +
+                        "Happy Durga Puja.\n"
+
+            }else if (posterModel.tags.contains("DUSSEHRA2021")){
+
+                posterModel.greeting_message = "May the Lord always bless you with wisdom and good health. May Goddess Durga " +
+                        "shower her choicest wishes over you and remove all evil obstacles in your life. Happy Dussehra!"
+
+            }else if (posterModel.tags.contains("NAVRATRI2021")){
+
+                posterModel.greeting_message = "Wishing you and your family a very Happy Navratri. --" +
+                        " May the nine days of Navratri light up your lives.\n"
+
+            }
+        }
 
 
     }

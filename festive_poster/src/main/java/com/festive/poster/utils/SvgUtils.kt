@@ -89,19 +89,29 @@ object SvgUtils {
         posterKeys.forEach {
             val replaceVal = if (it.custom==null) it.default else it.custom
 
-            if (it.type=="Image"){
+            if (it.type=="IMAGE"){
                 Log.i(TAG, "replace: $replaceVal")
 
-                val fileName = replaceVal?.substring(replaceVal.lastIndexOf("/")+1)
-                val file = File(FileUtils.getPathOfImages()+fileName)
-                if (!file.exists()){
-                    FileUtils.saveImage(replaceVal,file)
-                    Log.i(TAG, "image saved: ${file.path}")
+                if (replaceVal?.startsWith("https:") == true){
+                    val fileName = replaceVal.substring(replaceVal.lastIndexOf("/")+1)
+                    val file = File(FileUtils.getPathOfImages()+fileName)
+                    if (!file.exists()){
+                        FileUtils.saveImage(replaceVal,file)
+                        Log.i(TAG, "image saved: ${file.path}")
+                    }
+                    if (file.exists())
+                        result = result?.replace("{{"+it.name+"}}",file.path)
+                    Log.i(TAG, "replace image path: ${file.path}")
+
+                }else{
+
+                    Log.i(TAG, "replace image path: ${replaceVal.toString()}")
+                    result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
+
                 }
-                if (file.exists())
-                    result = result?.replace(it.name,fileName.toString())
+
             }else{
-                result = result?.replace(it.name,replaceVal.toString())
+                result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
             }
         }
         return result

@@ -37,17 +37,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="500dp"/>
 
-            <com.framework.views.dotsindicator.DotsIndicator
-                app:dotsColor="@color/colorLightGrey"
-                app:dotsCornerRadius="@dimen/_6dp"
-                app:dotsSize="@dimen/size_20"
-                app:dotsSpacing="@dimen/size_4"
-                app:selectedDotColor="@color/colorPrimary"
-                app:progressMode="false"
-                app:dotsStrokeWidth="0dp"
-                app:dotsWidthFactor="0"
-                android:layout_gravity="center"
+            <com.google.android.material.tabs.TabLayout
+                app:tabGravity="center"
                 android:id="@+id/dots"
+                app:tabMode="fixed"
+                android:layout_gravity="center"
+                app:tabBackground="@drawable/fposter_tab_selector"
+                app:tabIndicatorHeight="0dp"
                 android:layout_width="wrap_content"
                 android:layout_height="5dp"
                 android:layout_marginStart="@dimen/size_8"
