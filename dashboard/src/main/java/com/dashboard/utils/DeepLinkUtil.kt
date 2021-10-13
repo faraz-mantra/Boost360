@@ -104,6 +104,7 @@ const val deeplink_website_tab = "website_tab"
 const val deeplink_enquiries_tab = "enquiries_tab"
 const val deeplink_more_tab = "more_tab"
 const val deeplink_owner_info = "owner_info"
+const val deeplink_festive_poster = "festive_poster"
 const val visit_to_new_website = "Woohoo! We have a new website. Visit it at"
 const val tag_for_partners = ".nowfloats.com"
 
@@ -271,6 +272,8 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.initiateAddonMarketplace(session, false, "expertContact", "")
         } else if (url.contains(deeplink_owner_info)) {
           baseActivity.startOwnersInfo(session)
+        }else if (url.contains(deeplink_festive_poster)){
+          baseActivity.startFestivePosterActivity()
         }
       }
     } catch (e: Exception) {

@@ -995,6 +995,7 @@ fun AppCompatActivity.startDownloadUri(url: String, isToast: Boolean = false) {
 
 fun AppCompatActivity.startFestivePosterActivity(){
   try {
+    WebEngageController.trackEvent(SHARE_FESTIVE_POSTER_BUTTON)
     val intent = Intent(this, FestivePosterContainerActivity::class.java)
     startActivity(intent)
   }catch (e:Exception){

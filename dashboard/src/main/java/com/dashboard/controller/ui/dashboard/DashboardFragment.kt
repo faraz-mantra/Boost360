@@ -754,7 +754,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun marketPlaceBannerClick(data: DashboardMarketplaceBanner) {
     if (data.ctaWebLink.isNullOrEmpty().not()) {
-      if (data.ctaWebLink!!.contains("com.biz2.nowfloats.keyboard.home")) {
+      if (data.ctaWebLink!!.contains("com.biz2.nowfloats.keyboard.home") || data.ctaWebLink!!.contains("boost.nowfloats.com")) {
         WebEngageController.trackEvent(BOOST_MARKETPLACE_BANNER_CLICK, DEEP_LINK, NO_EVENT_VALUE)
         val deepHashMap: HashMap<DynamicLinkParams, String> =
           DynamicLinksManager().getURILinkParams(Uri.parse(data.ctaWebLink))
@@ -848,7 +848,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         else getChannelAccessToken(isEnquiriesShare = true, shareType = null)
       }
       binding?.btnFestive -> {
-        WebEngageController.trackEvent(SHARE_FESTIVE_POSTER_BUTTON)
         baseActivity.startFestivePosterActivity()
       }
     }
