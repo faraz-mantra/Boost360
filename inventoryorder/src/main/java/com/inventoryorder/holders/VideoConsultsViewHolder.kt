@@ -79,8 +79,8 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRe
       View.VISIBLE
     } ?: View.GONE
 
-    val todayDate = getCurrentDate().parseDate(FORMAT_DD_MM_YYYY) ?: ""
-    val itemDate = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_DD_MM_YYYY) ?: ""
+//    val todayDate = getCurrentDate().parseDate(FORMAT_DD_MM_YYYY) ?: ""
+//    val itemDate = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_DD_MM_YYYY) ?: ""
 
     OrderSummaryModel.OrderStatus.from(order.status())?.let {
       when (it) {

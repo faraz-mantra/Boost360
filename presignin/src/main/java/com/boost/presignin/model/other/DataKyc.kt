@@ -1,8 +1,10 @@
 package com.boost.presignin.model.other
 
+import com.framework.utils.*
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+const val BUSINESS_KYC_SAVE="BUSINESS_KYC_SAVE"
 
 data class DataKyc(
   @SerializedName("ActionId")
@@ -58,4 +60,12 @@ data class DataKyc(
   enum class Verify {
     YES, NO, ALLOW_EDIT
   }
+}
+
+fun getBusinessKycDetail(): DataKyc? {
+  return convertStringToObj(PreferencesUtils.instance.getData(BUSINESS_KYC_SAVE, "") ?: "")
+}
+
+fun DataKyc.saveBusinessKycDetail() {
+  com.framework.utils.PreferencesUtils.instance.saveData(BUSINESS_KYC_SAVE, convertObjToString(this))
 }

@@ -98,6 +98,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
   private lateinit var walletLayout: ConstraintLayout
   private lateinit var savedCardsLayout: ConstraintLayout
   private lateinit var payLinkLayout: ConstraintLayout
+  private var isPayViaLink : Boolean = false
 
   companion object {
     fun newInstance() = PaymentFragment()
@@ -390,9 +391,11 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     viewModel.getPamentUsingExternalLink().observe(this, Observer {
 //            if (it != null && it.equals("SUCCESSFULLY ADDED TO QUEUE")) {
       if (it != null && it.equals("OK")) {
+        isPayViaLink = true
         val orderConfirmationFragment = OrderConfirmationFragment.newInstance()
         val args = Bundle()
         args.putString("payment_type", "External_Link")
+        args.putBoolean("payViaLink",isPayViaLink)
         orderConfirmationFragment.arguments = args
         (activity as UpgradeActivity).replaceFragment(
           orderConfirmationFragment,
@@ -891,7 +894,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         )
       )
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
+      SentryController.captureException(e)
     }
   }
 
@@ -918,7 +923,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
       paymentData = JSONObject()
 
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
+      SentryController.captureException(e)
     }
   }
 
@@ -947,7 +954,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
       paymentData = JSONObject()
 
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
+      SentryController.captureException(e)
     }
   }
 

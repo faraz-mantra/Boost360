@@ -1,5 +1,6 @@
 package com.boost.presignin.model.other
 
+import com.appservice.model.accountDetails.BankAccountDetails
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 

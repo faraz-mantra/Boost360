@@ -45,6 +45,7 @@ import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.framework.pref.getDomainName
 import com.framework.utils.ContentSharing
 import com.framework.views.zero.*
@@ -72,12 +73,6 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   private var targetMap: Target? = null
   private var isNonPhysicalExperience: Boolean? = null
   private var currencyType: String? = "INR"
-  private var fpId: String? = null
-  private var fpTag: String? = null
-  private var clientId: String? = null
-  private var externalSourceId: String? = null
-  private var applicationId: String? = null
-  private var userProfileId: String? = null
   private var layoutManagerN: LinearLayoutManager? = null
 
   /* Paging */
@@ -123,12 +118,6 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   private fun getBundleData() {
     isNonPhysicalExperience = arguments?.getBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name)
     currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "INR"
-    fpId = arguments?.getString(IntentConstant.FP_ID.name)
-    fpTag = arguments?.getString(IntentConstant.FP_TAG.name)
-    clientId = arguments?.getString(IntentConstant.CLIENT_ID.name)
-    externalSourceId = arguments?.getString(IntentConstant.EXTERNAL_SOURCE_ID.name)
-    applicationId = arguments?.getString(IntentConstant.APPLICATION_ID.name)
-    userProfileId = arguments?.getString(IntentConstant.USER_PROFILE_ID.name)
   }
 
 
@@ -155,7 +144,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   private fun getListServiceFilterApi(searchString: String = "", isFirst: Boolean = false, offSet: Int? = null, limit: Int? = null) {
     if (isFirst || searchString.isNotEmpty()) showProgress()
-    viewModel?.getSearchListings(fpTag, fpId, searchString, offSet, limit)?.observeOnce(baseActivity, {
+    viewModel?.getSearchListings(sessionLocal.fpTag, sessionLocal.fPID, searchString, offSet, limit)?.observeOnce(baseActivity, {
       if (it.isSuccess()) {
         setServiceDataItems((it as? ServiceSearchListingResponse)?.result, searchString.isNotEmpty(), isFirst)
       } else if (isFirst) showShortToast(it.message())
@@ -320,12 +309,12 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     bundle.putSerializable(IntentConstant.PRODUCT_DATA.name, itemsItem)
     bundle.putBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name, isNonPhysicalExperience ?: false)
     bundle.putString(IntentConstant.CURRENCY_TYPE.name, currencyType)
-    bundle.putString(IntentConstant.FP_ID.name, fpId)
-    bundle.putString(IntentConstant.FP_TAG.name, fpTag)
-    bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
+    bundle.putString(IntentConstant.FP_ID.name, sessionLocal.fPID)
+    bundle.putString(IntentConstant.FP_TAG.name, sessionLocal.fpTag)
+    bundle.putString(IntentConstant.USER_PROFILE_ID.name, sessionLocal.userProfileId)
     bundle.putString(IntentConstant.CLIENT_ID.name, clientId)
-    bundle.putString(IntentConstant.EXTERNAL_SOURCE_ID.name, externalSourceId)
-    bundle.putString(IntentConstant.APPLICATION_ID.name, applicationId)
+    bundle.putString(IntentConstant.EXTERNAL_SOURCE_ID.name,sessionLocal.getFPDetails(Key_Preferences.EXTERNAL_SOURCE_ID))
+    bundle.putString(IntentConstant.APPLICATION_ID.name, sessionLocal.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID))
     return bundle
   }
 

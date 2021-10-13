@@ -84,11 +84,6 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   private var product: CatalogProduct? = null
   private var isNonPhysicalExperience: Boolean? = null
   private var currencyType: String? = null
-  private var fpId: String? = null
-  private var fpTag: String? = null
-  private var externalSourceId: String? = null
-  private var applicationId: String? = null
-  private var userProfileId: String? = null
   private var pickUpDataAddress: ArrayList<PickUpData>? = null
 
   private var isEdit: Boolean? = null
@@ -179,7 +174,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
 
   private fun getPickUpAddress() {
     showProgress()
-    viewModel?.getPickUpAddress(fpId)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getPickUpAddress(sessionLocal.fPID)?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         val response = it as? PickUpAddressResponse
         pickUpDataAddress = if ((it.isSuccess()) && response?.data.isNullOrEmpty().not()) {
@@ -195,7 +190,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
 
   private fun getPaymentGatewayKyc() {
     showProgress()
-    viewModel?.userAccountDetails(fpId, clientId)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.userAccountDetails(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         val response = it as? AccountDetailsResponse
         if ((it.isSuccess()) && response?.result?.bankAccountDetails != null) {
@@ -218,7 +213,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       binding?.externalUrlView?.gone()
       binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
       binding?.bankAccountName?.visible()
-      binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.getAccountNumberN()?:""}"
+      binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.getAccountNumberN() ?: ""}"
       binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
       binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
     }
@@ -252,30 +247,25 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     binding?.tvProductName?.setText(product?.Name)
     binding?.tvDesc?.setText(product?.Description)
     binding?.edtProductCategory?.setText(product?.category)
-    when {
-      product?.paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null || !bankAccountDetail?.iFSC.isNullOrEmpty() || !bankAccountDetail?.accountNumber.isNullOrEmpty() -> {
-        binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-        binding?.bankAccountName?.visible()
-        binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.getAccountNumberN()?:""}"
-        binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-        binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
-      }
+    if (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value) {
+      binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
+      binding?.edtUrl?.setText(product?.uniquePaymentUrl?.url ?: "")
+      binding?.edtNameDesc?.setText(product?.uniquePaymentUrl?.description ?: "")
+      binding?.bankAccountView?.gone()
+      binding?.externalUrlView?.visible()
+    } else if (product?.paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail?.isValidAccount() == true) {
+      binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
+      binding?.bankAccountName?.visible()
+      binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.getAccountNumberN() ?: ""}"
+      binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
+      binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
+    } else {
+      binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
+      binding?.bankAccountName?.gone()
+      binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
+      binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_not_added)
     }
-    when (product?.paymentType) {
-      CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value -> {
-        binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
-        binding?.edtUrl?.setText(product?.uniquePaymentUrl?.url ?: "")
-        binding?.edtNameDesc?.setText(product?.uniquePaymentUrl?.description ?: "")
-        binding?.bankAccountView?.gone()
-        binding?.externalUrlView?.visible()
-      }
-      else -> {
-        binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-        binding?.bankAccountName?.gone()
-        binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
-        binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_not_added)
-      }
-    }
+
     when {
       product?.Price ?: 0.0 <= 0.0 -> {
         binding?.toggleProduct?.isOn = false
@@ -303,15 +293,10 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun getBundleData() {
-    product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct
+    product = (arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct) ?: CatalogProduct()
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
     isNonPhysicalExperience = arguments?.getBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name)
     currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "₹"
-    fpId = arguments?.getString(IntentConstant.FP_ID.name)
-    fpTag = arguments?.getString(IntentConstant.FP_TAG.name)
-    externalSourceId = arguments?.getString(IntentConstant.EXTERNAL_SOURCE_ID.name)
-    applicationId = arguments?.getString(IntentConstant.APPLICATION_ID.name)
-    userProfileId = arguments?.getString(IntentConstant.USER_PROFILE_ID.name)
     if (isEdit == true) menuDelete?.isVisible = true
   }
 
@@ -398,9 +383,9 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     val gstData = gstProductData ?: GstData()
     val actionData = ActionDataG(
       gstData.gstSlab ?: 0.0, gstData.height ?: 0.0, gstData.length ?: 0.0,
-      merchantId = fpId, productId = productId, gstData.weight ?: 0.0, gstData.height ?: 0.0
+      merchantId = sessionLocal.fPID, productId = productId, gstData.weight ?: 0.0, gstData.height ?: 0.0
     )
-    val request = ProductGstDetailRequest(actionData, fpId)
+    val request = ProductGstDetailRequest(actionData, sessionLocal.fPID)
     viewModel?.addProductGstDetail(request)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.isSuccess()) {
         hideProgress()
@@ -464,24 +449,28 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     if (secondaryImageList.isNullOrEmpty().not()) {
       var checkPosition = 0
       secondaryImageList.forEach { image ->
-        val request = ProductImageRequest(ActionDataI(ImageI(url = image, description = ""), productId), fpId)
+        val request = ProductImageRequest(ActionDataI(ImageI(url = image, description = ""), productId), sessionLocal.fPID)
         viewModel?.addProductImage(request)?.observeOnce(viewLifecycleOwner, Observer {
           checkPosition += 1
           if (it.isSuccess()) {
             Log.d(ProductDetailFragment::class.java.name, "$it")
           } else showLongToast(getString(R.string.add_secondary_image_data_error_please_try_again))
           if (checkPosition == secondaryImageList.size) {
-            showLongToast(if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
+            showLongToast(
+              if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
                 R.string.product_saved_successfully
-              ))
+              )
+            )
             goBack()
           }
         })
       }
     } else {
-      showLongToast(if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
+      showLongToast(
+        if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
           R.string.product_saved_successfully
-        ))
+        )
+      )
       goBack()
     }
   }
@@ -539,7 +528,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       return false
     }
     product?.ClientId = clientId
-    product?.FPTag = fpTag
+    product?.FPTag = sessionLocal.fpTag
     product?.CurrencyCode = currencyType
     product?.Name = productName
     product?.category = productCategory
@@ -694,8 +683,8 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     WebEngageController.trackEvent(ADD_UPDATE_BANK_ACCOUNT, CLICK, NO_EVENT_VALUE)
     val bundle = Bundle()
     bundle.putString(IntentConstant.CLIENT_ID.name, clientId)
-    bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
-    bundle.putString(IntentConstant.FP_ID.name, fpId)
+    bundle.putString(IntentConstant.USER_PROFILE_ID.name, sessionLocal.userProfileId)
+    bundle.putString(IntentConstant.FP_ID.name, sessionLocal.fPID)
     bundle.putBoolean(IntentConstant.IS_SERVICE_CREATION.name, true)
     val fragment = when {
       (bankAccountDetail?.isValidAccount() == true) -> FragmentType.BANK_ACCOUNT_DETAILS

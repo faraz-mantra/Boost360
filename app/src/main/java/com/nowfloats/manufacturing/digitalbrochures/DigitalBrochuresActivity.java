@@ -328,7 +328,6 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
 
   @Override
   public void primaryButtonClicked() {
-
       if (isPremium()) {
           addBroucher();
       }else {
@@ -338,7 +337,7 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
 
   @Override
   public void secondaryButtonClicked() {
-
+    Toast.makeText(this, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
   }
 
   @Override

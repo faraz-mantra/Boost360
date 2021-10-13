@@ -442,7 +442,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
 
   @Override
   public void secondaryButtonClicked() {
-
+    Toast.makeText(getActivity(), getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
   }
 
   @Override

@@ -10,6 +10,7 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.databinding.FragmentDeliveryConfigurationBinding
 import com.appservice.ui.ecommerce.bottomsheets.BottomSheetAddCartSlab
 import com.appservice.ui.ecommerce.bottomsheets.BottomSheetAddWareHouse
+import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -18,6 +19,10 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.fromHtml
 import com.framework.views.customViews.CustomTextView
+import com.framework.webengageconstant.DELIVERY_SETUP_PAGE_LOAD
+import com.framework.webengageconstant.ECOMMERCE_SETTING_PAGE_LOAD
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.PAGE_VIEW
 
 class FragmentEcommerceDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigurationBinding, AppointmentSettingsViewModel>() {
 
@@ -40,6 +45,7 @@ class FragmentEcommerceDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigur
   override fun onCreateView() {
     super.onCreateView()
     sessionLocal = UserSessionManager(requireActivity())
+    WebEngageController.trackEvent(DELIVERY_SETUP_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setupView()
     getWareHouseAddress()
     binding?.toggleHomeDelivery?.setOnToggledListener { _, isOn ->
@@ -58,7 +64,7 @@ class FragmentEcommerceDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigur
         val data = it as? DeliveryDetailsResponse
         binding?.toggleAllowPickup?.isOn = data?.result?.isPickupAllowed ?: true
         binding?.toggleHomeDelivery?.isOn = data?.result?.isHomeDeliveryAllowed ?: true
-        binding?.etdFlatCharges?.setText(data?.result?.flatDeliveryCharge.toString())
+        binding?.etdFlatCharges?.setText(data?.result?.getFlatDeliveryCharge().toString())
       }
 
     })

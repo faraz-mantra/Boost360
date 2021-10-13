@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.framework.analytics.SentryController;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.ProductGallery.Model.ProductListModel;
@@ -124,6 +125,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
                             }
                         }
                     } catch (Exception e) {
+                        SentryController.INSTANCE.captureException(e);
                         System.gc();
                         e.printStackTrace();
                     }
@@ -133,6 +135,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
                 currencyValue = Constants.Currency_Country_Map.get(
                         session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).toLowerCase());
             } catch (Exception e) {
+                SentryController.INSTANCE.captureException(e);
                 e.printStackTrace();
             }
         }).start();
@@ -361,6 +364,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
                 productGalleryAdapter.refreshDetails(productItemModelList);
             }
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
             System.gc();
         }
@@ -395,6 +399,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
                     productGalleryAdapter.refreshDetails(arrModelTemp);
 
                 } catch (Exception e) {
+                    SentryController.INSTANCE.captureException(e);
                     e.printStackTrace();
                 }
             }
@@ -463,6 +468,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
 //                    selectedProducts = selectedProducts + URLEncoder.encode(productListModel.Name, "UTF-8").replace("+","") + "/p" + productListModel.ProductIndex;
                     selectedProducts = selectedProducts + productListModel.Name.replaceAll("[^a-zA-Z0-9]+", "-") + "/p" + productListModel.ProductIndex;
                 } catch (Exception e) {
+                    SentryController.INSTANCE.captureException(e);
                     e.printStackTrace();
                 }
                 break;

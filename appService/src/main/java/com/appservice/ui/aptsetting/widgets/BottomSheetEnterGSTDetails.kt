@@ -61,7 +61,7 @@ class BottomSheetEnterGSTDetails : BaseBottomSheetDialog<BottomSheetEnterGstDeta
 
   override fun onCreateView() {
     setOnClickListener(binding?.btnCancel, binding?.btnSaveChanges, binding?.whatsThis)
-    this.paymentProfileDetails = arguments?.getSerializable(IntentConstant.PAYMENT_PROFILE_DETAILS.name) as PaymentResult
+    this.paymentProfileDetails = arguments?.getSerializable(IntentConstant.PAYMENT_PROFILE_DETAILS.name) as? PaymentResult
     if (paymentProfileDetails == null) isEdit = false
     if (paymentProfileDetails?.taxDetails?.gSTDetails?.gSTIN == "") {
       binding?.radioNotRegistered?.isChecked = true

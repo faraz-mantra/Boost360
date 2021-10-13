@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import com.appservice.R
 import com.appservice.constant.FragmentType
 import com.appservice.databinding.FragmentTestimonialListBinding
@@ -15,14 +16,9 @@ import com.appservice.rest.TaskCode
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
-import com.framework.views.zero.OnZeroCaseClicked
-import com.framework.views.zero.RequestZeroCaseBuilder
-import com.framework.views.zero.ZeroCases
 import com.framework.views.zero.old.AppOnZeroCaseClicked
-import com.framework.views.zero.old.AppRequestZeroCaseBuilder
-import com.framework.views.zero.old.AppZeroCases
 import org.json.JSONObject
-import java.util.ArrayList
+import java.util.*
 
 class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListBinding>(), AppOnZeroCaseClicked {
 
@@ -122,6 +118,7 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
   }
 
   override fun secondaryButtonClicked() {
+    Toast.makeText(activity, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
   }
 
   override fun ternaryButtonClicked() {
