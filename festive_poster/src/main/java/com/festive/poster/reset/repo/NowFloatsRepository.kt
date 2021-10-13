@@ -36,6 +36,7 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
     val body =JsonObject().apply {
       addProperty("floatingPointId",floatingPointId)
       addProperty("floatingPointTag",floatingPointTag)
+      addProperty("featureKey","FESTIVEPOSTERS")
     }
     return NowFloatsRepository.makeRemoteRequest(
       remoteDataSource.getTemplateViewConfig(body),

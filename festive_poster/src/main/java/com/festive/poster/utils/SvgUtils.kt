@@ -87,9 +87,9 @@ object SvgUtils {
         var result =svgString
 
         posterKeys.forEach {
-            val replaceVal = if (it.Custom==null) it.Default else it.Custom
+            val replaceVal = if (it.custom==null) it.default else it.custom
 
-            if (it.Type=="Image"){
+            if (it.type=="Image"){
                 Log.i(TAG, "replace: $replaceVal")
 
                 val fileName = replaceVal?.substring(replaceVal.lastIndexOf("/")+1)
@@ -99,9 +99,9 @@ object SvgUtils {
                     Log.i(TAG, "image saved: ${file.path}")
                 }
                 if (file.exists())
-                    result = result?.replace(it.Name,fileName.toString())
+                    result = result?.replace(it.name,fileName.toString())
             }else{
-                result = result?.replace(it.Name,replaceVal.toString())
+                result = result?.replace(it.name,replaceVal.toString())
             }
         }
         return result

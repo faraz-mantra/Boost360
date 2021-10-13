@@ -69,9 +69,9 @@ class PosterListFragment: AppBaseFragment<FragmentPosterListBinding, FestivePost
 
 
             dataList?.forEach { template->
-                template.Keys.forEach { posterKeyModel ->
-                    if (posterKeyModel.Name=="Title"){
-                        posterKeyModel.Custom = it.name
+                template.keys.forEach { posterKeyModel ->
+                    if (posterKeyModel.name=="Title"){
+                        posterKeyModel.custom = it.name
                     }
                 }
             }
@@ -87,7 +87,7 @@ class PosterListFragment: AppBaseFragment<FragmentPosterListBinding, FestivePost
         )?.observe(viewLifecycleOwner,{
             val response = it as? GetTemplatesResponse
             response?.let {
-                dataList = response.Result.Templates.toArrayList()
+                dataList = response.Result.templates.toArrayList()
                 dataList?.forEach { posterModel -> posterModel.isPurchased=true }
                 dataList?.forEach { posterModel -> posterModel.greeting_message="Happy Navratri. Enjoy black friday sale upto 50% discount on our postselected merchandise." }
                 observeCustomization()

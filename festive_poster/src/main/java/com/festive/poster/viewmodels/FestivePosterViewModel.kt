@@ -38,7 +38,7 @@ class FestivePosterViewModel: BaseViewModel() {
         viewModelScope.launch {
             tags?.forEach {
 
-               val response =  NowFloatsRepository.getTemplates(floatingPointId,floatingPointTag, arrayListOf(it.Tag))
+               val response =  NowFloatsRepository.getTemplates(floatingPointId,floatingPointTag, arrayListOf(it.tag))
 
               //  val posterPackModel = PosterPackModel(it,response.Result.Templates.toArrayList())
 
