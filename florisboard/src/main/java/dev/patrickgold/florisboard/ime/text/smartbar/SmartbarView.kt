@@ -88,7 +88,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
     }
   private var shouldSuggestClipboardContents: Boolean = false
 
-  private var indexedActionStartArea = mutableListOf<Int>()
+  private var indexedActionStartArea: MutableList<Int> = mutableListOf()
   private var indexedMainArea: MutableList<Int> = mutableListOf()
   private var indexedActionEndArea: MutableList<Int> = mutableListOf()
 
@@ -278,8 +278,8 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener, TabL
           binding.businessFeatureToggleAction.visibility = View.VISIBLE
         }
       }
-      /*binding.actionStartArea.displayedChild =
-        indexedActionStartArea.indexOf(actionStartAreaId).coerceAtLeast(0)*/
+//      binding.actionStartArea.displayedChild =
+//        indexedActionStartArea.indexOf(actionStartAreaId).coerceAtLeast(0)
     }
     binding.mainArea.visibility = when (mainAreaId) {
       null -> View.INVISIBLE
