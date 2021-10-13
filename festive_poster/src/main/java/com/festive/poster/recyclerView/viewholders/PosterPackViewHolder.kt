@@ -52,7 +52,9 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding):
 
             })
             binding.vpPoster.adapter = adapter
-            binding.dots.setViewPager2(binding.vpPoster)
+            TabLayoutMediator(binding.dots,binding.vpPoster){
+                    tab,position->
+            }.attach()
         }
 
 
