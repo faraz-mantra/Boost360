@@ -55,11 +55,11 @@
             </com.framework.views.customViews.CustomCardView>
 
             <com.framework.views.customViews.CustomTextView
-                app:textType="BODY_2"
                 android:id="@+id/tv_greeting_msg"
                 android:padding="@dimen/size_8"
+                android:fontFamily="@font/regular"
+                android:textSize="@dimen/_14dp"
                 android:background="@drawable/shape_fposter_grey_stroke_rect"
-                android:text="Happy Navratri. Enjoy black friday sale upto 50% discount on our postselected merchandise."
                 android:layout_marginHorizontal="@dimen/size_16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -84,6 +84,8 @@
                     app:textType="BODY_3"
                     android:layout_weight="0.24"
                     android:gravity="center"
+                    android:textColor="@color/color_888888"
+                    android:fontFamily="@font/regular"
                     android:layout_marginHorizontal="@dimen/_14dp"
                     android:text="@string/share_via"
                     android:layout_width="0dp"
@@ -123,6 +125,8 @@
                         android:layout_width="wrap_content"
                         android:layout_marginTop="@dimen/size_4"
                         android:text="@string/whatsapp"
+                        android:textColor="@color/color_888888"
+                        android:fontFamily="@font/regular"
                         android:layout_height="wrap_content"/>
 
                 </LinearLayout>
@@ -145,6 +149,8 @@
                         android:layout_width="wrap_content"
                         android:layout_marginTop="@dimen/size_4"
                         android:text="@string/insta_dm"
+                        android:textColor="@color/color_888888"
+                        android:fontFamily="@font/regular"
                         android:layout_height="wrap_content"/>
 
                 </LinearLayout>
@@ -167,6 +173,8 @@
                         android:layout_width="wrap_content"
                         android:layout_marginTop="@dimen/size_4"
                         android:text="@string/others"
+                        android:textColor="@color/color_888888"
+                        android:fontFamily="@font/regular"
                         android:layout_height="wrap_content"/>
 
                 </LinearLayout>
@@ -188,6 +196,8 @@
                         android:layout_width="wrap_content"
                         android:layout_marginTop="@dimen/size_4"
                         android:text="@string/download"
+                        android:textColor="@color/color_888888"
+                        android:fontFamily="@font/regular"
                         android:layout_height="wrap_content"/>
 
                 </LinearLayout>

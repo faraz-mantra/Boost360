@@ -7,14 +7,16 @@ import java.io.File
 import android.graphics.BitmapFactory
 import android.util.Log
 import com.festive.poster.R
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 
 
 class SvgFileResolver: SVGExternalFileResolver() {
 
     private val TAG = "SvgFileResolver"
     override fun resolveImage(filename: String?): Bitmap {
-        Log.i(TAG, "resolveImage: $filename")
         val file = File(filename)
+        Log.i(TAG, "resolveImage: ${file.absolutePath}")
         if (file.exists()){
             val myBitmap = BitmapFactory.decodeFile(file.absolutePath)
             return myBitmap

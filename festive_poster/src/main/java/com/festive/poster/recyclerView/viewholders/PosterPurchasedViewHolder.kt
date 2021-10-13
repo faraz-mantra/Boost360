@@ -21,12 +21,12 @@ class PosterPurchasedViewHolder(binding: ListItemPurchasedPosterBinding):
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as PosterModel
-       /* model.keys.let {
+        model.keys.let {
             binding.ivSvg.loadAndReplace(
                 model.variants.firstOrNull()?.svgUrl,
                 it
             )
-        }*/
+        }
         binding.tvGreetingMsg.text = model.greeting_message
         binding.tvGreetingMsg.setOnClickListener {
             listener?.onItemClick(position,item,RecyclerViewActionType.POSTER_GREETING_MSG_CLICKED.ordinal)

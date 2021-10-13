@@ -29,16 +29,17 @@
         <com.framework.views.customViews.CustomTextView
             android:gravity="center"
             android:id="@+id/tv_poster_pack_name"
-            android:fontFamily="@font/bold"
+            android:fontFamily="@font/semi_bold"
             android:layout_marginHorizontal="@dimen/size_24"
             android:layout_marginTop="@dimen/size_16"
+            android:textColor="@color/black_4a4a4a"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <com.framework.views.customViews.CustomTextView
             android:gravity="center"
             android:id="@+id/tv_desc"
+            android:fontFamily="@font/regular"
             android:layout_marginHorizontal="@dimen/size_24"
-            android:layout_marginTop="@dimen/size_16"
             android:text="@string/order_confirm_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -47,12 +48,12 @@
             android:layout_marginTop="@dimen/size_24"
             android:gravity="center"
             android:textSize="@dimen/size_18"
-            android:fontFamily="@font/bold"
+            android:fontFamily="@font/semi_bold"
             android:textColor="@color/white"
             android:id="@+id/btn_confirm"
             android:background="@drawable/bg_button_orange_gradient"
             android:layout_width="match_parent"
-            android:text="@string/confirm_order"
+            android:text="@string/view_pack"
             android:layout_height="@dimen/size_50"/>
 
 

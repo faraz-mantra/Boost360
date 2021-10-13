@@ -1,6 +1,8 @@
 package com.festive.poster.ui
 
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -17,6 +19,10 @@ import com.framework.models.BaseViewModel
 import com.framework.webengageconstant.FESTIVAL_POSTER_UPDATE_INFO
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.github.dhaval2404.imagepicker.util.FileUtil
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.IOException
 
 class CustomizePosterSheet: BaseBottomSheetDialog<BsheetCustomizePosterBinding, BaseViewModel>() {
 
@@ -26,15 +32,19 @@ class CustomizePosterSheet: BaseBottomSheetDialog<BsheetCustomizePosterBinding, 
     private var sharedViewModel:FestivePosterSharedViewModel?=null
     private var packTag:String?=null
     private var isAlreadyPurchased:Boolean=false
+    private var creatorName:String?=null
 
     companion object{
         val BK_TAG="BK_TITLE"
         val BK_IS_PURCHASED="BK_IS_PURCHASED"
+        val BK_CREATOR_NAME="BK_CREATOR_NAME"
+
         @JvmStatic
-        fun newInstance(tag:String,isAlreadyPurchased:Boolean): CustomizePosterSheet {
+        fun newInstance(tag: String, isAlreadyPurchased: Boolean, creatorName: String?=null): CustomizePosterSheet {
             val bundle = Bundle().apply {
                 putString(BK_TAG,tag)
                 putBoolean(BK_IS_PURCHASED,isAlreadyPurchased)
+                putString(BK_CREATOR_NAME,creatorName)
             }
             val fragment =CustomizePosterSheet()
             fragment.arguments = bundle
@@ -53,6 +63,7 @@ class CustomizePosterSheet: BaseBottomSheetDialog<BsheetCustomizePosterBinding, 
     override fun onCreateView() {
         packTag = arguments?.getString(BK_TAG)
         isAlreadyPurchased = arguments?.getBoolean(BK_IS_PURCHASED) == true
+        creatorName = arguments?.getString(BK_CREATOR_NAME)
         sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
 
         setOnClickListener(binding?.ivCancel,binding?.uploadSelfie,binding?.tvUpdateInfo,binding?.imgEdit)
@@ -97,7 +108,7 @@ class CustomizePosterSheet: BaseBottomSheetDialog<BsheetCustomizePosterBinding, 
 
         if (!isAlreadyPurchased){
             PosterPaymentSheet().show(parentFragmentManager,PosterPaymentSheet::class.java.name)
-        }else{
+        }else if (creatorName==null) {
             addFragmentReplace(R.id.container,PosterListFragment.newInstance(packTag!!),true)
         }
         dismiss()
@@ -147,7 +158,7 @@ class CustomizePosterSheet: BaseBottomSheetDialog<BsheetCustomizePosterBinding, 
 
     private fun openCropFragment(data: Intent?) {
         val uri = data?.data!!
-        path = FileUtil.getTempFile(requireContext(),uri)?.path
+        path = getTempFile(requireContext(),uri)?.path
         binding?.ivUserImg?.setImageURI(uri)
         showUserImage()
 
@@ -157,5 +168,25 @@ class CustomizePosterSheet: BaseBottomSheetDialog<BsheetCustomizePosterBinding, 
         binding?.layoutImage?.visible()
         binding?.layoutNoImage?.gone()
 
+    }
+
+    fun getTempFile(context: Context, uri: Uri): File? {
+        try {
+            val destination = File(context.cacheDir, "image_picker.jpg")
+
+            val parcelFileDescriptor = context.contentResolver.openFileDescriptor(uri, "r")
+            val fileDescriptor = parcelFileDescriptor?.fileDescriptor ?: return null
+
+            val src = FileInputStream(fileDescriptor).channel
+            val dst = FileOutputStream(destination).channel
+            dst.transferFrom(src, 0, src.size())
+            src.close()
+            dst.close()
+
+            return destination
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+        }
+        return null
     }
 }

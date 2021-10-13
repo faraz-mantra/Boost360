@@ -10,7 +10,7 @@
     <string name="download">Download</string>
     <string name="customise_poster">Customise poster</string>
     <string name="upload_selfie">Upload your selfie</string>
-    <string name="your_name">Your name*</string>
+    <string name="your_name_star">Your name*</string>
     <string name="write_your_name">Write your name</string>
     <string name="display_email_id">Display email ID*</string>
     <string name="write_your_email_id">Write your email ID</string>
@@ -32,7 +32,7 @@
     <string name="understood">Understood</string>
     <string name="contact_support">Contact support</string>
     <string name="save">Save</string>
-    <string name="view_pack">View Pack</string>
+    <string name="view_pack">View pack</string>
     <string name="paying_">Paying ₹%1$s</string>
     <string name="for_pack_of_posters">for pack of %1$s posters</string>
     <string name="order_confirm_message"><![CDATA[Feel free to edit & share them with all your customers with your custom messages. You can make payment of ₹%1$s after you receive the payment link.]]></string>
