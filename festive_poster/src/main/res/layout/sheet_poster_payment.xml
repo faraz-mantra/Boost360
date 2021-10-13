@@ -18,8 +18,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/bold"
                 android:text="@string/paying_"
-                android:textColor="@color/black"
-                app:textType="HEADING_5" />
+                app:fontFamily="@font/semi_bold"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/size_16" />
 
             <com.framework.views.customViews.CustomImageView
                 android:id="@+id/iv_cancel"
@@ -31,6 +32,7 @@
             <com.framework.views.customViews.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
                 android:id="@+id/tv_subheading"
                 android:layout_below="@+id/tv_heading"
                  />
@@ -53,8 +55,10 @@
                 android:layout_height="wrap_content">
 
                 <RadioButton
-                    android:textColor="@color/grey_light_2"
-                    android:textSize="@dimen/size_18"
+                    android:textColor="@color/color_BBBBBB"
+                    android:textSize="@dimen/size_16"
+                    android:fontFamily="@font/regular"
+
                     android:text="@string/pay_using_debit_credit_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -63,6 +67,8 @@
                     android:layout_marginStart="@dimen/size_25"
                     android:textColor="@color/red_300"
                     android:layout_width="match_parent"
+                    android:fontFamily="@font/regular"
+                    android:textSize="@dimen/size_12"
                     android:text="@string/currently_unavailable"
                     android:layout_height="wrap_content"/>
 

@@ -9,7 +9,7 @@
             <corners
                 android:radius="@dimen/size_10"
                 />
-            <solid android:color="@color/grey_light_2"/>
+            <solid android:color="#DADADA"/>
         </shape>
     </item>
 </layer-list>

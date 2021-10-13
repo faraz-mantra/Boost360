@@ -24,13 +24,13 @@
                     android:layout_height="wrap_content">
 
                     <com.framework.views.customViews.CustomTextView
-                        android:layout_centerVertical="true"
-                        android:text="@string/customise_poster"
-                        app:textType="HEADING_5"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/bold"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/semi_bold"
+                        android:text="@string/customise_poster"
+                        android:textColor="@color/black_4a4a4a"
+                        android:textSize="@dimen/size_16" />
 
                     <com.framework.views.customViews.CustomImageView
                         android:id="@+id/iv_cancel"
@@ -117,12 +117,17 @@
                     <com.framework.views.customViews.CustomTextView
                         android:layout_width="match_parent"
                         android:text="@string/your_name"
+                        android:textSize="@dimen/size_12"
+                        android:fontFamily="@font/regular"
                         android:layout_height="wrap_content"/>
 
                     <com.framework.views.customViews.CustomEditText
                         android:padding="@dimen/size_10"
                         android:id="@+id/et_name"
                         android:hint="@string/write_your_name"
+                        android:textSize="@dimen/size_14"
+                        android:textColor="@color/black_4a4a4a"
+                        android:fontFamily="@font/regular"
                         android:background="@drawable/shape_fposter_grey_stroke_rect"
                         android:layout_marginTop="@dimen/size_4"
                         android:layout_width="match_parent"
@@ -132,12 +137,17 @@
                         android:layout_marginTop="@dimen/size_16"
                         android:layout_width="match_parent"
                         android:text="@string/display_email_id"
+                        android:textSize="@dimen/size_12"
+                        android:fontFamily="@font/regular"
                         android:layout_height="wrap_content"/>
 
                     <com.framework.views.customViews.CustomEditText
                         android:padding="@dimen/size_10"
                         android:id="@+id/et_email"
                         android:hint="@string/write_your_email_id"
+                        android:textSize="@dimen/size_14"
+                        android:textColor="@color/black_4a4a4a"
+                        android:fontFamily="@font/regular"
                         android:background="@drawable/shape_fposter_grey_stroke_rect"
                         android:layout_marginTop="@dimen/size_4"
                         android:layout_width="match_parent"
@@ -146,6 +156,8 @@
                     <com.framework.views.customViews.CustomTextView
                         android:layout_marginTop="@dimen/size_16"
                         android:layout_width="match_parent"
+                        android:textSize="@dimen/size_12"
+                        android:fontFamily="@font/regular"
                         android:text="@string/display_whatsapp_number"
                         android:layout_height="wrap_content"/>
 
@@ -155,6 +167,9 @@
                         android:inputType="number"
                         android:background="@drawable/shape_fposter_grey_stroke_rect"
                         android:layout_marginTop="@dimen/size_4"
+                        android:textSize="@dimen/size_14"
+                        android:textColor="@color/black_4a4a4a"
+                        android:fontFamily="@font/regular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
 
@@ -162,6 +177,8 @@
                         android:layout_marginTop="@dimen/size_16"
                         android:layout_width="match_parent"
                         android:text="@string/greeting_description"
+                        android:textSize="@dimen/size_12"
+                        android:fontFamily="@font/regular"
                         android:layout_height="wrap_content"/>
 
                     <com.framework.views.customViews.CustomEditText
@@ -169,6 +186,9 @@
                         android:id="@+id/et_desc"
                         android:background="@drawable/shape_fposter_grey_stroke_rect"
                         android:layout_marginTop="@dimen/size_4"
+                        android:textSize="@dimen/size_14"
+                        android:textColor="@color/black_4a4a4a"
+                        android:fontFamily="@font/regular"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/size_80"/>
 
@@ -177,12 +197,16 @@
                         android:layout_marginTop="@dimen/size_16"
                         android:layout_width="match_parent"
                         android:text="@string/website_address"
+                        android:textSize="@dimen/size_12"
+                        android:fontFamily="@font/regular"
                         android:layout_height="wrap_content"/>
 
                     <com.framework.views.customViews.CustomEditText
                         android:padding="@dimen/size_10"
                         android:id="@+id/et_website"
-
+                        android:textColor="@color/color_888888"
+                        android:fontFamily="@font/regular"
+                        android:textSize="@dimen/_14dp"
                         android:background="@drawable/shape_fposter_grey_rounded_rect"
                         android:layout_marginTop="@dimen/size_4"
                         android:layout_width="match_parent"
@@ -202,6 +226,7 @@
             android:background="@drawable/bg_button_orange_gradient"
             android:gravity="center"
             android:paddingVertical="@dimen/size_8"
+            android:fontFamily="@font/regular"
             android:text="@string/update_info"
             android:textColor="@color/white"
             app:textType="HEADING_5" />

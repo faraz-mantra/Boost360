@@ -32,7 +32,7 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding):
         if (model.isPurchased){
             binding.btnGetPack.text=getResources()?.getString(R.string.view_pack)
         }else{
-            binding.btnGetPack.text = "Get ${model.tagsModel.name} Poster Pack"
+            binding.btnGetPack.text = "Get ${model.tagsModel.name} Posters Pack"
 
         }
         binding.btnGetPack.setOnClickListener {
