@@ -10,7 +10,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.widget.ImageViewCompat
 import com.framework.R
 
-class CustomImageView : AppCompatImageView {
+open class CustomImageView : AppCompatImageView {
 
   constructor(context: Context) : super(context) {
     setCustomAttrs(context, null)

@@ -1,235 +1,264 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <RelativeLayout
-        android:background="@drawable/shape_fposter_white_top_rounded_rect"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_fposter_white_top_rounded_rect"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="@dimen/size_12"
+      android:gravity="center_vertical"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/semi_bold"
+        android:text="@string/customise_poster"
+        android:layout_weight="1"
+        android:textColor="@color/black_4a4a4a"
+        app:textType="HEADING_6" />
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/iv_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_fposter_bsheet_close" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <View
+      android:id="@+id/view"
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="@color/bg_grey_light"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginVertical="@dimen/size_50"
+      app:layout_constraintBottom_toTopOf="@+id/tv_update_info"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/view">
+
+      <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_above="@+id/tv_update_info"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <com.framework.views.customViews.CustomCardView
+          android:layout_width="@dimen/size_140"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_20"
+          android:layout_marginTop="@dimen/size_20"
+          app:cardBackgroundColor="@color/view_background_1"
+          app:cardCornerRadius="@dimen/size_10">
 
-                <RelativeLayout
-                    android:padding="@dimen/size_16"
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.framework.views.customViews.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:fontFamily="@font/bold"
-                        android:text="@string/customise_poster"
-                        android:textColor="@color/black_4a4a4a"
-                        android:textSize="@dimen/size_16" />
-
-                    <com.framework.views.customViews.CustomImageView
-                        android:id="@+id/iv_cancel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/ic_fposter_bsheet_close" />
-                </RelativeLayout>
-
-                <View
-                    android:background="@color/bg_grey_light"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-
-                <com.framework.views.customViews.CustomCardView
-                    android:layout_marginTop="@dimen/size_24"
-                    android:layout_marginStart="@dimen/size_24"
-                    android:layout_width="@dimen/size_140"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/view_background_1"
-                    app:cardCornerRadius="@dimen/size_10"
-                    app:cardElevation="@dimen/size_2">
-
-                    <LinearLayout
-                        android:id="@+id/layout_no_image"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <com.framework.views.customViews.CustomImageView
-                            android:padding="@dimen/size_30"
-                            android:layout_width="match_parent"
-                            android:src="@drawable/ic_fposter_profile_img_placeholder"
-                            android:layout_height="@dimen/size_120"/>
-
-
-                        <com.framework.views.customViews.CustomTextView
-                            android:layout_width="match_parent"
-                            android:textColor="@color/colorAccentLight"
-                            app:fontFamily="@font/semi_bold"
-                            app:textType="BODY_1"
-                            android:id="@+id/upload_selfie"
-                            android:gravity="center"
-                            android:background="@color/white"
-                            android:padding="@dimen/size_4"
-                            android:text="@string/upload_selfie"
-                            android:layout_height="wrap_content"/>
-
-                    </LinearLayout>
-
-                    <RelativeLayout
-                        android:visibility="gone"
-                        android:id="@+id/layout_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_140">
-
-                        <com.framework.views.customViews.CustomImageView
-                            android:scaleType="fitXY"
-                            android:id="@+id/iv_user_img"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
-
-                        <com.framework.views.customViews.CustomImageView
-                            android:id="@+id/img_edit"
-                            android:layout_width="@dimen/size_30"
-                            android:layout_height="@dimen/size_30"
-                            android:layout_alignParentBottom="true"
-                            android:layout_alignParentRight="true"
-                            android:background="@drawable/ic_fposter_round_white"
-                            app:srcCompat="@drawable/ic_fposter_pencil_d" />
-
-
-                    </RelativeLayout>
-
-
-                </com.framework.views.customViews.CustomCardView>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:orientation="vertical"
-                    android:layout_margin="@dimen/size_24"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.framework.views.customViews.CustomTextView
-                        android:layout_width="match_parent"
-                        android:text="@string/your_name_star"
-                        android:textSize="@dimen/size_12"
-                        android:fontFamily="@font/regular"
-                        android:layout_height="wrap_content"/>
-
-                    <com.framework.views.customViews.CustomEditText
-                        android:padding="@dimen/size_10"
-                        android:id="@+id/et_name"
-                        android:hint="@string/write_your_name"
-                        android:textSize="@dimen/size_14"
-                        android:textColor="@color/black_4a4a4a"
-                        android:fontFamily="@font/regular"
-                        android:background="@drawable/shape_fposter_grey_stroke_rect"
-                        android:layout_marginTop="@dimen/size_4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <com.framework.views.customViews.CustomTextView
-                        android:layout_marginTop="@dimen/size_16"
-                        android:layout_width="match_parent"
-                        android:text="@string/display_email_id"
-                        android:textSize="@dimen/size_12"
-                        android:fontFamily="@font/regular"
-                        android:layout_height="wrap_content"/>
-
-                    <com.framework.views.customViews.CustomEditText
-                        android:padding="@dimen/size_10"
-                        android:id="@+id/et_email"
-                        android:hint="@string/write_your_email_id"
-                        android:textSize="@dimen/size_14"
-                        android:textColor="@color/black_4a4a4a"
-                        android:fontFamily="@font/regular"
-                        android:background="@drawable/shape_fposter_grey_stroke_rect"
-                        android:layout_marginTop="@dimen/size_4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <com.framework.views.customViews.CustomTextView
-                        android:layout_marginTop="@dimen/size_16"
-                        android:layout_width="match_parent"
-                        android:textSize="@dimen/size_12"
-                        android:fontFamily="@font/regular"
-                        android:text="@string/display_whatsapp_number"
-                        android:layout_height="wrap_content"/>
-
-                    <com.framework.views.customViews.CustomEditText
-                        android:padding="@dimen/size_10"
-                        android:id="@+id/et_whatsapp"
-                        android:inputType="number"
-                        android:background="@drawable/shape_fposter_grey_stroke_rect"
-                        android:layout_marginTop="@dimen/size_4"
-                        android:textSize="@dimen/size_14"
-                        android:textColor="@color/black_4a4a4a"
-                        android:fontFamily="@font/regular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <com.framework.views.customViews.CustomTextView
-                        android:layout_marginTop="@dimen/size_16"
-                        android:layout_width="match_parent"
-                        android:text="@string/greeting_description"
-                        android:textSize="@dimen/size_12"
-                        android:fontFamily="@font/regular"
-                        android:layout_height="wrap_content"/>
-
-                    <com.framework.views.customViews.CustomEditText
-                        android:padding="@dimen/size_10"
-                        android:id="@+id/et_desc"
-                        android:background="@drawable/shape_fposter_grey_stroke_rect"
-                        android:layout_marginTop="@dimen/size_4"
-                        android:textSize="@dimen/size_14"
-                        android:textColor="@color/black_4a4a4a"
-                        android:fontFamily="@font/regular"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_80"/>
-
-
-                    <com.framework.views.customViews.CustomTextView
-                        android:layout_marginTop="@dimen/size_16"
-                        android:layout_width="match_parent"
-                        android:text="@string/website_address"
-                        android:textSize="@dimen/size_12"
-                        android:fontFamily="@font/regular"
-                        android:layout_height="wrap_content"/>
-
-                    <com.framework.views.customViews.CustomEditText
-                        android:padding="@dimen/size_10"
-                        android:id="@+id/et_website"
-                        android:textColor="@color/color_888888"
-                        android:fontFamily="@font/regular"
-                        android:textSize="@dimen/_14dp"
-                        android:background="@drawable/shape_fposter_grey_rounded_rect"
-                        android:layout_marginTop="@dimen/size_4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
-
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tv_update_info"
+          <LinearLayout
+            android:id="@+id/layout_no_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/bg_button_orange_gradient"
-            android:fontFamily="@font/semi_bold"
-            android:gravity="center"
-            android:paddingVertical="@dimen/size_12"
-            android:text="@string/update_info"
-            android:textColor="@color/white"
-            app:textType="HEADING_5" />
-    </RelativeLayout>
+            android:orientation="vertical">
+
+            <com.framework.views.customViews.CustomImageView
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/size_120"
+              android:padding="@dimen/size_30"
+              android:src="@drawable/ic_fposter_profile_img_placeholder" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/upload_selfie"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:gravity="center"
+              android:padding="@dimen/size_4"
+              android:text="@string/upload_selfie"
+              android:textColor="@color/colorAccentLight"
+              app:fontFamily="@font/semi_bold"
+              app:textType="BODY_1" />
+
+          </LinearLayout>
+
+          <RelativeLayout
+            android:id="@+id/layout_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_140"
+            android:visibility="gone">
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/iv_user_img"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:scaleType="fitXY" />
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/img_edit"
+              android:layout_width="@dimen/size_30"
+              android:layout_height="@dimen/size_30"
+              android:layout_alignParentRight="true"
+              android:layout_alignParentBottom="true"
+              android:background="@drawable/ic_fposter_round_white"
+              app:srcCompat="@drawable/ic_fposter_pencil_d" />
+
+
+          </RelativeLayout>
+
+
+        </com.framework.views.customViews.CustomCardView>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/size_20"
+          android:orientation="vertical">
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:text="@string/your_name_star"
+            android:textSize="@dimen/caption" />
+
+          <com.framework.views.customViews.CustomEditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:background="@drawable/shape_fposter_grey_stroke_rect"
+            android:fontFamily="@font/regular"
+            android:hint="@string/write_your_name"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:padding="@dimen/size_10"
+            android:singleLine="true"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="@dimen/body_1" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_16"
+            android:fontFamily="@font/regular"
+            android:text="@string/display_email_id"
+            android:textSize="@dimen/caption" />
+
+          <com.framework.views.customViews.CustomEditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:background="@drawable/shape_fposter_grey_stroke_rect"
+            android:fontFamily="@font/regular"
+            android:hint="@string/write_your_email_id"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:padding="@dimen/size_10"
+            android:singleLine="true"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="@dimen/body_1" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_16"
+            android:fontFamily="@font/regular"
+            android:text="@string/display_whatsapp_number"
+            android:textSize="@dimen/caption" />
+
+          <com.framework.views.customViews.CustomEditText
+            android:id="@+id/et_whatsapp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:background="@drawable/shape_fposter_grey_stroke_rect"
+            android:fontFamily="@font/regular"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLength="10"
+            android:maxLines="1"
+            android:padding="@dimen/size_10"
+            android:singleLine="true"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="@dimen/body_1" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_16"
+            android:fontFamily="@font/regular"
+            android:text="@string/greeting_description"
+            android:textSize="@dimen/caption" />
+
+          <com.framework.views.customViews.CustomEditText
+            android:id="@+id/et_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:background="@drawable/shape_fposter_grey_stroke_rect"
+            android:gravity="top|start"
+            android:imeOptions="actionDone"
+            android:inputType="textMultiLine"
+            android:lines="6"
+            android:maxLines="8"
+            android:minLines="4"
+            android:padding="@dimen/size_10"
+            android:scrollbars="vertical"
+            android:textSize="@dimen/body_1" />
+
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_16"
+            android:fontFamily="@font/regular"
+            android:text="@string/website_address"
+            android:textSize="@dimen/caption" />
+
+          <com.framework.views.customViews.CustomEditText
+            android:id="@+id/et_website"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:background="@drawable/shape_fposter_grey_rounded_rect"
+            android:focusable="false"
+            android:fontFamily="@font/regular"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:padding="@dimen/size_10"
+            android:singleLine="true"
+            android:textColor="@color/color_888888"
+            android:textSize="@dimen/body_1" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+      </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/tv_update_info"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/bg_button_orange_gradient"
+      android:fontFamily="@font/semi_bold"
+      android:gravity="center"
+      android:paddingVertical="@dimen/size_12"
+      android:text="@string/update_info"
+      android:textColor="@color/white"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:textType="HEADING_6" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
