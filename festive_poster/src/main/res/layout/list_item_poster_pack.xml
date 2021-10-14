@@ -1,78 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
-    <com.framework.views.customViews.CustomCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <com.framework.views.customViews.CustomCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/size_8"
+    app:cardBackgroundColor="@color/white_smoke_1"
+    app:cardCornerRadius="@dimen/size_20"
+    app:cardElevation="0dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:paddingVertical="@dimen/size_24">
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/tv_poster_heading"
         android:layout_width="match_parent"
-        app:cardElevation="0dp"
-        android:layout_marginBottom="@dimen/size_16"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:cardCornerRadius="@dimen/size_15"
-        android:layout_marginVertical="@dimen/size_8"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_24"
+        android:fontFamily="@font/regular"
+        android:textColor="@color/black_4a4a4a"
+        android:textSize="@dimen/heading_7"
+        tools:text="Durgapuja" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:paddingVertical="@dimen/size_24"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/tv_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_24"
+        android:fontFamily="@font/regular"
+        android:textColor="@color/color_888888" />
 
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/tv_poster_heading"
-                android:layout_width="match_parent"
-                android:textSize="@dimen/size_18"
-                tools:text="Durgapuja"
-                android:fontFamily="@font/regular"
-                android:textColor="@color/black_4a4a4a"
-                android:layout_marginStart="@dimen/size_24"
-                android:layout_height="wrap_content"/>
+      <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_poster"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_430"
+        android:layout_marginTop="@dimen/size_12"
+        android:paddingEnd="@dimen/size_70"
+        tools:ignore="RtlSymmetry" />
 
-            <com.framework.views.customViews.CustomTextView
-                android:layout_marginStart="@dimen/size_24"
-                android:layout_width="match_parent"
-                android:id="@+id/tv_price"
-                android:fontFamily="@font/regular"
-                android:textColor="@color/color_888888"
-                android:layout_height="wrap_content"/>
+      <com.google.android.material.tabs.TabLayout
+        android:id="@+id/dots"
+        android:layout_width="wrap_content"
+        android:layout_height="5dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/size_8"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
+        app:tabBackground="@drawable/fposter_tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="fixed" />
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:layout_marginTop="@dimen/size_16"
-                android:paddingEnd="@dimen/size_80"
-                android:layout_marginStart="@dimen/size_8"
-                android:id="@+id/vp_poster"
-                android:layout_width="match_parent"
-                android:layout_height="500dp"/>
+      <com.framework.views.customViews.CustomMaterialButton
+        android:id="@+id/btn_get_pack"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_60"
+        android:layout_marginHorizontal="@dimen/size_32"
+        android:layout_marginTop="@dimen/size_8"
+        android:backgroundTint="@color/colorPrimary"
+        android:elevation="0dp"
+        android:fontFamily="@font/semi_bold"
+        android:stateListAnimator="@null"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/heading_6"
+        android:translationZ="0dp"
+        app:cornerRadius="@dimen/size_15"
+        tools:text="Get navratri posters pack" />
 
-            <com.google.android.material.tabs.TabLayout
-                app:tabGravity="center"
-                android:id="@+id/dots"
-                app:tabMode="fixed"
-                android:layout_gravity="center"
-                app:tabBackground="@drawable/fposter_tab_selector"
-                app:tabIndicatorHeight="0dp"
-                android:layout_width="wrap_content"
-                android:layout_height="5dp"
-                android:layout_marginStart="@dimen/size_8"
-                android:layout_marginTop="8dp"
-                />
-
-            <com.framework.views.customViews.CustomMaterialButton
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/size_8"
-                app:cornerRadius="@dimen/size_15"
-                android:elevation="0dp"
-                android:translationZ="0dp"
-                android:stateListAnimator="@null"
-                android:fontFamily="@font/regular"
-                android:id="@+id/btn_get_pack"
-                android:textColor="@color/white"
-                android:backgroundTint="@color/colorPrimary"
-                android:textAllCaps="false"
-                android:textSize="@dimen/size_16"
-                tools:text="Get Navratri posters pack"
-                android:layout_marginHorizontal="@dimen/size_32"
-                android:layout_height="@dimen/size_60"/>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-    </com.framework.views.customViews.CustomCardView>
+  </com.framework.views.customViews.CustomCardView>
 </layout>
