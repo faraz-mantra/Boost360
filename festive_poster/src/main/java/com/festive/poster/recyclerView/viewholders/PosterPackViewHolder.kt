@@ -40,8 +40,7 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecycler
         }
       })
       binding.vpPoster.adapter = adapter
-      TabLayoutMediator(binding.dots, binding.vpPoster) { tab, position ->
-      }.attach()
+      TabLayoutMediator(binding.dots, binding.vpPoster) { _, _ -> }.attach()
     }
     super.bind(position, item)
   }
