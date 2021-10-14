@@ -45,11 +45,11 @@
 
       <com.google.android.material.tabs.TabLayout
         android:id="@+id/dots"
+        app:tabIndicatorFullWidth="false"
         android:layout_width="wrap_content"
-        android:layout_height="5dp"
+        android:layout_height="@dimen/size_3"
         android:layout_gravity="center"
-        android:layout_marginStart="@dimen/size_8"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/size_8"
         android:background="@android:color/transparent"
         app:tabBackground="@drawable/fposter_tab_selector"
         app:tabGravity="center"
