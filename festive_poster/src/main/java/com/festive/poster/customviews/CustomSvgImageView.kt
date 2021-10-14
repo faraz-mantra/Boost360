@@ -1,15 +1,17 @@
 package com.festive.poster.customviews
 
 import android.content.Context
+import android.graphics.drawable.PictureDrawable
 import android.util.AttributeSet
 import android.util.Log
+import android.widget.ImageView
 import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SVGImageView
 import com.festive.poster.models.PosterKeyModel
 import com.festive.poster.utils.SvgUtils
 import kotlinx.coroutines.*
 
-class CustomSvgImageView: SVGImageView {
+class CustomSvgImageView: androidx.appcompat.widget.AppCompatImageView {
 
     private var loadAndReplaceJob: Deferred<Any?>?=null
     private var posterKeys:List<PosterKeyModel>?=null
@@ -49,7 +51,8 @@ class CustomSvgImageView: SVGImageView {
                     svgString =  SvgUtils.replace(svgString,posterKeys)
                 }
                 withContext(Dispatchers.Main){
-                    setSVG(SVG.getFromString(svgString))
+//                    setSVG(SVG.getFromString(svgString))
+                    setImageDrawable(PictureDrawable(SVG.getFromString(svgString).renderToPicture()))
                 }
 
             }
