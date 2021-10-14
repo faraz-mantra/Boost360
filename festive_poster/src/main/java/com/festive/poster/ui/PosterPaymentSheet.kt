@@ -52,9 +52,9 @@ class PosterPaymentSheet : BaseBottomSheetDialog<SheetPosterPaymentBinding, Base
   private fun setupUi() {
     val posterPack = sharedViewModel?.selectedPosterPack
     posterPack?.let {
-      binding?.tvHeading?.text = getString(R.string.paying_, it.price.toString())
+      binding?.tvHeading?.text = getString(R.string.paying_, String.format("%.2f",it.price))
       binding?.tvSubheading?.text = getString(R.string.for_pack_of_posters, it.posterList?.size.toString())
-      binding?.tvPayLater?.text = getString(R.string.get_the_poster_pack_now_amp_pay_later, it.price.toString())
+      binding?.tvPayLater?.text = getString(R.string.get_the_poster_pack_now_amp_pay_later, String.format("%.2f",it.price))
       val number = when {
         session?.userPrimaryMobile.isNullOrEmpty().not() -> session?.userPrimaryMobile
         session?.userProfileMobile.isNullOrEmpty().not() -> session?.userProfileMobile
@@ -62,7 +62,7 @@ class PosterPaymentSheet : BaseBottomSheetDialog<SheetPosterPaymentBinding, Base
       }
       val email = if (session?.userProfileEmail.isNullOrEmpty()) "" else session?.userProfileEmail
       binding?.tvPayLaterMsg?.text = "We’ll send you a secure payment" +
-          " link on your registered email ID ${if (number.isNullOrEmpty()) email else "$email & $number"} to make the payment for ₹${it.price}."
+          " link on your registered email ID ${if (number.isNullOrEmpty()) email else "$email & $number"} to make the payment for ₹${String.format("%.2f",it.price)}."
     }
   }
 

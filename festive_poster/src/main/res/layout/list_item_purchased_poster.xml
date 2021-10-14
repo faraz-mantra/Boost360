@@ -18,36 +18,37 @@
       android:orientation="vertical">
 
       <com.framework.views.customViews.CustomCardView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_420"
-        android:layout_margin="@dimen/size_14"
-        app:cardCornerRadius="@dimen/size_20"
-        app:cardElevation="0dp">
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/size_430"
+          android:layout_gravity="center"
+          android:layout_margin="@dimen/size_14"
+          app:cardCornerRadius="@dimen/size_20"
+          app:cardElevation="0dp">
 
         <FrameLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
 
           <com.festive.poster.customviews.CustomSvgImageView
-            android:id="@+id/iv_svg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"/>
+              android:id="@+id/iv_svg"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:adjustViewBounds="true"
+              android:scaleType="fitCenter" />
 
           <com.framework.views.customViews.CustomMaterialButton
-            android:id="@+id/btn_tap_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/size_50"
-            android:layout_marginStart="@dimen/size_10"
-            android:layout_marginTop="@dimen/size_10"
-            android:backgroundTint="@color/black_opacity30"
-            android:fontFamily="@font/semi_bold"
-            android:text="@string/tap_to_edit"
-            android:textAllCaps="false"
-            android:textSize="@dimen/caption"
-            app:cornerRadius="@dimen/size_20"
-            app:icon="@drawable/ic_tap_to_edit" />
+              android:id="@+id/btn_tap_edit"
+              android:layout_width="wrap_content"
+              android:layout_height="@dimen/size_50"
+              android:layout_marginStart="@dimen/size_10"
+              android:layout_marginTop="@dimen/size_10"
+              android:backgroundTint="@color/black_opacity30"
+              android:fontFamily="@font/semi_bold"
+              android:text="@string/tap_to_edit"
+              android:textAllCaps="false"
+              android:textSize="@dimen/caption"
+              app:cornerRadius="@dimen/size_20"
+              app:icon="@drawable/ic_tap_to_edit" />
 
         </FrameLayout>
 

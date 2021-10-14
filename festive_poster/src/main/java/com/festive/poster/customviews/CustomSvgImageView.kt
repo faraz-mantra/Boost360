@@ -67,7 +67,7 @@ class CustomSvgImageView : CustomImageView {
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     if (url != null) {
-      loadAndReplace(url!!, posterKeys)
+//      loadAndReplace(url!!, posterKeys)
     }
   }
 
