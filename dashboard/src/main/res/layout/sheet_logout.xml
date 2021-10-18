@@ -40,13 +40,13 @@
         android:textAllCaps="false"
         android:layout_marginTop="@dimen/size_20"
         android:enabled="false"
-        android:textSize="@dimen/size_16"
+        android:textSize="@dimen/text_14"
         app:cornerRadius="@dimen/size_15"
-        app:strokeColor="@color/grey_A1A1A1"
+        app:strokeColor="@color/black_4a4a4a"
         app:strokeWidth="2dp"
-        android:fontFamily="@font/bold"
+        android:fontFamily="@font/semi_bold"
         android:text="@string/switch_to_a_different_business"
-        android:textColor="@color/grey_A1A1A1" />
+        android:textColor="@color/black_4a4a4a" />
 
     <com.framework.views.customViews.CustomMaterialButton
         android:id="@+id/btn_logout"
@@ -55,11 +55,9 @@
         android:layout_height="55dp"
         android:layout_marginTop="@dimen/size_10"
         android:enabled="false"
-        app:strokeColor="@color/grey_A1A1A1"
         android:backgroundTint="@color/red_E39595"
         android:textAllCaps="false"
-        app:strokeWidth="2dp"
-        android:fontFamily="@font/bold"
+        android:fontFamily="@font/semi_bold"
         android:text="@string/logout"
         android:textColor="@color/white" />
   </androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,61 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <data></data>
-
-  <androidx.appcompat.widget.LinearLayoutCompat
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <com.framework.views.customViews.CustomImageView
-      android:id="@+id/riv_close_bottomSheet"
-      android:layout_width="@dimen/size_40"
-      android:layout_height="@dimen/size_40"
-      android:layout_gravity="center_horizontal"
-      android:layout_marginBottom="@dimen/size_15"
-      android:src="@drawable/ic_cross_grey_circle" />
+    <data></data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:background="@drawable/bottoms_sheet_top20dp_white"
-      android:orientation="vertical"
-      android:padding="@dimen/size_20">
-
-      <com.framework.views.customViews.CustomTextView
-        android:id="@+id/customTextView7"
-        style="@style/BusinessProfile_Text_Title"
-        android:text="@string/choose_profile_photo"
-        android:textColor="@color/black_4a4a4a"
-        app:fontFamily="@font/bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:textType="HEADING_6" />
-
-      <com.framework.views.customViews.CustomButton
-        android:id="@+id/btn_take_photo"
-        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/size_16"
-        android:drawableStart="@drawable/ic_camera_d"
-        android:enabled="true"
-        android:text="@string/take_photo"
-        android:textColor="@color/white" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-      <com.framework.views.customViews.CustomButton
-        android:id="@+id/btn_gallery"
-        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-        android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/size_16"
-        android:drawableStart="@drawable/ic_photo_gallery_d"
-        android:enabled="true"
-        android:text="@string/upload_from_gallery"
-        android:textColor="@color/white" />
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/riv_close_bottomSheet"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/size_15"
+            android:src="@drawable/ic_cross_grey_circle" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottoms_sheet_top20dp_white"
+            android:orientation="vertical"
+            android:padding="@dimen/size_20">
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/customTextView7"
+                style="@style/BusinessProfile_Text_Title"
+                android:text="@string/choose_profile_photo"
+                android:textColor="@color/black_4a4a4a"
+                app:fontFamily="@font/bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:textType="HEADING_6" />
+
+            <com.framework.views.customViews.CustomMaterialButton
+                android:id="@+id/btn_take_photo"
+                style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_46"
+                android:layout_marginTop="@dimen/size_16"
+                android:enabled="true"
+                android:includeFontPadding="false"
+                android:text="@string/take_photo"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/colorPrimary"
+                app:icon="@drawable/ic_camera_d"
+                app:iconGravity="textStart"
+                app:iconTint="@color/white" />
+
+            <com.framework.views.customViews.CustomMaterialButton
+                android:id="@+id/btn_gallery"
+                style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_46"
+                android:layout_marginTop="@dimen/size_16"
+                android:enabled="true"
+                android:includeFontPadding="false"
+                android:text="@string/upload_from_gallery"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/colorPrimary"
+                app:icon="@drawable/ic_photo_gallery_d"
+                app:iconGravity="textStart"
+                app:iconTint="@color/white" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
-
-  </androidx.appcompat.widget.LinearLayoutCompat>
 
 </layout>
