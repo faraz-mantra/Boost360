@@ -27,7 +27,8 @@ object SvgUtils {
 
     fun initReqBuilder(context: Context): GlideRequest<CustomPictureDrawable>? {
         if(requestBuilder == null){
-            requestBuilder = GlideApp.with(context).`as`(CustomPictureDrawable::class.java)
+            requestBuilder = GlideApp.with(context).`as`(CustomPictureDrawable::class.java).diskCacheStrategy(
+                DiskCacheStrategy.AUTOMATIC)
         }
         return requestBuilder
     }

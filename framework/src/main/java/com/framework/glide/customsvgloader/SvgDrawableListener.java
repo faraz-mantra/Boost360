@@ -31,8 +31,8 @@ public class SvgDrawableListener implements RequestListener<CustomPictureDrawabl
     @Override
     public boolean onLoadFailed(
             GlideException e, Object model, Target<CustomPictureDrawable> target, boolean isFirstResource) {
-//    ImageView view = ((ImageViewTarget<?>) target).getView();
-//    view.setLayerType(ImageView.LAYER_TYPE_NONE, null);
+    ImageView view = ((ImageViewTarget<?>) target).getView();
+    view.setLayerType(ImageView.LAYER_TYPE_NONE, null);
         return false;
     }
 
@@ -61,7 +61,7 @@ public class SvgDrawableListener implements RequestListener<CustomPictureDrawabl
 //        }
 
 
-//    view.setLayerType(ImageView.LAYER_TYPE_SOFTWARE, null);
+    view.setLayerType(ImageView.LAYER_TYPE_SOFTWARE, null);
         return true;
     }
 

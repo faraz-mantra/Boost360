@@ -6,6 +6,9 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.caverock.androidsvg.PreserveAspectRatio
+import com.caverock.androidsvg.RenderOptions
 import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SVGParseException
 import com.framework.glide.customsvgloader.SvgRenderCacheUtil.Companion.instance
@@ -33,14 +36,27 @@ class BoostSvgStringLoader(
 
     fun setSvg(s: String?) {
         view.get()?.let {
+            var svg: SVG? = null
+            try {
+                svg = SVG.getFromString(s)
+                val op = RenderOptions().preserveAspectRatio(PreserveAspectRatio.FULLSCREEN)
+                val picture = svg.renderToPicture(op)
+                val drawable = PictureDrawable(picture)
+
             Looper.getMainLooper().run {
+
                 Log.d("SvgLoader", "setSvg() called ${Thread.currentThread()}")
                 Handler(Looper.getMainLooper()).post {
                     view.get()?.let {
                         Log.d("SvgLoader", "setSvg() called ${Thread.currentThread()}")
-                        setSvgFromString(s, it)
+                        Glide.with(it.context).load(drawable).into(it)
+//                        it.setImageDrawable(drawable);
                     }
                 }
+            }
+
+            } catch (e: SVGParseException) {
+                e.printStackTrace()
             }
         }
     }
@@ -49,7 +65,8 @@ class BoostSvgStringLoader(
         var svg: SVG? = null
         try {
             svg = SVG.getFromString(s)
-            val picture = svg.renderToPicture()
+            val op = RenderOptions().preserveAspectRatio(PreserveAspectRatio.FULLSCREEN)
+            val picture = svg.renderToPicture(op)
             val drawable = PictureDrawable(picture)
             view.setImageDrawable(drawable)
         } catch (e: SVGParseException) {
