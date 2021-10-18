@@ -164,6 +164,8 @@ android {
             buildConfigField "String", "GOOGLE_SERVER_CLIENT_SECRET", '"APvjD8ABZg5c8e-VeHBi3AAG"'
             buildConfigField "String", "RAZORPAY_KEY", '"rzp_live_o8qdD1DZ3PHBn0"'
             buildConfigField "String", "RAZORPAY_SECREAT", '"Gfq8pQyFbu5BOoY5SeT6UuQk"'
+
+            buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
         }
     }
     packagingOptions {
