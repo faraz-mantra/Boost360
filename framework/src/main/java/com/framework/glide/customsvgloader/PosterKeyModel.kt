@@ -1,4 +1,4 @@
-package com.festive.poster.models
+package com.framework.glide.customsvgloader
 
 data class PosterKeyModel(
     val default: String,

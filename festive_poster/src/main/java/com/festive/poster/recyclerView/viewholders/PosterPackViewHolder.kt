@@ -9,6 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.festive.poster.R
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.ListItemPosterPackBinding
+import com.festive.poster.models.PosterModel
 import com.festive.poster.models.PosterPackModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
@@ -22,6 +23,8 @@ import kotlin.math.abs
 class PosterPackViewHolder(binding: ListItemPosterPackBinding):
     AppBaseRecyclerViewHolder<ListItemPosterPackBinding>(binding) {
 
+
+    private var adapter: AppBaseRecyclerViewAdapter<PosterModel>? = null
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as PosterPackModel
@@ -40,17 +43,22 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding):
         }
 
         model.posterList?.let {
-            val adapter = AppBaseRecyclerViewAdapter(binding.root.context as BaseActivity<*, *>,it,object :RecyclerItemClickListener{
-                override fun onItemClick(
-                    c_position: Int,
-                    c_item: BaseRecyclerViewItem?,
-                    actionType: Int
-                ) {
-                    listener?.onChildClick(c_position,position,c_item,item,actionType)
-                }
+            if(adapter == null){
+                adapter = AppBaseRecyclerViewAdapter(binding.root.context as BaseActivity<*, *>,it,object :RecyclerItemClickListener{
+                    override fun onItemClick(
+                        c_position: Int,
+                        c_item: BaseRecyclerViewItem?,
+                        actionType: Int
+                    ) {
+                        listener?.onChildClick(c_position,position,c_item,item,actionType)
+                    }
 
 
-            })
+                })
+            }else{
+                adapter?.updateList(it)
+            }
+
             binding.vpPoster.adapter = adapter
             TabLayoutMediator(binding.dots,binding.vpPoster){
                     tab,position->
@@ -66,11 +74,11 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding):
     private fun setupVp(vpPdfs: ViewPager2) {
         vpPdfs.clipToPadding = false;
         vpPdfs.clipChildren = false;
-        vpPdfs.offscreenPageLimit=3
+        vpPdfs.offscreenPageLimit=1
         vpPdfs.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER;
 
         val compositePageTransformer = CompositePageTransformer();
-        compositePageTransformer.addTransformer( MarginPageTransformer(30));
+        compositePageTransformer.addTransformer( MarginPageTransformer(10));
 
         vpPdfs.setPageTransformer(compositePageTransformer);
 
