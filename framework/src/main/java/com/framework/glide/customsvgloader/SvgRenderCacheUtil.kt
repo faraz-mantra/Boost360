@@ -48,26 +48,26 @@ class SvgRenderCacheUtil private constructor() {
             val replaceVal = if (it.custom==null) it.default else it.custom
 
             if (it.type=="IMAGE"){
-                Log.i(TAG, "replace: $replaceVal")
-
-                if (replaceVal?.startsWith("https:") == true){
-                    val fileName = replaceVal.substring(replaceVal.lastIndexOf("/")+1)
-                    val file = File(FileUtils.getPathOfImages(context)+fileName)
-                    if (!file.exists()){
-                        FileUtils.saveImage(replaceVal,file, context)
-                        Log.i(TAG, "image saved: ${file.path}")
-                    }
-                    if (file.exists())
-                        result = result?.replace("{{"+it.name+"}}",file.path)
-                    Log.i(TAG, "replace image path: ${file.path}")
-
-                }else{
-
-                    Log.i(TAG, "replace image path: ${replaceVal.toString()}")
-                    result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
-
-                }
-
+//                Log.i(TAG, "replace: $replaceVal")
+//
+//                if (replaceVal?.startsWith("https:") == true){
+//                    val fileName = replaceVal.substring(replaceVal.lastIndexOf("/")+1)
+//                    val file = File(FileUtils.getPathOfImages(context)+fileName)
+//                    if (!file.exists()){
+//                        FileUtils.saveImage(replaceVal,file, context)
+//                        Log.i(TAG, "image saved: ${file.path}")
+//                    }
+//                    if (file.exists())
+//                        result = result?.replace("{{"+it.name+"}}",file.path)
+//                    Log.i(TAG, "replace image path: ${file.path}")
+//
+//                }else{
+//
+//                    Log.i(TAG, "replace image path: ${replaceVal.toString()}")
+//                    result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
+//
+//                }
+                result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
             }else{
                 result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
             }

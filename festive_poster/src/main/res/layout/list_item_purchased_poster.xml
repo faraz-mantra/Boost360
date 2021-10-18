@@ -25,12 +25,12 @@
           app:cardCornerRadius="@dimen/size_20"
           app:cardElevation="0dp">
 
-        <FrameLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
           <com.festive.poster.customviews.CustomSvgImageView
-              android:id="@+id/iv_svg"
+              android:id="@+id/iv_svg_purchased"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:adjustViewBounds="true"
@@ -39,6 +39,7 @@
           <com.framework.views.customViews.CustomMaterialButton
               android:id="@+id/btn_tap_edit"
               android:layout_width="wrap_content"
+              android:layout_centerHorizontal="true"
               android:layout_height="@dimen/size_50"
               android:layout_marginStart="@dimen/size_10"
               android:layout_marginTop="@dimen/size_10"
@@ -50,7 +51,7 @@
               app:cornerRadius="@dimen/size_20"
               app:icon="@drawable/ic_tap_to_edit" />
 
-        </FrameLayout>
+        </RelativeLayout>
 
       </com.framework.views.customViews.CustomCardView>
 

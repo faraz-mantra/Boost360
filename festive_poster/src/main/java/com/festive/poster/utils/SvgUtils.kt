@@ -15,12 +15,13 @@ import java.io.*
 import java.net.HttpURLConnection
 
 import android.content.Context
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.framework.glide.customsvgloader.FileUtils
 
 
 object SvgUtils {
 
-    private var requestBuilder: GlideRequest<CustomPictureDrawable>? = null
+    var requestBuilder: GlideRequest<CustomPictureDrawable>? = null
     private val TAG = "SvgUtils"
     private var map = HashMap<String, SVG>()
 
@@ -34,7 +35,14 @@ object SvgUtils {
     fun loadImage(url: String, view: ImageView, model: List<PosterKeyModel>){
         val uri = Uri.parse(url)
         val listener = SvgDrawableListener(model, url)
-        initReqBuilder(view.context)?.listener(listener)?.load(uri)?.centerCrop()?.into(view)
+        Log.d(TAG, "loadImage() called with: url = $url, model = $model $view")
+
+        initReqBuilder(view.context)?.let{
+            it.listener(listener)?.load(uri)?.into(view)
+            return
+        }
+        Log.d(TAG, "loadImage() called with: url = $url, model = $model request builder is null")
+
     }
 
 

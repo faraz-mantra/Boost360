@@ -16,6 +16,7 @@ class CustomSvgDecoder : ResourceDecoder<InputStream, SvgCustomDataModel> {
 
     override fun handles(source: InputStream, options: Options): Boolean {
         // TODO: Can we tell?
+        Log.d("CustomSvgDecoder", "handles() called with: source = $source, options = $options")
         return true
     }
 
@@ -28,4 +29,5 @@ class CustomSvgDecoder : ResourceDecoder<InputStream, SvgCustomDataModel> {
         model.convertedString = ConversionUtils.convertInputStreamToString(source)
         return SimpleResource(model)
     }
+
 }

@@ -2,6 +2,9 @@ package com.framework.glide.customsvgloader
 
 import android.content.Context
 import android.graphics.drawable.PictureDrawable
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.widget.ImageView
 import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SVGParseException
@@ -20,17 +23,25 @@ class BoostSvgStringLoader(
         var svgString = instance.retrieveFromCache(url)
         if (svgString == null || svgString.isEmpty()) {
             svgString = resource.svgModel.convertedString
-            svgString = instance.replace(svgString, model, context)
+            svgString?.let { instance.saveToCache(url, it) }
         }
         if (svgString != null && !svgString.isEmpty()) {
-            instance.saveToCache(url, svgString)
-
-//            setSvgFromString(svgString, view);
+            svgString = instance.replace(svgString, model, context)
+            setSvg(svgString)
         }
     }
 
     fun setSvg(s: String?) {
-        if (view.get() != null) {
+        view.get()?.let {
+            Looper.getMainLooper().run {
+                Log.d("SvgLoader", "setSvg() called ${Thread.currentThread()}")
+                Handler(Looper.getMainLooper()).post {
+                    view.get()?.let {
+                        Log.d("SvgLoader", "setSvg() called ${Thread.currentThread()}")
+                        setSvgFromString(s, it)
+                    }
+                }
+            }
         }
     }
 

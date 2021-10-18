@@ -15,6 +15,7 @@ import com.festive.poster.models.response.GetTemplatesResponse
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
@@ -115,16 +116,13 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
         dataList = response.Result.templates.toArrayList()
         dataList?.forEach { posterModel -> posterModel.isPurchased = true }
         setGreetingMessages()
-
-        observeCustomization()
-
         adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>, dataList!!, this)
         binding?.rvPosters?.adapter = adapter
         binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
-
+        observeCustomization()
+        adapter?.notifyDataSetChanged()
       }
       hideProgress()
-
     })
 
 
