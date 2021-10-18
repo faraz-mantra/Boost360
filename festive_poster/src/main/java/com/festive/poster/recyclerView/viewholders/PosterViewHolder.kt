@@ -17,9 +17,9 @@ class PosterViewHolder(binding: ListItemPosterBinding) :
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as PosterModel
         model.keys.let {
-            val url =
-                model.variants.firstOrNull()?.svgUrl ?: "https://siriablobstorage.blob.core.windows.net/svg-templates/61644f0c503d2a74e5b68963/DurgaPuja03.svg"
-//            val url ="https://siriablobstorage.blob.core.windows.net/svg-templates/61644f0c503d2a74e5b68963/DurgaPuja03.svg"
+//            val url =
+//                model.variants.firstOrNull()?.svgUrl ?: "https://siriablobstorage.blob.core.windows.net/svg-templates/61644f0c503d2a74e5b68963/DurgaPuja03.svg"
+            val url ="https://siriablobstorage.blob.core.windows.net/svg-templates/61644f0c503d2a74e5b68963/DurgaPuja03.svg"
 //            binding.ivSvg.loadAndReplace(
 //                url,
 //                it

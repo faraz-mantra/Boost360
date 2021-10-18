@@ -7,20 +7,39 @@ import java.io.File
 import android.graphics.BitmapFactory
 import android.util.Log
 import com.festive.poster.R
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.IOException
 
 
 class SvgFileResolver: SVGExternalFileResolver() {
 
     private val TAG = "SvgFileResolver"
-    override fun resolveImage(filename: String?): Bitmap {
-        Log.i(TAG, "resolveImage: $filename")
-        val file = File(filename)
-        if (file.exists()){
-            val myBitmap = BitmapFactory.decodeFile(file.absolutePath)
-            return myBitmap
-        }else{
-          return  BitmapFactory.decodeResource(FestivePosterApplication.instance.resources, R.drawable.placeholder_image)
-        }
 
+    private val cache: HashMap<String, Bitmap> = HashMap()
+    override fun resolveImage(filename: String?): Bitmap? {
+
+        if(filename?.isEmpty() == true)
+            return null
+
+        if(cache.containsKey(filename))
+            return cache.get(filename)
+
+        try {
+            val file = File(filename)
+            Log.i(TAG, "resolveImage: ${file.absolutePath}")
+            if (file.exists()) {
+                val myBitmap = BitmapFactory.decodeFile(file.absolutePath)
+                filename?.let { cache.put(it, myBitmap) };
+                return myBitmap
+            } else {
+                return BitmapFactory.decodeResource(
+                    FestivePosterApplication.instance.resources,
+                    R.drawable.placeholder_image
+                )
+            }
+        } catch (e: IOException){
+            return null
+        }
     }
 }
