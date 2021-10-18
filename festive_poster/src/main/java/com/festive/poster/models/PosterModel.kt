@@ -2,6 +2,7 @@ package com.festive.poster.models
 
 import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.recyclerView.AppBaseRecyclerViewItem
+import com.framework.glide.customsvgloader.PosterKeyModel
 import com.google.gson.Gson
 
 

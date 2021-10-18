@@ -1,15 +1,17 @@
 package com.festive.poster.utils
 
-import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
+import android.content.Context
 import android.net.Uri
 import android.util.Log
-import android.view.View
-import androidx.core.content.FileProvider
-import com.festive.poster.FestivePosterApplication
-import com.festive.poster.models.PosterKeyModel
+import android.widget.ImageView
+import com.bumptech.glide.request.RequestOptions
+import com.caverock.androidsvg.SVG
+import com.framework.glide.customsvgloader.PosterKeyModel
+import com.framework.glide.GlideApp
+import com.framework.glide.GlideRequest
+import com.framework.glide.SvgSoftwareLayerSetter
+import com.framework.glide.customsvgloader.CustomPictureDrawable
+import com.framework.glide.customsvgloader.SvgDrawableListener
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.*
@@ -18,7 +20,22 @@ import java.net.HttpURLConnection
 
 object SvgUtils {
 
+    private var requestBuilder: GlideRequest<CustomPictureDrawable>? = null
     private val TAG = "SvgUtils"
+    private var map = HashMap<String, SVG>()
+
+    fun initReqBuilder(context: Context): GlideRequest<CustomPictureDrawable>? {
+        if(requestBuilder == null){
+            requestBuilder = GlideApp.with(context).`as`(CustomPictureDrawable::class.java)
+        }
+        return requestBuilder
+    }
+
+    fun loadImage(url: String, view: ImageView, model: List<PosterKeyModel>){
+        val uri = Uri.parse(url)
+        val listener = SvgDrawableListener(model, url)
+        initReqBuilder(view.context)?.listener(listener)?.load(uri)?.centerCrop()?.into(view)
+    }
 
 
     suspend fun getSvgAsAString(url:String): String? {
@@ -50,7 +67,7 @@ object SvgUtils {
                 return result
             }
         }catch (e:Exception){
-            Log.e(TAG, "getSvgAsAString: $e", )
+            Log.e(TAG, "getSvgAsAString: $e")
         }
 
 
@@ -76,7 +93,7 @@ object SvgUtils {
             }
 
         }catch (e:Exception){
-            Log.e(TAG, "getInputStream: $e", )
+            Log.e(TAG, "getInputStream: $e")
         }
         return null
     }
@@ -116,6 +133,16 @@ object SvgUtils {
         }
         return result
     }
+
+    fun saveSvgCache(url: String, svg: SVG){
+        map.put(url, svg)
+    }
+
+    fun getSvg(url: String):SVG?{
+        return map.get(url)
+    }
+
+
 
 
 

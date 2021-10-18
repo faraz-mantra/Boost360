@@ -15,7 +15,6 @@
 
 
             <com.framework.views.customViews.CustomCardView
-                android:layout_margin="@dimen/size_16"
                 app:cardCornerRadius="@dimen/size_20"
                 app:cardElevation="0dp"
 
@@ -41,7 +40,7 @@
                         android:layout_height="@dimen/size_50"/>
 
                     <com.festive.poster.customviews.CustomSvgImageView
-                        android:scaleType="fitCenter"
+                        android:scaleType="centerCrop"
                         android:layout_width="match_parent"
                         android:id="@+id/iv_svg"
                         android:layout_height="match_parent"/>

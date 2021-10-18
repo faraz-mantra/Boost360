@@ -40,6 +40,8 @@ class FestivePosterContainerActivity:
         handleBackStack()
         menuClickListener()
 
+        SvgUtils.initReqBuilder(this)
+
         addFragmentReplace(binding?.container?.id,PosterPackListingFragment.newInstance(),true)
 
         lifecycleScope.launchWhenCreated {

@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.util.Log
 import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SVGImageView
-import com.festive.poster.models.PosterKeyModel
+import com.framework.glide.customsvgloader.PosterKeyModel
 import com.festive.poster.utils.SvgUtils
 import kotlinx.coroutines.*
 
@@ -41,16 +41,27 @@ class CustomSvgImageView: SVGImageView {
     fun loadAndReplace(url:String?, posterKeys:List<PosterKeyModel>?=null){
         this.url = url
         this.posterKeys = posterKeys
+
         url?.let {
+
             Log.i(TAG, "loadAndReplace: url $url")
-            loadAndReplaceJob = CoroutineScope(Dispatchers.IO).async {
-                svgString = SvgUtils.getSvgAsAString(url)
-                if (posterKeys!=null){
-                    svgString =  SvgUtils.replace(svgString,posterKeys)
+            loadAndReplaceJob = CoroutineScope(Dispatchers.Unconfined).async {
+                val sv = SvgUtils.getSvg(url)
+                if(sv != null){
+                    setSVG(sv)
+
+                }else{
+                    svgString = SvgUtils.getSvgAsAString(url)
+//                if (posterKeys!=null){
+//                    svgString =  SvgUtils.replace(svgString,posterKeys)
+//                }
+                    val svg = SVG.getFromString(svgString)
+                    SvgUtils.saveSvgCache(url, svg)
+                    withContext(Dispatchers.Main){
+                        setSVG(svg)
+                    }
                 }
-                withContext(Dispatchers.Main){
-                    setSVG(SVG.getFromString(svgString))
-                }
+
 
             }
         }
@@ -62,15 +73,15 @@ class CustomSvgImageView: SVGImageView {
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        loadAndReplaceJob?.cancel()
+//        loadAndReplaceJob?.cancel()
 
     }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        if (url!=null){
-            loadAndReplace(url!!,posterKeys)
-        }
+//        if (url!=null){
+//            loadAndReplace(url!!,posterKeys)
+//        }
     }
 
 
