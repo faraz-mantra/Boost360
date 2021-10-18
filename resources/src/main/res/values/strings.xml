@@ -3,4 +3,8 @@
   <string name="appointment_type">Appointment type</string>
   <string name="please_wait">Please Wait</string>
   <string name="pick_a_type_of_appointment_from_the_options_below">Pick a type of appointment from the options below</string>
+  <string name="need_help_desc">Please feel free to <a href="mailto: ria@nowfloats.com">send an email at ria@nowfloats.com</a>. Alternatively you can <a href="tel:18601231233">call us at 1860 123 1233</a>.</string>
+  <string name="need_help_title">We\'re here to help.</string>
+  <string name="okay">Okay</string>
+
 </resources>

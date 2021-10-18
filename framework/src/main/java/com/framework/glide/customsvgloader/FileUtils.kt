@@ -1,9 +1,9 @@
-package com.festive.poster.utils
+package com.framework.glide.customsvgloader
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
 import com.bumptech.glide.Glide
-import com.festive.poster.FestivePosterApplication
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
@@ -11,13 +11,13 @@ import java.io.OutputStream
 object FileUtils {
 
     private const val TAG = "FileUtils"
-    fun getPathOfImages(): String {
-        return FestivePosterApplication.instance.getExternalFilesDir(null)?.path+ "/"+"SVGIMAGES/"
+    fun getPathOfImages(context: Context): String {
+        return context.getExternalFilesDir(null)?.path+ "/"+"SVGIMAGES/"
     }
 
-    suspend fun saveImage(url: String?,dest:File){
+     fun saveImage(url: String?,dest:File, context: Context){
 
-        val bmp= Glide.with(FestivePosterApplication.instance).asBitmap()
+        val bmp= Glide.with(context).asBitmap()
             .load(url)
             .submit()
             .get()

@@ -1,21 +1,21 @@
 package com.festive.poster.utils
 
-import android.content.Context
 import android.net.Uri
 import android.util.Log
 import android.widget.ImageView
-import com.bumptech.glide.request.RequestOptions
 import com.caverock.androidsvg.SVG
 import com.framework.glide.customsvgloader.PosterKeyModel
 import com.framework.glide.GlideApp
 import com.framework.glide.GlideRequest
-import com.framework.glide.SvgSoftwareLayerSetter
 import com.framework.glide.customsvgloader.CustomPictureDrawable
 import com.framework.glide.customsvgloader.SvgDrawableListener
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.*
 import java.net.HttpURLConnection
+
+import android.content.Context
+import com.framework.glide.customsvgloader.FileUtils
 
 
 object SvgUtils {
@@ -41,11 +41,11 @@ object SvgUtils {
     suspend fun getSvgAsAString(url:String): String? {
 
         try {
-            val cacheString = SvgCaching.instance.retrieveFromCache(url)
-
-            if (cacheString!=null){
-                return cacheString
-            }
+//            val cacheString = SvgCaching.instance.retrieveFromCache(url)
+//
+//            if (cacheString!=null){
+//                return cacheString
+//            }
             getInputStream(url)?.let {
                 val  reader = BufferedReader(
                     InputStreamReader(it)
@@ -110,15 +110,15 @@ object SvgUtils {
                 Log.i(TAG, "replace: $replaceVal")
 
                 if (replaceVal?.startsWith("https:") == true){
-                    val fileName = replaceVal.substring(replaceVal.lastIndexOf("/")+1)
-                    val file = File(FileUtils.getPathOfImages()+fileName)
-                    if (!file.exists()){
-                        FileUtils.saveImage(replaceVal,file)
-                        Log.i(TAG, "image saved: ${file.path}")
-                    }
-                    if (file.exists())
-                        result = result?.replace("{{"+it.name+"}}",file.path)
-                    Log.i(TAG, "replace image path: ${file.path}")
+//                    val fileName = replaceVal.substring(replaceVal.lastIndexOf("/")+1)
+//                    val file = File(FileUtils.getPathOfImages()+fileName)
+//                    if (!file.exists()){
+////                        FileUtils.saveImage(replaceVal,file)
+//                        Log.i(TAG, "image saved: ${file.path}")
+//                    }
+//                    if (file.exists())
+//                        result = result?.replace("{{"+it.name+"}}",file.path)
+//                    Log.i(TAG, "replace image path: ${file.path}")
 
                 }else{
 
@@ -131,6 +131,7 @@ object SvgUtils {
                 result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
             }
         }
+
         return result
     }
 

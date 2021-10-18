@@ -42,6 +42,7 @@ class CustomSvgImageView: SVGImageView {
         this.url = url
         this.posterKeys = posterKeys
 
+
         url?.let {
 
             Log.i(TAG, "loadAndReplace: url $url")

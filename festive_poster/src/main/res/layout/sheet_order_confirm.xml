@@ -1,60 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <androidx.appcompat.widget.LinearLayoutCompat android:orientation="vertical"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_fposter_white_top_rounded_rect"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_fposter_white_top_rounded_rect"
+    android:orientation="vertical">
 
 
-        <com.framework.views.customViews.CustomImageView
-            android:layout_marginTop="@dimen/size_16"
-            android:layout_width="@dimen/size_80"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_fposter_yellow_tick"
-            android:layout_height="@dimen/size_80"/>
+    <com.framework.views.customViews.CustomImageView
+      android:layout_width="@dimen/size_80"
+      android:layout_height="@dimen/size_80"
+      android:layout_gravity="center"
+      android:layout_marginTop="@dimen/size_16"
+      android:src="@drawable/ic_fposter_yellow_tick" />
 
 
-        <com.framework.views.customViews.CustomTextView
-            android:layout_width="match_parent"
-            app:textType="HEADING_4"
-            android:fontFamily="@font/bold"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/size_16"
-            android:textColor="@color/orange"
-            android:text="@string/order_confirmed"
-            android:layout_height="wrap_content"/>
+    <com.framework.views.customViews.CustomTextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/size_16"
+      android:fontFamily="@font/semi_bold"
+      android:gravity="center"
+      android:text="@string/order_confirmed"
+      android:textColor="@color/orange"
+      app:textType="HEADING_4" />
 
-        <com.framework.views.customViews.CustomTextView
-            android:gravity="center"
-            android:id="@+id/tv_poster_pack_name"
-            android:fontFamily="@font/bold"
-            android:layout_marginHorizontal="@dimen/size_24"
-            android:layout_marginTop="@dimen/size_16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <com.framework.views.customViews.CustomTextView
-            android:gravity="center"
-            android:id="@+id/tv_desc"
-            android:layout_marginHorizontal="@dimen/size_24"
-            android:layout_marginTop="@dimen/size_16"
-            android:text="@string/order_confirm_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/tv_poster_pack_name"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/size_24"
+      android:layout_marginTop="@dimen/size_16"
+      android:fontFamily="@font/semi_bold"
+      android:gravity="center"
+      android:textColor="@color/black_4a4a4a" />
 
-        <com.framework.views.customViews.CustomTextView
-            android:layout_marginTop="@dimen/size_24"
-            android:gravity="center"
-            android:textSize="@dimen/size_18"
-            android:fontFamily="@font/bold"
-            android:textColor="@color/white"
-            android:id="@+id/btn_confirm"
-            android:background="@drawable/bg_button_orange_gradient"
-            android:layout_width="match_parent"
-            android:text="@string/confirm_order"
-            android:layout_height="@dimen/size_50"/>
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/tv_desc"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/size_24"
+      android:fontFamily="@font/regular"
+      android:gravity="center"
+      android:text="@string/order_confirm_message" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/btn_confirm"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_50"
+      android:layout_marginTop="@dimen/size_24"
+      android:background="@drawable/bg_button_orange_gradient"
+      android:fontFamily="@font/semi_bold"
+      android:gravity="center"
+      android:text="@string/view_pack"
+      android:textColor="@color/white"
+      app:textType="HEADING_6" />
 
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+  </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

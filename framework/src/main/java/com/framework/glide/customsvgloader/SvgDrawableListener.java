@@ -45,21 +45,33 @@ public class SvgDrawableListener implements RequestListener<CustomPictureDrawabl
             boolean isFirstResource) {
         Log.d("SvgDrawableListener", "onResourceReady() called with: resource ");
         ImageView view = ((ImageViewTarget<?>) target).getView();
-        try {
 
-            String svgString = SvgRenderCacheUtil.Companion.getInstance().retrieveFromCache(url);
-            if(svgString == null || svgString.isEmpty()){
-                svgString = resource.svgModel.getConvertedString();
-                SvgRenderCacheUtil.Companion.getInstance().saveToCache(url, svgString);
-            }
-            SVG svg = SVG.getFromString(svgString);
+
+        String svgString = SvgRenderCacheUtil.Companion.getInstance().retrieveFromCache(url);
+        if (svgString == null || svgString.isEmpty()) {
+            svgString = resource.svgModel.getConvertedString();
+            svgString = SvgRenderCacheUtil.Companion.getInstance().replace(svgString, this.model, view.getContext());
+        }
+        if (svgString != null && !svgString.isEmpty()) {
+            SvgRenderCacheUtil.Companion.getInstance().saveToCache(url, svgString);
+            setSvgFromString(svgString, view);
+        }
+
+
+//    view.setLayerType(ImageView.LAYER_TYPE_SOFTWARE, null);
+        return true;
+    }
+
+    public void setSvgFromString(String s, ImageView view) {
+        SVG svg = null;
+        try {
+            svg = SVG.getFromString(s);
             Picture picture = svg.renderToPicture();
             PictureDrawable drawable = new PictureDrawable(picture);
             view.setImageDrawable(drawable);
         } catch (SVGParseException e) {
             e.printStackTrace();
         }
-//    view.setLayerType(ImageView.LAYER_TYPE_SOFTWARE, null);
-        return true;
+
     }
 }

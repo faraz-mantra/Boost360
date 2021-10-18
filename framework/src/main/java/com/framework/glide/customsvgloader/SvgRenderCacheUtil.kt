@@ -1,7 +1,9 @@
 package com.framework.glide.customsvgloader
 
+import android.content.Context
 import android.util.Log
 import androidx.collection.LruCache
+import java.io.File
 
 class SvgRenderCacheUtil private constructor() {
     private  val TAG = "SvgCaching"
@@ -37,5 +39,40 @@ class SvgRenderCacheUtil private constructor() {
         }
 
         return null
+    }
+
+    fun replace(svgString: String?, posterKeys: List<PosterKeyModel>, context: Context): String? {
+        var result =svgString
+
+        posterKeys.forEach {
+            val replaceVal = if (it.custom==null) it.default else it.custom
+
+            if (it.type=="IMAGE"){
+                Log.i(TAG, "replace: $replaceVal")
+
+                if (replaceVal?.startsWith("https:") == true){
+                    val fileName = replaceVal.substring(replaceVal.lastIndexOf("/")+1)
+                    val file = File(FileUtils.getPathOfImages(context)+fileName)
+                    if (!file.exists()){
+                        FileUtils.saveImage(replaceVal,file, context)
+                        Log.i(TAG, "image saved: ${file.path}")
+                    }
+                    if (file.exists())
+                        result = result?.replace("{{"+it.name+"}}",file.path)
+                    Log.i(TAG, "replace image path: ${file.path}")
+
+                }else{
+
+                    Log.i(TAG, "replace image path: ${replaceVal.toString()}")
+                    result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
+
+                }
+
+            }else{
+                result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
+            }
+        }
+
+        return result
     }
 }
