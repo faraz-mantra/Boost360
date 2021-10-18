@@ -9,5 +9,8 @@
         <activity
             android:theme="@style/PosterTheme"
             android:name=".ui.FestivePosterContainerActivity"/>
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 </manifest>

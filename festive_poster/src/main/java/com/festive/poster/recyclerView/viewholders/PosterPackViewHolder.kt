@@ -1,9 +1,11 @@
 package com.festive.poster.recyclerView.viewholders
 
+import android.graphics.drawable.PictureDrawable
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.RequestBuilder
 import com.festive.poster.R
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.ListItemPosterPackBinding
@@ -49,7 +51,7 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecycler
   private fun setupVp(vpPdfs: ViewPager2) {
     vpPdfs.clipToPadding = false;
     vpPdfs.clipChildren = false;
-    vpPdfs.offscreenPageLimit = 3
+    vpPdfs.offscreenPageLimit = 1
     vpPdfs.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER;
     val compositePageTransformer = CompositePageTransformer();
     compositePageTransformer.addTransformer(MarginPageTransformer(30));
