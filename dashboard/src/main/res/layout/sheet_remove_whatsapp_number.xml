@@ -20,13 +20,14 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black_4a4a4a"
         app:fontFamily="@font/bold"
-        app:textType="HEADING_5"
+        android:textSize="20sp"
         android:text="@string/don_t_want_latest_updates_about_your_business" />
 
     <com.framework.views.customViews.CustomTextView
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/size_8"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/text_14"
         android:fontFamily="@font/regular"
         android:text="@string/remove_whatsapp_desc"
         android:textColor="@color/black_4a4a4a"
@@ -40,13 +41,13 @@
         android:layout_marginTop="@dimen/size_20"
         android:enabled="false"
         android:textAllCaps="false"
-        android:textSize="@dimen/size_16"
+        android:textSize="@dimen/text_14"
         app:cornerRadius="@dimen/size_15"
-        app:strokeColor="@color/grey_A1A1A1"
+        app:strokeColor="@color/black_4a4a4a"
         app:strokeWidth="2dp"
-        android:fontFamily="@font/bold"
+        android:fontFamily="@font/semi_bold"
         android:text="@string/don_t_remove_whatsapp_number"
-        android:textColor="@color/grey_A1A1A1" />
+        android:textColor="@color/black_4a4a4a" />
 
     <com.framework.views.customViews.CustomMaterialButton
         android:id="@+id/btn_remove"
@@ -55,12 +56,11 @@
         android:layout_height="55dp"
         android:layout_marginTop="@dimen/size_10"
         android:enabled="false"
-        app:strokeColor="@color/grey_A1A1A1"
         android:backgroundTint="@color/red_E39595"
         android:textAllCaps="false"
-        app:strokeWidth="2dp"
-        android:fontFamily="@font/bold"
-        android:text="@string/don_t_remove_whatsapp_number"
+        android:textSize="@dimen/text_14"
+        android:fontFamily="@font/semi_bold"
+        android:text="@string/remove_whatsapp_number"
         android:textColor="@color/white" />
   </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

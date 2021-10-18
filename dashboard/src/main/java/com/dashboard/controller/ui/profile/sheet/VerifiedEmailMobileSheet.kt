@@ -31,12 +31,14 @@ class VerifiedEmailMobileSheet : BaseBottomSheetDialog<SheetVerifiedEmailNumberB
     sheetType = arguments?.getString(IK_TYPE)
     emailOrMob = arguments?.getString(IK_EMAIL_OR_MOB)
     if (sheetType== SheetType.EMAIL.name){
+      binding?.btnChangeNumber?.text = getString(R.string.change_email)
       binding?.title?.setIconifiedText(
         getString(R.string.your_email_verified,emailOrMob), R.drawable.ic_check_circle_d,
         "verified", R.color.green_6FCF97,
         emailOrMob, R.font.bold
       )
     }else{
+      binding?.btnChangeNumber?.text = getString(R.string.change_number)
       binding?.title?.setIconifiedText(
         getString(R.string.hello_worldBlue,"+91 "+ emailOrMob), R.drawable.ic_check_circle_d,
         "verified", R.color.green_6FCF97,

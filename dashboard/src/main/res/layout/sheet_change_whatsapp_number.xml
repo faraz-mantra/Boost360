@@ -64,7 +64,7 @@
           android:checked="true"
         android:text="@string/i_agree_to_receive_important_business_updates_from_boost_360_via_whatsapp"
         android:textColor="@color/psn_sub_heading_color"
-        android:textSize="@dimen/body_1"
+        android:textSize="@dimen/subtitle_2"
         app:buttonTint="@color/checkbox_background"
         app:layout_constraintTop_toBottomOf="@id/phone_et" />
 

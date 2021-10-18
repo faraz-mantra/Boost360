@@ -67,10 +67,10 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
     }
 
     private fun setDataFromPref(merchantProfileDetails: UserProfileDataResult?) {
-        if (merchantProfileDetails?.ImageUrl.isNullOrEmpty()){
+        if (merchantProfileDetails?.ImageUrl.isNullOrEmpty()) {
             binding?.viewEmptyProfile?.visible()
             binding?.viewProfile?.gone()
-        }else{
+        } else {
             binding?.viewEmptyProfile?.gone()
             binding?.viewProfile?.visible()
             Glide.with(this).load(merchantProfileDetails?.ImageUrl)
@@ -125,6 +125,7 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
                 showImagePickerSheet()
             }
             binding?.viewEmptyProfile -> {
+                showImagePickerSheet()
             }
             binding?.viewName -> {
                 showEditUserNameSheet()

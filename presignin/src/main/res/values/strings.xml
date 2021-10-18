@@ -139,6 +139,7 @@
   <string name="this_is_your_registered_mobile_number">This is your registered mobile number</string>
   <string name="number_to_login_via_otp_change_tap_on_change_number">You can also use above number to login via OTP verification. In case you want to change this number, tap on ‘Change number ’.</string>
   <string name="change_number">Change number</string>
+  <string name="change_email">Change email</string>
   <string name="psn_login_now">Login now</string>
   <string name="request_otp">Request OTP</string>
   <string name="get_boost_360_tnc">https://www.getboost360.com/tnc?v=224</string>
