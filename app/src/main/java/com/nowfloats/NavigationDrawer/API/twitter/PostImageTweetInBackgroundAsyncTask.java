@@ -10,6 +10,7 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.thinksity.BuildConfig;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -125,7 +126,7 @@ public final class PostImageTweetInBackgroundAsyncTask extends
             HttpClient hc = new DefaultHttpClient(mgr, httpParameters);
 
             HttpPost request = new HttpPost(
-                    "https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyCo9zb7OlpbObma7PEPwJv189qOtw-FtGM");
+                    "https://www.googleapis.com/urlshortener/v1/url?key="+ BuildConfig.URL_SHORTENER_GOOGLE);
             request.setHeader("Content-type", "application/json");
             request.setHeader("Accept", "application/json");
 

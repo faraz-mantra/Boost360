@@ -15,8 +15,6 @@ public class Constants {
     public static final String KEY_FILE_URL = "file_url";
     public static final int RESULT_OK = 0;
     public static final int RESULT_CANCELLED = 1;
-    public static final String MAP_KEY = "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
-//    public static final String MAP_KEY = "AIzaSyCGruSQCiw5ynwyk5oIDN-Q1lBC2VRfIVY";
 
     public interface SectionType {
         String TYPE_TEXT = "Text";
