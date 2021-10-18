@@ -189,6 +189,7 @@ public class Constants {
     public static Typeface hel_bold, hel_roman;
     public static String PREF_NAME = "nowfloatsPrefs";
     public static String clientId = Specific.clientId2;
+    public static String clientIdThinksity = "217FF5B9CE214CDDAC4985C853AE7F75AAFA11AF2C4B47CB877BCA26EC217E6D";
     public static String clientId_ORDER = "AC16E0892F2F45388F439FDE9F6F3FB5C31F0FAA628D40CD9814A79D8841397D";
     public static String GMBClientId = "534180772998-29dvjja8u2lnaklmrdnne776i2gosi4c.apps.googleusercontent.com";
     public static String GMBCallbackUrl = "https://mybusiness.googleapis.com/v4/accounts";
