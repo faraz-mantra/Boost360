@@ -49,7 +49,7 @@ class BoostSvgStringLoader(
                 Handler(Looper.getMainLooper()).post {
                     view.get()?.let {
                         Log.d("SvgLoader", "setSvg() called ${Thread.currentThread()}")
-                        Glide.with(it.context).load(drawable).into(it)
+                        Glide.with(it.context.applicationContext).load(drawable).into(it)
 //                        it.setImageDrawable(drawable);
                     }
                 }

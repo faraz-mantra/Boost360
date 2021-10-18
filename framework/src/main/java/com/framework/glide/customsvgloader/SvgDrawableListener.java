@@ -61,7 +61,7 @@ public class SvgDrawableListener implements RequestListener<CustomPictureDrawabl
 //        }
 
 
-    view.setLayerType(ImageView.LAYER_TYPE_SOFTWARE, null);
+//    view.setLayerType(ImageView.LAYER_TYPE_SOFTWARE, null);
         return true;
     }
 
