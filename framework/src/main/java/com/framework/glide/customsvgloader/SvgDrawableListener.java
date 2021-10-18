@@ -43,19 +43,22 @@ public class SvgDrawableListener implements RequestListener<CustomPictureDrawabl
             Target<CustomPictureDrawable> target,
             DataSource dataSource,
             boolean isFirstResource) {
-        Log.d("SvgDrawableListener", "onResourceReady() called with: resource ");
+        Log.d("SvgDrawableListener", "onResourceReady() called with: resource "+Thread.currentThread());
         ImageView view = ((ImageViewTarget<?>) target).getView();
 
-
-        String svgString = SvgRenderCacheUtil.Companion.getInstance().retrieveFromCache(url);
-        if (svgString == null || svgString.isEmpty()) {
-            svgString = resource.svgModel.getConvertedString();
-            svgString = SvgRenderCacheUtil.Companion.getInstance().replace(svgString, this.model, view.getContext());
-        }
-        if (svgString != null && !svgString.isEmpty()) {
-            SvgRenderCacheUtil.Companion.getInstance().saveToCache(url, svgString);
-            setSvgFromString(svgString, view);
-        }
+        BoostSvgStringLoader v = new BoostSvgStringLoader(url, this.model, resource, view.getContext(), view);
+        SingletonExecutor.INSTANCE.submit(v);
+//
+//
+//        String svgString = SvgRenderCacheUtil.Companion.getInstance().retrieveFromCache(url);
+//        if (svgString == null || svgString.isEmpty()) {
+//            svgString = resource.svgModel.getConvertedString();
+//            svgString = SvgRenderCacheUtil.Companion.getInstance().replace(svgString, this.model, view.getContext());
+//        }
+//        if (svgString != null && !svgString.isEmpty()) {
+//            SvgRenderCacheUtil.Companion.getInstance().saveToCache(url, svgString);
+//            setSvgFromString(svgString, view);
+//        }
 
 
 //    view.setLayerType(ImageView.LAYER_TYPE_SOFTWARE, null);
