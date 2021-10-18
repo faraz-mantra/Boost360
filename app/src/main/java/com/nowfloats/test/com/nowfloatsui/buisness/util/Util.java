@@ -25,6 +25,7 @@ import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Utils;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import org.apache.http.HttpEntity;
@@ -282,8 +283,9 @@ public class Util {
 //            HttpPost request = new HttpPost(
 //                    "https://www.googleapis.com/urlshortener/v1/url");
 
+
             HttpPost request = new HttpPost(
-                    "https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8");
+                    "https://www.googleapis.com/urlshortener/v1/url?key=" + BuildConfig.URL_SHORTENER_GOOGLE);
             request.setHeader("Content-type", "application/json");
             //request.setHeader("Content-type", "application/json");
             request.setHeader("Accept", "application/json");
