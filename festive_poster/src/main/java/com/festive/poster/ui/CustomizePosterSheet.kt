@@ -84,7 +84,7 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
     super.onClick(v)
     when (v) {
       binding?.ivCancel -> dismiss()
-      binding?.uploadSelfie -> ImagePicker.with(this).start(RC_IMAGE_PCIKER)
+      binding?.uploadSelfie -> ImagePicker.with(this).crop().start(RC_IMAGE_PCIKER)
       binding?.tvUpdateInfo -> {
         Log.i(TAG, "path: $path")
         if (validation()) {

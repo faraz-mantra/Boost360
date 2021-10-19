@@ -1,6 +1,7 @@
 package com.festive.poster.ui
 
 import android.util.Log
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
@@ -53,6 +54,8 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
 
   override fun onCreateView() {
     super.onCreateView()
+    ViewCompat.setNestedScrollingEnabled(binding?.rvPosters!!, false);
+
     session = UserSessionManager(requireActivity())
     sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
 //    setObserver()
