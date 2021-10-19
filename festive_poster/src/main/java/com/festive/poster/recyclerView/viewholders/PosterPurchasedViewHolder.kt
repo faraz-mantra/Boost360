@@ -1,7 +1,10 @@
 package com.festive.poster.recyclerView.viewholders
 
 
+import android.content.Context
+import android.graphics.drawable.PictureDrawable
 import android.widget.Toast
+import com.caverock.androidsvg.SVG
 import com.festive.poster.FestivePosterApplication
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.ListItemPurchasedPosterBinding
@@ -11,10 +14,31 @@ import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
 import com.framework.constants.PackageNames
+import com.framework.glide.customsvgloader.PosterKeyModel
+import com.framework.glide.customsvgloader.SvgRenderCacheUtil
 import com.framework.utils.saveImageToSharedStorage
 import com.framework.utils.shareAsImage
 import com.framework.utils.toBitmap
 import com.framework.webengageconstant.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import android.graphics.Bitmap
+import android.graphics.Canvas
+
+import android.graphics.drawable.BitmapDrawable
+
+import android.graphics.drawable.Drawable
+import android.media.Image
+import android.util.Log
+import android.widget.ImageView
+import androidx.core.graphics.drawable.toBitmap
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
+import com.caverock.androidsvg.PreserveAspectRatio
+import com.caverock.androidsvg.RenderOptions
+
 
 class PosterPurchasedViewHolder(binding: ListItemPurchasedPosterBinding):
     AppBaseRecyclerViewHolder<ListItemPurchasedPosterBinding>(binding) {
@@ -50,8 +74,9 @@ class PosterPurchasedViewHolder(binding: ListItemPurchasedPosterBinding):
         }
 
         binding.ivWhatsapp.setOnClickListener {
+            getUncompressedSvg(binding.ivSvgPurchased,model.variants.firstOrNull()?.svgUrl,model.keys,binding.root.context)
             WebEngageController.trackEvent(FESTIVAL_POSTER_SHARE_WHATSAPP,event_value = HashMap())
-            binding.ivSvgPurchased.toBitmap()?.shareAsImage(PackageNames.WHATSAPP,text = model.greeting_message)
+           // binding.ivSvgPurchased.toBitmap()?.shareAsImage(PackageNames.WHATSAPP,text = model.greeting_message)
         }
 
         binding.ivInstagram.setOnClickListener {
@@ -62,5 +87,40 @@ class PosterPurchasedViewHolder(binding: ListItemPurchasedPosterBinding):
         super.bind(position, item)
     }
 
+    fun getUncompressedSvg(imageView:ImageView,url: String?, keys: List<PosterKeyModel>,context:Context){
+        url?.let {
+            CoroutineScope(Dispatchers.IO).launch {
+                var svgString = SvgRenderCacheUtil.instance.retrieveFromCache(url)
+                if (svgString == null || svgString.isEmpty()) {
+                    svgString = SvgUtils.getSvgAsAString(url)
+                    svgString?.let { SvgRenderCacheUtil.instance.saveToCache(url, it) }
+                }
+                if (svgString != null && !svgString.isEmpty()) {
+                    svgString = SvgRenderCacheUtil.instance.replace(svgString, keys, context)
+                    val op = RenderOptions().preserveAspectRatio(PreserveAspectRatio.FULLSCREEN)
+                    val bitmap= PictureDrawable(SVG.getFromString(svgString).renderToPicture(op))
+                   // Log.i("TAG", "getUncompressedSvg: bitmap width ${bitmap.width} height ${bitmap.height}")
+
+                    Glide.with(FestivePosterApplication.instance).asBitmap().load(bitmap).dontTransform()
+                        .into(object : CustomTarget<Bitmap?>() {
+
+                            override fun onResourceReady(
+                                resource: Bitmap,
+                                transition: Transition<in Bitmap?>?
+                            ) {
+                                resource.shareAsImage()
+                            }
+
+                            override fun onLoadCleared(placeholder: Drawable?) {
+                            }
+
+                        })
+
+                }
+            }
+        }
+
+
+    }
 
 }
