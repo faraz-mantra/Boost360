@@ -1,12 +1,16 @@
 package com.framework.glide.customsvgloader
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.graphics.drawable.PictureDrawable
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.caverock.androidsvg.PreserveAspectRatio
 import com.caverock.androidsvg.RenderOptions
 import com.caverock.androidsvg.SVG
@@ -34,6 +38,12 @@ class BoostSvgStringLoader(
         }
     }
 
+
+
+
+
+
+
     fun setSvg(s: String?) {
         view.get()?.let {
             var svg: SVG? = null
@@ -51,6 +61,21 @@ class BoostSvgStringLoader(
                         Log.d("SvgLoader", "setSvg() called ${Thread.currentThread()}")
                         Glide.with(it.context.applicationContext).load(drawable).into(it)
 //                        it.setImageDrawable(drawable);
+
+                        Glide.with(it.context.applicationContext).asBitmap().load(drawable).dontTransform().into(object :
+                            CustomTarget<Bitmap>() {
+                            override fun onResourceReady(
+                                resource: Bitmap,
+                                transition: Transition<in Bitmap>?
+                            ) {
+
+                            }
+
+                            override fun onLoadCleared(placeholder: Drawable?) {
+
+                            }
+
+                        })
                     }
                 }
             }
