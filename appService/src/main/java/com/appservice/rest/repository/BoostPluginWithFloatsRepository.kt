@@ -2,6 +2,7 @@ package com.appservice.rest.repository
 
 import com.appservice.base.rest.AppBaseLocalService
 import com.appservice.base.rest.AppBaseRepository
+import com.appservice.model.domainBooking.request.CreateDomainRequest
 import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.BoostPluginWithFloatsApiClient
 import com.appservice.rest.services.BoostPluginWithFloatsRemoteData
@@ -37,12 +38,9 @@ object BoostPluginWithFloatsRepository : AppBaseRepository<BoostPluginWithFloats
         )
     }
 
-    fun createDomain(clientId: String, domainName: String, domainType: String,
-                     existingFPTag: String, validityInYears: String, domainOrderType: Int) : Observable<BaseResponse>{
+    fun createDomain(createDomainRequest: CreateDomainRequest) : Observable<BaseResponse>{
         return makeRemoteRequest(
-            remoteDataSource.createDomain(clientId, domainName, domainType,
-                existingFPTag, 1, 0,
-                validityInYears, domainOrderType),
+            remoteDataSource.createDomain(createDomainRequest),
             TaskCode.CREATE_DOMAIN
         )
     }

@@ -91,6 +91,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_similar_domain_list_title" />
 
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_learn_how_to_choose_domain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:drawablePadding="@dimen/size_8"
+            android:drawableEnd="@drawable/ic_arrow_right_small_orange"
+            android:drawableStart="@drawable/ic_help_color_primary"
+            android:text="@string/learn_how_to_choose_a_great_domain"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/regular_medium"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <LinearLayout
             android:id="@+id/btn_continue"
             android:background="@color/colorPrimary"
@@ -103,7 +120,7 @@
             <com.framework.views.customViews.CustomTextView
                 android:textColor="@color/white"
                 style="@style/TextBoldStyle"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_16"
                 android:layout_marginVertical="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

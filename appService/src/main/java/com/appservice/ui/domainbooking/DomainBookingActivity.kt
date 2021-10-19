@@ -85,6 +85,7 @@ class DomainBookingActivity :
                 bundle = Bundle(),
                 clearTop = false
             )
+            finish()
         }
 
         binding?.appBar?.customImageView4?.setOnClickListener {

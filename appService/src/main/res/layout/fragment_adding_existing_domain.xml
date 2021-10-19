@@ -58,9 +58,9 @@
                         android:id="@+id/rvStepOne"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginStart="@dimen/size_14"
                         android:layout_marginTop="@dimen/size_16"
-                        android:layout_marginEnd="@dimen/size_22"
+                        android:layout_marginEnd="@dimen/size_14"
                         android:layout_marginBottom="@dimen/size_24" />
 
                     <com.framework.views.customViews.CustomTextView
@@ -129,9 +129,9 @@
                         android:id="@+id/rvStepTwo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginStart="@dimen/size_14"
                         android:layout_marginTop="@dimen/size_16"
-                        android:layout_marginEnd="@dimen/size_22"
+                        android:layout_marginEnd="@dimen/size_14"
                         android:layout_marginBottom="@dimen/size_24" />
 
                     <com.framework.views.customViews.CustomTextView
@@ -199,9 +199,9 @@
                         android:id="@+id/rvStepThree"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginStart="@dimen/size_14"
                         android:layout_marginTop="@dimen/size_16"
-                        android:layout_marginEnd="@dimen/size_22"
+                        android:layout_marginEnd="@dimen/size_14"
                         android:layout_marginBottom="@dimen/size_24" />
 
                     <com.framework.views.customViews.CustomTextView
@@ -266,9 +266,9 @@
                         android:id="@+id/rvStepFour_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginStart="@dimen/size_14"
                         android:layout_marginTop="@dimen/size_16"
-                        android:layout_marginEnd="@dimen/size_22"
+                        android:layout_marginEnd="@dimen/size_14"
                         android:layout_marginBottom="@dimen/size_24" />
 
                     <LinearLayout
@@ -318,6 +318,7 @@
                                 android:fontFamily="@font/regular"
                                 android:gravity="center"
                                 android:paddingStart="@dimen/size_4"
+                                android:textSize="@dimen/text_10"
                                 android:paddingEnd="@dimen/size_4"
                                 android:text="@string/copy"
                                 android:textAllCaps="true"
@@ -362,6 +363,7 @@
                                 android:fontFamily="@font/regular"
                                 android:gravity="center"
                                 android:paddingStart="@dimen/size_4"
+                                android:textSize="@dimen/text_10"
                                 android:paddingEnd="@dimen/size_4"
                                 android:text="@string/copy"
                                 android:textAllCaps="true"
@@ -375,9 +377,9 @@
                         android:id="@+id/rvStepFour_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginStart="@dimen/size_14"
                         android:layout_marginTop="@dimen/size_16"
-                        android:layout_marginEnd="@dimen/size_22"
+                        android:layout_marginEnd="@dimen/size_14"
                         android:layout_marginBottom="@dimen/size_32" />
 
                     <com.framework.views.customViews.CustomTextView
@@ -479,6 +481,7 @@
                 android:layout_marginStart="@dimen/size_20"
                 android:layout_marginTop="@dimen/size_300"
                 android:elevation="@dimen/size_4"
+                android:fontFamily="@font/bold"
                 android:text="@string/step_1_4"
                 android:textColor="@color/colorLightBlack"
                 android:textSize="@dimen/text_12"
@@ -493,6 +496,7 @@
                 android:layout_marginStart="@dimen/size_20"
                 android:layout_marginTop="288dp"
                 android:elevation="@dimen/size_4"
+                android:fontFamily="@font/bold"
                 android:text="@string/step_2_4"
                 android:textColor="@color/colorLightBlack"
                 android:textSize="@dimen/text_12"
@@ -507,6 +511,7 @@
                 android:layout_marginStart="@dimen/size_20"
                 android:layout_marginTop="@dimen/size_260"
                 android:elevation="@dimen/size_4"
+                android:fontFamily="@font/bold"
                 android:text="@string/step_3_4"
                 android:textColor="@color/colorLightBlack"
                 android:textSize="@dimen/text_12"
@@ -521,6 +526,7 @@
                 android:layout_marginStart="@dimen/size_20"
                 android:layout_marginTop="280dp"
                 android:elevation="@dimen/size_4"
+                android:fontFamily="@font/bold"
                 android:text="@string/step_final"
                 android:textColor="@color/colorLightBlack"
                 android:textSize="@dimen/text_12"
