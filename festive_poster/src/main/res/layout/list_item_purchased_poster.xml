@@ -36,13 +36,13 @@
               android:adjustViewBounds="true"
               android:scaleType="fitXY" />
 
-          <com.festive.poster.customviews.CustomSvgImageView
-              android:id="@+id/iv_svg_reder_view"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:adjustViewBounds="true"
-              android:scaleType="fitCenter"
-              android:visibility="invisible" />
+<!--          <com.festive.poster.customviews.CustomSvgImageView-->
+<!--              android:id="@+id/iv_svg_reder_view"-->
+<!--              android:layout_width="match_parent"-->
+<!--              android:layout_height="match_parent"-->
+<!--              android:adjustViewBounds="true"-->
+<!--              android:scaleType="fitCenter"-->
+<!--              android:visibility="invisible" />-->
 
           <com.framework.views.customViews.CustomMaterialButton
               android:id="@+id/btn_tap_edit"

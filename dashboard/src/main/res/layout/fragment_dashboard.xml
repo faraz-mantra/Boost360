@@ -632,7 +632,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/semi_bold"
-                android:text="@string/share_navratri_poster"
+                android:text="@string/share_festive_poster"
                 android:textColor="@color/colorAccentLight"
                 app:textAllCaps="false"
                 app:textType="HEADING_6" />
