@@ -705,7 +705,7 @@
     <string name="book_a_new_domain">Book a new domain</string>
     <string name="use_it_as_my_business_website_address">Use it as my business website address</string>
     <string name="create_a_sub_domain_and_map_my">Create a sub-domain on this domain and map my business website to that URL
-(Ex: <u>shop.samplebusiness.com</u>)</string>
+(Ex: <u><b>shop</b>.samplebusiness.com</u>)</string>
     <string name="step_1_4" tools:ignore="TypographyFractions">Step 1/4</string>
     <string name="step_2_4">Step 2/4</string>
     <string name="step_3_4" tools:ignore="TypographyFractions">Step 3/4</string>
@@ -721,8 +721,10 @@
     <string name="error_wrong_domain_entered">Please enter a valid domain name!</string>
     <string name="example">example</string>
     <string name="domain_second_step_text">In case you have a different website (for same business) connected to the domain that you own, you can integrate this website also as a sub-domain on that domain. <b><u>(what’s subdomain?)</u></b></string>
-    <string name="ns3_net"><![CDATA[ns3.--------.net]]></string>
+    <string name="ns3_net"><![CDATA[ns3.<-------->.net]]></string>
     <string name="copy">Copy</string>
     <string name="is_not_available">is not available.</string>
   <string name="is_available_new">is available!</string>
+  <string name="status">Status</string>
+  <string name="learn_how_to_choose_a_great_domain">Learn, how to choose a great domain</string>
 </resources>

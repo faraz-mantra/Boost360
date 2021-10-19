@@ -1,6 +1,7 @@
 package com.appservice.rest.services
 
 import com.appservice.model.domainBooking.DomainDetailsResponse
+import com.appservice.model.domainBooking.request.CreateDomainRequest
 import com.appservice.rest.EndPoints
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
@@ -24,16 +25,17 @@ interface BoostPluginWithFloatsRemoteData {
         @Query("domainType") domainType: String
     ): Observable<Response<Boolean>>
 
-    @POST(EndPoints.CREATE_DOMAIN)
+    @PUT(EndPoints.CREATE_DOMAIN)
     fun createDomain(
-       @Query("clientId") clientId: String,
+        @Body createDomainRequest: CreateDomainRequest
+      /* @Query("clientId") clientId: String,
        @Query("domainName") domainName: String,
        @Query("domainType") domainType: String,
        @Query("existingFPTag") existingFPTag: String,
        @Query("domainChannelType") domainChannelType: Int = 1,
        @Query("DomainRegService") DomainRegService: Int = 0,
        @Query("validityInYears") validityInYears: String,
-       @Query("DomainOrderType") domainOrderType: Int
-    ): Observable<Response<BaseResponse>>
+       @Query("DomainOrderType") domainOrderType: Int*/
+    ): Observable<Response<String>>
 
 }

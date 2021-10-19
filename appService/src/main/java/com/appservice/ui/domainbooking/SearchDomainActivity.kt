@@ -12,6 +12,7 @@ import com.appservice.R
 import com.appservice.base.AppBaseActivity
 import com.appservice.databinding.ActivitySearchDomainBinding
 import com.appservice.databinding.BsheetConfirmDomainSearchBinding
+import com.appservice.model.domainBooking.request.CreateDomainRequest
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
@@ -50,6 +51,10 @@ class SearchDomainActivity : AppBaseActivity<ActivitySearchDomainBinding, Search
 
         binding?.edSearchBox?.afterTextChanged {
             binding?.layputEtError?.gone()
+            if (it == "")
+                binding?.tvLearnHowToChooseDomain?.visible()
+            else
+                binding?.tvLearnHowToChooseDomain?.gone()
         }
 
         binding?.edSearchBox?.setOnEditorActionListener(object : TextView.OnEditorActionListener {
@@ -72,7 +77,11 @@ class SearchDomainActivity : AppBaseActivity<ActivitySearchDomainBinding, Search
 
     private fun searchDomain(domainString: String) {
         val splitDomain = getDomainSplitValues(domainString)
-        viewModel.searchDomain(splitDomain.domainName.lowercase(), clientId, splitDomain.domainExtension.uppercase()).observeOnce(lifecycleOwner = this, {
+        viewModel.searchDomain(
+            splitDomain.domainName.lowercase(),
+            clientId,
+            splitDomain.domainExtension.uppercase()
+        ).observeOnce(lifecycleOwner = this, {
             if (!it.isSuccess() || it == null) {
                 showShortToast(getString(R.string.something_went_wrong))
                 return@observeOnce
@@ -98,11 +107,32 @@ class SearchDomainActivity : AppBaseActivity<ActivitySearchDomainBinding, Search
         })
     }
 
-    private fun createDomain(domainSelected: String, domainType: String) {
-        viewModel.createDomain(
-            clientId, domainSelected.lowercase(), domainType.uppercase(),
-            session.fpTag!!, "1", 0
-        ).observeOnce(lifecycleOwner = this, {
+    private fun createDomain(domainSelected: String, domainType: String, bSheet: BottomSheetDialog) {
+        val createDomainRequest = CreateDomainRequest(
+            clientId = clientId,
+            domainName = domainSelected.lowercase(),
+            domainType = domainType.uppercase(),
+            existingFPTag = session.fpTag!!,
+            domainChannelType = 1,
+            DomainRegService = 0,
+            validityInYears = "1",
+            DomainOrderType = 0,
+
+            )
+        viewModel.createDomain(createDomainRequest).observeOnce(lifecycleOwner = this, {
+            if (!it.isSuccess() || it == null) {
+                showShortToast(getString(R.string.something_went_wrong))
+                return@observeOnce
+            }
+
+            val stringResponse = it.stringResponse as String
+            startFragmentDomainBookingActivity(
+                activity = this,
+                type = com.appservice.constant.FragmentType.ACTIVE_NEW_DOMAIN_FRAGMENT,
+                bundle = Bundle(),
+                clearTop = false
+            )
+            bSheet.dismiss()
         })
     }
 
@@ -161,7 +191,7 @@ class SearchDomainActivity : AppBaseActivity<ActivitySearchDomainBinding, Search
 
         sheetBinding.btnConfirm.setOnClickListener {
             val domainSplit = getDomainSplitValues(enteredDomainName)
-            createDomain(domainSplit.domainName, domainSplit.domainExtension)
+            createDomain(domainSplit.domainName, domainSplit.domainExtension, bSheet)
         }
 
         bSheet.show()

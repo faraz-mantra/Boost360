@@ -74,13 +74,12 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/size_4"
                             android:ellipsize="end"
-                            android:fontFamily="@font/barlow_regular"
+                            android:fontFamily="@font/barlow_condensed_semi_bold"
                             android:gravity="center"
                             android:maxLines="1"
                             android:text="samplestorewebsite.com"
                             android:textColor="@color/black_4a4a4a"
-                            android:textSize="@dimen/text_28"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/text_30"/>
 
                         <com.framework.views.customViews.CustomMaterialButton
                             android:id="@+id/btn_select_suggested_domain"
