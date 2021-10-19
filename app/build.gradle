@@ -60,7 +60,7 @@ android {
     buildTypes {
         applicationVariants.all { variant ->
             variant.outputs.all {
-                outputFileName = "NF-Boost-" + "${variant.name}-${variant.versionName}.apk"
+                outputFileName = "NF-Boost-" + "${variant.name}-${variant.versionName}_${getDate()}.apk"
             }
         }
         release {
@@ -149,6 +149,10 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+}
+
+def getDate() {
+    return new Date().format('yyMMdd.HHmm')
 }
 
 dependencies {

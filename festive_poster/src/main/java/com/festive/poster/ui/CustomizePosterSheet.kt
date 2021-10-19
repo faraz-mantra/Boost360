@@ -74,6 +74,8 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
   }
 
   private fun setUserDetails() {
+    binding?.etName?.setText(session?.userProfileName ?: session?.fpTag)
+    binding?.etWhatsapp?.setText(session?.userPrimaryMobile ?: session?.fPPrimaryContactNumber)
     binding?.etWebsite?.setText(session?.getDomainName(true))
     binding?.etEmail?.setText(session?.userProfileEmail ?: session?.fPEmail)
   }
@@ -82,7 +84,7 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
     super.onClick(v)
     when (v) {
       binding?.ivCancel -> dismiss()
-      binding?.uploadSelfie -> ImagePicker.with(this).start(RC_IMAGE_PCIKER)
+      binding?.uploadSelfie -> ImagePicker.with(this).crop().start(RC_IMAGE_PCIKER)
       binding?.tvUpdateInfo -> {
         Log.i(TAG, "path: $path")
         if (validation()) {
@@ -171,7 +173,7 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
 
   private fun getTempFile(context: Context, uri: Uri): File? {
     try {
-      val destination = File(context.cacheDir, "image_picker.jpg")
+      val destination = File(context.cacheDir, "${System.currentTimeMillis()}.jpg")
       val parcelFileDescriptor = context.contentResolver.openFileDescriptor(uri, "r")
       val fileDescriptor = parcelFileDescriptor?.fileDescriptor ?: return null
       val src = FileInputStream(fileDescriptor).channel

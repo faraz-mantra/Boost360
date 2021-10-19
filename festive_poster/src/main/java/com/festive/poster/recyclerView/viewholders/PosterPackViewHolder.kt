@@ -39,7 +39,7 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecycler
           listener?.onChildClick(c_position, position, c_item, item, actionType)
         }
       })
-      binding.vpPoster.offscreenPageLimit = 1
+//      binding.vpPoster.offscreenPageLimit = 1
       binding.vpPoster.adapter = adapter
       TabLayoutMediator(binding.dots, binding.vpPoster) { _, _ -> }.attach()
     }
@@ -49,7 +49,7 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecycler
   private fun setupVp(vpPdfs: ViewPager2) {
     vpPdfs.clipToPadding = false;
     vpPdfs.clipChildren = false;
-    vpPdfs.offscreenPageLimit = 3
+    vpPdfs.offscreenPageLimit = 1
     vpPdfs.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER;
     val compositePageTransformer = CompositePageTransformer();
     compositePageTransformer.addTransformer(MarginPageTransformer(30));
