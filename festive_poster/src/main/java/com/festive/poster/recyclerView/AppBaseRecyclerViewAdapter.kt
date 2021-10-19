@@ -25,7 +25,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     return when (recyclerViewItemType) {
       RecyclerViewItemType.POSTER_PACK->PosterPackViewHolder(binding as ListItemPosterPackBinding)
       RecyclerViewItemType.POSTER->PosterViewHolder(binding as ListItemPosterBinding)
-      RecyclerViewItemType.POSTER_PACK_PURCHASED->PosterPackPurchasedViewHolder(binding as ListItemPurchasedPosterPackBinding)
+      RecyclerViewItemType.POSTER_PACK_PURCHASED->PosterPackPurchasedViewHolder(binding as ListItemPurchasedPosterPackBinding) // Not currently used
       RecyclerViewItemType.POSTER_PURCHASED-> PosterPurchasedViewHolder(binding as ListItemPurchasedPosterBinding)
 
 

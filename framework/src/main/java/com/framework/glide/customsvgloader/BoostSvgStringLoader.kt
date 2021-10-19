@@ -11,6 +11,8 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.caverock.androidsvg.PreserveAspectRatio
 import com.caverock.androidsvg.RenderOptions
 import com.caverock.androidsvg.SVG
@@ -59,23 +61,12 @@ class BoostSvgStringLoader(
                 Handler(Looper.getMainLooper()).post {
                     view.get()?.let {
                         Log.d("SvgLoader", "setSvg() called ${Thread.currentThread()}")
-                        Glide.with(it.context.applicationContext).load(drawable).into(it)
+                        Glide.with(it.context.applicationContext).load(drawable).apply(RequestOptions.bitmapTransform(
+                            RoundedCorners(14)
+                        )).into(it)
 //                        it.setImageDrawable(drawable);
+//                        Glide.with(it.context.applicationContext).load(drawable).dontTransform().into(it)
 
-                        Glide.with(it.context.applicationContext).asBitmap().load(drawable).dontTransform().into(object :
-                            CustomTarget<Bitmap>() {
-                            override fun onResourceReady(
-                                resource: Bitmap,
-                                transition: Transition<in Bitmap>?
-                            ) {
-
-                            }
-
-                            override fun onLoadCleared(placeholder: Drawable?) {
-
-                            }
-
-                        })
                     }
                 }
             }

@@ -1,6 +1,7 @@
 package com.framework.utils
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.ContentValues
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
@@ -20,6 +21,7 @@ import android.view.View
 import android.view.ViewConfiguration
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
@@ -31,6 +33,7 @@ import com.airbnb.lottie.SimpleColorFilter
 import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
 import com.framework.BaseApplication
+import com.framework.constants.PackageNames
 import com.framework.views.customViews.CustomTextView
 import com.google.gson.reflect.TypeToken
 import java.io.File
@@ -176,9 +179,9 @@ fun Bitmap.shareAsImage(packageName:String?=null,text: String?=null){
     var uri: Uri? = null
     try {
       imagesFolder.mkdirs()
-      val file = File(imagesFolder, "shareimage.png")
+      val file = File(imagesFolder, "shareimage${System.currentTimeMillis()}.jpg")
       val stream = FileOutputStream(file)
-      compress(Bitmap.CompressFormat.PNG, 90, stream)
+      compress(Bitmap.CompressFormat.JPEG, 100, stream)
       stream.flush()
       stream.close()
       uri = FileProvider.getUriForFile(BaseApplication.instance, "${BaseApplication.instance.packageName}.provider", file)
@@ -186,7 +189,7 @@ fun Bitmap.shareAsImage(packageName:String?=null,text: String?=null){
       intent.putExtra(Intent.EXTRA_STREAM, uri)
       intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-      intent.type = "image/png"
+      intent.type = "image/*"
       packageName?.let {
         intent.`package`= packageName
       }
@@ -196,6 +199,18 @@ fun Bitmap.shareAsImage(packageName:String?=null,text: String?=null){
       BaseApplication.instance.startActivity(intent)
     } catch (e: Exception) {
       Log.d("IOException: " , e.message.toString())
+      if (e is ActivityNotFoundException){
+        when(packageName){
+          PackageNames.WHATSAPP->{
+            Toast.makeText(BaseApplication.instance,"Whatsapp is not installed on your device",Toast.LENGTH_LONG).show()
+
+          }
+          PackageNames.INSTAGRAM->{
+            Toast.makeText(BaseApplication.instance,"Instagram is not installed on your device",Toast.LENGTH_LONG).show()
+
+          }
+        }
+      }
     }
 
 }

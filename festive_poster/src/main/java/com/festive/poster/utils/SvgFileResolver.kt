@@ -19,6 +19,7 @@ class SvgFileResolver: SVGExternalFileResolver() {
     private val cache: HashMap<String, Bitmap> = HashMap()
     override fun resolveImage(filename: String?): Bitmap? {
 
+        Log.i(TAG, "resolveImage: file name $filename")
         if(filename?.isEmpty() == true)
             return null
 
@@ -27,7 +28,6 @@ class SvgFileResolver: SVGExternalFileResolver() {
 
         try {
             val file = File(filename)
-            Log.i(TAG, "resolveImage: ${file.absolutePath}")
             if (file.exists()) {
                 val myBitmap = BitmapFactory.decodeFile(file.absolutePath)
                 filename?.let { cache.put(it, myBitmap) };
