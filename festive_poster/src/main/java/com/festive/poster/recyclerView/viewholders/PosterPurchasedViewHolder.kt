@@ -23,21 +23,12 @@ import com.framework.webengageconstant.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import android.graphics.Bitmap
-import android.graphics.Canvas
 
-import android.graphics.drawable.BitmapDrawable
-
-import android.graphics.drawable.Drawable
-import android.media.Image
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.ImageView
 import androidx.core.graphics.drawable.toBitmap
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
-import com.caverock.androidsvg.PreserveAspectRatio
-import com.caverock.androidsvg.RenderOptions
 
 
 class PosterPurchasedViewHolder(binding: ListItemPurchasedPosterBinding):
@@ -64,7 +55,8 @@ class PosterPurchasedViewHolder(binding: ListItemPurchasedPosterBinding):
         }
         binding.ivOther.setOnClickListener {
             WebEngageController.trackEvent(FESTIVAL_POSTER_SHARE_OTHER,event_value = HashMap())
-            binding.ivSvgPurchased.toBitmap()?.shareAsImage(text = model.greeting_message)
+            getBitmap(binding.ivSvgRederView,model.variants.firstOrNull()?.svgUrl,model,binding.root.context)
+//            binding.ivSvgPurchased.toBitmap()?.shareAsImage(text = model.greeting_message)
         }
 
         binding.ivDownload.setOnClickListener {
@@ -74,14 +66,15 @@ class PosterPurchasedViewHolder(binding: ListItemPurchasedPosterBinding):
         }
 
         binding.ivWhatsapp.setOnClickListener {
-            getUncompressedSvg(binding.ivSvgPurchased,model.variants.firstOrNull()?.svgUrl,model.keys,binding.root.context)
             WebEngageController.trackEvent(FESTIVAL_POSTER_SHARE_WHATSAPP,event_value = HashMap())
+            getBitmap(binding.ivSvgRederView,model.variants.firstOrNull()?.svgUrl,model,binding.root.context, PackageNames.WHATSAPP)
            // binding.ivSvgPurchased.toBitmap()?.shareAsImage(PackageNames.WHATSAPP,text = model.greeting_message)
         }
 
         binding.ivInstagram.setOnClickListener {
             WebEngageController.trackEvent(FESTIVAL_POSTER_SHARE_INSTAGRAM,event_value = HashMap())
-            binding.ivSvgPurchased.toBitmap()?.shareAsImage(PackageNames.INSTAGRAM,text = model.greeting_message)
+            getBitmap(binding.ivSvgRederView,model.variants.firstOrNull()?.svgUrl,model,binding.root.context, PackageNames.INSTAGRAM)
+//            binding.ivSvgPurchased.toBitmap()?.shareAsImage(PackageNames.INSTAGRAM,text = model.greeting_message)
         }
 
         super.bind(position, item)
@@ -105,6 +98,36 @@ class PosterPurchasedViewHolder(binding: ListItemPurchasedPosterBinding):
         }
 
 
+    }
+
+    fun getBitmap(imageView:ImageView, url: String?, model: PosterModel, context:Context, packageName:String?=null) {
+        url?.let {
+            CoroutineScope(Dispatchers.IO).launch {
+                var svgString = SvgRenderCacheUtil.instance.retrieveFromCache(url)
+                if (svgString == null || svgString.isEmpty()) {
+                    svgString = SvgUtils.getSvgAsAString(url)
+                    svgString?.let { SvgRenderCacheUtil.instance.saveToCache(url, it) }
+                }
+                if (svgString != null && !svgString.isEmpty()) {
+                    svgString = SvgRenderCacheUtil.instance.replace(svgString, model.keys, context)
+                    // val op = RenderOptions().preserveAspectRatio(PreserveAspectRatio.FULLSCREEN)
+                    var drawable = PictureDrawable(SVG.getFromString(svgString).renderToPicture())
+                    Looper.getMainLooper().run {
+
+                        Log.d("SvgLoader", "setSvg() called ${Thread.currentThread()}")
+                        Handler(Looper.getMainLooper()).post {
+                            imageView.let {
+                                Log.d("SvgLoader", "setSvg() called ${Thread.currentThread()}")
+
+                                it.setImageDrawable(drawable)
+                                it.toBitmap()?.shareAsImage(PackageNames.WHATSAPP,text = model.greeting_message)
+                                it.setImageDrawable(null)
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }
