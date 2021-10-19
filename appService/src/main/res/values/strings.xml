@@ -45,6 +45,7 @@
   <string name="enabled_payments_reveived_bank">Once enabled, all payments from your customers will be received in this bank account</string>
   <string name="directly_designated_bank_account">Get payments in 48 hours, directly in your designated bank account</string>
   <string name="account_verification_pending">Your account verification is pending</string>
+  <string name="account_verification_under_process">Your account verification is under process</string>
   <string name="self_branded_payment_gateway">Self Branded Payment Gateway</string>
   <string name="about_this_add_on"> About this add-on</string>
   <string name="gateway_description">This payment gateway is powered by <b>Instamojo</b>, which allows you to collect your customers’ payment directly into your bank account without any delay, (unlike the default payment gateway provided by Boost). With this add-on acticvated on your boost website your customers see that they are paying to your business and not to boost.</string>
