@@ -1,14 +1,31 @@
 package com.festive.poster.recyclerView.viewholders
 
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Picture
 import android.util.Log
-import com.bumptech.glide.Glide
+import android.view.View
+import android.widget.ImageView
+import com.caverock.androidsvg.PreserveAspectRatio
+import com.caverock.androidsvg.RenderOptions
+import com.caverock.androidsvg.SVG
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.ListItemPosterBinding
 import com.festive.poster.models.PosterModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.utils.SvgUtils
+import com.framework.glide.customsvgloader.PosterKeyModel
+import com.framework.glide.customsvgloader.SvgRenderCacheUtil
+import com.framework.utils.shareAsImage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.lang.reflect.Method
+
 
 class PosterViewHolder(binding: ListItemPosterBinding) :
     AppBaseRecyclerViewHolder<ListItemPosterBinding>(binding) {
@@ -18,7 +35,8 @@ class PosterViewHolder(binding: ListItemPosterBinding) :
         val model = item as PosterModel
         model.keys.let {
             val url =
-                model.variants.firstOrNull()?.svgUrl ?: "https://siriablobstorage.blob.core.windows.net/svg-templates/61644f0c503d2a74e5b68963/DurgaPuja03.svg"
+                model.variants.firstOrNull()?.svgUrl
+                    ?: "https://siriablobstorage.blob.core.windows.net/svg-templates/61644f0c503d2a74e5b68963/DurgaPuja03.svg"
 //            val url ="https://siriablobstorage.blob.core.windows.net/svg-templates/61644f0c503d2a74e5b68963/DurgaPuja03.svg" // 63KB
 //            val url ="https://siriablobstorage.blob.core.windows.net/svg-templates/61644f3a503d2a74e5b68966/Dussehra01.svg" // 500KB
             SvgUtils.loadImage(url, binding.ivSvg, model.keys)
@@ -34,6 +52,7 @@ class PosterViewHolder(binding: ListItemPosterBinding) :
 //            if (bmp != null) {
 //                shareImage(bmp)
 //            }
+
             listener?.onItemClick(
                 position,
                 item,
@@ -44,42 +63,5 @@ class PosterViewHolder(binding: ListItemPosterBinding) :
         super.bind(position, item)
     }
 
-//    fun loadBitmapFromView(view: View): Bitmap? {
-//        val returnedBitmap =
-//            Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888)
-//        val canvas = Canvas(returnedBitmap)
-//        val bgDrawable = view.getBackground()
-//        bgDrawable?.draw(canvas)
-////        *//*  else
-//        canvas.drawColor(Color.WHITE);
-////        *//*
-////        *//*  else
-//        canvas.drawColor(Color.WHITE);
-////        *//*view.draw(canvas)
-//        return returnedBitmap
-//    }
+
 }
-/* private fun shareImage(bitmap: Bitmap) {
-     val imagesFolder = File(FestivePosterApplication.instance.getExternalFilesDir(null), "shared_images")
-     var uri: Uri? = null
-     try {
-         imagesFolder.mkdirs()
-         val file = File(imagesFolder, "svg-conv.png")
-         val stream = FileOutputStream(file)
-         bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
-         stream.flush()
-         stream.close()
-         uri = FileProvider.getUriForFile(FestivePosterApplication.instance, "${FestivePosterApplication.instance.packageName}.provider", file)
-         val intent = Intent(Intent.ACTION_SEND)
-         intent.putExtra(Intent.EXTRA_STREAM, uri)
-         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-         intent.type = "image/png"
-         FestivePosterApplication.instance.startActivity(intent)
-     } catch (e: IOException) {
-         Log.d("IOException: " , e.message.toString())
-     }
- }
-
-
-}*/
