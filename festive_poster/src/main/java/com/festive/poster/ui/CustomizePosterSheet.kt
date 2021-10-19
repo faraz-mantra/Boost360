@@ -171,7 +171,7 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
 
   private fun getTempFile(context: Context, uri: Uri): File? {
     try {
-      val destination = File(context.cacheDir, "image_picker.jpg")
+      val destination = File(context.cacheDir, "${System.currentTimeMillis()}.jpg")
       val parcelFileDescriptor = context.contentResolver.openFileDescriptor(uri, "r")
       val fileDescriptor = parcelFileDescriptor?.fileDescriptor ?: return null
       val src = FileInputStream(fileDescriptor).channel
