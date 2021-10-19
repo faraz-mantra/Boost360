@@ -46,8 +46,9 @@ class SvgRenderCacheUtil private constructor() {
 
         posterKeys.forEach {
             val replaceVal = if (it.custom==null) it.default else it.custom
-
-            if (it.type=="IMAGE"){
+            Log.i(TAG, "replace: $replaceVal")
+            result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
+//            if (it.type=="IMAGE"){
 //                Log.i(TAG, "replace: $replaceVal")
 //
 //                if (replaceVal?.startsWith("https:") == true){
@@ -67,10 +68,10 @@ class SvgRenderCacheUtil private constructor() {
 //                    result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
 //
 //                }
-                result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
-            }else{
-                result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
-            }
+//                result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
+//            }else{
+////                result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
+//            }
         }
 
         return result
