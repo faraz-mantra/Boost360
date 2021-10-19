@@ -55,7 +55,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
     super.onCreateView()
     session = UserSessionManager(requireActivity())
     sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
-    setObserver()
+//    setObserver()
     getTemplateViewConfig()
   }
 
@@ -101,7 +101,9 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
           response.Result.templatePacks.tags.forEach { pack_tag ->
             val templateList = ArrayList<PosterModel>()
             templates_response.Result.templates.forEach { template ->
-              if (template.tags.find { posterTag -> posterTag == pack_tag.tag } != null && template.active) {
+              var posterTag = template.tags.find { posterTag -> posterTag == pack_tag.tag }
+              if ( posterTag != null && template.active) {
+                template.greeting_message = getGreetingMessages(posterTag)
                 templateList.add(template.clone()!!)
               }
             }
@@ -136,6 +138,19 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
     if (dataList?.size ?: 0 >= 3) {
       Collections.swap(dataList, 0, 1)
       Collections.swap(dataList, 2, 0)
+    }
+  }
+
+  private fun getGreetingMessages(tag: String): String {
+    return when(tag) {
+      "DURGAPUJA2021" -> "May Maa Durga strengthen you to fight all evils, " +
+              "may she give you the courage to face all upheavals.\n" +
+              "Happy Durga Puja.\n"
+      "DUSSEHRA2021" -> "May the Lord always bless you with wisdom and good health. May Goddess Durga " +
+              "shower her choicest wishes over you and remove all evil obstacles in your life. Happy Dussehra!"
+      "NAVRATRI2021" -> "Wishing you and your family a very Happy Navratri. --" +
+              " May the nine days of Navratri light up your lives.\n"
+      else -> ""
     }
   }
 

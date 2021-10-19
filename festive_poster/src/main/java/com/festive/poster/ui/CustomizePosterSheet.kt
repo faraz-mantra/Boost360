@@ -74,6 +74,8 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
   }
 
   private fun setUserDetails() {
+    binding?.etName?.setText(session?.userProfileName ?: session?.fpTag)
+    binding?.etWhatsapp?.setText(session?.userPrimaryMobile ?: session?.fPPrimaryContactNumber)
     binding?.etWebsite?.setText(session?.getDomainName(true))
     binding?.etEmail?.setText(session?.userProfileEmail ?: session?.fPEmail)
   }
