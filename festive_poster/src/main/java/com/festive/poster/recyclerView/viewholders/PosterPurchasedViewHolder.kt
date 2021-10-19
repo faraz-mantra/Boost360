@@ -97,24 +97,8 @@ class PosterPurchasedViewHolder(binding: ListItemPurchasedPosterBinding):
                 }
                 if (svgString != null && !svgString.isEmpty()) {
                     svgString = SvgRenderCacheUtil.instance.replace(svgString, keys, context)
-                    val op = RenderOptions().preserveAspectRatio(PreserveAspectRatio.FULLSCREEN)
-                    val bitmap= PictureDrawable(SVG.getFromString(svgString).renderToPicture(op))
-                   // Log.i("TAG", "getUncompressedSvg: bitmap width ${bitmap.width} height ${bitmap.height}")
-
-                    Glide.with(FestivePosterApplication.instance).asBitmap().load(bitmap).dontTransform()
-                        .into(object : CustomTarget<Bitmap?>() {
-
-                            override fun onResourceReady(
-                                resource: Bitmap,
-                                transition: Transition<in Bitmap?>?
-                            ) {
-                                resource.shareAsImage()
-                            }
-
-                            override fun onLoadCleared(placeholder: Drawable?) {
-                            }
-
-                        })
+                   // val op = RenderOptions().preserveAspectRatio(PreserveAspectRatio.FULLSCREEN)
+                    PictureDrawable(SVG.getFromString(svgString).renderToPicture()).toBitmap().shareAsImage()
 
                 }
             }
