@@ -66,6 +66,7 @@ class PosterPurchasedViewHolder(binding: ListItemPurchasedPosterBinding):
         }
 
         binding.ivWhatsapp.setOnClickListener {
+            getUncompressedSvg(model.variants.firstOrNull()?.svgUrl,model.keys,binding.root.context)
             WebEngageController.trackEvent(FESTIVAL_POSTER_SHARE_WHATSAPP,event_value = HashMap())
             getBitmap(binding.ivSvgRederView,model.variants.firstOrNull()?.svgUrl,model,binding.root.context, PackageNames.WHATSAPP)
            // binding.ivSvgPurchased.toBitmap()?.shareAsImage(PackageNames.WHATSAPP,text = model.greeting_message)
@@ -80,7 +81,11 @@ class PosterPurchasedViewHolder(binding: ListItemPurchasedPosterBinding):
         super.bind(position, item)
     }
 
-    fun getUncompressedSvg(imageView:ImageView,url: String?, keys: List<PosterKeyModel>,context:Context){
+    fun getUncompressedSvg(
+        url: String?,
+        keys: List<PosterKeyModel>,
+        context: Context
+    ) {
         url?.let {
             CoroutineScope(Dispatchers.IO).launch {
                 var svgString = SvgRenderCacheUtil.instance.retrieveFromCache(url)
@@ -90,14 +95,22 @@ class PosterPurchasedViewHolder(binding: ListItemPurchasedPosterBinding):
                 }
                 if (svgString != null && !svgString.isEmpty()) {
                     svgString = SvgRenderCacheUtil.instance.replace(svgString, keys, context)
-                   // val op = RenderOptions().preserveAspectRatio(PreserveAspectRatio.FULLSCREEN)
-                    PictureDrawable(SVG.getFromString(svgString).renderToPicture()).toBitmap().shareAsImage()
+                    val svg = SVG.getFromString(svgString)
+                    svg.renderDPI = getResources()?.displayMetrics?.densityDpi?.toFloat() ?: 480.0f
+                    svg.documentWidth = svg.documentWidth*4
+                    svg.documentHeight = svg.documentHeight*4
+                    val b = Bitmap.createBitmap(
+                        svg.documentWidth.toInt(),
+                        svg.documentHeight.toInt(), Bitmap.Config.ARGB_8888
+                    )
+                    val canvas = Canvas(b)
+                    svg.renderToCanvas(canvas)
 
+                    b.shareAsImage()
                 }
             }
+
         }
-
-
     }
 
     fun getBitmap(imageView:ImageView, url: String?, model: PosterModel, context:Context, packageName:String?=null) {

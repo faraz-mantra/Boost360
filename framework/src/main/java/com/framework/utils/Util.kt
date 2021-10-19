@@ -179,7 +179,7 @@ fun Bitmap.shareAsImage(packageName:String?=null,text: String?=null){
     var uri: Uri? = null
     try {
       imagesFolder.mkdirs()
-      val file = File(imagesFolder, "shareimage.jpg")
+      val file = File(imagesFolder, "shareimage${System.currentTimeMillis()}.jpg")
       val stream = FileOutputStream(file)
       compress(Bitmap.CompressFormat.JPEG, 100, stream)
       stream.flush()
@@ -189,7 +189,7 @@ fun Bitmap.shareAsImage(packageName:String?=null,text: String?=null){
       intent.putExtra(Intent.EXTRA_STREAM, uri)
       intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-      intent.type = "image/png"
+      intent.type = "image/*"
       packageName?.let {
         intent.`package`= packageName
       }

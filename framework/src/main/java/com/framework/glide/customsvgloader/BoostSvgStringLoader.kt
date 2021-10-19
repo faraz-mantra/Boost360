@@ -1,12 +1,16 @@
 package com.framework.glide.customsvgloader
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.graphics.drawable.PictureDrawable
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.caverock.androidsvg.PreserveAspectRatio
@@ -36,6 +40,12 @@ class BoostSvgStringLoader(
         }
     }
 
+
+
+
+
+
+
     fun setSvg(s: String?) {
         view.get()?.let {
             var svg: SVG? = null
@@ -55,6 +65,8 @@ class BoostSvgStringLoader(
                             RoundedCorners(14)
                         )).into(it)
 //                        it.setImageDrawable(drawable);
+//                        Glide.with(it.context.applicationContext).load(drawable).dontTransform().into(it)
+
                     }
                 }
             }
