@@ -17,6 +17,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.framework.R
 import com.framework.helper.Navigator
@@ -53,7 +54,7 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
     binding = DataBindingUtil.inflate(inflater, getLayout(), container, false)
     binding?.lifecycleOwner = this
     navigator = Navigator(baseActivity)
-    viewModel = ViewModelProviders.of(this).get(getViewModelClass())
+    viewModel = ViewModelProvider(this).get(getViewModelClass())
     return binding?.root
   }
 

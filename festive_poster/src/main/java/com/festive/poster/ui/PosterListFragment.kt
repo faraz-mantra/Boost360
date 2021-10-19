@@ -72,6 +72,7 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
 
 
       dataList?.forEach { template ->
+        template.greeting_message=it.greetingMessage
         template.keys.forEach { posterKeyModel ->
           when (posterKeyModel.name) {
             "user_name" -> {
@@ -115,7 +116,6 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
       response?.let {
         dataList = response.Result.templates.toArrayList()
         dataList?.forEach { posterModel -> posterModel.isPurchased = true }
-        setGreetingMessages()
         adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>, dataList!!, this)
         binding?.rvPosters?.adapter = adapter
         binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
@@ -128,29 +128,6 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
 
   }
 
-  private fun setGreetingMessages() {
-    dataList?.forEach { posterModel ->
-      if (posterModel.tags.contains("DURGAPUJA2021")) {
-
-        posterModel.greeting_message = "May Maa Durga strengthen you to fight all evils, " +
-            "may she give you the courage to face all upheavals.\n" +
-            "Happy Durga Puja.\n"
-
-      } else if (posterModel.tags.contains("DUSSEHRA2021")) {
-
-        posterModel.greeting_message = "May the Lord always bless you with wisdom and good health. May Goddess Durga " +
-            "shower her choicest wishes over you and remove all evil obstacles in your life. Happy Dussehra!"
-
-      } else if (posterModel.tags.contains("NAVRATRI2021")) {
-
-        posterModel.greeting_message = "Wishing you and your family a very Happy Navratri. --" +
-            " May the nine days of Navratri light up your lives.\n"
-
-      }
-    }
-
-
-  }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
