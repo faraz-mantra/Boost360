@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.data.model.CartModel
+import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.interfaces.CompareBackListener
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.details.DetailsFragment
@@ -129,16 +130,38 @@ class UpgradeActivity : AppCompatActivity() {
   }
 
 //  private fun festivePosterOpenCart() {
-//    if (isFestivePoster) {
-//      val bundle = Bundle()
-//      bundle.putStringArrayList("festivePosterWidgets", festivePosterWidgets)
-//      bundle.putBoolean("isFestivePoster", isFestivePoster)
+////    if (isFestivePoster) {
+////      val bundle = Bundle()
+////      bundle.putStringArrayList("festivePosterWidgets", festivePosterWidgets)
+////      bundle.putBoolean("isFestivePoster", isFestivePoster)
+//      addFestivePosterToCart()
 //      cartFragment = CartFragment.newInstance()
-//      cartFragment?.let { addFragmentHome(it, CART_FRAGMENT, bundle) }
-//    }
+//      cartFragment?.let { addFragment(it, CART_FRAGMENT) }
+//
 //  }
 
-  infix fun setBackListener(compareBackListener: CompareBackListener?) {
+//  fun addFestivePosterToCart() {
+//    val discount = 100 - 0
+//    val paymentPrice = (discount * 91) / 100.0
+//    val cartItem = CartModel(
+//      "5e8903e0a0a1660001087063",
+//     "TESTIMONIALS",
+//      "TESTIMONIALS",
+//      "Testimonials",
+//      "More and more travelers now rely on reviews on hotels before making a booking. Guest reviews are definitely gaining momentum and online hotel review sites such as TripAdvisor and more, play a big role in driving trust and credibility for an independent hotel. Earlier, independent hotels, with their limited budget and resources, would not get as much online exposure as chain hotels did. But reviews have acted as game changers for small independent hotels, giving them a chance to get equal exposure as their branded rivals. With the testimonials feature, you can showcase your customer reviews and highlight their experience on the homepage of your website. ",
+//    "https://web.s-cdn.boostkit.dev/website-files/5e7a3cf46e0572000109a5b2/testimonials-6050574030a21e0001d0882d.png",
+//      paymentPrice,
+//      91.0,
+//      0,
+//      1,
+//      1,
+//      "features",
+//      ""
+//    )
+//  }
+
+
+    infix fun setBackListener(compareBackListener: CompareBackListener?) {
     this.compareBackListener = compareBackListener
   }
 

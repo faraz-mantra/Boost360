@@ -769,7 +769,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       viewModel.renewalResult().observeOnce(Observer { result ->
         renewalList = result?.filter { it.renewalStatus() == RenewalResult.RenewalStatus.PENDING.name }
           ?: ArrayList()
-//        renewalList = emptyList()
+        renewalList = emptyList()
         if (renewalList.isNotEmpty()) {
           val list = arrayListOf<CartModel>()
           renewalList.forEach { renewal -> list.add(saveRenewalData(renewal)) }

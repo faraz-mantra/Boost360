@@ -61,6 +61,7 @@ import com.onboarding.nowfloats.model.googleAuth.FirebaseTokenResponse
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.webengage.sdk.android.WebEngage
 import com.zopim.android.sdk.api.ZopimChat
+import kotlinx.android.synthetic.main.activity_dashboard.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import zendesk.core.AnonymousIdentity
