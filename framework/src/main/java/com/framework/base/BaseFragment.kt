@@ -54,8 +54,13 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
     binding = DataBindingUtil.inflate(inflater, getLayout(), container, false)
     binding?.lifecycleOwner = this
     navigator = Navigator(baseActivity)
-    viewModel = ViewModelProvider(this).get(getViewModelClass())
     return binding?.root
+  }
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    viewModel = ViewModelProvider(this).get(getViewModelClass())
+
   }
 
   override fun onPrepareOptionsMenu(menu: Menu) {

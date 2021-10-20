@@ -1,5 +1,8 @@
 package com.festive.poster.ui
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +19,7 @@ class FestivePosterContainerActivity : AppBaseActivity<ActivityFestivePoterConta
 
   override var TAG = "FestivePosterContainerA"
   private var sharedViewModel: FestivePosterSharedViewModel? = null
+  /*private val RC_STORAGE_PERMISSION=201*/
 
   override fun getLayout(): Int {
     return R.layout.activity_festive_poter_container
@@ -32,9 +36,42 @@ class FestivePosterContainerActivity : AppBaseActivity<ActivityFestivePoterConta
     sharedViewModel = ViewModelProvider(this).get(FestivePosterSharedViewModel::class.java)
     handleBackStack()
     menuClickListener()
-    addFragmentReplace(binding?.container?.id, PosterPackListingFragment.newInstance(), true)
+    showPosterPackListing()
     lifecycleScope.launchWhenCreated {
     }
+  }
+
+  /*private fun checkStoragePermission() {
+   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
+            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),RC_STORAGE_PERMISSION)
+        }else{
+          showPosterPackListing()
+        }
+      } else {
+        showPosterPackListing()
+      }
+
+  }
+
+  override fun onRequestPermissionsResult(
+    requestCode: Int,
+    permissions: Array<out String>,
+    grantResults: IntArray
+  ) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+    if (requestCode==RC_STORAGE_PERMISSION&&grantResults.isNotEmpty()){
+      if (grantResults[0]==PackageManager.PERMISSION_GRANTED)
+          showPosterPackListing()
+      else
+        finish()
+    }
+  }*/
+
+  private fun showPosterPackListing() {
+    addFragmentReplace(binding?.container?.id, PosterPackListingFragment.newInstance(), true)
+
   }
 
   private fun menuClickListener() {

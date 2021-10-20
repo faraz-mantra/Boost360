@@ -58,72 +58,30 @@ class PosterPurchasedViewHolder(binding: ListItemPurchasedPosterBinding):
         }
         binding.ivOther.setOnClickListener {
             WebEngageController.trackEvent(FESTIVAL_POSTER_SHARE_OTHER,event_value = HashMap())
-            getUncompressedSvg(model.variants.firstOrNull()?.svgUrl,model,binding.root.context, "")
+            SvgUtils.shareUncompressedSvg(model.variants.firstOrNull()?.svgUrl,model,binding.root.context, "")
         }
 
         binding.ivDownload.setOnClickListener {
             WebEngageController.trackEvent(FESTIVAL_POSTER_SHARE_DOWNLOAD,event_value = HashMap())
-            getUncompressedSvg(model.variants.firstOrNull()?.svgUrl,model,binding.root.context)
+            listener?.onItemClick(position,item,RecyclerViewActionType.POSTER_DOWNLOAD_CLICKED.ordinal)
+            SvgUtils.shareUncompressedSvg(model.variants.firstOrNull()?.svgUrl,model,binding.root.context)
             Toast.makeText(FestivePosterApplication.instance, "Image Saved To Storage", Toast.LENGTH_SHORT).show()
         }
 
         binding.ivWhatsapp.setOnClickListener {
             WebEngageController.trackEvent(FESTIVAL_POSTER_SHARE_WHATSAPP,event_value = HashMap())
-            getUncompressedSvg(model.variants.firstOrNull()?.svgUrl,model,binding.root.context, PackageNames.WHATSAPP)
+            SvgUtils.shareUncompressedSvg(model.variants.firstOrNull()?.svgUrl,model,binding.root.context, PackageNames.WHATSAPP)
         }
 
         binding.ivInstagram.setOnClickListener {
             WebEngageController.trackEvent(FESTIVAL_POSTER_SHARE_INSTAGRAM,event_value = HashMap())
-            getUncompressedSvg(model.variants.firstOrNull()?.svgUrl,model,binding.root.context, PackageNames.INSTAGRAM)
+            SvgUtils.shareUncompressedSvg(model.variants.firstOrNull()?.svgUrl,model,binding.root.context, PackageNames.INSTAGRAM)
         }
 
         super.bind(position, item)
     }
 
-    private fun getUncompressedSvg(
-        url: String?,
-        model: PosterModel,
-        context: Context,
-        packageName:String?=null
-    ) {
-        url?.let {
-            CoroutineScope(Dispatchers.IO).launch {
-                var svgString = SvgRenderCacheUtil.instance.retrieveFromCache(url)
-                if (svgString == null || svgString.isEmpty()) {
-                    svgString = SvgUtils.getSvgAsAString(url)
-                    svgString?.let { SvgRenderCacheUtil.instance.saveToCache(url, it) }
-                }
-                if (svgString != null && !svgString.isEmpty()) {
-                    svgString = SvgRenderCacheUtil.instance.replace(svgString, model.keys, context)
-                    val svg = SVG.getFromString(svgString)
-                    svg.renderDPI = getResources()?.displayMetrics?.densityDpi?.toFloat() ?: 480.0f
-                    svg.documentWidth = svg.documentWidth*4
-                    svg.documentHeight = svg.documentHeight*4
-                    val b = Bitmap.createBitmap(
-                        svg.documentWidth.toInt(),
-                        svg.documentHeight.toInt(), Bitmap.Config.ARGB_8888
-                    )
-                    val canvas = Canvas(b)
-                    svg.renderToCanvas(canvas)
-                    withContext(Dispatchers.Main) {
-                        when (packageName) {
-                            PackageNames.INSTAGRAM -> b.shareAsImage(
-                                PackageNames.INSTAGRAM,
-                                text = model.greeting_message
-                            )
-                            PackageNames.WHATSAPP -> b.shareAsImage(
-                                PackageNames.WHATSAPP,
-                                text = model.greeting_message
-                            )
-                            "" -> b.shareAsImage(text = model.greeting_message)
-                            else -> b.saveImageToSharedStorage()
-                        }
-                    }
-                }
-            }
 
-        }
-    }
 
 //    fun getBitmap(imageView:ImageView, url: String?, model: PosterModel, context:Context, packageName:String?=null) {
 //        url?.let {

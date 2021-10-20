@@ -1,5 +1,6 @@
 package com.festive.poster.recyclerView.viewholders
 
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -13,6 +14,7 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.framework.base.BaseActivity
+import com.framework.views.itemdecoration.LineItemDecoration
 import com.google.android.material.tabs.TabLayoutMediator
 
 class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecyclerViewHolder<ListItemPosterPackBinding>(binding) {
@@ -41,6 +43,8 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecycler
       })
 //      binding.vpPoster.offscreenPageLimit = 1
       binding.vpPoster.adapter = adapter
+/*      binding.vpPoster.layoutManager=LinearLayoutManager(binding.root.context,LinearLayoutManager.HORIZONTAL,false)
+      binding.vpPoster.addItemDecoration(LineItemDecoration())*/
       TabLayoutMediator(binding.dots, binding.vpPoster) { _, _ -> }.attach()
     }
     super.bind(position, item)
