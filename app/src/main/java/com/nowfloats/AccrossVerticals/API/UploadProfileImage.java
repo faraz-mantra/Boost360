@@ -100,6 +100,7 @@ public class UploadProfileImage extends AsyncTask<Void, String, String> {
                 return Objects.requireNonNull(response.body()).string();
             } else {
                 Methods.showSnackBarNegative(appContext, appContext.getString(R.string.uploading_image_failed));
+                SentryController.INSTANCE.captureException(new Exception(response.request().toString()));
             }
 
             in.close();

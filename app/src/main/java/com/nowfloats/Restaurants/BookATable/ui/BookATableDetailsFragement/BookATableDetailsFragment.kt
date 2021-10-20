@@ -12,6 +12,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.framework.analytics.SentryController
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.nowfloats.Login.UserSessionManager
@@ -124,7 +125,7 @@ class BookATableDetailsFragment : Fragment() {
       }
     }
 
-    ScreenType = arguments!!.getString("ScreenState")!!
+    ScreenType = requireArguments().getString("ScreenState")!!
     if (ScreenType != null && ScreenType.equals("edit")) {
       displayData()
     }
@@ -133,7 +134,7 @@ class BookATableDetailsFragment : Fragment() {
   }
 
   fun displayData() {
-    existingItemData = Gson().fromJson(arguments!!.getString("data"), Data::class.java)
+    existingItemData = Gson().fromJson(requireArguments().getString("data"), Data::class.java)
 
     itemId = existingItemData._id
 
@@ -159,9 +160,9 @@ class BookATableDetailsFragment : Fragment() {
         deleteRecord(itemId)
         return@OnClickListener
       }
-      activity!!.onBackPressed()
+      requireActivity().onBackPressed()
     })
-    back_button.setOnClickListener { activity!!.onBackPressed() }
+    back_button.setOnClickListener { requireActivity().onBackPressed() }
   }
 
   fun createNewTeamsAPI() {
@@ -178,7 +179,7 @@ class BookATableDetailsFragment : Fragment() {
 
         val request = AddBookTableData(
           actionData,
-          session!!.getFpTag()
+          session!!.fpTag
         )
         val APICalls = RestAdapter.Builder()
           .setEndpoint("https://webaction.api.boostkit.dev")
@@ -210,6 +211,7 @@ class BookATableDetailsFragment : Fragment() {
         })
       }
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
     }
   }

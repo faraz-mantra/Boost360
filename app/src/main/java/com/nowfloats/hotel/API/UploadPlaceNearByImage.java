@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
+import com.framework.analytics.SentryController;
 import com.nowfloats.hotel.Interfaces.PlaceNearByDetailsListener;
 import com.nowfloats.util.Methods;
 
@@ -95,12 +96,14 @@ public class UploadPlaceNearByImage extends AsyncTask<Void, String, String> {
                 return Objects.requireNonNull(response.body()).string();
             } else {
                 Methods.showSnackBarNegative(appContext, "Uploading Image Failed");
+                SentryController.INSTANCE.captureException(new Exception(response.request().toString()));
             }
 
             in.close();
             buf = null;
 
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
         return null;

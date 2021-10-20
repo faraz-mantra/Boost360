@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
+import com.framework.analytics.SentryController;
 import com.nowfloats.manufacturing.digitalbrochures.Interfaces.DigitalBrochuresDetailsListener;
 import com.nowfloats.manufacturing.projectandteams.Interfaces.TeamsDetailsListener;
 import com.nowfloats.util.Methods;
@@ -98,12 +99,14 @@ public class UploadPdfFile extends AsyncTask<Void, String, String> {
                 return Objects.requireNonNull(response.body()).string();
             } else {
                 Methods.showSnackBarNegative(appContext, appContext.getString(R.string.uploading_image_failed));
+                SentryController.INSTANCE.captureException(new Exception(response.request().toString()));
             }
 
             in.close();
             buf = null;
 
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
         return null;

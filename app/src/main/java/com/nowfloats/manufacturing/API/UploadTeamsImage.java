@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
+import com.framework.analytics.SentryController;
 import com.nowfloats.manufacturing.projectandteams.Interfaces.TeamsDetailsListener;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
@@ -98,6 +99,7 @@ public class UploadTeamsImage extends AsyncTask<Void, String, String> {
                 return Objects.requireNonNull(response.body()).string();
             } else {
                 Methods.showSnackBarNegative(appContext, appContext.getString(R.string.uploading_image_failed));
+                SentryController.INSTANCE.captureException(new Exception(response.request().toString()));
             }
 
             in.close();
@@ -105,6 +107,7 @@ public class UploadTeamsImage extends AsyncTask<Void, String, String> {
 
         } catch (Exception e) {
             e.printStackTrace();
+            SentryController.INSTANCE.captureException(e);
         }
         return null;
     }

@@ -47,6 +47,7 @@ import com.appservice.ui.catalog.widgets.*
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.getBitmap
 import com.appservice.viewmodel.ProductViewModel
+import com.framework.analytics.SentryController
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -73,6 +74,7 @@ import okio.Buffer
 import okio.BufferedSource
 import org.json.JSONObject
 import java.io.File
+import java.lang.Exception
 import java.nio.charset.Charset
 import java.util.*
 import kotlin.collections.ArrayList
