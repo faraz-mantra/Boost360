@@ -19,7 +19,7 @@ class LineItemDecoration : RecyclerView.ItemDecoration() {
     /**
      * Height of the space the indicator takes up at the bottom of the view.
      */
-    private val mIndicatorHeight = (DP * 24).toInt()
+    private val mIndicatorHeight = (DP * 32).toInt()
 
     /**
      * Indicator stroke width.
@@ -29,7 +29,7 @@ class LineItemDecoration : RecyclerView.ItemDecoration() {
     /**
      * Indicator width.
      */
-    private val mIndicatorItemLength = DP * 32
+    private val mIndicatorItemLength = DP * 24
 
     /**
      * Padding between indicators.
@@ -52,7 +52,7 @@ class LineItemDecoration : RecyclerView.ItemDecoration() {
         val indicatorStartX: Float = (parent.getWidth() - indicatorTotalWidth) / 2f
 
         // center vertically in the allotted space
-        val indicatorPosY: Float = parent.getHeight() - mIndicatorHeight / 2f
+        val indicatorPosY: Float = parent.getHeight() - mIndicatorHeight / 4f
         drawInactiveIndicators(c, indicatorStartX, indicatorPosY, itemCount)
 
 
