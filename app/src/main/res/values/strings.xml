@@ -1550,7 +1550,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
   <string name="increase_our_site_health">increase your site health score</string>
 
-  <string name="drop_us_on_email_or_call">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to enable this feature</string>
+  <string name="drop_us_on_email_or_call">Please drop us a line at <u>ria@nowfloats.com</u> or call us at 1860&#8211;123&#8211;1233 if you\'d like to enable this feature</string>
 
 
   <array name="businessboldtext">
@@ -2402,11 +2402,11 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="_91_84932987498" translatable="false">+91 84932987498</string>
   <string name="relevant_update_and_product_suggestions">Relevant update and product suggestions:</string>
   <string name="other_information">Other information</string>
-  <string name="if_you_wish_to_change_email_address_please_contact_ria_nowfloats_com">If you wish to change email address, please contact ria@nowfloats.com</string>
+  <string name="if_you_wish_to_change_email_address_please_contact_ria_nowfloats_com">If you wish to change email address, please contact <u>ria@nowfloats.com</u></string>
   <string name="domain_is_a_great_first_step_towards_building_your_brand_on_web">Domain is a great first step towards building your brand on web.</string>
   <string name="website_domain_not_enabled">Website domain not enabled</string>
   <string name="looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it">Looks like this add-on is not added to your current plan. Add it now to start using it.</string>
-  <string name="if_you_wish_to_change_business_category_please_contact_ria_nowfloats_com">If you wish to change business category, please contact ria@nowfloats.com</string>
+  <string name="if_you_wish_to_change_business_category_please_contact_ria_nowfloats_com">If you wish to change business category, please contact <u>ria@nowfloats.com</u></string>
   <string name="products_">Products</string>
   <string name="services_">Services</string>
   <string name="custom_">Custom</string>
