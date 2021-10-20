@@ -18,8 +18,8 @@
       android:orientation="vertical">
 
       <com.framework.views.customViews.CustomCardView
-          android:layout_width="wrap_content"
-          android:layout_height="@dimen/size_430"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
           android:layout_gravity="center"
           android:layout_margin="@dimen/size_16"
           app:cardCornerRadius="@dimen/size_20"
@@ -32,17 +32,18 @@
           <com.festive.poster.customviews.CustomSvgImageView
               android:id="@+id/iv_svg_purchased"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:adjustViewBounds="true"
+              android:minHeight="@dimen/size_430"
               android:scaleType="fitXY" />
 
-<!--          <com.festive.poster.customviews.CustomSvgImageView-->
-<!--              android:id="@+id/iv_svg_reder_view"-->
-<!--              android:layout_width="match_parent"-->
-<!--              android:layout_height="match_parent"-->
-<!--              android:adjustViewBounds="true"-->
-<!--              android:scaleType="fitCenter"-->
-<!--              android:visibility="invisible" />-->
+          <!--          <com.festive.poster.customviews.CustomSvgImageView-->
+          <!--              android:id="@+id/iv_svg_reder_view"-->
+          <!--              android:layout_width="match_parent"-->
+          <!--              android:layout_height="match_parent"-->
+          <!--              android:adjustViewBounds="true"-->
+          <!--              android:scaleType="fitCenter"-->
+          <!--              android:visibility="invisible" />-->
 
           <com.framework.views.customViews.CustomMaterialButton
               android:id="@+id/btn_tap_edit"
