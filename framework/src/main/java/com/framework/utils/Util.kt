@@ -1,33 +1,50 @@
 package com.framework.utils
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
+import android.content.ContentValues
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.ColorFilter
+import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.os.SystemClock
+import android.provider.MediaStore
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.SimpleColorFilter
 import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
+import com.framework.BaseApplication
+import com.framework.constants.PackageNames
 import com.framework.views.customViews.CustomTextView
 import com.google.gson.reflect.TypeToken
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
 import java.text.NumberFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import kotlin.collections.ArrayList
 
 inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
 
@@ -141,3 +158,108 @@ val File.sizeInKb get() = size / 1024
 val File.sizeInMb get() = sizeInKb / 1024
 val File.sizeInGb get() = sizeInMb / 1024
 val File.sizeInTb get() = sizeInGb / 1024
+
+fun <T> List<T>.toArrayList(): ArrayList<T> {
+  return ArrayList(this)
+}
+
+fun View.toBitmap(): Bitmap? {
+  val returnedBitmap =
+    Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+  val canvas = Canvas(returnedBitmap)
+  val bgDrawable = background
+  bgDrawable?.draw(canvas)
+
+  draw(canvas)
+  return returnedBitmap
+}
+
+fun Bitmap.shareAsImage(packageName:String?=null,text: String?=null){
+    val imagesFolder = File(BaseApplication.instance.getExternalFilesDir(null), "shared_images")
+    var uri: Uri? = null
+    try {
+      imagesFolder.mkdirs()
+      val file = File(imagesFolder, "shareimage${System.currentTimeMillis()}.jpg")
+      val stream = FileOutputStream(file)
+      compress(Bitmap.CompressFormat.JPEG, 100, stream)
+      stream.flush()
+      stream.close()
+      uri = FileProvider.getUriForFile(BaseApplication.instance, "${BaseApplication.instance.packageName}.provider", file)
+      val intent = Intent(Intent.ACTION_SEND)
+      intent.putExtra(Intent.EXTRA_STREAM, uri)
+      intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+      intent.type = "image/*"
+      packageName?.let {
+        intent.`package`= packageName
+      }
+      text?.let {
+        intent.putExtra(Intent.EXTRA_TEXT,text)
+      }
+      BaseApplication.instance.startActivity(intent)
+    } catch (e: Exception) {
+      Log.d("IOException: " , e.message.toString())
+      if (e is ActivityNotFoundException){
+        when(packageName){
+          PackageNames.WHATSAPP->{
+            Toast.makeText(BaseApplication.instance,"Whatsapp is not installed on your device",Toast.LENGTH_LONG).show()
+
+          }
+          PackageNames.INSTAGRAM->{
+            Toast.makeText(BaseApplication.instance,"Instagram is not installed on your device",Toast.LENGTH_LONG).show()
+
+          }
+        }
+      }
+    }
+
+}
+fun Bitmap.saveAsImageToAppFolder(destPath:String): File? {
+  var uri: Uri? = null
+  val file = File(destPath)
+
+  try {
+
+    file.createNewFile()
+    val stream = FileOutputStream(file)
+    compress(Bitmap.CompressFormat.PNG, 90, stream)
+    stream.flush()
+    stream.close()
+    return file
+  }catch (e: IOException) {
+    Log.d("IOException: " , e.message.toString())
+    file.delete()
+    return null
+  }
+
+
+}
+
+fun Bitmap.saveImageToSharedStorage(
+  filename: String=System.currentTimeMillis().toString()+".jpg",
+) {
+  val mimeType: String =  "image/jpeg"
+  val directory: String = Environment.DIRECTORY_PICTURES
+  val mediaContentUri: Uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+  val imageOutStream: OutputStream
+  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+    val values = ContentValues().apply {
+      put(MediaStore.Images.Media.DISPLAY_NAME, filename)
+      put(MediaStore.Images.Media.MIME_TYPE, mimeType)
+      put(MediaStore.Images.Media.RELATIVE_PATH, directory)
+    }
+
+    BaseApplication.instance.contentResolver.run {
+      val uri =
+        BaseApplication.instance.contentResolver.insert(mediaContentUri, values)
+          ?: return
+      imageOutStream = openOutputStream(uri) ?: return
+    }
+  } else {
+    val imagePath = Environment.getExternalStoragePublicDirectory(directory).absolutePath
+    val image = File(imagePath, filename)
+    imageOutStream = FileOutputStream(image)
+  }
+
+  imageOutStream.use {compress(Bitmap.CompressFormat.JPEG, 100, it) }
+}

@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
@@ -137,6 +138,20 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
   }
 
 
+  open fun addFragmentReplace(containerId: Int?, fragment: Fragment?, addToBackStack: Boolean) {
+    if (requireActivity().supportFragmentManager.isDestroyed) return
+    if (containerId == null || fragment == null) return
+
+    val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+    if (addToBackStack) {
+      fragmentTransaction.addToBackStack(fragment.javaClass.name)
+    }
+    try {
+      fragmentTransaction.replace(containerId, fragment,fragment.javaClass.name).commit()
+    } catch (e: IllegalStateException) {
+      e.printStackTrace()
+    }
+  }
   override fun onClick(v: View) {}
 
 

@@ -302,4 +302,7 @@
   <string name="update_details">Update details</string>
   <string name="add_profile_image">Add profile image*</string>
   <string name="error_loading_more_page">Error loading more data, please try again!</string>
+  <string name="share_festive_poster">Share Festival poster</string>
+  <string name="new4you">#New4you</string>
+  <string name="make_the_most_out_of_boost_360_for_your_business">Make the most out of Boost 360 for your business</string>
 </resources>

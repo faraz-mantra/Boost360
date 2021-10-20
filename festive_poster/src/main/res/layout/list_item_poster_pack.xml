@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <com.framework.views.customViews.CustomCardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginVertical="@dimen/size_8"
+      app:cardBackgroundColor="@color/white_smoke_1"
+      app:cardCornerRadius="@dimen/size_20"
+      app:cardElevation="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayoutCompat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/size_24">
+
+      <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_poster_heading"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="32dp"
+          android:layout_marginTop="8dp"
+          android:layout_marginEnd="32dp"
+          android:fontFamily="@font/regular"
+          android:textColor="@color/black_4a4a4a"
+          android:textSize="@dimen/heading_7"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          tools:text="Durgapuja" />
+
+      <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_price"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="4dp"
+          android:fontFamily="@font/regular"
+          android:textColor="@color/color_888888"
+          app:layout_constraintEnd_toEndOf="@+id/tv_poster_heading"
+          app:layout_constraintStart_toStartOf="@+id/tv_poster_heading"
+          app:layout_constraintTop_toBottomOf="@+id/tv_poster_heading" />
+
+      <androidx.viewpager2.widget.ViewPager2
+          android:id="@+id/vp_poster"
+          android:layout_width="0dp"
+          android:layout_height="@dimen/size_430"
+          android:layout_marginStart="8dp"
+          android:layout_marginTop="16dp"
+          android:layout_marginEnd="8dp"
+          android:paddingEnd="@dimen/size_60"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/tv_price"
+          tools:ignore="RtlSymmetry" />
+
+      <com.google.android.material.tabs.TabLayout
+          android:id="@+id/dots"
+          android:layout_width="0dp"
+          android:layout_height="@dimen/size_3"
+          android:layout_marginStart="32dp"
+          android:layout_marginTop="24dp"
+          android:layout_marginEnd="32dp"
+          android:background="@android:color/transparent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/vp_poster"
+          app:tabBackground="@drawable/fposter_tab_selector"
+          app:tabGravity="center"
+          app:tabIndicatorFullWidth="false"
+          app:tabIndicatorHeight="0dp"
+          app:tabMode="fixed" />
+
+      <com.framework.views.customViews.CustomMaterialButton
+          android:id="@+id/btn_get_pack"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="32dp"
+          android:layout_marginTop="24dp"
+          android:layout_marginEnd="32dp"
+          android:backgroundTint="@color/colorPrimary"
+          android:elevation="0dp"
+          android:fontFamily="@font/semi_bold"
+          android:lineSpacingExtra="2sp"
+          android:paddingTop="9dp"
+          android:paddingBottom="9dp"
+          android:stateListAnimator="@null"
+          android:textAllCaps="false"
+          android:textColor="@color/white"
+          android:textSize="@dimen/heading_6"
+          android:translationZ="0dp"
+          app:cornerRadius="@dimen/size_15"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/dots"
+          tools:text="Get navratri posters pack" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+  </com.framework.views.customViews.CustomCardView>
+</layout>
