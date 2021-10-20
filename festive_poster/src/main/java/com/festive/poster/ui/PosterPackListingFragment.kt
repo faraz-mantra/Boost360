@@ -21,6 +21,7 @@ import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
+import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.toArrayList
@@ -55,7 +56,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
   override fun onCreateView() {
     super.onCreateView()
     ViewCompat.setNestedScrollingEnabled(binding?.rvPosters!!, false);
-
+    Log.i(TAG, "onCreateView: ")
     session = UserSessionManager(requireActivity())
     sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
 //    setObserver()
@@ -85,19 +86,20 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
   private fun getTemplateViewConfig() {
     showProgress()
     viewModel?.getTemplateConfig(session?.fPID, session?.fpTag)
-      ?.observe(viewLifecycleOwner, {
+      ?.observeOnce(viewLifecycleOwner, {
         Log.i(TAG, "template config: ${Gson().toJson(it)}")
-        val response = it as? GetTemplateViewConfigResponse
-        response?.let {
-          val tagArray = prepareTagForApi(response.Result.templatePacks.tags)
-          fetchTemplates(tagArray, response)
+          val response = it as? GetTemplateViewConfigResponse
+          response?.let {
+            val tagArray = prepareTagForApi(response.Result.templatePacks.tags)
+            fetchTemplates(tagArray, response)
         }
+
       })
   }
 
   private fun fetchTemplates(tagArray: ArrayList<String>, response: GetTemplateViewConfigResponse) {
     viewModel?.getTemplates(session?.fPID, session?.fpTag, tagArray)
-      ?.observe(viewLifecycleOwner, {
+      ?.observeOnce(viewLifecycleOwner, {
         dataList = ArrayList()
         val templates_response = it as? GetTemplatesResponse
         templates_response?.let {
@@ -118,7 +120,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
   }
 
   private fun getPriceOfPosterPacks() {
-    viewModel?.getUpgradeData()?.observe(viewLifecycleOwner, {
+    viewModel?.getUpgradeData()?.observeOnce(viewLifecycleOwner, {
       val response = it as? UpgradeGetDataResponse
       response?.let {
         dataList?.forEach { pack ->
@@ -128,10 +130,13 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
           pack.price = feature_festive?.price ?: 0.0
           Log.i(TAG, "festive price: ${feature_festive?.price}")
         }
-        rearrangeList()
-        adapter = AppBaseRecyclerViewAdapter(baseActivity, dataList!!, this)
-        binding?.rvPosters?.adapter = adapter
-        binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
+
+          rearrangeList()
+          adapter = AppBaseRecyclerViewAdapter(baseActivity, dataList!!, this)
+          binding?.rvPosters?.adapter = adapter
+          binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
+
+
         hideProgress()
       }
     })

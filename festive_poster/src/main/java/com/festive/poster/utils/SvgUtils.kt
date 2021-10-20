@@ -4,19 +4,26 @@ import android.net.Uri
 import android.util.Log
 import android.widget.ImageView
 import com.caverock.androidsvg.SVG
-import com.framework.glide.customsvgloader.PosterKeyModel
 import com.framework.glide.GlideApp
 import com.framework.glide.GlideRequest
-import com.framework.glide.customsvgloader.CustomPictureDrawable
-import com.framework.glide.customsvgloader.SvgDrawableListener
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.*
 import java.net.HttpURLConnection
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.framework.glide.customsvgloader.FileUtils
+import com.festive.poster.models.PosterModel
+import com.framework.constants.PackageNames
+import com.framework.glide.customsvgloader.*
+import com.framework.utils.saveImageToSharedStorage
+import com.framework.utils.shareAsImage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 object SvgUtils {
@@ -153,6 +160,50 @@ object SvgUtils {
     }
 
 
+    fun shareUncompressedSvg(
+            url: String?,
+            model: PosterModel,
+            context: Context,
+            packageName:String?=null
+        ) {
+            url?.let {
+                CoroutineScope(Dispatchers.IO).launch {
+                    var svgString = SvgRenderCacheUtil.instance.retrieveFromCache(url)
+                    if (svgString == null || svgString.isEmpty()) {
+                        svgString = SvgUtils.getSvgAsAString(url)
+                        svgString?.let { SvgRenderCacheUtil.instance.saveToCache(url, it) }
+                    }
+                    if (svgString != null && !svgString.isEmpty()) {
+                        svgString = SvgRenderCacheUtil.instance.replace(svgString, model.keys, context)
+                        val svg = SVG.getFromString(svgString)
+                        svg.renderDPI = context.resources?.displayMetrics?.densityDpi?.toFloat() ?: 480.0f
+                        svg.documentWidth = svg.documentWidth*4
+                        svg.documentHeight = svg.documentHeight*4
+                        val b = Bitmap.createBitmap(
+                            svg.documentWidth.toInt(),
+                            svg.documentHeight.toInt(), Bitmap.Config.ARGB_8888
+                        )
+                        val canvas = Canvas(b)
+                        svg.renderToCanvas(canvas)
+                        withContext(Dispatchers.Main) {
+                            when (packageName) {
+                                PackageNames.INSTAGRAM -> b.shareAsImage(
+                                    PackageNames.INSTAGRAM,
+                                    text = model.greeting_message
+                                )
+                                PackageNames.WHATSAPP -> b.shareAsImage(
+                                    PackageNames.WHATSAPP,
+                                    text = model.greeting_message
+                                )
+                                "" -> b.shareAsImage(text = model.greeting_message)
+                                else -> b.saveImageToSharedStorage()
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
 
 
 

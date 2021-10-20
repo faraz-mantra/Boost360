@@ -1,7 +1,12 @@
 package com.festive.poster.ui
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +25,7 @@ import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.base.BaseActivity
+import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.FESTIVAL_POSTER_PURCHASED_GALLERY
@@ -31,6 +37,8 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
   private var adapter: AppBaseRecyclerViewAdapter<PosterModel>? = null
   private var sharedViewModel: FestivePosterSharedViewModel? = null
   private val TAG = "PosterListFragment"
+  private var selectedPosterModel:PosterModel?=null
+  private val RC_STORAGE_PERMISSION=200
 
   companion object {
     val BK_TAG = "BK_TAG"
@@ -111,18 +119,18 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
       session?.fPID,
       session?.fpTag,
       arrayListOf(packTag!!)
-    )?.observe(viewLifecycleOwner, {
-      val response = it as? GetTemplatesResponse
-      response?.let {
-        dataList = response.Result.templates.toArrayList()
-        dataList?.forEach { posterModel -> posterModel.isPurchased = true }
-        adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>, dataList!!, this)
-        binding?.rvPosters?.adapter = adapter
-        binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
-        observeCustomization()
-        adapter?.notifyDataSetChanged()
-      }
-      hideProgress()
+    )?.observeOnce(viewLifecycleOwner, {
+        val response = it as? GetTemplatesResponse
+        response?.let {
+          dataList = response.Result.templates.toArrayList()
+          dataList?.forEach { posterModel -> posterModel.isPurchased = true }
+          adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>, dataList!!, this)
+          binding?.rvPosters?.adapter = adapter
+          binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
+          observeCustomization()
+          adapter?.notifyDataSetChanged()
+        }
+        hideProgress()
     })
 
 
@@ -140,6 +148,42 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
         showEditGreetingMessageSheet(position)
 
       }
+      RecyclerViewActionType.POSTER_DOWNLOAD_CLICKED.ordinal->{
+        selectedPosterModel = item as PosterModel
+        checkStoragePermission()
+      }
+    }
+  }
+
+  private fun checkStoragePermission() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      if (checkSelfPermission(requireContext(),Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+        requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),RC_STORAGE_PERMISSION)
+      }else{
+        downloadSelectedPoster()
+      }
+    } else {
+      downloadSelectedPoster()
+    }
+
+  }
+
+  private fun downloadSelectedPoster() {
+    SvgUtils.shareUncompressedSvg(selectedPosterModel?.variants?.firstOrNull()?.svgUrl,selectedPosterModel!!,requireContext())
+  }
+
+  override fun onRequestPermissionsResult(
+    requestCode: Int,
+    permissions: Array<out String>,
+    grantResults: IntArray
+  ) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+    if (requestCode==RC_STORAGE_PERMISSION&&grantResults.isNotEmpty()){
+      if (grantResults[0]== PackageManager.PERMISSION_GRANTED)
+        downloadSelectedPoster()
+      else
+        Toast.makeText(requireActivity(), "We need access of storage to save the image", Toast.LENGTH_SHORT).show()
     }
   }
 
