@@ -262,4 +262,6 @@ fun Bitmap.saveImageToSharedStorage(
   }
 
   imageOutStream.use {compress(Bitmap.CompressFormat.JPEG, 100, it) }
+  Toast.makeText(BaseApplication.instance, "Image Saved To Storage", Toast.LENGTH_SHORT).show()
+
 }

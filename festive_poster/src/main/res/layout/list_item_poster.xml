@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <com.framework.views.customViews.CustomCardView
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
+        android:layout_marginStart="@dimen/size_8"
+        android:layout_marginEnd="@dimen/size_16"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/size_4"
         app:cardCornerRadius="@dimen/size_20">
 
         <com.framework.views.customViews.CustomCardView
