@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.festive.poster.R
 import com.festive.poster.databinding.BsheetCustomizePosterBinding
 import com.festive.poster.models.PosterCustomizationModel
+import com.festive.poster.utils.MarketPlaceUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.framework.base.BaseBottomSheetDialog
@@ -108,11 +109,16 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
       path
     )
     if (!isAlreadyPurchased) {
-      PosterPaymentSheet().show(parentFragmentManager, PosterPaymentSheet::class.java.name)
+      //PosterPaymentSheet().show(parentFragmentManager, PosterPaymentSheet::class.java.name)
+      gotoMarketPlace()
     } else if (creatorName == null) {
       addFragmentReplace(R.id.container, PosterListFragment.newInstance(packTag!!), true)
     }
     dismiss()
+  }
+
+  private fun gotoMarketPlace() {
+    MarketPlaceUtils.initiateAddonMarketplace(session!!,true,"","",true,requireContext())
   }
 
   private fun validation(): Boolean {
