@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data></data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/riv_close_bottomSheet"
+      android:layout_width="@dimen/size_40"
+      android:layout_height="@dimen/size_40"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginBottom="@dimen/size_15"
+      android:src="@drawable/ic_cross_grey_circle" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/bottoms_sheet_top20dp_white"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      android:padding="@dimen/size_20">
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_your_full_name"
+        android:textColor="@color/black_4a4a4a"
+        app:fontFamily="@font/bold"
+        app:textType="HEADING_5" />
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_20"
+        android:orientation="horizontal">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/customTextView7"
+          style="@style/BusinessProfile_Text_Title"
+          android:text="@string/full_name_"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_business_name_count"
+          style="@style/BusinessProfile_Text_Title"
+          android:layout_gravity="end"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          tools:text="0/40" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+      <com.framework.views.customViews.CustomEditText
+        android:id="@+id/cet_business_name"
+        style="@style/BusinessProfileTextField"
+        android:drawableEnd="@null"
+        android:inputType="textPersonName"
+        android:maxLength="40"
+        android:maxLines="1"
+        android:padding="@dimen/size_10"
+        android:scrollbars="vertical"
+        android:singleLine="true"
+        app:textType="BODY_3"
+        tools:ignore="UnusedAttribute" />
+
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/btn_publish"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/size_20"
+        android:backgroundTint="@color/material_button_background_state"
+        android:enabled="false"
+        android:text="@string/save"
+        android:textColor="@color/white" />
+
+      <ProgressBar
+          android:visibility="gone"
+          android:id="@+id/progressBar"
+          android:layout_marginTop="@dimen/size_8"
+          android:theme="@style/progressBar"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

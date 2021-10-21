@@ -22,6 +22,7 @@ import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
+import com.festive.poster.ui.FestivePosterContainerActivity
 import com.framework.analytics.SentryController
 import com.framework.pref.*
 import com.framework.webengageconstant.*
@@ -672,6 +673,15 @@ fun AppCompatActivity.startBusinessProfileDetailEdit(session: UserSessionManager
   }
 }
 
+fun AppCompatActivity.startUserProfileDetail(session: UserSessionManager?) {
+  try {
+    WebEngageController.trackEvent(USER_PROFILE_PAGE, CLICK, TO_BE_ADDED)
+    startFragmentDashboardActivity(com.dashboard.constant.FragmentType.FRAGMENT_USER_PROFILE)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
 
 fun AppCompatActivity.startBusinessContactInfo(session: UserSessionManager?) {
   try {
@@ -981,6 +991,27 @@ fun AppCompatActivity.startDownloadUri(url: String, isToast: Boolean = false) {
     request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "boost360")
     downloader.enqueue(request)
     if (isToast) Toast.makeText(this, "File downloading.. ", Toast.LENGTH_SHORT).show()
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+
+fun AppCompatActivity.startFestivePosterActivity(isBanner: Boolean = false) {
+  try {
+    WebEngageController.trackEvent(if (isBanner) SHARE_FESTIVE_POSTER_BANNER else SHARE_FESTIVE_POSTER_CLICK)
+    val intent = Intent(this, FestivePosterContainerActivity::class.java)
+    startActivity(intent)
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startLogoutActivity() {
+  try {
+    WebEngageController.trackEvent(BOOST_LOGOUT_CLICK, CLICK, TO_BE_ADDED)
+    val i = Intent(this, Class.forName("com.nowfloats.helper.LogoutActivity"))
+    this.startActivity(i)
   } catch (e: Exception) {
     e.printStackTrace()
   }

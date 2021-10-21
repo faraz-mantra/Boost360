@@ -123,6 +123,14 @@
   <dimen name="size_380">380dp</dimen>
   <dimen name="size_400">400dp</dimen>
   <dimen name="size_420">420dp</dimen>
+  <dimen name="size_430">430dp</dimen>
+  <dimen name="size_440">440dp</dimen>
+  <dimen name="size_450">450dp</dimen>
+  <dimen name="size_480">480dp</dimen>
+  <dimen name="size_500">500dp</dimen>
+  <dimen name="size_550">550dp</dimen>
+  <dimen name="size_600">600dp</dimen>
+  <dimen name="size_650">650dp</dimen>
 
 
   <dimen name="text_8">8sp</dimen>

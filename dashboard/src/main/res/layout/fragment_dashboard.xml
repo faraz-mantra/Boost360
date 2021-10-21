@@ -30,7 +30,7 @@
 
           <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_210">
+            android:layout_height="@dimen/size_260">
 
             <com.framework.views.customViews.CustomImageView
               android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                 android:id="@+id/low_readiness_score_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_190"
+                android:layout_marginTop="@dimen/size_240"
                 android:background="@drawable/ic_bg_dark_white_top_round"
                 android:orientation="vertical"
                 android:visibility="gone">
@@ -117,6 +117,7 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:ellipsize="end"
+                      android:fontFamily="@font/regular"
                       android:gravity="center_vertical"
                       android:includeFontPadding="false"
                       android:maxLines="1"
@@ -124,7 +125,6 @@
                       android:textColor="@color/white"
                       app:autoSizeMaxTextSize="18sp"
                       app:autoSizeMinTextSize="14sp"
-                      android:fontFamily="@font/regular"
                       app:autoSizeStepGranularity="1sp"
                       app:autoSizeTextType="uniform" />
 
@@ -133,8 +133,8 @@
                       android:layout_height="wrap_content"
                       android:layout_marginTop="@dimen/size_2"
                       android:ellipsize="end"
-                      android:maxLines="2"
                       android:fontFamily="@font/regular"
+                      android:maxLines="2"
                       android:text="@string/improve_your_score_to_90"
                       android:textColor="@color/white"
                       app:textType="OVERLINE" />
@@ -176,13 +176,13 @@
                   android:layout_marginStart="@dimen/size_18"
                   android:layout_marginTop="@dimen/size_12"
                   android:layout_marginEnd="@dimen/size_14">
+
                   <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginEnd="0.8dp"
                     android:repeatCount="infinite"
                     android:repeatMode="restart"
-                    tools:cardBackgroundColor="@color/colorAccent"
                     app:cardBackgroundColor="@android:color/transparent"
                     app:cardCornerRadius="@dimen/size_4"
                     app:cardElevation="0dp"
@@ -190,7 +190,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_default="percent">
+                    app:layout_constraintWidth_default="percent"
+                    tools:cardBackgroundColor="@color/colorAccent">
 
                     <com.airbnb.lottie.LottieAnimationView
                       android:layout_width="match_parent"
@@ -198,8 +199,8 @@
                       android:layout_gravity="center_horizontal"
                       android:repeatCount="infinite"
                       android:repeatMode="restart"
-                      android:scaleX="-1.5"
                       android:rotation="-180"
+                      android:scaleX="-1.5"
                       app:lottie_autoPlay="true"
                       app:lottie_loop="true"
                       app:lottie_rawRes="@raw/progress_green" />
@@ -209,8 +210,8 @@
                     android:id="@+id/progressBar"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:backgroundTint="@color/black_light_progress"
                     android:background="@drawable/ic_dr_progress_bg"
+                    android:backgroundTint="@color/black_light_progress"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -346,7 +347,7 @@
                 android:id="@+id/high_readiness_score_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_190"
+                android:layout_marginTop="@dimen/size_240"
                 android:background="@drawable/ic_business_snapshot_bac_d"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/size_12"
@@ -371,15 +372,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                      android:layout_marginTop="@dimen/size_12"
-                      android:layout_marginBottom="@dimen/size_12"
-                      app:dotsColor="@color/light_grey_1"
-                      app:dotsCornerRadius="@dimen/_6dp"
-                      app:dotsSize="@dimen/size_5"
-                      app:dotsSpacing="@dimen/size_2"
-                      app:dotsWidthFactor="2.5"
-                      app:progressMode="false"
-                      app:selectedDotColor="@color/grey_dark_2" />
+                    android:layout_marginTop="@dimen/size_12"
+                    android:layout_marginBottom="@dimen/size_12"
+                    app:dotsColor="@color/light_grey_1"
+                    app:dotsCornerRadius="@dimen/_6dp"
+                    app:dotsSize="@dimen/size_5"
+                    app:dotsSpacing="@dimen/size_2"
+                    app:dotsWidthFactor="2.5"
+                    app:progressMode="false"
+                    app:selectedDotColor="@color/grey_dark_2" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
               </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -388,7 +389,7 @@
               android:id="@+id/shimmer_load_dr_score_card"
               android:layout_width="match_parent"
               android:layout_height="@dimen/size_120"
-              android:layout_marginTop="@dimen/size_190"
+              android:layout_marginTop="@dimen/size_240"
               android:visibility="visible"
               app:cardBackgroundColor="@color/white"
               app:cardCornerRadius="@dimen/size_18"
@@ -599,10 +600,10 @@
               <com.framework.views.customViews.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/semi_bold"
                 android:text="@string/share_business_card"
                 android:textColor="@color/white"
                 app:textAllCaps="false"
-                android:fontFamily="@font/semi_bold"
                 app:textType="HEADING_6" />
 
               <com.framework.views.customViews.CustomImageView
@@ -611,6 +612,39 @@
                 android:layout_marginStart="@dimen/size_6"
                 android:visibility="gone"
                 app:srcCompat="@drawable/ic_arrow_down_white_12_d" />
+            </LinearLayout>
+
+            <LinearLayout
+              android:id="@+id/btn_festive"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:layout_marginTop="@dimen/size_10"
+              android:layout_marginEnd="@dimen/size_16"
+              android:background="@drawable/ic_btn_round_white"
+              android:clickable="true"
+              android:focusable="true"
+              android:foreground="?attr/selectableItemBackground"
+              android:gravity="center|center_vertical"
+              android:orientation="horizontal">
+
+              <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/semi_bold"
+                android:text="@string/share_festive_poster"
+                android:textColor="@color/colorAccentLight"
+                app:textAllCaps="false"
+                app:textType="HEADING_6" />
+
+              <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="@dimen/size_44"
+                android:layout_height="@dimen/size_44"
+                android:layout_marginStart="@dimen/size_6"
+                app:lottie_autoPlay="true"
+                android:layout_marginTop="@dimen/size_1"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/yellow_new_lotty" />
             </LinearLayout>
 
           </LinearLayout>
@@ -1006,7 +1040,7 @@
     <com.framework.views.customViews.CustomCardView
       android:id="@+id/scroll_down_btn"
       android:layout_width="@dimen/size_40"
-                    android:layout_height="@dimen/size_40"
+      android:layout_height="@dimen/size_40"
       android:layout_gravity="bottom|center_horizontal"
       android:layout_marginBottom="@dimen/size_16"
       android:clickable="true"

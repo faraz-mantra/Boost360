@@ -128,7 +128,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
         binding?.ctvActive?.setTextColor(getColor(R.color.green_27AE60))
       } else {
         binding?.ctvActive?.text = getString(R.string.inactive)
-        binding?.ctvActive?.setTextColor(getColor(R.color.red_F40000))
+        binding?.ctvActive?.setTextColor(getColor(R.color.red_E39595))
       }
       binding?.ctvActive?.gone()
     } else {

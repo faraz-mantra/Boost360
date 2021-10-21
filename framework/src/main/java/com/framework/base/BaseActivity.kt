@@ -29,7 +29,7 @@ import io.reactivex.disposables.Disposable
 
 abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> : AppCompatActivity(), View.OnClickListener {
 
-  protected var TAG = this.javaClass.simpleName
+  protected open var TAG = this.javaClass.simpleName
   protected var navigator: Navigator? = null
   protected var binding: Binding? = null
   protected lateinit var viewModel: ViewModel
@@ -239,7 +239,7 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
       fragmentTransaction.addToBackStack(fragment.javaClass.name)
     }
     try {
-      fragmentTransaction.replace(containerId, fragment).commit()
+      fragmentTransaction.replace(containerId, fragment,fragment.javaClass.name).commit()
     } catch (e: IllegalStateException) {
       e.printStackTrace()
       SentryController.captureException(e)

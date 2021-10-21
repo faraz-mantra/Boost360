@@ -16,6 +16,8 @@ import com.dashboard.controller.ui.allAddOns.AllBoostAddonsFragment
 import com.dashboard.controller.ui.business.BusinessProfileFragment
 import com.dashboard.controller.ui.customisationnav.CustomisationNavFragment
 import com.dashboard.controller.ui.drScore.DigitalReadinessScoreFragment
+import com.dashboard.controller.ui.profile.CropProfileImageFragment
+import com.dashboard.controller.ui.profile.UserProfileFragment
 import com.dashboard.controller.ui.websiteTheme.FragmentWebsiteTheme
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
@@ -27,11 +29,7 @@ import com.framework.views.customViews.CustomToolbar
 open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var type: FragmentType? = null
-  private var digitalReadinessScoreFragment: DigitalReadinessScoreFragment? = null
-  private var allBoostAddonsFragment: AllBoostAddonsFragment? = null
-  private var websiteThemeFragment: FragmentWebsiteTheme? = null
-  private var businessProfileFragment: BusinessProfileFragment? = null
-  private var customisationNavFragment: CustomisationNavFragment? = null
+  private var userFragment: UserProfileFragment? = null
 
   override fun getLayout(): Int {
     return R.layout.activity_fragment_container
@@ -60,7 +58,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   override fun customTheme(): Int? {
     return when (type) {
       FragmentType.DIGITAL_READINESS_SCORE -> R.style.DashboardThemeNew
-      FragmentType.FRAGMENT_WEBSITE_THEME,FragmentType.FRAGMENT_WEBSITE_NAV -> R.style.DashboardThemeNew
+      FragmentType.FRAGMENT_WEBSITE_THEME, FragmentType.FRAGMENT_WEBSITE_NAV, FragmentType.FRAGMENT_USER_PROFILE, FragmentType.FRAGMENT_USER_PROFILE_IMAGE_CROP -> R.style.DashboardThemeNew
       FragmentType.FRAGMENT_BUSINESS_PROFILE -> R.style.BusinessProfileTheme
       else -> super.customTheme()
     }
@@ -69,7 +67,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.ALL_BOOST_ADD_ONS -> ContextCompat.getColor(this, R.color.colorPrimary)
-      FragmentType.FRAGMENT_WEBSITE_THEME, FragmentType.FRAGMENT_WEBSITE_NAV -> ContextCompat.getColor(this, R.color.gray_4e4e4e)
+      FragmentType.FRAGMENT_WEBSITE_THEME, FragmentType.FRAGMENT_WEBSITE_NAV, FragmentType.FRAGMENT_USER_PROFILE, FragmentType.FRAGMENT_USER_PROFILE_IMAGE_CROP,
       FragmentType.FRAGMENT_BUSINESS_PROFILE -> ContextCompat.getColor(this, R.color.gray_4e4e4e)
       else -> super.getToolbarBackgroundColor()
     }
@@ -87,13 +85,18 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
       FragmentType.ALL_BOOST_ADD_ONS -> resources.getString(R.string.all_boost_add_ons)
       FragmentType.FRAGMENT_WEBSITE_NAV -> getString(R.string.website_style_customisation)
       FragmentType.FRAGMENT_BUSINESS_PROFILE -> getString(R.string.business_profile_)
+      FragmentType.FRAGMENT_USER_PROFILE -> getString(R.string.my_profile_d)
+      FragmentType.FRAGMENT_USER_PROFILE_IMAGE_CROP -> getString(R.string.crop_your_profile_photo)
+
       else -> super.getToolbarTitle()
     }
   }
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.ALL_BOOST_ADD_ONS, FragmentType.FRAGMENT_WEBSITE_THEME,FragmentType.FRAGMENT_WEBSITE_NAV , FragmentType.FRAGMENT_BUSINESS_PROFILE -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_toolbar_d)
+      FragmentType.ALL_BOOST_ADD_ONS, FragmentType.FRAGMENT_WEBSITE_THEME, FragmentType.FRAGMENT_WEBSITE_NAV,
+      FragmentType.FRAGMENT_BUSINESS_PROFILE, FragmentType.FRAGMENT_USER_PROFILE -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_toolbar_d)
+      FragmentType.FRAGMENT_USER_PROFILE_IMAGE_CROP -> ContextCompat.getDrawable(this, R.drawable.ic_cross_white)
       else -> super.getNavigationIcon()
     }
   }
@@ -133,36 +136,25 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
 
   private fun getFragmentInstance(type: FragmentType?): BaseFragment<*, *>? {
     return when (type) {
-      FragmentType.DIGITAL_READINESS_SCORE -> {
-        digitalReadinessScoreFragment = DigitalReadinessScoreFragment.newInstance()
-        digitalReadinessScoreFragment
+      FragmentType.DIGITAL_READINESS_SCORE -> DigitalReadinessScoreFragment.newInstance()
+      FragmentType.ALL_BOOST_ADD_ONS -> AllBoostAddonsFragment.newInstance()
+      FragmentType.FRAGMENT_WEBSITE_THEME -> FragmentWebsiteTheme.newInstance()
+      FragmentType.FRAGMENT_BUSINESS_PROFILE -> BusinessProfileFragment.newInstance()
+      FragmentType.FRAGMENT_WEBSITE_NAV -> CustomisationNavFragment.newInstance()
+      FragmentType.FRAGMENT_USER_PROFILE -> {
+        userFragment = UserProfileFragment.newInstance()
+        userFragment
       }
-      FragmentType.ALL_BOOST_ADD_ONS -> {
-        allBoostAddonsFragment = AllBoostAddonsFragment.newInstance()
-        allBoostAddonsFragment
-      }
-      FragmentType.FRAGMENT_WEBSITE_THEME -> {
-        websiteThemeFragment = FragmentWebsiteTheme.newInstance()
-        websiteThemeFragment
-      }
-      FragmentType.FRAGMENT_BUSINESS_PROFILE -> {
-        businessProfileFragment = BusinessProfileFragment.newInstance()
-        businessProfileFragment
-      }
-      FragmentType.FRAGMENT_WEBSITE_NAV -> {
-        customisationNavFragment = CustomisationNavFragment.newInstance()
-        customisationNavFragment
-      }
+      FragmentType.FRAGMENT_USER_PROFILE_IMAGE_CROP -> CropProfileImageFragment.newInstance()
       else -> throw IllegalFragmentTypeException()
     }
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    digitalReadinessScoreFragment?.onActivityResult(requestCode, resultCode, data)
-    allBoostAddonsFragment?.onActivityResult(requestCode, resultCode, data)
-    businessProfileFragment?.onActivityResult(requestCode, resultCode, data)
-    customisationNavFragment?.onActivityResult(requestCode, resultCode, data)
+    for (fragment in supportFragmentManager.fragments) {
+      fragment.onActivityResult(requestCode, resultCode, data)
+    }
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -174,6 +166,14 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
     }
     return super.onOptionsItemSelected(item)
   }
+
+  fun onRefresh() {
+    if (userFragment != null) userFragment?.onResume()
+  }
+
+}
+
+fun fetchUserProfileData() {
 
 }
 
