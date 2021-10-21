@@ -11,9 +11,12 @@ import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.domainbooking.model.DomainStepsModel
+import com.appservice.utils.WebEngageController
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.framework.webengageconstant.*
+import com.framework.webengageconstant.ADDING_EXISTING_DOMAIN_FLOW_PAGE_LOAD
 
 class AddingExistingDomainFragment :
     AppBaseFragment<FragmentAddingExistingDomainBinding, BaseViewModel>(),
@@ -40,6 +43,7 @@ class AddingExistingDomainFragment :
     }
 
     override fun onCreateView() {
+        WebEngageController.trackEvent(DOMAIN_ADDING_EXISTING_DOMAIN_STEPS_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
         (baseActivity as? DomainBookingContainerActivity)?.setToolbarTitleNew(
             resources.getString(
                 R.string.adding_existing_domain
@@ -50,11 +54,18 @@ class AddingExistingDomainFragment :
     }
 
     private fun setOnClickListeners() {
+        binding?.tvInfo?.setOnClickListener{
+            WebEngageController.trackEvent(ADDING_EXISTING_DOMAIN_STEPS_HELP_BUTTON_CLICK, CLICK, NO_EVENT_VALUE)
+            showShortToast(getString(R.string.coming_soon))
+        }
+
         binding?.btnNextStep?.setOnClickListener {
             if (addingExistingDomainStepStatus < 3) {
+                WebEngageController.trackEvent(ADDING_EXISTING_DOMAIN_NEXT_STEPS_CLICK, CLICK, NO_EVENT_VALUE)
                 ++addingExistingDomainStepStatus
                 setUiStepStatus()
             } else {
+                WebEngageController.trackEvent(DOMAIN_ADDING_EXISTING_FINAL_SUCCESS_CLICK, CLICK, NO_EVENT_VALUE)
                 startFragmentDomainBookingActivity(
                     activity = requireActivity(),
                     type = com.appservice.constant.FragmentType.ACTIVE_DOMAIN_FRAGMENT,
@@ -68,6 +79,7 @@ class AddingExistingDomainFragment :
             .onBackPressedDispatcher
             .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
+                    WebEngageController.trackEvent(ADDING_EXISTING_DOMAIN_STEPS_BACK_CLICK, CLICK, NO_EVENT_VALUE)
                     if (addingExistingDomainStepStatus >= 0) {
                         --addingExistingDomainStepStatus
                         setUiStepStatus()
@@ -193,13 +205,13 @@ class AddingExistingDomainFragment :
     private fun stepOneData(): ArrayList<DomainStepsModel> {
         val stepsList = arrayListOf(
             DomainStepsModel(
-                SpannableString("Open a new tab in your browser"), true
+                SpannableString("Open a new tab in your browser"), true, isTextDark = true
             ),
             DomainStepsModel(
-                SpannableString("Go to domain provider’s setting and log in"), true
+                SpannableString("Go to domain provider’s setting and log in"), true, isTextDark = true
             ),
             DomainStepsModel(
-                SpannableString("Come back here for next steps"), true
+                SpannableString("Come back here for next steps"), true, isTextDark = true
             )
         )
 
@@ -210,15 +222,15 @@ class AddingExistingDomainFragment :
         val stepsList = arrayListOf(
             DomainStepsModel(
                 SpannableString("On your domain provider’s site, go to ‘domains’ page."),
-                true
+                true, isTextDark = true
             ),
             DomainStepsModel(
                 SpannableString("Find <b><u>‘$domainNameString’</u></b> and go to it’s control panel or settings panel."),
-                true
+                true, isTextDark = true
             ),
             DomainStepsModel(
                 SpannableString("Find where you manage the domain’s settings. <b>Look for a button or link with the words Manage, Manage settings, domain settings or something similar</b>."),
-                true
+                true, isTextDark = true
             )
         )
         return stepsList
@@ -228,11 +240,11 @@ class AddingExistingDomainFragment :
         val stepsList = arrayListOf(
             DomainStepsModel(
                 SpannableString("In your domain settings, find the area where you manage or edit nameserver records, <b><u>(help)</u>.\n\nThis area could be called DNS settings, Nameservers, NS or similar. If you don’t see it immediately, try looking for a menu at the top or on the side of this page.</b>"),
-                true
+                true, isTextDark = true
             ),
             DomainStepsModel(
                 SpannableString("Find your current nameservers. They look like this:\n<b>ns-cloud-d1.googleomains.com\nns-cloud-d2.googleomains.com\nns-cloud-d3.googleomains.com\nns-cloud-d4.googleomains.com</b>"),
-                true
+                true, isTextDark = true
             ),
         )
         return stepsList
@@ -242,11 +254,11 @@ class AddingExistingDomainFragment :
         val stepsList = arrayListOf(
             DomainStepsModel(
                 SpannableString("On your domain provider’s site, replace your current nameservers with the <____> nameservers below, one at a time."),
-                true
+                true, isTextDark = true
             ),
             DomainStepsModel(
                 SpannableString("Remove previously written nameservers and add below shown 2 nameservers."),
-                true
+                true, isTextDark = true
             )
         )
         return stepsList
@@ -256,9 +268,9 @@ class AddingExistingDomainFragment :
         val stepsList = arrayListOf(
             DomainStepsModel(
                 SpannableString("Now you should have two above mentioned nameserver records. If you have others, just remove them."),
-                true
+                true, isTextDark = true
             ),
-            DomainStepsModel(SpannableString("Save your changes."), true),
+            DomainStepsModel(SpannableString("Save your changes."), true, isTextDark = true),
         )
         return stepsList
     }

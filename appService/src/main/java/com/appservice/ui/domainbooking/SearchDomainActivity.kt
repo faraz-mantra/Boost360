@@ -18,6 +18,7 @@ import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.domainbooking.model.SimilarDomainSuggestionModel
 import com.appservice.utils.Validations
+import com.appservice.utils.WebEngageController
 import com.appservice.utils.getDomainSplitValues
 import com.appservice.viewmodel.SearchDomainViewModel
 import com.framework.extensions.afterTextChanged
@@ -27,6 +28,7 @@ import com.framework.extensions.visible
 import com.framework.pref.clientId
 import com.framework.pref.getDomainName
 import com.framework.utils.showKeyBoard
+import com.framework.webengageconstant.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class SearchDomainActivity : AppBaseActivity<ActivitySearchDomainBinding, SearchDomainViewModel>(),
@@ -41,11 +43,19 @@ class SearchDomainActivity : AppBaseActivity<ActivitySearchDomainBinding, Search
     }
 
     override fun onCreateView() {
+        WebEngageController.trackEvent(DOMAIN_SEARCH_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
+        setOnListeners()
+        this.showKeyBoard(binding?.edSearchBox)
+    }
+
+    private fun setOnListeners() {
         binding?.btnContinue?.setOnClickListener {
+            WebEngageController.trackEvent(DOMAIN_CONFIRM_SELECTED_DOMAIN_CLICK, CLICK, NO_EVENT_VALUE)
             confirmBottomSheet()
         }
 
         binding?.include?.customImageView4?.setOnClickListener {
+            WebEngageController.trackEvent(DOMAIN_SEARCH_PAGE_BACK_CLICK, CLICK, NO_EVENT_VALUE)
             this.onNavPressed()
         }
 
@@ -71,8 +81,6 @@ class SearchDomainActivity : AppBaseActivity<ActivitySearchDomainBinding, Search
             }
 
         })
-
-        this.showKeyBoard(binding?.edSearchBox)
     }
 
     private fun searchDomain(domainString: String) {
@@ -91,16 +99,20 @@ class SearchDomainActivity : AppBaseActivity<ActivitySearchDomainBinding, Search
             binding?.layputEtError?.visible()
 
             val color: Int
+            val icon:Int
             val stringAvailability: Int
             if (isAvailable) {
+                icon = R.drawable.ic_selected_tick
                 color = R.color.green_dark
                 stringAvailability = R.string.is_available_new
                 binding?.btnContinue?.visible()
             } else {
+                icon = R.drawable.ic_error_red
                 color = R.color.red_dark
                 stringAvailability = R.string.is_not_available
                 binding?.btnContinue?.gone()
             }
+            binding?.tvIsDomainAvailable?.setCompoundDrawables(ContextCompat.getDrawable(this, icon), null, null, null)
             binding?.tvIsDomainAvailable?.text = "$domainString "
             binding?.tvIsDomainAvailable?.setTextColor(ContextCompat.getColor(this, color))
             binding?.tvAvailabilitySuffix?.text = getString(stringAvailability)
@@ -124,7 +136,7 @@ class SearchDomainActivity : AppBaseActivity<ActivitySearchDomainBinding, Search
                 showShortToast(getString(R.string.something_went_wrong))
                 return@observeOnce
             }
-
+            WebEngageController.trackEvent(DOMAIN_SEARCHED_CREATE_SUCCESS, DOMAIN_CREATION_SUCCESS, NO_EVENT_VALUE)
             val stringResponse = it.stringResponse as String
             startFragmentDomainBookingActivity(
                 activity = this,
@@ -173,6 +185,7 @@ class SearchDomainActivity : AppBaseActivity<ActivitySearchDomainBinding, Search
         )
 
         sheetBinding.btnConfirm.setOnClickListener {
+            WebEngageController.trackEvent(DOMAIN_SEARCHED_SELECTED_DOMAIN_CLICK, CLICK, NO_EVENT_VALUE)
             startFragmentDomainBookingActivity(
                 activity = this,
                 type = com.appservice.constant.FragmentType.ACTIVE_NEW_DOMAIN_FRAGMENT,
@@ -186,10 +199,12 @@ class SearchDomainActivity : AppBaseActivity<ActivitySearchDomainBinding, Search
         }
 
         sheetBinding.ivClose.setOnClickListener {
+            WebEngageController.trackEvent(DOMAIN_BOTTOM_SHEET_CLOSE_CLICK, CLICK, NO_EVENT_VALUE)
             bSheet.dismiss()
         }
 
         sheetBinding.btnConfirm.setOnClickListener {
+            WebEngageController.trackEvent(DOMAIN_CREATE_CALL_INVOKED_CLICK, CLICK, NO_EVENT_VALUE)
             val domainSplit = getDomainSplitValues(enteredDomainName)
             createDomain(domainSplit.domainName, domainSplit.domainExtension, bSheet)
         }

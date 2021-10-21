@@ -6,10 +6,14 @@ import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.databinding.FragmentActiveNewDomainBinding
 import com.appservice.model.domainBooking.DomainDetailsResponse
+import com.appservice.utils.WebEngageController
 import com.appservice.utils.getMillisecondsToDate
 import com.appservice.viewmodel.DomainBookingViewModel
 import com.framework.extensions.observeOnce
 import com.framework.pref.clientId
+import com.framework.webengageconstant.DOMAIN_ACTIVE_NEW_DOMAIN_DETAILS_PAGE_LOAD
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.PAGE_VIEW
 
 class ActiveNewDomainFragment :
     AppBaseFragment<FragmentActiveNewDomainBinding, DomainBookingViewModel>() {
@@ -24,12 +28,17 @@ class ActiveNewDomainFragment :
     }
 
     override fun onCreateView() {
+        WebEngageController.trackEvent(DOMAIN_ACTIVE_NEW_DOMAIN_DETAILS_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
         (baseActivity as? DomainBookingContainerActivity)?.setToolbarTitleNew(
             resources.getString(
                 R.string.website_domain
             ), resources.getDimensionPixelSize(R.dimen.size_44)
         )
+        onBackPressHandler()
+        domainDetailsApi()
+    }
 
+    private fun onBackPressHandler() {
         requireActivity()
             .onBackPressedDispatcher
             .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
@@ -38,8 +47,14 @@ class ActiveNewDomainFragment :
                 }
             }
             )
+    }
 
-        domainDetailsApi()
+    override fun getLayout(): Int {
+        return R.layout.fragment_active_new_domain
+    }
+
+    override fun getViewModelClass(): Class<DomainBookingViewModel> {
+        return DomainBookingViewModel::class.java
     }
 
     private fun domainDetailsApi() {
@@ -53,26 +68,24 @@ class ActiveNewDomainFragment :
     }
 
     private fun setAndParseData(domainDetailsResponse: DomainDetailsResponse) {
-        val string = domainDetailsResponse.domainName + domainDetailsResponse.domainType
-        binding?.layoutDomainDetails?.tvDomainValue?.text = string
+        var domainFullName = domainDetailsResponse.domainName + domainDetailsResponse.domainType
+        if (domainFullName.isNullOrEmpty())
+            domainFullName = "N/A"
+        binding?.layoutDomainDetails?.tvDomainValue?.text = domainFullName
 
         var activatedOn = domainDetailsResponse.activatedOn
-        if (!activatedOn.isNullOrEmpty() && activatedOn?.contains("/Date")!!) {
-            activatedOn = activatedOn.replace("/Date(", "").replace(")/", "")
-
-            binding?.layoutDomainDetails?.tvBookedValue?.text = getMillisecondsToDate(
-                activatedOn.toLong(), "dd-MM-YYYY"
-            )
-        }
+        activatedOn = if (!activatedOn.isNullOrEmpty() && activatedOn.contains("/Date"))
+            getMillisecondsToDate(activatedOn.replace("/Date(", "").replace(")/", "").toLong(), "dd-MM-YYYY")
+        else
+            "N/A"
+        binding?.layoutDomainDetails?.tvBookedValue?.text = activatedOn
 
         var expiryOn = domainDetailsResponse.expiresOn
-        if (!expiryOn.isNullOrEmpty() && expiryOn.contains("/Date")) {
-            expiryOn = expiryOn.replace("/Date(", "").replace(")/", "")
-
-            binding?.layoutDomainDetails?.tvExpireValue?.text = getMillisecondsToDate(
-                expiryOn.toLong(), "dd-MM-YYYY"
-            )
-        }
+        expiryOn = if (!expiryOn.isNullOrEmpty() && expiryOn.contains("/Date"))
+            getMillisecondsToDate(expiryOn.replace("/Date(", "").replace(")/", "").toLong(), "dd-MM-YYYY")
+        else
+            "N/A"
+        binding?.layoutDomainDetails?.tvExpireValue?.text = expiryOn
 
         binding?.layoutDomainDetails?.tvDomainStatus?.text = if (domainDetailsResponse.isActive!!)
             getString(R.string.active)
@@ -86,13 +99,4 @@ class ActiveNewDomainFragment :
                 getColor(R.color.black_4a4a4a)
         )
     }
-
-    override fun getLayout(): Int {
-        return R.layout.fragment_active_new_domain
-    }
-
-    override fun getViewModelClass(): Class<DomainBookingViewModel> {
-        return DomainBookingViewModel::class.java
-    }
-
 }

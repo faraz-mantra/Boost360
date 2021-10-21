@@ -562,6 +562,7 @@
                 android:layout_marginBottom="@dimen/size_28"
                 android:drawableStart="@drawable/ic_info_color_primary"
                 android:drawablePadding="@dimen/size_12"
+                android:visibility="invisible"
                 android:gravity="center"
                 android:text="@string/not_sure_provide_is"
                 android:textAlignment="gravity"

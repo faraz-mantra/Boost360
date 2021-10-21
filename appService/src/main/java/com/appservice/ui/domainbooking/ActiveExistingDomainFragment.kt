@@ -5,13 +5,17 @@ import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.databinding.FragmentActiveDomainBinding
 import com.appservice.model.domainBooking.DomainDetailsResponse
+import com.appservice.utils.WebEngageController
 import com.appservice.utils.getMillisecondsToDate
 import com.appservice.viewmodel.DomainBookingViewModel
 import com.framework.extensions.observeOnce
-import com.framework.models.BaseViewModel
 import com.framework.pref.clientId
+import com.framework.webengageconstant.DOMAIN_ACTIVE_EXISTING_DOMAIN_DETAILS_PAGE_LOAD
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.PAGE_VIEW
 
-class ActiveExistingDomainFragment : AppBaseFragment<FragmentActiveDomainBinding, DomainBookingViewModel>() {
+class ActiveExistingDomainFragment :
+    AppBaseFragment<FragmentActiveDomainBinding, DomainBookingViewModel>() {
 
     companion object {
         @JvmStatic
@@ -22,17 +26,23 @@ class ActiveExistingDomainFragment : AppBaseFragment<FragmentActiveDomainBinding
         }
     }
 
-    override fun onCreateView(){
+    override fun onCreateView() {
+        WebEngageController.trackEvent(
+            DOMAIN_ACTIVE_EXISTING_DOMAIN_DETAILS_PAGE_LOAD,
+            PAGE_VIEW,
+            NO_EVENT_VALUE
+        )
         (baseActivity as? DomainBookingContainerActivity)?.setToolbarTitleNew(
             resources.getString(
                 R.string.website_domain
-            ), resources.getDimensionPixelSize(R.dimen.size_44))
+            ), resources.getDimensionPixelSize(R.dimen.size_44)
+        )
 
         domainDetailsApi()
     }
 
     override fun getLayout(): Int {
-        return  R.layout.fragment_active_domain
+        return R.layout.fragment_active_domain
     }
 
     override fun getViewModelClass(): Class<DomainBookingViewModel> {
@@ -50,29 +60,46 @@ class ActiveExistingDomainFragment : AppBaseFragment<FragmentActiveDomainBinding
     }
 
     private fun setAndParseData(domainDetailsResponse: DomainDetailsResponse) {
-        val string = domainDetailsResponse.domainName + domainDetailsResponse.domainType
-        binding?.layoutIncludeDomainCard?.tvDomainValue?.text = string
+        val domainName =
+            if (!domainDetailsResponse.domainName.isNullOrEmpty() && domainDetailsResponse.domainName != "null")
+                domainDetailsResponse.domainName
+            else ""
+
+        val domainType =
+            if (domainDetailsResponse.domainType != null && domainDetailsResponse.domainType != "null")
+                domainDetailsResponse.domainType
+            else ""
+
+        val domainFullName = domainName + domainType
+
+        binding?.layoutIncludeDomainCard?.tvDomainValue?.text =
+            if (domainFullName == "") domainFullName else "N/A"
 
         var activatedOn = domainDetailsResponse.activatedOn
-        if (activatedOn?.contains("/Date")!!)
-            activatedOn = activatedOn.replace("/Date(", "").replace(")/", "")
+        activatedOn = if (!activatedOn.isNullOrEmpty() && activatedOn.contains("/Date"))
+            getMillisecondsToDate(
+                activatedOn.replace("/Date(", "").replace(")/", "").toLong(),
+                "dd-MM-YYYY"
+            )
+        else
+            "N/A"
+        binding?.layoutIncludeDomainCard?.tvBookedValue?.text = activatedOn
 
         var expiryOn = domainDetailsResponse.expiresOn
-        if (expiryOn?.contains("/Date")!!)
-            expiryOn = expiryOn.replace("/Date(", "").replace(")/", "")
-
-
-        binding?.layoutIncludeDomainCard?.tvBookedValue?.text = getMillisecondsToDate(
-            activatedOn.toLong(), "dd-MM-YYYY"
-        )
-        binding?.layoutIncludeDomainCard?.tvExpireValue?.text = getMillisecondsToDate(
-            expiryOn.toLong(), "dd-MM-YYYY"
-        )
-
-        binding?.layoutIncludeDomainCard?.tvDomainStatus?.text = if (domainDetailsResponse.isActive!!)
-            getString(R.string.active)
+        expiryOn = if (!expiryOn.isNullOrEmpty() && expiryOn.contains("/Date"))
+            getMillisecondsToDate(
+                expiryOn.replace("/Date(", "").replace(")/", "").toLong(),
+                "dd-MM-YYYY"
+            )
         else
-            getString(R.string.expired)
+            "N/A"
+        binding?.layoutIncludeDomainCard?.tvExpireValue?.text = expiryOn
+
+        binding?.layoutIncludeDomainCard?.tvDomainStatus?.text =
+            if (domainDetailsResponse.isActive!!)
+                getString(R.string.active)
+            else
+                getString(R.string.expired)
 
         binding?.layoutIncludeDomainCard?.tvDomainStatus?.setBackgroundColor(
             if (domainDetailsResponse.isActive)

@@ -12,7 +12,9 @@ import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.domainbooking.model.DomainSuggestionModel
+import com.appservice.utils.WebEngageController
 import com.framework.models.BaseViewModel
+import com.framework.webengageconstant.*
 
 class BookDomainSslFragment : AppBaseFragment<FragmentBookADomainSslBinding, BaseViewModel>(),
     RecyclerItemClickListener {
@@ -35,6 +37,7 @@ class BookDomainSslFragment : AppBaseFragment<FragmentBookADomainSslBinding, Bas
     }
 
     override fun onCreateView() {
+        WebEngageController.trackEvent(DOMAIN_BOOK_A_DOMAIN_SSL_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
         (baseActivity as? DomainBookingContainerActivity)?.setToolbarTitleNew(
             resources.getString(
                 R.string.book_a_domain_ssl
@@ -69,10 +72,12 @@ class BookDomainSslFragment : AppBaseFragment<FragmentBookADomainSslBinding, Bas
 
     private fun setOnClickListeners() {
         binding?.btnSearchANewDomain?.setOnClickListener {
+            WebEngageController.trackEvent(DOMAIN_SEARCH_A_NEW_DOMAIN_CLICK, CLICK, NO_EVENT_VALUE)
             startActivity(Intent(activity, SearchDomainActivity::class.java))
         }
 
         binding?.btnSelectSuggestedDomain?.setOnClickListener {
+            WebEngageController.trackEvent(DOMAIN_SELECT_SUGGESTED_DOMAIN_CLICK, CLICK, NO_EVENT_VALUE)
             startFragmentDomainBookingActivity(
                 activity = baseActivity,
                 type = com.appservice.constant.FragmentType.CONFIRMING_DOMAIN_FRAGMENT,
@@ -83,6 +88,7 @@ class BookDomainSslFragment : AppBaseFragment<FragmentBookADomainSslBinding, Bas
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+        WebEngageController.trackEvent(DOMAIN_SELECT_SUGGESTED_DOMAIN_CLICK, CLICK, NO_EVENT_VALUE)
         startFragmentDomainBookingActivity(
             activity = baseActivity,
             type = com.appservice.constant.FragmentType.CONFIRMING_DOMAIN_FRAGMENT,
