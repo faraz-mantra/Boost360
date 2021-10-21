@@ -19,12 +19,17 @@
       android:visibility="gone"
       app:fontFamily="@font/bold"
       app:textType="BODY_1"
+      tools:ignore="MissingConstraints"
       tools:text="Error" />
 
     <androidx.core.widget.NestedScrollView
       android:id="@+id/main_view"
       style="@style/match_match"
-      android:fillViewport="true">
+      android:fillViewport="true"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent">
 
       <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/match_match"
@@ -35,7 +40,9 @@
           style="@style/match_wrap"
           app:cardBackgroundColor="@color/white"
           app:cardElevation="@dimen/size_8"
-          app:layout_constraintTop_toTopOf="parent">
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent">
 
           <androidx.constraintlayout.widget.ConstraintLayout
             style="@style/match_wrap"
@@ -55,10 +62,10 @@
               android:id="@+id/tv_month_date_range"
               style="@style/wrap_wrap"
               android:layout_marginStart="@dimen/size_8"
+              android:fontFamily="@font/semi_bold"
               android:includeFontPadding="false"
               android:text="@string/aug_sep_2020"
               android:textColor="@color/light_blue_1"
-               android:fontFamily="@font/semi_bold"
               app:layout_constraintStart_toEndOf="@id/btn_month_range"
               app:layout_constraintTop_toTopOf="parent" />
 
@@ -79,6 +86,8 @@
           style="@style/match_wrap"
           app:cardBackgroundColor="@color/white"
           app:cardElevation="@dimen/size_4"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintTop_toBottomOf="@id/card_date_range_selector">
 
           <LinearLayout style="@style/match_wrap">
@@ -112,13 +121,17 @@
           android:drawableEnd="@drawable/ic_arrow_down_grey"
           android:drawablePadding="@dimen/size_20"
           android:focusable="false"
+          android:hint="@string/please_select_doctor_staff"
           android:inputType="textEmailAddress"
           android:maxLines="1"
           android:padding="@dimen/size_8"
           android:textColor="@color/black"
           android:textCursorDrawable="@null"
-          android:textSize="16sp"
-          app:layout_constraintTop_toBottomOf="@id/tv_doctor" />
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/tv_doctor"
+          app:textType="HEADING_6"
+          tools:ignore="KeyboardInaccessibleWidget" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_consultation_type"
@@ -145,10 +158,9 @@
             style="@style/wrap_wrap"
             android:checked="true"
             android:text="@string/in_clinic"
-            android:textAllCaps="false"
             android:textColor="@drawable/radio_selected"
-            android:textSize="16sp"
-            app:buttonTint="@drawable/radio_selected" />
+            app:buttonTint="@drawable/radio_selected"
+            app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomRadioButton
             android:id="@+id/radio_video_consultation"
@@ -156,11 +168,10 @@
             android:layout_marginStart="@dimen/size_20"
             android:checked="false"
             android:text="@string/video_consultation_camel_case"
-            android:textAllCaps="false"
             android:textColor="@drawable/radio_selected"
-            android:textSize="16sp"
             android:visibility="gone"
             app:buttonTint="@drawable/radio_selected"
+            app:textType="HEADING_6"
             tools:visibility="visible" />
         </RadioGroup>
 
@@ -183,13 +194,17 @@
           android:drawableEnd="@drawable/ic_arrow_down_grey"
           android:drawablePadding="@dimen/size_20"
           android:focusable="false"
+          android:hint="@string/please_select_service"
           android:inputType="textEmailAddress"
           android:maxLines="1"
           android:padding="@dimen/size_8"
           android:textColor="@color/black"
           android:textCursorDrawable="@null"
-          android:textSize="16sp"
-          app:layout_constraintTop_toBottomOf="@id/tv_consulting_service" />
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/tv_consulting_service"
+          app:textType="HEADING_6"
+          tools:ignore="KeyboardInaccessibleWidget" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_time_text"
@@ -217,9 +232,10 @@
           android:padding="@dimen/size_8"
           android:textColor="@color/black"
           android:textCursorDrawable="@null"
-          android:textSize="16sp"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/tv_time_text" />
+          app:layout_constraintTop_toBottomOf="@id/tv_time_text"
+          app:textType="HEADING_6"
+          tools:ignore="KeyboardInaccessibleWidget" />
 
         <LinearLayout
           android:id="@+id/ll_consultation_timings"
@@ -228,6 +244,8 @@
           android:layout_marginTop="@dimen/size_14"
           android:orientation="horizontal"
           android:weightSum="2"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintTop_toBottomOf="@id/edt_start_time">
 
           <LinearLayout
@@ -255,7 +273,7 @@
               android:maxLines="1"
               android:padding="@dimen/size_8"
               android:textColor="@color/black"
-              android:textSize="@dimen/size_16" />
+              app:textType="HEADING_6" />
 
           </LinearLayout>
 
@@ -278,14 +296,13 @@
               style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_8"
               android:background="@drawable/et_bg"
-              android:clickable="true"
               android:drawablePadding="@dimen/size_20"
               android:focusable="false"
               android:inputType="text"
               android:maxLines="1"
               android:padding="@dimen/size_8"
               android:textColor="@color/black"
-              android:textSize="@dimen/size_16" />
+              app:textType="HEADING_6" />
 
           </LinearLayout>
         </LinearLayout>
@@ -308,12 +325,13 @@
           android:background="@drawable/et_bg"
           android:inputType="textCapWords"
           android:maxLines="1"
+          android:focusable="true"
           android:padding="@dimen/size_8"
           android:textColor="@color/black"
           android:textCursorDrawable="@null"
-          android:textSize="16sp"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/tv_patient_name" />
+          app:layout_constraintTop_toBottomOf="@id/tv_patient_name"
+          app:textType="HEADING_6" />
 
         <LinearLayout
           android:id="@+id/ll_gender_age"
@@ -322,6 +340,8 @@
           android:layout_marginTop="@dimen/size_8"
           android:orientation="horizontal"
           android:weightSum="2"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintTop_toBottomOf="@id/edt_patient_name">
 
           <LinearLayout
@@ -337,20 +357,22 @@
               android:text="@string/gender"
               android:textColor="@color/warm_light" />
 
-            <com.framework.views.customViews.CustomTextView
+            <com.framework.views.customViews.CustomEditText
               android:id="@+id/edt_gender"
               style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_8"
               android:background="@drawable/et_bg"
               android:clickable="true"
               android:drawableEnd="@drawable/ic_arrow_down_grey"
-              android:drawablePadding="@dimen/size_20"
+              android:drawablePadding="@dimen/size_10"
               android:focusable="false"
-              android:inputType="none"
+              android:hint="@string/select_gender_"
+              android:inputType="text"
               android:maxLines="1"
               android:padding="@dimen/size_8"
               android:textColor="@color/black"
-              android:textSize="16sp" />
+              app:textType="HEADING_6"
+              tools:ignore="KeyboardInaccessibleWidget" />
 
           </LinearLayout>
 
@@ -375,10 +397,11 @@
               android:inputType="number"
               android:maxLength="3"
               android:maxLines="1"
+              android:focusable="true"
               android:padding="@dimen/size_8"
               android:textColor="@color/black"
               android:textCursorDrawable="@null"
-              android:textSize="@dimen/size_16" />
+              app:textType="HEADING_6" />
 
           </LinearLayout>
 
@@ -402,12 +425,13 @@
           android:inputType="number"
           android:maxLength="10"
           android:maxLines="1"
+          android:focusable="true"
           android:padding="@dimen/size_8"
           android:textColor="@color/black"
           android:textCursorDrawable="@null"
-          android:textSize="16sp"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/tv_patient_phone" />
+          app:layout_constraintTop_toBottomOf="@id/tv_patient_phone"
+          app:textType="HEADING_6" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_patient_email"
@@ -426,12 +450,13 @@
           android:background="@drawable/et_bg"
           android:inputType="textEmailAddress"
           android:maxLines="1"
+          android:focusable="true"
           android:padding="@dimen/size_8"
           android:textColor="@color/black"
           android:textCursorDrawable="@null"
-          android:textSize="16sp"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/tv_patient_email" />
+          app:layout_constraintTop_toBottomOf="@id/tv_patient_email"
+          app:textType="HEADING_6" />
 
         <LinearLayout
           style="@style/match_wrap"
@@ -439,6 +464,8 @@
           android:background="@color/white"
           android:orientation="vertical"
           android:padding="@dimen/size_16"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintTop_toBottomOf="@id/edt_patient_email">
 
           <com.framework.views.customViews.CustomTextView

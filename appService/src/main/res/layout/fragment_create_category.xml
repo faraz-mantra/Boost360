@@ -6,17 +6,18 @@
   <data />
 
   <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/match_match"
     android:orientation="vertical">
 
     <com.framework.views.viewgroups.BaseRecyclerView
       android:id="@+id/rv_category"
       android:layout_width="match_parent"
       android:layout_height="0dp"
+      android:clipToPadding="false"
       android:orientation="vertical"
+      android:paddingBottom="@dimen/size_30"
       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-      app:layout_constraintBottom_toTopOf="@+id/customButton"
+      app:layout_constraintBottom_toTopOf="@+id/btn_add_new_category"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
@@ -24,14 +25,12 @@
       tools:listitem="@layout/item_create_category" />
 
     <com.framework.views.customViews.CustomButton
-      android:id="@+id/customButton"
+      android:id="@+id/btn_add_new_category"
+      style="@style/Appointment.ButtonStyle"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
       android:layout_marginHorizontal="@dimen/size_16"
       android:layout_marginBottom="@dimen/size_16"
-      android:background="@drawable/bg_button_proceed"
-      android:text="@string/done_caps"
-      android:textColor="@color/white"
+      android:text="@string/add_new_category"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />

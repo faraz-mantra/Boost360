@@ -5,7 +5,6 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
@@ -23,13 +22,13 @@ import com.boost.presignin.recyclerView.BaseRecyclerViewItem
 import com.boost.presignin.recyclerView.RecyclerItemClickListener
 import com.boost.presignin.rest.response.ResponseDataCategory
 import com.boost.presignin.viewmodel.CategoryVideoModel
-import com.framework.base.BaseFragment
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.webengageconstant.*
 import android.content.Intent
 import android.net.Uri
+import com.framework.analytics.SentryController
 
 class CategoryFragment : AppBaseFragment<FragmentCategoryBinding, CategoryVideoModel>(), RecyclerItemClickListener {
 
@@ -112,6 +111,8 @@ class CategoryFragment : AppBaseFragment<FragmentCategoryBinding, CategoryVideoM
           val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + getString(R.string.expert_contact_number)))
           startActivity(intent)
         }catch (e:Exception){
+          SentryController.captureException(e)
+
           e.printStackTrace()
         }
       }

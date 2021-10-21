@@ -23,7 +23,7 @@ import com.dashboard.controller.ui.business.bottomsheet.BusinessNameBottomSheet
 import com.dashboard.controller.ui.business.model.BusinessProfileModel
 import com.dashboard.controller.ui.business.model.BusinessProfileUpdateRequest
 import com.dashboard.controller.ui.business.model.UpdatesItem
-import com.dashboard.controller.ui.website_theme.dialog.WebViewDialog
+import com.dashboard.controller.ui.websiteTheme.dialog.WebViewDialog
 import com.dashboard.databinding.FragmentBusinessProfileBinding
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.BusinessProfileViewModel

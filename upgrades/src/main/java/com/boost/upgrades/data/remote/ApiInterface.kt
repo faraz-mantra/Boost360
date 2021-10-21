@@ -14,6 +14,7 @@ import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDRespo
 import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse
 import com.boost.upgrades.data.api_model.gst.GSTApiResponse
+import com.boost.upgrades.data.api_model.stateCode.GetStates
 import com.boost.upgrades.data.renewalcart.CreateCartResponse
 import com.boost.upgrades.data.renewalcart.CreateCartStateRequest
 import com.boost.upgrades.data.renewalcart.RenewalPurchasedResponse
@@ -22,9 +23,9 @@ import retrofit2.http.*
 
 interface ApiInterface {
 
-  @Headers("Authorization: 591c0972ee786cbf48bd86cf", "Content-Type: application/json")
-  @GET("https://developer.api.boostkit.dev/language/v1/upgrade/get-data?website=5e7a3cf46e0572000109a5b2")
-  fun GetAllFeatures(): Observable<GetAllFeaturesResponse>
+//  @Headers("Authorization: 591c0972ee786cbf48bd86cf", "Content-Type: application/json")
+//  @GET("https://developer.api.boostkit.dev/language/v1/upgrade/get-data?website=5e7a3cf46e0572000109a5b2")
+//  fun GetAllFeatures(): Observable<GetAllFeaturesResponse>
 
   @Headers("Content-Type: application/json")
   @GET("Payment/v9/floatingpoint/CustomerPaymentProfile/{internalSourceId}")
@@ -107,18 +108,27 @@ interface ApiInterface {
   @POST("Payment/v9/floatingpoint/widgets/CartState")
   fun createCartStateRenewal(@Header("Authorization") auth: String, @Body request: CreateCartStateRequest): Observable<CreateCartResponse>
 
-  @Headers(
-    "Authorization: Basic YXBpbW9kaWZpZXI6dkVFQXRudF9yJ0RWZzcofg==",
-    "Content-Type: application/json"
-  )
-  @POST("https://si-withfloats-coupons-api-appservice.azurewebsites.net/v1/coupons/redeem")
-  fun redeemCoupon(@Body redeemCouponRequest: RedeemCouponRequest): Observable<RedeemCouponResponse>
+//  @Headers(
+//    "Authorization: Basic YXBpbW9kaWZpZXI6dkVFQXRudF9yJ0RWZzcofg==",
+//    "Content-Type: application/json"
+//  )
+//  @POST("https://si-withfloats-coupons-api-appservice.azurewebsites.net/v1/coupons/redeem")
+//  fun redeemCoupon(@Body redeemCouponRequest: RedeemCouponRequest): Observable<RedeemCouponResponse>
 
   @Headers("Content-Type: application/json")
   @GET("https://api2.withfloats.com/api/v1/Business/GetGSTINInformation")
   fun getGSTDetails(
     @Header("Authorization") auth: String,
     @Query("gstin") gstIN: String?,
-    @Query("clientId") clientId: String?,
+    @Query("clientId") clientId: String?
   ): Observable<GSTApiResponse>
+
+  @Headers("Content-Type: application/json")
+  @GET("https://api2.withfloats.com/api/v1/Business/GetStateCode")
+  fun getStates(
+    @Header("Authorization") auth: String,
+    @Query("clientId") clientId: String?
+  ): Observable<GetStates>
+
+
 }

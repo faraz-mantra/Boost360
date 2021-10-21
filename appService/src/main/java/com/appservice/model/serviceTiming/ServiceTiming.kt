@@ -3,7 +3,6 @@ package com.appservice.model.serviceTiming
 import com.appservice.constant.RecyclerViewItemType
 import com.appservice.model.serviceTiming.ServiceTiming.WeekdayValue.Companion.fromFullName
 import com.appservice.recyclerView.AppBaseRecyclerViewItem
-import com.google.android.libraries.places.api.model.Place
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 

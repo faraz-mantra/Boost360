@@ -329,7 +329,6 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
         discountedPrice = selectedService?.DiscountedPrice ?: 0.0
         currency = selectedService?.Currency ?: ""
         val bookingSlotsRequest = BookingSlotsRequest(
-          BatchType = "DAILY",
           ServiceId = serviceList?.get(pos)?._id!!,
           DateRange = DateRange(StartDate = startDate, EndDate = startDate)
         )

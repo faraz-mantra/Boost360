@@ -10,10 +10,10 @@ import java.io.Serializable
 data class MoreSettingsResponse(
 
   @field:SerializedName("useful_links")
-  var usefulLinks: List<UsefulLinksItem?>? = null,
+  var usefulLinks: ArrayList<UsefulLinksItem>? = null,
 
   @field:SerializedName("about_app_section")
-  var aboutAppSection: List<AboutAppSectionItem?>? = null
+  var aboutAppSection: ArrayList<AboutAppSectionItem>? = null
 ) : BaseResponse(), Serializable
 
 data class AboutAppSectionItem(

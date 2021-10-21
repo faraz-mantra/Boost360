@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/match_match"
+        android:orientation="vertical">
+
+        <com.framework.views.viewgroups.BaseRecyclerView
+            android:id="@+id/rv_product_category"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/size_10"
+            android:paddingBottom="@dimen/size_60"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="5"
+            tools:listitem="@layout/recycler_item_product_category" />
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/btn_add_new_category"
+            style="@style/Appointment.ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_44"
+            android:layout_marginHorizontal="@dimen/size_16"
+            android:layout_marginBottom="@dimen/size_16"
+            android:text="@string/add_new_category"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

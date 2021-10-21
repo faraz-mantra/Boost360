@@ -55,6 +55,7 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
+
               <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/low_readiness_score_view"
                 android:layout_width="match_parent"
@@ -370,17 +371,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/size_12"
-                    android:layout_marginBottom="@dimen/size_12"
-                    app:dotsColor="@color/light_grey_1"
-                    app:dotsCornerRadius="@dimen/_6dp"
-                    app:dotsSize="@dimen/size_5"
-                    app:dotsSpacing="@dimen/size_2"
-                    app:dotsWidthFactor="2.5"
-                    app:progressMode="false"
-                    app:selectedDotColor="@color/grey_dark_2" />
+                      android:layout_marginTop="@dimen/size_12"
+                      android:layout_marginBottom="@dimen/size_12"
+                      app:dotsColor="@color/light_grey_1"
+                      app:dotsCornerRadius="@dimen/_6dp"
+                      app:dotsSize="@dimen/size_5"
+                      app:dotsSpacing="@dimen/size_2"
+                      app:dotsWidthFactor="2.5"
+                      app:progressMode="false"
+                      app:selectedDotColor="@color/grey_dark_2" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
-
               </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
 

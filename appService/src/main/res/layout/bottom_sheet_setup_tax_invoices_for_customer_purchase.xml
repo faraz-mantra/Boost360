@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    style="@style/match_wrap"
+    android:background="@android:color/transparent">
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/tvTitle"
+      style="@style/ThemeOverlay.MaterialComponents.Toolbar.Primary"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/size_8"
+      android:text="@string/setup_tax_invoices_for_customer_purchases"
+      android:textColor="@color/white"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.1"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:textType="HEADING_4"
+      tools:ignore="RtlSymmetry"
+      tools:textColor="@color/dimgray" />
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/coordinatorLayoutBottomSheet"
+      style="@style/match_wrap"
+      android:layout_marginTop="@dimen/size_10"
+      android:background="@drawable/bg_rounded_top_white_2"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintBottom_toTopOf="@+id/btn_bottom"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tvTitle">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        style="@style/match_wrap"
+        android:layout_marginTop="@dimen/size_20"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@id/tvTitle"
+          style="@style/AppointmentSetting_Text_Heading"
+          android:layout_marginStart="@dimen/size_20"
+          android:text="@string/upload_signature_to_print_on_invoice" />
+
+
+        <include
+          android:id="@+id/layout_image_preview"
+          layout="@layout/item_preview_image"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_20"
+          android:layout_marginTop="@dimen/size_20"
+          android:visibility="gone" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/btn_click_photo"
+          style="@style/match_wrap"
+          android:layout_marginHorizontal="@dimen/size_20"
+          android:layout_marginTop="@dimen/size_8"
+          android:background="@drawable/shape_blue_filled_stroke"
+          android:padding="@dimen/size_12">
+
+          <com.framework.views.customViews.CustomTextView
+            style="@style/wrap_wrap"
+            android:layout_gravity="center"
+            android:drawablePadding="@dimen/size_8"
+            android:gravity="center"
+            android:text="@string/upload_signature"
+            android:textColor="@color/blue_4A90E2"
+            app:drawableLeftCompat="@drawable/ic_upload_blue"
+            app:fontFamily="@font/semi_bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:textAllCaps="false"
+            app:textType="BODY_1" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.framework.views.customViews.CustomTextView
+          style="@style/AppointmentSetting_Text_Heading"
+          android:layout_marginStart="@dimen/size_20"
+          android:layout_marginTop="@dimen/size_16"
+          android:layout_marginEnd="@dimen/size_20"
+          android:drawablePadding="@dimen/size_10"
+          android:text="@string/print_payment_info_on_post_paid_invoices" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          style="@style/match_wrap"
+          android:layout_marginHorizontal="@dimen/size_20"
+          android:layout_marginTop="@dimen/size_10"
+          android:orientation="vertical"
+          android:visibility="visible"
+          tools:visibility="visible">
+
+
+          <com.framework.views.customViews.CustomCheckBox
+            android:id="@+id/checkbox_bank_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:buttonTint="@color/gray_bbb"
+            android:checked="true"
+            android:enabled="false"
+            android:includeFontPadding="false"
+            android:text="@string/my_bank_account_details"
+            android:textColor="@color/black_4a4a4a"
+            app:textType="HEADING_6" />
+
+          <com.framework.views.customViews.CustomCheckBox
+            android:id="@+id/checkbox_upi_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/my_upi_id"
+            android:textColor="@color/black_4a4a4a"
+            app:buttonTint="@color/material_check_tin_state"
+            app:textType="HEADING_6" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/cet_upi_id"
+          style="@style/Appointment_Text_Field"
+          android:layout_marginHorizontal="@dimen/size_20"
+          android:hint="@string/brajmadhav_okhdfcbank" />
+
+        <View
+          android:id="@+id/line"
+          android:layout_width="match_parent"
+          android:layout_height="0.8dp"
+          android:layout_marginStart="@dimen/size_10"
+          android:layout_marginTop="@dimen/size_16"
+          android:layout_marginEnd="@dimen/size_10"
+          android:background="@color/light_grey_2" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <FrameLayout
+      android:id="@+id/btn_bottom"
+      style="@style/match_wrap"
+      android:layout_marginTop="@dimen/size_10"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent">
+
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/btn_horizontal"
+        style="@style/match_wrap"
+        android:background="@color/white"
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_14">
+
+        <com.framework.views.customViews.CustomButton
+          android:id="@+id/btnCancel"
+          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+          android:layout_marginEnd="@dimen/size_30"
+          android:background="@null"
+          android:text="@string/cancel"
+          android:textAllCaps="false" />
+
+        <com.framework.views.customViews.CustomButton
+          android:id="@+id/btn_save_changes"
+          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+          android:text="@string/save_changes"
+          android:textAllCaps="false"
+          android:textColor="@color/white" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </FrameLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +16,7 @@ import com.dashboard.controller.ui.allAddOns.AllBoostAddonsFragment
 import com.dashboard.controller.ui.business.BusinessProfileFragment
 import com.dashboard.controller.ui.customisationnav.CustomisationNavFragment
 import com.dashboard.controller.ui.drScore.DigitalReadinessScoreFragment
+import com.dashboard.controller.ui.websiteTheme.FragmentWebsiteTheme
 import com.dashboard.controller.ui.profile.CropProfileImageFragment
 import com.dashboard.controller.ui.profile.UserProfileFragment
 import com.dashboard.controller.ui.website_theme.FragmentWebsiteTheme
