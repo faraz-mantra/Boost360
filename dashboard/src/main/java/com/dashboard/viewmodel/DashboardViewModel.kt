@@ -3,10 +3,7 @@ package com.dashboard.viewmodel
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.appservice.rest.repository.WithFloatTwoRepository
-import com.dashboard.rest.repository.AzureWebsiteNewRepository
-import com.dashboard.rest.repository.DevBoostKitRepository
-import com.dashboard.rest.repository.PluginFloatRepository
-import com.dashboard.rest.repository.WithFloatRepository
+import com.dashboard.rest.repository.*
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
@@ -35,7 +32,7 @@ class DashboardViewModel : BaseViewModel() {
   }
 
   fun getFirebaseToken(): LiveData<BaseResponse> {
-    return GoogleAuthRepository.getFirebaseAuthToken().toLiveData()
+    return WithFloatTwoRepositoryD.getFirebaseAuthToken().toLiveData()
   }
 
   @Deprecated("NFX token API")
@@ -80,11 +77,7 @@ class DashboardViewModel : BaseViewModel() {
     return WithFloatRepository.getNavDashboardData(context).toLiveData()
   }
 
-  fun getSearchAnalytics(
-    fpTag: String?,
-    startDate: String?,
-    endDate: String?
-  ): LiveData<BaseResponse> {
+  fun getSearchAnalytics(fpTag: String?, startDate: String?, endDate: String?): LiveData<BaseResponse> {
     return DevBoostKitRepository.getSearchAnalytics(fpTag, startDate, endDate).toLiveData()
   }
 
@@ -120,40 +113,16 @@ class DashboardViewModel : BaseViewModel() {
     return InventoryOrderRepository.getSellerSummary(clientId, sellerId).toLiveData()
   }
 
-  fun getSellerSummaryV2_5(
-    clientId: String?,
-    sellerId: String?,
-    request: SellerSummaryRequest?
-  ): LiveData<BaseResponse> {
+  fun getSellerSummaryV2_5(clientId: String?, sellerId: String?, request: SellerSummaryRequest?): LiveData<BaseResponse> {
     return InventoryOrderRepository.getSellerSummaryV2_5(clientId, sellerId, request).toLiveData()
   }
 
-  fun getUserSummary(
-    fpTag: String?,
-    clientId: String?,
-    fpIdParent: String?,
-    scope: String?,
-    startDate: String? = null,
-    endDate: String? = null
-  ): LiveData<BaseResponse> {
-    return ApiWithFloatRepository.getUserSummary(
-      fpTag,
-      clientId,
-      fpIdParent,
-      scope,
-      startDate,
-      endDate
-    ).toLiveData()
+  fun getUserSummary(fpTag: String?, clientId: String?, fpIdParent: String?, scope: String?, startDate: String? = null, endDate: String? = null): LiveData<BaseResponse> {
+    return ApiWithFloatRepository.getUserSummary(fpTag, clientId, fpIdParent, scope, startDate, endDate).toLiveData()
   }
 
-  fun getSubscriberCount(
-    fpTag: String?,
-    clientId: String?,
-    startDate: String?,
-    endDate: String?
-  ): LiveData<BaseResponse> {
-    return ApiWithFloatRepository.getSubscriberCount(fpTag, clientId, startDate, endDate)
-      .toLiveData()
+  fun getSubscriberCount(fpTag: String?, clientId: String?, startDate: String?, endDate: String?): LiveData<BaseResponse> {
+    return ApiWithFloatRepository.getSubscriberCount(fpTag, clientId, startDate, endDate).toLiveData()
   }
 
   fun getMapVisits(fpTag: String?, mapData: Map<String, String>?): LiveData<BaseResponse> {
@@ -161,19 +130,9 @@ class DashboardViewModel : BaseViewModel() {
   }
 
   fun getUserCallSummary(
-    clientId: String?,
-    fpIdParent: String?,
-    identifierType: String?,
-    startDate: String? = null,
-    endDate: String? = null
+    clientId: String?, fpIdParent: String?, identifierType: String?, startDate: String? = null, endDate: String? = null
   ): LiveData<BaseResponse> {
-    return ApiWithFloatRepository.getUserCallSummary(
-      clientId,
-      fpIdParent,
-      identifierType,
-      startDate,
-      endDate
-    ).toLiveData()
+    return ApiWithFloatRepository.getUserCallSummary(clientId, fpIdParent, identifierType, startDate, endDate).toLiveData()
   }
 
   fun putUploadSecondaryImage(request: UploadFileBusinessRequest): LiveData<BaseResponse> {
@@ -181,23 +140,10 @@ class DashboardViewModel : BaseViewModel() {
   }
 
   fun putUploadBusinessLogo(
-    clientId: String?,
-    fpId: String?,
-    reqType: String?,
-    reqId: String?,
-    totalChunks: String?,
-    currentChunkNumber: String?,
-    file: RequestBody?
+    clientId: String?, fpId: String?, reqType: String?, reqId: String?, totalChunks: String?,
+    currentChunkNumber: String?, file: RequestBody?
   ): LiveData<BaseResponse> {
-    return com.dashboard.rest.repository.WithFloatTwoRepository.uploadBusinessLogo(
-      clientId,
-      fpId,
-      reqType,
-      reqId,
-      totalChunks,
-      currentChunkNumber,
-      file
-    ).toLiveData()
+    return WithFloatTwoRepositoryD.uploadBusinessLogo(clientId, fpId, reqType, reqId, totalChunks, currentChunkNumber, file).toLiveData()
   }
 
   fun getUpgradePremiumBanner(website_id: String? = "5e7a3cf46e0572000109a5b2"): LiveData<BaseResponse> {
@@ -208,10 +154,7 @@ class DashboardViewModel : BaseViewModel() {
     return DevBoostKitRepository.getUpgradeDashboardBanner(website_id = website_id).toLiveData()
   }
 
-  fun getDomainDetailsForFloatingPoint(
-    fpTag: String?,
-    map: Map<String, String>?
-  ): LiveData<BaseResponse> {
+  fun getDomainDetailsForFloatingPoint(fpTag: String?, map: Map<String, String>?): LiveData<BaseResponse> {
     return PluginFloatRepository.getDomainDetailsForFloatingPoint(fpTag, map).toLiveData()
   }
 

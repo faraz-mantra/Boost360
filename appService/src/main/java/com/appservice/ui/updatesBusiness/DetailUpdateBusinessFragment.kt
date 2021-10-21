@@ -23,23 +23,23 @@ import com.appservice.model.updateBusiness.UpdateFloat
 import com.appservice.utils.FileUtils
 import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.UpdatesViewModel
+import com.framework.analytics.SentryController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.pref.clientId
+import com.framework.pref.getDomainName
 import com.framework.utils.ContentSharing
 import com.framework.utils.setNoDoubleClickListener
 import com.framework.webengageconstant.DELETE
 import com.framework.webengageconstant.EVENT_NAME_UPDATE_DELETE
 import com.framework.webengageconstant.EVENT_NAME_UPDATE_DETAIL_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.json.JSONArray
 import org.json.JSONObject
 
-class DetailUpdateBusinessFragment :
-  AppBaseFragment<DetailBusinessFragmentBinding, UpdatesViewModel>() {
+class DetailUpdateBusinessFragment : AppBaseFragment<DetailBusinessFragmentBinding, UpdatesViewModel>() {
 
   private val STORAGE_CODE = 120
 
@@ -134,6 +134,7 @@ class DetailUpdateBusinessFragment :
           binding?.messagetag?.text = tags.substring(1)
         } catch (e: Exception) {
           e.printStackTrace()
+          SentryController.captureException(e)
         }
       }
     })

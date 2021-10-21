@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,14 +18,9 @@ import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.CardPaymentAdapter
-import com.boost.upgrades.adapter.StateListAdapter
 import com.boost.upgrades.adapter.UPIAdapter
 import com.boost.upgrades.adapter.WalletAdapter
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
-import com.boost.upgrades.data.api_model.customerId.customerInfo.AddressDetails
-import com.boost.upgrades.data.api_model.customerId.customerInfo.BusinessDetails
-import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
-import com.boost.upgrades.data.api_model.customerId.customerInfo.TaxDetails
 import com.boost.upgrades.data.api_model.customerId.get.Result
 import com.boost.upgrades.datamodule.SingleNetBankData
 import com.boost.upgrades.interfaces.*
@@ -31,20 +28,18 @@ import com.boost.upgrades.ui.checkoutkyc.BusinessDetailsFragment
 import com.boost.upgrades.ui.confirmation.OrderConfirmationFragment
 import com.boost.upgrades.ui.popup.*
 import com.boost.upgrades.ui.razorpay.RazorPayWebView
-import com.boost.upgrades.ui.webview.WebViewFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Constants.Companion.ADD_CARD_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.BUSINESS_DETAILS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.EXTERNAL_EMAIL_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.NETBANKING_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_WEBVIEW_POPUP_FRAGMENT
-import com.boost.upgrades.utils.Constants.Companion.STATE_LIST_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.UPI_POPUP_FRAGMENT
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
 import com.boost.upgrades.utils.observeOnce
 import com.bumptech.glide.Glide
-import com.framework.models.firestore.FirestoreManager
+import com.framework.analytics.SentryController
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
@@ -55,13 +50,11 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.checkoutkyc_fragment.*
 import kotlinx.android.synthetic.main.payment_fragment.*
 import org.json.JSONObject
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
@@ -99,6 +92,13 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
   var gstFlag = false
   lateinit var prefs: SharedPrefs
   private var gstResult : com.boost.upgrades.data.api_model.gst.Result? = null
+  private lateinit var paymentLL :LinearLayout
+  private lateinit var upiLayout: ConstraintLayout
+  private lateinit var netBankingLayout: ConstraintLayout
+  private lateinit var walletLayout: ConstraintLayout
+  private lateinit var savedCardsLayout: ConstraintLayout
+  private lateinit var payLinkLayout: ConstraintLayout
+  private var isPayViaLink : Boolean = false
 
   companion object {
     fun newInstance() = PaymentFragment()
@@ -109,6 +109,13 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     savedInstanceState: Bundle?
   ): View? {
     root = inflater.inflate(R.layout.payment_fragment, container, false)
+    paymentLL = root.findViewById(R.id.payment_mode_ll)
+    upiLayout = root.findViewById(R.id.upi_layout)
+    netBankingLayout = root.findViewById(R.id.netbanking_layout)
+    walletLayout = root.findViewById(R.id.wallet_layout)
+    savedCardsLayout = root.findViewById(R.id.saved_cards_layout)
+    payLinkLayout = root.findViewById(R.id.pay_by_link_section)
+
 
     totalAmount = requireArguments().getDouble("amount")
     session = UserSessionManager(requireActivity())
@@ -123,6 +130,14 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     cartCheckoutData.put("currency", requireArguments().getString("currency"));
     cartCheckoutData.put("contact", requireArguments().getString("contact"))
     prefs = SharedPrefs(activity as UpgradeActivity)
+
+    paymentLL.removeAllViews()
+
+    paymentLL.addView(upiLayout)
+    paymentLL.addView(netBankingLayout)
+    paymentLL.addView(savedCardsLayout)
+    paymentLL.addView(walletLayout)
+    paymentLL.addView(payLinkLayout)
 //        //this is a offer created from admin dashboard.
 //        cartCheckoutData.put("offer_id", arguments!!.getString("offer_F5hUaalR9tpSzn"))
 
@@ -338,17 +353,6 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     )
   }
 
-  private fun loadGstDetails() {
-    Log.v("loadGstDetails","3")
-    if (prefs.getGstApiResponse() != null) {
-      gstResult = prefs.getGstApiResponse()
-      val address = gstResult!!.address
-      business_name_value.text = gstResult!!.legalName
-      business_gstin_value.text = gstResult!!.gSTIN
-      business_supply_place_value.text = gstResult!!.address!!.state
-      business_address_value.text = address!!.addressLine1 +", "+ address!!.addressLine2 +", " + address!!.city +", "+ address!!.state +", "+ address!!.pincode
-    }
-  }
 
   fun loadData() {
     viewModel.loadpaymentMethods(razorpay)
@@ -387,9 +391,11 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     viewModel.getPamentUsingExternalLink().observe(this, Observer {
 //            if (it != null && it.equals("SUCCESSFULLY ADDED TO QUEUE")) {
       if (it != null && it.equals("OK")) {
+        isPayViaLink = true
         val orderConfirmationFragment = OrderConfirmationFragment.newInstance()
         val args = Bundle()
         args.putString("payment_type", "External_Link")
+        args.putBoolean("payViaLink",isPayViaLink)
         orderConfirmationFragment.arguments = args
         (activity as UpgradeActivity).replaceFragment(
           orderConfirmationFragment,
@@ -888,7 +894,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         )
       )
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
+      SentryController.captureException(e)
     }
   }
 
@@ -915,7 +923,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
       paymentData = JSONObject()
 
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
+      SentryController.captureException(e)
     }
   }
 
@@ -944,7 +954,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
       paymentData = JSONObject()
 
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
+      SentryController.captureException(e)
     }
   }
 

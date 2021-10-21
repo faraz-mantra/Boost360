@@ -12,9 +12,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.framework.pref.UserSessionManager;
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.TestimonialData;
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.Profileimage;
+import com.nowfloats.Login.UserSessionManager;
 import com.thinksity.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -32,7 +32,7 @@ public class TestimonialsAdapter extends RecyclerView.Adapter<TestimonialsAdapte
     private UserSessionManager userSession;
     private Activity context;
 
-    public TestimonialsAdapter(List<TestimonialData> itemList, TestimonialsListener listener, com.framework.pref.UserSessionManager session, Activity context) {
+    public TestimonialsAdapter(List<TestimonialData> itemList, TestimonialsListener listener, UserSessionManager session, Activity context) {
         this.itemList = itemList;
         this.listener = listener;
         this.userSession = session;

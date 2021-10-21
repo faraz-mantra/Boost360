@@ -356,10 +356,10 @@
   <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">Open bug report form (github.com)</string>
   <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Close</string>
   <string name="crash_notification_channel__title" comment="Title of crash notification channel">Boost 360 Error Reports</string>
-  <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Boost keyboard has stopped working…</string>
+  <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Boost has stopped working…</string>
   <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Tap to view error details</string>
-  <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Boost keyboard seems to stop working repeatedly…</string>
-  <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Falling back to previous keyboard to stop infinite crash loop. Tap to view error details</string>
+  <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Boost seems to stop working repeatedly…</string>
+  <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Falling back to previous app to stop infinite crash loop. Tap to view error details</string>
   <string name="deselect_all">Deselect LL</string>
   <string name="share">Share</string>
   <string name="tv_photos">Photos</string>
@@ -409,7 +409,7 @@
   <string name="change_layout">Change layout</string>
   <string name="keyboard_not_added_plan">Boost keyboard is not added in your current plan.</string>
   <string name="staff_not_added_plan">Staff is not added in your current plan.</string>
-    <string name="feature_not_renewed">Feature not renewed</string>
+  <string name="feature_not_renewed">Feature not renewed</string>
   <string name="keyboard_renew_desc">With business keyboard, share deals, offers, product details quickly as you chat with potential customers on WhatsApp, Instagram, Telegram, Facebook Messenger, etc.</string>
   <string name="renew_feature">Renew feature</string>
   <string name="error_while_fetching_your_business">Error while fetching your business information.</string>

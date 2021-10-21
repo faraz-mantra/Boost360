@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.view.isGone
 import androidx.lifecycle.Observer
-import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible

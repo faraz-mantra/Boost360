@@ -50,6 +50,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.framework.analytics.SentryController;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.ProductGallery.Adapter.InventoryListAdapter;
@@ -505,6 +506,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                                                         try {
                                                             Thread.sleep(3000);
                                                         } catch (Exception e) {
+                                                            SentryController.INSTANCE.captureException(e);
                                                             e.printStackTrace();
                                                         }
                                                         runOnUiThread(new Runnable() {
@@ -536,6 +538,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                                         materialProgress.dismiss();
                                     }
                                 } catch (Exception e) {
+                                    SentryController.INSTANCE.captureException(e);
                                     e.printStackTrace();
                                     materialProgress.dismiss();
                                     Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
@@ -568,6 +571,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                                                     String url = Constants.NOW_FLOATS_API_URL + "/Product/v1/Delete";
                                                     new ProductDelete(url, jsonObject.toString(), Product_Detail_Activity_V45.this, position).execute();
                                                 } catch (JSONException e) {
+                                                    SentryController.INSTANCE.captureException(e);
                                                     e.printStackTrace();
                                                 }
                                                 dialog.dismiss();
@@ -581,6 +585,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                                         }).show();
 
                             } catch (Exception e) {
+                                SentryController.INSTANCE.captureException(e);
                                 e.printStackTrace();
                             }
                         }
@@ -599,6 +604,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                             }
                         }, 500);*/
             } catch (Exception e) {
+                SentryController.INSTANCE.captureException(e);
                 e.printStackTrace();
             }
             replaceImage = false;
@@ -700,6 +706,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                             materialProgress.dismiss();
                         }
                     } catch (Exception e) {
+                        SentryController.INSTANCE.captureException(e);
                         e.printStackTrace();
                         materialProgress.dismiss();
                         Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
@@ -1124,6 +1131,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
         try {
             values.put(currency, productCurrency.getText().toString());
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
 
@@ -1158,6 +1166,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
             try {
                 product_price = Double.valueOf(productPrice.getText().toString().trim());
             } catch (Exception e) {
+                SentryController.INSTANCE.captureException(e);
                 YoYo.with(Techniques.Shake).playOn(productPrice);
                 Methods.showSnackBarNegative(activity, "Please enter valid price");
                 return false;
@@ -1170,6 +1179,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
             try {
                 product_discount = Double.valueOf(productDiscount.getText().toString().trim());
             } catch (Exception e) {
+                SentryController.INSTANCE.captureException(e);
                 YoYo.with(Techniques.Shake).playOn(productDiscount);
                 Methods.showSnackBarNegative(activity, "Please enter valid discount");
                 return false;
@@ -1373,6 +1383,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
             byte[] imageBytes = Methods.compressToByte(path, activity);
             new ProductImageUploadV45(url, imageBytes, Product_Detail_Activity_V45.this, productId).execute();
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
             Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
         }
@@ -1383,6 +1394,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
             MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_UPDATEIMAGE, null);
             uploadProductImage(productId);
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
             Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
         }
@@ -1433,6 +1445,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                             productCurrency.setText(s);
                             save.setVisibility(View.VISIBLE);
                         } catch (Exception e) {
+                            SentryController.INSTANCE.captureException(e);
                             e.printStackTrace();
                         }
                         dialog.dismiss();
@@ -1494,6 +1507,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                     if (replaceImage) replaceProductImage(product_data._id);
                 }
             } catch (Exception e) {
+                SentryController.INSTANCE.captureException(e);
                 e.printStackTrace();
             } catch (OutOfMemoryError E) {
                 E.printStackTrace();
@@ -1588,6 +1602,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                 startActivityForResult(i, Constants.GALLERY_PHOTO);
             }
         } catch (ActivityNotFoundException anfe) {
+            SentryController.INSTANCE.captureException(anfe);
             // display an error message
             String errorMessage = getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(activity, errorMessage);
@@ -1619,6 +1634,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                 startActivityForResult(captureIntent, Constants.CAMERA_PHOTO);
             }
         } catch (ActivityNotFoundException anfe) {
+            SentryController.INSTANCE.captureException(anfe);
             // display an error message
             String errorMessage = getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(activity, errorMessage);
@@ -1791,6 +1807,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                         }
                     });
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
     }

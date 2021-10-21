@@ -954,8 +954,10 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
   public void unsubscribeRIA(String fpID, final Activity activity) {
     final ProgressDialog pd;
-    pd = ProgressDialog.show(activity, "", activity.getString(R.string.logging_out));
+    pd = new ProgressDialog(activity, R.style.AppCompatAlertDialogStyle);
     pd.setCancelable(false);
+    pd.setMessage(activity.getString(R.string.logging_out));
+    pd.show();
     if (fpID != null && fpID.length() > 2) {
       HashMap<String, String> params = new HashMap<String, String>();
       params.put("clientId", Constants.clientId);
@@ -972,7 +974,8 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         @Override
         public void failure(RetrofitError error) {
           if (pd.isShowing()) pd.dismiss();
-          Methods.showSnackBarNegative(activity, activity.getString(R.string.unable_to_logout));
+          processUserSessionDataClear();
+//          Methods.showSnackBarNegative(activity, activity.getString(R.string.unable_to_logout));
         }
       });
     } else {
@@ -984,7 +987,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
   private void processUserSessionDataClear() {
     try {
       FirestoreManager.INSTANCE.reset();
-      
+
       WebEngageController.logout();
       AnaCore.logoutUser(activity);
       setUserLogin(false);

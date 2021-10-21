@@ -130,9 +130,10 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
   private fun clickActionButton(type: WebsiteActionItem.IconType) {
     when (type) {
       WebsiteActionItem.IconType.service_product_catalogue -> baseActivity.startListServiceProduct(session)
+      WebsiteActionItem.IconType.doctor_e_profile_listing -> baseActivity.startListDoctors(session)
       WebsiteActionItem.IconType.latest_update_tips -> session?.let { baseActivity.startUpdateLatestStory(it) }
       WebsiteActionItem.IconType.all_images -> baseActivity.startAllImage(session)
-      WebsiteActionItem.IconType.business_profile -> baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
+      WebsiteActionItem.IconType.business_profile -> baseActivity.startBusinessProfileDetailEdit(session)
       WebsiteActionItem.IconType.testimonials -> baseActivity.startTestimonial(session)
       WebsiteActionItem.IconType.custom_page -> baseActivity.startCustomPage(session)
       WebsiteActionItem.IconType.project_teams -> baseActivity.startListProjectAndTeams(session)
@@ -143,7 +144,8 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
       WebsiteActionItem.IconType.places_look_around -> baseActivity.startNearByView(session)
       WebsiteActionItem.IconType.trip_adviser_ratings -> baseActivity.startListTripAdvisor(session)
       WebsiteActionItem.IconType.seasonal_offers -> baseActivity.startListSeasonalOffer(session)
-      WebsiteActionItem.IconType.website_theme -> baseActivity.startWebsiteNav(session)// baseActivity.startWebsiteTheme(session)
+      WebsiteActionItem.IconType.website_theme -> baseActivity.startWebsiteNav(session)
+      WebsiteActionItem.IconType.owners_information -> baseActivity.startOwnersInfo(session)
     }
   }
 }

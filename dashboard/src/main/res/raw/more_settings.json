@@ -10,7 +10,7 @@
       "icon": "business_kyc",
       "actionBtn": {
         "color": "#EB5757",
-        "title": "Need action",
+        "title": "Add",
         "text_color": "#FFFFFF"
       },
       "isActionButtonEnabled": true,
@@ -37,9 +37,9 @@
     {
       "icon": "my_bank_acccount",
       "actionBtn": {
-        "color": "#F2FBE9",
-        "title": "Verified",
-        "text_color": "#7ED321"
+        "color": "#EB5757",
+        "title": "Add",
+        "text_color": "#FFFFFF"
       },
       "isActionButtonEnabled": true,
       "subtitle": "Connect & manage your bank account.",

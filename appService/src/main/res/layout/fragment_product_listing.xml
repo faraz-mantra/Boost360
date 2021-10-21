@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools">
+
+<data></data>
+
+<RelativeLayout
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:id="@+id/mainlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.framework.views.viewgroups.BaseRecyclerView
+      android:id="@+id/baseRecyclerView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:clipToPadding="false"
+      android:orientation="vertical"
+      android:paddingBottom="@dimen/size_80"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+      tools:itemCount="10"
+      tools:listitem="@layout/recycler_item_product_listing" />
+
+
+    <com.framework.views.fabButton.FloatingActionButton
+      android:id="@+id/cb_add_product"
+      style="@style/wrap_wrap"
+      android:layout_gravity="bottom|end"
+      android:layout_margin="16dp"
+      android:backgroundTint="@color/colorAccentLight"
+      android:clickable="true"
+      android:focusable="true"
+      android:fontFamily="@font/semi_bold"
+      android:gravity="center"
+      android:textColor="@color/white"
+      app:fabIcon="@drawable/ic_add_white"
+      app:fabIconPosition="start"
+      app:fabSize="normal"
+      app:fabType="circle" />
+
+    <ProgressBar
+      android:id="@+id/progress"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:indeterminate="true"
+      android:theme="@style/progressBar" />
+  </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+  <FrameLayout
+    android:id="@+id/child_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone" />
+</RelativeLayout>
+
+
+</layout>

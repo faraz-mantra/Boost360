@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/customImageView2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_no_offers_illustration"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.25"
+            app:layout_constraintWidth_percent="0.3" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/customTextView"
+            style="@style/Offers_Text_Heading"
+            android:text="@string/no_offers_created_so_far"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/customImageView2"
+            app:layout_constraintVertical_bias="0.05" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_subheading"
+            style="@style/Offers_Text_Subheading"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/customTextView"
+            app:layout_constraintVertical_bias="0.039"
+            android:text="@string/you_dont_have_any_offers_added_for_your_customers" />
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/cb_create_offers"
+            style="@style/Offers.ButtonStyle"
+            android:text="@string/create_offer"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ctv_subheading"
+            app:layout_constraintVertical_bias="0.067" />
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/cb_watch_video"
+            style="@style/Offers.ButtonStyle.Rounded.Solid.Stroke"
+            android:text="@string/watch_video"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cb_create_offers"
+            app:layout_constraintVertical_bias="0.060" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

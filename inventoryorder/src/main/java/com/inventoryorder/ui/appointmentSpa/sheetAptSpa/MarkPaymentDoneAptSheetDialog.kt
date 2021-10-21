@@ -4,8 +4,6 @@ import android.view.View
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.inventoryorder.R
-import com.inventoryorder.databinding.BottomSheetCancelAptBinding
-import com.inventoryorder.databinding.BottomSheetCancelOrderBinding
 import com.inventoryorder.databinding.BottomSheetMarkPaymentDoneBinding
 import com.inventoryorder.model.orderRequest.paymentRequest.PaymentReceivedRequest
 import com.inventoryorder.model.ordersdetails.OrderItem

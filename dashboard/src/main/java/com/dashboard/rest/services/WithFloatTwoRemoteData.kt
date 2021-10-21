@@ -4,6 +4,7 @@ import com.dashboard.controller.ui.business.model.BusinessProfileUpdateRequest
 import com.boost.presignin.model.userprofile.UserProfileData
 import com.dashboard.rest.EndPoints
 import com.framework.base.BaseResponse
+import com.onboarding.nowfloats.model.googleAuth.FirebaseTokenResponse
 import com.framework.pref.clientId2
 import com.google.gson.JsonObject
 import io.reactivex.Observable
@@ -11,8 +12,10 @@ import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
+import java.io.File
 
 interface WithFloatTwoRemoteData {
+
   @PUT(EndPoints.CREATE_BUSINESS_LOGO)
   fun uploadBusinessImage(
     @Query("clientId") clientId: String?,
@@ -29,6 +32,11 @@ interface WithFloatTwoRemoteData {
   fun updateBusinessProfile(
     @Body profileUpdateRequest: BusinessProfileUpdateRequest
   ): Observable<Response<ResponseBody>>
+
+  @GET(EndPoints.GET_FIREBASE_TOKEN)
+  fun getFirebaseToken(
+    @Query("clientId") client_id: String?
+  ):Observable<Response<FirebaseTokenResponse>>
 
   @PUT(EndPoints.UPLOAD_USER_PROFILE_IMAGE)
   fun uploadUserProfileImage(

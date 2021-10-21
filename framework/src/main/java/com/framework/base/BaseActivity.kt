@@ -17,6 +17,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.framework.R
+import com.framework.analytics.SentryController
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
 import com.framework.utils.ConversionUtils
@@ -240,6 +241,7 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
       fragmentTransaction.replace(containerId, fragment).commit()
     } catch (e: IllegalStateException) {
       e.printStackTrace()
+      SentryController.captureException(e)
     }
   }
 
@@ -252,12 +254,16 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
     }
   }
 
-  fun showLongToast(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+  fun showLongToast(string: String?) {
+    string?.let {
+      Toast.makeText(this, string, Toast.LENGTH_LONG).show()
+    }
   }
 
-  fun showShortToast(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+  fun showShortToast(string: String?) {
+    string?.let {
+      Toast.makeText(this, string, Toast.LENGTH_SHORT).show()
+    }
   }
 
 }
