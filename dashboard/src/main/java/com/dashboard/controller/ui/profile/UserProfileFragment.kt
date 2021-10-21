@@ -1,7 +1,6 @@
 package com.dashboard.controller.ui.profile
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.boost.presignin.model.userprofile.UserProfileData
@@ -12,9 +11,7 @@ import com.dashboard.base.AppBaseFragment
 import com.dashboard.controller.ui.profile.sheet.*
 import com.dashboard.databinding.FragmentUserProfileBinding
 import com.dashboard.viewmodel.UserProfileViewModel
-import com.framework.extensions.gone
-import com.framework.extensions.observeOnce
-import com.framework.extensions.visible
+import com.framework.extensions.*
 import com.framework.glide.util.glideLoad
 import com.framework.pref.UserSessionManager
 
@@ -44,19 +41,20 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(baseActivity)
+    val merchantProfileDetails = UserProfileDataResult.getMerchantProfileDetails()
+    setDataFromPref(merchantProfileDetails)
     setOnClickListener(
-      binding?.imgEdit, binding?.viewEmptyProfile, binding?.edtEmail, binding?.viewName, binding?.verifyEmail,
+      binding?.imgEdit, binding?.viewEmptyProfile, binding?.viewName, binding?.txtName, binding?.txtEmail,
       binding?.verifyWhatsappNo, binding?.viewWhatsappNo, binding?.viewEmail, binding?.viewMobileNumber,
-      binding?.txtEmail, binding?.txtMobileNumber, binding?.txtWhatsappNo, binding?.btnLogout
+      binding?.txtWhatsappNo, binding?.btnLogout, binding?.txtMobileNumber
     )
   }
 
   override fun onResume() {
     super.onResume()
-    val merchantProfileDetails = UserProfileDataResult.getMerchantProfileDetails()
-    setDataFromPref(merchantProfileDetails)
-    fetchUserData()
+    runOnUiThread { fetchUserData() }
   }
+
   private fun setDataFromPref(merchantProfileDetails: UserProfileDataResult?) {
     if (merchantProfileDetails?.ImageUrl.isNullOrEmpty()) {
       binding?.viewEmptyProfile?.visible()
@@ -83,17 +81,19 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
 //    binding?.txtMobileNumber?.isEnabled = true
 //    binding?.txtWhatsappNo?.isEnabled = true
 
-    binding?.txtEmail?.setText(merchantProfileDetails?.Email ?: "")
-    if (merchantProfileDetails?.Email.isNullOrEmpty()) {
+    binding?.txtEmail?.setText(merchantProfileDetails?.Email?.trim() ?: "")
+    if (merchantProfileDetails?.Email.isNullOrEmpty().not()) {
       binding?.verifyEmail?.visible()
       if (merchantProfileDetails?.IsEmailVerfied == true) {
         binding?.verifyEmail?.text = getString(R.string.verified)
         binding?.verifyEmail?.setTextColor(getColor(R.color.green_6FCF97))
+        binding?.verifyEmail?.drawableEnd = ContextCompat.getDrawable(baseActivity, R.drawable.ic_check_circle_d)
         binding?.edtEmail?.gone()
       } else {
         binding?.verifyEmail?.text = getString(R.string.verify_cap)
-        binding?.edtEmail?.visible()
         binding?.verifyEmail?.setTextColor(getColor(R.color.colorAccentLight))
+        binding?.verifyEmail?.drawableEnd = null
+        binding?.edtEmail?.visible()
       }
       binding?.viewEmail?.background = ContextCompat.getDrawable(baseActivity, R.drawable.rounded_view_stroke_grey)
     } else {
@@ -122,24 +122,22 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
       binding?.viewEmptyProfile -> {
         showImagePickerSheet()
       }
-      binding?.viewName -> {
-        showEditUserNameSheet()
+      binding?.viewName, binding?.txtName -> {
+        showEditUserNameSheet(userProfileData?.UserName ?: "") { fetchUserData() }
       }
-      binding?.viewEmail -> {
-        startProfileEditEmailSheet(userProfileData?.Email)
-
+      binding?.viewEmail, binding?.txtEmail -> {
+        if (userProfileData?.Email.isNullOrEmpty() || userProfileData?.IsEmailVerfied == false) {
+          startProfileEditEmailSheet(userProfileData?.Email ?: "")
+        } else {
+          startVerifiedMobEmailSheet(VerifyOtpEmailMobileSheet.SheetType.EMAIL.name, userProfileData?.Email ?: "")
+        }
       }
-      binding?.txtEmail -> {
-        startProfileEditEmailSheet(userProfileData?.Email)
-      }
-      binding?.verifyEmail -> {
-        startVerifiedMobEmailSheet(VerifyOtpEmailMobileSheet.SheetType.EMAIL.name, userProfileData?.Email)
-      }
-      binding?.viewMobileNumber -> {
-        startVerifiedMobEmailSheet(VerifyOtpEmailMobileSheet.SheetType.MOBILE.name, userProfileData?.MobileNo)
-      }
-      binding?.txtMobileNumber -> {
-        startVerifiedMobEmailSheet(VerifyOtpEmailMobileSheet.SheetType.MOBILE.name, userProfileData?.MobileNo)
+      binding?.viewMobileNumber, binding?.txtMobileNumber -> {
+        if (userProfileData?.MobileNo.isNullOrEmpty() || userProfileData?.IsMobileVerified == false) {
+          startProfileEditMobSheet(userProfileData?.MobileNo ?: "")
+        } else {
+          startVerifiedMobEmailSheet(VerifyOtpEmailMobileSheet.SheetType.MOBILE.name, userProfileData?.MobileNo ?: "")
+        }
       }
       binding?.viewWhatsappNo -> {
         startProfileEditWhatsappSheet(userProfileData?.FloatingPointDetails?.first()?.WhatsAppNumber)
@@ -158,27 +156,14 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
   }
 
   private fun showImagePickerSheet() {
-    ImagePickerSheet(this@UserProfileFragment).show(
-      parentFragmentManager,
-      ImagePickerSheet::javaClass.name
-    )
+    ImagePickerSheet(this@UserProfileFragment).show(parentFragmentManager, ImagePickerSheet::javaClass.name)
   }
-
 
   private fun showVerifyEmailSheet() {
     VerifyOtpEmailMobileSheet().show(
       parentFragmentManager,
       VerifyOtpEmailMobileSheet::javaClass.name
     )
-  }
-
-  private fun showEditUserNameSheet() {
-    val dialog = EditChangeUserNameSheet(this@UserProfileFragment).apply {
-      arguments = Bundle().apply { putString(EditChangeUserNameSheet.IK_NAME, userProfileData?.UserName) }
-    }
-    dialog.show(parentFragmentManager, EditChangeUserNameSheet::javaClass.name)
-
-    Handler().postDelayed({ dialog.dialog?.setOnDismissListener { fetchUserData() } }, 1000)
   }
 
   override fun onUpdateProfile() {

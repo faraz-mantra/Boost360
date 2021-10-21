@@ -36,7 +36,7 @@ class VerifiedEmailMobileSheet : BaseBottomSheetDialog<SheetVerifiedEmailNumberB
     sheetType = arguments?.getString(IK_TYPE)
     emailOrMob = arguments?.getString(IK_EMAIL_OR_MOB)
     if (sheetType == SheetType.EMAIL.name) {
-      if (emailOrMob.isNullOrEmpty().not()) {
+      if (emailOrMob.isNullOrEmpty()) {
         binding?.btnChangeNumber?.text = getString(R.string.add_email)
         binding?.title?.gone()
       } else {
