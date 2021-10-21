@@ -1,7 +1,6 @@
 package com.dashboard.base
 
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
@@ -31,14 +30,6 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
 
   protected open fun hideProgress() {
     progressView?.hideProgress()
-  }
-  protected fun logout() {
-    try {
-      val i = Intent(baseActivity, Class.forName("com.nowfloats.helper.LogoutActivity"))
-      startActivity(i)
-    } catch (e: Exception) {
-      e.printStackTrace()
-    }
   }
 
   protected open fun showProgress(title: String? = "Please wait...", cancelable: Boolean? = false) {

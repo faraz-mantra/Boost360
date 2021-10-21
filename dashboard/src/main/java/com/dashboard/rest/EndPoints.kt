@@ -50,5 +50,23 @@ object EndPoints {
   const val WEB_ACTION_KITSUNE_BASE = "https://webactions.kitsune.tools/api/v1/"
   const val WEB_ACTION_KITSUNE_UPLOAD_FILE = "about_us/upload-file"
 
+  //upload user profile image
+  const val UPLOAD_USER_PROFILE_IMAGE="/user/v9/floatingpoint/createUserProfileImage"
+  //get user profile details
+  const val GET_USER_PROFILE_DETAILS="/user/v9/floatingpoint/GetUserProfileDetails"
+  //update user name
+  const val UPDATE_USER_NAME="/user/v9/floatingpoint/updateUserName"
+  //update email
+  const val SEND_OTP_EMAIL="discover/v1/floatingpoint/SendOTPToEmail"
+  const val UPDATE_EMAIL="/user/v9/floatingPoint/updateRegisteredEmail"
+
+  //update mobile
+  const val SEND_OTP_MOBILE="discover/v1/floatingpoint/SendOTPIndia"
+  const val UPDATE_MOBILE="/user/v9/floatingPoint/updateRegisteredMobile"
+
+  //update whatsapp
+  const val UPDATE_WHATSAPP="/user/v9/floatingPoint/updateWhatsapp"
+
+
 }
 
