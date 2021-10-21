@@ -1,22 +1,21 @@
 package com.dashboard.controller.ui.profile.sheet
 
-import android.os.Bundle
 import android.view.View
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.observe
 import com.dashboard.R
 import com.dashboard.databinding.SheetChangeEmailBinding
 import com.dashboard.viewmodel.UserProfileViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
+import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.BaseViewModel
 
 class EditChangeEmailSheet : BaseBottomSheetDialog<SheetChangeEmailBinding, UserProfileViewModel>() {
 
-  companion object{
-    val IK_EMAIL:String="IK_EMAIL"
+  companion object {
+    val IK_EMAIL: String = "IK_EMAIL"
   }
+
   override fun getLayout(): Int {
     return R.layout.sheet_change_email
   }
@@ -26,28 +25,28 @@ class EditChangeEmailSheet : BaseBottomSheetDialog<SheetChangeEmailBinding, User
   }
 
   override fun onCreateView() {
-    val email =arguments?.getString(IK_EMAIL)
+    val email = arguments?.getString(IK_EMAIL)
     binding?.cetEmail?.setText(email)
-    setOnClickListener(binding?.btnPublish,binding?.rivCloseBottomSheet)
+    setOnClickListener(binding?.btnPublish, binding?.rivCloseBottomSheet)
     viewListeners()
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
-    when(v){
-      binding?.btnPublish->{
+    when (v) {
+      binding?.btnPublish -> {
         sendOtp()
       }
-      binding?.rivCloseBottomSheet->dismiss()
+      binding?.rivCloseBottomSheet -> dismiss()
     }
   }
 
   private fun sendOtp() {
-    val email =binding?.cetEmail?.text.toString()
+    val email = binding?.cetEmail?.text.toString()
     binding?.progressBar?.visible()
-    viewModel?.sendEmailOTP(email)?.observe(viewLifecycleOwner,{
-      if (it.status==200){
-        startVerifyMobEmailSheet(VerifyOtpEmailMobileSheet.SheetType.EMAIL.name,email)
+    viewModel?.sendEmailOTP(email)?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        startVerifyMobEmailSheet(VerifyOtpEmailMobileSheet.SheetType.EMAIL.name, email)
       }
       binding?.progressBar?.gone()
       dismiss()
@@ -56,7 +55,7 @@ class EditChangeEmailSheet : BaseBottomSheetDialog<SheetChangeEmailBinding, User
 
   private fun viewListeners() {
     binding?.cetEmail?.addTextChangedListener {
-      binding?.btnPublish?.isEnabled = it?.length?:0>0
+      binding?.btnPublish?.isEnabled = it?.length ?: 0 > 0
     }
   }
 }

@@ -1,10 +1,9 @@
 package com.dashboard.controller.ui.profile.sheet
 
-import android.content.Intent
 import android.view.View
 import com.dashboard.R
 import com.dashboard.databinding.SheetLogoutBinding
-import com.dashboard.databinding.SheetRemoveWhatsappNumberBinding
+import com.dashboard.utils.startLogoutActivity
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
@@ -19,24 +18,16 @@ class LogoutSheet : BaseBottomSheetDialog<SheetLogoutBinding, BaseViewModel>() {
   }
 
   override fun onCreateView() {
-      setOnClickListener(binding?.btnLogout)
+    setOnClickListener(binding?.btnLogout)
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
-    when(v){
-      binding?.btnLogout->{
+    when (v) {
+      binding?.btnLogout -> {
         dismiss()
-        logout()
+        baseActivity.startLogoutActivity()
       }
-    }
-  }
-  protected fun logout() {
-    try {
-      val i = Intent(baseActivity, Class.forName("com.nowfloats.helper.LogoutActivity"))
-      startActivity(i)
-    } catch (e: Exception) {
-      e.printStackTrace()
     }
   }
 }

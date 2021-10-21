@@ -13,7 +13,10 @@ import com.inventoryorder.rest.repositories.ApiWithFloatRepository
 import com.inventoryorder.rest.repositories.InventoryOrderRepository
 import com.onboarding.nowfloats.model.nfxProcess.NFXProcessRequest
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
-import com.onboarding.nowfloats.rest.repositories.*
+import com.onboarding.nowfloats.rest.repositories.CategoryRepository
+import com.onboarding.nowfloats.rest.repositories.ChannelRepository
+import com.onboarding.nowfloats.rest.repositories.UploadImageRepository
+import com.onboarding.nowfloats.rest.repositories.WhatsAppRepository
 import okhttp3.RequestBody
 import org.json.JSONObject
 
@@ -163,7 +166,7 @@ class DashboardViewModel : BaseViewModel() {
   }
 
   fun getUserProfileData(loginId:String?): LiveData<BaseResponse> {
-    return com.dashboard.rest.repository.WithFloatTwoRepository.getUserProfileData(loginId).toLiveData()
+    return WithFloatTwoRepositoryD.getUserProfileData(loginId).toLiveData()
   }
 }
 

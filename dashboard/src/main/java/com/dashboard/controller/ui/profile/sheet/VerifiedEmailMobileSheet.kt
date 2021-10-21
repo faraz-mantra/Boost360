@@ -42,7 +42,7 @@ class VerifiedEmailMobileSheet : BaseBottomSheetDialog<SheetVerifiedEmailNumberB
       binding?.title?.setIconifiedText(
         getString(R.string.hello_worldBlue,"+91 "+ emailOrMob), R.drawable.ic_check_circle_d,
         "verified", R.color.green_6FCF97,
-        "+91 "+emailOrMob, R.font.bold
+        "+91 $emailOrMob", R.font.bold
       )
     }
 

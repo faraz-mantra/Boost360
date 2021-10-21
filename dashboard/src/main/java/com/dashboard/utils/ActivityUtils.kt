@@ -999,3 +999,13 @@ fun AppCompatActivity.startDownloadUri(url: String, isToast: Boolean = false) {
     e.printStackTrace()
   }
 }
+
+fun AppCompatActivity.startLogoutActivity() {
+  try {
+    WebEngageController.trackEvent(BOOST_LOGOUT_CLICK, CLICK, TO_BE_ADDED)
+    val i = Intent(this, Class.forName("com.nowfloats.helper.LogoutActivity"))
+    this.startActivity(i)
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
