@@ -48,7 +48,6 @@ fun Fragment.startProfileEditWhatsappSheet(oldNumber:String?){
 }
 
 fun Fragment.startLogoutSheet(){
-    val dialog = LogoutSheet().apply {
-    }
+    val dialog = LogoutSheet().apply {}
     dialog.show(parentFragmentManager, LogoutSheet::javaClass.name)
 }

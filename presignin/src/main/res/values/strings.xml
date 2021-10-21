@@ -139,7 +139,9 @@
   <string name="this_is_your_registered_mobile_number">This is your registered mobile number</string>
   <string name="number_to_login_via_otp_change_tap_on_change_number">You can also use above number to login via OTP verification. In case you want to change this number, tap on ‘Change number ’.</string>
   <string name="change_number">Change number</string>
+  <string name="add_number">Add number</string>
   <string name="change_email">Change email</string>
+  <string name="add_email">Add email</string>
   <string name="psn_login_now">Login now</string>
   <string name="request_otp">Request OTP</string>
   <string name="get_boost_360_tnc">https://www.getboost360.com/tnc?v=224</string>
@@ -147,7 +149,7 @@
   <string name="need_help_title">We\'re here to help.</string>
   <string name="select_your_business_type">Select Your Business Type</string>
   <string name="confirm_proceed">Confirm category</string>
-    <string name="can_t_find_your_category_speak_to_our_expert">Can’t find your category? speak to our expert</string>
+  <string name="can_t_find_your_category_speak_to_our_expert">Can’t find your category? speak to our expert</string>
   <string name="loading_boost_dashboard_for_logged_in_user">Loading your business dashboard...</string>
   <string name="error_right_fptag">This link is intended for the business %1$s! and you are not authorized to access this page. Please make sure you are signed in to the right Boost account.</string>
   <string name="no_internet_connection">No Internet Connection</string>

@@ -90,6 +90,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     val city = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
     val country = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
     val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country"
+    binding?.ctvContent?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)
     binding?.ctvBusinessName?.text = session?.fPName ?: session?.fpTag
     binding?.ctvBusinessAddress?.text = location
     setRecyclerView()
@@ -102,12 +103,26 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
   }
 
   private fun setUserDetail(merchantProfileDetails: UserProfileDataResult?) {
+    binding?.rivUsersImage?.let { baseActivity.glideLoad(it, merchantProfileDetails?.ImageUrl ?: "", R.drawable.ic_user_circle_dark_grey) }
     if (merchantProfileDetails != null) {
-      binding?.constraintLayout4?.visible()
-      binding?.rivUsersImage?.let { baseActivity.glideLoad(it, merchantProfileDetails.ImageUrl ?: "", R.drawable.placeholder_image_n) }
-      binding?.ctvName?.text = (merchantProfileDetails.UserName).capitalizeUtil()
+      binding?.ctvType?.visible()
+      binding?.ctvName?.text = (merchantProfileDetails.getUserNameN() ?: getUserNumber()).capitalizeUtil()
+      binding?.ctvContent?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)
+    } else {
+      binding?.ctvType?.gone()
+      binding?.ctvName?.text = getUserNumber()
       binding?.ctvContent?.text = getString(R.string.profile_info_content)
-    } else binding?.constraintLayout4?.gone()
+    }
+  }
+
+  private fun getUserNumber(): String {
+    val number = when {
+      session?.userProfileMobile.isNullOrEmpty().not() && session?.userProfileMobile!!.length > 9 -> session?.userProfileMobile
+      session?.userPrimaryMobile.isNullOrEmpty().not() && session?.userPrimaryMobile!!.length > 9 -> session?.userPrimaryMobile
+      session?.fPPrimaryContactNumber.isNullOrEmpty().not() && session?.fPPrimaryContactNumber!!.length > 9 -> session?.fPPrimaryContactNumber
+      else -> "N/A"
+    }
+    return if (!number.equals("N/A") && number?.contains("+91") == true) number else "+91 $number"
   }
 
   private fun fetchUserData() {
@@ -115,8 +130,8 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       val userProfileResult = (it as? UserProfileData)?.Result
       if (it.isSuccess() && userProfileResult != null) {
         saveMerchantProfileDetails(userProfileResult)
-        setUserDetail(userProfileResult)
       }
+      setUserDetail(userProfileResult)
     })
   }
 
@@ -282,7 +297,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       .setMessage(R.string.are_you_sure)
       .setPositiveButton(R.string.logout) { dialog: DialogInterface, _: Int ->
         WebEngageController.trackEvent(BOOST_LOGOUT_CLICK, CLICK, NO_EVENT_VALUE)
-        logout()
+        baseActivity.startLogoutActivity()
         dialog.dismiss()
       }.setNegativeButton(R.string.cancel) { dialog: DialogInterface, _: Int ->
         dialog.dismiss()
@@ -310,8 +325,8 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    inflater.inflate(R.menu.menu_more, menu)
-    // menu.findItem(R.id.menu_more)?.icon?.setTint(Color.WHITE)
+//    inflater.inflate(R.menu.menu_more, menu)
+//     menu.findItem(R.id.menu_more)?.icon?.setTint(Color.WHITE)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {

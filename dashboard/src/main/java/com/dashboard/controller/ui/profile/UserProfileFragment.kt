@@ -3,6 +3,7 @@ package com.dashboard.controller.ui.profile
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.boost.presignin.model.userprofile.UserProfileData
 import com.boost.presignin.model.userprofile.UserProfileDataResult
 import com.boost.presignin.model.userprofile.UserProfileDataResult.Companion.saveMerchantProfileDetails
@@ -43,9 +44,6 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(baseActivity)
-    val merchantProfileDetails = UserProfileDataResult.getMerchantProfileDetails()
-    setDataFromPref(merchantProfileDetails)
-    fetchUserData()
     setOnClickListener(
       binding?.imgEdit, binding?.viewEmptyProfile, binding?.edtEmail, binding?.viewName, binding?.verifyEmail,
       binding?.verifyWhatsappNo, binding?.viewWhatsappNo, binding?.viewEmail, binding?.viewMobileNumber,
@@ -53,6 +51,12 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
     )
   }
 
+  override fun onResume() {
+    super.onResume()
+    val merchantProfileDetails = UserProfileDataResult.getMerchantProfileDetails()
+    setDataFromPref(merchantProfileDetails)
+    fetchUserData()
+  }
   private fun setDataFromPref(merchantProfileDetails: UserProfileDataResult?) {
     if (merchantProfileDetails?.ImageUrl.isNullOrEmpty()) {
       binding?.viewEmptyProfile?.visible()
@@ -64,13 +68,22 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
     }
 
     binding?.txtName?.setText(merchantProfileDetails?.UserName ?: "")
-    binding?.txtEmail?.setText(merchantProfileDetails?.Email ?: "")
-    binding?.txtMobileNumber?.setText(merchantProfileDetails?.MobileNo ?: "")
-    binding?.txtWhatsappNo?.setText(merchantProfileDetails?.FloatingPointDetails?.first()?.WhatsAppNumber ?: "")
-    binding?.txtEmail?.isEnabled = true
-    binding?.txtMobileNumber?.isEnabled = true
-    binding?.txtWhatsappNo?.isEnabled = true
 
+    binding?.txtMobileNumber?.setText(merchantProfileDetails?.MobileNo ?: "")
+    if (merchantProfileDetails?.MobileNo.isNullOrEmpty().not()) {
+      binding?.verifyMobile?.visible()
+      binding?.viewMobileNumber?.background = ContextCompat.getDrawable(baseActivity, R.drawable.rounded_view_stroke_grey)
+    } else {
+      binding?.verifyMobile?.gone()
+      binding?.viewMobileNumber?.background = ContextCompat.getDrawable(baseActivity, R.drawable.rounded_view_stroke_grey_white)
+    }
+
+//    binding?.txtWhatsappNo?.setText(merchantProfileDetails?.FloatingPointDetails?.first()?.WhatsAppNumber ?: "")
+//    binding?.txtEmail?.isEnabled = true
+//    binding?.txtMobileNumber?.isEnabled = true
+//    binding?.txtWhatsappNo?.isEnabled = true
+
+    binding?.txtEmail?.setText(merchantProfileDetails?.Email ?: "")
     if (merchantProfileDetails?.Email.isNullOrEmpty()) {
       binding?.verifyEmail?.visible()
       if (merchantProfileDetails?.IsEmailVerfied == true) {
@@ -82,22 +95,21 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
         binding?.edtEmail?.visible()
         binding?.verifyEmail?.setTextColor(getColor(R.color.colorAccentLight))
       }
+      binding?.viewEmail?.background = ContextCompat.getDrawable(baseActivity, R.drawable.rounded_view_stroke_grey)
     } else {
       binding?.verifyEmail?.gone()
       binding?.edtEmail?.gone()
+      binding?.viewEmail?.background = ContextCompat.getDrawable(baseActivity, R.drawable.rounded_view_stroke_grey_white)
     }
   }
 
   private fun fetchUserData() {
-    showProgress()
     viewModel?.getUserProfileData(session.userProfileId)?.observeOnce(viewLifecycleOwner, {
       userProfileData = (it as? UserProfileData)?.Result
       if (it.isSuccess() && userProfileData != null) {
         saveMerchantProfileDetails(userProfileData!!)
-        setDataFromPref(userProfileData!!)
-        binding?.verifyWhatsappNo?.visible()
       }
-      hideProgress()
+      setDataFromPref(userProfileData)
     })
   }
 

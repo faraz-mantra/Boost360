@@ -1,23 +1,25 @@
 package com.dashboard.controller.ui.profile.sheet
 
 import android.view.View
-import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
 import com.dashboard.R
 import com.dashboard.controller.ui.profile.UpdateProfileUiListener
 import com.dashboard.databinding.SheetChangeUsernameBinding
 import com.dashboard.viewmodel.UserProfileViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
+import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 
-class EditChangeUserNameSheet(val updateProfileUiListener: UpdateProfileUiListener) : BaseBottomSheetDialog<SheetChangeUsernameBinding, UserProfileViewModel>() {
+class EditChangeUserNameSheet(private val updateProfileUiListener: UpdateProfileUiListener) : BaseBottomSheetDialog<SheetChangeUsernameBinding, UserProfileViewModel>() {
 
-  private var userName:String?=null
-  companion object{
-    val IK_NAME:String="IK_NAME"
+  private var userName: String? = null
+
+  companion object {
+    val IK_NAME: String = "IK_NAME"
   }
+
   override fun getLayout(): Int {
     return R.layout.sheet_change_username
   }
@@ -28,39 +30,37 @@ class EditChangeUserNameSheet(val updateProfileUiListener: UpdateProfileUiListen
 
   override fun onCreateView() {
     userName = arguments?.getString(IK_NAME)
-    binding?.cetBusinessName?.setText(userName)
-    setOnClickListener(binding?.btnPublish,binding?.rivCloseBottomSheet)
     viewListeners()
+    binding?.cetBusinessName?.setText(userName)
+    setOnClickListener(binding?.btnPublish, binding?.rivCloseBottomSheet)
   }
 
   private fun viewListeners() {
-    binding?.cetBusinessName?.addTextChangedListener {
-      binding?.ctvBusinessNameCount?.text="${it?.length}/40"
-      binding?.btnPublish?.isEnabled = it?.length?:0<40
+    binding?.cetBusinessName?.doAfterTextChanged {
+      val length1 = it?.length ?: 0
+      binding?.ctvBusinessNameCount?.text = "${length1}/40"
+      binding?.btnPublish?.isEnabled = length1 < 40
     }
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
-    when(v){
-      binding?.btnPublish->{
+    when (v) {
+      binding?.btnPublish -> {
         updateUserNameApi()
       }
-      binding?.rivCloseBottomSheet->dismiss()
+      binding?.rivCloseBottomSheet -> dismiss()
     }
   }
 
   private fun updateUserNameApi() {
     binding?.progressBar?.visible()
-    viewModel?.updateUserName(binding?.cetBusinessName?.text.toString(),
-      UserSessionManager(requireContext()).userProfileId)?.observe(viewLifecycleOwner,{
+    viewModel?.updateUserName(binding?.cetBusinessName?.text.toString(), UserSessionManager(baseActivity).userProfileId)?.observeOnce(viewLifecycleOwner, {
       binding?.progressBar?.gone()
-
-      if (it.status==200){
+      if (it.isSuccess()) {
         updateProfileUiListener.onUpdateProfile()
         dismiss()
-      }
+      } else showShortToast(it.message())
     })
-
   }
 }
