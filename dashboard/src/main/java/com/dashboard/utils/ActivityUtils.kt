@@ -11,12 +11,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
-import com.appservice.ui.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.setFragmentType
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
+import com.appservice.ui.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.updatesBusiness.startUpdateFragmentActivity
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
@@ -176,8 +176,7 @@ fun AppCompatActivity.startFeviconImage(session: UserSessionManager?) {
 fun AppCompatActivity.startDomainDetail(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(DOMAIN_EMAIL_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val queries =
-      Intent(this, Class.forName("com.appservice.ui.domainbooking.DomainBookingActivity"))
+    val queries = Intent(this, Class.forName("com.appservice.ui.domainbooking.DomainBookingActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
@@ -185,11 +184,7 @@ fun AppCompatActivity.startDomainDetail(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startSiteViewAnalytic(
-  session: UserSessionManager?,
-  type: String,
-  eventName: String = WEBSITE_VISITS_CHART_DURATION_CHANGED
-) {
+fun AppCompatActivity.startSiteViewAnalytic(session: UserSessionManager?, type: String, eventName: String = WEBSITE_VISITS_CHART_DURATION_CHANGED) {
   try {
     WebEngageController.trackEvent(eventName, EVENT_LABEL_NULL, TO_BE_ADDED)
     val intent =
