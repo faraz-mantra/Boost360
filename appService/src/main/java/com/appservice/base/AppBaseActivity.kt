@@ -13,7 +13,7 @@ import com.appservice.utils.WebEngageController
 import com.framework.analytics.SentryController
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
-\import com.framework.webengageconstant.CLICK
+import com.framework.webengageconstant.CLICK
 import com.framework.webengageconstant.WEB_VIEW_PAGE
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
 import com.framework.pref.UserSessionManager

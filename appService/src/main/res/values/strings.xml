@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="hello_blank_fragment">Hello blank fragment</string>
   <string name="jpeg_png">JPEG/PNG</string>
   <string name="_800x800px">(800x800px)</string>
@@ -840,6 +840,7 @@
   <string name="domain_confirm_msg_1">Once confirmed, this domain will replace your website address (URL) </string>
   <string name="domain_confirm_msg_2">Don’t worry, anyone clicking on old URL will still be able to see your website on this new domain.</string>
   <string name="confirm_amp_apply_domain"><![CDATA[Confirm & apply domain]]></string>
+  <string name="this_is_your_current_website_address">This is your current website address.</string>
 
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>
@@ -989,4 +990,62 @@
   <string name="i_hereby_declare_that_i_ve_not_yet_registered_my_business_for_gst">I hereby declare that I’ve not yet registered my business for GST.</string>
 
   <string name="expired">Expired</string>
+
+  <string name="website_domain">Website Domain</string>
+  <string name="confirming_domain">Confirming Domain</string>
+  <string name="book_a_domain_ssl">Book a Domain + SSL</string>
+  <string name="adding_existing_domain">Adding Existing Domain</string>
+  <string name="other_suggestions">Other suggestions</string>
+  <string name="suggested_domain">Suggested domain</string>
+  <string name="login_to_your_provider">Login to your domain provider</string>
+  <string name="find_your_nameservers">Find your nameservers</string>
+  <string name="replace_your_nameserver">Replace your nameservers</string>
+  <string name="find_your_domain_settings_page">Find your domain settings page</string>
+  <string name="step_1_instructions">&#8226; Open a new tab in your browser.\n\n&#8226; Go to domain provider’s setting and log in.\n\n&#8226; Come back here for next steps</string>
+  <string name="step_2_instructions">&#8226; On your domain provider’s site, go to ‘domains’ page.\n\n&#8226; Find <b><u>‘samplebusiness.com’</u></b> and go to it’s control panel or settings panel.\n\n&#8226; Find where you manage the domain’s settings. <b>Look for a button or link with the words Manage, Manage settings, domain settings or something similar</b>.</string>
+  <string name="step_3_instructions">&#8226; In your domain settings, find the area where you manage or edit nameserver records, (help). <b>This area could be called DNS settings, Nameservers, NS or similar. If you don’t see it immediately, try looking for a menu at the top or on the side of this page.</b>\n\n&#8226; Find your current nameservers. They look like this:<b>\nns-cloud-d1.googleomains.com\nns-cloud-d2.googleomains.com\nns-cloud-d3.googleomains.com\nns-cloud-d4.googleomains.com</b></string>
+  <string name="step_final_instructions_part_one">&#8226; On your domain provider’s site, replace your current nameservers with the <![CDATA[<__>]]> nameservers below, one at a time.\n\n&#8226; Remove previously written nameservers and add below shown 2 nameservers.</string>
+  <string name="step_final_instructions_part_two">&#8226; Now you should have two above mentioned nameserver records. If you have others, just remove them.\n\n&#8226; Save your changes.</string>
+  <string name="suggestions_instructions">With a domain booked via Boost 360 gets you a <b>free SSL</b> (secure sockets layer) certificate. Please note that Boost 360 doesn’t provide any premium domain.</string>
+  <string name="make_a_custom_domain_your_website_address">Make a custom domain your website address.</string>
+  <string name="buy_domain_addon_desc">A personalised domain (website address) is an excellent first step toward creating your brand on the internet. Your business website is currently running on a subdomain of nowfloats.com. Buy/renew the add-on to enjoy this feature.</string>
+  <string name="buy_add_on">Buy Add-on</string>
+  <string name="buy_add_on_lowercase">Buy add-on</string>
+  <string name="type_the_domain_you_own">Type the domain you own</string>
+  <string name="enter_the_sub_domain_you_own">Enter a sub-domain you want</string>
+  <string name="www_example_com">www.example.com</string>
+  <string name="sub_domain_example">e.g. shop, blog, updates etc</string>
+  <string name="add_a_domain_you_own">Add a domain you own</string>
+  <string name="i_found_the_nameservers">I found the nameservers</string>
+  <string name="i_found_my_domain_settings">I found my domain settings</string>
+  <string name="i_logged_in">I logged in</string>
+  <string name="i_replaced_the_nameservers">I’ve replaced nameservers</string>
+  <string name="not_sure_provide_is">Not sure who the provider is?</string>
+  <string name="cant_find_domain_settings">Can’t find domain settings?</string>
+  <string name="cant_find_nameservers">Can’t find your nameservers?</string>
+  <string name="need_help">Need help?</string>
+  <string name="book_a_new_domain">Book a new domain</string>
+  <string name="use_it_as_my_business_website_address">Use it as my business website address</string>
+  <string name="create_a_sub_domain_and_map_my">Create a sub-domain on this domain and map my business website to that URL(Ex: <u><b>shop</b>.samplebusiness.com</u>)</string>
+  <string name="step_1_4" tools:ignore="TypographyFractions">Step 1/4</string>
+  <string name="step_2_4">Step 2/4</string>
+  <string name="step_3_4" tools:ignore="TypographyFractions">Step 3/4</string>
+  <string name="step_final">Final step</string>
+  <string name="continue_txt">Continue</string>
+  <string name="business_emails">Business Emails</string>
+  <string name="looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it">Looks like this add-on is not added to your\ncurrent plan. Add it now to start using it.</string>
+  <string name="active_domain_note">*Business emails can be booked only if your domain is not more than 6 months old.</string>
+  <string name="confirming_domain_instructions">Once confirmed, above domain will replace your website address (URL) samplestorewebsite.nowfloats.com. Don’t worry, anyone clicking on old URL will still be able to see your website on this new domain.</string>
+  <string name="confirm_and_apply_domain"><![CDATA[Confirm & apply domain]]></string>
+  <string name="domain_renewal_info">Your domain will be automatically renewed based\non your active BOOST package</string>
+  <string name="select_how_you_want_to_integrate">Select how you want to integrate</string>
+  <string name="error_wrong_domain_entered">Please enter a valid domain name!</string>
+  <string name="example">example</string>
+  <string name="domain_second_step_text">In case you have a different website (for same business) connected to the domain that you own, you can integrate this website also as a sub-domain on that domain. <b><u>(what’s subdomain?)</u></b></string>
+  <string name="ns3_net"><![CDATA[ns3.<-------->.net]]></string>
+  <string name="copy">Copy</string>
+  <string name="is_not_available">is not available.</string>
+  <string name="is_available_new">is available!</string>
+  <string name="status">Status</string>
+  <string name="learn_how_to_choose_a_great_domain">Learn, how to choose a great domain</string>
 </resources>
