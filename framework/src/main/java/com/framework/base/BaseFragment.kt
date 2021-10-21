@@ -46,6 +46,7 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     baseActivity = activity as BaseActivity<*, *>
+    viewModel = ViewModelProvider(this).get(getViewModelClass())
   }
 
   override fun onCreateView(
@@ -58,12 +59,6 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
     binding?.lifecycleOwner = this
     navigator = Navigator(baseActivity)
     return binding?.root
-  }
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    viewModel = ViewModelProvider(this).get(getViewModelClass())
-
   }
 
   override fun onPrepareOptionsMenu(menu: Menu) {
