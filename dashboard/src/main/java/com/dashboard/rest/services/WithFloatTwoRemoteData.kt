@@ -65,6 +65,7 @@ interface WithFloatTwoRemoteData {
   @GET(EndPoints.SEND_OTP_MOBILE)
   fun sendOTPMobile(
     @Query("mobileNumber") mobileNumber: String?,
+    @Query("messageTemplate") messageTemplate: String? = "Your one time Boost 360 verification code is [OTP]. The code is valid for 10 minutes, Please DO NOT share this code with anyone.#W5izmPg6WcR",
     @Query("clientId") clientId: String?= clientId2,
   ): Observable<Response<ResponseBody>>
 
