@@ -109,8 +109,8 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
       path
     )
     if (!isAlreadyPurchased) {
-      //PosterPaymentSheet().show(parentFragmentManager, PosterPaymentSheet::class.java.name)
-      gotoMarketPlace()
+      PosterPaymentSheet().show(parentFragmentManager, PosterPaymentSheet::class.java.name)
+      //gotoMarketPlace()
     } else if (creatorName == null) {
       addFragmentReplace(R.id.container, PosterListFragment.newInstance(packTag!!), true)
     }
