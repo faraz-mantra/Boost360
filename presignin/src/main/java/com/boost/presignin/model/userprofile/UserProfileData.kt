@@ -2,25 +2,31 @@ package com.boost.presignin.model.userprofile
 
 import com.framework.base.BaseResponse
 import com.framework.utils.*
+import java.io.Serializable
 
 const val USER_MERCHANT_DETAIL = "USER_MERCHANT_DETAIL"
 
 data class UserProfileData(
-  val Error: Error,
-  val Result: UserProfileDataResult,
-  val StatusCode: Int
+  val Error: Error? = null,
+  val Result: UserProfileDataResult? = null,
+  val StatusCode: Int? = null
 ) : BaseResponse()
 
 data class UserProfileDataResult(
-  val Email: String,
-  val FloatingPointDetails: List<FloatingPointDetail>,
-  val ImageUrl: String,
-  val IsEmailVerfied: Boolean,
-  val IsMobileVerified: Boolean,
-  val LoginId: String,
-  val MobileNo: String,
-  val UserName: String
-) {
+  val Email: String? = null,
+  val FloatingPointDetails: List<FloatingPointDetail>? = null,
+  val ImageUrl: String? = null,
+  val IsEmailVerfied: Boolean? = null,
+  val IsMobileVerified: Boolean? = null,
+  val LoginId: String? = null,
+  val MobileNo: String? = null,
+  val UserName: String? = null
+) : Serializable {
+
+  fun getUserNameN(): String? {
+    return if (UserName.isNullOrEmpty()) null else UserName
+  }
+
   companion object {
     fun saveMerchantProfileDetails(user: UserProfileDataResult) {
       PreferencesUtils.instance.saveData(USER_MERCHANT_DETAIL, convertObjToString(user) ?: "")
@@ -33,127 +39,127 @@ data class UserProfileDataResult(
 }
 
 data class FloatingPointDetail(
-  val AccountManagerId: String,
-  val AccountManagerLocationId: String,
-  val Address: String,
-  val AliasTag: String,
-  val AppExperienceCode: String,
-  val ApplicationId: String,
-  val BoostXWebsiteUrl: String,
-  val Category: HashMap<String, String>,
-  val City: String,
-  val Contact: UserProfileContact,
-  val ContactName: String,
-  val Contacts: List<UserProfileContact>,
-  val Country: String,
-  val CountryPhoneCode: String,
-  val CreatedOn: String,
-  val Description: String,
-  val Email: String,
-  val EnterpriseEmailContact: String,
-  val EnterpriseName: String,
-  val ExpiryDate: String,
-  val ExpiryType: Int,
-  val ExternalSourceId: String,
-  val ExternalSourceName: String,
-  val ExternalUrls: List<UserProfileExternalUrl>,
-  val FBPageName: String,
-  val FPEngagementIndex: Double,
-  val FPLocalWidgets: List<UserProfileFPLocalWidget>,
-  val FPWebWidgets: List<String>,
-  val FaviconUrl: String,
-  val GADomain: String,
-  val GAToken: String,
-  val ImageUri: String,
-  val IsBulkSubscription: Boolean,
-  val IsEmailSubscriptionEnabled: Boolean,
-  val IsOnboardingbyRiaTeamComplete: Boolean,
-  val IsPrivateForApplication: Boolean,
-  val IsSMSSubscriptionEnabled: Boolean,
-  val IsSiteHealthCritical: Boolean,
-  val IsStoreFront: Boolean,
-  val IsVerified: Boolean,
-  val LanguageCode: String,
-  val LogoUrl: String,
-  val NFXAccessTokens: String,
-  val Name: String,
-  val OnboardingbyRiaTeamCompletedOn: String,
+  val AccountManagerId: String? = null,
+  val AccountManagerLocationId: String? = null,
+  val Address: String? = null,
+  val AliasTag: String? = null,
+  val AppExperienceCode: String? = null,
+  val ApplicationId: String? = null,
+  val BoostXWebsiteUrl: String? = null,
+  val Category: HashMap<String, String>? = null,
+  val City: String? = null,
+  val Contact: UserProfileContact? = null,
+  val ContactName: String? = null,
+  val Contacts: List<UserProfileContact>? = null,
+  val Country: String? = null,
+  val CountryPhoneCode: String? = null,
+  val CreatedOn: String? = null,
+  val Description: String? = null,
+  val Email: String? = null,
+  val EnterpriseEmailContact: String? = null,
+  val EnterpriseName: String? = null,
+  val ExpiryDate: String? = null,
+  val ExpiryType: Int? = null,
+  val ExternalSourceId: String? = null,
+  val ExternalSourceName: String? = null,
+  val ExternalUrls: List<UserProfileExternalUrl>? = null,
+  val FBPageName: String? = null,
+  val FPEngagementIndex: Double? = null,
+  val FPLocalWidgets: List<UserProfileFPLocalWidget>? = null,
+  val FPWebWidgets: List<String>? = null,
+  val FaviconUrl: String? = null,
+  val GADomain: String? = null,
+  val GAToken: String? = null,
+  val ImageUri: String? = null,
+  val IsBulkSubscription: Boolean? = null,
+  val IsEmailSubscriptionEnabled: Boolean? = null,
+  val IsOnboardingbyRiaTeamComplete: Boolean? = null,
+  val IsPrivateForApplication: Boolean? = null,
+  val IsSMSSubscriptionEnabled: Boolean? = null,
+  val IsSiteHealthCritical: Boolean? = null,
+  val IsStoreFront: Boolean? = null,
+  val IsVerified: Boolean? = null,
+  val LanguageCode: String? = null,
+  val LogoUrl: String? = null,
+  val NFXAccessTokens: String? = null,
+  val Name: String? = null,
+  val OnboardingbyRiaTeamCompletedOn: String? = null,
   val OverallRating: Double,
   val PackageIds: List<String>,
-  val PanaromaId: String,
-  val ParentId: String,
-  val ParentPrimaryNumber: String,
-  val PaymentLevel: Int,
-  val PaymentState: Int,
-  val PinCode: String,
-  val PrimaryCategory: String,
-  val PrimaryNumber: String,
-  val ProductCategoryVerb: String,
-  val Pwd: String,
-  val RIANotificationType: String,
-  val Ratings: String,
-  val ReportsNotificationType: String,
-  val RootAliasUri: String,
-  val RootAliasUriStatusUpdate: Int,
-  val RootAliasUriStatusUpdatedOn: String,
-  val SMSGatewayUri: String,
-  val SearchTags: String,
-  val SearchTrafficNotificationType: String,
-  val SecondaryImages: List<String>,
-  val SecondaryTileImages: List<String>,
-  val SitemapUrl: String,
-  val SubscriberNotificationType: String,
-  val SystemGeneratedCategory: String,
-  val SystemNotificationType: String,
-  val Tag: String,
-  val TileImageUri: String,
+  val PanaromaId: String? = null,
+  val ParentId: String? = null,
+  val ParentPrimaryNumber: String? = null,
+  val PaymentLevel: Int? = null,
+  val PaymentState: Int? = null,
+  val PinCode: String? = null,
+  val PrimaryCategory: String? = null,
+  val PrimaryNumber: String? = null,
+  val ProductCategoryVerb: String? = null,
+  val Pwd: String? = null,
+  val RIANotificationType: String? = null,
+  val Ratings: String? = null,
+  val ReportsNotificationType: String? = null,
+  val RootAliasUri: String? = null,
+  val RootAliasUriStatusUpdate: Int? = null,
+  val RootAliasUriStatusUpdatedOn: String? = null,
+  val SMSGatewayUri: String? = null,
+  val SearchTags: String? = null,
+  val SearchTrafficNotificationType: String? = null,
+  val SecondaryImages: List<String>? = null,
+  val SecondaryTileImages: List<String>? = null,
+  val SitemapUrl: String? = null,
+  val SubscriberNotificationType: String? = null,
+  val SystemGeneratedCategory: String? = null,
+  val SystemNotificationType: String? = null,
+  val Tag: String? = null,
+  val TileImageUri: String? = null,
   val Timings: List<UserProfileTiming>,
-  val TinyLogoUrl: String,
-  val UpdatedOn: String,
-  val Uri: String,
-  val UriDescription: String,
-  val UserMessageNotificationType: String,
-  val WebKeywords: List<String>,
-  val WebTemplateId: String,
-  val WebTemplateType: Double,
-  val WhatsAppNumber: String,
-  val WhatsppNumber: String,
-  val _id: String,
-  val errorRadius: Double,
-  val height: Double,
-  val lat: Double,
-  val lng: Double,
-  val location: UserProfileLocation
+  val TinyLogoUrl: String? = null,
+  val UpdatedOn: String? = null,
+  val Uri: String? = null,
+  val UriDescription: String? = null,
+  val UserMessageNotificationType: String? = null,
+  val WebKeywords: List<String>? = null,
+  val WebTemplateId: String? = null,
+  val WebTemplateType: Double? = null,
+  val WhatsAppNumber: String? = null,
+  val WhatsppNumber: String? = null,
+  val _id: String? = null,
+  val errorRadius: Double? = null,
+  val height: Double? = null,
+  val lat: Double? = null,
+  val lng: Double? = null,
+  val location: UserProfileLocation? = null,
 )
 
 data class UserProfileFPLocalWidget(
-  val _key: String,
-  val html: String,
-  val type: String
+  val _key: String? = null,
+  val html: String? = null,
+  val type: String? = null,
 )
 
 data class UserProfileExternalUrl(
-  val Uri: String,
-  val UriDescription: Any,
-  val UriFaviconUrl: Any
+  val Uri: String? = null,
+  val UriDescription: Any? = null,
+  val UriFaviconUrl: Any? = null
 )
 
 data class UserProfileContact(
-  val ContactName: String,
-  val ContactNumber: String
+  val ContactName: String? = null,
+  val ContactNumber: String? = null
 )
 
 data class UserProfileTiming(
-  val From: String,
+  val From: String? = null,
   val To: String
 )
 
 data class UserProfileLocation(
-  val latitude: Double,
-  val longitude: Double
+  val latitude: Double? = null,
+  val longitude: Double? = null,
 )
 
 data class UserProfileError(
-  val ErrorCode: Any,
-  val ErrorList: Any
+  val ErrorCode: Any? = null,
+  val ErrorList: Any? = null
 )

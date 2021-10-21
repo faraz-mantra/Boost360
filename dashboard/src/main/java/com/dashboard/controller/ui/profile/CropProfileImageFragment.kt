@@ -10,6 +10,7 @@ import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.databinding.FragmentCropProfileImageBinding
 import com.dashboard.viewmodel.UserProfileViewModel
+import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId2
 import com.google.gson.Gson
@@ -19,7 +20,6 @@ import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.*
-
 
 class CropProfileImageFragment : AppBaseFragment<FragmentCropProfileImageBinding, UserProfileViewModel>() {
 
@@ -79,68 +79,47 @@ class CropProfileImageFragment : AppBaseFragment<FragmentCropProfileImageBinding
     lifecycleScope.launch(Dispatchers.Default) {
       val imgFile = saveBitmap()
       if (imgFile.exists()) {
-
         withContext(Dispatchers.Main) {
           showProgress()
-          viewModel?.uploadProfileImage(
-            clientId2, userSessionManager?.userProfileId, imgFile.name,
-            imgFile.asRequestBody("image/*".toMediaTypeOrNull())
-          )?.observe(viewLifecycleOwner, {
+          viewModel?.uploadProfileImage(clientId2, userSessionManager?.userProfileId, imgFile.name, imgFile.asRequestBody("image/*".toMediaTypeOrNull()))?.observeOnce(viewLifecycleOwner, {
             Log.i(TAG, "uploadImage Response: " + Gson().toJson(it))
             hideProgress()
-
-            if (it.status == 200) {
-              requireActivity().onBackPressed()
-            }
+            if (it.isSuccess()) requireActivity().onBackPressed()
           })
         }
-
       }
     }
   }
 
-  fun zoom(percent: Float) {
+  private fun zoom(percent: Float) {
     bitmap?.let {
       val scaleFactor = percent // Set this to the zoom factor
-
       val widthOffset = (scaleFactor / 2 * it.width).toInt()
       val heightOffset = (scaleFactor / 2 * it.height).toInt()
       val numWidthPixels: Int = it.width - 2 * widthOffset
       val numHeightPixels: Int = it.height - 2 * heightOffset
-
       if (widthOffset > 0 && heightOffset > 0 && numHeightPixels > 0 && numWidthPixels > 0) {
         val rescaledBitmap = Bitmap.createBitmap(
-          it,
-          widthOffset,
-          heightOffset,
-          numWidthPixels,
-          numHeightPixels,
-          null,
-          true
+          it, widthOffset, heightOffset, numWidthPixels, numHeightPixels, null, true
         )
-
         binding?.cropImg?.setImageBitmap(rescaledBitmap)
-
-
       }
-
-
     }
 
   }
 
   suspend fun saveBitmap(): File {
     bitmap = binding?.cropImg?.croppedImage
-    //create a file to write bitmap data
+//    create a file to write bitmap data
     val f = File(context?.cacheDir, "tempimg.jpg");
     f.createNewFile();
 
-//Convert bitmap to byte array
+//    Convert bitmap to byte array
     val bos = ByteArrayOutputStream()
     bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, bos);
     val bitmapdata = bos.toByteArray();
 
-//write the bytes in file
+//    write the bytes in file
     var fos: FileOutputStream? = null;
     try {
       fos = FileOutputStream(f);
@@ -154,7 +133,6 @@ class CropProfileImageFragment : AppBaseFragment<FragmentCropProfileImageBinding
     } catch (e: IOException) {
       e.printStackTrace();
     }
-
     return f
   }
 
