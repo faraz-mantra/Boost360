@@ -2055,11 +2055,11 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="you_have_not_configured_any_warehouse_as_package_pickup_addresses">You have not configured any warehouse as package pickup addresses.</string>
   <string name="place_name">Place name</string>
   <string name="alt_tag">ALT-tag</string>
-  <string name="alt_tag_is_nothing_but_a_description_of_this_image_that_helps_search_engines_find_this_image_n_200_characters_max">Alt tag is nothing but a description of this image that helps search engines find this image. \n(200 Characters Max)</string>
+  <string name="alt_tag_is_nothing_but_a_description_of_this_image_that_helps_search_engines_find_this_image_n_200_characters_max">Alt tag is nothing but a description of this image that helps search engines find this image. \n(200 characters max)</string>
   <string name="address">Address</string>
-  <string name="enter_address_n_100_characters_max">Enter address <br />(100 Characters Max)</string>
-  <string name="distance_from_hotel">Distance from Hotel</string>
-  <string name="enter_distance_in_mt_km">Enter distance in Mt/Km</string>
+  <string name="enter_address_n_100_characters_max">Enter address <br />(100 characters max)</string>
+  <string name="distance_from_hotel">Distance from hotel</string>
+  <string name="enter_distance_in_mt_km">Enter distance in mt/km</string>
   <string name="places_to_look_around">Places to look around</string>
   <string name="looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it_with_this_feature_highlight_what_s_near_your_hotel">Looks like this add-on is not added to your current plan. Add it now to start using it. With this feature Highlight what\'s near your hotel.</string>
   <string name="india">India</string>
