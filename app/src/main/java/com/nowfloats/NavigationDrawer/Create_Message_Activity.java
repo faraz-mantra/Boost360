@@ -333,7 +333,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
         } else {
             Constants.twitterShareEnabled = false;
             mTwitterShare = 0;
-            twitterloginButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.twitter_icon_inactive));
+            twitterloginButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.twitter_icon_n_inactive));
             twitterloginButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
         }
 
@@ -347,7 +347,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
                     if (Constants.twitterShareEnabled) {
                         Constants.twitterShareEnabled = false;
                         mTwitterShare = 0;
-                        twitterloginButton.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.twitter_icon_inactive));
+                        twitterloginButton.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.twitter_icon_n_inactive));
                         twitterloginButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
                         Toast.makeText(Create_Message_Activity.this, getString(R.string.twitter_disabled), Toast.LENGTH_SHORT).show();
                     } else {

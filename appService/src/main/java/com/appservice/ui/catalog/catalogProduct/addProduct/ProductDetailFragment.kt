@@ -24,8 +24,8 @@ import com.appservice.model.deviceId
 import com.appservice.model.pickUpAddress.PickUpAddressResponse
 import com.appservice.model.pickUpAddress.PickUpData
 import com.appservice.model.product.ProductItemsResponseItem
-import com.appservice.model.serviceProduct.UniquePaymentUrlN
 import com.appservice.model.serviceProduct.CatalogProduct
+import com.appservice.model.serviceProduct.UniquePaymentUrlN
 import com.appservice.model.serviceProduct.addProductImage.ActionDataI
 import com.appservice.model.serviceProduct.addProductImage.ImageI
 import com.appservice.model.serviceProduct.addProductImage.ProductImageRequest
@@ -601,8 +601,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       secondaryImage = (data?.getSerializableExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>) ?: ArrayList()
       gstProductData = data?.getSerializableExtra(IntentConstant.PRODUCT_GST_DETAIL.name) as? GstData
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 202) {
-      bankAccountDetail =
-        data?.getSerializableExtra(IntentConstant.USER_BANK_DETAIL.name) as? BankAccountDetails
+      bankAccountDetail = data?.getSerializableExtra(IntentConstant.USER_BANK_DETAIL.name) as? BankAccountDetails
       if (bankAccountDetail != null) {
         product?.paymentType = CatalogProduct.PaymentType.ASSURED_PURCHASE.value
         binding?.bankAccountView?.visible()
