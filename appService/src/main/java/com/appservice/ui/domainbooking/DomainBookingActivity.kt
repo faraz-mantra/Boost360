@@ -22,6 +22,7 @@ import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.domainbooking.model.DomainStepsModel
 import com.appservice.utils.Validations
+import com.appservice.utils.WebEngageController
 import com.appservice.utils.getDomainSplitValues
 import com.appservice.viewmodel.DomainBookingViewModel
 import com.framework.base.BaseActivity
@@ -33,6 +34,7 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.getDomainName
 import com.framework.utils.showKeyBoard
+import com.framework.webengageconstant.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 
@@ -59,6 +61,7 @@ class DomainBookingActivity :
     }
 
     override fun onCreateView() {
+        WebEngageController.trackEvent(DOMAIN_BOOKING_INITIAL_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
         baseActivity = this
         session = UserSessionManager(this)
         showProgress()
@@ -75,10 +78,12 @@ class DomainBookingActivity :
         }
 
         binding?.btnBookOldDomain?.setOnClickListener {
+            WebEngageController.trackEvent(CLICKED_ON_HAVE_AN_EXISTING_DOMAIN, CLICK, NO_EVENT_VALUE)
             showBsheetInputOwnDomain()
         }
 
         binding?.btnBookNewDomain?.setOnClickListener {
+            WebEngageController.trackEvent(CLICKED_ON_BOOK_A_NEW_DOMAIN, CLICK, NO_EVENT_VALUE)
             startFragmentDomainBookingActivity(
                 activity = this,
                 type = com.appservice.constant.FragmentType.BOOK_A_DOMAIN_SSL_FRAGMENT,
@@ -89,6 +94,7 @@ class DomainBookingActivity :
         }
 
         binding?.appBar?.customImageView4?.setOnClickListener {
+            WebEngageController.trackEvent(DOMAIN_BOOKING_PURCHASE_BACK_CLICK, CLICK, NO_EVENT_VALUE)
             this.onNavPressed()
         }
     }
@@ -106,9 +112,11 @@ class DomainBookingActivity :
         bSheet.setCancelable(false)
 
         sheetBinding.btnContinue.setOnClickListener {
+            WebEngageController.trackEvent(ADD_OWN_DOMAIN_SHEET_CONTINUE_CLICK, CLICK, NO_EVENT_VALUE)
             validateDomainAndCallApi(sheetBinding, bSheet)
         }
         sheetBinding.ivClose.setOnClickListener {
+            WebEngageController.trackEvent(DOMAIN_BOTTOM_SHEET_CLOSE_CLICK, CLICK, NO_EVENT_VALUE)
             bSheet.dismiss()
         }
         this.showKeyBoard(sheetBinding.etDomain)
@@ -144,15 +152,20 @@ class DomainBookingActivity :
             existingDomainRequest
         ).observeOnce(this, {
             hideProgress()
-            val bundle = Bundle()
-            bundle.putString("domainName", enteredDomainName)
-            startFragmentDomainBookingActivity(
-                activity = this,
-                type = com.appservice.constant.FragmentType.ADDING_EXISTING_DOMAIN_FRAGMENT,
-                bundle = bundle,
-                clearTop = false
-            )
+            WebEngageController.trackEvent(ADDING_EXISTING_DOMAIN_FLOW_PAGE_LOAD, SUCCESSFULLY_ADDED_EXISTING_DOMAIN, NO_EVENT_VALUE)
+            openExistingDomainFragmentFlow(enteredDomainName)
         })
+    }
+
+    private fun openExistingDomainFragmentFlow(enteredDomainName: String) {
+        val bundle = Bundle()
+        bundle.putString("domainName", enteredDomainName)
+        startFragmentDomainBookingActivity(
+            activity = this,
+            type = com.appservice.constant.FragmentType.ADDING_EXISTING_DOMAIN_FRAGMENT,
+            bundle = bundle,
+            clearTop = false
+        )
     }
 
     private fun validateData(sheetBinding: BsheetInputOwnDomainBinding): Boolean {
@@ -169,6 +182,8 @@ class DomainBookingActivity :
         bSheet.setCancelable(false)
 
         sheetBinding.tvDomainName.text = enteredDomainName
+        sheetBinding.radioCreateASubdomain.text = Html.fromHtml("${getString(R.string.create_a_sub_domain_and_map_my)}.<u>$enteredDomainName)</u>")
+
         domainIntegrationUserSelection = 0
         sheetBinding.radioAsBusinessWebsite.isChecked = true
         sheetBinding.radioGroup2.setOnCheckedChangeListener { group, checkedId ->
@@ -183,6 +198,7 @@ class DomainBookingActivity :
         }
 
         sheetBinding.btnContinue.setOnClickListener {
+            WebEngageController.trackEvent(DOMAIN_INPUT_DOMAIN_OR_SUBDOMAIN_OPTION_CLICK, CLICK, NO_EVENT_VALUE)
             if (domainIntegrationUserSelection == 0) {
                 addExistingDomainApiCall(
                     enteredDomainName,
@@ -194,6 +210,7 @@ class DomainBookingActivity :
         }
 
         sheetBinding.ivClose.setOnClickListener {
+            WebEngageController.trackEvent(DOMAIN_BOTTOM_SHEET_CLOSE_CLICK, CLICK, NO_EVENT_VALUE)
             bSheet.dismiss()
         }
         bSheet.show()
@@ -231,9 +248,11 @@ class DomainBookingActivity :
         }
 
         sheetBinding.btnContinue.setOnClickListener {
+            WebEngageController.trackEvent(ADD_OWN_SUB_DOMAIN_SHEET_CONTINUE_CLICK, CLICK, NO_EVENT_VALUE)
             addExistingDomainApiCall(enteredDomainName, sheetBinding.etSubDomain.text.toString())
         }
         sheetBinding.ivClose.setOnClickListener {
+            WebEngageController.trackEvent(DOMAIN_BOTTOM_SHEET_CLOSE_CLICK, CLICK, NO_EVENT_VALUE)
             bSheet.dismiss()
         }
         this.showKeyBoard(sheetBinding.etSubDomain)
@@ -301,7 +320,8 @@ class DomainBookingActivity :
         val stepsList = arrayListOf(
             DomainStepsModel(
                 SpannableString("Since search engines recognize a domain that’s already in use, we recommend integrating any relatable domain name that you currently own."),
-                false
+                false,
+                isTextDark = false
             ),
             DomainStepsModel(
                 SpannableString(secondStep)
@@ -319,11 +339,13 @@ class DomainBookingActivity :
                         )
                         val styleSpan = StyleSpan(Typeface.BOLD)
                         setSpan(styleSpan, whatsSubdomainIndex, whatsSubdomainIndex + whatsSubdomain.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                    }, false
+                    }, false,
+                isTextDark = false
             ),
             DomainStepsModel(
                 SpannableString("If you don’t have any other domain, click on ‘book a new domain’ and choose a domain you like for your business website."),
-                false
+                false,
+                isTextDark = false
             )
         )
 

@@ -6,7 +6,8 @@ import com.appservice.recyclerView.AppBaseRecyclerViewItem
 
 class DomainStepsModel(
     var desc: SpannableString,
-    var isBulletIndicated: Boolean
+    var isBulletIndicated: Boolean,
+    var isTextDark: Boolean
 ) : AppBaseRecyclerViewItem {
 
     override fun getViewType(): Int {

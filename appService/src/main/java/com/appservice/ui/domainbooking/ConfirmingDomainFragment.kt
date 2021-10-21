@@ -4,7 +4,9 @@ import android.os.Bundle
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.databinding.FragmentConfirmingDomainBinding
+import com.appservice.utils.WebEngageController
 import com.framework.models.BaseViewModel
+import com.framework.webengageconstant.*
 
 class ConfirmingDomainFragment : AppBaseFragment<FragmentConfirmingDomainBinding, BaseViewModel>() {
 
@@ -26,6 +28,7 @@ class ConfirmingDomainFragment : AppBaseFragment<FragmentConfirmingDomainBinding
     }
 
     override fun onCreateView() {
+        WebEngageController.trackEvent(DOMAIN_CONFIRMING_DOMAIN_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
         (baseActivity as? DomainBookingContainerActivity)?.setToolbarTitleNew(
             resources.getString(
                 R.string.confirming_domain
@@ -36,6 +39,7 @@ class ConfirmingDomainFragment : AppBaseFragment<FragmentConfirmingDomainBinding
 
     private fun setOnClickListeners() {
         binding?.btnConfirmApplyDomain?.setOnClickListener {
+            WebEngageController.trackEvent(DOMAIN_CONFIRM_SELECTED_DOMAIN_CLICK, CLICK, NO_EVENT_VALUE)
             startFragmentDomainBookingActivity(
                 activity = baseActivity,
                 type = com.appservice.constant.FragmentType.ACTIVE_NEW_DOMAIN_FRAGMENT,
@@ -45,6 +49,7 @@ class ConfirmingDomainFragment : AppBaseFragment<FragmentConfirmingDomainBinding
         }
 
         binding?.btnGoBack?.setOnClickListener {
+            WebEngageController.trackEvent(DOMAIN_CONFIRMING_GO_BACK_BUTTON_CLICK, CLICK, NO_EVENT_VALUE)
             baseActivity.onNavPressed()
         }
     }
