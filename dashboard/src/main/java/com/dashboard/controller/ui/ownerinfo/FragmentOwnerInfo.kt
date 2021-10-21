@@ -9,10 +9,10 @@ import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
-import com.dashboard.viewmodel.OwnersViewModel
 import com.dashboard.databinding.FragmentOwnerInfoBinding
 import com.dashboard.model.*
 import com.dashboard.utils.WebEngageController
+import com.dashboard.viewmodel.OwnersViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -21,7 +21,6 @@ import com.framework.imagepicker.ImagePicker
 import com.framework.pref.UserSessionManager
 import com.framework.utils.convertObjToString
 import com.framework.webengageconstant.*
-import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -57,6 +56,7 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
 
   override fun onCreateView() {
     super.onCreateView()
+    session = UserSessionManager(baseActivity)
     WebEngageController.trackEvent(OWNER_INFO_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.btnSaveDetails, binding?.clearImage, binding?.btnChangeImage, binding?.imageAddBtn)
     hitGetOwnersInfo()
@@ -77,35 +77,30 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
   }
 
   private fun updateOwnersInfo() {
-    showProgress(getString(R.string.updating))
+    showProgress()
     WebEngageController.trackEvent(OWNER_INFO_UPDATE, CLICK, NO_EVENT_VALUE)
-    val query = "{_id:'" + ownersDataResponse?.data?.get(0)?.id + "'}"
+    val query = "{_id:'" + ownersDataResponse?.data?.firstOrNull()?.id + "'}"
     val actionData = ActionData(binding?.ctfDescription?.text.toString(), binding?.ctfOwnerName?.text.toString(), binding?.ctfDesignation?.text.toString(), Profileimage(url = imageUrl ?: "", description = ""))
     val updateValue = "{\$set :" + convertObjToString(actionData) + "}"
     val request = UpdateOwnersDataRequest(query = query, updateValue = updateValue)
     viewModel?.updateOwnersData(request = request)?.observeOnce(viewLifecycleOwner, Observer {
-      hideProgress()
       if (it.isSuccess()) {
         showShortToast(getString(R.string.updated_owners_data))
-        goBack()
-      } else {
-        goBack()
-      }
+      } else showShortToast(getString(R.string.error_adding_owners_data))
+      hideProgress()
     })
   }
 
   private fun hitAddOwnersInfo() {
-    showLongToast(getString(R.string.loading))
+    showProgress()
     WebEngageController.trackEvent(OWNER_INFO_ADD, CLICK, NO_EVENT_VALUE)
     this.requestAddOwnersInfo?.actionData?.profileimage?.url = this.imageUrl ?: ""
+    this.requestAddOwnersInfo?.actionData?.profileimage?.description = ""
     viewModel?.addOwnersData(request = requestAddOwnersInfo!!)?.observeOnce(viewLifecycleOwner, {
-      hideProgress()
       if (it.isSuccess()) {
         showShortToast(getString(R.string.owners_data_added_successfully))
-      } else {
-        showShortToast(getString(R.string.error_adding_owners_data))
-        goBack()
-      }
+      } else showShortToast(getString(R.string.error_adding_owners_data))
+      hideProgress()
     })
   }
 
@@ -114,16 +109,13 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
       val fileNew = takeIf { ownerImage?.name.isNullOrEmpty().not() }?.let { ownerImage?.name } ?: "owner_${Date()}.jpg"
       val requestProfile = ownerImage?.asRequestBody("image/*".toMediaTypeOrNull())
       val body = requestProfile?.let { MultipartBody.Part.createFormData("file", fileNew, it) }
-      showProgress(getString(R.string.uploading_image))
+      showProgress()
       viewModel?.uploadImageProfile(assetFileName = fileNew, file = body)?.observeOnce(viewLifecycleOwner, {
         hideProgress()
         if (it.isSuccess()) {
           this.imageUrl = it.parseStringResponse() ?: ""
-          showLongToast(getString(R.string.image_uploaded))
           addUpdateOwnersInfo()
-        } else {
-          showShortToast(getString(R.string.error_uploading_image))
-        }
+        } else showShortToast(getString(R.string.error_uploading_image))
       })
     } else addUpdateOwnersInfo()
   }
@@ -133,7 +125,7 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
     viewModel?.getOwnersData(fpTag = session?.fpTag)?.observeOnce(viewLifecycleOwner, {
       hideProgress()
       if (it.isSuccess()) {
-        this.ownersDataResponse = (it as? OwnersDataResponse) ?: OwnersDataResponse()
+        ownersDataResponse = (it as? OwnersDataResponse) ?: OwnersDataResponse()
         updatePreviousData(ownersDataResponse!!)
       } else {
         showShortToast(getString(R.string.error_getting_owners_info))
@@ -156,7 +148,6 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
       binding?.civOwnerImage?.let {
         Picasso.get().load(data?.profileimage?.url ?: "").placeholder(R.drawable.placeholder_image_n).into(it)
       }
-//      binding?.civOwnerImage?.let { activity?.glideLoad(it, data.profileimage?.url ?: "", R.drawable.placeholder_image_n,isCrop=false) }
     }
     if (isEdit == true) binding?.btnSaveDetails?.text = getString(R.string.update_details)
   }
@@ -171,8 +162,7 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
     binding?.btnChangeImage?.gone()
     binding?.civOwnerImage?.gone()
     ownerImage = null
-    ownersDataResponse?.data?.get(0)?.profileimage?.url = null
-
+    ownersDataResponse?.data?.firstOrNull()?.profileimage?.url = null
   }
 
   private fun openImagePicker() {
@@ -197,8 +187,8 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
     val designation = binding?.ctfDesignation?.text.toString()
     val name = binding?.ctfOwnerName?.text.toString()
     val description = binding?.ctfDescription?.text.toString()
-    if (ownersDataResponse?.data?.get(0)?.profileimage?.url == null && ownerImage == null) {
-      showLongToast("Add owner image.")
+    if (ownersDataResponse?.data?.firstOrNull()?.profileimage?.url == null && ownerImage == null) {
+      showLongToast(getString(R.string.add_owner_image))
       return false
     }
     if (name.isEmpty()) {
