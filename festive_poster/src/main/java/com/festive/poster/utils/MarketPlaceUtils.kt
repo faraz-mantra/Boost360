@@ -31,6 +31,10 @@ object MarketPlaceUtils {
             intent.putExtra("isOpenCardFragment", isOpenCardFragment)
             intent.putExtra("screenType", screenType)
             intent.putExtra("accountType", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
+            intent.putExtra("boost_widget_key","TESTIMONIALS")
+            intent.putExtra("feature_code","TESTIMONIALS")
+            intent.putExtra("isFestivePoster",true)
+
             intent.putStringArrayListExtra(
                 "userPurchsedWidgets",
                 session.getStoreWidgets() as ArrayList<String>

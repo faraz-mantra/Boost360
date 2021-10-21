@@ -23,7 +23,7 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecycler
     val model = item as PosterPackModel
     binding.tvPosterHeading.text = model.tagsModel.name
     binding.tvPrice.text = "Pack of ${model.posterList?.size} posters for ₹${String.format("%.2f",model.price)}"
-    setupVp(binding.vpPoster)
+  //  setupVp(binding.vpPoster)
 
     if (model.isPurchasedN()) {
       binding.btnGetPack.text = getResources()?.getString(R.string.view_pack)
@@ -43,9 +43,9 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecycler
       })
 //      binding.vpPoster.offscreenPageLimit = 1
       binding.vpPoster.adapter = adapter
-/*      binding.vpPoster.layoutManager=LinearLayoutManager(binding.root.context,LinearLayoutManager.HORIZONTAL,false)
-      binding.vpPoster.addItemDecoration(LineItemDecoration())*/
-      TabLayoutMediator(binding.dots, binding.vpPoster) { _, _ -> }.attach()
+      binding.vpPoster.layoutManager=LinearLayoutManager(binding.root.context,LinearLayoutManager.HORIZONTAL,false)
+      binding.vpPoster.addItemDecoration(LineItemDecoration())
+      //TabLayoutMediator(binding.dots, binding.vpPoster) { _, _ -> }.attach()
     }
     super.bind(position, item)
   }

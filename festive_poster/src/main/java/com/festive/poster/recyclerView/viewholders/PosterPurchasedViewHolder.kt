@@ -64,8 +64,6 @@ class PosterPurchasedViewHolder(binding: ListItemPurchasedPosterBinding):
         binding.ivDownload.setOnClickListener {
             WebEngageController.trackEvent(FESTIVAL_POSTER_SHARE_DOWNLOAD,event_value = HashMap())
             listener?.onItemClick(position,item,RecyclerViewActionType.POSTER_DOWNLOAD_CLICKED.ordinal)
-            SvgUtils.shareUncompressedSvg(model.variants.firstOrNull()?.svgUrl,model,binding.root.context)
-            Toast.makeText(FestivePosterApplication.instance, "Image Saved To Storage", Toast.LENGTH_SHORT).show()
         }
 
         binding.ivWhatsapp.setOnClickListener {
