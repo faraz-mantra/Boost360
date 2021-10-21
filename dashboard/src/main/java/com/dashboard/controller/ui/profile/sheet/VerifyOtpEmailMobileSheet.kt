@@ -3,6 +3,7 @@ package com.dashboard.controller.ui.profile.sheet
 import android.view.View
 import com.boost.presignin.views.otptextview.OTPListener
 import com.dashboard.R
+import com.dashboard.controller.DashboardFragmentContainerActivity
 import com.dashboard.databinding.SheetVerifyOtpEmailNumberBinding
 import com.dashboard.viewmodel.UserProfileViewModel
 import com.framework.base.BaseBottomSheetDialog
@@ -81,33 +82,26 @@ class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumbe
   private fun updateEmailMobApi() {
     binding?.progressBar?.visible()
     if (sheetType == SheetType.EMAIL.name) {
-      viewModel?.updateEmail(
-        emailOrMob, binding?.pinTv?.otp,
-        UserSessionManager(requireContext()).userProfileId
-      )?.observeOnce(viewLifecycleOwner, {
+      viewModel?.updateEmail(emailOrMob, binding?.pinTv?.otp, UserSessionManager(baseActivity).userProfileId)?.observeOnce(viewLifecycleOwner, {
         if (it.isSuccess()) {
+          (baseActivity as? DashboardFragmentContainerActivity)?.onRefresh()
           dismiss()
         } else {
           binding?.tvInvalidOtp?.visible()
         }
-
         binding?.progressBar?.gone()
 
       })
 
     } else {
-      viewModel?.updateMobile(
-        emailOrMob, binding?.pinTv?.otp,
-        UserSessionManager(requireContext()).userProfileId
-      )?.observeOnce(viewLifecycleOwner, {
+      viewModel?.updateMobile(emailOrMob, binding?.pinTv?.otp, UserSessionManager(baseActivity).userProfileId)?.observeOnce(viewLifecycleOwner, {
         if (it.isSuccess()) {
+          (baseActivity as? DashboardFragmentContainerActivity)?.onRefresh()
           dismiss()
         } else {
           binding?.tvInvalidOtp?.visible()
         }
-
         binding?.progressBar?.gone()
-
       })
     }
   }

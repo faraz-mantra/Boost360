@@ -3,7 +3,6 @@ package com.dashboard.controller.ui.profile.sheet
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
 import com.dashboard.R
-import com.dashboard.controller.ui.profile.UpdateProfileUiListener
 import com.dashboard.databinding.SheetChangeUsernameBinding
 import com.dashboard.viewmodel.UserProfileViewModel
 import com.framework.base.BaseBottomSheetDialog
@@ -12,7 +11,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.pref.UserSessionManager
 
-class EditChangeUserNameSheet(private val updateProfileUiListener: UpdateProfileUiListener) : BaseBottomSheetDialog<SheetChangeUsernameBinding, UserProfileViewModel>() {
+class EditChangeUserNameSheet(var click: () -> Unit) : BaseBottomSheetDialog<SheetChangeUsernameBinding, UserProfileViewModel>() {
 
   private var userName: String? = null
 
@@ -58,7 +57,7 @@ class EditChangeUserNameSheet(private val updateProfileUiListener: UpdateProfile
     viewModel?.updateUserName(binding?.cetBusinessName?.text.toString(), UserSessionManager(baseActivity).userProfileId)?.observeOnce(viewLifecycleOwner, {
       binding?.progressBar?.gone()
       if (it.isSuccess()) {
-        updateProfileUiListener.onUpdateProfile()
+        click()
         dismiss()
       } else showShortToast(it.message())
     })

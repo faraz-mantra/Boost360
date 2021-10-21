@@ -341,8 +341,8 @@
   <string name="resend"><u>Resend</u></string>
   <string name="image_should_be_in_jpeg_or_png_with_size_500x500px_or_bigger_with_similar_aspect_ratio">Image should be in Jpeg or png with size 500x500px or bigger with similar aspect ratio.</string>
   <string name="crop_your_profile_photo">Crop your profile photo</string>
-  <string name="verify_cap">VERIFY</string>
-  <string name="not_opted_cap">NOT OPTED</string>
+  <string name="verify_cap">Verify</string>
+  <string name="not_opted_cap">Not opted</string>
   <string name="verify_email">Verify email</string>
   <string name="invalid_code_entered_please_re_enter_again">Invalid code entered. Please re-enter again.</string>
   <string name="don_t_want_latest_updates_about_your_business">Don’t want latest updates about your business?</string>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
@@ -113,9 +114,9 @@
           android:layout_height="wrap_content"
           android:layout_marginHorizontal="@dimen/size_2"
           android:layout_marginTop="@dimen/size_6"
+          android:background="@drawable/rounded_view_stroke_grey"
           android:clickable="true"
           android:focusable="true"
-          android:background="@drawable/rounded_view_stroke_grey"
           android:gravity="center_vertical">
 
           <com.framework.views.customViews.CustomEditText
@@ -126,8 +127,8 @@
             android:layout_marginStart="@dimen/size_10"
             android:layout_weight="1"
             android:background="@null"
-            android:enabled="false"
-            android:focusable="false"
+            android:clickable="true"
+            android:focusableInTouchMode="false"
             android:hint="@string/enter_your_full_name"
             android:textColor="@color/black_4a4a4a"
             app:textType="HEADING_6" />
@@ -155,8 +156,6 @@
           android:layout_height="wrap_content"
           android:layout_marginHorizontal="@dimen/size_2"
           android:layout_marginTop="@dimen/size_6"
-          android:clickable="true"
-          android:focusable="true"
           android:background="@drawable/rounded_view_stroke_grey"
           android:gravity="center_vertical">
 
@@ -168,9 +167,12 @@
             android:layout_marginStart="@dimen/size_10"
             android:layout_weight="1"
             android:background="@null"
-            android:enabled="false"
-            android:focusable="false"
+            android:clickable="true"
+            android:ellipsize="end"
+            android:focusableInTouchMode="false"
             android:hint="@string/enter_your_email_id"
+            android:includeFontPadding="false"
+            android:maxLines="1"
             android:textColor="@color/black_4a4a4a"
             app:textType="HEADING_6" />
 
@@ -179,7 +181,6 @@
             android:layout_width="@dimen/size_30"
             android:layout_height="@dimen/size_30"
             android:layout_marginEnd="@dimen/size_6"
-            android:visibility="gone"
             app:srcCompat="@drawable/ic_pencil_d" />
 
           <com.framework.views.customViews.CustomTextView
@@ -187,14 +188,13 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/ic_rounded_left_verify"
-            android:clickable="true"
-            android:focusable="true"
+            android:drawablePadding="@dimen/size_2"
             android:gravity="center"
             android:includeFontPadding="false"
             android:paddingHorizontal="@dimen/size_10"
             android:text="@string/verify_cap"
+            android:textAlignment="gravity"
             android:textColor="@color/colorAccentLight"
-            android:visibility="gone"
             app:fontFamily="@font/semi_bold"
             app:textType="CAPTION" />
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -214,8 +214,6 @@
           android:layout_height="wrap_content"
           android:layout_marginHorizontal="@dimen/size_2"
           android:layout_marginTop="@dimen/size_6"
-          android:clickable="true"
-          android:focusable="true"
           android:background="@drawable/rounded_view_stroke_grey"
           android:gravity="center_vertical">
 
@@ -227,8 +225,8 @@
             android:layout_marginStart="@dimen/size_10"
             android:layout_weight="1"
             android:background="@null"
-            android:enabled="false"
-            android:focusable="false"
+            android:clickable="true"
+            android:focusableInTouchMode="false"
             android:hint="@string/enter_your_mobile_number"
             android:textColor="@color/black_4a4a4a"
             app:textType="HEADING_6" />
@@ -239,8 +237,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/ic_rounded_left_verify"
-            android:clickable="true"
-            android:focusable="true"
+            android:drawableEnd="@drawable/ic_check_circle_d"
+            android:drawablePadding="@dimen/size_2"
             android:gravity="center"
             android:includeFontPadding="false"
             android:paddingHorizontal="@dimen/size_10"
