@@ -139,7 +139,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport, binding?.retryDrScore,
       binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.viewEmptyEnquiries?.btnWhatsappEnquiries,
       binding?.viewEmptyEnquiries?.btnInstagramEnquiries, binding?.viewEmptyEnquiries?.btnTelegramEnquiries, binding?.viewEmptyEnquiries?.btnMessangerEnquiries,
-      binding?.viewEmptyEnquiries?.btnEmailEnquiries, binding?.viewEmptyEnquiries?.btnOtherShareEnquiries
+      binding?.viewEmptyEnquiries?.btnEmailEnquiries, binding?.viewEmptyEnquiries?.btnOtherShareEnquiries, binding?.btnFestive
     )
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion1?.text = "Version $versionName"
@@ -754,7 +754,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun marketPlaceBannerClick(data: DashboardMarketplaceBanner) {
     if (data.ctaWebLink.isNullOrEmpty().not()) {
-      if (data.ctaWebLink!!.contains("com.biz2.nowfloats.keyboard.home")) {
+      if (data.ctaWebLink!!.contains("com.biz2.nowfloats.keyboard.home") || data.ctaWebLink!!.contains("boost.nowfloats.com")) {
         WebEngageController.trackEvent(BOOST_MARKETPLACE_BANNER_CLICK, DEEP_LINK, NO_EVENT_VALUE)
         val deepHashMap: HashMap<DynamicLinkParams, String> =
           DynamicLinksManager().getURILinkParams(Uri.parse(data.ctaWebLink))
@@ -846,6 +846,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           shareType = null
         )
         else getChannelAccessToken(isEnquiriesShare = true, shareType = null)
+      }
+      binding?.btnFestive -> {
+        baseActivity.startFestivePosterActivity()
       }
     }
   }

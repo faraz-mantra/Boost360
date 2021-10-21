@@ -3,6 +3,7 @@ package com.framework.extensions
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.framework.views.customViews.CustomAutoCompleteTextView
 import com.framework.views.customViews.CustomEditText
 
@@ -49,6 +50,12 @@ fun CustomAutoCompleteTextView.onTextChanged(onTextChanged: (String) -> Unit) {
 
     }
   })
+}
+
+fun Fragment?.runOnUiThread(action: () -> Unit) {
+  this ?: return
+  if (!isAdded) return // Fragment not attached to an Activity
+  activity?.runOnUiThread(action)
 }
 
 fun View.visible() {
