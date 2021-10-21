@@ -1,8 +1,8 @@
 package com.framework.models.firestore
 
-import android.annotation.SuppressLint
 import android.text.TextUtils
 import android.util.Log
+import com.framework.analytics.SentryController
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.MetadataChanges
@@ -40,6 +40,16 @@ object FirestoreManager {
     readDrScoreDocument()
   }
 
+  fun reset(){
+    Log.i(TAG, "reset called: ")
+    this.fpTag = ""
+    this.fpId = ""
+    this.clientId = ""
+    this.db = null
+    this.model = null
+    readDrScoreDocument()
+
+  }
 //    fun readCollection() {
 //        this.db?.collection("drsMerchants")?.get()?.addOnSuccessListener { result ->
 //            for (document in result) {
@@ -72,6 +82,7 @@ object FirestoreManager {
       return db?.collection(COLLECTION_NAME)?.document(this.fpTag)
     } catch (e: Exception) {
       e.printStackTrace()
+      SentryController.captureException(e)
       Log.e(TAG, "Firestore document reference")
     }
     return null

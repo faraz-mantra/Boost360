@@ -1,8 +1,14 @@
 package com.boost.presignin.ui.registration
 
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.view.View
 import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
+import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.constant.RecyclerViewActionType
 import com.boost.presignin.databinding.FragmentCategoryBinding
@@ -16,13 +22,15 @@ import com.boost.presignin.recyclerView.BaseRecyclerViewItem
 import com.boost.presignin.recyclerView.RecyclerItemClickListener
 import com.boost.presignin.rest.response.ResponseDataCategory
 import com.boost.presignin.viewmodel.CategoryVideoModel
-import com.framework.base.BaseFragment
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.webengageconstant.*
+import android.content.Intent
+import android.net.Uri
+import com.framework.analytics.SentryController
 
-class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoModel>(), RecyclerItemClickListener {
+class CategoryFragment : AppBaseFragment<FragmentCategoryBinding, CategoryVideoModel>(), RecyclerItemClickListener {
 
   private val TAG = "CategoryFragment"
   private lateinit var baseAdapter: AppBaseRecyclerViewAdapter<CategoryDataModel>
@@ -92,6 +100,26 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
         ), true
       )
     }
+
+    val str_no_category_found = getString(R.string.can_not_find_category_speak_expert)
+    binding?.tvNoCategoryFound?.movementMethod  =LinkMovementMethod.getInstance()
+    val clickableStr = "our expert"
+    val spannableString = SpannableString(str_no_category_found)
+    val clickableSpan = object :ClickableSpan(){
+      override fun onClick(p0: View) {
+        try {
+          val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + getString(R.string.expert_contact_number)))
+          startActivity(intent)
+        }catch (e:Exception){
+          SentryController.captureException(e)
+
+          e.printStackTrace()
+        }
+      }
+    }
+    spannableString.setSpan(clickableSpan,str_no_category_found.indexOf(clickableStr),
+      str_no_category_found.indexOf(clickableStr)+clickableStr.length,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    binding?.tvNoCategoryFound?.text = spannableString
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {

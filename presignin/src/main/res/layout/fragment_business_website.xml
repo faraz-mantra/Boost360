@@ -79,7 +79,7 @@
             android:maxLength="50"
             android:textAllCaps="false"
             android:textColor="@color/et_color"
-            android:textSize="@dimen/heading_4" />
+            android:textSize="14sp" />
 
           <com.framework.views.customViews.CustomTextView
             android:layout_width="wrap_content"

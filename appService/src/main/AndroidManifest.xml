@@ -1,79 +1,88 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.appservice">
+  xmlns:tools="http://schemas.android.com/tools"
+  package="com.appservice">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+  <uses-feature
+    android:name="android.hardware.camera"
+    android:required="false" />
 
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- Android 11 changes -->
-    <queries>
-        <intent>
-            <action android:name="android.media.action.IMAGE_CAPTURE" />
-        </intent>
-    </queries>
+  <application
+    android:requestLegacyExternalStorage="true"
+    tools:ignore="UnusedAttribute">
+    <activity
+      android:name=".ui.catalog.CatalogServiceContainerActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.cataloge"
+      android:windowSoftInputMode="adjustPan" />
 
-    <application
-        android:requestLegacyExternalStorage="true"
-        tools:ignore="UnusedAttribute">
-        <activity
-            android:name=".ui.domainbooking.DomainBookingActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.cataloge"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ui.domainbooking.SearchDomainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.cataloge"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".ui.catalog.CatalogServiceContainerActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.cataloge"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ui.bankaccount.AccountFragmentContainerActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.account"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ui.domainbooking.DomainBookingContainerActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.cataloge"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ui.paymentgateway.PaymentGatewayContainerActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.payment"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ui.staffs.ui.StaffFragmentContainerActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme_staff_home"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ui.testimonial.TestimonialContainerActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/TestimonialTheme"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ui.updatesBusiness.UpdateBusinessContainerActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/UpdateTheme"
-            android:windowSoftInputMode="adjustResize" />
+    <activity
+      android:name="com.appservice.ui.bankaccount.AccountFragmentContainerActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.account"
+      android:windowSoftInputMode="adjustPan" />
 
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
-    </application>
+    <activity
+      android:name="com.appservice.ui.paymentgateway.PaymentGatewayContainerActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.payment"
+      android:windowSoftInputMode="adjustPan" />
 
+    <activity
+      android:name=".ui.staffs.ui.StaffFragmentContainerActivity"
+      android:configChanges="keyboardHidden|orientation|screenSize"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme_staff_home"
+      android:windowSoftInputMode="adjustPan" />
+
+     <activity android:name=".offers.FragmentOffersContainerActivity" />
+
+    <activity
+      android:name=".ui.testimonial.TestimonialContainerActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/TestimonialTheme"
+      android:windowSoftInputMode="adjustPan" />
+    <activity
+      android:name=".ui.updatesBusiness.UpdateBusinessContainerActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/UpdateTheme"
+      android:windowSoftInputMode="adjustResize" />
+
+    <activity
+      android:name=".ui.domainbooking.DomainBookingContainerActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.cataloge"
+      android:windowSoftInputMode="adjustPan" />
+
+    <activity
+      android:name=".ui.domainbooking.DomainBookingActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.cataloge"
+      android:windowSoftInputMode="adjustPan" />
+    <activity
+      android:name=".ui.domainbooking.SearchDomainActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.cataloge"
+      android:windowSoftInputMode="adjustResize" />
+
+    <meta-data
+        android:name="preloaded_fonts"
+        android:resource="@array/preloaded_fonts" />
+
+    <meta-data
+      android:name="preloaded_fonts"
+      android:resource="@array/preloaded_fonts" />
+
+  </application>
+
+  <!-- Android 11 changes -->
+  <queries>
+    <intent>
+      <action android:name="android.media.action.IMAGE_CAPTURE" />
+    </intent>
+  </queries>
 </manifest>

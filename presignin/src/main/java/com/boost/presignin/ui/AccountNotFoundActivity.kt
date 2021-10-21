@@ -42,8 +42,7 @@ class AccountNotFoundActivity : AppBaseActivity<ActivityAccountNotFoundBinding, 
     }
     binding?.backIv?.setOnClickListener { onNavPressed() }
 
-    binding?.heading?.text =
-      "${getString(R.string.no_business_account_available_with)} +91-$phoneNumber"
+    binding?.heading?.text = "${getString(R.string.no_business_account_available_with)} +91-$phoneNumber"
     binding?.createAccountBt?.setOnClickListener {
       WebEngageController.trackEvent(PS_CREATE_BUSINESS_PROFILE_CLICK, CLICKED, NO_EVENT_VALUE)
       val bundle = Bundle()

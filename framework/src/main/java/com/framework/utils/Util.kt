@@ -22,10 +22,14 @@ import com.airbnb.lottie.SimpleColorFilter
 import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
 import com.framework.views.customViews.CustomTextView
+import com.google.gson.reflect.TypeToken
+import java.io.File
 import java.text.NumberFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+
+inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
 
 fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis: Long = 1000) {
   var lastClickTime: Long = 0
@@ -100,15 +104,9 @@ fun CustomTextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
     }
     startIndexOfLink = this.text.toString().indexOf(link.first, startIndexOfLink + 1)
 //      if(startIndexOfLink == -1) continue // todo if you want to verify your texts contains links text
-    spannableString.setSpan(
-      clickableSpan,
-      startIndexOfLink,
-      startIndexOfLink + link.first.length,
-      Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-    )
+    spannableString.setSpan(clickableSpan, startIndexOfLink, startIndexOfLink + link.first.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
   }
-  this.movementMethod =
-    LinkMovementMethod.getInstance() // without LinkMovementMethod, link can not click
+  this.movementMethod = LinkMovementMethod.getInstance() // without LinkMovementMethod, link can not click
   this.setText(spannableString, TextView.BufferType.SPANNABLE)
 }
 
@@ -130,12 +128,16 @@ fun AppCompatActivity.getNavigationBarHeight(): Int {
   } else 0
 }
 
-fun LottieAnimationView.changeLayersColor(
-  @ColorRes colorRes: Int
-) {
+fun LottieAnimationView.changeLayersColor(@ColorRes colorRes: Int) {
   val color = ContextCompat.getColor(context, colorRes)
   val filter = SimpleColorFilter(color)
   val keyPath = KeyPath("**")
   val callback: LottieValueCallback<ColorFilter> = LottieValueCallback(filter)
   addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
 }
+
+val File.size get() = if (!exists()) 0.0 else length().toDouble()
+val File.sizeInKb get() = size / 1024
+val File.sizeInMb get() = sizeInKb / 1024
+val File.sizeInGb get() = sizeInMb / 1024
+val File.sizeInTb get() = sizeInGb / 1024

@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.core.widget.NestedScrollView style="@style/match_match_root">
+
+    <LinearLayout
+      style="@style/match_wrap"
+      android:orientation="vertical">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/size_20">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/bg_rect_white_rounded_4"
+          android:paddingBottom="@dimen/size_20"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout4"
+            style="@style/match_wrap"
+            android:background="@drawable/bg_rect_white_rounded_4"
+            android:paddingTop="@dimen/size_16"
+            android:paddingBottom="@dimen/size_16"
+            android:paddingLeft="@dimen/size_20"
+            android:paddingRight="@dimen/size_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.framework.views.customViews.CustomTextView
+              style="@style/AppointmentSetting_Text_Heading"
+              android:text="@string/allow_order_pickup"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.appservice.views.toggle.widget.LabeledSwitch
+              android:id="@+id/toggle_allow_pickup"
+              style="@style/Appointment_Label_Switch"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintRight_toRightOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/customTextView3"
+            style="@style/Appointment_Text_Subheading"
+            android:layout_marginTop="@dimen/size_10"
+            android:fontFamily="@font/regular"
+            android:text="@string/where_can_your_customers_pick_up_this_order_from"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+            app:layout_constraintVertical_bias="0" />
+
+          <com.framework.views.customViews.CustomCheckBox
+            android:id="@+id/ccb_business_location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:buttonTint="@color/material_check_tin_state"
+            android:fontFamily="@font/regular"
+            android:includeFontPadding="false"
+            android:text="@string/from_your_business_location"
+            android:textSize="14sp"
+            android:translationY="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/customTextView3"
+            app:layout_constraintStart_toStartOf="@+id/customTextView3"
+            app:layout_constraintTop_toBottomOf="@+id/customTextView3"
+            app:layout_constraintVertical_bias="0" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_business_address"
+            style="@style/Appointment_Text_Subheading"
+            android:layout_width="@dimen/size_0"
+            android:gravity="start"
+            android:includeFontPadding="false"
+            android:paddingStart="@dimen/size_30"
+            android:text="@string/_24th_street_city_center_hsbl_colony_kolkata_west_bengal_100009"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/ccb_business_location"
+            app:layout_constraintStart_toStartOf="@+id/ccb_business_location"
+            app:layout_constraintTop_toBottomOf="@+id/ccb_business_location"
+            app:layout_constraintVertical_bias="0" />
+
+          <com.framework.views.customViews.CustomCheckBox
+            android:id="@+id/ccb_warehouse_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:buttonTint="@color/material_check_tin_state"
+            android:fontFamily="@font/regular"
+            android:includeFontPadding="false"
+            android:text="@string/from_your_warehouse_s"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/customTextView3"
+            app:layout_constraintStart_toStartOf="@+id/customTextView3"
+            app:layout_constraintTop_toBottomOf="@+id/ctv_business_address"
+            app:layout_constraintVertical_bias="0" />
+
+          <LinearLayout
+            android:id="@+id/container_ware_house_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@+id/ccb_warehouse_address"
+            app:layout_constraintStart_toStartOf="@+id/ccb_warehouse_address"
+            app:layout_constraintTop_toBottomOf="@+id/ccb_warehouse_address"
+            app:layout_constraintVertical_bias="0" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/add_wareHouse_address"
+            style="@style/wrap_wrap"
+            android:layout_height="@dimen/size_0"
+            android:layout_marginTop="@dimen/size_4"
+            android:layout_marginEnd="@dimen/size_20"
+            android:drawableStart="@drawable/ic_add_orange_10"
+            android:drawablePadding="@dimen/size_2"
+            android:gravity="center"
+            android:text="@string/add"
+            android:textAllCaps="false"
+            android:textColor="@color/orange"
+            app:layout_constraintBottom_toBottomOf="@+id/ccb_warehouse_address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ctv_business_address"
+            app:layout_constraintVertical_bias="0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/size_20">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/bg_rect_white_rounded_4"
+          android:orientation="vertical"
+          android:paddingBottom="@dimen/size_20"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
+            style="@style/match_wrap"
+            android:background="@drawable/bg_rect_white_rounded_4"
+            android:paddingTop="@dimen/size_16"
+            android:paddingBottom="@dimen/size_16"
+            android:paddingLeft="@dimen/size_20"
+            android:paddingRight="@dimen/size_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/customTextView6"
+              style="@style/AppointmentSetting_Text_Heading"
+              android:text="@string/allow_home_delivery"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintVertical_bias="0.01" />
+
+
+            <com.appservice.views.toggle.widget.LabeledSwitch
+              android:id="@+id/toggle_home_delivery"
+              style="@style/Appointment_Label_Switch"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintRight_toRightOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintVertical_bias="0.01" />
+
+            <com.framework.views.customViews.CustomImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_10"
+              android:layout_marginEnd="8dp"
+              android:src="@drawable/ic_info_circular_orange"
+              app:layout_constraintEnd_toStartOf="@+id/customTextView7"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/toggle_home_delivery" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/customTextView7"
+              style="@style/Appointment_Text_Subheading"
+              android:layout_width="match_parent"
+              android:layout_marginHorizontal="@dimen/size_20"
+              android:layout_marginTop="8dp"
+              android:fontFamily="@font/regular"
+              android:gravity="top|start"
+              android:text="@string/boost_360_does_not_handle_shipping_to_deliver_the_orders_to_customers_location_you_need_to_arrange_for_home_home_delivery_via_a_local_delivery_partner_or_any_trusted_shipping_company"
+              app:layout_constraintTop_toBottomOf="@id/toggle_home_delivery"
+              tools:layout_editor_absoluteX="40dp" />
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_delivery_setup_heading"
+            style="@style/AppointmentSetting_Text_Heading"
+            android:layout_marginTop="@dimen/size_20"
+            android:layout_marginHorizontal="@dimen/size_20"
+            android:text="@string/delivery_charges_setup"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+            app:layout_constraintVertical_bias="0.01" />
+
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_delivery_charge_note"
+            style="@style/Appointment_Text_Subheading"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/size_6"
+            android:layout_marginHorizontal="@dimen/size_20"
+            android:fontFamily="@font/regular"
+            android:gravity="top|start"
+            android:text="@string/set_the_default_delivery_fee_inclusive_of_taxes_that_you_want_to_charge_for_all_orders_requiring_home_delivery_please_note_that_the_shipping_charges_will_be_taxed_with_the_rate_of_that_item_which_has_the_highest_rate_of_tax_in_the_order"
+            app:layout_constraintTop_toBottomOf="@id/ctv_delivery_setup_heading" />
+
+          <RadioGroup
+            android:id="@id/radio_group"
+            style="@style/match_wrap"
+            android:layout_marginHorizontal="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_10"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ctv_delivery_charge_note">
+
+            <com.framework.views.customViews.CustomRadioButton
+              android:id="@+id/crb_flat_charges"
+              style="@style/RadioAppointment"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginHorizontal="@dimen/size_5"
+              android:checked="true"
+              android:tag="@string/flat_charges"
+              android:text="@string/flat_charges" />
+
+            <com.framework.views.customViews.CustomRadioButton
+              android:id="@+id/crb_cart_slab"
+              style="@style/RadioAppointment"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginHorizontal="@dimen/size_20"
+              android:tag="@string/cart_value_slab_s"
+              android:text="@string/cart_value_slab_s"
+              android:visibility="gone" />
+
+          </RadioGroup>
+
+          <LinearLayout
+            android:id="@+id/ll_container_cart_slab"
+            style="@style/match_wrap"
+            android:layout_marginHorizontal="@dimen/size_20"
+            android:layout_marginTop="@dimen/size_10"
+            android:orientation="vertical" />
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_add_another_slab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginHorizontal="@dimen/size_20"
+            android:layout_marginTop="@dimen/size_20"
+            android:background="@drawable/appointment_button_stroke_orange"
+            android:drawableStart="@drawable/ic_add_orange"
+            android:gravity="center"
+            android:padding="@dimen/size_10"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/radio_group">
+
+            <com.framework.views.customViews.CustomImageView
+              android:layout_width="@dimen/size_15"
+              android:layout_height="@dimen/size_15"
+              android:layout_marginEnd="@dimen/size_10"
+              android:src="@drawable/ic_add_orange"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toStartOf="@+id/customTextView5"
+              app:layout_constraintHorizontal_bias="1"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/customTextView5"
+              style="@style/wrap_wrap"
+              android:gravity="center_vertical"
+              android:text="@string/add_another_slab"
+              android:textColor="@color/orange"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_flat_charges"
+            style="@style/match_wrap"
+            android:layout_marginHorizontal="@dimen/size_20"
+            android:layout_marginTop="@dimen/size_10"
+            android:background="@drawable/bg_rect_edit_txt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radio_group">
+
+            <com.framework.views.customViews.CustomTextField
+              android:id="@+id/etd_flat_charges"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:background="@null"
+              android:drawableStart="@drawable/ic_indian_rupee"
+              android:drawablePadding="@dimen/size_15"
+              android:hint="@string/_50"
+              android:inputType="textCapWords"
+              android:maxEms="3"
+              android:padding="@dimen/size_10"
+              android:singleLine="true"
+              android:textColor="@color/warm_grey_10"
+              android:textColorHint="@color/primary_grey"
+              app:layout_constraintLeft_toLeftOf="parent"
+              app:layout_constraintRight_toLeftOf="@id/btn_save_charges"
+              app:layout_constraintRight_toRightOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/btn_save_charges"
+              android:layout_width="@dimen/size_80"
+              android:layout_height="0dp"
+              android:layout_margin="@dimen/size_0"
+              android:background="@drawable/shape_blue_stroke_rect_title_bkg"
+              android:clickable="true"
+              android:gravity="center"
+              android:text="@string/save"
+              android:textColor="@color/yellow_ffb900"
+              app:fontFamily="@font/semi_bold"
+              app:layout_constraintBottom_toBottomOf="@id/etd_flat_charges"
+              app:layout_constraintRight_toRightOf="parent"
+              app:layout_constraintTop_toTopOf="@id/etd_flat_charges"
+              app:textAllCaps="false"
+              app:textType="BODY_1" />
+
+
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_bottom_note"
+            style="@style/Appointment_Text_Subheading"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/size_20"
+            android:layout_marginTop="@dimen/size_10"
+            android:fontFamily="@font/regular"
+            android:gravity="top|start"
+            android:text="@string/above_delivery_fee_will_be_charged_for_all_home_delivery_orders_irrespective_or_cart_value"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
+
+        </LinearLayout>
+
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+  </androidx.core.widget.NestedScrollView>
+</layout>

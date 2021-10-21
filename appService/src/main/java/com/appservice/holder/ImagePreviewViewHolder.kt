@@ -19,8 +19,7 @@ import com.bumptech.glide.request.target.Target
 import java.io.ByteArrayOutputStream
 import java.util.*
 
-class ImagePreviewViewHolder(binding: ItemPreviewImageBinding) :
-  AppBaseRecyclerViewHolder<ItemPreviewImageBinding>(binding) {
+class ImagePreviewViewHolder(binding: ItemPreviewImageBinding) : AppBaseRecyclerViewHolder<ItemPreviewImageBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -39,29 +38,18 @@ class ImagePreviewViewHolder(binding: ItemPreviewImageBinding) :
       }
       else -> {
         activity?.let {
-          binding.ctvSize.text = "Loading..."
+          binding.ctvSize.text = activity?.getString(R.string.loading_)
           Glide.with(it)
             .asBitmap().load(data?.pathUrl ?: "")
             .placeholder(R.drawable.placeholder_image_n)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .listener(object : RequestListener<Bitmap> {
-              override fun onLoadFailed(
-                e: GlideException?,
-                model: Any?,
-                target: Target<Bitmap>?,
-                isFirstResource: Boolean
-              ): Boolean {
+              override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
                 return false
               }
 
               @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-              override fun onResourceReady(
-                resource: Bitmap?,
-                model: Any,
-                target: Target<Bitmap>,
-                dataSource: DataSource,
-                isFirstResource: Boolean
-              ): Boolean {
+              override fun onResourceReady(resource: Bitmap?, model: Any, target: Target<Bitmap>, dataSource: DataSource, isFirstResource: Boolean): Boolean {
                 if (resource != null) binding.ctvSize.text =
                   "${data?.getFileName() ?: ""}(${getImageSize(resource)})"
                 return false
@@ -71,11 +59,7 @@ class ImagePreviewViewHolder(binding: ItemPreviewImageBinding) :
       }
     }
     binding.cbChange.setOnClickListener {
-      listener?.onItemClick(
-        position,
-        data,
-        RecyclerViewActionType.IMAGE_CHANGE.ordinal
-      )
+      listener?.onItemClick(position, data, RecyclerViewActionType.IMAGE_CHANGE.ordinal)
     }
   }
 

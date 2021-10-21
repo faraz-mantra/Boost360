@@ -17,17 +17,20 @@ data class WebsiteActionItem(
   var title: String? = "",
   @SerializedName("desc")
   var desc: String? = "",
-  @SerializedName("count")
+  @SerializedName("countType")
+  var countType: String? = null,
   var count: Int? = null,
   @SerializedName("type")
   var type: String? = "",
 ) : Serializable, AppBaseRecyclerViewItem {
 
-
+  fun getCountN(): Int {
+    return if (count != null) count!! else 0
+  }
 
   var recyclerViewItemType: Int = RecyclerViewItemType.BOOST_WEBSITE_ITEM_VIEW.getLayout()
   override fun getViewType(): Int {
-    if (this.isFeature==true)
+    if (this.isFeature == true)
       return RecyclerViewItemType.BOOST_WEBSITE_ITEM_FEATURE_VIEW.getLayout()
     return recyclerViewItemType
   }
@@ -47,7 +50,9 @@ data class WebsiteActionItem(
     places_look_around(R.drawable.places_look_around_d),
     trip_adviser_ratings(R.drawable.trip_advisor_reviews_d),
     seasonal_offers(R.drawable.ic_offer_d),
-    website_theme(R.drawable.ic_website_theme);
+    website_theme(R.drawable.ic_website_theme),
+    owners_information(R.drawable.ic_owner),
+    doctor_e_profile_listing(R.drawable.ic_doctors_e_profile);
 
     companion object {
       fun fromName(name: String?): IconType? =

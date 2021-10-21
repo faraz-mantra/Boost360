@@ -4,6 +4,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.framework.utils.ValidationUtils
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.FragmentType
@@ -88,15 +89,14 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
 
   private fun onNextTapped() {
 
-    val name = binding?.editCustomerName?.text ?: ""
-    val email = binding?.editCustomerEmail?.text ?: ""
-    val phone = binding?.editCustomerPhone?.text ?: ""
-    val address = binding?.layoutBillingAddr?.editAddress?.text ?: ""
-    val city = binding?.layoutBillingAddr?.editCity?.text ?: ""
-    val state = binding?.layoutBillingAddr?.editState?.text ?: ""
-    val pinCode = binding?.layoutBillingAddr?.editPin?.text ?: ""
-
-    val gstNo = binding?.editGstin?.text ?: ""
+    val name = binding?.editCustomerName?.text?.toString() ?: ""
+    val email = binding?.editCustomerEmail?.text?.toString() ?: ""
+    val phone = binding?.editCustomerPhone?.text?.toString() ?: ""
+    val address = binding?.layoutBillingAddr?.editAddress?.text?.toString() ?: ""
+    val city = binding?.layoutBillingAddr?.editCity?.text?.toString() ?: ""
+    val state = binding?.layoutBillingAddr?.editState?.text?.toString() ?: ""
+    val pinCode = binding?.layoutBillingAddr?.editPin?.text?.toString() ?: ""
+    val gstNo = binding?.editGstin?.text?.toString() ?: ""
 
     if (name.isEmpty()) {
       showShortToast(getString(R.string.customer_name_cannot_be_empty))
@@ -108,21 +108,17 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
       return
     }
 
-    if (phone.length < 10) {
+    if (!ValidationUtils.isMobileNumberValid(phone?:"")) {
       showShortToast(getString(R.string.please_enter_valid_phone))
       return
     }
 
-    if (email.isNullOrEmpty().not() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        .not()
-    ) {
+    if (email.isEmpty().not() && !ValidationUtils.isEmailValid(email)) {
       showShortToast(getString(R.string.please_enter_valid_email))
       return
     }
 
-    if (gstNo.isNullOrEmpty().not() && Pattern.compile(AppConstant.GST_VALIDATION_REGEX)
-        .matcher(gstNo).matches().not()
-    ) {
+    if (gstNo.isEmpty().not() && Pattern.compile(AppConstant.GST_VALIDATION_REGEX).matcher(gstNo).matches().not()) {
       showShortToast(getString(R.string.enter_valid_gstin_number))
       return
     }
@@ -152,22 +148,10 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
       return
     }
 
-    val contactDetails = ContactDetails(
-      fullName = name.toString(),
-      emailId = email.toString(), primaryContactNumber = phone.toString()
-    )
+    val contactDetails = ContactDetails(fullName = name, emailId = email, primaryContactNumber = phone)
 
-    val billingAddress = Address(
-      address.toString(),
-      city = city.toString(),
-      region = state.toString(),
-      zipcode = pinCode.toString()
-    )
-    val buyerDetails = BuyerDetails(
-      contactDetails = contactDetails,
-      address = billingAddress,
-      GSTIN = gstNo.toString()
-    )
+    val billingAddress = Address(address, city = city, region = state, zipcode = pinCode)
+    val buyerDetails = BuyerDetails(contactDetails = contactDetails, address = billingAddress, GSTIN = gstNo)
     createOrderRequest.buyerDetails = buyerDetails
     val bundle = Bundle()
     bundle.putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)

@@ -10,7 +10,7 @@
       "icon": "business_kyc",
       "actionBtn": {
         "color": "#EB5757",
-        "title": "Need action",
+        "title": "Add",
         "text_color": "#FFFFFF"
       },
       "isActionButtonEnabled": true,
@@ -37,13 +37,24 @@
     {
       "icon": "my_bank_acccount",
       "actionBtn": {
-        "color": "#F2FBE9",
-        "title": "Verified",
-        "text_color": "#7ED321"
+        "color": "#EB5757",
+        "title": "Add",
+        "text_color": "#FFFFFF"
       },
       "isActionButtonEnabled": true,
       "subtitle": "Connect & manage your bank account.",
       "title": "My bank account"
+    },
+    {
+      "icon": "custom_website_domain",
+      "actionBtn": {
+        "color": "#F2FBE9",
+        "title": "Verified",
+        "text_color": "#7ED321"
+      },
+      "isActionButtonEnabled": false,
+      "subtitle": "Manage your website domain integration.",
+      "title": "Custom Website\nDomain"
     },
     //    {
     //      "icon": "boost_academy",

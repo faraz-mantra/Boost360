@@ -191,14 +191,23 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
       return;
     }
     String defaultTime = "00";
-    String mondayTime, tuesdayTime, wednesdayTime, thursdayTime, fridayTime, saturdayTime, sundayTime;
+    String sundayTime,mondayTime, tuesdayTime, wednesdayTime, thursdayTime, fridayTime, saturdayTime;
     String[] profilesattr = new String[20];
     profilesattr[0] = "TIME";
-    JSONArray ja = new JSONArray();
-    JSONObject dayData = new JSONObject();
 
     /*The clinic must be open for at least one day. If all days closed, then it means the business hours are not set.*/
     boolean openAtleastOneDayFlag = false;
+
+    if (switchSun.isChecked()) {
+      sundayTime = etSunOpen.getText().toString().trim() + "," + etSunClose.getText().toString().trim();
+      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME, etSunOpen.getText().toString().trim());
+      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME, etSunClose.getText().toString().trim());
+      openAtleastOneDayFlag = true;
+    } else {
+      sundayTime = defaultTime + "," + defaultTime;
+      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME, "00");
+      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME, "00");
+    }
 
     if (switchMon.isChecked()) {
       mondayTime = etMonOpen.getText().toString().trim() + "," + etMonClose.getText().toString().trim();
@@ -264,20 +273,8 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
       session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME, "00");
       session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_END_TIME, "00");
     }
-    if (switchSun.isChecked()) {
-      sundayTime = etSunOpen.getText().toString().trim() + "," + etSunClose.getText().toString().trim();
-      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME, etSunOpen.getText().toString().trim());
-      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME, etSunClose.getText().toString().trim());
-      openAtleastOneDayFlag = true;
-    } else {
-      sundayTime = defaultTime + "," + defaultTime;
-      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME, "00");
-      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME, "00");
-    }
     JSONObject offerObj = new JSONObject();
     try {
-      //offerObj.put("clientId", Constants.clientId);
-      //offerObj.put("fpTag", (Constants.StoreTag).toUpperCase());
       offerObj.put("key", "TIMINGS");
       offerObj.put("value",
           sundayTime + "#" +
@@ -291,11 +288,12 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
     } catch (JSONException e) {
       e.printStackTrace();
     }
-
+    JSONArray ja = new JSONArray();
+    JSONObject dayData = new JSONObject();
     ja.put(offerObj);
     try {
       dayData.put("clientId", Constants.clientId);
-      dayData.put("fpTag", (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)).toUpperCase());
+      dayData.put("fpTag", session.getFpTag());
       dayData.put("updates", ja);
     } catch (JSONException e) {
       e.printStackTrace();

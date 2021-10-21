@@ -1,5 +1,6 @@
 package com.appservice.model.staffModel
 
+import com.appservice.model.staffModel.SpecialisationsItem
 import com.google.gson.annotations.SerializedName
 
 data class StaffProfileUpdateRequest(
@@ -31,6 +32,34 @@ data class StaffProfileUpdateRequest(
   var age: Int? = null,
   @field:SerializedName("specialisations")
   var specialisations: ArrayList<SpecialisationsItem>? = null,
+
+  @field:SerializedName("Memberships")
+  val memberships: String? = null,
+
+  @field:SerializedName("BusinessLicence")
+  val businessLicence: String? = null,
+
+
+  @field:SerializedName("Speciality")
+  val speciality: String? = null,
+
+  @field:SerializedName("BookingWindow")
+  val bookingWindow: String? = null,
+
+
+  @field:SerializedName("AppointmentType")
+  val appointmentType: String? = null,
+
+
+  @field:SerializedName("Education")
+  val education: String? = null,
+
+  @field:SerializedName("Registration")
+  val registration: String? = null,
+
+
+  @field:SerializedName("ContactNumber")
+  val contactNumber: String? = null
 )
 
 

@@ -242,24 +242,15 @@ enum class OrderStatusValue(
 
   companion object {
     fun fromStatusOrder(status: String): OrderStatusValue? = values().firstOrNull {
-      (it.status.equals(
-        status,
-        ignoreCase = true
-      ) && it.type == OrderSummaryModel.OrderType.ORDER.name)
+      (it.status.equals(status, ignoreCase = true) && it.type == OrderSummaryModel.OrderType.ORDER.name)
     }
 
     fun fromStatusAppointment(status: String): OrderStatusValue? = values().firstOrNull {
-      (it.status.equals(
-        status,
-        ignoreCase = true
-      ) && it.type == OrderSummaryModel.OrderType.APPOINTMENT.name)
+      (it.status.equals(status, ignoreCase = true) && it.type == OrderSummaryModel.OrderType.APPOINTMENT.name)
     }
 
     fun fromStatusConsultation(status: String): OrderStatusValue? = values().firstOrNull {
-      (it.status.equals(
-        status,
-        ignoreCase = true
-      ) && it.type == OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name)
+      (it.status.equals(status, ignoreCase = true) && it.type == OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name)
     }
 
   }

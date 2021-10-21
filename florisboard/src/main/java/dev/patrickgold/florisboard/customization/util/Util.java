@@ -1,5 +1,9 @@
 package dev.patrickgold.florisboard.customization.util;
 
+import com.framework.BaseApplication;
+import com.framework.pref.TokenResultKt;
+import com.framework.pref.UserSessionManager;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
@@ -7,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import dev.patrickgold.florisboard.customization.network.GetGalleryImagesAsyncTask;
+import dev.patrickgold.florisboard.ime.core.FlorisApplication;
 
 /**
  * Created by Shimona on 01-06-2018.
@@ -33,7 +38,8 @@ public class Util {
             // Enable PUT method
             connection.setRequestMethod(requestMethod);
             connection.setRequestProperty("Connection", "Keep-Alive");
-
+            connection.setRequestProperty("Authorization", "Bearer "+ TokenResultKt.getAccessTokenAuth(new
+                    com.framework.pref.UserSessionManager(BaseApplication.Companion.getInstance())).getToken());
             connection.setRequestProperty("Content-Type", contentType);
 
             outputStream = new DataOutputStream(connection.getOutputStream());

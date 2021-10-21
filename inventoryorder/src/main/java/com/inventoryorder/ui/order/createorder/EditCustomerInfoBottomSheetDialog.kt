@@ -29,9 +29,9 @@ class EditCustomerInfoBottomSheetDialog(private val contactDetails: ContactDetai
 
   override fun onCreateView() {
     setOnClickListener(binding?.buttonDone, binding?.tvCancel)
-    binding?.editCustomerName?.setText(contactDetails?.fullName ?: "")
-    binding?.editCustomerPhone?.setText(contactDetails?.primaryContactNumber ?: "")
-    binding?.editCustomerEmail?.setText(contactDetails?.emailId ?: "")
+    binding?.editCustomerName?.setText(contactDetails.fullName)
+    binding?.editCustomerPhone?.setText(contactDetails.primaryContactNumber)
+    binding?.editCustomerEmail?.setText(contactDetails.emailId)
   }
 
   override fun onClick(v: View) {

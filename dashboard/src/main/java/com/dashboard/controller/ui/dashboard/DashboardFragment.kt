@@ -222,7 +222,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun setSummaryAndDrScore(isLoadingShimmerDr: Boolean) {
     if (isLoadingShimmerDr) WebEngageController.trackEvent(DIGITAL_READINESS_SCORE_RETRY, NO_EVENT_LABLE, NO_EVENT_VALUE)
-    (baseActivity as? DashboardActivity)?.setPercentageData(getDrScoreData()?.getDrsTotal() ?: 0)
+//    (baseActivity as? DashboardActivity)?.setPercentageData(getDrScoreData()?.getDrsTotal() ?: 0)
     refreshAllDashboardSummary()
     setDrScoreData(isLoadingShimmerDr)
   }
@@ -783,14 +783,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     super.onClick(v)
     // Track the share_business_card_initiated even in Firebase & Webengage
     when (v) {
-      binding?.filterBusinessReport -> bottomSheetFilter(
-        BUSINESS_REPORT,
-        FilterDateModel().getDateFilter(FILTER_BUSINESS_REPORT)
-      )
-      binding?.filterWebsiteReport -> bottomSheetFilter(
-        WEBSITE_REPORT,
-        FilterDateModel().getDateFilter(FILTER_WEBSITE_REPORT)
-      )
+      binding?.filterBusinessReport -> bottomSheetFilter(BUSINESS_REPORT, FilterDateModel().getDateFilter(FILTER_BUSINESS_REPORT))
+      binding?.filterWebsiteReport -> bottomSheetFilter(WEBSITE_REPORT, FilterDateModel().getDateFilter(FILTER_WEBSITE_REPORT))
       binding?.btnNotofication -> session?.let { baseActivity.startNotification(it) }
       binding?.btnBusinessLogo -> baseActivity.startBusinessLogo(session)//openDialogPicker()
       binding?.btnShowDigitalScore -> baseActivity.startReadinessScoreView(session, 0)
@@ -802,10 +796,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         else getChannelAccessToken(true)
       }
       binding?.retryDrScore -> setSummaryAndDrScore(true)
-      binding?.txtDomainName -> baseActivity.startWebViewPageLoad(
-        session,
-        session!!.getDomainName(false)
-      )
+      binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
       binding?.scrollDownBtn -> {
         binding?.nestedScrollView?.scrollToTopBottom(binding?.arrowBtn!!)
         WebEngageController.trackEvent(
@@ -935,9 +926,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           val lat = session?.getFPDetails(Key_Preferences.LATITUDE)
           val long = session?.getFPDetails(Key_Preferences.LONGITUDE)
           var location = ""
-          if (lat != null && long != null) location = "${
-            if (shareChannelText.isNullOrEmpty().not()) "\n\n" else ""
-          }\uD83D\uDCCD *Find us on map: http://www.google.com/maps/place/$lat,$long*\n\n"
+          val address = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)
+          if (lat != null && long != null) location = "${if (shareChannelText.isNullOrEmpty().not()) "\n\n" else ""}\uD83D\uDCCD *Find us on map: http://www.google.com/maps/place/$lat,$long*\n\n"
+          if (address.isNullOrEmpty().not()) location = "$location Address: $address\n\n"
           val txt = String.format(
             messageDetail!!,
             session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) ?: "",

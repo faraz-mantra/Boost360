@@ -35,57 +35,69 @@
           app:layout_constraintTop_toTopOf="parent">
 
           <ImageView
+            android:id="@+id/billing_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_billing_details"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/billing_image" />
+
+          <TextView
+            android:id="@+id/text_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/open_sans"
+            android:text="Billing Details"
+            android:textColor="@color/common_text_color"
+            android:textFontWeight="700"
+            android:textSize="@dimen/txt_18sp"
+            app:layout_constraintEnd_toStartOf="@+id/close"
+            app:layout_constraintStart_toEndOf="@+id/billing_image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+          <ImageView
             android:id="@+id/close"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
             android:src="@drawable/ic_close_icon"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/close" />
-
-          <TextView
-            android:id="@+id/text_content"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
-            android:gravity="center"
-            android:text="Billing details"
-            android:textColor="@color/common_text_color"
-            android:textFontWeight="700"
-            android:textSize="@dimen/txt_18sp"
-            app:layout_constraintEnd_toStartOf="@+id/confirm_btn"
-            app:layout_constraintStart_toEndOf="@+id/close"
-            app:layout_constraintTop_toTopOf="parent" />
-
-          <ImageView
-            android:id="@+id/confirm_btn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:src="@drawable/ic_send_invoice"
-
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/close" />
+            app:layout_constraintTop_toTopOf="@id/billing_image" />
 
           <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/open_sans"
-            android:gravity="center"
             android:text="for GST invoice"
             android:textColor="@color/common_text_color"
             android:textFontWeight="400"
             android:textSize="@dimen/txt_12sp"
-            app:layout_constraintEnd_toStartOf="@+id/confirm_btn"
-            app:layout_constraintStart_toEndOf="@+id/close"
+            app:layout_constraintEnd_toStartOf="@+id/close"
+            app:layout_constraintStart_toEndOf="@+id/billing_image"
             app:layout_constraintTop_toBottomOf="@id/text_content" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <View
+          android:id="@+id/billing_details_line"
+          android:layout_width="match_parent"
+          android:layout_height="2dp"
+          android:background="@drawable/billing_details_line"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintBottom_toTopOf="@id/billing_details_ll"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/marketplace_layout1" />
+
+
         <LinearLayout
+          android:id="@+id/billing_details_ll"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:orientation="vertical"
@@ -93,123 +105,14 @@
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/marketplace_layout1">
+          app:layout_constraintTop_toBottomOf="@id/billing_details_line">
 
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_5sdp"
-            android:text="Business name"
-            android:textColor="@color/common_text_color"
-            android:textFontWeight="400"
-            android:textSize="@dimen/txt_12sp" />
-
-
-          <EditText
-            android:id="@+id/business_name_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_selector"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:fontFamily="@font/open_sans"
-            android:gravity="bottom"
-            android:hint="@string/enter_business_name"
-            android:imeOptions="actionNext"
-            android:inputType="textCapWords"
-            android:textColor="@color/common_bold_text_color"
-            android:textColorHint="@color/globaLightSuperText"
-            android:textFontWeight="400"
-            android:textSize="@dimen/txt_14sp" />
-
-          <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-              android:id="@+id/business_gstin"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:paddingTop="@dimen/_4sdp"
-              android:paddingBottom="@dimen/_5sdp"
-              android:text="Business registered on GST?"
-              android:textColor="@color/common_text_color"
-              android:textFontWeight="400"
-              android:textSize="@dimen/txt_12sp" />
-
-            <ImageView
-              android:id="@+id/gstin_on"
-              android:layout_width="wrap_content"
-              android:layout_height="30dp"
-              android:layout_alignParentEnd="true"
-              android:gravity="end"
-              android:padding="@dimen/_4sdp"
-              app:srcCompat="@drawable/ic_switchon" />
-
-            <ImageView
-              android:id="@+id/gstin_off"
-              android:layout_width="wrap_content"
-              android:layout_height="30dp"
-              android:layout_alignParentEnd="true"
-              android:gravity="end"
-              android:padding="@dimen/_4sdp"
-              android:visibility="gone"
-              app:srcCompat="@drawable/ic_switchoff" />
-          </RelativeLayout>
-
-          <EditText
-            android:id="@+id/business_gstin_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_selector"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:fontFamily="@font/open_sans"
-            android:gravity="bottom"
-            android:hint="@string/enter_gstin_number"
-            android:imeOptions="actionNext"
-            android:inputType="textCapCharacters"
-            android:textAllCaps="true"
-            android:textColor="@color/common_bold_text_color"
-            android:textColorHint="@color/globaLightSuperText"
-            android:textFontWeight="400"
-            android:textSize="@dimen/txt_14sp" />
-
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/_5sdp"
-            android:paddingBottom="@dimen/_5sdp"
-            android:text="Business contact number"
-            android:textColor="@color/common_text_color"
-            android:textFontWeight="400"
-            android:textSize="@dimen/txt_12sp" />
-
-
-          <EditText
-            android:id="@+id/business_contact_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_selector"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:fontFamily="@font/open_sans"
-            android:gravity="bottom"
-            android:hint="+91 XXXXXXXXX"
-            android:imeOptions="actionNext"
-            android:inputType="phone"
-            android:textColor="@color/common_bold_text_color"
-            android:textColorHint="@color/globaLightSuperText"
-            android:textFontWeight="400"
-            android:textSize="@dimen/txt_14sp" />
-
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/_5sdp"
-            android:paddingBottom="@dimen/_5sdp"
-            android:text="Business email address"
+            android:text="Business email ID*"
             android:textColor="@color/common_text_color"
             android:textFontWeight="400"
             android:textSize="@dimen/txt_12sp" />
@@ -237,34 +140,150 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_5sdp"
-            android:text="State (Place of supply)"
+            android:text="Business contact number*"
             android:textColor="@color/common_text_color"
             android:textFontWeight="400"
             android:textSize="@dimen/txt_12sp" />
 
-          <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/business_city_name"
+
+          <com.framework.views.customViews.PrefixEditText
+            android:id="@+id/business_contact_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_selector"
-            android:drawableEnd="@drawable/ic_dropdown_business"
-            android:fontFamily="@font/open_sans"
-            android:gravity="bottom"
-            android:hint="Select your state"
-            android:imeOptions="actionNext"
-            android:inputType="textEmailAddress"
+            android:digits="0123456789"
+            android:hint="XXXXXXXXXX"
+            android:inputType="phone"
+            android:maxLength="10"
+            android:tag="+91 "
             android:textColor="@color/common_bold_text_color"
             android:textColorHint="@color/globaLightSuperText"
             android:textFontWeight="400"
             android:textSize="@dimen/txt_14sp" />
 
 
+          <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+              android:id="@+id/business_gstin"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingTop="@dimen/_4sdp"
+              android:paddingBottom="@dimen/_5sdp"
+              android:text="Business registered with GST? *"
+              android:textColor="@color/common_text_color"
+              android:textFontWeight="400"
+              android:textSize="@dimen/txt_12sp" />
+
+            <ImageView
+              android:id="@+id/gstin_on"
+              android:layout_width="wrap_content"
+              android:layout_height="30dp"
+              android:layout_alignParentEnd="true"
+              android:gravity="end"
+              android:padding="@dimen/_4sdp"
+              app:srcCompat="@drawable/ic_switchon" />
+
+            <ImageView
+              android:id="@+id/gstin_off"
+              android:layout_width="wrap_content"
+              android:layout_height="30dp"
+              android:layout_alignParentEnd="true"
+              android:gravity="end"
+              android:padding="@dimen/_4sdp"
+              android:visibility="gone"
+              app:srcCompat="@drawable/ic_switchoff" />
+          </RelativeLayout>
+
+          <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+              android:id="@+id/business_gstin_number"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/edittext_selector"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:fontFamily="@font/open_sans"
+              android:gravity="bottom"
+              android:hint="@string/enter_gstin_number"
+              android:imeOptions="actionNext"
+              android:inputType="textCapCharacters"
+              android:maxLength="15"
+              android:textAllCaps="true"
+              android:textColor="@color/common_bold_text_color"
+              android:textColorHint="@color/globaLightSuperText"
+              android:textFontWeight="400"
+              android:textSize="@dimen/txt_14sp" />
+
+            <ProgressBar
+              android:id="@+id/progress_bar"
+              style="?android:attr/progressBarStyleSmall"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="end|center_vertical"
+              android:layout_marginEnd="10dp"
+              android:indeterminate="true"
+              android:indeterminateTint="@color/colorAccentLight"
+              android:indeterminateTintMode="src_atop"
+              android:visibility="gone"
+              tools:visibility="visible" />
+          </FrameLayout>
+
+
           <TextView
+            android:id="@+id/gst_info_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:drawableStart="@drawable/ic_gst_text_info"
+            android:drawablePadding="5dp"
+            android:text="@string/gst_text"
+            android:textColor="#4A4A4A"
+            android:textSize="11sp"
+            android:visibility="gone"
+            tools:visibility="gone" />
+
+          <TextView
+            android:id="@+id/business_name_actual"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_5sdp"
-            android:text="Complete business address"
+            android:text="Business name*"
+            android:textColor="@color/common_text_color"
+            android:textFontWeight="400"
+            android:textSize="@dimen/txt_12sp" />
+
+
+          <EditText
+            android:id="@+id/business_name_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_selector"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:fontFamily="@font/open_sans"
+            android:gravity="bottom"
+            android:hint="@string/enter_business_name"
+            android:imeOptions="actionNext"
+            android:inputType="textCapWords"
+            android:textColor="@color/common_bold_text_color"
+            android:textColorHint="@color/globaLightSuperText"
+            android:textFontWeight="400"
+            android:textSize="@dimen/txt_14sp" />
+
+          <TextView
+            android:id="@+id/complete_business_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="Complete billing address*"
             android:textColor="@color/common_text_color"
             android:textFontWeight="400"
             android:textSize="@dimen/txt_12sp" />
@@ -287,37 +306,160 @@
             android:textFontWeight="400"
             android:textSize="@dimen/txt_14sp" />
 
+          <TextView
+            android:id="@+id/state_of_supply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="State (Place of supply)*"
+            android:textColor="@color/common_text_color"
+            android:textFontWeight="400"
+            android:textSize="@dimen/txt_12sp" />
 
           <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/place_of_supply_cl"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_selector"
+            android:orientation="horizontal">
 
-            <androidx.constraintlayout.widget.Guideline
-              android:id="@+id/middle_guideline1"
+            <androidx.appcompat.widget.AppCompatTextView
+              android:id="@+id/business_city_name"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:orientation="vertical"
-              app:layout_constraintGuide_percent="0.5" />
+              android:fontFamily="@font/open_sans"
+              android:gravity="bottom"
+              android:imeOptions="actionNext"
+              android:inputType="text"
+              android:textColor="@color/common_bold_text_color"
+              android:textColorHint="@color/globaLightSuperText"
+              android:textSize="@dimen/txt_14sp"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toStartOf="@+id/state_tin_value"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
 
-            <!--<TextView
-                android:id="@+id/confirm_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/orange_button_click_effect"
-                android:fontFamily="@font/open_sans_semibold"
-                android:gravity="center"
-                android:padding="@dimen/_10sdp"
-                android:text="Confirm and Save"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:layout_margin="@dimen/_10sdp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />-->
+            <TextView
+              android:id="@+id/state_tin_value"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="2dp"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toEndOf="@+id/business_city_name"
+              app:layout_constraintTop_toTopOf="parent"
+              tools:text="(37)" />
 
-
+            <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:src="@drawable/ic_dropdown_business"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
           </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+          <TextView
+            android:id="@+id/gst_business_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_semibold"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="Registered business name"
+            android:textColor="@color/common_text_color"
+            android:textFontWeight="400"
+            android:textSize="@dimen/txt_12sp"
+            android:visibility="gone" />
+
+          <TextView
+            android:id="@+id/gst_business_name_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_gst_business_name_bg"
+            android:fontFamily="@font/open_sans"
+            android:gravity="start|center"
+            android:paddingStart="12dp"
+            android:textColor="@color/common_bold_text_color"
+            android:textSize="@dimen/txt_14sp"
+            android:visibility="gone"
+            tools:text="Rejuve SPA" />
+
+          <TextView
+            android:id="@+id/gst_business_address_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_semibold"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="Registered business address"
+            android:textColor="@color/common_text_color"
+            android:textFontWeight="400"
+            android:textSize="@dimen/txt_12sp"
+            android:visibility="gone" />
+
+          <TextView
+            android:id="@+id/gst_business_address_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_gst_business_name_bg"
+            android:fontFamily="@font/open_sans"
+            android:gravity="start|center"
+            android:paddingStart="12dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:textColor="@color/common_bold_text_color"
+            android:textSize="@dimen/txt_14sp"
+            android:visibility="gone"
+            tools:text="123, Bhagal Singh road, Kolkata - 123456 West Bengal (10)" />
+
+          <TextView
+            android:id="@+id/confirm_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/orange_button_click_effect"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:text="Save details"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+
+          <!--          <androidx.constraintlayout.widget.ConstraintLayout-->
+          <!--            android:layout_width="match_parent"-->
+          <!--            android:layout_height="wrap_content">-->
+
+          <!--            <androidx.constraintlayout.widget.Guideline-->
+          <!--              android:id="@+id/middle_guideline1"-->
+          <!--              android:layout_width="wrap_content"-->
+          <!--              android:layout_height="wrap_content"-->
+          <!--              android:orientation="vertical"-->
+          <!--              app:layout_constraintGuide_percent="0.5" />-->
+
+          <!--            &lt;!&ndash;<TextView-->
+          <!--                android:id="@+id/confirm_btn"-->
+          <!--                android:layout_width="match_parent"-->
+          <!--                android:layout_height="wrap_content"-->
+          <!--                android:layout_marginTop="@dimen/_10sdp"-->
+          <!--                android:background="@drawable/orange_button_click_effect"-->
+          <!--                android:fontFamily="@font/open_sans_semibold"-->
+          <!--                android:gravity="center"-->
+          <!--                android:padding="@dimen/_10sdp"-->
+          <!--                android:text="Confirm and Save"-->
+          <!--                android:textAllCaps="true"-->
+          <!--                android:textColor="@color/white"-->
+          <!--                android:layout_margin="@dimen/_10sdp"-->
+          <!--                app:layout_constraintTop_toTopOf="parent"-->
+          <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+          <!--                app:layout_constraintStart_toStartOf="parent" />&ndash;&gt;-->
+
+
+          <!--          </androidx.constraintlayout.widget.ConstraintLayout>-->
 
         </LinearLayout>
 
