@@ -3,6 +3,7 @@ package com.boost.upgrades.ui.cart
 //import com.boost.upgrades.data.api_model.PurchaseOrder.request.*
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -151,6 +152,11 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
   var addonDetails: FeaturesModel? = null
 
+  var isFestivePoster :Boolean = false
+  var boostWidgetKey : String? = null
+  var featureCode : String? = null
+
+
 
 
   companion object {
@@ -171,8 +177,11 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     prefs = SharedPrefs(activity as UpgradeActivity)
     WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART, PAGE_VIEW, NO_EVENT_VALUE)
 
+
     return root
   }
+
+
 
   override fun onResume() {
     super.onResume()
@@ -193,10 +202,16 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     viewModel = ViewModelProviders.of(requireActivity()).get(CartViewModel::class.java)
     Constants.COMPARE_BACK_VALUE = 1
     prefs.storeCompareState(1)
-//    val isfestivePoster = requireArguments().getBoolean("isFestivePoster")
-//    val festiveWidgets =requireArguments().getStringArrayList("userPurchsedWidgets")
+
+
+    isFestivePoster = (activity as? UpgradeActivity)?.isFestivePoster ?: false
+    featureCode = (activity as? UpgradeActivity)?.featureCode ?: ""
+    boostWidgetKey = (activity as? UpgradeActivity)?.boostWidgetKey ?: ""
+
 //        showpopup()
-    addFestivePoster()
+    if(isFestivePoster){
+      addFestivePoster()
+    }
     initializePackageRecycler()
     initializeAddonsRecycler()
     initializeRenewalRecycler()
@@ -236,9 +251,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       totalCalculationAfterCoupon()
     }
 
-//    festive_poster.setOnClickListener {
-//      addFestivePosterAddOn()
-//    }
 
     cart_continue_submit.setOnClickListener {
 
@@ -698,7 +710,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
 
   fun loadFestiveData() {
-    viewModel.loadAddonsFromDB("EMAILACCOUNTS3")
+    viewModel.loadAddonsFromDB(featureCode!!)
   }
 
 

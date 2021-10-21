@@ -80,6 +80,8 @@ class UpgradeActivity : AppCompatActivity() {
   var isOpenCardFragment: Boolean = false
   var isBackCart: Boolean = false
   var isFestivePoster :Boolean = false
+  var boostWidgetKey : String? = null
+  var featureCode : String? = null
 
   var deepLinkViewType: String = ""
   var deepLinkDay: Int = 7
@@ -113,11 +115,13 @@ class UpgradeActivity : AppCompatActivity() {
     profileUrl = intent.getStringExtra("profileUrl")
     accountType = intent.getStringExtra("accountType")
     isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
-//    isFestivePoster = intent.getBooleanExtra("isFestivePoster",false)
+
     //user buying item directly
     widgetFeatureCode = intent.getStringExtra("buyItemKey")
     userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
-//    festivePosterWidgets = intent.getStringArrayListExtra("festivePosterWidgets")?: ArrayList()
+    featureCode = intent.getStringExtra("feature_code")
+    boostWidgetKey = intent.getStringExtra("boost_widget_key")
+    isFestivePoster = intent.getBooleanExtra("isFestivePoster",false)
 
     progressDialog = ProgressDialog(this)
 
@@ -125,40 +129,8 @@ class UpgradeActivity : AppCompatActivity() {
 //    WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, NO_EVENT_VALUE)
     initView()
     initRazorPay()
-//    festivePosterOpenCart()
-
   }
 
-//  private fun festivePosterOpenCart() {
-////    if (isFestivePoster) {
-////      val bundle = Bundle()
-////      bundle.putStringArrayList("festivePosterWidgets", festivePosterWidgets)
-////      bundle.putBoolean("isFestivePoster", isFestivePoster)
-//      addFestivePosterToCart()
-//      cartFragment = CartFragment.newInstance()
-//      cartFragment?.let { addFragment(it, CART_FRAGMENT) }
-//
-//  }
-
-//  fun addFestivePosterToCart() {
-//    val discount = 100 - 0
-//    val paymentPrice = (discount * 91) / 100.0
-//    val cartItem = CartModel(
-//      "5e8903e0a0a1660001087063",
-//     "TESTIMONIALS",
-//      "TESTIMONIALS",
-//      "Testimonials",
-//      "More and more travelers now rely on reviews on hotels before making a booking. Guest reviews are definitely gaining momentum and online hotel review sites such as TripAdvisor and more, play a big role in driving trust and credibility for an independent hotel. Earlier, independent hotels, with their limited budget and resources, would not get as much online exposure as chain hotels did. But reviews have acted as game changers for small independent hotels, giving them a chance to get equal exposure as their branded rivals. With the testimonials feature, you can showcase your customer reviews and highlight their experience on the homepage of your website. ",
-//    "https://web.s-cdn.boostkit.dev/website-files/5e7a3cf46e0572000109a5b2/testimonials-6050574030a21e0001d0882d.png",
-//      paymentPrice,
-//      91.0,
-//      0,
-//      1,
-//      1,
-//      "features",
-//      ""
-//    )
-//  }
 
 
     infix fun setBackListener(compareBackListener: CompareBackListener?) {
@@ -192,6 +164,9 @@ class UpgradeActivity : AppCompatActivity() {
       if (isDeepLink || isOpenCardFragment) {
         cartFragment = CartFragment.newInstance()
         cartFragment?.let { addFragment(it, CART_FRAGMENT) }
+      }
+      if(isFestivePoster){
+        festivePosterOpenCart()
       }
     } else {
       Toasty.error(
@@ -479,5 +454,12 @@ class UpgradeActivity : AppCompatActivity() {
       progressDialog.dismiss()
     }
   }
+
+  private fun festivePosterOpenCart() {
+    if (isFestivePoster) {
+      addFragment(CartFragment.newInstance(), CART_FRAGMENT)
+    }
+  }
+
 
 }
