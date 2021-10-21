@@ -1,6 +1,7 @@
 package com.onboarding.nowfloats.ui.updateChannel.digitalChannel
 
 import androidx.fragment.app.FragmentManager
+import com.framework.analytics.SentryController
 import com.framework.base.BaseDialogFragment
 import com.framework.models.BaseViewModel
 import com.framework.utils.ConversionUtils
@@ -48,6 +49,7 @@ class ProgressChannelDialog : BaseDialogFragment<DialogChannelProgressBinding, B
       if (this.isVisible.not()) show(manager, "")
     } catch (e: IllegalStateException) {
       e.printStackTrace()
+      SentryController.captureException(e)
     }
   }
 
@@ -56,6 +58,7 @@ class ProgressChannelDialog : BaseDialogFragment<DialogChannelProgressBinding, B
       if (isRemoving.not()) dismiss()
     } catch (e: IllegalStateException) {
       e.printStackTrace()
+      SentryController.captureException(e)
     }
   }
 

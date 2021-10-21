@@ -2,7 +2,6 @@ package com.boost.presignin.ui.mobileVerification
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.content.IntentSender.SendIntentException
 import android.graphics.Paint
 import android.os.Bundle
 import android.os.Handler
@@ -19,6 +18,7 @@ import com.boost.presignin.extensions.isPhoneValid
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.ui.login.LoginActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
+import com.framework.analytics.SentryController
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
@@ -65,7 +65,6 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
   }
 
   override fun onCreateView() {
-
     requestPhonePicker()
     WebEngageController.trackEvent(PS_LOGIN_NUMBER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.helpTv)
@@ -137,14 +136,12 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
       .setPhoneNumberIdentifierSupported(true)
       .build()
     val credentialsClient = Credentials.getClient(requireActivity())
-
     val intent = credentialsClient.getHintPickerIntent(hintRequest)
     try {
-      startIntentSenderForResult(
-        intent.intentSender,
-        NUMBER_PICKER_RC, null, 0, 0, 0,null
-      )
-    } catch (e: SendIntentException) {
+      startIntentSenderForResult(intent.intentSender, NUMBER_PICKER_RC, null, 0, 0, 0,null)
+    } catch (e: Exception) {
+      SentryController.captureException(e)
+
       e.printStackTrace()
     }
   }

@@ -2,6 +2,7 @@ package com.onboarding.nowfloats.managers
 
 import android.app.Activity
 import android.os.Bundle
+import com.framework.analytics.SentryController
 import com.framework.utils.PreferencesKey.NAVIGATION_STACK
 import com.framework.utils.PreferencesKey.REQUEST_FLOAT
 import com.framework.utils.PreferencesUtils
@@ -26,6 +27,7 @@ object NavigatorManager {
       stack = ArrayList(convertStringToList(stackJson) ?: ArrayList())
     } catch (e: Exception) {
       e.printStackTrace()
+      SentryController.captureException(e)
     }
   }
 
@@ -59,6 +61,7 @@ object NavigatorManager {
       )
     } catch (e: JsonSyntaxException) {
       e.printStackTrace()
+      SentryController.captureException(e)
       null
     }
   }

@@ -8,8 +8,7 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class ServiceDeliveryBottomSheet :
-  BaseBottomSheetDialog<BottomSheetServiceDeliveryBinding, BaseViewModel>() {
+class ServiceDeliveryBottomSheet : BaseBottomSheetDialog<BottomSheetServiceDeliveryBinding, BaseViewModel>() {
 
   private var pickUpDataAddress: ArrayList<PickUpData>? = null
   private var pickUpData: PickUpData? = null

@@ -9,6 +9,7 @@ import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.model.*
 import com.boost.upgrades.data.remote.ApiInterface
+import com.boost.upgrades.data.remote.NewApiInterface
 import com.boost.upgrades.utils.Utils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -28,6 +29,7 @@ class ComparePackageViewModel(application: Application) : BaseViewModel(applicat
   var updatesError: MutableLiveData<String> = MutableLiveData()
   var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
   var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
+  var NewApiService = Utils.getRetrofit(true).create(NewApiInterface::class.java)
   var experienceCode: String = "SVC"
   var _fpTag: String = "ABC"
   var allBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
@@ -189,7 +191,7 @@ class ComparePackageViewModel(application: Application) : BaseViewModel(applicat
 
     if (Utils.isConnectedToInternet(getApplication())) {
       CompositeDisposable().add(
-        ApiService.GetAllFeatures()
+        NewApiService.GetAllFeatures()
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(

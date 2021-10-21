@@ -89,9 +89,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/semi_bold"
+            android:text="View"
             android:textColor="@color/white"
-            app:textType="HEADING_6"
-            android:text="View" />
+            app:textType="HEADING_6" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <View
@@ -102,16 +102,16 @@
         <com.framework.views.bottombar.NiceBottomBar
           android:id="@+id/nav_view"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/size_60"
+          android:layout_height="@dimen/size_54"
           android:background="?android:attr/windowBackground"
           app:activeMenu="@menu/bottom_nav_active_menu"
           app:clickPosition="3"
-          app:indicatorEnabled="true"
-          app:indicatorGravity="top"
+          app:indicatorEnabled="false"
           app:indicatorInterpolator="anticipateOvershoot"
           app:itemFontActive="@font/regular"
           app:itemFontInActive="@font/regular"
           app:menu="@menu/bottom_nav_menu"
+          app:textVisible="true"
           tools:background="@color/white" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -119,6 +119,7 @@
 
     <include
       android:id="@+id/drawer_view"
+      android:visibility="gone"
       layout="@layout/view_drawer_home" />
   </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

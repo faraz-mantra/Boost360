@@ -1,4 +1,4 @@
-package com.appservice.ui.staffs.ui.profile
+package com.appservice.staffs.ui.profile
 
 import android.content.Intent
 import android.graphics.*
@@ -15,15 +15,20 @@ import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentStaffProfileBinding
 import com.appservice.model.staffModel.*
-import com.appservice.ui.staffs.ui.*
+import com.appservice.ui.staffs.ui.StaffFragmentContainerActivity
+import com.appservice.ui.staffs.ui.startStaffFragmentActivity
+import com.appservice.ui.catalog.common.AppointmentModel
+import com.appservice.ui.staffs.ui.Constants
 import com.appservice.ui.staffs.ui.bottomsheets.InActiveBottomSheet
 import com.appservice.ui.staffs.ui.bottomsheets.InActiveStaffConfirmationBottomSheet
 import com.appservice.ui.staffs.ui.bottomsheets.RemoveStaffConfirmationBottomSheet
-import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
-import com.appservice.ui.catalog.common.AppointmentModel
+import com.appservice.viewmodel.StaffViewModel
 import com.appservice.utils.WebEngageController
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
+import com.framework.pref.UserSessionManager
 import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
 
@@ -50,30 +55,18 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
 
   override fun onCreateView() {
     super.onCreateView()
+    sessionLocal = UserSessionManager(requireActivity())
     WebEngageController.trackEvent(STAFF_PROFILE_DETAIL, PAGE_VIEW, NO_EVENT_VALUE)
-    setOnClickListener(
-      binding?.civMenu,
-      binding?.ctvEdit,
-      binding?.ctvEditLeaves,
-      binding?.ctvEditServices,
-      binding?.ctvEditTiming
-    )
+    setOnClickListener(binding?.civMenu, binding?.ctvEdit, binding?.ctvEditLeaves, binding?.ctvEditServices, binding?.ctvEditTiming)
     getStaffDetail()
   }
 
   private fun updateStaffProfile() {
     val request = StaffProfileUpdateRequest(
-      isAvailable = staffDetails?.isAvailable,
-      serviceIds = staffDetails?.serviceIds,
-      gender = staffDetails?.gender,
-      floatingPointTag = UserSession.fpTag,
-      name = staffDetails?.name,
-      description = staffDetails?.description,
-      experience = staffDetails?.experience,
-      staffId = staffDetails?.id,
-      age = staffDetails?.age,
-      specialisations = staffDetails?.specialisations
-    )
+        isAvailable = staffDetails?.isAvailable, serviceIds = staffDetails?.serviceIds, gender = staffDetails?.gender,
+        floatingPointTag = sessionLocal.fpTag, name = staffDetails?.name, description = staffDetails?.description,
+        experience = staffDetails?.experience?.toIntOrNull(), staffId = staffDetails?.id, age = staffDetails?.age,
+        specialisations = staffDetails?.specialisations)
     viewModel?.updateStaffProfile(request)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         isUpdate = true
@@ -93,26 +86,42 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
         binding?.ctvStaffGenderAge?.text = "${staffDetails?.gender}, ${staffDetails?.age}"
         binding?.ctvAboutHeading?.text = "About ${staffDetails?.name}"
         binding?.ctvAboutStaff?.text = staffDetails?.description
-        binding?.civStaffProfileImg?.let {
-          activity?.glideLoad(
-            it,
-            staffDetails?.image ?: "",
-            R.drawable.placeholder_image
-          )
-        }
-        binding?.ctvSpecialization?.text = staffDetails?.specialisations?.get(0)?.value
+        binding?.civStaffProfileImg?.let { activity?.glideLoad(it, staffDetails?.image ?: "", R.drawable.placeholder_image) }
+        binding?.ctvSpecialization?.text = staffDetails?.specialisations?.firstOrNull()?.value?:""
         if (staffDetails?.isAvailable == false) showInactiveProfile()
         fetchServices()
         setTimings()
+        if (isDoctorProfile(sessionLocal?.fP_AppExperienceCode)){
+          setDoctorsData()
+        }
       } else showShortToast(res.errorMessage() ?: getString(R.string.something_went_wrong))
       hideProgress()
     })
 
   }
 
+  private fun setDoctorsData() {
+    binding?.ctvHeadingSpecialization?.gone()
+    binding?.ctvSpecialization?.gone()
+    binding?.llDoctorsAdditionalInfo?.visible()
+    binding?.ctvBusinessLicense?.visible()
+    binding?.ctvBusinessLicenseHeading?.visible()
+    binding?.ctvBusinessAppointment?.visible()
+    binding?.ctvBusinessAppointmentHeading?.visible()
+    binding?.ctvBusinessLicense?.text = staffDetails?.businessLicence
+    binding?.ctvBusinessAppointment?.text = staffDetails?.bookingWindow
+    binding?.ctvHeadingTiming?.text = getString(R.string.appointment_hours)
+    binding?.ctvEducation?.text = staffDetails?.education
+    binding?.ctvMobNo?.text = staffDetails?.contactNumber
+    binding?.ctvMembership?.text = staffDetails?.memberships
+    binding?.ctvRegistration?.text = staffDetails?.registration
+    binding?.ctvAppointmentType?.text =AppointmentType.typeMap[staffDetails?.appointmentType]
+    binding?.civDoctorsSignature?.let { activity?.glideLoad(it, staffDetails?.signature.toString(), R.drawable.placeholder_image_n) }
+
+  }
+
   private fun setExperience() {
-    binding?.ctvExperience?.text =
-      "${staffDetails?.experience}".plus(if (staffDetails?.experience ?: 0 < 2) " Year" else " Years")
+    binding?.ctvExperience?.text = "${staffDetails?.experience}".plus(if (staffDetails?.experience?.toIntOrNull() ?: 0 < 2) " Year" else " Years")
   }
 
   private fun setViewBackgrounds() {
@@ -133,10 +142,8 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
         binding?.ctvSpecialization?.setTextColor(resources.getColor(R.color.gray_4e4e4e))
         binding?.ctvHeadingTiming?.setTextColor(resources.getColor(R.color.black))
         binding?.rlStaffContainer?.setBackgroundColor(resources.getColor(R.color.yellow_ffb900))
-        (requireActivity() as StaffFragmentContainerActivity).getToolbar()
-          ?.setBackgroundColor(resources.getColor(R.color.yellow_ffb900))
-        (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor =
-          resources.getColor(R.color.yellow_f5b200)
+        (requireActivity() as StaffFragmentContainerActivity).getToolbar()?.setBackgroundColor(resources.getColor(R.color.yellow_ffb900))
+        (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor = resources.getColor(R.color.yellow_f5b200)
 
       }
       else -> {
@@ -153,13 +160,10 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
         binding?.ctvHeadingSpecialization?.setTextColor(resources.getColor(R.color.pinkish_grey))
         binding?.ctvSpecialization?.setTextColor(resources.getColor(R.color.pinkish_grey))
         binding?.ctvHeadingTiming?.setTextColor(resources.getColor(R.color.pinkish_grey))
-        binding?.civStaffProfileImg?.colorFilter =
-          ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) })
+        binding?.civStaffProfileImg?.colorFilter = ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) })
         binding?.rlStaffContainer?.setBackgroundColor(resources.getColor(R.color.pinkish_grey))
-        (requireActivity() as StaffFragmentContainerActivity).getToolbar()
-          ?.setBackgroundColor(resources.getColor(R.color.pinkish_grey))
-        (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor =
-          Color.parseColor("#ADADAD")
+        (requireActivity() as StaffFragmentContainerActivity).getToolbar()?.setBackgroundColor(resources.getColor(R.color.pinkish_grey))
+        (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor = Color.parseColor("#ADADAD")
       }
     }
   }
@@ -167,19 +171,14 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
   private fun setTimings() {
     binding?.llTimingContainer?.removeAllViews()
     staffDetails?.timings?.forEach {
-      if (it != null && it.timeSlots.isNullOrEmpty().not()) binding?.llTimingContainer?.addView(
-        getTimeView(it)
-      )
+      if (it != null && it.timeSlots.isNullOrEmpty().not()) binding?.llTimingContainer?.addView(getTimeView(it))
     }
   }
 
   private fun getTimeView(appointmentModel: AppointmentModel?): View {
-    val itemView = LayoutInflater.from(binding?.llTimingContainer?.context)
-      .inflate(R.layout.recycler_item_service_timing, null, false);
+    val itemView = LayoutInflater.from(binding?.llTimingContainer?.context).inflate(R.layout.recycler_item_service_timing, null, false);
     val timeTextView = itemView.findViewById(R.id.ctv_timing_services) as CustomTextView
-    if (staffDetails?.isAvailable == true) timeTextView.setTextColor(resources.getColor(R.color.gray_4e4e4e)) else timeTextView.setTextColor(
-      resources.getColor(R.color.pinkish_grey)
-    )
+    if (staffDetails?.isAvailable == true) timeTextView.setTextColor(resources.getColor(R.color.gray_4e4e4e)) else timeTextView.setTextColor(resources.getColor(R.color.pinkish_grey))
 
     val str = StringBuilder()
     str.clear()
@@ -219,19 +218,13 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
 
   private fun fetchServices() {
     var servicesProvided: ArrayList<DataItemService>? = null
-    val request = ServiceListRequest(
-      filterBy = FilterBy("ALL", 0, 0),
-      category = "",
-      floatingPointTag = UserSession.fpTag
-    )
+    val request = ServiceListRequest(filterBy = FilterBy("ALL", 0, 0), category = "", floatingPointTag = sessionLocal.fpTag)
     viewModel?.getServiceListing(request)?.observeOnce(viewLifecycleOwner, { res ->
       if (res?.isSuccess() == true) {
         val data = (res as? ServiceListResponse)?.result?.data
         if (staffDetails?.serviceIds.isNullOrEmpty().not()) {
-          servicesProvided =
-            data?.filter { item -> staffDetails?.serviceIds?.contains(item?.id) == true } as? ArrayList<DataItemService>
-          this.serviceIds =
-            data?.filter { item -> staffDetails?.serviceIds?.contains(item?.id) == true } as? ArrayList<String>
+          servicesProvided = data?.filter { item -> staffDetails?.serviceIds?.contains(item?.id) == true } as? ArrayList<DataItemService>
+          this.serviceIds = data?.filter { item -> staffDetails?.serviceIds?.contains(item?.id) == true } as? ArrayList<String>
         }
         setServices(servicesProvided?.map { it.name ?: "" })
       } else showShortToast(res?.errorMessage() ?: getString(R.string.something_went_wrong))
@@ -247,12 +240,9 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
   }
 
   private fun getServiceView(services: String?): View {
-    val itemView = LayoutInflater.from(binding?.llServices?.context)
-      .inflate(R.layout.recycler_item_service_timing, null, false);
+    val itemView = LayoutInflater.from(binding?.llServices?.context).inflate(R.layout.recycler_item_service_timing, null, false);
     val serviceTextView = itemView.findViewById(R.id.ctv_timing_services) as CustomTextView
-    if (staffDetails?.isAvailable == true) serviceTextView.setTextColor(resources.getColor(R.color.gray_4e4e4e)) else serviceTextView.setTextColor(
-      resources.getColor(R.color.pinkish_grey)
-    )
+    if (staffDetails?.isAvailable == true) serviceTextView.setTextColor(resources.getColor(R.color.gray_4e4e4e)) else serviceTextView.setTextColor(resources.getColor(R.color.pinkish_grey))
     serviceTextView.text = services
     return itemView;
   }
@@ -267,50 +257,26 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
       binding?.ctvEdit -> {
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.STAFF_DATA.name, staffDetails)
-        startStaffFragmentActivity(
-          requireActivity(),
-          FragmentType.STAFF_DETAILS_FRAGMENT,
-          bundle,
-          false,
-          isResult = true,
-          Constants.STAFF_PROFILE_UPDATED_DATA
-        )
+        startStaffFragmentActivity(requireActivity(), if (isDoctorProfile(sessionLocal.fP_AppExperienceCode)) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT, bundle, false, isResult = true, Constants.STAFF_PROFILE_UPDATED_DATA)
       }
       binding?.ctvEditLeaves -> {
 
       }
       binding?.ctvEditServices -> {
         val bundle = Bundle()
-        if (staffDetails?.serviceIds.isNullOrEmpty()
-            .not()
-        ) bundle.putStringArrayList(IntentConstant.STAFF_SERVICES.name, staffDetails?.serviceIds)
-        startStaffFragmentActivity(
-          requireActivity(),
-          FragmentType.STAFF_SELECT_SERVICES_FRAGMENT,
-          bundle,
-          clearTop = false,
-          isResult = true,
-          requestCode = Constants.REQUEST_CODE_SERVICES_PROVIDED
-        )
+        if (staffDetails?.serviceIds.isNullOrEmpty().not()) bundle.putStringArrayList(IntentConstant.STAFF_SERVICES.name, staffDetails?.serviceIds)
+        startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, bundle, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_SERVICES_PROVIDED)
       }
       binding?.ctvEditTiming -> {
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.STAFF_DATA.name, staffDetails)
-        startStaffFragmentActivity(
-          requireActivity(),
-          FragmentType.STAFF_TIMING_FRAGMENT,
-          bundle,
-          clearTop = false,
-          isResult = true,
-          requestCode = Constants.REQUEST_CODE_STAFF_TIMING
-        )
+        startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_TIMING_FRAGMENT, bundle, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_STAFF_TIMING)
       }
     }
   }
 
   private fun updateStaffTimings() {
-    val request =
-      StaffTimingAddUpdateRequest(staffId = staffDetails?.id, workTimings = staffDetails?.timings)
+    val request = StaffTimingAddUpdateRequest(staffId = staffDetails?.id, workTimings = staffDetails?.timings)
     viewModel?.updateStaffTiming(request)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         isUpdate = true
@@ -322,16 +288,10 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
 
   private fun showPopupWindow(anchor: View) {
     val view = LayoutInflater.from(baseActivity).inflate(R.layout.popup_window_staff_menu, null)
-    this.popupWindow = PopupWindow(
-      view,
-      WindowManager.LayoutParams.WRAP_CONTENT,
-      WindowManager.LayoutParams.WRAP_CONTENT,
-      true
-    )
-    val markAsActive =
-      this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.mark_as_active)
-    val removeStaff =
-      this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.remove_staff_profile)
+    this.popupWindow = PopupWindow(view, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
+    val markAsActive = this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.mark_as_active)
+    val removeStaff = this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.remove_staff_profile)
+    if (isDoctorProfile(sessionLocal?.fP_AppExperienceCode)) removeStaff?.text = getString(R.string.remove_doctor)
     markAsActive?.setOnClickListener {
       staffDetails?.isAvailable = true
       showInactiveConfirmation()
@@ -353,10 +313,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
     }
     inActiveBottomSheet.onBackPres = { onBackPresDetail() }
     inActiveBottomSheet.isCancelable = false
-    inActiveBottomSheet.show(
-      this@StaffProfileDetailsFragment.parentFragmentManager,
-      InActiveBottomSheet::class.java.name
-    )
+    inActiveBottomSheet.show(this@StaffProfileDetailsFragment.parentFragmentManager, InActiveBottomSheet::class.java.name)
   }
 
   private fun showInactiveConfirmation() {
@@ -365,30 +322,22 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
       staffDetails?.isAvailable = false
       updateStaffProfile()
     }
-    inActiveStaffConfirmationBottomSheet.show(
-      this@StaffProfileDetailsFragment.parentFragmentManager,
-      InActiveStaffConfirmationBottomSheet::class.java.name
-    )
+    inActiveStaffConfirmationBottomSheet.show(this@StaffProfileDetailsFragment.parentFragmentManager, InActiveStaffConfirmationBottomSheet::class.java.name)
   }
 
   private fun showRemoveStaffConfirmation() {
     val removeStaffConfirmationBottomSheet = RemoveStaffConfirmationBottomSheet()
     removeStaffConfirmationBottomSheet.onClicked = { removeStaffProfile() }
-    removeStaffConfirmationBottomSheet.show(
-      this@StaffProfileDetailsFragment.parentFragmentManager,
-      RemoveStaffConfirmationBottomSheet::class.java.name
-    )
+    val bundle = Bundle()
+    bundle.putBoolean(IntentConstant.STAFF_DATA.name,isDoctorProfile(sessionLocal.fP_AppExperienceCode))
+    removeStaffConfirmationBottomSheet.arguments = bundle
+    removeStaffConfirmationBottomSheet.show(this@StaffProfileDetailsFragment.parentFragmentManager, RemoveStaffConfirmationBottomSheet::class.java.name)
   }
 
 
   private fun removeStaffProfile() {
     showProgress()
-    viewModel?.deleteStaffProfile(
-      StaffDeleteImageProfileRequest(
-        staffDetails?.id,
-        UserSession.fpTag
-      )
-    )?.observe(viewLifecycleOwner, { res ->
+    viewModel?.deleteStaffProfile(StaffDeleteImageProfileRequest(staffDetails?.id, sessionLocal.fpTag))?.observe(viewLifecycleOwner, { res ->
       if (res.isSuccess()) {
         isUpdate = true
         onBackPresDetail()
@@ -401,12 +350,9 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
     super.onActivityResult(requestCode, resultCode, data)
     when {
       requestCode == Constants.REQUEST_CODE_SERVICES_PROVIDED && resultCode == AppCompatActivity.RESULT_OK -> {
-        val resultServices =
-          data?.extras?.get(IntentConstant.STAFF_SERVICES.name) as? ArrayList<DataItemService>
+        val resultServices = data?.extras?.get(IntentConstant.STAFF_SERVICES.name) as? ArrayList<DataItemService>
         staffDetails?.serviceIds = ArrayList()
-        resultServices?.forEach {
-          if (it.id.isNullOrEmpty().not()) staffDetails?.serviceIds?.add(it.id!!)
-        }
+        resultServices?.forEach { if (it.id.isNullOrEmpty().not()) staffDetails?.serviceIds?.add(it.id!!) }
         updateStaffProfile()
       }
       requestCode == Constants.REQUEST_CODE_STAFF_TIMING && resultCode == AppCompatActivity.RESULT_OK -> {

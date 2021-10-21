@@ -10,10 +10,10 @@ import java.io.Serializable
 data class MoreSettingsResponse(
 
   @field:SerializedName("useful_links")
-  var usefulLinks: List<UsefulLinksItem?>? = null,
+  var usefulLinks: ArrayList<UsefulLinksItem>? = null,
 
   @field:SerializedName("about_app_section")
-  var aboutAppSection: List<AboutAppSectionItem?>? = null
+  var aboutAppSection: ArrayList<AboutAppSectionItem>? = null
 ) : BaseResponse(), Serializable
 
 data class AboutAppSectionItem(
@@ -87,7 +87,8 @@ data class UsefulLinksItem(
     my_bank_acccount(R.drawable.my_bank_acccount),
     boost_academy(R.drawable.boost_academy),
     training_and_certification(R.drawable.training_and_certification),
-    boost_extension(R.drawable.boost_extension);
+    boost_extension(R.drawable.boost_extension),
+    custom_website_domain(R.drawable.ic_custom_domain_more_tab);
 
     companion object {
       fun fromName(name: String?): IconType? =

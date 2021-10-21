@@ -121,12 +121,7 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
 
 }
 
-fun Fragment.startUpdateFragmentActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false,
-  isResult: Boolean = false
-) {
+fun Fragment.startUpdateFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
   val intent = Intent(activity, UpdateBusinessContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -134,13 +129,7 @@ fun Fragment.startUpdateFragmentActivity(
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
-fun startUpdateFragmentActivityNew(
-  activity: Activity,
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean,
-  isResult: Boolean = false
-) {
+fun startUpdateFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean, isResult: Boolean = false) {
   val intent = Intent(activity, UpdateBusinessContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -151,11 +140,7 @@ fun startUpdateFragmentActivityNew(
   )
 }
 
-fun AppCompatActivity.startUpdateFragmentActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false
-) {
+fun AppCompatActivity.startUpdateFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
   val intent = Intent(this, UpdateBusinessContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -168,30 +153,12 @@ fun Intent.setFragmentType(type: FragmentType): Intent {
 }
 
 
-fun UserSessionManager.getDomainName(isRemoveHttp: Boolean = false): String? {
-  val rootAliasUri =
-    getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?.toLowerCase(Locale.ROOT)
-  val normalUri =
-    "https://${getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.nowfloats.com"
-  return if (rootAliasUri.isNullOrEmpty().not() && rootAliasUri != "null") {
-    return if (isRemoveHttp && rootAliasUri!!.contains("http://")) rootAliasUri.replace(
-      "http://",
-      ""
-    )
-    else if (isRemoveHttp && rootAliasUri!!.contains("https://")) rootAliasUri.replace(
-      "https://",
-      ""
-    ) else rootAliasUri
-  } else normalUri
-}
-
-
 fun getLatestUpdatesTaxonomyFromServiceCode(category_code: String?): String? {
   return when (category_code) {
     "DOC", "HOS" -> "Latest Updates & Health Tips"
     "SPA", "SAL" -> "Latest Updates & Offers"
     "HOT" -> "Latest Updates, News & Events"
-    "MFG" -> "Latest Updates & News"
+    "MFG" -> "Latest News & Update"
     "CAF", "EDU" -> "Latest Updates & Tips"
     else -> "Latest Updates"
   }

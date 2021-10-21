@@ -30,6 +30,7 @@ class QuickActionItem(
     ADD_COURSE(R.drawable.ic_add_new_course_d), ADD_UPCOMING_BATCH(R.drawable.ic_add_upcoming_batch_d),
     ADD_FACULTY_MEMBER(R.drawable.ic_add_doctor_staff_member_d), ADD_SLIDER_BANNER(R.drawable.ic_slider_banner_d),
     POST_SEASONAL_OFFER(R.drawable.ic_add_seasional_offer_d), ADD_ROOM_TYPE(R.drawable.ic_add_room_type_d),
+    SERVICES_OFFERS(R.drawable.ic_add_seasional_offer_d),
     ADD_NEARBY_ATTRACTION(R.drawable.ic_add_nearby_attraction_d), ADD_PRODUCT(R.drawable.ic_add_product_d),
     ADD_SERVICE(R.drawable.ic_add_service_d), LIST_DRUG_MEDICINE(R.drawable.ic_add_product_d),
     LIST_PRODUCT(R.drawable.ic_add_product_d), ADD_STAFF_PROFILE(R.drawable.ic_add_doctor_staff_member_d);

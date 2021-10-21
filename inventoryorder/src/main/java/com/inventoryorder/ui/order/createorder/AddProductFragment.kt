@@ -8,9 +8,9 @@ import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.inventoryorder.R
 import com.framework.webengageconstant.CLICKED_ON_ADD_PRODUCT
 import com.framework.webengageconstant.ORDERS
+import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType

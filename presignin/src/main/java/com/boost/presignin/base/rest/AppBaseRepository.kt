@@ -4,6 +4,7 @@ import android.content.Intent
 import com.boost.presignin.AppPreSignInApplication
 import com.boost.presignin.rest.TaskCode
 import com.boost.presignin.rest.apiClients.WithFloatsApiClient
+import com.framework.analytics.SentryController
 import com.framework.base.BaseRepository
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
@@ -26,15 +27,15 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
 
   override fun onFailure(response: BaseResponse, taskCode: Int) {
     super.onFailure(response, taskCode)
-    unauthorizedUserCheck(taskCode)
+    unauthorizedUserCheck(response.status)
   }
 
   override fun onSuccess(response: BaseResponse, taskCode: Int) {
     super.onSuccess(response, taskCode)
-    unauthorizedUserCheck(taskCode)
+    unauthorizedUserCheck(response.status)
   }
 
-  private fun unauthorizedUserCheck(taskCode: Int) {
+  private fun unauthorizedUserCheck(taskCode: Int?) {
     if (taskCode == 401) {
       AppPreSignInApplication.instance.apply {
         try {
@@ -43,6 +44,7 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
           startActivity(i)
         } catch (e: Exception) {
           e.printStackTrace()
+          SentryController.captureException(e)
         }
       }
     }

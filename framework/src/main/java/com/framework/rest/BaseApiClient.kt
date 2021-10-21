@@ -10,33 +10,34 @@ import java.util.concurrent.TimeUnit
 
 open class BaseApiClient protected constructor(isAuthRemove: Boolean = false) {
 
-    lateinit var retrofit: Retrofit
-    private var httpClient: OkHttpClient.Builder
-    private var gson = GsonBuilder().setLenient().create()
+  lateinit var retrofit: Retrofit
+  private var httpClient: OkHttpClient.Builder
+  private var gson = GsonBuilder().setLenient().create()
 
-    companion object {
-        val shared = BaseApiClient()
-    }
+  companion object {
+    val shared = BaseApiClient()
+  }
 
-    init {
-        val authInterceptor = ServiceInterceptor(isAuthRemove)
-        val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
-        httpClient = OkHttpClient.Builder()
-        httpClient.readTimeout(2, TimeUnit.MINUTES)
-            .connectTimeout(2, TimeUnit.MINUTES)
-            .writeTimeout(2, TimeUnit.MINUTES)
-        httpClient.addInterceptor(authInterceptor).addInterceptor(logging)
+  init {
+    val authInterceptor = ServiceInterceptor(isAuthRemove)
+    val tokenAuthenticator = TokenAuthenticator(isAuthRemove)
+    val logging = HttpLoggingInterceptor()
+    logging.level = HttpLoggingInterceptor.Level.BODY
+    httpClient = OkHttpClient.Builder()
+    httpClient.readTimeout(2, TimeUnit.MINUTES)
+      .connectTimeout(2, TimeUnit.MINUTES)
+      .writeTimeout(2, TimeUnit.MINUTES)
+    httpClient.addInterceptor(authInterceptor).addInterceptor(logging).authenticator(tokenAuthenticator)
 
-        gson = GsonBuilder().setLenient().create()
-    }
+    gson = GsonBuilder().setLenient().create()
+  }
 
-    fun init(baseUrl: String) {
-        retrofit = Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
-            .client(httpClient.build())
-            .build()
-    }
+  fun init(baseUrl: String) {
+    retrofit = Retrofit.Builder()
+      .baseUrl(baseUrl)
+      .addConverterFactory(GsonConverterFactory.create(gson))
+      .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
+      .client(httpClient.build())
+      .build()
+  }
 }

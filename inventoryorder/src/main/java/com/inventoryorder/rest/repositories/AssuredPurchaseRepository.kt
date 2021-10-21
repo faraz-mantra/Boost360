@@ -12,65 +12,31 @@ import com.inventoryorder.rest.services.AssuredPurchaseDataSource
 import io.reactivex.Observable
 import retrofit2.Retrofit
 
-object AssuredPurchaseRepository :
-  AppBaseRepository<AssuredPurchaseDataSource, AppBaseLocalService>() {
+object AssuredPurchaseRepository : AppBaseRepository<AssuredPurchaseDataSource, AppBaseLocalService>() {
 
-  fun postOrderInitiate(
-    clientId: String?,
-    request: OrderInitiateRequest?
-  ): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.initiateOrder(clientId, request),
-      TaskCode.POST_ORDER_INITIATE
-    )
+  fun postOrderInitiate(clientId: String?, request: OrderInitiateRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.initiateOrder(clientId, request), TaskCode.POST_ORDER_INITIATE)
   }
 
-  fun postAppointmentInitiate(
-    clientId: String?,
-    request: OrderInitiateRequest?
-  ): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.initiateAppointment(clientId, request),
-      TaskCode.POST_ORDER_INITIATE
-    )
+  fun postAppointmentInitiate(clientId: String?, request: OrderInitiateRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.initiateAppointment(clientId, request), TaskCode.POST_ORDER_INITIATE)
   }
 
   fun confirmOrder(clientId: String?, orderId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.confirmOrder(clientId, orderId),
-      TaskCode.CONFIRM_ORDER_TASK
-    )
+    return makeRemoteRequest(remoteDataSource.confirmOrder(clientId, orderId), TaskCode.CONFIRM_ORDER_TASK)
   }
 
   fun getOrderDetails(clientId: String?, orderId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.getOrderDetailsV2_5(clientId, orderId),
-      TaskCode.CONFIRM_ORDER_TASK
-    )
+    return makeRemoteRequest(remoteDataSource.getOrderDetailsV2_5(clientId, orderId), TaskCode.CONFIRM_ORDER_TASK)
   }
 
   fun postOrderUpdate(clientId: String?, request: OrderInitiateRequest?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.updateOrder(clientId, request),
-      TaskCode.POST_ORDER_UPDATE
-    )
+    return makeRemoteRequest(remoteDataSource.updateOrder(clientId, request), TaskCode.POST_ORDER_UPDATE)
   }
 
-  fun updateExtraPropertyOrder(
-    clientId: String?,
-    request: UpdateExtraPropertyRequest?,
-    requestCancel: UpdateOrderNPropertyRequest? = null
-  ): Observable<BaseResponse> {
-    return if (request != null) makeRemoteRequest(
-      remoteDataSource.updateExtraPropertyOrder(
-        clientId,
-        request
-      ), TaskCode.POST_ORDER_EXTRA_FILED_UPDATE
-    )
-    else makeRemoteRequest(
-      remoteDataSource.updateExtraPropertyCancelOrder(clientId, requestCancel),
-      TaskCode.POST_ORDER_EXTRA_FILED_UPDATE
-    )
+  fun updateExtraPropertyOrder(clientId: String?, request: UpdateExtraPropertyRequest?, requestCancel: UpdateOrderNPropertyRequest? = null): Observable<BaseResponse> {
+    return if (request != null) makeRemoteRequest(remoteDataSource.updateExtraPropertyOrder(clientId, request), TaskCode.POST_ORDER_EXTRA_FILED_UPDATE)
+    else makeRemoteRequest(remoteDataSource.updateExtraPropertyCancelOrder(clientId, requestCancel), TaskCode.POST_ORDER_EXTRA_FILED_UPDATE)
   }
 
   override fun getRemoteDataSourceClass(): Class<AssuredPurchaseDataSource> {
