@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.net.Uri
 import android.view.*
 import android.widget.PopupWindow
@@ -19,7 +18,8 @@ import com.appservice.ui.updatesBusiness.showDialog
 import com.boost.presignin.model.other.KYCDetails
 import com.boost.presignin.model.userprofile.UserProfileData
 import com.boost.presignin.model.userprofile.UserProfileDataResult
-import com.bumptech.glide.Glide
+import com.boost.presignin.model.userprofile.UserProfileDataResult.Companion.getMerchantProfileDetails
+import com.boost.presignin.model.userprofile.UserProfileDataResult.Companion.saveMerchantProfileDetails
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.RecyclerViewActionType
@@ -38,7 +38,6 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.pref.*
-import com.framework.pref.Key_Preferences.GET_FP_DETAILS_DESCRIPTION
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_IMAGE_URI
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
 import com.framework.webengageconstant.*
@@ -77,9 +76,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     if (businessLogoUrl.isNullOrEmpty().not() && businessLogoUrl!!.contains("BizImages") && businessLogoUrl.contains("http").not()) {
       businessLogoUrl = BASE_IMAGE_URL + businessLogoUrl
     }
-    binding?.rivUsersImage?.apply {
-      baseActivity.glideLoad(this, url = featureImageUrl, placeholder = R.drawable.placeholder_image, isCrop = true)
-    }
+
     binding?.rivBusinessImage?.apply {
       baseActivity.glideLoad(this, url = businessLogoUrl, placeholder = R.drawable.placeholder_image, isCrop = true)
     }
@@ -90,43 +87,37 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     binding?.rivCurrentlyManage?.apply {
       baseActivity.glideLoad(this, url = bgImageUri, placeholder = R.drawable.general_services_background_img_d, isCrop = true)
     }
-    binding?.ctvName?.text = (session?.userProfileName ?: session?.fpTag)?.capitalizeUtil()
     val city = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
     val country = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
     val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country"
-    binding?.ctvContent?.text = session?.getFPDetails(GET_FP_DETAILS_DESCRIPTION)
     binding?.ctvBusinessName?.text = session?.fPName ?: session?.fpTag
     binding?.ctvBusinessAddress?.text = location
     setRecyclerView()
   }
 
-  private fun setProfileData() {
-    if (session?.isMerchantUserDetailsSaved!! && session?.isMerchantDetailsUpdateUiNeeded!!) {
-      val merchantProfileDetails = UserProfileDataResult.getMerchantProfileDetails(session!!)
+  private fun refreshUserDetail() {
+    val merchantProfileDetails = getMerchantProfileDetails()
+    setUserDetail(merchantProfileDetails)
+    fetchUserData()
+  }
+
+  private fun setUserDetail(merchantProfileDetails: UserProfileDataResult?) {
+    if (merchantProfileDetails != null) {
       binding?.constraintLayout4?.visible()
-      Glide.with(this).load(merchantProfileDetails.ImageUrl)
-        .placeholder(R.drawable.placeholder_image_n).into(binding!!.rivUsersImage)
+      binding?.rivUsersImage?.let { baseActivity.glideLoad(it, merchantProfileDetails.ImageUrl ?: "", R.drawable.placeholder_image_n) }
       binding?.ctvName?.text = (merchantProfileDetails.UserName).capitalizeUtil()
       binding?.ctvContent?.text = getString(R.string.profile_info_content)
-      session?.isMerchantDetailsUpdateUiNeeded = false
-    }else {
-      fetchUserData()
-      binding?.constraintLayout4?.gone()
-    }
+    } else binding?.constraintLayout4?.gone()
   }
 
   private fun fetchUserData() {
-    viewModel?.getUserProfileData(session?.userProfileId)
-      ?.observe(viewLifecycleOwner, {
-        if (it.status == 200) {
-          val userProfileData = it as UserProfileData
-          val userProfileResult = userProfileData.Result
-          userProfileResult.apply {
-            UserProfileDataResult.saveMerchantProfileDetails(session!!, this)
-          }
-          setProfileData()
-        }
-      })
+    viewModel?.getUserProfileData(session?.userProfileId)?.observe(viewLifecycleOwner, {
+      val userProfileResult = (it as? UserProfileData)?.Result
+      if (it.isSuccess() && userProfileResult != null) {
+        saveMerchantProfileDetails(userProfileResult)
+        setUserDetail(userProfileResult)
+      }
+    })
   }
 
   private fun setRecyclerView() {
@@ -140,15 +131,10 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     })
   }
 
-  override fun onResume() {
-    super.onResume()
-    setHelpfulResources()
-  }
-
   private fun setHelpfulResources() {
     if (usefulLinks.isNullOrEmpty().not()) {
       usefulLinks?.map {
-        when(it.icon) {
+        when (it.icon) {
           UsefulLinksItem.IconType.my_bank_acccount.name -> {
             val bankData = getBankDetail()
             if (bankData?.isValidAccount() == true) {
@@ -325,7 +311,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.menu_more, menu)
-   // menu.findItem(R.id.menu_more)?.icon?.setTint(Color.WHITE)
+    // menu.findItem(R.id.menu_more)?.icon?.setTint(Color.WHITE)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -367,9 +353,11 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     } catch (e: Exception) {
       Toast.makeText(context, context.getString(R.string.unable_to_open_facebook), Toast.LENGTH_SHORT).show()
     }
+  }
 
-    override fun onResume() {
-        super.onResume()
-        setProfileData()
-    }
+  override fun onResume() {
+    super.onResume()
+    setHelpfulResources()
+    refreshUserDetail()
+  }
 }

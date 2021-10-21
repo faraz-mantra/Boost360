@@ -1,30 +1,31 @@
 package com.dashboard.controller.ui.profile.sheet
 
-import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.observe
 import com.boost.presignin.views.otptextview.OTPListener
 import com.dashboard.R
 import com.dashboard.databinding.SheetVerifyOtpEmailNumberBinding
 import com.dashboard.viewmodel.UserProfileViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
+import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 
 class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumberBinding, UserProfileViewModel>() {
 
-  private var sheetType:String?=null
-  private var emailOrMob:String?=null
-  companion object{
-    val IK_TYPE="IK_TYPE"
-    val IK_EMAIL_OR_MOB="IK_EMAIL_OR_MOB"
+  private var sheetType: String? = null
+  private var emailOrMob: String? = null
+
+  companion object {
+    val IK_TYPE = "IK_TYPE"
+    val IK_EMAIL_OR_MOB = "IK_EMAIL_OR_MOB"
   }
-  enum class SheetType{
+
+  enum class SheetType {
     EMAIL,
     MOBILE
   }
+
   override fun getLayout(): Int {
     return R.layout.sheet_verify_otp_email_number
   }
@@ -36,28 +37,28 @@ class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumbe
   override fun onCreateView() {
     sheetType = arguments?.getString(IK_TYPE)
     emailOrMob = arguments?.getString(IK_EMAIL_OR_MOB)
-    if (sheetType==SheetType.EMAIL.name){
+    if (sheetType == SheetType.EMAIL.name) {
       binding?.tvMobOrEmail?.text = emailOrMob
       binding?.tvHeading?.text = getString(R.string.verify_email)
-    }else{
+    } else {
       binding?.tvHeading?.text = getString(R.string.verify_mobile_number)
-      binding?.tvMobOrEmail?.text = "+91 "+emailOrMob
+      binding?.tvMobOrEmail?.text = "+91 $emailOrMob"
 
     }
 
     viewListeners()
-    setOnClickListener(binding?.btnPublish,binding?.btnResend,binding?.rivCloseBottomSheet)
+    setOnClickListener(binding?.btnPublish, binding?.btnResend, binding?.rivCloseBottomSheet)
   }
 
   private fun viewListeners() {
-    binding?.pinTv?.otpListener = object :OTPListener{
+    binding?.pinTv?.otpListener = object : OTPListener {
       override fun onInteractionListener() {
-        binding?.btnPublish?.isEnabled =binding?.pinTv?.otp?.length?:0==4
+        binding?.btnPublish?.isEnabled = binding?.pinTv?.otp?.length ?: 0 == 4
 
       }
 
       override fun onOTPComplete(otp: String) {
-        binding?.btnPublish?.isEnabled =true
+        binding?.btnPublish?.isEnabled = true
 
       }
 
@@ -66,25 +67,27 @@ class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumbe
 
   override fun onClick(v: View) {
     super.onClick(v)
-    when(v){
-      binding?.btnPublish->{
+    when (v) {
+      binding?.btnPublish -> {
         updateEmailMobApi()
       }
-      binding?.btnResend->{
+      binding?.btnResend -> {
         sendOtp()
       }
-      binding?.rivCloseBottomSheet->dismiss()
+      binding?.rivCloseBottomSheet -> dismiss()
     }
   }
 
   private fun updateEmailMobApi() {
     binding?.progressBar?.visible()
-    if (sheetType==SheetType.EMAIL.name){
-      viewModel?.updateEmail(emailOrMob,binding?.pinTv?.otp,
-        UserSessionManager(requireContext()).userProfileId)?.observe(viewLifecycleOwner,{
-        if (it.isSuccess()){
+    if (sheetType == SheetType.EMAIL.name) {
+      viewModel?.updateEmail(
+        emailOrMob, binding?.pinTv?.otp,
+        UserSessionManager(requireContext()).userProfileId
+      )?.observeOnce(viewLifecycleOwner, {
+        if (it.isSuccess()) {
           dismiss()
-        }else{
+        } else {
           binding?.tvInvalidOtp?.visible()
         }
 
@@ -92,12 +95,14 @@ class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumbe
 
       })
 
-    }else{
-      viewModel?.updateMobile(emailOrMob,binding?.pinTv?.otp,
-        UserSessionManager(requireContext()).userProfileId)?.observe(viewLifecycleOwner,{
-        if (it.isSuccess()){
+    } else {
+      viewModel?.updateMobile(
+        emailOrMob, binding?.pinTv?.otp,
+        UserSessionManager(requireContext()).userProfileId
+      )?.observeOnce(viewLifecycleOwner, {
+        if (it.isSuccess()) {
           dismiss()
-        }else{
+        } else {
           binding?.tvInvalidOtp?.visible()
         }
 
@@ -109,17 +114,16 @@ class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumbe
 
   private fun sendOtp() {
     binding?.progressBar?.visible()
-
-    if (sheetType==SheetType.EMAIL.name){
-      viewModel?.sendEmailOTP(emailOrMob)?.observe(viewLifecycleOwner,{
-        if (it.isSuccess()){
-            showLongToast(getString(R.string.otp_resent))
+    if (sheetType == SheetType.EMAIL.name) {
+      viewModel?.sendEmailOTP(emailOrMob)?.observeOnce(viewLifecycleOwner, {
+        if (it.isSuccess()) {
+          showLongToast(getString(R.string.otp_resent))
         }
         binding?.progressBar?.gone()
       })
-    }else{
-      viewModel?.sendMobileOTP(emailOrMob)?.observe(viewLifecycleOwner,{
-        if (it.isSuccess()){
+    } else {
+      viewModel?.sendMobileOTP(emailOrMob)?.observeOnce(viewLifecycleOwner, {
+        if (it.isSuccess()) {
           showLongToast(getString(R.string.otp_resent))
         }
         binding?.progressBar?.gone()

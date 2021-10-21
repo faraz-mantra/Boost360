@@ -2,14 +2,13 @@ package com.dashboard.controller.ui.profile.sheet
 
 import android.view.View
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.observe
 import com.dashboard.R
 import com.dashboard.databinding.SheetChangeMobileNumberBinding
 import com.dashboard.viewmodel.UserProfileViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
+import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.BaseViewModel
 
 class EditChangeMobileNumberSheet : BaseBottomSheetDialog<SheetChangeMobileNumberBinding, UserProfileViewModel>() {
 
@@ -42,10 +41,9 @@ class EditChangeMobileNumberSheet : BaseBottomSheetDialog<SheetChangeMobileNumbe
       binding?.btnPublish->{
         val mobile =binding?.cetPhone?.text.toString()
         binding?.progressBar?.visible()
-        viewModel?.sendMobileOTP(mobile)?.observe(viewLifecycleOwner,{
+        viewModel?.sendMobileOTP(mobile)?.observeOnce(viewLifecycleOwner,{
           if (it.isSuccess()){
             startVerifyMobEmailSheet(VerifyOtpEmailMobileSheet.SheetType.MOBILE.name,mobile)
-
           }
           binding?.progressBar?.gone()
           dismiss()

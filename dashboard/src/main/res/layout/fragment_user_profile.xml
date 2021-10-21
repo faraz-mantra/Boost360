@@ -24,9 +24,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:paddingBottom="@dimen/size_60"
+        android:orientation="vertical"
         android:paddingTop="@dimen/size_12"
-        android:orientation="vertical">
+        android:paddingBottom="@dimen/size_60">
 
         <com.framework.views.customViews.CustomCardView
           android:layout_width="@dimen/size_140"
@@ -174,9 +174,8 @@
             android:id="@+id/edt_email"
             android:layout_width="@dimen/size_30"
             android:layout_height="@dimen/size_30"
-              android:visibility="gone"
-
-              android:layout_marginEnd="@dimen/size_6"
+            android:layout_marginEnd="@dimen/size_6"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_pencil_d" />
 
           <com.framework.views.customViews.CustomTextView
@@ -184,14 +183,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/ic_rounded_left_verify"
-            android:gravity="center"
-              android:visibility="gone"
             android:clickable="true"
             android:focusable="true"
+            android:gravity="center"
             android:includeFontPadding="false"
             android:paddingHorizontal="@dimen/size_10"
             android:text="@string/verify_cap"
             android:textColor="@color/colorAccentLight"
+            android:visibility="gone"
             app:fontFamily="@font/semi_bold"
             app:textType="CAPTION" />
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -230,41 +229,41 @@
 
 
           <com.framework.views.customViews.CustomTextView
-              android:id="@+id/verify_mobile"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:background="@drawable/ic_rounded_left_verify"
-              android:gravity="center"
-              android:clickable="true"
-              android:focusable="true"
-              android:includeFontPadding="false"
-              android:paddingHorizontal="@dimen/size_10"
-              android:text="@string/verified"
-              android:textColor="@color/green_6FCF97"
-              app:fontFamily="@font/semi_bold"
-              app:textType="CAPTION" />
+            android:id="@+id/verify_mobile"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_rounded_left_verify"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="@dimen/size_10"
+            android:text="@string/verified"
+            android:textColor="@color/green_6FCF97"
+            app:fontFamily="@font/semi_bold"
+            app:textType="CAPTION" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.framework.views.customViews.CustomTextView
           android:layout_width="wrap_content"
-            android:visibility="gone"
           android:layout_height="wrap_content"
           android:layout_marginHorizontal="@dimen/size_2"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/whatsapp_no_for_important_updates"
           android:textColor="@color/black_4a4a4a"
+          android:visibility="gone"
           app:textType="BODY_1" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/view_whatsapp_no"
-            android:visibility="gone"
+          android:layout_width="match_parent"
 
-            android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginHorizontal="@dimen/size_2"
           android:layout_marginTop="@dimen/size_6"
           android:background="@drawable/rounded_view_stroke_grey"
-          android:gravity="center_vertical">
+          android:gravity="center_vertical"
+          android:visibility="gone">
 
           <com.framework.views.customViews.CustomEditText
             android:id="@+id/txt_whatsapp_no"
@@ -285,14 +284,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/ic_rounded_left_verify"
-            android:gravity="center"
-              android:includeFontPadding="false"
-            android:paddingHorizontal="@dimen/size_10"
-            android:text="@string/not_opted_cap"
             android:clickable="true"
             android:focusable="true"
-              android:visibility="gone"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="@dimen/size_10"
+            android:text="@string/not_opted_cap"
             android:textColor="@color/colorAccentLight"
+            android:visibility="gone"
             app:fontFamily="@font/semi_bold"
             app:textType="CAPTION" />
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -305,12 +304,12 @@
       style="@style/ButtonStyle.Red"
       android:layout_width="match_parent"
       android:layout_gravity="center"
+      android:layout_marginHorizontal="@dimen/size_2"
+      android:layout_marginBottom="@dimen/size_12"
       android:background="@drawable/rounded_stroke_btn_red"
       android:enabled="true"
       android:gravity="center"
       android:text="@string/logout"
-      android:layout_marginBottom="@dimen/size_12"
-      android:layout_marginHorizontal="@dimen/size_2"
       android:textAllCaps="false"
       android:textColor="@color/red_button"
       app:layout_constraintBottom_toBottomOf="parent" />

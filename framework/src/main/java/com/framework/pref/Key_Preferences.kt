@@ -126,4 +126,9 @@ object Key_Preferences {
   const val ACCESS_TOKEN_AUTH = "access_token_auth"
   val KEY_FP_CART_COUNT = "fbCartCount"
   const val PRODUCT_CATEGORY_VERB = "product_category_verb"
+
+  //Merchant profile Tags
+  const val KEY_IS_MERCHANT_DETAILS_SAVED = "isMerchantUserDetailsSaved"
+  const val KEY_IS_MERCHANT_DETAILS_UPDATE_UI_NEEDED = "isMerchantUserDetailsSaved"
+  const val KEY_MERCHANT_USER_DATA = "merchantUserData"
 }
