@@ -66,6 +66,13 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
     }
 
     binding?.txtName?.setText(merchantProfileDetails?.UserName ?: "")
+    if (merchantProfileDetails?.UserName.isNullOrEmpty().not()) {
+      binding?.edtName?.visible()
+      binding?.viewName?.background = ContextCompat.getDrawable(baseActivity, R.drawable.rounded_view_stroke_grey)
+    } else {
+      binding?.edtName?.gone()
+      binding?.viewName?.background = ContextCompat.getDrawable(baseActivity, R.drawable.rounded_view_stroke_grey_white)
+    }
 
     binding?.txtMobileNumber?.setText(merchantProfileDetails?.MobileNo ?: "")
     if (merchantProfileDetails?.MobileNo.isNullOrEmpty().not()) {
