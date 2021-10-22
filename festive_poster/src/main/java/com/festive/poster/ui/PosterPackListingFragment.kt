@@ -35,7 +35,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
   private val TAG = "PosterPackListingFragme"
   private var adapter: AppBaseRecyclerViewAdapter<PosterPackModel>? = null
   private var sharedViewModel: FestivePosterSharedViewModel? = null
-  private var dataList: ArrayList<PosterPackModel>? = null
+  var dataList: ArrayList<PosterPackModel>? = null
   private var session: UserSessionManager? = null
 
   companion object {
@@ -64,8 +64,8 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
   }
 
   private fun setObserver() {
-    sharedViewModel?.customizationDetails?.observe(viewLifecycleOwner, {
-      /*val posterPack = dataList?.find { posterPackModel -> posterPackModel.tagsModel.Tag==it.tag }
+   /* sharedViewModel?.customizationDetails?.observe(viewLifecycleOwner, {
+      *//*val posterPack = dataList?.find { posterPackModel -> posterPackModel.tagsModel.Tag==it.tag }
        Log.i(TAG, "poster pack: ${Gson().toJson(posterPack?.tagsModel)}")
        posterPack?.posterList?.forEach {posterModel ->
            Log.i(TAG, "poster model: ${Gson().toJson(posterModel)}")
@@ -77,9 +77,9 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
 
        }
        Log.i(TAG, "result: ${Gson().toJson(dataList?.get(1))}")
-       adapter?.notifyDataSetChanged()*/
+       adapter?.notifyDataSetChanged()*//*
 
-    })
+    })*/
   }
 
 
@@ -108,7 +108,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
             templates_response.Result.templates.forEach { template ->
               var posterTag = template.tags.find { posterTag -> posterTag == pack_tag.tag }
               if ( posterTag != null && template.active) {
-                template.greeting_message = getGreetingMessages(posterTag)
+                template.greeting_message = pack_tag.description
                 templateList.add(template.clone()!!)
               }
             }
@@ -143,10 +143,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
   }
 
   private fun rearrangeList() {
-    if (dataList?.size ?: 0 >= 3) {
-      Collections.swap(dataList, 0, 1)
-      Collections.swap(dataList, 2, 0)
-    }
+    dataList?.sortBy { it.tagsModel.tag }
   }
 
   private fun getGreetingMessages(tag: String): String {
@@ -189,7 +186,13 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
         WebEngageController.trackEvent(GET_FESTIVAL_POSTER_PACK_CLICK, event_value = HashMap())
         item as PosterPackModel
         sharedViewModel?.selectedPosterPack = item
-        CustomizePosterSheet.newInstance(item.tagsModel.tag, item.isPurchasedN()).show(baseActivity.supportFragmentManager, CustomizePosterSheet::class.java.name)
+
+        if (item.isPurchased){
+          sharedViewModel?.keyValueSaved?.value=null
+          addFragmentReplace(R.id.container, PosterListFragment.newInstance(item.tagsModel.tag!!), true)
+        }else{
+          CustomizePosterSheet.newInstance(item.tagsModel.tag, item.isPurchased).show(baseActivity.supportFragmentManager, CustomizePosterSheet::class.java.name)
+        }
       }
     }
   }
@@ -201,7 +204,8 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
         WebEngageController.trackEvent(GET_FESTIVAL_POSTER_PACK_CLICK, event_value = HashMap())
         parentItem as PosterPackModel
         sharedViewModel?.selectedPosterPack = parentItem
-        CustomizePosterSheet.newInstance(parentItem.tagsModel.tag, parentItem.isPurchasedN()).show(requireActivity().supportFragmentManager, CustomizePosterSheet::class.java.name)
+        sharedViewModel?.selectedPoster = childItem as PosterModel
+        CustomizePosterSheet.newInstance(parentItem.tagsModel.tag, parentItem.isPurchased).show(requireActivity().supportFragmentManager, CustomizePosterSheet::class.java.name)
       }
     }
   }

@@ -13,7 +13,16 @@ import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
 import com.framework.utils.toArrayList
+import io.reactivex.Observable
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
+import okhttp3.RequestBody
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class FestivePosterViewModel: BaseViewModel() {
 
@@ -33,6 +42,19 @@ class FestivePosterViewModel: BaseViewModel() {
         return DevBoostRepository.getUpgradeData().toLiveData()
     }
 
+    fun uploadProfileImage(floatingPointId: String?,floatingPointTag: String?,fileName:String,file: RequestBody?):LiveData<BaseResponse> {
+        return NowFloatsRepository.uploadProfileImage(floatingPointId,floatingPointTag,fileName,file).toLiveData()
+    }
+
+    fun saveKeyValue(floatingPointId: String?,fpTag: String?,templateIds:List<String>,map:HashMap<String,String?>):LiveData<BaseResponse>{
+
+        val observableList = ArrayList<Observable<BaseResponse>>()
+        templateIds.forEach {
+            observableList.add(NowFloatsRepository.saveKeyValue(floatingPointId,fpTag,it,map))
+        }
+        return Observable.merge(observableList)
+            .toLiveData()
+    }
     fun prepareTemplatePackList(floatingPointId: String?,floatingPointTag: String?,tags: List<PosterPackTagModel>?){
         val list = ArrayList<PosterPackModel>()
         viewModelScope.launch {

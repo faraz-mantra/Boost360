@@ -57,7 +57,7 @@ class PosterOrderConfirmSheet : BaseBottomSheetDialog<SheetOrderConfirmBinding, 
     when (v) {
       binding?.btnConfirm -> {
         WebEngageController.trackEvent(FESTIVAL_POSTER_VIEW_PACK_CLICK, event_value = HashMap())
-        addFragmentReplace(R.id.container, PosterListFragment.newInstance(sharedViewModel?.customizationDetails?.value?.tag!!), true)
+        addFragmentReplace(R.id.container, PosterListFragment.newInstance(sharedViewModel?.selectedPosterPack?.tagsModel?.tag!!), true)
         dismiss()
       }
     }

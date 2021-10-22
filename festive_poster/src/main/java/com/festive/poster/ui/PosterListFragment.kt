@@ -37,7 +37,9 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
   private var adapter: AppBaseRecyclerViewAdapter<PosterModel>? = null
   private var sharedViewModel: FestivePosterSharedViewModel? = null
   private val TAG = "PosterListFragment"
-  private var selectedPosterModel:PosterModel?=null
+  private var selectedPosterModelForDownload:PosterModel?=null
+  private var selectedPositionForEdit:Int=-1
+
   private val RC_STORAGE_PERMISSION=200
 
   companion object {
@@ -71,11 +73,19 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
     WebEngageController.trackEvent(FESTIVAL_POSTER_PURCHASED_GALLERY, event_value = HashMap())
     sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
     session = UserSessionManager(requireActivity())
-    setupList()
+    observeCustomization()
   }
 
   private fun observeCustomization() {
-    sharedViewModel?.customizationDetails?.observe(viewLifecycleOwner, {
+    sharedViewModel?.keyValueSaved?.observe(viewLifecycleOwner,{
+
+      Log.i(TAG, "observeCustomization: ")
+
+      setupList()
+
+
+    })
+    /*sharedViewModel?.customizationDetails?.observe(viewLifecycleOwner, {
       Log.i(TAG, "observeCustomization: ${Gson().toJson(it)}")
 
 
@@ -110,7 +120,7 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
         }
       }
       adapter?.notifyDataSetChanged()
-    })
+    })*/
   }
 
   private fun setupList() {
@@ -123,11 +133,11 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
         val response = it as? GetTemplatesResponse
         response?.let {
           dataList = response.Result.templates.toArrayList()
-          dataList?.forEach { posterModel -> posterModel.isPurchased = true }
+          dataList?.forEach { posterModel -> posterModel.isPurchased = true
+          posterModel.greeting_message = sharedViewModel?.greetingMessage}
           adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>, dataList!!, this)
           binding?.rvPosters?.adapter = adapter
           binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
-          observeCustomization()
           adapter?.notifyDataSetChanged()
         }
         hideProgress()
@@ -140,7 +150,15 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.POSTER_TAP_TO_EDIT_CLICK.ordinal -> {
-        CustomizePosterSheet.newInstance(packTag!!, true, PosterListFragment::class.java.name).show(requireActivity().supportFragmentManager, CustomizePosterSheet::class.java.name)
+        selectedPositionForEdit = position
+/*        CustomizePosterSheet.newInstance(packTag!!, true,
+          PosterListFragment::class.java.name,
+          (item as PosterModel).id).show(requireActivity().supportFragmentManager,
+          CustomizePosterSheet::class.java.name)*/
+
+        CustomizePosterSheet.newInstance(packTag!!, true,
+          PosterListFragment::class.java.name).show(requireActivity().supportFragmentManager,
+          CustomizePosterSheet::class.java.name)
 
       }
       RecyclerViewActionType.POSTER_GREETING_MSG_CLICKED.ordinal -> {
@@ -149,7 +167,7 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
 
       }
       RecyclerViewActionType.POSTER_DOWNLOAD_CLICKED.ordinal->{
-        selectedPosterModel = item as PosterModel
+        selectedPosterModelForDownload = item as PosterModel
         checkStoragePermission()
       }
     }
@@ -169,7 +187,8 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
   }
 
   private fun downloadSelectedPoster() {
-    SvgUtils.shareUncompressedSvg(selectedPosterModel?.variants?.firstOrNull()?.svgUrl,selectedPosterModel!!,requireContext())
+    SvgUtils.shareUncompressedSvg(selectedPosterModelForDownload?.variants?.firstOrNull()?.svgUrl,
+      selectedPosterModelForDownload!!,requireContext())
   }
 
   override fun onRequestPermissionsResult(

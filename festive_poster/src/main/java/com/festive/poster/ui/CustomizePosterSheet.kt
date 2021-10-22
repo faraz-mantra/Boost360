@@ -8,11 +8,17 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.festive.poster.R
+import com.festive.poster.base.AppBaseActivity
+import com.festive.poster.base.AppBaseBottomSheetFragment
+import com.festive.poster.base.ProgressDialog
 import com.festive.poster.databinding.BsheetCustomizePosterBinding
 import com.festive.poster.models.PosterCustomizationModel
+import com.festive.poster.models.PosterModel
 import com.festive.poster.utils.MarketPlaceUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
+import com.festive.poster.viewmodels.FestivePosterViewModel
+import com.framework.base.BaseActivity
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.visible
@@ -22,12 +28,15 @@ import com.framework.pref.getDomainName
 import com.framework.utils.ValidationUtils
 import com.framework.webengageconstant.FESTIVAL_POSTER_UPDATE_INFO
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.gson.Gson
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 
-class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding, BaseViewModel>() {
+class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBinding, FestivePosterViewModel>() {
 
   private val TAG = "CustomizePosterSheet"
   private var path: String? = null
@@ -60,8 +69,8 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
     return R.layout.bsheet_customize_poster
   }
 
-  override fun getViewModelClass(): Class<BaseViewModel> {
-    return BaseViewModel::class.java
+  override fun getViewModelClass(): Class<FestivePosterViewModel> {
+    return FestivePosterViewModel::class.java
   }
 
   override fun onCreateView() {
@@ -79,14 +88,14 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
     binding?.etWhatsapp?.setText(session?.userPrimaryMobile ?: session?.fPPrimaryContactNumber)
     binding?.etWebsite?.setText("www.${session?.getDomainName(true)}")
     binding?.etEmail?.setText(session?.userProfileEmail ?: session?.fPEmail)
-    binding?.etDesc?.setText(sharedViewModel?.selectedPosterPack?.posterList?.firstOrNull()?.greeting_message)
+    binding?.etDesc?.setText(sharedViewModel?.selectedPosterPack?.tagsModel?.description)
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
       binding?.ivCancel -> dismiss()
-      binding?.uploadSelfie -> ImagePicker.with(this).crop().start(RC_IMAGE_PCIKER)
+      binding?.uploadSelfie -> ImagePicker.with(this).cropSquare().start(RC_IMAGE_PCIKER)
       binding?.tvUpdateInfo -> {
         Log.i(TAG, "path: $path")
         if (validation()) {
@@ -99,7 +108,7 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
   }
 
   private fun submitDetails() {
-    sharedViewModel?.customizationDetails?.value = PosterCustomizationModel(
+    /*sharedViewModel?.customizationDetails?.value = PosterCustomizationModel(
       packTag!!,
       binding?.etName?.text.toString(),
       binding?.etEmail?.text.toString(),
@@ -107,11 +116,92 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
       binding?.etDesc?.text.toString(),
       binding?.etWebsite?.text.toString(),
       path
-    )
-    if (!isAlreadyPurchased) {
-      PosterPaymentSheet().show(parentFragmentManager, PosterPaymentSheet::class.java.name)
+    )*/
+    /*if (!isAlreadyPurchased) {
+      //PosterPaymentSheet().show(parentFragmentManager, PosterPaymentSheet::class.java.name)
       //gotoMarketPlace()
-    } else if (creatorName == null) {
+      uploadImageAndSaveData()
+    } else if (creatorName == PosterListFragment::class.java.name) {
+      uploadImageAndSaveData()
+    }else{
+      sharedViewModel?.keyValueSaved?.value=null
+      addFragmentReplace(R.id.container, PosterListFragment.newInstance(packTag!!), true)
+      dismiss()
+    }
+*/
+    uploadImageAndSaveData()
+  }
+
+  private fun uploadImageAndSaveData() {
+    showProgress()
+    val imgFile = File(path)
+    viewModel?.uploadProfileImage(session?.fPID,
+      session?.fpTag,imgFile.name,
+      imgFile.asRequestBody("image/*".toMediaTypeOrNull()))?.observe(viewLifecycleOwner,{
+
+      if (it.isSuccess()){
+          Log.i(TAG, "uploadImage: success ${Gson().toJson(it)}")
+          saveKeyValue(it.stringResponse)
+        }else{
+          hideProgress()
+      }
+    })
+
+
+
+  }
+
+  private fun saveKeyValue(imgUrl:String?) {
+
+    val map = hashMapOf("user_name" to binding?.etName?.text.toString(),
+    "business_website" to binding?.etWebsite?.text.toString(),
+    "business_email" to binding?.etEmail?.text.toString(),
+    "business_name" to session?.fPName,
+    "user_contact" to binding?.etWebsite?.text.toString(),
+    "user_image" to imgUrl)
+
+    val templateIds = ArrayList<String>()
+    if (isAlreadyPurchased){
+      templateIds.add(sharedViewModel?.selectedPoster?.id!!)
+    }else{
+      sharedViewModel?.selectedPosterPack?.posterList?.forEach {
+        templateIds.add(it.id)
+      }
+    }
+
+
+    sharedViewModel?.greetingMessage = binding?.etDesc?.text.toString()
+
+    var countApiCallSuccess =0
+    var totalApiCall=0
+
+    viewModel?.saveKeyValue(session?.fPID,session?.fpTag,templateIds,map)?.observe(viewLifecycleOwner,{
+      hideProgress()
+
+      totalApiCall++
+      if (it.isSuccess()){
+
+        countApiCallSuccess++
+        if (countApiCallSuccess==templateIds.size){
+          Log.i(TAG, "saveKeyValue: success")
+          navigateToNextFragment()
+        }
+
+      }
+        if (totalApiCall==templateIds.size&&countApiCallSuccess!=templateIds.size){
+          showLongToast("Unable to update info")
+        }
+
+      Log.i(TAG, "saveKeyValue: totalCalls $totalApiCall successcall $countApiCallSuccess")
+
+    })
+  }
+
+  private fun navigateToNextFragment() {
+    sharedViewModel?.keyValueSaved?.value=null
+    if (creatorName==PosterListFragment::class.java.name){
+      dismiss()
+    }else{
       addFragmentReplace(R.id.container, PosterListFragment.newInstance(packTag!!), true)
     }
     dismiss()

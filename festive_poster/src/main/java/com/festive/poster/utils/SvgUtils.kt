@@ -40,9 +40,9 @@ object SvgUtils {
         return requestBuilder
     }
 
-    fun loadImage(url: String, view: ImageView, model: List<PosterKeyModel>){
+    fun loadImage(url: String, view: ImageView, model: List<PosterKeyModel>, isPurchased: Boolean){
         val uri = Uri.parse(url)
-        val listener = SvgDrawableListener(model, url)
+        val listener = SvgDrawableListener(model, url,isPurchased)
         Log.d(TAG, "loadImage() called with: url = $url, model = $model $view")
 
         initReqBuilder(view.context)?.let{
@@ -174,7 +174,12 @@ object SvgUtils {
                         svgString?.let { SvgRenderCacheUtil.instance.saveToCache(url, it) }
                     }
                     if (svgString != null && !svgString.isEmpty()) {
-                        svgString = SvgRenderCacheUtil.instance.replace(svgString, model.keys, context)
+                        svgString = SvgRenderCacheUtil.instance.replace(
+                            svgString,
+                            model.keys,
+                            context,
+                            model.isPurchased
+                        )
                         val svg = SVG.getFromString(svgString)
                         svg.renderDPI = context.resources?.displayMetrics?.densityDpi?.toFloat() ?: 480.0f
                         svg.documentWidth = svg.documentWidth*4

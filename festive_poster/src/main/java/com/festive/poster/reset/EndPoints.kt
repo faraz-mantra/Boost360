@@ -14,4 +14,7 @@ object EndPoints {
     const val BOOST_KIT_DEV_BASE = "https://developer.api.boostkit.dev/"
     const val GET_UPGRADE_DATA="language/v1/upgrade/get-data"
 
+    const val UPLOAD_IMAGE="Templates/v1/UploadImage"
+    const val SAVE_KEY_VALUE="Templates/v1/SaveSVGTemplateKeys"
+
 }

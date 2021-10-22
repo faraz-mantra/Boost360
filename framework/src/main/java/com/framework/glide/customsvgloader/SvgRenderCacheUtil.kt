@@ -41,11 +41,18 @@ class SvgRenderCacheUtil private constructor() {
         return null
     }
 
-    fun replace(svgString: String?, posterKeys: List<PosterKeyModel>, context: Context): String? {
+    fun replace(
+        svgString: String?,
+        posterKeys: List<PosterKeyModel>,
+        context: Context,
+        isPurchased: Boolean
+    ): String? {
         var result =svgString
 
         posterKeys.forEach {
-            val replaceVal = if (it.custom==null) it.default else it.custom
+            val replaceVal = if (it.custom!=null&&isPurchased){
+                it.custom
+            } else it.default
 //            Log.i(TAG, "replace: $replaceVal")
 //            result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
             if (it.type=="IMAGE"){
@@ -60,7 +67,7 @@ class SvgRenderCacheUtil private constructor() {
                     }
                     if (file.exists())
                         result = result?.replace("{{"+it.name+"}}",file.path)
-                    Log.i(TAG, "replace image path: ${file.path}")
+                    Log.i(TAG, "replace image path: ${it.name} ${file.path}")
 
                 }else{
 
