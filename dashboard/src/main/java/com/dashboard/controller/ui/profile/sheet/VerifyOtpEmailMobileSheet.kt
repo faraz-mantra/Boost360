@@ -5,12 +5,15 @@ import com.boost.presignin.views.otptextview.OTPListener
 import com.dashboard.R
 import com.dashboard.controller.DashboardFragmentContainerActivity
 import com.dashboard.databinding.SheetVerifyOtpEmailNumberBinding
+import com.dashboard.utils.WebEngageController
 import com.dashboard.viewmodel.UserProfileViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.pref.UserSessionManager
+import com.framework.webengageconstant.*
+import com.framework.webengageconstant.USER_MERCHANT_PROFILE_EMAIL_PAGE
 
 class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumberBinding, UserProfileViewModel>() {
 
@@ -39,9 +42,11 @@ class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumbe
     sheetType = arguments?.getString(IK_TYPE)
     emailOrMob = arguments?.getString(IK_EMAIL_OR_MOB)
     if (sheetType == SheetType.EMAIL.name) {
+      WebEngageController.trackEvent(USER_MERCHANT_PROFILE_EMAIL_OTP, PAGE_VIEW, NO_EVENT_VALUE)
       binding?.tvMobOrEmail?.text = emailOrMob
       binding?.tvHeading?.text = getString(R.string.verify_email)
     } else {
+      WebEngageController.trackEvent(USER_MERCHANT_PROFILE_NUMBER_OTP, PAGE_VIEW, NO_EVENT_VALUE)
       binding?.tvHeading?.text = getString(R.string.verify_mobile_number)
       binding?.tvMobOrEmail?.text = "+91 $emailOrMob"
 
@@ -82,6 +87,7 @@ class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumbe
   private fun updateEmailMobApi() {
     binding?.progressBar?.visible()
     if (sheetType == SheetType.EMAIL.name) {
+      WebEngageController.trackEvent(USER_MERCHANT_PROFILE_EMAIL_OTP_VERIFY, CLICK, NO_EVENT_VALUE)
       viewModel?.updateEmail(emailOrMob, binding?.pinTv?.otp, UserSessionManager(baseActivity).userProfileId)?.observeOnce(viewLifecycleOwner, {
         if (it.isSuccess()) {
           (baseActivity as? DashboardFragmentContainerActivity)?.onRefresh()
@@ -94,6 +100,7 @@ class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumbe
       })
 
     } else {
+      WebEngageController.trackEvent(USER_MERCHANT_PROFILE_NUMBER_OTP_VERIFY, CLICK, NO_EVENT_VALUE)
       viewModel?.updateMobile(emailOrMob, binding?.pinTv?.otp, UserSessionManager(baseActivity).userProfileId)?.observeOnce(viewLifecycleOwner, {
         if (it.isSuccess()) {
           (baseActivity as? DashboardFragmentContainerActivity)?.onRefresh()

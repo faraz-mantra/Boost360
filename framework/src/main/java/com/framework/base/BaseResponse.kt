@@ -19,7 +19,7 @@ open class BaseResponse(
 ) : Serializable {
 
   fun message(): String {
-    val message = message ?: ""
+    val message = message ?: "Something went wrong!"
     return try {
       val jsonObj = JSONObject(message)
       jsonObj.getString("Message") ?: jsonObj.getString("message") ?: message
@@ -29,7 +29,7 @@ open class BaseResponse(
   }
 
   fun errorMessage(): String? {
-    val message = message
+    val message = message?:"Something went wrong!"
     return try {
       val jsonObj = JSONObject(message)
       val error = jsonObj.getJSONObject("Error")
@@ -40,7 +40,7 @@ open class BaseResponse(
   }
 
   fun errorNMessage(): String? {
-    val message = message
+    val message = message?:"Something went wrong!"
     return try {
       val jsonObj = JSONObject(message)
       val error = jsonObj.getJSONObject("Error").getJSONObject("ErrorList")
