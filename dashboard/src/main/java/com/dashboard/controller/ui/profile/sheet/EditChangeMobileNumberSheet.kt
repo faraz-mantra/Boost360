@@ -4,11 +4,13 @@ import android.view.View
 import androidx.core.widget.addTextChangedListener
 import com.dashboard.R
 import com.dashboard.databinding.SheetChangeMobileNumberBinding
+import com.dashboard.utils.WebEngageController
 import com.dashboard.viewmodel.UserProfileViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.webengageconstant.*
 
 class EditChangeMobileNumberSheet : BaseBottomSheetDialog<SheetChangeMobileNumberBinding, UserProfileViewModel>() {
 
@@ -29,8 +31,8 @@ class EditChangeMobileNumberSheet : BaseBottomSheetDialog<SheetChangeMobileNumbe
   override fun onCreateView() {
     mobile = arguments?.getString(IK_MOB)
     binding?.cetPhone?.setText(mobile)
+    WebEngageController.trackEvent(USER_MERCHANT_PROFILE_NUMBER_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.btnPublish, binding?.rivCloseBottomSheet)
-
     binding?.cetPhone?.addTextChangedListener {
       binding?.btnPublish?.isEnabled = (it?.length == 10)
     }
@@ -41,6 +43,7 @@ class EditChangeMobileNumberSheet : BaseBottomSheetDialog<SheetChangeMobileNumbe
     super.onClick(v)
     when (v) {
       binding?.btnPublish -> {
+        WebEngageController.trackEvent(USER_MERCHANT_PROFILE_NUMBER_PUBLISH, CLICK, NO_EVENT_VALUE)
         val mobile = binding?.cetPhone?.text.toString()
         binding?.progressBar?.visible()
         viewModel?.sendMobileOTP(mobile)?.observeOnce(viewLifecycleOwner, {

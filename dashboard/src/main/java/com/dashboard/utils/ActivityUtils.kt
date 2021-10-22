@@ -680,7 +680,7 @@ fun AppCompatActivity.startBusinessProfileDetailEdit(session: UserSessionManager
 
 fun AppCompatActivity.startUserProfileDetail(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent(USER_PROFILE_PAGE, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(USER_MERCHANT_PROFILE_PAGE, CLICK, TO_BE_ADDED)
     startFragmentDashboardActivity(com.dashboard.constant.FragmentType.FRAGMENT_USER_PROFILE)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
@@ -1012,9 +1012,9 @@ fun AppCompatActivity.startFestivePosterActivity(isBanner: Boolean = false) {
   }
 }
 
-fun AppCompatActivity.startLogoutActivity() {
+fun AppCompatActivity.startLogoutActivity(event: String = BOOST_LOGOUT_CLICK) {
   try {
-    WebEngageController.trackEvent(BOOST_LOGOUT_CLICK, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(event, CLICK, TO_BE_ADDED)
     val i = Intent(this, Class.forName("com.nowfloats.helper.LogoutActivity"))
     this.startActivity(i)
   } catch (e: Exception) {

@@ -4,12 +4,14 @@ import android.view.View
 import androidx.core.widget.doAfterTextChanged
 import com.dashboard.R
 import com.dashboard.databinding.SheetChangeUsernameBinding
+import com.dashboard.utils.WebEngageController
 import com.dashboard.viewmodel.UserProfileViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.pref.UserSessionManager
+import com.framework.webengageconstant.*
 
 class EditChangeUserNameSheet(var click: () -> Unit) : BaseBottomSheetDialog<SheetChangeUsernameBinding, UserProfileViewModel>() {
 
@@ -29,6 +31,7 @@ class EditChangeUserNameSheet(var click: () -> Unit) : BaseBottomSheetDialog<She
 
   override fun onCreateView() {
     userName = arguments?.getString(IK_NAME)
+    WebEngageController.trackEvent(USER_MERCHANT_PROFILE_USERNAME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
     viewListeners()
     binding?.cetBusinessName?.setText(userName)
     setOnClickListener(binding?.btnPublish, binding?.rivCloseBottomSheet)
@@ -46,6 +49,7 @@ class EditChangeUserNameSheet(var click: () -> Unit) : BaseBottomSheetDialog<She
     super.onClick(v)
     when (v) {
       binding?.btnPublish -> {
+        WebEngageController.trackEvent(USER_MERCHANT_PROFILE_USERNAME_PUBLISH, CLICK, NO_EVENT_VALUE)
         updateUserNameApi()
       }
       binding?.rivCloseBottomSheet -> dismiss()

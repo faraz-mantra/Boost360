@@ -311,13 +311,10 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.rivUsersImage -> {
-        baseActivity.startUserProfileDetail(session)
-      }
       binding?.rivBusinessImage -> {
         baseActivity.startBusinessLogo(session)
       }
-      binding?.civProfile, binding?.ctvContent, binding?.ctvName -> {
+      binding?.rivUsersImage, binding?.civProfile, binding?.ctvContent, binding?.ctvName -> {
         baseActivity.startUserProfileDetail(session)
       }
       binding?.boostSubscription -> {

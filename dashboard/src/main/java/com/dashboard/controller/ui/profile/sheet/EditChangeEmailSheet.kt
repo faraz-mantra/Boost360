@@ -4,11 +4,13 @@ import android.view.View
 import androidx.core.widget.addTextChangedListener
 import com.dashboard.R
 import com.dashboard.databinding.SheetChangeEmailBinding
+import com.dashboard.utils.WebEngageController
 import com.dashboard.viewmodel.UserProfileViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.webengageconstant.*
 
 class EditChangeEmailSheet : BaseBottomSheetDialog<SheetChangeEmailBinding, UserProfileViewModel>() {
 
@@ -26,6 +28,7 @@ class EditChangeEmailSheet : BaseBottomSheetDialog<SheetChangeEmailBinding, User
 
   override fun onCreateView() {
     val email = arguments?.getString(IK_EMAIL)
+    WebEngageController.trackEvent(USER_MERCHANT_PROFILE_EMAIL_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.cetEmail?.setText(email)
     setOnClickListener(binding?.btnPublish, binding?.rivCloseBottomSheet)
     viewListeners()
@@ -35,6 +38,7 @@ class EditChangeEmailSheet : BaseBottomSheetDialog<SheetChangeEmailBinding, User
     super.onClick(v)
     when (v) {
       binding?.btnPublish -> {
+        WebEngageController.trackEvent(USER_MERCHANT_PROFILE_EMAIL_PUBLISH, CLICK, NO_EVENT_VALUE)
         sendOtp()
       }
       binding?.rivCloseBottomSheet -> dismiss()
