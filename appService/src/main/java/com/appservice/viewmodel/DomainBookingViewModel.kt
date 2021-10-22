@@ -10,19 +10,11 @@ import com.framework.models.toLiveData
 
 class DomainBookingViewModel : BaseViewModel() {
 
-    fun domainDetails(fpId: String?, clientId: String?): LiveData<BaseResponse> {
-        return BoostPluginWithFloatsRepository.domainDetails(fpId, clientId).toLiveData()
-    }
+  fun domainDetails(fpId: String?, clientId: String?): LiveData<BaseResponse> {
+    return BoostPluginWithFloatsRepository.domainDetails(fpId, clientId).toLiveData()
+  }
 
-    fun addExistingDomain(
-        fpId: String?,
-        clientId: String?,
-        existingDomainRequest: ExistingDomainRequest
-    ): LiveData<BaseResponse> {
-        return RiaNowFloatsRepository.addExistingDomainDetails(
-            fpId,
-            clientId,
-            existingDomainRequest
-        ).toLiveData()
-    }
+  fun addExistingDomain(fpId: String?, clientId: String?, existingDomainRequest: ExistingDomainRequest): LiveData<BaseResponse> {
+    return RiaNowFloatsRepository.addExistingDomainDetails(fpId, clientId, existingDomainRequest).toLiveData()
+  }
 }

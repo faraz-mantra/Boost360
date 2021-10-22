@@ -1,81 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <LinearLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/iv_close"
+      android:layout_width="@dimen/size_40"
+      android:layout_height="@dimen/size_40"
+      android:src="@drawable/ic_close_dark_gray" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="@dimen/size_12"
+      android:background="@drawable/bg_rounded_top_white"
+      android:padding="@dimen/size_24">
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/customTextView7"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/semi_bold"
+        android:text="@string/type_the_domain_you_own"
+        android:textColor="@color/black_4a4a4a"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <com.framework.views.customViews.CustomImageView
-            android:id="@+id/iv_close"
-            android:layout_width="@dimen/size_40"
-            android:layout_height="@dimen/size_40"
-            android:src="@drawable/ic_close_dark_gray" />
+      <com.framework.views.customViews.CustomEditText
+        android:id="@+id/et_domain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/domain_et_bg"
+        android:ellipsize="end"
+        android:hint="@string/www_example_com"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:padding="@dimen/size_8"
+        android:scrollHorizontally="true"
+        android:textColor="@color/black_2A2A2A"
+        android:textColorHint="@color/black_322A2A2A"
+        android:textCursorDrawable="@drawable/yellow_cursor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customTextView7" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/size_12"
-            android:background="@drawable/bg_rounded_top_white"
-            android:padding="@dimen/size_24">
+      <com.framework.views.customViews.CustomMaterialButton
+        android:id="@+id/btn_continue"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_54"
+        android:layout_marginTop="@dimen/size_16"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/semi_bold"
+        android:text="@string/get_started"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/body_1"
+        app:cornerRadius="@dimen/size_15"
+        app:layout_constraintTop_toBottomOf="@+id/et_domain" />
 
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/customTextView7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/semi_bold"
-                android:text="@string/type_the_domain_you_own"
-                android:textColor="@color/black_4a4a4a"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.framework.views.customViews.CustomEditText
-                android:id="@+id/et_domain"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollHorizontally="true"
-                android:ellipsize="end"
-                android:layout_marginTop="8dp"
-                android:maxLines="1"
-                android:lines="1"
-                android:textColorHint="@color/black_322A2A2A"
-                android:textColor="@color/black_2A2A2A"
-                android:background="@drawable/domain_et_bg"
-                android:hint="@string/www_example_com"
-                android:padding="@dimen/size_8"
-                android:textCursorDrawable="@drawable/yellow_cursor"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/customTextView7" />
-
-            <com.framework.views.customViews.CustomMaterialButton
-                android:id="@+id/btn_continue"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_60"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:fontFamily="@font/regular"
-                android:text="@string/get_started"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_14"
-                app:cornerRadius="@dimen/size_15"
-                app:layout_constraintTop_toBottomOf="@+id/et_domain"
-                tools:layout_editor_absoluteX="24dp" />
-
-            <ProgressBar
-                android:id="@+id/progress_bottom_sheet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:indeterminate="true"
-                android:visibility="gone"
-                android:indeterminateTint="@color/colorPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+      <ProgressBar
+        android:id="@+id/progress_bottom_sheet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/colorPrimary"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </LinearLayout>
 </layout>
