@@ -38,9 +38,7 @@ import com.framework.webengageconstant.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 
-class DomainBookingActivity :
-    AppBaseActivity<ActivityDomainBookingBinding, DomainBookingViewModel>(),
-    RecyclerItemClickListener {
+class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, DomainBookingViewModel>(), RecyclerItemClickListener {
 
     private lateinit var baseActivity: BaseActivity<*, *>
     private lateinit var existingDomainRequest: ExistingDomainRequest
@@ -309,7 +307,7 @@ class DomainBookingActivity :
 
 
     private fun isPremium(): Boolean {
-        return session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false
+        return (session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false).not()
     }
 
     private fun setupSteps() {

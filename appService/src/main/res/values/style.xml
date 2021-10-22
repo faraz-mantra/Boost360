@@ -13,6 +13,10 @@
     <item name="searchViewStyle">@style/SearchView</item>
   </style>
 
+  <style name="AppTheme.domain" parent="AppTheme.cataloge">
+    <item name="colorPrimary">@color/black_4a4a4a</item>
+    <item name="colorPrimaryDark">@color/black_4a4a4a</item>
+  </style>
   <style name="CatalogTheme" parent="BaseTheme">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>

@@ -55,18 +55,18 @@
     <activity
       android:name=".ui.domainbooking.DomainBookingContainerActivity"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.cataloge"
+      android:theme="@style/AppTheme.domain"
       android:windowSoftInputMode="adjustPan" />
 
     <activity
       android:name=".ui.domainbooking.DomainBookingActivity"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.cataloge"
+      android:theme="@style/AppTheme.domain"
       android:windowSoftInputMode="adjustPan" />
     <activity
       android:name=".ui.domainbooking.SearchDomainActivity"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.cataloge"
+      android:theme="@style/AppTheme.domain"
       android:windowSoftInputMode="adjustResize" />
 
     <meta-data
