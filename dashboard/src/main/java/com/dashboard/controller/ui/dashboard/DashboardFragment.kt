@@ -6,7 +6,9 @@ import android.content.pm.PackageManager
 import android.graphics.*
 import android.net.Uri
 import android.os.Handler
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
@@ -60,6 +62,10 @@ import com.framework.pref.Key_Preferences.GET_FP_DETAILS_WEBSITE
 import com.framework.utils.*
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.framework.webengageconstant.*
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.inventoryorder.model.mapDetail.TOTAL_MAP_VISIT
 import com.inventoryorder.model.mapDetail.VisitsModelResponse
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
@@ -93,9 +99,14 @@ import kotlin.collections.ArrayList
 
 const val IS_FIRST_LOAD = "isFirsLoad"
 const val IS_DR_HIGH_DIALOG = "isDrHighDialog"
+const val FESTIVE_POSTER_NAME = "festive_poster_name"
+const val DASHBOARD_FESTIVAL_BUTTON_VISIBILITY = "dashboard_festive_poster_button_visible"
+const val FIREBASE_RC_FETCH_INTERVAL: Long = 900 // 15 min. Metric in seconds.
 
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
+  private val TAG = "DashboardFragment"
+  private var remoteConfig: FirebaseRemoteConfig? = null
   private var deepLinkUtil: DeepLinkUtil? = null
   private var connectedChannels: ArrayList<String> = arrayListOf()
   private var session: UserSessionManager? = null
@@ -147,6 +158,41 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     getAllDashboardSummary()
     getPremiumBanner()
     getChannelAccessToken()
+    setFirebaseRemoteConfig()
+  }
+
+  fun setFirebaseRemoteConfig() {
+    remoteConfig = Firebase.remoteConfig
+    val configSettings = remoteConfigSettings {
+      minimumFetchIntervalInSeconds = FIREBASE_RC_FETCH_INTERVAL//15 min
+    }
+    remoteConfig?.setConfigSettingsAsync(configSettings)
+    remoteConfig?.setDefaultsAsync(R.xml.remote_config_defaults)
+    remoteConfig?.fetchAndActivate()
+        ?.addOnCompleteListener(baseActivity) { task ->
+          if (task.isSuccessful) {
+            val updated = task.result
+            Log.d(TAG, "Config params updated: $updated")
+            Toast.makeText(baseActivity, "Fetch and activate succeeded",
+              Toast.LENGTH_SHORT).show()
+          } else {
+            Toast.makeText(baseActivity, "Fetch failed",
+              Toast.LENGTH_SHORT).show()
+          }
+          displayFestiveButtonView()
+        }
+  }
+
+  fun displayFestiveButtonView() {
+    Log.d(TAG, "Config params updated: ${remoteConfig?.getBoolean(DASHBOARD_FESTIVAL_BUTTON_VISIBILITY)}")
+    if (remoteConfig?.getBoolean(DASHBOARD_FESTIVAL_BUTTON_VISIBILITY)!!) {
+      Log.d(TAG, "Config params updated: Visible")
+      binding?.btnFestive?.visibility = View.VISIBLE
+      binding?.customFestivalTv?.text = remoteConfig?.getString(FESTIVE_POSTER_NAME)
+    } else {
+      Log.d(TAG, "Config params updated: Not Visible")
+      binding?.btnFestive?.visibility = View.GONE
+    }
   }
 
   private fun getSocialMediaChannel() {
