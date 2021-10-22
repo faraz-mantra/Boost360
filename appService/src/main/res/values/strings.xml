@@ -45,6 +45,7 @@
   <string name="enabled_payments_reveived_bank">Once enabled, all payments from your customers will be received in this bank account</string>
   <string name="directly_designated_bank_account">Get payments in 48 hours, directly in your designated bank account</string>
   <string name="account_verification_pending">Your account verification is pending</string>
+  <string name="account_verification_under_process">Your account verification is under process</string>
   <string name="self_branded_payment_gateway">Self Branded Payment Gateway</string>
   <string name="about_this_add_on"> About this add-on</string>
   <string name="gateway_description">This payment gateway is powered by <b>Instamojo</b>, which allows you to collect your customers’ payment directly into your bank account without any delay, (unlike the default payment gateway provided by Boost). With this add-on acticvated on your boost website your customers see that they are paying to your business and not to boost.</string>
@@ -363,7 +364,7 @@
   <string name="error_getting_service_timing">Error while getting the service timing.</string>
   <string name="update">Update</string>
   <string name="profile_updated">profile updated</string>
-  <string name="something_went_wrong">Something went wrong</string>
+  <string name="something_went_wrong">Something went wrong!</string>
   <string name="error_delete_failed_try_again">Item not deleted, please try again!</string>
   <string name="enter_staff_name">Enter staff name</string>
   <string name="select_staff_gender">Select staff gender</string>
@@ -536,7 +537,7 @@
   <string name="why_verify_bank_account">Why verify bank account?</string>
   <string name="why_do_we_need_to_add_and_verify_your_bank_account">Why do we need to add and verify your bank account?</string>
   <string name="this_account_is_being_used_to_send_you_money_collected_from_your_customers_who_are_making_payments_on_your_boost_business_website">This account is being used to send you money collected from your customers who are making payments on your Boost Business website.</string>
-  <string name="we_re_currently_verifying_your_bank_account_this_process_usually_takes_1_working_day_once_verified_we_will_notify_you_if_you_want_to_make_any_change_to_above_account_details_please_write_to_ria_nowfloats_com_with_this_screenshot_attached">We’re currently verifying your bank account. This process usually takes 1 working day. Once verified we will notify you. If you want to make any change to above account details, please write to ria@nowfloats.com with this screenshot attached.</string>
+  <string name="we_re_currently_verifying_your_bank_account_this_process_usually_takes_1_working_day_once_verified_we_will_notify_you_if_you_want_to_make_any_change_to_above_account_details_please_write_to_ria_nowfloats_com_with_this_screenshot_attached">We’re currently verifying your bank account. This process usually takes 1 working day. Once verified we will notify you. If you want to make any change to above account details, please write to <u>ria@nowfloats.com</u> with this screenshot attached.</string>
   <string name="bank_account_verified">Bank account verified</string>
   <string name="confirm_gst_details">Confirm GST details</string>
   <string name="your_gstin_no_arz6887865868_is_registered_with_the_company_name_nowfloats_technologies_pvt_ltd">Your GSTIN no. <b>ARZ6887865868</b> is registered with the company name <b>Nowfloats Technologies Pvt. Ltd.</b></string>
@@ -642,8 +643,8 @@
   <string name="product_image_uploading_error">Product image uploading error, please try again.</string>
   <string name="secondary_product_image_uploading_error_please">Secondary Product image uploading error, please try again.</string>
   <string name="add_secondary_image_data_error_please_try_again">Add secondary image data error, please try again.</string>
-  <string name="product_updated_successfully">Product updated successfully.</string>
-  <string name="product_saved_successfully">Product saved successfully.</string>
+  <string name="product_updated_successfully">Product updated successfully</string>
+  <string name="product_saved_successfully">Product saved successfully</string>
   <string name="you_have_unsaved_information_do_you_still_want_to_close">You have unsaved information. Do you still want to close?</string>
   <string name="service_image_uploading_error">Service image uploading error, please try again.</string>
   <string name="account_number_required">Account number*</string>

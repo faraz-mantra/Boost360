@@ -992,7 +992,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             facebookAutoPullConnect(false);
         }
         if (!isAuthenticated()) {
-            //twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
+            //twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_n_inactive));
             // String fbUName = pref.getString(TwitterConnection.PREF_USER_NAME, "");
             twitterProfileConnect(false);
             //twitterStatus.setText("Disconnected");
@@ -1009,7 +1009,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             twitter.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.twitter_icon_active));
             twitter.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
         } else {
-            twitter.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.twitter_icon_inactive));
+            twitter.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.twitter_icon_n_inactive));
             twitter.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
             twitterStatus.setVisibility(View.GONE);
         }
