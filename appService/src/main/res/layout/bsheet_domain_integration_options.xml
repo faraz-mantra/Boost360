@@ -30,6 +30,7 @@
                 android:gravity="center"
                 android:text="samplebusiness.com"
                 android:textSize="@dimen/text_26"
+                android:textColor="@color/black_4a4a4a"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -74,7 +75,8 @@
                         android:paddingVertical="@dimen/size_8"
                         android:paddingTop="@dimen/size_8"
                         android:paddingBottom="@dimen/size_8"
-                        android:text="@string/use_it_as_my_business_website_address" />
+                        android:text="@string/use_it_as_my_business_website_address"
+                        android:textColor="@color/black_4a4a4a" />
 
                     <com.framework.views.customViews.CustomRadioButton
                         android:id="@+id/radioCreateASubdomain"
@@ -87,7 +89,8 @@
                         android:padding="@dimen/size_4"
                         android:paddingTop="@dimen/size_8"
                         android:paddingBottom="@dimen/size_8"
-                        android:text="@string/create_a_sub_domain_and_map_my" />
+                        android:text="@string/create_a_sub_domain_and_map_my"
+                        android:textColor="@color/black_4a4a4a" />
 
                 </RadioGroup>
 

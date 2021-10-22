@@ -46,5 +46,6 @@
   <color name="colorShadowStart">#5e5e5e</color>
   <color name="colorShadowEnd">#c7c7c7</color>
   <color name="colorLightBlack">#333333</color>
+  <color name="gray_e5e5e5">#E5E5E5</color>
 
 </resources>

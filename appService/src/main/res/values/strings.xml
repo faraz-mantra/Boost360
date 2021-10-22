@@ -202,7 +202,7 @@
   <string name="staff_description_optional">Staff description (optional)</string>
   <string name="describe_this_staff_in_around_2000_characters_at_max">Describe this staff in around 2000 characters at max…</string>
   <string name="years_of_experience">Years of experience*</string>
-  <string name="is_available">Is available*</string>
+  <string name="is_available">is available</string>
   <string name="is_the_staff_available_for_home_service">Is the staff available for home service?</string>
   <string name="services_provided">Services provided</string>
   <string name="map_the_employee_to_one_or_multiple_services">Map the employee to one or multiple services.</string>
@@ -1026,7 +1026,7 @@
   <string name="need_help">Need help?</string>
   <string name="book_a_new_domain">Book a new domain</string>
   <string name="use_it_as_my_business_website_address">Use it as my business website address.</string>
-  <string name="create_a_sub_domain_and_map_my">Create a sub-domain on this domain and map my business website to that URL(Ex: <u><b>shop</b></u></string>
+  <string name="create_a_sub_domain_and_map_my">Create a sub-domain on this domain and map my business website to that URL(Ex:</string>
   <string name="step_1_4" tools:ignore="TypographyFractions">Step 1/4</string>
   <string name="step_2_4">Step 2/4</string>
   <string name="step_3_4" tools:ignore="TypographyFractions">Step 3/4</string>

@@ -66,7 +66,7 @@ class AddingExistingDomainFragment :
                 setUiStepStatus()
             } else {
                 WebEngageController.trackEvent(DOMAIN_ADDING_EXISTING_FINAL_SUCCESS_CLICK, CLICK, NO_EVENT_VALUE)
-                startFragmentDomainBookingActivity(
+                startFragmentDomainBookingActivityFinish(
                     activity = requireActivity(),
                     type = com.appservice.constant.FragmentType.ACTIVE_DOMAIN_FRAGMENT,
                     bundle = Bundle(),

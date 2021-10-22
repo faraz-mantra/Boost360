@@ -4,6 +4,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
+        android:background="@color/white"
         android:layout_height="match_parent"
         android:fillViewport="true">
 
@@ -60,6 +61,8 @@
                 android:layout_height="80dp"
                 android:layout_marginTop="@dimen/size_68"
                 app:cardCornerRadius="@dimen/size_40"
+                android:backgroundTint="@color/white"
+                android:background="@color/white"
                 app:layout_constraintEnd_toEndOf="@+id/btn_buy_addon"
                 app:layout_constraintStart_toStartOf="@+id/btn_buy_addon"
                 app:layout_constraintTop_toBottomOf="@+id/linear_upper_section">
@@ -101,17 +104,9 @@
 
             <com.framework.views.customViews.CustomMaterialButton
                 android:id="@+id/btn_buy_addon"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_60"
+                style="@style/CustomYellowButton"
                 android:layout_marginHorizontal="@dimen/size_22"
-                android:layout_marginTop="@dimen/size_24"
-                android:backgroundTint="@color/colorPrimary"
                 android:text="@string/view_in_add_on_store"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_14"
-                android:textStyle="bold"
-                app:cornerRadius="@dimen/size_15"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/customTextView6" />

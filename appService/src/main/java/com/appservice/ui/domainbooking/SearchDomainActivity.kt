@@ -59,8 +59,13 @@ class SearchDomainActivity : AppBaseActivity<ActivitySearchDomainBinding, Search
             this.onNavPressed()
         }
 
+        binding?.tvLearnHowToChooseDomain?.setOnClickListener {
+            showShortToast(getString(R.string.coming_soon))
+        }
+
         binding?.edSearchBox?.afterTextChanged {
             binding?.layputEtError?.gone()
+            binding?.btnContinue?.gone()
             if (it == "")
                 binding?.tvLearnHowToChooseDomain?.visible()
             else
@@ -98,24 +103,22 @@ class SearchDomainActivity : AppBaseActivity<ActivitySearchDomainBinding, Search
             val isAvailable = it.anyResponse as Boolean
             binding?.layputEtError?.visible()
 
-            val color: Int
-            val icon:Int
-            val stringAvailability: Int
             if (isAvailable) {
-                icon = R.drawable.ic_selected_tick
-                color = R.color.green_dark
-                stringAvailability = R.string.is_available_new
                 binding?.btnContinue?.visible()
+                binding?.tvIsNotDomainAvailable?.gone()
+                binding?.tvIsDomainAvailable?.visible()
+                binding?.tvAvailabilityNotSuffix?.gone()
+                binding?.tvAvailabilitySuffix?.visible()
             } else {
-                icon = R.drawable.ic_error_red
-                color = R.color.red_dark
-                stringAvailability = R.string.is_not_available
                 binding?.btnContinue?.gone()
+                binding?.tvIsNotDomainAvailable?.visible()
+                binding?.tvIsDomainAvailable?.gone()
+                binding?.tvAvailabilityNotSuffix?.visible()
+                binding?.tvAvailabilitySuffix?.gone()
             }
-            binding?.tvIsDomainAvailable?.setCompoundDrawables(ContextCompat.getDrawable(this, icon), null, null, null)
-            binding?.tvIsDomainAvailable?.text = "$domainString "
-            binding?.tvIsDomainAvailable?.setTextColor(ContextCompat.getColor(this, color))
-            binding?.tvAvailabilitySuffix?.text = getString(stringAvailability)
+
+            binding?.tvIsNotDomainAvailable?.text = domainString
+            binding?.tvIsDomainAvailable?.text = domainString
         })
     }
 

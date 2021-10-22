@@ -41,6 +41,8 @@
                 android:layout_marginTop="8dp"
                 android:maxLines="1"
                 android:lines="1"
+                android:textColorHint="@color/black_322A2A2A"
+                android:textColor="@color/black_2A2A2A"
                 android:background="@drawable/domain_et_bg"
                 android:hint="@string/www_example_com"
                 android:padding="@dimen/size_8"

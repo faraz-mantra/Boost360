@@ -182,7 +182,7 @@ class DomainBookingActivity :
         bSheet.setCancelable(false)
 
         sheetBinding.tvDomainName.text = enteredDomainName
-        sheetBinding.radioCreateASubdomain.text = Html.fromHtml("${getString(R.string.create_a_sub_domain_and_map_my)}.<u>$enteredDomainName)</u>")
+        sheetBinding.radioCreateASubdomain.text = Html.fromHtml("${getString(R.string.create_a_sub_domain_and_map_my)} <u><b>shop</b>.$enteredDomainName)</u>")
 
         domainIntegrationUserSelection = 0
         sheetBinding.radioAsBusinessWebsite.isChecked = true
@@ -309,7 +309,7 @@ class DomainBookingActivity :
 
 
     private fun isPremium(): Boolean {
-        return true//session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false
+        return session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false
     }
 
     private fun setupSteps() {

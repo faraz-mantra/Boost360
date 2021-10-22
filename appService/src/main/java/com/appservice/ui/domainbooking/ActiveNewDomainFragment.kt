@@ -68,9 +68,22 @@ class ActiveNewDomainFragment :
     }
 
     private fun setAndParseData(domainDetailsResponse: DomainDetailsResponse) {
-        var domainFullName = domainDetailsResponse.domainName + domainDetailsResponse.domainType
-        if (domainFullName.isNullOrEmpty())
-            domainFullName = "N/A"
+        val domainName =
+            if (!domainDetailsResponse.domainName.isNullOrEmpty() && domainDetailsResponse.domainName != "null")
+                domainDetailsResponse.domainName
+            else ""
+
+        val domainType =
+            if (domainDetailsResponse.domainType != null && domainDetailsResponse.domainType != "null")
+                domainDetailsResponse.domainType
+            else ""
+
+        val domainFullName =
+            if (domainName.isEmpty() && domainType.toString().isEmpty())
+                "N/A"
+            else
+                domainName + domainType
+
         binding?.layoutDomainDetails?.tvDomainValue?.text = domainFullName
 
         var activatedOn = domainDetailsResponse.activatedOn
