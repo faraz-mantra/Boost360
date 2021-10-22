@@ -90,6 +90,7 @@
                                 android:id="@+id/tv_domain_assigned"
                                 android:layout_width="wrap_content"
                                 tools:text="ksnfksfbsjkdf"
+                                android:textColor="@color/black_747474"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:textSize="@dimen/text_16" />
@@ -100,6 +101,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="4dp"
                             android:gravity="center"
+                            android:textColor="@color/black_747474"
                             android:text="@string/this_is_your_current_website_address" />
                     </LinearLayout>
 

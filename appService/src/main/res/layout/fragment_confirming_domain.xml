@@ -5,8 +5,9 @@
     tools:context=".ui.domainbooking.ConfirmingDomainFragment">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_e5e5e5"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -200,6 +201,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="@dimen/size_56"
             android:layout_marginEnd="24dp"
+            android:textColor="@color/white"
             android:text="@string/confirm_and_apply_domain"
             app:layout_constraintBottom_toTopOf="@+id/btn_book_new_domain"
             app:layout_constraintEnd_toEndOf="parent"
@@ -217,7 +219,7 @@
             android:text="@string/go_back"
             android:textSize="@dimen/text_16"
             android:textAllCaps="false"
-            android:fontFamily="@font/regular"
+            android:fontFamily="@font/regular_medium"
             android:textColor="@color/colorPrimary"
             android:visibility="visible"
             app:cornerRadius="@dimen/size_15"

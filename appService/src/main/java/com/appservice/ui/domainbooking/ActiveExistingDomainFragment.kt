@@ -37,8 +37,14 @@ class ActiveExistingDomainFragment :
                 R.string.website_domain
             ), resources.getDimensionPixelSize(R.dimen.size_44)
         )
-
+        setOnClickListeners()
         domainDetailsApi()
+    }
+
+    private fun setOnClickListeners() {
+        binding?.btnBuyAddon?.setOnClickListener {
+            showShortToast(getString(R.string.coming_soon))
+        }
     }
 
     override fun getLayout(): Int {
@@ -70,10 +76,14 @@ class ActiveExistingDomainFragment :
                 domainDetailsResponse.domainType
             else ""
 
-        val domainFullName = domainName + domainType
+        val domainFullName =
+            if (domainName.isEmpty() && domainType.toString().isEmpty())
+                "N/A"
+            else
+                domainName + domainType
 
-        binding?.layoutIncludeDomainCard?.tvDomainValue?.text =
-            if (domainFullName == "") domainFullName else "N/A"
+        binding?.layoutIncludeDomainCard?.tvDomainValue?.text = domainFullName
+
 
         var activatedOn = domainDetailsResponse.activatedOn
         activatedOn = if (!activatedOn.isNullOrEmpty() && activatedOn.contains("/Date"))

@@ -39,7 +39,7 @@
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="samplestorewebsite.com"
-                android:textColor="@color/black"
+                android:textColor="@color/black_4a4a4a"
                 android:textSize="@dimen/text_30"
                 android:fontFamily="@font/barlow_condensed_semi_bold"
                 app:layout_constraintTop_toBottomOf="@+id/customImageView5"
@@ -51,21 +51,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
+                android:textColor="@color/gray_828282"
                 android:text="@string/domain_confirm_msg_1"
                 app:layout_constraintTop_toBottomOf="@+id/tv_wb_address"
                 tools:layout_editor_absoluteX="24dp" />
 
             <com.framework.views.customViews.CustomMaterialButton
                 android:id="@+id/btn_confirm"
-                style="@style/TextBoldStyle"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_60"
+                style="@style/CustomYellowButton"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="@color/colorPrimary"
                 android:text="@string/confirm_amp_apply_domain"
-                android:textAllCaps="false"
                 android:textColor="@color/white"
-                app:cornerRadius="@dimen/size_15"
                 app:layout_constraintTop_toBottomOf="@+id/customTextView4"
                 tools:layout_editor_absoluteX="24dp" />
 

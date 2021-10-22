@@ -154,6 +154,7 @@
   <color name="red_E39595">#E39595</color>
   <color name="red_button">#E39595</color>
   <color name="black_202A2A2A">#202A2A2A</color>
+  <color name="black_322A2A2A">#322A2A2A</color>
   <color name="black_3C3C3C">#3C3C3C</color>
   <color name="colorAccentPositive">@color/colorAccent</color>
   <color name="colorAccentNegative">@color/black_4a4a4a</color>

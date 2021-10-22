@@ -56,6 +56,7 @@ open class DomainBookingContainerActivity :
     override fun customTheme(): Int? {
         return when (type) {
             /*FragmentType.ADD_BANK_ACCOUNT_START -> R.style.AppTheme_add_account*/
+                FragmentType.ACTIVE_DOMAIN_FRAGMENT -> R.style.StatusBarYellowTheme
             else -> super.customTheme()
         }
     }
@@ -151,6 +152,21 @@ fun startFragmentDomainBookingActivity(
     if (clearTop) intent.flags =
         Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     activity.startActivity(intent)
+}
+
+fun startFragmentDomainBookingActivityFinish(
+    activity: Activity,
+    type: FragmentType,
+    bundle: Bundle = Bundle(),
+    clearTop: Boolean
+) {
+    val intent = Intent(activity, DomainBookingContainerActivity::class.java)
+    intent.putExtras(bundle)
+    intent.setFragmentType(type)
+    if (clearTop) intent.flags =
+        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    activity.startActivity(intent)
+    activity.finish()
 }
 
 fun Intent.setFragmentType(type: FragmentType): Intent {
