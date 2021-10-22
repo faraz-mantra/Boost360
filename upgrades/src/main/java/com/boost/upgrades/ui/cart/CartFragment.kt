@@ -67,7 +67,10 @@ import android.net.Uri
 import java.lang.NumberFormatException
 import android.text.InputFilter
 import android.text.TextUtils
+import androidx.lifecycle.ViewModelProvider
 import com.boost.upgrades.ui.compare.ComparePackageFragment
+import com.boost.upgrades.ui.home.HomeViewModel
+import com.boost.upgrades.ui.home.HomeViewModelFactory
 import com.framework.analytics.SentryController
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_title
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_value
@@ -164,6 +167,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   }
 
   private lateinit var viewModel: CartViewModel
+  private lateinit var homeViewModel: HomeViewModel
+  private lateinit var homeViewModelFactory: HomeViewModelFactory
+
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     root = inflater.inflate(R.layout.cart_fragment, container, false)
@@ -199,7 +205,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
+    homeViewModelFactory = HomeViewModelFactory(requireNotNull(requireActivity().application))
     viewModel = ViewModelProviders.of(requireActivity()).get(CartViewModel::class.java)
+    homeViewModel = ViewModelProviders.of(requireActivity(), homeViewModelFactory)
+      .get(HomeViewModel::class.java)
     Constants.COMPARE_BACK_VALUE = 1
     prefs.storeCompareState(1)
 
@@ -210,6 +219,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
 //        showpopup()
     if(isFestivePoster){
+      loadDatFeatureData()
       addFestivePoster()
     }
     initializePackageRecycler()
@@ -711,6 +721,18 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
   fun loadFestiveData() {
     viewModel.loadAddonsFromDB(featureCode!!)
+  }
+
+  fun loadDatFeatureData() {
+    val pref = requireActivity().getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+    val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
+    var code: String = (activity as UpgradeActivity).experienceCode!!
+    if (!code.equals("null", true)) {
+      homeViewModel.setCurrentExperienceCode(code, fpTag!!)
+    }
+
+    homeViewModel.loadFestiveData()
+    addFestivePoster()
   }
 
 

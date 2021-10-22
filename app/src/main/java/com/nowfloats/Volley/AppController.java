@@ -19,6 +19,7 @@ import com.android.volley.toolbox.Volley;
 import com.appservice.AppServiceApplication;
 import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignup.locale.LocaleManager;
+import com.boost.upgrades.UpgradesApplication;
 import com.dashboard.AppDashboardApplication;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
@@ -125,6 +126,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         FlorisApplication.initModule(this);
         FestivePosterApplication.instance =this;
         FestivePosterApplication.initModule(this);
+//        UpgradesApplication.initModule(this);
         SharedPreferences pref = BaseOrderApplication.instance.getSharedPreferences(Constants.PREF_NAME_REFERRAL, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         initWebEngage();

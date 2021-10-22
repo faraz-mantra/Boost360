@@ -242,10 +242,12 @@
             android:singleLine="true"
             android:textColor="@color/color_888888"
             android:textSize="@dimen/body_1" />
+
         </androidx.appcompat.widget.LinearLayoutCompat>
       </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/tv_update_info"
