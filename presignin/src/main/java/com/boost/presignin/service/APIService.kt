@@ -7,9 +7,9 @@ import android.content.SharedPreferences
 import android.os.IBinder
 import android.util.Log
 import com.appservice.model.accountDetails.saveBanKDetail
+import com.appservice.model.kycData.saveBusinessKycDetail
 import com.boost.presignin.model.other.AccountDetailsResponse
 import com.boost.presignin.model.other.PaymentKycDataResponse
-import com.boost.presignin.model.other.saveBusinessKycDetail
 import com.boost.presignin.rest.repository.WebActionBoostKitRepository
 import com.boost.presignin.rest.repository.WithFloatRepository
 import com.boost.presignin.rest.repository.WithFloatTwoRepository

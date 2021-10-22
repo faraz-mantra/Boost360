@@ -128,19 +128,14 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
         binding?.btnFpStatus?.setImageResource(R.drawable.facebookpage_icon_inactive)
 
       }
-
-
     })
 
     toSubscribers.observe(viewLifecycleOwner,{
       if (it){
-
         binding?.btnSubscription?.setImageResource(R.drawable.subscribe_icon_active)
       }else{
         binding?.btnSubscription?.setImageResource(R.drawable.subscribe_icon_inactive)
-
       }
-
     })
 
     fbPageStatusEnable.observe(viewLifecycleOwner,{
@@ -148,31 +143,21 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
         binding?.btnFpPageStatus?.setImageResource(R.drawable.facebook_icon_active)
       }else{
         binding?.btnFpPageStatus?.setImageResource(R.drawable.facebook_icon_inactive)
-
       }
-      if (!firsTime)
-        showShortToast(getString(if (it) R.string.fb_enabled else R.string.fb_disabled))
+      if (!firsTime) showShortToast(getString(if (it) R.string.fb_enabled else R.string.fb_disabled))
     })
 
     twitterSharingEnabled.observe(viewLifecycleOwner,{
       if (it){
-        WebEngageController.trackEvent(
-          TWITTER_SHARING_ACTIVATED,
-          HAS_CLICKED_TWITTER_SHARING_ON,
-          sessionLocal.fpTag
-        )
-        binding?.btnTwitter?.setImageResource(R.drawable.twitter_icon_active)
+        WebEngageController.trackEvent(TWITTER_SHARING_ACTIVATED, HAS_CLICKED_TWITTER_SHARING_ON, sessionLocal.fpTag)
+        binding?.btnTwitter?.setImageResource(R.drawable.twitter_icon_n_active)
       }else{
-        binding?.btnTwitter?.setImageResource(R.drawable.twitter_icon_inactive)
-
+        binding?.btnTwitter?.setImageResource(R.drawable.twitter_icon_n_inactive)
       }
       if (!firsTime)
       showShortToast(getString(if (it) R.string.twitter_enabled else R.string.twitter_disabled))
-
     })
-    Handler().postDelayed({
-      firsTime=false
-    },1000)
+    Handler().postDelayed({ firsTime=false },1000)
   }
 
   private fun capLimitCheck() {

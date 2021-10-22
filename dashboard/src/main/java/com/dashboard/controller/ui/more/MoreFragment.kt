@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.net.Uri
 import android.view.*
 import android.widget.PopupWindow
@@ -13,10 +12,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.LinearLayoutCompat
 import com.appservice.model.accountDetails.getBankDetail
+import com.appservice.model.kycData.DataKyc
+import com.appservice.model.kycData.getBusinessKycDetail
 import com.appservice.ui.updatesBusiness.showDialog
-import com.boost.presignin.model.other.DataKyc
 import com.boost.presignin.model.other.KYCDetails
-import com.boost.presignin.model.other.getBusinessKycDetail
+import com.boost.presignin.model.userprofile.UserProfileData
+import com.boost.presignin.model.userprofile.UserProfileDataResult
+import com.boost.presignin.model.userprofile.UserProfileDataResult.Companion.getMerchantProfileDetails
+import com.boost.presignin.model.userprofile.UserProfileDataResult.Companion.saveMerchantProfileDetails
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.RecyclerViewActionType
@@ -30,10 +33,11 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.pref.*
-import com.framework.pref.Key_Preferences.GET_FP_DETAILS_DESCRIPTION
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_IMAGE_URI
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
 import com.framework.webengageconstant.*
@@ -72,9 +76,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     if (businessLogoUrl.isNullOrEmpty().not() && businessLogoUrl!!.contains("BizImages") && businessLogoUrl.contains("http").not()) {
       businessLogoUrl = BASE_IMAGE_URL + businessLogoUrl
     }
-    binding?.rivUsersImage?.apply {
-      baseActivity.glideLoad(this, url = featureImageUrl, placeholder = R.drawable.placeholder_image, isCrop = true)
-    }
+
     binding?.rivBusinessImage?.apply {
       baseActivity.glideLoad(this, url = businessLogoUrl, placeholder = R.drawable.placeholder_image, isCrop = true)
     }
@@ -85,14 +87,56 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     binding?.rivCurrentlyManage?.apply {
       baseActivity.glideLoad(this, url = bgImageUri, placeholder = R.drawable.general_services_background_img_d, isCrop = true)
     }
-    binding?.ctvName?.text = (session?.userProfileName ?: session?.fpTag)?.capitalizeUtil()
     val city = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
     val country = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
     val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country"
-    binding?.ctvContent?.text = session?.getFPDetails(GET_FP_DETAILS_DESCRIPTION)
+    binding?.ctvContent?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)
     binding?.ctvBusinessName?.text = session?.fPName ?: session?.fpTag
     binding?.ctvBusinessAddress?.text = location
     setRecyclerView()
+  }
+
+  private fun refreshUserDetail() {
+    val merchantProfileDetails = getMerchantProfileDetails()
+    setUserDetail(merchantProfileDetails)
+    fetchUserData()
+  }
+
+  private fun setUserDetail(merchantProfileDetails: UserProfileDataResult?) {
+    if (merchantProfileDetails?.ImageUrl.isNullOrEmpty().not()) {
+      binding?.rivUsersImage?.let { baseActivity.glideLoad(it, merchantProfileDetails?.ImageUrl ?: "", R.drawable.placeholder_image_n) }
+    } else {
+      binding?.rivUsersImage?.setImageResource(R.drawable.ic_user_circle_dark_grey)
+    }
+    if (merchantProfileDetails?.isNullAllValue() == false) {
+      binding?.ctvType?.visible()
+      binding?.ctvName?.text = (merchantProfileDetails.getUserNameN() ?: getUserNumber()).capitalizeUtil()
+      binding?.ctvContent?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)
+    } else {
+      binding?.ctvType?.gone()
+      binding?.ctvName?.text = getUserNumber()
+      binding?.ctvContent?.text = getString(R.string.profile_info_content)
+    }
+  }
+
+  private fun getUserNumber(): String {
+    val number = when {
+      session?.userProfileMobile.isNullOrEmpty().not() && session?.userProfileMobile!!.length > 9 -> session?.userProfileMobile
+      session?.userPrimaryMobile.isNullOrEmpty().not() && session?.userPrimaryMobile!!.length > 9 -> session?.userPrimaryMobile
+      session?.fPPrimaryContactNumber.isNullOrEmpty().not() && session?.fPPrimaryContactNumber!!.length > 9 -> session?.fPPrimaryContactNumber
+      else -> "N/A"
+    }
+    return if (!number.equals("N/A") && number?.contains("+91") == true) number else "+91 $number"
+  }
+
+  private fun fetchUserData() {
+    viewModel?.getUserProfileData(session?.userProfileId)?.observe(viewLifecycleOwner, {
+      val userProfileResult = (it as? UserProfileData)?.Result
+      if (it.isSuccess() && userProfileResult != null) {
+        saveMerchantProfileDetails(userProfileResult)
+      }
+      setUserDetail(userProfileResult)
+    })
   }
 
   private fun setRecyclerView() {
@@ -106,15 +150,10 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     })
   }
 
-  override fun onResume() {
-    super.onResume()
-    setHelpfulResources()
-  }
-
   private fun setHelpfulResources() {
     if (usefulLinks.isNullOrEmpty().not()) {
       usefulLinks?.map {
-        when(it.icon) {
+        when (it.icon) {
           UsefulLinksItem.IconType.my_bank_acccount.name -> {
             val bankData = getBankDetail()
             if (bankData?.isValidAccount() == true) {
@@ -262,7 +301,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       .setMessage(R.string.are_you_sure)
       .setPositiveButton(R.string.logout) { dialog: DialogInterface, _: Int ->
         WebEngageController.trackEvent(BOOST_LOGOUT_CLICK, CLICK, NO_EVENT_VALUE)
-        logout()
+        baseActivity.startLogoutActivity()
         dialog.dismiss()
       }.setNegativeButton(R.string.cancel) { dialog: DialogInterface, _: Int ->
         dialog.dismiss()
@@ -272,14 +311,11 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.rivUsersImage -> {
-        baseActivity.startFeatureLogo(session)
-      }
       binding?.rivBusinessImage -> {
         baseActivity.startBusinessLogo(session)
       }
-      binding?.civProfile, binding?.ctvContent, binding?.ctvName -> {
-        baseActivity.startBusinessProfileDetailEdit(session)
+      binding?.rivUsersImage, binding?.civProfile, binding?.ctvContent, binding?.ctvName -> {
+        baseActivity.startUserProfileDetail(session)
       }
       binding?.boostSubscription -> {
         baseActivity.initiateAddonMarketplace(session!!, false, "", "")
@@ -290,8 +326,8 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    inflater.inflate(R.menu.menu_more, menu)
-    menu.findItem(R.id.menu_more)?.icon?.setTint(Color.WHITE)
+//    inflater.inflate(R.menu.menu_more, menu)
+//     menu.findItem(R.id.menu_more)?.icon?.setTint(Color.WHITE)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -333,5 +369,11 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     } catch (e: Exception) {
       Toast.makeText(context, context.getString(R.string.unable_to_open_facebook), Toast.LENGTH_SHORT).show()
     }
+  }
+
+  override fun onResume() {
+    super.onResume()
+    setHelpfulResources()
+    refreshUserDetail()
   }
 }

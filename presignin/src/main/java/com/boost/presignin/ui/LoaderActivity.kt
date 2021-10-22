@@ -18,6 +18,7 @@ import com.boost.presignin.ui.intro.IntroActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.analytics.SentryController
 import com.framework.extensions.observeOnce
+import com.framework.models.firestore.FirestoreManager
 import com.framework.pref.*
 import com.framework.utils.NetworkUtils
 import com.google.android.material.snackbar.Snackbar
@@ -84,6 +85,7 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
       if (it1.isSuccess() && response != null) {
         ProcessFPDetails(session).storeFPDetails(response)
         setFPDetailsToSentry(session)
+        FirestoreManager.initData(session.fpTag ?: "", session.fPID ?: "", clientId)
         startService()
         if (
           deepLinkViewType != null && deepLinkViewType.equals("CART_FRAGMENT", ignoreCase = true)
@@ -203,7 +205,6 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
           startActivity(Intent(Settings.ACTION_DATA_ROAMING_SETTINGS).apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK; })
         } catch (e: Exception) {
           SentryController.captureException(e)
-
           Toast.makeText(this@LoaderActivity, "Unable to find network settings. Please do it manually from phone's settings", Toast.LENGTH_LONG).show()
           Log.e(TAG, "updateUiInternetNotAvailable: " + e.localizedMessage)
         }

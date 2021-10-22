@@ -12,10 +12,6 @@ import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentAddAccountStartBinding
 import com.framework.models.BaseViewModel
-import com.framework.views.zero.FragmentZeroCase
-import com.framework.views.zero.OnZeroCaseClicked
-import com.framework.views.zero.RequestZeroCaseBuilder
-import com.framework.views.zero.ZeroCases
 import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
@@ -66,7 +62,6 @@ class AddAccountStartFragment : AppBaseFragment<FragmentAddAccountStartBinding, 
       binding?.closeBtn -> baseActivity.onNavPressed()
       binding?.startBtn -> arguments?.let {
         startFragmentAccountActivity(FragmentType.BANK_ACCOUNT_DETAILS, it, isResult = true, requestCode = 202)
-        requireActivity().finish()
       }
     }
   }
@@ -74,7 +69,6 @@ class AddAccountStartFragment : AppBaseFragment<FragmentAddAccountStartBinding, 
   override fun primaryButtonClicked() {
     arguments?.let {
       startFragmentAccountActivity(FragmentType.BANK_ACCOUNT_DETAILS, it, isResult = true, requestCode = 202)
-      requireActivity().finish()
     }
   }
 

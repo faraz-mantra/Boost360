@@ -59,5 +59,5 @@ enum class RecyclerViewItemType {
       RECYCLER_WEBSITE_NAV -> R.layout.recycler_item_website_nav
       CHANNEL_STATUS_ITEM_VIEW -> R.layout.item_social_media
     }
-    }
+  }
 }
