@@ -154,21 +154,13 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     var s_uuid = UUID.randomUUID().toString()
     s_uuid = s_uuid.replace("-", "")
     viewModel?.putUploadBusinessLogo(
-      clientId2,
-      fpId = FirestoreManager.fpId,
-      reqType = "sequential",
-      reqId = s_uuid,
-      totalChunks = "1",
-      currentChunkNumber = "1",
-      file = RequestBody.create("image/png".toMediaTypeOrNull(), businessLogoImage.readBytes())
+      clientId2, fpId = FirestoreManager.fpId, reqType = "sequential", reqId = s_uuid, totalChunks = "1",
+      currentChunkNumber = "1", file = RequestBody.create("image/png".toMediaTypeOrNull(), businessLogoImage.readBytes())
     )?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
-        session?.storeFPDetails(
-          GET_FP_DETAILS_LogoUrl,
-          it.parseStringResponse()?.replace("\\", "")?.replace("\"", "")
-        )
-        showSnackBarPositive(requireActivity(), getString(R.string.business_image_uploaded))
-      } else showSnackBarNegative(requireActivity(), it.message)
+        session?.storeFPDetails(GET_FP_DETAILS_LogoUrl, it.parseStringResponse()?.replace("\\", "")?.replace("\"", ""))
+        showSnackBarPositive( getString(R.string.business_image_uploaded))
+      } else showSnackBarNegative( it.message?:getString(R.string.something_went_wrong))
       hideProgress()
     })
   }
@@ -328,17 +320,11 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
           val response = it?.parseStringResponse()
           if (response?.contains("NAME") == true) {
             onBusinessNameAddedOrUpdated(true)
-            showSnackBarPositive(
-              requireActivity(),
-              getString(R.string.business_name_published_successfully)
-            )
+            showSnackBarPositive(getString(R.string.business_name_published_successfully))
           }
           if (response?.contains("DESCRIPTION") == true) {
             onBusinessDescAddedOrUpdated(true)
-            showSnackBarPositive(
-              requireActivity(),
-              getString(R.string.business_description_published_successfully)
-            )
+            showSnackBarPositive(getString(R.string.business_description_published_successfully))
           }
           session?.storeFPDetails(
             GET_FP_DETAILS_DESCRIPTION,
