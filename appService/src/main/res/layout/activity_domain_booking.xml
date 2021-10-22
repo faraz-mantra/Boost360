@@ -20,7 +20,6 @@
     <androidx.core.widget.NestedScrollView
       android:layout_width="match_parent"
       android:layout_height="0dp"
-      android:layout_marginBottom="16dp"
       android:fillViewport="true"
       android:scrollbars="none"
       app:layout_constraintBottom_toTopOf="@+id/btn_book_old_domain"
@@ -144,11 +143,12 @@
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/layout_current_domain">
 
-          <androidx.cardview.widget.CardView
+          <com.framework.views.customViews.CustomCardView
             android:id="@+id/cardView3"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="24dp"
+            android:layout_width="@dimen/size_80"
+            android:layout_height="@dimen/size_80"
+            android:layout_marginTop="@dimen/size_24"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/size_40">
 
             <com.framework.views.customViews.CustomImageView
@@ -157,36 +157,39 @@
               android:layout_gravity="center"
               android:src="@drawable/ic_lock_gray_filled" />
 
-          </androidx.cardview.widget.CardView>
+          </com.framework.views.customViews.CustomCardView>
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/customTextView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/size_16"
             android:gravity="center"
+            android:textColor="@color/black_4a4a4a"
             android:text="@string/make_a_custom_domain_your_website_address"
-            android:textSize="20sp"
-            app:fontFamily="@font/bold" />
+            android:textSize="@dimen/heading_5"
+            app:fontFamily="@font/semi_bold" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/customTextView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/size_16"
+            android:textColor="@color/black_4a4a4a"
             android:gravity="center"
+            android:textSize="@dimen/body_1"
             android:text="@string/buy_domain_addon_desc" />
 
           <com.framework.views.customViews.CustomMaterialButton
             android:id="@+id/btn_buy_addon"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_60"
-            android:layout_marginTop="16dp"
+            android:layout_height="@dimen/size_54"
+            android:layout_marginTop="@dimen/size_16"
             android:backgroundTint="@color/colorPrimary"
             android:text="@string/buy_add_on_lowercase"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textStyle="bold"
+            android:fontFamily="@font/semi_bold"
             app:cornerRadius="@dimen/size_15" />
         </LinearLayout>
 
@@ -196,19 +199,17 @@
     <com.framework.views.customViews.CustomMaterialButton
       android:id="@+id/btn_book_old_domain"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/size_60"
-      android:layout_marginStart="@dimen/size_44"
-      android:layout_marginEnd="@dimen/size_36"
-      android:layout_marginBottom="16dp"
+      android:layout_height="@dimen/size_54"
+      android:layout_marginHorizontal="@dimen/size_30"
+      android:layout_marginBottom="@dimen/size_8"
       android:backgroundTint="@color/colorPrimary"
-      android:fontFamily="@font/regular"
+      android:fontFamily="@font/semi_bold"
       android:text="@string/add_a_domain_you_own"
       android:textAllCaps="false"
       android:textColor="@color/white"
-      android:textFontWeight="600"
-      android:textSize="@dimen/text_14"
+      android:textSize="@dimen/body_1"
       android:visibility="visible"
-      app:cornerRadius="@dimen/size_15"
+      app:cornerRadius="@dimen/size_10"
       app:layout_constraintBottom_toTopOf="@+id/btn_book_new_domain"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />
@@ -217,24 +218,20 @@
       android:id="@+id/btn_book_new_domain"
       style="@style/Widget.MaterialComponents.Button.OutlinedButton"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/size_60"
-      android:layout_marginStart="@dimen/size_44"
-      android:layout_marginEnd="@dimen/size_36"
-      android:layout_marginBottom="24dp"
-      android:fontFamily="@font/regular"
+      android:layout_height="@dimen/size_54"
+      android:layout_marginHorizontal="@dimen/size_30"
+      android:layout_marginBottom="@dimen/size_8"
+      android:fontFamily="@font/semi_bold"
       android:text="@string/book_a_new_domain"
       android:textAllCaps="false"
       android:textColor="@color/colorPrimary"
-      android:textFontWeight="600"
-      android:textSize="@dimen/text_14"
+      android:textSize="@dimen/body_1"
       android:visibility="visible"
-      app:cornerRadius="@dimen/size_15"
+      app:cornerRadius="@dimen/size_10"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:strokeColor="@color/colorPrimary" />
-
-
   </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
