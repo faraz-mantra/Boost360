@@ -91,8 +91,8 @@ public class BoostExtensionsFragment extends Fragment {
         .title("Integration key")
         .positiveText(R.string.copy_and_share)
         .negativeText(R.string.later)
-        .positiveColorRes(R.color.primaryColor)
-        .negativeColorRes(R.color.gray_40)
+        .positiveColorRes(R.color.colorAccentLight)
+        .negativeColorRes(R.color.black_4a4a4a)
         .callback(new MaterialDialog.ButtonCallback() {
           @Override
           public void onNegative(MaterialDialog dialog) {
@@ -119,48 +119,6 @@ public class BoostExtensionsFragment extends Fragment {
         }).build();
     EditText scriptText = (EditText) dialog.getCustomView().findViewById(R.id.boostx_script_body);
     scriptText.setText(session.getFPID());
-
-    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-      @Override
-      public void onDismiss(DialogInterface dialog) {
-        MaterialDialog dialog2 = new MaterialDialog.Builder(mContext)
-            .customView(R.layout.boostx_script_panel, true)
-            .title("wordpress-plugin script")
-            .positiveText(R.string.copy_and_share)
-            .negativeText(R.string.later)
-            .positiveColorRes(R.color.primaryColor)
-            .negativeColorRes(R.color.gray_40)
-            .callback(new MaterialDialog.ButtonCallback() {
-              @Override
-              public void onNegative(MaterialDialog dialog) {
-                super.onNegative(dialog);
-                dialog.dismiss();
-              }
-
-              @Override
-              public void onPositive(MaterialDialog dialog) {
-                String script = Constants.boostx_script.replace("[[FPTAG]]", session.getFpTag());
-                ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("boostx_script", script);
-                clipboard.setPrimaryClip(clip);
-
-                Methods.showSnackBarPositive(getActivity(), getString(R.string.the_script_has_been_copied_to_clipboard_also_you_can));
-
-                /*Create an ACTION_SEND Intent*/
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                /*Applying information Subject and Body.*/
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Boost360 wordpress-plugin script");
-                intent.putExtra(Intent.EXTRA_TEXT, script);
-                /*Fire!*/
-                startActivity(Intent.createChooser(intent, getString(R.string.shared_from_boost)));
-              }
-            }).build();
-        EditText scriptText = (EditText) dialog2.getCustomView().findViewById(R.id.boostx_script_body);
-        scriptText.setText(Constants.boostx_script.replace("[[FPTAG]]", session.getFpTag()));
-        dialog2.show();
-      }
-    });
     dialog.show();
   }
 
@@ -172,8 +130,8 @@ public class BoostExtensionsFragment extends Fragment {
         .title("website-plugin script")
         .positiveText(R.string.copy_and_share)
         .negativeText(R.string.later)
-        .positiveColorRes(R.color.primaryColor)
-        .negativeColorRes(R.color.gray_40)
+        .positiveColorRes(R.color.colorAccentLight)
+        .negativeColorRes(R.color.black_4a4a4a)
         .callback(new MaterialDialog.ButtonCallback() {
           @Override
           public void onNegative(MaterialDialog dialog) {
@@ -189,8 +147,7 @@ public class BoostExtensionsFragment extends Fragment {
             ClipData clip = ClipData.newPlainText("boostx_script", script);
             clipboard.setPrimaryClip(clip);
 
-            Methods.showSnackBarPositive(getActivity(),
-                getString(R.string.the_script_has_been_copied_to_clipboard_also_you_can));
+            Methods.showSnackBarPositive(getActivity(), getString(R.string.the_script_has_been_copied_to_clipboard_also_you_can));
 
             /*Create an ACTION_SEND Intent*/
             Intent intent = new Intent(Intent.ACTION_SEND);

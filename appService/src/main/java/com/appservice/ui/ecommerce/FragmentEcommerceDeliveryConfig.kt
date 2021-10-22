@@ -3,11 +3,11 @@ package com.appservice.ui.ecommerce
 import android.view.LayoutInflater
 import android.view.View
 import com.appservice.R
+import com.appservice.base.AppBaseFragment
+import com.appservice.databinding.FragmentDeliveryConfigurationBinding
 import com.appservice.model.aptsetting.DeliveryDetailsResponse
 import com.appservice.model.aptsetting.DeliverySetup
 import com.appservice.model.aptsetting.GetWareHouseResponse
-import com.appservice.base.AppBaseFragment
-import com.appservice.databinding.FragmentDeliveryConfigurationBinding
 import com.appservice.ui.ecommerce.bottomsheets.BottomSheetAddCartSlab
 import com.appservice.ui.ecommerce.bottomsheets.BottomSheetAddWareHouse
 import com.appservice.utils.WebEngageController
@@ -20,7 +20,6 @@ import com.framework.pref.clientId
 import com.framework.utils.fromHtml
 import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.DELIVERY_SETUP_PAGE_LOAD
-import com.framework.webengageconstant.ECOMMERCE_SETTING_PAGE_LOAD
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PAGE_VIEW
 
@@ -64,7 +63,7 @@ class FragmentEcommerceDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigur
         val data = it as? DeliveryDetailsResponse
         binding?.toggleAllowPickup?.isOn = data?.result?.isPickupAllowed ?: true
         binding?.toggleHomeDelivery?.isOn = data?.result?.isHomeDeliveryAllowed ?: true
-        binding?.etdFlatCharges?.setText(data?.result?.getFlatDeliveryCharge().toString())
+        binding?.etdFlatCharges?.setText((data?.result?.getFlatDeliveryCharge() ?: 0).toString())
       }
 
     })
