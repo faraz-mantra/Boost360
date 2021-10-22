@@ -129,7 +129,7 @@
           style="@style/AppointmentSetting_Text_Heading"
           android:layout_marginTop="@dimen/size_30"
           android:text="@string/default_tax_rate_for_services"
-          android:visibility="gone" />
+          android:visibility="visible" />
 
         <com.framework.views.customViews.CustomTextField
           style="@style/Appointment_Text_Field"
@@ -139,30 +139,30 @@
           android:hint="18%"
           android:padding="@dimen/_14dp"
           android:singleLine="true"
-          android:visibility="gone" />
+          android:visibility="visible" />
 
         <com.framework.views.customViews.CustomTextView
           style="@style/Appointment_Text_Catalog_Heading"
           android:layout_marginTop="@dimen/size_10"
           android:text="@string/what_are_text_rates"
           android:textColor="#747474"
-          android:visibility="gone" />
+          android:visibility="visible" />
 
         <com.framework.views.customViews.CustomTextView
           style="@style/AppointmentCatalogSettingText2"
           android:text="@string/tax_slabs_are_a_rate_at_which_any_product_is_taxable_determined_by_gst_council_of_india_this_is_used_to_back_calculate_the_final_paybale_amount_while_placing_an_order_at_the_checkout_page_on_your_website"
-          android:visibility="gone" />
+          android:visibility="visible" />
 
         <com.framework.views.customViews.CustomTextView
           style="@style/Appointment_Text_Catalog_Heading"
           android:text="@string/how_does_default_rate_work"
           android:textColor="#747474"
-          android:visibility="gone" />
+          android:visibility="visible" />
 
         <com.framework.views.customViews.CustomTextView
           style="@style/AppointmentCatalogSettingText2"
           android:text="@string/this_will_be_used_as_default_tax_rate_for_any_product_in_your_catalog_in_case_you_ve_not_entered_any_specific_tax_for_that_product"
-          android:visibility="gone" />
+          android:visibility="visible" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.core.widget.NestedScrollView>

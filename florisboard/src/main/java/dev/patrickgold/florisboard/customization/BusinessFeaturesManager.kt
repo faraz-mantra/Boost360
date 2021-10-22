@@ -260,7 +260,6 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
           }
         }
         else -> {
-
         }
       }
 
@@ -432,23 +431,20 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
 
   private fun apiObserveServiceProduct() {
     viewModel.products.observeForever {
-      Log.i(TAG, "apiObserveServiceProduct: observer")
       Timber.i("products - $it.")
       binding.businessFeatureProgress.gone()
       this.adapterProductService.removeLoaderN()
       if (it.Products.isNullOrEmpty().not()) {
         if (isFirstPage) {
           it.Products?.let { it1 -> this.adapterProductService.notifyNewList(it1) }
-        }
-        else{
+        } else {
           it.Products?.let { it1 -> this.adapterProductService.addItems(it1) }
         }
         PAGING_TOTAL_ELEMENTS = this.adapterProductService.getListData().size
         SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(1)?.text = "${getProductType(session?.fP_AppExperienceCode ?: "")} (${it.TotalCount})"
       } else {
-        if (businessFeatureEnum == BusinessFeatureEnum.INVENTORY_SERVICE&&isFirstPage) {
+        if (businessFeatureEnum == BusinessFeatureEnum.INVENTORY_SERVICE && isFirstPage) {
           this.adapterProductService.notifyNewList(arrayListOf())
-          //  Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
         }
       }
     }
@@ -466,9 +462,8 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         isLastPageD = (this.adapterStaff.getListData().size == PAGING_TOTAL_ELEMENTS)
         SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text = BusinessFeatureEnum.STAFF.name + " (${it.paging?.count})"
       } else {
-        if (businessFeatureEnum == BusinessFeatureEnum.STAFF&&isFirstPage) {
+        if (businessFeatureEnum == BusinessFeatureEnum.STAFF && isFirstPage) {
           this.adapterStaff.notifyNewList(arrayListOf())
-          //  Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
         }
       }
     }
@@ -486,9 +481,8 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         isLastPageD = (this.adapterUpdates.getListData().size == PAGING_TOTAL_ELEMENTS)
         SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text = BusinessFeatureEnum.UPDATES.name + " (${it.totalCount})"
       } else {
-        if (businessFeatureEnum == BusinessFeatureEnum.UPDATES&&isFirstPage) {
+        if (businessFeatureEnum == BusinessFeatureEnum.UPDATES && isFirstPage) {
           this.adapterUpdates.notifyNewList(arrayListOf())
-          //  Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
         }
       }
     }
@@ -854,7 +848,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     this.isLoadingD = false
     this.PAGING_TOTAL_ELEMENTS = 0
     this.offSet = PAGE_START
-    this.limit = PAGE_SIZE + 1
+    this.limit = PAGE_SIZE
     this.isLastPageD = false
   }
 

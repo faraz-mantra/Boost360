@@ -13,10 +13,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.LinearLayoutCompat
 import com.appservice.model.accountDetails.getBankDetail
+import com.appservice.model.kycData.DataKyc
+import com.appservice.model.kycData.getBusinessKycDetail
 import com.appservice.ui.updatesBusiness.showDialog
-import com.boost.presignin.model.other.DataKyc
 import com.boost.presignin.model.other.KYCDetails
-import com.boost.presignin.model.other.getBusinessKycDetail
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.RecyclerViewActionType

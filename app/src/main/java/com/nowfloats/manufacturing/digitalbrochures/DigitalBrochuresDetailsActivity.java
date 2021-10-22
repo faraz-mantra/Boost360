@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
@@ -94,19 +95,18 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
     });
 
     saveButton.setOnClickListener(v -> {
-      if (path != null) {
+      if (!TextUtils.isEmpty(path)) {
         showLoader("Uploading document.Please Wait...");
-        new Handler().postDelayed(() -> uploadPdfFileToServer(), 200);
+        new Handler().postDelayed(this::uploadPdfFileToServer, 200);
       } else {
         uploadDataToServer();
       }
     });
 
     uploadImageButton.setOnClickListener(v -> {
-      if (ActivityCompat.checkSelfPermission(DigitalBrochuresDetailsActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-          PackageManager.PERMISSION_GRANTED) {
-        ActivityCompat.requestPermissions(DigitalBrochuresDetailsActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-            gallery_req_id);
+      if (ActivityCompat.checkSelfPermission(DigitalBrochuresDetailsActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
+      ActivityCompat.checkSelfPermission(DigitalBrochuresDetailsActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        ActivityCompat.requestPermissions(DigitalBrochuresDetailsActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE}, gallery_req_id);
         return;
       }
       Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -378,8 +378,11 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
 //      path = FileUtils.getPath(this, selectedUri_PDF);
       path = new com.appservice.utils.FileUtils(this).getPath(selectedUri_PDF);
       Log.d("onActivityResult", "Path: " + path + "\n uri" + selectedUri_PDF.getPath());
-      attachBrochureEmptyLayout.setVisibility(View.GONE);
-      fileSelectedLayout.setVisibility(View.VISIBLE);
+      if (!TextUtils.isEmpty(path)) {
+        attachBrochureEmptyLayout.setVisibility(View.GONE);
+        fileSelectedLayout.setVisibility(View.VISIBLE);
+      }
+      Toast.makeText(this, "File path getting error!", Toast.LENGTH_SHORT).show();
     }
   }
 
