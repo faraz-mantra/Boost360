@@ -10,8 +10,10 @@ import com.festive.poster.reset.services.NowFloatsRemoteData
 import com.framework.base.BaseResponse
 import com.google.gson.Gson
 import com.google.gson.JsonArray
+import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import io.reactivex.Observable
+import okhttp3.RequestBody
 import retrofit2.Retrofit
 import retrofit2.http.Query
 
@@ -41,6 +43,27 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
     return NowFloatsRepository.makeRemoteRequest(
       remoteDataSource.getTemplateViewConfig(body),
       TaskCode.GET_TEMPLATE_CONFIG
+    )
+  }
+
+  fun uploadProfileImage(floatingPointId: String?,floatingPointTag: String?,fileName:String,file: RequestBody?): Observable<BaseResponse> {
+
+    return NowFloatsRepository.makeRemoteRequest(
+      remoteDataSource.uploadImage(floatingPointId,floatingPointTag,fileName,file),
+      TaskCode.UPLOAD_IMAGE
+    )
+  }
+
+  fun saveKeyValue(floatingPointId: String?,fpTag: String?,templateId:String,map:HashMap<String,String?>): Observable<BaseResponse> {
+    val body =JsonObject().apply {
+      addProperty("floatingPointId",floatingPointId)
+      addProperty("floatingPointTag",fpTag)
+      addProperty("templateId",templateId)
+      add("keyDetails",Gson().toJsonTree(map).asJsonObject)
+    }
+    return NowFloatsRepository.makeRemoteRequest(
+      remoteDataSource.saveKeyValue(body),
+      TaskCode.SAVE_KEY_VALUES
     )
   }
 

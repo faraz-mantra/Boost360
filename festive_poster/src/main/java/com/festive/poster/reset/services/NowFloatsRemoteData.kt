@@ -7,6 +7,7 @@ import com.festive.poster.reset.EndPoints
 import com.framework.base.BaseResponse
 import com.google.gson.JsonObject
 import io.reactivex.Observable
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -25,4 +26,18 @@ interface NowFloatsRemoteData {
   fun getTemplates(
     @Body body:JsonObject?,
     ): Observable<Response<GetTemplatesResponse>>
+
+  @POST(EndPoints.UPLOAD_IMAGE)
+  fun uploadImage(
+    @Query("floatingPointId") floatingPointId:String?,
+    @Query("tag") tag:String?,
+    @Query("fileName") fileName:String?,
+    @Body file: RequestBody?
+  ): Observable<Response<String>>
+
+  @POST(EndPoints.SAVE_KEY_VALUE)
+  fun saveKeyValue(
+    @Body body:JsonObject?,
+  ): Observable<Response<BaseResponse>>
+
 }

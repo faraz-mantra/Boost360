@@ -25,7 +25,7 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecycler
     binding.tvPrice.text = "Pack of ${model.posterList?.size} posters for ₹${String.format("%.2f",model.price)}"
   //  setupVp(binding.vpPoster)
 
-    if (model.isPurchasedN()) {
+    if (model.isPurchased) {
       binding.btnGetPack.text = getResources()?.getString(R.string.view_pack)
     } else {
       binding.btnGetPack.text = "Get ${model.tagsModel.name} Posters Pack"
