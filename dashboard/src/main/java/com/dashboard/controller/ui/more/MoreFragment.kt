@@ -103,8 +103,12 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
   }
 
   private fun setUserDetail(merchantProfileDetails: UserProfileDataResult?) {
-    binding?.rivUsersImage?.let { baseActivity.glideLoad(it, merchantProfileDetails?.ImageUrl ?: "", R.drawable.ic_user_circle_dark_grey) }
-    if (merchantProfileDetails != null) {
+    if (merchantProfileDetails?.ImageUrl.isNullOrEmpty().not()) {
+      binding?.rivUsersImage?.let { baseActivity.glideLoad(it, merchantProfileDetails?.ImageUrl ?: "", R.drawable.placeholder_image_n) }
+    } else {
+      binding?.rivUsersImage?.setImageResource(R.drawable.ic_user_circle_dark_grey)
+    }
+    if (merchantProfileDetails?.isNullAllValue() == false) {
       binding?.ctvType?.visible()
       binding?.ctvName?.text = (merchantProfileDetails.getUserNameN() ?: getUserNumber()).capitalizeUtil()
       binding?.ctvContent?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)
@@ -307,13 +311,10 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.rivUsersImage -> {
-        baseActivity.startUserProfileDetail(session)
-      }
       binding?.rivBusinessImage -> {
         baseActivity.startBusinessLogo(session)
       }
-      binding?.civProfile, binding?.ctvContent, binding?.ctvName -> {
+      binding?.rivUsersImage, binding?.civProfile, binding?.ctvContent, binding?.ctvName -> {
         baseActivity.startUserProfileDetail(session)
       }
       binding?.boostSubscription -> {

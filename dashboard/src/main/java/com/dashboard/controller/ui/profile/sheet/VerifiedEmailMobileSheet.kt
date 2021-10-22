@@ -3,11 +3,14 @@ package com.dashboard.controller.ui.profile.sheet
 import android.view.View
 import com.dashboard.R
 import com.dashboard.databinding.SheetVerifiedEmailNumberBinding
+import com.dashboard.utils.WebEngageController
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.framework.utils.setIconifiedText
+import com.framework.webengageconstant.*
+import com.framework.webengageconstant.USER_MERCHANT_PROFILE_NUMBER_PAGE
 
 class VerifiedEmailMobileSheet : BaseBottomSheetDialog<SheetVerifiedEmailNumberBinding, BaseViewModel>() {
 
@@ -36,6 +39,7 @@ class VerifiedEmailMobileSheet : BaseBottomSheetDialog<SheetVerifiedEmailNumberB
     sheetType = arguments?.getString(IK_TYPE)
     emailOrMob = arguments?.getString(IK_EMAIL_OR_MOB)
     if (sheetType == SheetType.EMAIL.name) {
+      WebEngageController.trackEvent(USER_MERCHANT_PROFILE_EMAIL_CHANGE, PAGE_VIEW, NO_EVENT_VALUE)
       if (emailOrMob.isNullOrEmpty()) {
         binding?.btnChangeNumber?.text = getString(R.string.add_email)
         binding?.title?.gone()
@@ -49,6 +53,7 @@ class VerifiedEmailMobileSheet : BaseBottomSheetDialog<SheetVerifiedEmailNumberB
         )
       }
     } else {
+      WebEngageController.trackEvent(USER_MERCHANT_PROFILE_NUMBER_CHANGE, PAGE_VIEW, NO_EVENT_VALUE)
       if (emailOrMob.isNullOrEmpty()) {
         binding?.btnChangeNumber?.text = getString(R.string.add_number)
         binding?.title?.gone()

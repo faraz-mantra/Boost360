@@ -55,7 +55,6 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-
               <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/low_readiness_score_view"
                 android:layout_width="match_parent"
@@ -383,6 +382,7 @@
                     app:selectedDotColor="@color/grey_dark_2" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
               </androidx.appcompat.widget.LinearLayoutCompat>
+
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <com.framework.views.customViews.CustomCardView
@@ -626,9 +626,11 @@
               android:focusable="true"
               android:foreground="?attr/selectableItemBackground"
               android:gravity="center|center_vertical"
-              android:orientation="horizontal">
+              android:orientation="horizontal"
+              tools:targetApi="m">
 
               <com.framework.views.customViews.CustomTextView
+                android:id="@+id/custom_festival_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/semi_bold"

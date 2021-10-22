@@ -88,22 +88,6 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     return dialog
   }
 
-  open fun addFragmentReplace(containerId: Int?, fragment: Fragment?, addToBackStack: Boolean) {
-    if (requireActivity().supportFragmentManager.isDestroyed) return
-    if (containerId == null || fragment == null) return
-
-    val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-    if (addToBackStack) {
-      fragmentTransaction.addToBackStack(fragment.javaClass.name)
-    }
-    try {
-      fragmentTransaction.replace(containerId, fragment).commit()
-    } catch (e: IllegalStateException) {
-      e.printStackTrace()
-    }
-  }
-
-
   fun dismiss(result: Int, data: Any?) {
     resultCancelled = result == RESULT_CANCELED
     if (!resultCancelled) callback?.onBottomSheetDismiss(result, data)

@@ -23,6 +23,10 @@ data class UserProfileDataResult(
   val UserName: String? = null
 ) : Serializable {
 
+  fun isNullAllValue(): Boolean {
+    return ImageUrl.isNullOrEmpty() && MobileNo.isNullOrEmpty() && UserName.isNullOrEmpty() && Email.isNullOrEmpty()
+  }
+
   fun getUserNameN(): String? {
     return if (UserName.isNullOrEmpty()) null else UserName
   }
