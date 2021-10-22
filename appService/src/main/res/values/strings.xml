@@ -364,7 +364,7 @@
   <string name="error_getting_service_timing">Error while getting the service timing.</string>
   <string name="update">Update</string>
   <string name="profile_updated">profile updated</string>
-  <string name="something_went_wrong">Something went wrong</string>
+  <string name="something_went_wrong">Something went wrong!</string>
   <string name="error_delete_failed_try_again">Item not deleted, please try again!</string>
   <string name="enter_staff_name">Enter staff name</string>
   <string name="select_staff_gender">Select staff gender</string>

@@ -10,10 +10,12 @@ import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.controller.ui.profile.sheet.*
 import com.dashboard.databinding.FragmentUserProfileBinding
+import com.dashboard.utils.WebEngageController
 import com.dashboard.viewmodel.UserProfileViewModel
 import com.framework.extensions.*
 import com.framework.glide.util.glideLoad
 import com.framework.pref.UserSessionManager
+import com.framework.webengageconstant.*
 
 class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProfileViewModel>(), UpdateProfileUiListener {
 
@@ -41,6 +43,7 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(baseActivity)
+    WebEngageController.trackEvent(USER_MERCHANT_PROFILE_VIEW, PAGE_VIEW, NO_EVENT_VALUE)
     val merchantProfileDetails = UserProfileDataResult.getMerchantProfileDetails()
     setDataFromPref(merchantProfileDetails)
     setOnClickListener(
@@ -66,6 +69,13 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
     }
 
     binding?.txtName?.setText(merchantProfileDetails?.UserName ?: "")
+    if (merchantProfileDetails?.UserName.isNullOrEmpty().not()) {
+      binding?.edtName?.visible()
+      binding?.viewName?.background = ContextCompat.getDrawable(baseActivity, R.drawable.rounded_view_stroke_grey)
+    } else {
+      binding?.edtName?.gone()
+      binding?.viewName?.background = ContextCompat.getDrawable(baseActivity, R.drawable.rounded_view_stroke_grey_white)
+    }
 
     binding?.txtMobileNumber?.setText(merchantProfileDetails?.MobileNo ?: "")
     if (merchantProfileDetails?.MobileNo.isNullOrEmpty().not()) {
@@ -116,16 +126,16 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.imgEdit -> {
-        showImagePickerSheet()
-      }
-      binding?.viewEmptyProfile -> {
-        showImagePickerSheet()
+      binding?.imgEdit, binding?.viewEmptyProfile -> {
+        WebEngageController.trackEvent(USER_MERCHANT_PROFILE_PROFILE_IMAGE, CLICK, NO_EVENT_VALUE)
+        ImagePickerSheet(this@UserProfileFragment).show(parentFragmentManager, ImagePickerSheet::javaClass.name)
       }
       binding?.viewName, binding?.txtName -> {
+        WebEngageController.trackEvent(USER_MERCHANT_PROFILE_USERNAME, CLICK, NO_EVENT_VALUE)
         showEditUserNameSheet(userProfileData?.UserName ?: "") { fetchUserData() }
       }
       binding?.viewEmail, binding?.txtEmail -> {
+        WebEngageController.trackEvent(USER_MERCHANT_PROFILE_EMAIL, CLICK, NO_EVENT_VALUE)
         if (userProfileData?.Email.isNullOrEmpty() || userProfileData?.IsEmailVerfied == false) {
           startProfileEditEmailSheet(userProfileData?.Email ?: "")
         } else {
@@ -133,30 +143,23 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
         }
       }
       binding?.viewMobileNumber, binding?.txtMobileNumber -> {
+        WebEngageController.trackEvent(USER_MERCHANT_PROFILE_NUMBER, CLICK, NO_EVENT_VALUE)
         if (userProfileData?.MobileNo.isNullOrEmpty() || userProfileData?.IsMobileVerified == false) {
           startProfileEditMobSheet(userProfileData?.MobileNo ?: "")
         } else {
           startVerifiedMobEmailSheet(VerifyOtpEmailMobileSheet.SheetType.MOBILE.name, userProfileData?.MobileNo ?: "")
         }
       }
-      binding?.viewWhatsappNo -> {
-        startProfileEditWhatsappSheet(userProfileData?.FloatingPointDetails?.first()?.WhatsAppNumber)
 
-      }
-      binding?.verifyWhatsappNo -> {
-        startProfileEditWhatsappSheet(userProfileData?.FloatingPointDetails?.first()?.WhatsAppNumber)
-      }
-      binding?.txtWhatsappNo -> {
+      binding?.viewWhatsappNo, binding?.verifyWhatsappNo, binding?.txtWhatsappNo -> {
+        WebEngageController.trackEvent(USER_MERCHANT_PROFILE_WHATSAPP, CLICK, NO_EVENT_VALUE)
         startProfileEditWhatsappSheet(userProfileData?.FloatingPointDetails?.first()?.WhatsAppNumber)
       }
       binding?.btnLogout -> {
+        WebEngageController.trackEvent(USER_MERCHANT_PROFILE_LOGOUT, CLICK, NO_EVENT_VALUE)
         startLogoutSheet()
       }
     }
-  }
-
-  private fun showImagePickerSheet() {
-    ImagePickerSheet(this@UserProfileFragment).show(parentFragmentManager, ImagePickerSheet::javaClass.name)
   }
 
   private fun showVerifyEmailSheet() {
