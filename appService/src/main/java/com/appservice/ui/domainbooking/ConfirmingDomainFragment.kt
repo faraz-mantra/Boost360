@@ -29,11 +29,6 @@ class ConfirmingDomainFragment : AppBaseFragment<FragmentConfirmingDomainBinding
 
     override fun onCreateView() {
         WebEngageController.trackEvent(DOMAIN_CONFIRMING_DOMAIN_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-        (baseActivity as? DomainBookingContainerActivity)?.setToolbarTitleNew(
-            resources.getString(
-                R.string.confirming_domain
-            ), resources.getDimensionPixelSize(R.dimen.size_44)
-        )
         setOnClickListeners()
     }
 

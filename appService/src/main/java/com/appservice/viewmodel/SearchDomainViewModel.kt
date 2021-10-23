@@ -11,8 +11,7 @@ import org.json.JSONObject
 class SearchDomainViewModel : BaseViewModel() {
 
     fun searchDomain(domain: String, clientId: String, domainType: String): LiveData<BaseResponse> {
-        return BoostPluginWithFloatsRepository.searchDomain(domain, clientId, domainType)
-            .toLiveData()
+        return BoostPluginWithFloatsRepository.searchDomain(domain, clientId, domainType).toLiveData()
     }
 
     fun createDomain(createDomainRequest: CreateDomainRequest): LiveData<BaseResponse> {

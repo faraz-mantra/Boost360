@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -55,7 +56,7 @@
                         <ImageView
                             android:layout_width="@dimen/size_65"
                             android:layout_height="@dimen/size_65"
-                            android:layout_marginTop="@dimen/size_16"
+                            android:layout_marginTop="@dimen/size_18"
                             app:srcCompat="@drawable/ic_globe_www" />
 
                         <com.framework.views.customViews.CustomTextView
@@ -72,7 +73,6 @@
                             android:id="@+id/tv_suggested_domain_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/size_4"
                             android:ellipsize="end"
                             android:fontFamily="@font/barlow_condensed_semi_bold"
                             android:gravity="center"
@@ -83,27 +83,24 @@
 
                         <com.framework.views.customViews.CustomMaterialButton
                             android:id="@+id/btn_select_suggested_domain"
+                            style="@style/CustomYellowButton"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/size_60"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="8dp"
-                            android:backgroundTint="@color/colorPrimary"
-                            android:text="@string/select_amp_continue"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_14"
-                            app:cornerRadius="@dimen/size_8" />
+                            android:layout_marginHorizontal="@dimen/size_15"
+                            android:layout_marginTop="@dimen/size_16"
+                            android:text="@string/select_amp_continue" />
 
                         <com.framework.views.customViews.CustomTextView
                             android:id="@+id/tv_suggested_domain_instruction"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/size_16"
+                            android:layout_marginBottom="@dimen/size_18"
+                            android:layout_marginHorizontal="@dimen/size_20"
                             android:gravity="center"
                             android:text="@string/suggestions_instructions"
-                            android:textColor="@color/black_4a4a4a"
-                            android:textSize="@dimen/text_12" />
+                            android:textColor="@color/gray_828282"
+                            android:textSize="@dimen/text_11" />
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -127,6 +124,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="vertical"
+                    tools:listitem="@layout/item_domain_suggestions"
                     app:layout_constraintEnd_toEndOf="@+id/layout_suggest_domain_select"
                     app:layout_constraintStart_toStartOf="@+id/tv_other_suggestions_title"
                     app:layout_constraintTop_toBottomOf="@+id/tv_other_suggestions_title" />

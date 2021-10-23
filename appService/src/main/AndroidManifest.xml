@@ -63,11 +63,6 @@
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.domain"
       android:windowSoftInputMode="adjustPan" />
-    <activity
-      android:name=".ui.domainbooking.SearchDomainActivity"
-      android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.domain"
-      android:windowSoftInputMode="adjustResize" />
 
     <meta-data
         android:name="preloaded_fonts"

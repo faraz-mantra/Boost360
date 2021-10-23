@@ -38,11 +38,6 @@ class BookDomainSslFragment : AppBaseFragment<FragmentBookADomainSslBinding, Bas
 
     override fun onCreateView() {
         WebEngageController.trackEvent(DOMAIN_BOOK_A_DOMAIN_SSL_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-        (baseActivity as? DomainBookingContainerActivity)?.setToolbarTitleNew(
-            resources.getString(
-                R.string.book_a_domain_ssl
-            ), resources.getDimensionPixelSize(R.dimen.size_44)
-        )
         setOnClickListeners()
         setData()
     }
@@ -55,11 +50,7 @@ class BookDomainSslFragment : AppBaseFragment<FragmentBookADomainSslBinding, Bas
         arrayDomainSuggestions.add(DomainSuggestionModel("samplebizsite.co.in"))
         arrayDomainSuggestions.add(DomainSuggestionModel("samplebizco.co.in"))
 
-        val adapter = AppBaseRecyclerViewAdapter(
-            baseActivity,
-            arrayDomainSuggestions,
-            itemClickListener = this@BookDomainSslFragment
-        )
+        val adapter = AppBaseRecyclerViewAdapter(baseActivity, arrayDomainSuggestions, itemClickListener = this@BookDomainSslFragment)
         val linearLayoutManager =
             LinearLayoutManager(baseActivity, LinearLayoutManager.VERTICAL, false)
         val dividerItemDecoration =
@@ -73,7 +64,12 @@ class BookDomainSslFragment : AppBaseFragment<FragmentBookADomainSslBinding, Bas
     private fun setOnClickListeners() {
         binding?.btnSearchANewDomain?.setOnClickListener {
             WebEngageController.trackEvent(DOMAIN_SEARCH_A_NEW_DOMAIN_CLICK, CLICK, NO_EVENT_VALUE)
-            startActivity(Intent(activity, SearchDomainActivity::class.java))
+            startFragmentDomainBookingActivity(
+                activity = baseActivity,
+                type = com.appservice.constant.FragmentType.SEARCH_DOMAIN_FRAGMENT,
+                bundle = Bundle(),
+                clearTop = false
+            )
         }
 
         binding?.btnSelectSuggestedDomain?.setOnClickListener {

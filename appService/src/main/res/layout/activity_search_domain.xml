@@ -7,13 +7,6 @@
         android:layout_height="match_parent"
         android:background="@color/gray_e5e5e5">
 
-        <include
-            android:id="@+id/include"
-            layout="@layout/toolbar_domain"
-            title="@{@string/search_a_new_domain}"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <com.framework.views.customViews.CustomEditText
             android:id="@+id/ed_search_box"
             android:layout_width="match_parent"
@@ -32,7 +25,7 @@
             android:textCursorDrawable="@drawable/yellow_cursor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/layput_et_error"

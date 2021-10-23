@@ -40,5 +40,6 @@ enum class IntentConstant {
   IS_ADD_NEW,
   CATALOG_DATA,
   CATALOG_CUSTOM_NAME,
-  STAFF_TIMINGS;
+  STAFF_TIMINGS,
+  DOMAIN_NAME;
 }
