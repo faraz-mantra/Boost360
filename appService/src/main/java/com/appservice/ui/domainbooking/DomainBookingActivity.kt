@@ -262,7 +262,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
 
 
   private fun isPremium(): Boolean {
-    return (session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false).not()
+    return (session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false)
   }
 
   private fun setupSteps() {
