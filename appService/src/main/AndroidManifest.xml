@@ -56,7 +56,7 @@
       android:name=".ui.domainbooking.DomainBookingContainerActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.domain"
-      android:windowSoftInputMode="adjustPan" />
+      android:windowSoftInputMode="adjustResize" />
 
     <activity
       android:name=".ui.domainbooking.DomainBookingActivity"

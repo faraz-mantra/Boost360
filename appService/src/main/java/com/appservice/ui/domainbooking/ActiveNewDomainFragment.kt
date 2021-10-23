@@ -53,12 +53,14 @@ class ActiveNewDomainFragment :
     }
 
     private fun domainDetailsApi() {
+        showProgress()
         viewModel?.domainDetails(sessionLocal.fpTag, clientId)?.observeOnce(this, {
             if (!it.isSuccess() || it == null) {
                 showShortToast(getString(R.string.something_went_wrong))
                 return@observeOnce
             }
             setAndParseData(it as DomainDetailsResponse)
+            hideProgress()
         })
     }
 

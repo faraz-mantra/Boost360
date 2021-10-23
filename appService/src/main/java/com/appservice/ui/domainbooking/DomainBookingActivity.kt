@@ -133,7 +133,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
    * Api Call for Adding Existing Domain to Boost
    * */
   private fun addExistingDomainApiCall(enteredDomainName: String, subDomainName: String) {
-    /*showProgress()
+    showProgress()
     existingDomainRequest = ExistingDomainRequest(clientId, session.fpTag, enteredDomainName, subDomainName)
     viewModel.addExistingDomain(clientId, session.fpTag, existingDomainRequest).observeOnce(this, {
       if (it.isSuccess()) {
@@ -143,8 +143,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
         } else showShortToast(getString(R.string.your_domain_could_not_be_added_please_try_again))
       } else showShortToast(it.message())
       hideProgress()
-    })*/
-    openExistingDomainFragmentFlow(enteredDomainName)
+    })
   }
 
   private fun openExistingDomainFragmentFlow(enteredDomainName: String) {
