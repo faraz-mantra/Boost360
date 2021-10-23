@@ -27,16 +27,7 @@ class ActiveExistingDomainFragment :
     }
 
     override fun onCreateView() {
-        WebEngageController.trackEvent(
-            DOMAIN_ACTIVE_EXISTING_DOMAIN_DETAILS_PAGE_LOAD,
-            PAGE_VIEW,
-            NO_EVENT_VALUE
-        )
-        (baseActivity as? DomainBookingContainerActivity)?.setToolbarTitleNew(
-            resources.getString(
-                R.string.website_domain
-            ), resources.getDimensionPixelSize(R.dimen.size_44)
-        )
+        WebEngageController.trackEvent(DOMAIN_ACTIVE_EXISTING_DOMAIN_DETAILS_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
         setOnClickListeners()
         domainDetailsApi()
     }

@@ -543,6 +543,5 @@ const val DOMAIN_SELECT_SUGGESTED_DOMAIN_CLICK = "Domain select suggested domain
 const val DOMAIN_CONFIRM_SELECTED_DOMAIN_CLICK = "Domain confirm selected domain click"
 const val DOMAIN_SEARCHED_SELECTED_DOMAIN_CLICK = "Domain searched selected domain click"
 const val DOMAIN_CONFIRMING_GO_BACK_BUTTON_CLICK = "Domain confirming go back button click"
-const val DOMAIN_SEARCH_PAGE_BACK_CLICK = "Domain search page back click"
 const val DOMAIN_SEARCHED_CREATE_SUCCESS = "Domain searched create success"
 const val DOMAIN_CREATE_CALL_INVOKED_CLICK = "Domain create call invoked click"

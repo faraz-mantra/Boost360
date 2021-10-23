@@ -1,22 +1,17 @@
 package com.appservice.ui.domainbooking
 
 import android.os.Bundle
-import android.text.Html
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
-import com.appservice.base.AppBaseActivity
+import com.appservice.base.AppBaseFragment
 import com.appservice.databinding.ActivitySearchDomainBinding
 import com.appservice.databinding.BsheetConfirmDomainSearchBinding
 import com.appservice.model.domainBooking.request.CreateDomainRequest
-import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.ui.domainbooking.model.SimilarDomainSuggestionModel
 import com.appservice.utils.Validations
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.getDomainSplitValues
@@ -27,12 +22,23 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.pref.clientId
 import com.framework.pref.getDomainName
+import com.framework.utils.fromHtml
 import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
-class SearchDomainActivity : AppBaseActivity<ActivitySearchDomainBinding, SearchDomainViewModel>(),
+class SearchDomainFragment :
+    AppBaseFragment<ActivitySearchDomainBinding, SearchDomainViewModel>(),
     RecyclerItemClickListener {
+
+    companion object {
+        @JvmStatic
+        fun newInstance(bundle: Bundle? = null): SearchDomainFragment {
+            val fragment = SearchDomainFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
 
     override fun getLayout(): Int {
         return R.layout.activity_search_domain
@@ -45,18 +51,13 @@ class SearchDomainActivity : AppBaseActivity<ActivitySearchDomainBinding, Search
     override fun onCreateView() {
         WebEngageController.trackEvent(DOMAIN_SEARCH_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
         setOnListeners()
-        this.showKeyBoard(binding?.edSearchBox)
+        baseActivity.showKeyBoard(binding?.edSearchBox)
     }
 
     private fun setOnListeners() {
         binding?.btnContinue?.setOnClickListener {
             WebEngageController.trackEvent(DOMAIN_CONFIRM_SELECTED_DOMAIN_CLICK, CLICK, NO_EVENT_VALUE)
             confirmBottomSheet()
-        }
-
-        binding?.include?.customImageView4?.setOnClickListener {
-            WebEngageController.trackEvent(DOMAIN_SEARCH_PAGE_BACK_CLICK, CLICK, NO_EVENT_VALUE)
-            this.onNavPressed()
         }
 
         binding?.tvLearnHowToChooseDomain?.setOnClickListener {
@@ -90,11 +91,11 @@ class SearchDomainActivity : AppBaseActivity<ActivitySearchDomainBinding, Search
 
     private fun searchDomain(domainString: String) {
         val splitDomain = getDomainSplitValues(domainString)
-        viewModel.searchDomain(
+        viewModel?.searchDomain(
             splitDomain.domainName.lowercase(),
             clientId,
             splitDomain.domainExtension.uppercase()
-        ).observeOnce(lifecycleOwner = this, {
+        )?.observeOnce(lifecycleOwner = this, {
             if (!it.isSuccess() || it == null) {
                 showShortToast(getString(R.string.something_went_wrong))
                 return@observeOnce
@@ -127,31 +128,32 @@ class SearchDomainActivity : AppBaseActivity<ActivitySearchDomainBinding, Search
             clientId = clientId,
             domainName = domainSelected.lowercase(),
             domainType = domainType.uppercase(),
-            existingFPTag = session.fpTag!!,
+            existingFPTag = sessionLocal.fpTag!!,
             domainChannelType = 1,
             DomainRegService = 0,
             validityInYears = "1",
             DomainOrderType = 0,
 
             )
-        viewModel.createDomain(createDomainRequest).observeOnce(lifecycleOwner = this, {
-            if (!it.isSuccess() || it == null) {
+        viewModel?.createDomain(createDomainRequest)?.observeOnce(lifecycleOwner = this, {
+            if (it.isSuccess().not() || it == null) {
                 showShortToast(getString(R.string.something_went_wrong))
                 return@observeOnce
             }
             WebEngageController.trackEvent(DOMAIN_SEARCHED_CREATE_SUCCESS, DOMAIN_CREATION_SUCCESS, NO_EVENT_VALUE)
             val stringResponse = it.stringResponse as String
             startFragmentDomainBookingActivity(
-                activity = this,
+                activity = baseActivity,
                 type = com.appservice.constant.FragmentType.ACTIVE_NEW_DOMAIN_FRAGMENT,
                 bundle = Bundle(),
                 clearTop = false
             )
             bSheet.dismiss()
+            baseActivity.finish()
         })
     }
 
-    private fun setRecyclerData() {
+    /*private fun setRecyclerData() {
         val arrayDomainSuggestions = arrayListOf<SimilarDomainSuggestionModel>()
         arrayDomainSuggestions.add(SimilarDomainSuggestionModel("samplebizsite.com", false))
         arrayDomainSuggestions.add(SimilarDomainSuggestionModel("samplebizsite.net", false))
@@ -162,35 +164,30 @@ class SearchDomainActivity : AppBaseActivity<ActivitySearchDomainBinding, Search
         val adapter = AppBaseRecyclerViewAdapter(
             this,
             arrayDomainSuggestions,
-            itemClickListener = this@SearchDomainActivity
+            itemClickListener = this@SearchDomainFragment
         )
         binding?.rvSimilarDomains?.adapter = adapter
         binding?.rvSimilarDomains?.layoutManager = LinearLayoutManager(this)
-    }
+    }*/
 
     private fun confirmBottomSheet() {
-        val bSheet = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
-        val sheetBinding = DataBindingUtil.inflate<BsheetConfirmDomainSearchBinding>(
-            layoutInflater,
-            R.layout.bsheet_confirm_domain_search,
-            null,
-            false
-        )
+        val bSheet = BottomSheetDialog(baseActivity, R.style.BottomSheetDialogTheme)
+        val sheetBinding = DataBindingUtil.inflate<BsheetConfirmDomainSearchBinding>(layoutInflater, R.layout.bsheet_confirm_domain_search, null, false)
         bSheet.setContentView(sheetBinding.root)
         bSheet.setCancelable(false)
         val enteredDomainName = binding?.edSearchBox?.text.toString()
 
         sheetBinding.tvWbAddress.text = enteredDomainName
-        sheetBinding.customTextView4.text = Html.fromHtml(
+        sheetBinding.customTextView4.text = fromHtml(
             "${getString(R.string.domain_confirm_msg_1)} " +
-                    "<u>${session.getDomainName(true)}</u>. " +
+                    "<u>${sessionLocal.getDomainName(true)}</u>. " +
                     "${getString(R.string.domain_confirm_msg_2)}"
         )
 
         sheetBinding.btnConfirm.setOnClickListener {
             WebEngageController.trackEvent(DOMAIN_SEARCHED_SELECTED_DOMAIN_CLICK, CLICK, NO_EVENT_VALUE)
             startFragmentDomainBookingActivity(
-                activity = this,
+                activity = baseActivity,
                 type = com.appservice.constant.FragmentType.ACTIVE_NEW_DOMAIN_FRAGMENT,
                 bundle = Bundle(),
                 clearTop = false
