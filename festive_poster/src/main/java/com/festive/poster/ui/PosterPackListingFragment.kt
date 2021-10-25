@@ -137,7 +137,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
           dataList?.forEach { it.isPurchased=true
           it.posterList?.forEach { it.isPurchased=true }}
 
-          rearrangeList()
+         // rearrangeList()
           adapter = AppBaseRecyclerViewAdapter(baseActivity, dataList!!, this)
           binding?.rvPosters?.adapter = adapter
           binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
@@ -161,6 +161,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
               "shower her choicest wishes over you and remove all evil obstacles in your life. Happy Dussehra!"
       "NAVRATRI2021" -> "Wishing you and your family a very Happy Navratri. --" +
               " May the nine days of Navratri light up your lives.\n"
+      "DIWALI2021" -> "Hoping this Diwali brings health, wealth, and happiness to you & your family. Happy Diwali.\n"
       else -> ""
     }
   }

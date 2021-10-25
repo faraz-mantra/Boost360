@@ -162,6 +162,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     getPremiumBanner()
     getChannelAccessToken()
     setFirebaseRemoteConfig()
+    displayFestiveButtonView()
   }
 
   private fun setFirebaseRemoteConfig() {
