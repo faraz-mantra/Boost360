@@ -48,7 +48,7 @@
     <item name="android:textCursorDrawable">@drawable/cursor_drawable</item>
     <item name="android:background">@drawable/shape_grey_stroke_rect_bkg_gray</item>
     <item name="android:inputType">textCapWords</item>
-    <item name="android:padding">@dimen/size_12</item>
+    <item name="android:padding">@dimen/size_11</item>
     <item name="android:drawableEnd">@drawable/ic_edit_business</item>
     <item name="android:textColor">@color/warm_grey_10</item>
     <item name="android:textColorHint">@color/primary_grey</item>

@@ -147,7 +147,7 @@
             android:layout_height="@dimen/size_200"
             app:buffered_color="@color/gray_light_3"
             app:fastforward_increment="10000"
-            app:played_color="@color/red_F40000"
+            app:played_color="@color/red_E39595"
             app:player_layout_id="@layout/exo_player_ui"
             app:resize_mode="fill"
             app:show_buffering="always"
@@ -159,7 +159,7 @@
           <!--                        android:layout_gravity="center"-->
           <!--                        app:auto_show="true"-->
           <!--                        app:buffered_color="@color/gray_light_3"-->
-          <!--                        app:played_color="@color/red_F40000"-->
+          <!--                        app:played_color="@color/red_E39595"-->
           <!--                        app:show_buffering="always"-->
           <!--                        app:use_artwork="true"-->
           <!--                        app:fastforward_increment="10000"-->
