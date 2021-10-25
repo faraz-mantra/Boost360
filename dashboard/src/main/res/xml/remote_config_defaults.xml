@@ -3,7 +3,7 @@
   tools:ignore="MissingDefaultResource">
   <entry>
     <key>festive_poster_name</key>
-    <value>Fetching config…</value>
+    <value>Share Festival Poster</value>
   </entry>
   <entry>
     <key>dashboard_festive_poster_button_visible</key>

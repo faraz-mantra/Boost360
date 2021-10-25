@@ -86,9 +86,14 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
   private fun setUserDetails() {
     binding?.etName?.setText(session?.userProfileName ?: session?.fpTag)
     binding?.etWhatsapp?.setText(session?.userPrimaryMobile ?: session?.fPPrimaryContactNumber)
-    binding?.etWebsite?.setText("www.${session?.getDomainName(true)}")
+    binding?.etWebsite?.setText(getDomainName())
     binding?.etEmail?.setText(session?.userProfileEmail ?: session?.fPEmail)
     binding?.etDesc?.setText(sharedViewModel?.selectedPosterPack?.tagsModel?.description)
+  }
+
+  private fun getDomainName(): String? {
+    return if(session?.getDomainName(true)?.startsWith("www.") == true) session?.getDomainName(true)
+    else "www.${session?.getDomainName(true)}"
   }
 
   override fun onClick(v: View) {
