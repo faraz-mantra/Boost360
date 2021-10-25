@@ -15,7 +15,7 @@
       android:clipToPadding="false"
       android:paddingBottom="@dimen/size_14"
       app:layout_constraintTop_toTopOf="parent"
-      tools:listitem="@layout/list_item_purchased_poster" />
+      tools:listitem="@layout/list_item_poster_share" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
