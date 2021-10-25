@@ -21,7 +21,9 @@ import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.toArrayList
@@ -60,11 +62,11 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
     session = UserSessionManager(requireActivity())
     sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
     setObserver()
-    getTemplateViewConfig()
+
   }
 
   private fun setObserver() {
-    sharedViewModel?.keyValueSaved?.observe(viewLifecycleOwner,{
+    sharedViewModel?.keyValueSaved?.observeOnce(viewLifecycleOwner,{
         getTemplateViewConfig()
     })
    /* sharedViewModel?.customizationDetails?.observe(viewLifecycleOwner, {
@@ -87,7 +89,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
 
 
   private fun getTemplateViewConfig() {
-    showProgress()
+    showShimmerAnimation()
     viewModel?.getTemplateConfig(session?.fPID, session?.fpTag)
       ?.observeOnce(viewLifecycleOwner, {
         Log.i(TAG, "template config: ${Gson().toJson(it)}")
@@ -134,8 +136,6 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
           Log.i(TAG, "festive price: ${feature_festive?.price}")
         }
 
-          dataList?.forEach { it.isPurchased=true
-          it.posterList?.forEach { it.isPurchased=true }}
 
          // rearrangeList()
           adapter = AppBaseRecyclerViewAdapter(baseActivity, dataList!!, this)
@@ -143,7 +143,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
           binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
 
 
-        hideProgress()
+        hideShimmerAnimation()
       }
     })
   }
@@ -215,5 +215,26 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
         CustomizePosterSheet.newInstance(parentItem.tagsModel.tag, parentItem.isPurchased).show(requireActivity().supportFragmentManager, CustomizePosterSheet::class.java.name)
       }
     }
+  }
+
+  fun showShimmerAnimation(){
+    binding?.shimmerLayout?.visible()
+    binding?.rvPosters?.gone()
+  }
+
+  fun hideShimmerAnimation(){
+    binding?.shimmerLayout?.gone()
+    binding?.rvPosters?.visible()
+  }
+
+  override fun onResume() {
+    super.onResume()
+    binding?.shimmerLayout?.startShimmer()
+
+  }
+
+  override fun onPause() {
+    super.onPause()
+    binding?.shimmerLayout?.stopShimmer()
   }
 }

@@ -25,7 +25,9 @@ import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.base.BaseActivity
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.pref.UserSessionManager
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.FESTIVAL_POSTER_PURCHASED_GALLERY
@@ -124,7 +126,7 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
   }
 
   private fun setupList() {
-    showProgress()
+    showShimmerAnimation()
     viewModel?.getTemplates(
       session?.fPID,
       session?.fpTag,
@@ -143,7 +145,7 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
           binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
           adapter?.notifyDataSetChanged()
         }
-        hideProgress()
+        hideShimmerAnimation()
     })
 
 
@@ -220,5 +222,25 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
       sheet.dismiss()
     }
     sheet.show()
+  }
+
+  fun showShimmerAnimation(){
+    binding?.shimmerLayout?.visible()
+    binding?.rvPosters?.gone()
+  }
+
+  fun hideShimmerAnimation(){
+    binding?.shimmerLayout?.gone()
+    binding?.rvPosters?.visible()
+  }
+  override fun onResume() {
+    super.onResume()
+    binding?.shimmerLayout?.startShimmer()
+
+  }
+
+  override fun onPause() {
+    super.onPause()
+    binding?.shimmerLayout?.stopShimmer()
   }
 }

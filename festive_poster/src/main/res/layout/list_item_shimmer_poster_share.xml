@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <com.framework.views.customViews.CustomCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/size_16"
+    android:layout_marginTop="@dimen/size_16"
+    app:cardCornerRadius="@dimen/size_20"
+    app:cardElevation="0dp">
+
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <com.framework.views.customViews.CustomCardView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_gravity="center"
+          android:layout_margin="@dimen/size_16"
+          app:cardCornerRadius="@dimen/size_20"
+          app:cardElevation="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+          <com.festive.poster.customviews.CustomSvgImageView
+              android:id="@+id/iv_svg_purchased"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/shimmerGrey"
+              android:adjustViewBounds="true"
+              android:minHeight="@dimen/size_430"
+              android:scaleType="fitXY" />
+
+
+
+        </RelativeLayout>
+
+      </com.framework.views.customViews.CustomCardView>
+
+      <View
+          android:background="@color/shimmerGrey"
+        android:id="@+id/tv_greeting_msg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_50"
+        android:layout_marginHorizontal="@dimen/size_14"
+        android:fontFamily="@font/regular"
+        android:padding="@dimen/size_8"
+        android:textSize="@dimen/body_1" />
+
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_14"
+        android:layout_marginTop="@dimen/size_16"
+        android:layout_marginBottom="@dimen/size_16"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:orientation="vertical">
+
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/iv_whatsapp"
+            android:layout_width="@dimen/size_50"
+            android:layout_height="@dimen/size_50"
+            android:background="@color/shimmerGrey"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:orientation="vertical">
+
+          <com.framework.views.customViews.CustomImageView
+              android:layout_width="@dimen/size_50"
+              android:layout_height="@dimen/size_50"
+              android:background="@color/shimmerGrey"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:orientation="vertical">
+
+
+
+          <com.framework.views.customViews.CustomImageView
+              android:layout_width="@dimen/size_50"
+              android:layout_height="@dimen/size_50"
+              android:background="@color/shimmerGrey"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:id="@+id/iv_download"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:orientation="vertical">
+
+
+
+          <com.framework.views.customViews.CustomImageView
+              android:layout_width="@dimen/size_50"
+              android:layout_height="@dimen/size_50"
+              android:background="@color/shimmerGrey"/>
+
+
+
+        </LinearLayout>
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+
+  </com.framework.views.customViews.CustomCardView>
+
+</layout>
+
