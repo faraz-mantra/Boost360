@@ -48,12 +48,33 @@ class FestivePosterViewModel: BaseViewModel() {
 
     fun saveKeyValue(floatingPointId: String?,fpTag: String?,templateIds:List<String>,map:HashMap<String,String?>):LiveData<BaseResponse>{
 
+        val lData = MutableLiveData<BaseResponse>()
         val observableList = ArrayList<Observable<BaseResponse>>()
         templateIds.forEach {
             observableList.add(NowFloatsRepository.saveKeyValue(floatingPointId,fpTag,it,map))
         }
-        return Observable.merge(observableList)
-            .toLiveData()
+        Observable.merge(observableList)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object :Observer<BaseResponse>{
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onNext(t: BaseResponse) {
+                    lData.value = t
+                }
+
+                override fun onError(e: Throwable) {
+                }
+
+                override fun onComplete() {
+
+                }
+
+            })
+
+        return lData
     }
     fun prepareTemplatePackList(floatingPointId: String?,floatingPointTag: String?,tags: List<PosterPackTagModel>?){
         val list = ArrayList<PosterPackModel>()

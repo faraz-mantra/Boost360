@@ -134,7 +134,10 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
         response?.let {
           dataList = response.Result.templates.toArrayList()
           dataList?.forEach { posterModel -> posterModel.isPurchased = true
-          posterModel.greeting_message = sharedViewModel?.greetingMessage}
+          posterModel.greeting_message = sharedViewModel?.greetingMessage
+            posterModel.shareLayout=true
+
+          }
           adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>, dataList!!, this)
           binding?.rvPosters?.adapter = adapter
           binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())

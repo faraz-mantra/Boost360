@@ -59,11 +59,14 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
     Log.i(TAG, "onCreateView: ")
     session = UserSessionManager(requireActivity())
     sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
-//    setObserver()
+    setObserver()
     getTemplateViewConfig()
   }
 
   private fun setObserver() {
+    sharedViewModel?.keyValueSaved?.observe(viewLifecycleOwner,{
+        getTemplateViewConfig()
+    })
    /* sharedViewModel?.customizationDetails?.observe(viewLifecycleOwner, {
       *//*val posterPack = dataList?.find { posterPackModel -> posterPackModel.tagsModel.Tag==it.tag }
        Log.i(TAG, "poster pack: ${Gson().toJson(posterPack?.tagsModel)}")
@@ -130,6 +133,9 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
           pack.price = feature_festive?.price ?: 0.0
           Log.i(TAG, "festive price: ${feature_festive?.price}")
         }
+
+          dataList?.forEach { it.isPurchased=true
+          it.posterList?.forEach { it.isPurchased=true }}
 
           rearrangeList()
           adapter = AppBaseRecyclerViewAdapter(baseActivity, dataList!!, this)

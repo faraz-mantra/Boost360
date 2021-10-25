@@ -2,7 +2,7 @@ package com.festive.poster.recyclerView.viewholders
 
 
 import com.festive.poster.constant.RecyclerViewActionType
-import com.festive.poster.databinding.ListItemPurchasedPosterBinding
+import com.festive.poster.databinding.ListItemPosterShareBinding
 import com.festive.poster.models.PosterModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
@@ -12,8 +12,8 @@ import com.framework.constants.PackageNames
 import com.framework.webengageconstant.*
 
 
-class PosterPurchasedViewHolder(binding: ListItemPurchasedPosterBinding):
-    AppBaseRecyclerViewHolder<ListItemPurchasedPosterBinding>(binding) {
+class PosterShareViewHolder(binding: ListItemPosterShareBinding):
+    AppBaseRecyclerViewHolder<ListItemPosterShareBinding>(binding) {
 
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {

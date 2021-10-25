@@ -161,7 +161,7 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
     "user_image" to imgUrl)
 
     val templateIds = ArrayList<String>()
-    if (isAlreadyPurchased){
+    if (false){
       templateIds.add(sharedViewModel?.selectedPoster?.id!!)
     }else{
       sharedViewModel?.selectedPosterPack?.posterList?.forEach {
@@ -199,7 +199,7 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
 
   private fun navigateToNextFragment() {
     sharedViewModel?.keyValueSaved?.value=null
-    if (creatorName==PosterListFragment::class.java.name){
+    if (isAlreadyPurchased||creatorName==PosterListFragment::class.java.name){
       dismiss()
     }else{
       addFragmentReplace(R.id.container, PosterListFragment.newInstance(packTag!!), true)
