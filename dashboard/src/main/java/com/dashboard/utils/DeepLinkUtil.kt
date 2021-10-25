@@ -105,6 +105,7 @@ const val deeplink_enquiries_tab = "enquiries_tab"
 const val deeplink_more_tab = "more_tab"
 const val deeplink_owner_info = "owner_info"
 const val deeplink_festive_poster = "festive_poster"
+const val deeplink_user_merchant_profile = "user_merchant_profile"
 const val visit_to_new_website = "Woohoo! We have a new website. Visit it at"
 const val tag_for_partners = ".nowfloats.com"
 
@@ -272,8 +273,10 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.initiateAddonMarketplace(session, false, "expertContact", "")
         } else if (url.contains(deeplink_owner_info)) {
           baseActivity.startOwnersInfo(session)
-        }else if (url.contains(deeplink_festive_poster)){
+        } else if (url.contains(deeplink_festive_poster)) {
           baseActivity.startFestivePosterActivity(true)
+        } else if (url.contains(deeplink_user_merchant_profile)) {
+          baseActivity.startUserProfileDetail(session)
         }
       }
     } catch (e: Exception) {
@@ -302,10 +305,12 @@ fun AppCompatActivity.upgradeApp() {
   try {
     val appPackageName: String = this.packageName
     try {
-      this.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName"))
+      this.startActivity(
+        Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName"))
       )
     } catch (anfe: ActivityNotFoundException) {
-      this.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName"))
+      this.startActivity(
+        Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName"))
       )
     }
   } catch (e: Exception) {

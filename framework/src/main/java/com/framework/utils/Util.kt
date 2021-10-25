@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.ColorFilter
 import android.net.Uri
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Environment
 import android.os.SystemClock
@@ -17,16 +18,20 @@ import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.util.Log
+import android.text.style.*
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.FontRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.content.res.ResourcesCompat
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.SimpleColorFilter
@@ -86,6 +91,31 @@ fun fromHtml(html: String?): Spanned? {
     Html.FROM_HTML_MODE_LEGACY
   )
   else Html.fromHtml(html)
+}
+
+fun AppCompatTextView.setIconifiedText(text: String, @DrawableRes iconResId: Int? = null, textColor: String? = null, @ColorRes color: Int? = null, textFont: String? = null, @FontRes font: Int? = null) {
+  SpannableStringBuilder("$text#").apply {
+    if (textColor.isNullOrEmpty().not() && color != null) {
+      val colorRes = ContextCompat.getColor(this@setIconifiedText.context, color)
+      val p1 = Pattern.compile(textColor, Pattern.CASE_INSENSITIVE)
+      val m1 = p1.matcher(text)
+      while (m1.find()) {
+        this.setSpan(ForegroundColorSpan(colorRes), m1.start(), m1.end(), Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+      }
+    }
+    if (textFont.isNullOrEmpty().not() && font != null) {
+      val style = ResourcesCompat.getFont(this@setIconifiedText.context, font)?.style ?: Typeface.BOLD
+      val p2 = Pattern.compile(textFont, Pattern.LITERAL)
+      val m2 = p2.matcher(text)
+      while (m2.find()) {
+        this.setSpan(StyleSpan(style), m2.start(), m2.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+      }
+    }
+    if (iconResId != null) {
+      val align = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) DynamicDrawableSpan.ALIGN_CENTER else DynamicDrawableSpan.ALIGN_BASELINE
+      setSpan(ImageSpan(context, iconResId, align), text.length, text.length + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
+  }.let { setText(it) }
 }
 
 fun getNumberFormat(value: String): String {
