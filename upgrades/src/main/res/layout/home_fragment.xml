@@ -370,17 +370,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/bold"
-                    tools:text="6 items waiting in cart"
                     android:textColor="#333333"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:text="6 items waiting in cart" />
 
                   <TextView
                     android:id="@+id/mp_items_name_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/mp_no_of_cart_items_tv"
+                    android:ellipsize="end"
                     android:fontFamily="@font/regular"
                     android:lines="2"
+                    android:scrollHorizontally="true"
                     android:textAlignment="viewStart"
                     android:textSize="14sp"
                     tools:text="unlimited content, IVR, call\ntracker and staff profiles +1 more" />
@@ -441,7 +443,10 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_alignParentEnd="true"
-              android:layout_margin="10dp"
+              android:layout_marginStart="10dp"
+              android:layout_marginTop="10dp"
+              android:layout_marginEnd="10dp"
+              android:layout_marginBottom="10dp"
               android:src="@drawable/ic_review_cart_close" />
           </RelativeLayout>
 
@@ -523,9 +528,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
           <LinearLayout
-            android:id="@+id/package_compare_layout"
+            android:id="@+id/package_compare_old_layout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:visibility="gone"
             android:layout_marginTop="2dp"
             android:layout_marginEnd="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -580,6 +586,29 @@
             app:progressMode="false"
             app:selectedDotColor="@color/app_yellow_1" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+          android:id="@+id/package_compare_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/package_layout"
+          android:layout_marginStart="10dp"
+          android:layout_marginTop="10dp"
+          android:layout_marginEnd="10dp"
+          android:layout_marginBottom="10dp"
+          android:background="@drawable/orange_button_click_effect"
+          android:gravity="center"
+          android:paddingStart="@dimen/_20sdp"
+          android:paddingTop="@dimen/_10sdp"
+          android:paddingEnd="@dimen/_20sdp"
+          android:paddingBottom="@dimen/_10sdp"
+          android:textColor="@color/white"
+          android:visibility="gone"
+          android:fontFamily="@font/open_sans_bold"
+          android:text="Compare packs"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"/>
       </RelativeLayout>
 
       <RelativeLayout
@@ -661,6 +690,18 @@
             android:textFontWeight="600"
             android:textSize="@dimen/txt_16sp" />
         </LinearLayout>
+
+        <TextView
+          android:id="@+id/recommended_features_additional_tv"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/recommended_features_section"
+          android:layout_marginStart="19dp"
+          android:fontFamily="@font/bold"
+          tools:text="Manufacturing"
+          android:textColor="#FFB900"
+          android:textFontWeight="600"
+          android:textSize="16sp" />
       </RelativeLayout>
 
       <RelativeLayout

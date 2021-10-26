@@ -1,34 +1,35 @@
 package com.nowfloats.BusinessProfile.UI.UI;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_UPLOAD_FAVICON_IMAGE;
+import static com.framework.webengageconstant.EventLabelKt.MANAGE_CONTENT;
+import static com.framework.webengageconstant.EventNameKt.FAVICON_IMAGE_ADDED;
+import static com.framework.webengageconstant.EventNameKt.UPLOAD_FAVICON_IMAGE;
+import static com.framework.webengageconstant.EventValueKt.NULL;
+
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-
-import androidx.databinding.DataBindingUtil;
-
 import android.graphics.Bitmap;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
+
+import com.framework.analytics.SentryController;
 import com.nowfloats.BusinessProfile.UI.API.UploadFaviconImage;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.RoundCorners_image;
@@ -46,12 +47,6 @@ import com.thinksity.R;
 import com.thinksity.databinding.ActivityFaviconImageBinding;
 
 import java.util.UUID;
-
-import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_UPLOAD_FAVICON_IMAGE;
-import static com.framework.webengageconstant.EventLabelKt.MANAGE_CONTENT;
-import static com.framework.webengageconstant.EventNameKt.FAVICON_IMAGE_ADDED;
-import static com.framework.webengageconstant.EventNameKt.UPLOAD_FAVICON_IMAGE;
-import static com.framework.webengageconstant.EventValueKt.NULL;
 
 public class FaviconImageActivity extends AppCompatActivity implements UploadFaviconImage.OnImageUpload {
     private static final int ACTION_REQUEST_IMAGE_EDIT = 3;
@@ -102,6 +97,7 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
                 Picasso.get().load(R.drawable.logo_default_image).into(logoimageView);
             }
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
             System.gc();
         }
@@ -222,9 +218,11 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
             // we will handle the returned data in onActivityResult
             startActivityForResult(captureIntent, CAMERA_PHOTO);
         } catch (ActivityNotFoundException anfe) {
+            SentryController.INSTANCE.captureException(anfe);
             String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(FaviconImageActivity.this, errorMessage);
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
     }
@@ -241,6 +239,7 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
 
             startActivityForResult(i, GALLERY_PHOTO);
         } catch (ActivityNotFoundException anfe) {
+            SentryController.INSTANCE.captureException(anfe);
             String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(FaviconImageActivity.this, errorMessage);
         }
@@ -257,6 +256,7 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
                     path = imageUrl;
                     path = Util.saveBitmap(path, FaviconImageActivity.this, "ImageFloat" + System.currentTimeMillis());
                 } catch (Exception e) {
+                    SentryController.INSTANCE.captureException(e);
                     e.printStackTrace();
                 } catch (OutOfMemoryError E) {
                     E.printStackTrace();
@@ -286,6 +286,7 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
                 }
             }
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
     }
@@ -335,6 +336,7 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
                     logoimageView.setImageBitmap(bmp);
                 }
             } catch (Exception e) {
+                SentryController.INSTANCE.captureException(e);
                 e.printStackTrace();
             }
         } else {

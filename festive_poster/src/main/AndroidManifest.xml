@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.festive.poster">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <application
+        android:name=".FestivePosterApplication"
+        >
+        <activity
+            android:theme="@style/PosterTheme"
+            android:name=".ui.FestivePosterContainerActivity"/>
+    </application>
+</manifest>

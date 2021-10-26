@@ -8,6 +8,7 @@ import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import com.framework.analytics.SentryController
 import com.framework.base.BaseDialogFragment
 import com.framework.models.BaseViewModel
 import com.framework.utils.ConversionUtils
@@ -66,6 +67,7 @@ class DigitalChannelWhyDialog :
         baseActivity.startActivity(intent)
       } else requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), 1)
     } catch (e: ActivityNotFoundException) {
+      SentryController.captureException(e)
       showLongToast(getString(R.string.error_in_your_phone_call))
     }
   }

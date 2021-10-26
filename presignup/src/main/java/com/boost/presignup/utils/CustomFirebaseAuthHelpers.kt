@@ -11,8 +11,6 @@ import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
-import com.framework.pref.UserSessionManager
-import com.framework.pref.getAccessTokenAuth
 import com.framework.rest.ServiceInterceptor
 import com.framework.webengageconstant.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn

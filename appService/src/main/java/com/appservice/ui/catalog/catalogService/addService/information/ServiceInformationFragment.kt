@@ -2,8 +2,6 @@ package com.appservice.ui.catalog.catalogService.addService.information
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -16,7 +14,7 @@ import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentServiceInformationBinding
 import com.appservice.model.FileModel
 import com.appservice.model.KeySpecification
-import com.appservice.model.serviceProduct.BuyOnlineLink
+import com.appservice.model.serviceProduct.UniquePaymentUrlN
 import com.appservice.model.serviceTiming.BusinessHourTiming
 import com.appservice.model.serviceTiming.ServiceTime
 import com.appservice.model.serviceTiming.ServiceTiming
@@ -217,10 +215,6 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     }
   }
 
-  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    super.onCreateOptionsMenu(menu, inflater)
-  }
-
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
@@ -318,7 +312,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         product?.keySpecification?.value = valSpecification
         product?.maxCodOrders = ordersQuantity
         product?.otherSpecification = otherSpec
-        product?.BuyOnlineLink = BuyOnlineLink(description = websiteName, url = websiteValue)
+        product?.BuyOnlineLink = UniquePaymentUrlN(description = websiteName, url = websiteValue)
         product?.GstSlab = 18//gst.toIntOrNull() ?: 0;
         val output = Intent()
         output.putExtra(IntentConstant.PRODUCT_DATA.name, product)
@@ -395,7 +389,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
           val dataImage = secondaryDataImage?.firstOrNull { it.ActualImage == data?.pathUrl }
             ?: return
           showProgress(resources.getString(R.string.removing_image))
-          val request = DeleteSecondaryImageRequest(product?.productId, dataImage.ImageId);
+          val request = DeleteSecondaryImageRequest(product?.productId, dataImage.ImageId)
           viewModel?.deleteSecondaryImage(request)?.observeOnce(viewLifecycleOwner, Observer {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               secondaryDataImage?.remove(dataImage)
@@ -416,7 +410,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
           val dataImage = secondaryDataImage?.firstOrNull { it.ActualImage == data?.pathUrl }
             ?: return
           showProgress(resources.getString(R.string.removing_image))
-          val request = DeleteSecondaryImageRequest(product?.productId, dataImage.ImageId);
+          val request = DeleteSecondaryImageRequest(product?.productId, dataImage.ImageId)
           viewModel?.deleteSecondaryImage(request)?.observeOnce(viewLifecycleOwner, {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               secondaryDataImage?.remove(dataImage)
@@ -476,6 +470,6 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
 }
 
-data class SpinnerImageModel(var state: Pair<String, Boolean>, var resId: Int) {
+data class SpinnerImageModel(var state: Pair<String, Boolean>, var resId: Int, var disable: Boolean = false) {
 
 }

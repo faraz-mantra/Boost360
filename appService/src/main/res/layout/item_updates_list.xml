@@ -25,7 +25,7 @@
         android:id="@+id/image_card"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_160"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         tools:srcCompat="@drawable/placeholder_image_n" />
 
       <com.framework.views.customViews.CustomTextView

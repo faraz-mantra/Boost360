@@ -25,16 +25,14 @@ import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.dashboard.DashboardFragment
 import com.dashboard.controller.ui.dialog.WelcomeHomeDialog
 import com.dashboard.databinding.ActivityDashboardBinding
-import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
 import com.dashboard.model.live.drawerData.DrawerHomeData
 import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
-import com.dashboard.model.live.welcomeData.WelcomeDashboardResponse
-import com.dashboard.model.live.welcomeData.WelcomeData
-import com.dashboard.model.live.welcomeData.getIsShowWelcome
+import com.dashboard.model.live.welcomeData.*
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
+import com.dashboard.utils.DashboardTabs.Companion.fromUrl
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.analytics.SentryController
 import com.framework.extensions.gone
@@ -42,8 +40,13 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
-import com.framework.models.firestore.FirestoreManager
+import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.models.caplimit_feature.saveCapData
 import com.framework.models.firestore.FirestoreManager.initData
+import com.framework.models.firestore.badges.BadgesFirestoreManager
+import com.framework.models.firestore.badges.BadgesFirestoreManager.getBadgesData
+import com.framework.models.firestore.badges.BadgesFirestoreManager.initDataBadges
+import com.framework.models.firestore.badges.BadgesModel
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.KEY_FP_CART_COUNT
 import com.framework.utils.*
@@ -65,6 +68,8 @@ import zendesk.core.Zendesk
 import zendesk.support.Support
 import java.io.File
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.concurrent.schedule
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
@@ -89,7 +94,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       return navHostFragment?.childFragmentManager?.fragments
     }
 
-  private var welcomeData: ArrayList<WelcomeData>? = null
+  private val welcomeData: List<WelcomeData>?
+    get() {
+      return getWelcomeList()
+    }
 
   override fun getLayout(): Int {
     return R.layout.activity_dashboard
@@ -106,15 +114,17 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     navControllerListener()
     binding?.navView?.setOnItemSelectedListener(this)
     toolbarPropertySet(0)
-    setDrawerHome()
-    val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
-    binding?.drawerView?.txtVersion?.text = "Version $versionName"
-    setOnClickListener(binding?.drawerView?.btnSiteMeter, binding?.drawerView?.imgBusinessLogo, binding?.drawerView?.backgroundImage, binding?.drawerView?.txtDomainName, binding?.viewCartCount)
-    intentDataCheckAndDeepLink(intent)
+//    setDrawerHome()
+//    val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
+//    binding?.drawerView?.txtVersion?.text = "Version $versionName"
+//    binding?.drawerView?.imgBusinessLogo, binding?.drawerView?.backgroundImage, binding?.drawerView?.txtDomainName
+    setOnClickListener(binding?.drawerView?.btnSiteMeter, binding?.viewCartCount)
     getWelcomeData()
+    intentDataCheckAndDeepLink(intent)
     session?.initializeWebEngageLogin()
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
+    session?.let { initDataBadges(it.fpTag ?: "", it.fPID ?: "", clientId) }
     registerFirebaseToken()
     reloadCapLimitData()
   }
@@ -123,8 +133,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     viewModel.getCapLimitFeatureDetails(session?.fPID ?: "", clientId).observeOnce(this, {
       if (it.isSuccess()) {
         val capLimitList = it.arrayResponse as? Array<CapLimitFeatureResponseItem>
-        val item = capLimitList?.firstOrNull { it1 -> (it1.featureKey == CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name && it1.properties.isNullOrEmpty().not()) } ?: CapLimitFeatureResponseItem()
-        item.saveCapData()
+        capLimitList?.toCollection(ArrayList())?.saveCapData()
       }
     })
   }
@@ -183,19 +192,21 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     if (intent != null && intent.data != null) {
       val action = intent.action
       val data = intent.dataString
-      val uri = intent.data
-      Log.d("Data: ", "$data  $action $uri")
+      val url = intent.data
+      mDeepLinkUrl = url.toString()
+      Log.d("Data: ", "$data  $action $mDeepLinkUrl")
       if (session?.isLoginCheck == true) {
-        if (uri != null && uri.toString().contains("onelink", true)) {
+        if (mDeepLinkUrl != null && mDeepLinkUrl.toString().contains("onelink", true)) {
           isAppFlyerLink()
         } else {
-          //Default Deep Link..
-          val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(uri)
-          if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
-            val viewType = deepHashMap[DynamicLinkParams.viewType]
-            val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
-            if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
-          } else deepLinkUtil?.deepLinkPage(data?.substring(data.lastIndexOf("/") + 1) ?: "", "", false)
+          if (!checkIsHomeDeepLink()) {
+            val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(url)
+            if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
+              val viewType = deepHashMap[DynamicLinkParams.viewType]
+              val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
+              if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
+            } else deepLinkUtil?.deepLinkPage(data?.substring(data.lastIndexOf("/") + 1) ?: "", "", false)
+          }
         }
       } else {
         this.startPreSignUp(session, true)
@@ -205,14 +216,31 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun isAppFlyerLink() {
-    if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
-      val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
-      val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
-      if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType, buyItemKey, false)
+    if (!checkIsHomeDeepLink()) {
+      if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
+        val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
+        val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
+        if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType, buyItemKey, false)
+      } else {
+        if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", "", false)
+      }
       AppsFlyerUtils.sAttributionData = mapOf()
-    } else {
-      if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", "", false)
     }
+  }
+
+  private fun checkIsHomeDeepLink(): Boolean {
+    val value = fromUrl(mDeepLinkUrl)
+    return if (value != null) {
+      if (binding?.navView?.getActiveItem() != value.position) {
+        Timer().schedule(50) {
+          binding?.navView?.post {
+            binding?.navView?.setActiveItem(value.position)
+            onItemSelect(value.position)
+          }
+        }
+      }
+      true
+    } else false
   }
 
   override fun onResume() {
@@ -244,24 +272,20 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     val cartCount = session?.getIntDetails(KEY_FP_CART_COUNT) ?: 0
     if ((getFragment(DashboardFragment::class.java) != null) && cartCount > 0) binding?.viewCartCount?.visible() else binding?.viewCartCount?.gone()
     binding?.cartCountTxt?.text = "$cartCount ${if (cartCount > 1) "items" else "item"} waiting in cart"
-    binding?.drawerView?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
-    binding?.drawerView?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(false)}</u>")
-    setPercentageData(FirestoreManager.getDrScoreData()?.getDrsTotal() ?: 0)
+//    binding?.drawerView?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
+//    binding?.drawerView?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(false)}</u>")
+//    setPercentageData(FirestoreManager.getDrScoreData()?.getDrsTotal() ?: 0)
     var imageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
     if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) {
       imageUri = BASE_IMAGE_URL + imageUri
     }
-    binding?.drawerView?.imgBusinessLogo?.let {
-      glideLoad(it, imageUri ?: "", R.drawable.business_edit_profile_icon_d)
-    }
+//    binding?.drawerView?.imgBusinessLogo?.let { glideLoad(it, imageUri ?: "", R.drawable.business_edit_profile_icon_d) }
     var bgImageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)
     if (bgImageUri.isNullOrEmpty().not() && bgImageUri!!.contains("http").not()) {
       bgImageUri = BASE_IMAGE_URL + bgImageUri
     }
     binding?.drawerView?.bgImage?.let {
-      glideLoad(
-        it, bgImageUri ?: "", R.drawable.general_services_background_img_d
-      )
+      glideLoad(it, bgImageUri ?: "", R.drawable.general_services_background_img_d)
     }
   }
 
@@ -277,11 +301,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       val response = it as? DrawerHomeDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         binding?.drawerView?.rvLeftDrawer?.apply {
-          adapterDrawer = AppBaseRecyclerViewAdapter(
-            this@DashboardActivity,
-            checkLockData(response.data!!),
-            this@DashboardActivity
-          )
+          adapterDrawer = AppBaseRecyclerViewAdapter(this@DashboardActivity, checkLockData(response.data!!), this@DashboardActivity)
           adapter = adapterDrawer
         }
       } else showShortToast(this.getString(R.string.navigation_data_error))
@@ -383,8 +403,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun toolbarPropertySet(pos: Int) {
     cartDataLoad(pos)
     when (pos) {
-      1 -> showToolbar(getString(R.string.my_website))
-      2 -> showToolbar(getString(R.string.my_enquiry))
+      1 -> showToolbar(getString(R.string.website))
+      2 -> showToolbar(getString(R.string.enquiry))
       4 -> showToolbar(getString(R.string.more))
       else -> {
         changeTheme(R.color.colorPrimary, R.color.colorPrimary)
@@ -398,8 +418,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     getToolbar()?.apply {
       visibility = View.VISIBLE
       supportActionBar?.setDisplayHomeAsUpEnabled(false)
+      setToolbarTitle(title)
     }
-    setToolbarTitle(title)
   }
 
 
@@ -440,13 +460,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK && isSecondaryImage) {
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
-      if (mPaths.isNullOrEmpty().not()) uploadSecondaryImage(mPaths[0])
+//      if (mPaths.isNullOrEmpty().not()) uploadSecondaryImage(mPaths[0])
     } else childFragments?.forEach { fragment ->
-      fragment.onActivityResult(
-        requestCode,
-        resultCode,
-        data
-      )
+      fragment.onActivityResult(requestCode, resultCode, data)
     }
   }
 
@@ -541,22 +557,15 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     val imageFile = File(path)
     isSecondaryImage = false
     showProgress()
-    viewModel.putUploadSecondaryImage(getRequestImageDate(imageFile))
-      .observeOnce(this, androidx.lifecycle.Observer {
-        if (it.isSuccess()) {
-          if (it.stringResponse.isNullOrEmpty().not()) {
-            session?.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, it.stringResponse)
-            binding?.drawerView?.bgImage?.let { it1 ->
-              glideLoad(
-                it1,
-                it.stringResponse ?: "",
-                R.drawable.general_services_background_img_d
-              )
-            }
-          }
-        } else showLongToast(it.message())
-        hideProgress()
-      })
+    viewModel.putUploadSecondaryImage(getRequestImageDate(imageFile)).observeOnce(this, {
+      if (it.isSuccess()) {
+        if (it.stringResponse.isNullOrEmpty().not()) {
+          session?.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, it.stringResponse)
+          binding?.drawerView?.bgImage?.let { it1 -> glideLoad(it1, it.stringResponse ?: "", R.drawable.general_services_background_img_d) }
+        }
+      } else showLongToast(it.message())
+      hideProgress()
+    })
   }
 
   private fun getRequestImageDate(businessImage: File): UploadFileBusinessRequest {
@@ -579,22 +588,60 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       Support.INSTANCE.init(Zendesk.INSTANCE)
       ZopimChat.init("MJwgUJn9SKy2m9ooxsQgJSeTSR5hU3A5")
     } catch (e: Exception) {
+      SentryController.captureException(e)
     }
   }
 
   private fun getWelcomeData() {
     viewModel.getWelcomeDashboardData(this).observeOnce(this, {
       val response = it as? WelcomeDashboardResponse
-      val data = response?.data?.firstOrNull { it1 ->
-        it1.type.equals(
-          session?.fP_AppExperienceCode,
-          ignoreCase = true
-        )
-      }?.actionItem
+      val data = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }?.actionItem
       if (response?.isSuccess() == true && data.isNullOrEmpty().not()) {
-        this.welcomeData = data
+        data?.saveWelcomeList()
       }
     })
+  }
+
+  override fun onStop() {
+    super.onStop()
+    BadgesFirestoreManager.listenerBadges = null
+  }
+
+  override fun onStart() {
+    super.onStart()
+    BadgesFirestoreManager.listenerBadges = {
+      val dataBadges = getBadgesData()
+      setBadgesData(dataBadges)
+    }
+  }
+
+  private fun setBadgesData(dataBadges: ArrayList<BadgesModel>?) {
+    binding?.navView?.post {
+      dataBadges?.forEach {
+        when (it.badgesType) {
+          BadgesModel.BadgesType.HOMEBADGE.name -> {
+            if (it.getMessageN() > 0) binding?.navView?.setBadge(0, it.getMessageText())
+            else binding?.navView?.removeBadge(0)
+          }
+          BadgesModel.BadgesType.WEBSITEBADGE.name -> {
+            if (it.getMessageN() > 0) binding?.navView?.setBadge(1, it.getMessageText())
+            else binding?.navView?.removeBadge(1)
+          }
+          BadgesModel.BadgesType.ENQUIRYBADGE.name -> {
+            if (it.getMessageN() > 0) binding?.navView?.setBadge(2, it.getMessageText())
+            else binding?.navView?.removeBadge(2)
+          }
+          BadgesModel.BadgesType.MARKETPLACEBADGE.name -> {
+            if (it.getMessageN() > 0) binding?.navView?.setBadge(3, it.getMessageText())
+            else binding?.navView?.removeBadge(3)
+          }
+          BadgesModel.BadgesType.MENUBADGE.name -> {
+            if (it.getMessageN() > 0) binding?.navView?.setBadge(4, it.getMessageText())
+            else binding?.navView?.removeBadge(4)
+          }
+        }
+      }
+    }
   }
 }
 

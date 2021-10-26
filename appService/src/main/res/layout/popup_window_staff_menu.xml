@@ -49,7 +49,7 @@
         android:gravity="center"
         android:padding="@dimen/size_16"
         android:text="REMOVE STAFF"
-        android:textColor="@color/red_F40000"
+        android:textColor="@color/red_E39595"
         android:textSize="12sp" />
 
     </LinearLayout>

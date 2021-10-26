@@ -31,6 +31,7 @@ open class AppServiceApplication : BaseApplication() {
       AssuredWithFloatsApiClient.shared.init(EndPoints.ASSURED_WITH_FLOATS_BASE_URL)
       StaffNowFloatsApiClient.shared.init(EndPoints.STAFF_BASE_URL)
       KitWebActionApiClient.shared.init(EndPoints.KIT_WEB_ACTION_WITH_FLOATS_BASE_URL)
+      BoostNowFloatsApiClient.shared.init(EndPoints.BOOST_NOW_FLOATS_BASE)
     }
   }
 }

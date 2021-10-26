@@ -9,18 +9,14 @@ import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import retrofit2.Retrofit
 
-object WebActionBoostKitRepository :
-  AppBaseRepository<WebActionBoostKitDataSource, AppBaseLocalService>() {
+object WebActionBoostKitRepository : AppBaseRepository<WebActionBoostKitDataSource, AppBaseLocalService>() {
 
   override fun getRemoteDataSourceClass(): Class<WebActionBoostKitDataSource> {
     return WebActionBoostKitDataSource::class.java
   }
 
   fun getSelfBrandedKyc(query: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.getSelfBrandedKyc(query),
-      TaskCode.GET_SELF_BRANDED_KYC
-    )
+    return makeRemoteRequest(remoteDataSource.getSelfBrandedKyc(query=query), TaskCode.GET_SELF_BRANDED_KYC)
   }
 
   override fun getLocalDataSourceInstance(): AppBaseLocalService {

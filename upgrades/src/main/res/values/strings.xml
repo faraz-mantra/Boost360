@@ -59,4 +59,6 @@
   <string name="enter_business_name">Enter your Business name</string>
   <string name="enter_email">Enter email address</string>
   <string name="enter_business_address">Enter your business address</string>
+  <string name="gst_business_name">Enter your registered business name</string>
+  <string name="gst_text">Any change made to business name &amp; address info on GST portal takes atleast 15 days to reflect here.</string>
 </resources>
