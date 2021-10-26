@@ -10,7 +10,6 @@ import com.framework.models.BaseViewModel
 class FestivePosterSharedViewModel: BaseViewModel() {
 
     val customizationDetails=MutableLiveData<PosterCustomizationModel>()
-    var greetingMessage:String?=null
     val keyValueSaved=MutableLiveData<Void>(null)
     var selectedPosterPack:PosterPackModel?=null
     var selectedPoster:PosterModel?=null

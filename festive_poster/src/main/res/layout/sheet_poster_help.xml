@@ -51,7 +51,7 @@
         android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:stateListAnimator="@null"
-        android:text="@string/understood"
+        android:text="@string/done"
         android:textSize="@dimen/body_1" />
 
       <com.framework.views.customViews.CustomTextView

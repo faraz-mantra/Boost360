@@ -17,4 +17,6 @@ object EndPoints {
     const val UPLOAD_IMAGE="Templates/v1/UploadImage"
     const val SAVE_KEY_VALUE="Templates/v1/SaveSVGTemplateKeys"
 
+    const val UPDATE_PURCHASE_STATUS="Templates/v1/UpdatePurchaseStatus"
+
 }

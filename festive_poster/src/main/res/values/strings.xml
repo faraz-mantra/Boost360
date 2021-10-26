@@ -34,6 +34,9 @@
     <string name="save">Save</string>
     <string name="view_pack">View pack</string>
     <string name="paying_">Paying ₹%1$s</string>
-    <string name="for_pack_of_posters">for pack of %1$s posters</string>
+    <string name="for_pack_of_posters">for %1$s pack</string>
+    <string name="of_size_posters">of %1$s posters</string>
     <string name="order_confirm_message"><![CDATA[Feel free to edit & share them with all your customers with your custom messages. You can make payment of ₹%1$s after you receive the payment link.]]></string>
+    <string name="poster_pack_footer_desc"><![CDATA[More personalised & sharable greeting posters will be available here as new festival or holiday approach.]]></string>
+    <string name="done">Done</string>
 </resources>
