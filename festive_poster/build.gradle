@@ -41,5 +41,4 @@ dependencies {
 
     api project(path: ':resources')
 
-
 }
