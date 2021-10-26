@@ -53,11 +53,11 @@ class BookDomainSslFragment : AppBaseFragment<FragmentBookADomainSslBinding, Bas
         val adapter = AppBaseRecyclerViewAdapter(baseActivity, arrayDomainSuggestions, itemClickListener = this@BookDomainSslFragment)
         val linearLayoutManager =
             LinearLayoutManager(baseActivity, LinearLayoutManager.VERTICAL, false)
-        val dividerItemDecoration =
+        /*val dividerItemDecoration =
             DividerItemDecoration(baseActivity, linearLayoutManager.orientation)
-        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(baseActivity, R.drawable.adapter_divider_white_3)!!)
+        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(baseActivity, R.drawable.adapter_divider_white_3)!!)*/
         binding?.rvSuggestedDomains?.layoutManager = linearLayoutManager
-        binding?.rvSuggestedDomains?.addItemDecoration(dividerItemDecoration)
+        //binding?.rvSuggestedDomains?.addItemDecoration(dividerItemDecoration)
         binding?.rvSuggestedDomains?.adapter = adapter
     }
 

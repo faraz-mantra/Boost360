@@ -67,10 +67,10 @@ class SearchDomainFragment :
         binding?.edSearchBox?.afterTextChanged {
             binding?.layputEtError?.gone()
             binding?.btnContinue?.gone()
-            if (it == "")
+            /*if (it == "")
                 binding?.tvLearnHowToChooseDomain?.visible()
             else
-                binding?.tvLearnHowToChooseDomain?.gone()
+                binding?.tvLearnHowToChooseDomain?.gone()*/
         }
 
         binding?.edSearchBox?.setOnEditorActionListener(object : TextView.OnEditorActionListener {

@@ -1068,4 +1068,9 @@
     <string name="whats_subdomain">(what’s subdomain?)</string>
     <string name="if_you_dont_have_any_other_domain_click_on_book_a_new_domain">If you don’t have any other domain, click on ‘book a new domain’ and choose a domain you like for your business website.</string>
     <string name="empty_string" />
+    <string name="bought_on">Bought on</string>
+  <string name="validity_till">Validity till</string>
+  <string name="continue_text">Continue</string>
+  <string name="expire_on">Expire on</string>
+  <string name="booked_on">Booked on</string>
 </resources>
