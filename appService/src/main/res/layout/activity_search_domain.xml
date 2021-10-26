@@ -129,6 +129,7 @@
             android:text="@string/learn_how_to_choose_a_great_domain"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_14"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -147,7 +148,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="16dp"
-                android:text="@string/select_amp_continue"
+                android:text="@string/continue_text"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_16" />
         </LinearLayout>

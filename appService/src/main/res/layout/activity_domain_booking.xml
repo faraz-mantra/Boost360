@@ -32,7 +32,7 @@
                 <View
                     android:id="@+id/view4"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_100"
+                    android:layout_height="@dimen/size_90"
                     android:background="@color/black_4a4a4a"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -200,7 +200,6 @@
             android:id="@+id/btn_book_old_domain"
             style="@style/CustomYellowButton"
             android:layout_marginHorizontal="@dimen/size_30"
-            android:layout_marginBottom="@dimen/size_8"
             android:text="@string/add_a_domain_you_own"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/btn_book_new_domain"

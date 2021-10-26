@@ -88,10 +88,11 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
       WebEngageController.trackEvent(CLICKED_ON_BOOK_A_NEW_DOMAIN, CLICK, NO_EVENT_VALUE)
       startFragmentDomainBookingActivity(
         activity = this,
-        type = com.appservice.constant.FragmentType.BOOK_A_DOMAIN_SSL_FRAGMENT,
+        type = com.appservice.constant.FragmentType.SEARCH_DOMAIN_FRAGMENT,
         bundle = Bundle(),
         clearTop = false
       )
+      finish()
     }
 
     binding?.appBar?.customImageView4?.setOnClickListener {
@@ -149,6 +150,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
     val bundle = Bundle()
     bundle.putString(IntentConstant.DOMAIN_NAME.toString(), enteredDomainName)
     startFragmentDomainBookingActivity(activity = this, type = com.appservice.constant.FragmentType.ADDING_EXISTING_DOMAIN_FRAGMENT, bundle = bundle, clearTop = false)
+    finish()
   }
 
   private fun validateData(sheetBinding: BsheetInputOwnDomainBinding): Boolean {
