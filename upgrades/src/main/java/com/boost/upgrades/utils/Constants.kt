@@ -40,10 +40,10 @@ class Constants {
     var COMPARE_CART_COUNT = 0
 
     //razorpay credentials
-//    val RAZORPAY_KEY: String = "rzp_live_o8qdD1DZ3PHBn0"
-//    val RAZORPAY_SECREAT: String = "Gfq8pQyFbu5BOoY5SeT6UuQk"
-//    val RAZORPAY_KEY: String = "rzp_test_OlLpIGwhA7bATX"
-//    val RAZORPAY_SECREAT: String = "wMa4K0UW4dPXD4ZJrkVg64mX"
+//        val RAZORPAY_KEY: String = "rzp_live_NsMLSX2HTaiEC9"
+//        val RAZORPAY_SECREAT: String = "Gfq8pQyFbu5BOoY5SeT6UuQk"
+//        val RAZORPAY_KEY: String = "rzp_test_OlLpIGwhA7bATX"
+//        val RAZORPAY_SECREAT: String = "wMa4K0UW4dPXD4ZJrkVg64mX"
 
 
     // fragments

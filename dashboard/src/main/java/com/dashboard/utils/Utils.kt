@@ -9,7 +9,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
 import android.net.Uri
-import android.os.SystemClock
 import android.view.View
 import android.view.animation.LinearInterpolator
 import android.webkit.MimeTypeMap
@@ -29,7 +28,7 @@ fun <F : Fragment> AppCompatActivity.getFragment(fragmentClass: Class<F>): F? {
   val navHostFragment = this.supportFragmentManager.fragments.first() as NavHostFragment
   navHostFragment.childFragmentManager.fragments.forEach {
     if (fragmentClass.isAssignableFrom(it.javaClass)) {
-      return it as F
+      return it as? F
     }
   }
   return null
@@ -94,12 +93,9 @@ fun Context.copyClipBoard(selectedText: String): Boolean {
 
 fun String.capitalizeUtil(): String {
   val capBuffer = StringBuffer()
-  val capMatcher: Matcher =
-    Pattern.compile("([a-z])([a-z]*)", Pattern.CASE_INSENSITIVE).matcher(this)
+  val capMatcher: Matcher = Pattern.compile("([a-z])([a-z]*)", Pattern.CASE_INSENSITIVE).matcher(this)
   while (capMatcher.find()) {
-    capMatcher.appendReplacement(capBuffer,
-      capMatcher.group(1).toUpperCase(Locale.getDefault()) + capMatcher.group(2)
-        .toLowerCase(Locale.getDefault())
+    capMatcher.appendReplacement(capBuffer, capMatcher.group(1).toUpperCase(Locale.getDefault()) + capMatcher.group(2).toLowerCase(Locale.getDefault())
     )
   }
   return capMatcher.appendTail(capBuffer).toString()

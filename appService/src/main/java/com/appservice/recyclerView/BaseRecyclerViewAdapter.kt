@@ -29,7 +29,7 @@ abstract class BaseRecyclerViewAdapter<T : BaseRecyclerViewItem>(
   abstract fun getViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder<*>
 
   override fun getItemViewType(position: Int): Int {
-    return list[position]?.getViewType()
+    return list[position].getViewType()
   }
 
   override fun getItemCount(): Int = list.size

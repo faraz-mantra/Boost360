@@ -36,7 +36,7 @@
     android:name="android.hardware.camera"
     android:required="true" />
 
-  <!--requestLegacyExternalStorage="true" using this to access external storage
+  <!--    requestLegacyExternalStorage="true" using this to access external storage
   in api 29 for ImagePicker library in ManageProductFragment-->
 
   <application
@@ -52,7 +52,7 @@
     android:theme="@style/AppTheme"
     android:usesCleartextTraffic="false"
     tools:ignore="UnusedAttribute"
-    tools:replace="android:name,android:theme,android:appComponentFactory">
+    tools:replace="android:label,android:name,android:theme,android:appComponentFactory">
 
     <meta-data
       android:name="invitereferrals_bid"
@@ -129,7 +129,7 @@
     <activity
       android:name="com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait" />
+      android:screenOrientation="portrait"/>
 
     <activity
       android:name="com.nowfloats.Image_Gallery.ImageViewerActivity"
@@ -139,7 +139,7 @@
       android:launchMode="singleTask"
       android:screenOrientation="portrait"
       android:theme="@style/MyTheme"
-      android:windowSoftInputMode="adjustPan" />
+      android:windowSoftInputMode="adjustPan"/>
     <activity
       android:name="com.nowfloats.ProductGallery.ManageProductActivity"
       android:screenOrientation="portrait"
@@ -189,7 +189,7 @@
 
     <receiver
       android:name="com.webengage.sdk.android.WebEngageReceiver"
-      android:exported="true">
+      android:exported="true" tools:replace="android:exported">
       <intent-filter>
         <action android:name="com.webengage.sdk.android.intent.ACTION" />
 
@@ -328,7 +328,8 @@
       android:name="com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"
       android:label="@string/title_activity_background_image_gallery"
       android:launchMode="singleTask"
-      android:theme="@style/AppTheme.NoActionBar" />
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.NoActionBar"/>
     <activity
       android:name="com.nowfloats.BusinessProfile.UI.UI.FeaturedImageActivity"
       android:launchMode="singleTask"
@@ -409,16 +410,64 @@
       android:name="com.nowfloats.Login.ForgotPassword"
       android:screenOrientation="portrait" />
 
+    <!--    <activity-->
+    <!--      android:name="com.nowfloats.PreSignUp.SplashScreen_Activity"-->
+    <!--      android:label="@string/title_activity_splash_screen_"-->
+    <!--      android:screenOrientation="portrait"-->
+    <!--      android:theme="@style/AppTheme.Splash">-->
+    <!--      <intent-filter>-->
+    <!--        <action android:name="android.intent.action.MAIN" />-->
+    <!--        <category android:name="android.intent.category.LAUNCHER" />-->
+    <!--      </intent-filter>-->
+    <!--    </activity>-->
+
+    <!--    <activity-->
+    <!--      android:name="com.nowfloats.PreSignUp.SplashScreen_Activity"-->
+    <!--      android:label="@string/app_name"-->
+    <!--      android:launchMode="singleTask"-->
+    <!--      android:screenOrientation="portrait"-->
+    <!--      android:windowSoftInputMode="adjustResize">-->
+    <!--      <intent-filter android:autoVerify="true">-->
+    <!--        <action android:name="android.intent.action.VIEW" />-->
+
+    <!--        <category android:name="android.intent.category.DEFAULT" />-->
+    <!--        <category android:name="android.intent.category.BROWSABLE" />-->
+
+    <!--        <data-->
+    <!--          android:host="${applicationId}.PreSignUp.SplashScreen_Activity"-->
+    <!--          android:pathPrefix="/"-->
+    <!--          android:scheme="http" />-->
+    <!--      </intent-filter>-->
+
+    <!--      <intent-filter android:autoVerify="true">-->
+    <!--        <action android:name="android.intent.action.VIEW" />-->
+
+    <!--        <category android:name="android.intent.category.DEFAULT" />-->
+    <!--        <category android:name="android.intent.category.BROWSABLE" />-->
+
+    <!--        <data-->
+    <!--          android:host="nowfloat.onelink.me"-->
+    <!--          android:pathPrefix="/FX0L"-->
+    <!--          android:scheme="https" />-->
+    <!--      </intent-filter>-->
+
+    <!--      <meta-data-->
+    <!--        android:name="android.support.PARENT_ACTIVITY"-->
+    <!--        android:value="com.nowfloats.PreSignUp.SplashScreen_Activity" />-->
+    <!--    </activity>-->
+
     <activity
-      android:name="com.nowfloats.PreSignUp.SplashScreen_Activity"
+      android:name="com.boost.presignin.ui.LoaderActivity"
       android:label="@string/app_name"
       android:launchMode="singleTask"
       android:screenOrientation="portrait"
-      android:windowSoftInputMode="adjustResize" />
+      android:windowSoftInputMode="adjustResize"/>
+
+    <!-- PreSignUp module -->
 
     <activity
       android:name="com.boost.presignup.SplashActivity"
-      android:label="@string/title_activity_splash_screen_"
+      android:label="@string/app_name"
       android:launchMode="singleTask"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.Splash"
@@ -488,7 +537,8 @@
     <activity
       android:name="com.nowfloats.CustomPage.CreateCustomPageActivity"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait" />
+      android:process=":createcustompageprocessboost"
+      android:screenOrientation="portrait"/>
     <activity
       android:name="com.nowfloats.NavigationDrawer.SocialSharingActivity"
       android:screenOrientation="portrait" />
@@ -530,7 +580,7 @@
       android:name="com.nowfloats.Analytics_Screen.SubscribersActivity"
       android:launchMode="singleTask"
       android:screenOrientation="portrait"
-      android:theme="@style/AppThemeSubscribe" />
+      android:theme="@style/AppThemeSubscribe"/>
     <activity
       android:name="com.nowfloats.Analytics_Screen.ShowVmnCallActivity"
       android:launchMode="singleTask"
@@ -708,11 +758,6 @@
 
     <activity
       android:name="com.nowfloats.helper.ReferralTransActivity"
-      android:screenOrientation="portrait"
-      android:theme="@style/Theme.Transparent.AppCompact" />
-
-    <activity
-      android:name="com.nowfloats.helper.ApiReLoadActivity"
       android:screenOrientation="portrait"
       android:theme="@style/Theme.Transparent.AppCompact" />
 

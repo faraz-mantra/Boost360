@@ -28,11 +28,17 @@ data class ExtraPropertiesN(
   val referenceId: String? = null,
   val scheduledDateTime: String? = null,
   val startTime: String? = null,
+  val scheduledDay: String? = null,
+  val staffId: String? = null,
+  val staffName: String? = null,
+  val Appointment: ArrayList<SpaAppointmentStaff>? = null,
   //ExtraItemProductConsultation model value
 
-  //additional items for SPA
-  val Appointment: ArrayList<SpaAppointmentStaff>? = null,
 ) : Serializable {
+
+  fun scheduledDateTime(): String? {
+   return if (scheduledDateTime.isNullOrEmpty() && Appointment.isNullOrEmpty().not()) Appointment?.firstOrNull()?.scheduledDateTime else scheduledDateTime
+  }
 
   fun durationTxt(): String? {
     return duration?.toDoubleOrNull()?.let { convertMinutesToDays(it) }
@@ -41,8 +47,7 @@ data class ExtraPropertiesN(
   fun detailsConsultation(): String {
     val ds = takeIf { doctorSpeciality.isNullOrEmpty().not() }?.let { "($doctorSpeciality)" } ?: ""
     val dn = takeIf { doctorName.isNullOrEmpty().not() }?.let { "${doctorName?.trim()} $ds" } ?: ""
-    val c =
-      takeIf { consultationFor.isNullOrEmpty().not() }?.let { "${consultationFor?.trim()}" } ?: ""
+    val c = takeIf { consultationFor.isNullOrEmpty().not() }?.let { "${consultationFor?.trim()}" } ?: ""
     return "$c\n$dn"
   }
 
@@ -55,10 +60,7 @@ data class ExtraPropertiesN(
   }
 
   fun getNumberPatient(): String? {
-    return if (patientMobileNumber?.contains("+91") == true) patientMobileNumber.replace(
-      "+91",
-      ""
-    ) else patientMobileNumber
+    return if (patientMobileNumber?.contains("+91") == true) patientMobileNumber.replace("+91", "") else patientMobileNumber
   }
 
   fun getSpaAptStaffDetail(): SpaAppointmentStaff? {

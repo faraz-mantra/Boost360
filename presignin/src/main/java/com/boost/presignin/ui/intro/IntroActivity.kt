@@ -84,20 +84,21 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     initTncString()
     nextPageTimer()
     binding?.introViewpager?.apply {
-      adapter = IntroAdapter(supportFragmentManager, lifecycle, items, { setNextPage() },
-        {
-          isVideoPlaying = it;
-          Log.i(TAG, "is video playing changed: $it")
-        }
-      )
+      adapter = IntroAdapter(
+        supportFragmentManager,
+        lifecycle,
+        items,
+        { setNextPage() },
+        { isVideoPlaying = it;
+          Log.i(TAG, "is video playing changed: "+it)})
       orientation = ViewPager2.ORIENTATION_HORIZONTAL
       binding?.introIndicator?.setViewPager2(binding!!.introViewpager)
       binding?.introViewpager?.offscreenPageLimit = items.size
-      binding?.introViewpager?.registerOnPageChangeCallback(object : CircularViewPagerHandler(this) {
+      binding?.introViewpager?.registerOnPageChangeCallback(object :CircularViewPagerHandler(this){
         override fun onPageSelected(position: Int) {
           super.onPageSelected(position)
           Log.i(TAG, "onPageSelected: ")
-          if (position != 0 && isVideoPlaying) {
+          if(position!=0&&isVideoPlaying){
             isVideoPlaying = false
             nextPageTimer()
           }

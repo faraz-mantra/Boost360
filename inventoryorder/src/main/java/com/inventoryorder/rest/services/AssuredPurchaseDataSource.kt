@@ -16,8 +16,16 @@ import retrofit2.http.Query
 
 interface AssuredPurchaseDataSource {
 
+  //v2
   @POST(EndPoints.POST_INITIATE_ORDER)
   fun initiateOrder(
+    @Query("clientId") clientId: String?,
+    @Body request: OrderInitiateRequest?
+  ): Observable<Response<OrderInitiateResponse>>
+
+  //v2.5
+  @POST(EndPoints.POST_INITIATE_APPOINTMENT)
+  fun initiateAppointment(
     @Query("clientId") clientId: String?,
     @Body request: OrderInitiateRequest?
   ): Observable<Response<OrderInitiateResponse>>
@@ -40,12 +48,6 @@ interface AssuredPurchaseDataSource {
     @Query("clientId") clientId: String?,
     @Body request: UpdateOrderNPropertyRequest?
   ): Observable<Response<Any>>
-
-  @POST(EndPoints.POST_INITIATE_APPOINTMENT)
-  fun initiateAppointment(
-    @Query("clientId") clientId: String?,
-    @Body request: OrderInitiateRequest?
-  ): Observable<Response<OrderInitiateResponse>>
 
   @GET(EndPoints.GET_CONFIRM_ORDER_2_5)
   fun confirmOrder(

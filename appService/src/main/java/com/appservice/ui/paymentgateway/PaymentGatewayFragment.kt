@@ -148,7 +148,7 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Web
           startFragmentPaymentActivity(FragmentType.SCAN_PAN_CARD, bundle)
         }
       }
-      binding?.btnViewStore -> startStorePage()
+      binding?.btnViewStore -> startStorePage(StatusKyc.CUSTOM_PAYMENTGATEWAY.name)
       binding?.btnViewDetails -> {
         if (dataKyc?.isVerified != DataKyc.Verify.YES.name) {
           val bundle = Bundle()
@@ -232,27 +232,6 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Web
       } else if (radio?.id == binding?.rbNoInstamojoAccount?.id) {
         isInstaMojoAccount = false
       }
-    }
-  }
-
-  fun startStorePage() {
-    try {
-      showProgress("Loading. Please wait...")
-      val intent = Intent(baseActivity, Class.forName("com.boost.upgrades.UpgradeActivity"))
-      intent.putExtra("expCode", session.experienceCode)
-      intent.putExtra("fpName", session.fpTag)
-      intent.putExtra("fpid", session.fpId)
-      intent.putExtra("fpTag", session.fpTag)
-      intent.putExtra("accountType", sessionLocal.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
-      intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(sessionLocal.getStoreWidgets() ?: ArrayList()))
-      intent.putExtra("email", sessionLocal.userProfileEmail ?: "ria@nowfloats.com")
-      intent.putExtra("mobileNo", sessionLocal.userPrimaryMobile?: "9160004303")
-      intent.putExtra("profileUrl", session.fpLogo)
-      intent.putExtra("buyItemKey", StatusKyc.CUSTOM_PAYMENTGATEWAY.name)
-      baseActivity.startActivity(intent)
-      Handler().postDelayed({ hideProgress() }, 1000)
-    } catch (e: Exception) {
-      showLongToast("Unable to start upgrade activity.")
     }
   }
 }

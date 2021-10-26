@@ -3,6 +3,8 @@ package com.onboarding.nowfloats.ui.updateChannel.digitalChannel
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import com.framework.analytics.SentryController
 import com.framework.base.BaseDialogFragment
 import com.framework.extensions.gone
 import com.framework.extensions.underlineText

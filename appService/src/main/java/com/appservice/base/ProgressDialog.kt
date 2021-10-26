@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.fragment.app.FragmentManager
 import com.appservice.R
 import com.appservice.databinding.ProgressDialogBinding
+import com.framework.analytics.SentryController
 import com.framework.base.BaseDialogFragment
 import com.framework.models.BaseViewModel
 import com.framework.utils.ConversionUtils
@@ -47,6 +48,7 @@ class ProgressDialog : BaseDialogFragment<ProgressDialogBinding, BaseViewModel>(
     try {
       if (this.isVisible.not()) show(manager, ProgressDialog::class.java.simpleName)
     } catch (e: Exception) {
+      SentryController.captureException(e)
       Log.e(ProgressDialog::class.java.name, e.localizedMessage)
     }
   }
@@ -55,6 +57,7 @@ class ProgressDialog : BaseDialogFragment<ProgressDialogBinding, BaseViewModel>(
     try {
       if (isRemoving.not()) dismiss()
     } catch (e: Exception) {
+      SentryController.captureException(e)
       Log.e(ProgressDialog::class.java.name, e.localizedMessage)
     }
   }

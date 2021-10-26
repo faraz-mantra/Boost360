@@ -92,7 +92,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
                             url = imageShare;
                         }
                         new Picasso.Builder(v.getContext())
-                                .downloader(new OkHttp3Downloader(Utils.getAuthClient()))
+                                .downloader(new OkHttp3Downloader(Utils.getAuthClient(url)))
                                 .build()
                                 .load(url)
                                 .into(new Target() {

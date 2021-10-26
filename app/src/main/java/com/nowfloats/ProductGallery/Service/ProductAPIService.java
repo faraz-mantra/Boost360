@@ -3,6 +3,7 @@ package com.nowfloats.ProductGallery.Service;
 import android.app.Activity;
 import android.view.View;
 
+import com.framework.analytics.SentryController;
 import com.nowfloats.ProductGallery.LoadMoreProductEvent;
 import com.nowfloats.ProductGallery.Model.ProductListModel;
 import com.nowfloats.ProductGallery.Product_Detail_Activity_V45;
@@ -55,6 +56,7 @@ public class ProductAPIService {
                             }
                         }
                     } catch (Exception e) {
+                        SentryController.INSTANCE.captureException(e);
                         e.printStackTrace();
                     }
                 }
@@ -74,6 +76,7 @@ public class ProductAPIService {
                 }
             });
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
             activity.runOnUiThread(new Runnable() {
                 @Override

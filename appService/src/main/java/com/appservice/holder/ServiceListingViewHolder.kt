@@ -6,7 +6,7 @@ import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.RecyclerItemServiceListingBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewHolder
 import com.appservice.recyclerView.BaseRecyclerViewItem
-import com.appservice.ui.model.ItemsItem
+import com.appservice.model.serviceProduct.service.ItemsItem
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad

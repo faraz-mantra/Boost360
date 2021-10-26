@@ -31,16 +31,19 @@ import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
-import com.framework.models.firestore.FirestoreManager.getDrScoreData
-import com.framework.models.firestore.FirestoreManager.updateDocument
+import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.pref.getDomainName
 import com.framework.utils.ContentSharing.Companion.shareUpdates
-import com.framework.utils.showKeyBoard
+import com.framework.views.zero.old.AppFragmentZeroCase
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.EVENT_NAME_UPDATE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
 import java.util.*
 
-open class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener {
+class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener,AppOnZeroCaseClicked {
 
   private val STORAGE_CODE = 120
 
@@ -52,6 +55,7 @@ open class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBi
   private var TOTAL_ELEMENTS = 0
   private var offSet: Int = PaginationScrollListener.PAGE_START
   private var isLastPageD = false
+  private lateinit var zeroCaseFragment: AppFragmentZeroCase
 
   companion object {
     @JvmStatic
@@ -79,6 +83,21 @@ open class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBi
     binding?.btnAdd?.setOnClickListener {
       startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, isResult = true)
     }
+    this.zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.LATEST_NEWS_UPADATES, this, baseActivity).getRequest().build()
+    addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
+  }
+
+  private fun nonEmptyView() {
+    setHasOptionsMenu(true)
+    binding?.mainlayout?.visible()
+    binding?.childContainer?.gone()
+  }
+
+  private fun emptyView() {
+    setHasOptionsMenu(false)
+    binding?.mainlayout?.gone()
+    binding?.childContainer?.visible()
+
   }
 
   private fun scrollPagingListener() {
@@ -110,8 +129,9 @@ open class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBi
   }
 
   private fun listUpdateApi(offSet: Int) {
-    binding?.emptyView?.gone()
-    hitApi(viewModel?.getMessageUpdates(getRequestUpdate(offSet)), R.string.latest_update_data_not_found)
+    nonEmptyView()
+    hitApi(viewModel?.getMessageUpdates(sessionLocal.getRequestUpdate(offSet)), R.string.latest_update_data_not_found)
+
   }
 
   override fun onSuccess(it: BaseResponse) {
@@ -119,32 +139,27 @@ open class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBi
     removeLoader()
     val data = it as? BusinessUpdateResponse
     if (data?.floats.isNullOrEmpty().not()) {
+      nonEmptyView()
       listFloat.addAll(data?.floats!!)
       isLastPageD = (listFloat.size == data.totalCount ?: 0)
       if (adapterUpdate == null) {
         binding?.rvUpdates?.apply {
-          adapterUpdate = AppBaseRecyclerViewAdapter(baseActivity, listFloat, this@UpdatesBusinessFragment)
+          adapterUpdate =
+            AppBaseRecyclerViewAdapter(baseActivity, listFloat, this@UpdatesBusinessFragment)
           this.adapter = adapterUpdate
         }
       } else adapterUpdate?.notifyDataSetChanged()
-    } else if (listFloat.isEmpty()) binding?.emptyView?.visible()
-    onBusinessUpdateAddedOrUpdated((data?.floats?: arrayListOf()).size)
+
+    } else if (listFloat.isEmpty()) emptyView()
+    onBusinessUpdateAddedOrUpdated(data?.floats?.size?:0)
     hideProgress()
   }
 
   override fun onFailure(it: BaseResponse) {
     super.onFailure(it)
-    binding?.emptyView?.visible()
+    emptyView()
     hideProgress()
     removeLoader()
-  }
-
-  private fun getRequestUpdate(skipBy: Int = 0): HashMap<String?, String?> {
-    val map = HashMap<String?, String?>()
-    map["clientId"] = clientId
-    map["skipBy"] = skipBy.toString()
-    map["fpId"] = sessionLocal.fPID ?: ""
-    return map
   }
 
   private fun removeLoader() {
@@ -247,10 +262,25 @@ open class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBi
     }
   }
 
+  override fun primaryButtonClicked() {
+    startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, isResult = true)
+
+  }
+
+  override fun secondaryButtonClicked() {
+    showShortToast(getString(R.string.coming_soon))
+  }
+
+  override fun ternaryButtonClicked() {
+  }
+
+  override fun appOnBackPressed() {
+  }
+
   open fun onBusinessUpdateAddedOrUpdated(count: Int) {
     val instance = FirestoreManager
-    if (instance.getDrScoreData() != null && instance.getDrScoreData()!!.metricdetail != null) {
-      instance.getDrScoreData()!!.metricdetail!!.number_updates_posted = count
+    if (instance.getDrScoreData() != null && instance.getDrScoreData()?.metricdetail != null) {
+      instance.getDrScoreData()?.metricdetail?.number_updates_posted = count
       instance.updateDocument()
     }
   }
@@ -277,4 +307,14 @@ fun showDialog(mContext: Context?, title: String?, msg: String?, listener: Dialo
     listener.onClick(dialog, which)
   }
   builder.create().show()
+}
+
+
+
+fun UserSessionManager.getRequestUpdate(skipBy: Int = 0): HashMap<String?, String?> {
+  val map = HashMap<String?, String?>()
+  map["clientId"] = clientId
+  map["skipBy"] = skipBy.toString()
+  map["fpId"] = this.fPID ?: ""
+  return map
 }

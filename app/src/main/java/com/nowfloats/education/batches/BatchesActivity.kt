@@ -10,13 +10,16 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.framework.base.BaseActivity
+import com.framework.models.BaseViewModel
 import com.nowfloats.Login.UserSessionManager
 import com.nowfloats.education.batches.ui.batchesfragment.BatchesFragment
 import com.nowfloats.education.helper.Constants
 import com.thinksity.R
+import com.thinksity.databinding.ActivityBatchesBinding
 import java.util.*
 
-class BatchesActivity : AppCompatActivity() {
+class BatchesActivity : BaseActivity<ActivityBatchesBinding, BaseViewModel>() {
   private var progressDialog: ProgressDialog? = null
   private val hmPrices = HashMap<String, Int>()
   var session: UserSessionManager? = null
@@ -24,13 +27,7 @@ class BatchesActivity : AppCompatActivity() {
   private var currentFragment: Fragment? = null
   private var fragmentManager: FragmentManager? = null
   private var fragmentTransaction: FragmentTransaction? = null
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_batches)
-    initializeView()
-    initView()
 
-  }
 
   private fun initView() {
     supportFragmentManager.addOnBackStackChangedListener {
@@ -121,5 +118,18 @@ class BatchesActivity : AppCompatActivity() {
 
   companion object {
     var headerText: TextView? = null
+  }
+
+  override fun getLayout(): Int {
+    return R.layout.activity_batches
+  }
+
+  override fun getViewModelClass(): Class<BaseViewModel> {
+    return BaseViewModel::class.java
+  }
+
+  override fun onCreateView() {
+    initializeView()
+    initView()
   }
 }

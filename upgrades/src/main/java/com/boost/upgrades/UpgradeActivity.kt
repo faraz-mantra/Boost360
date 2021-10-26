@@ -42,6 +42,7 @@ import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
 import com.framework.webengageconstant.*
 import com.boost.upgrades.utils.NetworkConnectivitySpeed.checkNetworkType
+import com.framework.analytics.SentryController
 import com.framework.pref.TokenResult
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
@@ -166,6 +167,7 @@ class UpgradeActivity : AppCompatActivity() {
       val razorPayKey: String = BuildConfigUtil.getBuildConfigField("RAZORPAY_KEY") ?: ""
       razorpay = Razorpay(this, razorPayKey)
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
     }
   }
@@ -187,6 +189,7 @@ class UpgradeActivity : AppCompatActivity() {
       overridePendingTransition(0, 0)
       finish()
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
     }
   }
@@ -242,6 +245,7 @@ class UpgradeActivity : AppCompatActivity() {
         else super.onBackPressed()
       }
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
     }
   }
@@ -303,6 +307,7 @@ class UpgradeActivity : AppCompatActivity() {
     try {
       fragmentManager!!.popBackStack()
     } catch (e: IllegalStateException){
+      SentryController.captureException(e)
       //ignore
     }
   }

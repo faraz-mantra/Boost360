@@ -35,8 +35,8 @@
           android:layout_height="?android:attr/actionBarSize"
           android:background="@color/colorPrimary"
           android:elevation="0dp"
-          app:titleTextAppearance="@style/Toolbar.TitleText"
-          android:hapticFeedbackEnabled="true" />
+          android:hapticFeedbackEnabled="true"
+          app:titleTextAppearance="@style/Toolbar.TitleText" />
 
       </com.google.android.material.appbar.AppBarLayout>
 
@@ -61,6 +61,39 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/view_cart_count"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/black_4a4a4a"
+          android:clickable="true"
+          android:focusable="true"
+          android:foreground="?attr/selectableItemBackground"
+          android:padding="@dimen/size_10"
+          android:visibility="gone"
+          tools:targetApi="m"
+          tools:visibility="visible">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/cart_count_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_shopping_cart_d"
+            android:drawablePadding="@dimen/size_8"
+            android:textColor="@color/white"
+            app:textType="HEADING_6"
+            tools:text="6 items waiting in cart" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/semi_bold"
+            android:text="View"
+            android:textColor="@color/white"
+            app:textType="HEADING_6" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
         <View
           android:layout_width="match_parent"
           android:layout_height="@dimen/size_1"
@@ -69,16 +102,16 @@
         <com.framework.views.bottombar.NiceBottomBar
           android:id="@+id/nav_view"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/size_60"
+          android:layout_height="@dimen/size_54"
           android:background="?android:attr/windowBackground"
           app:activeMenu="@menu/bottom_nav_active_menu"
-          app:clickPosition="3,4"
-          app:indicatorEnabled="true"
-          app:indicatorGravity="top"
+          app:clickPosition="3"
+          app:indicatorEnabled="false"
           app:indicatorInterpolator="anticipateOvershoot"
           app:itemFontActive="@font/regular"
           app:itemFontInActive="@font/regular"
           app:menu="@menu/bottom_nav_menu"
+          app:textVisible="true"
           tools:background="@color/white" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -86,6 +119,7 @@
 
     <include
       android:id="@+id/drawer_view"
+      android:visibility="gone"
       layout="@layout/view_drawer_home" />
   </androidx.drawerlayout.widget.DrawerLayout>
 </layout>
