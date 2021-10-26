@@ -6,28 +6,28 @@
   <domain-config cleartextTrafficPermitted="false">
     <domain includeSubdomains="true">api.withfloats.com</domain>
     <pin-set>
-      <pin digest="SHA-256">2KL8B8qxlYEBQAWOCVrIOGAgJWfH9Q9cEKVF9CurX9g=</pin>
-      <pin digest="SHA-256">jQJTbIh0grw0/1TkHSumWb+Fs0Ggogr621gT3PvPKG0=</pin>
+      <pin digest="SHA-256">BmcGsXgzGy/Cn9OXEWzLlBt0OZvgAoU5ueKMiyjMphU=</pin>
+      <pin digest="SHA-256">5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=</pin>
     </pin-set>
   </domain-config>
   <domain-config cleartextTrafficPermitted="false">
     <domain includeSubdomains="true">api2.withfloats.com</domain>
     <pin-set>
-      <pin digest="SHA-256">2KL8B8qxlYEBQAWOCVrIOGAgJWfH9Q9cEKVF9CurX9g=</pin>
-      <pin digest="SHA-256">jQJTbIh0grw0/1TkHSumWb+Fs0Ggogr621gT3PvPKG0=</pin>
+      <pin digest="SHA-256">BmcGsXgzGy/Cn9OXEWzLlBt0OZvgAoU5ueKMiyjMphU=</pin>
+      <pin digest="SHA-256">5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=</pin>
     </pin-set>
   </domain-config>
   <domain-config cleartextTrafficPermitted="false">
     <domain includeSubdomains="true">webaction.api.boostkit.dev</domain>
     <pin-set>
-      <pin digest="SHA-256">47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=</pin>
+      <pin digest="SHA-256">Edltovh6iyrg1Oa7Xt5THdLzt9b9EWm+8T8PNkIikTo=</pin>
       <pin digest="SHA-256">5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=</pin>
     </pin-set>
   </domain-config>
   <domain-config cleartextTrafficPermitted="false">
     <domain includeSubdomains="true">assuredpurchase.withfloats.com</domain>
     <pin-set>
-      <pin digest="SHA-256">hulegUdWKFHZEFZX09gZHx5/O+Ort19ZlImia67MBXQ=</pin>
+      <pin digest="SHA-256">16U92Nol9JgUfhHGHluPpj37dJg0/rVniygJP9O6koE=</pin>
       <pin digest="SHA-256">JSMzqOOrtyOT1kmau6zKhgT676hGgczD5VMdRMyJZFA=</pin>
     </pin-set>
   </domain-config>
@@ -62,7 +62,7 @@
   <domain-config cleartextTrafficPermitted="false">
     <domain includeSubdomains="true">boost.nowfloats.com</domain>
     <pin-set>
-      <pin digest="SHA-256">CfjRQV2jcsND88eJlyMs9aBBh898myaXJ/qG/BU4+nU=</pin>
+      <pin digest="SHA-256">AxEdEIDP0l2Xz0mqNOIZTmagX/MyBs5gRqUoDRa6fDs=</pin>
       <pin digest="SHA-256">8Rw90Ej3Ttt8RRkrg+WYDS9n7IS03bk5bjP/UXPtaY8=</pin>
     </pin-set>
   </domain-config>
@@ -76,14 +76,14 @@
   <domain-config cleartextTrafficPermitted="false">
     <domain includeSubdomains="true">nfx.withfloats.com</domain>
     <pin-set>
-      <pin digest="SHA-256">2KL8B8qxlYEBQAWOCVrIOGAgJWfH9Q9cEKVF9CurX9g=</pin>
-      <pin digest="SHA-256">jQJTbIh0grw0/1TkHSumWb+Fs0Ggogr621gT3PvPKG0=</pin>
+      <pin digest="SHA-256">BmcGsXgzGy/Cn9OXEWzLlBt0OZvgAoU5ueKMiyjMphU=</pin>
+      <pin digest="SHA-256">5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=</pin>
     </pin-set>
   </domain-config>
   <domain-config cleartextTrafficPermitted="false">
     <domain includeSubdomains="true">content.withfloats.com</domain>
     <pin-set>
-      <pin digest="SHA-256">lJokL7kAKGoWtMnsP4D/sEm2ANugu+LtnQgiVDpWno0=</pin>
+      <pin digest="SHA-256">9ZmvZgQ3bNU0IiN4qcubmAUdF94L81MD2wv/iwIuS88=</pin>
       <pin digest="SHA-256">JSMzqOOrtyOT1kmau6zKhgT676hGgczD5VMdRMyJZFA=</pin>
     </pin-set>
   </domain-config>
@@ -111,7 +111,7 @@
   <domain-config cleartextTrafficPermitted="false">
     <domain includeSubdomains="true">bpi.briteverify.com</domain>
     <pin-set>
-      <pin digest="SHA-256">3P8yerww1nEbUx0rZZsxQgWxwpLhOqN1Vr6QtODSdSg=</pin>
+      <pin digest="SHA-256">3hVvYJhQNX9lIYfsAKL3DTnzkqpThD4Ltr/sVqp47HA=</pin>
       <pin digest="SHA-256">JSMzqOOrtyOT1kmau6zKhgT676hGgczD5VMdRMyJZFA=</pin>
     </pin-set>
   </domain-config>
