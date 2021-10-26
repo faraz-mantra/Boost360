@@ -15,6 +15,8 @@ import com.framework.base.FRAGMENT_TYPE
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
+import androidx.appcompat.widget.*
+
 
 open class DomainBookingContainerActivity :
     AppBaseActivity<ActivityFragmentContainerDomainBookingBinding, BaseViewModel>() {
@@ -109,14 +111,20 @@ open class DomainBookingContainerActivity :
                         R.string.adding_existing_domain
                     }
                     FragmentType.ACTIVE_DOMAIN_FRAGMENT -> {
-                        binding?.title?.gravity = Gravity.CENTER_HORIZONTAL
+                      /*  val params = binding?.title?.layoutParams as Toolbar.LayoutParams
+                        params.gravity = Gravity.CENTER_HORIZONTAL
+                        //params.marginEnd = android.R.attr.actionBarSize
+                        binding?.title?.layoutParams = params*/
                         R.string.website_domain
                     }
                     FragmentType.CONFIRMING_DOMAIN_FRAGMENT -> {
                         R.string.confirming_domain
                     }
                     FragmentType.ACTIVE_NEW_DOMAIN_FRAGMENT -> {
-                        binding?.title?.gravity = Gravity.CENTER_HORIZONTAL
+                       /* val params = binding?.title?.layoutParams as Toolbar.LayoutParams
+                        //params.marginEnd = android.R.attr.actionBarSize
+                        params.gravity = Gravity.CENTER_HORIZONTAL
+                        binding?.title?.layoutParams = params*/
                         R.string.website_domain
                     }
                     FragmentType.SEARCH_DOMAIN_FRAGMENT -> {

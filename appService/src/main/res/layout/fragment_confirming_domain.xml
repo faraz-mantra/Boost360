@@ -218,7 +218,7 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="@dimen/size_32"
             android:text="@string/go_back"
-            android:textSize="@dimen/text_16"
+            android:textSize="@dimen/text_14"
             android:textAllCaps="false"
             android:fontFamily="@font/regular_medium"
             android:textColor="@color/colorPrimary"

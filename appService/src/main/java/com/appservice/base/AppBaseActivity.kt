@@ -26,11 +26,11 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
   override fun onCreate(savedInstanceState: Bundle?) {
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     session = UserSessionManager(this)
+    progressView = ProgressDialog.newInstance()
     super.onCreate(savedInstanceState)
   }
 
   override fun onCreateView() {
-    progressView = ProgressDialog.newInstance()
   }
 
   open fun hideProgress() {
