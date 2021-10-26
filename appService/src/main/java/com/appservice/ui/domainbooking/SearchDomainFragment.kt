@@ -90,6 +90,7 @@ class SearchDomainFragment :
     }
 
     private fun searchDomain(domainString: String) {
+        showProgress()
         val splitDomain = getDomainSplitValues(domainString)
         viewModel?.searchDomain(
             splitDomain.domainName.lowercase(),
@@ -100,30 +101,35 @@ class SearchDomainFragment :
                 showShortToast(getString(R.string.something_went_wrong))
                 return@observeOnce
             }
-
-            val isAvailable = it.anyResponse as Boolean
-            binding?.layputEtError?.visible()
-
-            if (isAvailable) {
-                binding?.btnContinue?.visible()
-                binding?.tvIsNotDomainAvailable?.gone()
-                binding?.tvIsDomainAvailable?.visible()
-                binding?.tvAvailabilityNotSuffix?.gone()
-                binding?.tvAvailabilitySuffix?.visible()
-            } else {
-                binding?.btnContinue?.gone()
-                binding?.tvIsNotDomainAvailable?.visible()
-                binding?.tvIsDomainAvailable?.gone()
-                binding?.tvAvailabilityNotSuffix?.visible()
-                binding?.tvAvailabilitySuffix?.gone()
-            }
-
-            binding?.tvIsNotDomainAvailable?.text = domainString
-            binding?.tvIsDomainAvailable?.text = domainString
+            parseAvailableResponse(it.anyResponse as Boolean, domainString)
+            hideProgress()
         })
     }
 
+    private fun parseAvailableResponse(isAvailable: Boolean, domainString: String) {
+        binding?.layputEtError?.visible()
+
+        if (isAvailable) {
+            binding?.btnContinue?.visible()
+            binding?.tvIsNotDomainAvailable?.gone()
+            binding?.tvIsDomainAvailable?.visible()
+            binding?.tvAvailabilityNotSuffix?.gone()
+            binding?.tvAvailabilitySuffix?.visible()
+        } else {
+            binding?.btnContinue?.gone()
+            binding?.tvIsNotDomainAvailable?.visible()
+            binding?.tvIsDomainAvailable?.gone()
+            binding?.tvAvailabilityNotSuffix?.visible()
+            binding?.tvAvailabilitySuffix?.gone()
+        }
+
+        binding?.tvIsNotDomainAvailable?.text = domainString
+        binding?.tvIsDomainAvailable?.text = domainString
+
+    }
+
     private fun createDomain(domainSelected: String, domainType: String, bSheet: BottomSheetDialog) {
+        showProgress()
         val createDomainRequest = CreateDomainRequest(
             clientId = clientId,
             domainName = domainSelected.lowercase(),
@@ -138,6 +144,7 @@ class SearchDomainFragment :
         viewModel?.createDomain(createDomainRequest)?.observeOnce(lifecycleOwner = this, {
             if (it.isSuccess().not() || it == null) {
                 showShortToast(getString(R.string.something_went_wrong))
+                hideProgress()
                 return@observeOnce
             }
             WebEngageController.trackEvent(DOMAIN_SEARCHED_CREATE_SUCCESS, DOMAIN_CREATION_SUCCESS, NO_EVENT_VALUE)
@@ -150,6 +157,7 @@ class SearchDomainFragment :
             )
             bSheet.dismiss()
             baseActivity.finish()
+            hideProgress()
         })
     }
 

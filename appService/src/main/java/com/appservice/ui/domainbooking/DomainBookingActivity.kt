@@ -67,7 +67,6 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
     WebEngageController.trackEvent(DOMAIN_BOOKING_INITIAL_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     baseActivity = this
     session = UserSessionManager(this)
-    showProgress()
     val domainSplit = getDomainSplitValues(session.getDomainName(true)!!)
     binding?.tvDomainTitle?.text = domainSplit?.domainName
     binding?.tvDomainAssigned?.text = domainSplit?.domainExtension
@@ -248,6 +247,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
   }
 
   private fun domainDetailsApi() {
+    showProgress()
     viewModel.domainDetails(session.fpTag, clientId).observeOnce(this, {
       if (it.isSuccess()) {
         val domainDetailsResponse = it as DomainDetailsResponse
@@ -262,7 +262,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
 
 
   private fun isPremium(): Boolean {
-    return (session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false)
+    return (session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false).not()
   }
 
   private fun setupSteps() {
@@ -297,6 +297,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
     progressDialog.setMessage(status)
     progressDialog.setCancelable(false)
     progressDialog.show()
+    showProgress()
     val intent = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
     intent.putExtra("expCode", session.fP_AppExperienceCode)
     intent.putExtra("fpName", session.fPName)
@@ -317,6 +318,9 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
     intent.putExtra("profileUrl", session.fPLogo)
     intent.putExtra("buyItemKey", "DOMAINPURCHASE")
     startActivity(intent)
-    Handler().postDelayed({ progressDialog.dismiss() }, 1000)
+    Handler().postDelayed({
+      hideProgress()
+      progressDialog.dismiss()
+                          }, 1000)
   }
 }
