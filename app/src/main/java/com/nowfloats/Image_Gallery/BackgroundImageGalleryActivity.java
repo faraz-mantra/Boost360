@@ -1,31 +1,22 @@
 package com.nowfloats.Image_Gallery;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_DELETE_BACKGROUND_IMAGE;
+import static com.framework.webengageconstant.EventLabelKt.UPDATE_BACKGROUND_IMAGE;
+import static com.framework.webengageconstant.EventNameKt.DELETE_BACKGROUND_IMAGE;
+import static com.framework.webengageconstant.EventNameKt.UPLOAD_BACKGROUND_IMAGE;
+
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-
-import androidx.databinding.DataBindingUtil;
-
 import android.graphics.Bitmap;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-
 import android.os.Environment;
 import android.provider.MediaStore;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,16 +25,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.framework.analytics.SentryController;
 import com.nguyenhoanglam.imagepicker.model.Config;
 import com.nguyenhoanglam.imagepicker.model.Image;
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
 import com.nowfloats.BusinessProfile.UI.API.UploadFaviconImage;
-import com.nowfloats.BusinessProfile.UI.UI.FeaturedImageActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.NotificationCenter.AlertArchive;
@@ -67,11 +63,6 @@ import java.util.UUID;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-
-import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_DELETE_BACKGROUND_IMAGE;
-import static com.framework.webengageconstant.EventLabelKt.UPDATE_BACKGROUND_IMAGE;
-import static com.framework.webengageconstant.EventNameKt.DELETE_BACKGROUND_IMAGE;
-import static com.framework.webengageconstant.EventNameKt.UPLOAD_BACKGROUND_IMAGE;
 
 
 public class BackgroundImageGalleryActivity extends AppCompatActivity implements UploadFaviconImage.OnImageUpload {
@@ -245,6 +236,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
                 startCamera(requestCode);
             }
         } catch (ActivityNotFoundException e) {
+            SentryController.INSTANCE.captureException(e);
             String errorMessage = getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(this, errorMessage);
         }
@@ -276,6 +268,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
             intent.putExtra(MediaStore.EXTRA_OUTPUT, primaryUri);
             startActivityForResult(intent, requestCode);
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             Toast.makeText(getApplicationContext(), R.string.failed_to_open_camera, Toast.LENGTH_LONG).show();
         }
     }
@@ -284,15 +277,16 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == CAMERA_IMAGE_REQUEST_CODE) {
+        if (resultCode == RESULT_OK && requestCode == CAMERA_IMAGE_REQUEST_CODE && primaryUri != null) {
             try {
                 Bitmap CameraBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), primaryUri);
                 String imageUrl = Methods.getRealPathFromURI(this, primaryUri);
                 String path = Util.saveBitmap(imageUrl, this, "ImageFloat" + System.currentTimeMillis());
-                Log.i(TAG, "onActivityResult: "+path);
+                Log.i(TAG, "onActivityResult: " + path);
                 uploadPrimaryPicture(path);
                 WebEngageController.trackEvent(UPLOAD_BACKGROUND_IMAGE, UPDATE_BACKGROUND_IMAGE, session.getFpTag());
             } catch (IOException e) {
+                SentryController.INSTANCE.captureException(e);
                 e.printStackTrace();
             }
 
@@ -414,6 +408,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
                         Picasso.get().load(url).into(viewHolder.imageView);
                     }
                 } catch (Exception e) {
+                    SentryController.INSTANCE.captureException(e);
                     e.printStackTrace();
                 }
             }

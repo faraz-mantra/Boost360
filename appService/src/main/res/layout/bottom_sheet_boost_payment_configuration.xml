@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        style="@style/match_wrap"
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/match_wrap"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/size_10">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                style="@style/match_wrap"
+                android:layout_marginStart="@dimen/size_10"
+                android:layout_marginBottom="@dimen/size_6"
+                android:orientation="vertical">
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/wrap_wrap"
+                    android:drawablePadding="@dimen/size_4"
+                    android:includeFontPadding="false"
+                    android:text="@string/payment_configuration"
+                    android:textColor="@color/white"
+                    app:fontFamily="@font/semi_bold"
+                    app:textType="HEADING_4"
+                    tools:textColor="@color/black_4a4a4a" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tvCustomerAddress"
+                    style="@style/match_wrap"
+                    android:includeFontPadding="false"
+                    android:text="@string/select_how_you_want_to_receive_money_for_your_bookings"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/italic"
+                    tools:textColor="@color/warm_grey" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/match_wrap"
+
+            android:background="@drawable/bg_rounded_top_white_2"
+            android:orientation="vertical">
+
+            <RadioGroup
+                style="@style/match_wrap"
+
+                android:layout_marginTop="@dimen/size_10"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/vw_boostPaymentGateway"
+                    style="@style/match_wrap"
+
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/size_20">
+
+                    <com.framework.views.customViews.CustomRadioButton
+                        android:id="@+id/rb_boostPaymentGateway"
+                        android:layout_gravity="start"
+                        android:buttonTint="@color/yellow_ffb900"
+                        style="@style/wrap_wrap"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:checked="true"
+                        android:layout_width="@dimen/size_30"
+                        android:height="@dimen/size_30"
+                        android:gravity="center"
+                        android:scaleX="0.8"
+                        android:scaleY="0.8" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        style="@style/match_wrap"
+
+                        android:orientation="vertical">
+
+                        <com.framework.views.customViews.CustomTextView
+                            style="@style/match_wrap"
+                            android:maxLines="1"
+                            android:drawableStart="@drawable/ic_boost_payment"
+                            android:drawablePadding="@dimen/size_5"
+                            android:text="@string/boost_payment_gateway"
+                            android:textColor="@color/black_2A2A2A"
+                            android:textSize="19sp"
+                            app:fontFamily="@font/semi_bold" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/tv_boostPaymentGatewayDesc"
+                            style="@style/match_wrap"
+
+                            android:includeFontPadding="false"
+                            android:text="@string/a_premium_service_by_boost_for_secure_payment_collection_learn_more_here"
+                            android:textColor="@color/black_4a4a4a"
+                            android:textSize="12sp"
+                            app:fontFamily="@font/regular" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/change_bank_detail"
+                            style="@style/match_wrap"
+
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:includeFontPadding="false"
+                            android:paddingTop="@dimen/size_6"
+                            android:paddingBottom="@dimen/size_4"
+                            android:text="@string/add_bank_detail"
+                            android:textColor="@color/dodger_blue_two"
+                            android:visibility="gone"
+                            app:fontFamily="@font/bold"
+                            app:textAllCaps="true"
+                            app:textType="BODY_1" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_5"
+                    android:background="@drawable/shape_grey_dotted_line" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/vw_customPaymentGateway"
+                    style="@style/match_wrap"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/size_20">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="@dimen/size_30"
+                        android:layout_height="@dimen/size_30"
+                        android:padding="@dimen/_6dp"
+                        android:layout_gravity="start"
+                        android:cropToPadding="true"
+                        android:clickable="false"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/ic_lock_appointment" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        style="@style/match_wrap"
+                        android:orientation="vertical">
+
+                        <com.framework.views.customViews.CustomTextView
+                            style="@style/match_wrap"
+                            android:drawableStart="@drawable/ic_custom_payment_gateway"
+                            android:drawablePadding="@dimen/size_5"
+                            android:maxLines="1"
+                            android:text="@string/my_custom_payment_gateway"
+                            android:textColor="@color/black_2A2A2A"
+                            android:textSize="19sp"
+                            app:fontFamily="@font/semi_bold" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            style="@style/match_wrap"
+
+                            android:includeFontPadding="false"
+                            android:text="@string/get_direct_payment_in_your_bank_account_instantly"
+                            android:textColor="@color/black_4a4a4a"
+                            android:textSize="12sp"
+                            app:fontFamily="@font/regular" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_5"
+                    android:background="@drawable/shape_grey_dotted_line" />
+
+            </RadioGroup>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                style="@style/match_wrap"
+
+                android:layout_marginTop="@dimen/size_20"
+                android:layout_marginEnd="@dimen/size_20"
+                android:layout_marginBottom="@dimen/size_20"
+                android:gravity="end">
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_cancel"
+                    style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+                    android:layout_marginEnd="@dimen/size_20"
+                    android:background="@null"
+                    android:text="@string/cancel" />
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_done"
+                    style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+                    android:text="@string/done"
+                    android:textColor="@color/white" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

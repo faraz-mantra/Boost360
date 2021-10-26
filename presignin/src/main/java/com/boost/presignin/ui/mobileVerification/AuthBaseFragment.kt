@@ -1,6 +1,5 @@
 package com.boost.presignin.ui.mobileVerification
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
@@ -15,14 +14,17 @@ import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.service.APIService
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
+import com.framework.analytics.SentryController
 import com.framework.extensions.observeOnce
-import com.framework.models.BaseViewModel
+import com.framework.models.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.clientIdThinksity
 import com.framework.pref.saveAccessTokenAuth
 import com.framework.webengageconstant.*
-import java.util.HashMap
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.set
 
 abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Binding, LoginSignUpViewModel>() {
 
@@ -45,10 +47,8 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
     showProgress()
     WebEngageController.initiateUserLogin(resultLogin()?.loginId)
     WebEngageController.setUserContactAttributes(
-      resultLogin()?.profileProperties?.userEmail,
-      resultLogin()?.profileProperties?.userMobile,
-      resultLogin()?.profileProperties?.userName,
-      resultLogin()?.sourceClientId
+      resultLogin()?.profileProperties?.userEmail, resultLogin()?.profileProperties?.userMobile,
+      resultLogin()?.profileProperties?.userName, resultLogin()?.sourceClientId
     )
     WebEngageController.setFPTag(this.floatingPointTag)
     WebEngageController.trackEvent(PS_LOGIN_SUCCESS, LOGIN_SUCCESS, NO_EVENT_VALUE)
@@ -70,7 +70,7 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
       val result = it as? AccessTokenResponse
       if (it?.isSuccess() == true && result?.result != null) {
         session.saveAccessTokenAuth(result.result!!)
-        this.aliInitializeActivity()
+        this.storeFpDetails()
       } else {
         hideProgress()
         showLongToast(getString(R.string.access_token_create_error))
@@ -78,35 +78,16 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
     })
   }
 
-  private fun AuthTokenDataItem.aliInitializeActivity() {
-    try {
-      val webIntent = Intent(baseActivity, Class.forName("com.nowfloats.helper.ApiReLoadActivity"))
-      startActivityForResult(webIntent, 101)
-      baseActivity.overridePendingTransition(0, 0)
-    } catch (e: ClassNotFoundException) {
-      this.storeFpDetails()
-    }
-  }
-
-  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
-    if (resultCode == Activity.RESULT_OK && requestCode == 101) {
-      authTokenData()?.storeFpDetails()
-    }
-  }
-
   private fun AuthTokenDataItem.storeFpDetails() {
-    WebEngageController.trackEvent(
-      PS_BUSINESS_ACCOUNT_CHOOSE,
-      CHOOSE_BUSINESS,
-      this.floatingPointId ?: ""
-    )
+    WebEngageController.trackEvent(PS_BUSINESS_ACCOUNT_CHOOSE, CHOOSE_BUSINESS, this.floatingPointId ?: "")
     val map = HashMap<String, String>()
     map["clientId"] = clientId
     viewModel?.getFpDetails(this.floatingPointId ?: "", map)?.observeOnce(viewLifecycleOwner, {
       val response = it as? UserFpDetailsResponse
       if (it.isSuccess() && response != null) {
         ProcessFPDetails(session).storeFPDetails(response)
+        SentryController.setUser(UserSessionManager(baseActivity))
+        FirestoreManager.initData(session.fpTag ?: "", session.fPID ?: "", clientId)
         startService()
         startDashboard()
       } else {
@@ -120,20 +101,19 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
     baseActivity.startService(Intent(baseActivity, APIService::class.java))
   }
 
-  protected fun startDashboard() {
+  private fun startDashboard() {
     try {
-      val dashboardIntent =
-        Intent(baseActivity, Class.forName("com.dashboard.controller.DashboardActivity"))
+      val dashboardIntent = Intent(baseActivity, Class.forName("com.dashboard.controller.DashboardActivity"))
       dashboardIntent.putExtras(requireActivity().intent)
       val bundle = Bundle()
       bundle.putParcelableArrayList("message", ArrayList())
       dashboardIntent.putExtras(bundle)
-      dashboardIntent.flags =
-        Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+      dashboardIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
       startActivity(dashboardIntent)
       baseActivity.finish()
       hideProgress()
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
     }
   }

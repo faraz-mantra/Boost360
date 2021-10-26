@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 public class CustomPageLink {
 
     @SerializedName("Total")
-    private int total;
+    private Integer total;
 
     @SerializedName("Skip")
     private int skip;
@@ -19,13 +19,13 @@ public class CustomPageLink {
     private int limit;
 
     @SerializedName("Count")
-    private int count;
+    private Integer count;
 
-    public int getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
 
@@ -49,11 +49,11 @@ public class CustomPageLink {
         return limit;
     }
 
-    public void setLimit(int limit) {
+    public void setLimit(Integer limit) {
         this.limit = limit;
     }
 
-    public int getCount() {
+    public Integer getCount() {
         return count;
     }
 

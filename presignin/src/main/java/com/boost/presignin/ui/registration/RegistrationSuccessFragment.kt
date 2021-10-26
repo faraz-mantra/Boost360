@@ -31,6 +31,7 @@ import com.boost.presignin.model.plan.Plan15DaysResponse
 import com.boost.presignin.service.APIService
 import com.boost.presignin.ui.WebPreviewActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
+import com.framework.analytics.SentryController
 import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
@@ -125,29 +126,12 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
         this.session?.saveAccessTokenAuth(result.result!!)
         this.session?.setUserLogin(true)
         this.session?.setUserSignUpComplete(false)
-        aliInitializeActivity()
+        apiBusinessActivatePlan()
       } else {
         showLongToast(getString(R.string.access_token_create_error))
         hideProgress()
       }
     })
-  }
-
-  private fun aliInitializeActivity() {
-    try {
-      val webIntent = Intent(baseActivity, Class.forName("com.nowfloats.helper.ApiReLoadActivity"))
-      startActivityForResult(webIntent, 101)
-      baseActivity.overridePendingTransition(0, 0)
-    } catch (e: ClassNotFoundException) {
-      apiBusinessActivatePlan()
-    }
-  }
-
-  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
-    if (resultCode == Activity.RESULT_OK && requestCode == 101) {
-      apiBusinessActivatePlan()
-    }
   }
 
   private fun apiBusinessActivatePlan() {
@@ -175,6 +159,8 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
         val response = it as? UserFpDetailsResponse
         if (it.isSuccess() && response != null) {
           ProcessFPDetails(session!!).storeFPDetails(response)
+          SentryController.setUser(UserSessionManager(baseActivity))
+
           startService()
           startDashboard()
         } else {
@@ -198,6 +184,8 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
       baseActivity.finish()
       hideProgress()
     } catch (e: Exception) {
+      SentryController.captureException(e)
+
       e.printStackTrace()
     }
   }

@@ -1,7 +1,10 @@
 package com.appservice.model.serviceProduct
 
 import android.net.Uri
+import com.appservice.constant.RecyclerViewItemType
 import com.appservice.model.KeySpecification
+import com.appservice.recyclerView.AppBaseRecyclerViewItem
+import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import java.util.*
@@ -64,41 +67,62 @@ class CatalogProduct(
   var brandName: String? = null,
   var category: String? = null,
 
+  @SerializedName("sharedPlatforms")
+  var sharedPlatforms: List<Any>? = null,
+
+  @SerializedName("GroupProductId")
+  var groupProductId: Any? = null,
+
+  @SerializedName("CustomWidgets")
+  var customWidgets: Any? = null,
+
   @SerializedName("isCodAvailable")
   var codAvailable: Boolean = false,
-
   @SerializedName("maxCodOrders")
-  var maxCodOrders: Int = 10,
-
+  var maxCodOrders: Int = 1,
   @SerializedName("isPrepaidOnlineAvailable")
-  var prepaidOnlineAvailable: Boolean = true,
-
+  var prepaidOnlineAvailable: Boolean = false,
   @SerializedName("maxPrepaidOnlineOrders")
-  var maxPrepaidOnlineAvailable: Int = 10,
+  var maxPrepaidOnlineAvailable: Int = 1,
 
   @SerializedName("uniquePaymentUrl")
-  var BuyOnlineLink: BuyOnlineLink? = null,
+  var uniquePaymentUrl: UniquePaymentUrlN? = null,
+
+  @SerializedName("BuyOnlineLink")
+  var buyOnlineLink: Any? = null,
   @SerializedName("keySpecification")
   var keySpecification: KeySpecification? = null,
 
   @SerializedName("otherSpecifications")
   var otherSpecification: ArrayList<KeySpecification>? = null,
   var pickupAddressReferenceId: String? = null,
-) : Serializable {
+  var recyclerViewItem: Int = RecyclerViewItemType.PRODUCT_LISTING.getLayout(),
+) : BaseResponse(), AppBaseRecyclerViewItem, Serializable {
+
+  override fun getViewType(): Int {
+    return recyclerViewItem
+  }
+
+  fun getCategoryWithBrand():String{
+   return if (category.isNullOrEmpty().not()) "$category ${if (brandName.isNullOrEmpty().not()) "by $brandName" else ""}" else "No category"
+  }
+  fun getBrand():String{
+    return if (brandName.isNullOrEmpty().not()) "$brandName" else "No brand"
+  }
+  fun getLoaderItem(): CatalogProduct {
+    this.recyclerViewItem = RecyclerViewItemType.PAGINATION_LOADER.getLayout()
+    return this
+  }
 
   fun isPriceToggleOn(): Boolean {
     return this.Price > 0
   }
 
   enum class PaymentType(val value: String) {
-    ASSURED_PURCHASE("AssuredPurchase"), MY_PAYMENT_GATEWAY("MyPaymentGateWay"), UNIQUE_PAYMENT_URL(
-      "UniquePaymentUrl"
-    ),
-    DONT_WANT_TO_SELL("None");
+    ASSURED_PURCHASE("AssuredPurchase"), MY_PAYMENT_GATEWAY("MyPaymentGateWay"), UNIQUE_PAYMENT_URL("UniquePaymentUrl"), DONT_WANT_TO_SELL("None");
 
     companion object {
-      fun fromValue(value: String): PaymentType? =
-        values().firstOrNull { it.value.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
+      fun fromValue(value: String): PaymentType? = values().firstOrNull { it.value.equals(value, ignoreCase = true) }
     }
   }
 }

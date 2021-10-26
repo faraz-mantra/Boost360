@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
   <string name="app_name">Thinksity</string>
   <string name="action_settings">Ayarlar</string>
@@ -357,8 +357,8 @@
   <string name="store">mağaza</string>
   <string name="empty_alert">Eğer yeni bir uyarı var en kısa sürede biz sizi bilgilendireceğiz</string>
   <string name="settings_tou_url">https://www.getboost360.com/tnc/</string>
-  <string name="drop_us_on_email_or_call">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to enable this feature.</string>
-  <string name="primary_contact_number_message">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to change this number.</string>
+  <string name="drop_us_on_email_or_call">Please drop us a line at <u>ria@nowfloats.com</u> or call us at 1860&#8211;123&#8211;1233 if you\'d like to enable this feature.</string>
+  <string name="primary_contact_number_message">Please drop us a line at <u>ria@nowfloats.com</u> or call us at 1860&#8211;123&#8211;1233 if you\'d like to change this number.</string>
 
   <string-array name="domain_array">
     <item>.com</item>
@@ -459,7 +459,7 @@
   <string name="something_went_wrong">bir şeyler yanlış gitti!!</string>
   <string name="enter_correct_user_name">Doğru kullanıcı adı girin.</string>
   <string name="check_your_email">E-postanı kontrol et</string>
-  <string name="enter_valid_username_or_password">geçerli bir kullanıcı adı / şifre girin</string>
+  <string name="enter_valid_username_or_password" tools:ignore="ExtraTranslation">geçerli bir kullanıcı adı / şifre girin</string>
   <string name="forgot_password">Parolanızı mı unuttunuz</string>
   <string name="enter_user_name">Kullanıcı adı girin</string>
   <string name="we_sent_email_with_password">Biz şifre ayrıntıları içeren bir e-posta gönderdik</string>

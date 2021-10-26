@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/size_10">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_10"
+                android:layout_marginBottom="@dimen/size_6"
+                android:orientation="vertical">
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/size_4"
+                    android:includeFontPadding="false"
+                    android:text="@string/select_appointment_type"
+                    android:textColor="@color/white"
+                    app:fontFamily="@font/open_sans_semibold"
+                    app:textType="HEADING_4"
+                    tools:textColor="@color/black_4a4a4a" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tvCustomerAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="@string/the_type_of_consultation_that_patients_will_get"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/italic"
+                    tools:textColor="@color/warm_grey" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded_top_white_2"
+            android:orientation="vertical">
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rg"
+                android:layout_marginTop="@dimen/size_10"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/ll_video_consultation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/size_20">
+
+                    <com.framework.views.customViews.CustomRadioButton
+                        android:id="@+id/rb_video_consultation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        style="@style/RadioWindow"
+                        android:tag="1"
+                        android:clickable="false" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_6"
+                        android:orientation="vertical">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/video_consultation"
+                            android:textColor="@color/black_2A2A2A"
+                            android:textSize="19sp"
+                            app:fontFamily="@font/open_sans_semibold" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/tv_boostPaymentGatewayDesc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="@string/consultation_will_be_given_through_video_call"
+                            android:textColor="@color/black_4a4a4a"
+                            android:textSize="12sp"
+                            app:fontFamily="@font/regular" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_5"
+                    android:background="@drawable/shape_grey_dotted_line" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/ll_inperson_consultation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/size_20">
+
+                    <com.framework.views.customViews.CustomRadioButton
+                        android:id="@+id/rb_inperson_consultation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        style="@style/RadioWindow"
+                        android:tag="2"
+                        android:clickable="false" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="@dimen/size_6"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/in_person_consultation"
+                            android:textColor="@color/black_2A2A2A"
+                            android:textSize="19sp"
+                            app:fontFamily="@font/open_sans_semibold" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/black_4a4a4a"
+                            android:text="@string/consultation_to_be_provided_to_patients_in_person"
+                            android:textSize="12sp"
+                            app:fontFamily="@font/regular" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_5"
+                    android:background="@drawable/shape_grey_dotted_line" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/ll_inperson_video_consultation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/size_20">
+
+                    <com.framework.views.customViews.CustomRadioButton
+                        android:id="@+id/rb_inperson_video_consultation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        style="@style/RadioWindow"
+                        android:tag="3"
+                        android:clickable="false" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_6"
+                        android:orientation="vertical">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/in_person_video_consultation"
+                            android:textColor="@color/black_2A2A2A"
+                            android:textSize="19sp"
+                            app:fontFamily="@font/open_sans_semibold" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="@string/consultation_can_be_given_in_both_methods"
+                            android:textColor="@color/black_4a4a4a"
+                            android:textSize="12sp"
+                            app:fontFamily="@font/regular" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_5"
+                    android:background="@drawable/shape_grey_dotted_line" />
+
+            </RadioGroup>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_20"
+                android:layout_marginEnd="@dimen/size_20"
+                android:layout_marginBottom="@dimen/size_20"
+                android:gravity="end">
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_go_back"
+                    android:layout_width="@dimen/size_110"
+                    android:layout_height="@dimen/size_46"
+                    android:layout_marginEnd="@dimen/size_20"
+                    android:fontFamily="@font/semi_bold"
+                    android:gravity="center"
+                    android:background="@null"
+                    android:stateListAnimator="@null"
+                    android:text="@string/go_back"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorAccent"
+                    app:textType="HEADING_6" />
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_done"
+                    android:layout_height="@dimen/size_36"
+                    android:fontFamily="@font/semi_bold"
+                    android:gravity="center"
+                    style="@style/ButtonStyle.Rounded.Solid"
+                    android:text="@string/done"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    app:textType="HEADING_6" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

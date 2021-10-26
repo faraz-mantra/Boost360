@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.framework.analytics.SentryController;
 import com.nowfloats.ProductGallery.Model.ProductListModel;
 import com.nowfloats.util.Constants;
 import com.squareup.picasso.Picasso;
@@ -129,6 +130,7 @@ public class ProductGalleryAdapter extends BaseAdapter {
                 viewHolder.flOverlay.setVisibility(View.GONE);
             }
         } catch (Exception exp) {
+            SentryController.INSTANCE.captureException(exp);
             exp.printStackTrace();
         }
 

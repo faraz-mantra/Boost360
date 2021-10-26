@@ -9,7 +9,6 @@ import com.framework.models.BaseViewModel
 import com.framework.utils.fromHtml
 import com.inventoryorder.R
 import com.inventoryorder.databinding.BottomSheetConfirmAptBinding
-import com.inventoryorder.databinding.BottomSheetConfirmOrderBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
 

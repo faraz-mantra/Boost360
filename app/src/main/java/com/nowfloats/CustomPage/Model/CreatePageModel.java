@@ -1,9 +1,11 @@
 package com.nowfloats.CustomPage.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by guru on 26/08/2015.
  */
-public class CreatePageModel {
+public class CreatePageModel implements Serializable {
     public String DisplayName;
     public String HtmlCode;
     public String Tag;

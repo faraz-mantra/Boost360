@@ -3,18 +3,14 @@ package com.inventoryorder.holders
 import android.annotation.SuppressLint
 import android.graphics.Paint
 import android.view.View
-import com.framework.extensions.gone
-import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
-import com.framework.utils.DateUtils
 import com.inventoryorder.R
 import com.inventoryorder.databinding.ItemBookingDetailsBinding
 import com.inventoryorder.model.ordersdetails.ItemN
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 
-class AppointmentDetailsViewHolder(binding: ItemBookingDetailsBinding) :
-  AppBaseRecyclerViewHolder<ItemBookingDetailsBinding>(binding) {
+class AppointmentDetailsViewHolder(binding: ItemBookingDetailsBinding) : AppBaseRecyclerViewHolder<ItemBookingDetailsBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)

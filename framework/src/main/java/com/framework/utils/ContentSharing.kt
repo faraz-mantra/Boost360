@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.content.FileProvider
 import com.framework.BaseApplication
 import com.framework.R
+import com.framework.analytics.SentryController
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import java.io.File
@@ -154,6 +155,7 @@ class ContentSharing {
               os.close()
             } catch (e: java.lang.Exception) {
               Log.e(javaClass.simpleName, "Error writing bitmap", e)
+              SentryController.captureException(e)
             }
             val uri = FileProvider.getUriForFile(activity, "${activity.packageName}.provider", imageFile)
             shareUriWithText(activity, uri, shareText, isWhatsApp, isFb, isLinkedin, isTwitter)
@@ -200,6 +202,7 @@ class ContentSharing {
           activity.startActivity(Intent.createChooser(share, intentChooserTitle))
         } catch (e: ActivityNotFoundException) {
           e.printStackTrace()
+          SentryController.captureException(e)
           activity.startActivity(Intent.createChooser(share, intentChooserTitle))
         }
       }

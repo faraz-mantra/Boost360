@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <com.framework.views.customViews.CustomCardView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/size_10"
+    app:cardUseCompatPadding="true">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/ll_logout"
+      android:layout_width="@dimen/size_100"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:orientation="horizontal"
+      android:padding="@dimen/size_10">
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/logout_text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:background="?android:selectableItemBackground"
+        android:clickable="false"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:text="@string/logout"
+        android:textColor="@color/gray_4e4e4e"
+        app:textType="HEADING_6" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </com.framework.views.customViews.CustomCardView>
+</layout>

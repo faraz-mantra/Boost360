@@ -55,10 +55,10 @@
   <string name="aug_sep_2020">Aug - Sep, 2020</string>
   <string name="go_to_current_week">Go to current week</string>
   <string name="consultation_type_camel_case">Consultation type</string>
-  <string name="new_apppointment_camel_case">New appointment</string>
-  <string name="new_appointment_n">New Appointment</string>
+  <string name="new_apppointment_camel_case">New Appointment</string>
+  <string name="appointment_new_title">New Appointment</string>
   <string name="update_apt_consult" tools:ignore="ExtraTranslation">Update Appointment</string>
-  <string name="in_clinic">In-Clinic</string>
+  <string name="in_clinic">In-clinic</string>
   <string name="consulting_service">Consulting service</string>
   <string name="start_time_camel_case">Start time</string>
   <string name="fees_incl_gst">Fees (Incl. GST)</string>
@@ -74,32 +74,27 @@
   <string name="tuesday_has_been_marked_as_off">Tuesday has been marked as off</string>
   <string name="mon_9_am_to_5_pm_br_1_pm_to_2pm">Mon - 9 AM to 5 PM : BR - 1 PM to 2PM</string>
   <string name="cosulting_service_not_available">Consulting Service is not available</string>
+  <string name="doctor_staff_not_available">Doctor is not available</string>
   <string name="consult_service">Consulting service</string>
   <string name="ok">Ok</string>
   <string name="dentist">Dentist</string>
   <string name="select_later_time_toast_string">Please select a time after the current time.</string>
   <string name="booking_created">Booking Created!</string>
-  <string name="video_consultation_camel_case">Video Consultation</string>
+  <string name="video_consultation_camel_case">Video consultation</string>
   <string name="please_select_time_slot">Please select time slot</string>
   <string name="confirm_appointment">Confirm appointment</string>
   <string name="cancel_video_consultation">Cancel video consultation</string>
   <string name="call_details">Call details</string>
   <string name="cancel_appointment"><u>Cancel appointment</u></string>
   <string name="cancel_appointment_n">Cancel appointment</string>
-  <string name="please_add_doctor_first">Doctor not added, please add first.</string>
+  <string name="please_add_doctor_first">Doctor not added, please add first!</string>
+  <string name="doctor_inactive">Doctor inactive, please active first!</string>
+  <string name="error_getting_doctor_data">Error getting doctor!</string>
   <string name="cancel_appointment_confirmation_message">Are you sure you want to cancel the appointment?</string>
   <string name="no">No</string>
   <string name="yes">Yes</string>
   <string name="cancel_consultation_confirmation_message">Are you sure you want to cancel the video consultation?</string>
   <string name="cancel_order_confirmation_message">Are you sure you want to cancel the order?</string>
-  <string name="please_add_teacher_first">Teacher not added, please add first.</string>
-  <string name="masseur_masseuse_not_added">Masseur/Masseuse not add, please add first</string>
-  <string name="please_add_hotel_room_first">Please add a hotel room first.</string>
-  <string name="please_add_table_first">Please add a table first.</string>
-  <string name="please_add_barber_first">Please add a barber first.</string>
-  <string name="please_add_commodity_first">Please add a manufactured commodity first.</string>
-  <string name="please_add_retail_commodity_first">Please add a retail commodity first.</string>
-  <string name="please_add_service_first">Please add a service first.</string>
   <string name="email_invalid_format_error">The email is in an invalid format.</string>
   <string name="phone_invalid_format_error">The number is in invalid format.</string>
   <string name="reschedule_consultation">Reschedule consultation</string>
@@ -389,7 +384,6 @@
   <string name="done">Done</string>
   <string name="pick_a_delivery_mode_from_the_list_below">Pick a delivery mode from the list below</string>
   <string name="delivery_option">Delivery option</string>
-  <string name="select_gender">Select gender</string>
   <string name="please_select_a_gender_from_below">Please select a gender from below</string>
   <string name="pick_a_service_location_from_the_options_below">Pick a service location from the options below</string>
   <string name="service_location">Service location</string>
@@ -431,7 +425,7 @@
   <string name="_3">3</string>
   <string name="error">Error</string>
   <string name="once_your_patients_starts_booking_video_consultation_from_your_boost_website_they_will_appear_here_alternatively_you_can_also_create_a_booking_on_behalf_of_any_patients_by_clicking_the_create_button_below">Once your patients starts booking video consultation from your boost website, they will appear here. Alternatively, you can also create a booking on behalf of any patients by clicking the create button below.</string>
-  <string name="new_order">New Order</string>
+  <string name="new_order">New order</string>
   <string name="patient_details">Patient details</string>
   <string name="today">Today</string>
   <string name="time_elapsed">Time elapsed</string>
@@ -463,7 +457,12 @@
   <string name="please_enter_valid_mobile_number">Please enter valid mobile number</string>
   <string name="please_enter_valid_email">Please Enter valid email</string>
   <string name="please_select_gender">Please select gender</string>
+  <string name="select_gender_">Select gender</string>
+  <string name="please_select_service">Please select service</string>
+  <string name="please_select_doctor_staff">Please select doctor</string>
   <string name="first_select_consultation_date">First select consultation date</string>
+  <string name="first_select_doctor">First select doctor</string>
+  <string name="first_select_service">First select service</string>
   <string name="please_select_consultation_date">Please select consultation date</string>
   <string name="time_slot_not_available">Time slot not available.</string>
   <string name="please_select_consulting_on">Please select consulting on.</string>
@@ -476,7 +475,7 @@
   <string name="please_select_date_first">Please select a date first</string>
   <string name="doctor_weekly_schedule_not_available">Doctor weekly schedule not available.</string>
   <string name="consultation_data_not_available">Consultation data not available.</string>
-  <string name="upcoming_consult">Upcoming Consult</string>
+  <string name="upcoming_consult">Upcoming consult</string>
   <string name="no_video_consultation_available">No video consultation available.</string>
   <string name="coming_soon">Coming soon..</string>
   <string name="there_are_no_email_clients_installed">There are no email clients installed.</string>
@@ -527,4 +526,6 @@
   <string name="payment_status_i">Payment status</string>
   <string name="service_location_i">Service location</string>
   <string name="send_email">Send email</string>
+  <string name="apt_resceduled_success">Your appointment is rescheduled successfully.</string>
+  <string name="service_not_available">Service not available!</string>
 </resources>

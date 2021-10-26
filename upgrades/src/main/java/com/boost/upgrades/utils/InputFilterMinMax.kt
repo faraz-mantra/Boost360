@@ -3,6 +3,7 @@ package com.boost.upgrades.utils
 import android.text.Spanned
 
 import android.text.InputFilter
+import com.framework.analytics.SentryController
 import java.lang.NumberFormatException
 
 
@@ -19,6 +20,7 @@ class InputFilterRange(private var range: IntRange) : InputFilter {
     val input = Integer.parseInt(dest.toString() + source.toString())
     if (range.contains(input)) null else ""
   } catch (nfe: NumberFormatException) {
+    SentryController.captureException(nfe)
     ""
   }
 }

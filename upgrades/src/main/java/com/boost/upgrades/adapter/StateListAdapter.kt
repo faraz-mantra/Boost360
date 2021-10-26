@@ -11,24 +11,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.data.api_model.customerId.StateModel
-import com.boost.upgrades.data.model.FeaturesModel
-import com.boost.upgrades.interfaces.MyAddonsListener
+import com.boost.upgrades.data.api_model.stateCode.Data
 import com.boost.upgrades.interfaces.StateListener
-import com.framework.enums.setTextStyle
 
 
 class StateListAdapter(
   val activity: UpgradeActivity,
-  itemList: List<StateModel>?, var mListener: StateListener
+  itemList: List<Data>?, var mListener: StateListener
 ) : RecyclerView.Adapter<StateListAdapter.upgradeViewHolder>() {
 
-  private var list = ArrayList<StateModel>()
+  private var list = ArrayList<Data>()
   private var selectedState: String? = null
+  private var selectedStateTin: String? = null
   private var selectedItem: Int? = 0
   private lateinit var context: Context
 
   init {
-    this.list = itemList as ArrayList<StateModel>
+    this.list = itemList as ArrayList<Data>
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -41,7 +40,7 @@ class StateListAdapter(
   }
 
   override fun getItemCount(): Int {
-    return list.size //5
+    return list.size
   }
 
   override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
@@ -50,19 +49,22 @@ class StateListAdapter(
 
     if (items.state == selectedState) {
       holder.state_name.setTypeface(null, Typeface.BOLD)
+      holder.stateTin.setTypeface(null,Typeface.BOLD)
       holder.selected_state.setImageDrawable(context.resources.getDrawable(R.drawable.ic_checked))
     }
 
     holder.itemView.setOnClickListener {
       holder.state_name.setTypeface(null, Typeface.BOLD)
+      holder.stateTin.setTypeface(null,Typeface.BOLD)
       holder.selected_state.setImageDrawable(context.resources.getDrawable(R.drawable.ic_checked))
       mListener.stateSelected(items)
     }
   }
 
 
-  fun addupdates(upgradeModel: List<StateModel>, state: String?) {
+  fun addupdates(upgradeModel: ArrayList<Data>, state: String?,stateTin:String?) {
     selectedState = state
+    selectedStateTin = stateTin
     val initPosition = list.size
     list.clear()
     list.addAll(upgradeModel)
@@ -72,15 +74,12 @@ class StateListAdapter(
   class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     var state_name = itemView.findViewById<TextView>(R.id.state_name)!!
+    var stateTin = itemView.findViewById<TextView>(R.id.state_tin)!!
     var selected_state = itemView.findViewById<ImageView>(R.id.selected_state)!!
 
-    private var context: Context = itemView.context
-
-
-    fun upgradeListItem(updateModel: StateModel) {
+    fun upgradeListItem(updateModel: Data) {
       state_name.text = updateModel.state
-
-
+      stateTin.text = "("+updateModel.stateTin +")"
     }
   }
 }

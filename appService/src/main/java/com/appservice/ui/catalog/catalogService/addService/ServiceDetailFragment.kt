@@ -25,7 +25,8 @@ import com.appservice.ui.catalog.catalogService.listing.CreateServiceSuccessBott
 import com.appservice.ui.catalog.catalogService.listing.TypeSuccess
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.*
-import com.appservice.ui.model.ItemsItem
+import com.appservice.model.serviceProduct.service.ItemsItem
+import com.appservice.model.serviceProduct.service.ServiceSearchListingResponse
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.getBitmap
 import com.appservice.viewmodel.ServiceViewModelV1
@@ -36,6 +37,11 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.models.caplimit_feature.PropertiesItem
+import com.framework.models.caplimit_feature.filterFeature
+import com.framework.models.caplimit_feature.getCapData
+import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.File
@@ -88,6 +94,21 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     binding?.toggleService?.setOnToggledListener { _, _ -> initServiceToggle() }
     initServiceToggle()
     listenerEditText()
+    capLimitCheck()
+  }
+
+  private fun capLimitCheck() {
+    val featureService = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureType.PRODUCTCATALOGUE)
+    val capLimitService = featureService?.filterProperty(PropertiesItem.KeyType.LIMIT)
+    if (isEdit.not() && capLimitService != null) {
+      viewModel?.getSearchListings(sessionLocal.fpTag, sessionLocal.fPID, "", 0, 5)?.observeOnce(viewLifecycleOwner, {
+        val data = (it as? ServiceSearchListingResponse)?.result?.paging
+        if (data?.count != null && capLimitService.getValueN() != null && data.count >= capLimitService.getValueN()!!) {
+          baseActivity.hideKeyBoard()
+          showAlertCapLimit("Can't add the service catalogue, please activate your premium Add-ons plan.",CapLimitFeatureResponseItem.FeatureType.PRODUCTCATALOGUE.name)
+        }
+      })
+    }
   }
 
   private fun initServiceToggle() {
@@ -219,8 +240,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     showLongToast(getString(R.string.service_removed_successfully))
     val data = Intent()
     data.putExtra(IntentConstant.IS_UPDATED.name, true)
-    baseActivity?.setResult(Activity.RESULT_OK, data)
-    baseActivity?.finish()
+    baseActivity.setResult(Activity.RESULT_OK, data)
+    baseActivity.finish()
   }
 
   private fun onServiceDetailResponseReceived(it: BaseResponse) {
@@ -263,9 +284,9 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   private fun createUpdateApi() {
     showProgress()
     if (product?.productId == null) {
-      hitApi(viewModel?.createService(product), R.string.service_adding_error);
+      hitApi(viewModel?.createService(product), R.string.service_adding_error)
     } else {
-      hitApi(viewModel?.updateService(product), R.string.service_updating_error);
+      hitApi(viewModel?.updateService(product), R.string.service_updating_error)
     }
   }
 
@@ -273,7 +294,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     if (serviceImage != null) {
       showProgress(getString(R.string.image_uploading))
       val request = UploadImageRequest.getInstance(0, product?.productId!!, serviceImage!!)
-      hitApi(viewModel?.addPrimaryImage(request), R.string.error_service_image);
+      hitApi(viewModel?.addPrimaryImage(request), R.string.error_service_image)
     } else uploadSecondaryImages()
   }
 
@@ -287,9 +308,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         viewModel?.addSecondaryImage(request)?.observeOnce(viewLifecycleOwner, Observer {
           checkPosition += 1
           if ((it.error is NoNetworkException).not()) {
-            if (it.isSuccess()
-                .not()
-            ) showError(resources.getString(R.string.secondary_service_image_upload_error))
+            if (it.isSuccess().not()) showError(resources.getString(R.string.secondary_service_image_upload_error))
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == images.size) addUpdateServiceTiming()
         })
@@ -298,15 +317,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun addUpdateServiceTiming() {
-    val request = AddServiceTimingRequest(
-      product?.productId,
-      product?.Duration,
-      getTimingRequest(this.serviceTimingList)
-    )
-    val requestApi =
-      if (isEdit.not()) viewModel?.addServiceTiming(request) else viewModel?.updateServiceTiming(
-        request
-      )
+    val request = AddServiceTimingRequest(product?.productId, product?.Duration, getTimingRequest(this.serviceTimingList))
+    val requestApi = if (isEdit.not()) viewModel?.addServiceTiming(request) else viewModel?.updateServiceTiming(request)
     requestApi?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         isRefresh = true
@@ -398,20 +410,14 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     val filterSheet = ImagePickerBottomSheet()
     filterSheet.isHidePdf(true)
     filterSheet.onClicked = { openImagePicker(it) }
-    filterSheet.show(
-      this@ServiceDetailFragment.parentFragmentManager,
-      ImagePickerBottomSheet::class.java.name
-    )
+    filterSheet.show(this@ServiceDetailFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
 
   private fun openSuccessBottomSheet() {
     val createdSuccess = CreateServiceSuccessBottomSheet()
     createdSuccess.setData(isEdit)
     createdSuccess.onClicked = { clickSuccessCreate(it) }
-    createdSuccess.show(
-      this@ServiceDetailFragment.parentFragmentManager,
-      CreateServiceSuccessBottomSheet::class.java.name
-    )
+    createdSuccess.show(this@ServiceDetailFragment.parentFragmentManager, CreateServiceSuccessBottomSheet::class.java.name)
   }
 
   private fun clickSuccessCreate(it: String) {
@@ -419,8 +425,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       TypeSuccess.CLOSE.name -> {
         val data = Intent()
         data.putExtra(IntentConstant.IS_UPDATED.name, isRefresh)
-        baseActivity?.setResult(Activity.RESULT_OK, data)
-        baseActivity?.finish()
+        baseActivity.setResult(Activity.RESULT_OK, data)
+        baseActivity.finish()
       }
       TypeSuccess.VISIT_WEBSITE.name -> {
       }

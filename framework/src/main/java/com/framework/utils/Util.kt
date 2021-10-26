@@ -1,33 +1,57 @@
 package com.framework.utils
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
+import android.content.ContentValues
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.ColorFilter
 import android.net.Uri
+import android.graphics.Typeface
 import android.os.Build
+import android.os.Environment
 import android.os.SystemClock
+import android.provider.MediaStore
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
+import android.text.style.*
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.FontRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import androidx.core.content.res.ResourcesCompat
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.SimpleColorFilter
 import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
+import com.framework.BaseApplication
+import com.framework.constants.PackageNames
 import com.framework.views.customViews.CustomTextView
+import com.google.gson.reflect.TypeToken
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
 import java.text.NumberFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import kotlin.collections.ArrayList
+
+inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
 
 fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis: Long = 1000) {
   var lastClickTime: Long = 0
@@ -38,7 +62,7 @@ fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis:
   }
 }
 
-fun Double.roundToFloat(numFractionDigits: Int): Float = "%.${numFractionDigits}f".format(this, Locale.ENGLISH).toFloat()
+fun Double.roundToFloat(numFractionDigits: Int):Float = "%.${numFractionDigits}f".format(this, Locale.ENGLISH).toFloat()
 
 fun Activity.hideKeyBoard() {
   val view = this.currentFocus
@@ -67,6 +91,31 @@ fun fromHtml(html: String?): Spanned? {
     Html.FROM_HTML_MODE_LEGACY
   )
   else Html.fromHtml(html)
+}
+
+fun AppCompatTextView.setIconifiedText(text: String, @DrawableRes iconResId: Int? = null, textColor: String? = null, @ColorRes color: Int? = null, textFont: String? = null, @FontRes font: Int? = null) {
+  SpannableStringBuilder("$text#").apply {
+    if (textColor.isNullOrEmpty().not() && color != null) {
+      val colorRes = ContextCompat.getColor(this@setIconifiedText.context, color)
+      val p1 = Pattern.compile(textColor, Pattern.CASE_INSENSITIVE)
+      val m1 = p1.matcher(text)
+      while (m1.find()) {
+        this.setSpan(ForegroundColorSpan(colorRes), m1.start(), m1.end(), Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+      }
+    }
+    if (textFont.isNullOrEmpty().not() && font != null) {
+      val style = ResourcesCompat.getFont(this@setIconifiedText.context, font)?.style ?: Typeface.BOLD
+      val p2 = Pattern.compile(textFont, Pattern.LITERAL)
+      val m2 = p2.matcher(text)
+      while (m2.find()) {
+        this.setSpan(StyleSpan(style), m2.start(), m2.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+      }
+    }
+    if (iconResId != null) {
+      val align = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) DynamicDrawableSpan.ALIGN_CENTER else DynamicDrawableSpan.ALIGN_BASELINE
+      setSpan(ImageSpan(context, iconResId, align), text.length, text.length + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
+  }.let { setText(it) }
 }
 
 fun getNumberFormat(value: String): String {
@@ -102,15 +151,9 @@ fun CustomTextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
     }
     startIndexOfLink = this.text.toString().indexOf(link.first, startIndexOfLink + 1)
 //      if(startIndexOfLink == -1) continue // todo if you want to verify your texts contains links text
-    spannableString.setSpan(
-      clickableSpan,
-      startIndexOfLink,
-      startIndexOfLink + link.first.length,
-      Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-    )
+    spannableString.setSpan(clickableSpan, startIndexOfLink, startIndexOfLink + link.first.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
   }
-  this.movementMethod =
-    LinkMovementMethod.getInstance() // without LinkMovementMethod, link can not click
+  this.movementMethod = LinkMovementMethod.getInstance() // without LinkMovementMethod, link can not click
   this.setText(spannableString, TextView.BufferType.SPANNABLE)
 }
 
@@ -132,14 +175,125 @@ fun AppCompatActivity.getNavigationBarHeight(): Int {
   } else 0
 }
 
-fun LottieAnimationView.changeLayersColor(
-  @ColorRes colorRes: Int
-) {
+fun LottieAnimationView.changeLayersColor(@ColorRes colorRes: Int) {
   val color = ContextCompat.getColor(context, colorRes)
   val filter = SimpleColorFilter(color)
   val keyPath = KeyPath("**")
   val callback: LottieValueCallback<ColorFilter> = LottieValueCallback(filter)
   addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
+}
+
+val File.size get() = if (!exists()) 0.0 else length().toDouble()
+val File.sizeInKb get() = size / 1024
+val File.sizeInMb get() = sizeInKb / 1024
+val File.sizeInGb get() = sizeInMb / 1024
+val File.sizeInTb get() = sizeInGb / 1024
+
+fun <T> List<T>.toArrayList(): ArrayList<T> {
+  return ArrayList(this)
+}
+
+fun View.toBitmap(): Bitmap? {
+  val returnedBitmap =
+    Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+  val canvas = Canvas(returnedBitmap)
+  val bgDrawable = background
+  bgDrawable?.draw(canvas)
+
+  draw(canvas)
+  return returnedBitmap
+}
+
+fun Bitmap.shareAsImage(packageName:String?=null,text: String?=null){
+    val imagesFolder = File(BaseApplication.instance.getExternalFilesDir(null), "shared_images")
+    var uri: Uri? = null
+    try {
+      imagesFolder.mkdirs()
+      val file = File(imagesFolder, "shareimage${System.currentTimeMillis()}.jpg")
+      val stream = FileOutputStream(file)
+      compress(Bitmap.CompressFormat.JPEG, 100, stream)
+      stream.flush()
+      stream.close()
+      uri = FileProvider.getUriForFile(BaseApplication.instance, "${BaseApplication.instance.packageName}.provider", file)
+      val intent = Intent(Intent.ACTION_SEND)
+      intent.putExtra(Intent.EXTRA_STREAM, uri)
+      intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+      intent.type = "image/*"
+      packageName?.let {
+        intent.`package`= packageName
+      }
+      text?.let {
+        intent.putExtra(Intent.EXTRA_TEXT,text)
+      }
+      BaseApplication.instance.startActivity(intent)
+    } catch (e: Exception) {
+      Log.d("IOException: " , e.message.toString())
+      if (e is ActivityNotFoundException){
+        when(packageName){
+          PackageNames.WHATSAPP->{
+            Toast.makeText(BaseApplication.instance,"Whatsapp is not installed on your device",Toast.LENGTH_LONG).show()
+
+          }
+          PackageNames.INSTAGRAM->{
+            Toast.makeText(BaseApplication.instance,"Instagram is not installed on your device",Toast.LENGTH_LONG).show()
+
+          }
+        }
+      }
+    }
+
+}
+fun Bitmap.saveAsImageToAppFolder(destPath:String): File? {
+  var uri: Uri? = null
+  val file = File(destPath)
+
+  try {
+
+    file.createNewFile()
+    val stream = FileOutputStream(file)
+    compress(Bitmap.CompressFormat.PNG, 90, stream)
+    stream.flush()
+    stream.close()
+    return file
+  }catch (e: IOException) {
+    Log.d("IOException: " , e.message.toString())
+    file.delete()
+    return null
+  }
+
+
+}
+
+fun Bitmap.saveImageToSharedStorage(
+  filename: String=System.currentTimeMillis().toString()+".jpg",
+) {
+  val mimeType: String =  "image/jpeg"
+  val directory: String = Environment.DIRECTORY_PICTURES
+  val mediaContentUri: Uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+  val imageOutStream: OutputStream
+  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+    val values = ContentValues().apply {
+      put(MediaStore.Images.Media.DISPLAY_NAME, filename)
+      put(MediaStore.Images.Media.MIME_TYPE, mimeType)
+      put(MediaStore.Images.Media.RELATIVE_PATH, directory)
+    }
+
+    BaseApplication.instance.contentResolver.run {
+      val uri =
+        BaseApplication.instance.contentResolver.insert(mediaContentUri, values)
+          ?: return
+      imageOutStream = openOutputStream(uri) ?: return
+    }
+  } else {
+    val imagePath = Environment.getExternalStoragePublicDirectory(directory).absolutePath
+    val image = File(imagePath, filename)
+    imageOutStream = FileOutputStream(image)
+  }
+
+  imageOutStream.use {compress(Bitmap.CompressFormat.JPEG, 100, it) }
+  Toast.makeText(BaseApplication.instance, "Image Saved To Storage", Toast.LENGTH_SHORT).show()
+
 }
 
 inline fun <reified T> read(): T {
