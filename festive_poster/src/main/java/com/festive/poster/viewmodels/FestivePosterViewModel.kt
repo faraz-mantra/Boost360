@@ -76,17 +76,11 @@ class FestivePosterViewModel: BaseViewModel() {
 
         return lData
     }
-    fun prepareTemplatePackList(floatingPointId: String?,floatingPointTag: String?,tags: List<PosterPackTagModel>?){
-        val list = ArrayList<PosterPackModel>()
-        viewModelScope.launch {
-            tags?.forEach {
 
-               val response =  NowFloatsRepository.getTemplates(floatingPointId,floatingPointTag, arrayListOf(it.tag))
+    fun updatePurchaseStatus(floatingPointId: String?,fpTag: String?,posterTag:String?,templateIds:List<String>): LiveData<BaseResponse> {
+        return NowFloatsRepository.updatePurchaseStatus(floatingPointId,fpTag,posterTag,templateIds).toLiveData()
 
-              //  val posterPackModel = PosterPackModel(it,response.Result.Templates.toArrayList())
-
-            }
-        }
     }
 
-}
+
+    }

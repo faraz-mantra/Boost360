@@ -195,7 +195,7 @@
             android:textColor="@color/black_4a4a4a"
             android:textSize="@dimen/body_1" />
 
-          <com.framework.views.customViews.CustomTextView
+         <!-- <com.framework.views.customViews.CustomTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_16"
@@ -217,7 +217,7 @@
             android:minLines="4"
             android:padding="@dimen/size_10"
             android:scrollbars="vertical"
-            android:textSize="@dimen/body_1" />
+            android:textSize="@dimen/body_1" />-->
 
 
           <com.framework.views.customViews.CustomTextView

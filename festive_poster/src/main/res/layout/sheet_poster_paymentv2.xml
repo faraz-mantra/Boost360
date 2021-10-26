@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+      xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+
+    <com.framework.views.customViews.CustomImageView
+        android:id="@+id/riv_close_bottomSheet"
+        android:layout_width="@dimen/size_40"
+        android:layout_height="@dimen/size_40"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/size_15"
+        android:src="@drawable/ic_fposter_help_bsheet_close_white" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:background="@drawable/shape_fposter_grey_top_rounded_rect"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+          android:paddingVertical="@dimen/size_12"
+          android:paddingHorizontal="@dimen/size_24"
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+        <com.framework.views.customViews.CustomTextView
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/size_25"
+            android:text="₹"
+            android:fontFamily="@font/bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            tools:text="51"
+            android:fontFamily="@font/bold"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/size_50"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_marginStart="@dimen/size_16"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+          <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_pack_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/bold"
+              tools:text="for diwali pack"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="@dimen/size_14" />
+          <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_pack_size"
+              android:layout_width="wrap_content"
+              tools:text="for pack of 5 poster"
+              android:fontFamily="@font/regular"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="@dimen/size_12"
+              android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+          android:elevation="@dimen/size_4"
+          android:padding="@dimen/size_24"
+          android:orientation="vertical"
+          android:background="@drawable/shape_fposter_white_top_rounded_rect"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_pay_later_price"
+            android:textColor="@color/color_888888"
+            android:fontFamily="@font/bold"
+            android:textSize="@dimen/size_12"
+            tools:text="Get the poster pack now &amp; pay ₹51 later. "
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_desc"
+            android:layout_marginTop="@dimen/size_8"
+            android:textColor="@color/black_4a4a4a"
+            android:fontFamily="@font/regular"
+            android:textSize="@dimen/size_12"
+            tools:text="24 hours after the the order is confirmed, we’ll send you a secure payment link on your registered email ID abcdfff@gmail.com
+&amp; +918142558406 to make the payment or ₹51 (including taxes). "
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <com.framework.views.customViews.CustomTextView
+        android:id="@+id/btn_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_50"
+        android:background="@drawable/bg_button_orange_gradient"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:text="@string/confirm_order"
+        android:textColor="@color/white"
+        app:textType="HEADING_6" />
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

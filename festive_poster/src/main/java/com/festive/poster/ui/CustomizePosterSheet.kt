@@ -88,7 +88,6 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
     binding?.etWhatsapp?.setText(session?.userPrimaryMobile ?: session?.fPPrimaryContactNumber)
     binding?.etWebsite?.setText(getDomainName())
     binding?.etEmail?.setText(session?.userProfileEmail ?: session?.fPEmail)
-    binding?.etDesc?.setText(sharedViewModel?.selectedPosterPack?.tagsModel?.description)
   }
 
   private fun getDomainName(): String? {
@@ -113,27 +112,7 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
   }
 
   private fun submitDetails() {
-    /*sharedViewModel?.customizationDetails?.value = PosterCustomizationModel(
-      packTag!!,
-      binding?.etName?.text.toString(),
-      binding?.etEmail?.text.toString(),
-      binding?.etWhatsapp?.text.toString(),
-      binding?.etDesc?.text.toString(),
-      binding?.etWebsite?.text.toString(),
-      path
-    )*/
-    /*if (!isAlreadyPurchased) {
-      //PosterPaymentSheet().show(parentFragmentManager, PosterPaymentSheet::class.java.name)
-      //gotoMarketPlace()
-      uploadImageAndSaveData()
-    } else if (creatorName == PosterListFragment::class.java.name) {
-      uploadImageAndSaveData()
-    }else{
-      sharedViewModel?.keyValueSaved?.value=null
-      addFragmentReplace(R.id.container, PosterListFragment.newInstance(packTag!!), true)
-      dismiss()
-    }
-*/
+
     uploadImageAndSaveData()
   }
 
@@ -166,7 +145,7 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
     "user_image" to imgUrl)
 
     val templateIds = ArrayList<String>()
-    if (false){
+    if (isAlreadyPurchased){
       templateIds.add(sharedViewModel?.selectedPoster?.id!!)
     }else{
       sharedViewModel?.selectedPosterPack?.posterList?.forEach {
@@ -175,7 +154,6 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
     }
 
 
-    sharedViewModel?.greetingMessage = binding?.etDesc?.text.toString()
 
     var countApiCallSuccess =0
     var totalApiCall=0
@@ -207,7 +185,7 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
     if (isAlreadyPurchased||creatorName==PosterListFragment::class.java.name){
       dismiss()
     }else{
-      addFragmentReplace(R.id.container, PosterListFragment.newInstance(packTag!!), true)
+      PosterPaymentSheetV2.newInstance().show(parentFragmentManager,PosterPaymentSheetV2::class.java.name)
     }
     dismiss()
   }
@@ -241,10 +219,7 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
       showLongToast("Please enter valid whatsapp")
       return false
     }
-    if (binding?.etDesc?.text?.toString().isNullOrEmpty()) {
-      showLongToast("Please enter greeting message")
-      return false
-    }
+
     if (binding?.etWhatsapp?.text?.toString().isNullOrEmpty()) {
       showLongToast("Please enter whatsapp")
       return false

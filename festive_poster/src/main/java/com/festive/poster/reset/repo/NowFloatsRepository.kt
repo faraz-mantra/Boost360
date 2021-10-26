@@ -67,6 +67,20 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
     )
   }
 
+  fun updatePurchaseStatus(floatingPointId: String?,fpTag: String?,posterTag:String?,templateIds:List<String>): Observable<BaseResponse> {
+    val body =JsonObject().apply {
+      addProperty("floatingPointId",floatingPointId)
+      addProperty("floatingPointTag",fpTag)
+      add("templateIds",Gson().toJsonTree(templateIds).asJsonArray)
+      addProperty("tag",posterTag)
+      addProperty("isPurchased",true)
+    }
+    return NowFloatsRepository.makeRemoteRequest(
+      remoteDataSource.updatePurchaseStatus(body),
+      TaskCode.SAVE_KEY_VALUES
+    )
+  }
+
   override fun getRemoteDataSourceClass(): Class<NowFloatsRemoteData> {
     return NowFloatsRemoteData::class.java
   }

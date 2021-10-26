@@ -26,8 +26,12 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecycler
   //  setupVp(binding.vpPoster)
 
     if (model.isPurchased) {
+      binding.btnGetPack.setBackgroundColor(getColor(R.color.white)!!)
+      binding.btnGetPack.setTextColor(getColor(R.color.colorPrimary)!!)
       binding.btnGetPack.text = getResources()?.getString(R.string.view_pack)
     } else {
+      binding.btnGetPack.setBackgroundColor(getColor(R.color.colorPrimary)!!)
+      binding.btnGetPack.setTextColor(getColor(R.color.white)!!)
       binding.btnGetPack.text = "Get ${model.tagsModel.name} Posters Pack"
 
     }

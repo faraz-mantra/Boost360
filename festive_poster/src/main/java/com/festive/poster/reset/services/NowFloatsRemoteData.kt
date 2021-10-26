@@ -40,4 +40,8 @@ interface NowFloatsRemoteData {
     @Body body:JsonObject?,
   ): Observable<Response<BaseResponse>>
 
+  @POST(EndPoints.UPDATE_PURCHASE_STATUS)
+  fun updatePurchaseStatus(
+    @Body body:JsonObject?,
+  ): Observable<Response<BaseResponse>>
 }

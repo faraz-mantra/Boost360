@@ -66,25 +66,11 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
   }
 
   private fun setObserver() {
-    sharedViewModel?.keyValueSaved?.observeOnce(viewLifecycleOwner,{
+    sharedViewModel?.keyValueSaved?.observe(viewLifecycleOwner,{
+      Log.i(TAG, "keyvaluesaved called: ")
         getTemplateViewConfig()
     })
-   /* sharedViewModel?.customizationDetails?.observe(viewLifecycleOwner, {
-      *//*val posterPack = dataList?.find { posterPackModel -> posterPackModel.tagsModel.Tag==it.tag }
-       Log.i(TAG, "poster pack: ${Gson().toJson(posterPack?.tagsModel)}")
-       posterPack?.posterList?.forEach {posterModel ->
-           Log.i(TAG, "poster model: ${Gson().toJson(posterModel)}")
-           posterModel.Keys.forEach { posterKeyModel ->
-               if (posterKeyModel.Name=="Title"){
-                   posterKeyModel.Custom = it.name
-               }
-           }
 
-       }
-       Log.i(TAG, "result: ${Gson().toJson(dataList?.get(1))}")
-       adapter?.notifyDataSetChanged()*//*
-
-    })*/
   }
 
 
@@ -133,8 +119,14 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
             feature.feature_code == pack.tagsModel.tag
           }
           pack.price = feature_festive?.price ?: 0.0
+
+
+          pack.posterList?.forEach {
+              poster->poster.isPurchased=pack.isPurchased
+          }
           Log.i(TAG, "festive price: ${feature_festive?.price}")
         }
+
 
 
          // rearrangeList()
@@ -219,12 +211,12 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
 
   fun showShimmerAnimation(){
     binding?.shimmerLayout?.visible()
-    binding?.rvPosters?.gone()
+    binding?.listLayout?.gone()
   }
 
   fun hideShimmerAnimation(){
     binding?.shimmerLayout?.gone()
-    binding?.rvPosters?.visible()
+    binding?.listLayout?.visible()
   }
 
   override fun onResume() {

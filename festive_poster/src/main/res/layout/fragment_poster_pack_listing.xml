@@ -10,6 +10,8 @@
 
 
     <com.facebook.shimmer.ShimmerFrameLayout
+        android:visibility="gone"
+
         android:nestedScrollingEnabled="true"
         android:id="@+id/shimmer_layout"
         android:layout_width="match_parent"
@@ -31,17 +33,92 @@
     </com.facebook.shimmer.ShimmerFrameLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:visibility="gone"
-        android:nestedScrollingEnabled="true"
-        android:id="@+id/rv_posters"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_marginTop="8dp"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      tools:itemCount="2"
-      tools:listitem="@layout/list_item_poster_pack" />
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/list_layout"
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+       >
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_posters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:overScrollMode="never"
+            tools:itemCount="2"
+            tools:listitem="@layout/list_item_poster_pack" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_200">
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_centerInParent="true"
+              android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+              <com.framework.views.customViews.CustomImageView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginEnd="@dimen/size_8"
+                  android:src="@drawable/ic_fposter_cake" />
+
+              <com.framework.views.customViews.CustomImageView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginEnd="@dimen/size_8"
+                  android:src="@drawable/ic_fposter_userfocus" />
+
+              <com.framework.views.customViews.CustomImageView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginEnd="@dimen/size_8"
+                  android:src="@drawable/ic_fposter_calendar" />
+
+              <com.framework.views.customViews.CustomImageView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginEnd="@dimen/size_8"
+                  android:src="@drawable/ic_fposter_share2" />
+            </LinearLayout>
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:textSize="@dimen/size_12"
+                android:textColor="@color/color_888888"
+                android:fontFamily="@font/regular"
+                android:layout_marginHorizontal="@dimen/size_24"
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_height="wrap_content"
+                android:text="@string/poster_pack_footer_desc" />
+
+          </androidx.appcompat.widget.LinearLayoutCompat>
+        </RelativeLayout>
+
+
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+
   </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

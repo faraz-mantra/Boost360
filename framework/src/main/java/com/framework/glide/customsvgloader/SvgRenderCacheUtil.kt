@@ -50,7 +50,7 @@ class SvgRenderCacheUtil private constructor() {
         var result =svgString
 
         posterKeys.forEach {
-            val replaceVal = if (it.custom!=null&&isPurchased){
+            val replaceVal = if (it.custom!=null){
                 it.custom
             } else it.default
 //            Log.i(TAG, "replace: $replaceVal")

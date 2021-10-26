@@ -34,7 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
 
-                    android:src="@drawable/ic_fposter_boost_360_watermark" />
+                    android:src="@drawable/ic_fposter_watermark" />
 
                 <com.framework.views.customViews.CustomMaterialButton
                     android:id="@+id/btn_tap_edit"
