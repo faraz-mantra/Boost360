@@ -48,7 +48,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020102
+        versionCode 2020020103
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -120,7 +120,7 @@ android {
             buildConfigField "String", "APXOR_BUNDLED_ID", '"0092e23d-20a6-49b9-82f9-afdc2d4872d3"'
         }
         partone {
-            versionName "6.0.10"
+            versionName "6.0.11"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
@@ -245,6 +245,12 @@ dependencies {
 
     implementation 'com.android.support:design:28.0.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+
+    api(group: "androidx.work", name: "work-runtime") {
+        version {
+            strictly "2.6.0"
+        }
+    }
 
     // Koin Dependency Injection
     implementation "org.koin:koin-android:$koin_version"

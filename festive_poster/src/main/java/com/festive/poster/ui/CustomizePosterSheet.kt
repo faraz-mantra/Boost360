@@ -77,16 +77,21 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
   private fun setUserDetails() {
     binding?.etName?.setText(session?.userProfileName ?: session?.fpTag)
     binding?.etWhatsapp?.setText(session?.userPrimaryMobile ?: session?.fPPrimaryContactNumber)
-    binding?.etWebsite?.setText("www.${session?.getDomainName(true)}")
+    binding?.etWebsite?.setText(getDomainName())
     binding?.etEmail?.setText(session?.userProfileEmail ?: session?.fPEmail)
     binding?.etDesc?.setText(sharedViewModel?.selectedPosterPack?.posterList?.firstOrNull()?.greeting_message)
+  }
+
+  private fun getDomainName(): String? {
+    return if(session?.getDomainName(true)?.startsWith("www.") == true) session?.getDomainName(true)
+    else "www.${session?.getDomainName(true)}"
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
       binding?.ivCancel -> dismiss()
-      binding?.uploadSelfie -> ImagePicker.with(this).crop().start(RC_IMAGE_PCIKER)
+      binding?.uploadSelfie -> ImagePicker.with(this).cropSquare().start(RC_IMAGE_PCIKER)
       binding?.tvUpdateInfo -> {
         Log.i(TAG, "path: $path")
         if (validation()) {
