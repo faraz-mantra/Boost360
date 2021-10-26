@@ -23,6 +23,7 @@ import com.dashboard.AppDashboardApplication;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.framework.analytics.UserExperiorController;
+import com.festive.poster.FestivePosterApplication;
 import com.inventoryorder.BaseOrderApplication;
 import com.invitereferrals.invitereferrals.IRInterfaces.IRTrackReferrerCode;
 import com.invitereferrals.invitereferrals.InviteReferralsApi;
@@ -123,6 +124,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         AppPreSignInApplication.initModule(this);
         FlorisApplication.instance = this;
         FlorisApplication.initModule(this);
+        FestivePosterApplication.instance =this;
+        FestivePosterApplication.initModule(this);
         SharedPreferences pref = BaseOrderApplication.instance.getSharedPreferences(Constants.PREF_NAME_REFERRAL, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         initWebEngage();

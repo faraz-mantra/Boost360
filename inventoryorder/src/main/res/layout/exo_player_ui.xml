@@ -32,7 +32,7 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:indeterminate="true"
-      android:indeterminateTint="@color/red_F40000" />
+      android:indeterminateTint="@color/red_E39595" />
 
     <TextView
       android:id="@id/exo_error_message"

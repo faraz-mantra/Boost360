@@ -33,7 +33,7 @@
 
           <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_210"
+            android:layout_height="@dimen/size_240"
             android:background="@drawable/ic_bg_dash" />
 
           <View
@@ -96,6 +96,15 @@
               android:layout_height="@dimen/size_48"
               android:layout_marginStart="@dimen/size_16"
               android:layout_marginTop="@dimen/size_20"
+              android:layout_marginEnd="@dimen/size_16"
+              android:background="@drawable/bg_rounded_20"
+              android:backgroundTint="@color/placeholder_bg"
+              android:gravity="center|center_vertical" />
+            <View
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/size_48"
+              android:layout_marginStart="@dimen/size_16"
+              android:layout_marginTop="@dimen/size_10"
               android:layout_marginEnd="@dimen/size_16"
               android:background="@drawable/bg_rounded_20"
               android:backgroundTint="@color/placeholder_bg"

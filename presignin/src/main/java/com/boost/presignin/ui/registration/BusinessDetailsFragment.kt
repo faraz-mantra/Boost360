@@ -1,7 +1,6 @@
 package com.boost.presignin.ui.registration
 
 import android.os.Bundle
-import android.view.WindowManager
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
@@ -22,6 +21,13 @@ import com.framework.webengageconstant.*
 import okio.Buffer
 import okio.BufferedSource
 import java.nio.charset.Charset
+import android.graphics.PorterDuff
+
+import android.graphics.drawable.Drawable
+import androidx.core.content.ContextCompat
+import android.graphics.PorterDuffColorFilter
+import com.framework.analytics.SentryController
+
 
 class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, LoginSignUpViewModel>() {
 
@@ -68,6 +74,54 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
         else -> binding?.civPhone?.setTintColor(getColor(R.color.et_unselected_color))
       }
     }
+    binding?.nametEt?.setOnFocusChangeListener { v, hasFocus ->
+      var drawable: Drawable? = ContextCompat.getDrawable(requireActivity(),R.drawable.ic_business_detail_user)
+      when (hasFocus) {
+        true ->{
+          drawable?.colorFilter =
+            PorterDuffColorFilter(resources.getColor(R.color.orange), PorterDuff.Mode.SRC_IN)
+        }
+        else -> {
+          drawable?.colorFilter =
+            PorterDuffColorFilter(resources.getColor(R.color.et_unselected_color), PorterDuff.Mode.SRC_IN)
+        }
+
+      }
+      binding?.nametEt?.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable,null,null,null)
+    }
+
+    binding?.businessNameEt?.setOnFocusChangeListener { v, hasFocus ->
+      var drawable: Drawable? = ContextCompat.getDrawable(requireActivity(),R.drawable.ic_business_detail_catelog)
+      when (hasFocus) {
+        true ->{
+          drawable?.colorFilter =
+            PorterDuffColorFilter(resources.getColor(R.color.orange), PorterDuff.Mode.SRC_IN)
+        }
+        else -> {
+          drawable?.colorFilter =
+            PorterDuffColorFilter(resources.getColor(R.color.et_unselected_color), PorterDuff.Mode.SRC_IN)
+        }
+
+      }
+      binding?.businessNameEt?.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable,null,null,null)
+    }
+
+    binding?.emailEt?.setOnFocusChangeListener { v, hasFocus ->
+      var drawable: Drawable? = ContextCompat.getDrawable(requireActivity(),R.drawable.ic_business_detail_email)
+      when (hasFocus) {
+        true ->{
+          drawable?.colorFilter =
+            PorterDuffColorFilter(resources.getColor(R.color.orange), PorterDuff.Mode.SRC_IN)
+        }
+        else -> {
+          drawable?.colorFilter =
+            PorterDuffColorFilter(resources.getColor(R.color.et_unselected_color), PorterDuff.Mode.SRC_IN)
+        }
+
+      }
+      binding?.emailEt?.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable,null,null,null)
+    }
+
     binding?.confirmButton?.setOnClickListener {
       val name = binding?.nametEt?.text?.toString()
       val businessName = binding?.businessNameEt?.text?.toString();
@@ -180,6 +234,8 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
       val responseBodyString: String? = buffer?.clone()?.readString(Charset.forName("UTF-8"))
       responseBodyString.toBoolean()
     } catch (e: Exception) {
+      SentryController.captureException(e)
+
       false
     }
   }

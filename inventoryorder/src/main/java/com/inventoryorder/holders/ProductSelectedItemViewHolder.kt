@@ -31,7 +31,7 @@ class ProductSelectedItemViewHolder(binding: ItemProductsAddedBinding) : AppBase
 
     val currency = data.productDetails?.getCurrencyCodeValue() ?: "INR"
     binding.tvProductName.text = data.productDetails?.name ?: ""
-    binding.tvProductPrice.text = "$currency ${data?.productDetails?.getPayablePrice()}"
+    binding.tvProductPrice.text = "$currency ${data.productDetails?.getPayablePrice()}"
     binding.tvProductQuantity.text = " x ${data.quantity}"
     binding.tvTotalItemPrice.text = "$currency ${data.getPayablePriceAmount()}"
     if (data.getActualPriceAmount() > 0.0) {

@@ -9,7 +9,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
 import android.net.Uri
-import android.os.SystemClock
 import android.view.View
 import android.view.animation.LinearInterpolator
 import android.webkit.MimeTypeMap
@@ -29,7 +28,7 @@ fun <F : Fragment> AppCompatActivity.getFragment(fragmentClass: Class<F>): F? {
   val navHostFragment = this.supportFragmentManager.fragments.first() as NavHostFragment
   navHostFragment.childFragmentManager.fragments.forEach {
     if (fragmentClass.isAssignableFrom(it.javaClass)) {
-      return it as F
+      return it as? F
     }
   }
   return null

@@ -48,7 +48,7 @@
         style="@style/match_wrap"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="6"
-        tools:listitem="@layout/item_bottom_sheet_pick_up_delivery_option" />
+        tools:listitem="@layout/item_time_slot_appointment" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

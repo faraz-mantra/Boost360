@@ -249,7 +249,7 @@
               android:id="@+id/create_message_subscribe_button"
               android:layout_width="@dimen/content_creation_icon_sizes"
               android:layout_height="@dimen/content_creation_icon_sizes"
-              android:src="@drawable/subscribe_icon" />
+              android:src="@drawable/subscribe_icon_active" />
           </LinearLayout>
 
           <LinearLayout
@@ -294,7 +294,7 @@
               android:id="@+id/create_message_activity_twitter_button"
               android:layout_width="@dimen/content_creation_icon_sizes"
               android:layout_height="@dimen/content_creation_icon_sizes"
-              app:srcCompat="@drawable/twitter_icon_inactive" />
+              app:srcCompat="@drawable/twitter_icon_n_inactive" />
           </LinearLayout>
 
           <LinearLayout

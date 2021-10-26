@@ -6,6 +6,7 @@ import android.graphics.Typeface
 import android.graphics.Typeface.*
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.PopupWindow
 import android.widget.TextView
@@ -57,7 +58,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   private var businessName: String? = null
   private var businessContact: String? = null
   private var popupWindow: PopupWindow? = null
-
+  private  val TAG = "WebsiteFragment"
   override fun getLayout(): Int {
     return R.layout.fragment_website
   }
@@ -68,6 +69,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
 
   override fun onCreateView() {
     super.onCreateView()
+    Log.i(TAG, "onCreateView: ")
     session = UserSessionManager(baseActivity)
     setOnClickListener(
       binding?.txtDomainName, binding?.btnProfileLogo, binding?.editProfile,
@@ -163,6 +165,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       WebsiteActionItem.IconType.trip_adviser_ratings -> baseActivity.startListTripAdvisor(session)
       WebsiteActionItem.IconType.seasonal_offers -> baseActivity.startListSeasonalOffer(session)
       WebsiteActionItem.IconType.website_theme -> baseActivity.startWebsiteTheme(session)
+      WebsiteActionItem.IconType.doctor_e_profile_listing -> baseActivity.startListDoctors(session)
     }
   }
 
@@ -202,8 +205,8 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       }
     }
     binding?.txtOpenClose?.text = resources.getString(if (isOpen) R.string.open_now else R.string.close_now)
-    binding?.txtOpenClose?.setTextColor(if (isOpen) getColor(R.color.green_light) else getColor(R.color.red_F40000))
-    binding?.ellipseOpenClose?.changeLayersColor(if (isOpen) R.color.green_light else R.color.red_F40000)
+    binding?.txtOpenClose?.setTextColor(if (isOpen) getColor(R.color.green_light) else getColor(R.color.red_E39595))
+    binding?.ellipseOpenClose?.changeLayersColor(if (isOpen) R.color.green_light else R.color.red_E39595)
 
   }
 

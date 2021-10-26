@@ -53,7 +53,6 @@
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
             android:src="@drawable/ic_close_icon"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/close" />
 
@@ -80,15 +79,20 @@
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@id/marketplace_layout1" />
-        <!--    <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="@dimen/_15sdp"
-android:paddingTop="@dimen/_30sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/separator">-->
+
+        <ProgressBar
+          android:id="@+id/states_progress_bar"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:indeterminate="true"
+          android:visibility="gone"
+          android:layout_marginTop="10dp"
+          tools:visibility="visible"
+          style="?android:attr/progressBarStyleLarge"
+          android:indeterminateTint="@color/colorAccentLight"
+          android:indeterminateTintMode="src_atop"
+          app:layout_constraintTop_toBottomOf="@+id/separator"/>
+
 
         <androidx.core.widget.NestedScrollView
           android:id="@+id/scrollViewStates"
@@ -99,7 +103,7 @@ android:paddingTop="@dimen/_30sdp"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@id/separator">
-          <!--android:padding="@dimen/_15sdp"-->
+
           <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_state"
             android:layout_width="match_parent"
@@ -117,9 +121,9 @@ android:paddingTop="@dimen/_30sdp"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@id/scrollViewStates" />
-        <!--</LinearLayout>-->
+
 
       </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
   </RelativeLayout>
-</LinearLayout><!--</androidx.core.widget.NestedScrollView>-->
+</LinearLayout>

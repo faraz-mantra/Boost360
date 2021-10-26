@@ -18,10 +18,12 @@ import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.CouponsModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.remote.ApiInterface
+import com.boost.upgrades.data.remote.NewApiInterface
 import com.boost.upgrades.data.renewalcart.*
 import com.boost.upgrades.utils.SingleLiveEvent
 import com.boost.upgrades.utils.Utils
 import com.dashboard.model.live.coupon.CouponServiceModel
+import com.framework.analytics.SentryController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.luminaire.apolloar.base_class.BaseViewModel
@@ -68,6 +70,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   var _updateProceedClick: MutableLiveData<Boolean> = MutableLiveData()
 
   var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
+  var NewApiService = Utils.getRetrofit(true).create(NewApiInterface::class.java)
+
 
   val compositeDisposable = CompositeDisposable()
 
@@ -210,6 +214,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
       out.close()
     } catch (e: IOException) {
       println("exception  $e")
+      SentryController.captureException(e)
     }
   }
 
@@ -652,6 +657,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
       cityResult.postValue(cityNames)
     } catch (ioException: JSONException) {
       ioException.printStackTrace()
+      SentryController.captureException(ioException)
     }
   }
 
@@ -671,6 +677,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
       stateResult.postValue(stateNames)
     } catch (ioException: JSONException) {
       ioException.printStackTrace()
+      SentryController.captureException(ioException)
     }
   }
 
@@ -680,7 +687,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 //            updatesLoader.postValue(true)
 //            APIRequestStatus = "Order registration in progress..."
       compositeDisposable.add(
-        ApiService.redeemCoupon(redeemCouponRequest)
+        NewApiService.redeemCoupon(redeemCouponRequest)
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(

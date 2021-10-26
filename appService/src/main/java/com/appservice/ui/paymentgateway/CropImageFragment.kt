@@ -15,6 +15,7 @@ import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentImageCropBinding
 import com.appservice.model.SessionData
+import com.framework.analytics.SentryController
 import com.framework.models.BaseViewModel
 import com.theartofdev.edmodo.cropper.CropImageView
 import java.io.File
@@ -63,6 +64,7 @@ class CropImageFragment : AppBaseFragment<FragmentImageCropBinding, BaseViewMode
       try {
         fileInputStream = FileInputStream(file)
       } catch (e: FileNotFoundException) {
+        SentryController.captureException(e)
         e.printStackTrace()
       }
       val panImageBitmap: Bitmap? = BitmapFactory.decodeStream(fileInputStream)

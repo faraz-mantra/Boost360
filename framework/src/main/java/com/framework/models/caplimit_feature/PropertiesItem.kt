@@ -11,10 +11,10 @@ data class PropertiesItem(
 ) : Serializable {
 
   enum class KeyType {
-    LATESTUPDATES, PRODUCT_CATALOUGE, CUSTOM_PAGE, IMAGE
+    LIMIT
   }
 
   fun getValueN(): Int? {
-    return value?.toIntOrNull()
+    return if (value != null && (value == "-1" || value == "0")) null else value?.toIntOrNull()
   }
 }

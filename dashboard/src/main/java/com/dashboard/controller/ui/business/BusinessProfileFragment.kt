@@ -1,9 +1,7 @@
 package com.dashboard.controller.ui.business
 
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.graphics.*
-import android.graphics.drawable.Drawable
 import android.media.ThumbnailUtils
 import android.os.Bundle
 import android.view.View
@@ -25,7 +23,7 @@ import com.dashboard.controller.ui.business.bottomsheet.BusinessNameBottomSheet
 import com.dashboard.controller.ui.business.model.BusinessProfileModel
 import com.dashboard.controller.ui.business.model.BusinessProfileUpdateRequest
 import com.dashboard.controller.ui.business.model.UpdatesItem
-import com.dashboard.controller.ui.website_theme.dialog.WebViewDialog
+import com.dashboard.controller.ui.websiteTheme.dialog.WebViewDialog
 import com.dashboard.databinding.FragmentBusinessProfileBinding
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.BusinessProfileViewModel
@@ -46,11 +44,8 @@ import com.framework.views.customViews.CustomImageView
 import com.framework.webengageconstant.*
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse.Companion.getConnectedChannel
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse.Companion.visibleChannels
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.*
 
@@ -133,7 +128,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
         binding?.ctvActive?.setTextColor(getColor(R.color.green_27AE60))
       } else {
         binding?.ctvActive?.text = getString(R.string.inactive)
-        binding?.ctvActive?.setTextColor(getColor(R.color.red_F40000))
+        binding?.ctvActive?.setTextColor(getColor(R.color.red_E39595))
       }
       binding?.ctvActive?.gone()
     } else {
@@ -159,21 +154,13 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     var s_uuid = UUID.randomUUID().toString()
     s_uuid = s_uuid.replace("-", "")
     viewModel?.putUploadBusinessLogo(
-      clientId2,
-      fpId = FirestoreManager.fpId,
-      reqType = "sequential",
-      reqId = s_uuid,
-      totalChunks = "1",
-      currentChunkNumber = "1",
-      file = RequestBody.create("image/png".toMediaTypeOrNull(), businessLogoImage.readBytes())
+      clientId2, fpId = FirestoreManager.fpId, reqType = "sequential", reqId = s_uuid, totalChunks = "1",
+      currentChunkNumber = "1", file = RequestBody.create("image/png".toMediaTypeOrNull(), businessLogoImage.readBytes())
     )?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
-        session?.storeFPDetails(
-          GET_FP_DETAILS_LogoUrl,
-          it.parseStringResponse()?.replace("\\", "")?.replace("\"", "")
-        )
-        showSnackBarPositive(requireActivity(), getString(R.string.business_image_uploaded))
-      } else showSnackBarNegative(requireActivity(), it.message)
+        session?.storeFPDetails(GET_FP_DETAILS_LogoUrl, it.parseStringResponse()?.replace("\\", "")?.replace("\"", ""))
+        showSnackBarPositive( getString(R.string.business_image_uploaded))
+      } else showSnackBarNegative( it.message?:getString(R.string.something_went_wrong))
       hideProgress()
     })
   }
@@ -333,17 +320,11 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
           val response = it?.parseStringResponse()
           if (response?.contains("NAME") == true) {
             onBusinessNameAddedOrUpdated(true)
-            showSnackBarPositive(
-              requireActivity(),
-              getString(R.string.business_name_published_successfully)
-            )
+            showSnackBarPositive(getString(R.string.business_name_published_successfully))
           }
           if (response?.contains("DESCRIPTION") == true) {
             onBusinessDescAddedOrUpdated(true)
-            showSnackBarPositive(
-              requireActivity(),
-              getString(R.string.business_description_published_successfully)
-            )
+            showSnackBarPositive(getString(R.string.business_description_published_successfully))
           }
           session?.storeFPDetails(
             GET_FP_DETAILS_DESCRIPTION,

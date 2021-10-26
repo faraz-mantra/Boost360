@@ -42,10 +42,12 @@ import androidx.core.content.ContextCompat;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.boost.upgrades.UpgradeActivity;
+import com.framework.analytics.SentryController;
 import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem;
 import com.framework.models.caplimit_feature.PropertiesItem;
 import com.framework.models.firestore.FirestoreManager;
 import com.google.firebase.FirebaseApp;
+import com.google.gson.GsonBuilder;
 import com.nowfloats.CustomPage.Model.CreatePageModel;
 import com.nowfloats.CustomPage.Model.CustomPageLink;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
@@ -65,8 +67,10 @@ import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import java.io.File;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
+import java.util.HashMap;
 
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import jp.wasabeef.richeditor.RichEditor;
@@ -76,6 +80,8 @@ import retrofit.RetrofitError;
 import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 
+import static com.framework.models.caplimit_feature.CapLimitFeatureResponseItemKt.filterFeature;
+import static com.framework.models.caplimit_feature.CapLimitFeatureResponseItemKt.getCapData;
 import static com.framework.utils.UtilKt.hideKeyBoard;
 import static com.framework.webengageconstant.EventLabelKt.ENTER_DIFFERENT_TITLE_AND_TRY_AGAIN;
 import static com.framework.webengageconstant.EventLabelKt.FAILED_TO_UPDATE_CUSTOMPAGE;
@@ -110,6 +116,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
   private ImageView deletePage;
   private int GALLERY_PHOTO = 5;
   private RiaNodeDataModel mRiaNodedata;
+  public ArrayList<CustomPageModel> dataModel = new ArrayList();
 
   @Override
   protected void attachBaseContext(Context newBase) {
@@ -132,10 +139,10 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     FirebaseApp.initializeApp(CreateCustomPageActivity.this);
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P&&!Constants.webViewInit) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && !Constants.webViewInit) {
       String process = getProcessName(this);
       String packageName = this.getPackageName();
-      if (!packageName.equals(process)){
+      if (!packageName.equals(process)) {
         WebView.setDataDirectorySuffix(process);
         Constants.webViewInit = true;
       }
@@ -143,6 +150,10 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     setContentView(R.layout.create_custom_page);
 
     curPos = getIntent().getIntExtra("position", -1);
+    String jsonData = getIntent().getStringExtra("data");
+    if (jsonData != null) {
+      dataModel = new ArrayList(Arrays.asList(new GsonBuilder().create().fromJson(jsonData, CustomPageModel[].class)));
+    }
 
     mRiaNodedata = getIntent().getParcelableExtra(Constants.RIA_NODE_DATA);
 
@@ -208,6 +219,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
               }
             });
       } catch (Exception e) {
+        SentryController.INSTANCE.captureException(e);
         e.printStackTrace();
         Methods.showSnackBarNegative(this, getString(R.string.something_went_wrong_try_again));
         materialProgress.dismiss();
@@ -233,7 +245,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     deletePage.setOnClickListener(v -> {
       String url = Constants.NOW_FLOATS_API_URL + "/Discover/v1/floatingpoint/custompage/delete";
       new SinglePageDeleteAsyncTask(url, CreateCustomPageActivity.this, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),
-          CustomPageFragment.dataModel.get(curPos).PageId, curPos).execute();
+          dataModel, curPos).execute();
     });
 
     save.setOnClickListener(v -> {
@@ -279,7 +291,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                     //Log.d("Create page success", "");
                     MixPanelController.track("CreateCustomPage", null);
                     long time = System.currentTimeMillis();
-                    CustomPageFragment.dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
+                    dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
                     WebEngageController.trackEvent(POST_ACUSTOMPAGE, SUCCESSFULLY_ADDED_CUSTOMPAGE, session.getFpTag());
                     Methods.showSnackBarPositive(activity, getString(R.string.page_successfully_created));
                     isNewDataAdded = true;
@@ -314,7 +326,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                   MixPanelController.track("UpdateCustomPage", null);
                   WebEngageController.trackEvent(UPDATE_CUSTOMPAGE, UPDATE_A_CUSTOMPAGE, session.getFpTag());
                   //Log.d("Update page success", "");
-                  CustomPageFragment.dataModel.get(curPos).DisplayName = name;
+                  dataModel.get(curPos).DisplayName = name;
                   Methods.showSnackBarPositive(activity, getString(R.string.page_updated));
                   onBackPressed();
                 }
@@ -329,6 +341,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
               });
             }
           } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
             Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
             materialProgress.dismiss();
@@ -525,10 +538,10 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     pageInterface2.getPageUrl(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), 0, 10, 1, new Callback<CustomPageLink>() {
       @Override
       public void success(CustomPageLink pageDetail, Response response) {
-        CapLimitFeatureResponseItem data = new CapLimitFeatureResponseItem().getCapData();
+        CapLimitFeatureResponseItem data = filterFeature(getCapData(), CapLimitFeatureResponseItem.FeatureType.CUSTOMPAGES);
         if (data != null && pageDetail != null) {
-          PropertiesItem capLimitImage = data.filterProperty(PropertiesItem.KeyType.CUSTOM_PAGE);
-          if (pageDetail.getTotal() != null && capLimitImage.getValueN() != null && pageDetail.getTotal() >= capLimitImage.getValueN()) {
+          PropertiesItem capLimitCustomPage = data.filterProperty(PropertiesItem.KeyType.LIMIT);
+          if (pageDetail.getTotal() != null && capLimitCustomPage.getValueN() != null && pageDetail.getTotal() >= capLimitCustomPage.getValueN()) {
             hideKeyBoard(activity);
             showAlertCapLimit("Can't add the custom page, please activate your premium Add-ons plan.");
           }
@@ -548,6 +561,10 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     builder.setPositiveButton("Explore Add-ons", (dialog, which) -> {
       dialog.dismiss();
       initiateBuyFromMarketplace();
+      activity.finish();
+    });
+    builder.setNegativeButton("Close", (dialog, which) -> {
+      dialog.dismiss();
       activity.finish();
     });
     builder.create().show();
@@ -714,6 +731,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
         }
 
       } catch (Exception e) {
+        SentryController.INSTANCE.captureException(e);
         e.printStackTrace();
       } catch (OutOfMemoryError E) {
         E.printStackTrace();
@@ -783,6 +801,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
         startActivityForResult(captureIntent, Constants.CAMERA_PHOTO);
       }
     } catch (ActivityNotFoundException anfe) {
+      SentryController.INSTANCE.captureException(anfe);
       // display an error message
       String errorMessage = getString(R.string.device_does_not_support_capturing_image);
       Methods.showSnackBarNegative(activity, errorMessage);
@@ -808,6 +827,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
         startActivityForResult(i, Constants.GALLERY_PHOTO);
       }
     } catch (ActivityNotFoundException anfe) {
+      SentryController.INSTANCE.captureException(anfe);
       // display an error message
       String errorMessage = getString(R.string.device_does_not_support_capturing_image);
       Methods.showSnackBarNegative(activity, errorMessage);
@@ -898,7 +918,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
       intent.putExtra("mobileNo", "9160004303");
     }
     intent.putExtra("profileUrl", session.getFPLogo());
-    intent.putExtra("buyItemKey", CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name());
+    intent.putExtra("buyItemKey", CapLimitFeatureResponseItem.FeatureType.CUSTOMPAGES.name());
     startActivity(intent);
     new Handler().postDelayed(() -> progressDialog.dismiss(), 1000);
   }

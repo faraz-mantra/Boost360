@@ -211,7 +211,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/update_rv_list"
-        android:layout_width="match_parent"
+      android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:clipToPadding="false"
       android:orientation="horizontal"
@@ -226,7 +226,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/staff_rv_list"
-        android:layout_width="match_parent"
+      android:layout_width="wrap_content"
       android:layout_height="match_parent"
       android:clipToPadding="false"
       android:orientation="vertical"
@@ -241,7 +241,6 @@
       app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
-        android:layout_margin="10dp"
       android:id="@+id/business_card_view"
       android:layout_width="match_parent"
       android:layout_height="0dp"
@@ -260,7 +259,6 @@
         app:cardElevation="0dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_margin="5dp"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_gravity="bottom"
@@ -313,7 +311,6 @@
       </com.framework.views.customViews.CustomCardView>
 
       <androidx.appcompat.widget.LinearLayoutCompat
-          android:id="@+id/vp_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/size_4"
@@ -331,17 +328,6 @@
           android:focusableInTouchMode="true"
           android:orientation="horizontal" />
       </androidx.appcompat.widget.LinearLayoutCompat>
-
-      <com.google.android.material.tabs.TabLayout
-          app:tabBackground="@drawable/tab_selector"
-          app:tabGravity="center"
-          app:tabIndicatorHeight="0dp"
-          app:tabMode="scrollable"
-          android:id="@+id/business_card_tab_dot"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="10dp"
-          android:layout_below="@+id/vp_holder" />
     </RelativeLayout>
 
     <ProgressBar

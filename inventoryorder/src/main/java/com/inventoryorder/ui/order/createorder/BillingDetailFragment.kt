@@ -3,14 +3,14 @@ package com.inventoryorder.ui.order.createorder
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import com.framework.webengageconstant.CLICKED_ON_ADD_CUSTOMER
-import com.framework.webengageconstant.ORDERS
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.framework.extensions.observeOnce
+import com.framework.webengageconstant.CLICKED_ON_ADD_CUSTOMER
+import com.framework.webengageconstant.ORDERS
 import com.google.android.material.textview.MaterialTextView
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
@@ -358,8 +358,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
   }
 
   private fun updateData() {
-    val currencyCode =
-      createOrderRequest.items?.firstOrNull()?.productDetails?.getCurrencyCodeValue() ?: "INR"
+    val currencyCode = createOrderRequest.items?.firstOrNull()?.productDetails?.getCurrencyCodeValue() ?: "INR"
     binding?.textItemTotalAmount?.text = "$currencyCode $totalPrice"
     binding?.textItemTotalDiscount?.text = "-$currencyCode $totalPriceDiscount"
     binding?.textGstAmount?.text = "$currencyCode ${calculateGST(totalPricePayable + deliveryFee)}"
@@ -368,27 +367,21 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
 
   private fun createOrder() {
     showProgress()
-    viewModel?.postAppointment(AppConstant.CLIENT_ID_2, createOrderRequest)
-      ?.observeOnce(viewLifecycleOwner, {
+    viewModel?.postAppointment(AppConstant.CLIENT_ID_2, createOrderRequest)?.observeOnce(viewLifecycleOwner, {
         if (it.isSuccess()) {
           hideProgress()
           val orderInitiateResponse = (it as? OrderInitiateResponse)
           apiConfirmOrder(orderInitiateResponse = orderInitiateResponse!!)
         } else {
           hideProgress()
-          showLongToast(
-            if (it.message()
-                .isNotEmpty()
-            ) it.message() else getString(R.string.unable_to_create_order)
-          )
+          showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
         }
       })
   }
 
   private fun apiConfirmOrder(orderInitiateResponse: OrderInitiateResponse) {
     showProgress()
-    viewModel?.confirmOrder(preferenceData?.clientId, orderInitiateResponse.data._id)
-      ?.observeOnce(viewLifecycleOwner, {
+    viewModel?.confirmOrder(preferenceData?.clientId, orderInitiateResponse.data._id)?.observeOnce(viewLifecycleOwner, {
         hideProgress()
         if (it.isSuccess()) {
           val bundle = Bundle()
@@ -396,11 +389,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
           bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
           startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)
         } else {
-          showLongToast(
-            if (it.message()
-                .isNotEmpty()
-            ) it.message() else getString(R.string.unable_to_create_order)
-          )
+          showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
         }
       })
   }
@@ -418,7 +407,6 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
   private fun calculateGST(amount: Double): Double {
     val df = DecimalFormat("#.##")
     df.roundingMode = RoundingMode.CEILING
-    return df.format((amount - (df.format(amount / AppConstant.GST_PERCENTAGE).toDouble())))
-      .toDouble()
+    return df.format((amount - (df.format(amount / AppConstant.GST_PERCENTAGE).toDouble()))).toDouble()
   }
 }

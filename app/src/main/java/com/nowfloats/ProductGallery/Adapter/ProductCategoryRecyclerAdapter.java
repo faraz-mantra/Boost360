@@ -100,8 +100,11 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
 
             try {
                 String formattedPrice = Helper.getCurrencyFormatter().format(model.Price - model.DiscountAmount);
-                viewHolder.tvPrice.setText(String.valueOf(model.CurrencyCode + " " + formattedPrice));
-
+                if (formattedPrice.equals("0")){
+                    viewHolder.tvPrice.setText(context.getString(R.string.not_for_sale));
+                }else {
+                    viewHolder.tvPrice.setText(String.valueOf(model.CurrencyCode + " " + formattedPrice));
+                }
                 if (model.DiscountAmount != 0) {
                     viewHolder.tvBasePrice.setVisibility(View.VISIBLE);
 
