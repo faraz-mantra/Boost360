@@ -13,5 +13,5 @@ class FestivePosterSharedViewModel: BaseViewModel() {
     val keyValueSaved=MutableLiveData<Void>(null)
     var selectedPosterPack:PosterPackModel?=null
     var selectedPoster:PosterModel?=null
-
+    var posterPackLoadListener = MutableLiveData<Boolean>()
 }

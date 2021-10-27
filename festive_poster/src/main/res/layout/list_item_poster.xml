@@ -47,7 +47,7 @@
                     android:textAllCaps="false"
                     android:textSize="@dimen/caption"
                     app:backgroundTint="@color/black_opacity30"
-                    app:cornerRadius="@dimen/size_20"
+                    app:cornerRadius="@dimen/size_15"
                     app:icon="@drawable/ic_tap_to_edit" />
             </FrameLayout>
         </com.framework.views.customViews.CustomCardView>

@@ -21,6 +21,7 @@ class FestivePosterContainerActivity : AppBaseActivity<ActivityFestivePoterConta
   override var TAG = "FestivePosterContainerA"
   private var sharedViewModel: FestivePosterSharedViewModel? = null
   private var posterPackListFragment=PosterPackListingFragment.newInstance()
+  private var isPosterPackLoaded=false
   /*private val RC_STORAGE_PERMISSION=201*/
 
   override fun getLayout(): Int {
@@ -33,6 +34,7 @@ class FestivePosterContainerActivity : AppBaseActivity<ActivityFestivePoterConta
 
   override fun onCreateView() {
     super.onCreateView()
+    binding?.ivDownload?.isEnabled = false
 
     WebEngageController.trackEvent(FESTIVE_POSTER_PAGE_LOAD, event_value = HashMap())
     SvgUtils.initReqBuilder(this)
@@ -42,6 +44,23 @@ class FestivePosterContainerActivity : AppBaseActivity<ActivityFestivePoterConta
     showPosterPackListing()
     lifecycleScope.launchWhenCreated {
     }
+
+    setObserevers()
+  }
+
+  private fun setObserevers() {
+    sharedViewModel?.posterPackLoadListener?.observe(this,{
+      isPosterPackLoaded = it
+      if (it){
+        binding?.ivDownload?.isEnabled = true
+        binding?.ivDownload?.setImageDrawable(getDrawable(R.drawable.ic_fposter_download_menu_grey))
+      }else{
+        binding?.ivDownload?.isEnabled = false
+        binding?.ivDownload?.setImageDrawable(getDrawable(R.drawable.ic_fposter_download_menu_grey_disabled))
+      }
+
+
+    })
   }
 
   /*private fun checkStoragePermission() {
@@ -88,9 +107,12 @@ class FestivePosterContainerActivity : AppBaseActivity<ActivityFestivePoterConta
         PosterHelpSheet().show(supportFragmentManager, PosterHelpSheet::class.java.name)
       }
       binding?.ivDownload->{
-        posterPackListFragment.dataList?.forEach { it.isPurchased=true }
-        addFragmentReplace(binding?.container?.id,PosterPackPurchasedListingFragment.newInstance(
-          posterPackListFragment.dataList?.filter { it.isPurchased }?.toArrayList()),true)
+        if (isPosterPackLoaded){
+          posterPackListFragment.dataList?.forEach { it.isPurchased=true }
+          addFragmentReplace(binding?.container?.id,PosterPackPurchasedListingFragment.newInstance(
+            posterPackListFragment.dataList?.filter { it.isPurchased }?.toArrayList()),true)
+        }
+
       }
     }
   }

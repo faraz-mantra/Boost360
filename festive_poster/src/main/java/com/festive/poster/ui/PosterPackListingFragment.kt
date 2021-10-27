@@ -75,6 +75,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
 
 
   private fun getTemplateViewConfig() {
+    sharedViewModel?.posterPackLoadListener?.value = false
     showShimmerAnimation()
     viewModel?.getTemplateConfig(session?.fPID, session?.fpTag)
       ?.observeOnce(viewLifecycleOwner, {
@@ -127,6 +128,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
           Log.i(TAG, "festive price: ${feature_festive?.price}")
         }
 
+        sharedViewModel?.posterPackLoadListener?.value = true
 
 
          // rearrangeList()

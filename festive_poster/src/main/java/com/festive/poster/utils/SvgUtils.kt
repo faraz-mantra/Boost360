@@ -18,7 +18,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.festive.poster.models.PosterModel
 import com.framework.constants.PackageNames
 import com.framework.glide.customsvgloader.*
-import com.framework.utils.saveImageToSharedStorage
+import com.framework.utils.RegexUtils
+import com.framework.utils.saveImageToStorage
 import com.framework.utils.shareAsImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -190,7 +191,7 @@ object SvgUtils {
                         )
                         val canvas = Canvas(b)
                         svg.renderToCanvas(canvas)
-                        withContext(Dispatchers.Main) {
+                        withContext(Dispatchers.Default) {
                             when (packageName) {
                                 PackageNames.INSTAGRAM -> b.shareAsImage(
                                     PackageNames.INSTAGRAM,
@@ -198,10 +199,10 @@ object SvgUtils {
                                 )
                                 PackageNames.WHATSAPP -> b.shareAsImage(
                                     PackageNames.WHATSAPP,
-                                    text = model.greeting_message
+                                    text = RegexUtils.addStarToNumbers(model.greeting_message)
                                 )
                                 "" -> b.shareAsImage(text = model.greeting_message)
-                                else -> b.saveImageToSharedStorage()
+                                else -> b.saveImageToStorage(showNoti = true)
                             }
                         }
                     }
