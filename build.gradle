@@ -13,7 +13,8 @@ buildscript {
         classpath 'com.google.gms:google-services:4.3.3'
         // kotlin support
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30"
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.5.1'
+        // Add the Crashlytics Gradle plugin
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
     }
 }
 

@@ -23,6 +23,8 @@ import com.dashboard.AppDashboardApplication;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.festive.poster.FestivePosterApplication;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.inventoryorder.BaseOrderApplication;
 import com.invitereferrals.invitereferrals.IRInterfaces.IRTrackReferrerCode;
 import com.invitereferrals.invitereferrals.InviteReferralsApi;
@@ -111,6 +113,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     public void onCreate() {
         super.onCreate();
 //        SmartLookController.initiateSmartLook(this.getString(R.string.samrt_look_api_key));
+        FirebaseApp.initializeApp(this.getApplicationContext());
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
         BaseOrderApplication.instance = this;
         BaseOrderApplication.initModule(this);
         BaseBoardingApplication.instance = this;
