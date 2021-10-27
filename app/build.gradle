@@ -149,10 +149,8 @@ android {
             buildConfigField "String", "twitter_consumer_secret", '"4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9"'
             buildConfigField "String", "GOOGLE_SERVER_CLIENT_ID", '"87687526880-dm4f3tml0ht88oer6gcc10r62l72pm1a.apps.googleusercontent.com"'
             buildConfigField "String", "GOOGLE_SERVER_CLIENT_SECRET", '"APvjD8ABZg5c8e-VeHBi3AAG"'
-            buildConfigField "String", "RAZORPAY_KEY", '"rzp_live_o8qdD1DZ3PHBn0"'
+            buildConfigField "String", "RAZORPAY_KEY", '"rzp_live_NsMLSX2HTaiEC9"'
             buildConfigField "String", "RAZORPAY_SECREAT", '"Gfq8pQyFbu5BOoY5SeT6UuQk"'
-
-            buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
         }
         jioonline {
             versionName "1.0.0"
@@ -299,6 +297,12 @@ dependencies {
 
     implementation 'com.android.support:design:28.0.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+
+    api(group: "androidx.work", name: "work-runtime") {
+        version {
+            strictly "2.6.0"
+        }
+    }
 
     // Koin Dependency Injection
     implementation "org.koin:koin-android:$koin_version"
