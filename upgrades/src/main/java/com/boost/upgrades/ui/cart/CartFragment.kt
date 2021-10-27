@@ -66,6 +66,7 @@ import android.net.Uri
 import java.lang.NumberFormatException
 import android.text.InputFilter
 import android.text.TextUtils
+import com.boost.upgrades.data.api_model.paymentprofile.LastPaymentMethodDetails
 import com.boost.upgrades.ui.compare.ComparePackageFragment
 import com.framework.analytics.SentryController
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_title
@@ -148,6 +149,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   private var event_attributes: HashMap<String, Any> = HashMap()
 
 
+
   companion object {
     fun newInstance() = CartFragment()
   }
@@ -189,11 +191,13 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     Constants.COMPARE_BACK_VALUE = 1
     prefs.storeCompareState(1)
 //        showpopup()
+    loadLastUsedPayData()
     initializePackageRecycler()
     initializeAddonsRecycler()
     initializeRenewalRecycler()
     initializeErrorObserver()
     initMvvM()
+    observeLastPaymentDetails()
     checkRenewalItemDeepLinkClick()
     gst_layout.visibility = View.GONE
     //show applyed coupon code
@@ -1730,12 +1734,22 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       }
 
     })
+
     //get customerId
 //        viewModel.getCustomerId().observe(this, Observer {
 //            if (it != null && it.isNotEmpty()) {
 //                customerId = it
 //            }
 //        })
+  }
+
+  @SuppressLint("FragmentLiveDataObserve")
+  private fun observeLastPaymentDetails() {
+    viewModel.getLastPayDetails().observe(viewLifecycleOwner, {
+      if (it != null) {
+        prefs.storeLastUsedPaymentMode(it.result?.lastPaymentMethodDetails?.lastPaymentMethod.toString())
+      }
+    })
   }
 
   fun updatePackage(features: List<CartModel>) {
@@ -1995,5 +2009,13 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       e.printStackTrace()
       SentryController.captureException(e)
     }
+  }
+
+  private fun loadLastUsedPayData(){
+    viewModel.getLastUsedPaymentDetails(
+      (activity as? UpgradeActivity)?.getAccessToken()?:"",
+      (activity as UpgradeActivity).fpid!!,
+      (activity as UpgradeActivity).clientid
+    )
   }
 }
