@@ -17,7 +17,6 @@
             android:background="@drawable/domain_et_bg"
             android:focusable="true"
             android:hint="@string/write_a_domain_name"
-            android:imeOptions="actionDone"
             android:inputType="text"
             android:padding="@dimen/size_8"
             android:textColor="@color/black_4a4a4a"
@@ -26,6 +25,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/pb_search"
+            android:layout_width="@dimen/size_30"
+            android:layout_height="@dimen/size_30"
+            android:indeterminate="true"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/size_8"
+            android:indeterminateTint="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="@+id/ed_search_box"
+            app:layout_constraintStart_toStartOf="@+id/ed_search_box"
+            app:layout_constraintTop_toBottomOf="@+id/ed_search_box" />
 
         <LinearLayout
             android:id="@+id/layput_et_error"
@@ -58,10 +69,11 @@
                 style="@style/TextRegularStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_selected_tick"
+                android:drawableStart="@drawable/ic_green_tick_new"
                 android:drawablePadding="@dimen/size_4"
                 android:fontFamily="@font/regular"
                 android:gravity="center_vertical"
+                android:textAlignment="gravity"
                 android:text="samplebusinesswebsite.com "
                 android:textColor="@color/green_dark"
                 android:textStyle="bold"

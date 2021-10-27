@@ -1039,7 +1039,7 @@
     <string name="confirm_and_apply_domain"><![CDATA[Confirm & apply domain]]></string>
     <string name="domain_renewal_info">Your domain will be automatically renewed based\non your active BOOST package</string>
     <string name="select_how_you_want_to_integrate">Select how you want to integrate</string>
-    <string name="error_wrong_domain_entered">Please enter a valid domain name!</string>
+    <string name="error_wrong_domain_entered">Please enter a valid domain name with these extensions like .com, .net, .co.za, .co.in, .ca, .org, .in !</string>
     <string name="example">example</string>
     <string name="domain_second_step_text">In case you have a different website (for same business) connected to the domain that you own, you can integrate this website also as a sub-domain on that domain. <b><u>(what’s subdomain?)</u></b></string>
     <string name="ns3_net"><![CDATA[ns3.<-------->.net]]></string>
