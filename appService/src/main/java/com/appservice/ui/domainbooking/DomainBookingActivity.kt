@@ -144,7 +144,6 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
           openExistingDomainFragmentFlow(enteredDomainName)
         } else showShortToast(getString(R.string.your_domain_could_not_be_added_please_try_again))
       } else showShortToast(it.message())
-      openExistingDomainFragmentFlow(enteredDomainName)
       hideProgress()
     })
   }
@@ -270,7 +269,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
 
 
   private fun isPremium(): Boolean {
-    return (session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false).not()
+    return (session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false)
   }
 
   private fun setupSteps() {
