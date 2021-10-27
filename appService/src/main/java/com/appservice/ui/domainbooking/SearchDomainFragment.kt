@@ -67,13 +67,22 @@ class SearchDomainFragment :
         binding?.edSearchBox?.afterTextChanged {
             binding?.layputEtError?.gone()
             binding?.btnContinue?.gone()
+            hideProgress()
+            val domainExtension = it.substringAfterLast(".").lowercase()
+            if (it.length >= 3 && it.contains(".")){
+                if (Validations.isDomainValid(it)) {
+                    searchDomain(it)
+                } else {
+                    showShortToast(getString(R.string.error_wrong_domain_entered))
+                }
+            }
             /*if (it == "")
                 binding?.tvLearnHowToChooseDomain?.visible()
             else
                 binding?.tvLearnHowToChooseDomain?.gone()*/
         }
 
-        binding?.edSearchBox?.setOnEditorActionListener(object : TextView.OnEditorActionListener {
+        /*binding?.edSearchBox?.setOnEditorActionListener(object : TextView.OnEditorActionListener {
             override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     if (Validations.isDomainValid(binding?.edSearchBox?.text.toString())) {
@@ -86,7 +95,7 @@ class SearchDomainFragment :
                 return false
             }
 
-        })
+        })*/
     }
 
     private fun searchDomain(domainString: String) {
@@ -99,6 +108,7 @@ class SearchDomainFragment :
         )?.observeOnce(lifecycleOwner = this, {
             if (!it.isSuccess() || it == null) {
                 showShortToast(getString(R.string.something_went_wrong))
+                hideProgress()
                 return@observeOnce
             }
             parseAvailableResponse(it.anyResponse as Boolean, domainString)
@@ -221,5 +231,13 @@ class SearchDomainFragment :
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+    }
+
+    override fun showProgress(title: String?, cancelable: Boolean?) {
+        binding?.pbSearch?.visible()
+    }
+
+    override fun hideProgress() {
+        binding?.pbSearch?.gone()
     }
 }

@@ -125,7 +125,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
       showSheetIntegrationOption(sheetBinding.etDomain.text.toString())
       bSheet.dismiss()
     } else {
-      showShortToast(getString(R.string.error_wrong_domain_entered))
+      showLongToast(getString(R.string.error_wrong_domain_entered))
     }
   }
 
@@ -166,7 +166,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
     bSheet.setCancelable(false)
 
     sheetBinding.tvDomainName.text = enteredDomainName
-    sheetBinding.radioCreateASubdomain.text = fromHtml("${getString(R.string.create_a_sub_domain_and_map_my)} <u><b>shop</b>.$enteredDomainName)</u>")
+    sheetBinding.radioCreateASubdomain.text = fromHtml("${getString(R.string.create_a_sub_domain_and_map_my)} <u><b>example</b>.$enteredDomainName)</u>")
 
     domainIntegrationUserSelection = 0
     sheetBinding.radioAsBusinessWebsite.isChecked = true
@@ -264,7 +264,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
 
 
   private fun isPremium(): Boolean {
-    return (session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false).not()
+    return (session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false)
   }
 
   private fun setupSteps() {

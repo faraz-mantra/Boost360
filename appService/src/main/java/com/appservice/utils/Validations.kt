@@ -1,6 +1,5 @@
 package com.appservice.utils
 
-import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 object Validations {
@@ -15,6 +14,12 @@ object Validations {
         else
             domainString.toString()
 
-        return Pattern.compile(DOMAIN_FORMAT).matcher(domainWithoutWWW).matches()
+        val domainSelection = arrayListOf("com", "net", "in", "ca", "org")
+        if (Pattern.compile(DOMAIN_FORMAT).matcher(domainWithoutWWW).matches()) {
+            val substringAfterLast = domainWithoutWWW.substringAfterLast(".").lowercase()
+            return domainSelection.contains(substringAfterLast) || substringAfterLast.contains("co.za") || substringAfterLast.contains("co.in")
+        }
+
+        return false
     }
 }
