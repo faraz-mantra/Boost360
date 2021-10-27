@@ -2,6 +2,7 @@ package com.appservice.holder
 
 import android.text.Html
 import android.text.method.LinkMovementMethod
+import android.util.TypedValue
 import android.widget.TextView
 import com.appservice.R
 import com.appservice.databinding.ItemPdfFileBinding
@@ -22,8 +23,10 @@ class DomainStepsViewHolder(binding: ListItemStepsDomainBinding) :
       binding.tvDesc.setTextColor(it)
       binding.tvCount.setTextColor(it)
     }
-    binding.tvDesc.movementMethod = LinkMovementMethod.getInstance()
-    binding.tvDesc.text = Html.fromHtml(model.desc.toString())
+    binding.tvDesc.apply {
+      movementMethod = LinkMovementMethod.getInstance()
+      text = Html.fromHtml(model.desc.toString())
+    }
     binding.tvCount.text= if(model.isBulletIndicated) "\u2022" else (position.plus(1)).toString()+"."
   }
 }

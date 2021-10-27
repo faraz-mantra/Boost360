@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -10,7 +10,7 @@
             android:id="@+id/tv_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1."
+            tools:text="1."
             android:textColor="@color/black_4a4a4a"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -19,9 +19,11 @@
             android:id="@+id/tv_desc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/size_4"
+            app:fontFamily="@font/regular"
             android:textColor="@color/black_4a4a4a"
-            android:text="Since search engines recognize a domain that’s already in use, we recommend integrating any relatable domain name that you currently own."
+            android:lineSpacingMultiplier="1.2"
+            tools:text="Since search engines recognize a domain that’s already in use, we recommend integrating any relatable domain name that you currently own."
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_count"
             app:layout_constraintTop_toTopOf="parent" />
