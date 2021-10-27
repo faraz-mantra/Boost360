@@ -17,7 +17,8 @@ import com.framework.analytics.SentryController
 import com.framework.models.toLiveData
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.onboarding.nowfloats.constant.PreferenceConstant
 import com.onboarding.nowfloats.model.channel.statusResponse.CHANNEL_STATUS_SUCCESS
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
@@ -78,16 +79,22 @@ class APIService : Service() {
   }
 
   private fun registerRia() {
-    val params = HashMap<String?, String?>()
-    params["Channel"] = FirebaseInstanceId.getInstance().token
-    params["UserId"] = userId
-    params["DeviceType"] = "ANDROID"
-    params["clientId"] = clientId
-
-    WithFloatTwoRepository.post_RegisterRia(params).toLiveData().observeForever {
-      if (it.isSuccess()) Log.d("Register Ria", "registerRia: success")
-      else Log.d("Register Ria", "registerRia: failed")
-    }
+    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+      if (!task.isSuccessful) {
+        Log.w("registerRia", "Fetching FCM registration token failed", task.exception)
+        return@OnCompleteListener
+      }
+      val token = task.result
+      val params = HashMap<String?, String?>()
+      params["Channel"] = token
+      params["UserId"] = userId
+      params["DeviceType"] = "ANDROID"
+      params["clientId"] = clientId
+      WithFloatTwoRepository.post_RegisterRia(params).toLiveData().observeForever {
+        if (it.isSuccess()) Log.d("Register Ria", "registerRia: success")
+        else Log.d("Register Ria", "registerRia: failed")
+      }
+    })
   }
 
   private fun nfxGetSocialTokens() {
