@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 
 def kotlin_version = "1.4.10"
 def lifecycle_version = "2.2.0"
@@ -110,10 +110,8 @@ dependencies {
     // Image Cropper Library
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
 
-    //Firebase analytics
-    api 'com.google.firebase:firebase-analytics-ktx:18.0.0'
-
-    //Firebase remoteconfig
+    //Firebase
+    api 'com.google.firebase:firebase-analytics-ktx:19.0.2'
     api 'com.google.firebase:firebase-config-ktx:21.0.1'
 
     // Referral Library: invitereferrals

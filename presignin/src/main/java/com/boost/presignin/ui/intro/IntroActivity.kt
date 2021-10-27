@@ -117,6 +117,8 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     }
   }
 
+//    val hashes = AppSignatureHashHelper(this).appSignatures
+
   private fun dialogRootError() {
     AlertDialog.Builder(ContextThemeWrapper(this, R.style.CustomAlertDialogTheme))
       .setCancelable(false)
