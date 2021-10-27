@@ -1,9 +1,6 @@
 package com.appservice.ui.domainbooking
 
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -12,7 +9,6 @@ import com.appservice.databinding.BsheetConfirmDomainSearchBinding
 import com.appservice.model.domainBooking.request.CreateDomainRequest
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.utils.Validations
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.getDomainSplitValues
 import com.appservice.viewmodel.SearchDomainViewModel
@@ -22,6 +18,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.pref.clientId
 import com.framework.pref.getDomainName
+import com.framework.utils.ValidationUtils.isDomainValid
 import com.framework.utils.fromHtml
 import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
@@ -70,7 +67,7 @@ class SearchDomainFragment :
             hideProgress()
             val domainExtension = it.substringAfterLast(".").lowercase()
             if (it.length >= 3 && it.contains(".")){
-                if (Validations.isDomainValid(it)) {
+                if (isDomainValid(it)) {
                     searchDomain(it)
                 } else {
                     showShortToast(getString(R.string.error_wrong_domain_entered))
@@ -85,7 +82,7 @@ class SearchDomainFragment :
         /*binding?.edSearchBox?.setOnEditorActionListener(object : TextView.OnEditorActionListener {
             override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    if (Validations.isDomainValid(binding?.edSearchBox?.text.toString())) {
+                    if (isDomainValid(binding?.edSearchBox?.text.toString())) {
                         searchDomain(binding?.edSearchBox?.text.toString())
                         return true
                     } else {

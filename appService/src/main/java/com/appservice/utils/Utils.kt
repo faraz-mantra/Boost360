@@ -136,4 +136,11 @@ fun getDomainSplitValues(domainValue: String): DomainAttributes {
     return DomainAttributes(split[0], ".${split[1]}")
 }
 
+fun removeWWWFromDomain(domainValue: String) : String {
+    return if (domainValue.startsWith("www."))
+        domainValue.replace("www.", "")
+    else
+        domainValue
+}
+
 

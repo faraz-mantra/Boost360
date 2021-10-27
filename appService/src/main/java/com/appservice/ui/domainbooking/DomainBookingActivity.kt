@@ -9,6 +9,7 @@ import android.text.*
 import android.text.style.ClickableSpan
 import android.text.style.StyleSpan
 import android.view.View
+import android.widget.CompoundButton
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
@@ -24,9 +25,9 @@ import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.domainbooking.model.DomainStepsModel
-import com.appservice.utils.Validations
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.getDomainSplitValues
+import com.appservice.utils.removeWWWFromDomain
 import com.appservice.viewmodel.DomainBookingViewModel
 import com.framework.base.BaseActivity
 import com.framework.extensions.afterTextChanged
@@ -37,6 +38,7 @@ import com.framework.pref.Key_Preferences.GET_FP_DETAILS_CATEGORY
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.getDomainName
+import com.framework.utils.ValidationUtils.isDomainValid
 import com.framework.utils.fromHtml
 import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
@@ -142,6 +144,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
           openExistingDomainFragmentFlow(enteredDomainName)
         } else showShortToast(getString(R.string.your_domain_could_not_be_added_please_try_again))
       } else showShortToast(it.message())
+      openExistingDomainFragmentFlow(enteredDomainName)
       hideProgress()
     })
   }
@@ -154,7 +157,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
   }
 
   private fun validateData(sheetBinding: BsheetInputOwnDomainBinding): Boolean {
-    return Validations.isDomainValid(sheetBinding.etDomain.text.toString())
+    return isDomainValid(sheetBinding.etDomain.text.toString())
   }
 
   private fun showSheetIntegrationOption(enteredDomainName: String) {
@@ -166,18 +169,21 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
     bSheet.setCancelable(false)
 
     sheetBinding.tvDomainName.text = enteredDomainName
-    sheetBinding.radioCreateASubdomain.text = fromHtml("${getString(R.string.create_a_sub_domain_and_map_my)} <u><b>example</b>.$enteredDomainName)</u>")
+    sheetBinding.radioCreateASubdomain.text = fromHtml("${getString(R.string.create_a_sub_domain_and_map_my)} <u><b>example</b>.${removeWWWFromDomain(enteredDomainName)})</u>")
 
     domainIntegrationUserSelection = 0
     sheetBinding.radioAsBusinessWebsite.isChecked = true
-    sheetBinding.radioGroup2.setOnCheckedChangeListener { group, checkedId ->
-      when (checkedId) {
-        sheetBinding.radioAsBusinessWebsite.id -> {
-          domainIntegrationUserSelection = 0
-        }
-        sheetBinding.radioCreateASubdomain.id -> {
-          domainIntegrationUserSelection = 1
-        }
+
+    sheetBinding.radioAsBusinessWebsite.setOnCheckedChangeListener { buttonView, isChecked ->
+      if (isChecked) {
+        sheetBinding.radioCreateASubdomain.isChecked = false
+        domainIntegrationUserSelection = 0
+      }
+    }
+    sheetBinding.radioCreateASubdomain.setOnCheckedChangeListener { buttonView, isChecked ->
+      if (isChecked) {
+        sheetBinding.radioAsBusinessWebsite.isChecked = false
+        domainIntegrationUserSelection = 1
       }
     }
 
@@ -264,7 +270,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
 
 
   private fun isPremium(): Boolean {
-    return (session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false)
+    return (session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false).not()
   }
 
   private fun setupSteps() {

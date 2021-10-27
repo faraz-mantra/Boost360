@@ -110,22 +110,12 @@ open class DomainBookingContainerActivity :
                     FragmentType.ADDING_EXISTING_DOMAIN_FRAGMENT -> {
                         R.string.adding_existing_domain
                     }
+                    FragmentType.ACTIVE_NEW_DOMAIN_FRAGMENT,
                     FragmentType.ACTIVE_DOMAIN_FRAGMENT -> {
-                      /*  val params = binding?.title?.layoutParams as Toolbar.LayoutParams
-                        params.gravity = Gravity.CENTER_HORIZONTAL
-                        //params.marginEnd = android.R.attr.actionBarSize
-                        binding?.title?.layoutParams = params*/
                         R.string.website_domain
                     }
                     FragmentType.CONFIRMING_DOMAIN_FRAGMENT -> {
                         R.string.confirming_domain
-                    }
-                    FragmentType.ACTIVE_NEW_DOMAIN_FRAGMENT -> {
-                       /* val params = binding?.title?.layoutParams as Toolbar.LayoutParams
-                        //params.marginEnd = android.R.attr.actionBarSize
-                        params.gravity = Gravity.CENTER_HORIZONTAL
-                        binding?.title?.layoutParams = params*/
-                        R.string.website_domain
                     }
                     FragmentType.SEARCH_DOMAIN_FRAGMENT -> {
                         R.string.search_a_new_domain
