@@ -189,7 +189,7 @@
 
     <receiver
       android:name="com.webengage.sdk.android.WebEngageReceiver"
-      android:exported="true">
+      android:exported="true" tools:replace="android:exported">
       <intent-filter>
         <action android:name="com.webengage.sdk.android.intent.ACTION" />
 
