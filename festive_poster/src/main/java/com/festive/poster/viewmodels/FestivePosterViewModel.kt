@@ -79,8 +79,7 @@ class FestivePosterViewModel: BaseViewModel() {
 
     fun updatePurchaseStatus(floatingPointId: String?,fpTag: String?,posterTag:String?,templateIds:List<String>): LiveData<BaseResponse> {
         return NowFloatsRepository.updatePurchaseStatus(floatingPointId,fpTag,posterTag,templateIds).toLiveData()
-
     }
 
 
-    }
+}

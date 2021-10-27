@@ -1,15 +1,16 @@
 package com.framework.utils
 
 import android.app.Activity
+import android.app.Notification
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.ActivityNotFoundException
 import android.content.ContentValues
+import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.ColorFilter
+import android.graphics.*
 import android.net.Uri
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Environment
 import android.os.SystemClock
@@ -41,10 +42,8 @@ import com.framework.BaseApplication
 import com.framework.constants.PackageNames
 import com.framework.views.customViews.CustomTextView
 import com.google.gson.reflect.TypeToken
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.OutputStream
+import okhttp3.internal.notify
+import java.io.*
 import java.text.NumberFormat
 import java.util.*
 import java.util.regex.Matcher
@@ -52,7 +51,7 @@ import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
 inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
-
+private const val TAG = "Util"
 fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis: Long = 1000) {
   var lastClickTime: Long = 0
   this.setOnClickListener {
@@ -265,33 +264,101 @@ fun Bitmap.saveAsImageToAppFolder(destPath:String): File? {
 
 }
 
-fun Bitmap.saveImageToSharedStorage(
+
+
+suspend fun Bitmap.saveImageToStorage(
+
   filename: String=System.currentTimeMillis().toString()+".jpg",
-) {
-  val mimeType: String =  "image/jpeg"
-  val directory: String = Environment.DIRECTORY_PICTURES
-  val mediaContentUri: Uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-  val imageOutStream: OutputStream
-  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-    val values = ContentValues().apply {
-      put(MediaStore.Images.Media.DISPLAY_NAME, filename)
-      put(MediaStore.Images.Media.MIME_TYPE, mimeType)
-      put(MediaStore.Images.Media.RELATIVE_PATH, directory)
+  showNoti:Boolean=false
+  ){
+  val noti_id = System.currentTimeMillis().toInt()
+
+  try {
+    var noti = NotiUtils.showNoti("Downloading Image", 0)
+    if (showNoti) {
+      NotiUtils.notificationManager?.notify(noti_id, noti)
+    }
+    var fileUri: Uri? = null
+
+    val mimeType: String = "image/jpeg"
+    val directory: String = Environment.DIRECTORY_PICTURES
+    val mediaContentUri: Uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+    val imageOutStream: OutputStream
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+      val values = ContentValues().apply {
+        put(MediaStore.Images.Media.DISPLAY_NAME, filename)
+        put(MediaStore.Images.Media.MIME_TYPE, mimeType)
+        put(MediaStore.Images.Media.RELATIVE_PATH, directory)
+      }
+
+      BaseApplication.instance.contentResolver.run {
+        val uri =
+          BaseApplication.instance.contentResolver.insert(mediaContentUri, values)
+            ?: return
+        fileUri = uri
+        imageOutStream = openOutputStream(uri) ?: return
+      }
+    } else {
+      val imagePath = Environment.getExternalStoragePublicDirectory(directory).absolutePath
+      val image = File(imagePath, filename)
+      imageOutStream = FileOutputStream(image)
+      fileUri = Uri.fromFile(image)
     }
 
-    BaseApplication.instance.contentResolver.run {
-      val uri =
-        BaseApplication.instance.contentResolver.insert(mediaContentUri, values)
-          ?: return
-      imageOutStream = openOutputStream(uri) ?: return
+
+    val byteOutputStream = ByteArrayOutputStream()
+    compress(Bitmap.CompressFormat.JPEG, 100, byteOutputStream)
+    val mbitmapdata: ByteArray = byteOutputStream.toByteArray()
+    val inputStream = ByteArrayInputStream(mbitmapdata)
+    val buffer = ByteArray(128) //Use 1024 for better performance
+    val lenghtOfFile = mbitmapdata.size
+    var totalWritten = 0
+    var bufferedBytes = 0
+    var progress = 0
+    while (inputStream.read(buffer).also { bufferedBytes = it } > 0) {
+      totalWritten += bufferedBytes
+      progress = (totalWritten * 100 / lenghtOfFile)
+      Log.i(TAG, "saveImageToStorage: progress $progress")
+      if (showNoti) {
+        NotiUtils.notificationBuilder?.setProgress(100, progress, false)
+        noti = NotiUtils.notificationBuilder?.build()
+        NotiUtils.notificationManager?.notify(noti_id, noti)
+      }
+      imageOutStream.write(buffer, 0, bufferedBytes)
     }
-  } else {
-    val imagePath = Environment.getExternalStoragePublicDirectory(directory).absolutePath
-    val image = File(imagePath, filename)
-    imageOutStream = FileOutputStream(image)
+    if (showNoti) {
+      if (progress >= 100) {
+        Log.i(TAG, "saveImageToStorage: success")
+        NotiUtils.notificationBuilder?.setContentTitle("Image Downloaded")
+          ?.setProgress(0, 0, false)
+          ?.setContentIntent(getFileViewerIntent(fileUri, mimeType).getPendingIntent())
+        noti = NotiUtils.notificationBuilder?.build()
+        NotiUtils.notificationManager?.notify(System.currentTimeMillis().toInt(), noti)
+      } else {
+        Toast.makeText(BaseApplication.instance, "Failed To Save Image", Toast.LENGTH_SHORT).show()
+      }
+      NotiUtils.notificationManager?.cancel(noti_id)
+    }
+
+
+  } catch (e: IOException) {
+    Toast.makeText(BaseApplication.instance, "Failed To Save Image", Toast.LENGTH_SHORT).show()
+    NotiUtils.notificationManager?.cancel(noti_id)
+
+    e.printStackTrace()
   }
+}
 
-  imageOutStream.use {compress(Bitmap.CompressFormat.JPEG, 100, it) }
-  Toast.makeText(BaseApplication.instance, "Image Saved To Storage", Toast.LENGTH_SHORT).show()
+fun getFileViewerIntent(uri: Uri?,type:String): Intent {
+  val newIntent = Intent(Intent.ACTION_VIEW)
+  newIntent.setDataAndType(uri, type)
+  newIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+ return newIntent
+}
 
+fun Intent.getPendingIntent(): PendingIntent? {
+  return PendingIntent.getActivity(
+    BaseApplication.instance,
+    System.currentTimeMillis().toInt(), this, PendingIntent.FLAG_UPDATE_CURRENT
+  )
 }

@@ -20,7 +20,6 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:visibility="gone"
-
             android:id="@+id/empty_layout"
             android:gravity="center"
             android:layout_marginHorizontal="@dimen/size_24"
@@ -41,7 +40,8 @@
                 android:layout_marginTop="@dimen/size_16"
                 android:layout_width="match_parent"
                 android:gravity="center"
-                app:textType="HEADING_7"
+                android:textSize="@dimen/size_16"
+                android:fontFamily="@font/regular"
                 android:text="@string/you_have_not_purchased_any_festival_greeting_tempalate_as_yet"
                 android:layout_height="wrap_content"/>
 
@@ -49,11 +49,12 @@
                 android:layout_width="wrap_content"
                 android:layout_marginTop="@dimen/size_24"
                 style="@style/PrimaryButton"
+                android:fontFamily="@font/regular"
+                android:textSize="@dimen/size_12"
                 android:id="@+id/buy_templates"
-                android:paddingVertical="@dimen/size_8"
-                android:paddingHorizontal="@dimen/size_24"
+                android:paddingHorizontal="@dimen/size_32"
                 android:text="@string/buy_templates"
-                android:layout_height="wrap_content"/>
+                android:layout_height="@dimen/size_40"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
