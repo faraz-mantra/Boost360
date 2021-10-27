@@ -3,6 +3,7 @@ package com.dashboard.viewmodel
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.appservice.rest.repository.WithFloatTwoRepository
+import com.dashboard.model.DisableBadgeNotificationRequest
 import com.dashboard.rest.repository.*
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
@@ -167,6 +168,10 @@ class DashboardViewModel : BaseViewModel() {
 
   fun getUserProfileData(loginId:String?): LiveData<BaseResponse> {
     return WithFloatTwoRepositoryD.getUserProfileData(loginId).toLiveData()
+  }
+
+  fun disableBadgeNotification(request: DisableBadgeNotificationRequest): LiveData<BaseResponse> {
+    return UsCentralNowFloatsCloudRepository.disableBadgeNotification(request).toLiveData()
   }
 }
 

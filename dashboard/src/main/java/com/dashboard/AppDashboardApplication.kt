@@ -8,6 +8,7 @@ import com.dashboard.rest.EndPoints.BOOST_KIT_NEW_BASE
 import com.dashboard.rest.EndPoints.DEV_BOOST_KIT_URL
 import com.dashboard.rest.EndPoints.NOW_FLOATS_BASE
 import com.dashboard.rest.EndPoints.PLUGIN_FLOATS_URL
+import com.dashboard.rest.EndPoints.US_CENTRAL_NOW_FLOATS_CLOUD_FUNCTIONS
 import com.dashboard.rest.EndPoints.WEB_ACTION_API_BASE
 import com.dashboard.rest.EndPoints.WEB_ACTION_KITSUNE_BASE
 import com.dashboard.rest.EndPoints.WITH_FLOATS_BASE
@@ -40,6 +41,7 @@ open class AppDashboardApplication : BaseApplication() {
       AzureWebsiteNetApiClient.shared.init(AZURE_WEBSITE_NET_URL)
       WebActionApiBoostKitClientN.shared.init(WEB_ACTION_API_BASE)
       WebActionKitSuneClientN.shared.init(WEB_ACTION_KITSUNE_BASE)
+      UsCentralNowFloatsCloudApiClient.shared.init(US_CENTRAL_NOW_FLOATS_CLOUD_FUNCTIONS)
     }
   }
 
