@@ -38,14 +38,41 @@
           android:layout_marginTop="4dp"
           android:fontFamily="@font/regular"
           android:textColor="@color/color_888888"
-          app:layout_constraintEnd_toEndOf="@+id/tv_poster_heading"
+          app:layout_constraintEnd_toStartOf="@+id/layout_purchased"
           app:layout_constraintStart_toStartOf="@+id/tv_poster_heading"
           app:layout_constraintTop_toBottomOf="@+id/tv_poster_heading" />
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/layout_purchased"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          app:layout_constraintBottom_toBottomOf="@+id/tv_price"
+          app:layout_constraintEnd_toEndOf="@+id/tv_poster_heading"
+          app:layout_constraintTop_toBottomOf="@+id/tv_poster_heading">
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/customImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/size_4"
+            android:src="@drawable/ic_fposter_purchased" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/customTextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:text="@string/purchased"
+            android:textColor="@color/success_color"
+            android:textSize="@dimen/size_12" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+     
 
       <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/vp_poster"
           android:layout_width="0dp"
-          android:layout_height="@dimen/size_480"
+          android:layout_height="@dimen/size_450"
           android:layout_marginStart="8dp"
           android:layout_marginTop="16dp"
           android:layout_marginEnd="8dp"
@@ -76,7 +103,6 @@
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginStart="32dp"
-          android:layout_marginTop="14dp"
           android:layout_marginEnd="32dp"
           app:strokeWidth="1dp"
           app:strokeColor="@color/colorPrimary"

@@ -1,5 +1,6 @@
 package com.festive.poster.recyclerView.viewholders
 
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -22,6 +23,7 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecycler
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     val model = item as PosterPackModel
     binding.tvPosterHeading.text = model.tagsModel.name
+    binding.layoutPurchased.isVisible = model.isPurchased
     binding.tvPrice.text = "Pack of ${model.posterList?.size} posters for ₹${model.price.toInt()}"
   //  setupVp(binding.vpPoster)
 

@@ -39,4 +39,5 @@
     <string name="order_confirm_message"><![CDATA[Feel free to edit & share them with all your customers with your custom messages. You can make payment of ₹%1$s after you receive the payment link.]]></string>
     <string name="poster_pack_footer_desc"><![CDATA[More personalised & sharable greeting posters will be available here as new festival or holiday approach.]]></string>
     <string name="done">Done</string>
+    <string name="purchased">Purchased</string>
 </resources>
