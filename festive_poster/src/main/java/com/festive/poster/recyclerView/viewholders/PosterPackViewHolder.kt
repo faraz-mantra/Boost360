@@ -33,7 +33,6 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecycler
       binding.btnGetPack.setBackgroundColor(getColor(R.color.colorPrimary)!!)
       binding.btnGetPack.setTextColor(getColor(R.color.white)!!)
       binding.btnGetPack.text = "Get ${model.tagsModel.name} Posters Pack"
-
     }
     binding.btnGetPack.setOnClickListener {
       listener?.onItemClick(position, item, RecyclerViewActionType.GET_POSTER_PACK_CLICK.ordinal)

@@ -61,9 +61,48 @@ class PosterPackPurchasedListingFragment: AppBaseFragment<FragmentPosterPackPurc
     private fun convertToPurchasedList(jsonList: ArrayList<PosterPackModel>?) {
 
         dataList = ArrayList()
-        jsonList?.forEach {
-            dataList?.add(PurchasedPosterPackModel(it.tagsModel,it.posterList,it.price))
+        jsonList?.forEachIndexed { index, posterPackModel ->
+            var iconPos= index
+            if (iconPos>8){
+                iconPos=0
+            }
+            posterPackModel.tagsModel.drawableIcon=getIcon(iconPos)
+            dataList?.add(PurchasedPosterPackModel(posterPackModel.tagsModel,posterPackModel.posterList,posterPackModel.price))
         }
+    }
+
+    fun getIcon(position: Int): Int {
+        when(position){
+            0->{
+                return R.drawable.frame_0
+            }
+            1->{
+                return R.drawable.frame_1
+            }
+            2->{
+                return R.drawable.frame_2
+            }
+            3->{
+                return R.drawable.frame_3
+            }
+            4->{
+                return R.drawable.frame_4
+            }
+            5->{
+                return R.drawable.frame_5
+            }
+            6->{
+                return R.drawable.frame_6
+            }
+            7->{
+                return R.drawable.frame_7
+            }
+            8->{
+                return R.drawable.frame_8
+            }
+
+        }
+        return R.drawable.frame_0
     }
 
     private fun setupList() {

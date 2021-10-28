@@ -19,7 +19,7 @@ class PosterPackPurchasedViewHolder(binding: ListItemPurchasedPosterPackBinding)
         val model = item as PurchasedPosterPackModel
         binding.tvPackSize.text = model.posterList?.size.toString()+" Posters"
         binding.tvPackTitle.text = model.tagsModel.name
-        Glide.with(FestivePosterApplication.instance).load(model.tagsModel.icon).placeholder(R.drawable.placeholder_image).into(binding.ivPosterPack)
+        Glide.with(FestivePosterApplication.instance).load(model.tagsModel.drawableIcon).placeholder(R.drawable.placeholder_image).into(binding.ivPosterPack)
 
         binding.root.setOnClickListener {
             listener?.onItemClick(position,item,RecyclerViewActionType.POSTER_PACK_PURCHASED_CLICK.ordinal)

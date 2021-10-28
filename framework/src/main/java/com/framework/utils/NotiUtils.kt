@@ -17,7 +17,6 @@ import com.framework.R
 object NotiUtils {
 
 
-    var notificationBuilder: NotificationCompat.Builder?=null
     var notificationManager: NotificationManager?=null
     val NOTIFICATION_CHANNEL_ID=BaseApplication.instance.packageName
 
@@ -36,8 +35,6 @@ object NotiUtils {
             notificationManager?.createNotificationChannel(notificationChannel)
         }
 
-        notificationBuilder = NotificationCompat.Builder(BaseApplication.instance, NOTIFICATION_CHANNEL_ID)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
 
 
     }
@@ -53,9 +50,9 @@ object NotiUtils {
 
 
 
-    fun showNoti(title:String,progress:Int,max:Int=0,i: Intent?=null,priority:Int=NotificationCompat.PRIORITY_HIGH): Notification? {
+    fun showNoti(title:String,progress:Int,max:Int=0,i: Intent?=null,priority:Int=NotificationCompat.PRIORITY_HIGH): NotificationCompat.Builder {
 
-        notificationBuilder = NotificationCompat.Builder(BaseApplication.instance, NOTIFICATION_CHANNEL_ID)
+       val notificationBuilder = NotificationCompat.Builder(BaseApplication.instance, NOTIFICATION_CHANNEL_ID)
             .setPriority(priority)
 
         prepareNotification()
@@ -81,10 +78,10 @@ object NotiUtils {
             ?.setOnlyAlertOnce(true)
             ?.setContentIntent(resultIntent)
             ?.setProgress(100,0,false)
-            ?.setSmallIcon(R.drawable.ic_book)
+            ?.setSmallIcon(R.drawable.app_launcher)
             ?.setContentTitle(title)
 
-        return notificationBuilder?.build()
+        return notificationBuilder
     }
 
 

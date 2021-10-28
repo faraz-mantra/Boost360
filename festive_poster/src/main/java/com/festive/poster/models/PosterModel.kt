@@ -24,7 +24,6 @@ open class PosterModel(
     val updatedOn: String,
     @SerializedName("variants")
     val variants: List<PosterVariantModel>,
-    var isPurchased:Boolean=false,
     var greeting_message:String?,
     var shareLayout:Boolean=false
 ): AppBaseRecyclerViewItem {
@@ -36,5 +35,8 @@ open class PosterModel(
         val stringAnimal = Gson().toJson(this, PosterModel::class.java)
         return Gson().fromJson(stringAnimal, PosterModel::class.java)
     }
+
+    var isPurchased:Boolean=false
+    get() = details.isPurchased
 
 }
