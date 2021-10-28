@@ -19,7 +19,7 @@ class LineItemDecoration : RecyclerView.ItemDecoration() {
     /**
      * Height of the space the indicator takes up at the bottom of the view.
      */
-    private val mIndicatorHeight = (DP * 32).toInt()
+    private val mIndicatorHeight = (DP * 100).toInt()
 
     /**
      * Indicator stroke width.
@@ -32,6 +32,11 @@ class LineItemDecoration : RecyclerView.ItemDecoration() {
     private val mIndicatorItemLength = DP * 24
 
     /**
+     * Indicator height.
+     */
+    private val mIndicatorItemHeight= 100.0F
+
+    /**
      * Padding between indicators.
      */
     private val mIndicatorItemPadding = DP * 6
@@ -40,7 +45,9 @@ class LineItemDecoration : RecyclerView.ItemDecoration() {
      * Some more natural animation interpolation
      */
     private val mInterpolator: Interpolator = AccelerateDecelerateInterpolator()
-    private val mPaint: Paint = Paint()
+    private val mPaint: Paint = Paint().apply {
+        strokeWidth=mIndicatorItemHeight
+    }
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDrawOver(c, parent, state)
         val itemCount: Int? = parent.getAdapter()?.getItemCount()

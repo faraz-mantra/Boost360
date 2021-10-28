@@ -48,7 +48,6 @@
     <androidx.core.widget.NestedScrollView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_marginVertical="@dimen/size_50"
       app:layout_constraintBottom_toTopOf="@+id/tv_update_info"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
