@@ -104,7 +104,8 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
                 templateList.add(template.clone()!!)
               }
             }
-            dataList?.add(PosterPackModel(pack_tag, templateList.toArrayList()))
+            dataList?.add(PosterPackModel(pack_tag, templateList.toArrayList(),isPurchased = pack_tag.isPurchased))
+
           }
           getPriceOfPosterPacks()
         }
@@ -121,15 +122,10 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
           }
           pack.price = feature_festive?.price ?: 0.0
 
-
-          pack.posterList?.forEach {
-              poster->poster.isPurchased=pack.isPurchased
-          }
           Log.i(TAG, "festive price: ${feature_festive?.price}")
         }
 
         sharedViewModel?.posterPackLoadListener?.value = true
-
 
          // rearrangeList()
           adapter = AppBaseRecyclerViewAdapter(baseActivity, dataList!!, this)
@@ -160,7 +156,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
     }
   }
 
-  private fun checkPurchasedOrNot() {
+  /*private fun checkPurchasedOrNot() {
     viewModel?.getFeatureDetails(session?.fPID, clientId)?.observe(viewLifecycleOwner, {
       val featureList = it.arrayResponse as? Array<GetFeatureDetailsItem>
       featureList?.let {
@@ -170,7 +166,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
         }
       }
     })
-  }
+  }*/
 
 
   private fun prepareTagForApi(tags: List<PosterPackTagModel>): ArrayList<String> {

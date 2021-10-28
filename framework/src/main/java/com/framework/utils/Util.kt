@@ -30,6 +30,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.FontRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
@@ -42,6 +43,8 @@ import com.framework.BaseApplication
 import com.framework.constants.PackageNames
 import com.framework.views.customViews.CustomTextView
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.internal.notify
 import java.io.*
 import java.text.NumberFormat
@@ -203,7 +206,7 @@ fun View.toBitmap(): Bitmap? {
   return returnedBitmap
 }
 
-fun Bitmap.shareAsImage(packageName:String?=null,text: String?=null){
+suspend fun Bitmap.shareAsImage(packageName:String?=null,text: String?=null){
     val imagesFolder = File(BaseApplication.instance.getExternalFilesDir(null), "shared_images")
     var uri: Uri? = null
     try {
@@ -229,16 +232,19 @@ fun Bitmap.shareAsImage(packageName:String?=null,text: String?=null){
     } catch (e: Exception) {
       Log.d("IOException: " , e.message.toString())
       if (e is ActivityNotFoundException){
-        when(packageName){
-          PackageNames.WHATSAPP->{
-            Toast.makeText(BaseApplication.instance,"Whatsapp is not installed on your device",Toast.LENGTH_LONG).show()
+        withContext(Dispatchers.Main){
+          when(packageName){
+            PackageNames.WHATSAPP->{
+              Toast.makeText(BaseApplication.instance,"Whatsapp is not installed on your device",Toast.LENGTH_LONG).show()
 
-          }
-          PackageNames.INSTAGRAM->{
-            Toast.makeText(BaseApplication.instance,"Instagram is not installed on your device",Toast.LENGTH_LONG).show()
+            }
+            PackageNames.INSTAGRAM->{
+              Toast.makeText(BaseApplication.instance,"Instagram is not installed on your device",Toast.LENGTH_LONG).show()
 
+            }
           }
         }
+
       }
     }
 
@@ -274,9 +280,10 @@ suspend fun Bitmap.saveImageToStorage(
   val noti_id = System.currentTimeMillis().toInt()
 
   try {
-    var noti = NotiUtils.showNoti("Downloading Image", 0)
+    val notificationBuilder = NotiUtils.showNoti("Downloading Image", 0)
+
     if (showNoti) {
-      NotiUtils.notificationManager?.notify(noti_id, noti)
+      NotiUtils.notificationManager?.notify(noti_id, notificationBuilder.build())
     }
     var fileUri: Uri? = null
 
@@ -320,20 +327,18 @@ suspend fun Bitmap.saveImageToStorage(
       progress = (totalWritten * 100 / lenghtOfFile)
       Log.i(TAG, "saveImageToStorage: progress $progress")
       if (showNoti) {
-        NotiUtils.notificationBuilder?.setProgress(100, progress, false)
-        noti = NotiUtils.notificationBuilder?.build()
-        NotiUtils.notificationManager?.notify(noti_id, noti)
+        notificationBuilder?.setProgress(100, progress, false)
+        NotiUtils.notificationManager?.notify(noti_id, notificationBuilder.build())
       }
       imageOutStream.write(buffer, 0, bufferedBytes)
     }
     if (showNoti) {
       if (progress >= 100) {
         Log.i(TAG, "saveImageToStorage: success")
-        NotiUtils.notificationBuilder?.setContentTitle("Image Downloaded")
+        notificationBuilder?.setContentTitle("Image Downloaded")
           ?.setProgress(0, 0, false)
           ?.setContentIntent(getFileViewerIntent(fileUri, mimeType).getPendingIntent())
-        noti = NotiUtils.notificationBuilder?.build()
-        NotiUtils.notificationManager?.notify(System.currentTimeMillis().toInt(), noti)
+        NotiUtils.notificationManager?.notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
       } else {
         Toast.makeText(BaseApplication.instance, "Failed To Save Image", Toast.LENGTH_SHORT).show()
       }

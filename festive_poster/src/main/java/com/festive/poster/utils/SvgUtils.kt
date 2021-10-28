@@ -193,14 +193,18 @@ object SvgUtils {
                         svg.renderToCanvas(canvas)
                         withContext(Dispatchers.Default) {
                             when (packageName) {
-                                PackageNames.INSTAGRAM -> b.shareAsImage(
-                                    PackageNames.INSTAGRAM,
-                                    text = model.greeting_message
-                                )
-                                PackageNames.WHATSAPP -> b.shareAsImage(
-                                    PackageNames.WHATSAPP,
-                                    text = RegexUtils.addStarToNumbers(model.greeting_message)
-                                )
+                                PackageNames.INSTAGRAM ->{
+                                    b.shareAsImage(
+                                        PackageNames.INSTAGRAM,
+                                        text = model.greeting_message
+                                    )
+                                }
+                                PackageNames.WHATSAPP ->{
+                                    b.shareAsImage(
+                                        PackageNames.WHATSAPP,
+                                        text = RegexUtils.addStarToNumbers(model.greeting_message)
+                                    )
+                                }
                                 "" -> b.shareAsImage(text = model.greeting_message)
                                 else -> b.saveImageToStorage(showNoti = true)
                             }

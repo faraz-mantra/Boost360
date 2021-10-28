@@ -108,6 +108,7 @@ class FestivePosterContainerActivity : AppBaseActivity<ActivityFestivePoterConta
       }
       binding?.ivDownload->{
         if (isPosterPackLoaded){
+         // posterPackListFragment.dataList?.forEach { it.isPurchased=true }
           addFragmentReplace(binding?.container?.id,PosterPackPurchasedListingFragment.newInstance(
             posterPackListFragment.dataList?.filter { it.isPurchased }?.toArrayList()),true)
         }
