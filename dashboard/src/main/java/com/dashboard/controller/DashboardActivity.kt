@@ -385,7 +385,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
                     toolbarPropertySet(pos)
                 }
 
-                //if (isBadgeCountAvailable(BadgesModel.BadgesType.WEBSITEBADGE.name))
+                if (isBadgeCountAvailable(BadgesModel.BadgesType.WEBSITEBADGE.name))
                     disableBadgeNotification(BadgesModel.BadgesType.WEBSITEBADGE.name)
             }
             2 -> {
