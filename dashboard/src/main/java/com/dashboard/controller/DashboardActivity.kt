@@ -385,7 +385,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
                     toolbarPropertySet(pos)
                 }
 
-                if (isBadgeCountAvailable(BadgesModel.BadgesType.WEBSITEBADGE.name))
+                //if (isBadgeCountAvailable(BadgesModel.BadgesType.WEBSITEBADGE.name))
                     disableBadgeNotification(BadgesModel.BadgesType.WEBSITEBADGE.name)
             }
             2 -> {
@@ -760,6 +760,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
                 flagId = flagId
             )
         ).observeOnce(this, {
+            Log.i("cgfxfg", it.toString())
           /*if (it.isSuccess()) {
             //TODO here in case of success of disable badge
           } else {
