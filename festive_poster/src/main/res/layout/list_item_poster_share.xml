@@ -51,10 +51,11 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_10"
               android:layout_marginTop="@dimen/size_10"
-              android:backgroundTint="@color/black_opacity30"
+              android:backgroundTint="@color/black_opacity20"
               android:fontFamily="@font/semi_bold"
               android:text="@string/tap_to_edit"
               android:textAllCaps="false"
+              android:letterSpacing="@dimen/zero_letter_spacing_float"
               android:textSize="@dimen/caption"
               app:cornerRadius="@dimen/size_20"
               app:icon="@drawable/ic_tap_to_edit" />
