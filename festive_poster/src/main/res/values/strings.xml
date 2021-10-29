@@ -4,7 +4,7 @@
     <string name="tap_to_edit">Tap to Edit</string>
     <string name="purchased_posters">Purchased posters</string>
     <string name="share_via">Share via</string>
-    <string name="insta_dm">Insta DM</string>
+    <string name="insta_dm">Instagram</string>
     <string name="whatsapp">Whatsapp</string>
     <string name="others">Others</string>
     <string name="download">Download</string>
@@ -40,4 +40,5 @@
     <string name="poster_pack_footer_desc"><![CDATA[More personalised & sharable greeting posters will be available here as new festival or holiday approach.]]></string>
     <string name="done">Done</string>
     <string name="purchased">Purchased</string>
+    <string name="your_picture">Your picture</string>
 </resources>

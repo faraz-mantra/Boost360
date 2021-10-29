@@ -15,7 +15,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_margin="@dimen/size_12"
-            app:cardCornerRadius="@dimen/size_10">
+            app:cardCornerRadius="@dimen/size_20">
 
             <FrameLayout
                 android:id="@+id/relativeLayout"

@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_50"
                 android:layout_marginTop="@dimen/size_24"
-                android:backgroundTint="@color/colorPrimary"
+                android:background="@drawable/bg_fposter_gradient_yellow"
                 android:fontFamily="@font/semi_bold"
                 android:gravity="center"
                 android:stateListAnimator="@null"

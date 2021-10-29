@@ -185,8 +185,8 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
         sharedViewModel?.selectedPosterPack = item
 
         if (item.isPurchased){
-          sharedViewModel?.keyValueSaved?.value=null
-          addFragmentReplace(R.id.container, PosterListFragment.newInstance(item.tagsModel.tag!!), true)
+          //sharedViewModel?.keyValueSaved?.value=null
+          addFragment(R.id.container, PosterListFragment.newInstance(item.tagsModel.tag!!), true,true)
         }else{
           CustomizePosterSheet.newInstance(item.tagsModel.tag, item.isPurchased).show(baseActivity.supportFragmentManager, CustomizePosterSheet::class.java.name)
         }

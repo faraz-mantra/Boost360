@@ -16,6 +16,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.festive.poster.models.PosterModel
+import com.framework.constants.Constants
 import com.framework.constants.PackageNames
 import com.framework.glide.customsvgloader.*
 import com.framework.utils.RegexUtils
