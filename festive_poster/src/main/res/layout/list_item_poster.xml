@@ -5,9 +5,9 @@
 
     <com.framework.views.customViews.CustomCardView
         android:layout_width="300dp"
+        android:layout_height="match_parent"
         android:layout_marginStart="@dimen/size_8"
         android:layout_marginEnd="@dimen/size_16"
-        android:layout_height="@dimen/size_400"
         app:cardCornerRadius="@dimen/size_20">
 
         <com.framework.views.customViews.CustomCardView
@@ -31,9 +31,9 @@
 
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/iv_watermark"
-                    android:layout_gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_300"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     android:layout_margin="@dimen/size_24"
 
                     android:src="@drawable/ic_fposter_watermark" />
@@ -44,12 +44,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_10"
                     android:layout_marginTop="@dimen/size_10"
+                    android:backgroundTint="@color/black_opacity20"
                     android:fontFamily="@font/semi_bold"
+                    android:letterSpacing="@dimen/zero_letter_spacing_float"
                     android:text="@string/tap_to_edit"
                     android:textAllCaps="false"
                     android:textSize="@dimen/caption"
-                    android:letterSpacing="@dimen/zero_letter_spacing_float"
-                    android:backgroundTint="@color/black_opacity20"
                     app:cornerRadius="@dimen/size_20"
                     app:icon="@drawable/ic_tap_to_edit" />
             </FrameLayout>
