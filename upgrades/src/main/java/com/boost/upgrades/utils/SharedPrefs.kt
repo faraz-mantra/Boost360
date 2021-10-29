@@ -41,6 +41,7 @@ class SharedPrefs(activity: Activity) {
   private val ADDED_PACK_DESC = "ADDED_PACK_DESC"
   private val GST_API_RESULT = "GST API RESULT"
   private val LAST_USED_PAYMENT_MODE = "LAST_USED_PAYMENT_MODE"
+  private val CART_VALIDITY_MONTHS = "CART_VALIDITY_MONTHS"
 
   private var editor: SharedPreferences.Editor? = null
 
@@ -217,6 +218,12 @@ class SharedPrefs(activity: Activity) {
 
   fun getStoreMonthsValidity(): Int {
     return pref!!.getInt(temp_monthsValidity, 0)
+  }
+  fun storeCartValidityMonths(cartValidityMonths : String){
+    editor!!.putString(CART_VALIDITY_MONTHS,cartValidityMonths).apply()
+  }
+  fun getCartValidityMonths():String?{
+    return pref!!.getString(CART_VALIDITY_MONTHS,null)
   }
 
   fun storeAddedPackageDesc(description: String) {
