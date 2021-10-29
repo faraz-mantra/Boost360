@@ -5,6 +5,7 @@
 
     <com.framework.views.customViews.CustomCardView
         android:layout_width="300dp"
+        app:cardUseCompatPadding="true"
         android:layout_marginStart="@dimen/size_8"
         android:layout_marginEnd="@dimen/size_16"
         android:layout_height="400dp"

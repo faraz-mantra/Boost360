@@ -110,7 +110,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       binding?.rivUsersImage?.setImageResource(R.drawable.ic_user_circle_dark_grey)
     }
     if (merchantProfileDetails?.isNullAllValue() == false) {
-      binding?.ctvType?.visible()
+      binding?.ctvType?.gone()
       binding?.ctvName?.text = (merchantProfileDetails.getUserNameN() ?: getUserNumber()).capitalizeUtil()
       binding?.ctvContent?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)
     } else {
