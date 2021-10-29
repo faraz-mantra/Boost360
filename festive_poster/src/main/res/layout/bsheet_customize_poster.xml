@@ -58,11 +58,21 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <com.framework.views.customViews.CustomTextView
+            android:layout_marginTop="@dimen/size_16"
+            android:layout_marginHorizontal="@dimen/size_20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:text="@string/your_picture"
+            android:textSize="@dimen/caption" />
+
+
         <com.framework.views.customViews.CustomCardView
           android:layout_width="@dimen/size_140"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_20"
-          android:layout_marginTop="@dimen/size_20"
+          android:layout_marginTop="@dimen/size_4"
           app:cardBackgroundColor="@color/view_background_1"
           app:cardCornerRadius="@dimen/size_10">
 
@@ -250,7 +260,7 @@
       android:id="@+id/tv_update_info"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:background="@drawable/bg_button_orange_gradient"
+      android:background="@drawable/bg_fposter_gradient_yellow"
       android:fontFamily="@font/semi_bold"
       android:gravity="center"
       android:paddingVertical="@dimen/size_12"

@@ -9,6 +9,7 @@ import com.festive.poster.models.response.GetTemplatesResponse
 import com.festive.poster.reset.repo.DevBoostRepository
 import com.festive.poster.reset.repo.FeatureProcessorRepository
 import com.festive.poster.reset.repo.NowFloatsRepository
+import com.festive.poster.reset.repo.WithFloatsRepository
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
@@ -42,8 +43,12 @@ class FestivePosterViewModel: BaseViewModel() {
         return DevBoostRepository.getUpgradeData().toLiveData()
     }
 
-    fun uploadProfileImage(floatingPointId: String?,floatingPointTag: String?,fileName:String,file: RequestBody?):LiveData<BaseResponse> {
+ /*   fun uploadProfileImage(floatingPointId: String?,floatingPointTag: String?,fileName:String,file: RequestBody?):LiveData<BaseResponse> {
         return NowFloatsRepository.uploadProfileImage(floatingPointId,floatingPointTag,fileName,file).toLiveData()
+    }
+*/
+    fun uploadProfileImage( clientId: String?,loginId:String?,fileName:String, file: RequestBody?): LiveData<BaseResponse> {
+        return WithFloatsRepository.uploadUserProfileImage(clientId,loginId,fileName,file).toLiveData()
     }
 
     fun saveKeyValue(floatingPointId: String?,fpTag: String?,templateIds:List<String>,map:HashMap<String,String?>):LiveData<BaseResponse>{

@@ -117,7 +117,7 @@ class PosterPackPurchasedListingFragment: AppBaseFragment<FragmentPosterPackPurc
             RecyclerViewActionType.POSTER_PACK_PURCHASED_CLICK.ordinal->{
                 sharedViewModel?.selectedPosterPack = item as PosterPackModel
                 sharedViewModel?.keyValueSaved?.value=null
-                addFragmentReplace(R.id.container,PosterListFragment.newInstance(item.tagsModel.tag),true)
+                addFragment(R.id.container,PosterListFragment.newInstance(item.tagsModel.tag),true,true)
             }
         }
     }

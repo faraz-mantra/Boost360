@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.framework.R
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
@@ -137,12 +138,29 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     }
   }
 
+  open fun addFragment(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean,showAnim:Boolean=false) {
+    if (activity?.supportFragmentManager?.isDestroyed == true) return
+    if (containerID == null || fragment == null) return
 
-  open fun addFragmentReplace(containerId: Int?, fragment: Fragment?, addToBackStack: Boolean) {
+    val fragmentTransaction = baseActivity.supportFragmentManager.beginTransaction()
+    if (showAnim){
+      fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
+    }
+    if (addToBackStack) {
+      fragmentTransaction.addToBackStack(fragment.javaClass.name)
+    }
+    fragmentTransaction.add(containerID, fragment, fragment.javaClass.name).commit()
+  }
+
+  open fun addFragmentReplace(containerId: Int?, fragment: Fragment?, addToBackStack: Boolean,showAnim:Boolean=false) {
     if (requireActivity().supportFragmentManager.isDestroyed) return
     if (containerId == null || fragment == null) return
 
     val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+    if (showAnim){
+      fragmentTransaction?.
+      setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
+    }
     if (addToBackStack) {
       fragmentTransaction.addToBackStack(fragment.javaClass.name)
     }

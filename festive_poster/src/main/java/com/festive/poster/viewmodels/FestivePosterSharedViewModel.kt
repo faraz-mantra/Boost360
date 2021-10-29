@@ -14,4 +14,5 @@ class FestivePosterSharedViewModel: BaseViewModel() {
     var selectedPosterPack:PosterPackModel?=null
     var selectedPoster:PosterModel?=null
     var posterPackLoadListener = MutableLiveData<Boolean>()
+    var shouldRefresh = false
 }

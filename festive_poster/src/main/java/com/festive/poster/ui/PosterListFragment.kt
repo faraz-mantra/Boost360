@@ -155,7 +155,7 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.POSTER_TAP_TO_EDIT_CLICK.ordinal -> {
-        selectedPositionForEdit = position
+        sharedViewModel?.selectedPoster = item as PosterModel
 /*        CustomizePosterSheet.newInstance(packTag!!, true,
           PosterListFragment::class.java.name,
           (item as PosterModel).id).show(requireActivity().supportFragmentManager,

@@ -55,7 +55,7 @@
                     android:id="@+id/iv_download"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/size_12"
+                    android:layout_marginEnd="@dimen/size_16"
                     android:src="@drawable/ic_fposter_download_menu_grey_disabled" />
 
                 <com.framework.views.customViews.CustomImageView

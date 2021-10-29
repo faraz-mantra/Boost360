@@ -92,7 +92,7 @@ class FestivePosterContainerActivity : AppBaseActivity<ActivityFestivePoterConta
   }*/
 
   private fun showPosterPackListing() {
-    addFragmentReplace(binding?.container?.id, posterPackListFragment, true)
+    addFragment(binding?.container?.id, posterPackListFragment, true,true)
 
   }
 
@@ -109,8 +109,8 @@ class FestivePosterContainerActivity : AppBaseActivity<ActivityFestivePoterConta
       binding?.ivDownload->{
         if (isPosterPackLoaded){
          // posterPackListFragment.dataList?.forEach { it.isPurchased=true }
-          addFragmentReplace(binding?.container?.id,PosterPackPurchasedListingFragment.newInstance(
-            posterPackListFragment.dataList?.filter { it.isPurchased }?.toArrayList()),true)
+          addFragment(binding?.container?.id,PosterPackPurchasedListingFragment.newInstance(
+            posterPackListFragment.dataList?.filter { it.isPurchased }?.toArrayList()),true,true)
         }
 
       }

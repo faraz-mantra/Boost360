@@ -24,7 +24,10 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.framework.models.UserProfileData
+import com.framework.models.UserProfileDataResult
 import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId2
 import com.framework.pref.getDomainName
 import com.framework.utils.ValidationUtils
 import com.framework.webengageconstant.FESTIVAL_POSTER_UPDATE_INFO
@@ -151,7 +154,7 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
           submitDetails()
         }
       }
-      binding?.imgEdit -> ImagePicker.with(this).start(RC_IMAGE_PCIKER)
+      binding?.imgEdit -> ImagePicker.with(this).cropSquare().start(RC_IMAGE_PCIKER)
     }
   }
 
@@ -164,13 +167,18 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
     showProgress()
     if (imageUrl==null){
       val imgFile = File(path)
-      viewModel?.uploadProfileImage(session?.fPID,
-        session?.fpTag,imgFile.name,
+      viewModel?.uploadProfileImage(
+        clientId2, session?.userProfileId,imgFile.name,
         imgFile.asRequestBody("image/*".toMediaTypeOrNull()))?.observe(viewLifecycleOwner,{
 
         if (it.isSuccess()){
           Log.i(TAG, "uploadImage: success ${Gson().toJson(it)}")
           imageUrl = it.stringResponse
+          val profileData = UserProfileDataResult.getMerchantProfileDetails()
+          if (profileData != null) {
+            profileData.ImageUrl = imageUrl
+            UserProfileDataResult.saveMerchantProfileDetails(profileData)
+          }
           saveKeyValue()
         }else{
           hideProgress()

@@ -99,7 +99,7 @@
             android:textColor="@color/black_4a4a4a"
             android:fontFamily="@font/regular"
             android:textSize="@dimen/size_12"
-            tools:text="24 hours after the the order is confirmed, we’ll send you a secure payment link on your registered email ID abcdfff@gmail.com
+            tools:text="A day after the the order is confirmed, we’ll send you a secure payment link on your registered email ID abcdfff@gmail.com
 &amp; +918142558406 to make the payment or ₹51 (including taxes). "
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -115,7 +115,7 @@
         android:id="@+id/btn_confirm"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_50"
-        android:background="@drawable/bg_button_orange_gradient"
+        android:background="@drawable/bg_fposter_gradient_yellow"
         android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:text="@string/confirm_order"

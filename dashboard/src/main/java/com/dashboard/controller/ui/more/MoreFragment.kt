@@ -16,10 +16,7 @@ import com.appservice.model.kycData.DataKyc
 import com.appservice.model.kycData.getBusinessKycDetail
 import com.appservice.ui.updatesBusiness.showDialog
 import com.boost.presignin.model.other.KYCDetails
-import com.boost.presignin.model.userprofile.UserProfileData
-import com.boost.presignin.model.userprofile.UserProfileDataResult
-import com.boost.presignin.model.userprofile.UserProfileDataResult.Companion.getMerchantProfileDetails
-import com.boost.presignin.model.userprofile.UserProfileDataResult.Companion.saveMerchantProfileDetails
+
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.RecyclerViewActionType
@@ -37,6 +34,10 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
+import com.framework.models.UserProfileData
+import com.framework.models.UserProfileDataResult
+import com.framework.models.UserProfileDataResult.Companion.getMerchantProfileDetails
+import com.framework.models.UserProfileDataResult.Companion.saveMerchantProfileDetails
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_IMAGE_URI
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl

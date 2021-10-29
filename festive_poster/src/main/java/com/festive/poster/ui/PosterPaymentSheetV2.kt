@@ -65,7 +65,7 @@ class PosterPaymentSheetV2 : AppBaseBottomSheetFragment<SheetPosterPaymentv2Bind
         else -> ""
       }
       val email = if (session?.userProfileEmail.isNullOrEmpty()) "" else session?.userProfileEmail
-      binding?.tvDesc?.text = "24 hours after the the order is confirmed, we’ll send you a secure payment link on your registered email ID" +
+      binding?.tvDesc?.text = "A day after the order is confirmed, we’ll send you a secure payment link on your registered email ID" +
               " ${if (email.isNullOrEmpty()) number else "$email & $number"} to make the payment for ₹${it.price.toInt()} (including taxes)."
     }
   }
