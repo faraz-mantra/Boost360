@@ -25,7 +25,9 @@ import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.base.BaseActivity
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.pref.UserSessionManager
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.FESTIVAL_POSTER_PURCHASED_GALLERY
@@ -37,7 +39,9 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
   private var adapter: AppBaseRecyclerViewAdapter<PosterModel>? = null
   private var sharedViewModel: FestivePosterSharedViewModel? = null
   private val TAG = "PosterListFragment"
-  private var selectedPosterModel:PosterModel?=null
+  private var selectedPosterModelForDownload:PosterModel?=null
+  private var selectedPositionForEdit:Int=-1
+
   private val RC_STORAGE_PERMISSION=200
 
   companion object {
@@ -71,11 +75,19 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
     WebEngageController.trackEvent(FESTIVAL_POSTER_PURCHASED_GALLERY, event_value = HashMap())
     sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
     session = UserSessionManager(requireActivity())
-    setupList()
+    observeCustomization()
   }
 
   private fun observeCustomization() {
-    sharedViewModel?.customizationDetails?.observe(viewLifecycleOwner, {
+    sharedViewModel?.keyValueSaved?.observe(viewLifecycleOwner,{
+
+      Log.i(TAG, "observeCustomization: ")
+
+      setupList()
+
+
+    })
+    /*sharedViewModel?.customizationDetails?.observe(viewLifecycleOwner, {
       Log.i(TAG, "observeCustomization: ${Gson().toJson(it)}")
 
 
@@ -110,11 +122,11 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
         }
       }
       adapter?.notifyDataSetChanged()
-    })
+    })*/
   }
 
   private fun setupList() {
-    showProgress()
+    showShimmerAnimation()
     viewModel?.getTemplates(
       session?.fPID,
       session?.fpTag,
@@ -123,14 +135,17 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
         val response = it as? GetTemplatesResponse
         response?.let {
           dataList = response.Result.templates.toArrayList()
-          dataList?.forEach { posterModel -> posterModel.isPurchased = true }
+          dataList?.forEach { posterModel -> posterModel.isPurchased = true
+            posterModel.greeting_message = sharedViewModel?.selectedPosterPack?.tagsModel?.description
+            posterModel.shareLayout=true
+
+          }
           adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>, dataList!!, this)
           binding?.rvPosters?.adapter = adapter
           binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
-          observeCustomization()
           adapter?.notifyDataSetChanged()
         }
-        hideProgress()
+        hideShimmerAnimation()
     })
 
 
@@ -140,7 +155,15 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.POSTER_TAP_TO_EDIT_CLICK.ordinal -> {
-        CustomizePosterSheet.newInstance(packTag!!, true, PosterListFragment::class.java.name).show(requireActivity().supportFragmentManager, CustomizePosterSheet::class.java.name)
+        sharedViewModel?.selectedPoster = item as PosterModel
+/*        CustomizePosterSheet.newInstance(packTag!!, true,
+          PosterListFragment::class.java.name,
+          (item as PosterModel).id).show(requireActivity().supportFragmentManager,
+          CustomizePosterSheet::class.java.name)*/
+
+        CustomizePosterSheet.newInstance(packTag!!, true,
+          PosterListFragment::class.java.name).show(requireActivity().supportFragmentManager,
+          CustomizePosterSheet::class.java.name)
 
       }
       RecyclerViewActionType.POSTER_GREETING_MSG_CLICKED.ordinal -> {
@@ -149,7 +172,7 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
 
       }
       RecyclerViewActionType.POSTER_DOWNLOAD_CLICKED.ordinal->{
-        selectedPosterModel = item as PosterModel
+        selectedPosterModelForDownload = item as PosterModel
         checkStoragePermission()
       }
     }
@@ -169,7 +192,8 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
   }
 
   private fun downloadSelectedPoster() {
-    SvgUtils.shareUncompressedSvg(selectedPosterModel?.variants?.firstOrNull()?.svgUrl,selectedPosterModel!!,requireContext())
+    SvgUtils.shareUncompressedSvg(selectedPosterModelForDownload?.variants?.firstOrNull()?.svgUrl,
+      selectedPosterModelForDownload!!,requireContext())
   }
 
   override fun onRequestPermissionsResult(
@@ -198,5 +222,25 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
       sheet.dismiss()
     }
     sheet.show()
+  }
+
+  fun showShimmerAnimation(){
+    binding?.shimmerLayout?.visible()
+    binding?.rvPosters?.gone()
+  }
+
+  fun hideShimmerAnimation(){
+    binding?.shimmerLayout?.gone()
+    binding?.rvPosters?.visible()
+  }
+  override fun onResume() {
+    super.onResume()
+    binding?.shimmerLayout?.startShimmer()
+
+  }
+
+  override fun onPause() {
+    super.onPause()
+    binding?.shimmerLayout?.stopShimmer()
   }
 }
