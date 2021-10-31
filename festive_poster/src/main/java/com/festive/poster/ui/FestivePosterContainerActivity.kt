@@ -1,9 +1,7 @@
 package com.festive.poster.ui
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.os.Build
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.festive.poster.R
@@ -12,13 +10,18 @@ import com.festive.poster.databinding.ActivityFestivePoterContainerBinding
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
+import com.framework.extensions.gone
+import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.framework.utils.toArrayList
 import com.framework.webengageconstant.FESTIVE_POSTER_PAGE_LOAD
 
 class FestivePosterContainerActivity : AppBaseActivity<ActivityFestivePoterContainerBinding, BaseViewModel>() {
 
   override var TAG = "FestivePosterContainerA"
   private var sharedViewModel: FestivePosterSharedViewModel? = null
+  private var posterPackListFragment=PosterPackListingFragment.newInstance()
+  private var isPosterPackLoaded=false
   /*private val RC_STORAGE_PERMISSION=201*/
 
   override fun getLayout(): Int {
@@ -31,14 +34,33 @@ class FestivePosterContainerActivity : AppBaseActivity<ActivityFestivePoterConta
 
   override fun onCreateView() {
     super.onCreateView()
+    binding?.ivDownload?.isEnabled = false
+
     WebEngageController.trackEvent(FESTIVE_POSTER_PAGE_LOAD, event_value = HashMap())
     SvgUtils.initReqBuilder(this)
     sharedViewModel = ViewModelProvider(this).get(FestivePosterSharedViewModel::class.java)
     handleBackStack()
-    menuClickListener()
+    setOnClickListener(binding?.ivBack,binding?.ivHelp,binding?.ivDownload)
     showPosterPackListing()
     lifecycleScope.launchWhenCreated {
     }
+
+    setObserevers()
+  }
+
+  private fun setObserevers() {
+    sharedViewModel?.posterPackLoadListener?.observe(this,{
+      isPosterPackLoaded = it
+      if (it){
+        binding?.ivDownload?.isEnabled = true
+        binding?.ivDownload?.setImageDrawable(getDrawable(R.drawable.ic_fposter_download_menu_grey))
+      }else{
+        binding?.ivDownload?.isEnabled = false
+        binding?.ivDownload?.setImageDrawable(getDrawable(R.drawable.ic_fposter_download_menu_grey_disabled))
+      }
+
+
+    })
   }
 
   /*private fun checkStoragePermission() {
@@ -70,16 +92,28 @@ class FestivePosterContainerActivity : AppBaseActivity<ActivityFestivePoterConta
   }*/
 
   private fun showPosterPackListing() {
-    addFragmentReplace(binding?.container?.id, PosterPackListingFragment.newInstance(), true)
+    addFragment(binding?.container?.id, posterPackListFragment, true,true)
 
   }
 
-  private fun menuClickListener() {
-    binding?.ivBack?.setOnClickListener {
-      onBackPressed()
-    }
-    binding?.ivHelp?.setOnClickListener {
-      PosterHelpSheet().show(supportFragmentManager, PosterHelpSheet::class.java.name)
+
+  override fun onClick(v: View?) {
+    super.onClick(v)
+    when(v){
+      binding?.ivBack->{
+        onBackPressed()
+      }
+      binding?.ivHelp->{
+        PosterHelpSheet().show(supportFragmentManager, PosterHelpSheet::class.java.name)
+      }
+      binding?.ivDownload->{
+        if (isPosterPackLoaded){
+         // posterPackListFragment.dataList?.forEach { it.isPurchased=true }
+          addFragment(binding?.container?.id,PosterPackPurchasedListingFragment.newInstance(
+            posterPackListFragment.dataList?.filter { it.isPurchased }?.toArrayList()),true,true)
+        }
+
+      }
     }
   }
 
@@ -91,12 +125,17 @@ class FestivePosterContainerActivity : AppBaseActivity<ActivityFestivePoterConta
         when (topFragment) {
           is PosterPackListingFragment -> {
             binding?.tvTitle?.text = getString(R.string.festival_poster)
+            binding?.ivDownload?.visible()
           }
 
-          is PosterPackPurchasedFragment -> {
+          is PosterPackPurchasedListingFragment -> {
             binding?.tvTitle?.text = getString(R.string.purchased_posters)
+            binding?.ivDownload?.gone()
+
           }
           is PosterListFragment -> {
+            binding?.ivDownload?.gone()
+
             binding?.tvTitle?.text = sharedViewModel?.selectedPosterPack?.tagsModel?.name + " (${sharedViewModel?.selectedPosterPack?.posterList?.size})"
           }
         }
