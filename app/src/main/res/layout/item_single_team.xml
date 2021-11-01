@@ -29,7 +29,9 @@
       app:layout_constraintTop_toTopOf="parent">
 
       <ImageView
-        android:id="@+id/profile_image"
+          android:tag="com.userexperior.ueSecureView"
+
+          android:id="@+id/profile_image"
         android:layout_width="@dimen/_75sdp"
         android:layout_height="@dimen/_75sdp"
         android:layout_margin="@dimen/_10sdp"
@@ -49,7 +51,9 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-          android:id="@+id/name"
+            android:tag="com.userexperior.ueSecureView"
+
+            android:id="@+id/name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:fontFamily="@font/regular"
@@ -58,7 +62,9 @@
           android:textSize="@dimen/_15sdp" />
 
         <TextView
-          android:id="@+id/description"
+            android:tag="com.userexperior.ueSecureView"
+
+            android:id="@+id/description"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="@string/cfo"

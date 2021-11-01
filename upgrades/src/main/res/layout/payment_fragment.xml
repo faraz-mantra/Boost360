@@ -205,17 +205,19 @@
             android:textColor="@color/common_text_color" />
 
           <TextView
-            android:id="@+id/business_name_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginLeft="@dimen/_12sdp"
-            android:layout_toEndOf="@+id/business_address"
-            android:fontFamily="@font/open_sans"
-            android:gravity="end"
-            android:padding="@dimen/_5sdp"
-            android:text="Modern SPA"
-            android:textColor="@color/common_text_color" />
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/business_name_value"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentEnd="true"
+              android:layout_marginLeft="@dimen/_12sdp"
+              android:layout_toEndOf="@+id/business_address"
+              android:fontFamily="@font/open_sans"
+              android:gravity="end"
+              android:padding="@dimen/_5sdp"
+              android:text="Modern SPA"
+              android:textColor="@color/common_text_color" />
 
           <TextView
             android:id="@+id/business_name_missing"
@@ -241,18 +243,20 @@
             android:textColor="@color/common_text_color" />
 
           <TextView
-            android:id="@+id/business_gstin_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/business_name_value"
-            android:layout_alignParentEnd="true"
-            android:layout_marginLeft="@dimen/_12sdp"
-            android:layout_toEndOf="@+id/business_address"
-            android:fontFamily="@font/open_sans"
-            android:gravity="end"
-            android:padding="@dimen/_5sdp"
-            android:text="22AAAAA****A1Z5"
-            android:textColor="@color/common_text_color" />
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/business_gstin_value"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/business_name_value"
+              android:layout_alignParentEnd="true"
+              android:layout_marginLeft="@dimen/_12sdp"
+              android:layout_toEndOf="@+id/business_address"
+              android:fontFamily="@font/open_sans"
+              android:gravity="end"
+              android:padding="@dimen/_5sdp"
+              android:text="22AAAAA****A1Z5"
+              android:textColor="@color/common_text_color" />
 
           <TextView
             android:id="@+id/business_gstin_missing"
@@ -279,18 +283,20 @@
             android:textColor="@color/common_text_color" />
 
           <TextView
-            android:id="@+id/business_email_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/business_mobile_value"
-            android:layout_alignParentEnd="true"
-            android:layout_marginLeft="@dimen/_12sdp"
-            android:layout_toEndOf="@+id/business_address"
-            android:fontFamily="@font/open_sans"
-            android:gravity="end"
-            android:padding="@dimen/_5sdp"
-            android:text="hello@nowfloats.com"
-            android:textColor="@color/common_text_color" />
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/business_email_value"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/business_mobile_value"
+              android:layout_alignParentEnd="true"
+              android:layout_marginLeft="@dimen/_12sdp"
+              android:layout_toEndOf="@+id/business_address"
+              android:fontFamily="@font/open_sans"
+              android:gravity="end"
+              android:padding="@dimen/_5sdp"
+              android:text="hello@nowfloats.com"
+              android:textColor="@color/common_text_color" />
 
           <TextView
             android:id="@+id/business_email_missing"
@@ -317,18 +323,20 @@
             android:textColor="@color/common_text_color" />
 
           <TextView
-            android:id="@+id/business_mobile_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/business_gstin_value"
-            android:layout_alignParentEnd="true"
-            android:layout_marginLeft="@dimen/_12sdp"
-            android:layout_toEndOf="@+id/business_address"
-            android:fontFamily="@font/open_sans"
-            android:gravity="end"
-            android:padding="@dimen/_5sdp"
-            android:text="+1235678905"
-            android:textColor="@color/common_text_color" />
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/business_mobile_value"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/business_gstin_value"
+              android:layout_alignParentEnd="true"
+              android:layout_marginLeft="@dimen/_12sdp"
+              android:layout_toEndOf="@+id/business_address"
+              android:fontFamily="@font/open_sans"
+              android:gravity="end"
+              android:padding="@dimen/_5sdp"
+              android:text="+1235678905"
+              android:textColor="@color/common_text_color" />
 
           <TextView
             android:id="@+id/business_mobile_missing"
@@ -355,20 +363,22 @@
             android:textColor="@color/common_text_color" />
 
           <TextView
-            android:id="@+id/business_supply_place_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/business_email_value"
-            android:layout_alignParentEnd="true"
-            android:layout_marginLeft="@dimen/_12sdp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="-1dp"
-            android:layout_toEndOf="@+id/business_address"
-            android:fontFamily="@font/open_sans"
-            android:gravity="end"
-            android:padding="@dimen/_5sdp"
-            android:text="Telangana"
-            android:textColor="@color/common_text_color" />
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/business_supply_place_value"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/business_email_value"
+              android:layout_alignParentEnd="true"
+              android:layout_marginLeft="@dimen/_12sdp"
+              android:layout_marginTop="0dp"
+              android:layout_marginEnd="-1dp"
+              android:layout_toEndOf="@+id/business_address"
+              android:fontFamily="@font/open_sans"
+              android:gravity="end"
+              android:padding="@dimen/_5sdp"
+              android:text="Telangana"
+              android:textColor="@color/common_text_color" />
 
           <TextView
             android:id="@+id/business_supply_place_missing"
@@ -395,21 +405,22 @@
             android:textColor="@color/common_text_color" />
 
           <TextView
-            android:id="@+id/business_address_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/business_supply_place_value"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="18dp"
-            android:layout_marginLeft="@dimen/_12sdp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="-3dp"
-            android:layout_toEndOf="@+id/business_address"
-            android:fontFamily="@font/open_sans"
-            android:gravity="end"
-            android:padding="@dimen/_5sdp"
-            android:text="Sample address"
-            android:textColor="@color/common_text_color" />
+              android:tag="com.userexperior.ueSecureView"
+              android:id="@+id/business_address_value"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/business_supply_place_value"
+              android:layout_alignParentEnd="true"
+              android:layout_marginStart="18dp"
+              android:layout_marginLeft="@dimen/_12sdp"
+              android:layout_marginTop="2dp"
+              android:layout_marginEnd="-3dp"
+              android:layout_toEndOf="@+id/business_address"
+              android:fontFamily="@font/open_sans"
+              android:gravity="end"
+              android:padding="@dimen/_5sdp"
+              android:text="Sample address"
+              android:textColor="@color/common_text_color" />
 
           <TextView
             android:id="@+id/business_address_missing"
@@ -586,7 +597,9 @@
             app:layout_constraintTop_toBottomOf="@id/upi_payment_title" />
 
           <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/upi_recycler"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/upi_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"
@@ -896,7 +909,9 @@
             app:layout_constraintTop_toBottomOf="@id/payment_payment_title" />
 
           <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/card_recycler"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/card_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"

@@ -202,7 +202,9 @@
                 tools:src="@drawable/dummy_staff_img" />
 
               <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ctv_business_name"
+                  android:tag="com.userexperior.ueSecureView"
+
+                  android:id="@+id/ctv_business_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_12"
@@ -220,7 +222,9 @@
                 tools:text="@string/business_name" />
 
               <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ctv_business_address"
+                  android:tag="com.userexperior.ueSecureView"
+
+                  android:id="@+id/ctv_business_address"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_12"

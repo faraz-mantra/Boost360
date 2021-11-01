@@ -464,7 +464,9 @@
               android:orientation="horizontal">
 
               <com.framework.views.customViews.CustomCardView
-                android:id="@+id/btn_business_logo"
+                  android:tag="com.userexperior.ueSecureView"
+
+                  android:id="@+id/btn_business_logo"
                 android:layout_width="@dimen/size_67"
                 android:layout_height="@dimen/size_67"
                 android:layout_marginStart="@dimen/size_16"
