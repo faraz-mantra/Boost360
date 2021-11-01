@@ -21,18 +21,12 @@ import com.framework.base.BaseFragment
 import com.framework.models.BaseViewModel
 import com.onboarding.nowfloats.constant.PreferenceConstant
 
-
 abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseFragment<Binding, ViewModel>() {
-
 
   protected var appBaseActivity: AppBaseActivity<*, *>? = null
   private var progressView: ProgressDialog? = null
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     appBaseActivity = activity as? AppBaseActivity<*, *>
     progressView = ProgressDialog.newInstance()
     return super.onCreateView(inflater, container, savedInstanceState)
@@ -44,18 +38,12 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
 
   protected val pref: SharedPreferences?
     get() {
-      return baseActivity.getSharedPreferences(
-        PreferenceConstant.NOW_FLOATS_PREFS,
-        Context.MODE_PRIVATE
-      )
+      return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
     }
 
   protected val prefReferral: SharedPreferences?
     get() {
-      return baseActivity.getSharedPreferences(
-        PreferenceConstant.PREF_NAME_REFERRAL,
-        Context.MODE_PRIVATE
-      )
+      return baseActivity.getSharedPreferences(PreferenceConstant.PREF_NAME_REFERRAL, Context.MODE_PRIVATE)
     }
 
   protected fun getToolbarTitle(): String? {
@@ -79,7 +67,6 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
     } catch (e: Exception) {
       e.printStackTrace()
       SentryController.captureException(e)
-
     }
   }
 
