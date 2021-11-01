@@ -5,7 +5,7 @@
 
   <com.framework.views.customViews.CustomCardView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="700dp"
     android:layout_marginHorizontal="@dimen/size_16"
     android:layout_marginTop="@dimen/size_16"
     app:cardCornerRadius="@dimen/size_20"
@@ -19,7 +19,7 @@
 
       <com.framework.views.customViews.CustomCardView
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
+          android:layout_height="460dp"
           android:layout_gravity="center"
           android:layout_margin="@dimen/size_16"
           app:cardCornerRadius="@dimen/size_20"
@@ -32,7 +32,7 @@
           <com.festive.poster.customviews.CustomSvgImageView
               android:id="@+id/iv_svg_purchased"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="match_parent"
               android:adjustViewBounds="true"
               android:minHeight="@dimen/size_430"
               android:scaleType="fitXY" />
@@ -51,10 +51,11 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_10"
               android:layout_marginTop="@dimen/size_10"
-              android:backgroundTint="@color/black_opacity30"
+              android:backgroundTint="@color/black_opacity20"
               android:fontFamily="@font/semi_bold"
               android:text="@string/tap_to_edit"
               android:textAllCaps="false"
+              android:letterSpacing="@dimen/zero_letter_spacing_float"
               android:textSize="@dimen/caption"
               app:cornerRadius="@dimen/size_20"
               app:icon="@drawable/ic_tap_to_edit" />
@@ -66,7 +67,7 @@
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/tv_greeting_msg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/size_76"
         android:layout_marginHorizontal="@dimen/size_14"
         android:background="@drawable/shape_fposter_grey_stroke_rect"
         android:fontFamily="@font/regular"
@@ -112,7 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/size_14"
         android:layout_marginTop="@dimen/size_16"
-        android:layout_marginBottom="@dimen/size_16"
+        android:layout_marginBottom="@dimen/size_10"
         android:orientation="horizontal"
         android:weightSum="4">
 
@@ -135,6 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_4"
             android:fontFamily="@font/regular"
+              android:textSize="@dimen/size_12"
             android:text="@string/whatsapp"
             android:textColor="@color/color_888888" />
 
@@ -158,7 +160,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_4"
-            android:fontFamily="@font/regular"
+              android:textSize="@dimen/size_12"
+
+              android:fontFamily="@font/regular"
             android:text="@string/insta_dm"
             android:textColor="@color/color_888888" />
 
@@ -182,7 +186,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_4"
-            android:fontFamily="@font/regular"
+              android:textSize="@dimen/size_12"
+
+              android:fontFamily="@font/regular"
             android:text="@string/others"
             android:textColor="@color/color_888888" />
 
@@ -206,7 +212,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_4"
-            android:fontFamily="@font/regular"
+              android:textSize="@dimen/size_12"
+
+              android:fontFamily="@font/regular"
             android:text="@string/download"
             android:textColor="@color/color_888888" />
 
