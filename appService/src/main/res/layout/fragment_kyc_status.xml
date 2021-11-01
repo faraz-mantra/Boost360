@@ -33,7 +33,9 @@
           app:cardElevation="@dimen/size_1">
 
           <com.framework.views.customViews.CustomImageView
-            android:id="@+id/iv_pan_card_image"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/iv_pan_card_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
@@ -57,7 +59,9 @@
             app:textType="CAPTION" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tv_pan_number"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/tv_pan_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
@@ -82,7 +86,10 @@
         app:textType="CAPTION" />
 
       <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tv_pan_name"
+          android:tag="com.userexperior.ueSecureView"
+
+
+          android:id="@+id/tv_pan_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_2"
@@ -106,7 +113,9 @@
         app:textType="CAPTION" />
 
       <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tv_bank_acc_number"
+          android:tag="com.userexperior.ueSecureView"
+
+          android:id="@+id/tv_bank_acc_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_2"
@@ -118,7 +127,9 @@
         app:textType="HEADING_5" />
 
       <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tv_bank_branch_details"
+          android:tag="com.userexperior.ueSecureView"
+
+          android:id="@+id/tv_bank_branch_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/kotak_mahindra_bank_connaught_place_branch"

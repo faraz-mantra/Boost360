@@ -152,7 +152,9 @@
 
                 <com.framework.views.customViews.CustomTextView
                   android:id="@+id/number"
-                  android:layout_width="wrap_content"
+                    android:tag="com.userexperior.ueSecureView"
+
+                    android:layout_width="wrap_content"
                   android:layout_height="match_parent"
                   android:layout_marginStart="@dimen/size_3"
                   android:ellipsize="end"
@@ -182,7 +184,9 @@
                   android:layout_height="match_parent"
                   android:layout_marginStart="@dimen/size_3"
                   android:ellipsize="end"
-                  android:gravity="center_vertical"
+                    android:tag="com.userexperior.ueSecureView"
+
+                    android:gravity="center_vertical"
                   android:maxLines="1"
                   android:textColor="@color/white"
                   app:autoSizeMaxTextSize="12sp"

@@ -145,7 +145,6 @@ object NFWebEngageController {
       if (params.isNotEmpty())
         AppsFlyerLib.getInstance().setAdditionalData(params)
 
-      UserExperiorController.setUserattr(email,mobile,name,clientId)
     }
   }
 
@@ -163,7 +162,6 @@ object NFWebEngageController {
         AppsFlyerLib.getInstance().logSession(weAnalytics.activity.get()?.applicationContext)
       }
       AppsFlyerLib.getInstance().setCustomerUserId(userId)
-      UserExperiorController.setUserIdentifier(userId)
       isUserLoggedIn = true
 
     }

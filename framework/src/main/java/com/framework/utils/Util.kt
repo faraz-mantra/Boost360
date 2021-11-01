@@ -50,6 +50,12 @@ import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
+import android.content.pm.PackageManager
+
+import android.content.pm.PackageInfo
+
+
+
 
 inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
 
@@ -294,4 +300,15 @@ fun Bitmap.saveImageToSharedStorage(
   imageOutStream.use {compress(Bitmap.CompressFormat.JPEG, 100, it) }
   Toast.makeText(BaseApplication.instance, "Image Saved To Storage", Toast.LENGTH_SHORT).show()
 
+}
+
+fun getAppVersionName(): String? {
+  try {
+    val pInfo: PackageInfo = BaseApplication.instance.getPackageManager().getPackageInfo(BaseApplication.instance.packageName, 0)
+    val version = pInfo.versionName
+    return version
+  } catch (e: PackageManager.NameNotFoundException) {
+    e.printStackTrace()
+  }
+  return null
 }

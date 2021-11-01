@@ -27,7 +27,9 @@
           android:padding="@dimen/size_10">
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_amount"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/text_amount"
             style="@style/HeaderTextStyle"
             android:fontFamily="@font/semi_bold"
             android:paddingStart="@dimen/size_4"
@@ -47,7 +49,9 @@
             app:layout_constraintTop_toBottomOf="@+id/text_amount" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/ctv_appointment_id"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/ctv_appointment_id"
             style="@style/TextRegularStyle"
             android:layout_marginStart="@dimen/size_1"
             android:layout_marginEnd="@dimen/size_2"
@@ -57,7 +61,9 @@
             tools:text="#GK7C4FM" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_date_time"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/text_date_time"
             style="@style/TextRegularStyle"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -115,7 +121,9 @@
             app:srcCompat="@drawable/placeholder_image" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_service_name"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/text_service_name"
             style="@style/TextBoldStyle"
             android:layout_width="0dp"
             android:layout_marginStart="@dimen/size_10"
@@ -125,7 +133,9 @@
             tools:text="@string/tools_text_simple_massage" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_appointment_amount"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/text_appointment_amount"
             style="@style/TextBoldStyle"
             android:layout_marginEnd="@dimen/size_5"
             app:layout_constraintBottom_toBottomOf="@id/text_service_name"
@@ -134,7 +144,9 @@
             tools:text="@string/tools_text_rs_20000" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_date"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/text_date"
             style="@style/TextRegularStyle"
             android:layout_marginStart="@dimen/size_10"
             android:layout_marginTop="@dimen/size_2"
@@ -145,7 +157,9 @@
             tools:text="@string/tools_text_11_00_am_on_mon_12_jan_2020" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_staff"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/text_staff"
             style="@style/TextRegularStyle"
             android:layout_marginStart="@dimen/size_10"
             android:layout_marginTop="@dimen/size_2"
@@ -177,7 +191,9 @@
               app:layout_constraintTop_toBottomOf="@id/text_date" />
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_service_location_dropdown"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/text_service_location_dropdown"
               style="@style/TextBoldStyle"
               android:layout_width="@dimen/size_0"
               android:layout_marginTop="@dimen/size_4"
@@ -209,7 +225,9 @@
               app:layout_constraintTop_toBottomOf="@id/text_date" />
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_payment_type_dropdown"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/text_payment_type_dropdown"
               style="@style/TextBoldStyle"
               android:layout_width="0dp"
               android:layout_marginTop="@dimen/size_4"
@@ -242,7 +260,9 @@
               app:layout_constraintTop_toBottomOf="@id/text_date" />
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_payment_status_dropdown"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/text_payment_status_dropdown"
               style="@style/TextBoldStyle"
               android:layout_width="@dimen/size_0"
               android:layout_marginTop="@dimen/size_4"
@@ -325,7 +345,9 @@
             app:layout_constraintTop_toTopOf="@id/image_person" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_customer_name"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/text_customer_name"
             style="@style/TextBoldStyle"
             android:layout_marginStart="@dimen/size_28"
             android:layout_marginTop="@dimen/size_16"
@@ -334,7 +356,9 @@
             tools:text="Mr, Sanghmitra Sharma" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_customer_phone"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/text_customer_phone"
             style="@style/TextRegularStyle"
             android:layout_marginTop="@dimen/size_5"
             android:textColor="@color/grey_dark_2"
@@ -343,7 +367,9 @@
             tools:text="@string/tools_text_phone_hint" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_customer_email"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/text_customer_email"
             style="@style/TextRegularStyle"
             android:layout_marginTop="@dimen/size_5"
             android:textColor="@color/grey_dark_2"
@@ -352,7 +378,9 @@
             tools:text="@string/tools_text_email" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/ctv_gstin"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/ctv_gstin"
             style="@style/TextRegularStyle"
             android:layout_marginTop="@dimen/size_5"
             android:textColor="@color/grey_dark_2"
@@ -434,7 +462,9 @@
               android:text="@string/customer_address" />
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_addr_value"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/text_addr_value"
               style="@style/TextRegularStyle"
               android:layout_marginStart="@dimen/size_1"
               android:layout_marginTop="@dimen/size_6"

@@ -17,6 +17,7 @@ import com.boost.presignin.service.APIService
 import com.boost.presignin.ui.intro.IntroActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.analytics.SentryController
+import com.framework.analytics.UserExperiorController
 import com.framework.extensions.observeOnce
 import com.framework.models.firestore.FirestoreManager
 import com.framework.pref.*
@@ -85,6 +86,7 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
       if (it1.isSuccess() && response != null) {
         ProcessFPDetails(session).storeFPDetails(response)
         setFPDetailsToSentry(session)
+        setFPDetailsToUserExperior(session)
         FirestoreManager.initData(session.fpTag ?: "", session.fPID ?: "", clientId)
         startService()
         if (
@@ -105,6 +107,10 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
 
   private fun setFPDetailsToSentry(session: UserSessionManager) {
     SentryController.setUser(session)
+  }
+
+  private fun setFPDetailsToUserExperior(session: UserSessionManager) {
+    UserExperiorController.setUserAttr(session)
   }
 
   private fun snackBarUnableToGetFp() {
