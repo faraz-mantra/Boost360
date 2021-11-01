@@ -17,6 +17,21 @@
     <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
   </style>
 
+  <style name="AppThemeSupportVideo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <item name="colorPrimary">@color/black_333333</item>
+    <item name="colorPrimaryDark">@color/black_333333</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
+    <item name="android:windowBackground">@color/white</item>
+    <item name="colorSecondary">@color/black_4a4a4a</item>
+    <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
+    <item name="android:windowDisablePreview">true</item>
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    <item name="editTextStyle">@style/ComposeEditText</item>
+    <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
+  </style>
+
 
   <style name="FooterButtonStyle">
     <item name="android:layout_width">0dp</item>

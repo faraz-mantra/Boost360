@@ -777,6 +777,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   override fun secondaryButtonClicked() {
     showShortToast(getString(R.string.coming_soon))
+    //TODO add tutorial video flow
   }
 
   override fun ternaryButtonClicked() {
