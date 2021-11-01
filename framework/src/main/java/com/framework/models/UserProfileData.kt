@@ -1,4 +1,4 @@
-package com.boost.presignin.model.userprofile
+package com.framework.models
 
 import com.framework.base.BaseResponse
 import com.framework.utils.*
@@ -15,7 +15,7 @@ data class UserProfileData(
 data class UserProfileDataResult(
   val Email: String? = null,
   val FloatingPointDetails: List<FloatingPointDetail>? = null,
-  val ImageUrl: String? = null,
+  var ImageUrl: String? = null,
   val IsEmailVerfied: Boolean? = null,
   val IsMobileVerified: Boolean? = null,
   val LoginId: String? = null,

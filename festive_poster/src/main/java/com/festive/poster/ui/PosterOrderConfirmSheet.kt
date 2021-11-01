@@ -46,7 +46,7 @@ class PosterOrderConfirmSheet : BaseBottomSheetDialog<SheetOrderConfirmBinding, 
     sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
     val selectedPosterPack = sharedViewModel?.selectedPosterPack
     binding?.tvPosterPackName?.text = selectedPosterPack?.tagsModel?.name + " pack of ${selectedPosterPack?.posterList?.size} posters"
-    binding?.tvDesc?.text = getString(R.string.order_confirm_message, selectedPosterPack?.price.toString())
+    binding?.tvDesc?.text = getString(R.string.order_confirm_message, selectedPosterPack?.price?.toInt().toString())
     WebEngageController.trackEvent(FESTIVAL_POSTER_ORDER_SUCCESS, event_value = HashMap())
     packTag = arguments?.getString(PosterListFragment.BK_TAG)
     setOnClickListener(binding?.btnConfirm)
@@ -57,7 +57,7 @@ class PosterOrderConfirmSheet : BaseBottomSheetDialog<SheetOrderConfirmBinding, 
     when (v) {
       binding?.btnConfirm -> {
         WebEngageController.trackEvent(FESTIVAL_POSTER_VIEW_PACK_CLICK, event_value = HashMap())
-        addFragmentReplace(R.id.container, PosterListFragment.newInstance(sharedViewModel?.customizationDetails?.value?.tag!!), true)
+        addFragment(R.id.container, PosterListFragment.newInstance(sharedViewModel?.selectedPosterPack?.tagsModel?.tag!!), true,true)
         dismiss()
       }
     }

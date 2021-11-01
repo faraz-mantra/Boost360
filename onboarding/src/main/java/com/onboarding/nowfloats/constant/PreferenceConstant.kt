@@ -36,9 +36,7 @@ object PreferenceConstant {
   const val TWITTER_USER_NAME = "twitter_user_name"
 
   // for referral
-  var PREF_NAME_REFERRAL = "nowfloatsPrefsReferral"
-  var IS_INSTALL_APP = "isInstallApp"
-  var REFER_CODE_APP = "referCodeApp"
-
-
+  const val PREF_NAME_REFERRAL = "nowfloatsPrefsReferral"
+  const val IS_INSTALL_APP = "isInstallApp"
+  const val REFER_CODE_APP = "referCodeApp"
 }
