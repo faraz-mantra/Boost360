@@ -30,7 +30,6 @@ import com.framework.extensions.observeOnce
 import com.framework.pref.*
 import com.framework.webengageconstant.*
 import com.invitereferrals.invitereferrals.InviteReferralsApi
-import com.onboarding.nowfloats.constant.PreferenceConstant
 import java.util.*
 
 open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBinding, LoginSignUpViewModel>() {
@@ -187,18 +186,20 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
 
 
   private fun setReferralCode(floatingPointId: String?) {
-    val code = prefReferral?.getString(PreferenceConstant.REFER_CODE_APP, "")
-    if (code.isNullOrEmpty().not()) {
-      Log.d("Set Referral Code", code ?: "")
-      var email = floatsRequest?.userBusinessEmail ?: "noemail-${floatsRequest?.requestProfile?.ProfileProperties?.userMobile}@noemail.com"
-      if (email.isEmpty().not()) email = floatsRequest?.userBusinessEmail!!
-      Log.d("Set Referral Email", email)
-      InviteReferralsApi.getInstance(baseActivity).tracking("register", email, 0, code, floatingPointId)
-      prefReferral?.edit()?.apply {
-        putString(PreferenceConstant.REFER_CODE_APP, "")
-        apply()
-      }
+    InviteReferralsApi.getInstance(baseActivity).ir_TrackingCallbackListener { tracking_response ->
+      Log.e("Tracking", "Response ir_TrackingCallbackListener = $tracking_response")
     }
+    InviteReferralsApi.getInstance(baseActivity).userDetailListener { ApiResponse ->
+      Log.e("Users", "Response userDetailListener = $ApiResponse")
+    }
+
+    val email = if (floatsRequest?.userBusinessEmail.isNullOrEmpty()) "noemail-${floatsRequest?.userBusinessMobile}@noemail.com" else floatsRequest?.userBusinessEmail
+    Log.e("Set Referral", "Email: $email")
+    InviteReferralsApi.getInstance(baseActivity).userDetails(
+      floatsRequest?.requestProfile?.ProfileProperties?.userName,
+      email, floatsRequest?.userBusinessMobile, 0, null, null
+    )
+    InviteReferralsApi.getInstance(baseActivity).tracking("register", email, 0, null, null)
   }
 
   private fun apiHitBusiness(businessProfileResponse: BusinessProfileResponse) {
