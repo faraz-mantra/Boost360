@@ -1,17 +1,13 @@
-package com.dashboard.rest.repository
+package com.appservice.rest.repository
 
-import com.dashboard.base.rest.AppBaseLocalService
-import com.dashboard.base.rest.AppBaseRepository
-import com.dashboard.model.websitetheme.WebsiteThemeUpdateRequest
-import com.dashboard.rest.TaskCode
-import com.dashboard.rest.apiClients.AzureWebsiteNetApiClient
-import com.dashboard.rest.apiClients.DevBoostKitApiClient
-import com.dashboard.rest.services.AzureWebsiteKitRemoteData
-import com.dashboard.rest.services.DevBoostKitRemoteData
+import com.appservice.base.rest.AppBaseLocalService
+import com.appservice.base.rest.AppBaseRepository
+import com.appservice.rest.TaskCode
+import com.appservice.rest.apiClients.AzureWebsiteNetApiClient
+import com.appservice.rest.services.AzureWebsiteKitRemoteData
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import retrofit2.Retrofit
-import retrofit2.http.Query
 
 
 object AzureWebsiteNewRepository : AppBaseRepository<AzureWebsiteKitRemoteData, AppBaseLocalService>() {
@@ -19,6 +15,10 @@ object AzureWebsiteNewRepository : AppBaseRepository<AzureWebsiteKitRemoteData, 
 
   fun getCapLimitFeatureDetails(fpId: String?, clientId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getCapLimitFeatureDetails(fpId,clientId), TaskCode.CAP_LIMIT_FEATURE_DETAILS)
+  }
+
+  fun getFeatureDetails(fpId: String?, clientId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getFeatureDetails(fpId,clientId), TaskCode.GET_FEATURE_DETAILS)
   }
 
 

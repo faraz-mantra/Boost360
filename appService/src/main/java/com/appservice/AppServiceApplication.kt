@@ -34,6 +34,7 @@ open class AppServiceApplication : BaseApplication() {
             BoostNowFloatsApiClient.shared.init(EndPoints.BOOST_NOW_FLOATS_BASE)
             BoostPluginWithFloatsApiClient.shared.init(EndPoints.BOOST_KIT_PLUGIN_WITH_FLOATS_NEW_BASE)
             RiaNowFloatsApiClient.shared.init(EndPoints.RIA_WITH_FLOATS_BASE)
+            AzureWebsiteNetApiClient.shared.init(EndPoints.AZURE_WEBSITE_NET_URL)
         }
     }
 }

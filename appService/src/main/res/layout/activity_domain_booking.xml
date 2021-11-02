@@ -201,7 +201,7 @@
             style="@style/CustomYellowButton"
             android:layout_marginHorizontal="@dimen/size_30"
             android:text="@string/add_a_domain_you_own"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/btn_book_new_domain"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

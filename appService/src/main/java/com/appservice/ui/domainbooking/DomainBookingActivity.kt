@@ -249,7 +249,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
     binding?.layoutBuyAddon?.gone()
     binding?.ivRiaSteps?.visible()
     binding?.btnBookNewDomain?.visible()
-    binding?.btnBookOldDomain?.visible()
+    //binding?.btnBookOldDomain?.visible()
     binding?.rvSteps?.visible()
   }
 
