@@ -1,6 +1,8 @@
 package com.onboarding.nowfloats.model.supportVideo
 
+import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class FeatureSupportVideoResponse(
 
@@ -9,7 +11,7 @@ data class FeatureSupportVideoResponse(
 
 	@field:SerializedName("Data")
 	val data: List<DataItem?>? = null
-)
+):Serializable, BaseResponse()
 
 data class RootAliasUrl(
 

@@ -9,23 +9,157 @@
         android:layout_height="match_parent"
         android:background="@color/black_333333">
 
-        <include
-            android:id="@+id/status_bar_view"
-            layout="@layout/video_progress_status_layout"
-            android:layout_width="match_parent"
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_voice_over_lang"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/english"
+            android:textColor="@color/white"
+            android:drawableTint="@color/white"
+            android:drawablePadding="@dimen/size_8"
+            android:textSize="@dimen/text_14"
+            app:fontFamily="@font/regular"
+            android:drawableEnd="@drawable/ic_arrow_down_blue"
+            android:drawableStart="@drawable/ic_voice_language"
+            android:layout_marginHorizontal="@dimen/size_22"
+            android:layout_marginVertical="@dimen/size_5"
+            android:src="@drawable/ic_voice_language"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/video_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/size_40"
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/iv_close_video"
+            android:layout_width="@dimen/size_20"
+            android:layout_height="@dimen/size_20"
+            android:layout_marginHorizontal="@dimen/size_22"
+            android:layout_marginVertical="@dimen/size_5"
+            android:src="@drawable/ic_close_video"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <jp.shts.android.storiesprogressview.StoriesProgressView
+            android:id="@+id/storiesProgressView"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/card_video_view_wrapper"
+            app:layout_constraintStart_toStartOf="@+id/card_video_view_wrapper"
+            app:layout_constraintTop_toBottomOf="@+id/iv_close_video"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_video_view_wrapper"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/size_22"
+            android:layout_marginVertical="@dimen/size_40"
+            app:cardCornerRadius="@dimen/size_10"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/status_bar_view" />
+            app:layout_constraintTop_toBottomOf="@+id/storiesProgressView">
+
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/video_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:show_buffering="when_playing" />
+
+        </androidx.cardview.widget.CardView>
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/iv_prev"
+            android:layout_width="@dimen/size_42"
+            android:layout_height="@dimen/size_108"
+            android:background="@drawable/rounded_vertical_button_black"
+            android:elevation="@dimen/size_8"
+            android:src="@drawable/ic_arrow_left"
+            app:layout_constraintBottom_toBottomOf="@+id/card_video_view_wrapper"
+            app:layout_constraintEnd_toStartOf="@+id/card_video_view_wrapper"
+            app:layout_constraintStart_toStartOf="@+id/card_video_view_wrapper"
+            app:layout_constraintTop_toTopOf="@+id/card_video_view_wrapper" />
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/iv_next"
+            android:layout_width="@dimen/size_42"
+            android:layout_height="@dimen/size_108"
+            android:background="@drawable/rounded_vertical_button_black"
+            android:elevation="@dimen/size_8"
+            android:src="@drawable/ic_arrow_right"
+            app:layout_constraintBottom_toBottomOf="@+id/card_video_view_wrapper"
+            app:layout_constraintEnd_toEndOf="@+id/card_video_view_wrapper"
+            app:layout_constraintStart_toEndOf="@+id/card_video_view_wrapper"
+            app:layout_constraintTop_toTopOf="@+id/card_video_view_wrapper" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cons_overlay_play"
+            android:background="@drawable/gradient_linear_faded_black"
+            android:elevation="@dimen/size_4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/size_22"
+            android:layout_marginTop="@dimen/size_40"
+            android:layout_marginBottom="@dimen/size_48"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/storiesProgressView">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/iv_play_btn"
+                android:layout_width="@dimen/size_60"
+                android:layout_height="@dimen/size_60"
+                android:src="@drawable/ic_play_circle_yellow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_18"
+                android:layout_marginBottom="@dimen/size_18"
+                android:textColor="@color/white"
+                android:textSize="@dimen/heading_5"
+                app:fontFamily="@font/semi_bold"
+                app:layout_constraintBottom_toTopOf="@+id/seek_bar_paused"
+                app:layout_constraintEnd_toEndOf="@+id/tvElapsedTime"
+                app:layout_constraintStart_toStartOf="@+id/seek_bar_paused"
+                android:text="How to track your website's performance" />
+
+            <androidx.appcompat.widget.AppCompatSeekBar
+                android:id="@+id/seek_bar_paused"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_8"
+                android:clickable="false"
+                android:progressTint="@color/white"
+                android:splitTrack="false"
+                android:thumb="@drawable/custom_yellow_thumb"
+                app:layout_constraintBottom_toBottomOf="@+id/tvElapsedTime"
+                app:layout_constraintEnd_toStartOf="@+id/tvElapsedTime"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvElapsedTime"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tvElapsedTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_16"
+                android:layout_marginEnd="@dimen/size_18"
+                android:layout_marginBottom="@dimen/size_24"
+                android:textColor="@color/white"
+                android:textSize="@dimen/subheading_2"
+                app:fontFamily="@font/regular"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="0:14 / 4:14" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
