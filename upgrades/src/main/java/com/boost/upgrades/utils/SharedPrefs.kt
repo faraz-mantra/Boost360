@@ -219,7 +219,7 @@ class SharedPrefs(activity: Activity) {
   fun getStoreMonthsValidity(): Int {
     return pref!!.getInt(temp_monthsValidity, 0)
   }
-  fun storeCartValidityMonths(cartValidityMonths : String){
+  fun storeCartValidityMonths(cartValidityMonths : String?){
     editor!!.putString(CART_VALIDITY_MONTHS,cartValidityMonths).apply()
   }
   fun getCartValidityMonths():String?{

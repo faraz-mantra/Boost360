@@ -754,7 +754,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       viewModel.renewalResult().observeOnce(Observer { result ->
         renewalList = result?.filter { it.renewalStatus() == RenewalResult.RenewalStatus.PENDING.name }
           ?: ArrayList()
-//        renewalList = emptyList()
+        renewalList = emptyList()
         if (renewalList.isNotEmpty()) {
           val list = arrayListOf<CartModel>()
           renewalList.forEach { renewal -> list.add(saveRenewalData(renewal)) }
@@ -1547,6 +1547,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         //remove saved orderdetails from prefs
         prefs.storeCartOrderInfo(null)
         prefs.storeApplyedCouponDetails(null)
+        prefs.storeCartValidityMonths(null)
 
         //clear viewModel data
         viewModel.clearValidCouponResult()
@@ -1903,6 +1904,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     couponDiwaliRedundant.remove(itemID)
     //remove saved orderdetails from prefs
     prefs.storeCartOrderInfo(null)
+    prefs.storeCartValidityMonths(null)
   }
 
   override fun showBundleDetails(itemID: String) {
