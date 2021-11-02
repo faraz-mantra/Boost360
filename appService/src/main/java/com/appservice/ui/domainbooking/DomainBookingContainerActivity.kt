@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.Gravity
 import androidx.core.content.ContextCompat
 import com.appservice.R
 import com.appservice.base.AppBaseActivity
@@ -15,7 +14,6 @@ import com.framework.base.FRAGMENT_TYPE
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
-import androidx.appcompat.widget.*
 
 
 open class DomainBookingContainerActivity :

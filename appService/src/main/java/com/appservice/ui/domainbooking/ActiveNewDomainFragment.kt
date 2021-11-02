@@ -1,15 +1,18 @@
 package com.appservice.ui.domainbooking
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.databinding.FragmentActiveNewDomainBinding
 import com.appservice.model.domainBooking.DomainDetailsResponse
+import com.appservice.rest.repository.AzureWebsiteNewRepository.getFeatureDetails
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.getMillisecondsToDate
 import com.appservice.viewmodel.DomainBookingViewModel
 import com.framework.extensions.observeOnce
+import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.pref.clientId
 import com.framework.webengageconstant.DOMAIN_ACTIVE_NEW_DOMAIN_DETAILS_PAGE_LOAD
 import com.framework.webengageconstant.NO_EVENT_VALUE
@@ -31,6 +34,23 @@ class ActiveNewDomainFragment :
         WebEngageController.trackEvent(DOMAIN_ACTIVE_NEW_DOMAIN_DETAILS_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
         onBackPressHandler()
         domainDetailsApi()
+
+    }
+
+    private fun getFeatureDetailsAzureApi() {
+        viewModel?.getFeatureDetails(sessionLocal.fpTag, clientId)?.observeOnce(this, {
+            if (!it.isSuccess() || it == null) {
+                hideProgress()
+                showShortToast(getString(R.string.something_went_wrong))
+                return@observeOnce
+            }
+            getDomainValidDates(it.arrayResponse as? Array<CapLimitFeatureResponseItem>)
+            hideProgress()
+        })
+    }
+
+    private fun getDomainValidDates(arrayOfCapLimitFeatureResponseItems: Array<CapLimitFeatureResponseItem>?) {
+        Log.i("cgcg", "arrayOfCapLimitFeatureResponseItems?.toString()")
     }
 
     private fun onBackPressHandler() {
@@ -56,11 +76,12 @@ class ActiveNewDomainFragment :
         showProgress()
         viewModel?.domainDetails(sessionLocal.fpTag, clientId)?.observeOnce(this, {
             if (!it.isSuccess() || it == null) {
+                hideProgress()
                 showShortToast(getString(R.string.something_went_wrong))
                 return@observeOnce
             }
+            getFeatureDetailsAzureApi()
             setAndParseData(it as DomainDetailsResponse)
-            hideProgress()
         })
     }
 
