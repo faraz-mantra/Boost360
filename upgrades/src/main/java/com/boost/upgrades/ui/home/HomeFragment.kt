@@ -35,7 +35,7 @@ import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.data.model.YoutubeVideoModel
 import com.boost.upgrades.data.remote.ApiInterface
-import com.boost.upgrades.database.LocalStorage
+//import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CompareBackListener
 import com.boost.upgrades.interfaces.HomeListener
 import com.boost.upgrades.ui.cart.CartFragment
@@ -86,7 +86,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
     lateinit var retrofit: Retrofit
     lateinit var ApiService: ApiInterface
-    lateinit var localStorage: LocalStorage
+//    lateinit var localStorage: LocalStorage
 
     lateinit var addonsCategoryAdapter: AddonsCategoryAdapter
     lateinit var upgradeAdapter: UpgradeAdapter
@@ -99,7 +99,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     lateinit var packageViewPagerAdapter: PackageViewPagerAdapter
     lateinit var featureDealsAdapter: FeatureDealsAdapter
 
-    var cart_list: List<WidgetModel>? = null
+//    var cart_list: List<WidgetModel>? = null
     var badgeNumber = 0
     var fpRefferalCode: String = ""
     var feedBackLink: String? = null
@@ -145,8 +145,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         //request retrofit instance
         ApiService = getRetrofit().create(ApiInterface::class.java)
         progressDialog = ProgressDialog(requireContext())
-        localStorage = LocalStorage.getInstance(requireContext())!!
-        cart_list = localStorage.getCartItems()
+//        localStorage = LocalStorage.getInstance(requireContext())!!
+//        cart_list = localStorage.getCartItems()
         prefs = SharedPrefs(activity as UpgradeActivity)
         session = UserSessionManager(requireActivity())
         session?.let { deepLinkUtil = DeepLinkUtil(requireActivity() as AppCompatActivity, it) }

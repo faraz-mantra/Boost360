@@ -35,7 +35,7 @@ import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.renewalcart.CreateCartStateRequest
 import com.boost.upgrades.data.renewalcart.RenewalPurchasedRequest
 import com.boost.upgrades.data.renewalcart.RenewalResult
-import com.boost.upgrades.database.LocalStorage
+//import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CartFragmentListener
 import com.boost.upgrades.ui.autorenew.AutoRenewSubsFragment
 import com.boost.upgrades.ui.checkoutkyc.CheckoutKycFragment
@@ -78,7 +78,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
   lateinit var root: View
 
-  lateinit var localStorage: LocalStorage
+//  lateinit var localStorage: LocalStorage
 
   var customerId: String = ""
 
@@ -156,7 +156,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     root = inflater.inflate(R.layout.cart_fragment, container, false)
-    localStorage = LocalStorage.getInstance(requireContext())!!
+//    localStorage = LocalStorage.getInstance(requireContext())!!
 
     progressDialog = ProgressDialog(requireContext())
 

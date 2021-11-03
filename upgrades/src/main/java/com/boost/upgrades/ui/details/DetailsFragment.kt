@@ -31,7 +31,7 @@ import com.boost.upgrades.data.api_model.GetAllWidgets.Review
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.remote.ApiInterface
-import com.boost.upgrades.database.LocalStorage
+//import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.DetailsFragmentListener
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.popup.ImagePreviewPopUpFragement
@@ -64,7 +64,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
 
   lateinit var retrofit: Retrofit
   lateinit var ApiService: ApiInterface
-  lateinit var localStorage: LocalStorage
+//  lateinit var localStorage: LocalStorage
   var singleWidgetKey: String? = null
   var badgeNumber = 0
   var addonDetails: FeaturesModel? = null
@@ -101,7 +101,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     progressDialog = ProgressDialog(requireContext())
     secondaryImagesAdapter = SecondaryImagesAdapter(ArrayList(), this)
     reviewAdaptor = ReviewViewPagerAdapter(ArrayList())
-    localStorage = LocalStorage.getInstance(requireContext())!!
+//    localStorage = LocalStorage.getInstance(requireContext())!!
     singleWidgetKey = requireArguments().getString("itemId")
     prefs = SharedPrefs(activity as UpgradeActivity)
 
