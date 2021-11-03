@@ -9,11 +9,21 @@ import com.festive.poster.models.response.GetTemplatesResponse
 import com.festive.poster.reset.repo.DevBoostRepository
 import com.festive.poster.reset.repo.FeatureProcessorRepository
 import com.festive.poster.reset.repo.NowFloatsRepository
+import com.festive.poster.reset.repo.WithFloatsRepository
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
 import com.framework.utils.toArrayList
+import io.reactivex.Observable
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
+import okhttp3.RequestBody
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class FestivePosterViewModel: BaseViewModel() {
 
@@ -33,17 +43,48 @@ class FestivePosterViewModel: BaseViewModel() {
         return DevBoostRepository.getUpgradeData().toLiveData()
     }
 
-    fun prepareTemplatePackList(floatingPointId: String?,floatingPointTag: String?,tags: List<PosterPackTagModel>?){
-        val list = ArrayList<PosterPackModel>()
-        viewModelScope.launch {
-            tags?.forEach {
-
-               val response =  NowFloatsRepository.getTemplates(floatingPointId,floatingPointTag, arrayListOf(it.tag))
-
-              //  val posterPackModel = PosterPackModel(it,response.Result.Templates.toArrayList())
-
-            }
-        }
+ /*   fun uploadProfileImage(floatingPointId: String?,floatingPointTag: String?,fileName:String,file: RequestBody?):LiveData<BaseResponse> {
+        return NowFloatsRepository.uploadProfileImage(floatingPointId,floatingPointTag,fileName,file).toLiveData()
     }
+*/
+    fun uploadProfileImage( clientId: String?,loginId:String?,fileName:String, file: RequestBody?): LiveData<BaseResponse> {
+        return WithFloatsRepository.uploadUserProfileImage(clientId,loginId,fileName,file).toLiveData()
+    }
+
+    fun saveKeyValue(floatingPointId: String?,fpTag: String?,templateIds:List<String>,map:HashMap<String,String?>):LiveData<BaseResponse>{
+
+        val lData = MutableLiveData<BaseResponse>()
+        val observableList = ArrayList<Observable<BaseResponse>>()
+        templateIds.forEach {
+            observableList.add(NowFloatsRepository.saveKeyValue(floatingPointId,fpTag,it,map))
+        }
+        Observable.merge(observableList)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object :Observer<BaseResponse>{
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onNext(t: BaseResponse) {
+                    lData.value = t
+                }
+
+                override fun onError(e: Throwable) {
+                }
+
+                override fun onComplete() {
+
+                }
+
+            })
+
+        return lData
+    }
+
+    fun updatePurchaseStatus(floatingPointId: String?,fpTag: String?,posterTag:String?,templateIds:List<String>): LiveData<BaseResponse> {
+        return NowFloatsRepository.updatePurchaseStatus(floatingPointId,fpTag,posterTag,templateIds).toLiveData()
+    }
+
 
 }
