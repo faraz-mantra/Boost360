@@ -28,6 +28,7 @@ object UserExperiorController {
 
     fun setUserAttr(fpTag:String?,mobile: String?, business_name: String?, category: String?,name:String?,user_name:String?,app_version:String?){
         val userProperties: HashMap<String, Any?> = HashMap()
+
         setUserIdentifier(fpTag)
         userProperties["name"] = name
         userProperties["mobile"] =mobile

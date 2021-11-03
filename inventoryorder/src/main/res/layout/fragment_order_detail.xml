@@ -154,7 +154,9 @@
                   <!--                  android:drawablePadding="@dimen/size_8"-->
                   <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tvDeliveryType"
-                    style="@style/wrap_wrap"
+                      android:tag="com.userexperior.ueSecureView"
+
+                      style="@style/wrap_wrap"
 
                     android:includeFontPadding="false"
                     android:maxLines="1"
@@ -190,7 +192,9 @@
                   <!--                  android:drawablePadding="@dimen/size_8"-->
                   <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tvPaymentMode"
-                    style="@style/wrap_wrap"
+                      android:tag="com.userexperior.ueSecureView"
+
+                      style="@style/wrap_wrap"
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:maxLines="1"
@@ -227,7 +231,9 @@
                   <!--                  android:drawablePadding="@dimen/size_8"-->
                   <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tvOrderStatus"
-                    style="@style/wrap_wrap"
+                      android:tag="com.userexperior.ueSecureView"
+
+                      style="@style/wrap_wrap"
 
                     android:ellipsize="end"
                     android:includeFontPadding="false"

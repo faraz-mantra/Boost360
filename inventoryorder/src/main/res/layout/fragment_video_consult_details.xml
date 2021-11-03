@@ -365,7 +365,9 @@
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvTotalOrderAmount"
-                style="@style/wrap_wrap"
+                  android:tag="com.userexperior.ueSecureView"
+
+                  style="@style/wrap_wrap"
                 android:layout_marginTop="@dimen/size_6"
                 android:textColor="@color/warm_grey_10"
                 app:fontFamily="@font/bold"

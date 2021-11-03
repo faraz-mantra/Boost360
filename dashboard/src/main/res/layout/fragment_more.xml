@@ -65,7 +65,9 @@
           app:textType="CAPTION" />
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_name"
+            android:tag="com.userexperior.ueSecureView"
+
+            android:id="@+id/ctv_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_16"
