@@ -4,6 +4,7 @@ import com.dashboard.base.rest.AppBaseLocalService
 import com.dashboard.base.rest.AppBaseRepository
 import com.dashboard.model.DisableBadgeNotificationRequest
 import com.dashboard.rest.TaskCode
+import com.dashboard.rest.apiClients.UsCentralNowFloatsCloudApiClient
 import com.dashboard.rest.apiClients.WebActionApiBoostKitClientN
 import com.dashboard.rest.services.UsCentralNowFloatsCloudRemoteData
 import com.framework.base.BaseResponse
@@ -21,7 +22,7 @@ object UsCentralNowFloatsCloudRepository : AppBaseRepository<UsCentralNowFloatsC
     }
 
     override fun getApiClient(): Retrofit {
-        return WebActionApiBoostKitClientN.shared.retrofit
+        return UsCentralNowFloatsCloudApiClient.shared.retrofit
     }
 
     fun disableBadgeNotification(request: DisableBadgeNotificationRequest): Observable<BaseResponse> {
