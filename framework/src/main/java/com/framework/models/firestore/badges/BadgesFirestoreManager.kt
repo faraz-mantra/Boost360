@@ -33,7 +33,7 @@ object BadgesFirestoreManager {
     Log.e("readBadgesDocument ", "readBadgesDocument")
     getDocumentReference()?.addSnapshotListener(MetadataChanges.EXCLUDE) { snapshot, e ->
       if (e == null && snapshot?.documentChanges != null) {
-        Log.d(TAG, "Document Data is : ${snapshot.documentChanges}")
+        Log.d(TAG, "Badges Document Data is : ${snapshot.documentChanges}")
         badgesModel = ArrayList()
         for (documentChange in snapshot.documentChanges) {
           val badgesType: BadgesModel.BadgesType? = fromUrlCheck(documentChange.document.reference.path)

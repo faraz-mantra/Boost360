@@ -461,12 +461,15 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     }
   }
 
-  private fun openDashboard(isSet: Boolean = true) {
-    mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
-    if (isSet) binding?.navView?.setActiveItem(0)
-    toolbarPropertySet(0)
-    WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
-  }
+    private fun openDashboard(isSet: Boolean = true) {
+        Log.i(TAG, "openDashboard: ${isBadgeCountAvailable(BadgesModel.BadgesType.HOMEBADGE.name)}")
+        if (isBadgeCountAvailable(BadgesModel.BadgesType.HOMEBADGE.name))
+            disableBadgeNotification(BadgesModel.BadgesType.HOMEBADGE.name)
+        mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
+        if (isSet) binding?.navView?.setActiveItem(0)
+        toolbarPropertySet(0)
+        WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
+    }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
