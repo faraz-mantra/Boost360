@@ -1,41 +1,19 @@
 package com.festive.poster.recyclerView.viewholders
 
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.drawable.PictureDrawable
-import android.widget.Toast
-import com.caverock.androidsvg.SVG
-import com.festive.poster.FestivePosterApplication
 import com.festive.poster.constant.RecyclerViewActionType
-import com.festive.poster.databinding.ListItemPurchasedPosterBinding
+import com.festive.poster.databinding.ListItemPosterShareBinding
 import com.festive.poster.models.PosterModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
 import com.framework.constants.PackageNames
-import com.framework.glide.customsvgloader.PosterKeyModel
-import com.framework.glide.customsvgloader.SvgRenderCacheUtil
-import com.framework.utils.saveImageToSharedStorage
-import com.framework.utils.shareAsImage
-import com.framework.utils.toBitmap
 import com.framework.webengageconstant.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
-import android.widget.ImageView
-import androidx.core.graphics.drawable.toBitmap
-import kotlinx.coroutines.withContext
 
 
-class PosterPurchasedViewHolder(binding: ListItemPurchasedPosterBinding):
-    AppBaseRecyclerViewHolder<ListItemPurchasedPosterBinding>(binding) {
+class PosterShareViewHolder(binding: ListItemPosterShareBinding):
+    AppBaseRecyclerViewHolder<ListItemPosterShareBinding>(binding) {
 
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
@@ -46,7 +24,7 @@ class PosterPurchasedViewHolder(binding: ListItemPurchasedPosterBinding):
 //                model.variants.firstOrNull()?.svgUrl,
 //                it
 //            )
-            SvgUtils.loadImage(url, binding.ivSvgPurchased, model.keys)
+            SvgUtils.loadImage(url, binding.ivSvgPurchased, model.keys, model.isPurchased)
         }
         binding.tvGreetingMsg.text = model.greeting_message
         binding.tvGreetingMsg.setOnClickListener {
