@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:orientation="vertical"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:elevation="@dimen/size_4"
             android:paddingHorizontal="@dimen/size_16"
             android:paddingVertical="@dimen/size_16"
@@ -17,30 +17,62 @@
             <com.framework.views.customViews.CustomImageView
                 android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_fposter_back_poster_pack_listing" />
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_fposter_back_poster_pack_listing"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/size_16"
-                android:layout_toRightOf="@+id/iv_back"
-                android:fontFamily="@font/semi_bold"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/iv_back"
+                android:ellipsize="end"
+                android:fontFamily="@font/bold"
+                android:maxLines="1"
                 android:text="@string/festival_poster"
                 android:textColor="@color/black_4a4a4a"
-                android:textSize="@dimen/size_16" />
+                android:textSize="@dimen/size_16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+                app:layout_constraintStart_toEndOf="@+id/iv_back"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <com.framework.views.customViews.CustomImageView
-                android:id="@+id/iv_help"
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_fposter_help_menu_grey" />
-        </RelativeLayout>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/iv_download"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/size_16"
+                    android:src="@drawable/ic_fposter_download_menu_grey_disabled" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/iv_search"
+                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_fposter_search_grey" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/iv_help"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_fposter_help_menu_grey" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <FrameLayout
             android:id="@+id/container"
             android:layout_width="match_parent"

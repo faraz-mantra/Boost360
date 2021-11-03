@@ -6,5 +6,6 @@
   <color name="color_BBBBBB">#BBBBBB</color>
   <color name="color_747474">#747474</color>
   <color name="festive_poster_list_bg">#E5E5E5</color>
-
+  <color name="black_opacity20">#33000000</color>
+  <color name="success_color">#7ED321</color>
 </resources>

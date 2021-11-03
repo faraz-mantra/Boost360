@@ -7,27 +7,40 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.festive.poster.R
+import com.festive.poster.base.AppBaseActivity
+import com.festive.poster.base.AppBaseBottomSheetFragment
+import com.festive.poster.base.ProgressDialog
 import com.festive.poster.databinding.BsheetCustomizePosterBinding
 import com.festive.poster.models.PosterCustomizationModel
+import com.festive.poster.models.PosterModel
 import com.festive.poster.utils.MarketPlaceUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
+import com.festive.poster.viewmodels.FestivePosterViewModel
+import com.framework.base.BaseActivity
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.framework.models.UserProfileData
+import com.framework.models.UserProfileDataResult
 import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId2
 import com.framework.pref.getDomainName
 import com.framework.utils.ValidationUtils
 import com.framework.webengageconstant.FESTIVAL_POSTER_UPDATE_INFO
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.gson.Gson
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 
-class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding, BaseViewModel>() {
+class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBinding, FestivePosterViewModel>() {
 
   private val TAG = "CustomizePosterSheet"
   private var path: String? = null
@@ -37,6 +50,17 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
   private var isAlreadyPurchased: Boolean = false
   private var creatorName: String? = null
   private var session: UserSessionManager? = null
+  private var imageUrl:String?=null
+
+  //keys
+  val user_name="user_name"
+  val business_website="business_website"
+  val business_email="business_email"
+  val business_name="business_name"
+  val user_contact="user_contact"
+  val user_image="user_image"
+
+
 
   companion object {
     val BK_TAG = "BK_TITLE"
@@ -60,8 +84,8 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
     return R.layout.bsheet_customize_poster
   }
 
-  override fun getViewModelClass(): Class<BaseViewModel> {
-    return BaseViewModel::class.java
+  override fun getViewModelClass(): Class<FestivePosterViewModel> {
+    return FestivePosterViewModel::class.java
   }
 
   override fun onCreateView() {
@@ -75,11 +99,42 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
   }
 
   private fun setUserDetails() {
-    binding?.etName?.setText(session?.userProfileName ?: session?.fpTag)
-    binding?.etWhatsapp?.setText(session?.userPrimaryMobile ?: session?.fPPrimaryContactNumber)
-    binding?.etWebsite?.setText(getDomainName())
-    binding?.etEmail?.setText(session?.userProfileEmail ?: session?.fPEmail)
-    binding?.etDesc?.setText(sharedViewModel?.selectedPosterPack?.posterList?.firstOrNull()?.greeting_message)
+    val keys = sharedViewModel?.selectedPoster?.keys
+
+    val name = if (keys?.find { it.name==user_name }?.custom!=null){
+      keys.find { it.name==user_name }?.custom
+    }else{
+      session?.userProfileName ?: session?.fpTag
+    }
+
+    val website = if (keys?.find { it.name==business_website }?.custom!=null){
+      keys.find { it.name==business_website }?.custom
+    }else{
+      getDomainName()
+    }
+
+    val whatsapp = if (keys?.find { it.name==user_contact }?.custom!=null){
+      keys.find { it.name==user_contact }?.custom
+    }else{
+      session?.userPrimaryMobile ?: session?.fPPrimaryContactNumber
+    }
+
+    val email = if (keys?.find { it.name==business_email }?.custom!=null){
+      keys.find { it.name==business_email }?.custom
+    }else{
+      session?.userProfileEmail ?: session?.fPEmail
+    }
+    keys?.find { it.name==user_image }?.custom?.let {url->
+        imageUrl=url
+        Glide.with(requireActivity()).load(url).into(binding?.ivUserImg!!)
+        showUserImage()
+    }
+
+    binding?.etName?.setText(name)
+    binding?.etWhatsapp?.setText(whatsapp)
+    binding?.etWebsite?.setText(website)
+    binding?.etEmail?.setText(email)
+
   }
 
   private fun getDomainName(): String? {
@@ -99,25 +154,94 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
           submitDetails()
         }
       }
-      binding?.imgEdit -> ImagePicker.with(this).start(RC_IMAGE_PCIKER)
+      binding?.imgEdit -> ImagePicker.with(this).cropSquare().start(RC_IMAGE_PCIKER)
     }
   }
 
   private fun submitDetails() {
-    sharedViewModel?.customizationDetails?.value = PosterCustomizationModel(
-      packTag!!,
-      binding?.etName?.text.toString(),
-      binding?.etEmail?.text.toString(),
-      binding?.etWhatsapp?.text.toString(),
-      binding?.etDesc?.text.toString(),
-      binding?.etWebsite?.text.toString(),
-      path
-    )
-    if (!isAlreadyPurchased) {
-      PosterPaymentSheet().show(parentFragmentManager, PosterPaymentSheet::class.java.name)
-      //gotoMarketPlace()
-    } else if (creatorName == null) {
-      addFragmentReplace(R.id.container, PosterListFragment.newInstance(packTag!!), true)
+
+    uploadImageAndSaveData()
+  }
+
+  private fun uploadImageAndSaveData() {
+    showProgress()
+    if (imageUrl==null){
+      val imgFile = File(path)
+      viewModel?.uploadProfileImage(
+        clientId2, session?.userProfileId,imgFile.name,
+        imgFile.asRequestBody("image/*".toMediaTypeOrNull()))?.observe(viewLifecycleOwner,{
+
+        if (it.isSuccess()){
+          Log.i(TAG, "uploadImage: success ${Gson().toJson(it)}")
+          imageUrl = it.stringResponse
+          val profileData = UserProfileDataResult.getMerchantProfileDetails()
+          if (profileData != null) {
+            profileData.ImageUrl = imageUrl
+            UserProfileDataResult.saveMerchantProfileDetails(profileData)
+          }
+          saveKeyValue()
+        }else{
+          hideProgress()
+        }
+      })
+    }else{
+      saveKeyValue()
+    }
+
+
+  }
+
+  private fun saveKeyValue() {
+
+    val map = hashMapOf(user_name to binding?.etName?.text.toString(),
+    business_website to binding?.etWebsite?.text.toString(),
+    business_email to binding?.etEmail?.text.toString(),
+    business_name to session?.fPName,
+    user_contact to binding?.etWhatsapp?.text.toString(),
+    user_image to imageUrl)
+
+    val templateIds = ArrayList<String>()
+    if (isAlreadyPurchased){
+      templateIds.add(sharedViewModel?.selectedPoster?.id!!)
+    }else{
+      sharedViewModel?.selectedPosterPack?.posterList?.forEach {
+        templateIds.add(it.id)
+      }
+    }
+
+
+
+    var countApiCallSuccess =0
+    var totalApiCall=0
+
+    viewModel?.saveKeyValue(session?.fPID,session?.fpTag,templateIds,map)?.observe(viewLifecycleOwner,{
+      hideProgress()
+
+      totalApiCall++
+      if (it.isSuccess()){
+
+        countApiCallSuccess++
+        if (countApiCallSuccess==templateIds.size){
+          Log.i(TAG, "saveKeyValue: success")
+          navigateToNextFragment()
+        }
+
+      }
+        if (totalApiCall==templateIds.size&&countApiCallSuccess!=templateIds.size){
+          showLongToast("Unable to update info")
+        }
+
+      Log.i(TAG, "saveKeyValue: totalCalls $totalApiCall successcall $countApiCallSuccess")
+
+    })
+  }
+
+  private fun navigateToNextFragment() {
+    sharedViewModel?.keyValueSaved?.value=null
+    if (isAlreadyPurchased||creatorName==PosterListFragment::class.java.name){
+      dismiss()
+    }else{
+      PosterPaymentSheetV2.newInstance().show(parentFragmentManager,PosterPaymentSheetV2::class.java.name)
     }
     dismiss()
   }
@@ -127,7 +251,7 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
   }
 
   private fun validation(): Boolean {
-    if (path.isNullOrEmpty()) {
+    if (path.isNullOrEmpty()&&imageUrl.isNullOrEmpty()) {
       showLongToast("Please upload image")
       return false
     }
@@ -151,10 +275,7 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
       showLongToast("Please enter valid whatsapp")
       return false
     }
-    if (binding?.etDesc?.text?.toString().isNullOrEmpty()) {
-      showLongToast("Please enter greeting message")
-      return false
-    }
+
     if (binding?.etWhatsapp?.text?.toString().isNullOrEmpty()) {
       showLongToast("Please enter whatsapp")
       return false
@@ -172,6 +293,7 @@ class CustomizePosterSheet : BaseBottomSheetDialog<BsheetCustomizePosterBinding,
   private fun openCropFragment(data: Intent?) {
     val uri = data?.data!!
     path = getTempFile(requireContext(), uri)?.path
+    imageUrl=null
     binding?.ivUserImg?.setImageURI(uri)
     showUserImage()
 
