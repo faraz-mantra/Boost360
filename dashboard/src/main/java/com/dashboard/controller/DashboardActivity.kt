@@ -47,6 +47,7 @@ import com.framework.models.firestore.FirestoreManager.initData
 import com.framework.models.firestore.badges.BadgesFirestoreManager
 import com.framework.models.firestore.badges.BadgesFirestoreManager.getBadgesData
 import com.framework.models.firestore.badges.BadgesFirestoreManager.initDataBadges
+import com.framework.models.firestore.badges.BadgesFirestoreManager.readDrScoreDocument
 import com.framework.models.firestore.badges.BadgesModel
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.KEY_FP_CART_COUNT
@@ -126,8 +127,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     intentDataCheckAndDeepLink(intent)
     session?.initializeWebEngageLogin()
     initialize()
-    session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
     session?.let { initDataBadges(it.fpTag ?: "", it.fPID ?: "", clientId) }
+    session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
     registerFirebaseToken()
     reloadCapLimitData()
   }
@@ -471,7 +472,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK && isSecondaryImage) {
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
-//      if (mPaths.isNullOrEmpty().not()) uploadSecondaryImage(mPaths[0])
+      if (mPaths.isNullOrEmpty().not()) uploadSecondaryImage(mPaths[0])
     } else childFragments?.forEach { fragment ->
       fragment.onActivityResult(requestCode, resultCode, data)
     }
@@ -626,10 +627,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       if (dataBadges.isNullOrEmpty().not())
         dataBadges!!.forEach {
           when (it.badgesType) {
-            BadgesModel.BadgesType.HOMEBADGE.name -> {
-              if (it.getMessageN() > 0) binding?.navView?.setBadge(0, it.getMessageText())
-              else binding?.navView?.removeBadge(0)
-            }
+//            BadgesModel.BadgesType.HOMEBADGE.name -> {
+//              if (it.getMessageN() > 0) binding?.navView?.setBadge(0, it.getMessageText())
+//              else binding?.navView?.removeBadge(0)
+//            }
             BadgesModel.BadgesType.WEBSITEBADGE.name -> {
               if (it.getMessageN() > 0) binding?.navView?.setBadge(1, it.getMessageText())
               else binding?.navView?.removeBadge(1)
@@ -649,7 +650,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
           }
         }
       else {
-        binding?.navView?.removeBadge(0)
+//        binding?.navView?.removeBadge(0)
         binding?.navView?.removeBadge(1)
         binding?.navView?.removeBadge(2)
         binding?.navView?.removeBadge(3)
@@ -668,6 +669,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       val request = DisableBadgeNotificationRequest(session?.fpTag, "BADGE", flagId)
       viewModel.disableBadgeNotification(request).observeOnce(this, {
         Log.i("DisableBadge", "Response: $it")
+        readDrScoreDocument()
       })
     }
   }
