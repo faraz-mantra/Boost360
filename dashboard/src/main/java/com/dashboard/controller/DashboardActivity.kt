@@ -462,9 +462,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
     private fun openDashboard(isSet: Boolean = true) {
-        Log.i(TAG, "openDashboard: ${isBadgeCountAvailable(BadgesModel.BadgesType.HOMEBADGE.name)}")
-        if (isBadgeCountAvailable(BadgesModel.BadgesType.HOMEBADGE.name))
-            disableBadgeNotification(BadgesModel.BadgesType.HOMEBADGE.name)
         mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
         if (isSet) binding?.navView?.setActiveItem(0)
         toolbarPropertySet(0)
