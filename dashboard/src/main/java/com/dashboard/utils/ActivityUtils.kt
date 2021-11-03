@@ -1007,6 +1007,8 @@ fun AppCompatActivity.startFestivePosterActivity(isBanner: Boolean = false) {
     WebEngageController.trackEvent(if (isBanner) SHARE_FESTIVE_POSTER_BANNER else SHARE_FESTIVE_POSTER_CLICK)
     val intent = Intent(this, FestivePosterContainerActivity::class.java)
     startActivity(intent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
   } catch (e: Exception) {
     e.printStackTrace()
   }

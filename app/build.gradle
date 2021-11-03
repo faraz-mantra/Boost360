@@ -47,7 +47,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020103
+        versionCode 2020020104
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -118,7 +118,7 @@ android {
             dimension "default"
         }
         partone {
-            versionName "6.0.11"
+            versionName "6.0.12"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "twitter_consumer_key", '"4CiUg5gcIbvYre8XjGd8GsElV"'

@@ -10,5 +10,8 @@ data class PosterPackTagModel(
     @SerializedName("name")
     val name: String,
     @SerializedName("tag")
-    val tag: String
+    val tag: String,
+    @SerializedName("isPurchased")
+    val isPurchased: Boolean,
+    var drawableIcon:Int
 )
