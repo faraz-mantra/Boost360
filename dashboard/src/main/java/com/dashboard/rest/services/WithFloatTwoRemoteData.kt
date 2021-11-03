@@ -1,9 +1,9 @@
 package com.dashboard.rest.services
 
 import com.dashboard.controller.ui.business.model.BusinessProfileUpdateRequest
-import com.boost.presignin.model.userprofile.UserProfileData
 import com.dashboard.rest.EndPoints
 import com.framework.base.BaseResponse
+import com.framework.models.UserProfileData
 import com.onboarding.nowfloats.model.googleAuth.FirebaseTokenResponse
 import com.framework.pref.clientId2
 import com.google.gson.JsonObject
