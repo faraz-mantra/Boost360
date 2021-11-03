@@ -29,7 +29,10 @@
             android:layout_height="wrap_content">
 
             <com.framework.views.customViews.CustomTextView
-                android:text="Navratri"
+                tools:text="Navratri"
+                android:fontFamily="@font/regular"
+
+                android:id="@+id/tv_pack_title"
                 app:textType="HEADING_5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,8 +40,10 @@
                 />
 
             <com.framework.views.customViews.CustomTextView
-                android:text="3 Posters"
+                tools:text="3 Posters"
+                android:id="@+id/tv_pack_size"
                 app:textType="BODY_3"
+                android:fontFamily="@font/regular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 

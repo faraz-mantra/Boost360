@@ -17,23 +17,11 @@ import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.ContextCompat;
 
 import com.anachat.chatsdk.AnaCore;
-import com.crashlytics.android.Crashlytics;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.nowfloats.Analytics_Screen.model.VmnCallModel;
-import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
 import com.nowfloats.Login.Login_Interface;
-import com.nowfloats.bubble.CustomerAssistantService;
-import com.nowfloats.managecustomers.FacebookChatDetailActivity;
-import com.nowfloats.managecustomers.models.FacebookChatDataModel;
-import com.nowfloats.managenotification.CallerInfoDialog;
-import com.nowfloats.managenotification.OrderModel;
-import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.Key_Preferences;
-import com.nowfloats.util.Methods;
-import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 import com.webengage.sdk.android.WebEngage;
 
@@ -46,10 +34,6 @@ import java.util.Map;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-
-import static com.nowfloats.util.Constants.PREF_NOTI_CALL_LOGS;
-import static com.nowfloats.util.Constants.PREF_NOTI_ENQUIRIES;
-import static com.nowfloats.util.Constants.PREF_NOTI_ORDERS;
 
 /**
  * Created by NowFloats on 05-10-2016.
@@ -72,7 +56,9 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
       //try {ZopimChat.setPushToken(token);} catch (Exception e) {}
       AnaCore.saveFcmToken(this, token);
     } catch (Exception e) {
-      Crashlytics.log("Failed to process FCM Token by RiaFirebaseMessagingService" + e.getMessage());
+      e.printStackTrace();
+      Log.e("onNewToken", "Failed to process FCM Token by RiaFirebaseMessagingService: " + e.getMessage());
+//      Crashlytics.log("Failed to process FCM Token by RiaFirebaseMessagingService" + e.getMessage());
     }
   }
 
@@ -89,7 +75,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         }
         if (mapResult.containsKey("payload")) {
           AnaCore.handlePush(this, mapResult.get("payload"));
-        } else if (!isWebEnagage){
+        } else if (!isWebEnagage) {
           String deepLinkUrl = mapResult.get("url");
           String title = mapResult.get("title");
           String message = mapResult.get("mp_message");
@@ -98,7 +84,8 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         }
       }
     } catch (Exception e) {
-      Crashlytics.log("Failed to process onMessageReceived in RiaFirebaseMessagingService" + e.getMessage());
+      Log.e("onMessageReceived", "Failed to process onMessageReceived in RiaFirebaseMessagingService: " + e.getMessage());
+//      Crashlytics.log("Failed to process onMessageReceived in RiaFirebaseMessagingService" + e.getMessage());
     }
   }
 
@@ -158,7 +145,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
   private void saveTokenToPreferenceAndUpload(String refreshedToken) {
     SharedPreferences pref = getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE);
     if (pref.getString("fpid", null) != null) {
-      registerChat(pref.getString("fpid", null),refreshedToken);
+      registerChat(pref.getString("fpid", null), refreshedToken);
     }
   }
 
