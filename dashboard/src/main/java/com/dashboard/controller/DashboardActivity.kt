@@ -86,7 +86,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   var isLoadShimmer = true
   var count = 0
   var activePreviousItem = 0
-  private var dataBadges:ArrayList<BadgesModel>? = arrayListOf()
+  private var dataBadges: ArrayList<BadgesModel>? = arrayListOf()
   private val navHostFragment: NavHostFragment?
     get() {
       return supportFragmentManager.fragments.first() as? NavHostFragment
@@ -354,57 +354,41 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   }
 
-    private fun checkWelcomeShowScreen(pos: Int) {
-        when (pos) {
-            1 -> {
-                val dataWebsite = welcomeData?.get(0)
-                if (dataWebsite?.welcomeType?.let { getIsShowWelcome(it) } != true) dataWebsite?.let {
-                    showWelcomeDialog(
-                        it
-                    )
-                }
-                else {
-                    mNavController.navigate(R.id.navigation_website, Bundle(), getNavOptions())
-                    toolbarPropertySet(pos)
-                }
-
-                if (isBadgeCountAvailable(BadgesModel.BadgesType.WEBSITEBADGE.name))
-                    disableBadgeNotification(BadgesModel.BadgesType.WEBSITEBADGE.name)
-            }
-            2 -> {
-                val dataCustomer = welcomeData?.get(1)
-                if (dataCustomer?.welcomeType?.let { getIsShowWelcome(it) } != true) dataCustomer?.let {
-                    showWelcomeDialog(
-                        it
-                    )
-                }
-                else {
-                    mNavController.navigate(R.id.navigation_enquiries, Bundle(), getNavOptions())
-                    toolbarPropertySet(pos)
-                }
-
-                if (isBadgeCountAvailable(BadgesModel.BadgesType.ENQUIRYBADGE.name))
-                    disableBadgeNotification(BadgesModel.BadgesType.ENQUIRYBADGE.name)
-            }
-            3 -> {
-                val dataAddOns = welcomeData?.get(2)
-                if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let {
-                    showWelcomeDialog(it)
-                }
-                else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
-
-                if (isBadgeCountAvailable(BadgesModel.BadgesType.MARKETPLACEBADGE.name))
-                    disableBadgeNotification(BadgesModel.BadgesType.MARKETPLACEBADGE.name)
-            }
-            4 -> {
-                mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
-                toolbarPropertySet(pos)
-
-                if (isBadgeCountAvailable(BadgesModel.BadgesType.MENUBADGE.name))
-                    disableBadgeNotification(BadgesModel.BadgesType.MENUBADGE.name)
-            }
+  private fun checkWelcomeShowScreen(pos: Int) {
+    when (pos) {
+      1 -> {
+        val dataWebsite = welcomeData?.get(0)
+        if (dataWebsite?.welcomeType?.let { getIsShowWelcome(it) } != true) dataWebsite?.let {
+          showWelcomeDialog(it)
         }
+        else {
+          mNavController.navigate(R.id.navigation_website, Bundle(), getNavOptions())
+          toolbarPropertySet(pos)
+        }
+        disableBadgeNotification(BadgesModel.BadgesType.WEBSITEBADGE.name)
+      }
+      2 -> {
+        val dataCustomer = welcomeData?.get(1)
+        if (dataCustomer?.welcomeType?.let { getIsShowWelcome(it) } != true) dataCustomer?.let { showWelcomeDialog(it) }
+        else {
+          mNavController.navigate(R.id.navigation_enquiries, Bundle(), getNavOptions())
+          toolbarPropertySet(pos)
+        }
+        disableBadgeNotification(BadgesModel.BadgesType.ENQUIRYBADGE.name)
+      }
+      3 -> {
+        val dataAddOns = welcomeData?.get(2)
+        if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let { showWelcomeDialog(it) }
+        else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
+        disableBadgeNotification(BadgesModel.BadgesType.MARKETPLACEBADGE.name)
+      }
+      4 -> {
+        mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
+        toolbarPropertySet(pos)
+        disableBadgeNotification(BadgesModel.BadgesType.MENUBADGE.name)
+      }
     }
+  }
 
   private fun showWelcomeDialog(data: WelcomeData) {
     val dialog = WelcomeHomeDialog.newInstance()
@@ -543,16 +527,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       DrawerHomeData.NavType.NAV_MANAGE_CONTENT -> session?.let { this.startManageContentActivity(it) }
       DrawerHomeData.NavType.NAV_CALLS -> this.startVmnCallCard(session)
       DrawerHomeData.NavType.NAV_ENQUIRY -> this.startBusinessEnquiry(session)
-      DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING -> session?.let {
-        this.startManageInventoryActivity(
-          it
-        )
-      }
+      DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING -> session?.let { this.startManageInventoryActivity(it) }
       DrawerHomeData.NavType.NAV_NEWS_LETTER_SUB -> this.startSubscriber(session)
       DrawerHomeData.NavType.NAV_BOOST_KEYBOARD -> session?.let { this.startKeyboardActivity(it) }
-      DrawerHomeData.NavType.NAV_ADD_ONS_MARKET -> session?.let {
-        this.initiateAddonMarketplace(it, false, "", "")
-      }
+      DrawerHomeData.NavType.NAV_ADD_ONS_MARKET -> session?.let { this.initiateAddonMarketplace(it, false, "", "") }
       DrawerHomeData.NavType.NAV_SETTING -> session?.let { this.startSettingActivity(it) }
       DrawerHomeData.NavType.NAV_HELP_SUPPORT -> session?.let { this.startHelpAndSupportActivity(it) }
       DrawerHomeData.NavType.NAV_ABOUT_BOOST -> session?.let { this.startAboutBoostActivity(it) }
@@ -605,7 +583,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     try {
       Zendesk.INSTANCE.init(
         this, "https://boost360.zendesk.com",
-        "684341b544a77a2a73f91bd3bb2bc77141d4fc427decda49", "mobile_sdk_client_6c56562cfec5c64c7857"
+        "684341b544a77a2a73f91bd3bb2bc77141d4fc427decda49",
+        "mobile_sdk_client_6c56562cfec5c64c7857"
       )
       val identity = AnonymousIdentity.Builder()
         .withNameIdentifier(session?.fpTag)
@@ -629,81 +608,69 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     })
   }
 
-    override fun onStop() {
-        super.onStop()
-        BadgesFirestoreManager.listenerBadges = null
-    }
+  override fun onStop() {
+    super.onStop()
+    BadgesFirestoreManager.listenerBadges = null
+  }
 
-    override fun onStart() {
-        super.onStart()
-        BadgesFirestoreManager.listenerBadges = {
-            dataBadges = getBadgesData()
-            setBadgesData(dataBadges)
-        }
+  override fun onStart() {
+    super.onStart()
+    BadgesFirestoreManager.listenerBadges = {
+      dataBadges = getBadgesData()
+      setBadgesData(dataBadges)
     }
+  }
 
-    private fun setBadgesData(dataBadges: ArrayList<BadgesModel>?) {
-        binding?.navView?.post {
-            if (dataBadges!= null && dataBadges.isNotEmpty())
-                dataBadges.forEach {
-                    when (it.badgesType) {
-                        BadgesModel.BadgesType.HOMEBADGE.name -> {
-                            if (it.getMessageN() > 0) binding?.navView?.setBadge(0, it.getMessageText())
-                            else binding?.navView?.removeBadge(0)
-                        }
-                        BadgesModel.BadgesType.WEBSITEBADGE.name -> {
-                            if (it.getMessageN() > 0) binding?.navView?.setBadge(1, it.getMessageText())
-                            else binding?.navView?.removeBadge(1)
-                        }
-                        BadgesModel.BadgesType.ENQUIRYBADGE.name -> {
-                            if (it.getMessageN() > 0) binding?.navView?.setBadge(2, it.getMessageText())
-                            else binding?.navView?.removeBadge(2)
-                        }
-                        BadgesModel.BadgesType.MARKETPLACEBADGE.name -> {
-                            if (it.getMessageN() > 0) binding?.navView?.setBadge(3, it.getMessageText())
-                            else binding?.navView?.removeBadge(3)
-                        }
-                        BadgesModel.BadgesType.MENUBADGE.name -> {
-                            if (it.getMessageN() > 0) binding?.navView?.setBadge(4, it.getMessageText())
-                            else binding?.navView?.removeBadge(4)
-                        }
-                    }
-                }
-            else {
-                binding?.navView?.removeBadge(0)
-                binding?.navView?.removeBadge(1)
-                binding?.navView?.removeBadge(2)
-                binding?.navView?.removeBadge(3)
-                binding?.navView?.removeBadge(4)
+  private fun setBadgesData(dataBadges: ArrayList<BadgesModel>?) {
+    binding?.navView?.post {
+      if (dataBadges.isNullOrEmpty().not())
+        dataBadges!!.forEach {
+          when (it.badgesType) {
+            BadgesModel.BadgesType.HOMEBADGE.name -> {
+              if (it.getMessageN() > 0) binding?.navView?.setBadge(0, it.getMessageText())
+              else binding?.navView?.removeBadge(0)
             }
-        }
-    }
-
-    private fun isBadgeCountAvailable(badgeType: String): Boolean {
-            dataBadges?.forEach {
-                if (it.badgesType == badgeType)
-                    return it.getMessageN() > 0
+            BadgesModel.BadgesType.WEBSITEBADGE.name -> {
+              if (it.getMessageN() > 0) binding?.navView?.setBadge(1, it.getMessageText())
+              else binding?.navView?.removeBadge(1)
             }
-        return false
+            BadgesModel.BadgesType.ENQUIRYBADGE.name -> {
+              if (it.getMessageN() > 0) binding?.navView?.setBadge(2, it.getMessageText())
+              else binding?.navView?.removeBadge(2)
+            }
+            BadgesModel.BadgesType.MARKETPLACEBADGE.name -> {
+              if (it.getMessageN() > 0) binding?.navView?.setBadge(3, it.getMessageText())
+              else binding?.navView?.removeBadge(3)
+            }
+            BadgesModel.BadgesType.MENUBADGE.name -> {
+              if (it.getMessageN() > 0) binding?.navView?.setBadge(4, it.getMessageText())
+              else binding?.navView?.removeBadge(4)
+            }
+          }
+        }
+      else {
+        binding?.navView?.removeBadge(0)
+        binding?.navView?.removeBadge(1)
+        binding?.navView?.removeBadge(2)
+        binding?.navView?.removeBadge(3)
+        binding?.navView?.removeBadge(4)
+      }
     }
+  }
 
-    private fun disableBadgeNotification(flagId: String) {
-        viewModel.disableBadgeNotification(
-            DisableBadgeNotificationRequest(
-                fpTag = session?.fpTag,
-                notificationType = "BADGE", //Type of notification is disabled here
-                flagId = flagId
-            )
-        ).observeOnce(this, {
-            Log.i("cgfxfg", it.toString())
-          /*if (it.isSuccess()) {
-            //TODO here in case of success of disable badge
-          } else {
-            //TODO here in case of failure of 400 of disable badge
-            showShortToast(it.message())
-          }*/
-        })
+  private fun isBadgeCountAvailable(badgeType: String): Boolean {
+    val badgeItem = dataBadges?.firstOrNull { it.badgesType == badgeType }
+    return badgeItem?.getMessageN() ?: 0 > 0
+  }
+
+  private fun disableBadgeNotification(flagId: String) {
+    if (isBadgeCountAvailable(flagId)) {
+      val request = DisableBadgeNotificationRequest(session?.fpTag, "BADGE", flagId)
+      viewModel.disableBadgeNotification(request).observeOnce(this, {
+        Log.i("DisableBadge", "Response: $it")
+      })
     }
+  }
 }
 
 
