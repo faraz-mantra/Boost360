@@ -3,9 +3,7 @@ package com.dashboard.controller.ui.profile
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.boost.presignin.model.userprofile.UserProfileData
-import com.boost.presignin.model.userprofile.UserProfileDataResult
-import com.boost.presignin.model.userprofile.UserProfileDataResult.Companion.saveMerchantProfileDetails
+
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.controller.ui.profile.sheet.*
@@ -14,6 +12,9 @@ import com.dashboard.utils.WebEngageController
 import com.dashboard.viewmodel.UserProfileViewModel
 import com.framework.extensions.*
 import com.framework.glide.util.glideLoad
+import com.framework.models.UserProfileData
+import com.framework.models.UserProfileDataResult
+import com.framework.models.UserProfileDataResult.Companion.saveMerchantProfileDetails
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 

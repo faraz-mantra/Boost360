@@ -43,11 +43,11 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
     return super.onOptionsItemSelected(item)
   }
 
-  protected open fun hideProgress() {
+  open fun hideProgress() {
     progressView?.hideProgress()
   }
 
-  protected open fun showProgress(title: String? = "Please wait...", cancelable: Boolean? = false) {
+ open fun showProgress(title: String? = "Please wait...", cancelable: Boolean? = false) {
     title?.let { progressView?.setTitle(it) }
     cancelable?.let { progressView?.isCancelable = it }
     progressView?.showProgress(supportFragmentManager)
