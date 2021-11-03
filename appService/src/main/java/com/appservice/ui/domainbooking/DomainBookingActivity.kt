@@ -259,7 +259,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
       if (it.isSuccess()) {
         val domainDetailsResponse = it as DomainDetailsResponse
         if (domainDetailsResponse.domainName != null && domainDetailsResponse.domainName.isNotEmpty()) {
-          startFragmentDomainBookingActivity(activity = this, type = com.appservice.constant.FragmentType.ACTIVE_DOMAIN_FRAGMENT, bundle = Bundle(), clearTop = false)
+          startFragmentDomainBookingActivity(activity = this, type = com.appservice.constant.FragmentType.ACTIVE_NEW_DOMAIN_FRAGMENT, bundle = Bundle(), clearTop = false)
           finish()
         } else premiumMode()
       } else showShortToast(it.message())

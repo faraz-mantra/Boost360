@@ -38,7 +38,7 @@ class ActiveNewDomainFragment :
     }
 
     private fun getFeatureDetailsAzureApi() {
-        viewModel?.getFeatureDetails(sessionLocal.fpTag, clientId)?.observeOnce(this, {
+        viewModel?.getFeatureDetails(sessionLocal.fPID, clientId)?.observeOnce(this, {
             if (!it.isSuccess() || it == null) {
                 hideProgress()
                 showShortToast(getString(R.string.something_went_wrong))
