@@ -16,9 +16,11 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.festive.poster.models.PosterModel
+import com.framework.constants.Constants
 import com.framework.constants.PackageNames
 import com.framework.glide.customsvgloader.*
-import com.framework.utils.saveImageToSharedStorage
+import com.framework.utils.RegexUtils
+import com.framework.utils.saveImageToStorage
 import com.framework.utils.shareAsImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,9 +42,9 @@ object SvgUtils {
         return requestBuilder
     }
 
-    fun loadImage(url: String, view: ImageView, model: List<PosterKeyModel>){
+    fun loadImage(url: String, view: ImageView, model: List<PosterKeyModel>, isPurchased: Boolean){
         val uri = Uri.parse(url)
-        val listener = SvgDrawableListener(model, url)
+        val listener = SvgDrawableListener(model, url,isPurchased)
         Log.d(TAG, "loadImage() called with: url = $url, model = $model $view")
 
         initReqBuilder(view.context)?.let{
@@ -174,7 +176,12 @@ object SvgUtils {
                         svgString?.let { SvgRenderCacheUtil.instance.saveToCache(url, it) }
                     }
                     if (svgString != null && !svgString.isEmpty()) {
-                        svgString = SvgRenderCacheUtil.instance.replace(svgString, model.keys, context)
+                        svgString = SvgRenderCacheUtil.instance.replace(
+                            svgString,
+                            model.keys,
+                            context,
+                            model.isPurchased
+                        )
                         val svg = SVG.getFromString(svgString)
                         svg.renderDPI = context.resources?.displayMetrics?.densityDpi?.toFloat() ?: 480.0f
                         svg.documentWidth = svg.documentWidth*4
@@ -185,18 +192,22 @@ object SvgUtils {
                         )
                         val canvas = Canvas(b)
                         svg.renderToCanvas(canvas)
-                        withContext(Dispatchers.Main) {
+                        withContext(Dispatchers.Default) {
                             when (packageName) {
-                                PackageNames.INSTAGRAM -> b.shareAsImage(
-                                    PackageNames.INSTAGRAM,
-                                    text = model.greeting_message
-                                )
-                                PackageNames.WHATSAPP -> b.shareAsImage(
-                                    PackageNames.WHATSAPP,
-                                    text = model.greeting_message
-                                )
+                                PackageNames.INSTAGRAM ->{
+                                    b.shareAsImage(
+                                        PackageNames.INSTAGRAM,
+                                        text = model.greeting_message
+                                    )
+                                }
+                                PackageNames.WHATSAPP ->{
+                                    b.shareAsImage(
+                                        PackageNames.WHATSAPP,
+                                        text = RegexUtils.addStarToNumbers(model.greeting_message)
+                                    )
+                                }
                                 "" -> b.shareAsImage(text = model.greeting_message)
-                                else -> b.saveImageToSharedStorage()
+                                else -> b.saveImageToStorage(showNoti = true)
                             }
                         }
                     }

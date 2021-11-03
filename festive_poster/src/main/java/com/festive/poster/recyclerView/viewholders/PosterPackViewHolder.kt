@@ -1,5 +1,6 @@
 package com.festive.poster.recyclerView.viewholders
 
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -22,14 +23,18 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecycler
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     val model = item as PosterPackModel
     binding.tvPosterHeading.text = model.tagsModel.name
-    binding.tvPrice.text = "Pack of ${model.posterList?.size} posters for ₹${String.format("%.2f",model.price)}"
+    binding.layoutPurchased.isVisible = model.isPurchased
+    binding.tvPrice.text = "Pack of ${model.posterList?.size} posters for ₹${model.price.toInt()}"
   //  setupVp(binding.vpPoster)
 
-    if (model.isPurchasedN()) {
+    if (model.isPurchased) {
+      binding.btnGetPack.setBackgroundColor(getColor(R.color.white)!!)
+      binding.btnGetPack.setTextColor(getColor(R.color.colorPrimary)!!)
       binding.btnGetPack.text = getResources()?.getString(R.string.view_pack)
     } else {
+      binding.btnGetPack.setBackgroundColor(getColor(R.color.colorPrimary)!!)
+      binding.btnGetPack.setTextColor(getColor(R.color.white)!!)
       binding.btnGetPack.text = "Get ${model.tagsModel.name} Posters Pack"
-
     }
     binding.btnGetPack.setOnClickListener {
       listener?.onItemClick(position, item, RecyclerViewActionType.GET_POSTER_PACK_CLICK.ordinal)
