@@ -109,7 +109,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
       startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
     }
 
-    val hashes = AppSignatureHashHelper(this).appSignatures
+//    val hashes = AppSignatureHashHelper(this).appSignatures
 
   }
 
