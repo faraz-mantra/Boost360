@@ -290,10 +290,7 @@ public class Constants {
     public static String FACEBOOK_PAGE_ACCESS_ID = "";
     public static String TWITTER_TOK = Specific.TWITTER_TOK;
     public static String TWITTER_SEC = Specific.TWITTER_SEC;
-    // for referral
-    public static String PREF_NAME_REFERRAL = "nowfloatsPrefsReferral";
-    public static String IS_INSTALL_APP = "isInstallApp";
-    public static String REFER_CODE_APP = "referCodeApp";
+
     public static String shortUrl = "";
     public static Boolean fbShareEnabled = false;
     public static boolean fbPageShareEnabled = false;
