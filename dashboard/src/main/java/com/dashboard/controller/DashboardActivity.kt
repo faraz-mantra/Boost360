@@ -53,6 +53,12 @@ import com.framework.utils.*
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
 import com.framework.webengageconstant.*
+import com.google.android.play.core.appupdate.AppUpdateInfo
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
+import com.google.android.play.core.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.iid.FirebaseInstanceId
 import com.inventoryorder.utils.DynamicLinkParams
@@ -73,6 +79,7 @@ import kotlin.concurrent.schedule
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
+  private val MY_REQUEST_CODE = 120
   private var doubleBackToExitPressedOnce = false
   private var mDeepLinkUrl: String? = null;
   private var mPayload: String? = null
@@ -81,6 +88,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private var session: UserSessionManager? = null
   private var adapterDrawer: AppBaseRecyclerViewAdapter<DrawerHomeData>? = null
   private var isSecondaryImage = false
+  private lateinit var appUpdateManager: AppUpdateManager
+  private lateinit var appUpdateInfoTask: Task<AppUpdateInfo>
   var isLoadShimmer = true
   var count = 0
   var activePreviousItem = 0
@@ -127,6 +136,39 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     session?.let { initDataBadges(it.fpTag ?: "", it.fPID ?: "", clientId) }
     registerFirebaseToken()
     reloadCapLimitData()
+    checkForUpdate()
+  }
+
+  private fun checkForUpdate() {
+    appUpdateManager = AppUpdateManagerFactory.create(this)
+
+// Returns an intent object that you use to check for an update.
+    appUpdateInfoTask = appUpdateManager.appUpdateInfo
+
+// Checks that the platform will allow the specified type of update.
+    appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+      if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+        // This example applies an immediate update. To apply a flexible update
+        // instead, pass in AppUpdateType.FLEXIBLE
+        && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
+      ) {
+        // Request the update.
+        Log.d(TAG, "checkForUpdate: App update available")
+        startUpdate(appUpdateInfo)
+      }
+    }
+  }
+
+  private fun startUpdate(appUpdateInfo: AppUpdateInfo) {
+    appUpdateManager.startUpdateFlowForResult(
+      // Pass the intent that is returned by 'getAppUpdateInfo()'.
+      appUpdateInfo,
+      // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
+      AppUpdateType.IMMEDIATE,
+      // The current activity making the update request.
+      this,
+      // Include a request code to later monitor this update request.
+      MY_REQUEST_CODE)
   }
 
   private fun reloadCapLimitData() {
@@ -458,6 +500,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
+    if(requestCode == MY_REQUEST_CODE && resultCode != RESULT_OK) showShortToast("App Update Failed")
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK && isSecondaryImage) {
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
 //      if (mPaths.isNullOrEmpty().not()) uploadSecondaryImage(mPaths[0])
