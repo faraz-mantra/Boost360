@@ -22,6 +22,7 @@ import com.boost.upgrades.adapter.UPIAdapter
 import com.boost.upgrades.adapter.WalletAdapter
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
 import com.boost.upgrades.data.api_model.customerId.get.Result
+import com.boost.upgrades.data.api_model.paymentprofile.LastPaymentMethodDetails
 import com.boost.upgrades.datamodule.SingleNetBankData
 import com.boost.upgrades.interfaces.*
 import com.boost.upgrades.ui.checkoutkyc.BusinessDetailsFragment
@@ -99,6 +100,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
   private lateinit var savedCardsLayout: ConstraintLayout
   private lateinit var payLinkLayout: ConstraintLayout
   private var isPayViaLink : Boolean = false
+  private var lastUsedPaymentMethod : String? = null
 
   companion object {
     fun newInstance() = PaymentFragment()
@@ -131,13 +133,44 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     cartCheckoutData.put("contact", requireArguments().getString("contact"))
     prefs = SharedPrefs(activity as UpgradeActivity)
 
+    lastUsedPaymentMethod = prefs.getLastUsedPaymentMode()
+
+
     paymentLL.removeAllViews()
 
-    paymentLL.addView(upiLayout)
-    paymentLL.addView(netBankingLayout)
-    paymentLL.addView(savedCardsLayout)
-    paymentLL.addView(walletLayout)
-    paymentLL.addView(payLinkLayout)
+    if(lastUsedPaymentMethod == "upi"){
+      paymentLL.addView(upiLayout)
+      paymentLL.addView(netBankingLayout)
+      paymentLL.addView(savedCardsLayout)
+      paymentLL.addView(walletLayout)
+      paymentLL.addView(payLinkLayout)
+    }else if(lastUsedPaymentMethod == "wallet"){
+      paymentLL.addView(walletLayout)
+      paymentLL.addView(upiLayout)
+      paymentLL.addView(netBankingLayout)
+      paymentLL.addView(savedCardsLayout)
+      paymentLL.addView(payLinkLayout)
+    }else if(lastUsedPaymentMethod == "netbanking"){
+      paymentLL.addView(netBankingLayout)
+      paymentLL.addView(upiLayout)
+      paymentLL.addView(savedCardsLayout)
+      paymentLL.addView(walletLayout)
+      paymentLL.addView(payLinkLayout)
+    }else if(lastUsedPaymentMethod =="card"){
+      paymentLL.addView(savedCardsLayout)
+      paymentLL.addView(upiLayout)
+      paymentLL.addView(netBankingLayout)
+      paymentLL.addView(walletLayout)
+      paymentLL.addView(payLinkLayout)
+    }else{
+      paymentLL.addView(upiLayout)
+      paymentLL.addView(netBankingLayout)
+      paymentLL.addView(savedCardsLayout)
+      paymentLL.addView(walletLayout)
+      paymentLL.addView(payLinkLayout)
+    }
+
+
 //        //this is a offer created from admin dashboard.
 //        cartCheckoutData.put("offer_id", arguments!!.getString("offer_F5hUaalR9tpSzn"))
 
@@ -857,6 +890,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     })
 
 
+
   }
 
   fun payViaPaymentLink() {
@@ -1147,6 +1181,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
       (activity as UpgradeActivity).clientid
     )
   }
+
 
 
   override fun backListener(flag: Boolean) {

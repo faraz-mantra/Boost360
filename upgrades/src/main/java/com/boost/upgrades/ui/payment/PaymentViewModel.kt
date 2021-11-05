@@ -15,6 +15,7 @@ import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerI
 import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse
 import com.boost.upgrades.data.api_model.gst.Error
 import com.boost.upgrades.data.api_model.gst.GSTApiResponse
+import com.boost.upgrades.data.api_model.paymentprofile.GetLastPaymentDetails
 import com.boost.upgrades.data.api_model.stateCode.GetStates
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
@@ -65,6 +66,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
   private var APIRequestStatus: String? = null
   private var gstApiInfo : MutableLiveData<GSTApiResponse> = MutableLiveData()
   private var statesInfo :MutableLiveData<GetStates> = MutableLiveData()
+  private var lastPaymentDetailsInfo :MutableLiveData<GetLastPaymentDetails> = MutableLiveData()
 
   var updatesError: MutableLiveData<String> = MutableLiveData()
   var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
@@ -145,6 +147,9 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
   }
   fun getStatesResult(): LiveData<GetStates>{
     return statesInfo
+  }
+  fun getLastPayDetails() :LiveData<GetLastPaymentDetails>{
+    return lastPaymentDetailsInfo
   }
 
   fun cityResult(): LiveData<List<String>> {
@@ -352,6 +357,27 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
       )
     }
   }
+
+  fun getLastUsedPaymentDetails(auth: String,floatingPointId :String,clientId: String){
+    if(Utils.isConnectedToInternet(getApplication())){
+      CompositeDisposable().add(
+        ApiService.getLastPaymentDetails(auth, floatingPointId, clientId)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(
+            {
+              lastPaymentDetailsInfo.postValue(it)
+            },
+            {
+              val temp = (it as HttpException).response()!!.errorBody()!!.string()
+              val errorBody : Error = Gson().fromJson(temp,object : TypeToken<com.boost.upgrades.data.api_model.paymentprofile.Error>() {}.type)
+              Toasty.error(getApplication(), errorBody.toString(), Toast.LENGTH_LONG).show()
+            }
+          )
+      )
+    }
+  }
+
 
   fun getCitiesFromAssetJson(context: Context) {
     val data: String? = Utils.getCityFromAssetJsonData(context)
