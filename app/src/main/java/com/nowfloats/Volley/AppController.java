@@ -130,18 +130,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     FestivePosterApplication.initModule(this);
     initWebEngage();
     //Invite Referral
-    SharedPreferences pref = this.getSharedPreferences(PreferenceConstant.PREF_NAME_REFERRAL, Context.MODE_PRIVATE);
-    SharedPreferences.Editor editor = pref.edit();
     InviteReferralsApplication.register(this);
-    if (!pref.getBoolean(PreferenceConstant.IS_INSTALL_APP, false)) {
-      InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null);
-      InviteReferralsApi.getInstance(this).getReferrerCode(code -> {
-        Log.d("InviteReferrals", code);
-        editor.putBoolean(PreferenceConstant.IS_INSTALL_APP, true);
-        editor.putString(PreferenceConstant.REFER_CODE_APP, code);
-        editor.apply();
-      });
-    }
+    InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null);
     //Koin
     KoinBaseApplication.initModule(this);
     //ContextApplication.initSdk(this, this);
