@@ -28,4 +28,6 @@
   <dimen name="heading_text_1">55sp</dimen>
   <dimen name="heading_text_2">50sp</dimen>
   <dimen name="heading_text_3">45sp</dimen>
+
+  <item name="zero_letter_spacing_float" type="dimen" format="float">0.0</item>
 </resources>
