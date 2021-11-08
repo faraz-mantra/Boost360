@@ -4,14 +4,21 @@
 
   <uses-permission android:name="android.permission.INTERNET" />
 
+  <permission
+    android:name="com.dashboard.CUSTOM_PERMISSION"
+    android:label="dashboard_permission"
+    android:protectionLevel="dangerous" />
+
   <application
     android:requestLegacyExternalStorage="true"
     tools:ignore="UnusedAttribute">
 
     <activity
       android:name=".controller.DashboardActivity"
+      android:exported="true"
       android:label="@string/dashboard"
       android:launchMode="singleTask"
+      android:permission="com.dashboard.CUSTOM_PERMISSION"
       android:screenOrientation="portrait"
       android:theme="@style/DashboardTheme"
       android:windowSoftInputMode="adjustPan">
