@@ -32,7 +32,7 @@
 -dontwarn org.apache.commons.codec.binary.Base64
 
 -keep class androidx.core.app.CoreComponentFactory { *; }
--keep class * extends androidx.fragment.app.Fragment{}
+#-keep class * extends androidx.fragment.app.Fragment{}
 
 #-dontwarn com.demach.konotor
 #-dontwarn com.demach.konotor.KonotorFeedbackActivity
@@ -105,8 +105,8 @@
 
 -keep class com.daimajia.androidanimations.** { *;}
 -keep class com.daimajia.easing.** { *;}
--keep class android.support.v4.** { *; }
--keep class android.support.v7.** { *; }
+#-keep class android.support.v4.** { *; }
+#-keep class android.support.v7.** { *; }
 
 
 
@@ -142,13 +142,12 @@
 -keep class * extends com.aviary.android.feather.sdk.widget.PackDetailLayout
 -keep class * extends com.aviary.android.feather.sdk.internal.services.BaseContextService
 -keep class * extends com.aviary.android.feather.sdk.internal.tracking.AbstractTracker
--keep class * extends android.app.Service
--keep class * extends android.os.AsyncTask
--keep class * extends android.app.Activity
--keep class * extends android.app.Application
--keep class * extends android.app.Service
--keep class * extends android.content.BroadcastReceiver
--keep class * extends android.content.ContentProvider
+#-keep class * extends android.app.Service
+#-keep class * extends android.os.AsyncTask
+#-keep class * extends android.app.Activity
+#-keep class * extends android.app.Application
+#-keep class * extends android.content.BroadcastReceiver
+#-keep class * extends android.content.ContentProvider
 -keep class com.android.vending.licensing.ILicensingService
 -keep public class com.android.vending.billing.IInAppBillingService
 -keep class com.aviary.android.feather.sdk.internal.headless.moa.MoaResult
@@ -381,8 +380,6 @@
 -keep class com.inventoryorder.model.** { <fields>; }
 -keep class com.inventoryorder.ui.tutorials.model.** { <fields>; }
 -keep class com.boost.presignin.model.** { <fields>; }
-
--keep class * extends androidx.fragment.app.Fragment{}
 ## New progard rule
 
 ##---------------Begin: proguard configuration for Gson  ----------

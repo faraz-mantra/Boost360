@@ -160,16 +160,16 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   private fun intentDataCheckAndDeepLink(intent: Intent?) {
     Log.i(TAG, "intentDataCheckAndDeepLink: ")
-    if (intent?.extras != null) {
-      if (intent.extras!!.containsKey("url")) mDeepLinkUrl = intent.extras!!.getString("url")
-      if (intent.extras!!.containsKey("payload")) mPayload = intent.extras!!.getString("payload")
-    }
-    if (intent != null && intent.data != null) {
-      val action = intent.action
-      val data = intent.dataString
-      val uri = intent.data
-      Log.d("Data: ", "$data  $action $uri")
-      if (session?.isLoginCheck == true) {
+    if (session?.isLoginCheck == true) {
+      if (intent?.extras != null) {
+        if (intent.extras!!.containsKey("url")) mDeepLinkUrl = intent.extras!!.getString("url")
+        if (intent.extras!!.containsKey("payload")) mPayload = intent.extras!!.getString("payload")
+      }
+      if (intent != null && intent.data != null) {
+        val action = intent.action
+        val data = intent.dataString
+        val uri = intent.data
+        Log.d("Data: ", "$data  $action $uri")
         if (uri != null && uri.toString().contains("onelink", true)) {
           isAppFlyerLink()
         } else {
@@ -181,11 +181,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
             if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
           } else deepLinkUtil?.deepLinkPage(data?.substring(data.lastIndexOf("/") + 1) ?: "", "", false)
         }
-      } else {
-        this.startPreSignUp(session, true)
-        finish()
-      }
-    } else isAppFlyerLink()
+      } else isAppFlyerLink()
+    } else {
+      this.startPreSignUp(session, true)
+      finish()
+    }
   }
 
   private fun isAppFlyerLink() {
