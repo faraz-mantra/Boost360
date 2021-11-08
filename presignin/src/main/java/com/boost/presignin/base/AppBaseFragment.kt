@@ -41,11 +41,6 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
       return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
     }
 
-  protected val prefReferral: SharedPreferences?
-    get() {
-      return baseActivity.getSharedPreferences(PreferenceConstant.PREF_NAME_REFERRAL, Context.MODE_PRIVATE)
-    }
-
   protected fun getToolbarTitle(): String? {
     return appBaseActivity?.getToolbar()?.getTitleTextView()?.text?.toString()
   }

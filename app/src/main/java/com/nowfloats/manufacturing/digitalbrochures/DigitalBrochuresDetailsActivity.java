@@ -37,6 +37,7 @@ import com.nowfloats.manufacturing.digitalbrochures.Interfaces.DigitalBrochuresD
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
+import java.io.File;
 import java.util.concurrent.ExecutionException;
 
 import retrofit.Callback;
@@ -378,11 +379,10 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
 //      path = FileUtils.getPath(this, selectedUri_PDF);
       path = new com.appservice.utils.FileUtils(this).getPath(selectedUri_PDF);
       Log.d("onActivityResult", "Path: " + path + "\n uri" + selectedUri_PDF.getPath());
-      if (!TextUtils.isEmpty(path)) {
+      if (new File(path).exists()) {
         attachBrochureEmptyLayout.setVisibility(View.GONE);
         fileSelectedLayout.setVisibility(View.VISIBLE);
-      }
-      Toast.makeText(this, "File path getting error!", Toast.LENGTH_SHORT).show();
+      }else Toast.makeText(this, "File path getting error!", Toast.LENGTH_SHORT).show();
     }
   }
 
