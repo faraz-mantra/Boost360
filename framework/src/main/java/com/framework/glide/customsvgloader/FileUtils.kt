@@ -22,7 +22,7 @@ object FileUtils {
             .submit()
             .get()
         try {
-            if (dest.createNewFile()){
+            if (dest.exists()||dest.createNewFile()){
                 val fOut: OutputStream = FileOutputStream(dest)
                 bmp.compress(Bitmap.CompressFormat.JPEG, 100, fOut)
                 fOut.flush()
