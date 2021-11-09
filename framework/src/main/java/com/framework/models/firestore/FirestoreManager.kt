@@ -34,13 +34,11 @@ object FirestoreManager {
     this.fpId = fpId
     this.clientId = clientId
     this.db = Firebase.firestore
-    if (this.model == null) {
-      this.model = DrScoreModel()
-    }
+    if (this.model == null) this.model = DrScoreModel()
     readDrScoreDocument()
   }
 
-  fun reset(){
+  fun reset() {
     Log.i(TAG, "reset called: ")
     this.fpTag = ""
     this.fpId = ""
@@ -64,7 +62,7 @@ object FirestoreManager {
 
   fun readDrScoreDocument() {
     Log.e("readDrScoreDocument ", "readDrScoreDocument")
-    getDocumentReference()?.addSnapshotListener(MetadataChanges.INCLUDE) { snapshot, e ->
+    getDocumentReference()?.addSnapshotListener(MetadataChanges.EXCLUDE) { snapshot, e ->
       if (e == null) {
         Log.d(TAG, "No Exception")
         Log.d(TAG, "Document Data is : " + snapshot?.data)
@@ -72,12 +70,12 @@ object FirestoreManager {
         updateDrScoreIfNull()
         listener?.invoke()
       } else {
-        Log.d(TAG, "Exception" + e)
+        Log.d(TAG, "Exception$e")
       }
     }
   }
 
-  fun getDocumentReference(): DocumentReference? {
+  private fun getDocumentReference(): DocumentReference? {
     try {
       return db?.collection(COLLECTION_NAME)?.document(this.fpTag)
     } catch (e: Exception) {
@@ -88,7 +86,7 @@ object FirestoreManager {
     return null
   }
 
-  fun updateDrScoreIfNull() {
+  private fun updateDrScoreIfNull() {
     if (this.model == null) {
       this.model = DrScoreModel()
 //      val docRef = getDocumentReference()
@@ -134,7 +132,7 @@ object FirestoreManager {
   }
 
   //convert a data class to a map
-  fun <T> T.serializeToMap(): Map<String, Any> {
+  private fun <T> T.serializeToMap(): Map<String, Any> {
     return convert()
   }
 
@@ -144,7 +142,7 @@ object FirestoreManager {
     return gson.fromJson(json, object : TypeToken<O>() {}.type)
   }
 
-  fun Observable<BaseResponse>.apiCreateUpdate() {
+  private fun Observable<BaseResponse>.apiCreateUpdate() {
     this.toLiveData().observeForever {
       if (it.isSuccess()) {
         readDrScoreDocument()

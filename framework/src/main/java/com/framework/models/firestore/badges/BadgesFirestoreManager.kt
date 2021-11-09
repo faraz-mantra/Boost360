@@ -29,11 +29,11 @@ object BadgesFirestoreManager {
     readDrScoreDocument()
   }
 
-  private fun readDrScoreDocument() {
+  fun readDrScoreDocument() {
     Log.e("readBadgesDocument ", "readBadgesDocument")
-    getDocumentReference()?.addSnapshotListener(MetadataChanges.INCLUDE) { snapshot, e ->
+    getDocumentReference()?.addSnapshotListener(MetadataChanges.EXCLUDE) { snapshot, e ->
       if (e == null && snapshot?.documentChanges != null) {
-        Log.d(TAG, "Document Data is : ${snapshot.documentChanges}")
+        Log.d(TAG, "Badges Document Data is : ${snapshot.documentChanges}")
         badgesModel = ArrayList()
         for (documentChange in snapshot.documentChanges) {
           val badgesType: BadgesModel.BadgesType? = fromUrlCheck(documentChange.document.reference.path)
@@ -43,6 +43,7 @@ object BadgesFirestoreManager {
             badgesModel!!.add(model)
           }
         }
+        Log.d(TAG, "Document badges is : $badgesModel")
         listenerBadges?.invoke()
       } else {
         Log.d(TAG, "Exception$e")
