@@ -1,8 +1,8 @@
 package com.inventoryorder.base.rest
 
-import android.content.Intent
 import com.framework.base.BaseRepository
 import com.framework.base.BaseResponse
+import com.framework.pref.UserSessionManager
 import com.inventoryorder.BaseOrderApplication
 import com.inventoryorder.rest.TaskCode
 import com.inventoryorder.rest.apiClients.WithFloatsApiClient
@@ -37,13 +37,7 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
   private fun unauthorizedUserCheck(taskCode: Int?) {
     if (taskCode == 401) {
       BaseOrderApplication.instance.apply {
-        try {
-          val i = Intent(this, Class.forName("com.nowfloats.helper.LogoutActivity"))
-          i.putExtra("isAuthErrorToast",true)
-          startActivity(i)
-        } catch (e: Exception) {
-          e.printStackTrace()
-        }
+        UserSessionManager(this).logoutUser(this, true)
       }
     }
   }
