@@ -1,18 +1,24 @@
 package com.nowfloats.Login;
 
+import static android.content.Context.ACTIVITY_SERVICE;
+
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.anachat.chatsdk.AnaCore;
 import com.appservice.AppServiceApplication;
+import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase;
 import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignin.ui.intro.IntroActivity;
+import com.boost.upgrades.UpgradesApplication;
 import com.dashboard.AppDashboardApplication;
 import com.framework.models.firestore.FirestoreManager;
 import com.framework.utils.PreferencesUtils;
@@ -50,6 +56,8 @@ import retrofit.client.Response;
 
 import static com.framework.utils.PreferencesUtilsKt.deleteAllData;
 import static com.nowfloats.util.Key_Preferences.MAIN_PRIMARY_CONTACT_NUM;
+
+import androidx.room.RoomDatabase;
 
 /**
  * Created by Dell on 28-01-2015.
@@ -1028,7 +1036,8 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
       //Analytics_Fragment.visitCount.setText("0");
       if (_context != null) {
         _context.deleteDatabase(SaveDataCounts.DATABASE_NAME);
-        _context.deleteDatabase("updates_db");  //DELETE MARKETPLACE DB
+//        _context.deleteDatabase("updates_db");  //DELETE MARKETPLACE DB
+        UpgradesApplication.clearDatabase(); //DELETE MARKETPLACE DB
       }
       clearAuth();
       Intent i = new Intent(activity, IntroActivity.class);

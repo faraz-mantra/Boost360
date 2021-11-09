@@ -17,5 +17,12 @@ open class UpgradesApplication: BaseApplication() {
             PreferencesUtils.initSharedPreferences(application)
             AppDatabase.getInstance(application)
         }
+
+        @JvmStatic
+        fun clearDatabase(){
+            Thread {
+                AppDatabase.getInstance(instance)!!.clearAllTables()
+            }.start()
+        }
     }
 }
