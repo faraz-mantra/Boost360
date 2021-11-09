@@ -1507,7 +1507,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           bundles_in_cart = false
           default_validity_months = 1
 //                    months_validity.text = default_validity_months.toString() + " month"
-          months_validity.setText(default_validity_months.toString())
+          if(prefs.getCartValidityMonths().isNullOrEmpty().not()){
+            months_validity.setText(prefs.getCartValidityMonths())
+          }else{
+            months_validity.setText(default_validity_months.toString())
+          }
+//          months_validity.setText(default_validity_months.toString())
           months_validity_edit_inc.visibility = View.VISIBLE
           months_validity_edit_dsc.visibility = View.VISIBLE
           package_layout.visibility = View.GONE
