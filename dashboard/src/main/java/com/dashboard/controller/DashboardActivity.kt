@@ -632,19 +632,19 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 //              else binding?.navView?.removeBadge(0)
 //            }
             BadgesModel.BadgesType.WEBSITEBADGE.name -> {
-              if (it.getMessageN() > 0 && it.isEnabled!!) binding?.navView?.setBadge(1, it.getMessageText())
+              if (it.getMessageN() > 0 && it.getIsEnable()) binding?.navView?.setBadge(1, it.getMessageText())
               else binding?.navView?.removeBadge(1)
             }
             BadgesModel.BadgesType.ENQUIRYBADGE.name -> {
-              if (it.getMessageN() > 0 && it.isEnabled!!) binding?.navView?.setBadge(2, it.getMessageText())
+              if (it.getMessageN() > 0 && it.getIsEnable()) binding?.navView?.setBadge(2, it.getMessageText())
               else binding?.navView?.removeBadge(2)
             }
             BadgesModel.BadgesType.MARKETPLACEBADGE.name -> {
-              if (it.getMessageN() > 0 && it.isEnabled!!) binding?.navView?.setBadge(3, it.getMessageText())
+              if (it.getMessageN() > 0 && it.getIsEnable()) binding?.navView?.setBadge(3, it.getMessageText())
               else binding?.navView?.removeBadge(3)
             }
             BadgesModel.BadgesType.MENUBADGE.name -> {
-              if (it.getMessageN() > 0 && it.isEnabled!!) binding?.navView?.setBadge(4, it.getMessageText())
+              if (it.getMessageN() > 0 && it.getIsEnable()) binding?.navView?.setBadge(4, it.getMessageText())
               else binding?.navView?.removeBadge(4)
             }
           }
