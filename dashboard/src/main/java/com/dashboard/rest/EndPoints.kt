@@ -63,6 +63,9 @@ object EndPoints {
   //update whatsapp
   const val UPDATE_WHATSAPP="/user/v9/floatingPoint/updateWhatsapp"
 
+  // TODO US CENTRAL NOW FLOATS API
+  const val US_CENTRAL_NOW_FLOATS_CLOUD_FUNCTIONS = "https://us-central1-nowfloats-boost.cloudfunctions.net/"
+  const val DISABLE_NOTIFICATION = "disableNotification"
 
 }
 
