@@ -8,6 +8,7 @@ import android.os.Handler
 import android.text.*
 import android.text.style.ClickableSpan
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
 import androidx.databinding.DataBindingUtil
@@ -43,12 +44,20 @@ import com.framework.utils.fromHtml
 import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 
+const val FIREBASE_RC_FETCH_INTERVAL: Long = 900 // 15 min. Metric in seconds.
+const val FEATURE_DOMAIN_BOOKING_ENABLE = "feature_domain_booking_enable"
 
 class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, DomainBookingViewModel>(), RecyclerItemClickListener {
 
   private lateinit var baseActivity: BaseActivity<*, *>
   private lateinit var existingDomainRequest: ExistingDomainRequest
+  private var remoteConfig: FirebaseRemoteConfig? = null
+  private var isBookNewDomainButtonEnabled = false
 
   /**
    * Bottom Sheet : function "showBsheetIntegrationOption"
@@ -74,6 +83,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
     binding?.tvDomainAssigned?.text = domainSplit?.domainExtension
     setupUI()
     onClickListeners()
+    setFirebaseRemoteConfig()
   }
 
   private fun onClickListeners() {
@@ -87,14 +97,18 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
     }
 
     binding?.btnBookNewDomain?.setOnClickListener {
-      WebEngageController.trackEvent(CLICKED_ON_BOOK_A_NEW_DOMAIN, CLICK, NO_EVENT_VALUE)
-      startFragmentDomainBookingActivity(
-        activity = this,
-        type = com.appservice.constant.FragmentType.SEARCH_DOMAIN_FRAGMENT,
-        bundle = Bundle(),
-        clearTop = false
-      )
-      finish()
+      if (isBookNewDomainButtonEnabled) {
+        WebEngageController.trackEvent(CLICKED_ON_BOOK_A_NEW_DOMAIN, CLICK, NO_EVENT_VALUE)
+        startFragmentDomainBookingActivity(
+          activity = this,
+          type = com.appservice.constant.FragmentType.SEARCH_DOMAIN_FRAGMENT,
+          bundle = Bundle(),
+          clearTop = false
+        )
+        finish()
+      }else{
+        showLongToast(getString(R.string.to_enable_reach_customer_support_at_ria_))
+      }
     }
 
     binding?.appBar?.customImageView4?.setOnClickListener {
@@ -329,5 +343,26 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
       hideProgress()
       progressDialog.dismiss()
                           }, 1000)
+  }
+
+  private fun setFirebaseRemoteConfig() {
+    remoteConfig = Firebase.remoteConfig
+    val configSettings = remoteConfigSettings { minimumFetchIntervalInSeconds = FIREBASE_RC_FETCH_INTERVAL }
+    remoteConfig?.setConfigSettingsAsync(configSettings)
+    remoteConfig?.setDefaultsAsync(R.xml.remote_config_defaults)
+    remoteConfig?.fetchAndActivate()?.addOnCompleteListener(baseActivity) { task ->
+      if (task.isSuccessful) {
+        val updated = task.result
+        Log.d(TAG, "Config params updated: $updated")
+//        showShortToast("Fetch and activate succeeded")
+      }
+//      else showShortToast("Fetch failed")
+      checkRemoteConfigValues()
+    }
+  }
+
+  private fun checkRemoteConfigValues() {
+    Log.d(TAG, "Config params updated: ${remoteConfig?.getBoolean(FEATURE_DOMAIN_BOOKING_ENABLE)}")
+    isBookNewDomainButtonEnabled = remoteConfig?.getBoolean(FEATURE_DOMAIN_BOOKING_ENABLE)!!
   }
 }
