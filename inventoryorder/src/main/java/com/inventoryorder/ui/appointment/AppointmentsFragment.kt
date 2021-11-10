@@ -105,12 +105,11 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
     requestFilter = getRequestFilterData(arrayListOf())
-    getSellerOrdersFilterApi(requestFilter, isFirst = true)
     binding?.swipeRefresh?.setColorSchemeColors(getColor(R.color.colorAccent))
     binding?.swipeRefresh?.setOnRefreshListener { loadNewData() }
     this.zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.APPOINTMENT, this, baseActivity).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
-
+    getSellerOrdersFilterApi(requestFilter, isFirst = true)
   }
 
   override fun onClick(v: View) {
@@ -172,6 +171,8 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
           val isDataNotEmpty = (response != null && response.Items.isNullOrEmpty().not())
           onInClinicAptAddedOrUpdated(isDataNotEmpty)//Dr score
           if (isDataNotEmpty) {
+            binding?.tvNoData?.gone()
+
             nonEmptyView()
             orderList.clear()
             removeLoader()
@@ -184,7 +185,19 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
             isLastPageD = (orderList.size == TOTAL_ELEMENTS)
             setAdapterNotify(orderList)
             setToolbarTitle(resources.getString(R.string.appointments) + " ($TOTAL_ELEMENTS)")
-          } else emptyView()
+          } else {
+            if (filterItem==null||filterItem?.type?.let { FilterModel.FilterType.fromType(it) }==FilterModel.FilterType.ALL_APPOINTMENTS){
+              emptyView()
+              Log.i(TAG, "getSellerOrdersFilterApi: no filter")
+            }else{
+              binding?.tvNoData?.visible()
+              orderList.clear()
+              removeLoader()
+              setAdapterNotify(orderList)
+              setToolbarTitle(resources.getString(R.string.appointments) + " (0)")
+            }
+
+          }
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
             nonEmptyView()
@@ -198,7 +211,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
             orderList.clear()
             orderList.addAll(orderListFinalList)
             setAdapterNotify(orderList)
-          } else emptyView()
+          }
         }
       } else showLongToast(it.message())
     })

@@ -22,6 +22,10 @@ data class BadgesModel(
     return message?.toInt() ?: 0
   }
 
+  fun getIsEnable(): Boolean {
+    return isEnabled ?: false
+  }
+
   fun getMessageText(): String {
     return if (getMessageN() > 9) "9+" else "${getMessageN()}"
   }
