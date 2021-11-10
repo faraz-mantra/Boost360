@@ -1,17 +1,30 @@
 package com.onboarding.nowfloats.model.supportVideo
 
 import com.framework.base.BaseResponse
+import com.framework.utils.*
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class FeatureSupportVideoResponse(
+const val SUPPORT_VIDEO_DATA = "SUPPORT_VIDEO_DATA"
 
+data class FeatureSupportVideoResponse(
 	@field:SerializedName("Extra")
 	val extra: Extra? = null,
 
 	@field:SerializedName("Data")
 	val data: List<DataItem?>? = null
-):Serializable, BaseResponse()
+):Serializable, BaseResponse(){
+
+	companion object {
+		fun saveSupportVideoData(user: FeatureSupportVideoResponse) {
+			PreferencesUtils.instance.saveData(SUPPORT_VIDEO_DATA, convertObjToString(user) ?: "")
+		}
+
+		fun getSupportVideoData(): FeatureSupportVideoResponse? {
+			return convertStringToObj(PreferencesUtils.instance.getData(SUPPORT_VIDEO_DATA, "") ?: "")
+		}
+	}
+}
 
 data class RootAliasUrl(
 

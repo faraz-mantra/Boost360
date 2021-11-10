@@ -1,7 +1,6 @@
 package com.nowfloats.NavigationDrawer;
 
 import static com.appservice.ui.bankaccount.AccountFragmentContainerActivityKt.startFragmentAccountActivityNew;
-import static com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity.*;
 import static com.framework.webengageconstant.EventLabelKt.ABOUT_BOOST;
 import static com.framework.webengageconstant.EventLabelKt.ACCOUNT_SETTINGS;
 import static com.framework.webengageconstant.EventLabelKt.ADDONS_MARKETPLACE;
@@ -42,7 +41,6 @@ import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.B
 import static com.nowfloats.manageinventory.ManageInventoryFragment.getExperienceType;
 import static com.nowfloats.util.Constants.REFERRAL_CAMPAIGN_CODE;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
-import static com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivityKt.startVideoActivity;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -185,7 +183,6 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
-import com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
@@ -628,8 +625,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         Bundle bundle = getBundleData();
         bundle.putString("FP_ID", session.getFPID());
         bundle.putString("CLIENT_ID", Constants.clientId);
-        //startFragmentAccountActivityNew(this, com.appservice.constant.FragmentType.BANK_ACCOUNT_DETAILS, bundle, false);
-        startVideoActivity(this);
+        startFragmentAccountActivityNew(this, com.appservice.constant.FragmentType.BANK_ACCOUNT_DETAILS, bundle, false);
       } else if (url.contains(getResources().getString(R.string.deeplink_boost_360_extensions))) {
         Intent boostExtensions = new Intent(HomeActivity.this, Boost360ExtensionsActivity.class);
         startActivity(boostExtensions);

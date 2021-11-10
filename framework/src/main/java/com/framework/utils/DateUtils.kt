@@ -158,8 +158,12 @@ object DateUtils {
   }
 
   fun millisecondsToMinutesSeconds(milliSeconds: Long): String? {
-    return String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(milliSeconds) % TimeUnit.HOURS.toMinutes(1),
-      TimeUnit.MILLISECONDS.toSeconds(milliSeconds) % TimeUnit.MINUTES.toSeconds(1)
-    )
+    return String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(milliSeconds).mod(TimeUnit.HOURS.toMinutes(1)),
+      TimeUnit.MILLISECONDS.toSeconds(milliSeconds).mod(TimeUnit.MINUTES.toSeconds(1)))
+  }
+
+  fun milliToMinSecFormat(milliSeconds: Long): String? {
+    return String.format("%d min %d sec", TimeUnit.MILLISECONDS.toMinutes(milliSeconds).mod(TimeUnit.HOURS.toMinutes(1)),
+      TimeUnit.MILLISECONDS.toSeconds(milliSeconds).mod(TimeUnit.MINUTES.toSeconds(1)))
   }
 }

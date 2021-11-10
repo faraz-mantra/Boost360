@@ -117,24 +117,47 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_video_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/size_18"
                 android:layout_marginBottom="@dimen/size_18"
+                tools:text="How to track your website's performance"
                 android:textColor="@color/white"
                 android:textSize="@dimen/heading_5"
                 app:fontFamily="@font/semi_bold"
-                app:layout_constraintBottom_toTopOf="@+id/seek_bar_paused"
+                app:layout_constraintBottom_toTopOf="@+id/barrier_bottom"
                 app:layout_constraintEnd_toEndOf="@+id/tvElapsedTime"
-                app:layout_constraintStart_toStartOf="@+id/seek_bar_paused"
-                android:text="How to track your website's performance" />
+                app:layout_constraintStart_toStartOf="@+id/seek_bar_paused" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="top"
+                app:constraint_referenced_ids="tvTimeTotal,seek_bar_paused,tvElapsedTime"/>
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tvTimeTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/size_18"
+                android:layout_marginBottom="@dimen/size_24"
+                android:gravity="center"
+                android:drawableStart="@drawable/ic_clock_time"
+                android:textColor="@color/white"
+                android:textSize="@dimen/subheading_2"
+                app:fontFamily="@font/regular"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_video_title"
+                tools:text="4 min 14 sec" />
 
             <androidx.appcompat.widget.AppCompatSeekBar
                 android:id="@+id/seek_bar_paused"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:visibility="visible"
                 android:layout_marginStart="@dimen/size_8"
-                android:clickable="false"
                 android:progressTint="@color/white"
                 android:splitTrack="false"
                 android:thumb="@drawable/custom_yellow_thumb"
@@ -150,10 +173,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_16"
+                android:visibility="gone"
                 android:layout_marginEnd="@dimen/size_18"
                 android:layout_marginBottom="@dimen/size_24"
                 android:textColor="@color/white"
                 android:textSize="@dimen/subheading_2"
+                android:gravity="center"
                 app:fontFamily="@font/regular"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
