@@ -1,12 +1,10 @@
 package com.onboarding.nowfloats.ui.supportVideo
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Build
 import android.util.Log
-import android.view.View
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.utils.DateUtils.milliToMinSecFormat
 import com.framework.utils.DateUtils.millisecondsToMinutesSeconds
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -14,18 +12,19 @@ import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
+import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.databinding.ActivitySupportVideoPlayerBinding
+import com.onboarding.nowfloats.extensions.playLeftInAnimation
+import com.onboarding.nowfloats.extensions.playRightInAnimation
+import com.onboarding.nowfloats.model.supportVideo.FeatureSupportVideoResponse
+import com.onboarding.nowfloats.model.supportVideo.FeatureSupportVideoResponse.Companion.getSupportVideoData
+import com.onboarding.nowfloats.model.supportVideo.FeatureSupportVideoResponse.Companion.saveSupportVideoData
+import com.onboarding.nowfloats.model.supportVideo.FeaturevideoItem
 import com.onboarding.nowfloats.viewmodel.SupportVideoViewModel
 import jp.shts.android.storiesprogressview.StoriesProgressView
-import android.view.animation.AccelerateInterpolator
+import android.view.MotionEvent
 
-import android.view.animation.Animation
-
-import android.view.animation.TranslateAnimation
-import com.onboarding.nowfloats.model.supportVideo.FeatureSupportVideoResponse
-import com.google.android.exoplayer2.ExoPlaybackException
-
-import com.google.android.exoplayer2.Timeline
+import android.view.View.OnTouchListener
 
 
 
@@ -37,15 +36,18 @@ class SupportVideoPlayerActivity :
 
     private val playbackStateListener: Player.EventListener = playbackStateListener()
     private var exoPlayer: SimpleExoPlayer? = null
+    private var supportVideoType: String = ""
     private var isVideoPaused = true
     private var currentPosition = 0
     private var currentVideoClock = 0L
     private var currentTotalClock = 0L
-    private var arrayOfVideoUrls = arrayListOf(
+    private lateinit var filteredVideos: List<FeaturevideoItem?>
+
+    /*private var arrayOfVideoUrls = arrayListOf(
         "https://cdn.nowfloats.com/manage/assets/Content/videos/vertical/BoostHowToTrackPerformanceAndWebsiteReport.mp4",
         "https://cdn.nowfloats.com/manage/assets/Content/videos/vertical/BoostHowToAddTestimonial.mp4",
         "https://cdn.nowfloats.com/manage/assets/Content/videos/vertical/BoostHowToTrackPerformanceAndWebsiteReport.mp4"
-    )
+    )*/
 
     override fun onCreateView() {
         super.onCreateView()
@@ -60,15 +62,141 @@ class SupportVideoPlayerActivity :
         return SupportVideoViewModel::class.java
     }
 
+    private fun initUI() {
+        val extras = intent.extras
+        if (extras?.containsKey(IntentConstant.SUPPORT_VIDEO_TYPE.name)!!) {
+            supportVideoType = extras.getString(IntentConstant.SUPPORT_VIDEO_TYPE.name)!!
+            getAndSaveFeatureSupportVideos()
+        }
+        binding?.storiesProgressView?.setStoriesListener(this)
+        setUpProgressBar()
+        setOnClickListeners()
+    }
+
+    private fun setUpProgressBar(duration: Long = 0L, counterL: Int = 0) {
+        binding?.storiesProgressView?.setStoryDuration(duration)
+        //binding?.storiesProgressView?.startStories(counterL)
+    }
+
+    private fun setOnClickListeners() {
+        binding?.ivCloseVideo?.setOnClickListener {
+            onBackPressed()
+        }
+
+        binding?.ivPrev?.setOnClickListener {
+            if (currentPosition > 0) {
+                binding?.videoView!!.playLeftInAnimation()
+                binding?.consOverlayPlay?.playLeftInAnimation()
+                loadPreviousVideo()
+            }
+        }
+
+        binding?.ivNext?.setOnClickListener {
+            if (currentPosition < filteredVideos.size - 1) {
+                binding?.videoView!!.playRightInAnimation()
+                binding?.consOverlayPlay?.playRightInAnimation()
+                loadNextVideo(false)
+            }
+        }
+
+        binding?.ivPlayBtn?.setOnClickListener {
+            playTheVideo()
+        }
+
+        binding?.videoView?.videoSurfaceView?.setOnClickListener {
+            currentVideoClock = exoPlayer?.currentPosition!!
+            currentTotalClock = exoPlayer?.contentDuration!!
+            pauseExoPlayer(false)
+            isVideoPaused = true
+        }
+
+        binding?.tvVoiceOverLang?.setOnClickListener {
+            showShortToast(getString(R.string.coming_soon))
+        }
+
+        binding?.seekBarPaused?.setOnTouchListener { _, _ -> true }
+    }
+
+    private fun playTheVideo() {
+        binding?.consOverlayPlay?.gone()
+        exoPlayer?.play()
+        isVideoPaused = false
+    }
+
+    private fun pauseExoPlayer(isFirstTimeVideoLoad: Boolean) {
+        exoPlayer?.pause()
+        if (!isFirstTimeVideoLoad) {
+            binding?.tvTimeTotal?.gone()
+            binding?.seekBarPaused?.visible()
+            binding?.tvElapsedTime?.visible()
+        }
+
+        binding?.seekBarPaused?.progress = (currentVideoClock.toFloat().div(currentTotalClock) * 100).toInt()
+        binding?.tvElapsedTime?.text = "${millisecondsToMinutesSeconds(currentVideoClock)}/${
+            millisecondsToMinutesSeconds(currentTotalClock)
+        }"
+        binding?.consOverlayPlay?.visible()
+    }
+
+    private fun loadNextVideo(isFirstLoad:Boolean) {
+        if (!isFirstLoad)
+          currentPosition++
+        exoPlayer?.next()
+        binding?.tvTimeTotal?.visible()
+        binding?.seekBarPaused?.gone()
+        binding?.tvElapsedTime?.gone()
+        binding?.tvVideoTitle?.text = filteredVideos[currentPosition]?.videotitle
+        //pauseExoPlayer(true)
+    }
+
+    private fun loadPreviousVideo() {
+        currentPosition--
+        exoPlayer?.previous()
+        binding?.tvTimeTotal?.visible()
+        binding?.seekBarPaused?.gone()
+        binding?.tvElapsedTime?.gone()
+        binding?.tvVideoTitle?.text = filteredVideos[currentPosition]?.videotitle
+        //pauseExoPlayer(true)
+    }
+
+    private fun getAndSaveFeatureSupportVideos() {
+        showProgress()
+        viewModel.getSupportVideos().observeForever {
+            val featureSupportVideoResponse = it as? FeatureSupportVideoResponse
+            if (it.isSuccess() && featureSupportVideoResponse != null) {
+                saveSupportVideoData(featureSupportVideoResponse)
+                populateData()
+            }
+            hideProgress()
+        }
+    }
+
+    private fun populateData() {
+        val featureVideos = getSupportVideoData()?.data?.first()?.featurevideo
+        filteredVideos = featureVideos?.filter { filter -> filter?.helpsectionidentifier == supportVideoType }!!
+        for (item in filteredVideos!!)
+            exoPlayer?.addMediaItem(item?.videourl?.url?.let { MediaItem.fromUri(it) }!!)
+        binding?.storiesProgressView?.setStoriesCount(filteredVideos.size)
+        exoPlayer?.prepare()
+        loadNextVideo(true)
+    }
+
+    override fun onNext() {
+    }
+
+    override fun onPrev() {
+    }
+
+    override fun onComplete() {
+        binding?.consOverlayPlay?.visible()
+    }
+
     private fun initializePlayer() {
         exoPlayer = SimpleExoPlayer.Builder(this)
             .build()
             .also { exoPlayer ->
                 exoPlayer.addListener(playbackStateListener)
                 binding?.videoView?.player = exoPlayer
-                for (item in arrayOfVideoUrls)
-                    exoPlayer.addMediaItem(MediaItem.fromUri(item))
-
                 exoPlayer.playWhenReady = false
                 exoPlayer.seekTo(0, 0L)
                 exoPlayer.prepare()
@@ -83,142 +211,25 @@ class SupportVideoPlayerActivity :
                     "ExoPlayer.STATE_BUFFERING -"
                 }
                 ExoPlayer.STATE_READY -> {
-                    //binding?.storiesProgressView?.resume()
                     currentVideoClock = exoPlayer?.currentPosition!!
                     currentTotalClock = exoPlayer?.contentDuration!!
+                    binding?.tvTimeTotal?.text = milliToMinSecFormat(currentTotalClock)
                     setUpProgressBar(exoPlayer?.contentDuration!!, currentPosition)
-
                     "ExoPlayer.STATE_READY     -"
                 }
                 ExoPlayer.STATE_ENDED -> {
-                    binding?.storiesProgressView?.pause()
                     exoPlayer?.pause()
                     binding?.consOverlayPlay?.visible()
+                    binding?.tvTimeTotal?.visible()
+                    binding?.seekBarPaused?.gone()
+                    binding?.tvElapsedTime?.gone()
+                    binding?.seekBarPaused?.progress = 0
                     "ExoPlayer.STATE_ENDED     -"
                 }
                 else -> "UNKNOWN_STATE             -"
             }
             Log.d(TAG, "changed state to $stateString")
         }
-    }
-
-    private fun initUI() {
-        binding?.storiesProgressView?.setStoriesCount(arrayOfVideoUrls.size)
-        binding?.storiesProgressView?.setStoriesListener(this)
-        getAndSaveFeatureSupportVideos()
-        setUpProgressBar()
-        setOnClickListeners()
-        loadNextVideo()
-    }
-
-    private fun setUpProgressBar(duration: Long = 0L, counterL: Int = 0) {
-        binding?.storiesProgressView?.setStoryDuration(duration)
-        binding?.storiesProgressView?.startStories(counterL)
-        binding?.storiesProgressView?.pause()
-    }
-
-    private fun setOnClickListeners() {
-        binding?.ivCloseVideo?.setOnClickListener {
-            onBackPressed()
-        }
-
-        binding?.ivPrev?.setOnClickListener {
-            if (currentPosition > 0) {
-                playLeftInAnimation(binding?.videoView!!)
-                loadPreviousVideo()
-            }
-        }
-
-        binding?.ivNext?.setOnClickListener {
-            if (currentPosition < arrayOfVideoUrls.size - 1) {
-                playRightInAnimation(binding?.videoView!!)
-                binding?.storiesProgressView?.skip()
-                loadNextVideo()
-            }
-        }
-
-        binding?.ivPlayBtn?.setOnClickListener {
-            playTheVideo()
-        }
-
-        binding?.videoView?.videoSurfaceView?.setOnClickListener {
-            currentVideoClock = exoPlayer?.currentPosition!!
-            currentTotalClock = exoPlayer?.contentDuration!!
-            pauseExoPlayer()
-            isVideoPaused = true
-        }
-
-        binding?.tvVoiceOverLang?.setOnClickListener {
-            showShortToast(getString(R.string.coming_soon))
-        }
-    }
-
-    private fun playTheVideo() {
-        binding?.consOverlayPlay?.gone()
-        binding?.storiesProgressView?.resume()
-        exoPlayer?.play()
-        isVideoPaused = false
-    }
-
-    private fun pauseExoPlayer(){
-        exoPlayer?.pause()
-        //binding?.storiesProgressView?.pause()
-        binding?.seekBarPaused?.progress = ((currentVideoClock / currentTotalClock) * 100).toInt()
-        binding?.consOverlayPlay?.visible()
-        binding?.tvElapsedTime?.text = "${millisecondsToMinutesSeconds(currentVideoClock)}/${millisecondsToMinutesSeconds(currentTotalClock)}"
-    }
-
-    private fun loadNextVideo() {
-        currentPosition++
-        exoPlayer?.next()
-        //pauseExoPlayer()
-        //binding?.storiesProgressView?.pause()
-    }
-
-    private fun loadPreviousVideo() {
-        currentPosition--
-        exoPlayer?.previous()
-        //pauseExoPlayer()
-        binding?.storiesProgressView?.reverse()
-        //binding?.storiesProgressView?.pause()
-    }
-
-    private fun getAndSaveFeatureSupportVideos() {
-        showProgress()
-        viewModel.getSupportVideos().observeForever {
-            if (it.isSuccess()) {
-                val featureSupportVideoResponse =  it as? FeatureSupportVideoResponse
-                val featureVideos = featureSupportVideoResponse?.data?.first()?.featurevideo
-                val filteredVideos =
-                    featureVideos?.filter { filter -> filter?.helpsectionidentifier == "feature.TESTIMONIALS" }
-                filteredVideos?.first()?.videourl?.url
-            }
-            hideProgress()
-        }
-    }
-
-    override fun onNext() {
-        binding?.storiesProgressView?.pause()
-        /* //binding?.storiesProgressView?.pause()
-         if (currentPosition < arrayOfVideoUrls.size - 1) {
-             currentPosition++
-             loadNextVideo()
-         }*/
-    }
-
-    override fun onPrev() {
-        binding?.storiesProgressView?.pause()
-        /* //binding?.storiesProgressView?.pause()
-         if (currentPosition > 0) {
-             currentPosition--
-             loadPreviousVideo()
-         }*/
-    }
-
-    override fun onComplete() {
-        binding?.consOverlayPlay?.visible()
-        //exoPlayer?.stop()
-        //binding?.storiesProgressView?.pause()
     }
 
     public override fun onStart() {
@@ -257,34 +268,4 @@ class SupportVideoPlayerActivity :
         }
         exoPlayer = null
     }
-
-    private fun playRightInAnimation(view: View) {
-        val inFromRight: Animation = TranslateAnimation(
-            Animation.RELATIVE_TO_PARENT, +1.0f,
-            Animation.RELATIVE_TO_PARENT, 0.0f,
-            Animation.RELATIVE_TO_PARENT, 0.0f,
-            Animation.RELATIVE_TO_PARENT, 0.0f
-        )
-        inFromRight.duration = 500
-        inFromRight.interpolator = AccelerateInterpolator()
-        view.startAnimation(inFromRight)
-    }
-
-    private fun playLeftInAnimation(view: View) {
-        val inFromLeft: Animation = TranslateAnimation(
-            Animation.RELATIVE_TO_PARENT, -1.0f,
-            Animation.RELATIVE_TO_PARENT, 0.0f,
-            Animation.RELATIVE_TO_PARENT, 0.0f,
-            Animation.RELATIVE_TO_PARENT, 0.0f
-        )
-        inFromLeft.duration = 500
-        inFromLeft.interpolator = AccelerateInterpolator()
-        view.startAnimation(inFromLeft)
-    }
-
-}
-
-fun startVideoActivity(activity: Activity) {
-    val intent = Intent(activity, SupportVideoPlayerActivity::class.java)
-    activity.startActivity(intent)
 }
