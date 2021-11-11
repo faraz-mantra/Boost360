@@ -171,6 +171,7 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
       e.printStackTrace()
     }
   }
+
   override fun onClick(v: View) {}
 
 

@@ -18,12 +18,15 @@ enum class RecyclerViewItemType {
   STAFF_LISTING_VIEW,
   EXPERIENCE_RECYCLER_ITEM,
   SERVICE_LISTING_VIEW,
-  OFFER_LISTING_VIEW, 
+  OFFER_LISTING_VIEW,
   PRODUCT_CATEGORY_ITEM_VIEW,
   PRODUCT_LISTING,
   OFFER_SELECT_SERVICES,
   STAFF_FILTER_VIEW,
-  CATALOG_SETTING_TILES;
+  CATALOG_SETTING_TILES,
+  DOMAIN_STEPS,
+  DOMAIN_NAME_SUGGESTIONS,
+  SIMILAR_DOMAIN_SUGGESTIONS;
 
 
   @LayoutRes
@@ -49,6 +52,9 @@ enum class RecyclerViewItemType {
       PRODUCT_CATEGORY_ITEM_VIEW -> R.layout.recycler_item_product_category
       PRODUCT_LISTING -> R.layout.recycler_item_product_listing
       CATALOG_SETTING_TILES -> R.layout.recycler_item_ecom_apt_settings
+      DOMAIN_STEPS -> R.layout.list_item_steps_domain
+      DOMAIN_NAME_SUGGESTIONS -> R.layout.item_domain_suggestions
+      SIMILAR_DOMAIN_SUGGESTIONS -> R.layout.item_similar_domain_suggestions
     }
   }
 }

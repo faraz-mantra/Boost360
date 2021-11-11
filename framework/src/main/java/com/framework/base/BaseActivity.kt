@@ -1,5 +1,6 @@
 package com.framework.base
 
+import android.app.ProgressDialog
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Bundle

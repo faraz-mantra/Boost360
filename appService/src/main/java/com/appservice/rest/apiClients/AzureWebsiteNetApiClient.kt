@@ -1,8 +1,8 @@
-package com.dashboard.rest.apiClients
+package com.appservice.rest.apiClients
 
 import com.framework.rest.BaseApiClient
 
-class AzureWebsiteNetApiClient : BaseApiClient(true) {
+class AzureWebsiteNetApiClient : BaseApiClient() {
 
   companion object {
     val shared = AzureWebsiteNetApiClient()
