@@ -1,7 +1,7 @@
-package com.dashboard.rest.services
+package com.appservice.rest.services
 
+import com.appservice.rest.EndPoints
 import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
-import com.dashboard.rest.EndPoints
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.GET
@@ -11,6 +11,12 @@ interface AzureWebsiteKitRemoteData {
 
   @GET(EndPoints.GET_FEATURE_DETAILS)
   fun getCapLimitFeatureDetails(
+    @Query("fpId") fpId: String?,
+    @Query("clientId") clientId: String?,
+  ): Observable<Response<Array<CapLimitFeatureResponseItem>>>
+
+  @GET(EndPoints.GET_FEATURE_DETAILS_2)
+  fun getFeatureDetails(
     @Query("fpId") fpId: String?,
     @Query("clientId") clientId: String?,
   ): Observable<Response<Array<CapLimitFeatureResponseItem>>>
