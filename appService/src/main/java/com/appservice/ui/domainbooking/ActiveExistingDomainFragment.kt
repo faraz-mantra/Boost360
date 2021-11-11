@@ -10,7 +10,7 @@ import com.appservice.utils.WebEngageController
 import com.appservice.utils.getMillisecondsToDate
 import com.appservice.viewmodel.DomainBookingViewModel
 import com.framework.extensions.observeOnce
-import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.pref.clientId
 import com.framework.webengageconstant.DOMAIN_ACTIVE_EXISTING_DOMAIN_DETAILS_PAGE_LOAD
 import com.framework.webengageconstant.NO_EVENT_VALUE
