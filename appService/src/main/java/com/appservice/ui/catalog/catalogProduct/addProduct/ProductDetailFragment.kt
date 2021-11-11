@@ -53,10 +53,10 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
-import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
-import com.framework.models.caplimit_feature.PropertiesItem
-import com.framework.models.caplimit_feature.filterFeature
-import com.framework.models.caplimit_feature.getCapData
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.firebaseUtils.caplimit_feature.PropertiesItem
+import com.framework.firebaseUtils.caplimit_feature.filterFeature
+import com.framework.firebaseUtils.caplimit_feature.getCapData
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_TAG
 import com.framework.pref.clientId
 import com.framework.utils.hideKeyBoard

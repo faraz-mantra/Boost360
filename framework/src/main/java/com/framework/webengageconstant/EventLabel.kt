@@ -198,6 +198,10 @@ const val YOUTUBE_LINK = "Youtube Link"
 const val CLICK_DIFFERENT_NUMBER = "Click different number"
 const val CLICK_LOGIN_USERNAME = "Click login username"
 const val BUSINESS_DETAILS = "BUSINESS DETAILS"
+//Domain Booking Mdule
+const val SUCCESSFULLY_ADDED_EXISTING_DOMAIN = "Successfully added existing domain"
+const val DOMAIN_CREATION_SUCCESS = "Domain creation success"
+
 
 
 

@@ -133,5 +133,20 @@ object EndPoints {
   const val ADD_TESTIMONIAL = "api/v1/{testimonials}/add-data"
   const val UPDATE_TESTIMONIAL = "api/v1/{testimonials}/update-data"
   const val DELETE_TESTIMONIAL = "api/v1/{testimonials}/update-data"
+
+  //TODO BOOST PLUGIN with floats APIs
+  const val BOOST_KIT_PLUGIN_WITH_FLOATS_NEW_BASE = "https://plugin.withfloats.com/"
+  const val DOMAIN_DETAILS = "DomainService/v3/GetDomainDetailsForFloatingPoint/{fpTag}"
+  const val SEARCH_DOMAIN = "DomainService/v1/checkAvailability/{domain}"
+  const val CREATE_DOMAIN = "DomainService/v2/domainWithWebsite/create"
+
+  //TODO RIA WITH FLOATS APIs
+  const val RIA_WITH_FLOATS_BASE = "https://ria.withfloats.com"
+  const val ADD_EXISTING_DOMAIN_DETAILS = "api/Service/EmailRIASupportTeamV2"
+
+  // TODO AZURE WEBSITE NET APIs
+  const val AZURE_WEBSITE_NET_URL = "https://withfloats-feature-processor-api.azurewebsites.net/"
+  const val GET_FEATURE_DETAILS = "Features/v1/GetFeatureDetils"
+  const val GET_FEATURE_DETAILS_2 = "Features/v1/GetFeatureDetails"
 }
 
