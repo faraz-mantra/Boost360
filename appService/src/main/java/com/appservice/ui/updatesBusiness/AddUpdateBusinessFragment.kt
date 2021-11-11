@@ -30,10 +30,10 @@ import com.framework.analytics.SentryController
 import com.framework.extensions.*
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
-import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
-import com.framework.models.caplimit_feature.PropertiesItem
-import com.framework.models.caplimit_feature.filterFeature
-import com.framework.models.caplimit_feature.getCapData
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.firebaseUtils.caplimit_feature.PropertiesItem
+import com.framework.firebaseUtils.caplimit_feature.filterFeature
+import com.framework.firebaseUtils.caplimit_feature.getCapData
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.PREF_KEY_TWITTER_LOGIN
 import com.framework.pref.Key_Preferences.PREF_NAME_TWITTER

@@ -7,12 +7,11 @@ import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.databinding.FragmentActiveNewDomainBinding
 import com.appservice.model.domainBooking.DomainDetailsResponse
-import com.appservice.rest.repository.AzureWebsiteNewRepository.getFeatureDetails
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.getMillisecondsToDate
 import com.appservice.viewmodel.DomainBookingViewModel
 import com.framework.extensions.observeOnce
-import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.pref.clientId
 import com.framework.webengageconstant.DOMAIN_ACTIVE_NEW_DOMAIN_DETAILS_PAGE_LOAD
 import com.framework.webengageconstant.NO_EVENT_VALUE

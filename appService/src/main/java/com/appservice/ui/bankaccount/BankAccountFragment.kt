@@ -24,7 +24,7 @@ import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.firestore.FirestoreManager
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.clientId
 import com.framework.webengageconstant.BANK_ACCOUNT
 import com.framework.webengageconstant.BANK_ACCOUNT_DETAILS_UPDATED

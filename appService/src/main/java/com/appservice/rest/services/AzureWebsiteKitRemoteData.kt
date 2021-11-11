@@ -1,7 +1,7 @@
 package com.appservice.rest.services
 
 import com.appservice.rest.EndPoints
-import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.GET

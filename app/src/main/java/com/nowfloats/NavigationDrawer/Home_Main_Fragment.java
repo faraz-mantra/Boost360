@@ -39,7 +39,7 @@ import com.appservice.constant.IntentConstant;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.dashboard.utils.CodeUtilsKt;
-import com.framework.models.firestore.FirestoreManager;
+import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.framework.utils.ContentSharing;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity;
