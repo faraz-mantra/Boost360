@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.firestore.FirestoreManager
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.utils.ValidationUtils
 import com.framework.webengageconstant.CONSULTATION_PAGE_LOAD
 import com.framework.webengageconstant.NO_EVENT_VALUE

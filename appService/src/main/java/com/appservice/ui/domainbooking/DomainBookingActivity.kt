@@ -5,12 +5,12 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
-import android.text.*
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.Spanned
 import android.text.style.ClickableSpan
 import android.text.style.StyleSpan
-import android.util.Log
 import android.view.View
-import android.widget.CompoundButton
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
@@ -35,6 +35,7 @@ import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureDomainEnable
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_CATEGORY
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
@@ -44,27 +45,12 @@ import com.framework.utils.fromHtml
 import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.google.firebase.remoteconfig.ktx.remoteConfig
-import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
-
-const val FIREBASE_RC_FETCH_INTERVAL: Long = 900 // 15 min. Metric in seconds.
-const val FEATURE_DOMAIN_BOOKING_ENABLE = "feature_domain_booking_enable"
 
 class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, DomainBookingViewModel>(), RecyclerItemClickListener {
 
   private lateinit var baseActivity: BaseActivity<*, *>
   private lateinit var existingDomainRequest: ExistingDomainRequest
-  private var remoteConfig: FirebaseRemoteConfig? = null
-  private var isBookNewDomainButtonEnabled = false
-
-  /**
-   * Bottom Sheet : function "showBsheetIntegrationOption"
-   * 0: sheetBinding.radioAsBusinessWebsite is selected
-   * 1: sheetBinding.radioCreateASubdomain is selected
-   * */
-  var domainIntegrationUserSelection: Int = 0
+  private var domainIntegrationUserSelection: Int = 0
 
   override fun getLayout(): Int {
     return R.layout.activity_domain_booking
@@ -83,7 +69,6 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
     binding?.tvDomainAssigned?.text = domainSplit?.domainExtension
     setupUI()
     onClickListeners()
-    setFirebaseRemoteConfig()
   }
 
   private fun onClickListeners() {
@@ -97,7 +82,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
     }
 
     binding?.btnBookNewDomain?.setOnClickListener {
-      if (isBookNewDomainButtonEnabled) {
+      if (featureDomainEnable()) {
         WebEngageController.trackEvent(CLICKED_ON_BOOK_A_NEW_DOMAIN, CLICK, NO_EVENT_VALUE)
         startFragmentDomainBookingActivity(
           activity = this,
@@ -106,7 +91,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
           clearTop = false
         )
         finish()
-      }else{
+      } else {
         showLongToast(getString(R.string.to_enable_reach_customer_support_at_ria_))
       }
     }
@@ -229,7 +214,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
     sheetBinding.etSubDomain.afterTextChanged {
       sheetBinding.btnContinue.isEnabled = it.isEmpty().not()
       if (it.isEmpty().not())
-         sheetBinding.tvDomainName.text = fromHtml("<u><font color=#ffb900>$it</font><font color=#4A4A4A>.${enteredDomainName}</font></u>")
+        sheetBinding.tvDomainName.text = fromHtml("<u><font color=#ffb900>$it</font><font color=#4A4A4A>.${enteredDomainName}</font></u>")
       else
         sheetBinding.tvDomainName.text = fromHtml("<u><font color=#E2E2E2>example</font><font color=#4A4A4A>.${enteredDomainName}</font></u>")
     }
@@ -294,12 +279,16 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
     val stepsList = arrayListOf(
       DomainStepsModel(SpannableString(getString(R.string.since_search_engine_recognize_a_domain_that_already_in_use)), false, isTextDark = false),
       DomainStepsModel(SpannableString(secondStep).apply {
-          setSpan(object : ClickableSpan() {
-              override fun onClick(widget: View) {
-                showLongToast(getString(R.string.a_subdomain_is_a_subdivision_of_a_domain)) } }, whatsSubdomainIndex, whatsSubdomainIndex + whatsSubdomain.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-          )
-          val styleSpan = StyleSpan(Typeface.BOLD)
-          setSpan(styleSpan, whatsSubdomainIndex, whatsSubdomainIndex + whatsSubdomain.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE) }, false, isTextDark = false),
+        setSpan(
+          object : ClickableSpan() {
+            override fun onClick(widget: View) {
+              showLongToast(getString(R.string.a_subdomain_is_a_subdivision_of_a_domain))
+            }
+          }, whatsSubdomainIndex, whatsSubdomainIndex + whatsSubdomain.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        val styleSpan = StyleSpan(Typeface.BOLD)
+        setSpan(styleSpan, whatsSubdomainIndex, whatsSubdomainIndex + whatsSubdomain.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+      }, false, isTextDark = false),
       DomainStepsModel(SpannableString(getString(R.string.if_you_dont_have_any_other_domain_click_on_book_a_new_domain)), false, isTextDark = false)
     )
 
@@ -342,27 +331,6 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
     Handler().postDelayed({
       hideProgress()
       progressDialog.dismiss()
-                          }, 1000)
-  }
-
-  private fun setFirebaseRemoteConfig() {
-    remoteConfig = Firebase.remoteConfig
-    val configSettings = remoteConfigSettings { minimumFetchIntervalInSeconds = FIREBASE_RC_FETCH_INTERVAL }
-    remoteConfig?.setConfigSettingsAsync(configSettings)
-    remoteConfig?.setDefaultsAsync(R.xml.remote_config_defaults)
-    remoteConfig?.fetchAndActivate()?.addOnCompleteListener(baseActivity) { task ->
-      if (task.isSuccessful) {
-        val updated = task.result
-        Log.d(TAG, "Config params updated: $updated")
-//        showShortToast("Fetch and activate succeeded")
-      }
-//      else showShortToast("Fetch failed")
-      checkRemoteConfigValues()
-    }
-  }
-
-  private fun checkRemoteConfigValues() {
-    Log.d(TAG, "Config params updated: ${remoteConfig?.getBoolean(FEATURE_DOMAIN_BOOKING_ENABLE)}")
-    isBookNewDomainButtonEnabled = remoteConfig?.getBoolean(FEATURE_DOMAIN_BOOKING_ENABLE)!!
+    }, 1000)
   }
 }
