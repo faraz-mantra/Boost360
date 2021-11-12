@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/iv_close"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:src="@drawable/ic_close_dark_gray"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/size_12"
+            android:background="@drawable/bg_rounded_top_white"
+            android:padding="@dimen/size_24">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/customImageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_www_web"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_wb_address"
+                style="@style/TextBoldStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="samplestorewebsite.com"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/text_30"
+                android:fontFamily="@font/barlow_condensed_semi_bold"
+                app:layout_constraintTop_toBottomOf="@+id/customImageView5"
+                tools:layout_editor_absoluteX="24dp" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/customTextView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:layout_marginHorizontal="@dimen/size_24"
+                android:text="@string/domain_confirm_msg_1"
+                android:textColor="@color/gray_828282"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_wb_address" />
+
+            <com.framework.views.customViews.CustomMaterialButton
+                android:id="@+id/btn_confirm"
+                style="@style/CustomYellowButton"
+                android:layout_marginTop="16dp"
+                android:text="@string/confirm_amp_apply_domain"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/customTextView4" />
+
+            <com.framework.views.customViews.CustomMaterialButton
+                android:id="@+id/btn_go_back"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_54"
+                android:layout_marginTop="@dimen/size_8"
+                android:text="@string/go_back"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                app:cornerRadius="@dimen/size_10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_confirm"
+                app:strokeColor="@color/colorPrimary" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</layout>

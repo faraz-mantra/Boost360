@@ -15,7 +15,7 @@ import androidx.core.view.isVisible
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.firestore.FirestoreManager
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY
 import com.framework.utils.DateUtils.FORMAT_HH_MM
 import com.framework.utils.DateUtils.FORMAT_HH_MM_A

@@ -5,7 +5,10 @@ import com.framework.exceptions.BaseException
 import com.framework.exceptions.NoNetworkException
 import com.framework.utils.NetworkUtils
 import io.reactivex.Observable
+import okhttp3.Request
 import okhttp3.ResponseBody
+import org.json.JSONObject
+import retrofit2.HttpException
 import retrofit2.Response
 import retrofit2.Retrofit
 
@@ -39,20 +42,23 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
         val response = getResponseValue(it, "Error")
         response.status = it.code()
         response.error = BaseException(it.errorBody()?.string() ?: "")
-        SentryController.captureException(Exception(it.raw().toString()))
         response.error?.localizedMessage?.let { it1 -> response.message = it1 }
         response.taskcode = taskCode
         onFailure(response, taskCode)
+        val rawRequest = it.raw().toString()
+        if (rawRequest.contains(DATA_EXCHANGE_URL).not()) {
+          SentryController.captureException(Exception(it.errorBody()?.string() ?: ""))
+        }
         return@map response
       }
     }.onErrorReturn {
-      SentryController.captureException(Exception(it.localizedMessage))
       it.printStackTrace()
       val response = BaseResponse()
       response.error = it
       response.message = it.localizedMessage
       response.taskcode = taskCode
       onFailure(response, taskCode)
+      SentryController.captureException(Exception(it.localizedMessage))
       response
     }
   }
@@ -91,5 +97,8 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
 
   }
 }
+
+
+const val DATA_EXCHANGE_URL = "https://nfx.withfloats.com/dataexchange"
 
 

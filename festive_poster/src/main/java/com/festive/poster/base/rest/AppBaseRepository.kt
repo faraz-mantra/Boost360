@@ -1,22 +1,18 @@
 package com.festive.poster.base.rest
 
-import android.content.Intent
 import com.festive.poster.FestivePosterApplication
 import com.festive.poster.reset.TaskCode
 import com.festive.poster.reset.apiClients.WithFloatsApiClient
 import com.framework.base.BaseRepository
 import com.framework.base.BaseResponse
+import com.framework.pref.UserSessionManager
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.Retrofit
 
-abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLocalService> :
-  BaseRepository<RemoteDataSource, LocalDataSource>() {
+abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLocalService> : BaseRepository<RemoteDataSource, LocalDataSource>() {
 
-  protected fun <T> makeRemoteRequest(
-    observable: Observable<Response<T>>,
-    taskCode: TaskCode
-  ): Observable<BaseResponse> {
+  protected fun <T> makeRemoteRequest(observable: Observable<Response<T>>, taskCode: TaskCode): Observable<BaseResponse> {
     return makeRemoteRequest(observable, taskCode.ordinal)
   }
 
@@ -24,10 +20,7 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
     return WithFloatsApiClient.shared.retrofit
   }
 
-  fun makeLocalRequest(
-    observable: Observable<BaseResponse>,
-    taskCode: TaskCode
-  ): Observable<BaseResponse> {
+  fun makeLocalRequest(observable: Observable<BaseResponse>, taskCode: TaskCode): Observable<BaseResponse> {
     return makeLocalResponse(observable, taskCode.ordinal)
   }
 
@@ -44,12 +37,7 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
   private fun unauthorizedUserCheck(taskCode: Int?) {
     if (taskCode == 401) {
       FestivePosterApplication.instance.apply {
-        try {
-          val i = Intent(this, Class.forName("com.nowfloats.helper.LogoutActivity"))
-          startActivity(i)
-        } catch (e: Exception) {
-          e.printStackTrace()
-        }
+        UserSessionManager(this).logoutUser(this, true)
       }
     }
   }

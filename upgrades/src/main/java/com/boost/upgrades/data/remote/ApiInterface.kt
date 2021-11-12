@@ -14,6 +14,7 @@ import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDRespo
 import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse
 import com.boost.upgrades.data.api_model.gst.GSTApiResponse
+import com.boost.upgrades.data.api_model.paymentprofile.GetLastPaymentDetails
 import com.boost.upgrades.data.api_model.stateCode.GetStates
 import com.boost.upgrades.data.renewalcart.CreateCartResponse
 import com.boost.upgrades.data.renewalcart.CreateCartStateRequest
@@ -129,6 +130,15 @@ interface ApiInterface {
     @Header("Authorization") auth: String,
     @Query("clientId") clientId: String?
   ): Observable<GetStates>
+
+  @Headers("Content-Type: application/json")
+  @GET("https://api.withfloats.com/discover/v9/business/paymentProfile/{floatingPointId}")
+  fun getLastPaymentDetails(
+    @Header("Authorization") auth: String,
+    @Path("floatingPointId") floatingPointId: String?,
+    @Query("clientId") clientId: String?
+    ):Observable<GetLastPaymentDetails>
+
 
 
 }

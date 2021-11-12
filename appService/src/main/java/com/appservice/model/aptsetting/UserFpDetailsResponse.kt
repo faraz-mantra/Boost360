@@ -2,6 +2,7 @@ package com.appservice.model.aptsetting
 
 import android.app.Activity
 import com.appservice.AppServiceApplication
+import com.appservice.constant.Constants
 import com.appservice.ui.aptsetting.ui.getProductType
 import com.framework.base.BaseResponse
 import com.framework.pref.UserSessionManager
@@ -216,7 +217,7 @@ data class UserFpDetailsResponse(
 ) : BaseResponse(), Serializable {
 
   fun productCategoryVerb(activity: Activity): String {
-    return if (productCategoryVerb.isNullOrEmpty()) getProductType(UserSessionManager(activity).fP_AppExperienceCode) else productCategoryVerb
+    return Constants.CATALOG_PREFIX+ if (productCategoryVerb.isNullOrEmpty()) getProductType(UserSessionManager(activity).fP_AppExperienceCode) else productCategoryVerb
   }
 }
 

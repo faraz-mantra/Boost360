@@ -136,4 +136,18 @@
   <dimen name="size_550">550dp</dimen>
   <dimen name="size_600">600dp</dimen>
   <dimen name="size_650">650dp</dimen>
+
+
+  <dimen name="text_8">8sp</dimen>
+  <dimen name="text_10">10sp</dimen>
+  <dimen name="text_11">11sp</dimen>
+  <dimen name="text_13">13sp</dimen>
+  <dimen name="text_18">18sp</dimen>
+  <dimen name="text_20">20sp</dimen>
+  <dimen name="text_22">22sp</dimen>
+  <dimen name="text_24">24sp</dimen>
+  <dimen name="text_26">26sp</dimen>
+  <dimen name="text_28">28sp</dimen>
+  <dimen name="text_30">30sp</dimen>
+  <dimen name="text_32">32sp</dimen>
 </resources>
