@@ -1,15 +1,11 @@
 package com.appservice.base
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.databinding.ViewDataBinding
@@ -17,17 +13,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.constant.PreferenceConstant
-import com.appservice.model.StatusKyc
 import com.framework.analytics.SentryController
 import com.framework.base.BaseFragment
 import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
-import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
-import com.onboarding.nowfloats.ui.webview.WebViewTNCDialog
 
 abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseFragment<Binding, ViewModel>() {
 

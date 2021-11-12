@@ -39,16 +39,17 @@ import com.framework.analytics.SentryController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.initRemoteConfigData
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
-import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
-import com.framework.models.caplimit_feature.saveCapData
-import com.framework.models.firestore.FirestoreManager.initData
-import com.framework.models.firestore.badges.BadgesFirestoreManager
-import com.framework.models.firestore.badges.BadgesFirestoreManager.getBadgesData
-import com.framework.models.firestore.badges.BadgesFirestoreManager.initDataBadges
-import com.framework.models.firestore.badges.BadgesFirestoreManager.readDrScoreDocument
-import com.framework.models.firestore.badges.BadgesModel
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.firebaseUtils.caplimit_feature.saveCapData
+import com.framework.firebaseUtils.firestore.FirestoreManager.initData
+import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager
+import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.getBadgesData
+import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.initDataBadges
+import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.readDrScoreDocument
+import com.framework.firebaseUtils.firestore.badges.BadgesModel
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.KEY_FP_CART_COUNT
 import com.framework.utils.*
@@ -129,6 +130,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     initialize()
     session?.let { initDataBadges(it.fpTag ?: "", it.fPID ?: "", clientId) }
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
+    initRemoteConfigData(this)
     registerFirebaseToken()
     reloadCapLimitData()
   }
