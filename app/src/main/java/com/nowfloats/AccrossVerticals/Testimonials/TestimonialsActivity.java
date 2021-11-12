@@ -1,5 +1,7 @@
 package com.nowfloats.AccrossVerticals.Testimonials;
 
+import static com.dashboard.utils.ActivityUtilsKt.startHelpSupportVideoActivity;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,9 +40,7 @@ import com.nowfloats.AccrossVerticals.API.model.GetToken.WebActionsItem;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
-import com.onboarding.nowfloats.constant.IntentConstant;
 import com.onboarding.nowfloats.constant.SupportVideoType;
-import com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityTestimonialsBinding;
 
@@ -394,8 +394,9 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
 
     @Override
     public void secondaryButtonClicked() {
-        startActivity(new Intent(this, SupportVideoPlayerActivity.class)
-        .putExtra(IntentConstant.SUPPORT_VIDEO_TYPE.name(), SupportVideoType.TESTIMONIALS.getValue()));
+        startHelpSupportVideoActivity(this, SupportVideoType.TESTIMONIALS.getValue());
+        /*startActivity(new Intent(this, SupportVideoPlayerActivity.class)
+        .putExtra(IntentConstant.SUPPORT_VIDEO_TYPE.name(), SupportVideoType.TESTIMONIALS.getValue()));*/
     }
 
     @Override
