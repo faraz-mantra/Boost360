@@ -322,7 +322,12 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.DELIVERED -> {
-        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
+        val status = arrayListOf(
+          OrderSummaryModel.OrderStatus.FEEDBACK_PENDING.name,
+          OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED.name,
+          OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name
+        )
+        requestFilter = getRequestFilterData(status)
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.CANCELLED -> {
