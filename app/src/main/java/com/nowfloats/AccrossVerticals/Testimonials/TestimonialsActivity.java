@@ -395,8 +395,6 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     @Override
     public void secondaryButtonClicked() {
         startHelpSupportVideoActivity(this, SupportVideoType.TESTIMONIALS.getValue());
-        /*startActivity(new Intent(this, SupportVideoPlayerActivity.class)
-        .putExtra(IntentConstant.SUPPORT_VIDEO_TYPE.name(), SupportVideoType.TESTIMONIALS.getValue()));*/
     }
 
     @Override
