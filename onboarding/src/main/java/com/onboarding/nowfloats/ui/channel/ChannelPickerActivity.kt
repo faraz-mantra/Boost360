@@ -11,7 +11,6 @@ import com.framework.extensions.visible
 import com.framework.pref.WA_KEY
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
-import com.onboarding.nowfloats.constant.PreferenceConstant
 import com.onboarding.nowfloats.constant.PreferenceConstant.GET_FP_DETAILS_TAG
 import com.onboarding.nowfloats.constant.PreferenceConstant.GET_FP_EXPERIENCE_CODE
 import com.onboarding.nowfloats.constant.PreferenceConstant.IS_UPDATE

@@ -746,14 +746,15 @@ class UserSessionManager(var activity: Context) {
   /**
    * Clear session details
    */
-  fun logoutUser(activity: Activity) {
-    logoutUser(activity.applicationContext)
+  fun logoutUser(activity: Activity, isAuthErrorToast: Boolean = false) {
+    logoutUser(activity.applicationContext, isAuthErrorToast)
   }
 
-  fun logoutUser(context: Context) {
+  fun logoutUser(context: Context, isAuthErrorToast: Boolean = false) {
     try {
       val i = Intent(context, Class.forName("com.nowfloats.helper.LogoutActivity"))
       i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+      i.putExtra("isAuthErrorToast", isAuthErrorToast)
       context.startActivity(i)
     } catch (e: Exception) {
       SentryController.captureException(e)

@@ -39,7 +39,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.framework.analytics.SentryController;
-import com.framework.models.firestore.FirestoreManager;
+import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.framework.views.zero.old.AppFragmentZeroCase;
 import com.framework.views.zero.old.AppOnZeroCaseClicked;
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder;

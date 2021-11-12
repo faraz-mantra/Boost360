@@ -16,7 +16,7 @@ import com.boost.presignin.service.APIService
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.analytics.SentryController
 import com.framework.extensions.observeOnce
-import com.framework.models.firestore.FirestoreManager
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.clientIdThinksity

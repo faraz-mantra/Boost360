@@ -30,7 +30,7 @@ import com.appservice.viewmodel.UpdatesViewModel
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
-import com.framework.models.firestore.FirestoreManager
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.getDomainName
