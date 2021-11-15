@@ -4,6 +4,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.PopupWindow
@@ -102,11 +103,12 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
     requestFilter = getRequestFilterData(arrayListOf())
-    getSellerOrdersFilterApi(requestFilter, isFirst = true)
     binding?.swipeRefresh?.setColorSchemeColors(getColor(R.color.colorAccent))
     binding?.swipeRefresh?.setOnRefreshListener { loadNewData() }
     this.zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.APPOINTMENT, this, baseActivity).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
+    getSellerOrdersFilterApi(requestFilter, isFirst = true)
+
   }
 
   override fun onClick(v: View) {
@@ -168,6 +170,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
           val isDataNotEmpty = (response != null && response.Items.isNullOrEmpty().not())
           onInClinicAptAddedOrUpdated(isDataNotEmpty)//Dr score
           if (isDataNotEmpty) {
+            binding?.tvNoData?.gone()
             nonEmptyView()
             orderList.clear()
             removeLoader()
@@ -180,7 +183,18 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
             isLastPageD = (orderList.size == TOTAL_ELEMENTS)
             setAdapterNotify(orderList)
             setToolbarTitle(resources.getString(R.string.appointments) + " ($TOTAL_ELEMENTS)")
-          } else emptyView()
+          } else {
+            if (filterItem==null||filterItem?.type?.let { FilterModel.FilterType.fromType(it) }==FilterModel.FilterType.ALL_APPOINTMENTS){
+              emptyView()
+            }else{
+              binding?.tvNoData?.visible()
+              orderList.clear()
+              removeLoader()
+              setAdapterNotify(orderList)
+              setToolbarTitle(resources.getString(R.string.appointments) + " (0)")
+            }
+
+          }
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
             nonEmptyView()
@@ -194,7 +208,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
             orderList.clear()
             orderList.addAll(orderListFinalList)
             setAdapterNotify(orderList)
-          } else emptyView()
+          }
         }
       } else showLongToast(it.message())
     })
@@ -310,7 +324,12 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.DELIVERED -> {
-        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
+        val status = arrayListOf(
+          OrderSummaryModel.OrderStatus.FEEDBACK_PENDING.name,
+          OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED.name,
+          OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name
+        )
+        requestFilter = getRequestFilterData(status)
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.CANCELLED -> {
