@@ -453,6 +453,10 @@ class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointme
         showLongToast(getString(R.string.age_field_must_not_be_empty))
         return false
       }
+      (age.toIntOrNull())?:0>150->{
+        showLongToast(getString(R.string.enter_valid_age))
+        return false
+      }
       patientMobile.isNullOrEmpty() -> {
         showLongToast(getString(R.string.patient_phone_number_field_must_not_be_empty))
         return false
