@@ -1,9 +1,8 @@
 package com.biz2.nowfloats.boost.updates.persistance.dao
 
 import androidx.room.*
-import com.framework.upgradeDB.model.*
+import com.boost.upgrades.data.model.*
 import io.reactivex.Single
-import kotlin.collections.ArrayList
 
 @Dao
 interface MarketOfferDao {

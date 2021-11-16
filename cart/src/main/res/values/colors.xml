@@ -348,5 +348,6 @@
 
     <color name="fullscreen_color">#a5000000</color>
     <color name="light_blue">#0068e0</color>
+    <color name="warm_grey">#747474</color>
 
 </resources>

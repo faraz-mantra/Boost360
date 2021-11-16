@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.boost.cart.base_class.BaseViewModel
 import com.framework.upgradeDB.local.AppDatabase
 import com.boost.cart.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.cart.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
@@ -21,11 +22,10 @@ import com.boost.cart.data.remote.NewApiInterface
 import com.boost.cart.data.renewalcart.*
 import com.boost.cart.utils.SingleLiveEvent
 import com.boost.cart.utils.Utils
-import com.dashboard.model.live.coupon.CouponServiceModel
+import com.boost.cart.data.model.coupon.CouponServiceModel
 import com.framework.analytics.SentryController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.luminaire.apolloar.base_class.BaseViewModel
 import es.dmoral.toasty.Toasty
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers

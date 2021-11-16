@@ -20,9 +20,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.cart.R
-import com.boost.cart.UpgradeActivity
+import com.boost.cart.CartActivity
 import com.boost.cart.adapter.ReviewViewPagerAdapter
 import com.boost.cart.adapter.SecondaryImagesAdapter
 import com.boost.cart.adapter.ZoomOutPageTransformer
@@ -30,10 +29,8 @@ import com.boost.cart.base_class.BaseFragment
 import com.boost.cart.data.api_model.GetAllFeatures.response.LearnMoreLink
 import com.boost.cart.data.api_model.GetAllWidgets.Review
 import com.framework.upgradeDB.model.*
-import com.boost.cart.data.remote.ApiInterface
-//import com.boost.cart.database.LocalStorage
 import com.boost.cart.interfaces.DetailsFragmentListener
-import com.boost.cart.ui.cart.CartFragment
+import com.boost.cart.ui.home.CartFragment
 import com.boost.cart.ui.popup.ImagePreviewPopUpFragement
 import com.boost.cart.ui.webview.WebViewFragment
 import com.boost.cart.utils.*
@@ -103,7 +100,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     reviewAdaptor = ReviewViewPagerAdapter(ArrayList())
 //    localStorage = LocalStorage.getInstance(requireContext())!!
     singleWidgetKey = requireArguments().getString("itemId")
-    prefs = SharedPrefs(activity as UpgradeActivity)
+    prefs = SharedPrefs(activity as CartActivity)
 
 //        addons_list = localStorage.getInitialLoad()
 
@@ -199,11 +196,11 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     }
 
     imageView121.setOnClickListener {
-      (activity as UpgradeActivity).popFragmentFromBackStack()
+      (activity as CartActivity).popFragmentFromBackStack()
     }
 
     imageViewCart121.setOnClickListener {
-      (activity as UpgradeActivity).addFragment(
+      (activity as CartActivity).addFragment(
         CartFragment.newInstance(),
         CART_FRAGMENT
       )
@@ -216,7 +213,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         args.putString("title", widgetLearnMore.text.toString())
         args.putString("link", widgetLearnMoreLink)
         webViewFragment.arguments = args
-        (activity as UpgradeActivity).addFragment(
+        (activity as CartActivity).addFragment(
           webViewFragment,
           WEB_VIEW_FRAGMENT
         )
@@ -462,7 +459,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
 //            longToast(requireContext(), "onFailure: " + it)
       println("addonsError ${it}")
       if (it.contains("Query returned empty"))
-        (activity as UpgradeActivity).popFragmentFromBackStack()
+        (activity as CartActivity).popFragmentFromBackStack()
     })
 
     viewModel.addonsLoader().observe(this, Observer {
@@ -524,7 +521,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     args.putInt("position", pos)
     args.putStringArrayList("list", list)
     imagePreviewPopUpFragement.arguments = args
-    imagePreviewPopUpFragement.show((activity as UpgradeActivity).supportFragmentManager, IMAGE_PREVIEW_POPUP_FRAGMENT)
+    imagePreviewPopUpFragement.show((activity as CartActivity).supportFragmentManager, IMAGE_PREVIEW_POPUP_FRAGMENT)
   }
 
   private fun getDiscountedPrice(price: Int, discountPercent: Int): Int {

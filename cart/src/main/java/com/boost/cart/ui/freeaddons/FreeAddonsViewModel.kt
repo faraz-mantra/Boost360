@@ -4,11 +4,11 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.boost.cart.base_class.BaseViewModel
 import com.framework.upgradeDB.local.AppDatabase
 import com.framework.upgradeDB.model.*
 import com.boost.cart.data.remote.ApiInterface
 import com.boost.cart.utils.Utils
-import com.luminaire.apolloar.base_class.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

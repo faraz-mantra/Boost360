@@ -40,7 +40,7 @@ import com.boost.cart.utils.Constants.Companion.COUPON_POPUP_FRAGEMENT
 import com.boost.cart.utils.Constants.Companion.GSTIN_POPUP_FRAGEMENT
 import com.boost.cart.utils.Constants.Companion.TAN_POPUP_FRAGEMENT
 import com.boost.cart.utils.DateUtils.parseDate
-import com.dashboard.model.live.coupon.CouponServiceModel
+import com.boost.cart.data.model.coupon.CouponServiceModel
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -55,6 +55,7 @@ import android.net.Uri
 import java.lang.NumberFormatException
 import android.text.InputFilter
 import android.text.TextUtils
+import com.boost.cart.CartActivity
 import com.boost.cart.R
 import com.boost.cart.adapter.CartAddonsAdaptor
 import com.boost.cart.adapter.CartPackageAdaptor
@@ -160,7 +161,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this)
     cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
     cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
-    prefs = SharedPrefs(activity as UpgradeActivity)
+    prefs = SharedPrefs(activity as CartActivity)
     WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART, PAGE_VIEW, NO_EVENT_VALUE)
 
     return root
@@ -232,12 +233,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //            if (prefs.getInitialLoadMarketPlace() && proceedCheckoutPopup == false) {
 //
 //                checkoutKycFragment.show(
-//                        (activity as UpgradeActivity).supportFragmentManager,
+//                        (activity as CartActivity).supportFragmentManager,
 //                        CHECKOUT_KYC_FRAGMENT
 //                )
 //            }else{
       /*       renewPopUpFragment.show(
-             (activity as UpgradeActivity).supportFragmentManager,
+             (activity as CartActivity).supportFragmentManager,
              RENEW_POPUP_FRAGEMENT
      )*/
       if (TextUtils.isEmpty(months_validity.text.toString())) {
@@ -264,7 +265,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //            }
 
 /*            renewPopUpFragment.show(
-                    (activity as UpgradeActivity).supportFragmentManager,
+                    (activity as CartActivity).supportFragmentManager,
                     RENEW_POPUP_FRAGEMENT
             )*/
 
@@ -320,7 +321,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     back_button12.setOnClickListener {
       WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART_BACK, NO_EVENT_LABLE, event_attributes)
-      (activity as UpgradeActivity).onBackPressed()
+      (activity as CartActivity).onBackPressed()
     }
 
     cart_view_details.setOnClickListener {
@@ -339,7 +340,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 Log.v("couponDiwaliRedundant3", " "+ couponDiwaliRedundant)
             }else{
             couponPopUpFragment.show(
-                    (activity as UpgradeActivity).supportFragmentManager,
+                    (activity as CartActivity).supportFragmentManager,
                     COUPON_POPUP_FRAGEMENT
             )
             }
@@ -354,7 +355,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         Toasty.error(requireContext(), "In order to apply coupon remove the item " + couponDiwaliRedundant.get("DICTATE"), Toast.LENGTH_SHORT, true).show()
       } else {
         /*couponPopUpFragment.show(
-                (activity as UpgradeActivity).supportFragmentManager,
+                (activity as CartActivity).supportFragmentManager,
                 COUPON_POPUP_FRAGEMENT
         )*/
         val args = Bundle()
@@ -362,12 +363,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         args.putDouble("cartValue", total)
         couponPopUpFragment.arguments = args
         couponPopUpFragment.show(
-          (activity as UpgradeActivity).supportFragmentManager,
+          (activity as CartActivity).supportFragmentManager,
           COUPON_POPUP_FRAGEMENT
         )
       }
       /*couponPopUpFragment.show(
-              (activity as UpgradeActivity).supportFragmentManager,
+              (activity as CartActivity).supportFragmentManager,
               COUPON_POPUP_FRAGEMENT
       )*/
     }
@@ -378,7 +379,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         "userPurchsedWidgets",
         arguments?.getStringArrayList("userPurchsedWidgets")
       )
-      (activity as UpgradeActivity).addFragmentHome(
+      (activity as CartActivity).addFragmentHome(
         ComparePackageFragment.newInstance(),
         Constants.COMPARE_FRAGMENT, args
       )
@@ -388,14 +389,14 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     }
     enter_gst_number.setOnClickListener {
       gstinPopUpFragment.show(
-        (activity as UpgradeActivity).supportFragmentManager,
+        (activity as CartActivity).supportFragmentManager,
         GSTIN_POPUP_FRAGEMENT
       )
     }
 
     enter_gstin_number.setOnClickListener {
       gstinPopUpFragment.show(
-        (activity as UpgradeActivity).supportFragmentManager,
+        (activity as CartActivity).supportFragmentManager,
         GSTIN_POPUP_FRAGEMENT
       )
     }
@@ -425,19 +426,19 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     enter_tan_number.setOnClickListener {
       tanPopUpFragment.show(
-        (activity as UpgradeActivity).supportFragmentManager,
+        (activity as CartActivity).supportFragmentManager,
         TAN_POPUP_FRAGEMENT
       )
     }
     entered_tan_number.setOnClickListener {
       tanPopUpFragment.show(
-        (activity as UpgradeActivity).supportFragmentManager,
+        (activity as CartActivity).supportFragmentManager,
         TAN_POPUP_FRAGEMENT
       )
     }
 
 //    all_recommended_addons.setOnClickListener {
-//      (activity as UpgradeActivity).goBackToRecommentedScreen()
+//      (activity as CartActivity).goBackToRecommentedScreen()
 //    }
 
     totalValidityDays = 30 * 1
@@ -477,7 +478,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         totalCalculationAfterCoupon()
         Log.v("cart_amount_value1", " " + total)
         if (couponCode.isNotEmpty())
-          viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
+          viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as CartActivity).fpid!!), couponCode)
         else
           totalCalculationAfterCoupon()
 //                Toasty.success(requireContext(), "Validity increased by 1 month.", Toast.LENGTH_SHORT, true).show()
@@ -520,7 +521,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         totalCalculationAfterCoupon()
         Log.v("cart_amount_value1", " " + total)
         if (couponCode.isNotEmpty())
-          viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
+          viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as CartActivity).fpid!!), couponCode)
         else
           totalCalculationAfterCoupon()
 //            Toasty.success(requireContext(), "Validity increased by 3 month(s).", Toast.LENGTH_SHORT, true).show()
@@ -562,7 +563,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //                    totalCalculation()
           totalCalculationAfterCoupon()
           if (couponCode.isNotEmpty())
-            viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
+            viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as CartActivity).fpid!!), couponCode)
 //                    Toasty.warning(requireContext(), "Validity reduced by 1 month.", Toast.LENGTH_SHORT, true).show()
         }
         if (default_validity_months > 1){
@@ -608,7 +609,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //                    totalCalculation()
           totalCalculationAfterCoupon()
           if (couponCode.isNotEmpty())
-            viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
+            viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as CartActivity).fpid!!), couponCode)
 //                Toasty.warning(requireContext(), "Validity reduced by 3 month(s).", Toast.LENGTH_SHORT, true).show()
         }
         if (default_validity_months > 1){
@@ -657,7 +658,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             prefs.storeCartOrderInfo(null)
             totalCalculationAfterCoupon()
             if (couponCode.isNotEmpty())
-              viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
+              viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as CartActivity).fpid!!), couponCode)
             else
               totalCalculationAfterCoupon()
           } else if (bundles_in_cart) {
@@ -667,7 +668,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             prefs.storeCartOrderInfo(null)
             totalCalculationAfterCoupon()
             if (couponCode.isNotEmpty())
-              viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
+              viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as CartActivity).fpid!!), couponCode)
             else
               totalCalculationAfterCoupon()
           }
@@ -702,7 +703,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     if (prefs.getInitialLoadMarketPlace()) {
 
       splashFragment.show(
-        (activity as UpgradeActivity).supportFragmentManager,
+        (activity as CartActivity).supportFragmentManager,
         Constants.SPLASH_FRAGMENT
       )
     }
@@ -713,39 +714,39 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     val widgetList = arrayListOf<com.boost.cart.data.renewalcart.Widget>()
     renewalItems?.forEach { widgetList.add(com.boost.cart.data.renewalcart.Widget(it.item_id, it.boost_widget_key)) }
 
-    val request = CreateCartStateRequest((activity as UpgradeActivity).clientid, (activity as UpgradeActivity).fpid, "RENEWAL", widgetList)
-    viewModel.createCartStateRenewal((activity as? UpgradeActivity)?.getAccessToken()?:"",request)
+    val request = CreateCartStateRequest((activity as CartActivity).clientid, (activity as CartActivity).fpid, "RENEWAL", widgetList)
+    viewModel.createCartStateRenewal((activity as? CartActivity)?.getAccessToken()?:"",request)
     viewModel.createCartRenewalResult().observeOnce(Observer { createPurchaseOrder(it.cartStateId) })
   }
 
   private fun checkRenewalItemDeepLinkClick() {
     val request1 =
       RenewalPurchasedRequest(
-        floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
+        floatingPointId = (activity as CartActivity).fpid, clientId = (activity as CartActivity).clientid,
         widgetStatus = RenewalPurchasedRequest.WidgetStatus.ACTIVE.name, nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
-        dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = DateUtils.getCurrentDate().parseDate(DateUtils.FORMAT_MM_DD_YYYY), endDate = DateUtils.getAmountDate((activity as UpgradeActivity).deepLinkDay).parseDate(DateUtils.FORMAT_MM_DD_YYYY)
+        dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = DateUtils.getCurrentDate().parseDate(DateUtils.FORMAT_MM_DD_YYYY), endDate = DateUtils.getAmountDate((activity as CartActivity).deepLinkDay).parseDate(DateUtils.FORMAT_MM_DD_YYYY)
       )
     Log.v("allPurchasedWidgets", " " + request1)
-    val ac = (activity as UpgradeActivity)
+    val ac = (activity as CartActivity)
     if (ac.isBackCart.not() && (ac.isDeepLink || ac.isOpenCardFragment)) {
       val currentDate = DateUtils.getCurrentDate().parseDate(DateUtils.FORMAT_MM_DD_YYYY)
-      val deepLinkDay = (activity as UpgradeActivity).deepLinkDay
+      val deepLinkDay = (activity as CartActivity).deepLinkDay
       val dateAmount = DateUtils.getAmountDate(deepLinkDay).parseDate(DateUtils.FORMAT_MM_DD_YYYY)
       val request = if (deepLinkDay <= -1) {
         RenewalPurchasedRequest(
-          floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
+          floatingPointId = (activity as CartActivity).fpid, clientId = (activity as CartActivity).clientid,
           widgetStatus = RenewalPurchasedRequest.WidgetStatus.EXPIRED.name, dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name,
           startDate = dateAmount, endDate = currentDate
         )
       } else {
         RenewalPurchasedRequest(
-          floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
+          floatingPointId = (activity as CartActivity).fpid, clientId = (activity as CartActivity).clientid,
           widgetStatus = RenewalPurchasedRequest.WidgetStatus.ACTIVE.name, nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
           dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = currentDate, endDate = dateAmount
         )
       }
 
-      viewModel.allPurchasedWidgets((activity as? UpgradeActivity)?.getAccessToken()?:"",request)
+      viewModel.allPurchasedWidgets((activity as? CartActivity)?.getAccessToken()?:"",request)
       viewModel.renewalResult().observeOnce(Observer { result ->
         renewalList = result?.filter { it.renewalStatus() == RenewalResult.RenewalStatus.PENDING.name }
           ?: ArrayList()
@@ -765,7 +766,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //                    Toasty.warning(requireContext(), "Renewal order not found").show()
           loadData()
 //                    ac.isBackCart = true
-//                    (activity as UpgradeActivity).onBackPressed()
+//                    (activity as CartActivity).onBackPressed()
         }
       })
     } else loadData()
@@ -1072,10 +1073,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     prefs.storeFeatureKeysInLastOrder(keysToBeActivated.toMutableSet())
     prefs.storeFeaturesCountInLastOrder(purchaseOrders.count())
 
-    viewModel.InitiatePurchaseOrder((activity as? UpgradeActivity)?.getAccessToken()?:"",
+    viewModel.InitiatePurchaseOrder((activity as? CartActivity)?.getAccessToken()?:"",
       CreatePurchaseOrderV2(
-        (activity as UpgradeActivity).clientid,
-        (activity as UpgradeActivity).fpid!!,
+        (activity as CartActivity).clientid,
+        (activity as CartActivity).fpid!!,
         PaymentDetails(
           "INR",
           couponDiscountPercentage, //[Double] Discount Percentage of the the payment(Coupon code discount)
@@ -1380,10 +1381,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     prefs.storeFeatureKeysInLastOrder(keysToBeActivated.toMutableSet())
     prefs.storeFeaturesCountInLastOrder(purchaseOrders.count())
 
-    viewModel.InitiatePurchaseAutoRenewOrder((activity as? UpgradeActivity)?.getAccessToken()?:"",
+    viewModel.InitiatePurchaseAutoRenewOrder((activity as? CartActivity)?.getAccessToken()?:"",
       CreatePurchaseOrderV2(
-        (activity as UpgradeActivity).clientid,
-        (activity as UpgradeActivity).fpid!!,
+        (activity as CartActivity).clientid,
+        (activity as CartActivity).fpid!!,
         PaymentDetails(
           "INR",
           couponDiscountPercentage, //[Double] Discount Percentage of the the payment(Coupon code discount)
@@ -1422,11 +1423,11 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //                        null,
 //                        null
 //                ),
-//                (activity as UpgradeActivity).clientid,
+//                (activity as CartActivity).clientid,
 //                "+91",
 //                "ANDROID",
 //                null,
-//                (activity as UpgradeActivity).fpTag!!,
+//                (activity as CartActivity).fpTag!!,
 //                null,
 //                null,
 //                com.boost.cart.data.api_model.customerId.customerInfo.TaxDetails(
@@ -1638,7 +1639,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
            args.putString("title", "Auto Renewal Subscription")
            args.putString("link", "https://razorpay.com/demo/")
            autoRenewFragment.arguments = args
-           (activity as UpgradeActivity).addFragment(
+           (activity as CartActivity).addFragment(
                    autoRenewFragment,
                    Constants.AUTO_RENEW_FRAGEMENT
            )*/
@@ -1928,7 +1929,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       args.putString("bundleData", Gson().toJson(selectedBundle))
       args.putBoolean("showCartIcon", false)
       packageFragment.arguments = args
-      (activity as UpgradeActivity).addFragment(packageFragment, Constants.PACKAGE_FRAGMENT)
+      (activity as CartActivity).addFragment(packageFragment, Constants.PACKAGE_FRAGMENT)
     } else {
       Toasty.info(requireContext(), "Something went wrong!! Try Later...").show()
     }
@@ -1974,14 +1975,14 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     args.putDouble("amount", result.Result.TotalPrice)// pass in currency subunits. For example, paise. Amount: 1000 equals ₹10
     args.putString("order_id", result.Result.OrderId)
     args.putString("transaction_id", result.Result.TransactionId)
-    args.putString("email", (activity as UpgradeActivity).email)
+    args.putString("email", (activity as CartActivity).email)
     args.putString("currency", "INR")
-    args.putString("contact", (activity as UpgradeActivity).mobileNo)
+    args.putString("contact", (activity as CartActivity).mobileNo)
     prefs.storeCardIds(cartItems)
     prefs.storeCouponIds(couponCode)
     prefs.storeValidityMonths(default_validity_months.toString())
     paymentFragment.arguments = args
-    (activity as UpgradeActivity).addFragment(
+    (activity as CartActivity).addFragment(
       paymentFragment,
       Constants.PAYMENT_FRAGMENT
     )
@@ -1994,7 +1995,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     args.putString("link", result.Result.TransactionRequestLink)
     Log.v("proceedToAutoRenew", " " + result.Result.TransactionRequestLink)
     autoRenewFragment.arguments = args
-    (activity as UpgradeActivity).addFragment(
+    (activity as CartActivity).addFragment(
       autoRenewFragment,
       Constants.AUTO_RENEW_FRAGEMENT
     )
@@ -2031,9 +2032,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
   private fun loadLastUsedPayData(){
     viewModel.getLastUsedPaymentDetails(
-      (activity as? UpgradeActivity)?.getAccessToken()?:"",
-      (activity as UpgradeActivity).fpid!!,
-      (activity as UpgradeActivity).clientid
+      (activity as? CartActivity)?.getAccessToken()?:"",
+      (activity as CartActivity).fpid!!,
+      (activity as CartActivity).clientid
     )
   }
 }

@@ -10,11 +10,11 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 
 import com.boost.cart.R
-import com.boost.cart.UpgradeActivity
+import com.boost.cart.CartActivity
 import com.boost.cart.adapter.CompareFreeAddonsAdapter
+import com.boost.cart.base_class.BaseFragment
 import com.framework.upgradeDB.model.*
 import com.boost.cart.interfaces.MyAddonsListener
 import com.boost.cart.utils.WebEngageController
@@ -74,7 +74,7 @@ class FreeAddonsFragment : BaseFragment(), MyAddonsListener {
       purchasedPackages = purchasedPack
     }
 
-    freeAddonsAdapter = CompareFreeAddonsAdapter((activity as UpgradeActivity), ArrayList(), this)
+    freeAddonsAdapter = CompareFreeAddonsAdapter((activity as CartActivity), ArrayList(), this)
 
 
     return root
@@ -93,7 +93,7 @@ class FreeAddonsFragment : BaseFragment(), MyAddonsListener {
 
 
     addons_back.setOnClickListener {
-      (activity as UpgradeActivity).popFragmentFromBackStack()
+      (activity as CartActivity).popFragmentFromBackStack()
     }
 
 
@@ -107,9 +107,9 @@ class FreeAddonsFragment : BaseFragment(), MyAddonsListener {
 
   private fun loadData() {
     viewModel.loadUpdates(
-      (activity as? UpgradeActivity)?.getAccessToken()?:"",
-      (activity as UpgradeActivity).fpid!!,
-      (activity as UpgradeActivity).clientid
+      (activity as? CartActivity)?.getAccessToken()?:"",
+      (activity as CartActivity).fpid!!,
+      (activity as CartActivity).clientid
     )
   }
 

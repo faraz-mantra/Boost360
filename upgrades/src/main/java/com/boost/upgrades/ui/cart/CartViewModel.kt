@@ -21,7 +21,7 @@ import com.boost.upgrades.data.remote.NewApiInterface
 import com.boost.upgrades.data.renewalcart.*
 import com.boost.upgrades.utils.SingleLiveEvent
 import com.boost.upgrades.utils.Utils
-import com.dashboard.model.live.coupon.CouponServiceModel
+import com.boost.upgrades.data.model.coupon.CouponServiceModel
 import com.framework.analytics.SentryController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

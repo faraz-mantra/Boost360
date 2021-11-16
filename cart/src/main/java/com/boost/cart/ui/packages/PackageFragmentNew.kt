@@ -17,16 +17,15 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-import com.framework.upgradeDB.local.AppDatabase
 
 import com.boost.cart.R
-import com.boost.cart.UpgradeActivity
+import com.boost.cart.CartActivity
 import com.boost.cart.adapter.CompareItemAdapter
 import com.boost.cart.adapter.PackageAdaptor
+import com.boost.cart.base_class.BaseFragment
 import com.boost.cart.data.api_model.GetAllFeatures.response.Bundles
 import com.framework.upgradeDB.model.*
-import com.boost.cart.ui.cart.CartFragment
+import com.boost.cart.ui.home.CartFragment
 import com.boost.cart.utils.CircleAnimationUtil
 import com.boost.cart.utils.Constants
 import com.boost.cart.utils.SharedPrefs
@@ -84,9 +83,9 @@ class PackageFragmentNew : BaseFragment() {
         val jsonString = requireArguments().getString("bundleData")
         Log.v("jsonString"," "+ jsonString)
         bundleData = Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type)
-        packageAdaptor = PackageAdaptor((activity as UpgradeActivity), ArrayList(), Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type))
-        packageAdapter = CompareItemAdapter((activity as UpgradeActivity), ArrayList())
-        prefs = SharedPrefs(activity as UpgradeActivity)
+        packageAdaptor = PackageAdaptor((activity as CartActivity), ArrayList(), Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type))
+        packageAdapter = CompareItemAdapter((activity as CartActivity), ArrayList())
+        prefs = SharedPrefs(activity as CartActivity)
         return root
     }
 
@@ -115,11 +114,11 @@ class PackageFragmentNew : BaseFragment() {
         }
 
         package_back.setOnClickListener {
-            (activity as UpgradeActivity).popFragmentFromBackStack()
+            (activity as CartActivity).popFragmentFromBackStack()
         }
 
         package_cart_icon.setOnClickListener {
-            (activity as UpgradeActivity).addFragment(
+            (activity as CartActivity).addFragment(
                     CartFragment.newInstance(),
                     Constants.CART_FRAGMENT
             )

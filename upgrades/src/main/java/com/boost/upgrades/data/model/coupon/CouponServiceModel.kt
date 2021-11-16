@@ -1,4 +1,4 @@
-package com.dashboard.model.live.coupon
+package com.boost.upgrades.data.model.coupon
 
 
 data class CouponServiceModel(
