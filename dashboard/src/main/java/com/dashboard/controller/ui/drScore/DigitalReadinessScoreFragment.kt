@@ -130,6 +130,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
     }
   }
 
+
   private fun visitingCardDetailText(shareChannelText: String?) {
     viewModel?.getBoostVisitingMessage(baseActivity)?.observeOnce(viewLifecycleOwner, {
       val response = it as? ShareUserDetailResponse
