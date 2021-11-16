@@ -13,7 +13,7 @@ import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.RemoveAddonsAdapter
-import com.boost.upgrades.data.model.CartModel
+import com.framework.upgradeDB.model.*
 //import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.RemoveItemsListener
 import com.boost.upgrades.utils.Constants.Companion.REMOVE_ADDONS_CONFIRMATION_FRAGMENT

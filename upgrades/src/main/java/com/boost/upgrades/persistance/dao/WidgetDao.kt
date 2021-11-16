@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.boost.upgrades.data.model.WidgetModel
+import com.framework.upgradeDB.model.*
 import io.reactivex.Single
 
 @Dao

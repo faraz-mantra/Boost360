@@ -25,15 +25,12 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
+import com.framework.upgradeDB.local.AppDatabase
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.*
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.*
-import com.boost.upgrades.data.model.CartModel
-import com.boost.upgrades.data.model.FeaturesModel
-import com.boost.upgrades.data.model.WidgetModel
-import com.boost.upgrades.data.model.YoutubeVideoModel
+import com.framework.upgradeDB.model.*
 import com.boost.upgrades.data.remote.ApiInterface
 //import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CompareBackListener

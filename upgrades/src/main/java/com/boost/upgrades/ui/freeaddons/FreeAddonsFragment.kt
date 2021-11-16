@@ -15,7 +15,7 @@ import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.CompareFreeAddonsAdapter
-import com.boost.upgrades.data.model.FeaturesModel
+import com.framework.upgradeDB.model.*
 import com.boost.upgrades.interfaces.MyAddonsListener
 import com.boost.upgrades.utils.WebEngageController
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_MY_ADDONS_LOADED

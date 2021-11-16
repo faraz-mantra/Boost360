@@ -19,7 +19,7 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.FreeAddonsAdapter
 import com.boost.upgrades.adapter.PaidAddonsAdapter
-import com.boost.upgrades.data.model.FeaturesModel
+import com.framework.upgradeDB.model.*
 import com.boost.upgrades.interfaces.MyAddonsListener
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
 import com.boost.upgrades.ui.history.HistoryFragment

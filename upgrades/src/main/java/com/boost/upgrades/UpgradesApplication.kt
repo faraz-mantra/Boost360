@@ -2,7 +2,7 @@ package com.boost.upgrades
 
 import android.util.Log
 import androidx.multidex.MultiDexApplication
-import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
+import com.framework.upgradeDB.local.AppDatabase
 import com.framework.BaseApplication
 import com.framework.utils.PreferencesUtils
 

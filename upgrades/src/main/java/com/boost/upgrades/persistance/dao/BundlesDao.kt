@@ -1,7 +1,7 @@
 package com.biz2.nowfloats.boost.updates.persistance.dao
 
 import androidx.room.*
-import com.boost.upgrades.data.model.BundlesModel
+import com.framework.upgradeDB.model.BundlesModel
 import io.reactivex.Flowable
 import io.reactivex.Single
 

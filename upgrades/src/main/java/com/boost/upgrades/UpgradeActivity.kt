@@ -21,7 +21,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
+import com.boost.cart.CartActivity
 import com.boost.upgrades.interfaces.CompareBackListener
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.details.DetailsFragment
@@ -47,6 +47,7 @@ import com.framework.analytics.SentryController
 import com.framework.pref.TokenResult
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
+import com.framework.upgradeDB.local.AppDatabase
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -149,8 +150,37 @@ class UpgradeActivity : AppCompatActivity() {
         } else finish()
       }
       if (isDeepLink || isOpenCardFragment) {
-        cartFragment = CartFragment.newInstance()
-        cartFragment?.let { addFragment(it, CART_FRAGMENT) }
+//        cartFragment = CartFragment.newInstance()
+//        cartFragment?.let { addFragment(it, CART_FRAGMENT) }
+        val intent = Intent(
+          this@UpgradeActivity,
+          CartActivity::class.java
+        )
+        intent.putExtra("fpid", fpid)
+        intent.putExtra("isDeepLink", isDeepLink)
+        intent.putExtra("deepLinkViewType", deepLinkViewType)
+        intent.putExtra("deepLinkDay", deepLinkDay)
+        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+        intent.putExtra(
+          "accountType",
+          accountType
+        )
+        intent.putStringArrayListExtra(
+          "userPurchsedWidgets",
+          userPurchsedWidgets
+        )
+        if (email != null) {
+          intent.putExtra("email", email)
+        } else {
+          intent.putExtra("email", "ria@nowfloats.com")
+        }
+        if (mobileNo != null) {
+          intent.putExtra("mobileNo", mobileNo)
+        } else {
+          intent.putExtra("mobileNo", "9160004303")
+        }
+        intent.putExtra("profileUrl", profileUrl)
+        startActivity(intent)
       }
     } else {
       Toasty.error(

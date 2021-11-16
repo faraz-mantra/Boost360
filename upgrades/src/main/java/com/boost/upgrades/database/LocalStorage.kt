@@ -2,7 +2,7 @@ package com.boost.upgrades.database
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.boost.upgrades.data.model.WidgetModel
+import com.framework.upgradeDB.model.*
 import com.boost.upgrades.utils.Constants.Companion.USER_PREFERENCES
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

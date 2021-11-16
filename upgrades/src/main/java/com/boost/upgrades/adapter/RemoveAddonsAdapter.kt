@@ -9,7 +9,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.data.model.CartModel
+import com.framework.upgradeDB.model.*
 import com.boost.upgrades.interfaces.RemoveItemsListener
 import com.bumptech.glide.Glide
 

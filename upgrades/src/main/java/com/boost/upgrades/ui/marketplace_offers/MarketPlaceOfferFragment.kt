@@ -27,8 +27,7 @@ import com.boost.upgrades.adapter.VideosListAdapter
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.MarketPlaceOfferDetail
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.MarketPlaceOffers
 import com.boost.upgrades.data.api_model.GetPurchaseOrder.Result
-import com.boost.upgrades.data.model.CouponsModel
-import com.boost.upgrades.data.model.FeaturesModel
+import com.framework.upgradeDB.model.*
 import com.boost.upgrades.interfaces.HistoryFragmentListener
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.freeaddons.FreeAddonsFragment

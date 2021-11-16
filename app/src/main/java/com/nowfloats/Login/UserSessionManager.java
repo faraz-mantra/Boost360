@@ -15,7 +15,7 @@ import android.util.Log;
 
 import com.anachat.chatsdk.AnaCore;
 import com.appservice.AppServiceApplication;
-import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase;
+import com.framework.upgradeDB.local.AppDatabase;
 import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignin.ui.intro.IntroActivity;
 import com.boost.upgrades.UpgradesApplication;

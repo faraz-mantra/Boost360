@@ -1,6 +1,6 @@
 package com.boost.upgrades.interfaces
 
-import com.boost.upgrades.data.model.CartModel
+import com.framework.upgradeDB.model.*
 
 interface CartFragmentListener {
 

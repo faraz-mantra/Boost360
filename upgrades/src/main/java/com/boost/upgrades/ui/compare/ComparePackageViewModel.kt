@@ -4,10 +4,8 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
-import com.boost.upgrades.data.model.*
+import com.framework.upgradeDB.local.AppDatabase
+import com.framework.upgradeDB.model.*
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.data.remote.NewApiInterface
 import com.boost.upgrades.utils.Utils

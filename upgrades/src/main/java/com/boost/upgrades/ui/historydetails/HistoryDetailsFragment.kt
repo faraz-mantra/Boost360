@@ -15,7 +15,7 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.HistoryDetailsAdapter
 import com.boost.upgrades.data.api_model.GetPurchaseOrder.Result
-import com.boost.upgrades.data.model.FeaturesModel
+import com.framework.upgradeDB.model.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.history_details_fragment.*
 import java.lang.Long

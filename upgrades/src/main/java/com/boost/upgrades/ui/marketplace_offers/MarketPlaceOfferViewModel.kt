@@ -4,11 +4,8 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.MarketPlaceOffers
-import com.boost.upgrades.data.model.CartModel
-import com.boost.upgrades.data.model.FeaturesModel
-import com.boost.upgrades.data.model.MarketOfferModel
+import com.framework.upgradeDB.local.AppDatabase
+import com.framework.upgradeDB.model.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.luminaire.apolloar.base_class.BaseViewModel

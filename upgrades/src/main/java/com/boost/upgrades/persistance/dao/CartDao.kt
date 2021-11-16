@@ -1,8 +1,7 @@
 package com.biz2.nowfloats.boost.updates.persistance.dao
 
 import androidx.room.*
-import com.boost.upgrades.data.model.CartModel
-import com.boost.upgrades.data.model.FeaturesModel
+import com.framework.upgradeDB.model.*
 import io.reactivex.Single
 
 @Dao

@@ -28,8 +28,7 @@ import com.boost.upgrades.adapter.SecondaryImagesAdapter
 import com.boost.upgrades.adapter.ZoomOutPageTransformer
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.LearnMoreLink
 import com.boost.upgrades.data.api_model.GetAllWidgets.Review
-import com.boost.upgrades.data.model.CartModel
-import com.boost.upgrades.data.model.FeaturesModel
+import com.framework.upgradeDB.model.*
 import com.boost.upgrades.data.remote.ApiInterface
 //import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.DetailsFragmentListener

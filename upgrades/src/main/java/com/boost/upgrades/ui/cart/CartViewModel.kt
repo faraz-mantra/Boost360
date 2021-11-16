@@ -6,7 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
+import com.framework.upgradeDB.local.AppDatabase
 import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.upgrades.data.api_model.couponSystem.redeem.RedeemCouponRequest
@@ -15,10 +15,7 @@ import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerI
 import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse
 import com.boost.upgrades.data.api_model.gst.Error
 import com.boost.upgrades.data.api_model.paymentprofile.GetLastPaymentDetails
-import com.boost.upgrades.data.model.BundlesModel
-import com.boost.upgrades.data.model.CartModel
-import com.boost.upgrades.data.model.CouponsModel
-import com.boost.upgrades.data.model.FeaturesModel
+import com.framework.upgradeDB.model.*
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.data.remote.NewApiInterface
 import com.boost.upgrades.data.renewalcart.*

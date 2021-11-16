@@ -15,7 +15,7 @@ import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.AllFeatureAdaptor
-import com.boost.upgrades.data.model.FeaturesModel
+import com.framework.upgradeDB.model.*
 import com.boost.upgrades.data.remote.ApiInterface
 //import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.utils.WebEngageController

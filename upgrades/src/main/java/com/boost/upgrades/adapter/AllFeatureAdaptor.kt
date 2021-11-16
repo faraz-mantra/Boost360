@@ -17,7 +17,7 @@ import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.data.model.FeaturesModel
+import com.framework.upgradeDB.model.*
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.bumptech.glide.Glide

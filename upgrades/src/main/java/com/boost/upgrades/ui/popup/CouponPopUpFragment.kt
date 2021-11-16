@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.data.api_model.couponSystem.redeem.RedeemCouponRequest
-import com.boost.upgrades.data.model.CouponsModel
+import com.framework.upgradeDB.model.*
 import com.boost.upgrades.ui.cart.CartViewModel
 import com.boost.upgrades.ui.compare.ComparePackageFragment
 import com.boost.upgrades.utils.Utils

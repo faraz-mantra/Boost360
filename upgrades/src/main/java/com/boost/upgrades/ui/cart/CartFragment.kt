@@ -28,10 +28,6 @@ import com.boost.upgrades.data.api_model.GetAllFeatures.response.PrimaryImage
 import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.*
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.upgrades.data.api_model.couponSystem.redeem.RedeemCouponRequest
-import com.boost.upgrades.data.model.BundlesModel
-import com.boost.upgrades.data.model.CartModel
-import com.boost.upgrades.data.model.CouponsModel
-import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.renewalcart.CreateCartStateRequest
 import com.boost.upgrades.data.renewalcart.RenewalPurchasedRequest
 import com.boost.upgrades.data.renewalcart.RenewalResult
@@ -66,9 +62,9 @@ import android.net.Uri
 import java.lang.NumberFormatException
 import android.text.InputFilter
 import android.text.TextUtils
-import com.boost.upgrades.data.api_model.paymentprofile.LastPaymentMethodDetails
 import com.boost.upgrades.ui.compare.ComparePackageFragment
 import com.framework.analytics.SentryController
+import com.framework.upgradeDB.model.*
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_title
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_value
 import kotlinx.android.synthetic.main.cart_fragment.igst_value
