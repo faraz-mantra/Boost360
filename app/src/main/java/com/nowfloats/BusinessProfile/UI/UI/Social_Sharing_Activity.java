@@ -1141,7 +1141,9 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 malertDialog = mdialogBuilder.create();
                 malertDialog.show();
             }
+
         }
+
     }
 
     private void showDialog(String headText, String message, final String actionButton) {
