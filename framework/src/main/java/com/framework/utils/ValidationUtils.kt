@@ -15,4 +15,15 @@ object ValidationUtils {
   fun isNumeric(str: String): Boolean {
     return matches("^(?:(?:\\-{1})?\\d+(?:\\.{1}\\d+)?)$", str)
   }
+
+
+  fun isBankAcValid(str: String): Boolean {
+    if (str.length in 19..8){
+      return false
+    }
+    val n = str.length
+    for (i in 1 until n) if (str[i] != str[0]) return false
+    return true
+  }
+
 }
