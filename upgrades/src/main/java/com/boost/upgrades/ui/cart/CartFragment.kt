@@ -212,6 +212,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       cart_apply_coupon.visibility = View.VISIBLE
       discount_coupon_title.text = "Discount coupon"
     }
+    //gihhub
+
 
     discount_coupon_remove.setOnClickListener {
       discount_coupon_remove.visibility = View.GONE
@@ -220,11 +222,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       discount_coupon_message.visibility = View.GONE
       //clear coupon
       validCouponCode = null
-
       //remove saved orderdetails and coupondetails from prefs
       prefs.storeCartOrderInfo(null)
       prefs.storeApplyedCouponDetails(null)
-
 //            totalCalculation()
       couponCode = ""
       couponServiceModel = null
