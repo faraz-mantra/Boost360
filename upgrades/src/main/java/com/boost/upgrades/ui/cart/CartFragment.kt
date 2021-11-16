@@ -212,8 +212,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       cart_apply_coupon.visibility = View.VISIBLE
       discount_coupon_title.text = "Discount coupon"
     }
-    //gihhub
-
 
     discount_coupon_remove.setOnClickListener {
       discount_coupon_remove.visibility = View.GONE
