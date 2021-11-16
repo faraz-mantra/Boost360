@@ -26,7 +26,8 @@ object UserExperiorController {
         UserExperior.setUserIdentifier(fpTag)
     }
 
-    fun setUserAttr(fpTag:String?,mobile: String?, business_name: String?, category: String?,name:String?,user_name:String?,app_version:String?){
+    fun setUserAttr(fpTag:String?,mobile: String?, business_name: String?,
+                    category: String?,name:String?,app_version:String?){
         val userProperties: HashMap<String, Any?> = HashMap()
 
         setUserIdentifier(fpTag)
@@ -34,14 +35,13 @@ object UserExperiorController {
         userProperties["mobile"] =mobile
         userProperties["business_name"] = business_name
         userProperties["category"] = category
-        userProperties["user_name"] = user_name
         userProperties["app_version"] = app_version
         Log.i(TAG, "setUserAttr: ${Gson().toJson(userProperties)}")
         UserExperior.setUserProperties(userProperties)
     }
 
     fun setUserAttr(session:UserSessionManager){
-        setUserAttr(session.fpTag,session.userProfileMobile,session.fPName,session.fpTag,session.userProfileName,null,
+        setUserAttr(session.fpTag,session.userProfileMobile,session.fPName,session.fpTag,session.userProfileName,
             getAppVersionName())
     }
 
@@ -54,7 +54,6 @@ object UserExperiorController {
     }
 
     fun setFpTag(fp:String){
-        UserExperior.setUserProperties(hashMapOf("" +
-                "fpTag" to fp))
+
     }
 }
