@@ -43,6 +43,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.utils.ValidationUtils
 import com.framework.utils.convertListObjToString
 import com.framework.utils.convertStringToList
 import com.framework.webengageconstant.KYC_VERIFICATION
@@ -409,7 +410,11 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         } else if (accountNumber.length > 18) {
           showShortToast(getString(R.string.account_greater_than_nine))
           return false
-        } else if (nameAccount.isNullOrEmpty()) {
+        }else if (ValidationUtils.isBankAcValid(accountNumber)){
+          showShortToast(getString(R.string.invalid_bank_account_number))
+          return false
+        }
+        else if (nameAccount.isNullOrEmpty()) {
           showShortToast(getString(R.string.bank_account_cannot_empty))
           return false
         } else if (ifsc.isNullOrEmpty()) {
