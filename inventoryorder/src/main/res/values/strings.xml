@@ -22,7 +22,7 @@
   <string name="bookings">Bookings</string>
   <string name="appointments">Appointments</string>
   <string name="location">"Location:"</string>
-  <string name="duration">"Duration (mins)"</string>
+  <string name="duration">"Duration (mins)"*</string>
   <string name="schedule">""</string>
   <string name="queryHintOrder">Search order by Id</string>
   <string name="queryHintAppointment">Search appointment by Id</string>
@@ -54,18 +54,18 @@
   <string name="error_opening_consultation_window">Error opening consultation window</string>
   <string name="aug_sep_2020">Aug - Sep, 2020</string>
   <string name="go_to_current_week">Go to current week</string>
-  <string name="consultation_type_camel_case">Consultation type</string>
+  <string name="consultation_type_camel_case">Consultation type *</string>
   <string name="new_apppointment_camel_case">New Appointment</string>
   <string name="appointment_new_title">New Appointment</string>
   <string name="update_apt_consult" tools:ignore="ExtraTranslation">Update Appointment</string>
   <string name="in_clinic">In-clinic</string>
-  <string name="consulting_service">Consulting service</string>
+  <string name="consulting_service">Consulting service *</string>
   <string name="start_time_camel_case">Start time</string>
   <string name="fees_incl_gst">Fees (Incl. GST)</string>
-  <string name="final_price">Final price</string>
-  <string name="patient_name_camel_case">Patient name</string>
-  <string name="age_years">Age (years)</string>
-  <string name="patient_mobile_number">Patient mobile number</string>
+  <string name="final_price">Final price*</string>
+  <string name="patient_name_camel_case">Patient name*</string>
+  <string name="age_years">Age (years)*</string>
+  <string name="patient_mobile_number">Patient mobile number*</string>
   <string name="patient_email_id_optional">Patient Email ID (optional)</string>
   <string name="create_appointment_note">Upon your confirmation, patient will be immediately notified with an Email and SMS with the appointment details.</string>
   <string name="confirm">Confirm</string>
@@ -107,7 +107,7 @@
   <string name="time_remaining">Time remaining</string>
   <string name="the_video_consultation_has_been_cancelled">The video consultation has been cancelled</string>
   <string name="the_appointment_has_been_cancelled">The appointment has been cancelled.</string>
-  <string name="select_doctor">Select doctor</string>
+  <string name="select_doctor">Select doctor *</string>
 
   <string name="at">at</string>
   <string name="call_buyer">Call buyer</string>
@@ -396,7 +396,7 @@
   <string name="_91_9013268178">+91 9013268178</string>
   <string name="rahulchaudhary86_gmail_com">rahulchaudhary86@gmail.com</string>
   <string name="home">Home</string>
-  <string name="time_slot">Time slot</string>
+  <string name="time_slot">Time slot *</string>
   <string name="what_s_this_booking_for">What’s this booking for?</string>
   <string name="secondary_text">Secondary text</string>
   <string name="appointment_type">Appointment Type</string>
@@ -413,7 +413,7 @@
   <string name="xxxxxxxxxx">XXXXXXXXXX</string>
   <string name="email">Email</string>
   <string name="rahul_cantech_co">rahul@cantech.co</string>
-  <string name="gender">Gender</string>
+  <string name="gender">Gender*</string>
   <string name="payment_mode_capital">Payment Mode</string>
   <string name="online">online</string>
   <string name="pay_at_clinic">Pay at clinic</string>
@@ -528,4 +528,5 @@
   <string name="send_email">Send email</string>
   <string name="apt_resceduled_success">Your appointment is rescheduled successfully.</string>
   <string name="service_not_available">Service not available!</string>
+    <string name="no_data_found">No data found</string>
 </resources>

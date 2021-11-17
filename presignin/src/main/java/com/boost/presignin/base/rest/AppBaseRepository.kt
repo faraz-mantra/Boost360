@@ -1,12 +1,11 @@
 package com.boost.presignin.base.rest
 
-import android.content.Intent
 import com.boost.presignin.AppPreSignInApplication
 import com.boost.presignin.rest.TaskCode
 import com.boost.presignin.rest.apiClients.WithFloatsApiClient
-import com.framework.analytics.SentryController
 import com.framework.base.BaseRepository
 import com.framework.base.BaseResponse
+import com.framework.pref.UserSessionManager
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -38,14 +37,7 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
   private fun unauthorizedUserCheck(taskCode: Int?) {
     if (taskCode == 401) {
       AppPreSignInApplication.instance.apply {
-        try {
-          val i = Intent(this, Class.forName("com.nowfloats.helper.LogoutActivity"))
-          i.putExtra("isAuthErrorToast",true)
-          startActivity(i)
-        } catch (e: Exception) {
-          e.printStackTrace()
-          SentryController.captureException(e)
-        }
+        UserSessionManager(this).logoutUser(this, true)
       }
     }
   }

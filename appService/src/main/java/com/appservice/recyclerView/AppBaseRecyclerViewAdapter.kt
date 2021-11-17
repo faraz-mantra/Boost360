@@ -42,6 +42,9 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       PRODUCT_CATEGORY_ITEM_VIEW -> ProductCategoryViewHolder(binding = binding as RecyclerItemProductCategoryBinding)
       PRODUCT_LISTING -> ProductListingViewHolder(binding = binding as RecyclerItemProductListingBinding)
       CATALOG_SETTING_TILES -> CatalogTileViewHolder(binding as RecyclerItemEcomAptSettingsBinding)
+      DOMAIN_STEPS -> DomainStepsViewHolder(binding as ListItemStepsDomainBinding)
+      DOMAIN_NAME_SUGGESTIONS -> DomainSuggestionsViewHolder(binding as ItemDomainSuggestionsBinding)
+      SIMILAR_DOMAIN_SUGGESTIONS -> SimilarDomainSuggestionViewHolder(binding as ItemSimilarDomainSuggestionsBinding)
     }
   }
 
