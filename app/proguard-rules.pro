@@ -31,7 +31,7 @@
 -dontwarn com.apxor.**
 -dontwarn org.apache.commons.codec.binary.Base64
 
--keep class androidx.core.app.CoreComponentFactory { *; }
+#-keep class androidx.core.app.CoreComponentFactory { *; }
 #-keep class * extends androidx.fragment.app.Fragment{}
 
 #-dontwarn com.demach.konotor
@@ -89,7 +89,6 @@
 -keep class com.nowfloats.CustomPage.Model.**{ *; }
 -keep class com.boost.presignin.model.**{ *; }
 -keep class sun.misc.Unsafe { *; }
--keepattributes Signature
 
 #-keep class com.google.gson.demach.** {
 #    <fields>;
@@ -149,7 +148,7 @@
 #-keep class * extends android.content.BroadcastReceiver
 #-keep class * extends android.content.ContentProvider
 -keep class com.android.vending.licensing.ILicensingService
--keep public class com.android.vending.billing.IInAppBillingService
+#-keep public class com.android.vending.billing.IInAppBillingService
 -keep class com.aviary.android.feather.sdk.internal.headless.moa.MoaResult
 -keep class com.aviary.android.feather.sdk.internal.headless.filters.NativeFilterProxy
 -keep class com.aviary.android.feather.sdk.utils.AviaryIntentConfigurationValidator
@@ -266,7 +265,7 @@
 # facebook sdk specific entries
 #
 
--keepnames class * implements java.io.Serializable
+#-keepnames class * implements java.io.Serializable
 
 -keepclassmembers class * implements java.io.Serializable {
     static final long serialVersionUID;
@@ -279,7 +278,6 @@
 }
 
 -keepclassmembers class com.facebook.Session {*;}
--keepattributes Signature
 -keep class com.facebook.model.** { *; }
 
 -keep class com.google.android.gms.R$styleable
@@ -311,9 +309,9 @@
 -keepclassmembers enum com.j256.** { *; }
 -keep interface com.j256.**
 -keepclassmembers interface com.j256.** { *; }
--keepclassmembers class * {
-  public <init>(android.content.Context);
-}
+#-keepclassmembers class * {
+#  public <init>(android.content.Context);
+#}
 
 -keepclassmembers class com.anachat.chatsdk.internal.model.** {
    @com.j256.ormlite.field.DatabaseField <fields>;
@@ -385,7 +383,6 @@
 ##---------------Begin: proguard configuration for Gson  ----------
 # Gson uses generic type information stored in a class file when working with fields. Proguard
 # removes such information by default, so configure it to keep all of it.
--keepattributes Signature
 
 # For using GSON @Expose annotation
 -keepattributes *Annotation*
@@ -415,8 +412,6 @@
 ##------keyboard---------##
 -dontnote retrofit2.Platform
 -dontwarn retrofit2.Platform$Java8
--keepattributes Signature
--keepattributes Exceptions
 -keepattributes *Annotation*,EnclosingMethod,Signature
 -keepnames class com.fasterxml.jackson.** { *;  }
 -dontwarn com.fasterxml.jackson.databind.**
@@ -454,11 +449,10 @@
 #-dontwarn com.google.android.libraries.places.internal.jb
 
 ##------Upgrades---------##
--dontwarn com.boost.upgrades.**
+#-dontwarn com.boost.upgrades.**
 #-keeppackagenames com.boost.upgrades
 #-keep class com.boost.upgrades.** {*;}
 -keep class com.boost.upgrades.data.** { <fields>; }
-
 
 ##-----Appsflyer-----###
 -keep class com.appsflyer.** { *; }
