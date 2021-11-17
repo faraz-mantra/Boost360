@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.framework.views.customViews.CustomImageView
+        android:id="@+id/iv_intro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tv_intro_title"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="@dimen/size_25"
+        android:scaleType="centerCrop"
+        android:src="@drawable/tutorial_1_new" />
+
+    <com.framework.views.customViews.CustomTextView
+        android:id="@+id/tv_intro_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="@dimen/size_28"
+        android:layout_marginBottom="@dimen/size_8"
+        android:fontFamily="@font/inter_semi_bold"
+        android:gravity="center"
+        android:textAlignment="gravity"
+        android:textColor="@color/black_2A2A2A"
+        android:textSize="@dimen/heading_7"
+        android:textStyle="bold"
+        tools:text="Join 1 lakh+ merchants and create your website in minutes" />
+
+</RelativeLayout>
+</layout>

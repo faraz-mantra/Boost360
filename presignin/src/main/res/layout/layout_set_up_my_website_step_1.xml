@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_F5F8FD">
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_28"
+            android:fontFamily="@font/inter_bold"
+            android:gravity="start"
+            android:text="@string/how_will_you_describe_your_business"
+            android:textAlignment="gravity"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toStartOf="@id/endGuide"
+            app:layout_constraintStart_toEndOf="@id/startGuide"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:fontFamily="@font/inter_regular"
+            android:gravity="start"
+            android:text="@string/this_will_help_us_understand_your_business_and_suggest_useful_features"
+            android:textAlignment="gravity"
+            android:textColor="@color/black_2A2A2A"
+            android:textSize="@dimen/text_13"
+            app:layout_constraintEnd_toStartOf="@id/endGuide"
+            app:layout_constraintStart_toEndOf="@id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+        <com.framework.views.customViews.CustomAutoCompleteTextView
+            android:id="@+id/autocomplete_search_category"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_51"
+            android:layout_marginTop="@dimen/size_20"
+            android:background="@drawable/rounded_rectangle_eceff1"
+            android:backgroundTint="@color/white"
+            android:drawableStart="@drawable/ic_search_offers"
+            android:drawablePadding="@dimen/size_16"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:padding="@dimen/size_8"
+            android:scrollHorizontally="true"
+            android:fontFamily="@font/inter_semi_bold"
+            android:hint="@string/ex_shopkeeper_doctor_boutique_etc"
+            android:paddingHorizontal="@dimen/size_16"
+            android:textSize="@dimen/text_13"
+            app:layout_constraintEnd_toStartOf="@id/endGuide"
+            app:layout_constraintStart_toEndOf="@id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/tv_subtitle" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_featured_categories_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_19"
+            android:fontFamily="@font/inter_medium"
+            android:gravity="start"
+            android:text="@string/featured_categories"
+            android:textAlignment="gravity"
+            android:textColor="@color/black_2A2A2A"
+            android:textSize="@dimen/text_13"
+            app:layout_constraintEnd_toStartOf="@id/endGuide"
+            app:layout_constraintStart_toEndOf="@id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/autocomplete_search_category" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_categories"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/size_12"
+            app:layout_constraintBottom_toTopOf="@+id/tv_next_step_1"
+            app:layout_constraintEnd_toStartOf="@id/endGuide"
+            app:layout_constraintStart_toEndOf="@id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/tv_featured_categories_title"
+            tools:listitem="@layout/item_website_categories" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_next_step_1"
+            style="@style/yellow_squared_button"
+            android:enabled="true"
+            android:text="@string/next"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="UnknownId" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/startGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.06" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/endGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.94" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
