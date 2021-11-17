@@ -13,10 +13,6 @@ object EndPoints {
   const val UPGRADE_PREMIUM_BANNER = "language/v1/upgrade/get-data"
   const val UPGRADE_DASHBOARD_BANNER = "language/v1/dashboard/get-data"
 
-  // AZURE WEBSITE NET APIs
-  const val AZURE_WEBSITE_NET_URL = "https://withfloats-feature-processor-api.azurewebsites.net/"
-  const val GET_FEATURE_DETAILS = "Features/v1/GetFeatureDetils"
-
   // Plugin APIs
   const val PLUGIN_FLOATS_URL = "https://plugin.withfloats.com/"
   const val DOMAIN_DETAIL = "DomainService/v3/GetDomainDetailsForFloatingPoint/{fpTag}"
@@ -67,6 +63,9 @@ object EndPoints {
   //update whatsapp
   const val UPDATE_WHATSAPP="/user/v9/floatingPoint/updateWhatsapp"
 
+  // TODO US CENTRAL NOW FLOATS API
+  const val US_CENTRAL_NOW_FLOATS_CLOUD_FUNCTIONS = "https://us-central1-nowfloats-boost.cloudfunctions.net/"
+  const val DISABLE_NOTIFICATION = "disableNotification"
 
 }
 

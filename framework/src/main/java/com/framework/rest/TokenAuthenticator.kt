@@ -26,7 +26,7 @@ class TokenAuthenticator(var isAuthRemove: Boolean) : Authenticator {
         // Refresh token failed, you can logout user or retry couple of times
         // Returning null is critical here, it will stop the current request
         // If you do not return null, you will end up in a loop calling refresh
-        session.logoutUser(BaseApplication.instance.applicationContext!!)
+        session.logoutUser(BaseApplication.instance.applicationContext)
         null
       } else {
         Log.d("authenticate","token: ${tokenResult.token}")

@@ -47,6 +47,7 @@ import java.util.*
 
 class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDetailsBinding>(), RecyclerItemClickListener {
 
+  private val TAG = "AppointmentDetailsFragm"
   private var orderItem: OrderItem? = null
   private var isRefresh: Boolean = false
   lateinit var mPopupWindow: PopupWindow

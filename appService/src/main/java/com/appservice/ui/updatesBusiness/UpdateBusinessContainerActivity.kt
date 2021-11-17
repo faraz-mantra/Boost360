@@ -23,7 +23,6 @@ import java.util.*
 open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var type: FragmentType? = null
-  private var session: UserSessionManager? = null
 
   override fun getLayout(): Int {
     return com.framework.R.layout.activity_fragment_container
@@ -36,7 +35,6 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun onCreate(savedInstanceState: Bundle?) {
     intent?.extras?.getInt(FRAGMENT_TYPE)?.let { type = FragmentType.values()[it] }
-    session = UserSessionManager(this)
     super.onCreate(savedInstanceState)
   }
 

@@ -35,7 +35,7 @@ import com.appservice.utils.WebEngageController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.firestore.FirestoreManager
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.pref.clientId
 import com.framework.views.zero.old.AppFragmentZeroCase
