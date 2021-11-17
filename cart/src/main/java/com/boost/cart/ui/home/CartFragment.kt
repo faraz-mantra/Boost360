@@ -63,6 +63,7 @@ import com.boost.cart.adapter.CartRenewalAdaptor
 import com.boost.cart.base_class.BaseFragment
 import com.boost.cart.interfaces.CartFragmentListener
 import com.boost.cart.ui.compare.ComparePackageFragment
+import com.boost.payment.PaymentActivity
 import com.framework.analytics.SentryController
 import com.framework.upgradeDB.model.*
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_title
@@ -1969,23 +1970,37 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
 //            Log.v("proceedToPayment " , "item_id "+ it.item_id  + " boost "+ it.boost_widget_key + " "+cartItems!!.size)
     }
-    val paymentFragment = PaymentFragment.newInstance()
-    val args = Bundle()
-    args.putString("customerId", customerId)
-    args.putDouble("amount", result.Result.TotalPrice)// pass in currency subunits. For example, paise. Amount: 1000 equals ₹10
-    args.putString("order_id", result.Result.OrderId)
-    args.putString("transaction_id", result.Result.TransactionId)
-    args.putString("email", (activity as CartActivity).email)
-    args.putString("currency", "INR")
-    args.putString("contact", (activity as CartActivity).mobileNo)
+//    val paymentFragment = PaymentFragment.newInstance()
+//    val args = Bundle()
+//    args.putString("customerId", customerId)
+//    args.putDouble("amount", result.Result.TotalPrice)// pass in currency subunits. For example, paise. Amount: 1000 equals ₹10
+//    args.putString("order_id", result.Result.OrderId)
+//    args.putString("transaction_id", result.Result.TransactionId)
+//    args.putString("email", (activity as CartActivity).email)
+//    args.putString("currency", "INR")
+//    args.putString("contact", (activity as CartActivity).mobileNo)
     prefs.storeCardIds(cartItems)
     prefs.storeCouponIds(couponCode)
     prefs.storeValidityMonths(default_validity_months.toString())
-    paymentFragment.arguments = args
-    (activity as CartActivity).addFragment(
-      paymentFragment,
-      Constants.PAYMENT_FRAGMENT
+//    paymentFragment.arguments = args
+//    (activity as CartActivity).addFragment(
+//      paymentFragment,
+//      Constants.PAYMENT_FRAGMENT
+//    )
+    val intent = Intent(
+      requireContext(),
+      PaymentActivity::class.java
     )
+    intent.putExtra("fpid", (activity as CartActivity).fpid)
+    intent.putExtra("fpName", (activity as CartActivity).fpName)
+    intent.putExtra("customerId", customerId)
+    intent.putExtra("amount", result.Result.TotalPrice)// pass in currency subunits. For example, paise. Amount: 1000 equals ₹10
+    intent.putExtra("order_id", result.Result.OrderId)
+    intent.putExtra("transaction_id", result.Result.TransactionId)
+    intent.putExtra("email", (activity as CartActivity).email)
+    intent.putExtra("currency", "INR")
+    intent.putExtra("contact", (activity as CartActivity).mobileNo)
+    startActivity(intent)
   }
 
   fun proceedToAutoRenewPayment(result: CreatePurchaseOrderResponse) {

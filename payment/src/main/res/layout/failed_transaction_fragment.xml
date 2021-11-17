@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/failed_outer_layout"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#1d000000">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/transaction_failed_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="@drawable/curve_top_bg"
+    android:paddingTop="@dimen/_10sdp">
+
+    <ImageView
+      android:id="@+id/transaction_failed_image"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/_10sdp"
+      android:src="@drawable/ic_transaction_failed"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+      android:id="@+id/transaction_failed_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/_10sdp"
+      android:fontFamily="@font/open_sans_semibold"
+      android:text="Transaction Failed"
+      android:textColor="@color/common_text_color"
+      android:textSize="@dimen/_14sdp"
+      app:layout_constraintBottom_toBottomOf="@id/transaction_failed_image"
+      app:layout_constraintStart_toEndOf="@id/transaction_failed_image"
+      app:layout_constraintTop_toTopOf="@id/transaction_failed_image" />
+
+    <TextView
+      android:id="@+id/transaction_failed_discription"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:paddingStart="@dimen/_5sdp"
+      android:paddingEnd="@dimen/_15sdp"
+      android:text="Any amount deducted will be refunded within 5-7 days. How do you want to proceed?"
+      android:textColor="#747474"
+      android:textSize="@dimen/_8sdp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="@id/transaction_failed_title"
+      app:layout_constraintTop_toBottomOf="@id/transaction_failed_title" />
+
+    <TextView
+      android:id="@+id/check_activation_status"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/_20sdp"
+      android:background="@drawable/orange_button_click_effect"
+      android:fontFamily="@font/open_sans_semibold"
+      android:gravity="center"
+      android:paddingStart="@dimen/_30sdp"
+      android:paddingTop="@dimen/_10sdp"
+      android:paddingEnd="@dimen/_30sdp"
+      android:paddingBottom="@dimen/_10sdp"
+      android:text="change payment method"
+      android:textAllCaps="true"
+      android:textColor="@color/white"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/transaction_failed_discription" />
+
+    <TextView
+      android:id="@+id/transaction_failed_retry"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/_10sdp"
+      android:fontFamily="@font/open_sans_semibold"
+      android:foreground="?android:attr/selectableItemBackground"
+      android:gravity="center"
+      android:paddingStart="@dimen/_30sdp"
+      android:paddingTop="@dimen/_10sdp"
+      android:paddingEnd="@dimen/_30sdp"
+      android:paddingBottom="@dimen/_10sdp"
+      android:text="retry"
+      android:textAllCaps="true"
+      android:textColor="#9b9b9b"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/check_activation_status" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

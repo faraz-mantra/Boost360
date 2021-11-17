@@ -72,6 +72,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 import android.widget.TextView
+import com.boost.cart.CartActivity
 import com.framework.analytics.SentryController
 
 
@@ -177,7 +178,36 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         }
 
         imageViewCart1.setOnClickListener {
-            (activity as UpgradeActivity).addFragment(CartFragment.newInstance(), CART_FRAGMENT)
+//            (activity as UpgradeActivity).addFragment(CartFragment.newInstance(), CART_FRAGMENT)
+            val intent = Intent(
+                requireContext(),
+                CartActivity::class.java
+            )
+            intent.putExtra("fpid", (activity as UpgradeActivity).fpid)
+            intent.putExtra("isDeepLink", (activity as UpgradeActivity).isDeepLink)
+            intent.putExtra("deepLinkViewType", (activity as UpgradeActivity).deepLinkViewType)
+            intent.putExtra("deepLinkDay", (activity as UpgradeActivity).deepLinkDay)
+            intent.putExtra("isOpenCardFragment", (activity as UpgradeActivity).isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                (activity as UpgradeActivity).accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                (activity as UpgradeActivity).userPurchsedWidgets
+            )
+            if ((activity as UpgradeActivity).email != null) {
+                intent.putExtra("email", (activity as UpgradeActivity).email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if ((activity as UpgradeActivity).mobileNo != null) {
+                intent.putExtra("mobileNo", (activity as UpgradeActivity).mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", (activity as UpgradeActivity).profileUrl)
+            startActivity(intent)
         }
 
         initializeVideosRecycler()

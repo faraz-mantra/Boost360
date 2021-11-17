@@ -14,6 +14,7 @@ import com.boost.cart.ui.myaddons.MyAddonsFragment
 import com.boost.cart.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.cart.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.boost.cart.utils.Constants.Companion.MYADDONS_FRAGMENT
+import com.boost.cart.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.cart.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.cart.utils.SharedPrefs
 import com.framework.analytics.SentryController
@@ -62,30 +63,32 @@ class CartActivity : AppCompatActivity() {
         prefs = SharedPrefs(this)
 
         initView()
+        initRazorPay()
     }
 
     fun initView() {
 
-        if (fpid != null) {
-            supportFragmentManager.addOnBackStackChangedListener {
-                val currentFragment = supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
-                if (currentFragment != null) {
-                    val tag = currentFragment.tag
-                    Log.e("Add tag", ">>>$tag")
-                    tellFragments()
-                } else finish()
-            }
-            if (isDeepLink || isOpenCardFragment) {
-                cartFragment = CartFragment.newInstance()
-                cartFragment?.let { addFragment(it, CART_FRAGMENT) }
-            }
-        } else {
-            Toasty.error(
-                this,
-                "Invalid Business Profile ID. Please restart the marketplace.",
-                Toast.LENGTH_LONG
-            ).show()
-            finish()
+        supportFragmentManager.addOnBackStackChangedListener {
+            val currentFragment =
+                supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
+            if (currentFragment != null) {
+                val tag = currentFragment.tag
+                Log.e("Add tag", ">>>$tag")
+                tellFragments()
+            } else finish()
+        }
+
+        cartFragment = CartFragment.newInstance()
+        cartFragment?.let { addFragment(it, CART_FRAGMENT) }
+
+    }
+
+    private fun initRazorPay() {
+        try {
+            razorpay = Razorpay(this, RAZORPAY_KEY)
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+            e.printStackTrace()
         }
     }
 
@@ -104,7 +107,7 @@ class CartActivity : AppCompatActivity() {
     }
 
     fun getAccessToken(): String {
-        return UserSessionManager(this).getAccessTokenAuth()?.barrierToken()?:""
+        return UserSessionManager(this).getAccessTokenAuth()?.barrierToken() ?: ""
     }
 
 
@@ -112,9 +115,15 @@ class CartActivity : AppCompatActivity() {
         val viewAllFragment = fragmentManager!!.findFragmentByTag(VIEW_ALL_FEATURE)
         val detailsFragment = fragmentManager!!.findFragmentByTag(DETAILS_FRAGMENT)
         if (viewAllFragment != null) {
-            fragmentManager!!.popBackStack(VIEW_ALL_FEATURE, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            fragmentManager!!.popBackStack(
+                VIEW_ALL_FEATURE,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE
+            )
         } else if (detailsFragment != null) {
-            fragmentManager!!.popBackStack(DETAILS_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            fragmentManager!!.popBackStack(
+                DETAILS_FRAGMENT,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE
+            )
         } else {
             fragmentManager!!.popBackStack(CART_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
@@ -170,7 +179,7 @@ class CartActivity : AppCompatActivity() {
     fun popFragmentFromBackStack() {
         try {
             fragmentManager!!.popBackStack()
-        } catch (e: IllegalStateException){
+        } catch (e: IllegalStateException) {
             SentryController.captureException(e)
             //ignore
         }

@@ -240,6 +240,7 @@ fun AppCompatActivity.initiateAddonMarketplace(
     if (isLoadingShow) delayProgressShow()
     WebEngageController.trackEvent(ADDON_MARKETPLACE_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val intent = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
+//    val intent = Intent(this, Class.forName("com.boost.cart.CartActivity"))
     intent.putExtra("expCode", session.fP_AppExperienceCode)
     intent.putExtra("fpName", session.fPName)
     intent.putExtra("fpid", session.fPID)
