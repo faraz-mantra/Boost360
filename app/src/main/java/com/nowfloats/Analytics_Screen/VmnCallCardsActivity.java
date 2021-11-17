@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.boost.upgrades.UpgradeActivity;
+import com.dashboard.utils.PremiumCode;
 import com.framework.views.customViews.CustomToolbar;
 import com.framework.views.zero.old.AppFragmentZeroCase;
 import com.framework.views.zero.old.AppOnZeroCaseClicked;
@@ -245,11 +246,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 
   private boolean isPremium() {
     List<String> keys = session.getStoreWidgets();
-
-    if (keys != null && keys.contains("CALLTRACKER")) {
-      return true;
-    }
-
+    if (keys != null && keys.contains(PremiumCode.CALLTRACKER.getValue())) return true;
     return false;
   }
 
