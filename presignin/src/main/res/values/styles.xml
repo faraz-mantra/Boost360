@@ -246,4 +246,39 @@
     <item name="android:gravity">center</item>
   </style>
 
+  <style name="AppTheme.NewOnBoarding" parent="AppTheme.Pre.Signin">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="android:statusBarColor">@color/white_F5F8FD</item>
+    <item name="colorPrimaryDark">#676767</item>
+  </style>
+
+  <style name="New_OnBoarding_Fullscreen" parent="AppTheme.Pre.Signin">
+    <item name="android:windowTranslucentStatus">true</item>
+    <item name="android:windowTranslucentNavigation">true</item>
+    <item name="windowNoTitle">true</item>
+    <item name="windowActionBar">false</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowActionBar">false</item>
+    <item name="android:windowFullscreen">true</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:background">@android:color/transparent</item>
+  </style>
+
+  <style name="yellow_button_new_onboard" parent="started_button">
+    <item name="textSize">@dimen/body_2</item>
+  </style>
+
+  <style name="yellow_squared_button">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">@dimen/size_50</item>
+    <item name="android:background">@color/disable_enable_button_selector</item>
+    <item name="background">@color/disable_enable_button_selector</item>
+    <item name="backgroundTint">@color/disable_enable_button_selector</item>
+    <item name="fontFamily">@font/inter_bold</item>
+    <item name="textSize">@dimen/text_16</item>
+    <item name="android:gravity">center</item>
+    <item name="android:textColor">@color/white</item>
+    <item name="textColor">@color/white</item>
+  </style>
+
 </resources>

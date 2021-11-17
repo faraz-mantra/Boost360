@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_F5F8FD"
+        tools:context=".ui.newOnboarding.SetupMyWebsiteFragment">
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/iv_step_1_setup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_tick_circle_green_hollow"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_step_2_setup"
+            app:layout_constraintEnd_toStartOf="@+id/view1"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_step_2_setup" />
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="@dimen/size_122"
+            android:layout_height="1.5dp"
+            android:background="@color/gray_33727D82"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_step_2_setup"
+            app:layout_constraintEnd_toStartOf="@+id/iv_step_2_setup"
+            app:layout_constraintStart_toEndOf="@+id/iv_step_1_setup"
+            app:layout_constraintTop_toTopOf="@+id/iv_step_2_setup" />
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/iv_step_2_setup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_12"
+            android:src="@drawable/ic_tick_circle_gray_hollow"
+            app:layout_constraintEnd_toStartOf="@+id/view2"
+            app:layout_constraintStart_toEndOf="@+id/view1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="@dimen/size_122"
+            android:layout_height="1.5dp"
+            android:background="@color/gray_33727D82"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_step_2_setup"
+            app:layout_constraintEnd_toStartOf="@+id/iv_step_3_setup"
+            app:layout_constraintStart_toEndOf="@+id/iv_step_2_setup"
+            app:layout_constraintTop_toTopOf="@+id/iv_step_2_setup" />
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/iv_step_3_setup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_tick_circle_gray_hollow"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_step_2_setup"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view2"
+            app:layout_constraintTop_toTopOf="@+id/iv_step_2_setup" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/size_28"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_step_2_setup">
+
+            <include
+                android:id="@+id/layoutStep1"
+                layout="@layout/layout_set_up_my_website_step_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <include
+                android:id="@+id/layoutStep2"
+                layout="@layout/layout_set_up_my_website_step_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <include
+                android:id="@+id/layoutStep3"
+                layout="@layout/layout_set_up_my_website_step_3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

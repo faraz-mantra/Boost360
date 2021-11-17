@@ -133,7 +133,9 @@ class SplashActivity : AppCompatActivity() {
 
   private fun startNewSignIn() {
     try {
-      val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
+      /*val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))*/
+      val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity"))
+      intent.putExtra("FRAGMENT_TYPE", 1) // 1 stands for Intro Screen ordinal from FragmentType in Presignin constants
       startActivity(intent)
       finish()
     } catch (e: Exception) {
