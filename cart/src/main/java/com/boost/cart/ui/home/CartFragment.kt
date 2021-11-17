@@ -29,7 +29,6 @@ import com.boost.cart.data.renewalcart.RenewalResult
 import com.boost.cart.ui.autorenew.AutoRenewSubsFragment
 import com.boost.cart.ui.checkoutkyc.CheckoutKycFragment
 import com.boost.cart.ui.packages.PackageFragment
-import com.boost.cart.ui.payment.PaymentFragment
 import com.boost.cart.ui.popup.CouponPopUpFragment
 import com.boost.cart.ui.popup.GSTINPopUpFragment
 import com.boost.cart.ui.popup.RenewalPopUpFragment

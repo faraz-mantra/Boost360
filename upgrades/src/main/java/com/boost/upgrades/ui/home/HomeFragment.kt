@@ -32,10 +32,8 @@ import com.boost.upgrades.adapter.*
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.*
 import com.framework.upgradeDB.model.*
 import com.boost.upgrades.data.remote.ApiInterface
-//import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CompareBackListener
 import com.boost.upgrades.interfaces.HomeListener
-import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.compare.ComparePackageFragment
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
@@ -45,7 +43,6 @@ import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.ui.packages.PackageFragmentNew
 import com.boost.upgrades.ui.webview.WebViewFragment
 import com.boost.upgrades.utils.*
-import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.COMPARE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MARKET_OFFER_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
@@ -178,7 +175,6 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         }
 
         imageViewCart1.setOnClickListener {
-//            (activity as UpgradeActivity).addFragment(CartFragment.newInstance(), CART_FRAGMENT)
             val intent = Intent(
                 requireContext(),
                 CartActivity::class.java
@@ -484,7 +480,35 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         }
         mp_review_cart_tv.setOnClickListener {
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED,EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED,NO_EVENT_VALUE)
-            (activity as UpgradeActivity).addFragment(CartFragment.newInstance(), CART_FRAGMENT)
+            val intent = Intent(
+                requireContext(),
+                CartActivity::class.java
+            )
+            intent.putExtra("fpid", (activity as UpgradeActivity).fpid)
+            intent.putExtra("isDeepLink", (activity as UpgradeActivity).isDeepLink)
+            intent.putExtra("deepLinkViewType", (activity as UpgradeActivity).deepLinkViewType)
+            intent.putExtra("deepLinkDay", (activity as UpgradeActivity).deepLinkDay)
+            intent.putExtra("isOpenCardFragment", (activity as UpgradeActivity).isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                (activity as UpgradeActivity).accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                (activity as UpgradeActivity).userPurchsedWidgets
+            )
+            if ((activity as UpgradeActivity).email != null) {
+                intent.putExtra("email", (activity as UpgradeActivity).email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if ((activity as UpgradeActivity).mobileNo != null) {
+                intent.putExtra("mobileNo", (activity as UpgradeActivity).mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", (activity as UpgradeActivity).profileUrl)
+            startActivity(intent)
         }
 
     }

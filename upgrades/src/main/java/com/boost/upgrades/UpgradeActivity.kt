@@ -23,19 +23,14 @@ import androidx.fragment.app.FragmentTransaction
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.cart.CartActivity
 import com.boost.upgrades.interfaces.CompareBackListener
-import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
 import com.boost.upgrades.ui.home.HomeFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
-import com.boost.upgrades.ui.splash.SplashFragment
 import com.boost.upgrades.utils.*
-import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.HOME_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
-import com.boost.upgrades.utils.Constants.Companion.ORDER_CONFIRMATION_FRAGMENT
-import com.boost.upgrades.utils.Constants.Companion.PAYMENT_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.SharedPrefs
@@ -58,9 +53,6 @@ import java.lang.IllegalStateException
 
 class UpgradeActivity : AppCompatActivity() {
 
-  private val splashFragment = SplashFragment()
-
-  private var cartFragment: CartFragment? = null
 
   lateinit var razorpay: Razorpay
 
@@ -150,8 +142,6 @@ class UpgradeActivity : AppCompatActivity() {
         } else finish()
       }
       if (isDeepLink || isOpenCardFragment) {
-//        cartFragment = CartFragment.newInstance()
-//        cartFragment?.let { addFragment(it, CART_FRAGMENT) }
         val intent = Intent(
           this@UpgradeActivity,
           CartActivity::class.java
@@ -234,39 +224,39 @@ class UpgradeActivity : AppCompatActivity() {
         val tag = currentFragment?.tag
         Log.e("back pressed tag", ">>>$tag")
         if (tag != null) {
-          if (tag == CART_FRAGMENT) {
-            WebEngageController.trackEvent(
-              ADDONS_MARKETPLACE_CLICKED_BACK_BUTTON_CART_SCREEN,
-              ADDONS_MARKETPLACE,
-              NO_EVENT_VALUE
-            )
-            supportFragmentManager.addOnBackStackChangedListener {
-              val currentFragment =
-                supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
-              if (currentFragment != null) {
-                val tag = currentFragment.tag
-                Log.e("Add tagu", ">>>$tag")
-                if (tag == Constants.COMPARE_FRAGMENT) {
-                  Log.e("Add tags", ">>>$tag")
-                  compareBackListener!!.backComparePress()
-                } else if (tag == Constants.HOME_FRAGMENT) {
-                  compareBackListener!!.backComparePress()
-                }
-              }
-            }
-          }
-          if (tag == PAYMENT_FRAGMENT)
-            WebEngageController.trackEvent(
-              ADDONS_MARKETPLACE_CLICKED_BACK_BUTTON_PAYMENTSCREEN,
-              ADDONS_MARKETPLACE,
-              NO_EVENT_VALUE
-            )
-          if (tag == ORDER_CONFIRMATION_FRAGMENT) {
-            if (isDeepLink) goHomeActivity()
-            else goToHomeFragment()
-          } else if ((isDeepLink || isOpenCardFragment) && (tag == HOME_FRAGMENT)) {
-            if (cartFragment != null && cartFragment?.isRenewalListNotEmpty() == true) alertDialog()
-            else goHomeActivity()
+//          if (tag == CART_FRAGMENT) {
+//            WebEngageController.trackEvent(
+//              ADDONS_MARKETPLACE_CLICKED_BACK_BUTTON_CART_SCREEN,
+//              ADDONS_MARKETPLACE,
+//              NO_EVENT_VALUE
+//            )
+//            supportFragmentManager.addOnBackStackChangedListener {
+//              val currentFragment =
+//                supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
+//              if (currentFragment != null) {
+//                val tag = currentFragment.tag
+//                Log.e("Add tagu", ">>>$tag")
+//                if (tag == Constants.COMPARE_FRAGMENT) {
+//                  Log.e("Add tags", ">>>$tag")
+//                  compareBackListener!!.backComparePress()
+//                } else if (tag == Constants.HOME_FRAGMENT) {
+//                  compareBackListener!!.backComparePress()
+//                }
+//              }
+//            }
+//          }
+//          if (tag == PAYMENT_FRAGMENT)
+//            WebEngageController.trackEvent(
+//              ADDONS_MARKETPLACE_CLICKED_BACK_BUTTON_PAYMENTSCREEN,
+//              ADDONS_MARKETPLACE,
+//              NO_EVENT_VALUE
+//            )
+//          if (tag == ORDER_CONFIRMATION_FRAGMENT) {
+//            if (isDeepLink) goHomeActivity()
+//            else goToHomeFragment()
+//          } else
+            if ((isDeepLink || isOpenCardFragment) && (tag == HOME_FRAGMENT)) {
+              goHomeActivity()
           } else fragmentManager!!.popBackStack()
         }
       } else {
@@ -348,9 +338,10 @@ class UpgradeActivity : AppCompatActivity() {
       fragmentManager!!.popBackStack(VIEW_ALL_FEATURE, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     } else if (detailsFragment != null) {
       fragmentManager!!.popBackStack(DETAILS_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-    } else {
-      fragmentManager!!.popBackStack(CART_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
+//    else {
+//      fragmentManager!!.popBackStack(CART_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+//    }
   }
 
   fun goBackToMyAddonsScreen() {
