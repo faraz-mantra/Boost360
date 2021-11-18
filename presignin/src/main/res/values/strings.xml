@@ -33,9 +33,9 @@
 
     <string name="code_sent_hint"> Type the 4-digit code you received on your entered mobile number %s.</string>
     <string name="verify">Verify</string>
-    <string name="psn_resend_hint">Didn’t get the code? Resend</string>
+    <string name="psn_resend_hint">Resend OTP</string>
     <string name="psn_resend">Resend</string>
-    <string name="psn_resend_in">Resend in %d s</string>
+    <string name="psn_resend_in">Resend OTP in %d s</string>
     <string name="psn_no_account_hint_before">We see that you could not complete your business account using</string>
     <string name="psn_no_account_hint_after">. Add business details to start now.</string>
     <string name="psn_no_account_heading">Continue creating your business account on Boost 360.</string>
