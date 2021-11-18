@@ -26,7 +26,7 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.CompareItemAdapter
 import com.boost.upgrades.adapter.PackageAdaptor
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.cart.data.api_model.GetAllFeatures.response.Bundles
 import com.framework.upgradeDB.model.*
 import com.boost.upgrades.utils.CircleAnimationUtil
 import com.boost.upgrades.utils.Constants

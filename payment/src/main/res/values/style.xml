@@ -2,14 +2,14 @@
 <resources>
 
   <!-- Base application theme. -->
-  <style name="AppTheme.Pre.Cart" parent="Theme.AppCompat.Light.NoActionBar">
+  <style name="AppTheme.Pre.Payment" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="colorPrimary">@color/colorAccent</item>
     <item name="colorPrimaryDark">#ffb900</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:windowAnimationStyle">@null</item>
   </style>
 
-  <style name="BoostCartScreenStyle" parent="AppTheme.Pre.Cart">
+  <style name="BoostPaymentScreenStyle" parent="AppTheme.Pre.Payment">
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
   </style>

@@ -197,9 +197,9 @@ class ComparePackageViewModel(application: Application) : BaseViewModel(applicat
               Log.e("GetAllFeatures", it.toString())
               val bundles = arrayListOf<BundlesModel>()
               for (item in it.Data[0].bundles) {
-                if (item.exclusive_for_customers != null && item.exclusive_for_customers.size > 0) {
+                if (item.exclusive_for_customers != null && item.exclusive_for_customers!!.size > 0) {
                   var applicableToCurrentFPTag = false
-                  for (code in item.exclusive_for_customers) {
+                  for (code in item.exclusive_for_customers!!) {
                     if (code.equals(_fpTag, true)) {
                       applicableToCurrentFPTag = true
                       break
@@ -208,9 +208,9 @@ class ComparePackageViewModel(application: Application) : BaseViewModel(applicat
                   if (!applicableToCurrentFPTag)
                     continue
                 }
-                if (item.exclusive_to_categories != null && item.exclusive_to_categories.size > 0) {
+                if (item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) {
                   var applicableToCurrentExpCode = false
-                  for (code in item.exclusive_to_categories) {
+                  for (code in item.exclusive_to_categories!!) {
                     if (code.equals(experienceCode, true)) {
                       applicableToCurrentExpCode = true
                       break
@@ -223,9 +223,9 @@ class ComparePackageViewModel(application: Application) : BaseViewModel(applicat
                   BundlesModel(
                     item._kid,
                     item.name,
-                    if (item.min_purchase_months != null && item.min_purchase_months > 1) item.min_purchase_months else 1,
+                    if (item.min_purchase_months != null && item.min_purchase_months!! > 1) item.min_purchase_months!! else 1,
                     item.overall_discount_percent,
-                    if (item.primary_image != null) item.primary_image.url else null,
+                    if (item.primary_image != null) item.primary_image!!.url else null,
                     Gson().toJson(item.included_features),
                     item.target_business_usecase,
                     Gson().toJson(item.exclusive_to_categories), item.desc

@@ -6,9 +6,10 @@
     <application>
         <activity
             android:name=".CartActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/BoostCartScreenStyle"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

@@ -1,15 +1,12 @@
 package com.boost.upgrades.data.remote
 
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
 import com.boost.upgrades.data.api_model.GetFloatingPointWebWidgets.response.GetFloatingPointWebWidgetsResponse
 import com.boost.upgrades.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
 import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
-import com.boost.upgrades.data.api_model.RazorpayToken.RazorpayTokenResponse
-import com.boost.upgrades.data.api_model.couponSystem.redeem.RedeemCouponRequest
-import com.boost.upgrades.data.api_model.couponSystem.redeem.RedeemCouponResponse
+import com.boost.cart.data.api_model.RazorpayToken.RazorpayTokenResponse
 import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
 import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse

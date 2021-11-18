@@ -26,8 +26,8 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.UpgradeAdapter
 import com.boost.upgrades.adapter.VideosListAdapter
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.MarketPlaceOfferDetail
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.MarketPlaceOffers
+import com.boost.cart.data.api_model.GetAllFeatures.response.MarketPlaceOfferDetail
+import com.boost.cart.data.api_model.GetAllFeatures.response.MarketPlaceOffers
 import com.boost.upgrades.data.api_model.GetPurchaseOrder.Result
 import com.framework.upgradeDB.model.*
 import com.boost.upgrades.interfaces.HistoryFragmentListener

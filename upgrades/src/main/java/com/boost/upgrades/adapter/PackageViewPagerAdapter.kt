@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.framework.upgradeDB.local.AppDatabase
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.cart.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.interfaces.HomeListener
 import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -104,7 +104,7 @@ class PackageViewPagerAdapter(
 
         var offeredBundlePrice = 0
         var originalBundlePrice = 0
-        val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1) bundles.min_purchase_months else 1
+        val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) bundles.min_purchase_months!! else 1
         CompositeDisposable().add(
                 AppDatabase.getInstance(activity.application)!!
                         .featuresDao()
@@ -131,12 +131,12 @@ class PackageViewPagerAdapter(
                                         holder.bundlePriceLabel.visibility = View.VISIBLE
                                     }
 
-                                    if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1){
+                                    if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1){
                                         holder.offerPrice.setText("₹" +
                                                 NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
                                                 "/" + bundles.min_purchase_months + "mths")
                                         if (offeredBundlePrice != originalBundlePrice) {
-                                            spannableString(holder, originalBundlePrice, bundles.min_purchase_months)
+                                            spannableString(holder, originalBundlePrice, bundles.min_purchase_months!!)
                                             holder.origCost.visibility = View.VISIBLE
                                         } else {
                                             holder.origCost.visibility = View.GONE
@@ -153,9 +153,9 @@ class PackageViewPagerAdapter(
                                         }
                                     }
 
-                                    if(bundles.primary_image != null && !bundles.primary_image.url.isNullOrEmpty()){
-                                        Glide.with(holder.itemView.context).load(bundles.primary_image.url).into(holder.primaryImage)
-                                        Glide.with(holder.itemView.context).load(bundles.primary_image.url).into(holder.primaryImageCopy)
+                                    if(bundles.primary_image != null && !bundles.primary_image!!.url.isNullOrEmpty()){
+                                        Glide.with(holder.itemView.context).load(bundles.primary_image!!.url).into(holder.primaryImage)
+                                        Glide.with(holder.itemView.context).load(bundles.primary_image!!.url).into(holder.primaryImageCopy)
                                     } else {
                                         holder.primaryImage.setImageResource(R.drawable.rectangle_copy_18)
                                         holder.primaryImageCopy.setImageResource(R.drawable.rectangle_copy_18)

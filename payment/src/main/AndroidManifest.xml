@@ -7,8 +7,9 @@
         <activity
             android:name=".PaymentActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BoostUpgradeScreenStyle"
-            android:windowSoftInputMode="adjustResize" />
+            android:theme="@style/BoostPaymentScreenStyle"
+            android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleTop" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

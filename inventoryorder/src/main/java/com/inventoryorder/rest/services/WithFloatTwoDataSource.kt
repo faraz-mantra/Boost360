@@ -1,5 +1,6 @@
 package com.inventoryorder.rest.services
 
+import com.boost.cart.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
 import com.inventoryorder.model.floatMessage.MessageModel
 import com.inventoryorder.model.order.ProductItem
 import com.inventoryorder.model.services.InventoryServicesResponseItem
@@ -7,6 +8,7 @@ import com.inventoryorder.rest.EndPoints
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
 

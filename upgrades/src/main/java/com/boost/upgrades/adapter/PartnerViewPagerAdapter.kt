@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.framework.upgradeDB.local.AppDatabase
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.PartnerZone
+import com.boost.cart.data.api_model.GetAllFeatures.response.PartnerZone
 import com.boost.upgrades.interfaces.HomeListener
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController

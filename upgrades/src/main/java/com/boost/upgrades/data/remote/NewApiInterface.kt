@@ -1,8 +1,8 @@
 package com.boost.upgrades.data.remote
 
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
-import com.boost.upgrades.data.api_model.couponSystem.redeem.RedeemCouponRequest
-import com.boost.upgrades.data.api_model.couponSystem.redeem.RedeemCouponResponse
+import com.boost.cart.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
+import com.boost.cart.data.api_model.couponSystem.redeem.RedeemCouponRequest
+import com.boost.cart.data.api_model.couponSystem.redeem.RedeemCouponResponse
 import io.reactivex.Observable
 import retrofit2.http.Body
 import retrofit2.http.GET

@@ -1,7 +1,10 @@
 package com.boost.upgrades
 
 import android.util.Log
+import androidx.lifecycle.ViewModelProviders
 import androidx.multidex.MultiDexApplication
+import com.boost.upgrades.ui.home.HomeViewModel
+import com.boost.upgrades.ui.home.HomeViewModelFactory
 import com.framework.upgradeDB.local.AppDatabase
 import com.framework.BaseApplication
 import com.framework.utils.PreferencesUtils

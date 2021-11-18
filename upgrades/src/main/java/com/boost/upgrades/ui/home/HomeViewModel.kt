@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.framework.upgradeDB.local.AppDatabase
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.*
+import com.boost.cart.data.api_model.GetAllFeatures.response.*
 import com.framework.upgradeDB.model.*
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.data.remote.NewApiInterface
@@ -168,9 +168,9 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                         Log.e("GetAllFeatures", it.toString())
                                         var data = arrayListOf<FeaturesModel>()
                                         for (item in it.Data[0].features) {
-                                            if (item.exclusive_to_categories != null && item.exclusive_to_categories.size > 0) {
+                                            if (item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) {
                                                 var applicableToCurrentExpCode = false
-                                                for (code in item.exclusive_to_categories) {
+                                                for (code in item.exclusive_to_categories!!) {
                                                     if (code.equals(experienceCode, true))
                                                         applicableToCurrentExpCode = true
                                                 }
@@ -178,12 +178,12 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                     continue
                                             }
 
-                                            val primaryImage = if (item.primary_image == null) null else item.primary_image.url
+                                            val primaryImage = if (item.primary_image == null) null else item.primary_image!!.url
                                             val secondaryImages = ArrayList<String>()
                                             if (item.secondary_images != null) {
-                                                for (sec_images in item.secondary_images) {
+                                                for (sec_images in item.secondary_images!!) {
                                                     if (sec_images.url != null) {
-                                                        secondaryImages.add(sec_images.url)
+                                                        secondaryImages.add(sec_images.url!!)
                                                     }
                                                 }
                                             }
@@ -209,8 +209,8 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                     if (secondaryImages.size == 0) null else Gson().toJson(secondaryImages),
                                                     Gson().toJson(item.learn_more_link),
                                                     if (item.total_installs == null) "--" else item.total_installs,
-                                                    if (item.extended_properties != null && item.extended_properties.size > 0) Gson().toJson(item.extended_properties) else null,
-                                                    if (item.exclusive_to_categories != null && item.exclusive_to_categories.size > 0) Gson().toJson(item.exclusive_to_categories) else null
+                                                    if (item.extended_properties != null && item.extended_properties!!.size > 0) Gson().toJson(item.extended_properties) else null,
+                                                    if (item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) Gson().toJson(item.exclusive_to_categories) else null
                                             ))
                                         }
                                         Completable.fromAction {
@@ -278,9 +278,9 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                         //saving bundle info in bundle table
                                         val bundles = arrayListOf<BundlesModel>()
                                         for (item in it.Data[0].bundles) {
-                                            if (item.exclusive_for_customers != null && item.exclusive_for_customers.size > 0) {
+                                            if (item.exclusive_for_customers != null && item.exclusive_for_customers!!.size > 0) {
                                                 var applicableToCurrentFPTag = false
-                                                for (code in item.exclusive_for_customers) {
+                                                for (code in item.exclusive_for_customers!!) {
                                                     if (code.equals(_fpTag, true)) {
                                                         applicableToCurrentFPTag = true
                                                         break
@@ -289,9 +289,9 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                 if (!applicableToCurrentFPTag)
                                                     continue
                                             }
-                                            if (item.exclusive_to_categories != null && item.exclusive_to_categories.size > 0) {
+                                            if (item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) {
                                                 var applicableToCurrentExpCode = false
-                                                for (code in item.exclusive_to_categories) {
+                                                for (code in item.exclusive_to_categories!!) {
                                                     if (code.equals(experienceCode, true)) {
                                                         applicableToCurrentExpCode = true
                                                         break
@@ -303,9 +303,9 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                             bundles.add(BundlesModel(
                                                     item._kid,
                                                     item.name,
-                                                    if (item.min_purchase_months != null && item.min_purchase_months > 1) item.min_purchase_months else 1,
+                                                    if (item.min_purchase_months != null && item.min_purchase_months!! > 1) item.min_purchase_months!! else 1,
                                                     item.overall_discount_percent,
-                                                    if (item.primary_image != null) item.primary_image.url else null,
+                                                    if (item.primary_image != null) item.primary_image!!.url else null,
                                                     Gson().toJson(item.included_features),
                                                     item.target_business_usecase,
                                                     Gson().toJson(item.exclusive_to_categories),item.desc
@@ -426,7 +426,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                             item.expiry_date,
                                                             item.title,
                                                             if (item.exclusive_to_categories != null && item.exclusive_to_categories.size > 0) Gson().toJson(item.exclusive_to_categories) else null,
-                                                            if (item.image != null) item.image.url else null,
+                                                            if (item.image != null) item.image!!.url else null,
                                                             if (item.cta_offer_identifier != null) item.cta_offer_identifier else null,
                                                     ))
                                                 }
@@ -593,9 +593,9 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                         //saving bundle info in bundle table
                                         val bundles = arrayListOf<BundlesModel>()
                                         for (item in it.Data[0].bundles) {
-                                            if (item.exclusive_for_customers != null && item.exclusive_for_customers.size > 0) {
+                                            if (item.exclusive_for_customers != null && item.exclusive_for_customers!!.size > 0) {
                                                 var applicableToCurrentFPTag = false
-                                                for (code in item.exclusive_for_customers) {
+                                                for (code in item.exclusive_for_customers!!) {
                                                     if (code.equals(_fpTag, true)) {
                                                         applicableToCurrentFPTag = true
                                                         break
@@ -604,9 +604,9 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                 if (!applicableToCurrentFPTag)
                                                     continue
                                             }
-                                            if (item.exclusive_to_categories != null && item.exclusive_to_categories.size > 0) {
+                                            if (item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) {
                                                 var applicableToCurrentExpCode = false
-                                                for (code in item.exclusive_to_categories) {
+                                                for (code in item.exclusive_to_categories!!) {
                                                     if (code.equals(experienceCode, true)) {
                                                         applicableToCurrentExpCode = true
                                                         break
@@ -618,9 +618,9 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                             bundles.add(BundlesModel(
                                                     item._kid,
                                                     item.name,
-                                                    if (item.min_purchase_months != null && item.min_purchase_months > 1) item.min_purchase_months else 1,
+                                                    if (item.min_purchase_months != null && item.min_purchase_months!! > 1) item.min_purchase_months!! else 1,
                                                     item.overall_discount_percent,
-                                                    if (item.primary_image != null) item.primary_image.url else null,
+                                                    if (item.primary_image != null) item.primary_image!!.url else null,
                                                     Gson().toJson(item.included_features),
                                                     item.target_business_usecase,
                                                     Gson().toJson(item.exclusive_to_categories),item.desc

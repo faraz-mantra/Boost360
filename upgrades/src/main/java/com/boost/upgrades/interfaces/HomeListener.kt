@@ -2,10 +2,10 @@ package com.boost.upgrades.interfaces
 
 import android.view.View
 import android.widget.ImageView
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.Image
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.PartnerZone
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.PromoBanners
+import com.boost.cart.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.cart.data.api_model.GetAllFeatures.response.Image
+import com.boost.cart.data.api_model.GetAllFeatures.response.PartnerZone
+import com.boost.cart.data.api_model.GetAllFeatures.response.PromoBanners
 import com.framework.upgradeDB.model.*
 
 interface HomeListener {

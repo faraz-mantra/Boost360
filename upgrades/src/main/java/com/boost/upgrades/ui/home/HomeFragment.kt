@@ -29,7 +29,7 @@ import com.framework.upgradeDB.local.AppDatabase
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.*
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.*
+import com.boost.cart.data.api_model.GetAllFeatures.response.*
 import com.framework.upgradeDB.model.*
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.interfaces.CompareBackListener
