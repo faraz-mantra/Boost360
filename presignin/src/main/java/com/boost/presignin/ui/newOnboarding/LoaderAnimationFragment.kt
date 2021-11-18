@@ -32,9 +32,15 @@ class LoaderAnimationFragment : AppBaseFragment<FragmentLoaderAnimationBinding, 
 
     override fun onCreateView() {
         super.onCreateView()
-        initUI()
+        setOnClickListeners()
     }
 
-    private fun initUI() {
+    private fun setOnClickListeners() {
+        binding?.tvPreviewWebsite?.setOnClickListener {
+            showShortToast(getString(R.string.coming_soon))
+        }
+        binding?.tvLaunchDashboard?.setOnClickListener {
+            showShortToast(getString(R.string.coming_soon))
+        }
     }
 }

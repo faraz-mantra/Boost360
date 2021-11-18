@@ -1,4 +1,4 @@
-package com.boost.presignin.ui.newOnboarding
+package com.boost.presignin.ui.newOnboarding.bottomSheet
 
 import com.boost.presignin.R
 import com.boost.presignin.databinding.SheetNeedHelpBinding

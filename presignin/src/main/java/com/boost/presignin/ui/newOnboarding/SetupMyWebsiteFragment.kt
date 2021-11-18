@@ -1,9 +1,8 @@
 package com.boost.presignin.ui.newOnboarding
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import android.view.*
 import androidx.core.content.ContextCompat
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
@@ -13,6 +12,8 @@ import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.framework.views.blur.BlurView
+import com.framework.views.blur.RenderScriptBlur
 
 class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, BaseViewModel>() {
 
@@ -67,6 +68,12 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Ba
 
         binding?.layoutStep2?.edInputBusinessName?.afterTextChanged {
             binding?.layoutStep2?.tvNextStep2?.isEnabled = it.isEmpty().not()
+            binding?.layoutStep2?.includeMobileView?.tvTitle?.text = it
+        }
+
+        binding?.layoutStep3?.edInputWebsiteAddress?.afterTextChanged {
+            binding?.layoutStep3?.tvNextStep3?.isEnabled = it.isEmpty().not()
+            binding?.layoutStep3?.includeMobileView?.tvWebsiteName?.text = it
         }
     }
 
@@ -106,6 +113,7 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Ba
                 binding?.ivStep2Setup?.setImageResource(R.drawable.ic_tick_circle_green_hollow)
                 binding?.view2?.background = ContextCompat.getDrawable(requireContext(), R.color.gray_33727D82)
                 binding?.ivStep3Setup?.setImageResource(R.drawable.ic_tick_circle_gray_hollow)
+                binding?.layoutStep2?.includeMobileView?.blurView?.setBlur(0.25F)
             }
             2 -> {
                 binding?.layoutStep1?.root?.gone()
@@ -116,7 +124,17 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Ba
                 binding?.ivStep2Setup?.setImageResource(R.drawable.ic_tick_circle_green_solid_filled)
                 binding?.view2?.background = ContextCompat.getDrawable(requireContext(), R.color.green_61CF96)
                 binding?.ivStep3Setup?.setImageResource(R.drawable.ic_tick_circle_green_hollow)
+                binding?.layoutStep3?.includeMobileView?.blurView?.setBlur(0.25F)
             }
         }
+    }
+
+    private fun BlurView.setBlur(value: Float) {
+        val decorView: View? = activity?.window?.decorView
+        val rootView: ViewGroup = decorView?.findViewById(android.R.id.content) as ViewGroup
+        val windowBackground: Drawable = decorView.background
+        this.setupWith(rootView)?.setFrameClearDrawable(windowBackground)
+            ?.setBlurAlgorithm(RenderScriptBlur(activity))?.setBlurRadius(value)
+            ?.setHasFixedTransformationMatrix(true)
     }
 }

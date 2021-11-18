@@ -187,5 +187,14 @@
     <string name="this_url_is_completely_secure">This URL is completely secure</string>
     <string name="you_can_create_a_support_request_and_someone_from_the_boost_team_will_assist_you">You can create a support request and someone from the Boost team will assist you.</string>
     <string name="create_support_request">Create Support Request</string>
+    <string name="could_not_find_your_business_type">Could not find your business type?</string>
+    <string name="choose_what_best_describes_your_business_the_best">Choose what best describes your business the best</string>
+    <string name="still_can_t_find_your_business_type">Still can’t find your business type?</string>
+    <string name="your_request_for_support_was_sent_successfully">Your Request for Support was sent successfully!</string>
+    <string name="someone_from_boost_will_get_in_touch_with_you">Someone from Boost will get in touch with you.</string>
+    <string name="preview">Preview</string>
+    <string name="you_have_successfully_created_your_website">You have successfully created your website</string>
+    <string name="preview_website">Preview website</string>
+    <string name="finish_and_go_to_dashboard">Finish and go to dashboard</string>
 
 </resources>

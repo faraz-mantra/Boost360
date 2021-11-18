@@ -52,6 +52,7 @@ class NewOnBoardingContainerActivity :
 
     override fun isHideToolbar(): Boolean {
         return when (type) {
+            FragmentType.LOADING_ANIMATION_DASHBOARD_FRAGMENT,
             FragmentType.INTRO_SLIDE_SHOW_FRAGMENT,
             FragmentType.WELCOME_FRAGMENT -> true
             else -> super.isHideToolbar()
