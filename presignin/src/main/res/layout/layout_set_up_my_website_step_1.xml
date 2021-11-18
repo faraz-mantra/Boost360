@@ -48,44 +48,106 @@
             android:drawableStart="@drawable/ic_search_offers"
             android:drawablePadding="@dimen/size_16"
             android:ellipsize="end"
-            android:singleLine="true"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:padding="@dimen/size_8"
-            android:scrollHorizontally="true"
             android:fontFamily="@font/inter_semi_bold"
             android:hint="@string/ex_shopkeeper_doctor_boutique_etc"
+            android:maxLines="1"
+            android:padding="@dimen/size_8"
             android:paddingHorizontal="@dimen/size_16"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textColor="@color/black"
             android:textSize="@dimen/text_13"
             app:layout_constraintEnd_toStartOf="@id/endGuide"
             app:layout_constraintStart_toEndOf="@id/startGuide"
             app:layout_constraintTop_toBottomOf="@+id/tv_subtitle" />
 
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tv_featured_categories_title"
+        <!--Enable visible this when search results found-->
+        <LinearLayout
+            android:id="@+id/linear_featured_categories"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_19"
-            android:fontFamily="@font/inter_medium"
-            android:gravity="start"
-            android:text="@string/featured_categories"
-            android:textAlignment="gravity"
-            android:textColor="@color/black_2A2A2A"
-            android:textSize="@dimen/text_13"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@id/endGuide"
+            app:layout_constraintStart_toEndOf="@id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/autocomplete_search_category">
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_featured_categories_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:gravity="start"
+                android:text="@string/featured_categories"
+                android:textAlignment="gravity"
+                android:textColor="@color/black_2A2A2A"
+                android:textSize="@dimen/text_13"
+                app:layout_constraintEnd_toStartOf="@id/endGuide"
+                app:layout_constraintStart_toEndOf="@id/startGuide"
+                app:layout_constraintTop_toBottomOf="@+id/autocomplete_search_category" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_categories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_12"
+                app:layout_constraintBottom_toTopOf="@+id/tv_next_step_1"
+                app:layout_constraintEnd_toStartOf="@id/endGuide"
+                app:layout_constraintStart_toEndOf="@id/startGuide"
+                app:layout_constraintTop_toBottomOf="@+id/tv_featured_categories_title"
+                tools:listitem="@layout/item_website_categories" />
+
+        </LinearLayout>
+
+        <!--Enable visible this when no search results found-->
+        <include
+            android:id="@+id/include_no_search_result_found"
+            layout="@layout/layout_no_category_search_results"
+            android:layout_width="0dp"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_19"
             app:layout_constraintEnd_toStartOf="@id/endGuide"
             app:layout_constraintStart_toEndOf="@id/startGuide"
             app:layout_constraintTop_toBottomOf="@+id/autocomplete_search_category" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_categories"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/size_12"
-            app:layout_constraintBottom_toTopOf="@+id/tv_next_step_1"
+        <!--On click on Click here visible @+id/include_no_search_result_found layout below-->
+        <LinearLayout
+            android:id="@+id/linear_still_cant_find"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_25"
+            android:visibility="gone"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toStartOf="@id/endGuide"
             app:layout_constraintStart_toEndOf="@id/startGuide"
-            app:layout_constraintTop_toBottomOf="@+id/tv_featured_categories_title"
-            tools:listitem="@layout/item_website_categories" />
+            app:layout_constraintTop_toBottomOf="@+id/autocomplete_search_category">
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_still_cant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semi_bold"
+                android:gravity="start"
+                android:text="@string/still_can_t_find_your_business_type"
+                android:textAlignment="gravity"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/text_14" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_click_here_still"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_8"
+                android:fontFamily="@font/inter_semi_bold"
+                android:gravity="start"
+                android:text="@string/click_here"
+                android:textAlignment="gravity"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_14" />
+
+        </LinearLayout>
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_next_step_1"

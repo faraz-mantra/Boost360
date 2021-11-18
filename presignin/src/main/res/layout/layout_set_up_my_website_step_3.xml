@@ -2,101 +2,117 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tv_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_32"
-        android:fontFamily="@font/inter_bold"
-        android:gravity="start"
-        android:text="@string/here_is_a_website_address_for_you"
-        android:textAlignment="gravity"
-        android:textColor="@color/black_4a4a4a"
-        android:textSize="@dimen/text_18"
-        app:layout_constraintEnd_toStartOf="@id/endGuide"
-        app:layout_constraintStart_toEndOf="@id/startGuide"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_F5F8FD">
 
-    <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tv_subtitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_4"
-        android:fontFamily="@font/inter_regular"
-        android:gravity="start"
-        android:text="@string/this_is_the_next_available_website_address_based_on_your_business_name"
-        android:textAlignment="gravity"
-        android:textColor="@color/black_2A2A2A"
-        android:textSize="@dimen/text_13"
-        app:layout_constraintEnd_toStartOf="@id/endGuide"
-        app:layout_constraintStart_toEndOf="@id/startGuide"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_32"
+            android:fontFamily="@font/inter_bold"
+            android:gravity="start"
+            android:text="@string/here_is_a_website_address_for_you"
+            android:textAlignment="gravity"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="@dimen/text_18"
+            app:layout_constraintEnd_toStartOf="@id/endGuide"
+            app:layout_constraintStart_toEndOf="@id/startGuide"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <com.framework.views.customViews.CustomTextInputLayout
-        android:id="@+id/customTextInputLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_24"
-        android:hint="@string/website_address"
-        app:hintTextColor="@color/black_66"
-        app:layout_constraintEnd_toStartOf="@id/endGuide"
-        app:layout_constraintStart_toEndOf="@id/startGuide"
-        app:layout_constraintTop_toBottomOf="@+id/tv_subtitle">
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:fontFamily="@font/inter_regular"
+            android:gravity="start"
+            android:text="@string/this_is_the_next_available_website_address_based_on_your_business_name"
+            android:textAlignment="gravity"
+            android:textColor="@color/black_2A2A2A"
+            android:textSize="@dimen/text_13"
+            app:layout_constraintEnd_toStartOf="@id/endGuide"
+            app:layout_constraintStart_toEndOf="@id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
-        <com.framework.views.customViews.CustomEditText
-            android:id="@+id/ed_input_website_address"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/regular_medium"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black_66"
-            android:textSize="@dimen/text_14" />
+        <com.framework.views.customViews.CustomTextInputLayout
+            android:id="@+id/customTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_24"
+            android:hint="@string/website_address"
+            android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
+            app:hintTextColor="@color/black_66"
+            app:layout_constraintEnd_toStartOf="@id/endGuide"
+            app:layout_constraintStart_toEndOf="@id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/tv_subtitle">
 
-    </com.framework.views.customViews.CustomTextInputLayout>
+            <com.framework.views.customViews.CustomEditText
+                android:id="@+id/ed_input_website_address"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/regular_medium"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black_66"
+                android:textSize="@dimen/text_14" />
 
-    <com.framework.views.customViews.CustomTextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_lock_gray"
-        android:layout_marginTop="@dimen/size_9"
-        android:drawablePadding="@dimen/size_12"
-        android:fontFamily="@font/inter_regular"
-        android:gravity="start"
-        android:text="@string/this_url_is_completely_secure"
-        android:textAlignment="gravity"
-        android:textColor="@color/black_2A2A2A"
-        android:textSize="@dimen/text_13"
-        app:layout_constraintStart_toStartOf="@+id/customTextInputLayout"
-        app:layout_constraintTop_toBottomOf="@+id/customTextInputLayout" />
+        </com.framework.views.customViews.CustomTextInputLayout>
 
-    <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tv_next_step_3"
-        style="@style/yellow_squared_button"
-        android:enabled="true"
-        android:text="@string/launch_my_website"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="UnknownId" />
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_secure"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_9"
+            android:drawableStart="@drawable/ic_lock_gray"
+            android:drawablePadding="@dimen/size_12"
+            android:fontFamily="@font/inter_regular"
+            android:gravity="start"
+            android:text="@string/this_url_is_completely_secure"
+            android:textAlignment="gravity"
+            android:textColor="@color/black_2A2A2A"
+            android:textSize="@dimen/text_13"
+            app:layout_constraintStart_toStartOf="@+id/customTextInputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/customTextInputLayout" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/startGuide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.06" />
+        <include
+            android:id="@+id/include_mobile_view"
+            layout="@layout/layout_website_name_mobile_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_62"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/endGuide"
+            app:layout_constraintStart_toStartOf="@+id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/tv_secure"
+            app:layout_constraintVertical_bias="1.0" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/endGuide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.94" />
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_next_step_3"
+            style="@style/yellow_squared_button"
+            android:enabled="true"
+            android:text="@string/launch_my_website"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="UnknownId" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/startGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.06" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/endGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.94" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
