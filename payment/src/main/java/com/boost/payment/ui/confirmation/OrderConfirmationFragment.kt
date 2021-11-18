@@ -24,6 +24,7 @@ import java.util.*
 
 class OrderConfirmationFragment : BaseFragment() {
 
+  val TAG = this::class.java.simpleName
   lateinit var prefs: SharedPrefs
   var data = JSONObject()
 
@@ -116,6 +117,26 @@ class OrderConfirmationFragment : BaseFragment() {
       ).show()
     }
 
+  }
+
+  override fun onResume() {
+    super.onResume()
+    Log.e(TAG, ">>> onResume")
+  }
+
+  override fun onPause() {
+    super.onPause()
+    Log.e(TAG, ">>> onPause")
+  }
+
+  override fun onStop() {
+    super.onStop()
+    Log.e(TAG, ">>> onStop")
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    Log.e(TAG, ">>> onDestroy")
   }
 
 }

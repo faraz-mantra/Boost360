@@ -62,7 +62,10 @@ class PaymentActivity : AppCompatActivity() {
                 val tag = currentFragment.tag
                 Log.e("Add tag", ">>>$tag")
                 tellFragments()
-            } else finish()
+            } else {
+                Log.e("Add tag", ">>> Finish PaymentActivity")
+                finish()
+            }
         }
 
         val paymentFragment = PaymentFragment.newInstance()
@@ -153,14 +156,14 @@ class PaymentActivity : AppCompatActivity() {
     }
 
     fun replaceFragment(fragment: Fragment, fragmentTag: String?) {
-        popFragmentFromBackStack()
-        addFragment(fragment, fragmentTag)
-//        currentFragment = fragment
-//        fragmentManager = supportFragmentManager
-//        fragmentTransaction = fragmentManager!!.beginTransaction()
-//        fragmentTransaction!!.replace(R.id.ao_fragment_container, fragment, fragmentTag)
-////        fragmentTransaction!!.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-//        fragmentTransaction!!.commit()
+//        popFragmentFromBackStack()
+//        addFragment(fragment, fragmentTag)
+        currentFragment = fragment
+        fragmentManager = supportFragmentManager
+        fragmentTransaction = fragmentManager!!.beginTransaction()
+        fragmentTransaction!!.replace(R.id.ao_fragment_container, fragment, fragmentTag)
+        fragmentTransaction!!.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+        fragmentTransaction!!.commit()
     }
 
     fun popFragmentFromBackStack() {
