@@ -102,7 +102,7 @@ dependencies {
     api 'androidx.multidex:multidex:2.0.1'
 
     // lottie animation
-    api "com.airbnb.android:lottie:3.3.1"
+    api "com.airbnb.android:lottie:4.2.1"
 
     //place google api
     api 'com.google.android.libraries.places:places:2.5.0'
@@ -130,7 +130,7 @@ dependencies {
     api 'com.webengage:android-sdk:3.+'
 
     //exoplayer
-    api 'com.google.android.exoplayer:exoplayer:2.14.1'
+    api 'com.google.android.exoplayer:exoplayer:2.16.0'
 
     // sms receiver apis
     api 'com.google.android.gms:play-services-auth:19.2.0'
@@ -147,4 +147,5 @@ dependencies {
 
     //image picker
     api 'com.github.dhaval2404:imagepicker:2.1'
+
 }

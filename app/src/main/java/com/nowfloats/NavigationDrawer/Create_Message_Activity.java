@@ -48,7 +48,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.framework.models.firestore.FirestoreManager;
+import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.nowfloats.CustomWidget.CustomTagLayout;
 import com.nowfloats.Login.Fetch_Home_Data;
 import com.nowfloats.Login.Login_Interface;

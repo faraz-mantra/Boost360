@@ -41,7 +41,9 @@ public interface APIInterfaces {
     void getDomainSupportType(@Query("clientId") String clientId, Callback<String[]> response);
 
     @GET("/DomainService/v3/GetDomainDetailsForFloatingPoint/{fpTag}")
-    void getDomainDetails(@Path("fpTag") String fpTag, @Query("clientId") String clientId, Callback<GetDomainData> response);
+    void getDomainDetails(@Path("fpTag") String fpTag,
+                          @Query("clientId") String clientId,
+                          Callback<GetDomainData> response);
 
     @POST("/api/Service/EmailRIASupportTeamV2")
     void addExistingDomainDeatils(@Query("authClientId") String clientId, @Query("fpTag") String fpTag, @Body ExistingDomainRequest body, Callback<Boolean> response);

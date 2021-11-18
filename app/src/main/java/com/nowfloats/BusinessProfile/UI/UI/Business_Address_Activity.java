@@ -74,6 +74,7 @@ import static com.framework.webengageconstant.EventValueKt.NULL;
 public class Business_Address_Activity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     public static final int PLACE_PICKER_REQUEST = 23;
+    private static final String TAG = "Business_Address";
     //public static GoogleMap googleMap;
     public static TextView saveTextView;
     public static String adresslinetext, citytext, pincodetext, countrytext, statetext;

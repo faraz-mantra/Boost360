@@ -28,7 +28,7 @@ import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.firestore.FirestoreManager
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.getData
 import com.framework.utils.roundToFloat
@@ -37,10 +37,8 @@ import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.framework.webengageconstant.DIGITAL_READINESS_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
 import com.google.android.material.snackbar.Snackbar
-import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
-import com.onboarding.nowfloats.rest.response.channel.ChannelsAccessTokenResponse
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.VisitingCardSheet
 
 class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessScoreBinding, DashboardViewModel>(), RecyclerItemClickListener {

@@ -2,6 +2,7 @@ package com.appservice.ui.aptsetting.widgets
 
 import android.view.View
 import com.appservice.R
+import com.appservice.constant.Constants
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.BottomSheetConfirmingChangesBinding
 import com.appservice.model.aptsetting.ProductCategoryVerbRequest
@@ -38,7 +39,7 @@ class BottomSheetConfirmingChange : BaseBottomSheetDialog<BottomSheetConfirmingC
     this.fpDetails = arguments?.getSerializable(IntentConstant.CATALOG_DATA.name) as? UserFpDetailsResponse
     this.catalogName = arguments?.getString(IntentConstant.CATALOG_CUSTOM_NAME.name)
     binding?.ctvNewDisplayText?.text = fromHtml("<b>New display text:</b> $catalogName")
-    binding?.ctvNewPageUrl?.text = fromHtml("<b>New page URL:</b><br /><u>${sessionManager?.getDomainName()}/$catalogName</u>")
+    binding?.ctvNewPageUrl?.text = fromHtml("<b>New page URL:</b><br /><u>${sessionManager?.getDomainName()}/${Constants.CATALOG_PREFIX}$catalogName</u>")
     binding?.ccbAgree?.setOnCheckedChangeListener { _, isChecked ->
       when (isChecked) {
         true -> binding?.btnYesChange?.visible()

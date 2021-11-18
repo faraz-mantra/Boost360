@@ -13,7 +13,7 @@ import androidx.core.view.isVisible
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.firestore.FirestoreManager
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_2
@@ -451,6 +451,10 @@ class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointme
       }
       age.isNullOrEmpty() -> {
         showLongToast(getString(R.string.age_field_must_not_be_empty))
+        return false
+      }
+      (age.toIntOrNull())?:0>150->{
+        showLongToast(getString(R.string.enter_valid_age))
         return false
       }
       patientMobile.isNullOrEmpty() -> {
