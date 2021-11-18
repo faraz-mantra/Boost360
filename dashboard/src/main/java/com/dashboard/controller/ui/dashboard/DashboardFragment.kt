@@ -9,12 +9,9 @@ import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
-import androidx.core.view.marginTop
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.bumptech.glide.Glide
@@ -52,12 +49,14 @@ import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.festivePosterName
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.festivePosterVisibility
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
-import com.framework.models.firestore.FirestoreManager
-import com.framework.models.firestore.FirestoreManager.fpId
-import com.framework.models.firestore.FirestoreManager.getDrScoreData
-import com.framework.models.firestore.FirestoreManager.readDrScoreDocument
+import com.framework.firebaseUtils.firestore.FirestoreManager
+import com.framework.firebaseUtils.firestore.FirestoreManager.fpId
+import com.framework.firebaseUtils.firestore.FirestoreManager.getDrScoreData
+import com.framework.firebaseUtils.firestore.FirestoreManager.readDrScoreDocument
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
@@ -102,14 +101,9 @@ import kotlin.collections.ArrayList
 
 const val IS_FIRST_LOAD = "isFirsLoad"
 const val IS_DR_HIGH_DIALOG = "isDrHighDialog"
-const val FESTIVE_POSTER_NAME = "festive_poster_name"
-const val DASHBOARD_FESTIVAL_BUTTON_VISIBILITY = "dashboard_festive_poster_button_visible"
-const val FIREBASE_RC_FETCH_INTERVAL: Long = 900 // 15 min. Metric in seconds.
 
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
-  private val TAG = "DashboardFragment"
-  private var remoteConfig: FirebaseRemoteConfig? = null
   private var deepLinkUtil: DeepLinkUtil? = null
   private var connectedChannels: ArrayList<String> = arrayListOf()
   private var session: UserSessionManager? = null
@@ -161,31 +155,13 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     getAllDashboardSummary()
     getPremiumBanner()
     getChannelAccessToken()
-    setFirebaseRemoteConfig()
     displayFestiveButtonView()
   }
 
-  private fun setFirebaseRemoteConfig() {
-    remoteConfig = Firebase.remoteConfig
-    val configSettings = remoteConfigSettings { minimumFetchIntervalInSeconds = FIREBASE_RC_FETCH_INTERVAL }
-    remoteConfig?.setConfigSettingsAsync(configSettings)
-    remoteConfig?.setDefaultsAsync(R.xml.remote_config_defaults)
-    remoteConfig?.fetchAndActivate()?.addOnCompleteListener(baseActivity) { task ->
-      if (task.isSuccessful) {
-        val updated = task.result
-        Log.d(TAG, "Config params updated: $updated")
-//        showShortToast("Fetch and activate succeeded")
-      }
-//      else showShortToast("Fetch failed")
-      displayFestiveButtonView()
-    }
-  }
-
   private fun displayFestiveButtonView() {
-    Log.d(TAG, "Config params updated: ${remoteConfig?.getBoolean(DASHBOARD_FESTIVAL_BUTTON_VISIBILITY)}")
-    val topMargin = if (remoteConfig?.getBoolean(DASHBOARD_FESTIVAL_BUTTON_VISIBILITY) == true) {
+    val topMargin = if (festivePosterVisibility()) {
       binding?.btnFestive?.visibility = View.VISIBLE
-      binding?.customFestivalTv?.text = remoteConfig?.getString(FESTIVE_POSTER_NAME)
+      binding?.customFestivalTv?.text = festivePosterName()
       baseActivity.resources.getDimensionPixelSize(R.dimen.size_240)
     } else {
       binding?.btnFestive?.visibility = View.GONE
