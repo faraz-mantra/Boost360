@@ -77,7 +77,7 @@ xmlns:tools="http://schemas.android.com/tools">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/size_25"
-        android:fontFamily="@font/inter_regular"
+        android:fontFamily="@font/inter_semi_bold"
         android:gravity="start"
         android:text="Resend OTP in 24s"
         android:textAlignment="gravity"
@@ -102,6 +102,7 @@ xmlns:tools="http://schemas.android.com/tools">
         app:layout_constraintStart_toEndOf="@+id/startGuide">
 
     <com.framework.views.customViews.CustomCheckBox
+        android:id="@+id/chk_whatsapp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_regular"
