@@ -17,4 +17,8 @@
     <key>feature_domain_booking_enable</key>
     <value>false</value>
   </entry>
+  <entry>
+    <key>in_app_update_type_immediate</key>
+    <value>false</value>
+  </entry>
 </defaultsMap><!-- END xml_defaults -->
