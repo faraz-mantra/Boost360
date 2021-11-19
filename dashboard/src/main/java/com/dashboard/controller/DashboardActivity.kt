@@ -349,7 +349,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       0 -> openDashboard(false)
       1 -> checkWelcomeShowScreen(pos)
       2 -> checkWelcomeShowScreen(pos)
-      4 -> checkWelcomeShowScreen(pos)
+      3 -> checkWelcomeShowScreen(pos)
       else -> {
         mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
         toolbarPropertySet(0)
@@ -380,13 +380,13 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         }
         disableBadgeNotification(BadgesModel.BadgesType.ENQUIRYBADGE.name)
       }
-      3 -> {
+//      3 -> {
 //        val dataAddOns = welcomeData?.get(2)
 //        if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let { showWelcomeDialog(it) }
 //        else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
 //        disableBadgeNotification(BadgesModel.BadgesType.MARKETPLACEBADGE.name)
-      }
-      4 -> {
+//      }
+      3 -> {
         mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
         toolbarPropertySet(pos)
         disableBadgeNotification(BadgesModel.BadgesType.MENUBADGE.name)
@@ -420,7 +420,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     when (pos) {
       1 -> showToolbar(getString(R.string.website))
       2 -> showToolbar(getString(R.string.enquiry))
-      4 -> showToolbar(getString(R.string.more))
+      3 -> showToolbar(getString(R.string.more))
       else -> {
         if (packageName.equals("com.jio.online", ignoreCase = true).not()) {
           changeTheme(R.color.colorPrimary, R.color.colorPrimary)

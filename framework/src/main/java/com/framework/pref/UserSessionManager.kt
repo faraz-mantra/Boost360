@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.database.Cursor
 import android.text.TextUtils
+import com.framework.BaseApplication
 import com.framework.analytics.SentryController
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_TAG
@@ -250,8 +251,10 @@ class UserSessionManager(var activity: Context) {
   }
 
   fun getStoreWidgets(): List<String>? {
-    val str = pref.getString(Key_Preferences.STORE_WIDGETS, "")
-    return if (str.isNullOrEmpty()) ArrayList<String>() else convertStringToList(str)
+    return if (BaseApplication.instance.packageName != "com.jio.online") {
+      val str = pref.getString(Key_Preferences.STORE_WIDGETS, "")
+      if (str.isNullOrEmpty()) ArrayList<String>() else convertStringToList(str)
+    }else arrayListOf()
   }
 
   val sourceClientId: String?

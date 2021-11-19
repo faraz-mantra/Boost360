@@ -58,6 +58,8 @@ import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_BUSINESS_
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_CALLS;
 import static com.framework.webengageconstant.EventValueKt.NULL;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
+import static com.thinksity.Specific.CONTACT_EMAIL_ID;
+import static com.thinksity.Specific.CONTACT_PHONE_ID;
 
 /**
  * Created by Admin on 27-04-2017.
@@ -579,12 +581,12 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
     if (session.getUserProfileEmail() != null) {
       intent.putExtra("email", session.getUserProfileEmail());
     } else {
-      intent.putExtra("email", "ria@nowfloats.com");
+      intent.putExtra("email", CONTACT_EMAIL_ID);
     }
     if (session.getUserPrimaryMobile() != null) {
       intent.putExtra("mobileNo", session.getUserPrimaryMobile());
     } else {
-      intent.putExtra("mobileNo", "9160004303");
+      intent.putExtra("mobileNo", CONTACT_PHONE_ID);
     }
     intent.putExtra("profileUrl", session.getFPLogo());
     intent.putExtra("buyItemKey", "CALLTRACKER");

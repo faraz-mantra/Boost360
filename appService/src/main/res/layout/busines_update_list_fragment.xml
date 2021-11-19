@@ -47,7 +47,7 @@
         android:backgroundTint="@color/colorAccentLight"
         android:clickable="true"
         android:focusable="true"
-        app:fabIcon="@drawable/ButtoncolorAccent"
+        app:fabIcon="@drawable/ic_add_white"
         app:fabSize="normal" />
 
       <androidx.appcompat.widget.LinearLayoutCompat

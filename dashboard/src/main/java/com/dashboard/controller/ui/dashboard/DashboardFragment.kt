@@ -702,7 +702,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun marketPlaceBannerClick(data: DashboardMarketplaceBanner) {
     if (data.ctaWebLink.isNullOrEmpty().not()) {
-      if (data.ctaWebLink!!.contains("com.jio.online.keyboard.home") || data.ctaWebLink!!.contains("boost.nowfloats.com")) {
+      if (data.ctaWebLink!!.contains("com.jio.online.keyboard.home") || data.ctaWebLink!!.contains("jio.bizdigital.com")) {
         WebEngageController.trackEvent(BOOST_MARKETPLACE_BANNER_CLICK, DEEP_LINK, NO_EVENT_VALUE)
         val deepHashMap: HashMap<DynamicLinkParams, String> =
           DynamicLinksManager().getURILinkParams(Uri.parse(data.ctaWebLink))
