@@ -148,7 +148,6 @@
             app:buffered_color="@color/gray_light_3"
             app:played_color="@color/red_E39595"
             app:player_layout_id="@layout/exo_player_ui"
-            app:resize_mode="fill"
             app:show_buffering="always"
             app:use_artwork="true" />
           <!--                    <com.google.android.exoplayer2.ui.PlayerView-->
