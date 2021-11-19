@@ -40,7 +40,7 @@
         android:text="@string/add_a_page"
         android:textColor="@color/zeroth_grey_title"
         android:textSize="@dimen/dgts__title_text_size"
-         android:fontFamily="@font/semi_bold" />
+        android:fontFamily="@font/semi_bold" />
 
       <TextView
         android:layout_width="wrap_content"
@@ -62,7 +62,10 @@
 
       <ProgressBar
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/colorAccent"/>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -72,7 +75,7 @@
       android:layout_gravity="bottom|right"
       android:layout_margin="16dp"
       android:scaleType="fitCenter"
-      app:backgroundTint="@color/colorAccentLight"
+      app:backgroundTint="@color/colorAccent_jio"
       app:srcCompat="@drawable/ic_add_white" />
   </FrameLayout>
 </LinearLayout>

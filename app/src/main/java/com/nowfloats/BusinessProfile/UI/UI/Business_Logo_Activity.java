@@ -32,7 +32,8 @@ import androidx.databinding.DataBindingUtil;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.framework.models.firestore.FirestoreManager;
+import com.framework.analytics.SentryController;
+import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.nowfloats.BusinessProfile.UI.API.Upload_Logo;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.EditImageActivity;
@@ -59,7 +60,9 @@ import static com.framework.webengageconstant.EventNameKt.BUSINESS_LOGO_ADDED;
 import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_BUSINESS_PROFILE;
 import static com.framework.webengageconstant.EventNameKt.UPLOAD_LOGO;
 
-public class Business_Logo_Activity extends AppCompatActivity {
+public class Business_Logo_Activity
+        extends AppCompatActivity {
+
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_GALLERY = 2;
     private static final int ACTION_REQUEST_IMAGE_EDIT = 3;
@@ -131,6 +134,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
                 }
             }
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
             System.gc();
         }
@@ -314,10 +318,12 @@ public class Business_Logo_Activity extends AppCompatActivity {
             // we will handle the returned data in onActivityResult
             startActivityForResult(captureIntent, CAMERA_PHOTO);
         } catch (ActivityNotFoundException anfe) {
+            SentryController.INSTANCE.captureException(anfe);
             // display an error message
             String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(Business_Logo_Activity.this, errorMessage);
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
     }
@@ -336,6 +342,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
 
             startActivityForResult(i, GALLERY_PHOTO);
         } catch (ActivityNotFoundException anfe) {
+            SentryController.INSTANCE.captureException(anfe);
             // display an error message
             String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(Business_Logo_Activity.this, errorMessage);
@@ -362,6 +369,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
                     path = imageUrl;
                     path = Util.saveBitmap(path, Business_Logo_Activity.this, "ImageFloat" + System.currentTimeMillis());
                 } catch (Exception e) {
+                    SentryController.INSTANCE.captureException(e);
                     e.printStackTrace();
                     //  Util.toast("Uh oh. Something went wrong. Please try again", this);
                 } catch (OutOfMemoryError E) {
@@ -395,6 +403,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
                 }
             }
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
     }
@@ -449,6 +458,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
                 // Decode Bitmap
                 bitmap = BitmapFactory.decodeStream(input);
             } catch (Exception e) {
+                SentryController.INSTANCE.captureException(e);
                 e.printStackTrace();
             }
             path = Util.saveCameraBitmap(bitmap, Business_Logo_Activity.this, "ImageFloat" + System.currentTimeMillis());

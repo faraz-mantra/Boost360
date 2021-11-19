@@ -74,7 +74,7 @@
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="@string/tv_name_n"
+          android:text="Name"
           android:textSize="@dimen/_11sdp" />
 
         <TextView
@@ -116,7 +116,7 @@
             android:id="@+id/title_img_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tv_description_n"
+            android:text="Description"
             android:textSize="@dimen/_11sdp" />
 
           <TextView
@@ -137,7 +137,7 @@
           android:layout_height="wrap_content"
           android:background="@drawable/edittext_bg_elevated"
           android:elevation="@dimen/_2sdp"
-          android:hint="@string/tv_description_n"
+          android:hint="Description"
           android:imeOptions="actionNext"
           android:inputType="textCapWords"
           android:maxLines="1" />

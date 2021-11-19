@@ -15,8 +15,8 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.DateUtils
+import com.framework.utils.DateUtils.parseDate
 import com.framework.utils.ValidationUtils
-import com.framework.views.customViews.CustomTextView
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -47,6 +47,7 @@ import java.util.*
 
 class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDetailsBinding>(), RecyclerItemClickListener {
 
+  private val TAG = "AppointmentDetailsFragm"
   private var orderItem: OrderItem? = null
   private var isRefresh: Boolean = false
   lateinit var mPopupWindow: PopupWindow
@@ -151,23 +152,13 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     val product = order?.firstItemForAptConsult()?.product()
     val extraAptDetail = product?.extraItemProductConsultation()
     binding?.ctvAppointmentId?.text = "#${order?.ReferenceNumber}"
-    binding?.textDateTime?.text = DateUtils.parseDate(
-      order?.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_3, timeZone = TimeZone.getTimeZone("IST")
-    )
+    binding?.textDateTime?.text = parseDate(order?.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_3, timeZone = TimeZone.getTimeZone("IST"))
 
     binding?.textAmount?.text = "${order?.BillingDetails?.CurrencyCode} ${order?.BillingDetails?.GrossAmount}"
 
     binding?.textServiceName?.text = product?.Name
-
-    val appointmentDate = java.lang.StringBuilder(DateUtils.parseDate(extraAptDetail?.startTime(), DateUtils.FORMAT_HH_MM, DateUtils.FORMAT_HH_MM_A) ?: "")
-    if (!DateUtils.parseDate(extraAptDetail?.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_5, timeZone = TimeZone.getTimeZone("IST")).isNullOrEmpty()) {
-      appointmentDate.append(
-        " on ${DateUtils.parseDate(
-            extraAptDetail?.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_5
-          )
-        }"
-      )
-    }
+    var appointmentDate= order?.firstItemForAptConsult()?.scheduledStartDate()
+    appointmentDate= parseDate(appointmentDate, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_4)
     binding?.textDate?.text = appointmentDate
 
     binding?.textStaff?.text = if (!extraAptDetail?.doctorName.isNullOrBlank()) "${extraAptDetail?.doctorName}" else ""

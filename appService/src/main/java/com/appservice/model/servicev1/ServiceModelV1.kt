@@ -1,7 +1,7 @@
 package com.appservice.model.servicev1
 
 import com.appservice.model.KeySpecification
-import com.appservice.model.serviceProduct.BuyOnlineLink
+import com.appservice.model.serviceProduct.UniquePaymentUrlN
 import com.appservice.model.serviceTiming.ServiceTiming
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
@@ -72,7 +72,7 @@ class ServiceModelV1(
   var isPriceInclusiveOfTax: Boolean = true,
 
   @SerializedName("url", alternate = ["Url", "uniquePaymentUrl"])
-  var BuyOnlineLink: BuyOnlineLink? = null,
+  var BuyOnlineLink: UniquePaymentUrlN? = null,
   @SerializedName("keySpecifications", alternate = ["KeySpecifications"])
   var keySpecification: KeySpecification? = null,
 

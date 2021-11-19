@@ -4,7 +4,7 @@ import com.dashboard.R
 import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.recyclerView.AppBaseRecyclerViewItem
 import com.framework.base.BaseResponse
-import com.framework.models.firestore.DrScoreModel
+import com.framework.firebaseUtils.firestore.DrScoreModel
 import java.util.*
 import kotlin.collections.ArrayList
 

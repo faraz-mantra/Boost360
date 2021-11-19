@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data></data>
+
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottoms_sheet_top20dp_white"
+    android:orientation="vertical"
+    android:padding="@dimen/size_20">
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/title"
+      style="@style/BusinessProfile_Text_Title"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:textType="HEADING_7"
+      tools:text="Your mobile number +919876543210 is verified" />
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/btn_change_number"
+      style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+      android:layout_width="match_parent"
+      android:layout_marginTop="@dimen/size_16"
+      android:enabled="true"
+      android:text="@string/change_number"
+      android:textColor="@color/white" />
+
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/btn_cancel"
+      style="@style/ButtonStyle.Red"
+      android:layout_width="match_parent"
+      android:layout_marginTop="@dimen/size_16"
+      android:background="@drawable/rounded_stroke_btn_grey"
+      android:gravity="center"
+      android:text="@string/cancel"
+      android:textAllCaps="false"
+      android:textColor="@color/warm_grey" />
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</layout>

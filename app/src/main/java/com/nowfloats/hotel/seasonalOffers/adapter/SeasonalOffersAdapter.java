@@ -3,6 +3,7 @@ package com.nowfloats.hotel.seasonalOffers.adapter;
 import android.content.Context;
 import android.text.SpannableString;
 import android.text.style.StrikethroughSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,10 +111,11 @@ public class SeasonalOffersAdapter extends RecyclerView.Adapter<SeasonalOffersAd
         }
         holder.offerPrice.setText("Rs." + itemList.get(position).getDiscountedPrice());
         holder.offerDescription.setText(itemList.get(position).getOfferImage().getDescription());
-        double discount = (itemList.get(position).getOrignalPrice() - itemList.get(position).getDiscountedPrice()) / (double) (itemList.get(position).getOrignalPrice());
-        discount *= 100.0;
-        holder.offerDiscount.setText(new DecimalFormat("##.##").format(discount) + "% Flat Discount");
-
+        if (itemList.get(position).getOrignalPrice()!=null&&itemList.get(position).getDiscountedPrice()!=null) {
+            double discount = (itemList.get(position).getOrignalPrice() - itemList.get(position).getDiscountedPrice()) / (double) (itemList.get(position).getOrignalPrice());
+            discount *= 100.0;
+            holder.offerDiscount.setText(new DecimalFormat("##.##").format(discount) + "% Flat Discount");
+        }
         Glide.with(context)
                 .load(itemList.get(position).getOfferImage().getUrl())
                 .into(holder.offerImage);

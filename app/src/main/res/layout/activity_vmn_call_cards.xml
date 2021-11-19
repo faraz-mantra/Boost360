@@ -1,613 +1,645 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:card_view="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/parent_layout"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical">
-
-
-  <include
-    android:id="@+id/toolbar"
-    layout="@layout/toolbar_boost"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-
-  <View
-    android:id="@+id/background_layout"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:layout_below="@id/toolbar"
-    android:background="@color/primaryColor"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
-  <LinearLayout
-    android:id="@+id/main_info_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_marginStart="30dp"
-    android:layout_marginTop="30dp"
-    android:layout_marginEnd="30dp"
-    android:layout_marginBottom="5dp"
-    android:background="@drawable/all_side_small_curve_bg"
-    android:elevation="@dimen/_3sdp"
-    android:orientation="vertical"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/toolbar">
-
-    <LinearLayout
-      android:id="@+id/user_info_layout"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/parent_layout"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="match_parent"
       android:orientation="vertical">
 
-      <TextView
-        android:id="@+id/tv_virtual_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:text="@string/_040969578"
-        android:textColor="@color/primaryColor"
-        android:textSize="23sp" />
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp"
-        android:text="@string/your_number"
-        android:textSize="15sp" />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:gravity="center"
-        android:text="@string/vmn_message_text"
-        android:textColor="#a2a2a2"
-        android:textSize="12sp" />
-
-      <View
-        android:id="@+id/dotted_line1"
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_boost"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_3sdp"
-        android:background="@drawable/dotted_line" />
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_questions_circular_button_white"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <LinearLayout
+        android:id="@+id/main_info_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/all_side_small_curve_bg"
+        android:elevation="@dimen/_3sdp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+      <!--
+          <LinearLayout
+            android:id="@+id/user_info_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+              android:id="@+id/tv_virtual_number"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:layout_marginTop="10dp"
+              android:text="@string/_040969578"
+              android:textColor="@color/primaryColor"
+              android:textSize="23sp" />
+
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:layout_marginTop="5dp"
+              android:text="@string/your_number"
+              android:textSize="15sp" />
+
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_margin="15dp"
+              android:gravity="center"
+              android:text="@string/vmn_message_text"
+              android:textColor="#a2a2a2"
+              android:textSize="12sp" />
+
+            <View
+              android:id="@+id/dotted_line1"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/_3sdp"
+              android:background="@drawable/dotted_line" />
+          </LinearLayout>
+      -->
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/see_more_less"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+          <TextView
+              android:layout_centerVertical="true"
+              android:layout_marginStart="@dimen/_16sdp"
+              android:fontFamily="@font/semi_bold"
+              android:textSize="@dimen/size_16"
+              android:id="@+id/total_number_of_calls"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/view_potential_calls_0" />
+
+          <ImageView
+              android:layout_marginStart="8dp"
+              android:layout_centerVertical="true"
+              android:layout_toRightOf="@id/total_number_of_calls"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:src="@drawable/ic_question_mark" />
+          <ImageView
+              android:layout_alignParentRight="true"
+              android:id="@+id/see_more_less_image"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:src="@drawable/down_arrow" />
+        </RelativeLayout>
+
+        <View
+            android:background="@color/grey"
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/help_web_phone_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:visibility="gone"
+            android:paddingVertical="8dp"
+            tools:visibility="visible">
+
+          <androidx.constraintlayout.widget.Guideline
+              android:id="@+id/middle_guideline"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              app:layout_constraintGuide_percent="0.5" />
+
+
+
+
+          <LinearLayout
+              android:id="@+id/phone_helper"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:gravity="center_horizontal"
+              android:orientation="horizontal"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="@id/middle_guideline"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_40sdp"
+                app:srcCompat="@drawable/ic_phone_call" />
+
+            <LinearLayout
+                android:layout_marginStart="@dimen/_16sdp"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+              <TextView
+                  android:id="@+id/phone_call_count"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/zero"
+                  android:textSize="@dimen/_20sdp" />
+
+              <TextView
+                  android:text="@string/mobile"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:id="@+id/website_helper"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:gravity="center_horizontal"
+              android:orientation="horizontal"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toEndOf="@id/middle_guideline"
+              app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_40sdp"
+                app:srcCompat="@drawable/ic_computer_status" />
+
+            <LinearLayout
+                android:layout_marginStart="@dimen/_16sdp"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+              <TextView
+                  android:id="@+id/web_call_count"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/zero"
+                  android:textSize="@dimen/_20sdp" />
+
+              <TextView
+                  android:text="@string/desktop"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
+
+          </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+      </LinearLayout>
+
+
     </LinearLayout>
 
     <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical">
+        android:id="@+id/help_website_info"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/main_info_layout"
+        android:elevation="@dimen/_5sdp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/main_info_layout"
+        app:layout_constraintTop_toBottomOf="@id/main_info_layout">
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/_2sdp"
+          android:background="@drawable/all_side_curve_bg"
+          android:elevation="@dimen/_5sdp"
+          android:gravity="center"
+          android:padding="@dimen/_10sdp"
+          android:text="The total number of clicks on your contact number displayed on website" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/help_phone_info"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/_5sdp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/main_info_layout"
+        app:layout_constraintTop_toBottomOf="@id/main_info_layout">
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/_2sdp"
+          android:background="@drawable/all_side_curve_bg"
+          android:elevation="@dimen/_5sdp"
+          android:gravity="center"
+          android:padding="@dimen/_10sdp"
+          android:text="The total number of clicks on your contact number displayed on website" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_info_layout"
+        tools:visibility="gone">
+
+      <include
+          android:id="@+id/empty_layout"
+          layout="@layout/empty_screen_layout"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:visibility="gone" />
 
       <LinearLayout
-        android:id="@+id/see_more_less"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-          android:id="@+id/total_number_of_calls"
-          android:layout_width="0dp"
+          android:id="@+id/calls_details_layout"
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:gravity="center"
-          android:text="@string/view_potential_calls_0" />
-
-        <ImageView
-          android:id="@+id/see_more_less_image"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:src="@drawable/down_arrow" />
-      </LinearLayout>
-
-      <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/help_web_phone_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <androidx.constraintlayout.widget.Guideline
-          android:id="@+id/middle_guideline"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          app:layout_constraintGuide_percent="0.5" />
+          android:layout_marginTop="30dp"
+          android:layout_marginBottom="30dp"
+          android:visibility="gone"
+          tools:visibility="visible">
 
         <LinearLayout
-          android:id="@+id/website_helper"
-          android:layout_width="0dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+          <TextView
+              android:id="@+id/total_count"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="0"
+              android:textColor="@color/primaryColor"
+              android:textSize="18sp" />
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Total Calls"
+              android:textSize="15sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/divider" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+          <TextView
+              android:id="@+id/received_count"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="0"
+              android:textColor="@color/primaryColor"
+              android:textSize="18sp" />
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Received Calls"
+              android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/divider" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+          <TextView
+              android:id="@+id/missed_count"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="0"
+              android:textColor="@color/primaryColor"
+              android:textSize="18sp" />
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Missed Calls"
+              android:textSize="15sp" />
+
+        </LinearLayout>
+
+      </LinearLayout>
+
+      <androidx.cardview.widget.CardView
+          android:id="@+id/card_view_view_calllog"
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:gravity="center_horizontal"
+          android:layout_gravity="bottom"
+          android:layout_margin="10dp"
+          android:visibility="gone"
+          app:cardBackgroundColor="#FFFFFF"
+          app:cardCornerRadius="3dp"
+          app:contentPadding="20dp"
+          tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="View call logs" />
+
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:src="@drawable/next" />
+        </LinearLayout>
+
+      </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+    <FrameLayout
+        android:visibility="gone"
+        android:id="@+id/child_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_info_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/primary_layout"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_info_layout"
+        tools:visibility="visible">
+
+      <LinearLayout
           android:orientation="horizontal"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="@id/middle_guideline"
+          android:id="@+id/first_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/_16sdp"
+          android:layout_marginEnd="@dimen/_16sdp"
+          android:gravity="center_vertical"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent">
 
-          <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_40sdp"
-            app:srcCompat="@drawable/ic_computer_status" />
-
-          <TextView
-            android:id="@+id/web_call_count"
+        <TextView
+            android:id="@+id/tv_tracked_call"
+            android:fontFamily="@font/semi_bold"
+            android:textSize="@dimen/_12sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:text="@string/zero"
-            android:textSize="@dimen/_30sdp" />
+            android:text="@string/tracked_calls" />
 
-          <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            app:srcCompat="@drawable/ic_help_call" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-          android:id="@+id/phone_helper"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:gravity="center_horizontal"
-          android:orientation="horizontal"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toEndOf="@id/middle_guideline"
-          app:layout_constraintTop_toTopOf="parent">
-
-          <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_40sdp"
-            app:srcCompat="@drawable/ic_phone_call" />
-
-          <TextView
-            android:id="@+id/phone_call_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:text="@string/zero"
-            android:textSize="@dimen/_30sdp" />
-
-          <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            app:srcCompat="@drawable/ic_help_call" />
-
-        </LinearLayout>
-      </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
-
-
-  </LinearLayout>
-
-  <LinearLayout
-    android:id="@+id/help_website_info"
-    android:layout_width="@dimen/_150sdp"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/main_info_layout"
-    android:elevation="@dimen/_5sdp"
-    android:visibility="gone"
-    app:layout_constraintStart_toStartOf="@id/main_info_layout"
-    app:layout_constraintTop_toBottomOf="@id/main_info_layout">
-
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_margin="@dimen/_2sdp"
-      android:background="@drawable/all_side_curve_bg"
-      android:elevation="@dimen/_5sdp"
-      android:gravity="center"
-      android:padding="@dimen/_10sdp"
-      android:text="The total number of clicks on your contact number displayed on website" />
-  </LinearLayout>
-
-  <LinearLayout
-    android:id="@+id/help_phone_info"
-    android:layout_width="@dimen/_150sdp"
-    android:layout_height="wrap_content"
-    android:elevation="@dimen/_5sdp"
-    android:visibility="gone"
-    app:layout_constraintEnd_toEndOf="@id/main_info_layout"
-    app:layout_constraintTop_toBottomOf="@id/main_info_layout">
-
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_margin="@dimen/_2sdp"
-      android:background="@drawable/all_side_curve_bg"
-      android:elevation="@dimen/_5sdp"
-      android:gravity="center"
-      android:padding="@dimen/_10sdp"
-      android:text="The total number of clicks on your contact number displayed on website" />
-  </LinearLayout>
-
-  <LinearLayout
-    android:id="@+id/main_layout"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:orientation="vertical"
-    android:visibility="gone"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/main_info_layout"
-    tools:visibility="gone">
-
-    <include
-      android:id="@+id/empty_layout"
-      layout="@layout/empty_screen_layout"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:visibility="gone" />
-
-    <LinearLayout
-      android:id="@+id/calls_details_layout"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="30dp"
-      android:layout_marginBottom="30dp"
-      android:visibility="gone"
-      tools:visibility="visible">
-
-      <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-          android:id="@+id/total_count"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="0"
-          android:textColor="@color/primaryColor"
-          android:textSize="18sp" />
-
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Total Calls"
-          android:textSize="15sp" />
-      </LinearLayout>
-
-      <View
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="@color/divider" />
-
-      <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-          android:id="@+id/received_count"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="0"
-          android:textColor="@color/primaryColor"
-          android:textSize="18sp" />
-
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Received Calls"
-          android:textSize="15sp" />
-
-      </LinearLayout>
-
-      <View
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="@color/divider" />
-
-      <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-          android:id="@+id/missed_count"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="0"
-          android:textColor="@color/primaryColor"
-          android:textSize="18sp" />
-
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Missed Calls"
-          android:textSize="15sp" />
-
-      </LinearLayout>
-
-    </LinearLayout>
-
-    <androidx.cardview.widget.CardView
-      android:id="@+id/card_view_view_calllog"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="bottom"
-      android:layout_margin="10dp"
-      android:visibility="gone"
-      card_view:cardBackgroundColor="#FFFFFF"
-      card_view:cardCornerRadius="3dp"
-      card_view:contentPadding="20dp"
-      tools:visibility="visible">
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:text="View call logs" />
 
         <ImageView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:src="@drawable/next" />
-      </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-  </LinearLayout>
-
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/primary_layout"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_marginTop="30dp"
-    android:orientation="vertical"
-    android:visibility="gone"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/main_info_layout"
-    tools:visibility="visible">
-
-    <LinearLayout
-      android:id="@+id/first_layout"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="30dp"
-      android:layout_marginEnd="30dp"
-      android:gravity="center_vertical"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tracked calls" />
-
-      <View
-        android:id="@+id/dotted_line2"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_3sdp"
-        android:layout_marginStart="@dimen/_5sdp"
-        android:layout_weight="1"
-        android:background="@drawable/dotted_line" />
-    </LinearLayout>
-
-    <LinearLayout
-      android:id="@+id/second_layout"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="30dp"
-      android:layout_marginEnd="30dp"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/first_layout">
-
-      <TextView
-        android:id="@+id/track_all_call"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:fontFamily="@font/semi_bold"
-        android:gravity="center"
-        android:paddingTop="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_10sdp"
-        android:text="All"
-        android:textColor="@color/primary_color" />
-
-      <TextView
-        android:id="@+id/track_missed_call"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:fontFamily="@font/semi_bold"
-        android:gravity="center"
-        android:paddingTop="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_10sdp"
-        android:text="Missed"
-        android:textColor="@color/common_text_color" />
-
-      <TextView
-        android:id="@+id/track_connected_call"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:fontFamily="@font/semi_bold"
-        android:gravity="center"
-        android:paddingTop="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_10sdp"
-        android:text="Connected"
-        android:textColor="@color/common_text_color" />
-
-      <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/call_recycler"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/second_layout" />
-
-    <LinearLayout
-      android:id="@+id/ll_no_call_tracker"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:visibility="gone"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/second_layout"
-      tools:visibility="visible">
-
-      <ImageView
-        android:id="@+id/iv_no_call_tracker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textColor="@color/primaryColor"
-        android:textSize="23sp"
-        app:srcCompat="@drawable/ic_no_call_tracker" />
-
-      <TextView
-        android:id="@+id/tv_no_call_recorded"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/semi_bold"
-        android:text="No call recorded yet"
-        android:textColor="#4A4A4A"
-        android:textSize="15sp" />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/regular"
-        android:gravity="center"
-        android:maxLines="2"
-        android:text="Calls made to your virtual mobile number \n will be listed here."
-        android:textColor="#a2a2a2"
-        android:textSize="14sp" />
-
-    </LinearLayout>
-
-  </androidx.constraintlayout.widget.ConstraintLayout>
-
-  <LinearLayout
-    android:id="@+id/secondary_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/background_layout"
-    android:layout_marginTop="@dimen/_80sdp"
-    android:gravity="center"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/background_layout"
-    tools:visibility="gone">
-
-    <RelativeLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:padding="@dimen/_20sdp"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
-
-      <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/circle_feature_bg"
-        android:elevation="@dimen/_2sdp"
-        android:gravity="center">
-
-        <ImageView
-          android:layout_width="50dp"
-          android:layout_height="50dp"
-          app:srcCompat="@drawable/ic_expiry_lock" />
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_question_mark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
       </LinearLayout>
 
       <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingStart="@dimen/_10sdp"
-        android:paddingTop="70dp"
-        android:paddingRight="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_20sdp">
-
-        <TextView
-          android:id="@+id/feature_name"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:fontFamily="@font/semi_bold"
-          android:text="Call tracker not enabled"
-          android:textColor="@color/common_text_color"
-          android:textSize="@dimen/_16sdp" />
-
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/_20sdp"
-          android:fontFamily="@font/semi_bold"
-          android:gravity="center"
-          android:text="Looks like this add-on is not added to your current plan. Add it now to start using it."
-          android:textSize="@dimen/_11sdp" />
-
-        <TextView
-          android:id="@+id/buy_item"
+          android:id="@+id/second_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_10sdp"
-          android:layout_marginTop="@dimen/_20sdp"
-          android:layout_marginEnd="@dimen/_10sdp"
-          android:background="@drawable/orange_button_click_effect"
-          android:fontFamily="@font/semi_bold"
-          android:gravity="center"
-          android:textAllCaps="false"
-          android:paddingTop="@dimen/_10sdp"
-          android:paddingBottom="@dimen/_10sdp"
-          android:text="@string/view_in_add_on_store"
-          android:textColor="@color/white" />
+
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/first_layout">
 
 
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/table_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+          <com.google.android.material.tabs.TabItem
+              android:id="@+id/track_all_call"
+
+              android:text="@string/all"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"/>
+
+          <com.google.android.material.tabs.TabItem
+              android:text="@string/missed"
+              android:id="@+id/track_missed_call"
+
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"/>
+
+          <com.google.android.material.tabs.TabItem
+              android:id="@+id/track_connected_call"
+              android:text="@string/connected"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"/>
+
+        </com.google.android.material.tabs.TabLayout>
       </LinearLayout>
 
-    </RelativeLayout>
+      <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/call_recycler"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/second_layout" />
 
-  </LinearLayout>
+      <!--<LinearLayout
+          android:id="@+id/ll_no_call_tracker"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:visibility="gone"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/second_layout"
+          tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/iv_no_call_tracker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/primaryColor"
+            android:textSize="23sp"
+            app:srcCompat="@drawable/ic_no_call_tracker" />
+
+        <TextView
+            android:id="@+id/tv_no_call_recorded"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/semi_bold"
+            android:text="No call recorded yet"
+            android:textColor="#4A4A4A"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/regular"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="Calls made to your virtual mobile number \n will be listed here."
+            android:textColor="#a2a2a2"
+            android:textSize="14sp" />
+
+      </LinearLayout>-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--<LinearLayout
+        android:id="@+id/secondary_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/background_layout"
+        android:layout_marginTop="@dimen/_80sdp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/background_layout"
+        tools:visibility="gone">
+
+      <RelativeLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:padding="@dimen/_20sdp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/circle_feature_bg"
+            android:elevation="@dimen/_2sdp"
+            android:gravity="center">
+
+          <ImageView
+              android:layout_width="50dp"
+              android:layout_height="50dp"
+              app:srcCompat="@drawable/ic_expiry_lock" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingTop="70dp"
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_20sdp">
+
+          <TextView
+              android:id="@+id/feature_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/semi_bold"
+              android:text="Call tracker not enabled"
+              android:textColor="@color/common_text_color"
+              android:textSize="@dimen/_16sdp" />
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/_20sdp"
+              android:fontFamily="@font/semi_bold"
+              android:gravity="center"
+              android:text="Looks like this add-on is not added to your current plan. Add it now to start using it."
+              android:textSize="@dimen/_11sdp" />
+
+          <TextView
+              android:id="@+id/buy_item"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/_10sdp"
+              android:layout_marginTop="@dimen/_20sdp"
+              android:layout_marginEnd="@dimen/_10sdp"
+              android:background="@drawable/orange_button_click_effect"
+              android:fontFamily="@font/semi_bold"
+              android:gravity="center"
+              android:textAllCaps="false"
+              android:paddingTop="@dimen/_10sdp"
+              android:paddingBottom="@dimen/_10sdp"
+              android:text="@string/view_in_add_on_store"
+              android:textColor="@color/white" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+      </RelativeLayout>
+
+    </LinearLayout>
+-->
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

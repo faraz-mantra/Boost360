@@ -34,11 +34,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.boost.upgrades.UpgradeActivity;
+import com.framework.views.zero.old.AppFragmentZeroCase;
+import com.framework.views.zero.old.AppOnZeroCaseClicked;
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
+import com.framework.views.zero.old.AppZeroCases;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.util.Constants;
@@ -46,13 +51,14 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
+import com.thinksity.databinding.FragmentKeyboardBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import dev.patrickgold.florisboard.ime.core.FlorisBoard;
 import io.codetail.animation.ViewAnimationUtils;
 import io.codetail.widget.RevealFrameLayout;
-import io.separ.neural.inputmethod.indic.LatinIME;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
@@ -63,7 +69,7 @@ import static com.thinksity.Specific.CONTACT_PHONE_ID;
  * Created by Admin on 02-03-2018.
  */
 
-public class KeyboardFragment extends Fragment implements View.OnTouchListener, View.OnClickListener {
+public class KeyboardFragment extends Fragment implements View.OnTouchListener, View.OnClickListener, AppOnZeroCaseClicked {
 
   private static final int STORAGE_CODE = 100, MICROPHONE_CODE = 101;
   private static final int INPUT_METHOD_SETTINGS = 102;
@@ -78,16 +84,16 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
   private RevealFrameLayout overLayout1;
   private RecyclerView rvKeyboardThemes;
   private KeyboardThemesAdapter keyboardThemesAdapter;
-  private ScrollView mainLayout;
-  private LinearLayout secondaryLayout;
-  private TextView buyItemButton;
   private UserSessionManager session;
+  private AppFragmentZeroCase appFragmentZeroCase;
+  private FragmentKeyboardBinding binding;
 
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     sharedPreferences = getContext().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-    return inflater.inflate(R.layout.fragment_keyboard, container, false);
+    binding = DataBindingUtil.inflate(inflater,R.layout.fragment_keyboard,container,false);
+    return binding.getRoot();
   }
 
   @Override
@@ -103,21 +109,20 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     super.onViewCreated(view, savedInstanceState);
 
     session = new UserSessionManager(getActivity().getApplicationContext(), requireActivity());
-
+    appFragmentZeroCase =new AppRequestZeroCaseBuilder(AppZeroCases.BUSINESS_KEYBOARD,this,getActivity()).getRequest().build();
+    getActivity().getSupportFragmentManager().beginTransaction().add(binding.childContainer.getId(),appFragmentZeroCase).commit();
     //show or hide if feature is available to user
-    mainLayout = view.findViewById(R.id.main_layout);
-    secondaryLayout = view.findViewById(R.id.secondary_layout);
-    buyItemButton = view.findViewById(R.id.buy_item);
+
     List<String> storeKeys = session.getStoreWidgets();
     if ((storeKeys != null && storeKeys.contains("BOOSTKEYBOARD")) || (Constants.currentActivePackageId != null &&
         Constants.currentActivePackageId.contains("59ce2ae56431a80b009cb1fa"))) {
-      mainLayout.setVisibility(View.VISIBLE);
-      secondaryLayout.setVisibility(View.GONE);
+      binding.mainLayout.setVisibility(View.VISIBLE);
+      binding.childContainer.setVisibility(View.GONE);
+
     } else {
-      mainLayout.setVisibility(View.GONE);
-      secondaryLayout.setVisibility(View.VISIBLE);
+      binding.mainLayout.setVisibility(View.GONE);
+      binding.childContainer.setVisibility(View.VISIBLE);
     }
-    buyItemButton.setOnClickListener(v -> initiateBuyFromMarketplace());
 
     MixPanelController.track(EventKeysWL.SIDE_PANEL_KEYBOARD, null);
     if (!isAdded() && isDetached()) return;
@@ -257,7 +262,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
 
   private boolean isInputMethodActivated() {
     List<InputMethodInfo> list = imeManager.getEnabledInputMethodList();
-    ComponentName myInputMethod = new ComponentName(mContext, LatinIME.class);
+    ComponentName myInputMethod = new ComponentName(mContext, FlorisBoard.class);
     for (InputMethodInfo info : list) {
       if (myInputMethod.equals(info.getComponent())) {
         return true;
@@ -271,7 +276,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
 
     ComponentName defaultInputMethod = ComponentName.unflattenFromString(id);
 
-    ComponentName myInputMethod = new ComponentName(mContext, LatinIME.class);
+    ComponentName myInputMethod = new ComponentName(mContext, FlorisBoard.class);
 
     return myInputMethod.equals(defaultInputMethod);
   }
@@ -430,6 +435,26 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     new Handler().postDelayed(() -> {
       progressDialog.dismiss();
     }, 1000);
+  }
+
+  @Override
+  public void primaryButtonClicked() {
+    initiateBuyFromMarketplace();
+  }
+
+  @Override
+  public void secondaryButtonClicked() {
+    Toast.makeText(getActivity(), getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
+  }
+
+  @Override
+  public void ternaryButtonClicked() {
+
+  }
+
+  @Override
+  public void appOnBackPressed() {
+
   }
 
   public class InputMethodChangeReceiver extends BroadcastReceiver {

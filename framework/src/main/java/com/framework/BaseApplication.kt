@@ -5,8 +5,8 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
-import com.framework.models.firestore.restApi.DrScoreApiClient
-import com.framework.models.firestore.restApi.EndPoints.DR_SCORE_BASE
+import com.framework.firebaseUtils.firestore.restApi.DrScoreApiClient
+import com.framework.firebaseUtils.firestore.restApi.EndPoints.DR_SCORE_BASE
 
 open class BaseApplication : MultiDexApplication() {
 

@@ -13,7 +13,6 @@ import com.google.gson.GsonBuilder;
 import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.NotificationCenter.NotificationInterface;
-import com.nowfloats.Store.iapUtils.Purchase;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.thinksity.Specific;
@@ -49,6 +48,7 @@ public class Constants {
             " </script> ";
 
     public static final boolean APK_MODE_RELEASE = false;
+    public static boolean webViewInit = false;
     public static final String APP_TAG = "Boost App";
     public static final String RIA_NODE_DATA = "riaNodeDatas";
     public static final int VISITS_TABLE = 0;
@@ -206,7 +206,6 @@ public class Constants {
     public static String clientId2 = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21";
     public static String clientId1 = "39EB5FD120DC4394A10301B108030CB70FA553E91F984C829AB6ADE23B6767B7";
     public static String license_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmtfDikZcbWSvq3f+pEsAL5KQCNy3X96j++Z1PnjvidpJCEe0/S1xdPs4CfT3JkeQl7SNps/9cPu3EuOOFdx76QPpAqlqXHMKMwM9H+ikx5iUWPSilRjwLfJNjbJZT2xpuI6k32VyHhqLyU4rR95nrAPTGrocyyV1jtTFSYt77YZew8YfeePlcB2STLP3Ookho37Ah1QovelfdaG5ZNWz5OPYKnificSPyYjioYkfUmpnUJvN0INYMGFKefhfPtWPx5UCiQp15A6ir4wH0wVL3/QksonIb0JMiXpuXvWuggNb1AqEtdiPuBTleU5GovKL+HToKjwQu8NSuJsb3EacIwIDAQAB";
-    public static Purchase lastPurchase = null;
     public static String teleCountry = "in";
     public static DisplayMetrics DISPLAY_METRICS = null;
     public static Boolean hasStoreData = false;
@@ -283,10 +282,7 @@ public class Constants {
     public static String FACEBOOK_USER_ID = "";
     public static String FACEBOOK_USER_ACCESS_ID = "";
     public static String FACEBOOK_PAGE_ACCESS_ID = "";
-    // for referral
-    public static String PREF_NAME_REFERRAL = "nowfloatsPrefsReferral";
-    public static String IS_INSTALL_APP = "isInstallApp";
-    public static String REFER_CODE_APP = "referCodeApp";
+
     public static String shortUrl = "";
     public static Boolean fbShareEnabled = false;
     public static boolean fbPageShareEnabled = false;

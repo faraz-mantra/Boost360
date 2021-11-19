@@ -534,538 +534,550 @@
 
       </androidx.constraintlayout.widget.ConstraintLayout>
 
-      <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/upi_layout"
+      <LinearLayout
+        android:id="@+id/payment_mode_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_2sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_2sdp"
-        android:background="@drawable/all_side_curve_bg"
-        android:elevation="@dimen/_2sdp"
-        android:paddingTop="@dimen/_4sdp"
-        android:paddingBottom="@dimen/_4sdp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/payment_business_details_layout"
-        tools:visibility="visible">
+        app:layout_constraintBottom_toTopOf="@id/payment_subscription_details_layout">
 
-        <TextView
-          android:id="@+id/upi_payment_title"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_5sdp"
-          android:fontFamily="@font/open_sans_semibold"
-          android:paddingStart="@dimen/_5sdp"
-          android:paddingTop="@dimen/_3sdp"
-          android:paddingEnd="@dimen/_5sdp"
-          android:paddingBottom="@dimen/_5sdp"
-          android:text="UPI"
-          android:textAllCaps="true"
-          android:textColor="@color/common_text_color"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-          android:id="@+id/upi_view_dummy"
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:background="@color/material_grey_400"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/upi_payment_title" />
-
-        <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/upi_recycler"
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/upi_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/_2sdp"
-          android:layout_marginBottom="@dimen/_2sdp"
-          android:nestedScrollingEnabled="false"
-          android:visibility="gone"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/upi_payment_title" />
-
-        <View
-          android:id="@+id/upi_view_dummy2"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/_1sdp"
-          android:background="@color/material_grey_400"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/upi_recycler" />
-
-        <LinearLayout
-          android:id="@+id/add_upi_layout"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:foreground="?android:attr/selectableItemBackground"
-          android:gravity="center_vertical"
-          android:paddingStart="@dimen/_10sdp"
-          android:paddingTop="@dimen/_10sdp"
-          android:paddingEnd="@dimen/_10sdp"
-          android:paddingBottom="@dimen/_5sdp"
-          app:layout_constraintTop_toBottomOf="@id/upi_view_dummy2">
-
-          <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_10sdp"
-            app:srcCompat="@drawable/ic_add_circle_outline" />
-
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_semibold"
-            android:text="Add new UPI id"
-            android:textColor="@color/common_text_color" />
-
-        </LinearLayout>
-
-
-      </androidx.constraintlayout.widget.ConstraintLayout>
-
-      <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/netbanking_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/upi_layout"
-        android:layout_marginStart="@dimen/_2sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_2sdp"
-        android:background="@drawable/all_side_curve_bg"
-        android:elevation="@dimen/_2sdp"
-        android:paddingTop="@dimen/_4sdp"
-        android:paddingBottom="@dimen/_4sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/upi_layout"
-        tools:visibility="visible">
-
-        <TextView
-          android:id="@+id/netbanking_title"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_5sdp"
-          android:fontFamily="@font/open_sans_semibold"
-          android:paddingStart="@dimen/_5sdp"
-          android:paddingTop="@dimen/_3sdp"
-          android:paddingEnd="@dimen/_5sdp"
-          android:paddingBottom="@dimen/_5sdp"
-          android:text="net banking"
-          android:textAllCaps="true"
-          android:textColor="@color/common_text_color"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-          android:id="@+id/payment_view_dummy"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/_1sdp"
-          android:background="@color/material_grey_400"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/netbanking_title" />
-
-        <LinearLayout
-          android:id="@+id/netbanking_top_banks_layout"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/_2sdp"
           android:layout_marginTop="@dimen/_10sdp"
-          android:layout_marginBottom="@dimen/_5sdp"
+          android:layout_marginEnd="@dimen/_2sdp"
+          android:background="@drawable/all_side_curve_bg"
+          android:elevation="@dimen/_2sdp"
+          android:paddingTop="@dimen/_4sdp"
+          android:paddingBottom="@dimen/_4sdp"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/payment_view_dummy">
+          app:layout_constraintTop_toBottomOf="parent"
+          tools:visibility="visible">
+
+          <TextView
+            android:id="@+id/upi_payment_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingTop="@dimen/_3sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="UPI"
+            android:textAllCaps="true"
+            android:textColor="@color/common_text_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+          <View
+            android:id="@+id/upi_view_dummy"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/material_grey_400"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/upi_payment_title" />
+
+          <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/upi_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:nestedScrollingEnabled="false"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/upi_payment_title" />
+
+          <View
+            android:id="@+id/upi_view_dummy2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/material_grey_400"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/upi_recycler" />
 
           <LinearLayout
-            android:id="@+id/axis_bank_layout"
-            android:layout_width="0dp"
+            android:id="@+id/add_upi_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            app:layout_constraintTop_toBottomOf="@id/upi_view_dummy2">
 
             <ImageView
-              android:id="@+id/axis_bank_image"
-              android:layout_width="@dimen/_35sdp"
-              android:layout_height="@dimen/_35sdp"
-              android:background="@drawable/backgroundwhite"
-              android:padding="8dp"
-              android:scaleType="fitCenter" />
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginEnd="@dimen/_10sdp"
+              app:srcCompat="@drawable/ic_add_circle_outline" />
 
             <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:fontFamily="@font/open_sans"
-              android:text="Axis Bank"
-              android:textColor="@color/common_bold_text_color"
-              android:textSize="@dimen/_9sdp" />
+              android:fontFamily="@font/open_sans_semibold"
+              android:text="Add new UPI id"
+              android:textColor="@color/common_text_color" />
+
           </LinearLayout>
 
-          <LinearLayout
-            android:id="@+id/icici_bank_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
 
-            <ImageView
-              android:id="@+id/icici_bank_image"
-              android:layout_width="@dimen/_35sdp"
-              android:layout_height="@dimen/_35sdp"
-              android:background="@drawable/backgroundwhite"
-              android:padding="8dp"
-              android:scaleType="fitCenter" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:fontFamily="@font/open_sans"
-              android:text="ICICI"
-              android:textColor="@color/common_bold_text_color"
-              android:textSize="@dimen/_9sdp" />
-          </LinearLayout>
-
-          <LinearLayout
-            android:id="@+id/hdfc_bank_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-              android:id="@+id/hdfc_bank_image"
-              android:layout_width="@dimen/_35sdp"
-              android:layout_height="@dimen/_35sdp"
-              android:background="@drawable/backgroundwhite"
-              android:padding="8dp"
-              android:scaleType="fitCenter" />
-
-            <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:fontFamily="@font/open_sans"
-              android:text="HDFC"
-              android:textColor="@color/common_bold_text_color"
-              android:textSize="@dimen/_9sdp" />
-          </LinearLayout>
-
-          <LinearLayout
-            android:id="@+id/citi_bank_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-              android:id="@+id/citi_bank_image"
-              android:layout_width="@dimen/_35sdp"
-              android:layout_height="@dimen/_35sdp"
-              android:background="@drawable/backgroundwhite"
-              android:padding="8dp"
-              android:scaleType="fitCenter" />
-
-            <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:fontFamily="@font/open_sans"
-              android:text="City Union"
-              android:textColor="@color/common_bold_text_color"
-              android:textSize="@dimen/_9sdp" />
-          </LinearLayout>
-
-          <LinearLayout
-            android:id="@+id/sbi_bank_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-              android:id="@+id/sbi_bank_image"
-              android:layout_width="@dimen/_35sdp"
-              android:layout_height="@dimen/_35sdp"
-              android:background="@drawable/backgroundwhite"
-              android:padding="8dp"
-              android:scaleType="fitCenter" />
-
-            <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:fontFamily="@font/open_sans"
-              android:text="SBI"
-              android:textColor="@color/common_bold_text_color"
-              android:textSize="@dimen/_9sdp" />
-          </LinearLayout>
-
-        </LinearLayout>
-
-        <View
-          android:id="@+id/payment_view_dummy2"
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/netbanking_layout"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/_1sdp"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/upi_layout"
+          android:layout_marginStart="@dimen/_2sdp"
           android:layout_marginTop="@dimen/_10sdp"
-          android:background="@color/material_grey_400"
+          android:layout_marginEnd="@dimen/_2sdp"
+          android:background="@drawable/all_side_curve_bg"
+          android:elevation="@dimen/_2sdp"
+          android:paddingTop="@dimen/_4sdp"
+          android:paddingBottom="@dimen/_4sdp"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/netbanking_top_banks_layout" />
-
-        <LinearLayout
-          android:id="@+id/show_more_bank"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:foreground="?android:attr/selectableItemBackground"
-          android:gravity="center"
-          android:paddingStart="@dimen/_10sdp"
-          android:paddingTop="@dimen/_10sdp"
-          android:paddingEnd="@dimen/_10sdp"
-          android:paddingBottom="@dimen/_5sdp"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/payment_view_dummy2">
+          app:layout_constraintTop_toBottomOf="@id/upi_layout"
+          tools:visibility="visible">
 
           <TextView
-            android:layout_width="0dp"
+            android:id="@+id/netbanking_title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginStart="@dimen/_5sdp"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Show more banks"
-            android:textColor="@color/common_text_color" />
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingTop="@dimen/_3sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="net banking"
+            android:textAllCaps="true"
+            android:textColor="@color/common_text_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-          <ImageView
-            android:layout_width="wrap_content"
+          <View
+            android:id="@+id/payment_view_dummy"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/material_grey_400"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/netbanking_title" />
+
+          <LinearLayout
+            android:id="@+id/netbanking_top_banks_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_arrow_right" />
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/payment_view_dummy">
 
-        </LinearLayout>
+            <LinearLayout
+              android:id="@+id/axis_bank_layout"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:gravity="center"
+              android:orientation="vertical">
 
-      </androidx.constraintlayout.widget.ConstraintLayout>
+              <ImageView
+                android:id="@+id/axis_bank_image"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/backgroundwhite"
+                android:padding="8dp"
+                android:scaleType="fitCenter" />
 
-      <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/saved_cards_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_2sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_2sdp"
-        android:background="@drawable/all_side_curve_bg"
-        android:elevation="@dimen/_2sdp"
-        android:paddingTop="@dimen/_4sdp"
-        android:paddingBottom="@dimen/_4sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/netbanking_layout"
-        tools:visibility="visible">
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:text="Axis Bank"
+                android:textColor="@color/common_bold_text_color"
+                android:textSize="@dimen/_9sdp" />
+            </LinearLayout>
 
-        <TextView
-          android:id="@+id/payment_payment_title"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_5sdp"
-          android:fontFamily="@font/open_sans_semibold"
-          android:paddingStart="@dimen/_5sdp"
-          android:paddingTop="@dimen/_3sdp"
-          android:paddingEnd="@dimen/_5sdp"
-          android:paddingBottom="@dimen/_5sdp"
-          android:text="Pay using saved cards"
-          android:textAllCaps="true"
-          android:textColor="@color/common_text_color"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+              android:id="@+id/icici_bank_layout"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:gravity="center"
+              android:orientation="vertical">
 
-        <View
+              <ImageView
+                android:id="@+id/icici_bank_image"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/backgroundwhite"
+                android:padding="8dp"
+                android:scaleType="fitCenter" />
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:text="ICICI"
+                android:textColor="@color/common_bold_text_color"
+                android:textSize="@dimen/_9sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+              android:id="@+id/hdfc_bank_layout"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:gravity="center"
+              android:orientation="vertical">
+
+              <ImageView
+                android:id="@+id/hdfc_bank_image"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/backgroundwhite"
+                android:padding="8dp"
+                android:scaleType="fitCenter" />
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:text="HDFC"
+                android:textColor="@color/common_bold_text_color"
+                android:textSize="@dimen/_9sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+              android:id="@+id/citi_bank_layout"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:gravity="center"
+              android:orientation="vertical">
+
+              <ImageView
+                android:id="@+id/citi_bank_image"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/backgroundwhite"
+                android:padding="8dp"
+                android:scaleType="fitCenter" />
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:text="City Union"
+                android:textColor="@color/common_bold_text_color"
+                android:textSize="@dimen/_9sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+              android:id="@+id/sbi_bank_layout"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:gravity="center"
+              android:orientation="vertical">
+
+              <ImageView
+                android:id="@+id/sbi_bank_image"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/backgroundwhite"
+                android:padding="8dp"
+                android:scaleType="fitCenter" />
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:text="SBI"
+                android:textColor="@color/common_bold_text_color"
+                android:textSize="@dimen/_9sdp" />
+            </LinearLayout>
+
+          </LinearLayout>
+
+          <View
+            android:id="@+id/payment_view_dummy2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/material_grey_400"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/netbanking_top_banks_layout" />
+
+          <LinearLayout
+            android:id="@+id/show_more_bank"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/payment_view_dummy2">
+
+            <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:fontFamily="@font/open_sans_semibold"
+              android:text="Show more banks"
+              android:textColor="@color/common_text_color" />
+
+            <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:srcCompat="@drawable/ic_arrow_right" />
+
+          </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/saved_cards_layout"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/_1sdp"
-          android:background="@color/material_grey_400"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/_2sdp"
+          android:layout_marginTop="@dimen/_10sdp"
+          android:layout_marginEnd="@dimen/_2sdp"
+          android:background="@drawable/all_side_curve_bg"
+          android:elevation="@dimen/_2sdp"
+          android:paddingTop="@dimen/_4sdp"
+          android:paddingBottom="@dimen/_4sdp"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/payment_payment_title" />
-
-        <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/card_recycler"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/_2sdp"
-          android:layout_marginBottom="@dimen/_2sdp"
-          android:nestedScrollingEnabled="false"
-          android:visibility="gone"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/payment_payment_title" />
-
-        <View
-          android:id="@+id/card_view_dummy2"
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:background="@color/material_grey_400"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/card_recycler" />
-
-        <LinearLayout
-          android:id="@+id/add_new_card"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:foreground="?android:attr/selectableItemBackground"
-          android:gravity="center_vertical"
-          android:paddingStart="@dimen/_10sdp"
-          android:paddingTop="@dimen/_10sdp"
-          android:paddingEnd="@dimen/_10sdp"
-          android:paddingBottom="@dimen/_5sdp"
-          app:layout_constraintTop_toBottomOf="@id/card_view_dummy2">
-
-          <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_10sdp"
-            app:srcCompat="@drawable/ic_add_circle_outline" />
+          app:layout_constraintTop_toBottomOf="@id/netbanking_layout"
+          tools:visibility="visible">
 
           <TextView
+            android:id="@+id/payment_payment_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Add new debit/credit/corporate card"
-            android:textColor="@color/common_text_color" />
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingTop="@dimen/_3sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="Pay using saved cards"
+            android:textAllCaps="true"
+            android:textColor="@color/common_text_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+          <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/material_grey_400"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/payment_payment_title" />
 
-      </androidx.constraintlayout.widget.ConstraintLayout>
-
-      <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/wallet_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_2sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_2sdp"
-        android:background="@drawable/all_side_curve_bg"
-        android:elevation="@dimen/_2sdp"
-        android:paddingTop="@dimen/_4sdp"
-        android:paddingBottom="@dimen/_4sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/saved_cards_layout">
-
-        <TextView
-          android:id="@+id/wallet_title"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_5sdp"
-          android:fontFamily="@font/open_sans_semibold"
-          android:paddingStart="@dimen/_5sdp"
-          android:paddingTop="@dimen/_3sdp"
-          android:paddingEnd="@dimen/_5sdp"
-          android:paddingBottom="@dimen/_5sdp"
-          android:text="Wallet"
-          android:textAllCaps="true"
-          android:textColor="@color/common_text_color"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-          android:id="@+id/wallet_view_dummy"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/_1sdp"
-          android:background="@color/material_grey_400"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/wallet_title" />
-
-        <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/wallet_recycler"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/_2sdp"
-          android:layout_marginBottom="@dimen/_2sdp"
-          android:nestedScrollingEnabled="false"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/wallet_view_dummy" />
-
-      </androidx.constraintlayout.widget.ConstraintLayout>
-
-      <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/pay_by_link_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_2sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_2sdp"
-        android:background="@drawable/all_side_curve_bg"
-        android:elevation="@dimen/_2sdp"
-        android:paddingTop="@dimen/_4sdp"
-        android:paddingBottom="@dimen/_4sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/wallet_layout"
-        tools:visibility="visible">
-
-        <TextView
-          android:id="@+id/pay_by_link_title"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_5sdp"
-          android:fontFamily="@font/open_sans_semibold"
-          android:paddingStart="@dimen/_5sdp"
-          android:paddingTop="@dimen/_3sdp"
-          android:paddingEnd="@dimen/_5sdp"
-          android:paddingBottom="@dimen/_5sdp"
-          android:text="Pay via payment link"
-          android:textAllCaps="true"
-          android:textColor="@color/common_text_color"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-          android:id="@+id/pay_by_link_view1"
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:background="@color/material_grey_400"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/pay_by_link_title" />
-
-
-        <View
-          android:id="@+id/pay_by_link_view2"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/_1sdp"
-          android:background="@color/material_grey_400"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/pay_by_link_view1" />
-
-        <LinearLayout
-          android:id="@+id/add_external_email"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:foreground="?android:attr/selectableItemBackground"
-          android:gravity="center_vertical"
-          android:paddingStart="@dimen/_10sdp"
-          android:paddingTop="@dimen/_10sdp"
-          android:paddingEnd="@dimen/_10sdp"
-          android:paddingBottom="@dimen/_5sdp"
-          app:layout_constraintTop_toBottomOf="@id/pay_by_link_view2">
-
-          <ImageView
-            android:layout_width="wrap_content"
+          <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/card_recycler"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_10sdp"
-            app:srcCompat="@drawable/ic_add_circle_outline" />
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:nestedScrollingEnabled="false"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/payment_payment_title" />
+
+          <View
+            android:id="@+id/card_view_dummy2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/material_grey_400"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_recycler" />
+
+          <LinearLayout
+            android:id="@+id/add_new_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            app:layout_constraintTop_toBottomOf="@id/card_view_dummy2">
+
+            <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginEnd="@dimen/_10sdp"
+              app:srcCompat="@drawable/ic_add_circle_outline" />
+
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/open_sans_semibold"
+              android:text="Add new debit/credit/corporate card"
+              android:textColor="@color/common_text_color" />
+
+          </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/wallet_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/_2sdp"
+          android:layout_marginTop="@dimen/_10sdp"
+          android:layout_marginEnd="@dimen/_2sdp"
+          android:background="@drawable/all_side_curve_bg"
+          android:elevation="@dimen/_2sdp"
+          android:paddingTop="@dimen/_4sdp"
+          android:paddingBottom="@dimen/_4sdp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/saved_cards_layout">
 
           <TextView
+            android:id="@+id/wallet_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Enter email id, to receive the link"
-            android:textColor="@color/common_text_color" />
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingTop="@dimen/_3sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="Wallet"
+            android:textAllCaps="true"
+            android:textColor="@color/common_text_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+          <View
+            android:id="@+id/wallet_view_dummy"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/material_grey_400"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/wallet_title" />
+
+          <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/wallet_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:nestedScrollingEnabled="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/wallet_view_dummy" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/pay_by_link_section"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/_2sdp"
+          android:layout_marginTop="@dimen/_10sdp"
+          android:layout_marginEnd="@dimen/_2sdp"
+          android:layout_marginBottom="5dp"
+          android:background="@drawable/all_side_curve_bg"
+          android:elevation="@dimen/_2sdp"
+          android:paddingTop="@dimen/_4sdp"
+          android:paddingBottom="@dimen/_4sdp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/wallet_layout"
+          tools:visibility="visible">
+
+          <TextView
+            android:id="@+id/pay_by_link_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingTop="@dimen/_3sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="Pay via payment link"
+            android:textAllCaps="true"
+            android:textColor="@color/common_text_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+          <View
+            android:id="@+id/pay_by_link_view1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/material_grey_400"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pay_by_link_title" />
 
 
-      </androidx.constraintlayout.widget.ConstraintLayout>
+          <View
+            android:id="@+id/pay_by_link_view2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/material_grey_400"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pay_by_link_view1" />
+
+          <LinearLayout
+            android:id="@+id/add_external_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            app:layout_constraintTop_toBottomOf="@id/pay_by_link_view2">
+
+            <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginEnd="@dimen/_10sdp"
+              app:srcCompat="@drawable/ic_add_circle_outline" />
+
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/open_sans_semibold"
+              android:text="Enter email id, to receive the link"
+              android:textColor="@color/common_text_color" />
+
+          </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+      </LinearLayout>
 
       <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/payment_subscription_details_layout"
@@ -1082,7 +1094,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pay_by_link_section">
+        app:layout_constraintTop_toBottomOf="@id/payment_mode_ll">
 
         <TextView
           android:id="@+id/payment_subscription_details_title"

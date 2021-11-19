@@ -80,14 +80,14 @@ class OrderSummaryModel(
       OrderSummaryModel(
         type = OrderSummaryType.ABANDONED.type,
         count = TotalOrdersAbandoned,
-        color = R.color.red_F40000
+        color = R.color.red_E39595
       )
     )
     list.add(
       OrderSummaryModel(
         type = OrderSummaryType.ESCALATED.type,
         count = TotalOrdersEscalated,
-        color = R.color.red_F40000
+        color = R.color.red_E39595
       )
     )
     return list

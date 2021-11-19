@@ -28,7 +28,7 @@ import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.firestore.FirestoreManager
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.getData
 import com.framework.utils.roundToFloat
@@ -37,10 +37,8 @@ import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.framework.webengageconstant.DIGITAL_READINESS_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
 import com.google.android.material.snackbar.Snackbar
-import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
-import com.onboarding.nowfloats.rest.response.channel.ChannelsAccessTokenResponse
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.VisitingCardSheet
 
 class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessScoreBinding, DashboardViewModel>(), RecyclerItemClickListener {
@@ -142,7 +140,9 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
           val lat = session?.getFPDetails(Key_Preferences.LATITUDE)
           val long = session?.getFPDetails(Key_Preferences.LONGITUDE)
           var location = ""
+          val address = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)
           if (lat != null && long != null) location = "${if (shareChannelText.isNullOrEmpty().not()) "\n\n" else ""}\uD83D\uDCCD *Find us on map: http://www.google.com/maps/place/$lat,$long*\n\n"
+          if (address.isNullOrEmpty().not()) location = "$location Address: $address\n\n"
           val txt = String.format(messageDetail!!, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME) ?: "", session!!.getDomainName(false), shareChannelText, location)
           visitingCard(txt)
         }

@@ -103,7 +103,6 @@ uses-permission#android.permission.ACCESS_FINE_LOCATION
 ADDED from AndroidManifest.xml:26:5
 	android:name
 		ADDED from AndroidManifest.xml:26:22
-uses-permission#com.android.vending.BILLING
 ADDED from AndroidManifest.xml:27:5
 	android:name
 		ADDED from AndroidManifest.xml:27:22

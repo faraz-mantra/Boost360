@@ -5,10 +5,11 @@ package com.dashboard.utils
 import android.app.ProgressDialog
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
+import com.dashboard.R
 
 class ProgressAsyncTask(activity: AppCompatActivity) : AsyncTask<Void?, Void?, Void?>() {
 
-  var progressDialog = ProgressDialog(activity)
+  var progressDialog = ProgressDialog(activity, R.style.AppCompatAlertDialogStyle)
 
   override fun onPreExecute() {
     progressDialog.setMessage("Loading. Please wait...")

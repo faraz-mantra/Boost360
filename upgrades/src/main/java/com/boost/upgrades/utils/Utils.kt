@@ -9,7 +9,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.boost.upgrades.data.api_model.GetAllWidgets.GetAllWidgets
 import com.boost.upgrades.utils.Constants.Companion.BASE_URL
-import com.framework.rest.ServiceInterceptor
+import com.framework.analytics.SentryController
+import com.framework.rest.TokenAuthenticator
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
@@ -19,8 +20,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.IOException
 import java.io.InputStream
-import java.lang.Integer.parseInt
-import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -30,22 +29,25 @@ object Utils {
 
 
   //getting retrofit instance
-  fun getRetrofit(token: String? = null): Retrofit {
+  fun getRetrofit(
+    isAuthRemove: Boolean = false
+  ): Retrofit {
     val client = Retrofit.Builder()
     client.baseUrl(BASE_URL)
     client.addConverterFactory(ScalarsConverterFactory.create())
     client.addConverterFactory(GsonConverterFactory.create())
     client.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-    client.client(httpClient(token))
+    client.client(httpClient(isAuthRemove))
     return client.build()
   }
-  fun httpClient(token: String? = null): OkHttpClient {
-//    val authInterceptor = ServiceInterceptor(false, token)
+
+  fun httpClient(isAuthRemove: Boolean): OkHttpClient {
+    val tokenAuthenticator = TokenAuthenticator(isAuthRemove)
     val httpClient = OkHttpClient.Builder()
     httpClient.readTimeout(2, TimeUnit.MINUTES)
       .connectTimeout(2, TimeUnit.MINUTES)
       .writeTimeout(2, TimeUnit.MINUTES)
-//    httpClient.addInterceptor(authInterceptor)
+    httpClient.authenticator(tokenAuthenticator)
     return httpClient.build()
   }
 
@@ -55,6 +57,7 @@ object Utils {
         activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
       inputMethodManager.hideSoftInputFromWindow(activity.currentFocus?.windowToken, 0)
     } catch (e: Exception) {
+      SentryController.captureException(e)
       Log.e(Utils::class.java.name, e?.localizedMessage ?: "")
     }
   }
@@ -89,6 +92,7 @@ object Utils {
       val listPersonType = object : TypeToken<List<GetAllWidgets>>() {}.type
       data = gson.fromJson(jsonString, listPersonType)
     } catch (ex: Exception) {
+      SentryController.captureException(ex)
       Log.e(Utils::class.java.name, ex?.localizedMessage ?: "")
       return null
     }
@@ -193,6 +197,7 @@ object Utils {
       json = String(buffer)
     } catch (ioException: IOException) {
       ioException.printStackTrace()
+      SentryController.captureException(ioException)
       return null
     }
     return json
@@ -208,6 +213,7 @@ object Utils {
       json = String(buffer)
     } catch (ioException: IOException) {
       ioException.printStackTrace()
+      SentryController.captureException(ioException)
       return null
     }
     return json
@@ -223,6 +229,7 @@ object Utils {
       json = String(buffer)
     } catch (ioException: IOException) {
       ioException.printStackTrace()
+      SentryController.captureException(ioException)
       return null
     }
     return json

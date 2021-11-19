@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.framework.models.firestore.FirestoreManager;
+import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.nowfloats.AccrossVerticals.API.APIInterfaces;
 import com.nowfloats.AccrossVerticals.API.model.GetDomain.GetDomainData;
 import com.nowfloats.AccrossVerticals.domain.ui.ActiveDomain.ActiveDomainFragment;
@@ -74,6 +74,7 @@ public class DomainEmailActivity extends AppCompatActivity {
     private void createView() {
         if (session.getStoreWidgets().contains("DOMAINPURCHASE")) {
             loadData();
+            onDomainAddedOrUpdated(true);
         } else {
             addFragment(new DomainNotPurchaseFragment(), "DOMAIN_NOT_PURCHASE_FRAGMENT");
             onDomainAddedOrUpdated(false);

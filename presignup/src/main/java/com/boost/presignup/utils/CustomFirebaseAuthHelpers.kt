@@ -11,8 +11,6 @@ import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
-import com.framework.pref.UserSessionManager
-import com.framework.pref.getAccessTokenAuth
 import com.framework.rest.ServiceInterceptor
 import com.framework.utils.BuildConfigUtil
 import com.framework.webengageconstant.*
@@ -64,14 +62,13 @@ class CustomFirebaseAuthHelpers constructor(
 
   init {
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//        .requestIdToken(activity.getString(R.string.default_web_client_id))
+//        .requestIdToken(activity.getString(R.string.server_client_id))
       .requestIdToken(BuildConfigUtil.getBuildConfigField("GOOGLE_SERVER_CLIENT_ID") ?: "")
       .requestEmail()
       .build()
     retrofit = Retrofit.Builder()
       .baseUrl("https://api2.withfloats.com")
-      .client(OkHttpClient.Builder().addInterceptor(
-        ServiceInterceptor(false,UserSessionManager(activity).getAccessTokenAuth()?.token)).build())
+      .client(OkHttpClient.Builder().addInterceptor(ServiceInterceptor(false)).build())
       .addConverterFactory(GsonConverterFactory.create())
       .build()
     this.currentActivity = activity

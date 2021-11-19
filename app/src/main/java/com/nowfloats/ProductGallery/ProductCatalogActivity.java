@@ -4,12 +4,7 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -26,22 +21,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.appservice.constant.FragmentType;
 import com.appservice.constant.IntentConstant;
-import com.framework.models.firestore.FirestoreManager;
+import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.framework.utils.ContentSharing;
-import com.framework.views.fabButton.FloatingActionButton;
+import com.framework.views.zero.old.AppFragmentZeroCase;
+import com.framework.views.zero.old.AppOnZeroCaseClicked;
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
+import com.framework.views.zero.old.AppZeroCases;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.ProductGallery.Adapter.ProductCategoryRecyclerAdapter;
 import com.nowfloats.ProductGallery.Model.ImageListModel;
 import com.nowfloats.ProductGallery.Model.Product;
 import com.nowfloats.ProductGallery.Service.ProductGalleryInterface;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.nowfloats.widget.WidgetKey;
-import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityProductCatalogBinding;
@@ -59,12 +55,11 @@ import static com.framework.webengageconstant.EventLabelKt.CLICK;
 import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
 import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_PRODUCTS_CATALOGUE_ADD_NEW;
 import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_PRODUCTS_CATALOGUE_ITEM;
-import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_MANAGE_CONTENT;
 import static com.framework.webengageconstant.EventNameKt.PRODUCT_CATALOGUE_LIST;
 import static com.framework.webengageconstant.EventValueKt.EVENT_VALUE_MANAGE_CONTENT;
 import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
 
-public class ProductCatalogActivity extends AppCompatActivity implements WidgetKey.OnWidgetListener {
+public class ProductCatalogActivity extends AppCompatActivity implements WidgetKey.OnWidgetListener, AppOnZeroCaseClicked {
 
     // For sharing
     private static final int STORAGE_CODE = 120;
@@ -76,18 +71,24 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     private ActivityProductCatalogBinding binding;
     private ProductCategoryRecyclerAdapter adapter;
     private UserSessionManager session;
+    private MenuItem itemToAdd;
     private boolean stop = false;
     private boolean isLoading = false;
     private int limit = WidgetKey.WidgetLimit.FEATURE_NOT_AVAILABLE.getValue();
+    private AppFragmentZeroCase appFragmentZeroCase;
+    private static final String TAG = "ProductCatalogActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        session = new UserSessionManager(getApplicationContext(), this);
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_catalog);
+        appFragmentZeroCase =new AppRequestZeroCaseBuilder(getZeroCaseFromServiceCode(session.getFP_AppExperienceCode()),this,this).getRequest().build();
+        getSupportFragmentManager().beginTransaction().add(binding.childContainer.getId(),appFragmentZeroCase).commit();
         WebEngageController.trackEvent(PRODUCT_CATALOGUE_LIST, PAGE_VIEW, EVENT_VALUE_MANAGE_CONTENT);
         setSupportActionBar(binding.layoutToolbar.toolbar);
 
-        session = new UserSessionManager(getApplicationContext(), this);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -95,17 +96,32 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
             getSupportActionBar().setTitle("");
             binding.layoutToolbar.toolbarTitle.setText(Utils.getProductCatalogTaxonomyFromServiceCode(session.getFP_AppExperienceCode()));
+
             binding.layoutToolbar.toolbar.setNavigationIcon(R.drawable.ic_back_arrow_white);
-            binding.tvMessage.setText(String.format(getString(R.string.product_empty_view_message),
-                    Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode()).toLowerCase()));
+          /*  binding.tvMessage.setText(String.format(getString(R.string.product_empty_view_message),
+                    Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode()).toLowerCase()));*/
         }
 
         this.initProductRecyclerView();
         getProducts(false);
         getWidgetLimit();
         checkIsAdd();
-        binding.btnAdd.setOnClickListener(v -> addProduct());
-        binding.btnAddCatalogue.setOnClickListener(v -> addProduct());
+//        binding.btnAddCatalogue.setOnClickListener(view -> addProduct());
+    }
+
+    public static AppZeroCases getZeroCaseFromServiceCode(String category_code) {
+        switch (category_code) {
+            case "HOS":
+                return AppZeroCases.HOSPITAL_SERVICES;
+            case "SPA":
+                return AppZeroCases.SPA_SERVICES;
+            case "SAL":
+                return AppZeroCases.SALON_SERVICES;
+            case "EDU":
+                return AppZeroCases.EDUCATION_SERVICES;
+            default:
+                return AppZeroCases.SERVICES;
+        }
     }
 
     private void checkIsAdd() {
@@ -150,22 +166,22 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
             @Override
             public void success(List<Product> data, Response response) {
 
+                Log.i(TAG, "success: ");
                 isLoading = false;
 
                 binding.pbLoading.setVisibility(View.GONE);
-
-                if (data != null && response.getStatus() == 200) {
+               if (data != null && response.getStatus() == 200) {
                     if (data.size() > 0) {
-                        binding.btnAdd.setVisibility(View.VISIBLE);
-                        binding.layoutEmptyView.setVisibility(View.GONE);
+                        if (itemToAdd != null) itemToAdd.setVisible(true);
+                        nonEmptyView();
                         adapter.setData(data, flag);
                         onProductServiceAddedOrUpdated(data.size());
                         return;
                     }
 
                     if (adapter.getItemCount() == 0) {
-                        binding.btnAdd.setVisibility(View.GONE);
-                        binding.layoutEmptyView.setVisibility(View.VISIBLE);
+                        if (itemToAdd != null) itemToAdd.setVisible(false);
+                        emptyView();
                     }
                 }
 
@@ -242,7 +258,9 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_add, menu);
+        getMenuInflater().inflate(R.menu.menu_add, menu);
+        itemToAdd = menu.findItem(R.id.menu_add);
+        itemToAdd.setVisible(true);
         return true;
     }
 
@@ -434,7 +452,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         newProduct.setPrepaidOnlineAvailable(p.prepaidOnlineAvailable);
         newProduct.setMaxPrepaidOnlineAvailable(p.maxPrepaidOnlineAvailable);
         if (p.BuyOnlineLink != null) {
-            newProduct.setBuyOnlineLink(new com.appservice.model.serviceProduct.BuyOnlineLink(p.BuyOnlineLink.url, p.BuyOnlineLink.description));
+            newProduct.setUniquePaymentUrl(new com.appservice.model.serviceProduct.UniquePaymentUrlN(p.BuyOnlineLink.url, p.BuyOnlineLink.description));
         }
         if (p.keySpecification != null) {
             newProduct.setKeySpecification(new com.appservice.model.KeySpecification(p.keySpecification.key, p.keySpecification.value));
@@ -472,4 +490,35 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     }
 
 
+    private void nonEmptyView() {
+        binding.mainlayout.setVisibility(View.VISIBLE);
+        binding.childContainer.setVisibility(View.GONE);
+    }
+
+
+    private void emptyView() {
+        binding.mainlayout.setVisibility(View.GONE);
+        binding.childContainer.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void primaryButtonClicked() {
+        addProduct();
+    }
+
+    @Override
+    public void secondaryButtonClicked() {
+
+    }
+
+    @Override
+    public void ternaryButtonClicked() {
+
+    }
+
+    @Override
+    public void appOnBackPressed() {
+
+    }
 }

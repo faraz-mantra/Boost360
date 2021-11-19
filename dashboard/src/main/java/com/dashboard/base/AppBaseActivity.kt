@@ -2,7 +2,6 @@ package com.dashboard.base
 
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
@@ -68,6 +67,13 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
         window.decorView.systemUiVisibility = flags
       }
     }
+    window?.statusBarColor = ContextCompat.getColor(this, taskBarColor)
+  }
+
+  fun changeTheme(color: Int, taskBarColor: Int) {
+    getToolbar()?.setBackgroundColor(ContextCompat.getColor(this, color))
+    window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+    window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
     window?.statusBarColor = ContextCompat.getColor(this, taskBarColor)
   }
 }

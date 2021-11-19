@@ -149,30 +149,11 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
               }
               floatingPointId = it.stringResponse ?: ""
               saveFpCreateData()
-              setReferralCode(floatingPointId)
               apiProcessChannelWhatsApp(dotProgressBar, floatingPointId)
             } else updateError("Floating point return null", it.status, "CREATE")
           } else updateError(it.error?.localizedMessage, it.status, "CREATE")
         })
     } else apiProcessChannelWhatsApp(dotProgressBar, floatingPointId)
-  }
-
-  private fun setReferralCode(floatingPointId: String) {
-    if (prefReferral?.getString(PreferenceConstant.REFER_CODE_APP, "").isNullOrEmpty().not()) {
-      var email = pref?.getString(PreferenceConstant.PERSON_EMAIL, "")
-      if (email.isNullOrEmpty().not()) email = requestFloatsModel?.contactInfo?.email
-      InviteReferralsApi.getInstance(baseActivity).tracking(
-        "register",
-        email,
-        0,
-        prefReferral?.getString(PreferenceConstant.REFER_CODE_APP, ""),
-        floatingPointId
-      )
-      prefReferral?.edit()?.apply {
-        putString(PreferenceConstant.REFER_CODE_APP, "")
-        apply()
-      }
-    }
   }
 
   private fun saveFpCreateData() {

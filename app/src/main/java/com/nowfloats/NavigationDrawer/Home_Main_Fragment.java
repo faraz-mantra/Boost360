@@ -7,14 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,7 +39,7 @@ import com.appservice.constant.IntentConstant;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.dashboard.utils.CodeUtilsKt;
-import com.framework.models.firestore.FirestoreManager;
+import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.framework.utils.ContentSharing;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity;
@@ -82,8 +77,6 @@ import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import com.thinksity.R;
 
 import org.json.JSONObject;
@@ -845,7 +838,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
         newProduct.setPrepaidOnlineAvailable(p.prepaidOnlineAvailable);
         newProduct.setMaxPrepaidOnlineAvailable(p.maxPrepaidOnlineAvailable);
         if (p.BuyOnlineLink != null) {
-            newProduct.setBuyOnlineLink(new com.appservice.model.serviceProduct.BuyOnlineLink(p.BuyOnlineLink.url, p.BuyOnlineLink.description));
+            newProduct.setUniquePaymentUrl(new com.appservice.model.serviceProduct.UniquePaymentUrlN(p.BuyOnlineLink.url, p.BuyOnlineLink.description));
         }
         if (p.keySpecification != null) {
             newProduct.setKeySpecification(new com.appservice.model.KeySpecification(p.keySpecification.key, p.keySpecification.value));

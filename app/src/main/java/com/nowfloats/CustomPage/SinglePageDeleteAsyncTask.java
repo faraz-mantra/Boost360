@@ -8,6 +8,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.CustomWidget.HttpDeleteWithBody;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
@@ -25,7 +26,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-
+import java.util.ArrayList;
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_DELETE_CUSTOMPAGE;
 import static com.framework.webengageconstant.EventLabelKt.FAILED_TO_DELETE_CUSTOMPAGE;
 import static com.framework.webengageconstant.EventNameKt.DELETE_CUSTOMPAGE;
@@ -41,13 +42,14 @@ public class SinglePageDeleteAsyncTask extends AsyncTask<String, String, String>
     private MaterialDialog materialProgress;
     private String pageId;
     private int position;
+    public ArrayList<CustomPageModel> dataModel;
 
-    public SinglePageDeleteAsyncTask(String url, Activity activity, String tag, String pageId,
-                                     int position) {
+    public SinglePageDeleteAsyncTask(String url, Activity activity, String tag, ArrayList<CustomPageModel> dataModel, int position) {
         this.url = url;
         this.activity = activity;
         this.tag = tag;
-        this.pageId = pageId;
+        this.pageId = dataModel.get(position).PageId;
+        this.dataModel = dataModel;
         this.position = position;
         flag = false;
     }
@@ -117,7 +119,7 @@ public class SinglePageDeleteAsyncTask extends AsyncTask<String, String, String>
                         materialProgress.dismiss();
                     if (flag) {
                         activity.finish();
-                        CustomPageFragment.dataModel.remove(position);
+                        dataModel.remove(position);
                         Methods.showSnackBarPositive(activity, activity.getString(R.string.page_removed));
                         if (CustomPageFragment.custompageAdapter != null)
                             CustomPageFragment.custompageAdapter.notifyDataSetChanged();

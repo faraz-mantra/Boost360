@@ -16,29 +16,29 @@ import com.thinksity.R;
  */
 
 public class BusinessEnquiryActivity extends AppCompatActivity {
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_business_enquiry);
-        CustomToolbar toolbar = (CustomToolbar) findViewById(R.id.toolbar);
+  @Override
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_business_enquiry);
+    CustomToolbar toolbar = (CustomToolbar) findViewById(R.id.toolbar);
 
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setTitle(getString(R.string.business_enquiries_title));
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_parent, new Business_Enquiries_Fragment())
-                .commit();
+    setSupportActionBar(toolbar);
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().setDisplayShowHomeEnabled(true);
+      getSupportActionBar().setTitle(getString(R.string.business_enquiries_title));
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+    getSupportFragmentManager().beginTransaction()
+        .add(R.id.fragment_parent, new Business_Enquiries_Fragment())
+        .commit();
+  }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-            return true;
-        } else return super.onOptionsItemSelected(item);
-    }
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == android.R.id.home) {
+      finish();
+      overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+      return true;
+    } else return super.onOptionsItemSelected(item);
+  }
 }

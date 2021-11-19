@@ -10,8 +10,7 @@ import com.inventoryorder.model.ordersdetails.ItemN
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 
-class AppointmentDetailsViewHolder(binding: ItemBookingDetailsBinding) :
-  AppBaseRecyclerViewHolder<ItemBookingDetailsBinding>(binding) {
+class AppointmentDetailsViewHolder(binding: ItemBookingDetailsBinding) : AppBaseRecyclerViewHolder<ItemBookingDetailsBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)

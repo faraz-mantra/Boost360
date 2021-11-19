@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <com.framework.views.customViews.CustomCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/size_5"
+    android:layout_marginTop="@dimen/size_7"
+    android:layout_marginBottom="@dimen/size_4"
+    app:cardCornerRadius="@dimen/size_6"
+    android:background="@color/colorAccent">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/image_icon"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_110"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/placeholder_image_n" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/title_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_5"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="@color/black_4f4f4f"
+        app:textType="HEADING_6"
+        tools:text="Er. Sweeta Sharma" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/title_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_1"
+        android:ellipsize="end"
+        android:fontFamily="@font/regular"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="@color/grey_dark_2"
+        app:textType="CAPTION"
+        tools:text="Urban Planner" />
+
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/btn_share"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_34"
+        android:layout_marginTop="@dimen/size_6"
+        android:background="@color/blue_accent_10"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:text="Share Profile"
+        android:textAllCaps="true"
+        android:textColor="@color/accent_blue" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </com.framework.views.customViews.CustomCardView>
+</layout>

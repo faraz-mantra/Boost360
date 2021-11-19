@@ -8,6 +8,18 @@
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.CAMERA" />
+  <queries>
+    <package android:name="com.whatsapp" />
+    <package android:name="com.google.android.gm" />
+    <package android:name="com.facebook.orca" />
+    <package android:name="com.facebook.katana" />
+    <package android:name="com.twitter.android" />
+    <package android:name="com.linkedin.android" />
+    <package android:name="com.google.android.apps.plus" />
+    <package android:name="com.pinterest" />
+    <package android:name="org.telegram.messenger" />
+  </queries>
 
-  <application android:theme="@style/BaseTheme" />
+  <application
+      android:theme="@style/BaseTheme" />
 </manifest>
