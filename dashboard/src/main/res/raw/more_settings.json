@@ -1,0 +1,140 @@
+{
+  "useful_links": [
+    {
+      "icon": "ria_digital_assistant",
+      "isActionButtonEnabled": false,
+      "subtitle": "FAQs, help & support, notifications etc.",
+      "title": "Help and support"
+    },
+    {
+      "icon": "business_kyc",
+      "actionBtn": {
+        "color": "#EB5757",
+        "title": "Add",
+        "text_color": "#FFFFFF"
+      },
+      "isActionButtonEnabled": true,
+      "subtitle": "Get verified to access additional features.",
+      "title": "My business KYC"
+    },
+    {
+      "icon": "boost_keyboard",
+      "isActionButtonEnabled": false,
+      "subtitle": "Share business details with customers.",
+      "title": "Business keyboard"
+    },
+    {
+      "icon": "refer_and_earn",
+      "actionBtn": {
+        "color": "#7ED321",
+        "title": "New",
+        "text_color": "#FFFFFF"
+      },
+      "isActionButtonEnabled": true,
+      "subtitle": "Help your friends grow along.",
+      "title": "Refer & earn"
+    },
+    {
+      "icon": "my_bank_acccount",
+      "actionBtn": {
+        "color": "#EB5757",
+        "title": "Add",
+        "text_color": "#FFFFFF"
+      },
+      "isActionButtonEnabled": true,
+      "subtitle": "Connect & manage your bank account.",
+      "title": "My bank account"
+    },
+    {
+      "icon": "custom_website_domain",
+      "actionBtn": {
+        "color": "#F2FBE9",
+        "title": "Verified",
+        "text_color": "#7ED321"
+      },
+      "isActionButtonEnabled": false,
+      "subtitle": "Manage your website domain integration.",
+      "title": "Custom Website\nDomain"
+    },
+    //    {
+    //      "icon": "boost_academy",
+    //      "actionBtn": {
+    //        "color": "#FFFFFF",
+    //        "title": "New"
+    //      },
+    //      "isActionButtonEnabled": false,
+    //      "subtitle": "Learn to make the most of your business website.",
+    //      "title": "Boost 360 academy"
+    //    },
+    {
+      "icon": "training_and_certification",
+      "actionBtn": {
+        "color": "#FFFFFF",
+        "title": "New"
+      },
+      "isActionButtonEnabled": false,
+      "subtitle": "Become an expert at marketing.",
+      "title": "Boost 360 training\n& certification"
+    },
+    {
+      "icon": "boost_extension",
+      "actionBtn": {
+        "color": "#FFFFFF",
+        "title": "New"
+      },
+      "isActionButtonEnabled": false,
+      "subtitle": "Already have a website? Connect with Boost 360.",
+      "title": "Boost 360\nextensions"
+    }
+  ],
+  "about_app_section": [
+    //  {
+    //    "icon": "whats_new_version",
+    //    "subtitle": "<data would change dynamically based on features>",
+    //    "title": "What’s new in latest version",
+    //    "actionBtn": {
+    //      "color": "#FFB900",
+    //      "text_color":"#FFFFFF",
+    //      "title": "V16.4"
+    //    }
+    //  },
+    {
+      "icon": "frequently_asked_question",
+      "subtitle": "Get answers to the most common queries.",
+      "title": "Frequently asked questions"
+    },
+    {
+      "icon": "like_us_on_facebook",
+      "subtitle": "Become a part of the Boost 360 community.",
+      "title": "Like us on Facebook"
+    },
+    {
+      "icon": "follow_us_on_twitter",
+      "subtitle": "Discover more about Boost 360 on Twitter.",
+      "title": "Follow us on Twitter"
+    },
+    {
+      "icon": "rate_us_on_google_play",
+      "subtitle": "Help us improve further with your positive reviews.",
+      "title": "Rate us on Playstore"
+    },
+    {
+      "icon": "terms_of_usages",
+      "subtitle": "Last updated on Nov 22, 2020.",
+      "title": "Terms of use"
+    },
+    {
+      "icon": "privacy_policy",
+      "subtitle": "Last updated on Nov 22, 2020.",
+      "title": "Privacy policy"
+    },
+    {
+      "view_type_2": "We’re listening :)"
+    },
+    {
+      "icon": "help_us_make_boost_better",
+      "subtitle": "Suggest a feature or share a your feedback.",
+      "title": "Help us make Boost 360 better"
+    }
+  ]
+}

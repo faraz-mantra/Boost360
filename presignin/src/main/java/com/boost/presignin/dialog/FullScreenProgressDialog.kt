@@ -3,6 +3,7 @@ package com.boost.presignin.dialog
 import androidx.fragment.app.FragmentManager
 import com.boost.presignin.R
 import com.boost.presignin.databinding.FullScreenDialogBinding
+import com.framework.analytics.SentryController
 import com.framework.base.BaseDialogFragment
 import com.framework.models.BaseViewModel
 import com.framework.utils.ConversionUtils
@@ -48,6 +49,7 @@ class FullScreenProgressDialog : BaseDialogFragment<FullScreenDialogBinding, Bas
       if (this.isVisible.not()) show(manager, "")
     } catch (e: IllegalStateException) {
       e.printStackTrace()
+      SentryController.captureException(e)
     }
   }
 
@@ -56,6 +58,8 @@ class FullScreenProgressDialog : BaseDialogFragment<FullScreenDialogBinding, Bas
       if (isRemoving.not()) dismiss()
     } catch (e: IllegalStateException) {
       e.printStackTrace()
+      SentryController.captureException(e)
+
     }
   }
 

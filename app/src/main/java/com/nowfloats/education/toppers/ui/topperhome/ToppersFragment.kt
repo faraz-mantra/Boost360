@@ -1,9 +1,9 @@
 package com.nowfloats.education.toppers.ui.topperhome
 
-import android.os.Bundle
-import android.view.LayoutInflater
+import android.app.ProgressDialog
+import android.content.Intent
+import android.os.Handler
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -12,8 +12,18 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.boost.upgrades.UpgradeActivity
+import com.framework.base.BaseFragment
+import com.framework.extensions.gone
+import com.framework.extensions.visible
+import com.framework.models.BaseViewModel
 import com.framework.views.fabButton.FloatingActionButton
-import com.nowfloats.education.helper.BaseFragment
+import com.framework.views.zero.old.AppFragmentZeroCase
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
+import com.nowfloats.Login.UserSessionManager
+import com.nowfloats.education.helper.Constants
 import com.nowfloats.education.helper.Constants.SUCCESS
 import com.nowfloats.education.helper.Constants.TOPPERS_DETAILS_FRAGMENT
 import com.nowfloats.education.helper.Constants.TOPPERS_FRAGMENT
@@ -24,29 +34,19 @@ import com.nowfloats.education.toppers.model.Data
 import com.nowfloats.education.toppers.ui.topperdetails.TopperDetailsFragment
 import com.nowfloats.util.Utils
 import com.thinksity.R
+import com.thinksity.databinding.ToppersFragmentBinding
 import org.koin.android.ext.android.inject
 
-class ToppersFragment : BaseFragment(), ItemClickEventListener {
+class ToppersFragment : BaseFragment<ToppersFragmentBinding, BaseViewModel>(), ItemClickEventListener,
+  AppOnZeroCaseClicked {
 
-  private val viewModel by inject<ToppersViewModel>()
+  private val myViewModel by inject<ToppersViewModel>()
   private val toppersAdapter: TopperAdapter by lazy { TopperAdapter(this) }
   private lateinit var toppersActivity: ToppersActivity
+  private lateinit var zeroCaseFragment: AppFragmentZeroCase
+  private var session:UserSessionManager?=null
 
-  override fun onCreateView(
-    inflater: LayoutInflater, container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.toppers_fragment, container, false)
-  }
 
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-
-    toppersActivity = activity as ToppersActivity
-    setHeader(view)
-    initLiveDataObservers()
-    initBatchesRecyclerview(view)
-  }
 
   private fun initBatchesRecyclerview(view: View) {
     val recyclerview = view.findViewById<RecyclerView>(R.id.topper_recycler)
@@ -59,20 +59,21 @@ class ToppersFragment : BaseFragment(), ItemClickEventListener {
 
     if (Utils.isNetworkConnected(requireContext())) {
       showLoader(getString(R.string.loading_our_topper))
-      viewModel.getOurToppers()
+      myViewModel.getOurToppers()
     } else {
-      showToast(resources.getString(R.string.noInternet))
+      showLongToast(resources.getString(R.string.noInternet))
     }
   }
 
   private fun initLiveDataObservers() {
-    viewModel.apply {
+    myViewModel.apply {
       ourTopperResponse.observe(viewLifecycleOwner, Observer {
         if (!it.Data.isNullOrEmpty()) {
+          nonEmptyView()
           setRecyclerviewAdapter(it.Data)
         } else{
+          emptyView()
           setRecyclerviewAdapter(arrayListOf())
-          showToast(getString(R.string.our_topper_data_empty))
         }
         hideLoader()
       })
@@ -88,7 +89,7 @@ class ToppersFragment : BaseFragment(), ItemClickEventListener {
             Toast.makeText(requireContext(), getString(R.string.topper_deleted_successfully), Toast.LENGTH_SHORT).show()
             showLoader(getString(R.string.loading_topper))
             setDeleteTopperLiveDataValue("")
-            viewModel.getOurToppers()
+            myViewModel.getOurToppers()
           }
         }
         hideLoader()
@@ -131,7 +132,7 @@ class ToppersFragment : BaseFragment(), ItemClickEventListener {
   override fun onDeleteClick(data: Any, position: Int) {
     toppersAdapter.menuOption(position, false)
     showLoader(getString(R.string.deleting_topper))
-    viewModel.deleteOurTopper(data as Data)
+    myViewModel.deleteOurTopper(data as Data)
   }
 
   private fun updateItemMenuOptionStatus(position: Int, status: Boolean) {
@@ -142,4 +143,114 @@ class ToppersFragment : BaseFragment(), ItemClickEventListener {
   companion object {
     fun newInstance(): ToppersFragment = ToppersFragment()
   }
+
+  override fun getLayout(): Int {
+    return R.layout.toppers_fragment
+  }
+
+  override fun getViewModelClass(): Class<BaseViewModel> {
+    return BaseViewModel::class.java
+  }
+
+  override fun onCreateView() {
+    session = UserSessionManager(requireActivity(),requireActivity())
+    zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.TOPPERS, this, baseActivity,isPremium()).getRequest().build()
+
+    addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
+
+    toppersActivity = activity as ToppersActivity
+    binding?.root?.let {
+      setHeader(it)
+      if (isPremium()){
+        initLiveDataObservers()
+        initBatchesRecyclerview(it)
+        nonEmptyView()
+      }else{
+        emptyView()
+      }
+    }
+
+  }
+
+  fun isPremium(): Boolean {
+    return session?.storeWidgets?.contains(Constants.TOPPER_FEATURE)==true
+  }
+
+  private fun nonEmptyView() {
+    setHasOptionsMenu(true)
+    binding?.mainlayout?.visible()
+    binding?.childContainer?.gone()
+  }
+
+
+  private fun emptyView() {
+    setHasOptionsMenu(false)
+    binding?.mainlayout?.gone()
+    binding?.childContainer?.visible()
+
+//    binding?.bookingRecycler?.gone()
+//    binding?.errorView?.visible()
+//    binding?.btnAdd?.gone()
+  }
+
+  override fun primaryButtonClicked() {
+    if (isPremium()){
+      (activity as ToppersActivity).addFragment(
+        TopperDetailsFragment.newInstance(),
+        TOPPERS_DETAILS_FRAGMENT
+      )
+    }else{
+      initiateBuyFromMarketplace()
+    }
+
+  }
+
+
+
+  override fun secondaryButtonClicked() {
+    Toast.makeText(activity, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
+  }
+
+  override fun ternaryButtonClicked() {
+  }
+
+  override fun appOnBackPressed() {
+
+  }
+
+  private fun initiateBuyFromMarketplace() {
+    session?.let {
+      val progressDialog = ProgressDialog(requireActivity())
+      val status = "Loading. Please wait..."
+      progressDialog.setMessage(status)
+      progressDialog.setCancelable(false)
+      progressDialog.show()
+      val intent = Intent(requireActivity(), UpgradeActivity::class.java)
+      intent.putExtra("expCode", it.fP_AppExperienceCode)
+      intent.putExtra("fpName", it.fpName)
+      intent.putExtra("fpid", it.fpid)
+      intent.putExtra("loginid", it.userProfileId)
+      intent.putStringArrayListExtra("userPurchsedWidgets", com.nowfloats.util.Constants.StoreWidgets)
+      intent.putExtra("fpTag", it.fpTag)
+      if (it.userProfileEmail != null) {
+        intent.putExtra("email", it.userProfileEmail)
+      } else {
+        intent.putExtra("email", "ria@nowfloats.com")
+      }
+      if (it.userPrimaryMobile != null) {
+        intent.putExtra("mobileNo", it.userPrimaryMobile)
+      } else {
+        intent.putExtra("mobileNo", "9160004303")
+      }
+      intent.putExtra("profileUrl", it.fpLogo)
+      intent.putExtra("buyItemKey", Constants.TOPPER_FEATURE)
+      startActivity(intent)
+      Handler().postDelayed({
+        progressDialog.dismiss()
+        requireActivity().finish()
+      }, 1000)
+    }
+  }
+
+
 }

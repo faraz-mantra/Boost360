@@ -14,7 +14,16 @@
   <color name="gray_adadad">#ADADAD</color>
   <color name="gray_828282">#828282</color>
   <color name="green_6bc95c">#6BC95C</color>
+  <color name="green_6FCF97">#6FCF97</color>
   <color name="error_red">#E39595</color>
   <color name="red_dark">#D03F3F</color>
+  <color name="red_FF4200">#FF4200</color>
+  <color name="snackbar_negative_color">#E02200</color>
+  <color name="gray707070">#707070</color>
+  <color name="we_are_currently_">#898989</color>
+  <color name="black_3333">#333333</color>
+  <color name="red_apt">#EB5757</color>
+  <color name="red_F40000">#F40000</color>
+  <color name="green_dark">#27AE60</color>
   <color name="ButtoncolorAccent">@color/colorAccent</color>
 </resources>

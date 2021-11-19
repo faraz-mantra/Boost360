@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.framework.views.customViews.CustomCardView
+        android:layout_width="300dp"
+        app:cardUseCompatPadding="true"
+        android:layout_marginStart="@dimen/size_8"
+        android:layout_marginEnd="@dimen/size_16"
+        android:layout_height="400dp"
+        app:cardCornerRadius="@dimen/size_20">
+
+        <com.framework.views.customViews.CustomCardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/size_16"
+            app:cardCornerRadius="@dimen/size_10">
+
+            <FrameLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.festive.poster.customviews.CustomSvgImageView
+                    android:id="@+id/iv_svg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/iv_watermark"
+                    android:layout_width="match_parent"
+                    android:background="@color/shimmerGrey"
+                    android:layout_height="match_parent"
+                     />
+
+
+            </FrameLayout>
+        </com.framework.views.customViews.CustomCardView>
+    </com.framework.views.customViews.CustomCardView>
+</layout>

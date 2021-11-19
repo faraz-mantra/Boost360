@@ -6,6 +6,7 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.boost.presignin.R
+import com.framework.analytics.SentryController
 
 enum class ShareType(var id: String, var message: String) {
   WHATS_APP("com.whatsapp", "Whatsapp have not been installed!"),
@@ -29,6 +30,8 @@ fun AppCompatActivity.shareViaAnyApp(shareType: ShareType?, message: String) {
       )
     )
   } catch (ex: ActivityNotFoundException) {
+    SentryController.captureException(ex)
+
     Toast.makeText(
       this,
       shareType?.message ?: "Sharing error, please try again!",

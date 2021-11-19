@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <color name="colorAccent">#ffb900</color>
-  <color name="colorAccent_jio">@color/colorAccent</color>
   <color name="colorPrimary">#ffb900</color>
   <color name="colorPrimaryDark">#d99d00</color>
   <color name="snow_white">#fbfbfb</color>
   <color name="grey_white">#F0F0F0</color>
   <color name="grey_light_1_d">#e6e6e6</color>
   <color name="grey_light_2_d">#b5b5b5</color>
-  <color name="website_url">@color/colorAccent</color>
-  <color name="red_light_1">#EF4B39</color>
-  <color name="accent_light_red">@color/red_light_1</color>
+  <color name="red_light_1">#EB5757</color>
   <color name="accent_30">#4DFFB900</color>
+  <color name="green_lite">#7ED321</color>
+  <color name="green_more_settings">#01D34F</color>
+  <color name="red_more_settings">#EB5757</color>
+  <color name="gray_5c5c5c">#5c5c5c</color>
+  <color name="gray_eeee">#eeeeee</color>
+  <color name="color_orange_more">#F2994A</color>
+  <color name="green_more">#7ED321</color>
+
+  <color name="colorAccent_jio">@color/colorAccent</color>
+  <color name="website_url">@color/colorAccent</color>
+  <color name="accent_light_red">@color/red_light_1</color>
+
+
   <color name="black_4a4a4a_n">#4A4A4A</color>
   <color name="grey_575757_n">#575757</color>
   <color name="grey_333333_n">#333333</color>

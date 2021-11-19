@@ -1,5 +1,6 @@
 package com.framework.base
 
+import android.app.ProgressDialog
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -17,6 +18,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.framework.R
+import com.framework.analytics.SentryController
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
 import com.framework.utils.ConversionUtils
@@ -27,7 +29,7 @@ import io.reactivex.disposables.Disposable
 
 abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> : AppCompatActivity(), View.OnClickListener {
 
-  protected var TAG = this.javaClass.simpleName
+  protected open var TAG = this.javaClass.simpleName
   protected var navigator: Navigator? = null
   protected var binding: Binding? = null
   protected lateinit var viewModel: ViewModel
@@ -44,12 +46,12 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
     binding?.lifecycleOwner = this
     viewModel = ViewModelProviders.of(this).get(getViewModelClass())
     navigator = Navigator(this)
+    setToolbar()
     val observables = getObservables()
     for (observable in observables) {
       observable?.let { compositeDisposable.add(it) }
     }
     onCreateView()
-    setToolbar()
   }
 
   protected open fun getObservables(): List<Disposable?> {
@@ -142,9 +144,7 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
   private fun setToolbar() {
     val toolbar = getToolbar() ?: return
     if (!isHideToolbar()) {
-      toolbar.setNavigationOnClickListener {
-        onBackPressed()
-      }
+      toolbar.setNavigationOnClickListener { onBackPressed() }
       setToolbarTitle(getToolbarTitle())
       getToolbarSubTitle()?.let { setToolbarSubTitle(it) }
       toolbar.getNavImageButton()?.let {
@@ -229,19 +229,39 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
     for (view in views) view.setOnClickListener(null)
   }
 
+  open fun addFragment(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean,showAnim:Boolean=false) {
+    if (supportFragmentManager.isDestroyed) return
+    if (containerID == null || fragment == null) return
+
+    val fragmentTransaction = supportFragmentManager.beginTransaction()
+    if (showAnim){
+      fragmentTransaction?.
+      setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+    }
+    if (addToBackStack) {
+      fragmentTransaction.addToBackStack(fragment.javaClass.name)
+    }
+    fragmentTransaction.add(containerID, fragment, fragment.javaClass.name).commit()
+  }
+
   // Fragment
-  open fun addFragmentReplace(containerId: Int?, fragment: Fragment?, addToBackStack: Boolean) {
+  open fun addFragmentReplace(containerId: Int?, fragment: Fragment?, addToBackStack: Boolean,showAnim:Boolean=false) {
     if (supportFragmentManager.isDestroyed) return
     if (containerId == null || fragment == null) return
 
     val fragmentTransaction = supportFragmentManager.beginTransaction()
+    if (showAnim){
+      fragmentTransaction?.
+      setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+    }
     if (addToBackStack) {
       fragmentTransaction.addToBackStack(fragment.javaClass.name)
     }
     try {
-      fragmentTransaction.replace(containerId, fragment).commit()
+      fragmentTransaction.replace(containerId, fragment,fragment.javaClass.name).commit()
     } catch (e: IllegalStateException) {
       e.printStackTrace()
+      SentryController.captureException(e)
     }
   }
 
@@ -254,12 +274,16 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
     }
   }
 
-  fun showLongToast(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+  fun showLongToast(string: String?) {
+    string?.let {
+      Toast.makeText(this, string, Toast.LENGTH_LONG).show()
+    }
   }
 
-  fun showShortToast(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+  fun showShortToast(string: String?) {
+    string?.let {
+      Toast.makeText(this, string, Toast.LENGTH_SHORT).show()
+    }
   }
 
 }

@@ -16,7 +16,7 @@ import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessWebsiteBinding
 import com.onboarding.nowfloats.extensions.afterTextChanged
-import com.onboarding.nowfloats.extensions.drawableEnd
+import com.framework.extensions.drawableEnd
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
 import com.onboarding.nowfloats.model.channel.*

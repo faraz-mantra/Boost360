@@ -7,6 +7,7 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
 import android.text.style.StyleSpan
+import android.util.Log
 import android.widget.ImageView
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
@@ -29,7 +30,6 @@ import com.framework.extensions.observeOnce
 import com.framework.pref.*
 import com.framework.webengageconstant.*
 import com.invitereferrals.invitereferrals.InviteReferralsApi
-import com.onboarding.nowfloats.constant.PreferenceConstant
 import java.util.*
 
 open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBinding, LoginSignUpViewModel>() {
@@ -136,8 +136,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     binding?.confirmButton?.isEnabled = false
     binding?.fragmentStatusIv?.isClickable = true
     binding?.websiteStatusTv?.setTextColor(getColor(R.color.red_error_e3954))
-    binding?.websiteStatusTv?.text =
-      "'${binding?.websiteEt?.text?.toString()?.trim()}' ${getString(R.string.user_not_available)}"
+    binding?.websiteStatusTv?.text = "'${binding?.websiteEt?.text?.toString()?.trim()}' ${getString(R.string.user_not_available)}"
     binding?.fragmentStatusIv?.setImageResource(R.drawable.ic_error_business_website)
     binding?.fragmentStatusIv?.setOnClickListener { binding?.websiteEt?.text?.clear() }
   }
@@ -172,42 +171,35 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     showProgress("We're creating your online ${floatsRequest?.categoryDataModel?.category_Name}...")
     if (this.responseCreateProfile == null) {
       binding?.confirmButton?.isEnabled = true
-      viewModel?.createMerchantProfile(request = floatsRequest?.requestProfile)
-        ?.observeOnce(viewLifecycleOwner, {
-          val businessProfileResponse = it as? BusinessProfileResponse
-          if (it.isSuccess() && businessProfileResponse != null && businessProfileResponse.result?.loginId.isNullOrEmpty()
-              .not()
-          ) {
-            apiHitBusiness(businessProfileResponse)
-          } else {
-            hideProgress()
-            val msg = it?.errorNMessage()
-            showShortToast(
-              if (msg.isNullOrEmpty().not()) msg else getString(R.string.unable_to_create_profile)
-            )
-          }
-        })
+      viewModel?.createMerchantProfile(request = floatsRequest?.requestProfile)?.observeOnce(viewLifecycleOwner, {
+        val businessProfileResponse = it as? BusinessProfileResponse
+        if (it.isSuccess() && businessProfileResponse != null && businessProfileResponse.result?.loginId.isNullOrEmpty().not()) {
+          apiHitBusiness(businessProfileResponse)
+        } else {
+          hideProgress()
+          val msg = it?.errorNMessage()
+          showShortToast(if (msg.isNullOrEmpty().not()) msg else getString(R.string.unable_to_create_profile))
+        }
+      })
     } else apiHitBusiness(this.responseCreateProfile!!)
   }
 
 
-  private fun setReferralCode(floatingPointId: String) {
-    if (prefReferral?.getString(PreferenceConstant.REFER_CODE_APP, "").isNullOrEmpty().not()) {
-      var email = floatsRequest?.userBusinessEmail
-        ?: "noemail-${floatsRequest?.requestProfile?.ProfileProperties?.userMobile}@noemail.com"
-      if (email.isEmpty().not()) email = floatsRequest?.userBusinessEmail!!
-      InviteReferralsApi.getInstance(baseActivity).tracking(
-        "register",
-        email,
-        0,
-        prefReferral?.getString(PreferenceConstant.REFER_CODE_APP, ""),
-        floatingPointId
-      )
-      prefReferral?.edit()?.apply {
-        putString(PreferenceConstant.REFER_CODE_APP, "")
-        apply()
-      }
+  private fun setReferralCode(floatingPointId: String?) {
+    InviteReferralsApi.getInstance(baseActivity).ir_TrackingCallbackListener { tracking_response ->
+      Log.e("Tracking", "Response ir_TrackingCallbackListener = $tracking_response")
     }
+    InviteReferralsApi.getInstance(baseActivity).userDetailListener { ApiResponse ->
+      Log.e("Users", "Response userDetailListener = $ApiResponse")
+    }
+
+    val email = if (floatsRequest?.userBusinessEmail.isNullOrEmpty()) "noemail-${floatsRequest?.userBusinessMobile}@noemail.com" else floatsRequest?.userBusinessEmail
+    Log.e("Set Referral", "Email: $email")
+    InviteReferralsApi.getInstance(baseActivity).userDetails(
+      floatsRequest?.requestProfile?.ProfileProperties?.userName,
+      email, floatsRequest?.userBusinessMobile, 0, null, null
+    )
+    InviteReferralsApi.getInstance(baseActivity).tracking("register", email, 0, null, null)
   }
 
   private fun apiHitBusiness(businessProfileResponse: BusinessProfileResponse) {
@@ -218,48 +210,40 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     this.responseCreateProfile = response
     val request = getBusinessRequest()
     isSyncCreateFpApi = true
-    viewModel?.putCreateBusinessV6(response.result?.loginId, request)
-      ?.observeOnce(viewLifecycleOwner, {
-        val result = it as? FloatingPointCreateResponse
-        if (result?.isSuccess() == true && result.authTokens.isNullOrEmpty().not()) {
-          authToken = result.authTokens?.get(0)
-          WebEngageController.initiateUserLogin(response.result?.loginId)
-          WebEngageController.setUserContactAttributes(
-            response.result?.profileProperties?.userEmail,
-            response.result?.profileProperties?.userMobile,
-            response.result?.profileProperties?.userName,
-            response.result?.sourceClientId
-          )
-          WebEngageController.setFPTag(authToken?.floatingPointTag)
-          authToken?.floatingPointId?.let { it1 -> setReferralCode(floatingPointId = it1) }
-          WebEngageController.trackEvent(PS_SIGNUP_SUCCESS, SIGNUP_SUCCESS, NO_EVENT_VALUE)
-          session.userProfileId = response.result?.loginId
-          session.userProfileEmail = response.result?.profileProperties?.userEmail
-          session.userProfileName = response.result?.profileProperties?.userName
-          session.userProfileMobile = response.result?.profileProperties?.userMobile
-          session.storeISEnterprise(response.result?.isEnterprise.toString() + "")
-          session.storeIsThinksity((response.result?.sourceClientId != null && response.result?.sourceClientId == clientIdThinksity).toString() + "")
-          session.storeFPDetails(
-            Key_Preferences.GET_FP_EXPERIENCE_CODE,
-            floatsRequest?.categoryDataModel?.experience_code
-          )
-          session.storeFPID(authToken?.floatingPointId)
-          session.storeFpTag(authToken?.floatingPointTag)
-          floatsRequest?.floatingPointId = authToken?.floatingPointId!!
-          floatsRequest?.fpTag = authToken?.floatingPointTag
-          floatsRequest?.requestProfile?.profileId = response.result?.loginId
-          session.saveCategoryRequest(floatsRequest!!)
-          session.saveAuthTokenData(authToken!!)
-          session.setUserSignUpComplete(true)
-          navigator?.clearBackStackAndStartNextActivity(
-            RegistrationActivity::class.java,
-            Bundle().apply { putInt(FRAGMENT_TYPE, SUCCESS_FRAGMENT) })
-        } else {
-          val msg = it.message()
-          showShortToast(if (msg.isNotEmpty()) msg else getString(R.string.error_create_business_fp))
-        }
-        hideProgress()
-      })
+    viewModel?.putCreateBusinessV6(response.result?.loginId, request)?.observeOnce(viewLifecycleOwner, {
+      val result = it as? FloatingPointCreateResponse
+      if (result?.isSuccess() == true && result.authTokens.isNullOrEmpty().not()) {
+        authToken = result.authTokens?.firstOrNull()
+        WebEngageController.initiateUserLogin(response.result?.loginId)
+        WebEngageController.setUserContactAttributes(
+          response.result?.profileProperties?.userEmail, response.result?.profileProperties?.userMobile,
+          response.result?.profileProperties?.userName, response.result?.sourceClientId
+        )
+        WebEngageController.setFPTag(authToken?.floatingPointTag)
+        setReferralCode(authToken?.floatingPointId)
+        WebEngageController.trackEvent(PS_SIGNUP_SUCCESS, SIGNUP_SUCCESS, NO_EVENT_VALUE)
+        session.userProfileId = response.result?.loginId
+        session.userProfileEmail = response.result?.profileProperties?.userEmail
+        session.userProfileName = response.result?.profileProperties?.userName
+        session.userProfileMobile = response.result?.profileProperties?.userMobile
+        session.storeISEnterprise(response.result?.isEnterprise.toString() + "")
+        session.storeIsThinksity((response.result?.sourceClientId != null && response.result?.sourceClientId == clientIdThinksity).toString() + "")
+        session.storeFPDetails(Key_Preferences.GET_FP_EXPERIENCE_CODE, floatsRequest?.categoryDataModel?.experience_code)
+        session.storeFPID(authToken?.floatingPointId)
+        session.storeFpTag(authToken?.floatingPointTag)
+        floatsRequest?.floatingPointId = authToken?.floatingPointId!!
+        floatsRequest?.fpTag = authToken?.floatingPointTag
+        floatsRequest?.requestProfile?.profileId = response.result?.loginId
+        session.saveCategoryRequest(floatsRequest!!)
+        session.saveAuthTokenData(authToken!!)
+        session.setUserSignUpComplete(true)
+        navigator?.clearBackStackAndStartNextActivity(RegistrationActivity::class.java, Bundle().apply { putInt(FRAGMENT_TYPE, SUCCESS_FRAGMENT) })
+      } else {
+        val msg = it.message()
+        showShortToast(if (msg.isNotEmpty()) msg else getString(R.string.error_create_business_fp))
+      }
+      hideProgress()
+    })
   }
 
   private fun getBusinessRequest(): BusinessCreateRequest {
@@ -280,8 +264,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     createRequest.appExperienceCode = floatsRequest?.categoryDataModel?.experience_code
     createRequest.whatsAppNumber = floatsRequest?.userBusinessMobile
     createRequest.whatsAppNotificationOptIn = floatsRequest?.whatsAppFlag ?: false
-    createRequest.boostXWebsiteUrl =
-      "www.${floatsRequest?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com"
+    createRequest.boostXWebsiteUrl = "www.${floatsRequest?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com"
     return createRequest
   }
 

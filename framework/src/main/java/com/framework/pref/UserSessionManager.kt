@@ -1,10 +1,12 @@
 package com.framework.pref
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.database.Cursor
 import android.text.TextUtils
-import com.framework.BaseApplication
+import com.framework.analytics.SentryController
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_TAG
 import com.framework.pref.Key_Preferences.GET_FP_EXPERIENCE_CODE
@@ -242,11 +244,14 @@ class UserSessionManager(var activity: Context) {
     editor.apply()
   }
 
+  fun storeProductVerb(`val`: String?) {
+    editor.putString(KEY_sourceClientId, `val`)
+    editor.apply()
+  }
+
   fun getStoreWidgets(): List<String>? {
-    return if (BaseApplication.instance.packageName != "com.jio.online") {
-      val str = pref.getString(Key_Preferences.STORE_WIDGETS, "")
-      if (str.isNullOrEmpty()) ArrayList<String>() else convertStringToList(str)
-    }else arrayListOf()
+    val str = pref.getString(Key_Preferences.STORE_WIDGETS, "")
+    return if (str.isNullOrEmpty()) ArrayList<String>() else convertStringToList(str)
   }
 
   val sourceClientId: String?
@@ -553,6 +558,7 @@ class UserSessionManager(var activity: Context) {
       editor.putBoolean(packegeId, `val`)
       editor.apply()
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
     }
   }
@@ -582,6 +588,7 @@ class UserSessionManager(var activity: Context) {
       editor.putString(key.trim { it <= ' ' }, value?.trim { it <= ' ' } ?: "")
       editor.apply()
     } catch (e: Exception) {
+      SentryController.captureException(e)
       e.printStackTrace()
     }
   }
@@ -739,8 +746,20 @@ class UserSessionManager(var activity: Context) {
   /**
    * Clear session details
    */
-  fun logoutUser() {
+  fun logoutUser(activity: Activity, isAuthErrorToast: Boolean = false) {
+    logoutUser(activity.applicationContext, isAuthErrorToast)
+  }
 
+  fun logoutUser(context: Context, isAuthErrorToast: Boolean = false) {
+    try {
+      val i = Intent(context, Class.forName("com.nowfloats.helper.LogoutActivity"))
+      i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+      i.putExtra("isAuthErrorToast", isAuthErrorToast)
+      context.startActivity(i)
+    } catch (e: Exception) {
+      SentryController.captureException(e)
+      e.printStackTrace()
+    }
   }
 
   var isSiteAppearanceShown: Boolean
@@ -800,18 +819,10 @@ class UserSessionManager(var activity: Context) {
 }
 
 fun UserSessionManager.getDomainName(isRemoveHttp: Boolean = false): String? {
-  val rootAliasUri =
-    getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?.toLowerCase(Locale.ROOT)
-  val normalUri =
-    "https://${getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.nowfloats.com"
+  val rootAliasUri = getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?.toLowerCase(Locale.ROOT)
+  val normalUri = "https://${getFPDetails(GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.nowfloats.com"
   return if (rootAliasUri.isNullOrEmpty().not() && rootAliasUri != "null") {
-    return if (isRemoveHttp && rootAliasUri!!.contains("http://")) rootAliasUri.replace(
-      "http://",
-      ""
-    )
-    else if (isRemoveHttp && rootAliasUri!!.contains("https://")) rootAliasUri.replace(
-      "https://",
-      ""
-    ) else rootAliasUri
+    return if (isRemoveHttp && rootAliasUri!!.contains("http://")) rootAliasUri.replace("http://", "")
+    else if (isRemoveHttp && rootAliasUri!!.contains("https://")) rootAliasUri.replace("https://", "") else rootAliasUri
   } else normalUri
 }

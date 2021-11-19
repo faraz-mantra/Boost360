@@ -12,6 +12,7 @@ import com.boost.presignin.base.AppBaseActivity
 import com.boost.presignin.databinding.ActivityWebPreviewBinding
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
 import com.boost.presignin.utils.shareViaAnyApp
+import com.framework.analytics.SentryController
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
@@ -77,6 +78,8 @@ class WebPreviewActivity : AppBaseActivity<ActivityWebPreviewBinding, BaseViewMo
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
           } catch (e: Exception) {
+            SentryController.captureException(e)
+
             e.printStackTrace()
             view.loadUrl(url)
             false

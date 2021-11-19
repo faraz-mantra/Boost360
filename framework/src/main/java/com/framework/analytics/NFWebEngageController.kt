@@ -32,23 +32,20 @@ object NFWebEngageController {
     if (BaseApplication.instance.packageName != "com.jio.online") {
       val trackEvent: MutableMap<String, Any> = HashMap()
       trackEvent["event_name"] = event_name
-      trackEvent["fptag/event_value"] = event_value!!
+      trackEvent["fptag/event_value"] = event_value ?: ""
       trackEvent["event_label"] = event_label
-      if (event_label.equals("rev")) {
-        trackEvent["revenue"] = event_value
+      if (event_label == "rev") {
+        trackEvent["revenue"] = event_value ?: ""
       }
       weAnalytics.track(event_name, trackEvent)
       weAnalytics.screenNavigated(event_name)
       //Firebase Analytics Event...
-      FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, event_value)
+      FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, event_value ?: "")
 
       //AppsFlyerEvent...
       try {
-        if (weAnalytics.activity != null) {
-          AppsFlyerLib.getInstance()
-            .logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent.toMap())
-        }
-
+        AppsFlyerLib.getInstance()
+          .logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent.toMap())
       } catch (e: Exception) {
         e.printStackTrace()
       }
@@ -67,7 +64,7 @@ object NFWebEngageController {
         //AppsFlyerEvent...
         try {
           AppsFlyerLib.getInstance().logEvent(
-            weAnalytics.activity?.get()?.applicationContext,
+            weAnalytics.activity.get()?.applicationContext,
             event_name, event_value.toMap()
           )
         } catch (e: Exception) {
@@ -99,7 +96,7 @@ object NFWebEngageController {
         //AppsFlyerEvent...
         try {
           AppsFlyerLib.getInstance().logEvent(
-            weAnalytics.activity?.get()?.applicationContext,
+            weAnalytics.activity.get()?.applicationContext,
             event_name, event_value.toMap()
           )
         } catch (e: Exception) {
@@ -179,7 +176,7 @@ object NFWebEngageController {
     if (BaseApplication.instance.packageName != "com.jio.online") {
       try {
         if (!userCategory.isNullOrEmpty()) {
-          val activity = weAnalytics.activity?.get()
+          val activity = weAnalytics.activity.get()
           val version = activity?.packageManager?.getPackageInfo(activity.packageName, 0)?.versionName
           weUser.setAttribute("Category", userCategory)
           weUser.setAttribute("Version", version ?: "")

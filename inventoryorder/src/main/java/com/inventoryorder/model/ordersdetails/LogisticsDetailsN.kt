@@ -1,7 +1,6 @@
 package com.inventoryorder.model.ordersdetails
 
 import java.io.Serializable
-import java.util.*
 
 data class LogisticsDetailsN(
   val Address: AddressN? = null,

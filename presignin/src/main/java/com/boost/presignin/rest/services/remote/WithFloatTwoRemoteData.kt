@@ -88,5 +88,5 @@ interface WithFloatTwoRemoteData {
 
   @Headers("Content-Type: application/json", "Accept: application/json")
   @POST(EndPoints.REGISTER_CHANNEL)
-  fun post_RegisterRia(@Body map: HashMap<String?, String?>?): Observable<Response<Any>>
+  fun post_RegisterRia(@Body map: HashMap<String?, String?>?): Observable<Response<Unit>>
 }

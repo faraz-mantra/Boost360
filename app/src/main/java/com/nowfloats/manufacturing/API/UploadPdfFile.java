@@ -26,13 +26,14 @@ import okhttp3.Response;
  */
 public class UploadPdfFile extends AsyncTask<Void, String, String> {
 
+    private final InputStream path;
     Activity appContext;
-    String path, fileName;
+    String fileName;
     ProgressDialog pd = null;
     DigitalBrochuresDetailsListener listener;
     boolean isUploadingSuccess = false;
 
-    public UploadPdfFile(Activity context, DigitalBrochuresDetailsListener listener, String path, String fileName) {
+    public UploadPdfFile(Activity context, DigitalBrochuresDetailsListener listener, InputStream path, String fileName) {
         this.appContext = context;
         this.path = path;
         this.fileName = fileName;
@@ -41,27 +42,21 @@ public class UploadPdfFile extends AsyncTask<Void, String, String> {
 
     @Override
     protected void onPreExecute() {
-        appContext.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                pd = ProgressDialog.show(appContext, "", "Uploading Logo...");
-                pd.setCancelable(false);
-            }
+        appContext.runOnUiThread(() -> {
+            pd = ProgressDialog.show(appContext, "", "Uploading Logo...");
+            pd.setCancelable(false);
         });
     }
 
 
     @Override
     protected void onPostExecute(String result) {
-        appContext.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                pd.dismiss();
-                try {
-                    listener.UploadedPdfURL(result);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        appContext.runOnUiThread(() -> {
+            pd.dismiss();
+            try {
+                listener.UploadedPdfURL(result);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 
@@ -73,11 +68,10 @@ public class UploadPdfFile extends AsyncTask<Void, String, String> {
         return uploadFileToServer(path, fileName);
     }
 
-    public String uploadFileToServer(String path, String fileName) {
+    public String uploadFileToServer(InputStream path, String fileName) {
         try {
-            File file = new File(path);
             OkHttpClient client = new OkHttpClient();
-            InputStream in = new FileInputStream(file);
+            InputStream in = path;
             byte[] buf;
             buf = new byte[in.available()];
             while (in.read(buf) != -1) ;

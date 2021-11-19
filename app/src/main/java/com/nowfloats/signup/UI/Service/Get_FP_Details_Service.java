@@ -6,8 +6,7 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.framework.models.firestore.FirestoreManager;
-import com.google.gson.Gson;
+import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.nowfloats.Analytics_Screen.API.NfxFacebbokAnalytics;
 import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
 import com.nowfloats.BusinessProfile.UI.API.Facebook_Auto_Publish_API;
@@ -62,7 +61,6 @@ import static com.nfx.leadmessages.Constants.SMS_REGEX;
  */
 public class Get_FP_Details_Service {
 
-    private static final String TAG = "Get_FP_Details_Service";
     public Get_FP_Details_Service(final Activity activity, String fpID, String clientID, final Bus bus) {
         HashMap<String, String> map = new HashMap<>();
         map.put("clientId", clientID);
@@ -71,7 +69,6 @@ public class Get_FP_Details_Service {
             @Override
             public void success(Get_FP_Details_Model get_fp_details_model, final Response response) {
                 try {
-                    Log.i(TAG, "onSuccess: "+ new Gson().toJson(get_fp_details_model));
                     if (get_fp_details_model != null) {
                         ProcessFPDetails.storeFPDetails(activity, get_fp_details_model);
                         UserSessionManager mSession = new UserSessionManager(activity.getApplicationContext(), activity);
@@ -300,7 +297,6 @@ public class Get_FP_Details_Service {
     }
 
     private void preProcessAndDispatchPlans(final PricingPlansModel storeMainModel, UserSessionManager mSession) {
-        Log.i(TAG, "preProcessAndDispatchPlans: ");
         new Thread(() -> {
             for (ActivePackage activePackage : storeMainModel.activePackages) {
                 int featuresCount = 0;

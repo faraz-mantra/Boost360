@@ -49,7 +49,6 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Model.Login_Data_Model;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
@@ -89,6 +88,7 @@ import retrofit.client.Response;
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABLE_LOGIN;
 import static com.framework.webengageconstant.EventNameKt.PS_LOGIN_USERNAME_PAGE_LOAD;
 
+@Deprecated
 public class Login_MainActivity extends AppCompatActivity implements API_Login.API_Login_Interface, View.OnClickListener {
     /*private String[] permission = new String[]{Manifest.permission.READ_SMS,
             Manifest.permission.RECEIVE_SMS,Manifest.permission.READ_PHONE_STATE};*/
@@ -118,7 +118,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
         BoostLog.d("HomeActivity", "This is getting Called");
         try {
             final HashMap<String, String> params = new HashMap<String, String>();
-            params.put("Channel", FirebaseInstanceId.getInstance().getToken());
+            params.put("Channel", "");
             params.put("UserId", userId);
             params.put("DeviceType", "ANDROID");
             params.put("clientId", Constants.clientId);
@@ -610,6 +610,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
     // this method called when user react on permissions
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case READ_MESSAGES_ID:
                 //getPermission();

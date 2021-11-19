@@ -6,22 +6,20 @@ import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 
 fun convertMapToString(data: Map<String?, String?>): String? {
-  //convert Map  to String
   return GsonBuilder().setPrettyPrinting().create().toJson(data)
 }
 
 fun convertStringToJsonObj(strObj: String): JsonObject? {
-  //convert string json to object
   return Gson().fromJson(strObj, JsonObject::class.java)
 }
 
 fun <T> convertListObjToString(listObj: List<T>): String? {
-  //convert object list to string json for
   return Gson().toJson(listObj, object : TypeToken<List<T>?>() {}.type)
 }
 
 inline fun <reified T> convertStringToList(json: String): List<T>? {
-  return Gson().fromJson(json, object : TypeToken<List<T?>?>() {}.type)
+  val type = TypeToken.getParameterized(ArrayList::class.java, T::class.java).type
+  return Gson().fromJson<ArrayList<T>>(json, type)
 }
 
 inline fun <reified T> convertStringToObj(json: String): T? {

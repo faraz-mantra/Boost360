@@ -1549,7 +1549,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
   <string name="increase_our_site_health">increase your site health score</string>
 
-  <string name="drop_us_on_email_or_call">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to enable this feature</string>
+  <string name="drop_us_on_email_or_call">Please drop us a line at <u>ria@nowfloats.com</u> or call us at 1860&#8211;123&#8211;1233 if you\'d like to enable this feature</string>
 
 
   <array name="businessboldtext">
@@ -1904,7 +1904,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="button_change"><u>Change</u></string>
   <string name="button_edit"><u>Edit</u></string>
   <string name="button_add"><u>Add</u></string>
-  <string name="null_string_exception">Don\'t enter empy updates</string>
+  <string name="null_string_exception">Don\'t enter empty updates</string>
   <string name="html_tags_exception">Sorry, you can\'t enter HTML tags</string>
   <string name="uh_oh">Uh-Oh!</string>
   <string name="not_auth">not authorized.</string>
@@ -2055,11 +2055,11 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="you_have_not_configured_any_warehouse_as_package_pickup_addresses">You have not configured any warehouse as package pickup addresses.</string>
   <string name="place_name">Place name</string>
   <string name="alt_tag">ALT-tag</string>
-  <string name="alt_tag_is_nothing_but_a_description_of_this_image_that_helps_search_engines_find_this_image_n_200_characters_max">Alt tag is nothing but a description of this image that helps search engines find this image. \n(200 Characters Max)</string>
+  <string name="alt_tag_is_nothing_but_a_description_of_this_image_that_helps_search_engines_find_this_image_n_200_characters_max">Alt tag is nothing but a description of this image that helps search engines find this image. \n(200 characters max)</string>
   <string name="address">Address</string>
-  <string name="enter_address_n_100_characters_max">Enter address <br />(100 Characters Max)</string>
-  <string name="distance_from_hotel">Distance from Hotel</string>
-  <string name="enter_distance_in_mt_km">Enter distance in Mt/Km</string>
+  <string name="enter_address_n_100_characters_max">Enter address <br />(100 characters max)</string>
+  <string name="distance_from_hotel">Distance from hotel</string>
+  <string name="enter_distance_in_mt_km">Enter distance in mt/km</string>
   <string name="places_to_look_around">Places to look around</string>
   <string name="looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it_with_this_feature_highlight_what_s_near_your_hotel">Looks like this add-on is not added to your current plan. Add it now to start using it. With this feature Highlight what\'s near your hotel.</string>
   <string name="india">India</string>
@@ -2131,7 +2131,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="load_more_calls">Load more calls</string>
   <string name="your_number">Your number</string>
   <string name="_040969578" translatable="false">040969578</string>
-  <string name="view_potential_calls_0">View potential calls (0)</string>
+  <string name="view_potential_calls_0">Potential calls (0)</string>
   <string name="zero">0</string>
   <string name="title">title</string>
   <string name="clicks">Clicks</string>
@@ -2402,11 +2402,11 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="_91_84932987498" translatable="false">+91 84932987498</string>
   <string name="relevant_update_and_product_suggestions">Relevant update and product suggestions:</string>
   <string name="other_information">Other information</string>
-  <string name="if_you_wish_to_change_email_address_please_contact_ria_nowfloats_com">If you wish to change email address, please contact ria@nowfloats.com</string>
+  <string name="if_you_wish_to_change_email_address_please_contact_ria_nowfloats_com">If you wish to change email address, please contact <u>ria@nowfloats.com</u></string>
   <string name="domain_is_a_great_first_step_towards_building_your_brand_on_web">Domain is a great first step towards building your brand on web.</string>
   <string name="website_domain_not_enabled">Website domain not enabled</string>
   <string name="looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it">Looks like this add-on is not added to your current plan. Add it now to start using it.</string>
-  <string name="if_you_wish_to_change_business_category_please_contact_ria_nowfloats_com">If you wish to change business category, please contact ria@nowfloats.com</string>
+  <string name="if_you_wish_to_change_business_category_please_contact_ria_nowfloats_com">If you wish to change business category, please contact <u>ria@nowfloats.com</u></string>
   <string name="products_">Products</string>
   <string name="services_">Services</string>
   <string name="custom_">Custom</string>
@@ -2863,9 +2863,9 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="seller_profile_updated">Seller profile updated</string>
   <string name="failed_to_update_seller_profile">Failed to update seller profile</string>
   <string name="failed_to_save_bank_information">Failed to save bank information</string>
-  <string name="failed_to_update_product">Failed to update product.</string>
-  <string name="product_saved_successfully">\"Product saved successfully : \"</string>
-  <string name="failed_to_save_product">Failed to save product.</string>
+  <string name="failed_to_update_product">Failed to update product</string>
+  <string name="product_saved_successfully">Product saved successfully</string>
+  <string name="failed_to_save_product">Failed to save product</string>
   <string name="deleted_successfully">Deleted successfully</string>
   <string name="failed_to_delete">Failed to delete</string>
   <string name="image_removed_successfully" translatable="false">Image removed successfully</string>
@@ -3074,6 +3074,12 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="domain_is_a_great_first_step_towards_building_your_brand_on_web_n">Domain is a great first step towards building your brand on web.</string>
   <string name="boost_keyboard_themes_n">Boost keyboard themes</string>
   <string name="seasional_offer_n">Seasonal Offers</string>
+  <string name="not_for_sale">Not for sale</string>
+  <string name="mobile">Mobile</string>
+  <string name="desktop">Desktop</string>
+  <string name="missed">Missed</string>
+  <string name="connected">Connected</string>
+  <string name="tracked_calls">Tracked calls on</string>
 
   <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
   <!--    <string name="ir_statusBarColor">#ffb900</string>-->

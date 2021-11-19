@@ -18,6 +18,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.framework.analytics.SentryController;
 import com.nowfloats.CustomWidget.HttpDeleteWithBody;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.RoundCorners_image;
@@ -752,6 +753,7 @@ public class Util {
 
         } catch (Exception e) {
             e.printStackTrace();
+            SentryController.INSTANCE.captureException(e);
         }
         return imgpath;
     }

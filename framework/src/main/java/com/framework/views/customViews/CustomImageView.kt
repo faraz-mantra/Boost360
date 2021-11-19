@@ -10,7 +10,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.widget.ImageViewCompat
 import com.framework.R
 
-class CustomImageView : AppCompatImageView {
+open class CustomImageView : AppCompatImageView {
 
   constructor(context: Context) : super(context) {
     setCustomAttrs(context, null)
@@ -20,18 +20,13 @@ class CustomImageView : AppCompatImageView {
     setCustomAttrs(context, attrs)
   }
 
-  constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
-    context,
-    attrs,
-    defStyle
-  ) {
+  constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
     setCustomAttrs(context, attrs)
   }
 
   private fun setCustomAttrs(context: Context, attrs: AttributeSet?) {
     if (attrs == null) return
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomImageView)
-
     typedArray.recycle()
   }
 

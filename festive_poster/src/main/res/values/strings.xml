@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="festival_poster">Festival Posters</string>
+    <string name="tap_to_edit">Tap to Edit</string>
+    <string name="purchased_posters">Purchased Posters</string>
+    <string name="share_via">Share via</string>
+    <string name="insta_dm">Instagram</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="others">Others</string>
+    <string name="download">Download</string>
+    <string name="customise_poster">Customise poster</string>
+    <string name="upload_selfie">Upload your selfie</string>
+    <string name="your_name_star">Your name*</string>
+    <string name="write_your_name">Write your name</string>
+    <string name="display_email_id">Display email ID*</string>
+    <string name="write_your_email_id">Write your email ID</string>
+    <string name="display_whatsapp_number">Display WhatsApp number*</string>
+    <string name="greeting_description">Greeting description*</string>
+    <string name="website_address">Website address*</string>
+    <string name="update_info">Update info</string>
+    <string name="you_have_not_purchased_any_festival_greeting_tempalate_as_yet">You have not purchased any festival greeting tempalate as yet.</string>
+    <string name="buy_templates">Buy templates</string>
+    <string name="currently_unavailable">Currently unavailable.</string>
+    <string name="pay_using_debit_credit_card">Pay using debit/ credit card</string>
+    <string name="pay_using_upi">Pay using UPI</string>
+    <string name="pay_later">Pay later</string>
+    <string name="get_the_poster_pack_now_amp_pay_later"><![CDATA[Get the poster pack now & pay ₹%1$s later.]]></string>
+    <string name="confirm_order">Confirm order</string>
+    <string name="order_confirmed">Order confirmed</string>
+    <string name="what_are_the_festival_posters">What are the festival posters?</string>
+    <string name="festive_poster_help_msg"><![CDATA[Festival posters are premium customisable digital greetings that you can share with your friends, family and specifically with your new & potential customers. Each such festival pack comes with 5 poster designs, available at a fixed price. Go ahead, use festive occasions to connect with those who matter the most to you and your business.]]></string>
+    <string name="understood">Understood</string>
+    <string name="contact_support">Contact support</string>
+    <string name="save">Save</string>
+    <string name="view_pack">View pack</string>
+    <string name="paying_">Paying ₹%1$s</string>
+    <string name="for_pack_of_posters">for %1$s pack</string>
+    <string name="of_size_posters">of %1$s posters</string>
+    <string name="order_confirm_message"><![CDATA[Feel free to edit & share them with all your customers with your custom messages. You can make payment of ₹%1$s after you receive the payment link.]]></string>
+    <string name="poster_pack_footer_desc"><![CDATA[More personalised & sharable greeting posters will be available here as new festival or holiday approach.]]></string>
+    <string name="done">Done</string>
+    <string name="purchased">Purchased</string>
+    <string name="your_picture">Your picture</string>
+</resources>

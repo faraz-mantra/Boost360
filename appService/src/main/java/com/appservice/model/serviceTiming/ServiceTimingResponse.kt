@@ -11,6 +11,4 @@ data class ServiceTimingResponse(
   var errorN: Any? = null,
   @SerializedName("Result")
   var result: ArrayList<ServiceTiming>? = null
-) : BaseResponse(), Serializable {
-
-}
+) : BaseResponse(), Serializable

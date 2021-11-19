@@ -4,6 +4,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.PopupWindow
@@ -14,7 +15,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.firestore.FirestoreManager
+import com.framework.firebaseUtils.firestore.FirestoreManager
+import com.framework.views.zero.old.AppFragmentZeroCase
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.APPOINTMENT_PAGE_LOAD
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PAGE_VIEW
@@ -53,14 +58,14 @@ import com.inventoryorder.ui.appointmentSpa.sheetAptSpa.*
 import com.inventoryorder.ui.bottomsheet.FilterBottomSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.*
 import com.inventoryorder.ui.startFragmentOrderActivity
-import com.inventoryorder.ui.tutorials.LearnHowItWorkBottomSheet
 import com.inventoryorder.utils.WebEngageController
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
-class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBinding>(), RecyclerItemClickListener {
+class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBinding>(), RecyclerItemClickListener,AppOnZeroCaseClicked  {
 
+  private lateinit var zeroCaseFragment: AppFragmentZeroCase
   private lateinit var requestFilter: OrderFilterRequest
   private var orderAdapter: AppBaseRecyclerViewAdapter<OrderItem>? = null
   private var orderList = ArrayList<OrderItem>()
@@ -94,25 +99,32 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     super.onCreateView()
     WebEngageController.trackEvent(APPOINTMENT_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
-    setOnClickListener(binding?.btnAdd, binding?.buttonAddApt)
+    setOnClickListener(binding?.btnAdd)
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
     requestFilter = getRequestFilterData(arrayListOf())
-    getSellerOrdersFilterApi(requestFilter, isFirst = true)
     binding?.swipeRefresh?.setColorSchemeColors(getColor(R.color.colorAccent))
     binding?.swipeRefresh?.setOnRefreshListener { loadNewData() }
+    this.zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.APPOINTMENT, this, baseActivity).getRequest().build()
+    addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
+    getSellerOrdersFilterApi(requestFilter, isFirst = true)
+
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnAdd, binding?.buttonAddApt -> {
-        val bundle = Bundle()
-        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
-        bundle.putBoolean(IntentConstant.IS_VIDEO.name, false)
-        startFragmentOrderActivity(FragmentType.CREATE_SPA_APPOINTMENT, bundle, isResult = true)
+      binding?.btnAdd -> {
+        addAppointment()
       }
     }
+  }
+
+  private fun addAppointment() {
+    val bundle = Bundle()
+    bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
+    bundle.putBoolean(IntentConstant.IS_VIDEO.name, false)
+    startFragmentOrderActivity(FragmentType.CREATE_SPA_APPOINTMENT, bundle, isResult = true)
   }
 
   private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
@@ -158,6 +170,8 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
           val isDataNotEmpty = (response != null && response.Items.isNullOrEmpty().not())
           onInClinicAptAddedOrUpdated(isDataNotEmpty)//Dr score
           if (isDataNotEmpty) {
+            binding?.tvNoData?.gone()
+            nonEmptyView()
             orderList.clear()
             removeLoader()
             val list = response!!.Items?.map { item ->
@@ -169,9 +183,21 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
             isLastPageD = (orderList.size == TOTAL_ELEMENTS)
             setAdapterNotify(orderList)
             setToolbarTitle(resources.getString(R.string.appointments) + " ($TOTAL_ELEMENTS)")
-          } else emptyView()
+          } else {
+            if (filterItem==null||filterItem?.type?.let { FilterModel.FilterType.fromType(it) }==FilterModel.FilterType.ALL_APPOINTMENTS){
+              emptyView()
+            }else{
+              binding?.tvNoData?.visible()
+              orderList.clear()
+              removeLoader()
+              setAdapterNotify(orderList)
+              setToolbarTitle(resources.getString(R.string.appointments) + " (0)")
+            }
+
+          }
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
+            nonEmptyView()
             val list = response.Items?.map { item ->
               item.recyclerViewType = RecyclerViewItemType.APPOINTMENT_SPA_ITEM_TYPE.getLayout();item
             } as ArrayList<OrderItem>
@@ -182,7 +208,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
             orderList.clear()
             orderList.addAll(orderListFinalList)
             setAdapterNotify(orderList)
-          } else emptyView()
+          }
         }
       } else showLongToast(it.message())
     })
@@ -212,18 +238,33 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
 
   private fun setAdapterNotify(items: ArrayList<OrderItem>) {
     binding?.bookingRecycler?.visible()
-    binding?.errorView?.gone()
+//    binding?.errorView?.gone()
+    nonEmptyView()
     binding?.btnAdd?.visible()
     if (orderAdapter != null) {
       orderAdapter?.notify(getDateWiseFilter(items))
     } else setAdapterAppointmentList(getDateWiseFilter(items))
   }
 
-  private fun emptyView() {
-    binding?.bookingRecycler?.gone()
-    binding?.errorView?.visible()
-    binding?.btnAdd?.gone()
+
+
+  private fun nonEmptyView() {
+    setHasOptionsMenu(true)
+    binding?.mainlayout?.visible()
+    binding?.childContainer?.gone()
   }
+
+  private fun emptyView() {
+    setHasOptionsMenu(false)
+    binding?.mainlayout?.gone()
+    binding?.childContainer?.visible()
+
+//    binding?.bookingRecycler?.gone()
+//    binding?.errorView?.visible()
+//    binding?.btnAdd?.gone()
+  }
+
+
 
   private fun getDateWiseFilter(orderList: ArrayList<OrderItem>): ArrayList<OrderItem> {
     val list = ArrayList<OrderItem>()
@@ -283,7 +324,12 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.DELIVERED -> {
-        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
+        val status = arrayListOf(
+          OrderSummaryModel.OrderStatus.FEEDBACK_PENDING.name,
+          OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED.name,
+          OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name
+        )
+        requestFilter = getRequestFilterData(status)
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.CANCELLED -> {
@@ -730,6 +776,23 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     orderList.clear()
     clickFilterItem(filterItem)
   }
+
+  override fun primaryButtonClicked() {
+    addAppointment()
+  }
+
+  override fun secondaryButtonClicked() {
+    showShortToast(getString(R.string.coming_soon))
+  }
+
+  override fun ternaryButtonClicked() {
+  }
+
+  override fun appOnBackPressed() {
+
+  }
+
+
 
 //  private fun apiOrderListCall() {
 //    when (OrderSummaryModel.OrderSummaryType.fromType(orderItemType)) {

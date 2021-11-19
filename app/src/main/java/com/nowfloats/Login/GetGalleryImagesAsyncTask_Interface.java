@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.framework.analytics.SentryController;
 import com.nowfloats.Image_Gallery.OtherImagesAdapter;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
@@ -87,6 +88,7 @@ public class GetGalleryImagesAsyncTask_Interface extends AsyncTask<Void, String,
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
+                        SentryController.INSTANCE.captureException(e);
                     }
                 }
 
@@ -112,6 +114,7 @@ public class GetGalleryImagesAsyncTask_Interface extends AsyncTask<Void, String,
             }
         } catch (Exception e) {
             e.printStackTrace();
+            SentryController.INSTANCE.captureException(e);
         }
         return response;
     }

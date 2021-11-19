@@ -9,6 +9,7 @@ import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.databinding.FragmentPreSigninIntroBinding
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.IntroItem
+import com.framework.analytics.SentryController
 import com.framework.models.BaseViewModel
 import com.framework.webengageconstant.*
 import com.google.android.exoplayer2.MediaItem
@@ -182,6 +183,8 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
         player?.stop()
       } catch (e: Exception) {
         Log.e("SKIP_VIDEO_SUSPEND", e.localizedMessage)
+        SentryController.captureException(e)
+
       }
       timer?.cancel()
       binding?.playPauseLottie?.isVisible = false
@@ -228,6 +231,8 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
       }
     } catch (e: Exception) {
       Log.e("TimerCountDown", e.localizedMessage)
+      SentryController.captureException(e)
+
     }
   }
 

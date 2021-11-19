@@ -91,7 +91,7 @@
         android:drawablePadding="@dimen/size_8"
         android:fontFamily="@font/semi_bold"
         android:gravity="center"
-        android:paddingHorizontal="@dimen/size_90"
+        android:paddingHorizontal="85dp"
         android:stateListAnimator="@null"
         android:text="@string/share_on_whatsapp"
         android:textAllCaps="false"
@@ -122,8 +122,8 @@
 
         <com.framework.views.customViews.CustomCardView
           android:id="@+id/btn_copy_message"
-          android:layout_width="@dimen/size_30"
-          android:layout_height="@dimen/size_30"
+          android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
           android:layout_marginStart="@dimen/size_20"
           app:cardBackgroundColor="@color/white_one"
           app:cardCornerRadius="@dimen/size_15"

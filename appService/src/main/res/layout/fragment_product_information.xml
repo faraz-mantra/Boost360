@@ -66,61 +66,220 @@
               android:layout_width="@dimen/size_0"
               android:layout_height="@dimen/size_40"
               android:layout_weight="1"
+              android:layout_marginEnd="@dimen/size_8"
               android:background="@drawable/spinner_catalog" />
-
-            <Space
-              android:layout_width="@dimen/size_0"
-              android:layout_height="@dimen/size_0"
-              android:layout_weight=".1" />
 
             <com.framework.views.customViews.CustomCardView
               android:id="@+id/ll_stock_change"
               android:layout_width="@dimen/size_0"
               android:layout_height="@dimen/size_40"
               android:layout_weight="1"
-              app:cardBackgroundColor="#f6f6f6"
+              android:layout_marginStart="@dimen/size_8"
+              app:cardBackgroundColor="@color/lightest_grey"
               app:cardCornerRadius="@dimen/size_10"
               app:cardElevation="0dp">
 
               <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:weightSum="3"
                 android:orientation="horizontal">
 
                 <com.framework.views.customViews.CustomImageView
                   android:id="@+id/civ_decrese_stock"
                   android:layout_width="0dp"
                   android:layout_height="match_parent"
-                  android:layout_weight="1"
+                  android:layout_weight=".8"
                   android:clickable="true"
                   android:focusable="true"
                   android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                  android:paddingHorizontal="@dimen/size_20"
-                  android:src="@drawable/ic_minus"
-                  app:tint="#FF4200" />
+                  android:paddingHorizontal="@dimen/size_18"
+                  app:srcCompat="@drawable/ic_minus"
+                  app:tint="@color/red_FF4200"
+                  tools:targetApi="m" />
 
                 <com.framework.views.customViews.CustomTextView
                   android:id="@+id/ctv_current_stock"
                   android:layout_width="0dp"
                   android:layout_height="match_parent"
-                  android:layout_marginStart="-5dp"
-                  android:layout_marginEnd="-5dp"
-                  android:layout_weight="1.3"
+                  android:layout_marginHorizontal="-5dp"
+                  android:layout_weight="1.4"
                   android:background="@drawable/bg_text_rounded"
                   android:gravity="center"
-                  android:text="10"
-                  android:textSize="12.57sp" />
+                  android:text="1"
+                  app:textType="CAPTION" />
 
                 <com.framework.views.customViews.CustomImageView
                   android:id="@+id/civ_increase_stock"
                   android:layout_width="0dp"
                   android:layout_height="match_parent"
-                  android:layout_weight="1"
+                  android:layout_weight=".8"
                   android:clickable="true"
+                  android:focusable="true"
                   android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                  android:paddingHorizontal="@dimen/size_20"
-                  android:src="@drawable/ic_plus_btn"
-                  app:tint="@color/light_green" />
+                  android:paddingHorizontal="@dimen/size_18"
+                  app:srcCompat="@drawable/ic_plus_btn"
+                  app:tint="@color/light_green"
+                  tools:targetApi="m" />
+              </LinearLayout>
+            </com.framework.views.customViews.CustomCardView>
+
+          </androidx.appcompat.widget.LinearLayoutCompat>
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/allow_cod"
+            android:textColor="@color/black_4a4a4a"
+            app:fontFamily="@font/semi_bold"
+            android:layout_marginTop="@dimen/size_10"
+            app:textType="BODY_3" />
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_6"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+              android:id="@+id/spinner_cod"
+              android:layout_width="@dimen/size_0"
+              android:layout_height="@dimen/size_40"
+              android:layout_weight="1"
+              android:layout_marginEnd="@dimen/size_8"
+              android:background="@drawable/spinner_catalog" />
+
+            <com.framework.views.customViews.CustomCardView
+              android:id="@+id/ll_cod_change"
+              android:layout_width="@dimen/size_0"
+              android:layout_height="@dimen/size_40"
+              android:layout_weight="1"
+              android:layout_marginStart="@dimen/size_8"
+              app:cardBackgroundColor="@color/lightest_grey"
+              app:cardCornerRadius="@dimen/size_10"
+              app:cardElevation="0dp">
+
+              <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="3"
+                android:orientation="horizontal">
+
+                <com.framework.views.customViews.CustomImageView
+                  android:id="@+id/civ_decrease_cod_qty"
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:layout_weight=".8"
+                  android:clickable="true"
+                  android:focusable="true"
+                  android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                  android:paddingHorizontal="@dimen/size_18"
+                  app:srcCompat="@drawable/ic_minus"
+                  app:tint="@color/red_FF4200"
+                  tools:targetApi="m" />
+
+                <com.framework.views.customViews.CustomTextView
+                  android:id="@+id/ctv_current_cod_qty"
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:layout_marginHorizontal="-5dp"
+                  android:layout_weight="1.4"
+                  android:background="@drawable/bg_text_rounded"
+                  android:gravity="center"
+                  android:text="1"
+                  app:textType="CAPTION" />
+
+                <com.framework.views.customViews.CustomImageView
+                  android:id="@+id/civ_increase_cod_qty"
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:layout_weight=".8"
+                  android:clickable="true"
+                  android:focusable="true"
+                  android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                  android:paddingHorizontal="@dimen/size_18"
+                  app:srcCompat="@drawable/ic_plus_btn"
+                  app:tint="@color/light_green"
+                  tools:targetApi="m" />
+              </LinearLayout>
+            </com.framework.views.customViews.CustomCardView>
+
+          </androidx.appcompat.widget.LinearLayoutCompat>
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/allow_online_pre_pay"
+            android:textColor="@color/black_4a4a4a"
+            app:fontFamily="@font/semi_bold"
+            android:layout_marginTop="@dimen/size_10"
+            app:textType="BODY_3" />
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_6"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+              android:id="@+id/spinner_online"
+              android:layout_width="@dimen/size_0"
+              android:layout_height="@dimen/size_40"
+              android:layout_weight="1"
+              android:layout_marginEnd="@dimen/size_8"
+              android:background="@drawable/spinner_catalog" />
+
+            <com.framework.views.customViews.CustomCardView
+              android:id="@+id/ll_online_change"
+              android:layout_width="@dimen/size_0"
+              android:layout_height="@dimen/size_40"
+              android:layout_weight="1"
+              android:layout_marginStart="@dimen/size_8"
+              app:cardBackgroundColor="@color/lightest_grey"
+              app:cardCornerRadius="@dimen/size_10"
+              app:cardElevation="0dp">
+
+              <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="3"
+                android:orientation="horizontal">
+
+                <com.framework.views.customViews.CustomImageView
+                  android:id="@+id/civ_decrease_online_qty"
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:layout_weight=".8"
+                  android:clickable="true"
+                  android:focusable="true"
+                  android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                  android:paddingHorizontal="@dimen/size_18"
+                  app:srcCompat="@drawable/ic_minus"
+                  app:tint="@color/red_FF4200"
+                  tools:targetApi="m" />
+
+                <com.framework.views.customViews.CustomTextView
+                  android:id="@+id/ctv_current_online_qty"
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:layout_marginHorizontal="-5dp"
+                  android:layout_weight="1.4"
+                  android:background="@drawable/bg_text_rounded"
+                  android:gravity="center"
+                  android:text="1"
+                  app:textType="CAPTION" />
+
+                <com.framework.views.customViews.CustomImageView
+                  android:id="@+id/civ_increase_online_qty"
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:layout_weight=".8"
+                  android:clickable="true"
+                  android:focusable="true"
+                  android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                  android:paddingHorizontal="@dimen/size_18"
+                  app:srcCompat="@drawable/ic_plus_btn"
+                  app:tint="@color/light_green"
+                  tools:targetApi="m" />
               </LinearLayout>
             </com.framework.views.customViews.CustomCardView>
 
@@ -602,7 +761,7 @@
                   android:layout_weight="0.3"
                   android:background="@android:color/transparent"
                   android:gravity="center"
-                  android:hint="@string/_0_12"
+                  android:hint="@string/_00"
                   android:inputType="numberDecimal"
                   android:maxLines="1"
                   android:paddingStart="@dimen/size_8"
@@ -646,7 +805,7 @@
                   android:layout_weight="0.3"
                   android:background="@android:color/transparent"
                   android:gravity="center"
-                  android:hint="@string/_9"
+                  android:hint="@string/_00"
                   android:inputType="numberDecimal"
                   android:maxLines="1"
                   android:paddingStart="@dimen/size_8"
@@ -734,6 +893,7 @@
                   android:gravity="center"
                   android:inputType="numberDecimal"
                   android:maxLines="1"
+                  android:hint="@string/_00"
                   android:paddingStart="@dimen/size_8"
                   android:singleLine="true"
                   android:textColor="@color/greyish_brown"
@@ -774,7 +934,7 @@
                   android:layout_weight="0.3"
                   android:background="@android:color/transparent"
                   android:gravity="center"
-                  android:hint="@string/_5"
+                  android:hint="@string/_00"
                   android:inputType="numberDecimal"
                   android:maxLines="1"
                   android:paddingStart="@dimen/size_8"

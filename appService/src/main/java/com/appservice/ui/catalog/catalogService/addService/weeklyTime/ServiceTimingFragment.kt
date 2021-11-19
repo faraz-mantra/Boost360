@@ -13,7 +13,7 @@ import com.appservice.model.serviceTiming.ServiceTiming
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
+import com.appservice.viewmodel.StaffViewModel
 import com.framework.utils.DateUtils
 import com.framework.utils.DateUtils.parseDate
 import java.util.*

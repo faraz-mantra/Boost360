@@ -11,8 +11,7 @@ enum class ClickType {
   CAMERA, GALLERY, PDF
 }
 
-class ImagePickerBottomSheet :
-  BaseBottomSheetDialog<BottomShettImagePickerBinding, BaseViewModel>() {
+class ImagePickerBottomSheet : BaseBottomSheetDialog<BottomShettImagePickerBinding, BaseViewModel>() {
 
   var onClicked: (type: ClickType) -> Unit = { }
   var isHidePdf = true

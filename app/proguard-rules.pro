@@ -361,6 +361,8 @@
 #-keeppackagenames com.inventoryorder
 #-keeppackagenames com.boost.presignup
 #-keeppackagenames com.boost.presignin
+#-keeppackagenames dev.patrickgold.florisboard
+#-keeppackagenames com.festive_poster
 
 #-keep class com.onboarding.** { *; }
 #-keep class com.dashboard.** { *; }
@@ -368,6 +370,8 @@
 #-keep class com.framework.** { *; }
 #-keep class com.resources.** { *; }
 #-keep class com.inventoryorder.** { *; }
+#-keep class dev.patrickgold.florisboard.** { *; }
+#-keep class com.festive_poster.** { *; }
 
 -keep class com.onboarding.nowfloats.model.** { <fields>; }
 -keep class com.inventoryorder.model.** { <fields>; }
@@ -378,6 +382,8 @@
 -keep class com.inventoryorder.model.** { <fields>; }
 -keep class com.inventoryorder.ui.tutorials.model.** { <fields>; }
 -keep class com.boost.presignin.model.** { <fields>; }
+-keep class dev.patrickgold.florisboard.customization.model.** { <fields>; }
+-keep class com.festive.poster.models.** { <fields>; }
 ## New progard rule
 
 ##---------------Begin: proguard configuration for Gson  ----------

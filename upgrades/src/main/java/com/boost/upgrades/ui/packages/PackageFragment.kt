@@ -101,6 +101,7 @@ class PackageFragment : BaseFragment() {
         initializeRecycler()
 
         package_title.setText(bundleData!!.name)
+        package_desc.setText(bundleData!!.desc)
 
 
 

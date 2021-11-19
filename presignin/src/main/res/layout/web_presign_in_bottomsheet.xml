@@ -58,7 +58,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_14sdp"
         android:drawableEnd="@null"
-        android:text="@string/go_back"
+        android:text="@string/back"
         tools:ignore="UnknownId" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </FrameLayout>
