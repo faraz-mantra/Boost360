@@ -384,16 +384,12 @@
     <item name="android:includeFontPadding">false</item>
     <item name="fontFamily">@font/regular</item>
     <item name="textType">BODY_1</item>
+  </style>
 
   <style name="ActiveThemeJio" parent="Base.Theme.AppCompat">
     <item name="colorAccent">@color/colorAccentLight</item>
     <item name="colorControlNormal">@color/placeholder_bg</item>
     <item name="colorControlActivated">@color/colorAccentLight</item>
-  </style>
-
-  <style name="MyCheckBox" parent="Theme.AppCompat.Light">
-    <item name="colorControlNormal">@color/colorAccent</item>
-    <item name="colorControlActivated">@color/colorAccent</item>
   </style>
 
   <style name="TextFieldStyle">

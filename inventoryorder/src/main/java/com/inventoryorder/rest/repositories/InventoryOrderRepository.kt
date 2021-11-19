@@ -15,8 +15,9 @@ import com.inventoryorder.rest.services.InventoryOrderRemoteDataSource
 import io.reactivex.Observable
 import retrofit2.Retrofit
 
-object InventoryOrderRepository :
-  AppBaseRepository<InventoryOrderRemoteDataSource, AppBaseLocalService>() {
+const val ORDER_CLIENT_ID_JIO = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+
+object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSource, AppBaseLocalService>() {
 
   override fun getRemoteDataSourceClass(): Class<InventoryOrderRemoteDataSource> {
     return InventoryOrderRemoteDataSource::class.java

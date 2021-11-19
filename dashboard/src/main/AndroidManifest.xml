@@ -37,7 +37,7 @@
           android:scheme="http" />
 
         <data
-          android:host="boost.nowfloats.com"
+          android:host="jio.bizdigital.com"
           android:pathPrefix="/"
           android:scheme="http" />
 

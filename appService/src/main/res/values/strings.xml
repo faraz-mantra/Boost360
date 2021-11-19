@@ -297,7 +297,7 @@
     <string name="business_hours_timing"><b>Note:</b> Since the clinic business hours are from 9:30am to 7:30 pm, all your sessions will be between same. </string>
     <string name="from">From</string>
     <string name="to">to</string>
-    <string name="edit_">EDIT</string>
+    <string name="edit_">Edit</string>
     <string name="apply_same_on_all_days">Apply same on all days</string>
     <string name="dropdown_options_1_1_2_3_4_5_5"><![CDATA[Dropdown options: <1, 1, 2, 3, 4, 5, 5+]]></string>
     <string name="enter_age">Enter age</string>
@@ -1077,15 +1077,9 @@
 
   <string name="toolbar_doctor_details">Doctor Details</string>
   <string name="loading_">Loading...</string>
-  <string name="edit_">EDIT</string>
-  <string name="name_of_the_account_holder">Name of the account holder*</string>
-  <string name="storage_permission" translatable="false">Storage Permission</string>
   <string name="_0_12">0.12</string>
   <string name="_9">9</string>
-  <string name="_5">5</string>
-  <string name="_4_products_under_this_category">4 products under this category</string>
   <string name="done_">Done</string>
   <string name="payment_gateway_not_added_please_add_first">Boost Payment gateway not added, please add first.</string>
-  <string name="all_payment_on_your_boost_website_are_processed_through_this_payment_gateway_instead_of_default_boost_payment_gateway_when_you_add_a_new_product_service_on_your_business_website_please_make_sure_to_select_this_payment_gateway">All payment on your Boost website are processed through this payment gateway instead of default Boost Payment Gateway. When you add a new product service on your business website please make sure to select this payment gateway.</string>
 
 </resources>
