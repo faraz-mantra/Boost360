@@ -60,7 +60,8 @@
             app:layout_constraintStart_toEndOf="@+id/view2"
             app:layout_constraintTop_toTopOf="@+id/iv_step_2_setup" />
 
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/inner_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
@@ -69,7 +70,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_step_2_setup">
-
+<!--
             <include
                 android:id="@+id/layoutStep1"
                 layout="@layout/layout_set_up_my_website_step_1"
@@ -86,9 +87,9 @@
                 android:id="@+id/layoutStep3"
                 layout="@layout/layout_set_up_my_website_step_3"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent" />-->
 
-        </LinearLayout>
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
