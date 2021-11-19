@@ -236,7 +236,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
                 hideProgress()
                 if (it.isSuccess()) {
                     val result = it as? VerifyOtpResponse
-                    if (result?.Result?.authTokens.isNullOrEmpty().not()) {
+                    if (false) {
                         if (result?.Result?.authTokens!!.size == 1) {
                             this.resultLogin = result.Result
                             authTokenData()?.createAccessTokenAuth()
@@ -245,6 +245,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
                                 activity = requireActivity(),
                                 type = com.boost.presignin.constant.FragmentType.WELCOME_FRAGMENT,
                                 bundle = Bundle().apply {
+                                    putString(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber)
                                 },
                                 clearTop = true
                             )
@@ -254,6 +255,8 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
                             activity = requireActivity(),
                             type = com.boost.presignin.constant.FragmentType.WELCOME_FRAGMENT,
                             bundle = Bundle().apply {
+                                putString(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber)
+
                             },
                             clearTop = true
                         )

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
+import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentSetupMyWebsiteBinding
 import com.boost.presignin.databinding.FragmentWelcomeBinding
 import com.framework.models.BaseViewModel
@@ -20,6 +21,10 @@ class WelcomeFragment : AppBaseFragment<FragmentWelcomeBinding, BaseViewModel>()
             fragment.arguments = bundle
             return fragment
         }
+    }
+
+    private val phoneNumber by lazy {
+        arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
     }
 
     override fun getLayout(): Int {
@@ -40,7 +45,9 @@ class WelcomeFragment : AppBaseFragment<FragmentWelcomeBinding, BaseViewModel>()
             startFragmentFromNewOnBoardingActivity(
                 activity = requireActivity(),
                 type = com.boost.presignin.constant.FragmentType.SET_UP_MY_WEBSITE_FRAGMENT,
-                bundle = Bundle(),
+                bundle = Bundle().apply {
+                                        putString(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber)
+                },
                 clearTop = false
             )
         }
