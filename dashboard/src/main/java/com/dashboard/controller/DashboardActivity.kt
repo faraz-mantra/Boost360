@@ -1,6 +1,7 @@
 package com.dashboard.controller
 
 import android.content.Intent
+import android.content.IntentSender
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
@@ -39,7 +40,9 @@ import com.framework.analytics.SentryController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.appUpdateType
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.initRemoteConfigData
+import com.framework.firebaseUtils.UpdateType
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
@@ -63,6 +66,10 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.tasks.Task
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.play.core.install.InstallStateUpdatedListener
+import com.google.android.play.core.install.model.ActivityResult
+import com.google.android.play.core.install.model.InstallStatus
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import com.inventoryorder.utils.DynamicLinkParams
@@ -146,35 +153,58 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun checkForUpdate() {
+    Log.i(TAG, "checkForUpdate: Inside Method")
     appUpdateManager = AppUpdateManagerFactory.create(this)
-
-// Returns an intent object that you use to check for an update.
+    appUpdateManager.registerListener(appUpdateListener)
     appUpdateInfoTask = appUpdateManager.appUpdateInfo
-
-// Checks that the platform will allow the specified type of update.
     appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-      if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-        // This example applies an immediate update. To apply a flexible update
-        // instead, pass in AppUpdateType.FLEXIBLE
-        && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
-      ) {
-        // Request the update.
-        Log.d(TAG, "checkForUpdate: App update available")
+      Log.i(TAG, "checkForUpdate: ${appUpdateInfo.updateAvailability()} ${appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)}")
+      if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE || appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
         startUpdate(appUpdateInfo)
+      } else if(appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
+        popupSnackBarForCompleteUpdate();
       }
     }
   }
 
   private fun startUpdate(appUpdateInfo: AppUpdateInfo) {
-    appUpdateManager.startUpdateFlowForResult(
-      // Pass the intent that is returned by 'getAppUpdateInfo()'.
-      appUpdateInfo,
-      // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
-      AppUpdateType.IMMEDIATE,
-      // The current activity making the update request.
-      this,
-      // Include a request code to later monitor this update request.
-      MY_REQUEST_CODE)
+    try {
+      appUpdateManager.startUpdateFlowForResult(
+              appUpdateInfo,
+              appUpdateType().ordinal,
+              this,
+              MY_REQUEST_CODE)
+    } catch (e: IntentSender.SendIntentException ) {
+      e.printStackTrace();
+      SentryController.captureException(e)
+    }
+  }
+
+  private val appUpdateListener: InstallStateUpdatedListener = InstallStateUpdatedListener { state ->
+    if (state.installStatus() == InstallStatus.DOWNLOADED) {
+      popupSnackBarForCompleteUpdate();
+    } else if (state.installStatus() == InstallStatus.INSTALLED) {
+      removeInstallStateUpdateListener();
+    } else {
+      showShortToast("InstallStateUpdatedListener: state: ${state.installStatus()}")
+    }
+  }
+
+  private fun popupSnackBarForCompleteUpdate() {
+    Snackbar.make(findViewById<View>(android.R.id.content).rootView, "Download Complete", Snackbar.LENGTH_INDEFINITE)
+            .setAction("Install") {
+              if (appUpdateManager != null) {
+                appUpdateManager.completeUpdate()
+              }
+            }
+            .setActionTextColor(resources.getColor(R.color.green_light))
+            .show()
+  }
+
+  private fun removeInstallStateUpdateListener() {
+    if (appUpdateManager != null) {
+      appUpdateManager.unregisterListener(appUpdateListener)
+    }
   }
 
   private fun reloadCapLimitData() {
@@ -514,7 +544,13 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    if(requestCode == MY_REQUEST_CODE && resultCode != RESULT_OK) showShortToast("App Update Failed")
+    if(requestCode == MY_REQUEST_CODE) {
+      when(resultCode){
+        RESULT_OK -> showShortToast("App updated successfully")
+        RESULT_CANCELED -> showShortToast("App update cancelled")
+        ActivityResult.RESULT_IN_APP_UPDATE_FAILED -> showShortToast("App update failed")
+      }
+    }
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK && isSecondaryImage) {
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
       if (mPaths.isNullOrEmpty().not()) uploadSecondaryImage(mPaths[0])
@@ -657,6 +693,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onStop() {
     super.onStop()
     BadgesFirestoreManager.listenerBadges = null
+    removeInstallStateUpdateListener()
   }
 
   override fun onStart() {
