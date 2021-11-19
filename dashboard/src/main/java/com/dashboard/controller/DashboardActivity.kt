@@ -10,6 +10,7 @@ import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
@@ -161,7 +162,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       Log.i(TAG, "checkForUpdate: ${appUpdateInfo.updateAvailability()} ${appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)}")
       if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE || appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
         startUpdate(appUpdateInfo)
-      } else if(appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
+      } else if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
         popupSnackBarForCompleteUpdate();
       }
     }
@@ -169,42 +170,32 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   private fun startUpdate(appUpdateInfo: AppUpdateInfo) {
     try {
-      appUpdateManager.startUpdateFlowForResult(
-              appUpdateInfo,
-              appUpdateType().ordinal,
-              this,
-              MY_REQUEST_CODE)
-    } catch (e: IntentSender.SendIntentException ) {
+      appUpdateManager.startUpdateFlowForResult(appUpdateInfo, appUpdateType().ordinal, this, MY_REQUEST_CODE)
+    } catch (e: IntentSender.SendIntentException) {
       e.printStackTrace();
       SentryController.captureException(e)
     }
   }
 
   private val appUpdateListener: InstallStateUpdatedListener = InstallStateUpdatedListener { state ->
-    if (state.installStatus() == InstallStatus.DOWNLOADED) {
-      popupSnackBarForCompleteUpdate();
-    } else if (state.installStatus() == InstallStatus.INSTALLED) {
-      removeInstallStateUpdateListener();
-    } else {
-      showShortToast("InstallStateUpdatedListener: state: ${state.installStatus()}")
+    when {
+      state.installStatus() == InstallStatus.DOWNLOADED -> popupSnackBarForCompleteUpdate()
+      state.installStatus() == InstallStatus.INSTALLED -> removeInstallStateUpdateListener()
+      else -> showShortToast("InstallStateUpdatedListener: state: ${state.installStatus()}")
     }
   }
 
   private fun popupSnackBarForCompleteUpdate() {
-    Snackbar.make(findViewById<View>(android.R.id.content).rootView, "Download Complete", Snackbar.LENGTH_INDEFINITE)
-            .setAction("Install") {
-              if (appUpdateManager != null) {
-                appUpdateManager.completeUpdate()
-              }
-            }
-            .setActionTextColor(resources.getColor(R.color.green_light))
-            .show()
+    Snackbar.make(
+      findViewById<View>(android.R.id.content).rootView,
+      getString(R.string.download_complete), Snackbar.LENGTH_INDEFINITE
+    ).setAction(getString(R.string.install)) {
+      if (this::appUpdateManager.isInitialized) appUpdateManager.completeUpdate()
+    }.setActionTextColor(ContextCompat.getColor(this, R.color.green_light)).show()
   }
 
   private fun removeInstallStateUpdateListener() {
-    if (appUpdateManager != null) {
-      appUpdateManager.unregisterListener(appUpdateListener)
-    }
+    if (this::appUpdateManager.isInitialized) appUpdateManager.unregisterListener(appUpdateListener)
   }
 
   private fun reloadCapLimitData() {
@@ -535,17 +526,17 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     }
   }
 
-    private fun openDashboard(isSet: Boolean = true) {
-        mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
-        if (isSet) binding?.navView?.setActiveItem(0)
-        toolbarPropertySet(0)
-        WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
-    }
+  private fun openDashboard(isSet: Boolean = true) {
+    mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
+    if (isSet) binding?.navView?.setActiveItem(0)
+    toolbarPropertySet(0)
+    WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
+  }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    if(requestCode == MY_REQUEST_CODE) {
-      when(resultCode){
+    if (requestCode == MY_REQUEST_CODE) {
+      when (resultCode) {
         RESULT_OK -> showShortToast("App updated successfully")
         RESULT_CANCELED -> showShortToast("App update cancelled")
         ActivityResult.RESULT_IN_APP_UPDATE_FAILED -> showShortToast("App update failed")
