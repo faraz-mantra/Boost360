@@ -10,18 +10,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.framework.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.cart.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.interfaces.HomeListener
 import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.package_fragment.*
-import kotlinx.android.synthetic.main.package_item.view.*
-import kotlinx.coroutines.withContext
 import java.text.NumberFormat
 import java.util.*
 

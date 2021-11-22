@@ -7,22 +7,22 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.boost.cart.base_class.BaseViewModel
-import com.framework.upgradeDB.local.AppDatabase
-import com.boost.cart.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
-import com.boost.cart.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
-import com.boost.cart.data.api_model.couponSystem.redeem.RedeemCouponRequest
-import com.boost.cart.data.api_model.customerId.create.CreateCustomerIDResponse
-import com.boost.cart.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
-import com.boost.cart.data.api_model.customerId.get.GetCustomerIDResponse
-import com.boost.cart.data.api_model.gst.Error
-import com.boost.cart.data.api_model.paymentprofile.GetLastPaymentDetails
-import com.framework.upgradeDB.model.*
-import com.boost.cart.data.remote.ApiInterface
-import com.boost.cart.data.remote.NewApiInterface
-import com.boost.cart.data.renewalcart.*
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
+import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
+import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponRequest
+import com.boost.dbcenterapi.data.api_model.customerId.create.CreateCustomerIDResponse
+import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
+import com.boost.dbcenterapi.data.api_model.customerId.get.GetCustomerIDResponse
+import com.boost.dbcenterapi.data.api_model.gst.Error
+import com.boost.dbcenterapi.data.api_model.paymentprofile.GetLastPaymentDetails
+import com.boost.dbcenterapi.upgradeDB.model.*
+import com.boost.dbcenterapi.data.remote.ApiInterface
+import com.boost.dbcenterapi.data.remote.NewApiInterface
+import com.boost.dbcenterapi.data.renewalcart.*
 import com.boost.cart.utils.SingleLiveEvent
 import com.boost.cart.utils.Utils
-import com.boost.cart.data.model.coupon.CouponServiceModel
+import com.boost.dbcenterapi.data.model.coupon.CouponServiceModel
 import com.framework.analytics.SentryController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -731,7 +731,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
             },
             {
               val temp = (it as HttpException).response()!!.errorBody()!!.string()
-              val errorBody : Error = Gson().fromJson(temp,object : TypeToken<com.boost.cart.data.api_model.paymentprofile.Error>() {}.type)
+              val errorBody : Error = Gson().fromJson(temp,object : TypeToken<com.boost.dbcenterapi.data.api_model.paymentprofile.Error>() {}.type)
               Toasty.error(getApplication(), errorBody.toString(), Toast.LENGTH_LONG).show()
             }
           )

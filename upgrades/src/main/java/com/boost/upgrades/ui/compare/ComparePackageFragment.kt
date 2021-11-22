@@ -21,14 +21,14 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.cart.CartActivity
-import com.framework.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.SimplePageTransformer
-import com.boost.cart.data.api_model.GetAllFeatures.response.Bundles
-import com.boost.cart.data.api_model.GetAllFeatures.response.IncludedFeature
-import com.boost.cart.data.api_model.GetAllFeatures.response.PrimaryImage
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PrimaryImage
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.upgrades.interfaces.CompareBackListener
 import com.boost.upgrades.interfaces.CompareListener
 import com.boost.upgrades.ui.freeaddons.FreeAddonsFragment
@@ -46,7 +46,6 @@ import kotlinx.android.synthetic.main.compare_package_fragment.package_back
 import kotlinx.android.synthetic.main.compare_package_fragment.package_cart_icon
 import kotlinx.android.synthetic.main.compare_package_fragment.package_indicator2
 import kotlinx.android.synthetic.main.compare_package_fragment.package_viewpager
-import kotlinx.android.synthetic.main.home_fragment.*
 import org.json.JSONObject
 
 

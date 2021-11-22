@@ -2,8 +2,6 @@ package com.boost.cart.adapter
 
 import android.content.Context
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,10 +12,8 @@ import com.boost.cart.CartActivity
 import com.boost.cart.R
 import com.boost.cart.ui.details.DetailsFragment
 import com.boost.cart.utils.Constants
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.bumptech.glide.Glide
-import java.text.NumberFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 

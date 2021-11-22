@@ -25,13 +25,13 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-import com.framework.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.*
-import com.boost.cart.data.api_model.GetAllFeatures.response.*
-import com.framework.upgradeDB.model.*
-import com.boost.upgrades.data.remote.ApiInterface
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
+import com.boost.dbcenterapi.upgradeDB.model.*
+import com.boost.dbcenterapi.data.remote.ApiInterface
 import com.boost.upgrades.interfaces.CompareBackListener
 import com.boost.upgrades.interfaces.HomeListener
 import com.boost.upgrades.ui.compare.ComparePackageFragment

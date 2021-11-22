@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.CartActivity
 import com.boost.cart.R
 import com.boost.cart.adapter.CompareItemAdapter
-import com.framework.upgradeDB.local.AppDatabase
-import com.boost.cart.data.api_model.GetAllFeatures.response.Bundles
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.cart.interfaces.CompareListener
 import com.bumptech.glide.Glide
 //import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter

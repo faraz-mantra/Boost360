@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
 import com.boost.cart.CartActivity
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.cart.interfaces.MyAddonsListener
 import com.boost.cart.ui.details.DetailsFragment
 import com.boost.cart.utils.Constants

@@ -15,8 +15,8 @@ import com.boost.cart.base_class.BaseFragment
 
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.HistoryAdapter
-import com.boost.cart.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
-import com.boost.cart.data.api_model.GetPurchaseOrder.Result
+import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
+import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.Result
 import com.boost.cart.interfaces.HistoryFragmentListener
 import com.boost.cart.ui.historydetails.HistoryDetailsFragment
 import com.boost.cart.utils.Constants.Companion.HISTORY_DETAILS_FRAGMENT

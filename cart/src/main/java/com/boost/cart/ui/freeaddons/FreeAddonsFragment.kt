@@ -15,7 +15,7 @@ import com.boost.cart.R
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.CompareFreeAddonsAdapter
 import com.boost.cart.base_class.BaseFragment
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.cart.interfaces.MyAddonsListener
 import com.boost.cart.utils.WebEngageController
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_MY_ADDONS_LOADED

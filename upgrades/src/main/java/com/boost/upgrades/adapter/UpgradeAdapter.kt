@@ -2,8 +2,6 @@ package com.boost.upgrades.adapter
 
 import android.content.Context
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.utils.Constants
 import com.bumptech.glide.Glide

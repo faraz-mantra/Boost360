@@ -3,8 +3,8 @@ package com.boost.upgrades.ui.removeaddons
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.framework.upgradeDB.local.AppDatabase
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.luminaire.apolloar.base_class.BaseViewModel
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers

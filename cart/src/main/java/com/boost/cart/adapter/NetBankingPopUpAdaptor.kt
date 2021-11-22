@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
-import com.boost.cart.datamodule.SingleNetBankData
+import com.boost.dbcenterapi.data.api_model.datamodule.SingleNetBankData
 import com.boost.cart.interfaces.NetBankingListener
 
 class NetBankingPopUpAdaptor(

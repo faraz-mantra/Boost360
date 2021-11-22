@@ -12,8 +12,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.CartActivity
 import com.boost.cart.R
-import com.boost.cart.data.api_model.GetAllFeatures.response.Bundles
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.cart.ui.details.DetailsFragment
 import com.boost.cart.utils.Constants
 import com.bumptech.glide.Glide

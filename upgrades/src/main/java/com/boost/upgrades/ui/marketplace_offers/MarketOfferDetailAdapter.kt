@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
-import com.boost.cart.data.api_model.GetAllFeatures.response.MarketPlaceOfferDetail
-import com.boost.upgrades.data.api_model.GetPurchaseOrder.Result
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.MarketPlaceOfferDetail
+import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.Result
 import com.boost.upgrades.interfaces.HistoryFragmentListener
 import java.lang.Long
 import java.text.NumberFormat

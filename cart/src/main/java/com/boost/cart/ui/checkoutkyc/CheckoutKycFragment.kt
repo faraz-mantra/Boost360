@@ -15,11 +15,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.boost.cart.R
 import com.boost.cart.CartActivity
-import com.boost.cart.data.api_model.customerId.customerInfo.AddressDetails
-import com.boost.cart.data.api_model.customerId.customerInfo.BusinessDetails
-import com.boost.cart.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
-import com.boost.cart.data.api_model.customerId.customerInfo.TaxDetails
-import com.boost.cart.data.api_model.customerId.get.Result
+import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.AddressDetails
+import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.BusinessDetails
+import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
+import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.TaxDetails
+import com.boost.dbcenterapi.data.api_model.customerId.get.Result
 import com.boost.cart.ui.home.CartViewModel
 import com.boost.cart.utils.Utils.isValidGSTIN
 import com.boost.cart.utils.Utils.isValidMail

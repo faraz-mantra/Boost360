@@ -1,6 +1,6 @@
 package com.boost.cart.interfaces
 
-import com.boost.cart.data.api_model.stateCode.Data
+import com.boost.dbcenterapi.data.api_model.stateCode.Data
 
 interface StateListener {
 

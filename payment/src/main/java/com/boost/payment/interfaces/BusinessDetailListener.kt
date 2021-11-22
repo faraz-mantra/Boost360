@@ -1,6 +1,6 @@
 package com.boost.payment.interfaces
 
-import com.boost.payment.data.api_model.customerId.StateModel
+import com.boost.dbcenterapi.data.api_model.customerId.StateModel
 
 interface BusinessDetailListener {
 

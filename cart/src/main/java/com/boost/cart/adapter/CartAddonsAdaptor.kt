@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
 import com.boost.cart.interfaces.CartFragmentListener
 import com.boost.cart.utils.WebEngageController
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.bumptech.glide.Glide
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_ADD_ON_CROSSED_DELETED_FROM_CART

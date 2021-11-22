@@ -28,10 +28,10 @@ import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.ReviewViewPagerAdapter
 import com.boost.upgrades.adapter.SecondaryImagesAdapter
 import com.boost.upgrades.adapter.ZoomOutPageTransformer
-import com.boost.cart.data.api_model.GetAllFeatures.response.LearnMoreLink
-import com.boost.upgrades.data.api_model.GetAllWidgets.Review
-import com.framework.upgradeDB.model.*
-import com.boost.upgrades.data.remote.ApiInterface
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.LearnMoreLink
+import com.boost.dbcenterapi.data.api_model.GetAllWidgets.Review
+import com.boost.dbcenterapi.upgradeDB.model.*
+import com.boost.dbcenterapi.data.remote.ApiInterface
 import com.boost.upgrades.interfaces.DetailsFragmentListener
 import com.boost.upgrades.ui.popup.ImagePreviewPopUpFragement
 import com.boost.upgrades.ui.webview.WebViewFragment

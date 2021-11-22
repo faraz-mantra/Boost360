@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,8 +22,8 @@ import com.boost.cart.CartActivity
 import com.boost.cart.adapter.CompareItemAdapter
 import com.boost.cart.adapter.PackageAdaptor
 import com.boost.cart.base_class.BaseFragment
-import com.boost.cart.data.api_model.GetAllFeatures.response.Bundles
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.cart.ui.home.CartFragment
 import com.boost.cart.utils.CircleAnimationUtil
 import com.boost.cart.utils.Constants
@@ -32,11 +31,8 @@ import com.boost.cart.utils.SharedPrefs
 import com.boost.cart.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.framework.webengageconstant.*
-import com.framework.webengageconstant.ADDONS_MARKETPLACE_FEATURE_DETAILS_LOADED
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.package_fragment.*
 import kotlinx.android.synthetic.main.package_fragment_layout.*
 import kotlinx.android.synthetic.main.package_fragment_layout.badge121
 import kotlinx.android.synthetic.main.package_fragment_layout.offer_price

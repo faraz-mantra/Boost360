@@ -15,9 +15,9 @@ import com.boost.cart.R
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.AllFeatureAdaptor
 import com.boost.cart.base_class.BaseFragment
-import com.framework.upgradeDB.model.*
-import com.boost.cart.data.remote.ApiInterface
-//import com.boost.cart.database.LocalStorage
+import com.boost.dbcenterapi.upgradeDB.model.*
+import com.boost.dbcenterapi.data.remote.ApiInterface
+//import com.boost.dbcenterapi.database.LocalStorage
 import com.boost.cart.utils.WebEngageController
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_ALL_FEATURES_LOADED
 import com.framework.webengageconstant.ALL_FEATURES

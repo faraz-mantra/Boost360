@@ -4,9 +4,9 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.framework.upgradeDB.local.AppDatabase
-import com.framework.upgradeDB.model.*
-import com.boost.upgrades.data.remote.ApiInterface
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.model.*
+import com.boost.dbcenterapi.data.remote.ApiInterface
 import com.boost.upgrades.utils.Utils
 import com.luminaire.apolloar.base_class.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers

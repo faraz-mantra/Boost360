@@ -17,7 +17,7 @@ import com.boost.cart.CartActivity
 import com.boost.cart.R
 import com.boost.cart.ui.details.DetailsFragment
 import com.boost.cart.utils.Constants.Companion.DETAILS_FRAGMENT
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.bumptech.glide.Glide
 import java.text.NumberFormat
 import java.util.*

@@ -20,10 +20,9 @@ import com.boost.payment.adapter.CardPaymentAdapter
 import com.boost.payment.adapter.UPIAdapter
 import com.boost.payment.adapter.WalletAdapter
 import com.boost.payment.base_class.BaseFragment
-import com.boost.payment.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
-import com.boost.payment.data.api_model.customerId.get.Result
-import com.boost.payment.data.api_model.paymentprofile.LastPaymentMethodDetails
-import com.boost.payment.datamodule.SingleNetBankData
+import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
+import com.boost.dbcenterapi.data.api_model.customerId.get.Result
+import com.boost.dbcenterapi.data.api_model.datamodule.SingleNetBankData
 import com.boost.payment.interfaces.*
 import com.boost.payment.ui.checkoutkyc.BusinessDetailsFragment
 import com.boost.payment.ui.confirmation.OrderConfirmationFragment
@@ -91,7 +90,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
   val stateFragment = StateListPopFragment()
   var gstFlag = false
   lateinit var prefs: SharedPrefs
-  private var gstResult : com.boost.payment.data.api_model.gst.Result? = null
+  private var gstResult : com.boost.dbcenterapi.data.api_model.gst.Result? = null
   private lateinit var paymentLL :LinearLayout
   private lateinit var upiLayout: ConstraintLayout
   private lateinit var netBankingLayout: ConstraintLayout

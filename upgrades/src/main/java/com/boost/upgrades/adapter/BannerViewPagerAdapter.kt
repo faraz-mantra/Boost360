@@ -5,15 +5,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.framework.upgradeDB.local.AppDatabase
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.cart.data.api_model.GetAllFeatures.response.PromoBanners
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PromoBanners
 import com.boost.upgrades.interfaces.HomeListener
 import com.bumptech.glide.Glide
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 class BannerViewPagerAdapter(

@@ -26,9 +26,9 @@ import com.boost.cart.adapter.ReviewViewPagerAdapter
 import com.boost.cart.adapter.SecondaryImagesAdapter
 import com.boost.cart.adapter.ZoomOutPageTransformer
 import com.boost.cart.base_class.BaseFragment
-import com.boost.cart.data.api_model.GetAllFeatures.response.LearnMoreLink
-import com.boost.cart.data.api_model.GetAllWidgets.Review
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.LearnMoreLink
+import com.boost.dbcenterapi.data.api_model.GetAllWidgets.Review
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.cart.interfaces.DetailsFragmentListener
 import com.boost.cart.ui.home.CartFragment
 import com.boost.cart.ui.popup.ImagePreviewPopUpFragement

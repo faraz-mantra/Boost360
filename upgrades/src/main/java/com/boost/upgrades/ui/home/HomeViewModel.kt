@@ -6,11 +6,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.framework.upgradeDB.local.AppDatabase
-import com.boost.cart.data.api_model.GetAllFeatures.response.*
-import com.framework.upgradeDB.model.*
-import com.boost.upgrades.data.remote.ApiInterface
-import com.boost.upgrades.data.remote.NewApiInterface
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
+import com.boost.dbcenterapi.upgradeDB.model.*
+import com.boost.dbcenterapi.data.remote.ApiInterface
+import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.upgrades.utils.Utils
 import com.framework.analytics.SentryController
 import com.google.gson.Gson

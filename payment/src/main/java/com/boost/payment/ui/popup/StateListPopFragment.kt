@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.payment.R
 import com.boost.payment.PaymentActivity
 import com.boost.payment.adapter.StateListAdapter
-import com.boost.payment.data.api_model.customerId.get.Result
-import com.boost.payment.data.api_model.stateCode.Data
+import com.boost.dbcenterapi.data.api_model.customerId.get.Result
+import com.boost.dbcenterapi.data.api_model.stateCode.Data
 import com.boost.payment.interfaces.StateListener
 import com.boost.payment.ui.payment.PaymentViewModel
 import kotlinx.android.synthetic.main.checkoutkyc_fragment.*

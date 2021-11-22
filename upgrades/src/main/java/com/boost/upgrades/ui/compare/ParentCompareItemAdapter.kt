@@ -10,12 +10,12 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.framework.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.CompareItemAdapter
-import com.boost.cart.data.api_model.GetAllFeatures.response.Bundles
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.upgrades.interfaces.CompareListener
 import com.bumptech.glide.Glide
 //import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter

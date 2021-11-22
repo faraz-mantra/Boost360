@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,8 +21,8 @@ import com.boost.cart.R
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.PackageAdaptor
 import com.boost.cart.base_class.BaseFragment
-import com.boost.cart.data.api_model.GetAllFeatures.response.Bundles
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.cart.ui.home.CartFragment
 import com.boost.cart.utils.CircleAnimationUtil
 import com.boost.cart.utils.Constants

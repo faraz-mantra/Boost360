@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.payment.PaymentActivity
 import com.boost.payment.R
-import com.boost.payment.data.api_model.stateCode.Data
+import com.boost.dbcenterapi.data.api_model.stateCode.Data
 import com.boost.payment.interfaces.StateListener
 
 

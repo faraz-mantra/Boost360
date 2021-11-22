@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.CartActivity
 import com.boost.cart.R
-import com.boost.cart.data.api_model.stateCode.Data
+import com.boost.dbcenterapi.data.api_model.stateCode.Data
 import com.boost.cart.interfaces.StateListener
 
 

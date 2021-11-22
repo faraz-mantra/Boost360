@@ -2,7 +2,7 @@ package com.boost.payment.ui.confirmation
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
-import com.framework.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

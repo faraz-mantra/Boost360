@@ -3,7 +3,6 @@ package com.boost.cart.ui.historydetails
 import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +13,12 @@ import com.boost.cart.R
 import com.boost.cart.adapter.HistoryDetailsAdapter
 import com.boost.cart.base_class.BaseFragment
 
-import com.boost.cart.data.api_model.GetPurchaseOrder.Result
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.Result
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.history_details_fragment.*
 import java.lang.Long
 import java.text.NumberFormat
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList

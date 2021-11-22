@@ -9,19 +9,19 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.boost.payment.base_class.BaseViewModel
-import com.boost.payment.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
-import com.boost.payment.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
-import com.boost.payment.data.api_model.customerId.create.CreateCustomerIDResponse
-import com.boost.payment.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
-import com.boost.payment.data.api_model.customerId.get.GetCustomerIDResponse
-import com.boost.payment.data.api_model.gst.Error
-import com.boost.payment.data.api_model.gst.GSTApiResponse
-import com.boost.payment.data.api_model.paymentprofile.GetLastPaymentDetails
-import com.boost.payment.data.api_model.stateCode.GetStates
-import com.boost.payment.data.remote.ApiInterface
-import com.boost.payment.utils.Constants.Companion.RAZORPAY_KEY
-import com.boost.payment.utils.Constants.Companion.RAZORPAY_SECREAT
-import com.boost.payment.utils.Utils
+import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
+import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
+import com.boost.dbcenterapi.data.api_model.customerId.create.CreateCustomerIDResponse
+import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
+import com.boost.dbcenterapi.data.api_model.customerId.get.GetCustomerIDResponse
+import com.boost.dbcenterapi.data.api_model.gst.Error
+import com.boost.dbcenterapi.data.api_model.gst.GSTApiResponse
+import com.boost.dbcenterapi.data.api_model.paymentprofile.GetLastPaymentDetails
+import com.boost.dbcenterapi.data.api_model.stateCode.GetStates
+import com.boost.dbcenterapi.data.remote.ApiInterface
+import com.boost.dbcenterapi.utils.Constants.Companion.RAZORPAY_KEY
+import com.boost.dbcenterapi.utils.Constants.Companion.RAZORPAY_SECREAT
+import com.boost.dbcenterapi.utils.Utils
 import com.framework.analytics.SentryController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -359,7 +359,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
             },
             {
               val temp = (it as HttpException).response()!!.errorBody()!!.string()
-              val errorBody : Error = Gson().fromJson(temp,object : TypeToken<com.boost.payment.data.api_model.stateCode.Error>() {}.type)
+              val errorBody : Error = Gson().fromJson(temp,object : TypeToken<com.boost.dbcenterapi.data.api_model.stateCode.Error>() {}.type)
               progressBar.visibility = View.GONE
               Toasty.error(getApplication(), errorBody.toString(), Toast.LENGTH_LONG).show()
             }
@@ -380,7 +380,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
             },
             {
               val temp = (it as HttpException).response()!!.errorBody()!!.string()
-              val errorBody : Error = Gson().fromJson(temp,object : TypeToken<com.boost.payment.data.api_model.paymentprofile.Error>() {}.type)
+              val errorBody : Error = Gson().fromJson(temp,object : TypeToken<com.boost.dbcenterapi.data.api_model.paymentprofile.Error>() {}.type)
               Toasty.error(getApplication(), errorBody.toString(), Toast.LENGTH_LONG).show()
             }
           )

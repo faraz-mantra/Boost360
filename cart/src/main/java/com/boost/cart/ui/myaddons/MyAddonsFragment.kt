@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,7 +18,7 @@ import com.boost.cart.CartActivity
 import com.boost.cart.adapter.FreeAddonsAdapter
 import com.boost.cart.adapter.PaidAddonsAdapter
 import com.boost.cart.base_class.BaseFragment
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.cart.interfaces.MyAddonsListener
 import com.boost.cart.ui.features.ViewAllFeaturesFragment
 import com.boost.cart.ui.history.HistoryFragment
@@ -28,12 +27,9 @@ import com.boost.cart.utils.Constants.Companion.HISTORY_FRAGMENT
 import com.boost.cart.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.cart.utils.WebEngageController
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.framework.webengageconstant.*
 import es.dmoral.toasty.Toasty
-import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.my_addons_fragment.*
-import kotlinx.android.synthetic.main.view_all_features_fragment.*
 
 class MyAddonsFragment : BaseFragment(), MyAddonsListener {
 

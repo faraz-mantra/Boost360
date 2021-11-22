@@ -10,7 +10,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.boost.payment.R
 import com.boost.payment.PaymentActivity
-import com.boost.payment.data.api_model.Razorpay.PaymentErrorModule
+import com.boost.dbcenterapi.data.api_model.Razorpay.PaymentErrorModule
 import com.boost.payment.ui.confirmation.OrderConfirmationFragment
 import com.boost.payment.ui.payment.PaymentViewModel
 import com.boost.payment.ui.popup.FailedTransactionPopUpFragment

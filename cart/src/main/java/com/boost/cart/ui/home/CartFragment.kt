@@ -1,6 +1,6 @@
 package com.boost.cart.ui.home
 
-//import com.boost.cart.data.api_model.PurchaseOrder.request.*
+//import com.boost.dbcenterapi.data.api_model.PurchaseOrder.request.*
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -15,17 +15,17 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.boost.cart.data.api_model.GetAllFeatures.response.Bundles
-import com.boost.cart.data.api_model.GetAllFeatures.response.ExtendedProperty
-import com.boost.cart.data.api_model.GetAllFeatures.response.IncludedFeature
-import com.boost.cart.data.api_model.GetAllFeatures.response.PrimaryImage
-import com.boost.cart.data.api_model.PurchaseOrder.requestV2.*
-import com.boost.cart.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
-import com.boost.cart.data.api_model.couponSystem.redeem.RedeemCouponRequest
-import com.boost.cart.data.renewalcart.CreateCartStateRequest
-import com.boost.cart.data.renewalcart.RenewalPurchasedRequest
-import com.boost.cart.data.renewalcart.RenewalResult
-//import com.boost.cart.database.LocalStorage
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.ExtendedProperty
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PrimaryImage
+import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.*
+import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
+import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponRequest
+import com.boost.dbcenterapi.data.renewalcart.CreateCartStateRequest
+import com.boost.dbcenterapi.data.renewalcart.RenewalPurchasedRequest
+import com.boost.dbcenterapi.data.renewalcart.RenewalResult
+//import com.boost.dbcenterapi.database.LocalStorage
 import com.boost.cart.ui.autorenew.AutoRenewSubsFragment
 import com.boost.cart.ui.checkoutkyc.CheckoutKycFragment
 import com.boost.cart.ui.packages.PackageFragment
@@ -39,7 +39,7 @@ import com.boost.cart.utils.Constants.Companion.COUPON_POPUP_FRAGEMENT
 import com.boost.cart.utils.Constants.Companion.GSTIN_POPUP_FRAGEMENT
 import com.boost.cart.utils.Constants.Companion.TAN_POPUP_FRAGEMENT
 import com.boost.cart.utils.DateUtils.parseDate
-import com.boost.cart.data.model.coupon.CouponServiceModel
+import com.boost.dbcenterapi.data.model.coupon.CouponServiceModel
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -64,7 +64,7 @@ import com.boost.cart.interfaces.CartFragmentListener
 import com.boost.cart.ui.compare.ComparePackageFragment
 import com.boost.payment.PaymentActivity
 import com.framework.analytics.SentryController
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.upgradeDB.model.*
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_title
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_value
 import kotlinx.android.synthetic.main.cart_fragment.igst_value
@@ -711,8 +711,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
   private fun createCartStateRenewal(renewalItems: List<CartModel>?) {
     Log.v("createPurchaseOrder2", " " + renewalItems.toString())
-    val widgetList = arrayListOf<com.boost.cart.data.renewalcart.Widget>()
-    renewalItems?.forEach { widgetList.add(com.boost.cart.data.renewalcart.Widget(it.item_id, it.boost_widget_key)) }
+    val widgetList = arrayListOf<com.boost.dbcenterapi.data.renewalcart.Widget>()
+    renewalItems?.forEach { widgetList.add(com.boost.dbcenterapi.data.renewalcart.Widget(it.item_id, it.boost_widget_key)) }
 
     val request = CreateCartStateRequest((activity as CartActivity).clientid, (activity as CartActivity).fpid, "RENEWAL", widgetList)
     viewModel.createCartStateRenewal((activity as? CartActivity)?.getAccessToken()?:"",request)

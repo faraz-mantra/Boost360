@@ -1,24 +1,19 @@
 package com.nowfloats.Login;
 
-import static android.content.Context.ACTIVITY_SERVICE;
-
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.anachat.chatsdk.AnaCore;
 import com.appservice.AppServiceApplication;
-import com.framework.upgradeDB.local.AppDatabase;
+import com.boost.dbcenterapi.DBCenterAPIApplication;
 import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignin.ui.intro.IntroActivity;
-import com.boost.upgrades.UpgradesApplication;
 import com.dashboard.AppDashboardApplication;
 import com.framework.models.firestore.FirestoreManager;
 import com.framework.utils.PreferencesUtils;
@@ -37,7 +32,6 @@ import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Key_Preferences;
-import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
 import com.onboarding.nowfloats.BaseBoardingApplication;
@@ -56,8 +50,6 @@ import retrofit.client.Response;
 
 import static com.framework.utils.PreferencesUtilsKt.deleteAllData;
 import static com.nowfloats.util.Key_Preferences.MAIN_PRIMARY_CONTACT_NUM;
-
-import androidx.room.RoomDatabase;
 
 /**
  * Created by Dell on 28-01-2015.
@@ -1037,7 +1029,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
       if (_context != null) {
         _context.deleteDatabase(SaveDataCounts.DATABASE_NAME);
 //        _context.deleteDatabase("updates_db");  //DELETE MARKETPLACE DB
-        UpgradesApplication.clearDatabase(); //DELETE MARKETPLACE DB
+        DBCenterAPIApplication.clearDatabase(); //DELETE MARKETPLACE DB
       }
       clearAuth();
       Intent i = new Intent(activity, IntroActivity.class);

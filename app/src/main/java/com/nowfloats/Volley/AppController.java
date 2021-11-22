@@ -1,7 +1,6 @@
 package com.nowfloats.Volley;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -17,9 +16,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.appservice.AppServiceApplication;
+import com.boost.dbcenterapi.DBCenterAPIApplication;
 import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignup.locale.LocaleManager;
-import com.boost.upgrades.UpgradesApplication;
 import com.dashboard.AppDashboardApplication;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
@@ -129,8 +128,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     FestivePosterApplication.instance = this;
     FestivePosterApplication.initModule(this);
     //upgrade module changes
-    UpgradesApplication.instance = this;
-    UpgradesApplication.initModule(this);
+    DBCenterAPIApplication.instance = this;
+    DBCenterAPIApplication.initModule(this);
     initWebEngage();
     //Invite Referral
     InviteReferralsApplication.register(this);

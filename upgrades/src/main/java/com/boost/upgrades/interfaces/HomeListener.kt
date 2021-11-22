@@ -1,12 +1,10 @@
 package com.boost.upgrades.interfaces
 
-import android.view.View
 import android.widget.ImageView
-import com.boost.cart.data.api_model.GetAllFeatures.response.Bundles
-import com.boost.cart.data.api_model.GetAllFeatures.response.Image
-import com.boost.cart.data.api_model.GetAllFeatures.response.PartnerZone
-import com.boost.cart.data.api_model.GetAllFeatures.response.PromoBanners
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PartnerZone
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PromoBanners
+import com.boost.dbcenterapi.upgradeDB.model.*
 
 interface HomeListener {
     fun onPackageClicked(item: Bundles?)

@@ -6,10 +6,10 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.boost.cart.base_class.BaseViewModel
-import com.boost.cart.data.api_model.customerId.create.CreateCustomerIDResponse
-import com.boost.cart.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
-import com.boost.cart.data.api_model.customerId.get.GetCustomerIDResponse
-import com.boost.cart.data.remote.ApiInterface
+import com.boost.dbcenterapi.data.api_model.customerId.create.CreateCustomerIDResponse
+import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
+import com.boost.dbcenterapi.data.api_model.customerId.get.GetCustomerIDResponse
+import com.boost.dbcenterapi.data.remote.ApiInterface
 import com.boost.cart.utils.Utils
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers

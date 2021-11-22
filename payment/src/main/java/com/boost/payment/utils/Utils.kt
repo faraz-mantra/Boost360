@@ -7,7 +7,7 @@ import android.net.NetworkInfo
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import com.boost.payment.data.api_model.GetAllWidgets.GetAllWidgets
+import com.boost.dbcenterapi.data.api_model.GetAllWidgets.GetAllWidgets
 import com.boost.payment.utils.Constants.Companion.BASE_URL
 import com.framework.analytics.SentryController
 import com.framework.rest.TokenAuthenticator

@@ -1,6 +1,5 @@
 package com.boost.upgrades.adapter
 
-import android.app.ActionBar
 import android.content.Context
 import android.graphics.Paint
 import android.os.Bundle
@@ -13,11 +12,10 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.bumptech.glide.Glide

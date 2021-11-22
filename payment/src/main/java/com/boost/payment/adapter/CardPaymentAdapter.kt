@@ -9,7 +9,7 @@ import android.widget.EditText
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.payment.R
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.payment.utils.Utils.hideSoftKeyboard
 
 

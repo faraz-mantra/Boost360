@@ -16,11 +16,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.boost.payment.R
 import com.boost.payment.PaymentActivity
-import com.boost.payment.data.api_model.customerId.customerInfo.AddressDetails
-import com.boost.payment.data.api_model.customerId.customerInfo.BusinessDetails
-import com.boost.payment.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
-import com.boost.payment.data.api_model.customerId.customerInfo.TaxDetails
-import com.boost.payment.data.api_model.customerId.get.Result
+import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.AddressDetails
+import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.BusinessDetails
+import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
+import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.TaxDetails
+import com.boost.dbcenterapi.data.api_model.customerId.get.Result
 import com.boost.payment.interfaces.BusinessDetailListener
 import com.boost.payment.ui.payment.PaymentViewModel
 import com.boost.payment.ui.popup.StateListPopFragment
@@ -54,7 +54,7 @@ class BusinessDetailsFragment : DialogFragment() {
   val stateFragment = StateListPopFragment()
   lateinit var prefs: SharedPrefs
   private var session: UserSessionManager? = null
-  private var gstInfoResult: com.boost.payment.data.api_model.gst.Result? = null
+  private var gstInfoResult: com.boost.dbcenterapi.data.api_model.gst.Result? = null
   private var isGstApiCalled :Boolean = false
 
 

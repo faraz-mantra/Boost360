@@ -15,8 +15,8 @@ import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.AllFeatureAdaptor
-import com.framework.upgradeDB.model.*
-import com.boost.upgrades.data.remote.ApiInterface
+import com.boost.dbcenterapi.upgradeDB.model.*
+import com.boost.dbcenterapi.data.remote.ApiInterface
 //import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.utils.WebEngageController
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_ALL_FEATURES_LOADED

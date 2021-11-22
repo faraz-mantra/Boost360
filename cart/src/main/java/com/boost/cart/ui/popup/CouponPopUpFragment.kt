@@ -14,8 +14,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.boost.cart.R
 import com.boost.cart.CartActivity
-import com.boost.cart.data.api_model.couponSystem.redeem.RedeemCouponRequest
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponRequest
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.cart.ui.home.CartViewModel
 import com.boost.cart.utils.Utils
 import com.boost.cart.utils.WebEngageController
@@ -23,11 +23,8 @@ import com.framework.webengageconstant.ADDONS_MARKETPLACE_DISCOUNT_COUPON_LOADED
 import com.framework.webengageconstant.DISCOUNT_COUPON
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.add_card_popup.*
 import kotlinx.android.synthetic.main.coupon_popup.*
-import kotlinx.android.synthetic.main.order_confirmation_fragment.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class CouponPopUpFragment : DialogFragment() {
 

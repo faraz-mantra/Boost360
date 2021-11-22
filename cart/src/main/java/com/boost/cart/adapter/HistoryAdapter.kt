@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
 import com.boost.cart.interfaces.HistoryFragmentListener
-import com.boost.cart.data.api_model.GetPurchaseOrder.Result
+import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.Result
 import java.lang.Long
 import java.text.NumberFormat
 import java.text.ParseException

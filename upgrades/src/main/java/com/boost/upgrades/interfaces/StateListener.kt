@@ -1,7 +1,7 @@
 package com.boost.upgrades.interfaces
 
-import com.boost.upgrades.data.api_model.customerId.StateModel
-import com.boost.upgrades.data.api_model.stateCode.Data
+import com.boost.dbcenterapi.data.api_model.customerId.StateModel
+import com.boost.dbcenterapi.data.api_model.stateCode.Data
 
 interface StateListener {
 

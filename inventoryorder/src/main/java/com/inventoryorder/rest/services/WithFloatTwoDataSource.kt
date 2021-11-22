@@ -1,6 +1,5 @@
 package com.inventoryorder.rest.services
 
-import com.boost.cart.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
 import com.inventoryorder.model.floatMessage.MessageModel
 import com.inventoryorder.model.order.ProductItem
 import com.inventoryorder.model.services.InventoryServicesResponseItem

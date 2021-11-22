@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.SharedPreferences
 import android.text.TextUtils
-import com.boost.payment.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
-import com.boost.payment.data.api_model.gst.Result
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
+import com.boost.dbcenterapi.data.api_model.gst.Result
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

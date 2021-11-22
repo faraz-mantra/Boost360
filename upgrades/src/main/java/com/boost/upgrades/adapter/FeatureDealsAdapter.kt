@@ -11,11 +11,11 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.framework.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.cart.data.api_model.GetAllFeatures.response.FeatureDeals
-import com.framework.upgradeDB.model.*
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.FeatureDeals
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.upgrades.interfaces.HomeListener
 import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
