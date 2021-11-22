@@ -11,4 +11,8 @@ class CategoryVideoModel : BaseViewModel() {
   fun getCategories(context: Context): LiveData<BaseResponse> {
     return CategoryRepository.getCategories(context).toLiveData()
   }
+
+  fun getCategoriesOv2(context: Context): LiveData<BaseResponse> {
+    return CategoryRepository.getCategoriesOv2(context).toLiveData()
+  }
 }

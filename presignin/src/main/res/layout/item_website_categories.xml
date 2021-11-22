@@ -21,7 +21,7 @@
                 android:background="@drawable/rounded_rectangle_eceff1">
 
                 <com.framework.views.customViews.CustomImageView
-                    android:id="@+id/customImageView7"
+                    android:id="@+id/iv_cat_img"
                     android:layout_width="@dimen/size_32"
                     android:layout_height="@dimen/size_32"
                     android:layout_marginTop="@dimen/size_20"
@@ -40,16 +40,15 @@
                     android:textAlignment="gravity"
                     android:textColor="@color/black_2A2A2A"
                     android:textSize="@dimen/text_13"
-                    app:layout_constraintBottom_toBottomOf="@+id/customImageView7"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_cat_img"
                     app:layout_constraintEnd_toStartOf="@+id/radioAsBusinessWebsite"
-                    app:layout_constraintStart_toEndOf="@+id/customImageView7"
-                    app:layout_constraintTop_toTopOf="@+id/customImageView7" />
+                    app:layout_constraintStart_toEndOf="@+id/iv_cat_img"
+                    app:layout_constraintTop_toTopOf="@+id/iv_cat_img" />
 
                 <com.framework.views.customViews.CustomRadioButton
                     android:id="@+id/radioAsBusinessWebsite"
-                    android:layout_width="@dimen/size_20"
-                    android:layout_height="@dimen/size_20"
-                    android:button="@drawable/check_selector_domain_booking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:checked="false"
                     android:gravity="center"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_category_title"
