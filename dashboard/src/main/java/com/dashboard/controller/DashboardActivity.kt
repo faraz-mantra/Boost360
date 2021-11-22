@@ -128,13 +128,13 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     session?.let { initDataBadges(it.fpTag ?: "", it.fPID ?: "", clientId) }
     registerFirebaseToken()
     reloadCapLimitData()
-    loadMarketPlaceData()
+//    loadMarketPlaceData()
   }
 
-  private fun loadMarketPlaceData() {
-    Log.e("loadMarketPlaceData", "Initialized")
-    viewModel.loadMarketPlaceData(application, session?.fP_AppExperienceCode, session?.fpTag)
-  }
+//  private fun loadMarketPlaceData() {
+//    Log.e("loadMarketPlaceData", "Initialized")
+//    viewModel.loadMarketPlaceData(application, session?.fP_AppExperienceCode, session?.fpTag)
+//  }
 
   private fun reloadCapLimitData() {
     viewModel.getCapLimitFeatureDetails(session?.fPID ?: "", clientId).observeOnce(this, {

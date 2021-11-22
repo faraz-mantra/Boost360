@@ -3,6 +3,7 @@ package com.boost.dbcenterapi
 import android.util.Log
 import androidx.multidex.MultiDexApplication
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.utils.DataLoader
 import com.framework.BaseApplication
 import com.framework.utils.PreferencesUtils
 
@@ -16,6 +17,7 @@ open class DBCenterAPIApplication: BaseApplication() {
             BaseApplication.initModule(application)
             PreferencesUtils.initSharedPreferences(application)
             AppDatabase.getInstance(application)
+            DataLoader.loadMarketPlaceData(application,"","")
         }
 
         @JvmStatic
