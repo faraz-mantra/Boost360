@@ -588,7 +588,7 @@
   <string name="get_boost_360_tnc">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
   <string name="need_help_desc">Please feel free to <a href="mailto: businesscare@jio.com">send an email at businesscare@jio.com</a>. Alternatively you can <a href="tel:18008899444">call us at 1800 889 9444</a>.</string>
   <string name="business_category_is_to_be_selected_only_once_while_setting_up_your_business_account_on_boost_360_to_know_more_contact_support">Business category is to be selected only once while setting up your business account on JioOnline. To know more contact support.</string>
-  <string name="fp_shop_awaited_desc">Unfortunately, This functionality is not available on the Android app yet. To activate this channel, please log in to boost the web portal <a href="https://jioonline.nowfloatsdev.com/">(jioonline.nowfloatsdev.com)</a> from the nearest desktop and go to <b>Content > Content Sharing Settings</b>. There you\'ll be able to activate this.</string>
+  <string name="fp_shop_awaited_desc">Unfortunately, This functionality is not available on the Android app yet. To activate this channel, please log in to boost the web portal <a href="https://jioonline.bizdigitaldev.com/">(jioonline.bizdigitaldev.com)</a> from the nearest desktop and go to <b>Content > Content Sharing Settings</b>. There you\'ll be able to activate this.</string>
   <string name="nowfloats">JioOnline</string>
   <string name="powered_by_company"> JioOnline</string>
   <string name="nowfloats_deliv">JioOnline delivery</string>
@@ -610,5 +610,56 @@
 
   <string name="collect_boost_business_website_desc">This account is being used to send you money collected from your customers who are making payments on your JioOnline Business website.</string>
   <string name="a_premium_service_by_boost_for_secure_payment_collection_learn_more_here">A premium service by JioOnline for secure payment collection (Learn more here)</string>
+
+  <string name="my_boost_360_subscription">My JioOnline subscription</string>
+  <string name="boost_360_training_certification"><![CDATA[JioOnline Training & certification]]></string>
+  <string name="boost_360_extensions">JioOnline extensions</string>
+  <string name="about_boost_360">About JioOnline</string>
+  <string name="run_boost_360_account_on_your_wordpress_website">Run JioOnline account on your wordpress website.</string>
+  <string name="help_us_make_boost_360_better">Help us make JioOnline better</string>
+  <string name="you_need_to_buy_the_one_time_pack_for_boost">You need to buy the one-time pack for JioOnline Training and Certification.</string>
+  <string name="boost_360_is_proudly_made_in_india">JioOnline is Proudly made in INDIA</string>
+  <string name="make_the_most_out_of_boost_360_for_your_business">Make the most out of JioOnline for your business</string>
+  <string name="i_agree_to_receive_important_business_updates_from_boost_360_via_whatsapp">I agree to receive important business updates from JioOnline via WhatsApp.</string>
+
+  <string name="payment_gateway_not_added_please_add_first">JioOnline Payment gateway not added, please add first.</string>
+  <string name="domain_renewal_info">Your domain will be automatically renewed based\non your active JioOnline package</string>
+  <string name="suggestions_instructions">With a domain booked via JioOnline gets you a <b>free SSL</b> (secure sockets layer) certificate. Please note that JioOnline doesn’t provide any premium domain.</string>
+  <string name="boost_360_does_not_handle_shipping_to_deliver_the_orders_to_customers_location_you_need_to_arrange_for_home_home_delivery_via_a_local_delivery_partner_or_any_trusted_shipping_company">JioOnline does not handle shipping. To deliver the orders to customers’ location, you need to arrange for home delivery via a local delivery partner or any trusted shipping company.</string>
+  <string name="to_enable_reach_customer_support_at_ria_">To enable this feature reach customer support at businesscare@jio.com</string>
+  <string name="confirming_domain_instructions">Once confirmed, above domain will replace your website address (URL) <u>samplestorewebsite.bizdigital.com.</u> Don’t worry, anyone clicking on old URL will still be able to see your website on this new domain.</string>
+  <string name="buy_domain_addon_desc">A personalised domain (website address) is an excellent first step toward creating your brand on the internet. Your business website is currently running on a subdomain of bizdigital.com. Buy/renew the add-on to enjoy this feature.</string>
+  <string name="nowfloats_technologies_pvt_ltd">JioOnline Technologies Pvt Ltd.</string>
+  <string name="your_gstin_no_arz6887865868_is_registered_with_the_company_name_nowfloats_technologies_pvt_ltd">Your GSTIN no. <b>ARZ6887865868</b> is registered with the company name <b>JioOnline Technologies Pvt. Ltd.</b></string>
+  <string name="we_re_currently_verifying_your_bank_account_this_process_usually_takes_1_working_day_once_verified_we_will_notify_you_if_you_want_to_make_any_change_to_above_account_details_please_write_to_ria_nowfloats_com_with_this_screenshot_attached">We’re currently verifying your bank account. This process usually takes 1 working day. Once verified we will notify you. If you want to make any change to above account details, please write to <u>businesscare@jio.com</u> with this screenshot attached.</string>
+
+  <string name="expert_contact_number">18008899444</string>
+
+  <!--   florisboard Keyboard-->
+  <string name="app_name_k">JioOnline keyboard</string>
+  <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when JioOnline keyboard is not enabled in the system">JioOnline keyboard is not enabled in the system and thus won\'t be available as an input method in the input picker. Click here to resolve this issue.</string>
+  <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when JioOnline keyboard is not selected as the default keyboard">JioOnline keyboard is not selected as the default input method. Click here to resolve this issue.</string>
+  <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Thanks for trying out JioOnline keyboard! This project is still in alpha and therefore missing features. If you find any bugs or want to make a suggestion, please check out the repo on GitHub and file an issue. This helps making JioOnline keyboard better. Thank you!</string>
+  <string name="pref__theme__source_assets" comment="Label for the theme source field">JioOnline keyboard App Assets</string>
+  <string name="about__app_icon_content_description" comment="Content description of app icon in About">App icon of JioOnline keyboard</string>
+  <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Welcome!</string>
+  <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Thanks for trying out JioOnline keyboard! Before you can start using it, we have to do the usual stuff and enable it in the system settings, set up your preferred language/layout, etc… But no worries - the setup wizard will guide you through this!</string>
+  <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">JioOnline keyboard does fully respect your privacy and does not collect any user data. For more info see here:</string>
+  <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">The source code for JioOnline keyboard is publicly accessible for anyone, so you can easily review what JioOnline keyboard does in the background. Check out the repository link below.</string>
+  <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">One last thing before you start the setup - if you encounter any bugs/crashes/issues with JioOnline keyboard or you have a feature request - head over to the GitHub repository linked below and file an issue. This helps in improving the experience for all users!</string>
+  <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Enable JioOnline keyboard</string>
+  <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android requires that every custom keyboard has to be manually enabled before you can use it. Click the button below to go to the <i>Language &amp; Input</i> settings, then make sure to check \'<i>JioOnline keyboard</i>\'.</string>
+  <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">JioOnline keyboard has been successfully enabled. To continue click <i>NEXT</i>!</string>
+  <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Make JioOnline keyboard default</string>
+  <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">JioOnline keyboard is now enabled in your system. To actively use it, switch to JioOnline keyboard by selecting it in the input selector dialog!</string>
+  <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Successfully switched the default keyboard to JioOnline keyboard!</string>
+  <string name="crash_dialog__title" comment="Title of crash dialog">JioOnline Error Report</string>
+  <string name="crash_dialog__description" comment="Description of crash dialog">Sorry for the inconvenience, but JioOnline has crashed due to an unexpected error.\n\nIf you wish to report this error, click on "Copy to clipboard", then on the "Open bug report" button. Fill out the bug report and paste the log. This helps in making JioOnline better and more stable for everyone. Thank you!</string>
+  <string name="crash_notification_channel__title" comment="Title of crash notification channel">JioOnline Error Reports</string>
+  <string name="crash_once_notification__title" comment="Title of the notification for a single crash">JioOnline has stopped working…</string>
+  <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">JioOnline seems to stop working repeatedly…</string>
+  <string name="keyboard_not_added_plan">JioOnline keyboard is not added in your current plan.</string>
+  <string name="login_to_boost">Login to JioOnline</string>
+  <!--   florisboard Keyboard-->
 
 </resources>

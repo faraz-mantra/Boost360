@@ -120,5 +120,9 @@
   <color name="red_fe946f">#4a4a4a</color>
   <color name="live_red">#4a4a4a</color>
   <color name="red_dark">#4a4a4a</color>
+
+  <color name="wrongOTPColor">@color/colorAccentLight</color>
+  <color name="red_button">@color/colorAccentLight</color>
+  <color name="colorAccentLightDark">@color/colorAccentLight</color>
   <!--  red type color-->
 </resources>
