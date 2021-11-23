@@ -76,7 +76,7 @@
               android:id="@+id/btn_primary"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/colorAccent">
+              android:background="@color/colorAccentLight">
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/ctv_btn_primary_title"
@@ -97,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:src="@drawable/exo_icon_play"
+                tools:src="@drawable/exo_icon_play"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/ctv_btn_primary_title"
@@ -131,7 +131,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/regular_medium"
                 android:gravity="center"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorAccentLight"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -144,8 +144,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:src="@drawable/share"
-                android:tint="@color/colorAccent"
+                tools:src="@drawable/share"
+                android:tint="@color/colorAccentLight"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/ctv_btn_secondary_title"
@@ -168,7 +168,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
               android:id="@+id/btn_tertiary"
-                android:visibility="gone"
+              android:visibility="gone"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/white">
@@ -179,7 +179,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/semi_bold"
                 android:gravity="center"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorAccentLight"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -191,7 +191,7 @@
                 android:id="@+id/civ_icon_left_tertiary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/share"
+                tools:src="@drawable/share"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/ctv_btn_title_tertiary"

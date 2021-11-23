@@ -139,17 +139,17 @@
                     android:gravity="center"
                     android:text="@string/search_a_new_domain_lowercase"
                     android:textAllCaps="false"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorAccentLight"
                     android:textSize="@dimen/text_14"
                     app:cornerRadius="@dimen/size_10"
                     app:icon="@drawable/ic_search_yellow"
                     app:iconGravity="textStart"
                     app:iconPadding="@dimen/size_12"
-                    app:iconTint="@color/colorPrimary"
+                    app:iconTint="@color/colorAccentLight"
                     app:layout_constraintEnd_toEndOf="@+id/rv_suggested_domains"
                     app:layout_constraintStart_toStartOf="@+id/rv_suggested_domains"
                     app:layout_constraintTop_toBottomOf="@+id/rv_suggested_domains"
-                    app:strokeColor="@color/colorPrimary" />
+                    app:strokeColor="@color/colorAccentLight" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
