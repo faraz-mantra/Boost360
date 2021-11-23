@@ -228,7 +228,7 @@
       style="@style/Appointment.ButtonStyle.Rounded.Solid.Stroke"
       android:layout_width="match_parent"
       android:layout_marginHorizontal="@dimen/size_20"
-      android:backgroundTint="@color/colorAccent"
+      android:backgroundTint="@color/colorAccentLight"
       android:text="@string/save_details"
       android:textAllCaps="false"
       android:textColor="@color/white"
