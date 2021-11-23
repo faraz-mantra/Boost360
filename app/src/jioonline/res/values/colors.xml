@@ -10,7 +10,7 @@
   <color name="squash">@color/colorPrimaryDarkBlue</color>
   <color name="marigold">@color/colorPrimaryDarkBlue</color>
   <color name="colorPrimary_10">#1A0400A6</color>
-  <color name="accentLight_1">#0400A6</color>
+  <color name="accentLight_1">@color/colorPrimaryDarkBlue</color>
   <color name="accentLight_2">#CDCCED</color>
 
 
