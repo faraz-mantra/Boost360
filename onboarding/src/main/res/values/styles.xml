@@ -18,8 +18,8 @@
   </style>
 
   <style name="AppThemeSupportVideo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-    <item name="colorPrimary">@color/black_333333</item>
-    <item name="colorPrimaryDark">@color/black_333333</item>
+    <item name="colorPrimary">@color/black_1e1e1e</item>
+    <item name="colorPrimaryDark">@color/black_1e1e1e</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
     <item name="android:windowBackground">@color/white</item>
@@ -268,6 +268,10 @@
 
   <style name="TextAppearanceSearch" parent="Widget.AppCompat.SearchView" >
     <item name="android:textSize">14sp</item>
+  </style>
+
+  <style name="SeekBarTheme" parent="Widget.AppCompat.SeekBar">
+    <item name="colorAccent">@color/pinkish_grey</item>
   </style>
 
 </resources>

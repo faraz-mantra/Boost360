@@ -40,6 +40,7 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
+import com.onboarding.nowfloats.constant.SupportVideoType;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityVmnCallCardsBinding;
 
@@ -613,7 +614,12 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 
   @Override
   public void secondaryButtonClicked() {
-    Toast.makeText(this, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
+    try {
+      startActivity(new Intent(this, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
+              .putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name(), SupportVideoType.TOB.getValue()));
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override

@@ -148,9 +148,12 @@ dependencies {
     //image picker
     api 'com.github.dhaval2404:imagepicker:2.1'
 
-
     //stories progress bar
     api 'com.github.shts:StoriesProgressView:3.0.0'
+
+    //Meta Data Receiver & Resolved
+    api 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.16'
+    api 'com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.16'
 
     //ExoPlayer
     api 'com.google.android.exoplayer:exoplayer-core:2.15.1'

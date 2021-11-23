@@ -2,7 +2,9 @@ package com.onboarding.nowfloats.ui.supportVideo
 
 import android.os.Build
 import android.util.Log
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.utils.DateUtils.milliToMinSecFormat
@@ -11,6 +13,7 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.material.slider.Slider
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
 import com.onboarding.nowfloats.constant.IntentConstant
@@ -22,6 +25,14 @@ import com.onboarding.nowfloats.model.supportVideo.FeatureSupportVideoResponse.C
 import com.onboarding.nowfloats.model.supportVideo.FeatureSupportVideoResponse.Companion.saveSupportVideoData
 import com.onboarding.nowfloats.model.supportVideo.FeaturevideoItem
 import com.onboarding.nowfloats.viewmodel.SupportVideoViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import wseemann.media.FFmpegMediaMetadataRetriever
 
 
 class SupportVideoPlayerActivity :
@@ -33,7 +44,16 @@ class SupportVideoPlayerActivity :
     private var currentPosition = 0
     private var currentVideoClock = 0L
     private var currentTotalClock = 0L
+    private var isFirstLoad = true
     private lateinit var filteredVideos: MutableList<FeaturevideoItem?>
+    private lateinit var allVideoDuration: LongArray
+
+    /*private var arrayOfVideoUrls = arrayListOf(
+        "https://cdn.nowfloats.com/manage/assets/Content/videos/vertical/BoostHowToTrackPerformanceAndWebsiteReport.mp4",
+        "https://cdn.nowfloats.com/manage/assets/Content/videos/vertical/BoostHowToAddTestimonial.mp4",
+        "https://cdn.nowfloats.com/manage/assets/Content/videos/vertical/BoostHowToTrackPerformanceAndWebsiteReport.mp4",
+        "https://cdn.nowfloats.com/manage/assets/Content/videos/vertical/BoostHowToTrackPerformanceAndWebsiteReport.mp4"
+    )*/
 
     override fun onCreateView() {
         super.onCreateView()
@@ -54,12 +74,7 @@ class SupportVideoPlayerActivity :
             supportVideoType = extras.getString(IntentConstant.SUPPORT_VIDEO_TYPE.name)!!
             getAndSaveFeatureSupportVideos()
         }
-        setUpProgressBar()
         setOnClickListeners()
-    }
-
-    private fun setUpProgressBar(duration: Long = 0L, counterL: Int = 0) {
-        binding?.storiesProgressView?.setStoryDuration(duration)
     }
 
     private fun setOnClickListeners() {
@@ -79,7 +94,8 @@ class SupportVideoPlayerActivity :
             if (currentPosition < filteredVideos.size - 1) {
                 binding?.videoView!!.playRightInAnimation()
                 binding?.consOverlayPlay?.playRightInAnimation()
-                loadNextVideo(false)
+                isFirstLoad = false
+                loadNextVideo()
             }
         }
 
@@ -120,13 +136,16 @@ class SupportVideoPlayerActivity :
         binding?.consOverlayPlay?.visible()
     }
 
-    private fun loadNextVideo(isFirstLoad:Boolean) {
-        if (!isFirstLoad)
+    private fun loadNextVideo() {
+        if (!isFirstLoad) {
+            isFirstLoad = false
             currentPosition++
+            exoPlayer?.next()
+        }
 
         when {
             filteredVideos.size == 1 -> {
-                blurAndDisableNavButtons(true, true)
+                blurAndDisableNavButtons(isPrevButtonDisable = true, isNextButtonDisable = true)
             }
             currentPosition == filteredVideos.size - 1 -> {
                 blurAndDisableNavButtons(isNextButtonDisable = true)
@@ -136,31 +155,48 @@ class SupportVideoPlayerActivity :
             }
         }
 
-        exoPlayer?.next()
+        setupSliderProgresses()
         binding?.videoView?.useController = false
         binding?.tvTimeTotal?.visible()
         binding?.seekBarPaused?.gone()
         binding?.tvElapsedTime?.gone()
+        binding?.tvTimeTotal?.text = ""
         binding?.tvVideoTitle?.text = filteredVideos[currentPosition]?.videotitle
-        //pauseExoPlayer(true)
+    }
+
+    private fun setupSliderProgresses() {
+        for (index in 0 until binding?.linearProgressStatus?.childCount!!) {
+            val childAt = binding?.linearProgressStatus?.getChildAt(index) as Slider
+            if (isFirstLoad){
+                childAt.value = 0f
+            }else {
+                if (index < exoPlayer?.currentMediaItemIndex!!) {
+                    childAt.value = 100f
+                } else if (index > exoPlayer?.currentMediaItemIndex!!) {
+                    childAt.value = 0f
+                }
+            }
+        }
     }
 
     private fun loadPreviousVideo() {
         currentPosition--
-        if (currentPosition == 0){
+        exoPlayer?.previous()
+        if (currentPosition == 0) {
             blurAndDisableNavButtons(isPrevButtonDisable = true)
-        }else{
+        } else {
             blurAndDisableNavButtons()
             binding?.ivPrev?.setTintColor(ContextCompat.getColor(this, R.color.white))
             binding?.ivNext?.alpha = 1f
         }
-        exoPlayer?.previous()
+
+        setupSliderProgresses()
         binding?.videoView?.useController = false
         binding?.tvTimeTotal?.visible()
         binding?.seekBarPaused?.gone()
         binding?.tvElapsedTime?.gone()
+        binding?.tvTimeTotal?.text = ""
         binding?.tvVideoTitle?.text = filteredVideos[currentPosition]?.videotitle
-        //pauseExoPlayer(true)
     }
 
     private fun getAndSaveFeatureSupportVideos() {
@@ -177,31 +213,39 @@ class SupportVideoPlayerActivity :
 
     private fun populateData() {
         val featureVideos = getSupportVideoData()?.data?.first()?.featurevideo
-        filteredVideos = (featureVideos?.filter { filter -> filter?.helpsectionidentifier == supportVideoType } as MutableList<FeaturevideoItem?>?)!!
-
+        filteredVideos =
+            (featureVideos?.filter { filter -> filter?.helpsectionidentifier == supportVideoType } as MutableList<FeaturevideoItem?>?)!!
+        getVideoDurations()
+        initStatusProgressBar()
+        /*for (item in filteredVideos)
+            exoPlayer?.addMediaItem(item?.videourl?.url?.let { MediaItem.fromUri(it) }!!)*/
         for (item in filteredVideos)
-            exoPlayer?.addMediaItem(item?.videourl?.url?.let { MediaItem.fromUri(it) }!!)
-        binding?.storiesProgressView?.setStoriesCount(filteredVideos.size)
+            exoPlayer?.addMediaItem(item.let { MediaItem.fromUri(it?.videourl?.url!!) })
         exoPlayer?.prepare()
-        loadNextVideo(true)
+        isFirstLoad = true
+        loadNextVideo()
+        launchProgressListener()
     }
 
-    private fun blurAndDisableNavButtons(isPrevButtonDisable:Boolean = false, isNextButtonDisable:Boolean = false){
-        if (isPrevButtonDisable){
+    private fun blurAndDisableNavButtons(
+        isPrevButtonDisable: Boolean = false,
+        isNextButtonDisable: Boolean = false
+    ) {
+        if (isPrevButtonDisable) {
             binding?.ivPrev?.setTintColor(ContextCompat.getColor(this, R.color.black))
             binding?.ivPrev?.alpha = 0.5f
             binding?.ivPrev?.isEnabled = false
-        }else{
+        } else {
             binding?.ivPrev?.setTintColor(ContextCompat.getColor(this, R.color.white))
             binding?.ivPrev?.alpha = 1f
             binding?.ivPrev?.isEnabled = true
         }
 
-        if (isNextButtonDisable){
+        if (isNextButtonDisable) {
             binding?.ivNext?.setTintColor(ContextCompat.getColor(this, R.color.black))
             binding?.ivNext?.alpha = 0.5f
             binding?.ivNext?.isEnabled = false
-        }else{
+        } else {
             binding?.ivNext?.setTintColor(ContextCompat.getColor(this, R.color.white))
             binding?.ivNext?.alpha = 1f
             binding?.ivNext?.isEnabled = true
@@ -212,16 +256,25 @@ class SupportVideoPlayerActivity :
         exoPlayer = SimpleExoPlayer.Builder(this)
             .build()
             .also { exoPlayer ->
-                exoPlayer.addListener(playbackStateListener)
-                binding?.videoView?.player = exoPlayer
-                exoPlayer.playWhenReady = false
-                exoPlayer.seekTo(0, 0L)
-                exoPlayer.prepare()
+                exoPlayer.apply {
+                    repeatMode = Player.REPEAT_MODE_ONE
+                    addListener(playbackStateListener)
+                    playWhenReady = false
+                    seekTo(0, 0L)
+                    prepare()
+                    binding?.videoView?.player = this
+                }
                 binding?.videoView?.useController = false
             }
     }
 
     private fun playbackStateListener() = object : Player.EventListener {
+
+        override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+            super.onMediaItemTransition(mediaItem, reason)
+            onVideoEnded()
+        }
+
         override fun onPlaybackStateChanged(playbackState: Int) {
             val stateString: String = when (playbackState) {
                 ExoPlayer.STATE_IDLE -> {
@@ -236,23 +289,26 @@ class SupportVideoPlayerActivity :
                     currentVideoClock = exoPlayer?.currentPosition!!
                     currentTotalClock = exoPlayer?.contentDuration!!
                     binding?.tvTimeTotal?.text = milliToMinSecFormat(currentTotalClock)
-                    setUpProgressBar(exoPlayer?.contentDuration!!, currentPosition)
                     "ExoPlayer.STATE_READY     -"
                 }
                 ExoPlayer.STATE_ENDED -> {
-                    exoPlayer?.pause()
-                    binding?.consOverlayPlay?.visible()
-                    binding?.videoView?.useController = false
-                    binding?.tvTimeTotal?.visible()
-                    binding?.seekBarPaused?.gone()
-                    binding?.tvElapsedTime?.gone()
-                    binding?.seekBarPaused?.progress = 0
+                    onVideoEnded()
                     "ExoPlayer.STATE_ENDED     -"
                 }
                 else -> "UNKNOWN_STATE             -"
             }
             Log.d(TAG, "changed state to $stateString")
         }
+    }
+
+    private fun onVideoEnded() {
+        exoPlayer?.pause()
+        binding?.consOverlayPlay?.visible()
+        binding?.videoView?.useController = false
+        binding?.tvTimeTotal?.visible()
+        binding?.seekBarPaused?.gone()
+        binding?.tvElapsedTime?.gone()
+        binding?.seekBarPaused?.progress = 0
     }
 
     public override fun onStart() {
@@ -290,5 +346,64 @@ class SupportVideoPlayerActivity :
             removeListener(playbackStateListener)
         }
         exoPlayer = null
+    }
+
+    private fun getVideoDurations() {
+        allVideoDuration = LongArray(filteredVideos.size)
+        val mmr = FFmpegMediaMetadataRetriever()
+        for (index in 0 until filteredVideos.size) {
+            mmr.setDataSource(filteredVideos[index]?.videourl?.url)
+            val durationString = mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_DURATION)
+            allVideoDuration[index] = durationString.toLong()
+        }
+
+        mmr.release()
+    }
+
+    private fun initStatusProgressBar() {
+        binding?.linearProgressStatus?.weightSum = filteredVideos.size.toFloat()
+
+        for (index in 0 until filteredVideos.size) {
+            val slider = Slider(this)
+            slider.apply {
+                valueFrom = 0f
+                valueTo = 100f
+                value = 0f
+                isTickVisible = false
+                thumbRadius = 0
+                haloRadius = 0
+                trackActiveTintList = ContextCompat.getColorStateList(this@SupportVideoPlayerActivity, R.color.slider_active_color_selector)!!
+                trackInactiveTintList = ContextCompat.getColorStateList(this@SupportVideoPlayerActivity, R.color.slider_inactive_color_selector)!!
+                setPadding(0, 0, 0, 0)
+
+                val layoutParamsSlider = LinearLayout.LayoutParams(0, 6, 1f)
+                layoutParamsSlider.setMargins(6, 0, 6, 0)
+                layoutParams = layoutParamsSlider
+
+                binding?.linearProgressStatus?.addView(this)
+            }
+        }
+    }
+
+    private fun videoProgress() = flow {
+        while (true) {
+            emit((exoPlayer?.currentPosition?.toFloat()?.div(exoPlayer!!.duration.toFloat())?.times(100))?.toInt()!!)
+            delay(1000)
+        }
+    }.flowOn(Dispatchers.Main)
+
+    private fun launchProgressListener() {
+        lifecycleScope.launch {
+            withContext(Dispatchers.Main) {
+                videoProgress().collect {
+                    statusProgressUpdate(it)
+                }
+            }
+        }
+    }
+
+    private fun statusProgressUpdate(progressPercentage: Int) {
+        val childAt = binding?.linearProgressStatus?.getChildAt(exoPlayer?.currentMediaItemIndex!!) as Slider
+        childAt.value = progressPercentage.toFloat()
     }
 }
