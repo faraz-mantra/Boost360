@@ -185,7 +185,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/size_54"
                         android:layout_marginTop="@dimen/size_16"
-                        android:backgroundTint="@color/colorPrimary"
+                        android:backgroundTint="@color/colorAccentLight"
                         android:fontFamily="@font/semi_bold"
                         android:text="@string/buy_add_on_lowercase"
                         android:textAllCaps="false"
@@ -216,14 +216,14 @@
             android:fontFamily="@font/semi_bold"
             android:text="@string/book_a_new_domain"
             android:textAllCaps="false"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorAccentLight"
             android:textSize="@dimen/body_1"
             android:visibility="visible"
             app:cornerRadius="@dimen/size_10"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:strokeColor="@color/colorPrimary" />
+            app:strokeColor="@color/colorAccentLight" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

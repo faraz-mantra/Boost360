@@ -22,7 +22,7 @@
         android:id="@+id/constraintLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black_4a4a4a"
+        android:background="@color/black_4a4a4a_jio"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/size_16"
         android:paddingBottom="@dimen/size_16"
@@ -100,7 +100,8 @@
           android:layout_width="@dimen/size_32"
           android:layout_height="@dimen/size_32"
           android:padding="@dimen/size_8"
-          android:src="@drawable/ic_arrow_right_7_white_d"
+          app:srcCompat="@drawable/ic_arrow_right_7_white_d"
+          app:tint="@color/white"
           app:layout_constraintBottom_toBottomOf="@+id/ctv_content"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintTop_toTopOf="@+id/ctv_name" />
