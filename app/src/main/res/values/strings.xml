@@ -897,8 +897,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="demo_plan">You are currently on a demo plan. To get more out of your website, upgrade to one of our paid plans.</string>
   <string name="free_plan">You are currently on a free plan. To get more out of your website, upgrade to one of our paid plans.</string>
   <string name="account_detail">Account Details</string>
-  <string name="active">ACTIVE</string>
-  <string name="expired">EXPIRED</string>
+  <string name="active">Active</string>
+  <string name="expired">Expired</string>
   <string name="feching_search_detail">Fetching Search details&#8230;</string>
   <string name="week">Week</string>
   <string name="unique_visitors">Website visitors</string>
