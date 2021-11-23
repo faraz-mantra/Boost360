@@ -121,7 +121,7 @@
               android:text="@string/resend"
               android:id="@+id/btn_resend"
               app:fontFamily="@font/bold"
-              android:textColor="@color/yellow_ffb900"
+              android:textColor="@color/colorAccentLight"
               app:textType="CAPTION" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,12 +1,23 @@
-<vector android:height="24dp" android:viewportHeight="21"
-    android:viewportWidth="21" android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
-    <path android:fillColor="#00000000"
-        android:pathData="M10.4409,18.4858C14.5831,18.4858 17.9409,15.128 17.9409,10.9858C17.9409,6.8437 14.5831,3.4858 10.4409,3.4858C6.2988,3.4858 2.9409,6.8437 2.9409,10.9858C2.9409,15.128 6.2988,18.4858 10.4409,18.4858Z"
-        android:strokeColor="#FFB900" android:strokeLineCap="round"
-        android:strokeLineJoin="round" android:strokeWidth="1.8"/>
-    <path android:fillColor="#00000000"
-        android:pathData="M9.8159,10.3608H10.4409V14.7358H11.0659"
-        android:strokeColor="#FFB900" android:strokeLineCap="round"
-        android:strokeLineJoin="round" android:strokeWidth="1.8"/>
-    <path android:fillColor="#FFB900" android:pathData="M10.4409,8.4858C10.9587,8.4858 11.3784,8.0661 11.3784,7.5483C11.3784,7.0306 10.9587,6.6108 10.4409,6.6108C9.9232,6.6108 9.5034,7.0306 9.5034,7.5483C9.5034,8.0661 9.9232,8.4858 10.4409,8.4858Z"/>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+  android:width="24dp"
+  android:height="24dp"
+  android:viewportWidth="21"
+  android:viewportHeight="21">
+  <path
+    android:fillColor="#00000000"
+    android:pathData="M10.4409,18.4858C14.5831,18.4858 17.9409,15.128 17.9409,10.9858C17.9409,6.8437 14.5831,3.4858 10.4409,3.4858C6.2988,3.4858 2.9409,6.8437 2.9409,10.9858C2.9409,15.128 6.2988,18.4858 10.4409,18.4858Z"
+    android:strokeWidth="1.8"
+    android:strokeColor="@color/colorAccent"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round" />
+  <path
+    android:fillColor="#00000000"
+    android:pathData="M9.8159,10.3608H10.4409V14.7358H11.0659"
+    android:strokeWidth="1.8"
+    android:strokeColor="@color/colorAccent"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round" />
+  <path
+    android:fillColor="@color/colorAccent"
+    android:pathData="M10.4409,8.4858C10.9587,8.4858 11.3784,8.0661 11.3784,7.5483C11.3784,7.0306 10.9587,6.6108 10.4409,6.6108C9.9232,6.6108 9.5034,7.0306 9.5034,7.5483C9.5034,8.0661 9.9232,8.4858 10.4409,8.4858Z" />
 </vector>
