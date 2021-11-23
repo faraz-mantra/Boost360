@@ -67,6 +67,8 @@ class UpgradeActivity : AppCompatActivity() {
   var isDeepLink: Boolean = false
   var isOpenCardFragment: Boolean = false
   var isBackCart: Boolean = false
+  var isOpenHomeFragment:Boolean = false
+  var isOpenAddOnsFragment:Boolean = false
 
   var deepLinkViewType: String = ""
   var deepLinkDay: Int = 7
@@ -99,6 +101,8 @@ class UpgradeActivity : AppCompatActivity() {
     profileUrl = intent.getStringExtra("profileUrl")
     accountType = intent.getStringExtra("accountType")
     isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
+    isOpenHomeFragment = intent.getBooleanExtra("isComingFromOrderConfirm",false)
+    isOpenAddOnsFragment = intent.getBooleanExtra("isComingFromOrderConfirmActivation",false)
     //user buying item directly
     widgetFeatureCode = intent.getStringExtra("buyItemKey")
     userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
@@ -117,6 +121,7 @@ class UpgradeActivity : AppCompatActivity() {
 
 
   fun initView() {
+
 
     if (fpid != null) {
       val bundle = Bundle()
@@ -169,6 +174,14 @@ class UpgradeActivity : AppCompatActivity() {
         }
         intent.putExtra("profileUrl", profileUrl)
         startActivity(intent)
+      }
+      if(isOpenHomeFragment){
+        addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
+      }
+      if(isOpenAddOnsFragment){
+        val args = Bundle()
+        args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+        addFragmentHome(MyAddonsFragment.newInstance(), MYADDONS_FRAGMENT,args)
       }
     } else {
       Toasty.error(

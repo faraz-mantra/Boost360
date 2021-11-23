@@ -1274,10 +1274,10 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             Log.e("getFeedBackLink", it.toString())
             feedBackLink = it
         })
-
-        viewModel.getBundleExxists().observe(this,androidx.lifecycle.Observer{
-            Log.d("getBundleExxists", it.toString())
-        })
+//
+//        viewModel.getBundleExxists().observe(this,androidx.lifecycle.Observer{
+//            Log.d("getBundleExxists", it.toString())
+//        })
     }
 
     fun updateRecycler(list: List<FeaturesModel>) {

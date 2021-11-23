@@ -1,5 +1,6 @@
 package com.boost.payment.ui.confirmation
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,8 @@ import com.boost.payment.utils.SharedPrefs
 import com.boost.payment.utils.Utils
 import com.boost.payment.utils.WebEngageController
 import com.framework.analytics.SentryController
+import com.framework.pref.Key_Preferences
+import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.order_confirmation_fragment.*
@@ -27,6 +30,9 @@ class OrderConfirmationFragment : BaseFragment() {
   val TAG = this::class.java.simpleName
   lateinit var prefs: SharedPrefs
   var data = JSONObject()
+  var session:UserSessionManager? = null
+  var screenType: String = ""
+  var buyItemKey: String? = ""
 
   companion object {
     fun newInstance() = OrderConfirmationFragment()
@@ -59,6 +65,7 @@ class OrderConfirmationFragment : BaseFragment() {
 //      } catch (e: Exception) {
 //      }
 //    }
+    session = UserSessionManager(activity as PaymentActivity)
     prefs = SharedPrefs(activity as PaymentActivity)
     return inflater.inflate(R.layout.order_confirmation_fragment, container, false)
   }
@@ -73,6 +80,8 @@ class OrderConfirmationFragment : BaseFragment() {
     prefs.storeOrderSuccessFlag(true)
     prefs.storeCartOrderInfo(null)
     prefs.storeApplyedCouponDetails(null)
+    UserSessionManager(requireActivity()).storeIntDetails(Key_Preferences.KEY_FP_CART_COUNT,0)
+
 
     try {
       if (arguments != null) {
@@ -97,7 +106,8 @@ class OrderConfirmationFragment : BaseFragment() {
     }
 
     back_button.setOnClickListener {
-//      (activity as PaymentActivity).goToHomeFragment()
+      goToHomeFragment()
+      (activity as PaymentActivity).finish()
       Toast.makeText(requireContext(), "Redirect based on needs...", Toast.LENGTH_SHORT).show()
     }
 
@@ -107,7 +117,8 @@ class OrderConfirmationFragment : BaseFragment() {
         Check_Activation_Status,
         NO_EVENT_VALUE
       )
-      (activity as PaymentActivity).goBackToMyAddonsScreen()
+      goToAddOnsFragment()
+      (activity as PaymentActivity).finish()
     }
 
     order_needs_help.setOnClickListener {
@@ -138,5 +149,78 @@ class OrderConfirmationFragment : BaseFragment() {
     super.onDestroy()
     Log.e(TAG, ">>> onDestroy")
   }
+
+  private fun goToHomeFragment() {
+    try {
+      val intent = Intent(context, Class.forName("com.boost.upgrades.UpgradeActivity"))
+      intent.putExtra("isComingFromOrderConfirm",true)
+      intent.putExtra("expCode", session?.fP_AppExperienceCode)
+      intent.putExtra("fpName", session?.fPName)
+      intent.putExtra("fpid", session?.fPID)
+      intent.putExtra("fpTag", session?.fpTag)
+      intent.putExtra("screenType", screenType)
+      intent.putExtra("accountType", session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
+      intent.putExtra("boost_widget_key","TESTIMONIALS")
+      intent.putExtra("feature_code","TESTIMONIALS")
+
+      intent.putStringArrayListExtra(
+        "userPurchsedWidgets",
+        session?.getStoreWidgets() as ArrayList<String>
+      )
+      if (session?.userProfileEmail != null) {
+        intent.putExtra("email", session?.userProfileEmail)
+      } else {
+        intent.putExtra("email", "ria@nowfloats.com")
+      }
+      if (session?.userPrimaryMobile != null) {
+        intent.putExtra("mobileNo", session?.userPrimaryMobile)
+      } else {
+        intent.putExtra("mobileNo", "9160004303")
+      }
+      if (buyItemKey != null && buyItemKey!!.isNotEmpty()) intent.putExtra("buyItemKey", buyItemKey)
+      intent.putExtra("profileUrl", session?.fPLogo)
+      startActivity(intent)
+    } catch (e: Exception) {
+      SentryController.captureException(e)
+      e.printStackTrace()
+    }
+  }
+
+  private fun goToAddOnsFragment() {
+    try {
+      val intent = Intent(context, Class.forName("com.boost.upgrades.UpgradeActivity"))
+      intent.putExtra("isComingFromOrderConfirmActivation",true)
+      intent.putExtra("expCode", session?.fP_AppExperienceCode)
+      intent.putExtra("fpName", session?.fPName)
+      intent.putExtra("fpid", session?.fPID)
+      intent.putExtra("fpTag", session?.fpTag)
+      intent.putExtra("screenType", screenType)
+      intent.putExtra("accountType", session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
+      intent.putExtra("boost_widget_key","TESTIMONIALS")
+      intent.putExtra("feature_code","TESTIMONIALS")
+
+      intent.putStringArrayListExtra(
+        "userPurchsedWidgets",
+        session?.getStoreWidgets() as ArrayList<String>
+      )
+      if (session?.userProfileEmail != null) {
+        intent.putExtra("email", session?.userProfileEmail)
+      } else {
+        intent.putExtra("email", "ria@nowfloats.com")
+      }
+      if (session?.userPrimaryMobile != null) {
+        intent.putExtra("mobileNo", session?.userPrimaryMobile)
+      } else {
+        intent.putExtra("mobileNo", "9160004303")
+      }
+      if (buyItemKey != null && buyItemKey!!.isNotEmpty()) intent.putExtra("buyItemKey", buyItemKey)
+      intent.putExtra("profileUrl", session?.fPLogo)
+      startActivity(intent)
+    } catch (e: Exception) {
+      SentryController.captureException(e)
+      e.printStackTrace()
+    }
+  }
+
 
 }
