@@ -20,6 +20,8 @@ import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.onboardingRequest.saveCategoryRequest
 import com.boost.presignin.model.signup.FloatingPointCreateResponse
 import com.boost.presignin.model.userprofile.BusinessProfileResponse
+import com.boost.presignin.ui.newOnboarding.bottomSheet.HelpSupportSuccessBottomSheet
+import com.boost.presignin.ui.newOnboarding.bottomSheet.NeedHelpBottomSheet
 import com.boost.presignin.ui.registration.RegistrationActivity
 import com.boost.presignin.ui.registration.SUCCESS_FRAGMENT
 import com.boost.presignin.viewmodel.CategoryVideoModel
@@ -129,7 +131,8 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_item_help_onboard -> {
-                showShortToast(getString(R.string.coming_soon))
+                NeedHelpBottomSheet().show(parentFragmentManager,
+                    NeedHelpBottomSheet::class.java.name)
                 return true
             }
             else -> super.onOptionsItemSelected(item)

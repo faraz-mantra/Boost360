@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -51,43 +52,92 @@
             app:layout_constraintStart_toEndOf="@id/startGuide"
             app:layout_constraintTop_toBottomOf="@+id/tv_subtitle">
 
-            <com.framework.views.customViews.CustomEditText
-                android:id="@+id/ed_input_website_address"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/regular_medium"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black_66"
-                android:textSize="@dimen/text_14" />
+            <include
+                android:id="@+id/address_input_layout"
+                layout="@layout/layout_website_address_input"
+                />
 
         </com.framework.views.customViews.CustomTextInputLayout>
 
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tv_secure"
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_9"
-            android:drawableStart="@drawable/ic_lock_gray"
-            android:drawablePadding="@dimen/size_12"
-            android:fontFamily="@font/inter_regular"
-            android:gravity="start"
-            android:text="@string/this_url_is_completely_secure"
-            android:textAlignment="gravity"
-            android:textColor="@color/black_2A2A2A"
-            android:textSize="@dimen/text_13"
-            app:layout_constraintStart_toStartOf="@+id/customTextInputLayout"
-            app:layout_constraintTop_toBottomOf="@+id/customTextInputLayout" />
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@+id/endGuide"
+            app:layout_constraintStart_toStartOf="@+id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/customTextInputLayout">
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/green_61CF96"
+                app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:src="@drawable/ic_presignin_https_lock" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="@string/secure"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/regular" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_secure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="start"
+                android:text="@string/this_url_is_completely_secure"
+                android:textAlignment="gravity"
+                android:textColor="@color/black_2A2A2A"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+
+        <com.framework.views.customViews.CustomTextView
+            android:visibility="gone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/this_link_is_already_in_use_please_choose_another"
+            android:textColor="@color/input_error_color"
+            android:textSize="12sp"
+            app:fontFamily="@font/regular"
+            app:layout_constraintEnd_toStartOf="@+id/endGuide"
+            app:layout_constraintStart_toStartOf="@+id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/customTextInputLayout"
+             />
 
         <include
             android:id="@+id/include_mobile_view"
             layout="@layout/layout_website_name_mobile_view"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_62"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_next_step_3"
             app:layout_constraintEnd_toStartOf="@+id/endGuide"
+            app:layout_constraintHeight_percent="0.4"
             app:layout_constraintStart_toStartOf="@+id/startGuide"
-            app:layout_constraintTop_toBottomOf="@+id/tv_secure"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
             app:layout_constraintVertical_bias="1.0" />
 
         <com.framework.views.customViews.CustomTextView

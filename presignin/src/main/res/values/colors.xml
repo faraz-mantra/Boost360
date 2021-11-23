@@ -31,5 +31,6 @@
   <color name="red_error_e3954">#e39595</color>
   <color name="graycacaca">#cacaca</color>
   <color name="gray_f0f0f0">#cacaca</color>
+  <color name="input_error_color">#FF5C00</color>
 
 </resources>

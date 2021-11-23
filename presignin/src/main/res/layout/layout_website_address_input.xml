@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="8dp">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/bg_grey_stroke_et"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.framework.views.customViews.CustomEditText
+                android:id="@+id/et_input"
+                android:layout_width="0dp"
+                android:enabled="false"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="sdfsddsfsdfsdsdfsdsdfsddssdff"
+                android:layout_margin="4dp"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:background="@color/white_F5F8FD"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/_14dp"
+                app:fontFamily="@font/inter_bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <LinearLayout
+                app:layout_constraintHorizontal_bias="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center|end"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/et_input"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/nowfloats_dot_com"
+                    android:textColor="#9DA4B2" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_presignin_edit_input" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/iv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_domain_tick"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:paddingHorizontal="4dp"
+            android:background="@color/white_F5F8FD"
+            android:textSize="12sp"
+            android:layout_marginBottom="4dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Website address"
+            app:layout_constraintBottom_toTopOf="@+id/input_layout"
+            app:layout_constraintStart_toStartOf="@+id/input_layout"
+            app:layout_constraintTop_toTopOf="@id/input_layout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

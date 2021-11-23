@@ -25,6 +25,8 @@ import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.ui.login.LoginActivity
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.boost.presignin.ui.mobileVerification.OTP_FRAGMENT
+import com.boost.presignin.ui.newOnboarding.bottomSheet.HelpSupportSuccessBottomSheet
+import com.boost.presignin.ui.newOnboarding.bottomSheet.NeedHelpBottomSheet
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.analytics.SentryController
 import com.framework.base.FRAGMENT_TYPE
@@ -188,7 +190,8 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_item_help_onboard -> {
-                showShortToast(getString(R.string.coming_soon))
+                NeedHelpBottomSheet().show(parentFragmentManager,
+                    NeedHelpBottomSheet::class.java.name)
                 return true
             }
             else -> super.onOptionsItemSelected(item)
