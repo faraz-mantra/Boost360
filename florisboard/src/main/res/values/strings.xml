@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">Boost keyboard</string>
+  <string name="app_name_k">Boost keyboard</string>
 
   <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pause</string>
   <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Wait</string>
