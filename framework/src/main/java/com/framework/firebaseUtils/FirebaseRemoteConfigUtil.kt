@@ -12,6 +12,7 @@ const val FIREBASE_RC_FETCH_INTERVAL: Long = 900
 const val FESTIVE_POSTER_NAME = "festive_poster_name"
 const val DASHBOARD_FESTIVAL_BUTTON_VISIBILITY = "dashboard_festive_poster_button_visible"
 const val FEATURE_DOMAIN_BOOKING_ENABLE = "feature_domain_booking_enable"
+const val IN_APP_UPDATE_TYPE_IMMEDIATE = "in_app_update_type_immediate"
 
 object FirebaseRemoteConfigUtil {
 
@@ -49,4 +50,18 @@ object FirebaseRemoteConfigUtil {
     Log.d(TAG, "Config feature domain enable: ${remoteConfig?.getBoolean(FEATURE_DOMAIN_BOOKING_ENABLE) ?: false}")
     return remoteConfig?.getBoolean(FEATURE_DOMAIN_BOOKING_ENABLE) ?: false
   }
+
+  fun appUpdateType(): UpdateType {
+    Log.d(TAG, "Config in app update type: ${remoteConfig?.getString(IN_APP_UPDATE_TYPE_IMMEDIATE) ?: false}")
+    return if (remoteConfig?.getBoolean(IN_APP_UPDATE_TYPE_IMMEDIATE) == true) {
+      UpdateType.IMMEDIATE
+    } else {
+      UpdateType.FLEXIBLE
+    }
+  }
+}
+
+enum class UpdateType{
+  FLEXIBLE,
+  IMMEDIATE
 }
