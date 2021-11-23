@@ -17,7 +17,6 @@ open class DBCenterAPIApplication: BaseApplication() {
             BaseApplication.initModule(application)
             PreferencesUtils.initSharedPreferences(application)
             AppDatabase.getInstance(application)
-            DataLoader.loadMarketPlaceData(application,"","")
         }
 
         @JvmStatic
