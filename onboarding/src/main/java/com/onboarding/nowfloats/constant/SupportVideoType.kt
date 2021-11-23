@@ -6,7 +6,7 @@ enum class SupportVideoType (val value :String) {
     LATEST_UPDATES("feature.LATESTUPDATES"), //Pending
     PAYMENT_GATEWAY("feature.PAYMENTGATEWAY"), //hold, doubts
     ANALYTICS("feature.ANALYTICS"), //hold, doubts
-    TOB("feature.TOB"),             //hold, doubts
+    TOB("feature.TOB"),             //Applied in Enquiries Calls, messages, newsletter subscribers
     TESTIMONIALS("feature.TESTIMONIALS"),
     PRODUCT_CATALOGUE("feature.PRODUCTCATALOGUE"),
     FEATURED_IMAGE("feature.FEATUREDIMAGE"),

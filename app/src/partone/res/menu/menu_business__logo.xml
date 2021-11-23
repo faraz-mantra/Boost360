@@ -3,4 +3,10 @@
   xmlns:tools="http://schemas.android.com/tools"
   tools:context="test.com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity">
 
+    <item
+        android:id="@+id/menu_item_help_featured_image"
+        android:title="@string/watch_how_it_works"
+        android:icon="@drawable/ic_help_white"
+        app:showAsAction="always"/>
+
 </menu>

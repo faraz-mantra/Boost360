@@ -512,7 +512,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     @Override
     public void secondaryButtonClicked() {
         startHelpSupportVideoActivity(this, SupportVideoType.PRODUCT_CATALOGUE.getValue());
-        }
+    }
 
     @Override
     public void ternaryButtonClicked() {
