@@ -157,9 +157,9 @@
   <color name="black_3C3C3C">#3C3C3C</color>
   <color name="colorAccentPositive">@color/colorAccent</color>
   <color name="colorAccentNegative">@color/black_4a4a4a</color>
-
   <color name="grey_bg">#F8F8F8</color>
 
   <color name="black_4a4a4a_jio">@color/black_4a4a4a</color>
   <color name="primary_4a4a4a_jio">@color/black_4a4a4a</color>
+  <color name="gray_white_text_jio">@color/gray_text_hint</color>
 </resources>
