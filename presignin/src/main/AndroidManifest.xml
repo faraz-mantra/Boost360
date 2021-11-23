@@ -52,8 +52,9 @@
         <activity
             android:name=".ui.newOnboarding.NewOnBoardingContainerActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NewOnBoarding"
-            android:windowSoftInputMode="adjustResize"/>
+            />
 
         <receiver
             android:name="com.framework.smsVerification.SMSReceiver"

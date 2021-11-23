@@ -25,6 +25,8 @@ import com.boost.presignin.model.login.VerifyOtpResponse
 import com.boost.presignin.ui.mobileVerification.AuthBaseFragment
 import com.boost.presignin.ui.mobileVerification.FP_LIST_FRAGMENT
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
+import com.boost.presignin.ui.newOnboarding.bottomSheet.HelpSupportSuccessBottomSheet
+import com.boost.presignin.ui.newOnboarding.bottomSheet.NeedHelpBottomSheet
 import com.boost.presignin.ui.registration.RegistrationActivity
 import com.boost.presignin.views.otptextview.OTPListener
 import com.framework.base.FRAGMENT_TYPE
@@ -160,7 +162,8 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_item_help_onboard -> {
-                showShortToast(getString(R.string.coming_soon))
+                NeedHelpBottomSheet().show(parentFragmentManager,
+                    NeedHelpBottomSheet::class.java.name)
                 return true
             }
             else -> super.onOptionsItemSelected(item)

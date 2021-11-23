@@ -25,6 +25,7 @@ import com.boost.presignin.model.signup.FloatingPointCreateResponse
 import com.boost.presignin.model.userprofile.BusinessProfileResponse
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.afterTextChanged
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
 import com.framework.pref.Key_Preferences
@@ -80,9 +81,16 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
             apiHitCreateMerchantProfile()
         }
 
-        binding?.edInputWebsiteAddress?.afterTextChanged {
+        binding?.addressInputLayout?.etInput?.afterTextChanged {
             binding?.tvNextStep3?.isEnabled = it.isEmpty().not()
             binding?.includeMobileView?.tvWebsiteName?.text = it
+        }
+
+        binding?.addressInputLayout?.ivIcon?.setOnClickListener {
+            binding?.addressInputLayout?.ivIcon?.gone()
+            binding?.addressInputLayout?.ivStatus?.gone()
+            binding?.addressInputLayout?.etInput?.isEnabled = true
+
         }
     }
 
@@ -148,7 +156,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     }
 
     private fun getBusinessRequest(): BusinessCreateRequest {
-        val domain =binding!!.edInputWebsiteAddress.text.toString()
+        val domain =binding!!.addressInputLayout.etInput.text.toString()
         val createRequest = BusinessCreateRequest()
         createRequest.autoFillSampleWebsiteData = true
         //createRequest.webTemplateId = floatsRequest?.categoryDataModel?.webTemplateId
