@@ -21,7 +21,6 @@
                 android:enabled="false"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="sdfsddsfsdfsdsdfsdsdfsddssdff"
                 android:layout_margin="4dp"
                 android:layout_height="match_parent"
                 android:padding="10dp"
