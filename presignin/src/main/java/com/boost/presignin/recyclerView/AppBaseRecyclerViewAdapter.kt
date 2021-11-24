@@ -5,13 +5,10 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.presignin.R
-import com.boost.presignin.holder.PagingViewHolder
 import com.boost.presignin.constant.RecyclerViewItemType.*
 import com.boost.presignin.databinding.*
-import com.boost.presignin.holder.BusinessListViewHolder
-import com.boost.presignin.holder.CategoryOv2RecyclerViewHolder
+import com.boost.presignin.holder.*
 import com.boost.presignin.holder.common.SectionHeaderRecyclerViewHolder
-import com.boost.presignin.holder.CategoryRecyclerViewHolder
 import com.boost.presignin.holder.common.IntroSlidesViewHolder
 import com.framework.base.BaseActivity
 import java.util.*
@@ -33,6 +30,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       CATEGORY_ITEM_OV2 -> CategoryOv2RecyclerViewHolder(binding as ItemWebsiteCategoriesBinding)
       BUSINESS_LIST_ITEM -> BusinessListViewHolder(binding as RecyclerItemFpInfoBinding)
       INTRO_NEW_SLIDES -> IntroSlidesViewHolder(binding as ItemIntroNewSlidesBinding)
+      CATEGORY_SUGGESTION_ITEM->CategorySuggestionViewholder(binding as ListItemCategorySuggestionBinding)
     }
   }
 

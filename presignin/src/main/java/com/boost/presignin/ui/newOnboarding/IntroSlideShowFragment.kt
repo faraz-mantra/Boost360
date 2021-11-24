@@ -8,6 +8,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.FragmentType
+import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentIntroSlideShowBinding
 import com.boost.presignin.model.authToken.AuthTokenDataItem
 import com.boost.presignin.model.newOnboarding.IntroItemNew

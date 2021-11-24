@@ -11,13 +11,13 @@ import java.io.Serializable
 
 
 class CategoryDataModelOv2(
-  val experience_code: String? = null,
-  val webTemplateId: String? = null,
-  val category_key: String? = null,
-  val category_Name: String? = null,
-  val category_descriptor: String? = null,
-  val icon: String? = null,
-  val sections: ArrayList<SectionsFeature>? = null,
+    val experience_code: String? = null,
+    val webTemplateId: String? = null,
+    val category_key: String? = null,
+    var category_Name: String? = null,
+    val category_descriptor: String? = null,
+    val icon: String? = null,
+    val sections: ArrayList<SectionsFeature>? = null,
 ) : BaseResponse(), AppBaseRecyclerViewItem, Serializable {
   var sectionType: Boolean = false
   var isSelected = false
