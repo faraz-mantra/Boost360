@@ -2,20 +2,20 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.framework.views.customViews.CustomTextView
         android:id="@+id/tv_no_search_title"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
+        app:layout_constraintHorizontal_bias="0"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_28"
         android:fontFamily="@font/inter_semi_bold"
         android:gravity="start"
-        android:layout_marginStart="@dimen/size_64"
-        android:layout_marginEnd="@dimen/size_64"
         android:text="@string/could_not_find_your_business_type"
         android:textAlignment="gravity"
         android:textColor="@color/black_4a4a4a"
@@ -26,13 +26,11 @@
 
     <com.framework.views.customViews.CustomTextView
         android:id="@+id/tv_no_search_subtitle"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
+        app:layout_constraintHorizontal_bias="0"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_6"
-        android:layout_marginStart="@dimen/size_64"
-        android:layout_marginEnd="@dimen/size_64"
         android:fontFamily="@font/inter_regular"
-        android:gravity="center"
         android:text="@string/choose_what_best_describes_your_business_the_best"
         android:textAlignment="gravity"
         android:textColor="@color/black_2A2A2A"
@@ -44,7 +42,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_categories"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="@dimen/size_20"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,5 +50,5 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_no_search_subtitle"
         tools:listitem="@layout/item_website_categories" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
 </layout>
