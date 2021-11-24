@@ -33,6 +33,7 @@ import com.nowfloats.education.koindi.KoinBaseApplication;
 import com.nowfloats.util.Constants;
 import com.onboarding.nowfloats.BaseBoardingApplication;
 import com.onboarding.nowfloats.constant.PreferenceConstant;
+import com.thinksity.R;
 import com.webengage.sdk.android.WebEngageActivityLifeCycleCallbacks;
 import com.webengage.sdk.android.WebEngageConfig;
 
@@ -46,7 +47,6 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
   public static final String TAG = AppController.class.getSimpleName();
   private static AppController mInstance;
   private final String APPSFLAYER_DEV_KEY = "8PD2DC7BbVdr7aLnRE8wHY";
-  String webEngageKey = "~10a5cad2d";
   private RequestQueue mRequestQueue;
   private ImageLoader mImageLoader;
   private LocaleManager localeManager;
@@ -163,9 +163,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
                 .setFontAttrId(R.attr.fontPath)
                 .build());*/
     FacebookSdk.sdkInitialize(getApplicationContext());
-      if (!BaseOrderApplication.instance.getPackageName().equals("com.jio.online")) {
-          registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this));
-      }
+    registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this));
     //WebEngage.registerPushNotificationCallback(new PushNotificationCallbacksImpl());
     AppEventsLogger.activateApp(this);
 
@@ -189,14 +187,11 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
   }
 
   void initWebEngage() {
-    if (!BaseOrderApplication.instance.getPackageName().equals("com.jio.online")) {
-      WebEngageConfig webEngageConfig = new WebEngageConfig.Builder()
-          .setWebEngageKey(webEngageKey)
-          .setDebugMode(true)
-          .build();
-      registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this, webEngageConfig));
-    }
-
+    WebEngageConfig webEngageConfig = new WebEngageConfig.Builder()
+        .setWebEngageKey(getString(R.string.webengage_license_code))
+        .setDebugMode(true)
+        .build();
+    registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this, webEngageConfig));
   }
 
   public RequestQueue getRequestQueue() {
