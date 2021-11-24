@@ -6,6 +6,7 @@ import com.boost.presignin.R
 enum class RecyclerViewItemType {
   PAGINATION_LOADER,
   CATEGORY_ITEM,
+  CATEGORY_SUGGESTION_ITEM,
   CATEGORY_ITEM_OV2,
   BUSINESS_LIST_ITEM,
   SECTION_HEADER_ITEM,
@@ -21,6 +22,7 @@ enum class RecyclerViewItemType {
       BUSINESS_LIST_ITEM -> R.layout.recycler_item_fp_info
       INTRO_NEW_SLIDES -> R.layout.item_intro_new_slides
       CATEGORY_ITEM_OV2->R.layout.item_website_categories
+      CATEGORY_SUGGESTION_ITEM->R.layout.list_item_category_suggestion
     }
   }
 }

@@ -3,10 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/iv_bar"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_presignin_category_selected_bar"
+            android:layout_height="wrap_content"/>
+
         <androidx.cardview.widget.CardView
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
             android:id="@+id/layout_suggest_domain_select"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,9 +56,13 @@
 
                 <com.framework.views.customViews.CustomRadioButton
                     android:id="@+id/radioAsBusinessWebsite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:checked="false"
+                    android:button="@null"
+                    app:buttonCompat="@null"
+                    android:background="@drawable/check_selector_domain_booking"
+
                     android:gravity="center"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_category_title"
                     app:layout_constraintEnd_toStartOf="@+id/endGuide"
