@@ -3,6 +3,7 @@ package com.boost.presignin.holder
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.View
+import androidx.core.view.isVisible
 import com.boost.presignin.R
 import com.boost.presignin.constant.RecyclerViewActionType
 import com.boost.presignin.databinding.ItemWebsiteCategoriesBinding
@@ -38,12 +39,8 @@ class CategoryOv2RecyclerViewHolder constructor(binding: ItemWebsiteCategoriesBi
   }
 
   private fun setCardSelection(isSelected: Boolean) {
-    if (isSelected) {
-      binding.radioAsBusinessWebsite.buttonTintList = ColorStateList.valueOf(Color.parseColor("#4a4a4a"))
-    } else {
-      binding.radioAsBusinessWebsite.buttonTintList = ColorStateList.valueOf(Color.parseColor("#bbbbbb"))
-    }
     binding.radioAsBusinessWebsite.isChecked =isSelected
+    binding.ivBar.isVisible = isSelected
 
   }
 
@@ -55,7 +52,7 @@ class CategoryOv2RecyclerViewHolder constructor(binding: ItemWebsiteCategoriesBi
     val drawable = model?.getImage(activity) ?: return
     binding.ivCatImg.setImageDrawable(drawable)
     binding.ivCatImg.setTintColor(getColor(R.color.black_4a4a4a)!!)
-    setClickListeners(binding.layoutSuggestDomainSelect)
+    setClickListeners(binding.layoutSuggestDomainSelect,binding.radioAsBusinessWebsite)
     setCardSelection(model.isSelected)
 
   }

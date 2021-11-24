@@ -2,6 +2,9 @@ package com.boost.presignin.rest
 
 object EndPoints {
 
+  const val BOOST_KIT_DEV_BASE = "https://developer.api.boostkit.dev/"
+  const val GET_CATEGORIES="language/v1/categories/get-data"
+
   //TODO NFX API WITH FLOAT
   const val WITH_FLOATS_BASE = "https://api.withfloats.com/"
   const val PUT_CREATE_BUSINESS_URL = "discover/v5/FloatingPoint/create"
