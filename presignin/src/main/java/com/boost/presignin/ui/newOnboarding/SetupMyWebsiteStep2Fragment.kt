@@ -14,6 +14,17 @@ import com.boost.presignin.databinding.LayoutSetUpMyWebsiteStep1Binding
 import com.boost.presignin.databinding.LayoutSetUpMyWebsiteStep2Binding
 import com.framework.extensions.afterTextChanged
 import com.framework.models.BaseViewModel
+import com.framework.utils.fromHtml
+import android.view.inputmethod.EditorInfo
+
+import android.view.KeyEvent
+
+import android.widget.TextView
+
+import android.widget.TextView.OnEditorActionListener
+import com.framework.extensions.gone
+import com.framework.extensions.visible
+
 
 class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Binding, BaseViewModel>() {
 
@@ -48,16 +59,31 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
     private fun setOnClickListeners() {
         binding?.tvNextStep2?.setOnClickListener {
             addFragment(R.id.inner_container,SetupMyWebsiteStep3Fragment.newInstance(Bundle()
-                .apply
-                {
+                .apply {
                     putString(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber)
-                    putString(IntentConstant.EXTRA_BUSINESS_NAME.name,binding?.edInputBusinessName?.text.toString())
+                    putString(IntentConstant.EXTRA_BUSINESS_NAME.name,binding?.businessNameInputLayout?.etInput?.text.toString())
                 }),true)
         }
 
-        binding?.edInputBusinessName?.afterTextChanged {
+        binding?.businessNameInputLayout?.etInput?.afterTextChanged {
             binding?.tvNextStep2?.isEnabled = it.isEmpty().not()
             binding?.includeMobileView?.tvTitle?.text = it
+            binding?.businessNameInputLayout?.tvWordCount?.text = fromHtml("<font color=#09121F>${it.length}</font><font color=#9DA4B2> /40</font>")
+        }
+
+        binding?.businessNameInputLayout?.etInput?.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                binding?.businessNameInputLayout?.etInput?.isEnabled = false
+                binding?.businessNameInputLayout?.tvWordCount?.gone()
+                binding?.businessNameInputLayout?.ivIcon?.visible()
+            }
+            false
+        }
+
+        binding?.businessNameInputLayout?.ivIcon?.setOnClickListener {
+            binding?.businessNameInputLayout?.etInput?.isEnabled = true
+            binding?.businessNameInputLayout?.tvWordCount?.visible()
+            binding?.businessNameInputLayout?.ivIcon?.gone()
         }
     }
 }

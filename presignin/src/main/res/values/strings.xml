@@ -181,8 +181,6 @@
     <string name="this_will_help_suggest_available_website_address">This will help suggest available website address</string>
     <string name="business_name">Business Name</string>
     <string name="launch_my_website">Launch my website</string>
-    <string name="here_is_a_website_address_for_you">Here is a website address for you</string>
-    <string name="this_is_the_next_available_website_address_based_on_your_business_name">This is the next available website address based on your business name</string>
     <string name="website_address">Website Address</string>
     <string name="this_url_is_completely_secure">This URL is completely secure</string>
     <string name="you_can_create_a_support_request_and_someone_from_the_boost_team_will_assist_you">You can create a support request and someone from the Boost team will assist you.</string>
@@ -199,5 +197,7 @@
     <string name="secure">Secure | https://</string>
     <string name="this_link_is_already_in_use_please_choose_another">This link is already in use! Please choose another.</string>
     <string name="no_result_found">No results found</string>
+    <string name="we_ve_picked_the_closest_matching_website_address_for_you_feel_free_to_customize_it">We’ve picked the closest matching website address for you. Feel free to customize it.</string>
+    <string name="your_website_is_almost_ready">Your website is almost ready!</string>
 
 </resources>

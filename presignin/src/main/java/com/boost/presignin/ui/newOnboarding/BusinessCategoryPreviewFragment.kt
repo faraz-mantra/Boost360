@@ -1,6 +1,7 @@
 package com.boost.presignin.ui.newOnboarding
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.presignin.R
@@ -17,7 +18,9 @@ import com.boost.presignin.recyclerView.BaseRecyclerViewItem
 import com.boost.presignin.recyclerView.RecyclerItemClickListener
 import com.boost.presignin.rest.response.ResponseDataCategoryOv2
 import com.boost.presignin.viewmodel.CategoryVideoModel
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.webengageconstant.*
 
 class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPreviewBinding, CategoryVideoModel>(),
@@ -49,18 +52,38 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
 
     override fun onCreateView() {
         super.onCreateView()
-        setOnClickListeners()
-
+        setOnClickListener(binding?.tvNextStep, binding?.layoutMobile, binding?.layoutDesktop)
 
     }
 
-    private fun setOnClickListeners() {
-        binding?.tvNextStep?.setOnClickListener {
-            addFragment(R.id.inner_container,SetupMyWebsiteStep2Fragment.newInstance(Bundle()
-                .apply
-                {
-                    putString(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber)
-                }),true)
+    override fun onClick(v: View) {
+        super.onClick(v)
+        when(v){
+            binding?.tvNextStep->{
+                addFragment(R.id.inner_container,SetupMyWebsiteStep2Fragment.newInstance(Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber) }),true)
+            }
+            binding?.layoutMobile -> {
+                setUpButtonSelectedUI()
+            }
+            binding?.layoutDesktop -> {
+                setUpButtonSelectedUI(isMobilePreviewMode = false)
+            }
+        }
+    }
+
+    private fun setUpButtonSelectedUI(isMobilePreviewMode:Boolean = true) {
+        if (isMobilePreviewMode){
+            binding?.layoutMobile?.setBackgroundResource(R.drawable.ic_presignin_bg_yellow_solid_stroke)
+            binding?.layoutDesktop?.setBackgroundResource(0)
+            binding?.ivMobile?.visible()
+            binding?.ivDesktop?.gone()
+            binding?.ivWebsitePreview?.setImageResource(R.drawable.mobile_preview_website)
+        }else{
+            binding?.layoutMobile?.setBackgroundResource(0)
+            binding?.layoutDesktop?.setBackgroundResource(R.drawable.ic_presignin_bg_yellow_solid_stroke)
+            binding?.ivMobile?.gone()
+            binding?.ivDesktop?.visible()
+            binding?.ivWebsitePreview?.setImageResource(R.drawable.desktop_preview_website)
         }
     }
 

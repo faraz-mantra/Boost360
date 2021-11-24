@@ -90,9 +90,7 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
             }else{
                 requireActivity().finish()
             }
-
         }
-
         //initUI()
     }
 

@@ -53,7 +53,6 @@
 
                 <LinearLayout
                     android:id="@+id/layout_mobile"
-
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@drawable/ic_presignin_bg_yellow_solid_stroke"
@@ -103,6 +102,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.framework.views.customViews.CustomImageView
+            android:id="@+id/iv_website_preview"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:src="@drawable/mobile_preview_website"
