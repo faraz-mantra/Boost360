@@ -89,6 +89,7 @@
   <color name="colorLightGrey_jio">#4a4a4a</color>
 
   <color name="accent_30">#4D0400A6</color>
+  <color name="yellow_orange_22">#380400A6</color>
   <color name="red_light_1">#EC008C</color>
   <color name="accent_light_red">@color/colorAccentLight</color>
   <color name="colorAccent_jio">@color/red_light_1</color>
