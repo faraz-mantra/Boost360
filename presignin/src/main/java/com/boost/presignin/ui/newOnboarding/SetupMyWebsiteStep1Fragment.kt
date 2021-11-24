@@ -96,7 +96,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
 
     private fun setOnClickListeners() {
         binding?.tvNextStep1?.setOnClickListener {
-            addFragment(R.id.inner_container,SetupMyWebsiteStep2Fragment.newInstance(Bundle()
+            addFragment(R.id.inner_container,BusinessCategoryPreviewFragment.newInstance(Bundle()
                 .apply
                 {
                     putString(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber)

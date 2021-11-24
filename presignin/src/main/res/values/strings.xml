@@ -198,5 +198,6 @@
     <string name="finish_and_go_to_dashboard">Finish and go to dashboard</string>
     <string name="secure">Secure | https://</string>
     <string name="this_link_is_already_in_use_please_choose_another">This link is already in use! Please choose another.</string>
+    <string name="no_result_found">No results found</string>
 
 </resources>

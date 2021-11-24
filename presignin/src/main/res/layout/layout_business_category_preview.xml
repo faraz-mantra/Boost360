@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_F5F8FD">
+
+
+        <com.framework.views.customViews.CustomEditText
+            android:id="@+id/autocomplete_search_category"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_51"
+            android:layout_marginTop="@dimen/size_20"
+            android:background="@drawable/rounded_rectangle_eceff1"
+            android:backgroundTint="@color/white"
+            android:drawableEnd="@drawable/ic_presignin_edit_input"
+            android:drawableStart="@drawable/ic_search_offers"
+            android:drawablePadding="@dimen/size_16"
+            android:ellipsize="end"
+            android:fontFamily="@font/inter_semi_bold"
+            android:hint="@string/ex_shopkeeper_doctor_boutique_etc"
+            android:maxLines="1"
+            android:padding="@dimen/size_8"
+            android:paddingHorizontal="@dimen/size_16"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_13"
+            app:layout_constraintEnd_toStartOf="@id/endGuide"
+            app:layout_constraintStart_toEndOf="@id/startGuide"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="24dp"
+            app:cardCornerRadius="30dp"
+            app:layout_constraintEnd_toStartOf="@+id/endGuide"
+            app:layout_constraintStart_toStartOf="@+id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/autocomplete_search_category">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/layout_mobile"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_presignin_bg_yellow_solid_stroke"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:id="@+id/iv_mobile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_presignin_mobile_cat_preview" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Mobile"
+                        app:fontFamily="@font/regular" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_desktop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:id="@+id/iv_desktop"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_presignin_desktop_cat_preview" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Desktop"
+                        app:fontFamily="@font/regular" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.framework.views.customViews.CustomImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/mobile_preview_website"
+            app:layout_constraintBottom_toTopOf="@+id/tv_next_step"
+            app:layout_constraintEnd_toStartOf="@+id/endGuide"
+            app:layout_constraintHeight_percent="0.5"
+            app:layout_constraintStart_toStartOf="@+id/startGuide" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_next_step"
+            style="@style/yellow_squared_button"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:text="@string/next"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="UnknownId" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/startGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.06" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/endGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.94" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -38,7 +38,7 @@
             app:layout_constraintStart_toEndOf="@id/startGuide"
             app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
-        <com.framework.views.customViews.CustomAutoCompleteTextView
+        <com.framework.views.customViews.CustomEditText
             android:id="@+id/autocomplete_search_category"
             android:layout_width="0dp"
             android:layout_height="@dimen/size_51"
@@ -60,6 +60,72 @@
             app:layout_constraintEnd_toStartOf="@id/endGuide"
             app:layout_constraintStart_toEndOf="@id/startGuide"
             app:layout_constraintTop_toBottomOf="@+id/tv_subtitle" />
+
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/layout_et_sugestion"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/endGuide"
+            app:layout_constraintStart_toStartOf="@+id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/autocomplete_search_category">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_cat_suggestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="match_parent"
+                android:id="@+id/tv_no_result_found"
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp"
+                android:text="@string/no_result_found"
+                android:textColor="@color/gray_B3B3B3"
+                android:textSize="12sp"
+                app:fontFamily="@font/regular" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@color/color99E4E4E4" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:id="@+id/layout_did_you_mean"
+                android:layout_height="wrap_content"
+                android:padding="24dp">
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/customTextView10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="Did you mean: Boutique"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/semi_bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/customImageView7"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/customImageView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_presignin_arrow_up_left"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+
 
         <!--Enable visible this when search results found-->
         <LinearLayout
@@ -113,15 +179,15 @@
 
         <!--On click on Click here visible @+id/include_no_search_result_found layout below-->
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/linear_still_cant_find"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_25"
-            android:visibility="gone"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toStartOf="@id/endGuide"
             app:layout_constraintStart_toEndOf="@id/startGuide"
-            app:layout_constraintTop_toBottomOf="@+id/autocomplete_search_category">
+            app:layout_constraintTop_toBottomOf="@+id/layout_et_sugestion">
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tv_still_cant"
