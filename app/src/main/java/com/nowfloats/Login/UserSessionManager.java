@@ -201,7 +201,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
   }
 
   public String getUserProfileName() {
-    return pref.getString(PROFILE_NAME, null);
+    return pref.getString(PROFILE_NAME, "");
   }
 
   public void setUserProfileName(String name) {
