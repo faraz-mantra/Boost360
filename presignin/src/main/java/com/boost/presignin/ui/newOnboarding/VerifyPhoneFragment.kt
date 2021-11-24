@@ -231,7 +231,15 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
     }
 
     fun verify() {
-        showProgress(getString(R.string.verify_otp))
+        startFragmentFromNewOnBoardingActivity(
+            activity = requireActivity(),
+            type = com.boost.presignin.constant.FragmentType.WELCOME_FRAGMENT,
+            bundle = Bundle().apply {
+                putString(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber)
+            },
+            clearTop = true
+        )
+        /*showProgress(getString(R.string.verify_otp))
         WebEngageController.trackEvent(PS_VERIFY_OTP_VERIFY, OTP_VERIFY_CLICK, NO_EVENT_VALUE)
         val otp = binding?.pinOtpVerify?.otp
         viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId2)
@@ -267,7 +275,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
                 } else {
                     showLongToast(getString(R.string.wrong_otp_tv))
                 }
-            })
+            })*/
     }
 
     override fun onOTPReceived(otp: String?) {

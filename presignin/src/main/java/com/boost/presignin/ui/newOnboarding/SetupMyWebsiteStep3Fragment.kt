@@ -2,17 +2,11 @@ package com.boost.presignin.ui.newOnboarding
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.FragmentType
 import com.boost.presignin.constant.IntentConstant
-import com.boost.presignin.databinding.FragmentSetupMyWebsiteBinding
-import com.boost.presignin.databinding.FragmentWelcomeBinding
-import com.boost.presignin.databinding.LayoutSetUpMyWebsiteStep1Binding
 import com.boost.presignin.databinding.LayoutSetUpMyWebsiteStep3Binding
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.BusinessInfoModel
@@ -27,7 +21,7 @@ import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
-import com.framework.models.BaseViewModel
+import com.framework.extensions.visible
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
@@ -86,11 +80,20 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
             binding?.includeMobileView?.tvWebsiteName?.text = it
         }
 
+        binding?.addressInputLayout?.etInput?.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                binding?.addressInputLayout?.etInput?.isEnabled = false
+                binding?.addressInputLayout?.ivIcon?.visible()
+                websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1)
+            }
+            false
+        }
+
         binding?.addressInputLayout?.ivIcon?.setOnClickListener {
             binding?.addressInputLayout?.ivIcon?.gone()
             binding?.addressInputLayout?.ivStatus?.gone()
             binding?.addressInputLayout?.etInput?.isEnabled = true
-
+            websiteNameFieldUiVisibility()
         }
     }
 
@@ -119,7 +122,10 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
                 session?.userProfileMobile = response.result?.profileProperties?.userMobile
                 session?.storeISEnterprise(response.result?.isEnterprise.toString() + "")
                 session?.storeIsThinksity((response.result?.sourceClientId != null && response.result?.sourceClientId == clientIdThinksity).toString() + "")
-                session?.storeFPDetails(Key_Preferences.GET_FP_EXPERIENCE_CODE, categoryFloatsReq?.categoryDataModel?.experience_code)
+                session?.storeFPDetails(
+                    Key_Preferences.GET_FP_EXPERIENCE_CODE,
+                    categoryFloatsReq?.categoryDataModel?.experience_code
+                )
                 session?.storeFPID(authToken?.floatingPointId)
                 session?.storeFpTag(authToken?.floatingPointTag)
                 categoryFloatsReq?.floatingPointId = authToken?.floatingPointId!!
@@ -128,6 +134,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
                 session?.saveCategoryRequest(categoryFloatsReq!!)
                 session?.saveAuthTokenData(authToken)
                 session?.setUserSignUpComplete(true)
+
                 startFragmentFromNewOnBoardingActivity(
                     activity = requireActivity(),
                     type = FragmentType.LOADING_ANIMATION_DASHBOARD_FRAGMENT,
@@ -201,14 +208,56 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         if (this.responseCreateProfile == null) {
             viewModel?.createMerchantProfile(request = categoryFloatsReq?.requestProfile)?.observeOnce(viewLifecycleOwner, {
                 val businessProfileResponse = it as? BusinessProfileResponse
-                if (it.isSuccess() && businessProfileResponse != null && businessProfileResponse.result?.loginId.isNullOrEmpty().not()) {
+                if (it.isSuccess() && businessProfileResponse != null && businessProfileResponse.result?.loginId.isNullOrEmpty()
+                        .not()
+                ) {
                     apiHitBusiness(businessProfileResponse)
                 } else {
                     hideProgress()
                     val msg = it?.errorNMessage()
-                    showShortToast(if (msg.isNullOrEmpty().not()) msg else getString(R.string.unable_to_create_profile))
+                    showShortToast(
+                        if (msg.isNullOrEmpty()
+                                .not()
+                        ) msg else getString(R.string.unable_to_create_profile)
+                    )
                 }
             })
         } else apiHitBusiness(this.responseCreateProfile!!)
+    }
+
+
+    /**
+     * This function enables and disabled error mode in case name is invalid
+     * @param websiteNameFieldVisibility : Mode of UI Visibility
+     *  0 or else : Normal Edit Mode
+     *  1 : Green Valid Name Mode
+     *  2 : Red Error Mode
+     * */
+    private fun websiteNameFieldUiVisibility(websiteNameFieldVisibility: Int = 0) {
+
+        when (websiteNameFieldVisibility) {
+            1 -> {
+                binding?.tvNameNotAvailableError?.gone()
+                binding?.linearSecureWrapper?.visible()
+                binding?.addressInputLayout?.ivStatus?.setImageResource(R.drawable.ic_domain_tick)
+                binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_green_stroke_et)
+                binding?.addressInputLayout?.ivStatus?.visible()
+                binding?.addressInputLayout?.ivIcon?.visible()
+            }
+            2 -> {
+                binding?.tvNameNotAvailableError?.visible()
+                binding?.linearSecureWrapper?.gone()
+                binding?.addressInputLayout?.ivStatus?.setImageResource(R.drawable.ic_tick_red_error)
+                binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_red_stroke_et)
+                binding?.addressInputLayout?.ivStatus?.visible()
+                binding?.addressInputLayout?.ivIcon?.visible()
+            }
+            else -> {
+                binding?.tvNameNotAvailableError?.gone()
+                binding?.linearSecureWrapper?.gone()
+                binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_grey_stroke_et)
+                binding?.addressInputLayout?.ivIcon?.gone()
+            }
+        }
     }
 }

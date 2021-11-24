@@ -57,11 +57,15 @@
                 app:layout_constraintStart_toEndOf="@id/startGuide"
                 app:layout_constraintTop_toBottomOf="@+id/tv_subtitle">
 
-                <com.framework.views.customViews.CustomEditText
+                <!--<com.framework.views.customViews.CustomEditText
                     android:id="@+id/ed_input_business_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textColorHint="@color/black_66" />
+                    android:textColorHint="@color/black_66" />-->
+
+                <include
+                    android:id="@+id/business_name_input_layout"
+                    layout="@layout/layout_business_name_input" />
 
             </com.framework.views.customViews.CustomTextInputLayout>
 

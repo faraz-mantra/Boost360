@@ -16,7 +16,7 @@
             android:layout_marginTop="@dimen/size_32"
             android:fontFamily="@font/inter_bold"
             android:gravity="start"
-            android:text="@string/here_is_a_website_address_for_you"
+            android:text="@string/your_website_is_almost_ready"
             android:textAlignment="gravity"
             android:textColor="@color/black_4a4a4a"
             android:textSize="@dimen/text_18"
@@ -31,7 +31,7 @@
             android:layout_marginTop="@dimen/size_4"
             android:fontFamily="@font/inter_regular"
             android:gravity="start"
-            android:text="@string/this_is_the_next_available_website_address_based_on_your_business_name"
+            android:text="@string/we_ve_picked_the_closest_matching_website_address_for_you_feel_free_to_customize_it"
             android:textAlignment="gravity"
             android:textColor="@color/black_2A2A2A"
             android:textSize="@dimen/text_13"
@@ -54,17 +54,17 @@
 
             <include
                 android:id="@+id/address_input_layout"
-                layout="@layout/layout_website_address_input"
-                />
+                layout="@layout/layout_website_address_input" />
 
         </com.framework.views.customViews.CustomTextInputLayout>
 
 
         <LinearLayout
-            android:id="@+id/linearLayout2"
+            android:id="@+id/linear_secure_wrapper"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:visibility="gone"
             android:orientation="horizontal"
             app:layout_constraintEnd_toStartOf="@+id/endGuide"
             app:layout_constraintStart_toStartOf="@+id/startGuide"
@@ -111,22 +111,24 @@
                 android:text="@string/this_url_is_completely_secure"
                 android:textAlignment="gravity"
                 android:textColor="@color/black_2A2A2A"
-                android:textSize="12dp" />
+                android:textSize="@dimen/text_12" />
 
         </LinearLayout>
 
         <com.framework.views.customViews.CustomTextView
-            android:visibility="gone"
-            android:layout_width="0dp"
+            android:id="@+id/tv_name_not_available_error"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_12"
             android:text="@string/this_link_is_already_in_use_please_choose_another"
             android:textColor="@color/input_error_color"
             android:textSize="12sp"
+            android:visibility="gone"
             app:fontFamily="@font/regular"
-            app:layout_constraintEnd_toStartOf="@+id/endGuide"
-            app:layout_constraintStart_toStartOf="@+id/startGuide"
-            app:layout_constraintTop_toBottomOf="@+id/customTextInputLayout"
-             />
+            app:layout_constraintEnd_toEndOf="@+id/customTextInputLayout"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/customTextInputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/customTextInputLayout" />
 
         <include
             android:id="@+id/include_mobile_view"
@@ -137,7 +139,7 @@
             app:layout_constraintEnd_toStartOf="@+id/endGuide"
             app:layout_constraintHeight_percent="0.4"
             app:layout_constraintStart_toStartOf="@+id/startGuide"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+            app:layout_constraintTop_toBottomOf="@+id/linear_secure_wrapper"
             app:layout_constraintVertical_bias="1.0" />
 
         <com.framework.views.customViews.CustomTextView
