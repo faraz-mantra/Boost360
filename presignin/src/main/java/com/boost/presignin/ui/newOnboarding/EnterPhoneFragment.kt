@@ -73,9 +73,6 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
         WebEngageController.trackEvent(PS_LOGIN_NUMBER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
 
         setOnClickListener(binding?.tvRequestOtp)
-
-
-
     }
 
     override fun onClick(v: View) {
@@ -90,7 +87,15 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
 
 
     private fun sendOtp(phoneNumber: String?) {
-        WebEngageController.trackEvent(PS_LOGIN_NUMBER_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
+        startFragmentFromNewOnBoardingActivity(
+            activity = requireActivity(),
+            type = com.boost.presignin.constant.FragmentType.VERIFY_PHONE_FRAGMENT,
+            bundle = Bundle().apply {
+                putString(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber)
+            },
+            clearTop = false
+        )
+        /*WebEngageController.trackEvent(PS_LOGIN_NUMBER_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
         baseActivity.hideKeyBoard()
         showProgress(getString(R.string.sending_otp))
         viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner, {
@@ -105,7 +110,7 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
                 )
             } else showShortToast(getString(R.string.otp_not_sent))
             hideProgress()
-        })
+        })*/
     }
 
 
