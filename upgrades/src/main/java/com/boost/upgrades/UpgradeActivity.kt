@@ -150,6 +150,7 @@ class UpgradeActivity : AppCompatActivity() {
           CartActivity::class.java
         )
         intent.putExtra("fpid", fpid)
+        intent.putExtra("expCode", experienceCode)
         intent.putExtra("isDeepLink", isDeepLink)
         intent.putExtra("deepLinkViewType", deepLinkViewType)
         intent.putExtra("deepLinkDay", deepLinkDay)
@@ -175,14 +176,7 @@ class UpgradeActivity : AppCompatActivity() {
         intent.putExtra("profileUrl", profileUrl)
         startActivity(intent)
       }
-      if(isOpenHomeFragment){
-        addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
-      }
-      if(isOpenAddOnsFragment){
-        val args = Bundle()
-        args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
-        addFragmentHome(MyAddonsFragment.newInstance(), MYADDONS_FRAGMENT,args)
-      }
+      navigateScreens()
     } else {
       Toasty.error(
         this,
@@ -468,6 +462,35 @@ class UpgradeActivity : AppCompatActivity() {
     } else {
       loadingStatus = false
       progressDialog.dismiss()
+    }
+  }
+
+  override fun onNewIntent(intent: Intent?) {
+    super.onNewIntent(intent)
+    Log.e(this::class.java.simpleName, "onNewIntent")
+    setIntent(intent)
+  }
+
+  override fun onResume() {
+    super.onResume()
+    Log.e(this::class.java.simpleName, "onResume")
+    if(intent!=null) {
+      isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
+      isOpenHomeFragment = intent.getBooleanExtra("isComingFromOrderConfirm", false)
+      isOpenAddOnsFragment = intent.getBooleanExtra("isComingFromOrderConfirmActivation", false)
+      userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
+      navigateScreens()
+    }
+  }
+
+  fun navigateScreens(){
+//    if(isOpenHomeFragment){
+//      addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
+//    }
+    if(isOpenAddOnsFragment){
+      val args = Bundle()
+      args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+      addFragmentHome(MyAddonsFragment.newInstance(), MYADDONS_FRAGMENT,args)
     }
   }
 

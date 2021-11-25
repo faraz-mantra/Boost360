@@ -153,6 +153,7 @@ class OrderConfirmationFragment : BaseFragment() {
   private fun goToHomeFragment() {
     try {
       val intent = Intent(context, Class.forName("com.boost.upgrades.UpgradeActivity"))
+      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       intent.putExtra("isComingFromOrderConfirm",true)
       intent.putExtra("expCode", session?.fP_AppExperienceCode)
       intent.putExtra("fpName", session?.fPName)
@@ -189,6 +190,7 @@ class OrderConfirmationFragment : BaseFragment() {
   private fun goToAddOnsFragment() {
     try {
       val intent = Intent(context, Class.forName("com.boost.upgrades.UpgradeActivity"))
+      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       intent.putExtra("isComingFromOrderConfirmActivation",true)
       intent.putExtra("expCode", session?.fP_AppExperienceCode)
       intent.putExtra("fpName", session?.fPName)

@@ -256,6 +256,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onResume() {
     super.onResume()
+    Log.e(this::class.java.simpleName, "onResume")
     setUserData()
   }
 

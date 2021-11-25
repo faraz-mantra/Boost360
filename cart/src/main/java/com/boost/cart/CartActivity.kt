@@ -184,4 +184,9 @@ class CartActivity : AppCompatActivity() {
             //ignore
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        Log.e(this::class.java.simpleName, "onResume")
+    }
 }

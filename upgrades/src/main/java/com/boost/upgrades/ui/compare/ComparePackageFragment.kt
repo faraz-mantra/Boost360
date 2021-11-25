@@ -153,6 +153,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener,CompareBackListen
                 CartActivity::class.java
             )
             intent.putExtra("fpid", (activity as UpgradeActivity).fpid)
+            intent.putExtra("expCode", (activity as UpgradeActivity).experienceCode)
             intent.putExtra("isDeepLink", (activity as UpgradeActivity).isDeepLink)
             intent.putExtra("deepLinkViewType", (activity as UpgradeActivity).deepLinkViewType)
             intent.putExtra("deepLinkDay", (activity as UpgradeActivity).deepLinkDay)
