@@ -1,5 +1,6 @@
 package com.dashboard.controller
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -19,6 +20,8 @@ import androidx.navigation.fragment.NavHostFragment
 import com.anachat.chatsdk.AnaCore
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.dbcenterapi.utils.AddToCartUtils
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.RecyclerViewActionType
@@ -34,6 +37,7 @@ import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.utils.DashboardTabs.Companion.fromUrl
 import com.dashboard.viewmodel.DashboardViewModel
+import com.festive.poster.utils.MarketPlaceUtils
 import com.framework.analytics.SentryController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -85,6 +89,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   var isLoadShimmer = true
   var count = 0
   var activePreviousItem = 0
+  private var updatesModel : FeaturesModel? = null
+  private lateinit var context : Context
   private val navHostFragment: NavHostFragment?
     get() {
       return supportFragmentManager.fragments.first() as? NavHostFragment
@@ -106,6 +112,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onCreateView() {
     super.onCreateView()
+    context = this
     session = UserSessionManager(this)
     session?.let { deepLinkUtil = DeepLinkUtil(this, it) }
     mNavController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
@@ -119,7 +126,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 //    val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
 //    binding?.drawerView?.txtVersion?.text = "Version $versionName"
 //    binding?.drawerView?.imgBusinessLogo, binding?.drawerView?.backgroundImage, binding?.drawerView?.txtDomainName
-    setOnClickListener(binding?.drawerView?.btnSiteMeter, binding?.viewCartCount)
+    setOnClickListener(binding?.drawerView?.btnSiteMeter, binding?.viewCartCount,binding?.addToCart)
     getWelcomeData()
     intentDataCheckAndDeepLink(intent)
     session?.initializeWebEngageLogin()
@@ -508,7 +515,14 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       }
       binding?.drawerView?.backgroundImage -> openImagePicker(true)
       binding?.viewCartCount -> session?.let { this.initiateAddonMarketplace(it, true, "", "") }
+      binding?.addToCart -> session?.let {
+          gotoMarketPlace()
+      }
     }
+  }
+  private fun gotoMarketPlace() {
+//    AddToCartUtils.addWidgetToCart(updatesModel!!,application)
+    AddToCartUtils.openCart(session!!,true,context)
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {

@@ -61,6 +61,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <Button
+          android:id="@+id/add_to_cart"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Add To Cart"/>
+
         <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/view_cart_count"
           android:layout_width="match_parent"
