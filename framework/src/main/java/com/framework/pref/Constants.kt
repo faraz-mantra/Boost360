@@ -38,10 +38,6 @@ var currencyArray = ArrayList<String>()
 const val WA_KEY = "58ede4d4ee786c1604f6c535"
 
 val BASE_IMAGE_URL = "https://content.withfloats.com"
-val FACEBOOK_PAGE_ID = "fb://page/277931445614143"
-val FACEBOOK_PAGE_WITH_ID: String = FACEBOOK_PAGE_ID
-
-var FACEBOOK_URL: String = "https://www.facebook.com/nowfloats"
 
 var StoreWidgets = ArrayList<String>()
 
