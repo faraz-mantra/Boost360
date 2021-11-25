@@ -4,13 +4,13 @@
   android:layout_height="match_parent">
 
   <View
-    android:id="@+id/thumbnail"
-    android:layout_width="70dp"
-    android:layout_height="67dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="@dimen/padding_10"
-    android:layout_marginEnd="@dimen/activityPadding"
-    android:background="@color/background2" />
+      android:id="@+id/thumbnail"
+      android:layout_width="70dp"
+      android:layout_height="67dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="@dimen/padding_10"
+      android:layout_marginEnd="@dimen/activityPadding"
+      android:background="@color/background2" />
 
   <LinearLayout
     android:layout_width="wrap_content"

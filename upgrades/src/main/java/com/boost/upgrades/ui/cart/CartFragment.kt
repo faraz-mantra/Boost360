@@ -263,7 +263,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         }
       }
 
-
 //            }
 
 /*            renewPopUpFragment.show(
@@ -1732,7 +1731,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           prefs.storeCartOrderInfo(null)
 
           //save coupon Details
-//                    prefs.storeApplyedCouponDetails(it)
+           //         prefs.storeApplyedCouponDetails(it)
 
 //                    validCouponCode = it
           couponServiceModel = it
