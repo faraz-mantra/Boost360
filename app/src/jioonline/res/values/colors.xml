@@ -113,7 +113,7 @@
   <color name="watermelon">@color/greyish_light</color>
   <color name="lemon_light">@color/greyish_light</color>
   <color name="watermelon_light">#4a4a4a</color>
-  <color name="watermelon_light_10">#664A4A4A</color>
+  <color name="watermelon_light_10">#4a4a4a</color>
   <color name="scarlet">@color/black_4a4a4a</color>
   <color name="scarlet_40">@color/greyish_light</color>
   <color name="watermelon_1">#4a4a4a</color>
