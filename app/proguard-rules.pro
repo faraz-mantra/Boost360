@@ -361,8 +361,8 @@
 #-keeppackagenames com.inventoryorder
 #-keeppackagenames com.boost.presignup
 #-keeppackagenames com.boost.presignin
-#-keeppackagenames dev.patrickgold.florisboard
 #-keeppackagenames com.festive_poster
+#-keeppackagenames dev.patrickgold.florisboard
 
 #-keep class com.onboarding.** { *; }
 #-keep class com.dashboard.** { *; }
@@ -370,21 +370,29 @@
 #-keep class com.framework.** { *; }
 #-keep class com.resources.** { *; }
 #-keep class com.inventoryorder.** { *; }
-#-keep class dev.patrickgold.florisboard.** { *; }
 #-keep class com.festive_poster.** { *; }
+#-keep class com.boost.presignup.** { *; }
+-keep class dev.patrickgold.florisboard.** { *; }
 
 -keep class com.onboarding.nowfloats.model.** { <fields>; }
 -keep class com.inventoryorder.model.** { <fields>; }
 -keep class com.dashboard.model.** { <fields>; }
 -keep class com.appservice.model.** { <fields>; }
--keep class com.appservice.ui.domainbooking.model.** { <fields>; }
 -keep class com.boost.presignup.datamodel.** { <fields>; }
--keep class com.appservice.ui.model.** { <fields>; }
 -keep class com.inventoryorder.model.** { <fields>; }
--keep class com.inventoryorder.ui.tutorials.model.** { <fields>; }
 -keep class com.boost.presignin.model.** { <fields>; }
--keep class dev.patrickgold.florisboard.customization.model.** { <fields>; }
 -keep class com.festive.poster.models.** { <fields>; }
+-keep class dev.patrickgold.florisboard.customization.model.** { <fields>; }
+-keep class com.framework.models.** { <fields>; }
+
+-keep class com.appservice.ui.model.** { <fields>; }
+-keep class com.appservice.ui.domainbooking.model.** { <fields>; }
+-keep class com.inventoryorder.ui.tutorials.model.** { <fields>; }
+-keep class com.framework.rest.tokenCreate.** { <fields>; }
+-keep class com.boost.presignin.rest.response.** { <fields>; }
+-keep class com.dashboard.controller.ui.business.model.** { <fields>; }
+-keep class com.dashboard.controller.ui.customisationnav.model.** { <fields>; }
+-keep class com.dashboard.controller.ui.more.model.** { <fields>; }
 ## New progard rule
 
 ##---------------Begin: proguard configuration for Gson  ----------

@@ -1,4 +1,4 @@
-package com.appservice.staffs.ui.home
+package com.appservice.ui.staffs.ui.home
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle

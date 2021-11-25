@@ -7,10 +7,12 @@ import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.framework.pref.FACEBOOK_PAGE_WITH_ID
-import com.framework.pref.FACEBOOK_URL
+import com.dashboard.R
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.framework.webengageconstant.ABOUT_BOOST_FB_LIKE
+import com.framework.webengageconstant.CLICK
+import com.framework.webengageconstant.NO_EVENT_VALUE
 import java.util.*
 
 const val facebook_chat_main = "facebookchatMain"
@@ -287,31 +289,30 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
 }
 
 fun likeUsFacebook(context: Context, review: String) {
-  val facebookIntent: Intent = try {
-    context.packageManager.getPackageInfo("com.facebook.katana", 0)
-    Intent(Intent.ACTION_VIEW, Uri.parse(FACEBOOK_PAGE_WITH_ID))
-  } catch (e: java.lang.Exception) {
-    Intent(Intent.ACTION_VIEW, Uri.parse(FACEBOOK_URL + review))
-  }
-  facebookIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
-  try {
-    context.startActivity(facebookIntent)
-  } catch (e: java.lang.Exception) {
-    Toast.makeText(context, "unable to open facebook", Toast.LENGTH_SHORT).show()
-  }
+  WebEngageController.trackEvent(ABOUT_BOOST_FB_LIKE, CLICK, NO_EVENT_VALUE)
+  if (context.getString(R.string.settings_facebook_page_id).isNotEmpty() || context.getString(R.string.settings_facebook_like_link).isNotEmpty()) {
+    val facebookIntent: Intent = try {
+      context.packageManager.getPackageInfo(context.getString(R.string.facebook_package), 0)
+      Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.settings_facebook_page_id)))
+    } catch (e: Exception) {
+      Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.settings_facebook_like_link) + review))
+    }
+    facebookIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
+    try {
+      context.startActivity(facebookIntent)
+    } catch (e: Exception) {
+      Toast.makeText(context, context.getString(R.string.unable_to_open_facebook), Toast.LENGTH_SHORT).show()
+    }
+  } else Toast.makeText(context, context.getString(R.string.coming_soon), Toast.LENGTH_SHORT).show()
 }
 
 fun AppCompatActivity.upgradeApp() {
   try {
     val appPackageName: String = this.packageName
     try {
-      this.startActivity(
-        Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName"))
-      )
+      this.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
     } catch (anfe: ActivityNotFoundException) {
-      this.startActivity(
-        Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName"))
-      )
+      this.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
     }
   } catch (e: Exception) {
     e.printStackTrace()
