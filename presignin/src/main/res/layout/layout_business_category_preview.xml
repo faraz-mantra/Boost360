@@ -8,16 +8,31 @@
         android:layout_height="match_parent"
         android:background="@color/white_F5F8FD">
 
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_28"
+            android:fontFamily="@font/inter_bold"
+            android:gravity="start"
+            android:text="@string/your_business_category_was_selected"
+            android:textAlignment="gravity"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toStartOf="@id/endGuide"
+            app:layout_constraintStart_toEndOf="@id/startGuide"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.framework.views.customViews.CustomEditText
+        <TextView
+            android:gravity="center_vertical"
             android:id="@+id/autocomplete_search_category"
             android:layout_width="0dp"
             android:layout_height="@dimen/size_51"
-            android:layout_marginTop="@dimen/size_20"
+            android:layout_marginTop="16dp"
             android:background="@drawable/rounded_rectangle_eceff1"
             android:backgroundTint="@color/white"
-            android:drawableEnd="@drawable/ic_presignin_edit_input"
             android:drawableStart="@drawable/ic_search_offers"
+            android:drawableEnd="@drawable/ic_presignin_edit_input"
             android:drawablePadding="@dimen/size_16"
             android:ellipsize="end"
             android:fontFamily="@font/inter_semi_bold"
@@ -27,11 +42,11 @@
             android:paddingHorizontal="@dimen/size_16"
             android:scrollHorizontally="true"
             android:singleLine="true"
-            android:textColor="@color/black"
+            android:textColor="@color/colorB3B3B3"
             android:textSize="@dimen/text_13"
             app:layout_constraintEnd_toStartOf="@id/endGuide"
             app:layout_constraintStart_toEndOf="@id/startGuide"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
 
         <com.google.android.material.card.MaterialCardView

@@ -34,6 +34,7 @@ import com.framework.extensions.afterTextChanged
 import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
 import com.framework.models.BaseViewModel
+import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.fromHtml
 import com.framework.utils.hideKeyBoard
@@ -72,7 +73,7 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
         requestPhonePicker()
         WebEngageController.trackEvent(PS_LOGIN_NUMBER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
 
-        setOnClickListener(binding?.tvRequestOtp)
+        setOnClickListener(binding?.tvRequestOtp,binding?.tvLoginWithEmail)
     }
 
     override fun onClick(v: View) {
@@ -80,7 +81,10 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
         when(v){
             binding?.tvRequestOtp->{
                 sendOtp(binding?.phoneEt?.text.toString())
-
+            }
+            binding?.tvLoginWithEmail->{
+                WebEngageController.trackEvent(PS_LOGIN_USERNAME_CLICK, CLICK_LOGIN_USERNAME, NO_EVENT_VALUE)
+                navigator?.startActivity(LoginActivity::class.java)
             }
         }
     }

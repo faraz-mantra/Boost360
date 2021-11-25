@@ -66,6 +66,10 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
         arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
     }
 
+    private val whatsappConsent by lazy {
+        arguments?.getBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name)
+    }
+
     override fun getLayout(): Int {
         return R.layout.fragment_setup_my_website
     }
@@ -81,6 +85,8 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
             .apply
          {
              putString(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber)
+             putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name,whatsappConsent==true)
+
          }),true)
 
         parentFragmentManager.addOnBackStackChangedListener {

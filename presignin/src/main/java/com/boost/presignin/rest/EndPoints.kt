@@ -42,5 +42,10 @@ object EndPoints {
   //todo webaction boost kit api url
   const val WEB_ACTION_BOOST_KIT_API_URL = "https://webaction.api.boostkit.dev"
   const val GET_DATA = "/api/v1/kycdoc/get-data"
+
+  const val RIA_WITH_FLOATS_BASE = "https://ria.withfloats.com"
+  const val WHATSAPP_OPT_IN="/api/WhatsApp/OptIn"
+
 }
+
 
