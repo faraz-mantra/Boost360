@@ -73,9 +73,7 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
 
     override fun onCreateView() {
         super.onCreateView()
-        setOnClickListener(binding?.tvNextStep, binding?.layoutMobile, binding?.layoutDesktop)
-
-        setOnClickListeners()
+        setOnClickListener(binding?.tvNextStep, binding?.layoutMobile, binding?.layoutDesktop,binding?.autocompleteSearchCategory)
         setupUi()
 
 
@@ -85,7 +83,6 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
         val spannableString = SpannableString(categorySuggUiModel.category+" in "+categorySuggUiModel.subCategory)
         binding?.autocompleteSearchCategory?.setText(spannableString)
         Log.i(TAG, "setupUi: $mobilePreview")
-        Glide.with(this).load(mobilePreview).into(binding?.ivPreview!!)
     }
 
     override fun onClick(v: View) {
@@ -100,20 +97,13 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
             binding?.layoutDesktop -> {
                 setUpButtonSelectedUI(isMobilePreviewMode = false)
             }
+            binding?.autocompleteSearchCategory->{
+                requireActivity().onBackPressed()
+
+            }
         }
     }
-    private fun setOnClickListeners() {
-        binding?.tvNextStep?.setOnClickListener {
-            addFragment(R.id.inner_container,SetupMyWebsiteStep2Fragment.newInstance(Bundle()
-                .apply
-                {
-                    putString(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber)
-                }),true)
-        }
-        binding?.autocompleteSearchCategory?.setOnClickListener {
-            requireActivity().onBackPressed()
-        }
-    }
+
 
     private fun setUpButtonSelectedUI(isMobilePreviewMode:Boolean = true) {
         if (isMobilePreviewMode){
@@ -121,13 +111,14 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
             binding?.layoutDesktop?.setBackgroundResource(0)
             binding?.ivMobile?.visible()
             binding?.ivDesktop?.gone()
+            Glide.with(this).load(mobilePreview).into(binding?.ivWebsitePreview!!)
             binding?.ivWebsitePreview?.setImageResource(R.drawable.mobile_preview_website)
         }else{
             binding?.layoutMobile?.setBackgroundResource(0)
             binding?.layoutDesktop?.setBackgroundResource(R.drawable.ic_presignin_bg_yellow_solid_stroke)
             binding?.ivMobile?.gone()
             binding?.ivDesktop?.visible()
-            binding?.ivWebsitePreview?.setImageResource(R.drawable.desktop_preview_website)
+            Glide.with(this).load(desktopPreview).into(binding?.ivWebsitePreview!!)
         }
     }
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
