@@ -254,7 +254,7 @@ class UserSessionManager(var activity: Context) {
     return if (BaseApplication.instance.packageName != "com.jio.online") {
       val str = pref.getString(Key_Preferences.STORE_WIDGETS, "")
       if (str.isNullOrEmpty()) ArrayList<String>() else convertStringToList(str)
-    }else arrayListOf()
+    }else arrayListOf("BOOSTKEYBOARD")
   }
 
   val sourceClientId: String?
