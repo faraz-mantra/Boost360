@@ -28,13 +28,13 @@ public class Specific {
     public static final String FACEBOOK_API_KEY 	= "539836972828386";  // Boost
     public static final String RIA_FIREBASE_COLLECTION_NAME 	= "RIAUserActivityLog";  // Boost
 
-    public static final String FACEBOOK_URL = "https://www.facebook.com/nowfloats";
+    public static final String FACEBOOK_URL = "";
     public static final String PACKAGE_NAME = "com.jio.online";
     public static final String[] FACEBOOK_READ_PERMISSIONS = {"email", "public_profile", "read_insights", "business_management"};
     public static final String[] FACEBOOK_PUBLISH_PERMISSIONS = {"publish_pages", "manage_pages"};
-    public static final String FACEBOOK_PAGE_ID = "fb://page/277931445614143";
-    public static final String TWITTER_URL = "https://twitter.com/Nowfloats";
-    public static final String TWITTER_ID_URL = "twitter://user?screen_name=nowfloats";
+    public static final String FACEBOOK_PAGE_ID = "";
+    public static final String TWITTER_URL = "";
+    public static final String TWITTER_ID_URL = "";
     public static final String TWILIO_AUTHY_API_KEY = "gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5";
     public static final Boolean IS_JIO_DASHBOARD= true;
 
