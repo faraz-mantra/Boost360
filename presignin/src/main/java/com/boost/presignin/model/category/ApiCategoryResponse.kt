@@ -24,7 +24,6 @@ data class ApiCategoryResponseCategory(
     val _parentClassName: String,
     val _propertyName: String,
     val appexperiencecodedetails: List<Appexperiencecodedetail>,
-    val appexperiencecodes: List<String>,
     val createdon: String,
     val isarchived: Boolean,
     val name: String,
