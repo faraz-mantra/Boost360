@@ -13,7 +13,6 @@ fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observ
   })
 }
 
-
 fun <T> LiveData<T>.observeOnce(observer: Observer<T>) {
   observeForever(object : Observer<T> {
     override fun onChanged(t: T) {
