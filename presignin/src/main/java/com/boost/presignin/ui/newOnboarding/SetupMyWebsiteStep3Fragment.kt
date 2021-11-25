@@ -1,6 +1,8 @@
 package com.boost.presignin.ui.newOnboarding
 
+import BusinessDomainRequest
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.inputmethod.EditorInfo
 import com.boost.presignin.R
@@ -12,6 +14,7 @@ import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.BusinessInfoModel
 import com.boost.presignin.model.authToken.saveAuthTokenData
 import com.boost.presignin.model.business.BusinessCreateRequest
+import com.boost.presignin.model.category.CategoryDataModelOv2
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
 import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.onboardingRequest.saveCategoryRequest
@@ -22,10 +25,8 @@ import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.pref.Key_Preferences
-import com.framework.pref.UserSessionManager
-import com.framework.pref.clientId
-import com.framework.pref.clientIdThinksity
+import com.framework.pref.*
+import com.framework.utils.convertJsonToObj
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PS_SIGNUP_SUCCESS
 import com.framework.webengageconstant.SIGNUP_SUCCESS
@@ -48,6 +49,17 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     var createProfileReq: CreateProfileRequest?=null
 
 
+    private val categoryModel by lazy {
+        convertJsonToObj<CategoryDataModelOv2?>(arguments?.getString(IntentConstant.CATEGORY_DATA.name))
+
+    }
+
+
+
+    private val whatsappConsent by lazy {
+        arguments?.getBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name)
+    }
+
     private val businessName by lazy {
         arguments?.getString(IntentConstant.EXTRA_BUSINESS_NAME.name)
     }
@@ -68,11 +80,35 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     override fun onCreateView() {
         super.onCreateView()
         setOnClickListeners()
+
+        apiCheckDomain {
+            websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1)
+        }
+    }
+
+    private fun apiCheckDomain(onSuccess:()->Unit) {
+        val subDomain = binding?.addressInputLayout?.etInput?.text.toString()
+        if (!TextUtils.isEmpty(subDomain)) {
+            val data = BusinessDomainRequest(clientId2, subDomain, subDomain)
+            viewModel?.postCheckBusinessDomain(data)?.observeOnce(viewLifecycleOwner, {response->
+                if (response.isSuccess() && response.stringResponse.isNullOrEmpty().not()) {
+                    onSuccess.invoke()
+                }else{
+                    websiteNameFieldUiVisibility(websiteNameFieldVisibility = 2)
+                }
+
+                })
+        } else {
+            websiteNameFieldUiVisibility(websiteNameFieldVisibility = 2)
+            //errorSet()
+        }
     }
 
     private fun setOnClickListeners() {
         binding?.tvNextStep3?.setOnClickListener {
-            apiHitCreateMerchantProfile()
+            apiCheckDomain {
+                apiHitCreateMerchantProfile()
+            }
         }
 
         binding?.addressInputLayout?.etInput?.afterTextChanged {
@@ -166,7 +202,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         val domain =binding!!.addressInputLayout.etInput.text.toString()
         val createRequest = BusinessCreateRequest()
         createRequest.autoFillSampleWebsiteData = true
-        //createRequest.webTemplateId = floatsRequest?.categoryDataModel?.webTemplateId
+        createRequest.webTemplateId = categoryModel!!.webTemplateId
         createRequest.clientId = clientId
         createRequest.tag = domain
         createRequest.name = businessName
@@ -177,10 +213,10 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         // createRequest.email = floatsRequest?.userBusinessEmail
         createRequest.primaryNumberCountryCode = "+91"
         createRequest.uri = ""
-        // createRequest.primaryCategory = floatsRequest?.categoryDataModel?.category_key
-        //  createRequest.appExperienceCode = floatsRequest?.categoryDataModel?.experience_code
-        // createRequest.whatsAppNumber = floatsRequest?.userBusinessMobile
-        // createRequest.whatsAppNotificationOptIn = floatsRequest?.whatsAppFlag ?: false
+        createRequest.primaryCategory = categoryModel!!.category_key
+          createRequest.appExperienceCode = categoryModel!!.experience_code
+         createRequest.whatsAppNumber = if (whatsappConsent == true) phoneNumber else null
+         createRequest.whatsAppNotificationOptIn = whatsappConsent!!
         createRequest.boostXWebsiteUrl = "www.${domain.lowercase()}.nowfloats.com"
         return createRequest
     }

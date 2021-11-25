@@ -37,6 +37,10 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
         }
     }
 
+    private val whatsappConsent by lazy {
+        arguments?.getBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name)
+    }
+
 
     private val phoneNumber by lazy {
         arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
@@ -60,6 +64,8 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
         binding?.tvNextStep2?.setOnClickListener {
             addFragment(R.id.inner_container,SetupMyWebsiteStep3Fragment.newInstance(Bundle()
                 .apply {
+                    putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name,whatsappConsent==true)
+
                     putString(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber)
                     putString(IntentConstant.EXTRA_BUSINESS_NAME.name,binding?.businessNameInputLayout?.etInput?.text.toString())
                 }),true)

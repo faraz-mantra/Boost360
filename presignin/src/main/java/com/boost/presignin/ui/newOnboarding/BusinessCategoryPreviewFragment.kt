@@ -1,7 +1,9 @@
 package com.boost.presignin.ui.newOnboarding
 
 import android.os.Bundle
+import android.text.Spannable
 import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -47,6 +49,10 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
         arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
     }
 
+    private val whatsappConsent by lazy {
+        arguments?.getString(IntentConstant.WHATSAPP_CONSENT_FLAG.name)
+    }
+
     private val mobilePreview by lazy {
         arguments?.getString(IntentConstant.MOBILE_PREVIEW.name)
     }
@@ -55,11 +61,11 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
         arguments?.getString(IntentConstant.DESKTOP_PREVIEW.name)
     }
     private val categoryModel by lazy {
-        convertJsonToObj<CategoryDataModelOv2>(arguments?.getString(IntentConstant.CATEGORY_DATA.name))
+        convertJsonToObj<CategoryDataModelOv2?>(arguments?.getString(IntentConstant.CATEGORY_DATA.name))
 
     }
     private val categorySuggUiModel by lazy {
-        convertJsonToObj<CategorySuggestionUiModel>(arguments?.getString(IntentConstant.CATEGORY_SUGG_UI.name))
+        convertJsonToObj<CategorySuggestionUiModel?>(arguments?.getString(IntentConstant.CATEGORY_SUGG_UI.name))
     }
 
 
@@ -80,9 +86,21 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
     }
 
     private fun setupUi() {
-        val spannableString = SpannableString(categorySuggUiModel.category+" in "+categorySuggUiModel.subCategory)
-        binding?.autocompleteSearchCategory?.setText(spannableString)
-        Log.i(TAG, "setupUi: $mobilePreview")
+        if (categorySuggUiModel!=null){
+            val totalString = categorySuggUiModel?.category+" in "+categorySuggUiModel?.subCategory
+            val spannableString = SpannableString(totalString)
+            val boldStart = totalString.indexOf(categorySuggUiModel?.category!!)
+            spannableString.setSpan(ForegroundColorSpan(getColor(R.color.black_4a4a4a)),boldStart,boldStart
+            +categorySuggUiModel?.category!!.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            binding?.autocompleteSearchCategory?.setText(spannableString)
+            Log.i(TAG, "setupUi: $mobilePreview")
+        }else{
+            binding?.autocompleteSearchCategory?.setText(categoryModel?.category_Name)
+
+        }
+        Glide.with(this).load(mobilePreview).into(binding?.ivWebsitePreview!!)
+
+
     }
 
     override fun onClick(v: View) {
@@ -112,7 +130,6 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
             binding?.ivMobile?.visible()
             binding?.ivDesktop?.gone()
             Glide.with(this).load(mobilePreview).into(binding?.ivWebsitePreview!!)
-            binding?.ivWebsitePreview?.setImageResource(R.drawable.mobile_preview_website)
         }else{
             binding?.layoutMobile?.setBackgroundResource(0)
             binding?.layoutDesktop?.setBackgroundResource(R.drawable.ic_presignin_bg_yellow_solid_stroke)

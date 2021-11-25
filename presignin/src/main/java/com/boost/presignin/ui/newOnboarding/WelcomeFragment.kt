@@ -23,6 +23,10 @@ class WelcomeFragment : AppBaseFragment<FragmentWelcomeBinding, BaseViewModel>()
         }
     }
 
+    private val whatsappConsent by lazy {
+        arguments?.getBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name)
+    }
+
     private val phoneNumber by lazy {
         arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
     }
@@ -47,8 +51,10 @@ class WelcomeFragment : AppBaseFragment<FragmentWelcomeBinding, BaseViewModel>()
                 type = com.boost.presignin.constant.FragmentType.SET_UP_MY_WEBSITE_FRAGMENT,
                 bundle = Bundle().apply {
                                         putString(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber)
+                    putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name,whatsappConsent==true)
+
                 },
-                clearTop = false
+                clearTop = true
             )
         }
     }

@@ -3,10 +3,7 @@ package com.boost.presignin
 import androidx.multidex.MultiDexApplication
 import com.appservice.rest.apiClients.BoostKitDevApiClient
 import com.boost.presignin.rest.EndPoints
-import com.boost.presignin.rest.apiClients.NfxFacebookAnalyticsClient
-import com.boost.presignin.rest.apiClients.WebActionBoostKitClient
-import com.boost.presignin.rest.apiClients.WithFloatsApiClient
-import com.boost.presignin.rest.apiClients.WithFloatsApiTwoClient
+import com.boost.presignin.rest.apiClients.*
 import com.boost.presignin.rest.services.remote.BoostKitDevRemoteData
 import com.boost.presignin.rest.services.remote.WithFloatsRemoteDataSource
 import com.framework.BaseApplication
@@ -28,6 +25,7 @@ open class AppPreSignInApplication : BaseApplication() {
 
     @JvmStatic
     fun apiInitialize() {
+      RiaWithFloatsApiClient.shared.init(EndPoints.RIA_WITH_FLOATS_BASE)
       WithFloatsApiTwoClient.shared.init(EndPoints.WITH_FLOATS_TWO_BASE)
       WithFloatsApiClient.shared.init(EndPoints.WITH_FLOATS_BASE)
       com.boost.presignin.rest.apiClients.BoostKitDevApiClient.shared.init(EndPoints.BOOST_KIT_DEV_BASE)

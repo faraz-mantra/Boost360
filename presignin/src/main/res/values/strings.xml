@@ -199,5 +199,6 @@
     <string name="no_result_found">No results found</string>
     <string name="we_ve_picked_the_closest_matching_website_address_for_you_feel_free_to_customize_it">We’ve picked the closest matching website address for you. Feel free to customize it.</string>
     <string name="your_website_is_almost_ready">Your website is almost ready!</string>
+    <string name="your_business_category_was_selected">Your business category was selected</string>
 
 </resources>

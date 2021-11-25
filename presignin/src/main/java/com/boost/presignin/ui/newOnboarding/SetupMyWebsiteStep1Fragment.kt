@@ -1,6 +1,9 @@
 package com.boost.presignin.ui.newOnboarding
 
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -40,6 +43,8 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
         }
     }
 
+    private var noCatListAdapter: AppBaseRecyclerViewAdapter<CategoryDataModelOv2>?=null
+    private var notCatFoundList: ArrayList<CategoryDataModelOv2>?=null
     private var apiCatResponse: ApiCategoryResponse?=null
     private var selectedCat:CategoryDataModelOv2?=null
     private var selectedCatSugg:CategorySuggestionUiModel?=null
@@ -47,9 +52,19 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     private lateinit var baseAdapter: AppBaseRecyclerViewAdapter<CategoryDataModelOv2>
     private var categoryList = ArrayList<CategoryDataModelOv2>()
     private var apiCategoryList:ArrayList<CategorySuggestionUiModel>?=null
+    val noResultCat1UiTitle = "Do you sell products?"
+    var noResultCat1OriginalTitle:String?=null
+
+    val noResultCat2UiTitle="Do you provide services?"
+    var noResultCat2OriginalTitle:String?=null
+
     private val phoneNumber by lazy {
         arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
     }
+    private val whatsappConsent by lazy {
+        arguments?.getBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name)
+    }
+
 
 
     override fun getLayout(): Int {
@@ -90,6 +105,9 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
         viewModel?.getCategoriesOv2(requireContext())?.observeOnce(viewLifecycleOwner) {
             if (it.error != null) return@observeOnce
             categorylocalResponse = it as ResponseDataCategoryOv2
+            noResultCat1OriginalTitle= categorylocalResponse?.data?.find { it.experience_code=="RTL" }?.category_Name
+            noResultCat2OriginalTitle= categorylocalResponse?.data?.find { it.experience_code=="SVC" }?.category_Name
+
             loadCategoryFromApi()
 
             baseAdapter.addItems(categoryList.apply {
@@ -146,22 +164,22 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     private fun handleSuggestionNoResult() {
         binding?.tvNoResultFound?.visible()
         binding?.includeNoSearchResultFound?.root?.visible()
-        val list = ArrayList<CategoryDataModelOv2>()
-        list.add(
+        notCatFoundList = ArrayList<CategoryDataModelOv2>()
+        notCatFoundList?.add(
             categorylocalResponse?.data?.find { it.experience_code=="RTL" }?.apply {
-                category_Name="Do you sell products?"
+                category_Name=noResultCat1UiTitle
             }!!
         )
 
-        list.add(
+        notCatFoundList?.add(
             categorylocalResponse?.data?.find { it.experience_code=="SVC" }?.apply {
-                category_Name="Do you provide services?"
+                category_Name=noResultCat2UiTitle
             }!!
         )
 
-        val adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>
-            ,list,this)
-        binding?.includeNoSearchResultFound?.rvCategories?.adapter = adapter
+       noCatListAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>
+            ,notCatFoundList!!,this)
+        binding?.includeNoSearchResultFound?.rvCategories?.adapter = noCatListAdapter
         binding?.includeNoSearchResultFound?.rvCategories?.layoutManager = LinearLayoutManager(requireActivity())
 
 
@@ -190,6 +208,12 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
         binding?.tvNextStep1?.setOnClickListener {
           goToNextStep()
         }
+        binding?.includeCatSuggSelected?.root?.setOnClickListener {
+            binding?.includeCatSuggSelected?.root?.gone()
+            binding?.autocompleteSearchCategory?.visible()
+            binding?.layoutEtSugestion?.visible()
+
+        }
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -200,6 +224,14 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
                     listItem.isSelected = (listItem.category_key == selectedCat?.category_key)
                 }
                 binding?.rvCategories?.post { baseAdapter.notifyDataSetChanged() }
+
+                if (notCatFoundList!=null){
+                    for (listItem in notCatFoundList!!) {
+                        listItem.isSelected = (listItem.category_key == selectedCat?.category_key)
+                    }
+                    noCatListAdapter?.notifyDataSetChanged()
+                }
+
                // if (categoryList.filter { it.isSelected }.isNullOrEmpty()) binding?.confirmButton?.gone() else binding?.confirmButton?.visible()
             }
 
@@ -207,16 +239,24 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
                 item as CategorySuggestionUiModel
                 selectedCatSugg = item
                 setSelectedCat(categoryList.find { it.experience_code==item.appExpCode }!!)
-                goToNextStep()
+                showCatSugesstionSelected()
             }
         }
+
+    }
+
+    private fun showCatSugesstionSelected() {
+        binding?.includeCatSuggSelected?.root?.visible()
+        binding?.layoutEtSugestion?.gone()
+        binding?.includeCatSuggSelected?.tvCatSelected?.text = selectedCatSugg?.category
+        binding?.includeCatSuggSelected?.tvSubcat?.text = selectedCatSugg?.subCategory
 
     }
 
     private fun goToNextStep() {
         var mobilePreview: String? = null
 
-        selectedCatSugg?.appExpCode
+        selectedCat?.experience_code
 
         var desktopPreview: String? = null
 
@@ -236,6 +276,14 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
         }
 
 
+        if (selectedCat!=null){
+            if (selectedCat?.category_Name==noResultCat1UiTitle){
+                selectedCat?.category_Name = noResultCat1OriginalTitle
+            }
+            if (selectedCat?.category_Name==noResultCat2UiTitle){
+                selectedCat?.category_Name = noResultCat2OriginalTitle
+            }
+        }
 
         addFragment(R.id.inner_container,BusinessCategoryPreviewFragment.newInstance(Bundle()
             .apply
@@ -245,6 +293,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
                 putString(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber)
                 putString(IntentConstant.CATEGORY_SUGG_UI.name,Gson().toJson(selectedCatSugg))
                 putString(IntentConstant.CATEGORY_DATA.name,Gson().toJson(selectedCat))
+                putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name,whatsappConsent==true)
             }),true)
     }
 

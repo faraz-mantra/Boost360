@@ -39,24 +39,15 @@
             app:layout_constraintStart_toEndOf="@id/startGuide"
             app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
-        <com.framework.views.customViews.CustomTextInputLayout
-            android:id="@+id/customTextInputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <include
+            android:id="@+id/address_input_layout"
+            layout="@layout/layout_website_address_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_24"
-            android:hint="@string/website_address"
-            android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
-            app:hintTextColor="@color/black_66"
-            app:layout_constraintEnd_toStartOf="@id/endGuide"
-            app:layout_constraintStart_toEndOf="@id/startGuide"
-            app:layout_constraintTop_toBottomOf="@+id/tv_subtitle">
-
-            <include
-                android:id="@+id/address_input_layout"
-                layout="@layout/layout_website_address_input" />
-
-        </com.framework.views.customViews.CustomTextInputLayout>
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toStartOf="@+id/endGuide"
+            app:layout_constraintStart_toStartOf="@+id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/tv_subtitle" />
 
 
         <LinearLayout
