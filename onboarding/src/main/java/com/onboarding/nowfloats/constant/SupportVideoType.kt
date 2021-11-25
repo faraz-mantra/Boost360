@@ -3,8 +3,8 @@ package com.onboarding.nowfloats.constant
 enum class SupportVideoType (val value :String) {
     CUSTOM_PAGES("feature.CUSTOMPAGES"),
     GALLERY_IMAGE("feature.GALLERYIMAGE"),
-    LATEST_UPDATES("feature.LATESTUPDATES"), //Pending
-    PAYMENT_GATEWAY("feature.PAYMENTGATEWAY"), //hold, doubts
+    LATEST_UPDATES("feature.LATESTUPDATES"), //Pending website tab, Help & tips
+    PAYMENT_GATEWAY("feature.PAYMENTGATEWAY"),
     ANALYTICS("feature.ANALYTICS"), //hold, doubts
     TOB("feature.TOB"),             //Applied in Enquiries Calls, messages, newsletter subscribers
     TESTIMONIALS("feature.TESTIMONIALS"),
