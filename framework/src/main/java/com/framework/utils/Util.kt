@@ -42,6 +42,7 @@ import com.airbnb.lottie.value.LottieValueCallback
 import com.framework.BaseApplication
 import com.framework.constants.PackageNames
 import com.framework.views.customViews.CustomTextView
+import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -367,3 +368,5 @@ fun Intent.getPendingIntent(): PendingIntent? {
     System.currentTimeMillis().toInt(), this, PendingIntent.FLAG_UPDATE_CURRENT
   )
 }
+
+inline fun <reified T> convertJsonToObj(json: String?) = Gson().fromJson<T>(json, object: TypeToken<T>() {}.type)

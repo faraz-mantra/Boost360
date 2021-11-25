@@ -40,7 +40,9 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
         }
     }
 
+    private var apiCatResponse: ApiCategoryResponse?=null
     private var selectedCat:CategoryDataModelOv2?=null
+    private var selectedCatSugg:CategorySuggestionUiModel?=null
     private var categorylocalResponse: ResponseDataCategoryOv2?=null
     private lateinit var baseAdapter: AppBaseRecyclerViewAdapter<CategoryDataModelOv2>
     private var categoryList = ArrayList<CategoryDataModelOv2>()
@@ -171,11 +173,11 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
 
             apiCategoryList = ArrayList()
             if (it.isSuccess()){
-                it as ApiCategoryResponse
+              apiCatResponse =   it as ApiCategoryResponse
                 it.Data.firstOrNull()?.categories?.forEach { cat->
-                    cat.appexperiencecodes.forEach { appExp->
-                      val subCat =  categorylocalResponse!!.data!!.find { localCat->localCat.experience_code==appExp }!!.category_Name!!
-                        apiCategoryList?.add(CategorySuggestionUiModel(cat.name,subCat,appExp,""))
+                    cat.appexperiencecodedetails.forEach { appExpDet->
+                      val subCat =  categorylocalResponse!!.data!!.find { localCat->localCat.experience_code==appExpDet.name }!!.category_Name!!
+                        apiCategoryList?.add(CategorySuggestionUiModel(cat.name,subCat,appExpDet.name,""))
                     }
                 }
 
@@ -203,6 +205,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
 
             RecyclerViewActionType.CATEGORY_SUGGESTION_CLICKED.ordinal->{
                 item as CategorySuggestionUiModel
+                selectedCatSugg = item
                 setSelectedCat(categoryList.find { it.experience_code==item.appExpCode }!!)
                 goToNextStep()
             }
@@ -211,10 +214,36 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     }
 
     private fun goToNextStep() {
+        var mobilePreview: String? = null
+
+        selectedCatSugg?.appExpCode
+
+        var desktopPreview: String? = null
+
+        loop@ for (cat in apiCatResponse?.Data?.firstOrNull()?.categories!!) {
+
+            mobilePreview = cat.appexperiencecodedetails.find { expCodeDet ->
+                expCodeDet.name == selectedCat?.experience_code || expCodeDet.name == selectedCatSugg?.appExpCode
+            }?.mobilepreview?.url
+            if (mobilePreview != null) break@loop
+        }
+        loop@ for (cat in apiCatResponse?.Data?.firstOrNull()?.categories!!) {
+            desktopPreview = cat.appexperiencecodedetails.find { expCodeDet ->
+                expCodeDet.name == selectedCat?.experience_code || expCodeDet.name == selectedCatSugg?.appExpCode
+            }?.desktoppreview?.url
+            if (desktopPreview != null) break@loop
+
+        }
+
+
+
         addFragment(R.id.inner_container,BusinessCategoryPreviewFragment.newInstance(Bundle()
             .apply
             {
+                putString(IntentConstant.DESKTOP_PREVIEW.name,desktopPreview)
+                putString(IntentConstant.MOBILE_PREVIEW.name,mobilePreview)
                 putString(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber)
+                putString(IntentConstant.CATEGORY_SUGG_UI.name,Gson().toJson(selectedCatSugg))
                 putString(IntentConstant.CATEGORY_DATA.name,Gson().toJson(selectedCat))
             }),true)
     }

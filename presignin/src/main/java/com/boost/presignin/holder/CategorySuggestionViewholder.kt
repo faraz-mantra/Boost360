@@ -35,7 +35,11 @@ class CategorySuggestionViewholder(binding: ListItemCategorySuggestionBinding) :
     }else{
       binding.tvCat.text = data.category
     }
-    setClickListeners(binding.root)
+
+    binding.root.setOnClickListener {
+      onItemClick(position,item)
+    }
+
   }
 
   private fun onItemClick(position: Int, item: BaseRecyclerViewItem) {
