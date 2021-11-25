@@ -106,13 +106,13 @@
   </style>
 
   <style name="AppTheme_payment_gateway" parent="AppTheme.account">
-    <item name="colorPrimary">@color/orange</item>
-    <item name="colorPrimaryDark">@color/orange</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
   </style>
 
   <style name="AppTheme_staff_home" parent="AppTheme.Base">
-    <item name="colorPrimary">@color/orange</item>
-    <item name="colorPrimaryDark">#F5B200</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
     <item name="searchViewStyle">@style/SearchView</item>
   </style>
