@@ -1,5 +1,7 @@
 package com.appservice.model.staffModel
 
+import com.appservice.model.staffModel.SpecialisationsItem
+import com.appservice.model.staffModel.StaffImage
 import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
@@ -34,5 +36,35 @@ data class StaffCreateProfileRequest(
 
   @field:SerializedName("Specialisations", alternate = ["specialisations"])
   var specialisations: List<SpecialisationsItem?>? = null,
-) : Serializable, BaseResponse()
+
+
+  @field:SerializedName("Memberships")
+  var memberships: String? = null,
+
+  @field:SerializedName("BusinessLicence")
+  var businessLicence: String? = null,
+
+
+  @field:SerializedName("Speciality")
+  var speciality: String? = null,
+
+  @field:SerializedName("BookingWindow")
+  var bookingWindow: String? = null,
+
+
+  @field:SerializedName("AppointmentType")
+  var appointmentType: String? = null,
+
+
+  @field:SerializedName("Education")
+  var education: String? = null,
+
+  @field:SerializedName("Registration")
+  var registration: String? = null,
+
+
+  @field:SerializedName("ContactNumber")
+  var contactNumber: String? = null,
+
+  ) : Serializable, BaseResponse()
 

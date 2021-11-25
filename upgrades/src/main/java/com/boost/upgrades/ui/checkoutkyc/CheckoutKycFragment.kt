@@ -69,14 +69,14 @@ class CheckoutKycFragment : DialogFragment() {
 
     loadCustomerInfo()
     initMvvm()
-    viewModel.getCitiesFromAssetJson(activity!!)
+    viewModel.getCitiesFromAssetJson(requireActivity())
     business_gst_number.setFilters(business_gst_number.filters + InputFilter.AllCaps())
 
     confirm_btn.setOnClickListener {
       if (validateAgreement()) {
         if (!customerInfoState) { //no customer available
           //create customer payment profile
-          viewModel.createCustomerInfo(
+          viewModel.createCustomerInfo((activity as? UpgradeActivity)?.getAccessToken()?:"",
             CreateCustomerInfoRequest(
               AddressDetails(
                 if (business_city_name.text.isEmpty()) null else business_city_name.text.toString(),
@@ -109,7 +109,7 @@ class CheckoutKycFragment : DialogFragment() {
           )
         } else {
           //update customer payment profile
-          viewModel.updateCustomerInfo(
+          viewModel.updateCustomerInfo((activity as? UpgradeActivity)?.getAccessToken()?:"",
             CreateCustomerInfoRequest(
               AddressDetails(
                 if (business_city_name.text.isEmpty()) null else business_city_name.text.toString(),
@@ -233,6 +233,7 @@ class CheckoutKycFragment : DialogFragment() {
 
   private fun loadCustomerInfo() {
     viewModel.getCustomerInfo(
+      (activity as? UpgradeActivity)?.getAccessToken()?:"",
       (activity as UpgradeActivity).fpid!!,
       (activity as UpgradeActivity).clientid
     )

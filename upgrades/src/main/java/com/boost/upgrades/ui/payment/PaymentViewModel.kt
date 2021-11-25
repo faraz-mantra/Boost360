@@ -3,19 +3,25 @@ package com.boost.upgrades.ui.payment
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
 import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
 import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse
+import com.boost.upgrades.data.api_model.gst.Error
+import com.boost.upgrades.data.api_model.gst.GSTApiResponse
+import com.boost.upgrades.data.api_model.paymentprofile.GetLastPaymentDetails
+import com.boost.upgrades.data.api_model.stateCode.GetStates
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_SECREAT
 import com.boost.upgrades.utils.Utils
+import com.framework.analytics.SentryController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.luminaire.apolloar.base_class.BaseViewModel
@@ -56,7 +62,11 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
   var cityValue: String? = null
   var selectedState: String? = null
   var selectedStateResult: MutableLiveData<String> = MutableLiveData()
+  var selectedStateTinResult: MutableLiveData<String> = MutableLiveData()
   private var APIRequestStatus: String? = null
+  private var gstApiInfo : MutableLiveData<GSTApiResponse> = MutableLiveData()
+  private var statesInfo :MutableLiveData<GetStates> = MutableLiveData()
+  private var lastPaymentDetailsInfo :MutableLiveData<GetLastPaymentDetails> = MutableLiveData()
 
   var updatesError: MutableLiveData<String> = MutableLiveData()
   var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
@@ -132,6 +142,15 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
   fun getCustomerInfoResult(): LiveData<GetCustomerIDResponse> {
     return updateCustomerInfo
   }
+  fun getGstApiResult(): LiveData<GSTApiResponse>{
+    return gstApiInfo
+  }
+  fun getStatesResult(): LiveData<GetStates>{
+    return statesInfo
+  }
+  fun getLastPayDetails() :LiveData<GetLastPaymentDetails>{
+    return lastPaymentDetailsInfo
+  }
 
   fun cityResult(): LiveData<List<String>> {
     return cityResult
@@ -149,12 +168,20 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
     return cityValueResult
   }
 
+
   fun selectedStateResult(state: String) {
     selectedStateResult.postValue(state)
   }
 
   fun getSelectedStateResult(): LiveData<String> {
     return selectedStateResult
+  }
+
+  fun selectedStateTinResult(stateTin :String){
+      selectedStateTinResult.postValue(stateTin)
+  }
+  fun getSelectedStateTinResult():LiveData<String>{
+    return selectedStateTinResult
   }
 
   fun updatesError(): LiveData<String> {
@@ -185,6 +212,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
       out.close()
     } catch (e: IOException) {
       println("exception  $e")
+      SentryController.captureException(e)
     }
   }
 
@@ -233,9 +261,9 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
     )
   }
 
-  fun loadPamentUsingExternalLink(clientId: String, data: PaymentThroughEmailRequestBody) {
+  fun loadPamentUsingExternalLink(auth: String,clientId: String, data: PaymentThroughEmailRequestBody) {
     CompositeDisposable().add(
-      ApiService.createPaymentThroughEmail(clientId, data)
+      ApiService.createPaymentThroughEmail(auth,clientId, data)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({
@@ -246,9 +274,9 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
     )
   }
 
-  fun loadPaymentLinkPriority(clientId: String, data: PaymentPriorityEmailRequestBody) {
+  fun loadPaymentLinkPriority(auth: String,clientId: String, data: PaymentPriorityEmailRequestBody) {
     CompositeDisposable().add(
-      ApiService.createPaymentThroughEmailPriority(data)
+      ApiService.createPaymentThroughEmailPriority(auth,data)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({
@@ -259,10 +287,10 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
     )
   }
 
-  fun getCustomerInfo(InternalSourceId: String, clientId: String) {
+  fun getCustomerInfo(auth:String,InternalSourceId: String, clientId: String) {
     if (Utils.isConnectedToInternet(getApplication())) {
       CompositeDisposable().add(
-        ApiService.getCustomerId(InternalSourceId, clientId)
+        ApiService.getCustomerId(auth,InternalSourceId, clientId)
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(
@@ -285,6 +313,71 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
       )
     }
   }
+  fun getGstApiInfo(auth: String,gstIn:String,clientId: String,progressBar: ProgressBar){
+    if(Utils.isConnectedToInternet(getApplication())){
+      CompositeDisposable().add(
+        ApiService.getGSTDetails(auth,gstIn,clientId)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(
+            {
+              Log.i("getGstDetails",it.toString())
+              gstApiInfo.postValue(it)
+            },
+            {
+              val temp = (it as HttpException).response()!!.errorBody()!!.string()
+              val errorBody : Error = Gson().fromJson(temp,object : TypeToken<Error>() {}.type)
+              progressBar.visibility = View.GONE
+              Toasty.error(getApplication(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
+            }
+          )
+      )
+    }
+  }
+
+  fun getStatesWithCodes(auth: String,clientId: String,progressBar: ProgressBar){
+    if(Utils.isConnectedToInternet(getApplication())){
+      CompositeDisposable().add(
+        ApiService.getStates(auth,clientId)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(
+            {
+              Log.i("getStates",it.toString())
+              statesInfo.postValue(it)
+              progressBar.visibility = View.GONE
+            },
+            {
+              val temp = (it as HttpException).response()!!.errorBody()!!.string()
+              val errorBody : Error = Gson().fromJson(temp,object : TypeToken<com.boost.upgrades.data.api_model.stateCode.Error>() {}.type)
+              progressBar.visibility = View.GONE
+              Toasty.error(getApplication(), errorBody.toString(), Toast.LENGTH_LONG).show()
+            }
+          )
+      )
+    }
+  }
+
+  fun getLastUsedPaymentDetails(auth: String,floatingPointId :String,clientId: String){
+    if(Utils.isConnectedToInternet(getApplication())){
+      CompositeDisposable().add(
+        ApiService.getLastPaymentDetails(auth, floatingPointId, clientId)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(
+            {
+              lastPaymentDetailsInfo.postValue(it)
+            },
+            {
+              val temp = (it as HttpException).response()!!.errorBody()!!.string()
+              val errorBody : Error = Gson().fromJson(temp,object : TypeToken<com.boost.upgrades.data.api_model.paymentprofile.Error>() {}.type)
+              Toasty.error(getApplication(), errorBody.toString(), Toast.LENGTH_LONG).show()
+            }
+          )
+      )
+    }
+  }
+
 
   fun getCitiesFromAssetJson(context: Context) {
     val data: String? = Utils.getCityFromAssetJsonData(context)
@@ -302,6 +395,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
       cityResult.postValue(cityNames)
     } catch (ioException: JSONException) {
       ioException.printStackTrace()
+      SentryController.captureException(ioException)
     }
   }
 
@@ -325,6 +419,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
       cityResult.postValue(cityNames)
     } catch (ioException: JSONException) {
       ioException.printStackTrace()
+      SentryController.captureException(ioException)
     }
   }
 
@@ -342,6 +437,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
       stateResult.postValue(stateNames)
     } catch (ioException: JSONException) {
       ioException.printStackTrace()
+      SentryController.captureException(ioException)
     }
   }
 
@@ -362,13 +458,14 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
       stateValueResult.postValue(stateValue)
     } catch (ioException: JSONException) {
       ioException.printStackTrace()
+      SentryController.captureException(ioException)
     }
   }
 
-  fun createCustomerInfo(createCustomerInfoRequest: CreateCustomerInfoRequest) {
+  fun createCustomerInfo(auth:String,createCustomerInfoRequest: CreateCustomerInfoRequest) {
     APIRequestStatus = "Creating a new payment profile..."
     CompositeDisposable().add(
-      ApiService.createCustomerId(createCustomerInfoRequest)
+      ApiService.createCustomerId(auth,createCustomerInfoRequest)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(
@@ -390,12 +487,12 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
     )
   }
 
-  fun updateCustomerInfo(createCustomerInfoRequest: CreateCustomerInfoRequest) {
+  fun updateCustomerInfo(auth: String,createCustomerInfoRequest: CreateCustomerInfoRequest) {
 //                    var sample = Gson().toJson(createCustomerInfoRequest)
 //            writeStringAsFile(sample, "updateCustomer.txt")
     APIRequestStatus = "Creating a new payment profile..."
     CompositeDisposable().add(
-      ApiService.updateCustomerId(createCustomerInfoRequest)
+      ApiService.updateCustomerId(auth,createCustomerInfoRequest)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(

@@ -10,7 +10,9 @@ import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.*
 import com.boost.upgrades.data.model.*
 import com.boost.upgrades.data.remote.ApiInterface
+import com.boost.upgrades.data.remote.NewApiInterface
 import com.boost.upgrades.utils.Utils
+import com.framework.analytics.SentryController
 import com.google.gson.Gson
 import com.luminaire.apolloar.base_class.BaseViewModel
 import io.reactivex.Completable
@@ -46,8 +48,10 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     val compositeDisposable = CompositeDisposable()
     var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
+    var NewApiService = Utils.getRetrofit(true).create(NewApiInterface::class.java)
 
-    var experienceCode: String = "SVC"
+
+  var experienceCode: String = "SVC"
     var _fpTag: String = "ABC"
 
     var categoryResult: MutableLiveData<String> = MutableLiveData()
@@ -146,16 +150,17 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
             }
         } catch (ioException: JSONException) {
             ioException.printStackTrace()
+          SentryController.captureException(ioException)
         }
     }
 
-    fun loadUpdates(fpid: String, clientId: String, expCode: String?, fpTag: String?) {
+    fun loadUpdates(auth:String,fpid: String, clientId: String, expCode: String?, fpTag: String?) {
         Log.v("loadUpdates ", " " + expCode + " " + fpTag)
         updatesLoader.postValue(true)
 
         if (Utils.isConnectedToInternet(getApplication())) {
             compositeDisposable.add(
-                    ApiService.GetAllFeatures()
+                    NewApiService.GetAllFeatures()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
@@ -228,7 +233,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                                         updatesLoader.postValue(false)
 
                                                                         compositeDisposable.add(
-                                                                                ApiService.GetFloatingPointWebWidgets(fpid, clientId)
+                                                                                ApiService.GetFloatingPointWebWidgets(auth,fpid, clientId)
                                                                                         .subscribeOn(Schedulers.io())
                                                                                         .observeOn(AndroidSchedulers.mainThread())
                                                                                         .subscribe(
@@ -577,7 +582,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
         if (Utils.isConnectedToInternet(getApplication())) {
             compositeDisposable.add(
-                    ApiService.GetAllFeatures()
+                    NewApiService.GetAllFeatures()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(

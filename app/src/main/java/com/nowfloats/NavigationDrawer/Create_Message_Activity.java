@@ -48,7 +48,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.framework.models.firestore.FirestoreManager;
+import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.nowfloats.CustomWidget.CustomTagLayout;
 import com.nowfloats.Login.Fetch_Home_Data;
 import com.nowfloats.Login.Login_Interface;
@@ -333,7 +333,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
         } else {
             Constants.twitterShareEnabled = false;
             mTwitterShare = 0;
-            twitterloginButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.twitter_icon_inactive));
+            twitterloginButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.twitter_icon_n_inactive));
             twitterloginButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
         }
 
@@ -347,7 +347,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
                     if (Constants.twitterShareEnabled) {
                         Constants.twitterShareEnabled = false;
                         mTwitterShare = 0;
-                        twitterloginButton.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.twitter_icon_inactive));
+                        twitterloginButton.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.twitter_icon_n_inactive));
                         twitterloginButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
                         Toast.makeText(Create_Message_Activity.this, getString(R.string.twitter_disabled), Toast.LENGTH_SHORT).show();
                     } else {
@@ -397,7 +397,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
                                     if (tosubscribers) {
                                         WebEngageController.trackEvent(SUBSCRIBER_SHARING_ACTIVATED, HAS_CLICKED_SUBSCRIBER_SHARING_ON, session.getFpTag());
                                         MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_SEND_TO_SUBSCRIBERS, null);
-                                        create_message_subscribe_button.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.subscribe_icon));
+                                        create_message_subscribe_button.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.subscribe_icon_inactive));
                                         create_message_subscribe_button.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
                                         tosubscribers = false;
                                     } else {
@@ -414,7 +414,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
                 } else {
                     if (tosubscribers) {
                         MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_SEND_TO_SUBSCRIBERS, null);
-                        create_message_subscribe_button.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.subscribe_icon));
+                        create_message_subscribe_button.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.subscribe_icon_inactive));
                         create_message_subscribe_button.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
                         tosubscribers = false;
                     } else {

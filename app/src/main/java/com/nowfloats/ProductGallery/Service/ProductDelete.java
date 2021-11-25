@@ -5,11 +5,13 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.framework.analytics.SentryController;
 import com.nowfloats.CustomWidget.HttpDeleteWithBody;
 import com.nowfloats.ProductGallery.Model.ProductListModel;
 import com.nowfloats.ProductGallery.Product_Gallery_Fragment;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import org.apache.http.HttpResponse;
@@ -108,6 +110,7 @@ public class ProductDelete extends AsyncTask<String, String, String> {
                     Product_Gallery_Fragment.productItemModelList.remove((int) selectedPos);
                     count++;
                 } catch (JSONException e) {
+                    SentryController.INSTANCE.captureException(e);
                     e.printStackTrace();
                 }
 
@@ -121,6 +124,7 @@ public class ProductDelete extends AsyncTask<String, String, String> {
     private void deleteProduct(String values) {
         HttpClient httpclient = new DefaultHttpClient();
         HttpDeleteWithBody del = new HttpDeleteWithBody(url);
+        del.setHeader("Authorization", Utils.getAuthToken());
         StringEntity se;
         try {
             se = new StringEntity(values, HTTP.UTF_8);
@@ -135,10 +139,13 @@ public class ProductDelete extends AsyncTask<String, String, String> {
                 flag = true;
             }
         } catch (UnsupportedEncodingException e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         } catch (ClientProtocolException e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         } catch (IOException e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
     }

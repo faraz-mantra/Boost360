@@ -5,7 +5,9 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
+import com.framework.analytics.SentryController;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Utils;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -62,6 +64,7 @@ public class UploadFaviconImage extends AsyncTask<Void, String, String> {
         try {
             f.createNewFile();
         } catch (IOException e) {
+            SentryController.INSTANCE.captureException(e);
             e.printStackTrace();
         }
 
@@ -95,6 +98,7 @@ public class UploadFaviconImage extends AsyncTask<Void, String, String> {
             // Enable PUT method
             connection.setRequestMethod(Constants.HTTP_PUT);
             connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
 
             connection.setRequestProperty("Content-Type", Constants.BG_SERVICE_CONTENT_TYPE_OCTET_STREAM);
 
@@ -135,6 +139,7 @@ public class UploadFaviconImage extends AsyncTask<Void, String, String> {
             outputStream.flush();
             outputStream.close();
         } catch (Exception ex) {
+            SentryController.INSTANCE.captureException(ex);
             ex.printStackTrace();
         }
     }

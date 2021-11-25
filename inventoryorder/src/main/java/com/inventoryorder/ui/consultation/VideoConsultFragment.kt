@@ -13,13 +13,14 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.firestore.FirestoreManager
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.utils.ValidationUtils
-import com.framework.webengageconstant.*
+import com.framework.webengageconstant.CONSULTATION_PAGE_LOAD
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.PAGE_VIEW
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -92,11 +93,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
     if (isFirst || isSearch) binding?.progress?.visible()
     viewModel?.getSellerOrdersFilter(request)?.observeOnce(viewLifecycleOwner, Observer {
       binding?.progress?.gone()
-      if (it.error is NoNetworkException) {
-        errorView(resources.getString(R.string.internet_connection_not_available))
-        return@Observer
-      }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
+      if (it.isSuccess()) {
         val response = (it as? InventoryOrderListResponse)?.Data
         if (isSearch.not()) {
           if (isRefresh) orderList.clear()
@@ -195,7 +192,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
     when (v) {
       binding?.btnAdd -> {
         val bundle = Bundle()
-        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
+        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
         bundle.putBoolean(IntentConstant.IS_VIDEO.name, true)
         startFragmentOrderActivity(FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
       }
@@ -211,7 +208,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
       }
 
       override fun loadMoreItems() {
-        if (!isLastPageD) {
+        if (!isLastPageD && (searchView?.query?.length ?: 0) == 0) {
           isLoadingD = true
           currentPage += requestFilter.limit ?: 0
           orderAdapter?.addLoadingFooter(OrderItem().getLoaderItem())
@@ -298,7 +295,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
         }
 
         override fun onQueryTextChange(newText: String?): Boolean {
-          newText?.let { startFilter(it.trim()) }
+          startFilter(newText ?: "".trim())
           return false
         }
       })
@@ -309,14 +306,9 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   private fun startFilter(query: String) {
     if (query.isEmpty().not() && query.length > 2) {
       val isNumberWith91 = (query.contains("+91"))
-      val isNumber =
-        ValidationUtils.isNumeric(if (isNumberWith91) query.replace("+91", "") else query)
-      val type =
-        if (isNumber) QueryObject.QueryKey.BuyerPrimaryContactNumber.name else QueryObject.QueryKey.BuyerFullName.name
-      getSellerOrdersFilterApi(
-        getRequestFilterData(arrayListOf(), searchTxt = query, type = type),
-        isSearch = true
-      )
+      val isNumber = ValidationUtils.isNumeric(if (isNumberWith91) query.replace("+91", "") else query)
+      val type = if (isNumber) QueryObject.QueryKey.BuyerPrimaryContactNumber.name else QueryObject.QueryKey.BuyerFullName.name
+      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query, type = type), isSearch = true)
     } else setAdapterNotify(orderList)
   }
 
@@ -357,36 +349,23 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   }
 
 
-  private fun getRequestFilterData(
-    statusList: ArrayList<String>,
-    searchTxt: String = "",
-    type: String = QueryObject.QueryKey.BuyerFullName.name
-  ): OrderFilterRequest {
+  private fun getRequestFilterData(statusList: ArrayList<String>, searchTxt: String = "", type: String = QueryObject.QueryKey.BuyerFullName.name): OrderFilterRequest {
     val requestFil: OrderFilterRequest?
     if (searchTxt.isEmpty()) {
       currentPage = PAGE_START
       requestFil = OrderFilterRequest(clientId = clientId, skip = currentPage, limit = PAGE_SIZE)
     } else requestFil = OrderFilterRequest(clientId = clientId)
     requestFil.filterBy.add(
-      OrderFilterRequestItem(
-        QueryConditionType = OrderFilterRequestItem.Condition.AND.name,
-        QueryObject = getQueryList()
-      )
+      OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.AND.name, QueryObject = getQueryList())
     )
     if (statusList.isNullOrEmpty().not()) {
       requestFil.filterBy.add(
-        OrderFilterRequestItem(
-          QueryConditionType = OrderFilterRequestItem.Condition.OR.name,
-          QueryObject = getQueryStatusList(statusList)
-        )
+        OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.OR.name, QueryObject = getQueryStatusList(statusList))
       )
     }
     if (searchTxt.isNotEmpty()) {
       requestFil.filterBy.add(
-        OrderFilterRequestItem(
-          QueryConditionType = OrderFilterRequestItem.Condition.OR.name,
-          QueryObject = getQueryFilter(type, searchTxt)
-        )
+        OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.OR.name, QueryObject = getQueryFilter(type, searchTxt))
       )
     }
     return requestFil
@@ -394,33 +373,11 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 
   private fun getQueryList(): ArrayList<QueryObject> {
     val queryList = ArrayList<QueryObject>()
+    queryList.add(QueryObject(QueryObject.QueryKey.Identifier.value, fpTag, QueryObject.Operator.EQ.name))
+    queryList.add(QueryObject(QueryObject.QueryKey.Mode.value, OrderSummaryRequest.OrderMode.APPOINTMENT.name, QueryObject.Operator.EQ.name))
+    queryList.add(QueryObject(QueryObject.QueryKey.DeliveryMode.value, OrderSummaryRequest.DeliveryMode.ONLINE.name, QueryObject.Operator.EQ.name))
     queryList.add(
-      QueryObject(
-        QueryObject.QueryKey.Identifier.value,
-        fpTag,
-        QueryObject.Operator.EQ.name
-      )
-    )
-    queryList.add(
-      QueryObject(
-        QueryObject.QueryKey.Mode.value,
-        OrderSummaryRequest.OrderMode.APPOINTMENT.name,
-        QueryObject.Operator.EQ.name
-      )
-    )
-    queryList.add(
-      QueryObject(
-        QueryObject.QueryKey.DeliveryMode.value,
-        OrderSummaryRequest.DeliveryMode.ONLINE.name,
-        QueryObject.Operator.EQ.name
-      )
-    )
-    queryList.add(
-      QueryObject(
-        QueryObject.QueryKey.DeliveryProvider.value,
-        QueryObject.QueryValue.NF_VIDEO_CONSULATION.name,
-        QueryObject.Operator.EQ.name
-      )
+      QueryObject(QueryObject.QueryKey.DeliveryProvider.value, QueryObject.QueryValue.NF_VIDEO_CONSULATION.name, QueryObject.Operator.EQ.name)
     )
     return queryList
   }

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/smartbar"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layoutDirection="locale"
+  android:orientation="horizontal">
+
+  <dev.patrickgold.florisboard.ime.core.FlorisViewFlipper
+    android:id="@+id/action_start_area"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    app:layout_constrainedWidth="true"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <LinearLayout
+      android:id="@+id/action_toggle_container"
+      style="@style/SmartbarContainer"
+      android:layout_gravity="center_vertical">
+
+      <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/business_feature_toggle_action"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="@dimen/smartbar_button_margin"
+        android:layout_marginEnd="@dimen/smartbar_button_margin"
+        android:layout_marginBottom="@dimen/smartbar_button_margin"
+        android:background="@null"
+        android:paddingTop="@dimen/smartbar_button_padding"
+        android:paddingEnd="@dimen/smartbar_button_padding"
+        android:paddingBottom="@dimen/smartbar_button_padding"
+        android:scaleType="fitXY"
+        android:src="@drawable/business_feature_quick_actions"
+        tools:ignore="RtlSymmetry" />
+
+      <!--            <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton-->
+      <!--                android:id="@+id/quick_action_toggle"-->
+      <!--                android:visibility="gone"-->
+      <!--                style="@style/SmartbarQuickAction.Toggle"-->
+      <!--                android:contentDescription="@string/smartbar__quick_action_toggle__alt"-->
+      <!--                android:src="@drawable/ic_keyboard_arrow_right" />-->
+
+      <!--            <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton-->
+      <!--                android:id="@+id/back_button"-->
+      <!--                style="@style/SmartbarQuickAction"-->
+      <!--                android:contentDescription="@string/smartbar__quick_action__exit_editing"-->
+      <!--                android:src="@drawable/ic_arrow_back"-->
+      <!--                android:visibility="gone" />-->
+
+    </LinearLayout>
+
+  </dev.patrickgold.florisboard.ime.core.FlorisViewFlipper>
+
+  <dev.patrickgold.florisboard.ime.core.FlorisViewFlipper
+    android:id="@+id/main_area"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    app:layout_constrainedWidth="true"
+    app:layout_constraintEnd_toStartOf="@id/action_end_area"
+    app:layout_constraintStart_toEndOf="@id/action_start_area"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <com.google.android.material.tabs.TabLayout
+      android:id="@+id/business_feature_tab_layout"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      app:tabIndicatorColor="@color/accent_blue"
+      app:tabMode="scrollable"
+      app:tabSelectedTextColor="@color/accent_blue"
+      app:tabTextColor="@color/black_4a4a4a">
+
+      <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="0"
+        android:visibility="gone" />
+
+      <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="1"
+        android:text="Services" />
+
+      <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="2"
+        android:text="Updates" />
+
+      <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="3"
+        android:text="Photos" />
+
+      <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="4"
+        android:text="Staff"
+        android:visibility="gone"/>
+
+      <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="5"
+        android:text="Business card" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <LinearLayout
+      android:id="@+id/candidates"
+      style="@style/SmartbarContainer">
+
+      <Button
+        android:id="@+id/candidate0"
+        style="@style/SmartbarCandidate" />
+
+      <View style="@style/SmartbarDivider" />
+
+      <Button
+        android:id="@+id/candidate1"
+        style="@style/SmartbarCandidate" />
+
+      <View style="@style/SmartbarDivider" />
+
+      <Button
+        android:id="@+id/candidate2"
+        style="@style/SmartbarCandidate" />
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/clipboard_suggestion_row"
+      style="@style/SmartbarContainer">
+
+      <Button
+        android:id="@+id/clipboard_suggestion"
+        style="@style/SmartbarQuickAction.ClipboardSuggestion"
+        android:drawableStart="@drawable/ic_content_paste_with_padding" />
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/quick_actions"
+      style="@style/SmartbarContainer">
+
+      <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
+        android:id="@+id/quick_action_undo"
+        style="@style/SmartbarQuickAction"
+        android:contentDescription="@string/smartbar__quick_action__undo"
+        android:src="@drawable/ic_undo" />
+
+      <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
+        android:id="@+id/quick_action_redo"
+        style="@style/SmartbarQuickAction"
+        android:contentDescription="@string/smartbar__quick_action__redo"
+        android:src="@drawable/ic_redo" />
+
+      <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
+        android:id="@+id/quick_action_switch_to_media_context"
+        style="@style/SmartbarQuickAction"
+        android:contentDescription="@string/smartbar__quick_action__switch_to_media_context"
+        android:src="@drawable/ic_sentiment_satisfied" />
+
+      <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
+        android:id="@+id/quick_action_open_settings"
+        style="@style/SmartbarQuickAction"
+        android:contentDescription="@string/smartbar__quick_action__open_settings"
+        android:src="@drawable/ic_settings" />
+
+      <!-- TODO: find better icon for one-handed mode -->
+      <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
+        android:id="@+id/quick_action_one_handed_toggle"
+        style="@style/SmartbarQuickAction"
+        android:contentDescription="@string/smartbar__quick_action__one_handed_mode"
+        android:src="@drawable/ic_smartphone" />
+
+      <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
+        android:id="@+id/quick_action_switch_to_editing_context"
+        style="@style/SmartbarQuickAction"
+        android:contentDescription="@string/smartbar__quick_action__switch_to_editing_context"
+        android:src="@drawable/ic_open_with" />
+
+    </LinearLayout>
+
+    <dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
+      android:id="@+id/clipboard_cursor_row"
+      style="@style/SmartbarContainer"
+      android:layoutDirection="ltr"
+      app:isSmartbarKeyboard="true" />
+
+    <dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
+      android:id="@+id/number_row"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layoutDirection="ltr"
+      app:isSmartbarKeyboard="true" />
+
+  </dev.patrickgold.florisboard.ime.core.FlorisViewFlipper>
+
+  <dev.patrickgold.florisboard.ime.core.FlorisViewFlipper
+    android:id="@+id/action_end_area"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:visibility="gone"
+    app:layout_constrainedWidth="true"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
+      android:id="@+id/private_mode_button"
+      style="@style/SmartbarQuickAction.PrivateModeButton"
+      android:contentDescription="@string/smartbar__quick_action__private_mode"
+      android:src="@drawable/ic_security" />
+
+  </dev.patrickgold.florisboard.ime.core.FlorisViewFlipper>
+
+</dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView>

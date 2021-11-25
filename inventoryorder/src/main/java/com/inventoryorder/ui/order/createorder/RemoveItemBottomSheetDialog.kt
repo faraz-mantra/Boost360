@@ -4,7 +4,7 @@ import android.view.View
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.inventoryorder.R
-import com.inventoryorder.databinding.*
+import com.inventoryorder.databinding.BottomSheetRemoveItemBinding
 
 class RemoveItemBottomSheetDialog :
   BaseBottomSheetDialog<BottomSheetRemoveItemBinding, BaseViewModel>() {

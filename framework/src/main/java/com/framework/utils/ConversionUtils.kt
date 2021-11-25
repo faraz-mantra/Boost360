@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.View
 import com.framework.BaseApplication
 import com.framework.helper.MemoryConstants
@@ -480,5 +481,27 @@ object ConversionUtils {
       ++i
     }
     return true
+  }
+
+  fun convertInputStreamToString(ins: InputStream?): String? {
+    ins?.let {
+      val  reader = BufferedReader(
+        InputStreamReader(it)
+      )
+
+      // do reading, usually loop until end of file reading
+      var mLine:StringBuilder = StringBuilder()
+      var line:String?=""
+      while (line!= null) {
+        line = reader.readLine()
+        //process line
+        if (line!=null)
+          mLine.append(line)
+      }
+
+      var result =mLine.toString()
+      return result
+    }
+    return null
   }
 }

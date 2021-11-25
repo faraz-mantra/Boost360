@@ -12,8 +12,8 @@ import com.google.gson.GsonBuilder;
 import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.NotificationCenter.NotificationInterface;
-import com.nowfloats.Store.iapUtils.Purchase;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
+import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.thinksity.Specific;
 
 import org.json.JSONArray;
@@ -47,6 +47,7 @@ public class Constants {
             " </script> ";
 
     public static final boolean APK_MODE_RELEASE = false;
+    public static boolean webViewInit = false;
     public static final String APP_TAG = "Boost App";
     public static final String RIA_NODE_DATA = "riaNodeDatas";
     public static final int VISITS_TABLE = 0;
@@ -97,9 +98,17 @@ public class Constants {
     //    public static RestAdapter validEmailAdapter = null;
     public static final RestAdapter validEmailAdapter = new RestAdapter.Builder().setEndpoint("https://bpi.briteverify.com").build();
     //    public static RestAdapter restAdapter = null;
-    public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
-    public static final RestAdapter restAdapterV2 = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL_V2)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("gggv2")).build();
-    public static final RestAdapter restAdapterWithFloat = new RestAdapter.Builder().setEndpoint(Constants.WITH_FLOATS_API_URL)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("with float")).build();
+    public static final RestAdapter restAdapter = new RestAdapter.Builder()
+            .setEndpoint(Constants.NOW_FLOATS_API_URL)
+            .setRequestInterceptor(Utils.getAuthRequestInterceptor())
+            .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
+    public static final RestAdapter restAdapterV2 = new RestAdapter.Builder()
+            .setEndpoint(Constants.NOW_FLOATS_API_URL_V2)
+            .setRequestInterceptor(Utils.getAuthRequestInterceptor())
+            .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("gggv2")).build();
+    public static final RestAdapter restAdapterWithFloat = new RestAdapter.Builder()
+            .setRequestInterceptor(Utils.getAuthRequestInterceptor())
+            .setEndpoint(Constants.WITH_FLOATS_API_URL)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("with float")).build();
     public static final RestAdapter restAdapterBoostKit = new RestAdapter.Builder().setEndpoint(Constants.WEB_ACTION_BOOST_KIT_API_URL)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Boost Kit")).build();
     public static final RestAdapter restAdapterSalesman = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL_SALESMAN)/*.setClient(getClient())*//*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
     public static final RestAdapter movingFloatsDevAdapter = new RestAdapter.Builder().setEndpoint("http://movingfloats_nds.nowfloatsdev.com").setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
@@ -161,8 +170,14 @@ public class Constants {
     /**
      * Dev Adapter
      */
-    public static final RestAdapter restAdapterDev = new RestAdapter.Builder().setEndpoint(/*"http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com/"*/ "https://api2.withfloats.com/")/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
-    public static final RestAdapter restAdapterDev1 = new RestAdapter.Builder().setEndpoint(/*"http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com"*/ "https://api2.withfloats.com")/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
+    public static final RestAdapter restAdapterDev = new RestAdapter.Builder().setEndpoint(/*"http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com/"*/ "https://api2.withfloats.com/")/*.setClient(getClient())*/
+            .setRequestInterceptor(Utils.getAuthRequestInterceptor())
+            .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
+    public static final RestAdapter restAdapterDev1 = new RestAdapter.Builder()
+            .setEndpoint(/*"http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com"*/ "https://api2.withfloats.com")/*.setClient(getClient())*/
+            .setLogLevel(RestAdapter.LogLevel.FULL)
+            .setRequestInterceptor(Utils.getAuthRequestInterceptor())
+            .setLog(new AndroidLog("ggg")).build();
     public static boolean LOGOUPLOADED = false;
     public static boolean IS_SUNDAY_CHECKED = false;
     public static boolean IS_MONDAY_CHECKED = false;
@@ -192,7 +207,6 @@ public class Constants {
     public static String clientId2 = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21";
     public static String clientId1 = "39EB5FD120DC4394A10301B108030CB70FA553E91F984C829AB6ADE23B6767B7";
     public static String license_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmtfDikZcbWSvq3f+pEsAL5KQCNy3X96j++Z1PnjvidpJCEe0/S1xdPs4CfT3JkeQl7SNps/9cPu3EuOOFdx76QPpAqlqXHMKMwM9H+ikx5iUWPSilRjwLfJNjbJZT2xpuI6k32VyHhqLyU4rR95nrAPTGrocyyV1jtTFSYt77YZew8YfeePlcB2STLP3Ookho37Ah1QovelfdaG5ZNWz5OPYKnificSPyYjioYkfUmpnUJvN0INYMGFKefhfPtWPx5UCiQp15A6ir4wH0wVL3/QksonIb0JMiXpuXvWuggNb1AqEtdiPuBTleU5GovKL+HToKjwQu8NSuJsb3EacIwIDAQAB";
-    public static Purchase lastPurchase = null;
     public static String GOOGLE_API_KEY = "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
     public static String teleCountry = "in";
     public static DisplayMetrics DISPLAY_METRICS = null;
@@ -274,10 +288,7 @@ public class Constants {
     public static String FACEBOOK_PAGE_ACCESS_ID = "";
     public static String TWITTER_TOK = Specific.TWITTER_TOK;
     public static String TWITTER_SEC = Specific.TWITTER_SEC;
-    // for referral
-    public static String PREF_NAME_REFERRAL = "nowfloatsPrefsReferral";
-    public static String IS_INSTALL_APP = "isInstallApp";
-    public static String REFER_CODE_APP = "referCodeApp";
+
     public static String shortUrl = "";
     public static Boolean fbShareEnabled = false;
     public static boolean fbPageShareEnabled = false;

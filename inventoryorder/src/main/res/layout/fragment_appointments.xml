@@ -11,149 +11,172 @@
     android:id="@+id/swipe_refresh"
     style="@style/match_wrap">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-      style="@style/match_match"
-      android:background="@color/lightest_grey"
-      android:orientation="vertical"
-      tools:context=".ui.FragmentContainerOrderActivity">
-
-      <View
-        android:id="@+id/view_shadow"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_3"
-        android:background="@drawable/down_shadow"
-        android:visibility="gone" />
-
-      <androidx.coordinatorlayout.widget.CoordinatorLayout style="@style/match_match">
-
-        <com.framework.views.viewgroups.BaseRecyclerView
-          android:id="@+id/booking_recycler"
-          style="@style/match_wrap"
-          android:orientation="vertical"
-          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-          app:layout_behavior="@string/appbar_scrolling_view_behavior"
-          tools:itemCount="10"
-          tools:listitem="@layout/item_appointments_order" />
-
-        <ProgressBar
-          android:id="@+id/progress"
-          style="@style/wrap_wrap"
-          android:layout_gravity="center"
-          android:indeterminate="true"
-          android:theme="@style/progressBar"
-          android:visibility="gone" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-          android:id="@+id/error_view"
+        android:layout_height="match_parent">
+      <androidx.appcompat.widget.LinearLayoutCompat
           style="@style/match_match"
-          android:layout_marginStart="@dimen/size_50"
-          android:layout_marginEnd="@dimen/size_50"
-          android:visibility="gone">
+          android:id="@+id/mainlayout"
+          android:background="@color/lightest_grey"
+          android:orientation="vertical"
+          tools:context=".ui.FragmentContainerOrderActivity">
 
-          <LinearLayout
-            style="@style/wrap_wrap"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <View
+            android:id="@+id/view_shadow"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_3"
+            android:background="@drawable/down_shadow"
+            android:visibility="gone" />
 
-            <com.framework.views.customViews.CustomImageView
-              android:layout_width="@dimen/size_170"
-              android:layout_height="@dimen/size_160"
-              app:srcCompat="@drawable/ic_empty_appointment_icon" />
+        <androidx.coordinatorlayout.widget.CoordinatorLayout style="@style/match_match">
 
-            <com.framework.views.customViews.CustomTextView
-              style="@style/wrap_wrap"
-              android:layout_marginTop="@dimen/size_10"
-              android:gravity="center"
-              android:text="@string/no_appointment_so_far"
-              android:textAlignment="gravity"
-              android:textColor="@color/greyish_brown"
-              app:fontFamily="@font/semi_bold"
-              app:textType="HEADING_4" />
-
-            <com.framework.views.customViews.CustomTextView
-              style="@style/wrap_wrap"
-              android:layout_marginTop="@dimen/size_6"
-              android:gravity="center"
-              android:text="@string/tap_below_button_to_log_a_sample_offline_appointment"
-              android:textAlignment="gravity"
-              android:textColor="@color/grey_light_2"
-              app:textType="HEADING_6" />
-
-            <com.framework.views.customViews.CustomButton
-              android:id="@+id/buttonAddApt"
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/size_40"
-              android:layout_marginTop="@dimen/size_20"
-              android:background="@drawable/button_rounded_6"
-              android:gravity="center"
-              android:stateListAnimator="@null"
-              android:text="@string/make_a_sample_appointment"
-              android:textAllCaps="false"
-              android:textColor="@color/white"
-              app:fontFamily="@font/semi_bold"
-              app:textType="BODY_1" />
-          </LinearLayout>
-
-          <LinearLayout
-            style="@style/match_wrap"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:ignore="MissingConstraints">
-
-            <com.framework.views.customViews.CustomTextView
-              style="@style/wrap_wrap"
-              android:layout_marginTop="@dimen/size_6"
-              android:gravity="center"
-              android:text="@string/to_learn_more_about_how_bookings_work"
-              android:textAlignment="gravity"
-              android:textColor="@color/grey_light_2"
-              app:textType="BODY_1" />
-
-            <LinearLayout
+          <com.framework.views.viewgroups.BaseRecyclerView
+              android:id="@+id/booking_recycler"
               style="@style/match_wrap"
-              android:layout_marginBottom="@dimen/size_20"
+              android:orientation="vertical"
+              app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+              app:layout_behavior="@string/appbar_scrolling_view_behavior"
+              tools:itemCount="10"
+              tools:listitem="@layout/item_appointments_order" />
+
+          <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_no_data"
+              android:visibility="gone"
+              android:layout_width="match_parent"
+              app:textType="HEADING_5"
+              android:fontFamily="@font/regular"
               android:gravity="center"
-              android:orientation="horizontal">
+              android:layout_gravity="center"
+              android:text="@string/no_data_found"
+              android:layout_height="wrap_content"/>
 
-              <com.framework.views.customViews.CustomTextView
-                style="@style/wrap_wrap"
-                android:text="@string/click_on_the"
-                android:textColor="@color/grey_light_2"
-                app:textType="BODY_1" />
+          <ProgressBar
+              android:id="@+id/progress"
+              style="@style/wrap_wrap"
+              android:layout_gravity="center"
+              android:indeterminate="true"
+              android:theme="@style/progressBar"
+              android:visibility="gone" />
 
-              <com.framework.views.customViews.CustomTextView
-                style="@style/wrap_wrap"
-                android:drawableStart="@drawable/ic_about_apt_icon"
-                android:text="@string/icon_on_top_right"
-                android:textColor="@color/warm_grey"
-                app:textType="BODY_1" />
-            </LinearLayout>
-          </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+          <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+          <!--          android:id="@+id/error_view"-->
+          <!--          style="@style/match_match"-->
+          <!--          android:layout_marginStart="@dimen/size_50"-->
+          <!--          android:layout_marginEnd="@dimen/size_50"-->
+          <!--          android:visibility="visible">-->
+
+          <!--          <LinearLayout-->
+          <!--            style="@style/wrap_wrap"-->
+          <!--            android:layout_gravity="center"-->
+          <!--            android:gravity="center"-->
+          <!--            android:orientation="vertical"-->
+          <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+          <!--            app:layout_constraintEnd_toEndOf="parent"-->
+          <!--            app:layout_constraintStart_toStartOf="parent"-->
+          <!--            app:layout_constraintTop_toTopOf="parent">-->
+
+          <!--            <com.framework.views.customViews.CustomImageView-->
+          <!--              android:layout_width="@dimen/size_170"-->
+          <!--              android:layout_height="@dimen/size_160"-->
+          <!--              app:srcCompat="@drawable/ic_empty_appointment_icon" />-->
+
+          <!--            <com.framework.views.customViews.CustomTextView-->
+          <!--              style="@style/wrap_wrap"-->
+          <!--              android:layout_marginTop="@dimen/size_10"-->
+          <!--              android:gravity="center"-->
+          <!--              android:text="@string/no_appointment_so_far"-->
+          <!--              android:textAlignment="gravity"-->
+          <!--              android:textColor="@color/greyish_brown"-->
+          <!--              app:fontFamily="@font/semi_bold"-->
+          <!--              app:textType="HEADING_4" />-->
+
+          <!--            <com.framework.views.customViews.CustomTextView-->
+          <!--              style="@style/wrap_wrap"-->
+          <!--              android:layout_marginTop="@dimen/size_6"-->
+          <!--              android:gravity="center"-->
+          <!--              android:text="@string/tap_below_button_to_log_a_sample_offline_appointment"-->
+          <!--              android:textAlignment="gravity"-->
+          <!--              android:textColor="@color/grey_light_2"-->
+          <!--              app:textType="HEADING_6" />-->
+
+          <!--            <com.framework.views.customViews.CustomButton-->
+          <!--              android:id="@+id/buttonAddApt"-->
+          <!--              android:layout_width="match_parent"-->
+          <!--              android:layout_height="@dimen/size_40"-->
+          <!--              android:layout_marginTop="@dimen/size_20"-->
+          <!--              android:background="@drawable/button_rounded_6"-->
+          <!--              android:gravity="center"-->
+          <!--              android:stateListAnimator="@null"-->
+          <!--              android:text="@string/make_a_sample_appointment"-->
+          <!--              android:textAllCaps="false"-->
+          <!--              android:textColor="@color/white"-->
+          <!--              app:fontFamily="@font/semi_bold"-->
+          <!--              app:textType="BODY_1" />-->
+          <!--          </LinearLayout>-->
+
+          <!--          <LinearLayout-->
+          <!--            style="@style/match_wrap"-->
+          <!--            android:gravity="center"-->
+          <!--            android:orientation="vertical"-->
+          <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+          <!--            tools:ignore="MissingConstraints">-->
+
+          <!--            <com.framework.views.customViews.CustomTextView-->
+          <!--              style="@style/wrap_wrap"-->
+          <!--              android:layout_marginTop="@dimen/size_6"-->
+          <!--              android:gravity="center"-->
+          <!--              android:text="@string/to_learn_more_about_how_bookings_work"-->
+          <!--              android:textAlignment="gravity"-->
+          <!--              android:textColor="@color/grey_light_2"-->
+          <!--              app:textType="BODY_1" />-->
+
+          <!--            <LinearLayout-->
+          <!--              style="@style/match_wrap"-->
+          <!--              android:layout_marginBottom="@dimen/size_20"-->
+          <!--              android:gravity="center"-->
+          <!--              android:orientation="horizontal">-->
+
+          <!--              <com.framework.views.customViews.CustomTextView-->
+          <!--                style="@style/wrap_wrap"-->
+          <!--                android:text="@string/click_on_the"-->
+          <!--                android:textColor="@color/grey_light_2"-->
+          <!--                app:textType="BODY_1" />-->
+
+          <!--              <com.framework.views.customViews.CustomTextView-->
+          <!--                style="@style/wrap_wrap"-->
+          <!--                android:drawableStart="@drawable/ic_about_apt_icon"-->
+          <!--                android:text="@string/icon_on_top_right"-->
+          <!--                android:textColor="@color/warm_grey"-->
+          <!--                app:textType="BODY_1" />-->
+          <!--            </LinearLayout>-->
+          <!--          </LinearLayout>-->
+          <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
-        <com.framework.views.fabButton.FloatingActionButton
-          android:id="@+id/btn_add"
-          style="@style/wrap_wrap"
-          android:layout_gravity="bottom|end"
-          android:layout_margin="16dp"
-          android:clickable="true"
-          android:focusable="true"
-          android:backgroundTint="@color/colorAccentLight"
-          android:fontFamily="@font/semi_bold"
-          android:gravity="center"
-          android:textColor="@color/white"
-          app:fabIcon="@drawable/ic_add_white"
-          app:fabIconPosition="start"
-          app:fabSize="normal"
-          app:fabType="circle" />
-      </androidx.coordinatorlayout.widget.CoordinatorLayout>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+          <com.framework.views.fabButton.FloatingActionButton
+              android:id="@+id/btn_add"
+              style="@style/wrap_wrap"
+              android:layout_gravity="bottom|end"
+              android:layout_margin="16dp"
+              android:clickable="true"
+              android:focusable="true"
+              android:backgroundTint="@color/colorAccentLight"
+              android:fontFamily="@font/semi_bold"
+              android:gravity="center"
+              android:textColor="@color/white"
+              app:fabIcon="@drawable/ic_add_white"
+              app:fabIconPosition="start"
+              app:fabSize="normal"
+              app:fabType="circle" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <FrameLayout
+          android:visibility="gone"
+          android:id="@+id/child_container"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"/>
+    </RelativeLayout>
+
   </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

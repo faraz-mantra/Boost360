@@ -13,6 +13,6 @@ data class KYCDetails(
   var verificationStatus: String? = null
 ) : Serializable {
   enum class Status {
-    PENDING
+    PENDING, VERIFIED
   }
 }

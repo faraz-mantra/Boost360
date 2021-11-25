@@ -11,6 +11,7 @@
     <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
     <item name="colorSecondary">@color/black_4a4a4a</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
   </style>
 
   <style name="CustomBottomSheet" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">

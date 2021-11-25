@@ -149,7 +149,6 @@
 -keep class * extends android.content.BroadcastReceiver
 -keep class * extends android.content.ContentProvider
 -keep class com.android.vending.licensing.ILicensingService
--keep public class com.android.vending.billing.IInAppBillingService
 -keep class com.aviary.android.feather.sdk.internal.headless.moa.MoaResult
 -keep class com.aviary.android.feather.sdk.internal.headless.filters.NativeFilterProxy
 -keep class com.aviary.android.feather.sdk.utils.AviaryIntentConfigurationValidator
@@ -363,6 +362,7 @@
 -keeppackagenames com.inventoryorder
 -keeppackagenames com.boost.presignup
 -keeppackagenames com.boost.presignin
+-keeppackagenames dev.patrickgold.florisboard
 
 -keep class com.onboarding.** { *; }
 -keep class com.dashboard.** { *; }
@@ -370,6 +370,7 @@
 -keep class com.framework.** { *; }
 -keep class com.resources.** { *; }
 -keep class com.inventoryorder.** { *; }
+-keep class dev.patrickgold.florisboard.** { *; }
 -keep class com.onboarding.nowfloats.model.** { <fields>; }
 -keep class com.inventoryorder.model.** { <fields>; }
 -keep class com.dashboard.model.** { <fields>; }
@@ -379,6 +380,7 @@
 -keep class com.appservice.ui.model.** { <fields>; }
 -keep class com.inventoryorder.ui.tutorials.model.** { <fields>; }
 -keep class com.boost.presignin.model.** { <fields>; }
+-keep class dev.patrickgold.florisboard.customization.model.** { <fields>; }
 
 ## New progard rule
 

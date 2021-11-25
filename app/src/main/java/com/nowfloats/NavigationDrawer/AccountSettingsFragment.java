@@ -3,6 +3,7 @@ package com.nowfloats.NavigationDrawer;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -220,6 +221,9 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 .negativeColorRes(R.color.black_4a4a4a)
                 .positiveColorRes(R.color.colorAccentLight)
                 .onPositive((dialog, which) -> {
+                    SharedPreferences nowfloatsPrefs = getActivity()
+                            .getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE);
+                    nowfloatsPrefs.edit().clear().apply();
                     sessionManager.logoutUser();
                 })
                 .onNegative((dialog, which) -> dialog.dismiss())

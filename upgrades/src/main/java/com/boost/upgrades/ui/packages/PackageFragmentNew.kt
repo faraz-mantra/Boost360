@@ -132,6 +132,7 @@ class PackageFragmentNew : BaseFragment() {
 
                     //clear cartOrderInfo from SharedPref to requestAPI again
                     prefs.storeCartOrderInfo(null)
+                    prefs.storeAddedPackageDesc(bundleData?.desc!!)
 
                     makeFlyAnimation(package_profile_image_copy_new)
 

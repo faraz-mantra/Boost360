@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
+import com.framework.analytics.SentryController;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.RoundCorners_image;
@@ -13,6 +14,7 @@ import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import java.io.BufferedReader;
@@ -82,6 +84,7 @@ public class Upload_Logo extends AsyncTask<Void, String, String> {
                     Business_Logo_Activity.logoimageView.setImageBitmap(bmp);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    SentryController.INSTANCE.captureException(e);
                 }
             });
 
@@ -121,6 +124,7 @@ public class Upload_Logo extends AsyncTask<Void, String, String> {
             String temp = uri + "totalChunks=1&currentChunkNumber=1";
             sendDataToServer(temp, Methods.compressToByte(imagePath, appContext));
         } catch (Exception e) {
+            SentryController.INSTANCE.captureException(e);
             Methods.showSnackBarNegative(appContext, e.getMessage());
             e.printStackTrace();
             System.gc();
@@ -146,6 +150,7 @@ public class Upload_Logo extends AsyncTask<Void, String, String> {
             // Enable PUT method
             connection.setRequestMethod(Constants.HTTP_PUT);
             connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
 
 
             connection.setRequestProperty("Content-Type",
@@ -191,26 +196,31 @@ public class Upload_Logo extends AsyncTask<Void, String, String> {
                 else
                     Constants.serviceResponse = "";
             } catch (Exception e) {
+                SentryController.INSTANCE.captureException(e);
             } finally {
                 try {
                     inputStreamReader.close();
                 } catch (Exception e) {
+                    SentryController.INSTANCE.captureException(e);
                 }
                 try {
                     bufferedReader.close();
                 } catch (Exception e) {
+                    SentryController.INSTANCE.captureException(e);
                 }
 
             }
 
 
         } catch (Exception ex) {
+            SentryController.INSTANCE.captureException(ex);
             isUploadingSuccess = false;
         } finally {
             try {
                 outputStream.flush();
                 outputStream.close();
             } catch (Exception e) {
+                SentryController.INSTANCE.captureException(e);
             }
         }
     }

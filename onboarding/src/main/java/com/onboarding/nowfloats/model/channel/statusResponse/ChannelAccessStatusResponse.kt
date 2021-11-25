@@ -27,6 +27,7 @@ data class ChannelAccessStatusResponse(
   companion object {
 
     const val CONNECTED_CHANNELS = "connected_channels"
+    const val CHANNEL_SHARE_URL = "channel_share_url"
 
     fun getConnectedChannel(): ArrayList<String> {
       val resp = PreferencesUtils.instance.getData(CONNECTED_CHANNELS, "") ?: ""

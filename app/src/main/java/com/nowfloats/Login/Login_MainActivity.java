@@ -30,6 +30,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -48,7 +49,6 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Model.Login_Data_Model;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
@@ -63,6 +63,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -76,6 +77,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import jp.wasabeef.richeditor.RichEditor;
@@ -86,6 +88,7 @@ import retrofit.client.Response;
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABLE_LOGIN;
 import static com.framework.webengageconstant.EventNameKt.PS_LOGIN_USERNAME_PAGE_LOAD;
 
+@Deprecated
 public class Login_MainActivity extends AppCompatActivity implements API_Login.API_Login_Interface, View.OnClickListener {
     /*private String[] permission = new String[]{Manifest.permission.READ_SMS,
             Manifest.permission.RECEIVE_SMS,Manifest.permission.READ_PHONE_STATE};*/
@@ -115,7 +118,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
         BoostLog.d("HomeActivity", "This is getting Called");
         try {
             final HashMap<String, String> params = new HashMap<String, String>();
-            params.put("Channel", FirebaseInstanceId.getInstance().getToken());
+            params.put("Channel", "");
             params.put("UserId", userId);
             params.put("DeviceType", "ANDROID");
             params.put("clientId", Constants.clientId);
@@ -515,6 +518,17 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
                 }
                 return null;
             }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                // Basic Authentication
+                //String auth = "Basic " + Base64.encodeToString(CONSUMER_KEY_AND_SECRET.getBytes(), Base64.NO_WRAP);
+
+                headers.put("Authorization", Utils.getAuthToken());
+                return headers;
+
+            }
         };
         queue.add(req);
     }
@@ -596,6 +610,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
     // this method called when user react on permissions
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case READ_MESSAGES_ID:
                 //getPermission();

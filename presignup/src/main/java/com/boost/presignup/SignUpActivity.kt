@@ -21,11 +21,13 @@ import com.boost.presignup.datamodel.userprofile.UserProfileRequest
 import com.boost.presignup.datamodel.userprofile.UserProfileResponse
 import com.boost.presignup.utils.Utils.hideKeyBoard
 import com.boost.presignup.utils.WebEngageController
+import com.framework.rest.ServiceInterceptor
 import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
 import com.google.firebase.auth.FirebaseAuth
 import com.onboarding.nowfloats.ui.webview.WebViewTNCDialog
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import okhttp3.OkHttpClient
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -100,6 +102,7 @@ class SignUpActivity : AppCompatActivity() {
     enableFormInput()
     retrofit = Retrofit.Builder()
       .baseUrl("https://api2.withfloats.com")
+      .client(OkHttpClient.Builder().addInterceptor(ServiceInterceptor(false)).build())
       .addConverterFactory(GsonConverterFactory.create())
       .build()
     ApiService = retrofit.create(Apis::class.java)

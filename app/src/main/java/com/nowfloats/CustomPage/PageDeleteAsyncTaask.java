@@ -8,7 +8,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.CustomWidget.HttpDeleteWithBody;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.squareup.otto.Bus;
 import com.thinksity.R;
 
@@ -36,14 +38,16 @@ public class PageDeleteAsyncTaask extends AsyncTask<String, String, String> {
     private boolean flag = false;
     private MaterialDialog materialProgress;
     private CustomPageInterface pageInterface;
+    public ArrayList<CustomPageModel> dataModel ;
     private Bus bus;
 
-    public PageDeleteAsyncTaask(String url, Activity activity, String tag, CustomPageInterface pageInterface, Bus bus) {
+    public PageDeleteAsyncTaask(String url, Activity activity, String tag, CustomPageInterface pageInterface,ArrayList<CustomPageModel> dataModel, Bus bus) {
         this.url = url;
         this.activity = activity;
         this.tag = tag;
         this.bus = bus;
         this.pageInterface = pageInterface;
+        this.dataModel = dataModel;
         flag = false;
     }
 
@@ -67,7 +71,7 @@ public class PageDeleteAsyncTaask extends AsyncTask<String, String, String> {
             for (int i = 0; i < CustomPageFragment.posList.size(); i++) {
                 int n = Integer.parseInt(CustomPageFragment.posList.get(i).toString());
                 final JSONObject map = new JSONObject();
-                map.put("PageId", CustomPageFragment.dataModel.get(n).PageId);
+                map.put("PageId", dataModel.get(n).PageId);
                 map.put("Tag", "" + tag);
                 map.put("clientId", "" + Constants.clientId);
                 if (CustomPageFragment.posList.size() - 1 == i) {
@@ -98,6 +102,7 @@ public class PageDeleteAsyncTaask extends AsyncTask<String, String, String> {
         flag = false;
         HttpClient httpclient = new DefaultHttpClient();
         HttpDeleteWithBody del = new HttpDeleteWithBody(url);
+        del.addHeader("Authorization", Utils.getAuthToken());
         StringEntity se;
         try {
             se = new StringEntity(values, HTTP.UTF_8);
@@ -126,10 +131,10 @@ public class PageDeleteAsyncTaask extends AsyncTask<String, String, String> {
                         if (materialProgress != null)
                             materialProgress.dismiss();
                         if (flag) {
-//                            if (CustomPageFragment.dataModel!=null && CustomPageFragment.dataModel.size()>0){
+//                            if (dataModel!=null && dataModel.size()>0){
 //                        for (int i = 0; i < CustomPageFragment.posList.size(); i++) {
 //                            int n = Integer.parseInt(CustomPageFragment.posList.get(i).toString());
-//                            CustomPageFragment.dataModel.remove(n);
+//                            dataModel.remove(n);
 //                        }
 
                             new CustomPageService().GetPages(tag, Constants.clientId, pageInterface, bus);

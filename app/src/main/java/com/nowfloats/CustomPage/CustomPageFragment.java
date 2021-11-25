@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
@@ -22,7 +21,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.framework.models.firestore.FirestoreManager;
+import com.framework.analytics.SentryController;
+import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nowfloats.CustomPage.Model.CustomPageEvent;
 import com.nowfloats.CustomPage.Model.CustomPageLink;
@@ -33,10 +33,8 @@ import com.nowfloats.on_boarding.OnBoardingApiCalls;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
-import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
-import com.nowfloats.widget.WidgetKey;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -57,13 +55,10 @@ import static com.framework.webengageconstant.EventNameKt.CREATE_ACUSTOMPAGE;
 public class CustomPageFragment extends Fragment {
     public static RecyclerView recyclerView;
     public static CustomPageAdapter custompageAdapter;
-    public static ArrayList<CustomPageModel> dataModel = new ArrayList<>();
+    public ArrayList<CustomPageModel> dataModel = new ArrayList<CustomPageModel>();
     public static ArrayList<String> posList = new ArrayList<>();
     public static boolean customPageDeleteCheck = false;
     public CustomPageInterface pageInterface;
-    //    private Toolbar toolbar;
-//    private Drawable defaultColor;
-//    private View deleteView = null;
     public CustomPageDeleteInterface deleteInterface;
     Bus bus;
     UserSessionManager session;
@@ -75,41 +70,22 @@ public class CustomPageFragment extends Fragment {
 
     @Override
     public void onResume() {
-        MixPanelController.track("CustomPages", null);
+
         super.onResume();
         bus.register(this);
-        if (custompageAdapter != null) {
-            custompageAdapter.updateSelection(0);
-            custompageAdapter.notifyDataSetChanged();
-
-            if (dataModel.size() == 0) {
-                emptylayout.setVisibility(View.VISIBLE);
-            } else {
-                emptylayout.setVisibility(View.GONE);
-            }
-        }
-        if (recyclerView != null)
-            recyclerView.invalidate();
-//        if (dataModel.size()==0){
-//            emptylayout.setVisibility(View.VISIBLE);
-//        }else {
-//            emptylayout.setVisibility(View.GONE);
+//        MixPanelController.track("CustomPages", null);
+//        if (custompageAdapter != null) {
+//            custompageAdapter.updateSelection(0);
+//            custompageAdapter.notifyDataSetChanged();
+//            if (dataModel.size() == 0) emptylayout.setVisibility(View.VISIBLE);
+//            else emptylayout.setVisibility(View.GONE);
 //        }
-
-//        if (deleteView!=null){
-//            deleteView.setBackgroundColor(android.R.attr.selectableItemBackground);
-//            deleteView = null;
-//        }
-
-        posList = new ArrayList<String>();
-        deleteInterface.DeletePageTrigger(0, false, null);
-//        getSupportActionBar().setDisplayShowTitleEnabled(true);
-//        getSupportActionBar().setBackgroundDrawable(defaultColor);
-        if (titleTextView != null)
-            titleTextView.setText(getString(R.string.custom_pages));
-        if (delete != null)
-            delete.setVisibility(View.GONE);
-        customPageDeleteCheck = false;
+//        if (recyclerView != null) recyclerView.invalidate();
+//        posList = new ArrayList<>();
+//        deleteInterface.DeletePageTrigger(0, false, null);
+//        if (titleTextView != null) titleTextView.setText(getString(R.string.custom_pages));
+//        if (delete != null) delete.setVisibility(View.GONE);
+//        customPageDeleteCheck = false;
     }
 
     @Override
@@ -134,62 +110,22 @@ public class CustomPageFragment extends Fragment {
         recyclerView.setItemAnimator(new FadeInUpAnimator());
         emptylayout = (LinearLayout) view.findViewById(R.id.emptycustompage);
         progress_layout = (LinearLayout) view.findViewById(R.id.progress_custom_page);
-        progress_layout.setVisibility(View.VISIBLE);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.setItemAnimator(null);
-
-
         final FloatingActionButton addProduct = view.findViewById(R.id.fab_custom_page);
-
         addProduct.setOnClickListener(v -> addProduct());
-        if ((activity instanceof CustomPageActivity) && ((CustomPageActivity) activity).isAdd)
-            addProduct();
+        if ((activity instanceof CustomPageActivity) && ((CustomPageActivity) activity).isAdd) addProduct();
+        isRefreshList();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.fragment_custom_page);
-
         activity = getActivity();
         pageInterface = Constants.restAdapter.create(CustomPageInterface.class);
         session = new UserSessionManager(activity.getApplicationContext(), activity);
         bus = BusProvider.getInstance().getBus();
         deleteInterface = (CustomPageDeleteInterface) activity;
-
-//        toolbar = (Toolbar) findViewById(R.id.tool_bar_product_detail);
-        // defaultColor = activity.getResources().getColor(R.color.primaryColor);
-//        toolbar.setBackgroundResource(defaultColor);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowTitleEnabled(true);
-//        defaultColor = new ColorDrawable(getResources().getColor(R.color.white));
-//        getSupportActionBar().setBackgroundDrawable(defaultColor);
-//        getSupportActionBar().setTitle("Custom Pages");
-
-
-        CustomPageInterface pageInterface2 = Constants.restAdapter.create(CustomPageInterface.class);
-        pageInterface2.getPageUrl(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), 0, 10, 1, new Callback<CustomPageLink>() {
-            @Override
-            public void success(CustomPageLink pageDetail, Response response) {
-
-                customPageLink = pageDetail;
-
-
-                LoadPageList(activity, bus);
-
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-
-        });
-
-
         //Title
         titleTextView = HomeActivity.headerText;
         if (titleTextView != null)
@@ -206,7 +142,21 @@ public class CustomPageFragment extends Fragment {
     }
 
     public void isRefreshList() {
-        LoadPageList(activity, bus);
+        progress_layout.setVisibility(View.VISIBLE);
+        CustomPageInterface pageInterface2 = Constants.restAdapter.create(CustomPageInterface.class);
+        pageInterface2.getPageUrl(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), 0, 100, 1, new Callback<CustomPageLink>() {
+            @Override
+            public void success(CustomPageLink pageDetail, Response response) {
+                customPageLink = pageDetail;
+                LoadPageList(activity, bus);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                progress_layout.setVisibility(View.GONE);
+            }
+
+        });
     }
 
     private void LoadPageList(Activity activity, Bus bus) {
@@ -225,7 +175,6 @@ public class CustomPageFragment extends Fragment {
                 session.setCustomPageCount(dataModel.size());
                 OnBoardingApiCalls.updateData(session.getFpTag(), String.format("custom_page:%s", dataModel.size() > 0 ? "true" : "false"));
             }
-            progress_layout.setVisibility(View.GONE);
             custompageAdapter = new CustomPageAdapter(activity, dataModel, session, pageInterface, bus, customPageLink);
 //            AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(custompageAdapter);
 //            ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
@@ -237,6 +186,7 @@ public class CustomPageFragment extends Fragment {
         } else {
             emptylayout.setVisibility(View.VISIBLE);
         }
+        progress_layout.setVisibility(View.GONE);
     }
 
     private void onCustomPageAddedOrUpdated(boolean isAdded) {
@@ -345,7 +295,7 @@ public class CustomPageFragment extends Fragment {
 
                                         String url = Constants.NOW_FLOATS_API_URL + "/Discover/v1/floatingpoint/custompage/delete";
                                         for (int i = 0; i < posList.size(); i++) {
-                                            new PageDeleteAsyncTaask(url, activity, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), pageInterface, bus).execute();
+                                            new PageDeleteAsyncTaask(url, activity, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), pageInterface,dataModel, bus).execute();
                                         }
                                         dialog.dismiss();
                                         deleteInterface.DeletePageTrigger(0, false, null);
@@ -357,6 +307,7 @@ public class CustomPageFragment extends Fragment {
                                         customPageDeleteCheck = false;
                                         CustomPageAdapter.deleteCheck = false;
                                     } catch (Exception e) {
+                                        SentryController.INSTANCE.captureException(e);
                                         e.printStackTrace();
                                         posList = new ArrayList<String>();
                                         deleteInterface.DeletePageTrigger(0, false, null);
@@ -438,25 +389,25 @@ public class CustomPageFragment extends Fragment {
      * Revamped Widget Logic
      */
     private void addProduct() {
-        /**
-         * If not new pricing plan
-         */
-        if (!WidgetKey.isNewPricingPlan) {
-            if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
-                Methods.showFeatureNotAvailDialog(getContext());
-            } else {
+//        /**
+//         * If not new pricing plan
+//         */
+//        if (!WidgetKey.isNewPricingPlan) {
+//            if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+//                Methods.showFeatureNotAvailDialog(getContext());
+//            } else {
+//                openAddCustomPageActivity();
+//            }
+//        } else {
+//            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_CUSTOM_PAGES, WidgetKey.WIDGET_PROPERTY_MAX);
+//
+//            if (value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue())) {
+//                Methods.showFeatureNotAvailDialog(getContext());
+//            } else if (!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && dataModel.size() >= Integer.parseInt(value)) {
+//                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_custom_page_limit)), Toast.LENGTH_LONG).show();
+//            } else {
                 openAddCustomPageActivity();
-            }
-        } else {
-            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_CUSTOM_PAGES, WidgetKey.WIDGET_PROPERTY_MAX);
-
-            if (value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue())) {
-                Methods.showFeatureNotAvailDialog(getContext());
-            } else if (!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && dataModel.size() >= Integer.parseInt(value)) {
-                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_custom_page_limit)), Toast.LENGTH_LONG).show();
-            } else {
-                openAddCustomPageActivity();
-            }
-        }
+//            }
+//        }
     }
 }

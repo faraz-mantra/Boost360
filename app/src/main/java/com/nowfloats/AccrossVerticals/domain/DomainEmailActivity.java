@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.framework.models.firestore.FirestoreManager;
+import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.nowfloats.AccrossVerticals.API.APIInterfaces;
 import com.nowfloats.AccrossVerticals.API.model.GetDomain.GetDomainData;
 import com.nowfloats.AccrossVerticals.domain.ui.ActiveDomain.ActiveDomainFragment;
@@ -19,6 +19,7 @@ import com.nowfloats.AccrossVerticals.domain.ui.DomainPurchased.DomainPurchasedF
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import retrofit.Callback;
@@ -73,6 +74,7 @@ public class DomainEmailActivity extends AppCompatActivity {
     private void createView() {
         if (session.getStoreWidgets().contains("DOMAINPURCHASE")) {
             loadData();
+            onDomainAddedOrUpdated(true);
         } else {
             addFragment(new DomainNotPurchaseFragment(), "DOMAIN_NOT_PURCHASE_FRAGMENT");
             onDomainAddedOrUpdated(false);
@@ -136,6 +138,7 @@ public class DomainEmailActivity extends AppCompatActivity {
             showProgress();
             APIInterfaces APICalls = new RestAdapter.Builder()
                     .setEndpoint("http://plugin.withfloats.com")
+                    .setRequestInterceptor(Utils.getAuthRequestInterceptor())
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .setLog(new AndroidLog("ggg"))
                     .build()

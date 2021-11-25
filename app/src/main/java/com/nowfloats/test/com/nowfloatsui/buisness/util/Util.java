@@ -18,12 +18,14 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.framework.analytics.SentryController;
 import com.nowfloats.CustomWidget.HttpDeleteWithBody;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.RoundCorners_image;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import org.apache.http.HttpEntity;
@@ -100,6 +102,9 @@ public class Util {
             // Enable PUT method
             connection.setRequestMethod(requestMethod);
             connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
+
+
             connection.setRequestProperty("Content-Type",
                     Constants.BG_SERVICE_CONTENT_TYPE_JSON);
             outputStream = new DataOutputStream(connection.getOutputStream());
@@ -178,6 +183,7 @@ public class Util {
             // Enable PUT method
             connection.setRequestMethod(requestMethod);
             connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
 
             connection.setRequestProperty("Content-Type", contentType);
 
@@ -437,7 +443,8 @@ public class Util {
         try {
             defaultHttpClient = new DefaultHttpClient();
             httpGet = new HttpGet(apiURL);
-            httpGet.setHeader("Content-Type", "application/json");
+            httpGet.addHeader("Content-Type", "application/json");
+            httpGet.addHeader("Authorization", Utils.getAuthToken());
             HttpResponse execute = defaultHttpClient.execute(httpGet);
             content = execute.getEntity().getContent();
             buffer = new BufferedReader(new InputStreamReader(content));
@@ -559,6 +566,7 @@ public class Util {
 
                     HttpClient client = new DefaultHttpClient();
                     HttpGet httpRequest = new HttpGet(serverUri);
+                    httpRequest.setHeader("Authorization", Utils.getAuthToken());
                     HttpResponse responseOfSite = client.execute(httpRequest);
                     HttpEntity entity = (HttpEntity) ((HttpResponse) responseOfSite).getEntity();
                     if (entity != null) {
@@ -588,6 +596,7 @@ public class Util {
         boolean flag = false;
         HttpClient httpclient = new DefaultHttpClient();
         HttpDeleteWithBody del = new HttpDeleteWithBody(url);
+        del.setHeader("Authorization", Utils.getAuthToken());
         StringEntity se;
         try {
             se = new StringEntity(content, HTTP.UTF_8);
@@ -634,6 +643,7 @@ public class Util {
         }
         try {
             URLConnection connection = wallpaperURL.openConnection();
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
             connection.connect();
         } catch (IOException e) {
             e.printStackTrace();
@@ -811,6 +821,7 @@ public class Util {
 
         } catch (Exception e) {
             e.printStackTrace();
+            SentryController.INSTANCE.captureException(e);
         }
         return imgpath;
     }

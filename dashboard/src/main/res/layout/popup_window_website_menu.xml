@@ -49,10 +49,10 @@
         android:focusable="true"
         android:fontFamily="@font/semi_bold"
         android:gravity="center"
-        android:padding="@dimen/size_16"
+        android:padding="@dimen/size_14"
         android:text="@string/reset_to_default"
         android:textColor="@color/black_4a4a4a"
-        android:textSize="12sp" />
+        app:textType="HEADING_6" />
 
     </LinearLayout>
 

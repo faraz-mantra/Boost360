@@ -11,8 +11,7 @@ import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import retrofit2.Retrofit
 
-object BusinessCreateRepository :
-  AppBaseRepository<BusinessCreateRemoteDataSource, AppBaseLocalService>() {
+object BusinessCreateRepository : AppBaseRepository<BusinessCreateRemoteDataSource, AppBaseLocalService>() {
 
   override fun getRemoteDataSourceClass(): Class<BusinessCreateRemoteDataSource> {
     return BusinessCreateRemoteDataSource::class.java

@@ -9,6 +9,7 @@ import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Utils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -84,6 +85,7 @@ public class DeleteBackgroundImageAsyncTask extends AsyncTask<Void, String, Stri
                 StringEntity entity = new StringEntity(obj.toString(), HTTP.UTF_8);
                 entity.setContentType("application/json");
                 httpPost.setHeader("Content-type", "application/json");
+                httpPost.setHeader("Authorization", Utils.getAuthToken());
                 httpPost.setEntity(entity);
                 HttpClient client = new DefaultHttpClient();
                 HttpResponse response = client.execute(httpPost);

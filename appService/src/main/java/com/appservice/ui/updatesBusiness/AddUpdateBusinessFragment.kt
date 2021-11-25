@@ -2,6 +2,7 @@ package com.appservice.ui.updatesBusiness
 
 import android.content.*
 import android.os.Bundle
+import android.os.Handler
 import android.speech.RecognizerIntent
 import android.view.Menu
 import android.view.MenuInflater
@@ -11,29 +12,36 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
-import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.AddUpdateBusinessFragmentBinding
+import com.appservice.model.updateBusiness.BusinessUpdateResponse
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
 import com.appservice.model.updateBusiness.UpdateFloat
+import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.getBitmap
 import com.appservice.viewmodel.UpdatesViewModel
+import com.framework.analytics.SentryController
 import com.framework.extensions.*
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.firebaseUtils.caplimit_feature.PropertiesItem
+import com.framework.firebaseUtils.caplimit_feature.filterFeature
+import com.framework.firebaseUtils.caplimit_feature.getCapData
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.PREF_KEY_TWITTER_LOGIN
 import com.framework.pref.Key_Preferences.PREF_NAME_TWITTER
 import com.framework.utils.hasHTMLTags
+import com.framework.utils.hideKeyBoard
 import com.framework.utils.showKeyBoard
 import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentChannelActivity
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -50,12 +58,14 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
 
   private val REQ_CODE_SPEECH_INPUT = 122
   private var isUpdate: Boolean = false
-  private var toSubscribers = false
-  private var fbStatusEnabled = false
-  private var twitterSharingEnabled = false
-  private var fbPageStatusEnable = false
+  private var toSubscribers = MutableLiveData(false)
+  private var fbStatusEnabled = MutableLiveData(false)
+  private var twitterSharingEnabled = MutableLiveData(false)
+  private var fbPageStatusEnable =MutableLiveData(false)
   private var updateFloat: UpdateFloat? = null
   private var postImagePath: String? = null
+  private var firsTime=true
+
   private val postImage: File?
     get() {
       return if (postImagePath.isNullOrEmpty().not()) File(postImagePath) else null
@@ -100,13 +110,68 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
       viewLifecycleOwner,
       object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-          if (isUpdate.not() && binding?.edtDesc?.text.isNullOrEmpty()
-              .not() || postImage != null
+          if (isUpdate.not() && binding?.edtDesc?.text.isNullOrEmpty().not() || postImage != null
           ) onBackPress() else baseActivity.finish()
         }
       })
     initializeSocial()
+    observeBtnStatus()
     binding?.edtDesc?.post { baseActivity.showKeyBoard(binding?.edtDesc) }
+    capLimitCheck()
+  }
+
+  private fun observeBtnStatus() {
+    fbStatusEnabled.observe(viewLifecycleOwner,{
+      if (it){
+        binding?.btnFpStatus?.setImageResource(R.drawable.facebookpage_icon_active)
+      }else{
+        binding?.btnFpStatus?.setImageResource(R.drawable.facebookpage_icon_inactive)
+
+      }
+    })
+
+    toSubscribers.observe(viewLifecycleOwner,{
+      if (it){
+        binding?.btnSubscription?.setImageResource(R.drawable.subscribe_icon_active)
+      }else{
+        binding?.btnSubscription?.setImageResource(R.drawable.subscribe_icon_inactive)
+      }
+    })
+
+    fbPageStatusEnable.observe(viewLifecycleOwner,{
+      if (it){
+        binding?.btnFpPageStatus?.setImageResource(R.drawable.facebook_icon_active)
+      }else{
+        binding?.btnFpPageStatus?.setImageResource(R.drawable.facebook_icon_inactive)
+      }
+      if (!firsTime) showShortToast(getString(if (it) R.string.fb_enabled else R.string.fb_disabled))
+    })
+
+    twitterSharingEnabled.observe(viewLifecycleOwner,{
+      if (it){
+        WebEngageController.trackEvent(TWITTER_SHARING_ACTIVATED, HAS_CLICKED_TWITTER_SHARING_ON, sessionLocal.fpTag)
+        binding?.btnTwitter?.setImageResource(R.drawable.twitter_icon_n_active)
+      }else{
+        binding?.btnTwitter?.setImageResource(R.drawable.twitter_icon_n_inactive)
+      }
+      if (!firsTime)
+      showShortToast(getString(if (it) R.string.twitter_enabled else R.string.twitter_disabled))
+    })
+    Handler().postDelayed({ firsTime=false },1000)
+  }
+
+  private fun capLimitCheck() {
+    val featureUpdate = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureType.LATESTUPDATES)
+    val capLimitUpdate = featureUpdate?.filterProperty(PropertiesItem.KeyType.LIMIT)
+    if (isUpdate.not() && capLimitUpdate != null) {
+      viewModel?.getMessageUpdates(sessionLocal.getRequestUpdate(PaginationScrollListener.PAGE_START))?.observeOnce(viewLifecycleOwner, {
+        val data = it as? BusinessUpdateResponse
+        if (data?.totalCount != null && capLimitUpdate.getValueN() != null && data.totalCount!! >= capLimitUpdate.getValueN()!!) {
+          baseActivity.hideKeyBoard()
+          showAlertCapLimit("Can't add the business update, please activate your premium Add-ons plan.",CapLimitFeatureResponseItem.FeatureType.LATESTUPDATES.name)
+        }
+      })
+    }
   }
 
   private fun localDataView() {
@@ -136,33 +201,17 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
     if (sessionLocal.facebookName.isNullOrEmpty()
         .not() && (sessionLocal.getIntDetails("fbStatus") == 1 || sessionLocal.getIntDetails("fbStatus") == 3)
     ) {
-      fbStatusEnabled = true
-      binding?.btnFpStatus?.setTintColor(
-        ContextCompat.getColor(
-          baseActivity,
-          if (fbStatusEnabled) R.color.colorAccent else R.color.grey_A1A1A1
-        )
-      )
+      fbStatusEnabled.postValue(true)
     }
     if (sessionLocal.facebookPage.isNullOrEmpty()
         .not() && sessionLocal.getIntDetails("fbPageStatus") == 1
     ) {
-      fbPageStatusEnable = true
-      binding?.btnFpPageStatus?.setTintColor(
-        ContextCompat.getColor(
-          baseActivity,
-          if (fbPageStatusEnable) R.color.colorAccent else R.color.grey_A1A1A1
-        )
-      )
+      fbPageStatusEnable.postValue(true)
+
     }
     if (mSharedPreferences?.getBoolean(PREF_KEY_TWITTER_LOGIN, false) == true) {
-      twitterSharingEnabled = true
-      binding?.btnTwitter?.setTintColor(
-        ContextCompat.getColor(
-          baseActivity,
-          if (twitterSharingEnabled) R.color.colorAccent else R.color.grey_A1A1A1
-        )
-      )
+      twitterSharingEnabled.postValue(true)
+
     }
   }
 
@@ -192,24 +241,12 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
                 sessionLocal.fpTag
               )
               sessionLocal.storeBooleanDetails(isFirstTimeSendToSubscriber, true)
-              toSubscribers = toSubscribers.not()
-              binding?.btnSubscription?.setTintColor(
-                ContextCompat.getColor(
-                  baseActivity,
-                  if (toSubscribers) R.color.colorAccent else R.color.grey_A1A1A1
-                )
-              )
+              toSubscribers.postValue(toSubscribers.value?.not())
             }
             .setNegativeButton(R.string.cancel, null)
             .show()
         } else {
-          toSubscribers = toSubscribers.not()
-          binding?.btnSubscription?.setTintColor(
-            ContextCompat.getColor(
-              baseActivity,
-              if (toSubscribers) R.color.colorAccent else R.color.grey_A1A1A1
-            )
-          )
+          toSubscribers.postValue(toSubscribers.value?.not())
         }
       }
 
@@ -218,50 +255,24 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
         if (sessionLocal.facebookName.isNullOrEmpty()
             .not() && (sessionLocal.getIntDetails("fbStatus") == 1 || sessionLocal.getIntDetails("fbStatus") == 3)
         ) {
-          fbStatusEnabled = fbStatusEnabled.not()
-          binding?.btnFpStatus?.setTintColor(
-            ContextCompat.getColor(
-              baseActivity,
-              if (fbStatusEnabled) R.color.colorAccent else R.color.grey_A1A1A1
-            )
-          )
-          showShortToast(getString(if (fbStatusEnabled) R.string.fb_enabled else R.string.fb_disabled))
+          fbStatusEnabled.postValue(fbStatusEnabled.value?.not())
+
         } else baseActivity.startDigitalChannel(sessionLocal)
       }
       binding?.btnFpPageStatus -> {
         if (sessionLocal.facebookPage.isNullOrEmpty()
             .not() && sessionLocal.getIntDetails("fbPageStatus") == 1
         ) {
-          fbPageStatusEnable = fbPageStatusEnable.not()
-          binding?.btnFpPageStatus?.setTintColor(
-            ContextCompat.getColor(
-              baseActivity,
-              if (fbPageStatusEnable) R.color.colorAccent else R.color.grey_A1A1A1
-            )
-          )
-          if (fbPageStatusEnable) WebEngageController.trackEvent(
-            FB_PAGE_SHARING_ACTIVATED,
-            HAS_CLICKED_FB_PAGE_SHARING_ON,
-            sessionLocal.fpTag
-          )
-          showShortToast(getString(if (fbPageStatusEnable) R.string.facebook_page_enabled else R.string.facebook_page_disabled))
+          fbPageStatusEnable.postValue(fbPageStatusEnable.value?.not())
+
+
         } else baseActivity.startDigitalChannel(sessionLocal)
       }
       binding?.btnTwitter -> {
         if (mSharedPreferences?.getBoolean(PREF_KEY_TWITTER_LOGIN, false) == true) {
-          twitterSharingEnabled = twitterSharingEnabled.not()
-          binding?.btnTwitter?.setTintColor(
-            ContextCompat.getColor(
-              baseActivity,
-              if (twitterSharingEnabled) R.color.colorAccent else R.color.grey_A1A1A1
-            )
-          )
-          if (twitterSharingEnabled) WebEngageController.trackEvent(
-            TWITTER_SHARING_ACTIVATED,
-            HAS_CLICKED_TWITTER_SHARING_ON,
-            sessionLocal.fpTag
-          )
-          showShortToast(getString(if (twitterSharingEnabled) R.string.twitter_enabled else R.string.twitter_disabled))
+          twitterSharingEnabled.postValue(twitterSharingEnabled.value?.not())
+
+
         } else baseActivity.startDigitalChannel(sessionLocal)
       }
     }
@@ -279,6 +290,7 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
       startActivityForResult(intent, REQ_CODE_SPEECH_INPUT)
     } catch (a: ActivityNotFoundException) {
       showShortToast(getString(R.string.speech_not_supported))
+      SentryController.captureException(a)
     }
   }
 
@@ -346,9 +358,9 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
     showProgress()
     WebEngageController.trackEvent(POST_AN_UPDATE, EVENT_LABEL_NULL, sessionLocal.fpTag)
     var socialShare = ""
-    if (fbStatusEnabled) socialShare += "FACEBOOK."
-    if (fbPageStatusEnable) socialShare += "FACEBOOK_PAGE."
-    if (twitterSharingEnabled) socialShare += "TWITTER."
+    if (fbStatusEnabled.value == true) socialShare += "FACEBOOK."
+    if (fbPageStatusEnable.value == true) socialShare += "FACEBOOK_PAGE."
+    if (twitterSharingEnabled.value == true) socialShare += "TWITTER."
     val merchantId = if (sessionLocal.iSEnterprise == "true") null else sessionLocal.fPID
     val parentId = if (sessionLocal.iSEnterprise == "true") sessionLocal.fPParentId else null
     val isPictureMessage = postImage != null
@@ -358,7 +370,7 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
       isPictureMessage,
       merchantId,
       parentId,
-      toSubscribers,
+      toSubscribers.value,
       socialShare
     )
     viewModel?.putBizMessageUpdate(request)?.observeOnce(viewLifecycleOwner, {
@@ -368,7 +380,7 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
           val s_uuid = UUID.randomUUID().toString().replace("-", "")
           viewModel?.putBizImageUpdate(
             clientId, "sequential", s_uuid, 1, 1,
-            socialShare, it.stringResponse, toSubscribers, bodyImage
+            socialShare, it.stringResponse, toSubscribers.value, bodyImage
           )?.observeOnce(viewLifecycleOwner, { it1 ->
             if (it1.isSuccess()) {
               successResult()
@@ -462,5 +474,6 @@ fun AppCompatActivity.startDigitalChannel(session: UserSessionManager, channelTy
     startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
   } catch (e: Exception) {
     e.printStackTrace()
+    SentryController.captureException(e)
   }
 }

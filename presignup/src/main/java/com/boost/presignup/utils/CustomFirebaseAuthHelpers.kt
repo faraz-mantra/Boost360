@@ -11,6 +11,7 @@ import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
+import com.framework.rest.ServiceInterceptor
 import com.framework.webengageconstant.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -20,6 +21,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import com.google.gson.Gson
+import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okio.Buffer
 import okio.BufferedSource
@@ -59,12 +61,12 @@ class CustomFirebaseAuthHelpers constructor(
 
   init {
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//        .requestIdToken(activity.getString(R.string.default_web_client_id))
       .requestIdToken(activity.getString(R.string.server_client_id))
       .requestEmail()
       .build()
     retrofit = Retrofit.Builder()
       .baseUrl("https://api2.withfloats.com")
+      .client(OkHttpClient.Builder().addInterceptor(ServiceInterceptor(false)).build())
       .addConverterFactory(GsonConverterFactory.create())
       .build()
     this.currentActivity = activity

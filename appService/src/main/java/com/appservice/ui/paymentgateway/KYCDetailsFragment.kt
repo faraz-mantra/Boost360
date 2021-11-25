@@ -43,6 +43,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.utils.ValidationUtils
 import com.framework.utils.convertListObjToString
 import com.framework.utils.convertStringToList
 import com.framework.webengageconstant.KYC_VERIFICATION
@@ -181,7 +182,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     val requestBody = panCarImage?.let { it.asRequestBody(mimType.toMediaTypeOrNull()) }
     val bodyPanCard =
       requestBody?.let { MultipartBody.Part.createFormData("file", filePancard, it) }
-    viewModel?.putUploadFile(session?.auth_1, bodyPanCard, filePancard)
+    viewModel?.putUploadFile(session?.auth_2, bodyPanCard, filePancard)
       ?.observeOnce(viewLifecycleOwner, Observer {
         if ((it.error is NoNetworkException).not()) {
           if (it.status == 200 || it.status == 201 || it.status == 202) {
@@ -208,7 +209,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     val requestBody = bankStatementImage?.let { it.asRequestBody(mimType.toMediaTypeOrNull()) }
     val bodyStatement =
       requestBody?.let { MultipartBody.Part.createFormData("file", fileStatement, it) }
-    viewModel?.putUploadFile(session?.auth_1, bodyStatement, fileStatement)
+    viewModel?.putUploadFile(session?.auth_2, bodyStatement, fileStatement)
       ?.observeOnce(viewLifecycleOwner, Observer {
         if ((it.error is NoNetworkException).not()) {
           if (it.status == 200 || it.status == 201 || it.status == 202) {
@@ -247,7 +248,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
           val requestBody = file.asRequestBody(mimType.toMediaTypeOrNull())
           val bodyAdditional =
             MultipartBody.Part.createFormData("file", fileAdditional, requestBody)
-          viewModel?.putUploadFile(session?.auth_1, bodyAdditional, fileAdditional)
+          viewModel?.putUploadFile(session?.auth_2, bodyAdditional, fileAdditional)
             ?.observeOnce(viewLifecycleOwner, Observer {
               checkPosition += 1
               if ((it.error is NoNetworkException).not()) {
@@ -401,19 +402,29 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
       }
       binding?.addDifferent?.isChecked == true -> {
         if (accountNumber.isNullOrEmpty()) {
-          showShortToast("Bank account number can't empty.")
+          showShortToast(getString(R.string.bank_number_can_not_empty))
           return false
-        } else if (nameAccount.isNullOrEmpty()) {
-          showShortToast("Bank account name can't empty.")
+        } else if (accountNumber.length < 9) {
+          showShortToast(getString(R.string.account_less_than_nine))
+          return false
+        } else if (accountNumber.length > 18) {
+          showShortToast(getString(R.string.account_greater_than_nine))
+          return false
+        }else if (ValidationUtils.isBankAcValid(accountNumber)){
+          showShortToast(getString(R.string.invalid_bank_account_number))
+          return false
+        }
+        else if (nameAccount.isNullOrEmpty()) {
+          showShortToast(getString(R.string.bank_account_cannot_empty))
           return false
         } else if (ifsc.isNullOrEmpty()) {
-          showShortToast("Bank IFSC can't empty.")
+          showShortToast(getString(R.string.bank_ifcs_cannot_empty))
           return false
         } else if (ifsc.length < 11 || !isValidIfsc) {
-          showLongToast("Please enter valid IFSC code")
+          showLongToast(getString(R.string.please_enter_valid_ifcs))
           return false
         } else if (bankName.isNullOrEmpty()) {
-          showShortToast("Bank name can't empty.")
+          showShortToast(getString(R.string.bank_name_cant_empty))
           return false
         }
       }

@@ -1,7 +1,6 @@
 package com.nowfloats.BusinessProfile.UI.UI;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,17 +25,12 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.framework.models.firestore.FirestoreManager;
+import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.framework.views.customViews.CustomButton;
 import com.nowfloats.BusinessProfile.UI.API.UploadProfileAsyncTask;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
-import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.signup.UI.API.Download_Facebook_Image;
-import com.nowfloats.signup.UI.API.Signup_Descriptinon;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
-import com.nowfloats.signup.UI.UI.WebSiteAddressActivity;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -59,7 +53,6 @@ import java.util.Locale;
 import static android.view.View.NO_ID;
 import static com.framework.webengageconstant.EventLabelKt.CLICK;
 import static com.framework.webengageconstant.EventLabelKt.CLICKING_USE_SAME_TIME_FOR_WHOLE_WEEK;
-import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
 import static com.framework.webengageconstant.EventLabelKt.TOGGLE_FRIDAY;
 import static com.framework.webengageconstant.EventLabelKt.TOGGLE_MONDAY;
 import static com.framework.webengageconstant.EventLabelKt.TOGGLE_SATURDAY;
@@ -191,14 +184,23 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
       return;
     }
     String defaultTime = "00";
-    String mondayTime, tuesdayTime, wednesdayTime, thursdayTime, fridayTime, saturdayTime, sundayTime;
+    String sundayTime,mondayTime, tuesdayTime, wednesdayTime, thursdayTime, fridayTime, saturdayTime;
     String[] profilesattr = new String[20];
     profilesattr[0] = "TIME";
-    JSONArray ja = new JSONArray();
-    JSONObject dayData = new JSONObject();
 
     /*The clinic must be open for at least one day. If all days closed, then it means the business hours are not set.*/
     boolean openAtleastOneDayFlag = false;
+
+    if (switchSun.isChecked()) {
+      sundayTime = etSunOpen.getText().toString().trim() + "," + etSunClose.getText().toString().trim();
+      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME, etSunOpen.getText().toString().trim());
+      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME, etSunClose.getText().toString().trim());
+      openAtleastOneDayFlag = true;
+    } else {
+      sundayTime = defaultTime + "," + defaultTime;
+      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME, "00");
+      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME, "00");
+    }
 
     if (switchMon.isChecked()) {
       mondayTime = etMonOpen.getText().toString().trim() + "," + etMonClose.getText().toString().trim();
@@ -264,20 +266,8 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
       session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME, "00");
       session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_END_TIME, "00");
     }
-    if (switchSun.isChecked()) {
-      sundayTime = etSunOpen.getText().toString().trim() + "," + etSunClose.getText().toString().trim();
-      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME, etSunOpen.getText().toString().trim());
-      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME, etSunClose.getText().toString().trim());
-      openAtleastOneDayFlag = true;
-    } else {
-      sundayTime = defaultTime + "," + defaultTime;
-      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME, "00");
-      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME, "00");
-    }
     JSONObject offerObj = new JSONObject();
     try {
-      //offerObj.put("clientId", Constants.clientId);
-      //offerObj.put("fpTag", (Constants.StoreTag).toUpperCase());
       offerObj.put("key", "TIMINGS");
       offerObj.put("value",
           sundayTime + "#" +
@@ -291,11 +281,12 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
     } catch (JSONException e) {
       e.printStackTrace();
     }
-
+    JSONArray ja = new JSONArray();
+    JSONObject dayData = new JSONObject();
     ja.put(offerObj);
     try {
       dayData.put("clientId", Constants.clientId);
-      dayData.put("fpTag", (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)).toUpperCase());
+      dayData.put("fpTag", session.getFpTag());
       dayData.put("updates", ja);
     } catch (JSONException e) {
       e.printStackTrace();

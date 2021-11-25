@@ -19,9 +19,7 @@ class PreferencesUtils {
   companion object {
     val instance = PreferencesUtils()
     fun initSharedPreferences(context: Context) {
-      instance.sharedPref = context.getSharedPreferences(
-        "prefs", Activity.MODE_PRIVATE
-      )
+      instance.sharedPref = context.getSharedPreferences("prefs", Activity.MODE_PRIVATE)
       instance.editor = instance.sharedPref.edit()
     }
   }

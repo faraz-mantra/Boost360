@@ -9,12 +9,14 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.framework.analytics.SentryController;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import org.apache.http.HttpEntity;
@@ -331,6 +333,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
                 try {
                     Thread.sleep(2000);
                 } catch (Exception e) {
+                    SentryController.INSTANCE.captureException(e);
                     System.out.println();
 
                 }
@@ -411,6 +414,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            SentryController.INSTANCE.captureException(e);
             response = null;
         } catch (OutOfMemoryError e) {
             e.printStackTrace();
@@ -435,6 +439,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
             Thread.sleep(5000);
             HttpClient client = new DefaultHttpClient();
             HttpGet httpRequest = new HttpGet(serverUri);
+            httpRequest.setHeader("Authorization", Utils.getAuthToken());
             org.apache.http.HttpResponse responseOfSite = client.execute(httpRequest);
             HttpEntity entity = (HttpEntity) ((org.apache.http.HttpResponse) responseOfSite).getEntity();
             if (entity != null) {
@@ -455,7 +460,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
 
         } catch (Exception e) {
             System.out.println();
-
+            SentryController.INSTANCE.captureException(e);
         }
 
 
@@ -523,7 +528,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
             connection.setChunkedStreamingMode(1024);
             connection.setRequestMethod("PUT");
             connection.setRequestProperty("Content-Type", "application/octet-stream");
-
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
             connection.setRequestProperty("Connection", "Keep-Alive");
 
             outputStream = new DataOutputStream(connection.getOutputStream());
@@ -549,6 +554,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+                SentryController.INSTANCE.captureException(e);
                 response = "error";
                 return response;
             }
@@ -569,6 +575,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
             response = "error";
             Log.e("Send file Exception", ex.getMessage() + "");
             ex.printStackTrace();
+            SentryController.INSTANCE.captureException(ex);
         }
         return response;
     }

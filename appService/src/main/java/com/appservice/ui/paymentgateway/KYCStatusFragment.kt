@@ -18,6 +18,7 @@ import com.appservice.extension.fadeIn
 import com.appservice.model.SessionData
 import com.appservice.model.kycData.DataKyc
 import com.appservice.model.kycData.PaymentKycDataResponse
+import com.appservice.model.kycData.saveBusinessKycDetail
 import com.appservice.model.paymentKyc.PaymentKycRequest
 import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.WebBoostKitViewModel
@@ -66,9 +67,10 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
     viewModel?.getKycData(session?.auth_1, getQuery())?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         val resp = it as? PaymentKycDataResponse
-        if (it.status == 200 || it.status == 201 || it.status == 202) {
+        if (it.isSuccess()) {
           if (resp?.data.isNullOrEmpty().not()) {
-            setData(resp!!.data!![0])
+            resp?.data?.first()?.saveBusinessKycDetail()
+            setData(resp?.data?.first()!!)
           } else {
             binding?.mainView?.gone()
             showLongToast("Kyc detail not found")

@@ -89,6 +89,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="6"
+        android:scrollbars="vertical"
         tools:listitem="@layout/recycler_item_select_font"
         tools:visibility="visible" />
 

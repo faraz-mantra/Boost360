@@ -11,6 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.nowfloats.Volley.AppController;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Utils;
 
 import org.json.JSONObject;
 
@@ -57,7 +58,7 @@ public class Number_of_Visits {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-type", "application/json");
-
+                headers.put("Authorization", Utils.getAuthToken());
                 return headers;
             }
         };
