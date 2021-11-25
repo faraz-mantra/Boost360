@@ -33,11 +33,10 @@ jobs:
         wrapper-cache-enabled: true
         dependencies-cache-enabled: true
         configuration-cache-enabled: true
-
-    # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
-    # the publishing section of your build.gradle
-    - name: Publish to GitHub Packages
-      run: gradle publish
-      env:
-        USERNAME: ${{ github.actor }}
-        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        arguments: assembleRelease
+    - name: Upload our APK
+      uses: actions/upload-artifact@v2.2.0
+      with:
+        name: Release artifact
+        path: app/build/outputs/apk/ourbuildtype/release/app-artifact-*.apk
+    
