@@ -763,7 +763,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
       if (TextUtils.isEmpty(str)) return new ArrayList();
       return new Gson().fromJson(str, new TypeToken<List<String>>() {}.getType());
     }else {
-      return new ArrayList<>();
+      return new ArrayList<>(Arrays.asList("BOOSTKEYBOARD"));
     }
   }
 
