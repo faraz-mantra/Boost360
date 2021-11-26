@@ -52,7 +52,9 @@
             android:orientation="horizontal">
 
             <EditText
-              android:id="@+id/edit_primary_code"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/edit_primary_code"
               android:layout_width="50dp"
               android:layout_height="match_parent"
               android:enabled="false"
@@ -61,7 +63,9 @@
               android:textSize="14sp" />
 
             <EditText
-              android:id="@+id/edit_primary_contact_number"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/edit_primary_contact_number"
               style="@style/ProductEditTextStyle"
               android:layout_weight="1"
               android:hint="XXXXXXXXXX"
@@ -102,7 +106,9 @@
             android:orientation="horizontal">
 
             <EditText
-              android:id="@+id/edit_call_tracker_number_code"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/edit_call_tracker_number_code"
               android:layout_width="50dp"
               android:layout_height="match_parent"
               android:enabled="false"
@@ -111,7 +117,9 @@
               android:textSize="14sp" />
 
             <EditText
-              android:id="@+id/edit_call_tracker_number"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/edit_call_tracker_number"
               style="@style/ProductEditTextStyle"
               android:layout_weight="1"
               android:hint="@string/xxxxxxxxxx"
@@ -166,7 +174,9 @@
             android:orientation="horizontal">
 
             <EditText
-              android:id="@+id/edit_display_contact_number_code_1"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/edit_display_contact_number_code_1"
               android:layout_width="50dp"
               android:layout_height="match_parent"
               android:enabled="false"
@@ -175,7 +185,9 @@
               android:textSize="14sp" />
 
             <EditText
-              android:id="@+id/edit_display_contact_number_1"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/edit_display_contact_number_1"
               style="@style/ProductEditTextStyle"
               android:hint="@string/xxxxxxxxxx"
               android:inputType="number" />
@@ -215,7 +227,9 @@
             android:orientation="horizontal">
 
             <EditText
-              android:id="@+id/edit_display_contact_number_code_2"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/edit_display_contact_number_code_2"
               android:layout_width="50dp"
               android:layout_height="match_parent"
               android:enabled="false"
@@ -224,7 +238,9 @@
               android:textSize="14sp" />
 
             <EditText
-              android:id="@+id/edit_display_contact_number_2"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/edit_display_contact_number_2"
               style="@style/ProductEditTextStyle"
               android:hint="@string/xxxxxxxxxx"
               android:inputType="number" />
@@ -264,7 +280,9 @@
             android:orientation="horizontal">
 
             <EditText
-              android:id="@+id/edit_display_contact_number_code_3"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/edit_display_contact_number_code_3"
               android:layout_width="50dp"
               android:layout_height="match_parent"
               android:enabled="false"
@@ -273,7 +291,9 @@
               android:textSize="14sp" />
 
             <EditText
-              android:id="@+id/edit_display_contact_number_3"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/edit_display_contact_number_3"
               style="@style/ProductEditTextStyle"
               android:hint="@string/xxxxxxxxxx"
               android:inputType="number" />
@@ -312,7 +332,9 @@
             android:orientation="horizontal">
 
             <EditText
-              android:id="@+id/edit_whatsapp_code"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/edit_whatsapp_code"
               android:layout_width="50dp"
               android:layout_height="match_parent"
               android:enabled="false"
@@ -321,7 +343,9 @@
               android:textSize="14sp" />
 
             <EditText
-              android:id="@+id/edit_whatsapp_number"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/edit_whatsapp_number"
               style="@style/ProductEditTextStyle"
               android:layout_weight="1"
               android:hint="@string/xxxxxxxxxx"
