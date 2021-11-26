@@ -43,20 +43,18 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
   protected abstract fun getViewModelClass(): Class<ViewModel>
   protected abstract fun onCreateView()
 
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    baseActivity = activity as BaseActivity<*, *>
+    viewModel = ViewModelProvider(this).get(getViewModelClass())
+  }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     setHasOptionsMenu(true)
-    baseActivity = activity as BaseActivity<*, *>
     binding = DataBindingUtil.inflate(inflater, getLayout(), container, false)
     binding?.lifecycleOwner = this
     navigator = Navigator(baseActivity)
     return binding?.root
-  }
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    viewModel = ViewModelProvider(this).get(getViewModelClass())
-
   }
 
   override fun onPrepareOptionsMenu(menu: Menu) {
@@ -121,22 +119,32 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
   }
 
   // Transactions
-  open fun addFragmentReplace(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean) {
+  open fun addFragmentReplace(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean,showAnim:Boolean=false) {
     if (activity?.supportFragmentManager?.isDestroyed == true) return
     if (containerID == null || fragment == null) return
 
     val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
+    if (showAnim){
+      fragmentTransaction?.
+      setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+    }
+
+
     if (addToBackStack) {
       fragmentTransaction?.addToBackStack(fragment.javaClass.name)
     }
     fragmentTransaction?.replace(containerID, fragment, fragment.javaClass.name)?.commit()
   }
 
-  open fun addFragment(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean) {
+  open fun addFragment(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean,showAnim:Boolean=false) {
     if (activity?.supportFragmentManager?.isDestroyed == true) return
     if (containerID == null || fragment == null) return
 
     val fragmentTransaction = baseActivity.supportFragmentManager.beginTransaction()
+    if (showAnim){
+      fragmentTransaction?.
+      setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+    }
     if (addToBackStack) {
       fragmentTransaction.addToBackStack(fragment.javaClass.name)
     }

@@ -37,7 +37,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
-import com.framework.models.firestore.FirestoreManager
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 import java.io.ByteArrayOutputStream

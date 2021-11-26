@@ -47,14 +47,6 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> :
       )
     }
 
-  protected val prefReferral: SharedPreferences?
-    get() {
-      return baseActivity.getSharedPreferences(
-        PreferenceConstant.PREF_NAME_REFERRAL,
-        Context.MODE_PRIVATE
-      )
-    }
-
   protected val userProfileId: String?
     get() {
       return pref?.getString(PreferenceConstant.USER_PROFILE_ID, "")

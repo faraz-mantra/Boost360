@@ -7,6 +7,7 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
 import android.text.style.StyleSpan
+import android.util.Log
 import android.widget.ImageView
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
@@ -29,7 +30,6 @@ import com.framework.extensions.observeOnce
 import com.framework.pref.*
 import com.framework.webengageconstant.*
 import com.invitereferrals.invitereferrals.InviteReferralsApi
-import com.onboarding.nowfloats.constant.PreferenceConstant
 import java.util.*
 
 open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBinding, LoginSignUpViewModel>() {
@@ -185,18 +185,21 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   }
 
 
-  private fun setReferralCode(floatingPointId: String) {
-    if (prefReferral?.getString(PreferenceConstant.REFER_CODE_APP, "").isNullOrEmpty().not()) {
-      var email = floatsRequest?.userBusinessEmail ?: "noemail-${floatsRequest?.requestProfile?.ProfileProperties?.userMobile}@noemail.com"
-      if (email.isEmpty().not()) email = floatsRequest?.userBusinessEmail!!
-      InviteReferralsApi.getInstance(baseActivity).tracking(
-        "register", email, 0, prefReferral?.getString(PreferenceConstant.REFER_CODE_APP, ""), floatingPointId
-      )
-      prefReferral?.edit()?.apply {
-        putString(PreferenceConstant.REFER_CODE_APP, "")
-        apply()
-      }
+  private fun setReferralCode(floatingPointId: String?) {
+    InviteReferralsApi.getInstance(baseActivity).ir_TrackingCallbackListener { tracking_response ->
+      Log.e("Tracking", "Response ir_TrackingCallbackListener = $tracking_response")
     }
+    InviteReferralsApi.getInstance(baseActivity).userDetailListener { ApiResponse ->
+      Log.e("Users", "Response userDetailListener = $ApiResponse")
+    }
+
+    val email = if (floatsRequest?.userBusinessEmail.isNullOrEmpty()) "noemail-${floatsRequest?.userBusinessMobile}@noemail.com" else floatsRequest?.userBusinessEmail
+    Log.e("Set Referral", "Email: $email")
+    InviteReferralsApi.getInstance(baseActivity).userDetails(
+      floatsRequest?.requestProfile?.ProfileProperties?.userName,
+      email, floatsRequest?.userBusinessMobile, 0, null, null
+    )
+    InviteReferralsApi.getInstance(baseActivity).tracking("register", email, 0, null, null)
   }
 
   private fun apiHitBusiness(businessProfileResponse: BusinessProfileResponse) {
@@ -210,14 +213,14 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     viewModel?.putCreateBusinessV6(response.result?.loginId, request)?.observeOnce(viewLifecycleOwner, {
       val result = it as? FloatingPointCreateResponse
       if (result?.isSuccess() == true && result.authTokens.isNullOrEmpty().not()) {
-        authToken = result.authTokens?.get(0)
+        authToken = result.authTokens?.firstOrNull()
         WebEngageController.initiateUserLogin(response.result?.loginId)
         WebEngageController.setUserContactAttributes(
           response.result?.profileProperties?.userEmail, response.result?.profileProperties?.userMobile,
           response.result?.profileProperties?.userName, response.result?.sourceClientId
         )
         WebEngageController.setFPTag(authToken?.floatingPointTag)
-        authToken?.floatingPointId?.let { it1 -> setReferralCode(floatingPointId = it1) }
+        setReferralCode(authToken?.floatingPointId)
         WebEngageController.trackEvent(PS_SIGNUP_SUCCESS, SIGNUP_SUCCESS, NO_EVENT_VALUE)
         session.userProfileId = response.result?.loginId
         session.userProfileEmail = response.result?.profileProperties?.userEmail

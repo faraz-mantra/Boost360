@@ -26,13 +26,14 @@ import okhttp3.Response;
  */
 public class UploadPdfFile extends AsyncTask<Void, String, String> {
 
+    private final InputStream path;
     Activity appContext;
-    String path, fileName;
+    String fileName;
     ProgressDialog pd = null;
     DigitalBrochuresDetailsListener listener;
     boolean isUploadingSuccess = false;
 
-    public UploadPdfFile(Activity context, DigitalBrochuresDetailsListener listener, String path, String fileName) {
+    public UploadPdfFile(Activity context, DigitalBrochuresDetailsListener listener, InputStream path, String fileName) {
         this.appContext = context;
         this.path = path;
         this.fileName = fileName;
@@ -67,11 +68,10 @@ public class UploadPdfFile extends AsyncTask<Void, String, String> {
         return uploadFileToServer(path, fileName);
     }
 
-    public String uploadFileToServer(String path, String fileName) {
+    public String uploadFileToServer(InputStream path, String fileName) {
         try {
-            File file = new File(path);
             OkHttpClient client = new OkHttpClient();
-            InputStream in = new FileInputStream(file);
+            InputStream in = path;
             byte[] buf;
             buf = new byte[in.available()];
             while (in.read(buf) != -1) ;

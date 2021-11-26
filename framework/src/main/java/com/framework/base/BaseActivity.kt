@@ -1,5 +1,6 @@
 package com.framework.base
 
+import android.app.ProgressDialog
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -228,12 +229,31 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
     for (view in views) view.setOnClickListener(null)
   }
 
+  open fun addFragment(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean,showAnim:Boolean=false) {
+    if (supportFragmentManager.isDestroyed) return
+    if (containerID == null || fragment == null) return
+
+    val fragmentTransaction = supportFragmentManager.beginTransaction()
+    if (showAnim){
+      fragmentTransaction?.
+      setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+    }
+    if (addToBackStack) {
+      fragmentTransaction.addToBackStack(fragment.javaClass.name)
+    }
+    fragmentTransaction.add(containerID, fragment, fragment.javaClass.name).commit()
+  }
+
   // Fragment
-  open fun addFragmentReplace(containerId: Int?, fragment: Fragment?, addToBackStack: Boolean) {
+  open fun addFragmentReplace(containerId: Int?, fragment: Fragment?, addToBackStack: Boolean,showAnim:Boolean=false) {
     if (supportFragmentManager.isDestroyed) return
     if (containerId == null || fragment == null) return
 
     val fragmentTransaction = supportFragmentManager.beginTransaction()
+    if (showAnim){
+      fragmentTransaction?.
+      setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+    }
     if (addToBackStack) {
       fragmentTransaction.addToBackStack(fragment.javaClass.name)
     }

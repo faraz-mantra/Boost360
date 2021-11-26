@@ -40,6 +40,16 @@
               tools:listitem="@layout/item_appointments_order"
               tools:visibility="gone" />
 
+          <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_no_data"
+              android:visibility="gone"
+              android:layout_width="match_parent"
+              app:textType="HEADING_5"
+              android:fontFamily="@font/regular"
+              android:gravity="center"
+              android:layout_gravity="center"
+              android:text="@string/no_data_found"
+              android:layout_height="wrap_content"/>
           <ProgressBar
               android:id="@+id/progress"
               style="@style/wrap_wrap"

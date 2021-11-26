@@ -19,7 +19,8 @@ import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.analytics.SentryController
 import com.framework.analytics.UserExperiorController
 import com.framework.extensions.observeOnce
-import com.framework.models.firestore.FirestoreManager
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.*
 import com.framework.utils.NetworkUtils
 import com.google.android.material.snackbar.Snackbar
@@ -88,6 +89,7 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
         setFPDetailsToSentry(session)
         setFPDetailsToUserExperior(session)
         FirestoreManager.initData(session.fpTag ?: "", session.fPID ?: "", clientId)
+        FirebaseRemoteConfigUtil.initRemoteConfigData(this)
         startService()
         if (
           deepLinkViewType != null && deepLinkViewType.equals("CART_FRAGMENT", ignoreCase = true)

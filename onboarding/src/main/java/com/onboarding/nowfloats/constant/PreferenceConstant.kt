@@ -35,10 +35,4 @@ object PreferenceConstant {
   const val PREF_KEY_TWITTER_LOGIN = "is_twitter_loggedin"
   const val TWITTER_USER_NAME = "twitter_user_name"
 
-  // for referral
-  var PREF_NAME_REFERRAL = "nowfloatsPrefsReferral"
-  var IS_INSTALL_APP = "isInstallApp"
-  var REFER_CODE_APP = "referCodeApp"
-
-
 }
