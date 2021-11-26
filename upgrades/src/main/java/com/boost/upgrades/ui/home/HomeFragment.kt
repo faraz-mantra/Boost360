@@ -1214,7 +1214,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             if (it.size > 0) {
                 updatePartnerViewPager(it)
                 partner_layout.visibility = View.VISIBLE
-            } else {
+            }
+            else {
                 partner_layout.visibility = View.GONE
             }
         })

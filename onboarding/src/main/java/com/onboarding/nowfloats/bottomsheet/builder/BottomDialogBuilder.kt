@@ -126,9 +126,7 @@ open class BottomDialogBuilder(var context: BaseActivity<*, *>) {
     this.footerBuilder = footerBuilder
     return this
   }
-
 }
-
 
 fun BottomDialogBuilder.oneButton(
   text: String, @ColorRes colorId: Int? = null,
@@ -163,7 +161,6 @@ class ClickListenerSetter {
   }
 }
 
-
 fun BottomDialogBuilder.message(text: String, selectable: Boolean = false): BottomDialogBuilder {
   contentBuilder = MessageContentBuilder(text, selectable)
   return this
@@ -189,7 +186,6 @@ fun BottomDialogBuilder.featureMutableList(
   contentBuilder = FeatureContentBuilder(context, data, autoDismiss)
   return this
 }
-
 
 fun BottomDialogBuilder.title(
   title: CharSequence?,

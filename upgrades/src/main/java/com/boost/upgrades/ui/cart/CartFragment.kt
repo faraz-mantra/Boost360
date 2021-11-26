@@ -220,14 +220,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       discount_coupon_message.visibility = View.GONE
       //clear coupon
       validCouponCode = null
-
       //remove saved orderdetails and coupondetails from prefs
       prefs.storeCartOrderInfo(null)
       prefs.storeApplyedCouponDetails(null)
-
 //            totalCalculation()
-      couponCode = ""
-      couponServiceModel = null
+//      couponCode = ""
+//      couponServiceModel = null
 
       totalCalculationAfterCoupon()
     }
@@ -264,7 +262,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
         }
       }
-
 
 //            }
 
@@ -1739,7 +1736,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           prefs.storeCartOrderInfo(null)
 
           //save coupon Details
-//                    prefs.storeApplyedCouponDetails(it)
+           //         prefs.storeApplyedCouponDetails(it)
 
 //                    validCouponCode = it
           couponServiceModel = it
