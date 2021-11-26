@@ -207,7 +207,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     if (session?.isUserLoggedIn == false) {
       updateUiNotLoginned()
     } else if (lastSyncTime == null || MethodUtils.getDaysDiff(System.currentTimeMillis(), lastSyncTime) >= 1) {
-      Log.i(TAG, "last sync is greater than 24 hour: " + lastSyncTime)
+      Log.i(TAG, "last sync is greater than 24 hour: $lastSyncTime")
       viewModel.getDetails(session?.fpTag, clientId)
     } else {
       loadDataBasesOnTab()
@@ -264,7 +264,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       }
 
     } else {
-      Timber.i("Please add boost keyboard in your current plan.")
+      Timber.i("Please add keyboard in your current plan.")
       updateUiFeatureNotRenewed()
     }
   }

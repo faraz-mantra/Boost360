@@ -389,7 +389,7 @@
             android:textColor="@color/colorAccentLight"
             app:layout_constraintStart_toEndOf="@id/text_email"
             app:layout_constraintTop_toBottomOf="@id/ctv_gstin"
-            app:tint="@color/colorAccent_jio"
+            app:tint="@color/colorAccentLight"
             tools:ignore="RtlSymmetry" />
 
           <androidx.constraintlayout.widget.Group

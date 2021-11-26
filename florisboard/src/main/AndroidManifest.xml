@@ -27,7 +27,7 @@
         <!-- IME service -->
         <service
             android:name="dev.patrickgold.florisboard.ime.core.FlorisBoard"
-            android:label="Boost"
+            android:label="@string/boost_360"
             android:permission="android.permission.BIND_INPUT_METHOD">
             <meta-data
                 android:name="android.view.im"
