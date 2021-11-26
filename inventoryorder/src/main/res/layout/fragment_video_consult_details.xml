@@ -174,7 +174,7 @@
                   android:textAllCaps="false"
                   android:paddingBottom="@dimen/size_2"
                   android:text="@string/payment_reminder"
-                  android:textColor="@color/colorAccent_jio"
+                  android:textColor="@color/colorAccentLight"
                   app:textType="HEADING_6" />
               </LinearLayout>
 
@@ -258,7 +258,7 @@
                 android:drawableStart="@drawable/ic_phone"
                 android:drawablePadding="@dimen/size_4"
                 android:includeFontPadding="false"
-                android:textColor="@color/colorAccent_jio"
+                android:textColor="@color/colorAccentLight"
                 app:fontFamily="@font/semi_bold"
                 app:textType="CAPTION"
                 tools:text="+91 9013268178" />
@@ -273,7 +273,7 @@
                 android:ellipsize="end"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:textColor="@color/colorAccent_jio"
+                android:textColor="@color/colorAccentLight"
                 app:fontFamily="@font/semi_bold"
                 app:textType="CAPTION"
                 tools:text="rahul@cantech.co" />

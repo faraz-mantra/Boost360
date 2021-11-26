@@ -12,13 +12,13 @@
       android:viewportWidth="17"
       android:viewportHeight="16">
       <path
-        android:fillColor="@color/colorAccent"
+        android:fillColor="@color/color_border_ffb900"
         android:pathData="M1.259,15.0727V1.3965H16.2377L12.3302,6.2809L16.2377,11.1652H1.259" />
       <path
         android:fillColor="#00000000"
         android:pathData="M1.259,15.0727V1.3965H16.2377L12.3302,6.2809L16.2377,11.1652H1.259"
         android:strokeWidth="1.25015"
-        android:strokeColor="#4A4A4A"
+        android:strokeColor="@color/color_border_4a4a4a"
         android:strokeLineCap="round"
         android:strokeLineJoin="round" />
     </vector>
