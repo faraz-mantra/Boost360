@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?><!-- START xml_defaults -->
+<defaultsMap xmlns:tools="http://schemas.android.com/tools"
+  tools:ignore="MissingDefaultResource">
+  <entry>
+    <key>festive_poster_name</key>
+    <value>Share Festival Poster</value>
+  </entry>
+  <entry>
+    <key>dashboard_festive_poster_button_visible</key>
+    <value>false</value>
+  </entry>
+  <entry>
+    <key>welcome_message</key>
+    <value>Welcome to my awesome app!</value>
+  </entry>
+  <entry>
+    <key>feature_domain_booking_enable</key>
+    <value>false</value>
+  </entry>
+  <entry>
+    <key>in_app_update_type_immediate</key>
+    <value>false</value>
+  </entry>
+</defaultsMap><!-- END xml_defaults -->

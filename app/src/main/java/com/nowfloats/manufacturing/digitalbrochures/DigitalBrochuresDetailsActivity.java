@@ -22,6 +22,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
+import com.framework.utils.FileUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
@@ -37,6 +39,9 @@ import com.nowfloats.manufacturing.digitalbrochures.Interfaces.DigitalBrochuresD
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
 
 import retrofit.Callback;
@@ -59,7 +64,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
   Data existingItemData;
   int SELECT_PDF = 123;
   View dummyView1;
-  String path = null;
+  InputStream path = null;
   private ProgressDialog progressDialog;
 
   @Override
@@ -95,7 +100,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
     });
 
     saveButton.setOnClickListener(v -> {
-      if (!TextUtils.isEmpty(path)) {
+      if (path!=null) {
         showLoader("Uploading document.Please Wait...");
         new Handler().postDelayed(this::uploadPdfFileToServer, 200);
       } else {
@@ -109,7 +114,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
         ActivityCompat.requestPermissions(DigitalBrochuresDetailsActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE}, gallery_req_id);
         return;
       }
-      Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+      Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
       intent.setType("application/pdf");
       intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"application/pdf"});
       intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -376,13 +381,19 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
     if (requestCode == SELECT_PDF && resultCode == RESULT_OK) {
       Uri selectedUri_PDF = data.getData();
 //      path = FileUtils.getPath(this, selectedUri_PDF);
-      path = new com.appservice.utils.FileUtils(this).getPath(selectedUri_PDF);
-      Log.d("onActivityResult", "Path: " + path + "\n uri" + selectedUri_PDF.getPath());
-      if (!TextUtils.isEmpty(path)) {
-        attachBrochureEmptyLayout.setVisibility(View.GONE);
-        fileSelectedLayout.setVisibility(View.VISIBLE);
+      try {
+        path = FileUtils.INSTANCE.getInputStream(selectedUri_PDF);
+        Log.d("onActivityResult", "Path: " + path + "\n uri" + selectedUri_PDF.getPath());
+        if (path!=null) {
+          Log.i("onActivityResult: ","File Exist");
+          attachBrochureEmptyLayout.setVisibility(View.GONE);
+          fileSelectedLayout.setVisibility(View.VISIBLE);
+        }else Toast.makeText(this, "File path getting error!", Toast.LENGTH_SHORT).show();
+      } catch (IOException e) {
+        Toast.makeText(this, "File path getting error!", Toast.LENGTH_SHORT).show();
+        e.printStackTrace();
       }
-      Toast.makeText(this, "File path getting error!", Toast.LENGTH_SHORT).show();
+
     }
   }
 

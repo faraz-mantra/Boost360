@@ -10,5 +10,7 @@ data class PosterDetailsModel(
     @SerializedName("price")
     val Price: Double,
     @SerializedName("title")
-    val Title: String
+    val Title: String,
+    @SerializedName("isPurchased")
+    val isPurchased: Boolean
 )

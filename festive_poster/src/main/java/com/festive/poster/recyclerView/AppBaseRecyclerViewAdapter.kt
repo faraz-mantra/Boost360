@@ -6,7 +6,7 @@ import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.*
 import com.festive.poster.recyclerView.viewholders.PosterPackPurchasedViewHolder
 import com.festive.poster.recyclerView.viewholders.PosterPackViewHolder
-import com.festive.poster.recyclerView.viewholders.PosterPurchasedViewHolder
+import com.festive.poster.recyclerView.viewholders.PosterShareViewHolder
 import com.festive.poster.recyclerView.viewholders.PosterViewHolder
 import com.framework.base.BaseActivity
 import java.util.*
@@ -26,7 +26,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.POSTER_PACK->PosterPackViewHolder(binding as ListItemPosterPackBinding)
       RecyclerViewItemType.POSTER->PosterViewHolder(binding as ListItemPosterBinding)
       RecyclerViewItemType.POSTER_PACK_PURCHASED->PosterPackPurchasedViewHolder(binding as ListItemPurchasedPosterPackBinding) // Not currently used
-      RecyclerViewItemType.POSTER_PURCHASED-> PosterPurchasedViewHolder(binding as ListItemPurchasedPosterBinding)
+      RecyclerViewItemType.POSTER_SHARE-> PosterShareViewHolder(binding as ListItemPosterShareBinding)
 
 
     }

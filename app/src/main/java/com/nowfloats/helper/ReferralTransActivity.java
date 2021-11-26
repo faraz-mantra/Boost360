@@ -18,52 +18,55 @@ import org.json.JSONException;
 import static com.nowfloats.util.Constants.REFERRAL_CAMPAIGN_CODE;
 
 public class ReferralTransActivity extends AppCompatActivity {
-    UserSessionManager session;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        session = new UserSessionManager(getApplicationContext(), ReferralTransActivity.this);
-        if (!TextUtils.isEmpty(session.getFPEmail())) {
-            InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
-                    session.getUserProfileName(),
-                    session.getFPEmail(),
-                    session.getUserPrimaryMobile(),
-                    REFERRAL_CAMPAIGN_CODE, null, null
-            );
-            inviteReferralLogin();
-        } else if (!TextUtils.isEmpty(session.getUserProfileEmail())) {
-            InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
-                    session.getUserProfileName(),
-                    session.getUserProfileEmail(),
-                    session.getUserPrimaryMobile(),
-                    REFERRAL_CAMPAIGN_CODE, null, null
-            );
-            inviteReferralLogin();
+  private UserSessionManager session;
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    session = new UserSessionManager(getApplicationContext(), ReferralTransActivity.this);
+    String email = "";
+    String number = "";
+    String username = "";
+    if (!TextUtils.isEmpty(session.getFPEmail())) email = session.getFPEmail();
+    if (email.isEmpty()) email = session.getUserProfileEmail();
+
+    if (!TextUtils.isEmpty(session.getFPPrimaryContactNumber())) number = session.getFPPrimaryContactNumber();
+    if (number.isEmpty()) number = session.getUserPrimaryMobile();
+    if (number.isEmpty()) number = session.getUserProfileMobile();
+    if (!number.isEmpty() && number.length() > 10) number = number.substring(number.length() - 10, number.length());
+
+    if (!TextUtils.isEmpty(session.getUserProfileName())) username = session.getUserProfileName();
+    if (username.isEmpty()) username = session.getFPName();
+
+    if (!email.isEmpty()) {
+      Log.d("ReferralTransActivity", "Username: " + username + "Email: " + email + "Number: " + number);
+      InviteReferralsApi.getInstance(getApplicationContext()).userDetails(username, email, number, REFERRAL_CAMPAIGN_CODE, null, null);
+      inviteReferralLogin();
+    } else {
+      Toast.makeText(getApplicationContext(), R.string.an_unexpacted_error, Toast.LENGTH_LONG).show();
+    }
+    finish();
+  }
+
+  private void inviteReferralLogin() {
+    InviteReferralsApi.getInstance(getApplicationContext()).userDetailListener(jsonObject -> {
+      Log.d("Referral Details", jsonObject.toString());
+      try {
+        String status = jsonObject.get("Authentication").toString();
+        if (status.equalsIgnoreCase("success")) {
+          InviteReferralsApi.getInstance(getApplicationContext()).inline_btn(REFERRAL_CAMPAIGN_CODE);
         } else {
-            Toast.makeText(getApplicationContext(), R.string.an_unexpacted_error, Toast.LENGTH_LONG).show();
+          Toast.makeText(getApplicationContext(), getString(R.string.auth_failed_try_again), Toast.LENGTH_SHORT).show();
         }
-        finish();
-    }
+      } catch (JSONException e) {
+        Toast.makeText(getApplicationContext(), getString(R.string.auth_failed_try_again), Toast.LENGTH_SHORT).show();
+      }
+    });
+  }
 
-    private void inviteReferralLogin() {
-        InviteReferralsApi.getInstance(getApplicationContext()).userDetailListener(jsonObject -> {
-            Log.d("Referral Details", jsonObject.toString());
-            try {
-                String status = jsonObject.get("Authentication").toString();
-                if (status.toLowerCase().equals("success")) {
-                    InviteReferralsApi.getInstance(getApplicationContext()).inline_btn(REFERRAL_CAMPAIGN_CODE);
-                } else {
-                    Toast.makeText(getApplicationContext(), getString(R.string.auth_failed_try_again), Toast.LENGTH_SHORT).show();
-                }
-            } catch (JSONException e) {
-                Toast.makeText(getApplicationContext(), getString(R.string.auth_failed_try_again), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+  }
 }

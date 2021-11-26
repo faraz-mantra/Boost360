@@ -1,6 +1,7 @@
 package com.dashboard.controller
 
 import android.content.Intent
+import android.content.IntentSender
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
@@ -9,6 +10,7 @@ import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
@@ -25,6 +27,7 @@ import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.dashboard.DashboardFragment
 import com.dashboard.controller.ui.dialog.WelcomeHomeDialog
 import com.dashboard.databinding.ActivityDashboardBinding
+import com.dashboard.model.DisableBadgeNotificationRequest
 import com.dashboard.model.live.drawerData.DrawerHomeData
 import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
 import com.dashboard.model.live.welcomeData.*
@@ -38,23 +41,38 @@ import com.framework.analytics.SentryController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.appUpdateType
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.initRemoteConfigData
+import com.framework.firebaseUtils.UpdateType
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
-import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
-import com.framework.models.caplimit_feature.saveCapData
-import com.framework.models.firestore.FirestoreManager.initData
-import com.framework.models.firestore.badges.BadgesFirestoreManager
-import com.framework.models.firestore.badges.BadgesFirestoreManager.getBadgesData
-import com.framework.models.firestore.badges.BadgesFirestoreManager.initDataBadges
-import com.framework.models.firestore.badges.BadgesModel
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.firebaseUtils.caplimit_feature.saveCapData
+import com.framework.firebaseUtils.firestore.FirestoreManager.initData
+import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager
+import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.getBadgesData
+import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.initDataBadges
+import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.readDrScoreDocument
+import com.framework.firebaseUtils.firestore.badges.BadgesModel
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.KEY_FP_CART_COUNT
 import com.framework.utils.*
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
 import com.framework.webengageconstant.*
+import com.google.android.play.core.appupdate.AppUpdateInfo
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
+import com.google.android.play.core.tasks.Task
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.play.core.install.InstallStateUpdatedListener
+import com.google.android.play.core.install.model.ActivityResult
+import com.google.android.play.core.install.model.InstallStatus
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
 import com.onboarding.nowfloats.model.googleAuth.FirebaseTokenResponse
@@ -73,6 +91,7 @@ import kotlin.concurrent.schedule
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
+  private val MY_REQUEST_CODE = 120
   private var doubleBackToExitPressedOnce = false
   private var mDeepLinkUrl: String? = null;
   private var mPayload: String? = null
@@ -81,9 +100,12 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private var session: UserSessionManager? = null
   private var adapterDrawer: AppBaseRecyclerViewAdapter<DrawerHomeData>? = null
   private var isSecondaryImage = false
+  private lateinit var appUpdateManager: AppUpdateManager
+  private lateinit var appUpdateInfoTask: Task<AppUpdateInfo>
   var isLoadShimmer = true
   var count = 0
   var activePreviousItem = 0
+  private var dataBadges: ArrayList<BadgesModel>? = arrayListOf()
   private val navHostFragment: NavHostFragment?
     get() {
       return supportFragmentManager.fragments.first() as? NavHostFragment
@@ -123,10 +145,57 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     intentDataCheckAndDeepLink(intent)
     session?.initializeWebEngageLogin()
     initialize()
-    session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
     session?.let { initDataBadges(it.fpTag ?: "", it.fPID ?: "", clientId) }
+    session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
+    initRemoteConfigData(this)
     registerFirebaseToken()
     reloadCapLimitData()
+    checkForUpdate()
+  }
+
+  private fun checkForUpdate() {
+    Log.i(TAG, "checkForUpdate: Inside Method")
+    appUpdateManager = AppUpdateManagerFactory.create(this)
+    appUpdateManager.registerListener(appUpdateListener)
+    appUpdateInfoTask = appUpdateManager.appUpdateInfo
+    appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+      Log.i(TAG, "checkForUpdate: ${appUpdateInfo.updateAvailability()} ${appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)}")
+      if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE || appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+        startUpdate(appUpdateInfo)
+      } else if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
+        popupSnackBarForCompleteUpdate();
+      }
+    }
+  }
+
+  private fun startUpdate(appUpdateInfo: AppUpdateInfo) {
+    try {
+      appUpdateManager.startUpdateFlowForResult(appUpdateInfo, appUpdateType().ordinal, this, MY_REQUEST_CODE)
+    } catch (e: IntentSender.SendIntentException) {
+      e.printStackTrace();
+      SentryController.captureException(e)
+    }
+  }
+
+  private val appUpdateListener: InstallStateUpdatedListener = InstallStateUpdatedListener { state ->
+    when {
+      state.installStatus() == InstallStatus.DOWNLOADED -> popupSnackBarForCompleteUpdate()
+      state.installStatus() == InstallStatus.INSTALLED -> removeInstallStateUpdateListener()
+      else -> showShortToast("InstallStateUpdatedListener: state: ${state.installStatus()}")
+    }
+  }
+
+  private fun popupSnackBarForCompleteUpdate() {
+    Snackbar.make(
+      findViewById<View>(android.R.id.content).rootView,
+      getString(R.string.download_complete), Snackbar.LENGTH_INDEFINITE
+    ).setAction(getString(R.string.install)) {
+      if (this::appUpdateManager.isInitialized) appUpdateManager.completeUpdate()
+    }.setActionTextColor(ContextCompat.getColor(this, R.color.green_light)).show()
+  }
+
+  private fun removeInstallStateUpdateListener() {
+    if (this::appUpdateManager.isInitialized) appUpdateManager.unregisterListener(appUpdateListener)
   }
 
   private fun reloadCapLimitData() {
@@ -167,14 +236,18 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun initialize() {
     WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
     StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitAll().build())
-    FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
-      val token = instanceIdResult.token
+    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+      if (!task.isSuccessful) {
+        Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+        return@OnCompleteListener
+      }
+      val token = task.result
       if (token.isNotEmpty()) {
         WebEngage.get().setRegistrationID(token)
         AnaCore.saveFcmToken(this, token)
         AnaCore.registerUser(this, session?.fpTag ?: "", ANA_BUSINESS_ID, ANA_CHAT_API_URL)
       }
-    }
+    })
     initialiseZendeskSupportSdk()
   }
 
@@ -351,11 +424,14 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     when (pos) {
       1 -> {
         val dataWebsite = welcomeData?.get(0)
-        if (dataWebsite?.welcomeType?.let { getIsShowWelcome(it) } != true) dataWebsite?.let { showWelcomeDialog(it) }
+        if (dataWebsite?.welcomeType?.let { getIsShowWelcome(it) } != true) dataWebsite?.let {
+          showWelcomeDialog(it)
+        }
         else {
           mNavController.navigate(R.id.navigation_website, Bundle(), getNavOptions())
           toolbarPropertySet(pos)
         }
+        disableBadgeNotification(BadgesModel.BadgesType.WEBSITEBADGE.name)
       }
       2 -> {
         val dataCustomer = welcomeData?.get(1)
@@ -364,17 +440,18 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
           mNavController.navigate(R.id.navigation_enquiries, Bundle(), getNavOptions())
           toolbarPropertySet(pos)
         }
+        disableBadgeNotification(BadgesModel.BadgesType.ENQUIRYBADGE.name)
       }
       3 -> {
         val dataAddOns = welcomeData?.get(2)
-        if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let {
-          showWelcomeDialog(it)
-        }
+        if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let { showWelcomeDialog(it) }
         else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
+        disableBadgeNotification(BadgesModel.BadgesType.MARKETPLACEBADGE.name)
       }
       4 -> {
         mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
         toolbarPropertySet(pos)
+        disableBadgeNotification(BadgesModel.BadgesType.MENUBADGE.name)
       }
     }
   }
@@ -458,9 +535,16 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == MY_REQUEST_CODE) {
+      when (resultCode) {
+        RESULT_OK -> showShortToast("App updated successfully")
+        RESULT_CANCELED -> showShortToast("App update cancelled")
+        ActivityResult.RESULT_IN_APP_UPDATE_FAILED -> showShortToast("App update failed")
+      }
+    }
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK && isSecondaryImage) {
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
-//      if (mPaths.isNullOrEmpty().not()) uploadSecondaryImage(mPaths[0])
+      if (mPaths.isNullOrEmpty().not()) uploadSecondaryImage(mPaths[0])
     } else childFragments?.forEach { fragment ->
       fragment.onActivityResult(requestCode, resultCode, data)
     }
@@ -516,16 +600,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       DrawerHomeData.NavType.NAV_MANAGE_CONTENT -> session?.let { this.startManageContentActivity(it) }
       DrawerHomeData.NavType.NAV_CALLS -> this.startVmnCallCard(session)
       DrawerHomeData.NavType.NAV_ENQUIRY -> this.startBusinessEnquiry(session)
-      DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING -> session?.let {
-        this.startManageInventoryActivity(
-          it
-        )
-      }
+      DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING -> session?.let { this.startManageInventoryActivity(it) }
       DrawerHomeData.NavType.NAV_NEWS_LETTER_SUB -> this.startSubscriber(session)
       DrawerHomeData.NavType.NAV_BOOST_KEYBOARD -> session?.let { this.startKeyboardActivity(it) }
-      DrawerHomeData.NavType.NAV_ADD_ONS_MARKET -> session?.let {
-        this.initiateAddonMarketplace(it, false, "", "")
-      }
+      DrawerHomeData.NavType.NAV_ADD_ONS_MARKET -> session?.let { this.initiateAddonMarketplace(it, false, "", "") }
       DrawerHomeData.NavType.NAV_SETTING -> session?.let { this.startSettingActivity(it) }
       DrawerHomeData.NavType.NAV_HELP_SUPPORT -> session?.let { this.startHelpAndSupportActivity(it) }
       DrawerHomeData.NavType.NAV_ABOUT_BOOST -> session?.let { this.startAboutBoostActivity(it) }
@@ -578,7 +656,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     try {
       Zendesk.INSTANCE.init(
         this, "https://boost360.zendesk.com",
-        "684341b544a77a2a73f91bd3bb2bc77141d4fc427decda49", "mobile_sdk_client_6c56562cfec5c64c7857"
+        "684341b544a77a2a73f91bd3bb2bc77141d4fc427decda49",
+        "mobile_sdk_client_6c56562cfec5c64c7857"
       )
       val identity = AnonymousIdentity.Builder()
         .withNameIdentifier(session?.fpTag)
@@ -605,42 +684,66 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onStop() {
     super.onStop()
     BadgesFirestoreManager.listenerBadges = null
+    removeInstallStateUpdateListener()
   }
 
   override fun onStart() {
     super.onStart()
     BadgesFirestoreManager.listenerBadges = {
-      val dataBadges = getBadgesData()
+      dataBadges = getBadgesData()
       setBadgesData(dataBadges)
     }
   }
 
   private fun setBadgesData(dataBadges: ArrayList<BadgesModel>?) {
     binding?.navView?.post {
-      dataBadges?.forEach {
-        when (it.badgesType) {
-          BadgesModel.BadgesType.HOMEBADGE.name -> {
-            if (it.getMessageN() > 0) binding?.navView?.setBadge(0, it.getMessageText())
-            else binding?.navView?.removeBadge(0)
-          }
-          BadgesModel.BadgesType.WEBSITEBADGE.name -> {
-            if (it.getMessageN() > 0) binding?.navView?.setBadge(1, it.getMessageText())
-            else binding?.navView?.removeBadge(1)
-          }
-          BadgesModel.BadgesType.ENQUIRYBADGE.name -> {
-            if (it.getMessageN() > 0) binding?.navView?.setBadge(2, it.getMessageText())
-            else binding?.navView?.removeBadge(2)
-          }
-          BadgesModel.BadgesType.MARKETPLACEBADGE.name -> {
-            if (it.getMessageN() > 0) binding?.navView?.setBadge(3, it.getMessageText())
-            else binding?.navView?.removeBadge(3)
-          }
-          BadgesModel.BadgesType.MENUBADGE.name -> {
-            if (it.getMessageN() > 0) binding?.navView?.setBadge(4, it.getMessageText())
-            else binding?.navView?.removeBadge(4)
+      if (dataBadges.isNullOrEmpty().not())
+        dataBadges!!.forEach {
+          when (it.badgesType) {
+//            BadgesModel.BadgesType.HOMEBADGE.name -> {
+//              if (it.getMessageN() > 0) binding?.navView?.setBadge(0, it.getMessageText())
+//              else binding?.navView?.removeBadge(0)
+//            }
+            BadgesModel.BadgesType.WEBSITEBADGE.name -> {
+              if (it.getMessageN() > 0 && it.getIsEnable()) binding?.navView?.setBadge(1, it.getMessageText())
+              else binding?.navView?.removeBadge(1)
+            }
+            BadgesModel.BadgesType.ENQUIRYBADGE.name -> {
+              if (it.getMessageN() > 0 && it.getIsEnable()) binding?.navView?.setBadge(2, it.getMessageText())
+              else binding?.navView?.removeBadge(2)
+            }
+            BadgesModel.BadgesType.MARKETPLACEBADGE.name -> {
+              if (it.getMessageN() > 0 && it.getIsEnable()) binding?.navView?.setBadge(3, it.getMessageText())
+              else binding?.navView?.removeBadge(3)
+            }
+            BadgesModel.BadgesType.MENUBADGE.name -> {
+              if (it.getMessageN() > 0 && it.getIsEnable()) binding?.navView?.setBadge(4, it.getMessageText())
+              else binding?.navView?.removeBadge(4)
+            }
           }
         }
+      else {
+//        binding?.navView?.removeBadge(0)
+        binding?.navView?.removeBadge(1)
+        binding?.navView?.removeBadge(2)
+        binding?.navView?.removeBadge(3)
+        binding?.navView?.removeBadge(4)
       }
+    }
+  }
+
+  private fun isBadgeCountAvailable(badgeType: String): Boolean {
+    val badgeItem = dataBadges?.firstOrNull { it.badgesType == badgeType }
+    return badgeItem?.getMessageN() ?: 0 > 0
+  }
+
+  private fun disableBadgeNotification(flagId: String) {
+    if (isBadgeCountAvailable(flagId)) {
+      val request = DisableBadgeNotificationRequest(session?.fpTag, "BADGE", flagId)
+      viewModel.disableBadgeNotification(request).observeOnce(this, {
+        Log.i("DisableBadge", "Response: $it")
+        readDrScoreDocument()
+      })
     }
   }
 }

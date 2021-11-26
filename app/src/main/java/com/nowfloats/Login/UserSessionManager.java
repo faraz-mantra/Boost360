@@ -14,7 +14,7 @@ import com.appservice.AppServiceApplication;
 import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignin.ui.intro.IntroActivity;
 import com.dashboard.AppDashboardApplication;
-import com.framework.models.firestore.FirestoreManager;
+import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.framework.utils.PreferencesUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -31,7 +31,6 @@ import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Key_Preferences;
-import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
 import com.onboarding.nowfloats.BaseBoardingApplication;
@@ -202,7 +201,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
   }
 
   public String getUserProfileName() {
-    return pref.getString(PROFILE_NAME, null);
+    return pref.getString(PROFILE_NAME, "");
   }
 
   public void setUserProfileName(String name) {

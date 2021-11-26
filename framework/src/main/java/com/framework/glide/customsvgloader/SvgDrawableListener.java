@@ -18,13 +18,15 @@ import java.util.List;
 public class SvgDrawableListener implements RequestListener<CustomPictureDrawable> {
     public List<PosterKeyModel> model;
     public String url;
+    public Boolean isPurchased;
 
     public SvgDrawableListener() {
 
     }
 
-    public SvgDrawableListener(List<PosterKeyModel> model, String url) {
+    public SvgDrawableListener(List<PosterKeyModel> model, String url,Boolean isPurchased) {
         this.model = model;
+        this.isPurchased = isPurchased;
         this.url = url;
     }
 
@@ -46,7 +48,7 @@ public class SvgDrawableListener implements RequestListener<CustomPictureDrawabl
         Log.d("SvgDrawableListener", "onResourceReady() called with: resource "+Thread.currentThread());
         ImageView view = ((ImageViewTarget<?>) target).getView();
 
-        BoostSvgStringLoader v = new BoostSvgStringLoader(url, this.model, resource, view.getContext(), view);
+        BoostSvgStringLoader v = new BoostSvgStringLoader(url, this.model, resource, view.getContext(), view,isPurchased);
         SingletonExecutor.INSTANCE.submit(v);
 //
 //
