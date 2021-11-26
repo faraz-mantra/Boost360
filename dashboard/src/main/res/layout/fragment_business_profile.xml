@@ -37,12 +37,15 @@
             <com.framework.views.customViews.CustomImageView
               android:id="@+id/business_image"
               android:layout_width="match_parent"
-              android:layout_height="@dimen/size_180"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:layout_height="@dimen/size_180"
               android:visibility="gone"
               app:srcCompat="@color/placeholder_bg" />
 
             <LinearLayout
-              android:id="@+id/image_add_btn"
+                android:tag="com.userexperior.ueSecureView"
+                android:id="@+id/image_add_btn"
               android:layout_width="match_parent"
               android:layout_height="@dimen/size_180"
               android:background="@color/white_smoke_1"

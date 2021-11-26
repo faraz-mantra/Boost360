@@ -22,8 +22,8 @@ object UserExperiorController {
     }
 
 
-    fun setUserIdentifier(fpTag:String?){
-        UserExperior.setUserIdentifier(fpTag)
+    fun setUserIdentifier(fpId:String?){
+        UserExperior.setUserIdentifier(fpId)
     }
 
     fun setUserAttr(fpTag:String?,mobile: String?, business_name: String?,
@@ -41,7 +41,7 @@ object UserExperiorController {
     }
 
     fun setUserAttr(session:UserSessionManager){
-        setUserAttr(session.fpTag,session.userProfileMobile,session.fPName,session.fpTag,session.userProfileName,
+        setUserAttr(session.fPID,session.userProfileMobile,session.fPName,session.fpTag,session.userProfileName,
             getAppVersionName())
     }
 
