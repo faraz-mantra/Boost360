@@ -1,5 +1,6 @@
 package dev.patrickgold.florisboard.customization
 
+import android.app.Activity
 import android.content.ClipDescription
 import android.content.Context
 import android.content.Intent
@@ -687,6 +688,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     val float = item as? FloatUpdate
     if (NetworkUtils.isNetworkConnected()) {
       val shareText = String.format("*%s*", float?.message)
+      shareUpdates(float?.message!!,float?.url,session?.userProfileMobile,float?.imageUri)
       pathToUriGet(float?.imageUri, shareText, BusinessFeatureEnum.UPDATES)
     } else Toast.makeText(mContext, mContext.getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
   }
@@ -697,8 +699,54 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     if (NetworkUtils.isNetworkConnected()) {
       val shareText = String.format("*%s*\n*%s* %s\n\n-------------\n%s\n", product?.name?.trim { it <= ' ' },
         "${product?.getProductDiscountedPriceOrPrice()}", "${if (product?.discountAmount?.toDoubleOrNull() ?: 0.0 != 0.0) "~${product?.getProductPrice()}~" else ""}", product?.description?.trim { it <= ' ' })
-      pathToUriGet(product?.imageUri, shareText, BusinessFeatureEnum.INVENTORY_SERVICE)
+
+      shareProduct(product?.name,product?.price,product?.productUrl
+        ,session?.userProfileMobile,product?.imageUri)
     } else Toast.makeText(mContext, mContext.getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
+  }
+
+  fun shareProduct(
+    name: String? = null, price: String? = null, link: String? = null, vmn: String? = null, imageUri: String? = null,
+  ) {
+    val templateBuilder = StringBuilder()
+    if (name.isNullOrBlank().not()) {
+      templateBuilder.append("🆕 *Item name:* $name").append("\n")
+    }
+    if (price.isNullOrBlank().not()) {
+      templateBuilder.append("🏷️ *Price:* Rs.$price").append("\n")
+    }
+    if (vmn.isNullOrBlank().not()) {
+      templateBuilder.append("📞 Feel free to call $vmn if you need any help. ").append("\n")
+    }
+    if (link.isNullOrBlank().not()) {
+      templateBuilder.append("👉🏼 *Place your order here:* $link")
+    }
+    pathToUriGet(imageUri, templateBuilder.toString(), BusinessFeatureEnum.INVENTORY_SERVICE)
+
+  }
+
+  fun shareUpdates(
+    updateContent: String, link: String?,
+    vmn: String?, imageUri: String? = null
+  ) {
+    val subDomain = if (isService(session?.fP_AppExperienceCode)) "all-services" else "all-products"
+
+    val catalogLink= session?.getDomainName() + "/" + subDomain
+
+    val templateBuilder = StringBuilder()
+    if (updateContent.isBlank().not() && link.isNullOrBlank().not()) {
+      templateBuilder.append("👋🏼 Hey there!")
+      templateBuilder.append("${ContentSharing.truncateString(updateContent, 100)}: Read more $link")
+        .append("\n")
+    }
+    if (catalogLink.isBlank().not()) {
+      templateBuilder.append("🏷️ Check our online catalogue, $catalogLink").append("\n")
+    }
+    if (vmn.isNullOrBlank().not()) {
+      templateBuilder.append("📞 Feel free to call $vmn if you need any help. ")
+    }
+    pathToUriGet(imageUri, templateBuilder.toString(), BusinessFeatureEnum.UPDATES)
+
   }
 
   private fun pathToUriGet(imageUri: String?, shareText: String, type: BusinessFeatureEnum) {

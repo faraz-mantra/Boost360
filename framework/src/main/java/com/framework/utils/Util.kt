@@ -367,3 +367,10 @@ fun Intent.getPendingIntent(): PendingIntent? {
     System.currentTimeMillis().toInt(), this, PendingIntent.FLAG_UPDATE_CURRENT
   )
 }
+
+fun isService(category_code: String?): Boolean {
+  return when (category_code) {
+    "SVC", "DOC", "HOS", "SPA", "SAL" -> true
+    else -> false
+  }
+}
