@@ -92,7 +92,6 @@
   <color name="yellow_orange_22">#380400A6</color>
   <color name="red_light_1">#EC008C</color>
   <color name="accent_light_red">@color/colorAccentLight</color>
-  <color name="colorAccent_jio">@color/red_light_1</color>
   <color name="black_4a4a4a_jio">@color/colorPrimary</color>
   <color name="primary_4a4a4a_jio">@color/colorPrimaryDarkBlue</color>
 
@@ -124,6 +123,8 @@
   <color name="live_red">#4a4a4a</color>
   <color name="red_dark">#4a4a4a</color>
 
+  <color name="color_border_4a4a4a">@color/colorAccentLight</color>
+  <color name="color_border_ffb900">#AFADFC</color>
   <color name="wrongOTPColor">@color/colorAccentLight</color>
   <color name="red_button">@color/colorAccentLight</color>
   <color name="colorAccentLightDark">@color/colorAccentLight</color>
