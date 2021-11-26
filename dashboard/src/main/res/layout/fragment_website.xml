@@ -70,7 +70,9 @@
                   <com.framework.views.customViews.CustomImageView
                     android:id="@+id/img_profile_logo"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                      android:tag="com.userexperior.ueSecureView"
+
+                      android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:scaleType="fitCenter"
                     tools:srcCompat="@drawable/ic_add_logo_d" />
@@ -101,7 +103,9 @@
 
                 <com.framework.views.customViews.CustomTextView
                   android:id="@+id/txt_domain_name"
-                  android:layout_width="wrap_content"
+                    android:tag="com.userexperior.ueSecureView"
+
+                    android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginStart="@dimen/size_2"
                   android:layout_marginTop="@dimen/size_2"

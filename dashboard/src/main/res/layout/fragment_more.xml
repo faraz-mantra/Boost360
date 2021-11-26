@@ -31,7 +31,9 @@
         <com.framework.views.roundedimageview.RoundedImageView
           android:id="@+id/riv_users_image"
           android:layout_width="@dimen/size_68"
-          android:layout_height="@dimen/size_68"
+            android:tag="com.userexperior.ueSecureView"
+
+            android:layout_height="@dimen/size_68"
           android:layout_marginTop="@dimen/size_4"
           android:scaleType="centerCrop"
           app:layout_constraintBottom_toBottomOf="parent"
@@ -189,7 +191,9 @@
                 android:id="@+id/riv_business_image"
                 android:layout_width="@dimen/size_42"
                 android:layout_height="@dimen/size_42"
-                android:clickable="true"
+                  android:tag="com.userexperior.ueSecureView"
+
+                  android:clickable="true"
                 android:focusable="true"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -488,7 +488,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:scaleType="fitCenter"
+                      android:tag="com.userexperior.ueSecureView"
+
+                      android:scaleType="fitCenter"
                     app:srcCompat="@drawable/ic_add_logo_d" />
                 </com.framework.views.customViews.CustomCardView>
 
@@ -539,7 +541,9 @@
                     android:layout_marginTop="@dimen/size_1"
                     android:drawableStart="@drawable/ic_website_d"
                     android:drawablePadding="@dimen/size_4"
-                    android:ellipsize="end"
+                      android:tag="com.userexperior.ueSecureView"
+
+                      android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:includeFontPadding="false"
                     android:maxLines="1"
