@@ -237,7 +237,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
                     if (it.isSuccess()) {
                         val result = it as? VerifyOtpResponse
                         isOtpVerified = true
-                        if (false) {
+                        if (result?.Result?.authTokens.isNullOrEmpty().not()) {
                             if (result?.Result?.authTokens!!.size == 1) {
                                 this.resultLogin = result.Result
                                 authTokenData()?.createAccessTokenAuth()
