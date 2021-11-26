@@ -144,9 +144,6 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
                     val isPhoneValid = binding?.phoneEt?.text.toString().isPhoneValid()
                     binding?.tvRequestOtp?.isEnabled = isPhoneValid
 
-                    if (isPhoneValid){
-                        binding?.tvRequestOtp?.performClick()
-                    }
                 }
             }
         }
