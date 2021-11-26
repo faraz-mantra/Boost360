@@ -39,7 +39,7 @@
           android:clickable="true"
           android:focusable="true"
           android:padding="@dimen/size_4"
-          android:textColor="@color/colorAccent_jio"
+          android:textColor="@color/colorAccentLight"
           app:fontFamily="@font/regular"
           app:textType="HEADING_4"
           tools:alpha="1"
