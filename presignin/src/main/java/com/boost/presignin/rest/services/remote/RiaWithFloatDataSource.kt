@@ -13,6 +13,9 @@ interface RiaWithFloatDataSource {
   @GET(value = EndPoints.WHATSAPP_OPT_IN)
   fun whatsappOptIn(
     @Query("authClientId") clientId:String= clientId2,
-    @Body body:JsonObject,
+    @Query("optType") optType:Int,
+    @Query("number") number:String,
+    @Query("customerId") customerId:String,
+    @Query("optinId") optinId:String = "919381915059"
   ): Observable<Response<PaymentKycDataResponse>>
 }

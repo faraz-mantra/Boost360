@@ -185,6 +185,7 @@
     <string name="this_url_is_completely_secure">This URL is completely secure</string>
     <string name="you_can_create_a_support_request_and_someone_from_the_boost_team_will_assist_you">You can create a support request and someone from the Boost team will assist you.</string>
     <string name="create_support_request">Create Support Request</string>
+    <string name="call_us">Call Us</string>
     <string name="could_not_find_your_business_type">Could not find your business type?</string>
     <string name="choose_what_best_describes_your_business_the_best">Choose what best describes your business the best</string>
     <string name="still_can_t_find_your_business_type">Still can’t find your business type?</string>
@@ -200,5 +201,6 @@
     <string name="we_ve_picked_the_closest_matching_website_address_for_you_feel_free_to_customize_it">We’ve picked the closest matching website address for you. Feel free to customize it.</string>
     <string name="your_website_is_almost_ready">Your website is almost ready!</string>
     <string name="your_business_category_was_selected">Your business category was selected</string>
+    <string name="please_select_your_whatsapp_updates_pref">Please select your preference for WhatsApp Updates!</string>
 
 </resources>

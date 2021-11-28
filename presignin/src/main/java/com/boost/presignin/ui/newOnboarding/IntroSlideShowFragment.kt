@@ -75,7 +75,7 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
         binding?.btnGetStarted?.setOnClickListener{
             startFragmentFromNewOnBoardingActivity(
                 activity = requireActivity(),
-                type = com.boost.presignin.constant.FragmentType.SET_UP_MY_WEBSITE_FRAGMENT,
+                type = FragmentType.ENTER_PHONE_FRAGMENT,
                 bundle = Bundle().apply {
                     putString(IntentConstant.EXTRA_PHONE_NUMBER.name,"phoneNumber")
                 },

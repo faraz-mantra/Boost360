@@ -1,5 +1,7 @@
 package com.boost.presignin.ui.newOnboarding.bottomSheet
 
+import android.content.Intent
+import android.net.Uri
 import com.boost.presignin.R
 import com.boost.presignin.databinding.SheetNeedHelpBinding
 import com.framework.base.BaseBottomSheetDialog
@@ -22,6 +24,11 @@ class NeedHelpBottomSheet : BaseBottomSheetDialog<SheetNeedHelpBinding, BaseView
 
         binding?.tvCreateSupportRequest?.setOnClickListener {
             //TODO call API create support
+            Intent().apply {
+                action = Intent.ACTION_DIAL
+                data = Uri.parse("tel:" + getString(R.string.expert_contact_number))
+                startActivity(this)
+            }
         }
     }
 }

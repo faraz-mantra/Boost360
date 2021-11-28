@@ -54,8 +54,6 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
 
     }
 
-
-
     private val whatsappConsent by lazy {
         arguments?.getBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name)
     }
@@ -80,17 +78,19 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     override fun onCreateView() {
         super.onCreateView()
         setOnClickListeners()
-
+        binding?.addressInputLayout?.etInput?.setText(businessName.toString().lowercase())
         apiCheckDomain {
             websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1)
         }
     }
 
     private fun apiCheckDomain(onSuccess:()->Unit) {
-        val subDomain = binding?.addressInputLayout?.etInput?.text.toString()
+        showProgress()
+        val subDomain = binding?.addressInputLayout?.etInput?.text.toString().lowercase()
         if (!TextUtils.isEmpty(subDomain)) {
             val data = BusinessDomainRequest(clientId2, subDomain, subDomain)
             viewModel?.postCheckBusinessDomain(data)?.observeOnce(viewLifecycleOwner, {response->
+                hideProgress()
                 if (response.isSuccess() && response.stringResponse.isNullOrEmpty().not()) {
                     onSuccess.invoke()
                 }else{
@@ -120,15 +120,15 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 binding?.addressInputLayout?.etInput?.isEnabled = false
                 binding?.addressInputLayout?.ivIcon?.visible()
-                websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1)
+                apiCheckDomain {
+                    websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1)
+                }
+                //websiteNameFieldUiVisibility()
             }
             false
         }
 
         binding?.addressInputLayout?.ivIcon?.setOnClickListener {
-            binding?.addressInputLayout?.ivIcon?.gone()
-            binding?.addressInputLayout?.ivStatus?.gone()
-            binding?.addressInputLayout?.etInput?.isEnabled = true
             websiteNameFieldUiVisibility()
         }
     }
@@ -270,9 +270,10 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
      *  2 : Red Error Mode
      * */
     private fun websiteNameFieldUiVisibility(websiteNameFieldVisibility: Int = 0) {
-
         when (websiteNameFieldVisibility) {
             1 -> {
+                binding?.addressInputLayout?.etInput?.isEnabled = false
+                binding?.tvNextStep3?.isEnabled = true
                 binding?.tvNameNotAvailableError?.gone()
                 binding?.linearSecureWrapper?.visible()
                 binding?.addressInputLayout?.ivStatus?.setImageResource(R.drawable.ic_domain_tick)
@@ -281,6 +282,8 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
                 binding?.addressInputLayout?.ivIcon?.visible()
             }
             2 -> {
+                binding?.addressInputLayout?.etInput?.isEnabled = false
+                binding?.tvNextStep3?.isEnabled = false
                 binding?.tvNameNotAvailableError?.visible()
                 binding?.linearSecureWrapper?.gone()
                 binding?.addressInputLayout?.ivStatus?.setImageResource(R.drawable.ic_tick_red_error)
@@ -289,10 +292,12 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
                 binding?.addressInputLayout?.ivIcon?.visible()
             }
             else -> {
+                binding?.addressInputLayout?.etInput?.isEnabled = true
                 binding?.tvNameNotAvailableError?.gone()
                 binding?.linearSecureWrapper?.gone()
                 binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_grey_stroke_et)
                 binding?.addressInputLayout?.ivIcon?.gone()
+                binding?.addressInputLayout?.ivStatus?.gone()
             }
         }
     }

@@ -18,14 +18,14 @@ object RiaWithFloatRepository : AppBaseRepository<RiaWithFloatDataSource, AppBas
   }
 
   fun whatsappOptIn(optType:Int,number:String,customerId:String): Observable<BaseResponse> {
-    val body = JsonObject().apply {
+    /*val body = JsonObject().apply {
       addProperty("optType",optType)
       addProperty("whatsappNumber",number)
       addProperty("customerId",customerId)
       addProperty("optinId","919381915059")
 
-    }
-    return makeRemoteRequest(remoteDataSource.whatsappOptIn(body = body), TaskCode.WHATSAPP_OPT_IN)
+    }*/
+    return makeRemoteRequest(remoteDataSource.whatsappOptIn(optType = optType, number = number, customerId = customerId), TaskCode.WHATSAPP_OPT_IN)
   }
 
   override fun getLocalDataSourceInstance(): AppBaseLocalService {

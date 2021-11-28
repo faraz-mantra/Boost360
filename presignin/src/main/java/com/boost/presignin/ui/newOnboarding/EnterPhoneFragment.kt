@@ -91,15 +91,7 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
 
 
     private fun sendOtp(phoneNumber: String?) {
-        startFragmentFromNewOnBoardingActivity(
-            activity = requireActivity(),
-            type = com.boost.presignin.constant.FragmentType.VERIFY_PHONE_FRAGMENT,
-            bundle = Bundle().apply {
-                putString(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber)
-            },
-            clearTop = false
-        )
-        /*WebEngageController.trackEvent(PS_LOGIN_NUMBER_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_LOGIN_NUMBER_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
         baseActivity.hideKeyBoard()
         showProgress(getString(R.string.sending_otp))
         viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner, {
@@ -114,7 +106,7 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
                 )
             } else showShortToast(getString(R.string.otp_not_sent))
             hideProgress()
-        })*/
+        })
     }
 
 
