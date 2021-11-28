@@ -2,38 +2,26 @@ package com.boost.presignin.ui.newOnboarding
 
 import android.os.Bundle
 import android.os.Handler
-import android.text.Spannable
-import android.text.SpannableString
 import android.text.TextPaint
-import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.view.*
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import com.boost.presignin.R
-import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
-import com.boost.presignin.databinding.FragmentSetupMyWebsiteBinding
 import com.boost.presignin.databinding.FragmentVerifyPhoneBinding
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.authToken.AuthTokenDataItem
 import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.model.login.VerifyOtpResponse
 import com.boost.presignin.ui.mobileVerification.AuthBaseFragment
-import com.boost.presignin.ui.mobileVerification.FP_LIST_FRAGMENT
-import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
-import com.boost.presignin.ui.newOnboarding.bottomSheet.HelpSupportSuccessBottomSheet
 import com.boost.presignin.ui.newOnboarding.bottomSheet.NeedHelpBottomSheet
-import com.boost.presignin.ui.registration.RegistrationActivity
 import com.boost.presignin.views.otptextview.OTPListener
-import com.framework.base.FRAGMENT_TYPE
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.clientId2
@@ -43,16 +31,16 @@ import com.framework.webengageconstant.*
 
 class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSReceiver.OTPReceiveListener {
 
-    private var isCounterRunning = false
-
     private lateinit var countDown: com.boost.presignin.timer.CountDownTimer
-
     private var resultLogin: VerificationRequestResult? = null
+    private var loginId: String? = null
+    var isOtpVerified = false
+    var isExistingUser = false
+    private var isCounterRunning = false
 
     private val phoneNumber by lazy {
         arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
     }
-
 
     override fun resultLogin(): VerificationRequestResult? {
         return resultLogin
@@ -64,7 +52,6 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
         ) resultLogin()?.authTokens!![0] else null
     }
 
-    var isOtpVerified=false
     companion object {
         @JvmStatic
         fun newInstance(bundle: Bundle? = null): VerifyPhoneFragment {
@@ -127,14 +114,15 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
             override fun onInteractionListener() {
                 val otp = binding?.pinOtpVerify?.otp
                 binding?.tvVerifyOtp?.isEnabled = otp != null && otp.length == 4
-                binding?.linearWhatsApp?.apply {
-                    if (otp != null && otp.length == 4) visible() else gone()
-                }
+                /* binding?.linearWhatsApp?.apply {
+                     if (otp != null && otp.length == 4) visible() else gone()
+                 }*/
             }
 
             override fun onOTPComplete(otp: String) {
-                verify()
-                binding?.linearWhatsApp?.visible()
+                if (isExistingUser.not())
+                    verify()
+                //binding?.linearWhatsApp?.visible()
             }
         }
 
@@ -237,45 +225,67 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
                     if (it.isSuccess()) {
                         val result = it as? VerifyOtpResponse
                         isOtpVerified = true
+                        binding?.tvResendOtpIn?.gone()
                         if (result?.Result?.authTokens.isNullOrEmpty().not()) {
                             if (result?.Result?.authTokens!!.size == 1) {
                                 this.resultLogin = result.Result
-                                authTokenData()?.createAccessTokenAuth()
-                            } else {
-                                binding?.linearWhatsApp?.visible()
+                                loginId = resultLogin?.loginId
                             }
-                        } else {
+                            showLongToast(getString(R.string.please_select_your_whatsapp_updates_pref))
+                            isExistingUser = true
                             binding?.linearWhatsApp?.visible()
-
+                            //verify()
+                        } else {
+                            isExistingUser = false
+                            binding?.linearWhatsApp?.gone()
+                            moveToWelcomeScreen(
+                                phoneNumber!!,
+                                isWhatsAppFlagChecked = false,
+                                isClearTop = false
+                            )
                         }
                     } else {
+                        isOtpVerified = false
                         showLongToast(getString(R.string.wrong_otp_tv))
                     }
 
                 })
         }
-
     }
 
     private fun apiWhatsappOptin() {
-        viewModel?.whatsappOptIn(0,phoneNumber!!,session.userProfileId!!)?.observe(viewLifecycleOwner,{
+        viewModel?.whatsappOptIn(
+            0,
+            phoneNumber!!,
+            customerId = loginId!!
+        )?.observe(viewLifecycleOwner, {
 
-            if (it.isSuccess()){
-                startFragmentFromNewOnBoardingActivity(
-                    activity = requireActivity(),
-                    type = com.boost.presignin.constant.FragmentType.WELCOME_FRAGMENT,
-                    bundle = Bundle().apply {
-                        putString(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber)
-                        putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name,
-                            binding?.chkWhatsapp?.isChecked == true
-                        )
-
-                    },
-                    clearTop = true
-                )
+            if (it.isSuccess()) {
+                authTokenData()?.createAccessTokenAuth()
+                //moveToWelcomeScreen(phoneNumber!!, isWhatsAppFlagChecked = true, isClearTop = true)
             }
         })
 
+    }
+
+    private fun moveToWelcomeScreen(
+        enteredPhone: String,
+        isWhatsAppFlagChecked: Boolean,
+        isClearTop: Boolean
+    ) {
+        startFragmentFromNewOnBoardingActivity(
+            activity = requireActivity(),
+            type = com.boost.presignin.constant.FragmentType.WELCOME_FRAGMENT,
+            bundle = Bundle().apply {
+                putString(IntentConstant.EXTRA_PHONE_NUMBER.name, enteredPhone)
+                putBoolean(
+                    IntentConstant.WHATSAPP_CONSENT_FLAG.name,
+                    binding?.chkWhatsapp?.isChecked == isWhatsAppFlagChecked
+                )
+
+            },
+            clearTop = isClearTop
+        )
     }
 
     override fun onOTPReceived(otp: String?) {

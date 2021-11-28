@@ -54,7 +54,7 @@
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_create_support_request"
             style="@style/yellow_squared_button"
-            android:text="@string/create_support_request"
+            android:text="@string/call_us"
             android:enabled="true"
             android:layout_marginTop="@dimen/size_25"
             app:layout_constraintTop_toBottomOf="@+id/need_subtitle_sheet"

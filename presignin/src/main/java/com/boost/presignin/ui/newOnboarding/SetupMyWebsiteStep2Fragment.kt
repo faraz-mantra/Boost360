@@ -1,29 +1,16 @@
 package com.boost.presignin.ui.newOnboarding
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
-import com.boost.presignin.databinding.FragmentSetupMyWebsiteBinding
-import com.boost.presignin.databinding.FragmentWelcomeBinding
-import com.boost.presignin.databinding.LayoutSetUpMyWebsiteStep1Binding
 import com.boost.presignin.databinding.LayoutSetUpMyWebsiteStep2Binding
 import com.framework.extensions.afterTextChanged
-import com.framework.models.BaseViewModel
-import com.framework.utils.fromHtml
-import android.view.inputmethod.EditorInfo
-
-import android.view.KeyEvent
-
-import android.widget.TextView
-
-import android.widget.TextView.OnEditorActionListener
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.models.BaseViewModel
+import com.framework.utils.fromHtml
 
 
 class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Binding, BaseViewModel>() {
@@ -62,8 +49,8 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
 
     private fun setOnClickListeners() {
         binding?.tvNextStep2?.setOnClickListener {
-            addFragment(R.id.inner_container,SetupMyWebsiteStep3Fragment.newInstance(Bundle()
-                .apply {
+            addFragment(R.id.inner_container,SetupMyWebsiteStep3Fragment.newInstance(
+                Bundle().apply {
                     putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name,whatsappConsent==true)
 
                     putString(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber)

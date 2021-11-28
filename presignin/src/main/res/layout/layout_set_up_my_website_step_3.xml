@@ -59,7 +59,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toStartOf="@+id/endGuide"
             app:layout_constraintStart_toStartOf="@+id/startGuide"
-            app:layout_constraintTop_toBottomOf="@+id/customTextInputLayout">
+            app:layout_constraintTop_toBottomOf="@+id/address_input_layout">
 
 
             <com.google.android.material.card.MaterialCardView
@@ -110,16 +110,17 @@
             android:id="@+id/tv_name_not_available_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_6"
             android:layout_marginHorizontal="@dimen/size_12"
             android:text="@string/this_link_is_already_in_use_please_choose_another"
             android:textColor="@color/input_error_color"
             android:textSize="12sp"
             android:visibility="gone"
             app:fontFamily="@font/regular"
-            app:layout_constraintEnd_toEndOf="@+id/customTextInputLayout"
+            app:layout_constraintEnd_toEndOf="@+id/address_input_layout"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/customTextInputLayout"
-            app:layout_constraintTop_toBottomOf="@+id/customTextInputLayout" />
+            app:layout_constraintStart_toStartOf="@+id/address_input_layout"
+            app:layout_constraintTop_toBottomOf="@+id/address_input_layout" />
 
         <include
             android:id="@+id/include_mobile_view"
