@@ -57,7 +57,6 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
-import com.thinksity.Specific;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1282,12 +1281,12 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         if (session.getUserProfileEmail() != null) {
             intent.putExtra("email", session.getUserProfileEmail());
         } else {
-            intent.putExtra("email", Specific.CONTACT_EMAIL_ID);
+            intent.putExtra("email", getString(R.string.ria_customer_mail));
         }
         if (session.getUserPrimaryMobile() != null) {
             intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
-            intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID);
+            intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
         }
         intent.putExtra("profileUrl", session.getFPLogo());
         intent.putExtra("buyItemKey", "DOMAINPURCHASE");
