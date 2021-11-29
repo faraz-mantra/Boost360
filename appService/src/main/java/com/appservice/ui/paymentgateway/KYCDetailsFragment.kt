@@ -390,7 +390,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         showShortToast("Pan name can't empty.")
         return false
       }
-      !isNameValid(panName) -> {
+      !isValidName(panName) -> {
         showShortToast("Please enter a valid name.")
         return false
       }
@@ -408,11 +408,10 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         } else if (accountNumber.length > 18) {
           showShortToast(getString(R.string.account_greater_than_nine))
           return false
-        }else if (ValidationUtils.isBankAcValid(accountNumber)){
+        } else if (ValidationUtils.isBankAcValid(accountNumber)) {
           showShortToast(getString(R.string.invalid_bank_account_number))
           return false
-        }
-        else if (nameAccount.isNullOrEmpty()) {
+        } else if (nameAccount.isNullOrEmpty()) {
           showShortToast(getString(R.string.bank_account_cannot_empty))
           return false
         } else if (ifsc.isNullOrEmpty()) {
@@ -759,7 +758,8 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     return Pattern.compile("[A-Z]{5}[0-9]{4}[A-Z]{1}").matcher(panNumber).matches()
   }
 
-  private fun isNameValid(name: String): Boolean {
-    return Pattern.compile("^([^0-9]*)\$").matcher(name).matches() || Pattern.compile("[$&+,:;=\\\\?@#|/'<>.^*()%!-]").matcher(name).matches()
+  private fun isValidName(name: String): Boolean {
+    val regExp = "^[^<>{}\"/|;:.,~!?@#$%^=&*\\]\\\\()\\[¿§«»ω⊙¤°℃℉€¥£¢¡®©0-9_+]*$"
+    return Pattern.compile(regExp, Pattern.CASE_INSENSITIVE).matcher(name).matches()
   }
 }
