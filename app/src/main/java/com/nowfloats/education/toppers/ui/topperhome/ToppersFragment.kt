@@ -34,7 +34,6 @@ import com.nowfloats.education.toppers.model.Data
 import com.nowfloats.education.toppers.ui.topperdetails.TopperDetailsFragment
 import com.nowfloats.util.Utils
 import com.thinksity.R
-import com.thinksity.Specific
 import com.thinksity.databinding.ToppersFragmentBinding
 import org.koin.android.ext.android.inject
 import java.util.ArrayList
