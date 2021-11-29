@@ -153,8 +153,6 @@
             android:textFontWeight="400"
             app:textType="CAPTION"
             tools:text="INR 0" />
-
-
         </LinearLayout>
 
         <LinearLayout

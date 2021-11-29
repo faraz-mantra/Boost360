@@ -348,7 +348,7 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
 
     public void initiateProcess(final InitiateModel initiateModel) {
         ((OnPaymentOptionClick) mContext).showProcess(getString(R.string.please_wait));
-        String accId = manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
+        String accId = Constants.clientId;
         String appId = manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID);
         initiateModel.setClientId(TextUtils.isEmpty(accId) ? appId : accId);
         initiateModel.setEmail(manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));

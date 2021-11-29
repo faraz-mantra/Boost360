@@ -25,11 +25,14 @@ import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
 import com.festive.poster.ui.FestivePosterContainerActivity
 import com.framework.analytics.SentryController
 import com.framework.pref.*
+import com.framework.utils.DateUtils
 import com.framework.webengageconstant.*
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.floatMessage.MessageModel
 import com.inventoryorder.ui.startFragmentOrderActivity
+import com.inventoryorder.utils.getFileName
+import com.inventoryorder.utils.getUrlExtension
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentChannelActivity
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
@@ -984,11 +987,11 @@ fun AppCompatActivity.startDownloadUri(url: String, isToast: Boolean = false) {
     val downloader = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
     val uri = Uri.parse(url)
     val request = DownloadManager.Request(uri)
-    request.setTitle(uri.path?.getFileName() ?: "boost_file")
-    request.setDescription("boost360 File")
+    request.setTitle(uri.path?.getFileName() ?: getString(R.string.boost_file))
+    request.setDescription(getString(R.string.boost_360_file))
     request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "boost360")
+    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "${getString(R.string.boost_file)}_${DateUtils.getCurrentDate().time}.${url.getUrlExtension()}")
     downloader.enqueue(request)
     if (isToast) Toast.makeText(this, "File downloading.. ", Toast.LENGTH_SHORT).show()
   } catch (e: Exception) {
