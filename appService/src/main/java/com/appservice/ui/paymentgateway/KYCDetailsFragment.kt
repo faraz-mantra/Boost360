@@ -762,6 +762,6 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
   }
 
   private fun isNameValid(name: String): Boolean {
-    return Pattern.compile("^([^0-9]*)\$").matcher(name).matches()
+    return Pattern.compile("^([^0-9]*)\$").matcher(name).matches() || Pattern.compile("[$&+,:;=\\\\?@#|/'<>.^*()%!-]").matcher(name).matches()
   }
 }

@@ -49,8 +49,7 @@ class CustomArrayAdapter(context: Context, resource: Int, var list: ArrayList<Se
   private var nameFilter: Filter = object : Filter() {
     override fun convertResultToString(resultValue: Any): String {
       val item = (resultValue as ServiceItem)
-      val res =
-        fromHtml("<b><color='#2a2a2a'>${item.Name}</color></b> <color='#adadad'>(${item.Currency}${item.DiscountedPrice} for ${item.Duration}min)</color>")
+      val res = fromHtml("<b><color='#2a2a2a'>${item.Name}</color></b> <color='#adadad'>(${item.Currency}${item.DiscountedPrice} for ${item.Duration}min)</color>")
       return res.toString()
     }
 
@@ -59,9 +58,7 @@ class CustomArrayAdapter(context: Context, resource: Int, var list: ArrayList<Se
       filteredList = ArrayList()
       if (searchString.isNotEmpty()) {
         for (item in copyList) {
-          if (item.Name?.toLowerCase(Locale.ROOT)
-              ?.contains(searchString.toString().toLowerCase(Locale.ROOT)) == true
-          ) {
+          if (item.Name?.toLowerCase(Locale.ROOT)?.contains(searchString.toString().toLowerCase(Locale.ROOT)) == true) {
             filteredList?.add(item)
           }
         }

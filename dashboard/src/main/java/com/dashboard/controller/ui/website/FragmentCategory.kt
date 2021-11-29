@@ -25,6 +25,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.genericType
 import com.framework.utils.getData
@@ -90,7 +91,7 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
     Log.i(TAG, "setAdapterCustomer: ")
     val merchantSummary = getMerchantSummaryWebsite()
     setupList(merchantSummary, actionItem)
-    viewModel?.getMerchantSummary(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session?.fpTag)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getMerchantSummary(clientId, session?.fpTag)?.observeOnce(viewLifecycleOwner, {
       Log.i(TAG, "merchantsummary: ")
       val response = it as? MerchantSummaryResponse
       response?.saveMerchantSummary()

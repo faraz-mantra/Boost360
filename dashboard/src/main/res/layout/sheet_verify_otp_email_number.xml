@@ -53,7 +53,7 @@
           android:layout_marginTop="@dimen/size_8"
           android:layout_height="wrap_content"
           android:fontFamily="@font/semi_bold"
-          tools:text="+91 - 54654"
+          tools:text="+91 - 9898967847"
           android:layout_marginBottom="@dimen/size_16"
           android:layout_marginHorizontal="@dimen/size_20"
           android:textColor="@color/black_4a4a4a"

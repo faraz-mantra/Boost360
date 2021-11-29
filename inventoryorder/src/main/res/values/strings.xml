@@ -438,9 +438,7 @@
   <string name="please_wait">Please wait...</string>
   <string name="share">Share</string>
   <string name="hash_xxxxxxxx"># XXXXXXX</string>
-  <string name="invoice_downloading">\"Invoice downloading.. \"</string>
-  <string name="boost_360_file">boost360 File</string>
-  <string name="boost_file">boost_file</string>
+  <string name="invoice_downloading">Invoice downloading..</string>
   <string name="permission_denied_to_read_your_external_storage">Permission denied to read your External storage</string>
   <string name="error_sharing_invoice">Error sharing invoice, please try again.</string>
   <string name="order_invoice">Order invoice</string>

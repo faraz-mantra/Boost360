@@ -50,6 +50,17 @@ open class BaseResponse(
     }
   }
 
+  fun errorIPMessage(): String? {
+    val message = message
+    return try {
+      val jsonObj = JSONObject(message)
+      val error = jsonObj.getJSONObject("Error").getJSONObject("ErrorList")
+      return error.getString("INVALID PARAMETERS")
+    } catch (ex: Exception) {
+      message
+    }
+  }
+
   fun isSuccess(): Boolean {
     return status == 200 || status == 201 || status == 202 || status == 204
   }
