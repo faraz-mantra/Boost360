@@ -35,5 +35,4 @@ public class Specific {
     public static String access_level = "20";
     public static final String CONTACT_PHONE_ID = "9160004303";
 
-
 }

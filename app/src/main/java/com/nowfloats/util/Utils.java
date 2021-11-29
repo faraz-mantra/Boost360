@@ -43,8 +43,6 @@ import static com.framework.webengageconstant.EventLabelKt.BUSINESS_PROFILE_CREA
 import static com.framework.webengageconstant.EventLabelKt.CLICK;
 import static com.framework.webengageconstant.EventNameKt.ADDON_MARKETPLACE_PAGE_CLICK;
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_PROFILE_CREATION_SUCCESSFUL;
-import static com.thinksity.Specific.CONTACT_EMAIL_ID;
-import static com.thinksity.Specific.CONTACT_PHONE_ID;
 
 import androidx.annotation.NonNull;
 
@@ -434,12 +432,12 @@ public class Utils {
       if (session.getUserProfileEmail() != null) {
         intent.putExtra("email", session.getUserProfileEmail());
       } else {
-        intent.putExtra("email", CONTACT_EMAIL_ID);
+        intent.putExtra("email", context.getString(R.string.ria_customer_mail));
       }
       if (session.getUserPrimaryMobile() != null) {
         intent.putExtra("mobileNo", session.getUserPrimaryMobile());
       } else {
-        intent.putExtra("mobileNo", CONTACT_PHONE_ID);
+        intent.putExtra("mobileNo", context.getString(R.string.ria_customer_number));
       }
       if (buyItemKey != null /*&& buyItemKey.isNotEmpty()*/)
         intent.putExtra("buyItemKey", buyItemKey);

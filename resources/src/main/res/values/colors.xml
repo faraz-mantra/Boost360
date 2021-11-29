@@ -158,6 +158,8 @@
   <color name="colorAccentPositive">@color/colorAccent</color>
   <color name="colorAccentNegative">@color/black_4a4a4a</color>
   <color name="grey_bg">#F8F8F8</color>
+  <color name="black_1e1e1e">#1E1E1E</color>
+
 
   <color name="black_4a4a4a_jio">@color/black_4a4a4a</color>
   <color name="primary_4a4a4a_jio">@color/black_4a4a4a</color>
