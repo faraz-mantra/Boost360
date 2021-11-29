@@ -21,7 +21,7 @@ import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class OrderConfirmationFragment : BaseFragment() {
+class OrderConfirmationFragment : BaseFragment("MarketPlaceOrderConfirmationFragment") {
 
   lateinit var prefs: SharedPrefs
   var data = JSONObject()

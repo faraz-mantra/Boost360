@@ -20,7 +20,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AutoRenewOrderConfirmationFragment : BaseFragment() {
+class AutoRenewOrderConfirmationFragment : BaseFragment("MarketPlaceAutoRenewOrderConfirmationFragment") {
 
   lateinit var prefs: SharedPrefs
 

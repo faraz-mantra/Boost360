@@ -50,7 +50,7 @@ import retrofit.client.Response
 import retrofit.converter.GsonConverter
 
 
-class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroCaseClicked {
+class BookATableFragment : BaseFragment("BookATableFragment"), BookTableFragmentListener, AppOnZeroCaseClicked {
 
   lateinit var adapter: BookTableAdapter
   var session: UserSessionManager? = null

@@ -50,7 +50,7 @@ import kotlinx.android.synthetic.main.home_fragment.*
 import org.json.JSONObject
 
 
-class ComparePackageFragment : BaseFragment(), CompareListener,CompareBackListener {
+class ComparePackageFragment : BaseFragment("MarketPlaceComparePackageFragment"), CompareListener,CompareBackListener {
 
     lateinit var root: View
 
