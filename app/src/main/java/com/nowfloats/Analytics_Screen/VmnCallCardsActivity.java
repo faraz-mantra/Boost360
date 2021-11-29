@@ -40,6 +40,7 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
+import com.onboarding.nowfloats.constant.SupportVideoType;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityVmnCallCardsBinding;
 
@@ -58,8 +59,6 @@ import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_BUSINESS_
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_CALLS;
 import static com.framework.webengageconstant.EventValueKt.NULL;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
-import static com.thinksity.Specific.CONTACT_EMAIL_ID;
-import static com.thinksity.Specific.CONTACT_PHONE_ID;
 
 /**
  * Created by Admin on 27-04-2017.
@@ -577,16 +576,16 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
     intent.putExtra("fpid", session.getFPID());
     intent.putExtra("fpTag", session.getFpTag());
     intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
-    intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
+    intent.putStringArrayListExtra("userPurchsedWidgets", new ArrayList(session.getStoreWidgets()));
     if (session.getUserProfileEmail() != null) {
       intent.putExtra("email", session.getUserProfileEmail());
     } else {
-      intent.putExtra("email", CONTACT_EMAIL_ID);
+      intent.putExtra("email", getString(R.string.ria_customer_mail));
     }
     if (session.getUserPrimaryMobile() != null) {
       intent.putExtra("mobileNo", session.getUserPrimaryMobile());
     } else {
-      intent.putExtra("mobileNo", CONTACT_PHONE_ID);
+      intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
     }
     intent.putExtra("profileUrl", session.getFPLogo());
     intent.putExtra("buyItemKey", "CALLTRACKER");
@@ -615,7 +614,12 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 
   @Override
   public void secondaryButtonClicked() {
-    Toast.makeText(this, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
+    try {
+      startActivity(new Intent(this, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
+              .putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name(), SupportVideoType.TOB.getValue()));
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override

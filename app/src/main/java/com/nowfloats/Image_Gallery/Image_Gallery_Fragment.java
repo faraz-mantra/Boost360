@@ -1,5 +1,6 @@
 package com.nowfloats.Image_Gallery;
 
+import static com.dashboard.utils.ActivityUtilsKt.startHelpSupportVideoActivity;
 import static com.framework.webengageconstant.EventLabelKt.MANAGE_CONTENT;
 import static com.framework.webengageconstant.EventLabelKt.UPDATE_GALLERY_IMAGES;
 import static com.framework.webengageconstant.EventNameKt.GALLERY_IMAGE_ADDED;
@@ -55,6 +56,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
+import com.onboarding.nowfloats.constant.SupportVideoType;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentImageGalleryBinding;
 
@@ -637,8 +639,8 @@ public class Image_Gallery_Fragment extends Fragment implements
 
     @Override
     public void secondaryButtonClicked() {
-        Toast.makeText(getActivity(), getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
-
+        //Toast.makeText(getActivity(), getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
+        startHelpSupportVideoActivity(activity, SupportVideoType.GALLERY_IMAGE.getValue());
     }
 
     @Override

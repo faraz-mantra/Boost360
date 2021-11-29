@@ -368,6 +368,13 @@ fun Intent.getPendingIntent(): PendingIntent? {
   )
 }
 
+fun isService(category_code: String?): Boolean {
+  return when (category_code) {
+    "SVC", "DOC", "HOS", "SPA", "SAL" -> true
+    else -> false
+  }
+}
+
 inline fun <reified T> read(): T {
   val value: String = readLine()!!
   return when (T::class) {

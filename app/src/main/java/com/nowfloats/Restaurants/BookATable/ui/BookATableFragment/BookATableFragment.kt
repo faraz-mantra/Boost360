@@ -284,7 +284,7 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
     intent.putExtra("fpName", session!!.fpName)
     intent.putExtra("fpid", session!!.fpid)
     intent.putExtra("loginid", session!!.userProfileId)
-    intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets)
+    intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(session?.storeWidgets?: arrayListOf()))
     intent.putExtra("fpTag", session!!.fpTag)
     if (session!!.userProfileEmail != null) {
       intent.putExtra("email", session!!.userProfileEmail)

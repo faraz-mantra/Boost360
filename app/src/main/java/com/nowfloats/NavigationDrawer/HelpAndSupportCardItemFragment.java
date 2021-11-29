@@ -33,6 +33,7 @@ import com.zopim.android.sdk.prechat.ZopimChatActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import zendesk.support.guide.HelpCenterActivity;
@@ -55,8 +56,6 @@ import static com.framework.webengageconstant.EventNameKt.SUPPORT_VIEWED_PREMIUM
 import static com.framework.webengageconstant.EventNameKt.SUPPORT_VIEW_TICKETS;
 import static com.framework.webengageconstant.EventValueKt.NULL;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
-import static com.thinksity.Specific.CONTACT_EMAIL_ID;
-import static com.thinksity.Specific.CONTACT_PHONE_ID;
 
 /**
  * Created by Admin on 28-12-2017.
@@ -173,16 +172,16 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                         intent.putExtra("fpid", session.getFPID());
                         intent.putExtra("fpTag", session.getFpTag());
                         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
-                        intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
+                        intent.putStringArrayListExtra("userPurchsedWidgets", new ArrayList(session.getStoreWidgets()));
                         if (session.getUserProfileEmail() != null) {
                             intent.putExtra("email", session.getUserProfileEmail());
                         } else {
-                            intent.putExtra("email", CONTACT_EMAIL_ID);
+                            intent.putExtra("email", getString(R.string.ria_customer_mail));
                         }
                         if (session.getUserPrimaryMobile() != null) {
                             intent.putExtra("mobileNo", session.getUserPrimaryMobile());
                         } else {
-                            intent.putExtra("mobileNo", CONTACT_PHONE_ID);
+                            intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
                         }
                         intent.putExtra("profileUrl", session.getFPLogo());
                         intent.putExtra("buyItemKey", "CUSTOMERSUPPORT");

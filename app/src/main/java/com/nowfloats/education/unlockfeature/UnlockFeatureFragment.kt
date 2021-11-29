@@ -17,6 +17,7 @@ import com.nowfloats.education.model.UnlockFeatureModel
 import com.nowfloats.util.Constants
 import com.thinksity.R
 import com.thinksity.databinding.UnlockFeatureBinding
+import java.util.ArrayList
 
 
 class UnlockFeatureFragment(
@@ -58,7 +59,7 @@ class UnlockFeatureFragment(
       intent.putExtra("fpName", it.fpName)
       intent.putExtra("fpid", it.fpid)
       intent.putExtra("loginid", it.userProfileId)
-      intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets)
+      intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(session.storeWidgets))
       intent.putExtra("fpTag", it.fpTag)
       if (it.userProfileEmail != null) {
         intent.putExtra("email", it.userProfileEmail)
