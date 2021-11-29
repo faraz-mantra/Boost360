@@ -37,5 +37,6 @@ public class Specific {
     public static String client_ID_13_enterprizeonboardingservice = "BFB1A9D329204D25AF5423A58E21EB8349FAFE9752DD49F780F7680521DC33E1";
     public static String client_ID_14 = "A91B82DE3E93446A8141A52F288F69EFA1B09B1D13BB4E55BE743AB547B3489E";
     public static String access_level = "20";
+    public static final String CONTACT_PHONE_ID = "9160004303";
 
 }

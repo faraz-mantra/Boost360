@@ -16,7 +16,9 @@ import com.nowfloats.Login.UserSessionManager
 import com.nowfloats.education.model.UnlockFeatureModel
 import com.nowfloats.util.Constants
 import com.thinksity.R
+import com.thinksity.Specific
 import com.thinksity.databinding.UnlockFeatureBinding
+import java.util.ArrayList
 
 
 class UnlockFeatureFragment(
@@ -58,17 +60,17 @@ class UnlockFeatureFragment(
       intent.putExtra("fpName", it.fpName)
       intent.putExtra("fpid", it.fpid)
       intent.putExtra("loginid", it.userProfileId)
-      intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets)
+      intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(session.storeWidgets))
       intent.putExtra("fpTag", it.fpTag)
       if (it.userProfileEmail != null) {
         intent.putExtra("email", it.userProfileEmail)
       } else {
-        intent.putExtra("email", "ria@nowfloats.com")
+        intent.putExtra("email", Specific.CONTACT_EMAIL_ID)
       }
       if (it.userPrimaryMobile != null) {
         intent.putExtra("mobileNo", it.userPrimaryMobile)
       } else {
-        intent.putExtra("mobileNo", "9160004303")
+        intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID)
       }
       intent.putExtra("profileUrl", it.fpLogo)
       intent.putExtra("buyItemKey", unlockFeatureModel.buyItemKey)

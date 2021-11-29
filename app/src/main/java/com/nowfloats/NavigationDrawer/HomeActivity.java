@@ -187,6 +187,7 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
+import com.thinksity.Specific;
 import com.zopim.android.sdk.api.ZopimChat;
 
 import org.json.JSONException;
@@ -970,8 +971,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
       keys2.addAll(keys);
       Toast.makeText(HomeActivity.this, getString(R.string.refreshing_your_business_dashboard), Toast.LENGTH_LONG).show();
       for (int i = 0; i < keys2.size(); i++) {
-        if (!Constants.StoreWidgets.contains(keys2.get(i))) {
-          Constants.StoreWidgets.add(keys2.get(i));
+        if (!session.getStoreWidgets().contains(keys2.get(i))) {
+          session.getStoreWidgets().add(keys2.get(i));
         }
       }
     }
@@ -1584,16 +1585,16 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     intent.putExtra("isOpenCardFragment", isOpenCardFragment);
     intent.putExtra("screenType", screenType);
     intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
-    intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
+    intent.putStringArrayListExtra("userPurchsedWidgets", new ArrayList(session.getStoreWidgets()));
     if (session.getUserProfileEmail() != null) {
       intent.putExtra("email", session.getUserProfileEmail());
     } else {
-      intent.putExtra("email", "ria@nowfloats.com");
+      intent.putExtra("email", Specific.CONTACT_EMAIL_ID);
     }
     if (session.getUserPrimaryMobile() != null) {
       intent.putExtra("mobileNo", session.getUserPrimaryMobile());
     } else {
-      intent.putExtra("mobileNo", "9160004303");
+      intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID);
     }
     if (buyItemKey != null && !buyItemKey.isEmpty()) intent.putExtra("buyItemKey", buyItemKey);
     intent.putExtra("profileUrl", session.getFPLogo());

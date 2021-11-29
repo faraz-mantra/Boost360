@@ -37,8 +37,10 @@ import com.nowfloats.education.helper.Constants.SUCCESS
 import com.nowfloats.education.helper.ItemClickEventListener
 import com.nowfloats.util.Utils
 import com.thinksity.R
+import com.thinksity.Specific
 import com.thinksity.databinding.FacultyManagementFragmentBinding
 import org.koin.android.ext.android.inject
+import java.util.ArrayList
 
 class FacultyManagementFragment : BaseFragment(), ItemClickEventListener, AppOnZeroCaseClicked {
 
@@ -229,17 +231,17 @@ class FacultyManagementFragment : BaseFragment(), ItemClickEventListener, AppOnZ
       intent.putExtra("fpName", it.fpName)
       intent.putExtra("fpid", it.fpid)
       intent.putExtra("loginid", it.userProfileId)
-      intent.putStringArrayListExtra("userPurchsedWidgets", com.nowfloats.util.Constants.StoreWidgets)
+      intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(userSessionManager.getStoreWidgets()))
       intent.putExtra("fpTag", it.fpTag)
       if (it.userProfileEmail != null) {
         intent.putExtra("email", it.userProfileEmail)
       } else {
-        intent.putExtra("email", "ria@nowfloats.com")
+        intent.putExtra("email", Specific.CONTACT_EMAIL_ID)
       }
       if (it.userPrimaryMobile != null) {
         intent.putExtra("mobileNo", it.userPrimaryMobile)
       } else {
-        intent.putExtra("mobileNo", "9160004303")
+        intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID)
       }
       intent.putExtra("profileUrl", it.fpLogo)
       intent.putExtra("buyItemKey", Constants.FACULTY_MANAGEMENT_FEATURE)
