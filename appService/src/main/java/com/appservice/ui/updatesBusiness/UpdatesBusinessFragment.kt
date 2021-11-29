@@ -41,6 +41,7 @@ import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.EVENT_NAME_UPDATE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
+import com.onboarding.nowfloats.constant.SupportVideoType
 import java.util.*
 
 class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener,AppOnZeroCaseClicked {
@@ -268,7 +269,9 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
   }
 
   override fun secondaryButtonClicked() {
-    showShortToast(getString(R.string.coming_soon))
+    //showShortToast(getString(R.string.coming_soon))
+    startActivity(Intent(baseActivity, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
+      .putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name, SupportVideoType.LATEST_UPDATES.value))
   }
 
   override fun ternaryButtonClicked() {

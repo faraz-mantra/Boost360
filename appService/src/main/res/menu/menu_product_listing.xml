@@ -6,4 +6,10 @@
         android:icon="@drawable/ic_appointment_settings"
         android:title="@string/e_commerce_settings"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_item_help"
+        android:title="@string/watch_how_it_works"
+        android:icon="@drawable/ic_help_white"
+        app:showAsAction="always"/>
 </menu>
