@@ -39,7 +39,6 @@ import com.nowfloats.manufacturing.projectandteams.adapter.TeamAdapter;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;
-import com.thinksity.Specific;
 import com.thinksity.databinding.ActivityTeamCategoryBinding;
 
 import org.json.JSONObject;
@@ -309,12 +308,12 @@ public class TeamsActivity extends AppCompatActivity implements TeamsActivityLis
     if (userSessionManager.getUserProfileEmail() != null) {
       intent.putExtra("email", userSessionManager.getUserProfileEmail());
     } else {
-      intent.putExtra("email", Specific.CONTACT_EMAIL_ID);
+      intent.putExtra("email", getString(R.string.ria_customer_mail));
     }
     if (userSessionManager.getUserPrimaryMobile() != null) {
       intent.putExtra("mobileNo", userSessionManager.getUserPrimaryMobile());
     } else {
-      intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID);
+      intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
     }
     intent.putExtra("profileUrl", userSessionManager.getFPLogo());
     intent.putExtra("buyItemKey", WIDGET_KEY);

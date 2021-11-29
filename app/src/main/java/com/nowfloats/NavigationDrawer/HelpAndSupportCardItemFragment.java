@@ -25,7 +25,6 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
-import com.thinksity.Specific;
 import com.webengage.sdk.android.WebEngage;
 import com.zopim.android.sdk.api.ZopimChat;
 import com.zopim.android.sdk.model.VisitorInfo;
@@ -176,12 +175,12 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                         if (session.getUserProfileEmail() != null) {
                             intent.putExtra("email", session.getUserProfileEmail());
                         } else {
-                            intent.putExtra("email", Specific.CONTACT_EMAIL_ID);
+                            intent.putExtra("email", getString(R.string.ria_customer_mail));
                         }
                         if (session.getUserPrimaryMobile() != null) {
                             intent.putExtra("mobileNo", session.getUserPrimaryMobile());
                         } else {
-                            intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID);
+                            intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
                         }
                         intent.putExtra("profileUrl", session.getFPLogo());
                         intent.putExtra("buyItemKey", "CUSTOMERSUPPORT");

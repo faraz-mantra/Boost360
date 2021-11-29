@@ -38,7 +38,6 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;
-import com.thinksity.Specific;
 import com.thinksity.databinding.ActivityDigitalBrochuresBinding;
 
 import org.json.JSONObject;
@@ -311,12 +310,12 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
         if (session.getUserProfileEmail() != null) {
             intent.putExtra("email", session.getUserProfileEmail());
         } else {
-            intent.putExtra("email", Specific.CONTACT_EMAIL_ID);
+            intent.putExtra("email", getString(R.string.ria_customer_mail));
         }
         if (session.getUserPrimaryMobile() != null) {
             intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
-            intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID);
+            intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
         }
         intent.putExtra("profileUrl", session.getFPLogo());
         intent.putExtra("buyItemKey", "BROCHURE");

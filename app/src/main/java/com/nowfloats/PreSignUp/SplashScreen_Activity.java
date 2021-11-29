@@ -48,7 +48,6 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
-import com.thinksity.Specific;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -344,12 +343,12 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         if (session.getUserProfileEmail() != null) {
             intent.putExtra("email", session.getUserProfileEmail());
         } else {
-            intent.putExtra("email", Specific.CONTACT_EMAIL_ID);
+            intent.putExtra("email", getString(R.string.ria_customer_mail));
         }
         if (session.getUserPrimaryMobile() != null) {
             intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
-            intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID);
+            intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
         }
         intent.putExtra("profileUrl", session.getFPLogo());
         startActivity(intent);

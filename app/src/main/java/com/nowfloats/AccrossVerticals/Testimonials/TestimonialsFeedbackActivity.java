@@ -59,7 +59,6 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.WebEngageController;
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.GetTestimonialData;
 import com.thinksity.R;
-import com.thinksity.Specific;
 
 import java.io.File;
 import java.io.IOException;
@@ -760,12 +759,12 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     if (session.getUserProfileEmail() != null) {
       intent.putExtra("email", session.getUserProfileEmail());
     } else {
-      intent.putExtra("email", Specific.CONTACT_EMAIL_ID);
+      intent.putExtra("email", getString(R.string.ria_customer_mail));
     }
     if (session.getUserPrimaryMobile() != null) {
       intent.putExtra("mobileNo", session.getUserPrimaryMobile());
     } else {
-      intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID);
+      intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
     }
     intent.putExtra("profileUrl", session.getFPLogo());
     intent.putExtra("buyItemKey", CapLimitFeatureResponseItem.FeatureType.TESTIMONIALS.name());
