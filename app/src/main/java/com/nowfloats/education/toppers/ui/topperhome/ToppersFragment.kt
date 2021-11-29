@@ -34,7 +34,6 @@ import com.nowfloats.education.toppers.model.Data
 import com.nowfloats.education.toppers.ui.topperdetails.TopperDetailsFragment
 import com.nowfloats.util.Utils
 import com.thinksity.R
-import com.thinksity.Specific
 import com.thinksity.databinding.ToppersFragmentBinding
 import org.koin.android.ext.android.inject
 import java.util.ArrayList
@@ -237,12 +236,12 @@ class ToppersFragment : BaseFragment<ToppersFragmentBinding, BaseViewModel>(), I
       if (it.userProfileEmail != null) {
         intent.putExtra("email", it.userProfileEmail)
       } else {
-        intent.putExtra("email", Specific.CONTACT_EMAIL_ID)
+        intent.putExtra("email", getString(R.string.ria_customer_mail))
       }
       if (it.userPrimaryMobile != null) {
         intent.putExtra("mobileNo", it.userPrimaryMobile)
       } else {
-        intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID)
+        intent.putExtra("mobileNo", getString(R.string.ria_customer_number))
       }
       intent.putExtra("profileUrl", it.fpLogo)
       intent.putExtra("buyItemKey", Constants.TOPPER_FEATURE)

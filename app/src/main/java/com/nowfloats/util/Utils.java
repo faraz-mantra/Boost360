@@ -25,7 +25,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 import com.nowfloats.Login.UserSessionManager;
 import com.thinksity.R;
-import com.thinksity.Specific;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -433,12 +432,12 @@ public class Utils {
       if (session.getUserProfileEmail() != null) {
         intent.putExtra("email", session.getUserProfileEmail());
       } else {
-        intent.putExtra("email", Specific.CONTACT_EMAIL_ID);
+        intent.putExtra("email", context.getString(R.string.ria_customer_mail));
       }
       if (session.getUserPrimaryMobile() != null) {
         intent.putExtra("mobileNo", session.getUserPrimaryMobile());
       } else {
-        intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID);
+        intent.putExtra("mobileNo", context.getString(R.string.ria_customer_number));
       }
       if (buyItemKey != null /*&& buyItemKey.isNotEmpty()*/)
         intent.putExtra("buyItemKey", buyItemKey);

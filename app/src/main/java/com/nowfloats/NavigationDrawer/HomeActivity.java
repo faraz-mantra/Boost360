@@ -187,7 +187,6 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
-import com.thinksity.Specific;
 import com.zopim.android.sdk.api.ZopimChat;
 
 import org.json.JSONException;
@@ -1589,12 +1588,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     if (session.getUserProfileEmail() != null) {
       intent.putExtra("email", session.getUserProfileEmail());
     } else {
-      intent.putExtra("email", Specific.CONTACT_EMAIL_ID);
+      intent.putExtra("email", getString(R.string.ria_customer_mail));
     }
     if (session.getUserPrimaryMobile() != null) {
       intent.putExtra("mobileNo", session.getUserPrimaryMobile());
     } else {
-      intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID);
+      intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
     }
     if (buyItemKey != null && !buyItemKey.isEmpty()) intent.putExtra("buyItemKey", buyItemKey);
     intent.putExtra("profileUrl", session.getFPLogo());

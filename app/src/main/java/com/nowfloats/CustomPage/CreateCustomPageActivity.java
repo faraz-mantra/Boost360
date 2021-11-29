@@ -65,7 +65,6 @@ import com.nowfloats.util.RiaEventLogger;
 import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
-import com.thinksity.Specific;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -911,12 +910,12 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     if (session.getUserProfileEmail() != null) {
       intent.putExtra("email", session.getUserProfileEmail());
     } else {
-      intent.putExtra("email", Specific.CONTACT_EMAIL_ID);
+      intent.putExtra("email", getString(R.string.ria_customer_mail));
     }
     if (session.getUserPrimaryMobile() != null) {
       intent.putExtra("mobileNo", session.getUserPrimaryMobile());
     } else {
-      intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID);
+      intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
     }
     intent.putExtra("profileUrl", session.getFPLogo());
     intent.putExtra("buyItemKey", CapLimitFeatureResponseItem.FeatureType.CUSTOMPAGES.name());

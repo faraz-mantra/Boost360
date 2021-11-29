@@ -13,8 +13,10 @@ import com.google.gson.GsonBuilder;
 import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.NotificationCenter.NotificationInterface;
+import com.nowfloats.Volley.AppController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.thinksity.R;
 import com.thinksity.Specific;
 
 import org.json.JSONArray;
@@ -456,7 +458,7 @@ public class Constants {
     public static String FACEBOOK_URL = Specific.FACEBOOK_URL;
     public static String PACKAGE_NAME = Specific.PACKAGE_NAME;
     public static String DEFAULT_PACKAGE_NAME_WEB_ERROR = "com.biz.nowfloats";
-    public static String SUPPORT_EMAIL_ID = Specific.CONTACT_EMAIL_ID;
+    public static String SUPPORT_EMAIL_ID = AppController.getInstance().getString(R.string.ria_customer_mail);
     /**
      * Dev URL
      */
