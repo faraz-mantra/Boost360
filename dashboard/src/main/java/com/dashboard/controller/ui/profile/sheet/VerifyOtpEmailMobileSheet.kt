@@ -93,6 +93,8 @@ class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumbe
           (baseActivity as? DashboardFragmentContainerActivity)?.onRefresh()
           dismiss()
         } else {
+          val errorMessage = it.errorIPMessage()
+          if (errorMessage.isNullOrEmpty().not()) binding?.tvInvalidOtp?.text = errorMessage
           binding?.tvInvalidOtp?.visible()
         }
         binding?.progressBar?.gone()
@@ -106,6 +108,8 @@ class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumbe
           (baseActivity as? DashboardFragmentContainerActivity)?.onRefresh()
           dismiss()
         } else {
+          val errorMessage = it.errorIPMessage()
+          if (errorMessage.isNullOrEmpty().not()) binding?.tvInvalidOtp?.text = errorMessage
           binding?.tvInvalidOtp?.visible()
         }
         binding?.progressBar?.gone()

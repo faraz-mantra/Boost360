@@ -103,12 +103,18 @@ class CatalogProduct(
     return recyclerViewItem
   }
 
-  fun getCategoryWithBrand():String{
-   return if (category.isNullOrEmpty().not()) "$category ${if (brandName.isNullOrEmpty().not()) "by $brandName" else ""}" else "No category"
+  fun getCategoryWithBrand(): String {
+    return if (category.isNullOrEmpty().not()) "$category ${if (brandName.isNullOrEmpty().not()) "by $brandName" else ""}" else "No category"
   }
-  fun getBrand():String{
+
+  fun getDiscountedPrice(): Double {
+    return Price - DiscountAmount
+  }
+
+  fun getBrand(): String {
     return if (brandName.isNullOrEmpty().not()) "$brandName" else "No brand"
   }
+
   fun getLoaderItem(): CatalogProduct {
     this.recyclerViewItem = RecyclerViewItemType.PAGINATION_LOADER.getLayout()
     return this
