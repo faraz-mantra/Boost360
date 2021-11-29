@@ -27,7 +27,7 @@ import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.view_all_features_fragment.*
 import retrofit2.Retrofit
 
-class ViewAllFeaturesFragment : BaseFragment() {
+class ViewAllFeaturesFragment : BaseFragment("MarketPlaceViewAllFeaturesFragment") {
 
   lateinit var root: View
 

@@ -35,7 +35,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.my_addons_fragment.*
 import kotlinx.android.synthetic.main.view_all_features_fragment.*
 
-class MyAddonsFragment : BaseFragment(), MyAddonsListener {
+class MyAddonsFragment : BaseFragment("MarketPlaceMyAddonsFragment"), MyAddonsListener {
 
   lateinit var root: View
   lateinit var freeAddonsAdapter: FreeAddonsAdapter

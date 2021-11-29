@@ -75,7 +75,7 @@ import kotlinx.android.synthetic.main.cart_fragment.igst_value
 import kotlinx.android.synthetic.main.cart_fragment.package_layout
 
 
-class CartFragment : BaseFragment(), CartFragmentListener {
+class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListener {
 
   lateinit var root: View
 

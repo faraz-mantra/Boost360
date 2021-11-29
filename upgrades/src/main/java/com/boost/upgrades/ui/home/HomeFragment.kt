@@ -78,7 +78,7 @@ import android.widget.TextView
 import com.framework.analytics.SentryController
 
 
-class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
+class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, CompareBackListener {
 
     lateinit var root: View
     private lateinit var viewModel: HomeViewModel
