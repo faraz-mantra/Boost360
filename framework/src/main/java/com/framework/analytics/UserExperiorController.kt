@@ -8,7 +8,7 @@ import com.framework.pref.UserSessionManager
 import com.framework.utils.getAppVersionName
 import com.google.gson.Gson
 import com.userexperior.UserExperior
-
+import java.lang.Exception
 
 
 object UserExperiorController {
@@ -55,5 +55,13 @@ object UserExperiorController {
 
     fun setFpTag(fp:String){
 
+    }
+
+    fun startScreen(screenName:String){
+        try {
+            UserExperior.startScreen(screenName)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }
