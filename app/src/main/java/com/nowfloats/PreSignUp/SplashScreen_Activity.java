@@ -48,6 +48,7 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
+import com.thinksity.Specific;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -339,16 +340,16 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         intent.putExtra("deepLinkDay", deepLinkDay);
         intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
-        intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
+        intent.putStringArrayListExtra("userPurchsedWidgets", new ArrayList(session.getStoreWidgets()));
         if (session.getUserProfileEmail() != null) {
             intent.putExtra("email", session.getUserProfileEmail());
         } else {
-            intent.putExtra("email", "ria@nowfloats.com");
+            intent.putExtra("email", Specific.CONTACT_EMAIL_ID);
         }
         if (session.getUserPrimaryMobile() != null) {
             intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
-            intent.putExtra("mobileNo", "9160004303");
+            intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID);
         }
         intent.putExtra("profileUrl", session.getFPLogo());
         startActivity(intent);

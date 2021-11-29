@@ -318,12 +318,12 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
     if (session.userProfileEmail != null) {
       intent.putExtra("email", session.userProfileEmail)
     } else {
-      intent.putExtra("email", "ria@nowfloats.com")
+      intent.putExtra("email", getString(R.string.ria_customer_mail))
     }
     if (session.userPrimaryMobile != null) {
       intent.putExtra("mobileNo", session.userPrimaryMobile)
     } else {
-      intent.putExtra("mobileNo", "9160004303")
+      intent.putExtra("mobileNo", getString(R.string.ria_customer_number))
     }
     intent.putExtra("profileUrl", session.fPLogo)
     intent.putExtra("buyItemKey", "DOMAINPURCHASE")

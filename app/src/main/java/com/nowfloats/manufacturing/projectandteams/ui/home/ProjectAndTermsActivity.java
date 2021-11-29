@@ -22,6 +22,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;
+import com.thinksity.Specific;
 
 import org.json.JSONObject;
 
@@ -32,6 +33,8 @@ import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
+
+import java.util.ArrayList;
 
 public class ProjectAndTermsActivity extends AppCompatActivity {
 
@@ -213,16 +216,16 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
         intent.putExtra("fpid", session.getFPID());
         intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
-        intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
+        intent.putStringArrayListExtra("userPurchsedWidgets", new ArrayList(session.getStoreWidgets()));
         if (session.getUserProfileEmail() != null) {
             intent.putExtra("email", session.getUserProfileEmail());
         } else {
-            intent.putExtra("email", "ria@nowfloats.com");
+            intent.putExtra("email", Specific.CONTACT_EMAIL_ID);
         }
         if (session.getUserPrimaryMobile() != null) {
             intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
-            intent.putExtra("mobileNo", "9160004303");
+            intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID);
         }
         intent.putExtra("profileUrl", session.getFPLogo());
         intent.putExtra("buyItemKey", "PROJECTTEAM");
