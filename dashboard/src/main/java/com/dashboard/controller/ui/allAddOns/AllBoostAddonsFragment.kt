@@ -60,7 +60,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
   }
 
   override fun onCreateView() {
-    super.onCreateView()
+     super.onCreateView()
     session = UserSessionManager(baseActivity)
     WebEngageController.trackEvent(BOOST_ADD_ONS_PAGE, PAGE_VIEW, session?.fpTag)
   }

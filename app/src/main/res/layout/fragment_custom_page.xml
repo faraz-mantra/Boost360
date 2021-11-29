@@ -1,81 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  android:background="@color/screen_bg"
-  android:orientation="vertical"
-  tools:context="com.nowfloats.CustomPage.CustomPageFragment">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/screen_bg"
+    android:orientation="vertical"
+    tools:context="com.nowfloats.CustomPage.CustomPageFragment">
 
-  <FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/custompage_recycler_view"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_margin="5dp"
-      android:scrollbars="vertical" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/custompage_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:scrollbars="vertical" />
 
-    <LinearLayout
-      android:id="@+id/emptycustompage"
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      android:gravity="center"
-      android:orientation="vertical"
-      android:visibility="gone">
+        <LinearLayout
+            android:id="@+id/emptycustompage"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-      <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/custompage_zeroth_icon" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/custompage_zeroth_icon" />
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dgts__padding_title"
-        android:layout_marginBottom="@dimen/dgts__padding_title"
-        android:text="@string/add_a_page"
-        android:textColor="@color/zeroth_grey_title"
-        android:textSize="@dimen/dgts__title_text_size"
-        android:fontFamily="@font/semi_bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dgts__padding_title"
+                android:layout_marginBottom="@dimen/dgts__padding_title"
+                android:fontFamily="@font/semi_bold"
+                android:text="@string/add_a_page"
+                android:textColor="@color/zeroth_grey_title"
+                android:textSize="@dimen/dgts__title_text_size" />
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="8dp"
-        android:text="@string/use_custom_pages_to_describe_business"
-        android:textColor="@color/zeroth_grey"
-        android:textSize="15sp" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/use_custom_pages_to_describe_business"
+                android:textColor="@color/zeroth_grey"
+                android:textSize="15sp" />
+        </LinearLayout>
 
-    <LinearLayout
-      android:id="@+id/progress_custom_page"
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      android:gravity="center"
-      android:orientation="vertical"
-      android:visibility="gone">
+        <LinearLayout
+            android:id="@+id/progress_custom_page"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-      <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:indeterminateTintMode="src_atop"
-        android:indeterminateTint="@color/colorAccent"/>
-    </LinearLayout>
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/colorAccent"
+                android:indeterminateTintMode="src_atop" />
+        </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-      android:id="@+id/fab_custom_page"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="bottom|right"
-      android:layout_margin="16dp"
-      android:scaleType="fitCenter"
-      app:backgroundTint="@color/colorAccentLight"
-      app:srcCompat="@drawable/ic_add_white" />
-  </FrameLayout>
-</LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_custom_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:scaleType="fitCenter"
+            app:backgroundTint="@color/colorAccentLight"
+            app:srcCompat="@drawable/ic_add_white" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/child_container_custom_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+</RelativeLayout>
