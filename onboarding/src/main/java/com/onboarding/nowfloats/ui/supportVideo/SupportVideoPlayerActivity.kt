@@ -3,6 +3,7 @@ package com.onboarding.nowfloats.ui.supportVideo
 import android.os.Build
 import android.util.Log
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.framework.extensions.gone
@@ -56,6 +57,11 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
 
   override fun onCreateView() {
     super.onCreateView()
+    if (packageName.equals("com.jio.online", ignoreCase = true)) {
+      showShortToast(getString(R.string.coming_soon))
+      finish()
+      return
+    }
     initUI()
   }
 
