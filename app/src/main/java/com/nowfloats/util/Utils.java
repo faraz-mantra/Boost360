@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 import com.nowfloats.Login.UserSessionManager;
 import com.thinksity.R;
+import com.thinksity.Specific;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -432,12 +433,12 @@ public class Utils {
       if (session.getUserProfileEmail() != null) {
         intent.putExtra("email", session.getUserProfileEmail());
       } else {
-        intent.putExtra("email", "ria@nowfloats.com");
+        intent.putExtra("email", Specific.CONTACT_EMAIL_ID);
       }
       if (session.getUserPrimaryMobile() != null) {
         intent.putExtra("mobileNo", session.getUserPrimaryMobile());
       } else {
-        intent.putExtra("mobileNo", "9160004303");
+        intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID);
       }
       if (buyItemKey != null /*&& buyItemKey.isNotEmpty()*/)
         intent.putExtra("buyItemKey", buyItemKey);

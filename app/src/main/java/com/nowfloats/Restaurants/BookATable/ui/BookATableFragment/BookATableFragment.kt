@@ -38,6 +38,7 @@ import com.nowfloats.Restaurants.Interfaces.BookTableFragmentListener
 import com.nowfloats.util.Constants
 import com.nowfloats.util.Methods
 import com.thinksity.R
+import com.thinksity.Specific
 import com.thinksity.databinding.BookATableFragmentBinding
 import kotlinx.android.synthetic.main.book_a_table_fragment.*
 import kotlinx.android.synthetic.main.new_custome_app_bar.*
@@ -284,17 +285,17 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
     intent.putExtra("fpName", session!!.fpName)
     intent.putExtra("fpid", session!!.fpid)
     intent.putExtra("loginid", session!!.userProfileId)
-    intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets)
+    intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(session?.storeWidgets?: arrayListOf()))
     intent.putExtra("fpTag", session!!.fpTag)
     if (session!!.userProfileEmail != null) {
       intent.putExtra("email", session!!.userProfileEmail)
     } else {
-      intent.putExtra("email", "ria@nowfloats.com")
+      intent.putExtra("email", Specific.CONTACT_EMAIL_ID)
     }
     if (session!!.userPrimaryMobile != null) {
       intent.putExtra("mobileNo", session!!.userPrimaryMobile)
     } else {
-      intent.putExtra("mobileNo", "9160004303")
+      intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID)
     }
     intent.putExtra("profileUrl", session!!.fpLogo)
     intent.putExtra("buyItemKey", "BOOKTABLE")

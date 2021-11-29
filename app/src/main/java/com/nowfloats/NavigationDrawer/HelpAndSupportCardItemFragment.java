@@ -25,6 +25,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
+import com.thinksity.Specific;
 import com.webengage.sdk.android.WebEngage;
 import com.zopim.android.sdk.api.ZopimChat;
 import com.zopim.android.sdk.model.VisitorInfo;
@@ -32,6 +33,7 @@ import com.zopim.android.sdk.prechat.ZopimChatActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import zendesk.support.guide.HelpCenterActivity;
@@ -170,16 +172,16 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                         intent.putExtra("fpid", session.getFPID());
                         intent.putExtra("fpTag", session.getFpTag());
                         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
-                        intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
+                        intent.putStringArrayListExtra("userPurchsedWidgets", new ArrayList(session.getStoreWidgets()));
                         if (session.getUserProfileEmail() != null) {
                             intent.putExtra("email", session.getUserProfileEmail());
                         } else {
-                            intent.putExtra("email", "ria@nowfloats.com");
+                            intent.putExtra("email", Specific.CONTACT_EMAIL_ID);
                         }
                         if (session.getUserPrimaryMobile() != null) {
                             intent.putExtra("mobileNo", session.getUserPrimaryMobile());
                         } else {
-                            intent.putExtra("mobileNo", "9160004303");
+                            intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID);
                         }
                         intent.putExtra("profileUrl", session.getFPLogo());
                         intent.putExtra("buyItemKey", "CUSTOMERSUPPORT");
