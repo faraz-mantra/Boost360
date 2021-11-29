@@ -31,7 +31,7 @@ data class PremiumFeatureData(
   var promoBanners: ArrayList<PromoAcademyBanner>? = null,
   @SerializedName("academy_banners")
   var academyBanner: ArrayList<PromoAcademyBanner>? = null,
-  @SerializedName("rootaliasurl")
+  @SerializedName("rootAliasUrl")
   var rootaliasurl: Rootaliasurl? = null,
   @SerializedName("schemaid")
   var schemaid: String? = null,
