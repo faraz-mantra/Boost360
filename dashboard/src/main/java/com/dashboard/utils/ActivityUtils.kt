@@ -34,6 +34,7 @@ import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.getFileName
 import com.inventoryorder.utils.getUrlExtension
 import com.onboarding.nowfloats.constant.FragmentType
+import com.onboarding.nowfloats.constant.SupportVideoType
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentChannelActivity
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
 import java.util.*
@@ -1016,6 +1017,16 @@ fun AppCompatActivity.startLogoutActivity(event: String = BOOST_LOGOUT_CLICK) {
   try {
     WebEngageController.trackEvent(event, CLICK, TO_BE_ADDED)
     val i = Intent(this, Class.forName("com.nowfloats.helper.LogoutActivity"))
+    this.startActivity(i)
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun Context.startHelpSupportVideoActivity(supportType:String){
+  try {
+    val i = Intent(this, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
+    i.putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name, supportType)
     this.startActivity(i)
   } catch (e: Exception) {
     e.printStackTrace()

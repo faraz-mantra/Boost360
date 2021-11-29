@@ -1,6 +1,9 @@
 package com.onboarding.nowfloats.extensions
 
 import android.view.View
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.Animation
+import android.view.animation.TranslateAnimation
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import com.onboarding.nowfloats.BaseBoardingApplication.Companion.instance
@@ -43,4 +46,28 @@ fun fadeInTogether(first: View, second: View): Completable {
 fun tick(delaySecond: Int = 5): Completable {
   return Completable.timer(delaySecond.toLong(), TimeUnit.SECONDS)
 
+}
+
+fun View.playRightInAnimation() {
+  val inFromRight: Animation = TranslateAnimation(
+    Animation.RELATIVE_TO_PARENT, +1.0f,
+    Animation.RELATIVE_TO_PARENT, 0.0f,
+    Animation.RELATIVE_TO_PARENT, 0.0f,
+    Animation.RELATIVE_TO_PARENT, 0.0f
+  )
+  inFromRight.duration = 500
+  inFromRight.interpolator = AccelerateInterpolator()
+  this.startAnimation(inFromRight)
+}
+
+fun View.playLeftInAnimation() {
+  val inFromLeft: Animation = TranslateAnimation(
+    Animation.RELATIVE_TO_PARENT, -1.0f,
+    Animation.RELATIVE_TO_PARENT, 0.0f,
+    Animation.RELATIVE_TO_PARENT, 0.0f,
+    Animation.RELATIVE_TO_PARENT, 0.0f
+  )
+  inFromLeft.duration = 500
+  inFromLeft.interpolator = AccelerateInterpolator()
+  this.startAnimation(inFromLeft)
 }

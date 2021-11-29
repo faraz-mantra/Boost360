@@ -4,12 +4,15 @@ import android.content.ClipDescription
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
@@ -41,7 +44,6 @@ import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatus
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelsType
 import com.onboarding.nowfloats.model.digitalCard.CardData
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.addPlus91
-import com.onboarding.nowfloats.utils.viewToBitmap
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
 import dev.patrickgold.florisboard.customization.adapter.FeaturesEnum
@@ -63,8 +65,8 @@ import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
+import android.view.View.MeasureSpec
 
-// keyborad ImePresenterImpl
 
 class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : OnItemClickListener {
 
@@ -72,6 +74,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     onRegisterInputView(inputView, florisBoard)
   }
 
+  private var businessCardList: ArrayList<DigitalCardDataKeyboard>? = null
   private val TAG = "BusinessFeaturesManager"
   private lateinit var binding: BusinessFeaturesLayoutBinding
   private var sharedPref: SharedPrefUtil = SharedPrefUtil.fromBoostPref().getsBoostPref(FlorisApplication.instance)
@@ -143,6 +146,8 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       it.offscreenPageLimit = 3
       it.setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
     }
+    binding.indicatorBcard.setViewPager2(binding.viewPagerProfile)
+
 
     binding.staffRvList.also {
       it.layoutManager = GridLayoutManager(mContext, 2, GridLayoutManager.VERTICAL, false)
@@ -367,6 +372,8 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     binding.clSelectionLayout.visibility = if (isIII) View.VISIBLE else View.GONE
     binding.rvListPhotos.visibility = if (isIII) View.VISIBLE else View.GONE
     binding.businessCardView.visibility = if (isIV) View.VISIBLE else View.GONE
+    binding.bcardVpLayout.visibility = if (isIV) View.VISIBLE else View.GONE
+
     binding.staffRvList.visibility = if (isV) View.VISIBLE else View.GONE
   }
 
@@ -528,19 +535,19 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
           else -> ""
         }
       }
-      val cardList = ArrayList<DigitalCardDataKeyboard>()
-      cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_ONE_ITEM.ordinal))
-      cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_FOUR_ITEM.ordinal))
-      cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_SIX_ITEM.ordinal))
-      cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_EIGHT_ITEM.ordinal))
-      cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_TWO_ITEM.ordinal))
-      cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_THREE_ITEM.ordinal))
-      cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_FIVE_ITEM.ordinal))
-      cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_SEVEN_ITEM.ordinal))
-      cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_NINE_ITEM.ordinal))
-      cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_TEN_ITEM.ordinal))
+      businessCardList = ArrayList<DigitalCardDataKeyboard>()
+      businessCardList?.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_ONE_ITEM.ordinal))
+      businessCardList?.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_FOUR_ITEM.ordinal))
+      businessCardList?.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_SIX_ITEM.ordinal))
+      businessCardList?.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_EIGHT_ITEM.ordinal))
+      businessCardList?.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_TWO_ITEM.ordinal))
+      businessCardList?.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_THREE_ITEM.ordinal))
+      businessCardList?.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_FIVE_ITEM.ordinal))
+      businessCardList?.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_SEVEN_ITEM.ordinal))
+      businessCardList?.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_NINE_ITEM.ordinal))
+      businessCardList?.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_TEN_ITEM.ordinal))
 
-      this.adapterBusinessCard.notifyNewList(cardList)
+      this.adapterBusinessCard.notifyNewList(businessCardList!!)
       binding.businessFeatureProgress.gone()
       binding.btnShareImageBusiness.setOnClickListener { shareImageTextBusiness() }
       binding.btnShareImageTextBusiness.setOnClickListener {
@@ -586,10 +593,44 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
 
 
   private fun shareImageTextBusiness(shareText: String = "") {
-    val bitmap = binding.viewPagerProfile.getChildAt(0)?.let { viewToBitmap(it) }
+    val data = businessCardList?.get(binding.viewPagerProfile.currentItem)
+    var bitmap = BusinessCardUtil.bitmapOfBusinessCard0(data)
+    when (data?.recyclerViewType) {
+      FeaturesEnum.VISITING_CARD_ONE_ITEM.ordinal -> {
+        bitmap = BusinessCardUtil.bitmapOfBusinessCard0(data)
+      }
+      FeaturesEnum.VISITING_CARD_TWO_ITEM.ordinal -> {
+        bitmap = BusinessCardUtil.bitmapOfBusinessCard1(data)
+      }
+      FeaturesEnum.VISITING_CARD_THREE_ITEM.ordinal -> {
+        bitmap = BusinessCardUtil.bitmapOfBusinessCard2(data)
+      }
+      FeaturesEnum.VISITING_CARD_FOUR_ITEM.ordinal -> {
+        bitmap = BusinessCardUtil.bitmapOfBusinessCard3(data)
+      }
+      FeaturesEnum.VISITING_CARD_FIVE_ITEM.ordinal -> {
+        bitmap = BusinessCardUtil.bitmapOfBusinessCard4(data)
+      }
+      FeaturesEnum.VISITING_CARD_SIX_ITEM.ordinal -> {
+        bitmap = BusinessCardUtil.bitmapOfBusinessCard5(data)
+      }
+      FeaturesEnum.VISITING_CARD_SEVEN_ITEM.ordinal -> {
+        bitmap = BusinessCardUtil.bitmapOfBusinessCard6(data)
+      }
+      FeaturesEnum.VISITING_CARD_EIGHT_ITEM.ordinal -> {
+        bitmap = BusinessCardUtil.bitmapOfBusinessCard7(data)
+      }
+      FeaturesEnum.VISITING_CARD_NINE_ITEM.ordinal -> {
+        bitmap = BusinessCardUtil.bitmapOfBusinessCard8(data)
+      }
+      FeaturesEnum.VISITING_CARD_TEN_ITEM.ordinal -> {
+        bitmap = BusinessCardUtil.bitmapOfBusinessCard9(data)
+      }
+
+    }
+
     try {
-      val cropBitmap = bitmap?.let { Bitmap.createBitmap(it, 40, 0, bitmap.width - 80, bitmap.height) }
-      val path = MediaStore.Images.Media.insertImage(mContext.contentResolver, cropBitmap, "boost_${Date().time}", null)
+      val path = MediaStore.Images.Media.insertImage(mContext.contentResolver, bitmap, "boost_${Date().time}", null)
       val imageUri: Uri = Uri.parse(path)
       shareUriWithText(imageUri, shareText)
     } catch (e: Exception) {
@@ -687,18 +728,57 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     val float = item as? FloatUpdate
     if (NetworkUtils.isNetworkConnected()) {
       val shareText = String.format("*%s*", float?.message)
-      pathToUriGet(float?.imageUri, shareText, BusinessFeatureEnum.UPDATES)
+      shareUpdates(float?.message!!, float.url, session?.userProfileMobile, float.imageUri)
+      pathToUriGet(float.imageUri, shareText, BusinessFeatureEnum.UPDATES)
     } else Toast.makeText(mContext, mContext.getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
   }
 
   private fun onClickedShareInventory(item: BaseRecyclerItem) {
-    Log.i(TAG, "onClickedShareInventory: ")
     val product = item as? Product
     if (NetworkUtils.isNetworkConnected()) {
       val shareText = String.format("*%s*\n*%s* %s\n\n-------------\n%s\n", product?.name?.trim { it <= ' ' },
         "${product?.getProductDiscountedPriceOrPrice()}", "${if (product?.discountAmount?.toDoubleOrNull() ?: 0.0 != 0.0) "~${product?.getProductPrice()}~" else ""}", product?.description?.trim { it <= ' ' })
-      pathToUriGet(product?.imageUri, shareText, BusinessFeatureEnum.INVENTORY_SERVICE)
+
+      shareProduct(product?.name, product?.getDiscountedPrice()?.toString(), product?.productUrl, session?.userProfileMobile, product?.imageUri)
     } else Toast.makeText(mContext, mContext.getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
+  }
+
+  fun shareProduct(name: String? = null, price: String? = null, link: String? = null, vmn: String? = null, imageUri: String? = null, ) {
+    val templateBuilder = StringBuilder()
+    if (name.isNullOrBlank().not()) {
+      templateBuilder.append("🆕 *Item name:* $name").append("\n")
+    }
+    if (price.isNullOrBlank().not()) {
+      templateBuilder.append("🏷️ *Price:* Rs.$price").append("\n")
+    }
+    if (vmn.isNullOrBlank().not()) {
+      templateBuilder.append("📞 Feel free to call $vmn if you need any help. ").append("\n")
+    }
+    if (link.isNullOrBlank().not()) {
+      templateBuilder.append("👉🏼 *Place your order here:* $link")
+    }
+    pathToUriGet(imageUri, templateBuilder.toString(), BusinessFeatureEnum.INVENTORY_SERVICE)
+
+  }
+
+  fun shareUpdates(updateContent: String, link: String?, vmn: String?, imageUri: String? = null) {
+    val subDomain = if (isService(session?.fP_AppExperienceCode)) "all-services" else "all-products"
+
+    val catalogLink = session?.getDomainName() + "/" + subDomain
+
+    val templateBuilder = StringBuilder()
+    if (updateContent.isBlank().not() && link.isNullOrBlank().not()) {
+      templateBuilder.append("👋🏼 Hey there!")
+      templateBuilder.append("${ContentSharing.truncateString(updateContent, 100)}: Read more $link").append("\n")
+    }
+    if (catalogLink.isBlank().not()) {
+      templateBuilder.append("🏷️ Check our online catalogue, $catalogLink").append("\n")
+    }
+    if (vmn.isNullOrBlank().not()) {
+      templateBuilder.append("📞 Feel free to call $vmn if you need any help. ")
+    }
+    pathToUriGet(imageUri, templateBuilder.toString(), BusinessFeatureEnum.UPDATES)
+
   }
 
   private fun pathToUriGet(imageUri: String?, shareText: String, type: BusinessFeatureEnum) {

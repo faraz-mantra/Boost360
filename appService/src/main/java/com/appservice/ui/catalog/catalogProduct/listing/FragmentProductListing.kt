@@ -13,6 +13,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -43,7 +44,9 @@ import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.*
+import com.onboarding.nowfloats.constant.SupportVideoType
 import java.util.*
+
 
 class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, ProductViewModel>(), RecyclerItemClickListener, AppOnZeroCaseClicked {
 
@@ -60,7 +63,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
   private var userProfileId: String? = null
   private var layoutManagerN: LinearLayoutManager? = null
   private var fragmentZeroCase: AppFragmentZeroCase? = null
-
+  private var isZeroCaseCalled = true
 
   /* Paging */
   private var isLoadingD = false
@@ -199,16 +202,18 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
   private fun setEmptyView(visibility: Int) {
     when (visibility) {
       View.GONE -> {
-        setHasOptionsMenu(true)
+        isZeroCaseCalled = false
         binding?.mainlayout?.visible()
         binding?.childContainer?.gone()
       }
       View.VISIBLE -> {
-        setHasOptionsMenu(false)
+        isZeroCaseCalled = true
         binding?.mainlayout?.gone()
         binding?.childContainer?.visible()
       }
     }
+    setHasOptionsMenu(true)
+    baseActivity.invalidateOptionsMenu()
     if (visibility == View.VISIBLE) setListingView(View.GONE) else setListingView(View.VISIBLE)
   }
 
@@ -327,10 +332,21 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     inflater.inflate(R.menu.menu_product_listing, menu)
   }
 
+  override fun onPrepareOptionsMenu(menu: Menu) {
+    super.onPrepareOptionsMenu(menu)
+    menu.findItem(R.id.action_product_configuration).isVisible = isZeroCaseCalled.not()
+    menu.findItem(R.id.menu_item_help).isVisible = isZeroCaseCalled
+  }
+
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.action_product_configuration -> {
         startFragmentActivity(FragmentType.ECOMMERCE_SETTINGS)
+        return true
+      }
+      R.id.menu_item_help -> {
+        startActivity(Intent(baseActivity, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
+          .putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name, SupportVideoType.PRODUCT_CATALOGUE.value))
         return true
       }
       else -> super.onOptionsItemSelected(item)

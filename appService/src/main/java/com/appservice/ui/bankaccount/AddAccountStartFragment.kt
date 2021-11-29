@@ -16,6 +16,7 @@ import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
+import com.onboarding.nowfloats.constant.SupportVideoType
 
 class AddAccountStartFragment : AppBaseFragment<FragmentAddAccountStartBinding, BaseViewModel>(), AppOnZeroCaseClicked {
   private val TAG = "AddAccountStartFragment"
@@ -73,7 +74,13 @@ class AddAccountStartFragment : AppBaseFragment<FragmentAddAccountStartBinding, 
   }
 
   override fun secondaryButtonClicked() {
-    Toast.makeText(activity, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
+    //Toast.makeText(this, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
+    try {
+      startActivity(Intent(baseActivity, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
+          .putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name, SupportVideoType.PAYMENT_GATEWAY.value))
+    } catch (e: ClassNotFoundException) {
+      e.printStackTrace()
+    }
   }
 
   override fun ternaryButtonClicked() {
