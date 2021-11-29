@@ -24,6 +24,11 @@ public class ReferralTransActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    if (getPackageName().equalsIgnoreCase("com.jio.online")) {
+      Toast.makeText(this, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
+      this.finish();
+      return;
+    }
     session = new UserSessionManager(getApplicationContext(), ReferralTransActivity.this);
     String email = "";
     String number = "";
