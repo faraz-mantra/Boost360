@@ -644,7 +644,9 @@
   <string name="settings_twitter_url_id"></string>
   <string name="google_form_help_business_boost"></string>
 
-  <string name="google_map_key" translatable="false">AIzaSyD6mt4XepThpyfQg7AtV9WX25SnLlfBwnc</string>
+  <string name="google_map_key" translatable="false">AIzaSyD6mt4XepThpyfQg7AtV9WX25SnLlfBwnc</string> <!--place api-->
+
+  <string name="sentry_url">https://59f88b513d054d9a9e09fd0afef2b9f3@o282435.ingest.sentry.io/6085786</string>
 
   <!--   florisboard Keyboard-->
   <string name="app_name_k">JioOnline keyboard</string>
