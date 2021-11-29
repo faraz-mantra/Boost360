@@ -288,19 +288,26 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     if (actionType == RecyclerViewActionType.SERVICE_WHATS_APP_SHARE.ordinal) {
       shareProduct = item as? ItemsItem
       shareType = true
-      if (checkStoragePermission())
+      if (checkStoragePermission()) {
+        var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
+        if (fpDetails.isNullOrEmpty()) fpDetails = "Services"
         ContentSharing.shareProduct(
-          shareProduct?.name, shareProduct?.price.toString(), "${domainName}/all-services", session?.fPPrimaryContactNumber,
+          shareProduct?.name, shareProduct?.discountedPrice?.toString() ?: "0.0", "${domainName}/all-$fpDetails", session?.fPPrimaryContactNumber,
           shareProduct?.image, true, isService = true, activity = requireActivity()
         )
+      }
     }
     if (actionType == RecyclerViewActionType.SERVICE_DATA_SHARE_CLICK.ordinal) {
       shareProduct = item as? ItemsItem
       shareType = false
-      if (checkStoragePermission()) ContentSharing.shareProduct(
-        shareProduct?.name, shareProduct?.price.toString(), "${domainName}/all-services", session?.fPPrimaryContactNumber,
-        shareProduct?.image, isService = true, activity = requireActivity()
-      )
+      if (checkStoragePermission()) {
+        var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
+        if (fpDetails.isNullOrEmpty()) fpDetails = "Services"
+        ContentSharing.shareProduct(
+          shareProduct?.name, shareProduct?.discountedPrice?.toString() ?: "0.0", "${domainName}/all-$fpDetails", session?.fPPrimaryContactNumber,
+          shareProduct?.image, isService = true, activity = requireActivity()
+        )
+      }
     }
   }
 

@@ -131,4 +131,7 @@
   <string name="lets_add_food_item_to_this_menu">Let\'s add food items to your menu</string>
   <string name="no_call_tracked_yet">No call tracked yet!</string>
 
+  <string name="boost_360_file">boost360 File</string>
+  <string name="boost_file">boost_file</string>
+
 </resources>
