@@ -68,15 +68,13 @@ import kotlin.collections.ArrayList
 import android.view.View.MeasureSpec
 
 
-// keyborad ImePresenterImpl
-
 class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : OnItemClickListener {
 
   init {
     onRegisterInputView(inputView, florisBoard)
   }
 
-  private var businessCardList: ArrayList<DigitalCardDataKeyboard>?=null
+  private var businessCardList: ArrayList<DigitalCardDataKeyboard>? = null
   private val TAG = "BusinessFeaturesManager"
   private lateinit var binding: BusinessFeaturesLayoutBinding
   private var sharedPref: SharedPrefUtil = SharedPrefUtil.fromBoostPref().getsBoostPref(FlorisApplication.instance)
@@ -597,35 +595,35 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   private fun shareImageTextBusiness(shareText: String = "") {
     val data = businessCardList?.get(binding.viewPagerProfile.currentItem)
     var bitmap = BusinessCardUtil.bitmapOfBusinessCard0(data)
-    when(data?.recyclerViewType){
-      FeaturesEnum.VISITING_CARD_ONE_ITEM.ordinal->{
+    when (data?.recyclerViewType) {
+      FeaturesEnum.VISITING_CARD_ONE_ITEM.ordinal -> {
         bitmap = BusinessCardUtil.bitmapOfBusinessCard0(data)
       }
-      FeaturesEnum.VISITING_CARD_TWO_ITEM.ordinal->{
+      FeaturesEnum.VISITING_CARD_TWO_ITEM.ordinal -> {
         bitmap = BusinessCardUtil.bitmapOfBusinessCard1(data)
       }
-      FeaturesEnum.VISITING_CARD_THREE_ITEM.ordinal->{
+      FeaturesEnum.VISITING_CARD_THREE_ITEM.ordinal -> {
         bitmap = BusinessCardUtil.bitmapOfBusinessCard2(data)
       }
-      FeaturesEnum.VISITING_CARD_FOUR_ITEM.ordinal->{
+      FeaturesEnum.VISITING_CARD_FOUR_ITEM.ordinal -> {
         bitmap = BusinessCardUtil.bitmapOfBusinessCard3(data)
       }
-      FeaturesEnum.VISITING_CARD_FIVE_ITEM.ordinal->{
+      FeaturesEnum.VISITING_CARD_FIVE_ITEM.ordinal -> {
         bitmap = BusinessCardUtil.bitmapOfBusinessCard4(data)
       }
-      FeaturesEnum.VISITING_CARD_SIX_ITEM.ordinal->{
+      FeaturesEnum.VISITING_CARD_SIX_ITEM.ordinal -> {
         bitmap = BusinessCardUtil.bitmapOfBusinessCard5(data)
       }
-      FeaturesEnum.VISITING_CARD_SEVEN_ITEM.ordinal->{
+      FeaturesEnum.VISITING_CARD_SEVEN_ITEM.ordinal -> {
         bitmap = BusinessCardUtil.bitmapOfBusinessCard6(data)
       }
-      FeaturesEnum.VISITING_CARD_EIGHT_ITEM.ordinal->{
+      FeaturesEnum.VISITING_CARD_EIGHT_ITEM.ordinal -> {
         bitmap = BusinessCardUtil.bitmapOfBusinessCard7(data)
       }
-      FeaturesEnum.VISITING_CARD_NINE_ITEM.ordinal->{
+      FeaturesEnum.VISITING_CARD_NINE_ITEM.ordinal -> {
         bitmap = BusinessCardUtil.bitmapOfBusinessCard8(data)
       }
-      FeaturesEnum.VISITING_CARD_TEN_ITEM.ordinal->{
+      FeaturesEnum.VISITING_CARD_TEN_ITEM.ordinal -> {
         bitmap = BusinessCardUtil.bitmapOfBusinessCard9(data)
       }
 
@@ -730,26 +728,22 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     val float = item as? FloatUpdate
     if (NetworkUtils.isNetworkConnected()) {
       val shareText = String.format("*%s*", float?.message)
-      shareUpdates(float?.message!!,float?.url,session?.userProfileMobile,float?.imageUri)
-      pathToUriGet(float?.imageUri, shareText, BusinessFeatureEnum.UPDATES)
+      shareUpdates(float?.message!!, float.url, session?.userProfileMobile, float.imageUri)
+      pathToUriGet(float.imageUri, shareText, BusinessFeatureEnum.UPDATES)
     } else Toast.makeText(mContext, mContext.getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
   }
 
   private fun onClickedShareInventory(item: BaseRecyclerItem) {
-    Log.i(TAG, "onClickedShareInventory: ")
     val product = item as? Product
     if (NetworkUtils.isNetworkConnected()) {
       val shareText = String.format("*%s*\n*%s* %s\n\n-------------\n%s\n", product?.name?.trim { it <= ' ' },
         "${product?.getProductDiscountedPriceOrPrice()}", "${if (product?.discountAmount?.toDoubleOrNull() ?: 0.0 != 0.0) "~${product?.getProductPrice()}~" else ""}", product?.description?.trim { it <= ' ' })
 
-      shareProduct(product?.name,product?.price,product?.productUrl
-        ,session?.userProfileMobile,product?.imageUri)
+      shareProduct(product?.name, product?.getDiscountedPrice()?.toString(), product?.productUrl, session?.userProfileMobile, product?.imageUri)
     } else Toast.makeText(mContext, mContext.getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
   }
 
-  fun shareProduct(
-    name: String? = null, price: String? = null, link: String? = null, vmn: String? = null, imageUri: String? = null,
-  ) {
+  fun shareProduct(name: String? = null, price: String? = null, link: String? = null, vmn: String? = null, imageUri: String? = null, ) {
     val templateBuilder = StringBuilder()
     if (name.isNullOrBlank().not()) {
       templateBuilder.append("🆕 *Item name:* $name").append("\n")
@@ -767,19 +761,15 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
 
   }
 
-  fun shareUpdates(
-    updateContent: String, link: String?,
-    vmn: String?, imageUri: String? = null
-  ) {
+  fun shareUpdates(updateContent: String, link: String?, vmn: String?, imageUri: String? = null) {
     val subDomain = if (isService(session?.fP_AppExperienceCode)) "all-services" else "all-products"
 
-    val catalogLink= session?.getDomainName() + "/" + subDomain
+    val catalogLink = session?.getDomainName() + "/" + subDomain
 
     val templateBuilder = StringBuilder()
     if (updateContent.isBlank().not() && link.isNullOrBlank().not()) {
       templateBuilder.append("👋🏼 Hey there!")
-      templateBuilder.append("${ContentSharing.truncateString(updateContent, 100)}: Read more $link")
-        .append("\n")
+      templateBuilder.append("${ContentSharing.truncateString(updateContent, 100)}: Read more $link").append("\n")
     }
     if (catalogLink.isBlank().not()) {
       templateBuilder.append("🏷️ Check our online catalogue, $catalogLink").append("\n")
