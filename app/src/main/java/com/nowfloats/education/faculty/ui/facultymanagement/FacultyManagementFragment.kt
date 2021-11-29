@@ -37,7 +37,6 @@ import com.nowfloats.education.helper.Constants.SUCCESS
 import com.nowfloats.education.helper.ItemClickEventListener
 import com.nowfloats.util.Utils
 import com.thinksity.R
-import com.thinksity.Specific
 import com.thinksity.databinding.FacultyManagementFragmentBinding
 import org.koin.android.ext.android.inject
 import java.util.ArrayList
@@ -236,12 +235,12 @@ class FacultyManagementFragment : BaseFragment(), ItemClickEventListener, AppOnZ
       if (it.userProfileEmail != null) {
         intent.putExtra("email", it.userProfileEmail)
       } else {
-        intent.putExtra("email", Specific.CONTACT_EMAIL_ID)
+        intent.putExtra("email", getString(R.string.ria_customer_mail))
       }
       if (it.userPrimaryMobile != null) {
         intent.putExtra("mobileNo", it.userPrimaryMobile)
       } else {
-        intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID)
+        intent.putExtra("mobileNo", getString(R.string.ria_customer_number))
       }
       intent.putExtra("profileUrl", it.fpLogo)
       intent.putExtra("buyItemKey", Constants.FACULTY_MANAGEMENT_FEATURE)

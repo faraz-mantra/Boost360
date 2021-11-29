@@ -29,7 +29,6 @@ import com.nowfloats.hotel.API.model.UpdateTripAdvisorData.UpdateTripAdvisorData
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
-import com.thinksity.Specific;
 
 import org.json.JSONObject;
 
@@ -365,12 +364,12 @@ public class TripAdvisorActivity extends AppCompatActivity {
         if (session.getFPEmail() != null) {
             intent.putExtra("email", session.getFPEmail());
         } else {
-            intent.putExtra("email", Specific.CONTACT_EMAIL_ID);
+            intent.putExtra("email", getString(R.string.ria_customer_mail));
         }
         if (session.getUserPrimaryMobile() != null) {
             intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
-            intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID);
+            intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
         }
         intent.putExtra("profileUrl", session.getFPLogo());
         intent.putExtra("buyItemKey", "TRIPADVISOR-REVIEWS");

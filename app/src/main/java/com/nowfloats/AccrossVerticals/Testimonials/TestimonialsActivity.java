@@ -42,7 +42,6 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.onboarding.nowfloats.constant.SupportVideoType;
 import com.thinksity.R;
-import com.thinksity.Specific;
 import com.thinksity.databinding.ActivityTestimonialsBinding;
 
 import org.json.JSONObject;
@@ -425,12 +424,12 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         if (session.getUserProfileEmail() != null) {
             intent.putExtra("email", session.getUserProfileEmail());
         } else {
-            intent.putExtra("email", Specific.CONTACT_EMAIL_ID);
+            intent.putExtra("email", getString(R.string.ria_customer_mail));
         }
         if (session.getUserPrimaryMobile() != null) {
             intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
-            intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID);
+            intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
         }
         intent.putExtra("profileUrl", session.getFPLogo());
         intent.putExtra("buyItemKey", WIDGET_KEY);

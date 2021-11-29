@@ -237,12 +237,12 @@ class ToppersFragment : BaseFragment<ToppersFragmentBinding, BaseViewModel>(), I
       if (it.userProfileEmail != null) {
         intent.putExtra("email", it.userProfileEmail)
       } else {
-        intent.putExtra("email", Specific.CONTACT_EMAIL_ID)
+        intent.putExtra("email", getString(R.string.ria_customer_mail))
       }
       if (it.userPrimaryMobile != null) {
         intent.putExtra("mobileNo", it.userPrimaryMobile)
       } else {
-        intent.putExtra("mobileNo", Specific.CONTACT_PHONE_ID)
+        intent.putExtra("mobileNo", getString(R.string.ria_customer_number))
       }
       intent.putExtra("profileUrl", it.fpLogo)
       intent.putExtra("buyItemKey", Constants.TOPPER_FEATURE)
