@@ -22,8 +22,8 @@ data class DashboardBannerData(
 //    var kid: String? = null,
   @SerializedName("marketplace_banners")
   var marketplaceBanners: ArrayList<DashboardMarketplaceBanner>? = null,
-//    @SerializedName("rootaliasurl")
-//    var rootaliasurl: Rootaliasurl? = null,
+//    @SerializedName("rootAliasUrl")
+//    var rootAliasUrl: RootAliasUrl? = null,
 //    @SerializedName("schemaid")
 //    var schemaid: String? = null,
 //    @SerializedName("updatedon")
