@@ -11,6 +11,8 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.boost.presignup.utils.DynamicLinkParams
 import com.boost.presignup.utils.FirebaseDynamicLinksManager
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureNewOnBoardingFlowEnable
 import com.framework.pref.UserSessionManager
 import com.framework.utils.AppsFlyerUtils
 import com.onboarding.nowfloats.managers.NavigatorManager
@@ -66,6 +68,7 @@ class SplashActivity : AppCompatActivity() {
   }
 
   private fun onCreateView() {
+    FirebaseRemoteConfigUtil.initRemoteConfigData(this)
     if (session?.isUserLoggedIn == true && deepLinkViewType.isNotEmpty()) {
       try {
         val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.LoaderActivity"))
@@ -133,9 +136,11 @@ class SplashActivity : AppCompatActivity() {
 
   private fun startNewSignIn() {
     try {
-      /*val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))*/
-      val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity"))
-      intent.putExtra("FRAGMENT_TYPE", 1) // 1 stands for Intro Screen ordinal from FragmentType in Presignin constants
+      val intent : Intent = if (featureNewOnBoardingFlowEnable())
+        Intent(applicationContext, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity"))
+      else
+        Intent(applicationContext, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
+      intent.putExtra("FRAGMENT_TYPE", 0) // 0 stands for New screen Enter Phone Number ordinal from FragmentType in Presignin constants
       startActivity(intent)
       finish()
     } catch (e: Exception) {
