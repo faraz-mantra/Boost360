@@ -241,11 +241,10 @@
       app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
-        android:layout_margin="8dp"
       android:id="@+id/business_card_view"
       android:layout_width="match_parent"
       android:layout_height="0dp"
-        android:visibility="gone"
+      android:visibility="gone"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
@@ -311,19 +310,14 @@
 
       </com.framework.views.customViews.CustomCardView>
 
-    </RelativeLayout>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/bcard_vp_layout"
+      <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:weightSum="1"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/size_4"
         android:layout_marginBottom="@dimen/size_34"
         android:orientation="vertical">
 
-      <androidx.viewpager2.widget.ViewPager2
-          android:layout_marginTop="12dp"
+        <androidx.viewpager2.widget.ViewPager2
           android:id="@+id/view_pager_profile"
           android:layout_width="match_parent"
           android:layout_height="0dp"
@@ -333,22 +327,8 @@
           android:focusable="true"
           android:focusableInTouchMode="true"
           android:orientation="horizontal" />
-
-      <com.framework.views.dotsindicator.DotsIndicator
-          android:id="@+id/indicator_bcard"
-          android:layout_marginTop="6dp"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:layout_marginBottom="@dimen/size_25"
-          app:dotsSpacing="2dp"
-          app:dotsColor="@color/black_4a4a4a_30"
-          app:dotsCornerRadius="@dimen/_6dp"
-          app:dotsSize="@dimen/size_6"
-          app:dotsWidthFactor="4"
-          app:progressMode="false"
-          app:selectedDotColor="@color/accent_blue" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </RelativeLayout>
 
     <ProgressBar
       android:id="@+id/business_feature_progress"
