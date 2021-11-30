@@ -11,8 +11,7 @@ import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerViewHolder
 import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
 import dev.patrickgold.florisboard.customization.model.response.DigitalCardDataKeyboard
 
-class VisitingCardOneViewHolder(binding: ItemVisitingCardOneBinding, val listener: OnItemClickListener?) :
-  BaseRecyclerViewHolder<ItemVisitingCardOneBinding>(binding) {
+class VisitingCardOneViewHolder(binding: ItemVisitingCardOneBinding, val listener: OnItemClickListener?) : BaseRecyclerViewHolder<ItemVisitingCardOneBinding>(binding) {
 
   override fun bindTo(position: Int, item: BaseRecyclerItem?) {
     val data = (item as? DigitalCardDataKeyboard)?.cardData ?: return
