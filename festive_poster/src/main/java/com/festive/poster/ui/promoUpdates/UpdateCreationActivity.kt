@@ -1,24 +1,15 @@
-package com.example.template.views
+package com.festive.poster.ui.promoUpdates
 
-import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import com.example.template.base.AppBaseActivity
-import com.example.template.R
-import com.example.template.databinding.ActivityUpdateCreationBinding
-import com.example.template.models.SocialConnModel
-import com.example.template.recyclerView.AppBaseRecyclerViewAdapter
-import com.framework.base.BaseActivity
+import com.festive.poster.R
+import com.festive.poster.base.AppBaseActivity
+import com.festive.poster.databinding.ActivityUpdateCreationBinding
+import com.festive.poster.models.promoModele.SocialConnModel
+import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.framework.models.BaseViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 
-
-
-
 class UpdateCreationActivity : AppBaseActivity<ActivityUpdateCreationBinding, BaseViewModel>() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun getLayout(): Int {
         return R.layout.activity_update_creation
@@ -66,7 +57,6 @@ class UpdateCreationActivity : AppBaseActivity<ActivityUpdateCreationBinding, Ba
             TodaysPickFragment.newInstance(),
             BrowseAllTemplateFragment.newInstance(),
             CreatePostFragment.newInstance()
-
         )
         val viewPagerAdapter = TabAdapter(fragmentList, this)
         binding?.viewPager?.apply {

@@ -10,11 +10,12 @@ enum class RecyclerViewItemType {
 
   @LayoutRes
   fun getLayout(): Int {
-    return when (this) {
+    /*return when (this) {
       TODAYS_PICK_TEMPLATE_VIEW -> R.layout.list_item_todays_pick_template
       TEMPLATE_VIEW -> R.layout.list_item_template
       SOCIAL_CONN->R.layout.list_item_social_conn
 
-    }
+    }*/
+    return 0
   }
 }

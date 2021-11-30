@@ -10,10 +10,10 @@ import com.framework.models.BaseViewModel
 
 abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseFragment<Binding, ViewModel>() {
 
-  private var progressView: ProgressDialog? = null
+  //private var progressView: ProgressDialog? = null
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    progressView = ProgressDialog.newInstance()
+    //progressView = ProgressDialog.newInstance()
     return super.onCreateView(inflater, container, savedInstanceState)
   }
 
@@ -21,12 +21,12 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
   }
 
   protected open fun hideProgress() {
-    progressView?.hideProgress()
+    //progressView?.hideProgress()
   }
 
   protected open fun showProgress(title: String? = "Please wait...", cancelable: Boolean? = false) {
-    title?.let { progressView?.setTitle(it) }
-    cancelable?.let { progressView?.isCancelable = it }
-    activity?.let { progressView?.showProgress(it.supportFragmentManager) }
+    //title?.let { progressView?.setTitle(it) }
+    //cancelable?.let { progressView?.isCancelable = it }
+    //activity?.let { progressView?.showProgress(it.supportFragmentManager) }
   }
 }

@@ -1,9 +1,9 @@
-package com.example.template.views
+package com.festive.poster.ui.promoUpdates
 
 import android.os.Bundle
-import com.example.template.base.AppBaseFragment
-import com.example.template.R
-import com.example.template.databinding.FragmentTodaysPickBinding
+import com.festive.poster.R
+import com.festive.poster.base.AppBaseFragment
+import com.festive.poster.databinding.FragmentTodaysPickBinding
 import com.framework.models.BaseViewModel
 
 class BrowseAllTemplateFragment: AppBaseFragment<FragmentTodaysPickBinding, BaseViewModel>() {

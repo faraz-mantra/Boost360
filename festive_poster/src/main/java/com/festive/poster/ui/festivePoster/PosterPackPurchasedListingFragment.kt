@@ -1,4 +1,4 @@
-package com.festive.poster.ui
+package com.festive.poster.ui.festivePoster
 
 import android.os.Bundle
 import android.view.View
@@ -16,11 +16,8 @@ import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.framework.base.BaseActivity
-import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
-import com.framework.utils.convertStringToList
 import com.framework.utils.convertStringToObj
-import com.framework.utils.toArrayList
 import com.google.gson.Gson
 
 class PosterPackPurchasedListingFragment: AppBaseFragment<FragmentPosterPackPurchasedBinding, BaseViewModel>(),RecyclerItemClickListener {
@@ -53,7 +50,9 @@ class PosterPackPurchasedListingFragment: AppBaseFragment<FragmentPosterPackPurc
         sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
 
         setOnClickListener(binding?.buyTemplates)
-        val jsonList = convertStringToObj<ArrayList<PosterPackModel>>(arguments?.getString(BK_PACK_LIST_JSON)?:"")
+        val jsonList = convertStringToObj<ArrayList<PosterPackModel>>(arguments?.getString(
+            BK_PACK_LIST_JSON
+        )?:"")
         convertToPurchasedList(jsonList)
         setupList()
     }
@@ -117,7 +116,8 @@ class PosterPackPurchasedListingFragment: AppBaseFragment<FragmentPosterPackPurc
             RecyclerViewActionType.POSTER_PACK_PURCHASED_CLICK.ordinal->{
                 sharedViewModel?.selectedPosterPack = item as PosterPackModel
                 sharedViewModel?.keyValueSaved?.value=null
-                addFragment(R.id.container,PosterListFragment.newInstance(item.tagsModel.tag),true,true)
+                addFragment(R.id.container,
+                    PosterListFragment.newInstance(item.tagsModel.tag),true,true)
             }
         }
     }

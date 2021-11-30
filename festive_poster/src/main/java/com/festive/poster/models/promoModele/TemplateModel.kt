@@ -1,9 +1,8 @@
-package com.example.template.models
+package com.festive.poster.models.promoModele
 
-import com.example.template.recyclerView.AppBaseRecyclerViewItem
-import com.example.template.R
+import com.festive.poster.R
+import com.festive.poster.recyclerView.AppBaseRecyclerViewItem
 
-/*
 data class TemplateModel(
     var imgUrl:String?=null,
     var desc:String?=null
@@ -11,4 +10,4 @@ data class TemplateModel(
     override fun getViewType(): Int {
         return R.layout.list_item_template
     }
-}*/
+}

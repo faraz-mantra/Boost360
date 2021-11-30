@@ -4,11 +4,21 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
-        android:name=".FestivePosterApplication"
-        >
+        android:name=".FestivePosterApplication">
         <activity
             android:screenOrientation="portrait"
             android:theme="@style/PosterTheme"
-            android:name=".ui.FestivePosterContainerActivity"/>
+            android:name=".ui.festivePoster.FestivePosterContainerActivity"/>
+
+        <activity
+            android:screenOrientation="portrait"
+            android:name="com.festive.poster.ui.promoUpdates.UpdateCreationActivity"
+            android:exported="true"/>
+
+        <activity
+            android:theme="@style/TemplateTheme"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:name="com.festive.poster.ui.promoUpdates.edit_post.EditPostActivity"
+            android:screenOrientation="portrait"/>
     </application>
 </manifest>

@@ -8,6 +8,6 @@ data class SocialConnModel(
     var content:String?=null
 ):AppBaseRecyclerViewItem {
     override fun getViewType(): Int {
-        return R.layout.list_item_social_conn
+        return 0 //R.layout.list_item_social_conn
     }
 }

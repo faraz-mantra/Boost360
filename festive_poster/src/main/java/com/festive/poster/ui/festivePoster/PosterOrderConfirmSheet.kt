@@ -1,4 +1,4 @@
-package com.festive.poster.ui
+package com.festive.poster.ui.festivePoster
 
 import android.content.Intent
 import android.os.Bundle
@@ -57,7 +57,8 @@ class PosterOrderConfirmSheet : BaseBottomSheetDialog<SheetOrderConfirmBinding, 
     when (v) {
       binding?.btnConfirm -> {
         WebEngageController.trackEvent(FESTIVAL_POSTER_VIEW_PACK_CLICK, event_value = HashMap())
-        addFragment(R.id.container, PosterListFragment.newInstance(sharedViewModel?.selectedPosterPack?.tagsModel?.tag!!), true,true)
+        addFragment(R.id.container,
+            PosterListFragment.newInstance(sharedViewModel?.selectedPosterPack?.tagsModel?.tag!!), true,true)
         dismiss()
       }
     }

@@ -22,7 +22,7 @@ import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
-import com.festive.poster.ui.FestivePosterContainerActivity
+import com.festive.poster.ui.festivePoster.FestivePosterContainerActivity
 import com.framework.analytics.SentryController
 import com.framework.pref.*
 import com.framework.webengageconstant.*

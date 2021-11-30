@@ -1,4 +1,4 @@
-package com.festive.poster.ui
+package com.festive.poster.ui.festivePoster
 
 import android.content.Context
 import android.content.Intent
@@ -9,22 +9,14 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.festive.poster.R
-import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.base.AppBaseBottomSheetFragment
-import com.festive.poster.base.ProgressDialog
 import com.festive.poster.databinding.BsheetCustomizePosterBinding
-import com.festive.poster.models.PosterCustomizationModel
-import com.festive.poster.models.PosterModel
 import com.festive.poster.utils.MarketPlaceUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
-import com.framework.base.BaseActivity
-import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.visible
-import com.framework.models.BaseViewModel
-import com.framework.models.UserProfileData
 import com.framework.models.UserProfileDataResult
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId2
@@ -238,10 +230,10 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
 
   private fun navigateToNextFragment() {
     sharedViewModel?.keyValueSaved?.value=null
-    if (isAlreadyPurchased||creatorName==PosterListFragment::class.java.name){
+    if (isAlreadyPurchased||creatorName== PosterListFragment::class.java.name){
       dismiss()
     }else{
-      PosterPaymentSheetV2.newInstance().show(parentFragmentManager,PosterPaymentSheetV2::class.java.name)
+      PosterPaymentSheetV2.newInstance().show(parentFragmentManager, PosterPaymentSheetV2::class.java.name)
     }
     dismiss()
   }

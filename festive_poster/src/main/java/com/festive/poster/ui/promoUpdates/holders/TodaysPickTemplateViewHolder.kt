@@ -1,10 +1,10 @@
-package com.example.template.views.recyclerView.holders
+package com.festive.poster.ui.promoUpdates.holders
 
-import com.example.template.recyclerView.AppBaseRecyclerViewHolder
-import com.example.template.recyclerView.BaseRecyclerViewItem
-import com.example.template.databinding.ListItemTodaysPickTemplateBinding
-import com.example.template.models.TodaysPickModel
-import com.example.template.recyclerView.AppBaseRecyclerViewAdapter
+import com.festive.poster.databinding.ListItemTodaysPickTemplateBinding
+import com.festive.poster.models.promoModele.TodaysPickModel
+import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
+import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
+import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.framework.base.BaseActivity
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -17,7 +17,7 @@ class TodaysPickTemplateViewHolder(binding: ListItemTodaysPickTemplateBinding):
         binding.tvCatTitle.text = model.cat_title
         binding.tvCatDesc.text = model.cat_desc
         model.templateList?.let {
-            val adapter = AppBaseRecyclerViewAdapter(binding.root.context as BaseActivity<*, *>,it)
+            val adapter = AppBaseRecyclerViewAdapter(binding.root.context as BaseActivity<*, *>, it)
             binding.vpTemplate.adapter = adapter
             TabLayoutMediator(binding.tabLayout,binding.vpTemplate){
                     tab,position->

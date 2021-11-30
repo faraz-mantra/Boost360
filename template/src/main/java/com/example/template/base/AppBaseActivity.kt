@@ -12,11 +12,11 @@ import com.framework.models.BaseViewModel
 
 abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseActivity<Binding, ViewModel>() {
 
-  private var progressView: ProgressDialog? = null
+  //private var progressView: ProgressDialog? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-    progressView = ProgressDialog.newInstance()
+    //progressView = ProgressDialog.newInstance()
     super.onCreate(savedInstanceState)
   }
 
@@ -44,13 +44,13 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
   }
 
   protected open fun hideProgress() {
-    progressView?.hideProgress()
+    //progressView?.hideProgress()
   }
 
   protected open fun showProgress(title: String? = "Please wait...", cancelable: Boolean? = false) {
-    title?.let { progressView?.setTitle(it) }
-    cancelable?.let { progressView?.isCancelable = it }
-    progressView?.showProgress(supportFragmentManager)
+    //title?.let { progressView?.setTitle(it) }
+    //cancelable?.let { progressView?.isCancelable = it }
+    //progressView?.showProgress(supportFragmentManager)
   }
 
   fun changeTheme(color: Int, taskBarColor: Int) {

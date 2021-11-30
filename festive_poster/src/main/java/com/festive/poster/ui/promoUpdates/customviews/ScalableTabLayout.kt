@@ -1,4 +1,4 @@
-package com.example.template.views.customviews
+package com.festive.poster.ui.promoUpdates.customviews
 
 import android.content.Context
 import android.util.AttributeSet

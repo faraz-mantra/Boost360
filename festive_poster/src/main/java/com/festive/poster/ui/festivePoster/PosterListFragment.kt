@@ -1,4 +1,4 @@
-package com.festive.poster.ui
+package com.festive.poster.ui.festivePoster
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -32,7 +32,6 @@ import com.framework.pref.UserSessionManager
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.FESTIVAL_POSTER_PURCHASED_GALLERY
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.gson.Gson
 
 class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePosterViewModel>(), RecyclerItemClickListener {
 
@@ -161,8 +160,10 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
           (item as PosterModel).id).show(requireActivity().supportFragmentManager,
           CustomizePosterSheet::class.java.name)*/
 
-        CustomizePosterSheet.newInstance(packTag!!, true,
-          PosterListFragment::class.java.name).show(requireActivity().supportFragmentManager,
+        CustomizePosterSheet.newInstance(
+            packTag!!, true,
+            PosterListFragment::class.java.name
+        ).show(requireActivity().supportFragmentManager,
           CustomizePosterSheet::class.java.name)
 
       }

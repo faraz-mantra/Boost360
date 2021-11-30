@@ -1,4 +1,4 @@
-package com.festive.poster.ui
+package com.festive.poster.ui.festivePoster
 
 import android.content.DialogInterface
 import android.content.Intent

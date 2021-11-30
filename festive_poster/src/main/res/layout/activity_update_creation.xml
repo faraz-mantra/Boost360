@@ -5,7 +5,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.UpdateCreationActivity">
+        tools:context="com.festive.poster.ui.promoUpdates.UpdateCreationActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
@@ -155,7 +155,7 @@
                 android:orientation="vertical"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <com.example.template.views.customviews.ScalableTabLayout
+                <com.festive.poster.ui.promoUpdates.customviews.ScalableTabLayout
                     android:id="@+id/tab_layout"
                     style="@style/TabTextStyle"
                     android:layout_width="match_parent"
@@ -166,7 +166,7 @@
                     app:tabMode="scrollable"
                     app:tabTextAppearance="@style/TabTextStyle">
 
-                </com.example.template.views.customviews.ScalableTabLayout>
+                </com.festive.poster.ui.promoUpdates.customviews.ScalableTabLayout>
 
 
                 <androidx.viewpager2.widget.ViewPager2

@@ -1,14 +1,13 @@
-package com.example.template.views
+package com.festive.poster.ui.promoUpdates
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.template.base.AppBaseFragment
-import com.example.template.R
-import com.example.template.databinding.FragmentTodaysPickBinding
-import com.example.template.models.SocialConnModel
-import com.example.template.models.TemplateModel
-import com.example.template.models.TodaysPickModel
-import com.example.template.recyclerView.AppBaseRecyclerViewAdapter
+import com.festive.poster.R
+import com.festive.poster.base.AppBaseFragment
+import com.festive.poster.databinding.FragmentTodaysPickBinding
+import com.festive.poster.models.promoModele.TemplateModel
+import com.festive.poster.models.promoModele.TodaysPickModel
+import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 

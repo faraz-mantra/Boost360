@@ -823,8 +823,9 @@
 
     <!-- PreSignUp module -->
 
+      <!--android:name="com.boost.presignup.SplashActivity"-->
     <activity
-      android:name="com.boost.presignup.SplashActivity"
+        android:name="com.festive.poster.ui.promoUpdates.UpdateCreationActivity"
       android:label="@string/app_name"
       android:launchMode="singleTask"
       android:screenOrientation="portrait"

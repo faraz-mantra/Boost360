@@ -1,3 +1,4 @@
+package com.example.template.recyclerView/*
 package com.example.template.recyclerView
 
 import android.view.LayoutInflater
@@ -8,9 +9,9 @@ import com.example.template.constant.RecyclerViewItemType.*
 import com.example.template.databinding.ListItemSocialConnBinding
 import com.example.template.databinding.ListItemTemplateBinding
 import com.example.template.databinding.ListItemTodaysPickTemplateBinding
-import com.example.template.views.recyclerView.holders.SoicalConnViewHolder
-import com.example.template.views.recyclerView.holders.TemplateViewHolder
-import com.example.template.views.recyclerView.holders.TodaysPickTemplateViewHolder
+import com.festive.poster.ui.promoUpdates.holders.SoicalConnViewHolder
+import com.festive.poster.ui.promoUpdates.holders.TemplateViewHolder
+import com.festive.poster.ui.promoUpdates.holders.TodaysPickTemplateViewHolder
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -25,9 +26,9 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     val recyclerViewItemType = RecyclerViewItemType.values().first { it.getLayout() == viewType }
     val binding = getViewDataBinding(inflater, recyclerViewItemType, parent)
     return when (recyclerViewItemType) {
-      TODAYS_PICK_TEMPLATE_VIEW->TodaysPickTemplateViewHolder(binding as ListItemTodaysPickTemplateBinding)
-      TEMPLATE_VIEW->TemplateViewHolder(binding as ListItemTemplateBinding)
-      SOCIAL_CONN->SoicalConnViewHolder(binding as ListItemSocialConnBinding)
+      TODAYS_PICK_TEMPLATE_VIEW-> com.festive.poster.ui.promoUpdates.holders.TodaysPickTemplateViewHolder(binding as ListItemTodaysPickTemplateBinding)
+      TEMPLATE_VIEW-> com.festive.poster.ui.promoUpdates.holders.TemplateViewHolder(binding as ListItemTemplateBinding)
+      SOCIAL_CONN-> com.festive.poster.ui.promoUpdates.holders.SoicalConnViewHolder(binding as ListItemSocialConnBinding)
 
     }
   }
@@ -129,4 +130,4 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     notifyItemRangeChanged(0, itemCount)
   }
   // New Function
-}
+}*/

@@ -1,9 +1,9 @@
 package com.example.template.base
 
+/*
 import android.util.Log
 import androidx.fragment.app.FragmentManager
 import com.example.template.R
-import com.example.template.databinding.MtemplateProgressDialogBinding
 import com.framework.base.BaseDialogFragment
 import com.framework.models.BaseViewModel
 import com.framework.utils.ConversionUtils
@@ -59,4 +59,4 @@ class ProgressDialog : BaseDialogFragment<MtemplateProgressDialogBinding, BaseVi
     }
   }
 
-}
+}*/

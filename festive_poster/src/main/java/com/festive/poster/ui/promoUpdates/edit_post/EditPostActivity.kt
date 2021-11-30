@@ -1,23 +1,20 @@
-package com.example.template.views.edit_post
+package com.festive.poster.ui.promoUpdates.edit_post
 
-import android.R.attr
 import androidx.databinding.DataBindingUtil
-import com.example.template.R
-import com.example.template.databinding.ActivityEditPostBinding
-import com.example.template.databinding.BsheetEditPostBinding
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.util.Log
 
-import android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
 import com.caverock.androidsvg.SVG
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.util.*
-import android.R.attr.label
 import android.content.*
+import com.festive.poster.R
+import com.festive.poster.databinding.ActivityEditPostBinding
+import com.festive.poster.databinding.BsheetEditPostBinding
 
 
 class EditPostActivity: BaseActivity<ActivityEditPostBinding, BaseViewModel>() {

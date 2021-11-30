@@ -1,4 +1,4 @@
-package com.festive.poster.ui
+package com.festive.poster.ui.festivePoster
 
 import android.util.Log
 import android.view.View
@@ -20,7 +20,7 @@ class FestivePosterContainerActivity : AppBaseActivity<ActivityFestivePoterConta
 
   override var TAG = "FestivePosterContainerA"
   private var sharedViewModel: FestivePosterSharedViewModel? = null
-  private var posterPackListFragment=PosterPackListingFragment.newInstance()
+  private var posterPackListFragment= PosterPackListingFragment.newInstance()
   private var isPosterPackLoaded=false
   /*private val RC_STORAGE_PERMISSION=201*/
 
@@ -109,8 +109,9 @@ class FestivePosterContainerActivity : AppBaseActivity<ActivityFestivePoterConta
       binding?.ivDownload->{
         if (isPosterPackLoaded){
          // posterPackListFragment.dataList?.forEach { it.isPurchased=true }
-          addFragment(binding?.container?.id,PosterPackPurchasedListingFragment.newInstance(
-            posterPackListFragment.dataList?.filter { it.isPurchased }?.toArrayList()),true,true)
+          addFragment(binding?.container?.id, PosterPackPurchasedListingFragment.newInstance(
+              posterPackListFragment.dataList?.filter { it.isPurchased }?.toArrayList()
+          ),true,true)
         }
 
       }

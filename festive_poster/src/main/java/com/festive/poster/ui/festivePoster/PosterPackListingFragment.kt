@@ -1,4 +1,4 @@
-package com.festive.poster.ui
+package com.festive.poster.ui.festivePoster
 
 import android.util.Log
 import androidx.core.view.ViewCompat
@@ -8,7 +8,6 @@ import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.FragmentPosterPackListingBinding
-import com.festive.poster.models.GetFeatureDetailsItem
 import com.festive.poster.models.PosterModel
 import com.festive.poster.models.PosterPackModel
 import com.festive.poster.models.PosterPackTagModel
@@ -25,7 +24,6 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.pref.UserSessionManager
-import com.framework.pref.clientId
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.GET_FESTIVAL_POSTER_PACK_CLICK
 import com.google.gson.Gson
@@ -186,9 +184,11 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
 
         if (item.isPurchased){
           //sharedViewModel?.keyValueSaved?.value=null
-          addFragment(R.id.container, PosterListFragment.newInstance(item.tagsModel.tag!!), true,true)
+          addFragment(R.id.container,
+              PosterListFragment.newInstance(item.tagsModel.tag!!), true,true)
         }else{
-          CustomizePosterSheet.newInstance(item.tagsModel.tag, item.isPurchased).show(baseActivity.supportFragmentManager, CustomizePosterSheet::class.java.name)
+          CustomizePosterSheet.newInstance(item.tagsModel.tag, item.isPurchased)
+              .show(baseActivity.supportFragmentManager, CustomizePosterSheet::class.java.name)
         }
       }
     }
@@ -202,7 +202,8 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
         parentItem as PosterPackModel
         sharedViewModel?.selectedPosterPack = parentItem
         sharedViewModel?.selectedPoster = childItem as PosterModel
-        CustomizePosterSheet.newInstance(parentItem.tagsModel.tag, parentItem.isPurchased).show(requireActivity().supportFragmentManager, CustomizePosterSheet::class.java.name)
+        CustomizePosterSheet.newInstance(parentItem.tagsModel.tag, parentItem.isPurchased)
+            .show(requireActivity().supportFragmentManager, CustomizePosterSheet::class.java.name)
       }
     }
   }
