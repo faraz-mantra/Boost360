@@ -303,17 +303,17 @@ public class TeamsActivity extends AppCompatActivity implements TeamsActivityLis
     intent.putExtra("fpName", userSessionManager.getFPName());
     intent.putExtra("fpid", userSessionManager.getFPID());
     intent.putExtra("loginid", userSessionManager.getUserProfileId());
-    intent.putStringArrayListExtra("userPurchsedWidgets", com.nowfloats.util.Constants.StoreWidgets);
+    intent.putStringArrayListExtra("userPurchsedWidgets", new ArrayList(session.getStoreWidgets()));
     intent.putExtra("fpTag", userSessionManager.getFpTag());
     if (userSessionManager.getUserProfileEmail() != null) {
       intent.putExtra("email", userSessionManager.getUserProfileEmail());
     } else {
-      intent.putExtra("email", "ria@nowfloats.com");
+      intent.putExtra("email", getString(R.string.ria_customer_mail));
     }
     if (userSessionManager.getUserPrimaryMobile() != null) {
       intent.putExtra("mobileNo", userSessionManager.getUserPrimaryMobile());
     } else {
-      intent.putExtra("mobileNo", "9160004303");
+      intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
     }
     intent.putExtra("profileUrl", userSessionManager.getFPLogo());
     intent.putExtra("buyItemKey", WIDGET_KEY);
