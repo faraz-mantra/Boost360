@@ -31,6 +31,7 @@ import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.floatMessage.MessageModel
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.onboarding.nowfloats.constant.FragmentType
+import com.onboarding.nowfloats.constant.SupportVideoType
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentChannelActivity
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
 import java.util.*
@@ -249,12 +250,12 @@ fun AppCompatActivity.initiateAddonMarketplace(
     if (session.userProfileEmail != null) {
       intent.putExtra("email", session.userProfileEmail)
     } else {
-      intent.putExtra("email", "ria@nowfloats.com")
+      intent.putExtra("email", getString(R.string.ria_customer_mail))
     }
     if (session.userPrimaryMobile != null) {
       intent.putExtra("mobileNo", session.userPrimaryMobile)
     } else {
-      intent.putExtra("mobileNo", "9160004303")
+      intent.putExtra("mobileNo", getString(R.string.ria_customer_number))
     }
     if (buyItemKey != null && buyItemKey.isNotEmpty()) intent.putExtra("buyItemKey", buyItemKey)
     intent.putExtra("profileUrl", session.fPLogo)
@@ -1013,6 +1014,16 @@ fun AppCompatActivity.startLogoutActivity(event: String = BOOST_LOGOUT_CLICK) {
   try {
     WebEngageController.trackEvent(event, CLICK, TO_BE_ADDED)
     val i = Intent(this, Class.forName("com.nowfloats.helper.LogoutActivity"))
+    this.startActivity(i)
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun Context.startHelpSupportVideoActivity(supportType:String){
+  try {
+    val i = Intent(this, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
+    i.putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name, supportType)
     this.startActivity(i)
   } catch (e: Exception) {
     e.printStackTrace()

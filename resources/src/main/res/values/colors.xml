@@ -160,6 +160,7 @@
   <color name="colorAccentNegative">@color/black_4a4a4a</color>
 
   <color name="grey_bg">#F8F8F8</color>
+  <color name="black_1e1e1e">#1E1E1E</color>
 
   <color name="white_F5F8FD">#F5F8FD</color>
   <color name="white_ECEFF1">#ECEFF1</color>

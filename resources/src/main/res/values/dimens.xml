@@ -80,6 +80,7 @@
   <dimen name="size_94">94dp</dimen>
   <dimen name="size_96">96dp</dimen>
   <dimen name="size_100">100dp</dimen>
+  <dimen name="size_108">108dp</dimen>
   <dimen name="size_110">110dp</dimen>
   <dimen name="size_112">112dp</dimen>
   <dimen name="size_115">115dp</dimen>
@@ -114,6 +115,7 @@
   <dimen name="size_224">224dp</dimen>
   <dimen name="size_226">226dp</dimen>
   <dimen name="size_230">230dp</dimen>
+  <dimen name="size_236">236dp</dimen>
   <dimen name="size_240">240dp</dimen>
   <dimen name="size_250">250dp</dimen>
   <dimen name="size_260">260dp</dimen>

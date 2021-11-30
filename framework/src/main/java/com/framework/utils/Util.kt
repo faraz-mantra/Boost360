@@ -369,4 +369,11 @@ fun Intent.getPendingIntent(): PendingIntent? {
   )
 }
 
+fun isService(category_code: String?): Boolean {
+  return when (category_code) {
+    "SVC", "DOC", "HOS", "SPA", "SAL" -> true
+    else -> false
+  }
+}
+
 inline fun <reified T> convertJsonToObj(json: String?) = Gson().fromJson<T>(json, object: TypeToken<T>() {}.type)

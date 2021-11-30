@@ -36,6 +36,7 @@ import com.nowfloats.util.Utils
 import com.thinksity.R
 import com.thinksity.databinding.ToppersFragmentBinding
 import org.koin.android.ext.android.inject
+import java.util.ArrayList
 
 class ToppersFragment : BaseFragment<ToppersFragmentBinding, BaseViewModel>(), ItemClickEventListener,
   AppOnZeroCaseClicked {
@@ -230,17 +231,17 @@ class ToppersFragment : BaseFragment<ToppersFragmentBinding, BaseViewModel>(), I
       intent.putExtra("fpName", it.fpName)
       intent.putExtra("fpid", it.fpid)
       intent.putExtra("loginid", it.userProfileId)
-      intent.putStringArrayListExtra("userPurchsedWidgets", com.nowfloats.util.Constants.StoreWidgets)
+      intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(session!!.storeWidgets))
       intent.putExtra("fpTag", it.fpTag)
       if (it.userProfileEmail != null) {
         intent.putExtra("email", it.userProfileEmail)
       } else {
-        intent.putExtra("email", "ria@nowfloats.com")
+        intent.putExtra("email", getString(R.string.ria_customer_mail))
       }
       if (it.userPrimaryMobile != null) {
         intent.putExtra("mobileNo", it.userPrimaryMobile)
       } else {
-        intent.putExtra("mobileNo", "9160004303")
+        intent.putExtra("mobileNo", getString(R.string.ria_customer_number))
       }
       intent.putExtra("profileUrl", it.fpLogo)
       intent.putExtra("buyItemKey", Constants.TOPPER_FEATURE)

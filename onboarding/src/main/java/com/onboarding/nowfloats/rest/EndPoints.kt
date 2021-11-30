@@ -46,4 +46,7 @@ object EndPoints {
   const val GET_GMB_ACCOUNT_LOCATIONS = "v4/accounts/{user_id}/locations"
   const val POST_GOOGLE_AUTH_TOKENS = "oauth2/v4/token"
 
+  // TODO DEVELOPER API BOOST KIT DEV
+  const val DEVELOPER_API_BOOST_KIT_DEV_BASE_URL = "https://developer.api.boostkit.dev/language/v1/"
+  const val GET_FEATURE_SUPPORT_VIDEOS = "featurevideos/get-data"
 }
