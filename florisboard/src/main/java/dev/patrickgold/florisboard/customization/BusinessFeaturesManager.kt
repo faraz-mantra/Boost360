@@ -659,6 +659,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     }
   }
 
+  
   private fun getChannelAccessToken(isShow: Boolean = false) {
     if (isShow) binding.businessFeatureProgress.visible() else binding.businessFeatureProgress.gone()
     viewModel.getChannelsAccessTokenStatus(session?.fPID)
