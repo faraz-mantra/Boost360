@@ -72,7 +72,7 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
     }
 
     private fun setOnListeners() {
-        binding?.btnGetStarted?.setOnClickListener{
+        binding?.btnGetStarted?.setOnClickListener {
             startFragmentFromNewOnBoardingActivity(
                 activity = requireActivity(),
                 type = FragmentType.ENTER_PHONE_FRAGMENT,
