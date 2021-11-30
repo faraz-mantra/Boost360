@@ -473,3 +473,8 @@
 -keepclasseswithmembers class * {
 public void onPayment*(...);
 }
+
+-keep class wseemann.media.**{ *; }
+-keep class wseemann.media.FFmpegMediaMetadataRetriever {
+*** mNativeContext;
+}

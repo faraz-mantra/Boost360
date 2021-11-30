@@ -7,4 +7,10 @@
   <string name="need_help_title">We\'re here to help.</string>
   <string name="okay">Okay</string>
 
+  <string name="contact_us_number">18601231233</string>
+  <string name="boost_360_tnc_presignup">https://www.getboost360.com/tnc?src=android&amp;stage=presignup</string>
+  <string name="boost_360_tag_domain">nowfloats.com</string>
+  <string name="ria_customer_mail">ria@nowfloats.com</string>
+  <string name="ria_customer_number">9160004303</string>
+
 </resources>
