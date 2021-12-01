@@ -42,6 +42,7 @@ import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.utils.ValidationUtils
+import com.framework.utils.ValidationUtils.isValidName
 import com.framework.utils.convertListObjToString
 import com.framework.utils.convertStringToList
 import com.framework.webengageconstant.KYC_VERIFICATION
@@ -368,7 +369,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     val panName = binding?.edtNameOnPanCard?.text?.toString()
     // if add new
     val accountNumber = binding?.edtBankAccountNumber?.text?.toString()
-    val nameAccount = binding?.edtBankAccountHolderName?.text?.toString()
+    val nameAccount = binding?.edtBankAccountHolderName?.text?.toString() ?: ""
     val ifsc = binding?.edtBankIfscCode?.text?.toString()
     val bankName = binding?.edtBankName?.text?.toString()
     val bankBranch = binding?.edtBankBranch?.text?.toString()
@@ -413,6 +414,9 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
           return false
         } else if (nameAccount.isNullOrEmpty()) {
           showShortToast(getString(R.string.bank_account_cannot_empty))
+          return false
+        } else if (!isValidName(nameAccount)) {
+          showShortToast(getString(R.string.bank_account_name_invalid))
           return false
         } else if (ifsc.isNullOrEmpty()) {
           showShortToast(getString(R.string.bank_ifcs_cannot_empty))
@@ -756,10 +760,5 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
 
   private fun isPanNumberValid(panNumber: String): Boolean {
     return Pattern.compile("[A-Z]{5}[0-9]{4}[A-Z]{1}").matcher(panNumber).matches()
-  }
-
-  private fun isValidName(name: String): Boolean {
-    val regExp = "^[^<>{}\"/|;:.,~!?@#$%^=&*\\]\\\\()\\[¿§«»ω⊙¤°℃℉€¥£¢¡®©0-9_+]*$"
-    return Pattern.compile(regExp, Pattern.CASE_INSENSITIVE).matcher(name).matches()
   }
 }

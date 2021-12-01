@@ -314,8 +314,8 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     final CustomEditText email = (CustomEditText) view.findViewById(R.id.edittext);
     new MaterialDialog.Builder(this)
         .customView(view, false)
-        .positiveText("Add")
-        .negativeText("Cancel")
+        .positiveText(getString(R.string.add))
+        .negativeText(getString(R.string.cancel))
         .negativeColorRes(R.color.black_4a4a4a)
         .positiveColorRes(R.color.colorAccentLight)
         .callback(new MaterialDialog.ButtonCallback() {

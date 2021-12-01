@@ -254,16 +254,19 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
 
   private fun followUsTwitter() {
     WebEngageController.trackEvent(ABOUT_BOOST_TWITTER_LIKE, CLICK, NO_EVENT_VALUE)
-    if (getString(R.string.settings_twitter_url_id).isNotEmpty() || getString(R.string.settings_twitter_url).isNotEmpty()) {
-
-      val twitterIntent: Intent = try {
-        baseActivity.packageManager.getPackageInfo(baseActivity.getString(R.string.twitter_package), 0)
-        Intent(Intent.ACTION_VIEW, Uri.parse(baseActivity.getString(R.string.settings_twitter_url_id)))
-      } catch (e: Exception) {
-        Intent(Intent.ACTION_VIEW, Uri.parse(baseActivity.getString(R.string.settings_twitter_url)))
-      }
-      twitterIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
+    if (getString(R.string.settings_twitter_url_id).isEmpty() && getString(R.string.settings_twitter_url).isEmpty()) {
       try {
+        val twitterIntent = if (getString(R.string.settings_twitter_url_id).isEmpty() && getString(R.string.settings_twitter_url).isNotEmpty()) {
+          Intent(Intent.ACTION_VIEW, Uri.parse(baseActivity.getString(R.string.settings_twitter_url)))
+        } else {
+          try {
+            baseActivity.packageManager.getPackageInfo(baseActivity.getString(R.string.twitter_package), 0)
+            Intent(Intent.ACTION_VIEW, Uri.parse(baseActivity.getString(R.string.settings_twitter_url_id)))
+          } catch (e: Exception) {
+            Intent(Intent.ACTION_VIEW, Uri.parse(baseActivity.getString(R.string.settings_twitter_url)))
+          }
+        }
+        twitterIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
         baseActivity.startActivity(twitterIntent)
       } catch (e: Exception) {
         showShortToast(baseActivity.getString(R.string.unable_to_open_twitter))

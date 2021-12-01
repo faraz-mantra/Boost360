@@ -123,6 +123,10 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
       showLongToast(getString(R.string.enter_account_holder_name))
       return false
     }
+    if (!ValidationUtils.isValidName(accountName)) {
+      showShortToast(getString(R.string.bank_account_name_invalid))
+      return false
+    }
     if (accountNumber.isEmpty()) {
       showLongToast(getString(R.string.enter_account_number))
       return false
@@ -135,7 +139,7 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
       showShortToast(getString(R.string.account_greater_than_nine))
       return false
     }
-     if (ValidationUtils.isBankAcValid(accountNumber)){
+    if (ValidationUtils.isBankAcValid(accountNumber)) {
       showShortToast(getString(R.string.invalid_bank_account_number))
       return false
     }

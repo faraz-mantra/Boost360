@@ -3079,6 +3079,9 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="missed">Missed</string>
   <string name="connected">Connected</string>
   <string name="tracked_calls">Tracked calls on</string>
+  <string name="enable_boost_keyboard">Enable Boost keyboard</string>
+  <string name="select_boost_keyboard">Select Boost keyboard</string>
+  <string name="allow_access">Allow access</string>
 
   <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
   <!--    <string name="ir_statusBarColor">#ffb900</string>-->
