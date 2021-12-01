@@ -69,6 +69,7 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
   private fun initUI() {
     val extras = intent.extras
     supportVideoType = extras?.getString(IntentConstant.SUPPORT_VIDEO_TYPE.name) ?: ""
+    if (Build.VERSION.SDK_INT >= 24) initializePlayer() else finishActivity()
     if (supportVideoType.isNotEmpty()) {
       if (isSavedSupportDataAvailableInSharedPref()) {
         populateData()
@@ -76,12 +77,10 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
       } else {
         getAndSaveFeatureSupportVideos(true)
       }
-    } else {
-      showShortToast(getString(R.string.please_try_again_later))
-      finish()
-    }
+    } else finishActivity()
     setOnClickListeners()
   }
+
 
   private fun isSavedSupportDataAvailableInSharedPref(): Boolean {
     return getSupportVideoData().isNullOrEmpty().not()
@@ -94,7 +93,7 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
 
     binding?.ivPrev?.setOnClickListener {
       if (currentPosition > 0) {
-        binding?.videoView!!.playLeftInAnimation()
+        binding?.videoView?.playLeftInAnimation()
         binding?.consOverlayPlay?.playLeftInAnimation()
         loadPreviousVideo()
       }
@@ -102,7 +101,7 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
 
     binding?.ivNext?.setOnClickListener {
       if (currentPosition < filteredVideos.size - 1) {
-        binding?.videoView!!.playRightInAnimation()
+        binding?.videoView?.playRightInAnimation()
         binding?.consOverlayPlay?.playRightInAnimation()
         isFirstLoad = false
         loadNextVideo()
@@ -206,7 +205,7 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
     binding?.seekBarPaused?.gone()
     binding?.tvElapsedTime?.gone()
     binding?.tvTimeTotal?.text = ""
-    binding?.tvVideoTitle?.text = filteredVideos[currentPosition]?.videotitle
+    binding?.tvVideoTitle?.text = filteredVideos[currentPosition].videotitle
   }
 
   private fun getAndSaveFeatureSupportVideos(isProgress: Boolean = false) {
@@ -230,22 +229,19 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
   private fun populateData() {
     val featureFirstVideo: FeaturevideoItem? = getSupportVideoData()?.firstOrNull { it.helpsectionidentifier == supportVideoType }
     if (featureFirstVideo != null && featureFirstVideo.videourl?.url?.contains("youtube") == false) {
-      //featureVideos?.filter { filter -> filter.helpsectionidentifier == supportVideoType }
-      filteredVideos = arrayListOf(featureFirstVideo)//(featureVideos?.filter { filter -> filter.helpsectionidentifier == supportVideoType } as MutableList<FeaturevideoItem>?)!!
-      getVideoDurations()
-      initStatusProgressBar()
-      /*for (item in filteredVideos)
-      exoPlayer?.addMediaItem(item?.videourl?.url?.let { MediaItem.fromUri(it) }!!)*/
+      filteredVideos = arrayListOf(featureFirstVideo)
+      //(featureVideos?.filter { filter -> filter.helpsectionidentifier == supportVideoType } as MutableList<FeaturevideoItem>?)!!
       for (item in filteredVideos) {
         exoPlayer?.addMediaItem(item.let { MediaItem.fromUri(it.videourl?.url!!) })
       }
+      getVideoDurations()
+      initStatusProgressBar()
       exoPlayer?.prepare()
       isFirstLoad = true
       loadNextVideo()
       launchProgressListener()
     } else {
-      showShortToast(getString(R.string.coming_soon))
-      finish()
+      finishActivity()
       return
     }
   }
@@ -279,7 +275,7 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
         addListener(playbackStateListener)
         playWhenReady = false
         seekTo(0, 0L)
-        prepare()
+//        prepare()
         binding?.videoView?.player = this
       }
       binding?.videoView?.useController = false
@@ -329,34 +325,30 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
     binding?.seekBarPaused?.progress = 0
   }
 
-  public override fun onStart() {
-    super.onStart()
-    if (Build.VERSION.SDK_INT >= 24) {
-      initializePlayer()
-    }
-  }
-
-  public override fun onResume() {
-    super.onResume()
-    if ((Build.VERSION.SDK_INT < 24 || exoPlayer == null)) {
-      initializePlayer()
-    }
-  }
+//  public override fun onStart() {
+//    super.onStart()
+//    if (Build.VERSION.SDK_INT >= 24) {
+//      initializePlayer()
+//    }
+//  }
+//
+//  public override fun onResume() {
+//    super.onResume()
+//    if ((Build.VERSION.SDK_INT < 24 || exoPlayer == null)) {
+//      initializePlayer()
+//    }
+//  }
 
   public override fun onPause() {
+    if (Build.VERSION.SDK_INT < 24) releasePlayer()
     super.onPause()
-    if (Build.VERSION.SDK_INT < 24) {
-      releasePlayer()
-    }
   }
 
 
   public override fun onStop() {
     elapsedTimeUpdatesJob?.cancel()
+    if (Build.VERSION.SDK_INT >= 24) releasePlayer()
     super.onStop()
-    if (Build.VERSION.SDK_INT >= 24) {
-      releasePlayer()
-    }
   }
 
   private fun releasePlayer() {
@@ -404,7 +396,7 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
 
   private fun videoProgress() = flow {
     while (true) {
-      emit((exoPlayer?.currentPosition?.toFloat()?.div(exoPlayer!!.duration.toFloat())?.times(100))?.toInt()!!)
+      emit((exoPlayer?.currentPosition?.toFloat()?.div(exoPlayer?.duration?.toFloat() ?: 0F)?.times(100))?.toInt() ?: 0)
       delay(1000)
     }
   }.flowOn(Dispatchers.Main)
@@ -424,4 +416,8 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
     childAt.value = progressPercentage.toFloat()
   }
 
+  private fun finishActivity() {
+    showShortToast(getString(R.string.please_try_again_later))
+    finish()
+  }
 }
