@@ -363,14 +363,14 @@
 #-keeppackagenames com.festive_poster
 #-keeppackagenames dev.patrickgold.florisboard
 
-#-keep class com.onboarding.** { *; }
-#-keep class com.dashboard.** { *; }
-#-keep class com.appservice.** { *; }
-#-keep class com.resources.** { *; }
-#-keep class com.inventoryorder.** { *; }
-#-keep class com.festive_poster.** { *; }
-#-keep class com.boost.presignup.** { *; }
-#-keep class com.boost.presignin.** { *; }
+-keep class com.onboarding.** { *; }
+-keep class com.dashboard.** { *; }
+-keep class com.appservice.** { *; }
+-keep class com.resources.** { *; }
+-keep class com.inventoryorder.** { *; }
+-keep class com.festive_poster.** { *; }
+-keep class com.boost.presignup.** { *; }
+-keep class com.boost.presignin.** { *; }
 -keep class com.framework.** { *; }
 -keep class dev.patrickgold.florisboard.** { *; }
 
