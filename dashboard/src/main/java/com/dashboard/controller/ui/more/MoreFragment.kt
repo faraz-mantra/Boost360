@@ -254,7 +254,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
 
   private fun followUsTwitter() {
     WebEngageController.trackEvent(ABOUT_BOOST_TWITTER_LIKE, CLICK, NO_EVENT_VALUE)
-    if (getString(R.string.settings_twitter_url_id).isEmpty() && getString(R.string.settings_twitter_url).isEmpty()) {
+    if (getString(R.string.settings_twitter_url_id).isNotEmpty() || getString(R.string.settings_twitter_url).isNotEmpty()) {
       try {
         val twitterIntent = if (getString(R.string.settings_twitter_url_id).isEmpty() && getString(R.string.settings_twitter_url).isNotEmpty()) {
           Intent(Intent.ACTION_VIEW, Uri.parse(baseActivity.getString(R.string.settings_twitter_url)))
