@@ -1,7 +1,9 @@
 package com.boost.presignin.holder.common
 
 import android.animation.Animator
+import androidx.core.content.ContextCompat
 import com.airbnb.lottie.LottieDrawable
+import com.boost.presignin.constant.RecyclerViewActionType
 import com.boost.presignin.databinding.ItemIntroNewSlidesBinding
 import com.boost.presignin.model.newOnboarding.IntroItemNew
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewHolder
@@ -18,33 +20,27 @@ class IntroSlidesViewHolder constructor(binding: ItemIntroNewSlidesBinding) :
         val model = item as IntroItemNew
 
         binding.relativeParentWrapperIntroItem.setBackgroundColor(model.slideBackgroundColor!!)
+        binding.lottieAnimationIntro.setBackgroundColor(ContextCompat.getColor(itemView.context, model.slideBackgroundColor))
 
-        binding.ivIntro.apply {
-            if (position == 1 /*|| position == 3*/) gone() else {
-                setImageResource(model.imageResource!!)
-                visible()
-            }
-        }
         binding.lottieAnimationIntro.apply {
-            if (position == 1 /*|| position == 3*/) {
-                binding.lottieAnimationIntro.setAnimation(model.lottieRawResource!!)
-                binding.lottieAnimationIntro.repeatCount =
-                    if (model.isLottieRepeat!!) LottieDrawable.INFINITE else 1
-                binding.lottieAnimationIntro.repeatMode = LottieDrawable.RESTART
-                binding.lottieAnimationIntro.playAnimation()
-                visible()
-            } else
-                gone()
+                setAnimation(model.lottieRawResource!!)
+                repeatCount = if (model.isLottieRepeat!!) LottieDrawable.INFINITE else 0
+                repeatMode = LottieDrawable.RESTART
+                playAnimation()
         }
 
         binding.tvIntroTitle.text = model.title
 
         binding.lottieAnimationIntro.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(animation: Animator?) {
+                //onItemClick(position, item)
             }
 
             override fun onAnimationEnd(animation: Animator?) {
-                binding.lottieAnimationIntro.cancelAnimation()
+                if (model.isLottieRepeat?.not() == true) {
+                    binding.lottieAnimationIntro.cancelAnimation()
+                }
+                onItemClick(position, item)
             }
 
             override fun onAnimationCancel(animation: Animator?) {
@@ -54,5 +50,9 @@ class IntroSlidesViewHolder constructor(binding: ItemIntroNewSlidesBinding) :
             }
 
         })
+    }
+
+    private fun onItemClick(position: Int, item: BaseRecyclerViewItem) {
+        listener?.onItemClick(position, item, RecyclerViewActionType.INTRO_LOTTIE_ANIMATION_COMPLETE_INVOKE.ordinal)
     }
 }

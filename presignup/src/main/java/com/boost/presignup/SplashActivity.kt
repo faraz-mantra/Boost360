@@ -140,7 +140,7 @@ class SplashActivity : AppCompatActivity() {
         Intent(applicationContext, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity"))
       else
         Intent(applicationContext, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
-      intent.putExtra("FRAGMENT_TYPE", 0) // 0 stands for New screen Enter Phone Number ordinal from FragmentType in Presignin constants
+      intent.putExtra("FRAGMENT_TYPE", 1) // 0 stands for New screen Enter Phone Number ordinal from FragmentType in Presignin constants
       startActivity(intent)
       finish()
     } catch (e: Exception) {

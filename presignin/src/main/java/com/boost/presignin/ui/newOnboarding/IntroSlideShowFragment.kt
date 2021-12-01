@@ -3,19 +3,19 @@ package com.boost.presignin.ui.newOnboarding
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.FragmentType
 import com.boost.presignin.constant.IntentConstant
+import com.boost.presignin.constant.RecyclerViewActionType
 import com.boost.presignin.databinding.FragmentIntroSlideShowBinding
-import com.boost.presignin.model.authToken.AuthTokenDataItem
 import com.boost.presignin.model.newOnboarding.IntroItemNew
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
 import com.boost.presignin.recyclerView.RecyclerItemClickListener
-import com.boost.presignin.ui.intro.CircularViewPagerHandler
 import com.framework.models.BaseViewModel
 
 class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, BaseViewModel>(),
@@ -26,14 +26,8 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
 
     private val nextRunnable = Runnable {
         binding?.viewpagerIntro?.post {
-                val lastPosition: Int? = binding?.viewpagerIntro?.adapter?.itemCount?.minus(1)
-                val mCurrentPosition = binding?.viewpagerIntro?.currentItem ?: 0
-                val isLast = (mCurrentPosition == lastPosition)
-                binding?.viewpagerIntro?.setCurrentItem(
-                    if (isLast) 0 else mCurrentPosition + 1,
-                    isLast.not()
-                )
-                nextPageTimer()
+            changePageOnAnimationEnd()
+            nextPageTimer()
         }
     }
 
@@ -65,10 +59,17 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
         binding?.viewpagerIntro?.apply {
             adapter  = AppBaseRecyclerViewAdapter(baseActivity, introItems, this@IntroSlideShowFragment)
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
-            binding?.introIndicatorNew?.setViewPager2(binding!!.viewpagerIntro)
-            binding?.viewpagerIntro?.offscreenPageLimit = introItems.size
+            binding?.introIndicatorNew?.setViewPager2(this)
+           offscreenPageLimit = introItems.size
+
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    binding?.consWrapperIntro?.setBackgroundColor(ContextCompat.getColor(baseActivity, IntroItemNew().getData(baseActivity)[position].slideBackgroundColor ?: 0))
+                }
+            })
         }
-        nextPageTimer()
+        //nextPageTimer()
     }
 
     private fun setOnListeners() {
@@ -85,9 +86,21 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+        when (actionType) {
+            RecyclerViewActionType.INTRO_LOTTIE_ANIMATION_COMPLETE_INVOKE.ordinal -> {
+                changePageOnAnimationEnd()
+            }
+        }
     }
 
     private fun nextPageTimer() {
         handler.postDelayed(nextRunnable, 3000)
+    }
+
+    private fun changePageOnAnimationEnd() {
+        val lastPosition: Int? = binding?.viewpagerIntro?.adapter?.itemCount?.minus(1)
+        val mCurrentPosition = binding?.viewpagerIntro?.currentItem ?: 0
+        val isLast = (mCurrentPosition == lastPosition)
+        binding?.viewpagerIntro?.setCurrentItem(if (isLast) 0 else mCurrentPosition + 1, isLast.not())
     }
 }
