@@ -16,12 +16,12 @@ data class FeatureSupportVideoResponse(
 ):Serializable, BaseResponse(){
 
 	companion object {
-		fun saveSupportVideoData(user: FeatureSupportVideoResponse) {
-			PreferencesUtils.instance.saveData(SUPPORT_VIDEO_DATA, convertObjToString(user) ?: "")
+		fun saveSupportVideoData(user: List<FeaturevideoItem>?) {
+			PreferencesUtils.instance.saveData(SUPPORT_VIDEO_DATA, convertListObjToString(user?.toList() ?: ArrayList()) ?: "")
 		}
 
-		fun getSupportVideoData(): FeatureSupportVideoResponse? {
-			return convertStringToObj(PreferencesUtils.instance.getData(SUPPORT_VIDEO_DATA, "") ?: "")
+		fun getSupportVideoData(): List<FeaturevideoItem>? {
+			return convertStringToList(PreferencesUtils.instance.getData(SUPPORT_VIDEO_DATA, "") ?: "")
 		}
 	}
 }
@@ -77,7 +77,7 @@ data class DataItem(
 	val schemaid: String? = null,
 
 	@field:SerializedName("featurevideo")
-	val featurevideo: List<FeaturevideoItem?>? = null,
+	val featurevideo: List<FeaturevideoItem>? = null,
 
 	@field:SerializedName("_kid")
 	val kid: String? = null,
@@ -113,7 +113,7 @@ data class FeaturevideoItem(
 	val importance: Double? = null,
 
 	@field:SerializedName("relatedfeatures")
-	val relatedfeatures: List<String?>? = null,
+	val relatedfeatures: List<String>? = null,
 
 	@field:SerializedName("videotitle")
 	val videotitle: String? = null,
@@ -149,7 +149,7 @@ data class FeaturevideoItem(
 	val videourl: Videourl? = null,
 
 	@field:SerializedName("categories")
-	val categories: List<Any?>? = null,
+	val categories: List<Any>? = null,
 
 	@field:SerializedName("videolanguage")
 	val videolanguage: String? = null,
