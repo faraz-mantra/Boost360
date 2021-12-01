@@ -10,8 +10,8 @@
   <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="@color/grey_f9f9f9">
+    android:background="@color/grey_f9f9f9"
+    android:fillViewport="true">
 
     <FrameLayout
       android:layout_width="match_parent"
@@ -296,10 +296,10 @@
         <com.framework.views.customViews.CustomEditText
           android:id="@+id/edt_patient_name"
           style="@style/match_wrap"
-            android:digits="0123456789qwertzuiopasdfghjklyxcvbnmABCDEFGHIJKLMNOPQRSTUVWXYZ "
-            android:layout_marginHorizontal="@dimen/size_16"
+          android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginVertical="@dimen/size_8"
           android:background="@drawable/et_bg"
+          android:digits="0123456789qwertzuiopasdfghjklyxcvbnmABCDEFGHIJKLMNOPQRSTUVWXYZ "
           android:focusable="true"
           android:inputType="textCapWords"
           android:maxLines="1"

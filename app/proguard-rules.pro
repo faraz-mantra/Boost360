@@ -351,7 +351,6 @@
 
 -dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder
 
-
 ## New progard rule
 #-keeppackagenames com.onboarding
 #-keeppackagenames com.dashboard
@@ -367,11 +366,12 @@
 #-keep class com.onboarding.** { *; }
 #-keep class com.dashboard.** { *; }
 #-keep class com.appservice.** { *; }
-#-keep class com.framework.** { *; }
 #-keep class com.resources.** { *; }
 #-keep class com.inventoryorder.** { *; }
 #-keep class com.festive_poster.** { *; }
 #-keep class com.boost.presignup.** { *; }
+#-keep class com.boost.presignin.** { *; }
+-keep class com.framework.** { *; }
 -keep class dev.patrickgold.florisboard.** { *; }
 
 -keep class com.onboarding.nowfloats.model.** { <fields>; }
@@ -393,6 +393,7 @@
 -keep class com.dashboard.controller.ui.business.model.** { <fields>; }
 -keep class com.dashboard.controller.ui.customisationnav.model.** { <fields>; }
 -keep class com.dashboard.controller.ui.more.model.** { <fields>; }
+-keep class com.framework.pref.** { <fields>; }
 ## New progard rule
 
 ##---------------Begin: proguard configuration for Gson  ----------
