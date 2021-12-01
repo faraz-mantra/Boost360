@@ -21,29 +21,29 @@ class IntroItemNew(
         return arrayListOf(
             IntroItemNew(
                 c.getString(R.string.new_into_1_title),
-                R.drawable.tutorial_1_new,
                 null,
+                R.raw.lottie_intro_1_merchant,
                 false,
-                R.color.white
+                R.color.white_F4F8FA
             ),
             IntroItemNew(
                 c.getString(R.string.new_into_2_title),
-                R.drawable.tutorial_new_2,
-                R.raw.lottie_marketing_tools_intro_2,
+                null,
+                R.raw.lottie_intro_2_marketing,
                 false,
                 R.color.white_F4F8FA
             ),
             IntroItemNew(
                 c.getString(R.string.new_into_3_title),
-                R.drawable.tutorial_1_new,
                 null,
+                R.raw.lottie_intro_3_products,
                 true,
-                R.color.white
+                R.color.white_F4F8FA
             ),
             IntroItemNew(
                 c.getString(R.string.new_into_4_title),
-                R.drawable.tutorial_3_new,
-                R.raw.lottie_collect_payments_intro_4,
+                null,
+                R.raw.lottie_intro_4_collect,
                 true,
                 R.color.white_F7F7F4
             ),
