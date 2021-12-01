@@ -218,6 +218,7 @@
     <string name="this_email_is_already_in_use">This email is already in use.</string>
     <string name="validation_error_try_again">Validation error, please try again.</string>
     <string name="english">English</string>
+    <string name="please_try_again_later">Something went wrong. Please try again later !</string>
 
 </resources>
 
