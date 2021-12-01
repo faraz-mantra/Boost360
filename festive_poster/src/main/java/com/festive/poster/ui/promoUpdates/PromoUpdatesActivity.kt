@@ -1,18 +1,19 @@
 package com.festive.poster.ui.promoUpdates
 
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.viewpager2.widget.ViewPager2
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
-import com.festive.poster.databinding.ActivityUpdateCreationBinding
+import com.festive.poster.databinding.ActivityPromoUpdatesBinding
 import com.festive.poster.models.promoModele.SocialConnModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.framework.models.BaseViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 
-class UpdateCreationActivity : AppBaseActivity<ActivityUpdateCreationBinding, BaseViewModel>() {
+class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseViewModel>() {
 
     override fun getLayout(): Int {
-        return R.layout.activity_update_creation
+        return R.layout.activity_promo_updates
     }
 
     override fun getViewModelClass(): Class<BaseViewModel> {
@@ -83,10 +84,11 @@ class UpdateCreationActivity : AppBaseActivity<ActivityUpdateCreationBinding, Ba
 
         // New way of interaction with TabLayout and page title setting
         TabLayoutMediator(binding!!.tabLayout, binding!!.viewPager) { currentTab, currentPosition ->
-            when(currentPosition){
-                1->{
-                    currentTab.setCustomView(R.layout.tab_item_with_count)
-                }
+            currentTab.icon=when(currentPosition){
+                0->AppCompatResources.getDrawable(this,R.drawable.ic_sundim)
+                1->AppCompatResources.getDrawable(this,R.drawable.ic_circlesfour)
+                2->AppCompatResources.getDrawable(this,R.drawable.ic_magnifyingglass)
+                else -> null
             }
             currentTab.text = when (currentPosition) {
                 0 -> getString(R.string.todays_pick)

@@ -19,9 +19,7 @@ class TodaysPickTemplateViewHolder(binding: ListItemTodaysPickTemplateBinding):
         model.templateList?.let {
             val adapter = AppBaseRecyclerViewAdapter(binding.root.context as BaseActivity<*, *>, it)
             binding.vpTemplate.adapter = adapter
-            TabLayoutMediator(binding.tabLayout,binding.vpTemplate){
-                    tab,position->
-            }.attach()
+            binding.introIndicatorNew.setViewPager2(binding.vpTemplate)
         }
 
         super.bind(position, item)

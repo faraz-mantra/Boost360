@@ -324,6 +324,7 @@
     <attr name="dotsStrokeColor" />
     <attr name="stiffness" />
     <attr name="dampingRatio" />
+    <attr name="selectedDotColor"/>
   </declare-styleable>
 
   <declare-styleable name="WormDotsIndicator">
