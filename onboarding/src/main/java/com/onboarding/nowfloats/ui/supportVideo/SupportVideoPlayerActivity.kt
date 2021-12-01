@@ -25,13 +25,10 @@ import com.onboarding.nowfloats.model.supportVideo.FeatureSupportVideoResponse.C
 import com.onboarding.nowfloats.model.supportVideo.FeatureSupportVideoResponse.Companion.saveSupportVideoData
 import com.onboarding.nowfloats.model.supportVideo.FeaturevideoItem
 import com.onboarding.nowfloats.viewmodel.SupportVideoViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import wseemann.media.FFmpegMediaMetadataRetriever
 
 
@@ -45,8 +42,9 @@ class SupportVideoPlayerActivity :
     private var currentVideoClock = 0L
     private var currentTotalClock = 0L
     private var isFirstLoad = true
-    private lateinit var filteredVideos: MutableList<FeaturevideoItem?>
+    private var filteredVideos: MutableList<FeaturevideoItem> = mutableListOf()
     private lateinit var allVideoDuration: LongArray
+    private var elapsedTimeUpdatesJob: Job? = null
 
     /*private var arrayOfVideoUrls = arrayListOf(
         "https://cdn.nowfloats.com/manage/assets/Content/videos/vertical/BoostHowToTrackPerformanceAndWebsiteReport.mp4",
@@ -70,11 +68,23 @@ class SupportVideoPlayerActivity :
 
     private fun initUI() {
         val extras = intent.extras
-        if (extras?.containsKey(IntentConstant.SUPPORT_VIDEO_TYPE.name)!!) {
-            supportVideoType = extras.getString(IntentConstant.SUPPORT_VIDEO_TYPE.name)!!
-            getAndSaveFeatureSupportVideos()
+        supportVideoType = extras?.getString(IntentConstant.SUPPORT_VIDEO_TYPE.name) ?: ""
+        if (supportVideoType.isEmpty().not()){
+            if (isSavedSupportDataAvailableInSharedPref()) {
+                populateData()
+                getAndSaveFeatureSupportVideos(true)
+            }else {
+                getAndSaveFeatureSupportVideos()
+            }
+        }else {
+            showShortToast(getString(R.string.please_try_again_later))
+            finish()
         }
         setOnClickListeners()
+    }
+
+    private fun isSavedSupportDataAvailableInSharedPref(): Boolean {
+        return getSupportVideoData()?.isEmpty() == false
     }
 
     private fun setOnClickListeners() {
@@ -161,7 +171,7 @@ class SupportVideoPlayerActivity :
         binding?.seekBarPaused?.gone()
         binding?.tvElapsedTime?.gone()
         binding?.tvTimeTotal?.text = ""
-        binding?.tvVideoTitle?.text = filteredVideos[currentPosition]?.videotitle
+        binding?.tvVideoTitle?.text = filteredVideos[currentPosition].videotitle
     }
 
     private fun setupSliderProgresses() {
@@ -199,32 +209,38 @@ class SupportVideoPlayerActivity :
         binding?.tvVideoTitle?.text = filteredVideos[currentPosition]?.videotitle
     }
 
-    private fun getAndSaveFeatureSupportVideos() {
-        showProgress()
+    private fun getAndSaveFeatureSupportVideos(isProgress: Boolean = false) {
+        if (isProgress) showProgress()
         viewModel.getSupportVideos().observeForever {
             val featureSupportVideoResponse = it as? FeatureSupportVideoResponse
             if (it.isSuccess() && featureSupportVideoResponse != null) {
-                saveSupportVideoData(featureSupportVideoResponse)
-                populateData()
+                saveSupportVideoData(featureSupportVideoResponse.data?.first()?.featurevideo)
+                if (isProgress) populateData()
             }
             hideProgress()
         }
     }
 
     private fun populateData() {
-        val featureVideos = getSupportVideoData()?.data?.first()?.featurevideo
-        filteredVideos =
-            (featureVideos?.filter { filter -> filter?.helpsectionidentifier == supportVideoType } as MutableList<FeaturevideoItem?>?)!!
-        getVideoDurations()
-        initStatusProgressBar()
-        /*for (item in filteredVideos)
+        val featureFirstVideo:FeaturevideoItem? = getSupportVideoData()?.firstOrNull { it.helpsectionidentifier == supportVideoType }
+        if (featureFirstVideo != null && featureFirstVideo.videourl?.url?.contains("youtube") == false) {
+            //featureVideos?.filter { filter -> filter.helpsectionidentifier == supportVideoType }
+            featureFirstVideo.let { filteredVideos.add(it) } //(featureVideos?.filter { filter -> filter.helpsectionidentifier == supportVideoType } as MutableList<FeaturevideoItem>?)!!
+            getVideoDurations()
+            initStatusProgressBar()
+            /*for (item in filteredVideos)
             exoPlayer?.addMediaItem(item?.videourl?.url?.let { MediaItem.fromUri(it) }!!)*/
-        for (item in filteredVideos)
-            exoPlayer?.addMediaItem(item.let { MediaItem.fromUri(it?.videourl?.url!!) })
-        exoPlayer?.prepare()
-        isFirstLoad = true
-        loadNextVideo()
-        launchProgressListener()
+            for (item in filteredVideos)
+                exoPlayer?.addMediaItem(item.let { MediaItem.fromUri(it.videourl?.url!!) })
+            exoPlayer?.prepare()
+            isFirstLoad = true
+            loadNextVideo()
+            launchProgressListener()
+        } else {
+            showShortToast(getString(R.string.coming_soon))
+            finish()
+            return
+        }
     }
 
     private fun blurAndDisableNavButtons(
@@ -334,6 +350,7 @@ class SupportVideoPlayerActivity :
 
 
     public override fun onStop() {
+        elapsedTimeUpdatesJob?.cancel()
         super.onStop()
         if (Build.VERSION.SDK_INT >= 24) {
             releasePlayer()
@@ -393,11 +410,11 @@ class SupportVideoPlayerActivity :
     }.flowOn(Dispatchers.Main)
 
     private fun launchProgressListener() {
-        lifecycleScope.launch {
-            withContext(Dispatchers.Main) {
-                videoProgress().collect {
-                    statusProgressUpdate(it)
-                }
+        elapsedTimeUpdatesJob = lifecycleScope.launch {
+                withContext(Dispatchers.Main) {
+                    videoProgress().collect {
+                        statusProgressUpdate(it)
+                    }
             }
         }
     }
@@ -406,4 +423,5 @@ class SupportVideoPlayerActivity :
         val childAt = binding?.linearProgressStatus?.getChildAt(exoPlayer?.currentMediaItemIndex!!) as Slider
         childAt.value = progressPercentage.toFloat()
     }
+
 }
