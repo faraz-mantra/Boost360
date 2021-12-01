@@ -20,32 +20,32 @@ class IntroItemNew(
     fun getData(c: Context): ArrayList<IntroItemNew> {
         return arrayListOf(
             IntroItemNew(
-                c.getString(R.string.new_into_1_title),
-                null,
-                R.raw.lottie_intro_1_merchant,
-                false,
-                R.color.white_F4F8FA
+                title = c.getString(R.string.new_into_1_title),
+                imageResource = null,
+                lottieRawResource = R.raw.lottie_intro_1_merchant,
+                isLottieRepeat = false,
+                slideBackgroundColor = R.color.white_F4F8FA
             ),
             IntroItemNew(
-                c.getString(R.string.new_into_2_title),
-                null,
-                R.raw.lottie_intro_2_marketing,
-                false,
-                R.color.white_F4F8FA
+                title = c.getString(R.string.new_into_2_title),
+                imageResource = null,
+                lottieRawResource = R.raw.lottie_intro_2_marketing,
+                isLottieRepeat = false,
+                slideBackgroundColor = R.color.white_F4F8FA
             ),
             IntroItemNew(
-                c.getString(R.string.new_into_3_title),
-                null,
-                R.raw.lottie_intro_3_products,
-                true,
-                R.color.white_F4F8FA
+                title = c.getString(R.string.new_into_3_title),
+                imageResource = null,
+                lottieRawResource = R.raw.lottie_intro_3_products,
+                isLottieRepeat = true,
+                slideBackgroundColor = R.color.white_F4F8FA
             ),
             IntroItemNew(
-                c.getString(R.string.new_into_4_title),
-                null,
-                R.raw.lottie_intro_4_collect,
-                true,
-                R.color.white_F7F7F4
+                title = c.getString(R.string.new_into_4_title),
+                imageResource = null,
+                lottieRawResource = R.raw.lottie_intro_4_collect,
+                isLottieRepeat = true,
+                slideBackgroundColor = R.color.white_F7F7F4
             ),
         )
     }
