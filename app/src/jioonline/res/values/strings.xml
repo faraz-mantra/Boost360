@@ -385,7 +385,6 @@
     <item>Log out</item>
   </string-array>
   <string name="boost_extension">JioOnline Extensions</string>
-  <string name="enable_boost_keyboard">Enable business keyboard</string>
   <string name="about">About JioOnline</string>
   <string name="boost_payment_gateway">JioOnline payment gateway</string>
   <string name="payment_gateway_not_added_please_add_first">JioOnline Payment gateway not added, please add first.</string>
@@ -643,6 +642,9 @@
   <string name="settings_twitter_url">https://twitter.com/reliancejio</string>
   <string name="settings_twitter_url_id"></string>
   <string name="google_form_help_business_boost"></string>
+
+  <string name="enable_boost_keyboard">Enable JioOnline keyboard</string>
+  <string name="select_boost_keyboard">Select JioOnline keyboard</string>
 
   <string name="google_map_key" translatable="false">AIzaSyD6mt4XepThpyfQg7AtV9WX25SnLlfBwnc</string> <!--place api-->
 
