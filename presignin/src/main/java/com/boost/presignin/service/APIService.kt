@@ -23,6 +23,7 @@ import com.onboarding.nowfloats.constant.PreferenceConstant
 import com.onboarding.nowfloats.model.channel.statusResponse.CHANNEL_STATUS_SUCCESS
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelsType
+import com.onboarding.nowfloats.model.supportVideo.FeatureSupportVideoResponse
 import com.onboarding.nowfloats.rest.repositories.ChannelRepository
 import com.onboarding.nowfloats.rest.repositories.DeveloperBoostKitDevRepository
 import org.json.JSONException
@@ -55,7 +56,7 @@ class APIService : Service() {
         nfxGetSocialTokens()
         hitSelfBrandedKycAPI()
         checkUserAccountDetails()
-        getAndSaveFeatureSupportVideos()
+        getAndSaveKAdminFeatureSupportVideos()
     }
 
     private fun checkUserAccountDetails() {
@@ -166,10 +167,12 @@ class APIService : Service() {
         }
     }
 
-    private fun getAndSaveFeatureSupportVideos() {
+    private fun getAndSaveKAdminFeatureSupportVideos() {
         DeveloperBoostKitDevRepository.getSupportVideos().toLiveData().observeForever {
-            if (it.isSuccess()) {
-                Log.i("kjsbcjk", it.toString())
+            val featureVideo =
+                (it as? FeatureSupportVideoResponse)?.data?.firstOrNull()?.featurevideo
+            if (it.isSuccess() && featureVideo.isNullOrEmpty().not()) {
+                FeatureSupportVideoResponse.saveSupportVideoData(featureVideo)
             }
         }
     }
