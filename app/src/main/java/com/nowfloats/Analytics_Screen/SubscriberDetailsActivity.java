@@ -223,38 +223,50 @@ public class SubscriberDetailsActivity extends AppCompatActivity implements View
   }
 
   private void sendSms() {
-    String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(this);
-    Intent sendIntent;
-    sendIntent = new Intent(Intent.ACTION_SENDTO);
-    if (defaultSmsPackageName != null) {
-      sendIntent.putExtra(Intent.EXTRA_TEXT, "Write here");
-      sendIntent.setData(Uri.parse("sms:" + mSubscriberData.getUserMobile()));
-      sendIntent.setType("text/plain");
-      sendIntent.setPackage(defaultSmsPackageName);
-      startActivity(sendIntent);
-    } else {
-      sendIntent.setType("vnd.android-dir/mms-sms");
-      sendIntent.addCategory(Intent.CATEGORY_DEFAULT);
-      sendIntent.putExtra("sms_body", "Write here");
-      sendIntent.setData(Uri.parse("sms:" + mSubscriberData.getUserMobile()));
-      startActivity(Intent.createChooser(sendIntent, "Sms by:"));
+    try {
+      String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(this);
+      Intent sendIntent;
+      sendIntent = new Intent(Intent.ACTION_SENDTO);
+      if (defaultSmsPackageName != null) {
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Write here");
+        sendIntent.setData(Uri.parse("sms:" + mSubscriberData.getUserMobile()));
+        sendIntent.setType("text/plain");
+        sendIntent.setPackage(defaultSmsPackageName);
+        startActivity(sendIntent);
+      } else {
+        sendIntent.setType("vnd.android-dir/mms-sms");
+        sendIntent.addCategory(Intent.CATEGORY_DEFAULT);
+        sendIntent.putExtra("sms_body", "Write here");
+        sendIntent.setData(Uri.parse("sms:" + mSubscriberData.getUserMobile()));
+        startActivity(Intent.createChooser(sendIntent, "Sms by:"));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 
   private void makeCall() {
-    Intent callIntent = new Intent(Intent.ACTION_DIAL);
-    callIntent.addCategory(Intent.CATEGORY_DEFAULT);
-    callIntent.setData(Uri.parse("tel:" + mSubscriberData.getUserMobileWithCountryCode()));
-    startActivity(Intent.createChooser(callIntent, "Call by:"));
+    try {
+      Intent callIntent = new Intent(Intent.ACTION_DIAL);
+      callIntent.addCategory(Intent.CATEGORY_DEFAULT);
+      callIntent.setData(Uri.parse("tel:" + mSubscriberData.getUserMobileWithCountryCode()));
+      startActivity(Intent.createChooser(callIntent, "Call by:"));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   private void sendMail() {
-    Intent email = new Intent(Intent.ACTION_SEND);
-    email.addCategory(Intent.CATEGORY_DEFAULT);
-    email.setData(Uri.parse("mailto:"));
-    email.setType("message/rfc822");
-    email.putExtra(Intent.EXTRA_EMAIL, new String[]{mSubscriberData.getUserMobile()});
-    startActivity(Intent.createChooser(email, "Email by:"));
+    try {
+      Intent email = new Intent(Intent.ACTION_SEND);
+      email.addCategory(Intent.CATEGORY_DEFAULT);
+      email.setData(Uri.parse("mailto:"));
+      email.setType("message/rfc822");
+      email.putExtra(Intent.EXTRA_EMAIL, new String[]{mSubscriberData.getUserMobile()});
+      startActivity(Intent.createChooser(email, "Email by:"));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   private void openWhatsApp(String countryCode, String mobile) {

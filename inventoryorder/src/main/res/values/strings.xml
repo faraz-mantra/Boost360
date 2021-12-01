@@ -265,6 +265,7 @@
   <string name="dummy_title">Mutton rogan josh</string>
   <string name="edit">Edit</string>
   <string name="customer_name_cannot_be_empty">Customer Name cannot be empty</string>
+  <string name="please_enter_valid_customer_name">Please enter a valid customer name.</string>
   <string name="customer_email_cannot_be_empty">Customer Email cannot be empty</string>
   <string name="customer_phone_cannot_be_empty">Customer phone number cannot be empty</string>
   <string name="customer_address_cannot_be_empty">Customer address cannot be empty</string>
