@@ -432,12 +432,12 @@ public class Utils {
       if (session.getUserProfileEmail() != null) {
         intent.putExtra("email", session.getUserProfileEmail());
       } else {
-        intent.putExtra("email", "ria@nowfloats.com");
+        intent.putExtra("email", context.getString(R.string.ria_customer_mail));
       }
       if (session.getUserPrimaryMobile() != null) {
         intent.putExtra("mobileNo", session.getUserPrimaryMobile());
       } else {
-        intent.putExtra("mobileNo", "9160004303");
+        intent.putExtra("mobileNo", context.getString(R.string.ria_customer_number));
       }
       if (buyItemKey != null /*&& buyItemKey.isNotEmpty()*/)
         intent.putExtra("buyItemKey", buyItemKey);

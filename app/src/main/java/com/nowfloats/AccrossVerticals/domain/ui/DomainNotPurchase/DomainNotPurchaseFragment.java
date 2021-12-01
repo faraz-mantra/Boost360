@@ -22,6 +22,8 @@ import com.thinksity.R;
 
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
+import java.util.ArrayList;
+
 public class DomainNotPurchaseFragment extends Fragment {
 
     private DomainNotPurchaseViewModel mViewModel;
@@ -86,16 +88,16 @@ public class DomainNotPurchaseFragment extends Fragment {
         intent.putExtra("fpid", session.getFPID());
         intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
-        intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
+        intent.putStringArrayListExtra("userPurchsedWidgets", new ArrayList(session.getStoreWidgets()));
         if (session.getUserProfileEmail() != null) {
             intent.putExtra("email", session.getUserProfileEmail());
         } else {
-            intent.putExtra("email", "ria@nowfloats.com");
+            intent.putExtra("email", getString(R.string.ria_customer_mail));
         }
         if (session.getUserPrimaryMobile() != null) {
             intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
-            intent.putExtra("mobileNo", "9160004303");
+            intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
         }
         intent.putExtra("profileUrl", session.getFPLogo());
         intent.putExtra("buyItemKey", "DOMAINPURCHASE");
