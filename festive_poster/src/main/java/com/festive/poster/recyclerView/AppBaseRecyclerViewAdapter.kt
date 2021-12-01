@@ -30,7 +30,9 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW-> TodaysPickTemplateViewHolder(binding as ListItemTodaysPickTemplateBinding)
       RecyclerViewItemType.TEMPLATE_VIEW-> TemplateViewHolder(binding as ListItemTemplateBinding)
       RecyclerViewItemType.SOCIAL_CONN-> SoicalConnViewHolder(binding as ListItemSocialConnBinding)
-      RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT->BrowsePosterCatViewHolder(binding as ListItemBrowseTemplateCatBinding)
+      RecyclerViewItemType.BROWSE_TAB_TEMPLATE_CAT->BrowseTabPosterCatViewHolder(binding as ListItemBrowseTabTemplateCatBinding)
+      RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT->BrowseAllPosterCatViewHolder(binding as ListItemBrowseAllCatBinding)
+
     }
   }
 

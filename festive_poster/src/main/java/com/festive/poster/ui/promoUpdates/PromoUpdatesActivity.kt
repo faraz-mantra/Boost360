@@ -27,100 +27,13 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseVi
 
     override fun onCreateView() {
         super.onCreateView()
-        setupView()
-        setupViewPager()
+        addFragmentReplace(binding?.container?.id,PromoLandingPageFragment.newInstance(),true)
     }
 
-    private fun setupView() {
 
-        val soicalConnList = arrayListOf(
-            SocialConnModel(
-            content = "1000+ people are on twitter"
-        ), SocialConnModel(
-            content = "1000+ people are on facebook"
-        )
-        )
-
-        val socialconnadapter = AppBaseRecyclerViewAdapter(this,soicalConnList)
-        binding?.vpSocialConn?.adapter = socialconnadapter
-        binding?.ivLeftArrow?.setOnClickListener {
-            binding?.vpSocialConn?.postDelayed(Runnable {
-                binding?.vpSocialConn?.currentItem = binding?.vpSocialConn?.currentItem?:1 - 1;
-
-            }, 100)
-        }
-        binding?.ivRightArrow?.setOnClickListener {
-            binding?.vpSocialConn?.postDelayed(Runnable {
-                binding?.vpSocialConn?.currentItem = binding?.vpSocialConn?.currentItem?:0 + 1;
-
-            }, 100)
-        }
-
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (getTopFragment()==null) finish()
     }
 
-    private fun setupViewPager() {
-        val fragmentList = arrayListOf(
-            TodaysPickFragment.newInstance(),
-            BrowseAllTemplateFragment.newInstance(),
-            CreatePostFragment.newInstance()
-        )
-        val viewPagerAdapter = TabAdapter(fragmentList, this)
-        binding?.viewPager?.apply {
-            isUserInputEnabled = false
-            adapter = viewPagerAdapter
-            offscreenPageLimit = 3
-            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-
-                    when(position){
-                        0->{
-
-
-                        }
-                        1->{
-
-
-                        }
-                    }
-                }
-            })
-        }
-
-
-        binding?.tabLayout?.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                val tabIconColor: Int =
-                    ContextCompat.getColor(this@PromoUpdatesActivity, R.color.colorPrimary)
-                tab!!.icon!!.setColorFilter2(tabIconColor,BlendMode.SRC_IN, PorterDuff.Mode.SRC_IN)
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                val tabIconColor: Int =
-                    ContextCompat.getColor(this@PromoUpdatesActivity, R.color.colorB3B3B3)
-                tab!!.icon!!.setColorFilter2(tabIconColor,BlendMode.SRC_IN, PorterDuff.Mode.SRC_IN)
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-
-        })
-
-        // New way of interaction with TabLayout and page title setting
-        TabLayoutMediator(binding!!.tabLayout, binding!!.viewPager) { currentTab, currentPosition ->
-            currentTab.icon=when(currentPosition){
-                0->AppCompatResources.getDrawable(this,R.drawable.ic_sundim)
-                1->AppCompatResources.getDrawable(this,R.drawable.ic_circlesfour)
-                2->AppCompatResources.getDrawable(this,R.drawable.ic_magnifyingglass)
-                else -> null
-            }
-            currentTab.text = when (currentPosition) {
-                0 -> getString(R.string.for_today)
-                1 -> getString(R.string.browse)
-                2 -> getString(R.string.find)
-                else -> ""
-            }
-        }.attach()
-
-
-    }
 }
