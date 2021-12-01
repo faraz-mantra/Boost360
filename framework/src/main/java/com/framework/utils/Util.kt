@@ -10,6 +10,7 @@ import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.graphics.*
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -372,5 +373,13 @@ fun isService(category_code: String?): Boolean {
   return when (category_code) {
     "SVC", "DOC", "HOS", "SPA", "SAL" -> true
     else -> false
+  }
+}
+
+fun Drawable.setColorFilter2(color: Int,blendMode:BlendMode,porterDuffMode:PorterDuff.Mode){
+  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+    colorFilter = BlendModeColorFilter(color, blendMode)
+  } else {
+    setColorFilter(color,porterDuffMode)
   }
 }

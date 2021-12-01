@@ -2,22 +2,69 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            tools:listitem="@layout/list_item_todays_pick_template"
-            android:id="@+id/rv_templates"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                tools:itemCount="3"
+                tools:listitem="@layout/list_item_todays_pick_template"
+                android:id="@+id/rv_templates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                />
+
+
+            <com.framework.views.customViews.CustomCardView
+                android:layout_marginBottom="@dimen/size_16"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginHorizontal="@dimen/size_24"
+                android:layout_height="83dp">
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:layout_margin="@dimen/size_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:src="@drawable/ic_browse_all_template_prefix"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        style="@style/BlackSemiBoldS"
+                        android:layout_marginStart="@dimen/size_8"
+                        android:text="@string/browse_all_templates"
+                        android:layout_height="wrap_content"/>
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:src="@drawable/ic_fastforward"
+                        android:layout_marginStart="@dimen/size_8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_browse_all_template_suffix"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.framework.views.customViews.CustomCardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 </layout>

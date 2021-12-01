@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.RecyclerViewActionType
+import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.FragmentPosterPackListingBinding
 import com.festive.poster.models.PosterModel
 import com.festive.poster.models.PosterPackModel
@@ -102,7 +103,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
                 templateList.add(template.clone()!!)
               }
             }
-            dataList?.add(PosterPackModel(pack_tag, templateList.toArrayList(),isPurchased = pack_tag.isPurchased))
+            dataList?.add(PosterPackModel(pack_tag, templateList.toArrayList(),isPurchased = pack_tag.isPurchased,list_layout = RecyclerViewItemType.POSTER_PACK.getLayout()))
 
           }
           getPriceOfPosterPacks()

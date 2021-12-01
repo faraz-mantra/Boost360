@@ -11,10 +11,11 @@ open class PosterPackModel(
   val tagsModel: PosterPackTagModel,
   var posterList: ArrayList<PosterModel>? = null,
   var price: Double = 0.0,
-  var isPurchased: Boolean = false
+  var isPurchased: Boolean = false,
+  var list_layout:Int
 ) : AppBaseRecyclerViewItem {
   override fun getViewType(): Int {
-    return RecyclerViewItemType.POSTER_PACK.getLayout()
+    return list_layout
   }
 
   fun isPurchasedN(): Boolean {

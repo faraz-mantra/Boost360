@@ -44,8 +44,9 @@
 
     <string name="app_name">template</string>
     <string name="promo_updates">Promo updates</string>
-    <string name="todays_pick">Today\'s Pick</string>
-    <string name="browser_all">Browse All</string>
+    <string name="for_today">For today</string>
+    <string name="browse">Browse</string>
+    <string name="find">Find</string>
     <string name="create_post">Create Post</string>
     <string name="share">Share</string>
     <string name="post">Post</string>
@@ -59,4 +60,5 @@
     <string name="edit_template_text">Edit Template Text</string>
     <string name="header_1">Header 1</string>
     <string name="header_2">Header 2</string>
+    <string name="browse_all_templates">Browse all templates</string>
 </resources>

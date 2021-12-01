@@ -1,6 +1,9 @@
 package com.festive.poster.ui.promoUpdates
 
+import android.graphics.BlendMode
+import android.graphics.PorterDuff
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
@@ -8,6 +11,8 @@ import com.festive.poster.databinding.ActivityPromoUpdatesBinding
 import com.festive.poster.models.promoModele.SocialConnModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.framework.models.BaseViewModel
+import com.framework.utils.setColorFilter2
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseViewModel>() {
@@ -82,6 +87,24 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseVi
         }
 
 
+        binding?.tabLayout?.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                val tabIconColor: Int =
+                    ContextCompat.getColor(this@PromoUpdatesActivity, R.color.colorPrimary)
+                tab!!.icon!!.setColorFilter2(tabIconColor,BlendMode.SRC_IN, PorterDuff.Mode.SRC_IN)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                val tabIconColor: Int =
+                    ContextCompat.getColor(this@PromoUpdatesActivity, R.color.colorB3B3B3)
+                tab!!.icon!!.setColorFilter2(tabIconColor,BlendMode.SRC_IN, PorterDuff.Mode.SRC_IN)
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+        })
+
         // New way of interaction with TabLayout and page title setting
         TabLayoutMediator(binding!!.tabLayout, binding!!.viewPager) { currentTab, currentPosition ->
             currentTab.icon=when(currentPosition){
@@ -91,9 +114,9 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseVi
                 else -> null
             }
             currentTab.text = when (currentPosition) {
-                0 -> getString(R.string.todays_pick)
-                1 -> getString(R.string.browser_all)
-                2 -> getString(R.string.create_post)
+                0 -> getString(R.string.for_today)
+                1 -> getString(R.string.browse)
+                2 -> getString(R.string.find)
                 else -> ""
             }
         }.attach()

@@ -10,7 +10,8 @@ enum class RecyclerViewItemType {
   POSTER_SHARE,
   TODAYS_PICK_TEMPLATE_VIEW,
   TEMPLATE_VIEW,
-  SOCIAL_CONN;
+  SOCIAL_CONN,
+  BROWSE_ALL_TEMPLATE_CAT;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -22,6 +23,7 @@ enum class RecyclerViewItemType {
       TODAYS_PICK_TEMPLATE_VIEW -> R.layout.list_item_todays_pick_template
       TEMPLATE_VIEW -> R.layout.list_item_template
       SOCIAL_CONN -> R.layout.list_item_social_conn
+      BROWSE_ALL_TEMPLATE_CAT->R.layout.list_item_browse_template_cat
     }
   }
 }

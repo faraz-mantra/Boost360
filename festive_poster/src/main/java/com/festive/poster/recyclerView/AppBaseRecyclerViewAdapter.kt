@@ -4,10 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.*
-import com.festive.poster.recyclerView.viewholders.PosterPackPurchasedViewHolder
-import com.festive.poster.recyclerView.viewholders.PosterPackViewHolder
-import com.festive.poster.recyclerView.viewholders.PosterShareViewHolder
-import com.festive.poster.recyclerView.viewholders.PosterViewHolder
+import com.festive.poster.recyclerView.viewholders.*
 import com.festive.poster.ui.promoUpdates.holders.SoicalConnViewHolder
 import com.festive.poster.ui.promoUpdates.holders.TemplateViewHolder
 import com.festive.poster.ui.promoUpdates.holders.TodaysPickTemplateViewHolder
@@ -33,7 +30,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW-> TodaysPickTemplateViewHolder(binding as ListItemTodaysPickTemplateBinding)
       RecyclerViewItemType.TEMPLATE_VIEW-> TemplateViewHolder(binding as ListItemTemplateBinding)
       RecyclerViewItemType.SOCIAL_CONN-> SoicalConnViewHolder(binding as ListItemSocialConnBinding)
-
+      RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT->BrowsePosterCatViewHolder(binding as ListItemBrowseTemplateCatBinding)
     }
   }
 

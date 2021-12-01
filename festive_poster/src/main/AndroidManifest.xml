@@ -11,6 +11,8 @@
             android:name=".ui.festivePoster.FestivePosterContainerActivity"/>
 
         <activity
+            android:theme="@style/PosterTheme"
+
             android:screenOrientation="portrait"
             android:name="com.festive.poster.ui.promoUpdates.PromoUpdatesActivity"
             android:exported="true"/>

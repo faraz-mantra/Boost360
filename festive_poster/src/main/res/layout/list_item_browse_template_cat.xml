@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <com.google.android.material.card.MaterialCardView
+        app:cardCornerRadius="@dimen/size_15"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginVertical="@dimen/size_8"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="@dimen/size_150"
+        android:layout_height="@dimen/size_150"
+        app:cardBackgroundColor="@color/colorPrimary"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:background="@color/white"
+                    android:layout_width="@dimen/size_50"
+                    android:layout_height="1dp"/>
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginVertical="@dimen/size_12"
+                    android:text="SALES"
+                    android:letterSpacing="0.4"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/inter_medium"
+                    android:textAllCaps="true"
+                    android:layout_height="wrap_content"/>
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:text="(23)"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/regular"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>
