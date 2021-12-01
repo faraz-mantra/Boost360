@@ -230,7 +230,6 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
     val featureFirstVideo: FeaturevideoItem? = getSupportVideoData()?.firstOrNull { it.helpsectionidentifier == supportVideoType }
     if (featureFirstVideo != null && featureFirstVideo.videourl?.url?.contains("youtube") == false) {
       filteredVideos = arrayListOf(featureFirstVideo)
-      //(featureVideos?.filter { filter -> filter.helpsectionidentifier == supportVideoType } as MutableList<FeaturevideoItem>?)!!
       for (item in filteredVideos) {
         exoPlayer?.addMediaItem(item.let { MediaItem.fromUri(it.videourl?.url!!) })
       }
@@ -252,7 +251,7 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
       binding?.ivPrev?.alpha = 0.5f
       binding?.ivPrev?.isEnabled = false
     } else {
-      binding?.ivPrev?.setTintColor(ContextCompat.getColor(this, R.color.white))
+      binding?.ivPrev?.setTintColor(ContextCompat.getColor(this, R.color.pinkish_grey))
       binding?.ivPrev?.alpha = 1f
       binding?.ivPrev?.isEnabled = true
     }
@@ -262,7 +261,7 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
       binding?.ivNext?.alpha = 0.5f
       binding?.ivNext?.isEnabled = false
     } else {
-      binding?.ivNext?.setTintColor(ContextCompat.getColor(this, R.color.white))
+      binding?.ivNext?.setTintColor(ContextCompat.getColor(this, R.color.pinkish_grey))
       binding?.ivNext?.alpha = 1f
       binding?.ivNext?.isEnabled = true
     }
