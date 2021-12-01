@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
 import com.framework.utils.DateUtils
+import com.framework.utils.ValidationUtils
 import com.framework.utils.ValidationUtils.isEmailValid
 import com.framework.utils.ValidationUtils.isMobileNumberValid
 import com.framework.utils.fromHtml
@@ -140,8 +141,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
   }
 
   private fun validateForm() {
-
-    val name = binding?.layoutCustomer?.editCustomerName?.text ?: ""
+    val name = binding?.layoutCustomer?.editCustomerName?.text?.toString() ?: ""
     val email = binding?.layoutCustomer?.editCustomerEmail?.text?.toString() ?: ""
     val phone = binding?.layoutCustomer?.editCustomerPhone?.text?.toString() ?: ""
     val address = binding?.layoutBillingAddr?.editAddress?.text ?: ""
@@ -160,6 +160,10 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
       return
     }
 
+    if (!ValidationUtils.isValidName(name)) {
+      showShortToast(getString(R.string.please_enter_valid_customer_name))
+      return
+    }
     if (phone.isEmpty()) {
       showShortToast(getString(R.string.customer_phone_cannot_be_empty))
       return
