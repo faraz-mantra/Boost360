@@ -2,6 +2,7 @@ package com.boost.presignin.rest.services.remote
 
 import com.boost.presignin.model.other.PaymentKycDataResponse
 import com.boost.presignin.rest.EndPoints
+import com.framework.base.BaseResponse
 import com.framework.pref.clientId2
 import com.google.gson.JsonObject
 import io.reactivex.Observable
@@ -10,12 +11,9 @@ import retrofit2.http.*
 
 interface RiaWithFloatDataSource {
 
-  @GET(value = EndPoints.WHATSAPP_OPT_IN)
+  @POST(value = EndPoints.WHATSAPP_OPT_IN)
   fun whatsappOptIn(
     @Query("authClientId") clientId:String= clientId2,
-    @Query("optType") optType:Int,
-    @Query("number") number:String,
-    @Query("customerId") customerId:String,
-    @Query("optinId") optinId:String = "919381915059"
-  ): Observable<Response<PaymentKycDataResponse>>
+    @Body body: JsonObject
+  ): Observable<Response<Any>>
 }

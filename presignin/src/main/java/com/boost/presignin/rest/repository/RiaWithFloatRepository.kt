@@ -3,6 +3,7 @@ package com.boost.presignin.rest.repository
 import com.boost.presignin.base.rest.AppBaseLocalService
 import com.boost.presignin.base.rest.AppBaseRepository
 import com.boost.presignin.rest.TaskCode
+import com.boost.presignin.rest.apiClients.RiaWithFloatsApiClient
 import com.boost.presignin.rest.apiClients.WebActionBoostKitClient
 import com.boost.presignin.rest.services.remote.RiaWithFloatDataSource
 import com.boost.presignin.rest.services.remote.WebActionBoostKitDataSource
@@ -18,14 +19,14 @@ object RiaWithFloatRepository : AppBaseRepository<RiaWithFloatDataSource, AppBas
   }
 
   fun whatsappOptIn(optType:Int,number:String,customerId:String): Observable<BaseResponse> {
-    /*val body = JsonObject().apply {
+    val body = JsonObject().apply {
       addProperty("optType",optType)
-      addProperty("whatsappNumber",number)
+      addProperty("whatsappNumber","91$number")
       addProperty("customerId",customerId)
       addProperty("optinId","919381915059")
 
-    }*/
-    return makeRemoteRequest(remoteDataSource.whatsappOptIn(optType = optType, number = number, customerId = customerId), TaskCode.WHATSAPP_OPT_IN)
+    }
+    return makeRemoteRequest(remoteDataSource.whatsappOptIn(body = body), TaskCode.WHATSAPP_OPT_IN)
   }
 
   override fun getLocalDataSourceInstance(): AppBaseLocalService {
@@ -33,6 +34,6 @@ object RiaWithFloatRepository : AppBaseRepository<RiaWithFloatDataSource, AppBas
   }
 
   override fun getApiClient(): Retrofit {
-    return WebActionBoostKitClient.shared.retrofit
+    return RiaWithFloatsApiClient.shared.retrofit
   }
 }
