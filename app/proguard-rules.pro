@@ -392,7 +392,7 @@
 #-keep class com.festive_poster.** { *; }
 #-keep class com.boost.presignup.** { *; }
 #-keep class com.boost.presignin.** { *; }
-#-keep class com.framework.** { *; }
+-keep class com.framework.** { *; }
 -keep class dev.patrickgold.florisboard.** { *; }
 
 -keep class com.onboarding.nowfloats.model.** { <fields>; }
