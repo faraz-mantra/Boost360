@@ -84,7 +84,9 @@
 
             <com.framework.views.customViews.CustomImageView
               android:layout_width="match_parent"
-              android:layout_height="@dimen/size_120"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:layout_height="@dimen/size_120"
               android:padding="@dimen/size_30"
               android:src="@drawable/ic_fposter_profile_img_placeholder" />
 
