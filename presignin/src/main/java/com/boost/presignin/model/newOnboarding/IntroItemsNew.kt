@@ -22,21 +22,21 @@ class IntroItemNew(
             IntroItemNew(
                 title = c.getString(R.string.new_into_1_title),
                 imageResource = null,
-                lottieRawResource = R.raw.lottie_intro_1_merchant,
+                lottieRawResource = R.raw.new_lottie_merchants_1,
                 isLottieRepeat = false,
                 slideBackgroundColor = R.color.white_F4F8FA
             ),
             IntroItemNew(
                 title = c.getString(R.string.new_into_2_title),
                 imageResource = null,
-                lottieRawResource = R.raw.lottie_intro_2_marketing,
+                lottieRawResource = R.raw.new_lottie_marketing_2,
                 isLottieRepeat = false,
                 slideBackgroundColor = R.color.white_F4F8FA
             ),
             IntroItemNew(
                 title = c.getString(R.string.new_into_3_title),
                 imageResource = null,
-                lottieRawResource = R.raw.lottie_intro_3_products,
+                lottieRawResource = R.raw.new_lottie_selling_products_3,
                 isLottieRepeat = true,
                 slideBackgroundColor = R.color.white_F4F8FA
             ),

@@ -37,7 +37,7 @@ class IntroSlidesViewHolder constructor(binding: ItemIntroNewSlidesBinding) :
             }
 
             override fun onAnimationEnd(animation: Animator?) {
-                if (model.isLottieRepeat?.not() == true) {
+                if (model.isLottieRepeat == false) {
                     binding.lottieAnimationIntro.cancelAnimation()
                 }
                 onItemClick(position, item)
