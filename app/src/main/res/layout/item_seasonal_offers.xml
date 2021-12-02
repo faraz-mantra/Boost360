@@ -30,7 +30,9 @@
       app:layout_constraintTop_toTopOf="parent">
 
       <ImageView
-        android:id="@+id/offer_profile_image"
+          android:tag="com.userexperior.ueSecureView"
+
+          android:id="@+id/offer_profile_image"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
         android:layout_margin="@dimen/_10sdp"
@@ -50,7 +52,9 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-          android:id="@+id/offer_title"
+            android:tag="com.userexperior.ueSecureView"
+
+            android:id="@+id/offer_title"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:fontFamily="@font/regular"
@@ -63,7 +67,9 @@
           android:layout_height="wrap_content">
 
           <TextView
-            android:id="@+id/offer_price"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/offer_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/semi_bold"
@@ -72,7 +78,9 @@
             android:textSize="@dimen/_12sdp" />
 
           <TextView
-            android:id="@+id/mrp_price"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/mrp_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
@@ -152,7 +160,9 @@
         app:srcCompat="@drawable/ic_percentage_seasonal_offer" />
 
       <TextView
-        android:id="@+id/discount_percentage"
+          android:tag="com.userexperior.ueSecureView"
+
+          android:id="@+id/discount_percentage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"

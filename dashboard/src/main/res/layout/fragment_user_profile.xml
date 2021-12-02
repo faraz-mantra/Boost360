@@ -56,7 +56,8 @@
 
                 <com.framework.views.customViews.CustomImageView
                   android:id="@+id/img_profile"
-                  android:layout_width="match_parent"
+                    android:tag="com.userexperior.ueSecureView"
+                    android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:scaleType="centerCrop"
                   app:srcCompat="@drawable/placeholder_image_n" />

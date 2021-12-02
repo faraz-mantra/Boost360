@@ -30,7 +30,9 @@
         android:textSize="@dimen/_11sdp" />
 
       <androidx.cardview.widget.CardView
-        android:id="@+id/card_primary_image"
+          android:tag="com.userexperior.ueSecureView"
+
+          android:id="@+id/card_primary_image"
         android:layout_width="180dp"
         android:layout_height="130dp"
         android:layout_marginStart="@dimen/_15sdp"
@@ -88,7 +90,8 @@
 
       <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/user_name"
-        style="@style/EditTextCustomeStyle"
+
+          style="@style/EditTextCustomeStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/edittext_bg_elevated"
@@ -132,7 +135,8 @@
 
         <androidx.appcompat.widget.AppCompatEditText
           android:id="@+id/img_desc"
-          style="@style/EditTextCustomeStyle"
+
+            style="@style/EditTextCustomeStyle"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="@drawable/edittext_bg_elevated"
@@ -175,7 +179,8 @@
 
         <androidx.appcompat.widget.AppCompatEditText
           android:id="@+id/review_title"
-          style="@style/EditTextCustomeStyle"
+
+            style="@style/EditTextCustomeStyle"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="@drawable/edittext_bg_elevated"
@@ -230,7 +235,8 @@
       </LinearLayout>
 
       <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/review_description"
+
+          android:id="@+id/review_description"
         style="@style/EditTextCustomeStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

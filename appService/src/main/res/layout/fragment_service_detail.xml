@@ -64,7 +64,9 @@
             android:orientation="vertical">
 
             <com.framework.views.customViews.CustomImageView
-              android:layout_width="wrap_content"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               app:srcCompat="@drawable/ic_add_image" />
 

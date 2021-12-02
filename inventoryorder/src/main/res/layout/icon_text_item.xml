@@ -8,7 +8,9 @@
   </data>
 
   <androidx.appcompat.widget.LinearLayoutCompat
-    android:id="@+id/main_view"
+      android:tag="com.userexperior.ueSecureView"
+
+      android:id="@+id/main_view"
     style="@style/wrap_wrap"
     android:gravity="center_vertical"
     android:orientation="horizontal">
