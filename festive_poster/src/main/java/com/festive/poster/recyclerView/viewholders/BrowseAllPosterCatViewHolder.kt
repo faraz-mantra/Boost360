@@ -25,9 +25,14 @@ class BrowseAllPosterCatViewHolder(binding: ListItemBrowseAllCatBinding) :
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     val model = item as PosterPackModel
+    if (model.isSelected){
+        binding.root.alpha =1F
+    }else{
+      binding.root.alpha = 0.5F
+    }
 
     binding.root.setOnClickListener {
-      listener?.onItemClick(position,model,RecyclerViewActionType.BROWSE_TAB_POSTER_CAT_CLICKED.ordinal)
+      listener?.onItemClick(position,model,RecyclerViewActionType.BROWSE_ALL_POSTER_CAT_CLICKED.ordinal)
     }
 
     super.bind(position, item)

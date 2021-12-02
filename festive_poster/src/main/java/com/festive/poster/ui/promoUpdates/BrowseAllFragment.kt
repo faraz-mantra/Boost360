@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
+import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.FragmentBrowseAllBinding
 import com.festive.poster.models.PosterDetailsModel
@@ -14,11 +15,14 @@ import com.festive.poster.models.PosterPackTagModel
 import com.festive.poster.models.promoModele.TemplateModel
 import com.festive.poster.models.promoModele.TodaysPickModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
+import com.festive.poster.recyclerView.BaseRecyclerViewItem
+import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 
-class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel>() {
+class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel>(),RecyclerItemClickListener {
 
+    private var categoryAdapter: AppBaseRecyclerViewAdapter<PosterPackModel>?=null
     var categoryList:ArrayList<PosterPackModel>?=null
 
     override fun getLayout(): Int {
@@ -69,8 +73,8 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel
             null,0.0,false,RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT.getLayout()))
 
 
-        val adapter =AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,categoryList!!)
-        binding?.rvCat?.adapter = adapter
+        categoryAdapter =AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,categoryList!!,this)
+        binding?.rvCat?.adapter = categoryAdapter
         binding?.rvCat?.layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false)
 
         setupPosterList()
@@ -90,5 +94,15 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel
         binding?.rvPosters?.adapter = adapter
         binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
 
+    }
+
+    override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+        when(actionType){
+            RecyclerViewActionType.BROWSE_ALL_POSTER_CAT_CLICKED.ordinal->{
+                categoryList?.forEach { it.isSelected =false }
+                categoryList?.get(position)?.isSelected=true
+                categoryAdapter?.notifyDataSetChanged()
+            }
+        }
     }
 }

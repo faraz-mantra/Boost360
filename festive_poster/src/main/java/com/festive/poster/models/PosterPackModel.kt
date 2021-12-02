@@ -18,6 +18,9 @@ open class PosterPackModel(
     return list_layout
   }
 
+  var isSelected:Boolean = false
+
+
   fun isPurchasedN(): Boolean {
     val oldTags: List<String> = convertStringToList(UserSessionManager(FestivePosterApplication.instance).getFPDetails(Key_Preferences.FESTIVE_POSTER_PURCHASED_TAG) ?: "") ?: arrayListOf()
     val isContain = oldTags.contains(tagsModel?.tag ?: "")

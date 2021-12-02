@@ -2,6 +2,7 @@ package com.festive.poster.ui.promoUpdates
 
 import android.graphics.BlendMode
 import android.graphics.PorterDuff
+import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
@@ -27,7 +28,18 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseVi
 
     override fun onCreateView() {
         super.onCreateView()
+        observeFragmentStack()
+        setOnClickListener(binding?.ivToolbarBack)
         addFragmentReplace(binding?.container?.id,PromoLandingPageFragment.newInstance(),true)
+    }
+
+    override fun onClick(v: View?) {
+        super.onClick(v)
+        when(v){
+            binding?.ivToolbarBack->{
+                onBackPressed()
+            }
+        }
     }
 
 
@@ -36,4 +48,17 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseVi
         if (getTopFragment()==null) finish()
     }
 
+    fun observeFragmentStack(){
+        supportFragmentManager.addOnBackStackChangedListener {
+            when(getTopFragment()){
+               is PromoLandingPageFragment->{
+                   binding?.tvToolbarTitle?.text = getString(R.string.promo_updates)
+               }
+                is BrowseAllFragment->{
+                    binding?.tvToolbarTitle?.text = getString(R.string.browse_all)
+
+                }
+            }
+        }
+    }
 }
