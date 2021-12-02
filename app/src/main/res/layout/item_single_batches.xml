@@ -49,7 +49,9 @@
           app:layout_constraintTop_toTopOf="parent">
 
           <TextView
-            android:layout_width="wrap_content"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:fontFamily="@font/semi_bold"
@@ -66,7 +68,9 @@
             android:layout_marginTop="4dp">
 
             <TextView
-              android:layout_width="wrap_content"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text='@{batchesResponseData.batchtiming!=null &amp;&amp; batchesResponseData.batchtiming != "" ? batchesResponseData.batchtiming : "-"}'
               android:textColor="#747474"
@@ -82,7 +86,9 @@
               android:background="@color/primary_color" />
 
             <TextView
-              android:layout_width="wrap_content"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text='@{batchesResponseData.duration!=null &amp;&amp;batchesResponseData.duration!= "" ? batchesResponseData.duration : "-"}'
               android:textSize="@dimen/txt_12sp"
@@ -130,7 +136,9 @@
           android:textSize="@dimen/_8sdp" />
 
         <TextView
-          android:id="@+id/date_value"
+            android:tag="com.userexperior.ueSecureView"
+
+            android:id="@+id/date_value"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:fontFamily="@font/regular"
