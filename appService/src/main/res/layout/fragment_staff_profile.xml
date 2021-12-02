@@ -30,6 +30,8 @@
                 android:orientation="vertical">
 
                 <com.framework.views.customViews.CustomTextView
+                    android:tag="com.userexperior.ueSecureView"
+
                     android:id="@+id/ctv_staff_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -40,6 +42,8 @@
                     tools:text="Gaurav Singh" />
 
                 <com.framework.views.customViews.CustomTextView
+                    android:tag="com.userexperior.ueSecureView"
+
                     android:id="@+id/ctv_staff_gender_age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -88,6 +92,8 @@
                     tools:text="About Gaurav Singh" />
 
                 <com.framework.views.customViews.CustomTextView
+                    android:tag="com.userexperior.ueSecureView"
+
                     android:id="@+id/ctv_about_staff"
                     style="@style/StaffProfileTextContent"
                     android:layout_below="@id/ctv_about_heading"
@@ -134,6 +140,8 @@
                     android:text="@string/special" />
 
                 <com.framework.views.customViews.CustomTextView
+                    android:tag="com.userexperior.ueSecureView"
+
                     android:id="@+id/ctv_specialization"
                     style="@style/StaffProfileTextContent"
                     android:layout_below="@id/ctv_heading_specialization"
@@ -148,6 +156,8 @@
                     android:text="@string/year_of_experience" />
 
                 <com.framework.views.customViews.CustomTextView
+                    android:tag="com.userexperior.ueSecureView"
+
                     android:id="@+id/ctv_experience"
                     style="@style/StaffProfileTextContent"
                     android:layout_below="@id/ctv_heading_experience"
@@ -162,6 +172,8 @@
                     android:text="@string/services_provided" />
 
                 <LinearLayout
+                    android:tag="com.userexperior.ueSecureView"
+
                     android:id="@+id/ll_services"
                     style="@style/ll_match_wrap_vertical"
                     android:layout_below="@id/ctv_heading_services"
@@ -184,6 +196,8 @@
                     android:visibility="visible" />
 
                 <LinearLayout
+                    android:tag="com.userexperior.ueSecureView"
+
                     android:id="@+id/ll_timing_container"
                     style="@style/ll_match_wrap_vertical"
                     android:layout_below="@id/ctv_heading_timing"
@@ -321,6 +335,8 @@
             </RelativeLayout>
 
             <com.framework.views.roundedimageview.RoundedImageView
+                android:tag="com.userexperior.ueSecureView"
+
                 android:id="@+id/civ_staff_profile_img"
                 android:layout_width="@dimen/size_100"
                 android:layout_height="@dimen/size_100"

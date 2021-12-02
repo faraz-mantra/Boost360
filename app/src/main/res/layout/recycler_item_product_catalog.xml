@@ -50,7 +50,8 @@
           android:background="@drawable/background_grey_border">
 
           <ImageView
-            android:id="@+id/thumbnail"
+              android:tag="com.userexperior.ueSecureView"
+              android:id="@+id/thumbnail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -79,7 +80,9 @@
           android:textSize="14sp" />
 
         <TextView
-          android:id="@+id/label_brand"
+            android:tag="com.userexperior.ueSecureView"
+
+            android:id="@+id/label_brand"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:maxLines="2"
@@ -90,7 +93,9 @@
           android:fontFamily="@font/regular" />
 
         <TextView
-          android:id="@+id/label_name"
+            android:tag="com.userexperior.ueSecureView"
+
+            android:id="@+id/label_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_below="@+id/label_brand"
@@ -104,7 +109,9 @@
       </LinearLayout>
 
       <TextView
-        android:id="@+id/label_description"
+          android:tag="com.userexperior.ueSecureView"
+
+          android:id="@+id/label_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/card_thumbnail"
@@ -151,7 +158,9 @@
           android:orientation="horizontal">
 
           <TextView
-            android:id="@+id/label_price"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/label_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -161,7 +170,9 @@
             android:textSize="12sp" />
 
           <TextView
-            android:id="@+id/label_base_price"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/label_base_price"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
