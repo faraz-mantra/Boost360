@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "957109807631",
-    "project_id": "jioonline-dev",
-    "storage_bucket": "jioonline-dev.appspot.com"
+    "project_number": "316471373124",
+    "project_id": "jioonline-prod",
+    "storage_bucket": "jioonline-prod.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:957109807631:android:b6d8bbb7bfb8e91e19117a",
+        "mobilesdk_app_id": "1:316471373124:android:ad815746c77cf23d46bb11",
         "android_client_info": {
           "package_name": "com.jio.online"
         }
       },
       "oauth_client": [
         {
-          "client_id": "957109807631-0ddvbuvf0ebdrrpv2sj892e9pi2bs96j.apps.googleusercontent.com",
+          "client_id": "316471373124-0vmpnsv0jf25m2ko7ttcfqgp8h7rcm0o.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCN-HwcHjDqjwuIUghy8ETxHi5ct5HWLB8"
+          "current_key": "AIzaSyClyo_pXk38fYGIQmzT0wIEBKwG9tMbmNU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "957109807631-0ddvbuvf0ebdrrpv2sj892e9pi2bs96j.apps.googleusercontent.com",
+              "client_id": "316471373124-0vmpnsv0jf25m2ko7ttcfqgp8h7rcm0o.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
