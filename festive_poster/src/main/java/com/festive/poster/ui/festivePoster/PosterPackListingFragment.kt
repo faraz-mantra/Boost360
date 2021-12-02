@@ -100,6 +100,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
               var posterTag = template.tags.find { posterTag -> posterTag == pack_tag.tag }
               if ( posterTag != null && template.active) {
                 template.greeting_message = pack_tag.description
+                template.layout_id = RecyclerViewItemType.POSTER.getLayout()
                 templateList.add(template.clone()!!)
               }
             }

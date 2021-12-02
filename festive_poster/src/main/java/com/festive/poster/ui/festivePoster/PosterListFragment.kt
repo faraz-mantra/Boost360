@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.RecyclerViewActionType
+import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.FragmentPosterListBinding
 import com.festive.poster.databinding.SheetEditShareMessageBinding
 import com.festive.poster.models.PosterModel
@@ -136,7 +137,7 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
           dataList = response.Result.templates.toArrayList()
           dataList?.forEach { posterModel -> posterModel.isPurchased = true
             posterModel.greeting_message = sharedViewModel?.selectedPosterPack?.tagsModel?.description
-            posterModel.shareLayout=true
+            posterModel.layout_id = RecyclerViewItemType.POSTER_SHARE.getLayout()
 
           }
           adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>, dataList!!, this)

@@ -79,7 +79,10 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel
     fun setupPosterList(){
         val dataList = arrayListOf(
             PosterModel(true,"", PosterDetailsModel("",false,0.0,"",
-                false),"",ArrayList(),ArrayList(),"",ArrayList(),"",R.layout.list_item_template,
+                false),"",ArrayList(),ArrayList(),"",ArrayList(),"",RecyclerViewItemType.TEMPLATE_VIEW_FOR_RV.getLayout(),
+            ),
+            PosterModel(true,"", PosterDetailsModel("",false,0.0,"",
+                false),"",ArrayList(),ArrayList(),"",ArrayList(),"",RecyclerViewItemType.TEMPLATE_VIEW_FOR_RV.getLayout(),
             )
         )
 

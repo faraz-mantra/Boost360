@@ -6,7 +6,8 @@ import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.*
 import com.festive.poster.recyclerView.viewholders.*
 import com.festive.poster.ui.promoUpdates.holders.SoicalConnViewHolder
-import com.festive.poster.ui.promoUpdates.holders.TemplateViewHolder
+import com.festive.poster.ui.promoUpdates.holders.TemplateForRVViewHolder
+import com.festive.poster.ui.promoUpdates.holders.TemplateForVPViewHolder
 import com.festive.poster.ui.promoUpdates.holders.TodaysPickTemplateViewHolder
 import com.framework.base.BaseActivity
 import java.util.*
@@ -28,7 +29,9 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.POSTER_PACK_PURCHASED->PosterPackPurchasedViewHolder(binding as ListItemPurchasedPosterPackBinding) // Not currently used
       RecyclerViewItemType.POSTER_SHARE-> PosterShareViewHolder(binding as ListItemPosterShareBinding)
       RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW-> TodaysPickTemplateViewHolder(binding as ListItemTodaysPickTemplateBinding)
-      RecyclerViewItemType.TEMPLATE_VIEW-> TemplateViewHolder(binding as ListItemTemplateBinding)
+      RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP-> TemplateForVPViewHolder(binding as ListItemTemplateForVpBinding)
+      RecyclerViewItemType.TEMPLATE_VIEW_FOR_RV-> TemplateForRVViewHolder(binding as ListItemTemplateForRvBinding)
+
       RecyclerViewItemType.SOCIAL_CONN-> SoicalConnViewHolder(binding as ListItemSocialConnBinding)
       RecyclerViewItemType.BROWSE_TAB_TEMPLATE_CAT->BrowseTabPosterCatViewHolder(binding as ListItemBrowseTabTemplateCatBinding)
       RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT->BrowseAllPosterCatViewHolder(binding as ListItemBrowseAllCatBinding)

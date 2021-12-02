@@ -8,6 +8,6 @@ data class TemplateModel(
     var desc:String?=null
 ): AppBaseRecyclerViewItem {
     override fun getViewType(): Int {
-        return R.layout.list_item_template
+        return R.layout.list_item_template_for_rv
     }
 }

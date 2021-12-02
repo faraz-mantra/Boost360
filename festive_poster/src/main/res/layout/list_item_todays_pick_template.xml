@@ -26,7 +26,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_category_icon"
             app:layout_constraintTop_toTopOf="@+id/iv_category_icon"
-            tools:text="Discounts and Offers" />
+            android:text="Discounts and Offers" />
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_cat_desc"
@@ -38,7 +38,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_category_icon"
             app:layout_constraintTop_toBottomOf="@+id/tv_cat_title"
-            tools:text="Post about offers or friday sale upto 50% discount  on selected products" />
+            android:text="Post about offers or friday sale upto 50% discount  on selected products" />
 
 
         <androidx.viewpager2.widget.ViewPager2
