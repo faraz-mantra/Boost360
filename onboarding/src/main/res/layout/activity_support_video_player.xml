@@ -181,6 +181,7 @@
             <androidx.appcompat.widget.AppCompatSeekBar
                 android:id="@+id/seek_bar_paused"
                 android:layout_width="0dp"
+                style="?android:attr/progressBarStyleHorizontal"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 android:layout_marginStart="@dimen/size_8"
