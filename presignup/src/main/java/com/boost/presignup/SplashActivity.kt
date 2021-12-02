@@ -134,13 +134,17 @@ class SplashActivity : AppCompatActivity() {
     }
   }
 
+  /**
+   * FRAGMENT_TYPE : 0 stands for New screen Enter Phone Number
+   *               : 1 stands for New Intro Slide Show Fragment
+   * */
   private fun startNewSignIn() {
     try {
-      val intent : Intent = if (featureNewOnBoardingFlowEnable())
-        Intent(applicationContext, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity"))
-      else
+      val intent : Intent = if (featureNewOnBoardingFlowEnable()) {
+        Intent(applicationContext, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity")).
+        putExtra("FRAGMENT_TYPE", 1) // 0 stands for New screen Enter Phone Number ordinal from FragmentType in Presignin constants
+      }else
         Intent(applicationContext, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
-      intent.putExtra("FRAGMENT_TYPE", 1) // 0 stands for New screen Enter Phone Number ordinal from FragmentType in Presignin constants
       startActivity(intent)
       finish()
     } catch (e: Exception) {

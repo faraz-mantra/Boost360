@@ -259,7 +259,6 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
             phoneNumber!!,
             customerId = loginId!!
         )?.observe(viewLifecycleOwner, {
-
             if (it.isSuccess()) {
                 authTokenData()?.createAccessTokenAuth()
                 //moveToWelcomeScreen(phoneNumber!!, isWhatsAppFlagChecked = true, isClearTop = true)
