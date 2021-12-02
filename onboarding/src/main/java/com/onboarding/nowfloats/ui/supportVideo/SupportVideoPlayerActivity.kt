@@ -6,6 +6,7 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.framework.extensions.gone
+import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.DateUtils.milliToMinSecFormat
 import com.framework.utils.DateUtils.millisecondsToMinutesSeconds
@@ -25,13 +26,10 @@ import com.onboarding.nowfloats.model.supportVideo.FeatureSupportVideoResponse.C
 import com.onboarding.nowfloats.model.supportVideo.FeatureSupportVideoResponse.Companion.saveSupportVideoData
 import com.onboarding.nowfloats.model.supportVideo.FeaturevideoItem
 import com.onboarding.nowfloats.viewmodel.SupportVideoViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import wseemann.media.FFmpegMediaMetadataRetriever
 
 
@@ -44,15 +42,16 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
   private var currentVideoClock = 0L
   private var currentTotalClock = 0L
   private var isFirstLoad = true
-  private lateinit var filteredVideos: MutableList<FeaturevideoItem?>
+  private var filteredVideos: MutableList<FeaturevideoItem> = mutableListOf()
   private lateinit var allVideoDuration: LongArray
+  private var elapsedTimeUpdatesJob: Job? = null
 
-//  private var arrayOfVideoUrls = arrayListOf(
-//      "https://cdn.nowfloats.com/manage/assets/Content/videos/vertical/BoostHowToTrackPerformanceAndWebsiteReport.mp4",
-//      "https://cdn.nowfloats.com/manage/assets/Content/videos/vertical/BoostHowToAddTestimonial.mp4",
-//      "https://cdn.nowfloats.com/manage/assets/Content/videos/vertical/BoostHowToTrackPerformanceAndWebsiteReport.mp4",
-//      "https://cdn.nowfloats.com/manage/assets/Content/videos/vertical/BoostHowToTrackPerformanceAndWebsiteReport.mp4"
-//  )
+  /*private var arrayOfVideoUrls = arrayListOf(
+      "https://cdn.nowfloats.com/manage/assets/Content/videos/vertical/BoostHowToTrackPerformanceAndWebsiteReport.mp4",
+      "https://cdn.nowfloats.com/manage/assets/Content/videos/vertical/BoostHowToAddTestimonial.mp4",
+      "https://cdn.nowfloats.com/manage/assets/Content/videos/vertical/BoostHowToTrackPerformanceAndWebsiteReport.mp4",
+      "https://cdn.nowfloats.com/manage/assets/Content/videos/vertical/BoostHowToTrackPerformanceAndWebsiteReport.mp4"
+  )*/
 
   override fun onCreateView() {
     super.onCreateView()
@@ -69,19 +68,32 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
 
   private fun initUI() {
     val extras = intent.extras
-    if (extras?.containsKey(IntentConstant.SUPPORT_VIDEO_TYPE.name)!!) {
-      supportVideoType = extras.getString(IntentConstant.SUPPORT_VIDEO_TYPE.name)!!
-      getAndSaveFeatureSupportVideos()
-    }
+    supportVideoType = extras?.getString(IntentConstant.SUPPORT_VIDEO_TYPE.name) ?: ""
+    if (Build.VERSION.SDK_INT >= 24) initializePlayer() else finishActivity()
+    if (supportVideoType.isNotEmpty()) {
+      if (isSavedSupportDataAvailableInSharedPref()) {
+        populateData()
+        getAndSaveFeatureSupportVideos()
+      } else {
+        getAndSaveFeatureSupportVideos(true)
+      }
+    } else finishActivity()
     setOnClickListeners()
   }
 
+
+  private fun isSavedSupportDataAvailableInSharedPref(): Boolean {
+    return getSupportVideoData().isNullOrEmpty().not()
+  }
+
   private fun setOnClickListeners() {
-    binding?.ivCloseVideo?.setOnClickListener { onBackPressed() }
+    binding?.ivCloseVideo?.setOnClickListener {
+      onBackPressed()
+    }
 
     binding?.ivPrev?.setOnClickListener {
       if (currentPosition > 0) {
-        binding?.videoView!!.playLeftInAnimation()
+        binding?.videoView?.playLeftInAnimation()
         binding?.consOverlayPlay?.playLeftInAnimation()
         loadPreviousVideo()
       }
@@ -89,7 +101,7 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
 
     binding?.ivNext?.setOnClickListener {
       if (currentPosition < filteredVideos.size - 1) {
-        binding?.videoView!!.playRightInAnimation()
+        binding?.videoView?.playRightInAnimation()
         binding?.consOverlayPlay?.playRightInAnimation()
         isFirstLoad = false
         loadNextVideo()
@@ -141,9 +153,15 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
     }
 
     when {
-      filteredVideos.size == 1 -> blurAndDisableNavButtons(isPrevButtonDisable = true, isNextButtonDisable = true)
-      currentPosition == filteredVideos.size - 1 -> blurAndDisableNavButtons(isNextButtonDisable = true)
-      else -> blurAndDisableNavButtons()
+      filteredVideos.size == 1 -> {
+        blurAndDisableNavButtons(isPrevButtonDisable = true, isNextButtonDisable = true)
+      }
+      currentPosition == filteredVideos.size - 1 -> {
+        blurAndDisableNavButtons(isNextButtonDisable = true)
+      }
+      else -> {
+        blurAndDisableNavButtons()
+      }
     }
 
     setupSliderProgresses()
@@ -152,16 +170,20 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
     binding?.seekBarPaused?.gone()
     binding?.tvElapsedTime?.gone()
     binding?.tvTimeTotal?.text = ""
-    binding?.tvVideoTitle?.text = filteredVideos[currentPosition]?.videotitle
+    binding?.tvVideoTitle?.text = filteredVideos[currentPosition].videotitle
   }
 
   private fun setupSliderProgresses() {
-    for (index in 0 until (binding?.linearProgressStatus?.childCount ?: 0)) {
+    for (index in 0 until binding?.linearProgressStatus?.childCount!!) {
       val childAt = binding?.linearProgressStatus?.getChildAt(index) as Slider
-      if (isFirstLoad) childAt.value = 0f
-      else {
-        if (index < exoPlayer?.currentMediaItemIndex ?: 0) childAt.value = 100f
-        else if (index > exoPlayer?.currentMediaItemIndex ?: 0) childAt.value = 0f
+      if (isFirstLoad) {
+        childAt.value = 0f
+      } else {
+        if (index < exoPlayer?.currentMediaItemIndex!!) {
+          childAt.value = 100f
+        } else if (index > exoPlayer?.currentMediaItemIndex!!) {
+          childAt.value = 0f
+        }
       }
     }
   }
@@ -183,32 +205,44 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
     binding?.seekBarPaused?.gone()
     binding?.tvElapsedTime?.gone()
     binding?.tvTimeTotal?.text = ""
-    binding?.tvVideoTitle?.text = filteredVideos[currentPosition]?.videotitle
+    binding?.tvVideoTitle?.text = filteredVideos[currentPosition].videotitle
   }
 
-  private fun getAndSaveFeatureSupportVideos() {
-    showProgress()
-    viewModel.getSupportVideos().observeForever {
-      val featureSupportVideoResponse = it as? FeatureSupportVideoResponse
-      if (it.isSuccess() && featureSupportVideoResponse != null) {
-        saveSupportVideoData(featureSupportVideoResponse)
-        populateData()
+  private fun getAndSaveFeatureSupportVideos(isProgress: Boolean = false) {
+    if (isProgress) showProgress()
+    viewModel.getSupportVideos().observeOnce(this, {
+      val featureVideo = (it as? FeatureSupportVideoResponse)?.data?.firstOrNull()?.featurevideo
+      if (it.isSuccess() && featureVideo.isNullOrEmpty().not()) {
+        saveSupportVideoData(featureVideo)
+        if (isProgress) populateData()
+      } else {
+        saveSupportVideoData(arrayListOf())
+        if (isProgress) {
+          showShortToast(getString(R.string.coming_soon))
+          finish()
+        }
       }
       hideProgress()
-    }
+    })
   }
 
   private fun populateData() {
-    val featureVideos = getSupportVideoData()?.data?.first()?.featurevideo
-    filteredVideos = (featureVideos?.filter { filter -> filter?.helpsectionidentifier == supportVideoType } as MutableList<FeaturevideoItem?>?)!!
-    getVideoDurations()
-    initStatusProgressBar()
-    /*for (item in filteredVideos) exoPlayer?.addMediaItem(item?.videourl?.url?.let { MediaItem.fromUri(it) }!!)*/
-    for (item in filteredVideos) exoPlayer?.addMediaItem(item.let { MediaItem.fromUri(it?.videourl?.url!!) })
-    exoPlayer?.prepare()
-    isFirstLoad = true
-    loadNextVideo()
-    launchProgressListener()
+    val featureFirstVideo: FeaturevideoItem? = getSupportVideoData()?.firstOrNull { it.helpsectionidentifier == supportVideoType }
+    if (featureFirstVideo != null && featureFirstVideo.videourl?.url?.contains("youtube") == false) {
+      filteredVideos = arrayListOf(featureFirstVideo)
+      for (item in filteredVideos) {
+        exoPlayer?.addMediaItem(item.let { MediaItem.fromUri(it.videourl?.url!!) })
+      }
+      getVideoDurations()
+      initStatusProgressBar()
+      exoPlayer?.prepare()
+      isFirstLoad = true
+      loadNextVideo()
+      launchProgressListener()
+    } else {
+      finishActivity()
+      return
+    }
   }
 
   private fun blurAndDisableNavButtons(isPrevButtonDisable: Boolean = false, isNextButtonDisable: Boolean = false) {
@@ -217,7 +251,7 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
       binding?.ivPrev?.alpha = 0.5f
       binding?.ivPrev?.isEnabled = false
     } else {
-      binding?.ivPrev?.setTintColor(ContextCompat.getColor(this, R.color.white))
+      binding?.ivPrev?.setTintColor(ContextCompat.getColor(this, R.color.pinkish_grey))
       binding?.ivPrev?.alpha = 1f
       binding?.ivPrev?.isEnabled = true
     }
@@ -227,7 +261,7 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
       binding?.ivNext?.alpha = 0.5f
       binding?.ivNext?.isEnabled = false
     } else {
-      binding?.ivNext?.setTintColor(ContextCompat.getColor(this, R.color.white))
+      binding?.ivNext?.setTintColor(ContextCompat.getColor(this, R.color.pinkish_grey))
       binding?.ivNext?.alpha = 1f
       binding?.ivNext?.isEnabled = true
     }
@@ -240,7 +274,7 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
         addListener(playbackStateListener)
         playWhenReady = false
         seekTo(0, 0L)
-        prepare()
+//        prepare()
         binding?.videoView?.player = this
       }
       binding?.videoView?.useController = false
@@ -248,6 +282,7 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
   }
 
   private fun playbackStateListener() = object : Player.EventListener {
+
     override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
       super.onMediaItemTransition(mediaItem, reason)
       onVideoEnded()
@@ -289,31 +324,30 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
     binding?.seekBarPaused?.progress = 0
   }
 
-  public override fun onStart() {
-    super.onStart()
-    if (Build.VERSION.SDK_INT >= 24) initializePlayer()
-  }
-
-  public override fun onResume() {
-    super.onResume()
-    if ((Build.VERSION.SDK_INT < 24 || exoPlayer == null)) {
-      initializePlayer()
-    }
-  }
+//  public override fun onStart() {
+//    super.onStart()
+//    if (Build.VERSION.SDK_INT >= 24) {
+//      initializePlayer()
+//    }
+//  }
+//
+//  public override fun onResume() {
+//    super.onResume()
+//    if ((Build.VERSION.SDK_INT < 24 || exoPlayer == null)) {
+//      initializePlayer()
+//    }
+//  }
 
   public override fun onPause() {
+    if (Build.VERSION.SDK_INT < 24) releasePlayer()
     super.onPause()
-    if (Build.VERSION.SDK_INT < 24) {
-      releasePlayer()
-    }
   }
 
 
   public override fun onStop() {
+    elapsedTimeUpdatesJob?.cancel()
+    if (Build.VERSION.SDK_INT >= 24) releasePlayer()
     super.onStop()
-    if (Build.VERSION.SDK_INT >= 24) {
-      releasePlayer()
-    }
   }
 
   private fun releasePlayer() {
@@ -328,7 +362,7 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
     allVideoDuration = LongArray(filteredVideos.size)
     val mmr = FFmpegMediaMetadataRetriever()
     for (index in 0 until filteredVideos.size) {
-      mmr.setDataSource(filteredVideos[index]?.videourl?.url)
+      mmr.setDataSource(filteredVideos[index].videourl?.url)
       val durationString = mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_DURATION)
       allVideoDuration[index] = durationString.toLong()
     }
@@ -349,9 +383,11 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
         trackActiveTintList = ContextCompat.getColorStateList(this@SupportVideoPlayerActivity, R.color.slider_active_color_selector)!!
         trackInactiveTintList = ContextCompat.getColorStateList(this@SupportVideoPlayerActivity, R.color.slider_inactive_color_selector)!!
         setPadding(0, 0, 0, 0)
+
         val layoutParamsSlider = LinearLayout.LayoutParams(0, 6, 1f)
         layoutParamsSlider.setMargins(6, 0, 6, 0)
         layoutParams = layoutParamsSlider
+
         binding?.linearProgressStatus?.addView(this)
       }
     }
@@ -359,13 +395,13 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
 
   private fun videoProgress() = flow {
     while (true) {
-      emit((exoPlayer?.currentPosition?.toFloat()?.div(exoPlayer!!.duration.toFloat())?.times(100))?.toInt()!!)
+      emit((exoPlayer?.currentPosition?.toFloat()?.div(exoPlayer?.duration?.toFloat() ?: 0F)?.times(100))?.toInt() ?: 0)
       delay(1000)
     }
   }.flowOn(Dispatchers.Main)
 
   private fun launchProgressListener() {
-    lifecycleScope.launch {
+    elapsedTimeUpdatesJob = lifecycleScope.launch {
       withContext(Dispatchers.Main) {
         videoProgress().collect {
           statusProgressUpdate(it)
@@ -377,5 +413,10 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
   private fun statusProgressUpdate(progressPercentage: Int) {
     val childAt = binding?.linearProgressStatus?.getChildAt(exoPlayer?.currentMediaItemIndex!!) as Slider
     childAt.value = progressPercentage.toFloat()
+  }
+
+  private fun finishActivity() {
+    showShortToast(getString(R.string.please_try_again_later))
+    finish()
   }
 }
