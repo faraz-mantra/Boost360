@@ -15,7 +15,6 @@ import com.boost.presignin.rest.repository.*
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
-import io.reactivex.Observable
 
 class LoginSignUpViewModel : BaseViewModel() {
 
@@ -87,11 +86,8 @@ class LoginSignUpViewModel : BaseViewModel() {
     return WithFloatRepository.validateUsersPhone(requestValidatePhone = requestValidatePhone).toLiveData()
   }
 
-  fun whatsappOptIn(optType:Int,number:String,customerId:String): LiveData<BaseResponse> {
-    return RiaWithFloatRepository.whatsappOptIn(optType,number,customerId).toLiveData()
-  }
 
-    fun getCategoriesPlan(context: Context): LiveData<BaseResponse> {
+  fun getCategoriesPlan(context: Context): LiveData<BaseResponse> {
     return CategoryRepository.getCategoriesPlan(context).toLiveData()
   }
 }

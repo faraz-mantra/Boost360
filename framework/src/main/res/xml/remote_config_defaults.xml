@@ -21,8 +21,4 @@
     <key>in_app_update_type_immediate</key>
     <value>false</value>
   </entry>
-  <entry>
-    <key>new_onboarding_with_updated_categories_and_gui_active</key>
-    <value>false</value>
-  </entry>
 </defaultsMap><!-- END xml_defaults -->

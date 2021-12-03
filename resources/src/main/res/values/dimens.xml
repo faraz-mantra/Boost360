@@ -26,6 +26,9 @@
   <dimen name="size_13">13dp</dimen>
   <dimen name="size_14">14dp</dimen>
   <dimen name="size_15">15dp</dimen>
+  <dimen name="text_12">12sp</dimen>
+  <dimen name="text_14">14sp</dimen>
+  <dimen name="text_16">16sp</dimen>
   <dimen name="size_16">16dp</dimen>
   <dimen name="size_17">17dp</dimen>
   <dimen name="size_18">18dp</dimen>
@@ -39,11 +42,9 @@
   <dimen name="size_26">26dp</dimen>
   <dimen name="size_28">28dp</dimen>
   <dimen name="size_30">30dp</dimen>
-  <dimen name="size_31">31dp</dimen>
   <dimen name="size_32">32dp</dimen>
   <dimen name="size_33">33dp</dimen>
   <dimen name="size_34">34dp</dimen>
-  <dimen name="size_35">35dp</dimen>
   <dimen name="size_36">36dp</dimen>
   <dimen name="size_38">38dp</dimen>
   <dimen name="size_40">40dp</dimen>
@@ -54,7 +55,6 @@
   <dimen name="size_48">48dp</dimen>
   <dimen name="size_52">52dp</dimen>
   <dimen name="size_50">50dp</dimen>
-  <dimen name="size_51">51dp</dimen>
   <dimen name="size_54">54dp</dimen>
   <dimen name="size_56">56dp</dimen>
   <dimen name="size_58">58dp</dimen>
@@ -109,7 +109,6 @@
   <dimen name="size_196">196dp</dimen>
   <dimen name="size_198">198dp</dimen>
   <dimen name="size_200">200dp</dimen>
-  <dimen name="size_204">204dp</dimen>
   <dimen name="size_210">210dp</dimen>
   <dimen name="size_220">220dp</dimen>
   <dimen name="size_224">224dp</dimen>
@@ -140,14 +139,9 @@
 
 
   <dimen name="text_8">8sp</dimen>
-  <dimen name="text_9">9sp</dimen>
   <dimen name="text_10">10sp</dimen>
   <dimen name="text_11">11sp</dimen>
-  <dimen name="text_12">12sp</dimen>
   <dimen name="text_13">13sp</dimen>
-  <dimen name="text_14">14sp</dimen>
-  <dimen name="text_16">16sp</dimen>
-  <dimen name="text_17">17sp</dimen>
   <dimen name="text_18">18sp</dimen>
   <dimen name="text_20">20sp</dimen>
   <dimen name="text_22">22sp</dimen>
@@ -156,5 +150,4 @@
   <dimen name="text_28">28sp</dimen>
   <dimen name="text_30">30sp</dimen>
   <dimen name="text_32">32sp</dimen>
-  <dimen name="text_35">35sp</dimen>
 </resources>
