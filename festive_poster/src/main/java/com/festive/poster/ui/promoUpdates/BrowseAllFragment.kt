@@ -82,17 +82,42 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel
 
     fun setupPosterList(){
         val dataList = arrayListOf(
-            PosterModel(true,"", PosterDetailsModel("",false,0.0,"",
-                false),"",ArrayList(),ArrayList(),"",ArrayList(),"",RecyclerViewItemType.TEMPLATE_VIEW_FOR_RV.getLayout(),
+            PosterModel(
+                true,
+                "",
+                PosterDetailsModel(
+                    "", false, 0.0, "",
+                    false
+                ),
+                "",
+                ArrayList(),
+                ArrayList(),
+                "",
+                ArrayList(),
+                "",
+                RecyclerViewItemType.TEMPLATE_VIEW_FOR_RV.getLayout(),
             ),
-            PosterModel(true,"", PosterDetailsModel("",false,0.0,"",
-                false),"",ArrayList(),ArrayList(),"",ArrayList(),"",RecyclerViewItemType.TEMPLATE_VIEW_FOR_RV.getLayout(),
+            PosterModel(
+                true,
+                "",
+                PosterDetailsModel(
+                    "", false, 0.0, "",
+                    false
+                ),
+                "",
+                ArrayList(),
+                ArrayList(),
+                "",
+                ArrayList(),
+                "",
+                RecyclerViewItemType.TEMPLATE_VIEW_FOR_RV.getLayout(),
             )
         )
 
         val adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList)
         binding?.rvPosters?.adapter = adapter
         binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
+
 
     }
 
