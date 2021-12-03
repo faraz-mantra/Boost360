@@ -102,6 +102,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.dashboard.controller.DashboardFragmentContainerActivityKt;
 import com.framework.analytics.SentryController;
 import com.framework.utils.AppsFlyerUtils;
+import com.inventoryorder.constant.AppConstant;
 import com.inventoryorder.constant.FragmentType;
 import com.inventoryorder.constant.IntentConstant;
 import com.inventoryorder.model.PreferenceData;
@@ -694,7 +695,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
     if (rootAlisasURI != null && !rootAlisasURI.isEmpty()) url = rootAlisasURI;
     else url = normalURI;
-    PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(),
+    PreferenceData data = new PreferenceData(AppConstant.CLIENT_ID_2, session.getUserProfileId(),
         Constants.WA_KEY, session.getFpTag(), session.getUserPrimaryMobile(), url, session.getFPEmail(),
         session.getFPDetails(Key_Preferences.LATITUDE), session.getFPDetails(Key_Preferences.LONGITUDE),
         session.getFP_AppExperienceCode());
