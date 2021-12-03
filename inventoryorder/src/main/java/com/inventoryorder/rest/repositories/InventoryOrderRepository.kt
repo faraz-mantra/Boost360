@@ -15,8 +15,6 @@ import com.inventoryorder.rest.services.InventoryOrderRemoteDataSource
 import io.reactivex.Observable
 import retrofit2.Retrofit
 
-const val ORDER_CLIENT_ID_JIO = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
-
 object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSource, AppBaseLocalService>() {
 
   override fun getRemoteDataSourceClass(): Class<InventoryOrderRemoteDataSource> {
@@ -29,7 +27,7 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
 
   fun getSellerSummary(clientId: String?, sellerId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.getSellerSummary(ORDER_CLIENT_ID_JIO, sellerId),
+      remoteDataSource.getSellerSummary(clientId, sellerId),
       TaskCode.GET_SELLER_SUMMARY
     )
   }
@@ -40,7 +38,7 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
     request: SellerSummaryRequest?
   ): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.getSellerSummaryV2_5(ORDER_CLIENT_ID_JIO, sellerId, request),
+      remoteDataSource.getSellerSummaryV2_5(clientId, sellerId, request),
       TaskCode.GET_SELLER_SUMMARY
     )
   }
@@ -48,7 +46,7 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
   fun getSellerOrders(request: OrderSummaryRequest): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.getSellerOrders(
-        ORDER_CLIENT_ID_JIO,
+        request.clientId,
         request.sellerId,
         request.orderMode,
         request.deliveryMode,
@@ -62,7 +60,7 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
 
   fun getSellerOrdersFilter(request: OrderFilterRequest): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.getSellerOrdersFiler(ORDER_CLIENT_ID_JIO, request),
+      remoteDataSource.getSellerOrdersFiler(request.clientId, request),
       TaskCode.GET_LIST_ORDER_FILTER
     )
   }
@@ -70,7 +68,7 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
   fun getAssurePurchaseOrders(request: OrderSummaryRequest): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.getAssurePurchaseOrders(
-        ORDER_CLIENT_ID_JIO,
+        request.clientId,
         request.sellerId,
         request.skip,
         request.limit
@@ -81,7 +79,7 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
   fun getCancelledOrders(request: OrderSummaryRequest): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.getCancelledOrders(
-        ORDER_CLIENT_ID_JIO,
+        request.clientId,
         request.sellerId,
         request.skip,
         request.limit
@@ -91,7 +89,7 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
 
   fun getOrderDetails(clientId: String?, orderId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.getOrderDetails(ORDER_CLIENT_ID_JIO, orderId),
+      remoteDataSource.getOrderDetails(clientId, orderId),
       TaskCode.GET_ORDER_DETAILS
     )
   }
@@ -99,7 +97,7 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
   fun getInCompleteOrders(request: OrderSummaryRequest): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.getInCompleteOrders(
-        ORDER_CLIENT_ID_JIO,
+        request.clientId,
         request.sellerId,
         request.skip,
         request.limit
@@ -109,7 +107,7 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
 
   fun confirmOrder(clientId: String?, orderId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.confirmOrder(ORDER_CLIENT_ID_JIO, orderId),
+      remoteDataSource.confirmOrder(clientId, orderId),
       TaskCode.CONFIRM_ORDER_TASK
     )
   }
@@ -124,7 +122,7 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
 
   fun sendReBookingReminder(clientId: String?, orderId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.sendReBookingReminder(ORDER_CLIENT_ID_JIO, orderId),
+      remoteDataSource.sendReBookingReminder(clientId, orderId),
       TaskCode.SEND_RE_BOOKING_ORDER_TASK
     )
   }
@@ -134,7 +132,7 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
     request: FeedbackRequest?
   ): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.sendOrderFeedbackRequest(ORDER_CLIENT_ID_JIO, request),
+      remoteDataSource.sendOrderFeedbackRequest(clientId, request),
       TaskCode.SEND_FEEDBACK_REQUEST
     )
   }
@@ -145,21 +143,21 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
     cancellingEntity: String?
   ): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.cancelOrder(ORDER_CLIENT_ID_JIO, orderId, cancellingEntity),
+      remoteDataSource.cancelOrder(clientId, orderId, cancellingEntity),
       TaskCode.CANCEL_ORDER_TASK
     )
   }
 
   fun markAsDelivered(clientId: String?, orderId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.markAsDelivered(ORDER_CLIENT_ID_JIO, orderId),
+      remoteDataSource.markAsDelivered(clientId, orderId),
       TaskCode.DELIVERED_ORDER_TASK
     )
   }
 
   fun markCodPaymentDone(clientId: String?, orderId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.markCodPaymentDone(ORDER_CLIENT_ID_JIO, orderId),
+      remoteDataSource.markCodPaymentDone(clientId, orderId),
       TaskCode.MARK_PAYMENT_DONE_TASK
     )
   }
@@ -169,14 +167,14 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
     request: PaymentReceivedRequest?
   ): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.markPaymentReceivedMerchant(ORDER_CLIENT_ID_JIO, request),
+      remoteDataSource.markPaymentReceivedMerchant(clientId, request),
       TaskCode.MARK_PAYMENT_MERCHANT_TASK
     )
   }
 
   fun markAsShipped(clientId: String?, request: MarkAsShippedRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.markAsShipped(ORDER_CLIENT_ID_JIO, request),
+      remoteDataSource.markAsShipped(clientId, request),
       TaskCode.SHIPPED_ORDER_TASK
     )
   }
