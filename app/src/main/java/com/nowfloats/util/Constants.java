@@ -564,17 +564,4 @@ public class Constants {
         String BACKGROUND_SERVICE_RESPONSE = "response";
     }
 
-    public enum NEW_ON_BOARDING_FRAGMENT {
-        INTRO_SLIDES_SHOW(1), ENTER_PHONE_FRAGMENT(0);
-
-        NEW_ON_BOARDING_FRAGMENT(int value) {this.value = value;}
-
-
-        public int value;
-
-        public int getValue() {
-            return this.value;
-        }
-    }
-
 }

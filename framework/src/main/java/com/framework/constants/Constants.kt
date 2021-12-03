@@ -17,6 +17,4 @@ object Constants {
     val shimmerDrawable = ShimmerDrawable().apply {
         setShimmer(shimmer)
     }
-
-    const val AUTH_KEY="597ee93f5d64370820a6127c"
 }

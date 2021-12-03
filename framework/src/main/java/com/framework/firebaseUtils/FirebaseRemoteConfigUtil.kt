@@ -13,7 +13,6 @@ const val FESTIVE_POSTER_NAME = "festive_poster_name"
 const val DASHBOARD_FESTIVAL_BUTTON_VISIBILITY = "dashboard_festive_poster_button_visible"
 const val FEATURE_DOMAIN_BOOKING_ENABLE = "feature_domain_booking_enable"
 const val IN_APP_UPDATE_TYPE_IMMEDIATE = "in_app_update_type_immediate"
-const val NEW_ONBOARDING_WITH_UPDATED_CATEGORIES_AND_GUI_ACTIVE = "new_onboarding_with_updated_categories_and_gui_active"
 
 object FirebaseRemoteConfigUtil {
 
@@ -50,11 +49,6 @@ object FirebaseRemoteConfigUtil {
   fun featureDomainEnable(): Boolean {
     Log.d(TAG, "Config feature domain enable: ${remoteConfig?.getBoolean(FEATURE_DOMAIN_BOOKING_ENABLE) ?: false}")
     return remoteConfig?.getBoolean(FEATURE_DOMAIN_BOOKING_ENABLE) ?: false
-  }
-
-  fun featureNewOnBoardingFlowEnable(): Boolean {
-    Log.d(TAG, "Config feature NEW ONBOARDING enable: ${remoteConfig?.getBoolean(NEW_ONBOARDING_WITH_UPDATED_CATEGORIES_AND_GUI_ACTIVE) ?: false}")
-    return remoteConfig?.getBoolean(NEW_ONBOARDING_WITH_UPDATED_CATEGORIES_AND_GUI_ACTIVE) ?: false
   }
 
   fun appUpdateType(): UpdateType {
