@@ -143,4 +143,10 @@ class NetBankingPopUpFragement : DialogFragment(), NetBankingListener {
 //        requireActivity().viewModelStore.clear()
 //    }
 
+  override fun onResume() {
+    super.onResume()
+//    UserExperiorController.startScreen("MarketPlaceNetBankingPopUpFragement")
+
+  }
+
 }

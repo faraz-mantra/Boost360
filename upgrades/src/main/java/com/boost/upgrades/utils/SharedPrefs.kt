@@ -195,7 +195,7 @@ class SharedPrefs(activity: Activity) {
   //storing couponDetails
   fun storeApplyedCouponDetails(couponDetails: CouponsModel?) {
     val couponInfo = Gson().toJson(couponDetails)
-    editor!!.putString(CART_COUPON_DETAILS, couponInfo).apply()
+   editor!!.putString(CART_COUPON_DETAILS, couponInfo).apply()
   }
 
   fun getApplyedCouponDetails(): CouponsModel? {

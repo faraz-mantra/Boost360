@@ -78,5 +78,10 @@ class FailedTransactionPopUpFragment : DialogFragment() {
       NO_EVENT_VALUE
     )
   }
+  override fun onResume() {
+    super.onResume()
+//    UserExperiorController.startScreen("MarketPlaceFailedTransactionPopUpFragment")
+
+  }
 
 }
