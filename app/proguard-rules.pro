@@ -392,7 +392,7 @@
 #-keep class com.festive_poster.** { *; }
 #-keep class com.boost.presignup.** { *; }
 #-keep class com.boost.presignin.** { *; }
-#-keepclasseswithmembers class com.framework.** { *; }
+#-keep class com.framework.** { *; }
 -keep class dev.patrickgold.florisboard.** { *; }
 
 -keep class com.onboarding.nowfloats.model.** { <fields>; }
@@ -418,13 +418,15 @@
 -keep class com.appservice.offers.models.** { <fields>; }
 -keep class com.inventoryorder.rest.response.** { <fields>; }
 -keep class com.onboarding.nowfloats.rest.response.** { <fields>; }
+-keep class auth.google.model.** { <fields>; }
+-keep class com.framework.pref.** { <fields>; }
+-keep class com.dashboard.controller.ui.ownerinfo.ConsultationHoursModel**
+-keep class com.appservice.ui.catalog.common.AppointmentModel**
+-keep class com.framework.base.BaseResponse**
+-keep class com.framework.base.BaseRequest**
+-keep class com.framework.views.bottombar.BottomBarItem**
+-keep class com.framework.firebaseUtils.** { *; }
 #-keep class com.framework.firebaseUtils.firestore.restApi.model.** { <fields>; }
-#-keep class auth.google.model.** { <fields>; }
-#-keep class com.framework.pref.** { <fields>; }
-#-keep class com.dashboard.controller.ui.ownerinfo.ConsultationHoursModel**
-#-keep class com.appservice.ui.catalog.common.AppointmentModel**
-#-keep class com.framework.base.BaseResponse**
-#-keep class com.framework.base.BaseRequest**
 #-keep class com.framework.firebaseUtils.firestore.badges.BadgesModel**
 #-keep class com.framework.firebaseUtils.firestore.Disabled**
 #-keep class com.framework.firebaseUtils.firestore.Drs_segment**
@@ -433,7 +435,7 @@
 #-keep class com.framework.firebaseUtils.firestore.Events**
 #-keep class com.framework.firebaseUtils.firestore.Metricdetail**
 #-keep class com.framework.firebaseUtils.caplimit_feature.PropertiesItem**
--keep class com.framework.views.bottombar.BottomBarItem**
+
 ## New progard rule
 
 ##---------------Begin: proguard configuration for Gson  ----------
