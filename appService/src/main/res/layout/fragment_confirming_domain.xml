@@ -41,6 +41,8 @@
                         app:srcCompat="@drawable/ic_globe_www" />
 
                     <com.framework.views.customViews.CustomTextView
+                        android:tag="com.userexperior.ueSecureView"
+
                         android:id="@+id/tv_suggested_domain_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

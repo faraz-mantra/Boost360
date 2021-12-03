@@ -32,6 +32,7 @@ import com.boost.presignin.service.APIService
 import com.boost.presignin.ui.WebPreviewActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.analytics.SentryController
+import com.framework.analytics.UserExperiorController
 import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
@@ -160,7 +161,7 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
         if (it.isSuccess() && response != null) {
           ProcessFPDetails(session!!).storeFPDetails(response)
           SentryController.setUser(UserSessionManager(baseActivity))
-
+          UserExperiorController.setUserAttr(UserSessionManager(baseActivity))
           startService()
           startDashboard()
         } else {
