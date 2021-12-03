@@ -12,7 +12,9 @@
     android:layout_marginBottom="@dimen/size_16">
 
     <com.framework.views.customViews.CustomCheckBox
-      android:id="@+id/ccb_services"
+        android:tag="com.userexperior.ueSecureView"
+
+        android:id="@+id/ccb_services"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:fontFamily="@font/regular"

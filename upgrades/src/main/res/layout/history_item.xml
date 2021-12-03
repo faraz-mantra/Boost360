@@ -23,7 +23,9 @@
       android:orientation="vertical">
 
       <TextView
-        android:id="@+id/item_orderId"
+          android:tag="com.userexperior.ueSecureView"
+
+          android:id="@+id/item_orderId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -62,7 +64,8 @@
       </LinearLayout>
 
       <TextView
-        android:id="@+id/item_date"
+          android:tag="com.userexperior.ueSecureView"
+          android:id="@+id/item_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -72,7 +75,9 @@
     </LinearLayout>
 
     <TextView
-      android:id="@+id/history_item_amount"
+        android:tag="com.userexperior.ueSecureView"
+
+        android:id="@+id/history_item_amount"
       android:layout_width="wrap_content"
       android:layout_height="match_parent"
       android:gravity="center"

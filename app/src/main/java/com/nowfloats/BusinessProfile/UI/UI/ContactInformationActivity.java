@@ -406,7 +406,7 @@ public class ContactInformationActivity extends BaseActivity {
 
         StringBuilder webWidgets = new StringBuilder();
 
-        for (String widget : Constants.StoreWidgets) {
+        for (String widget : session.getStoreWidgets()) {
             webWidgets.append(widget).append("#");
         }
 

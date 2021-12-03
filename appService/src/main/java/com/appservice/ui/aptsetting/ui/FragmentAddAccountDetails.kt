@@ -19,6 +19,7 @@ import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.utils.ValidationUtils
 
 class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding, AppointmentSettingsViewModel>() {
 
@@ -132,6 +133,10 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
     }
     if (accountNumber.length > 18) {
       showShortToast(getString(R.string.account_greater_than_nine))
+      return false
+    }
+     if (ValidationUtils.isBankAcValid(accountNumber)){
+      showShortToast(getString(R.string.invalid_bank_account_number))
       return false
     }
     if (accountNumberConfirm.isEmpty()) {

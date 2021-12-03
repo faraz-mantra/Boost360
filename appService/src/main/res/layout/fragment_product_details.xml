@@ -85,7 +85,9 @@
                 android:orientation="vertical">
 
                 <com.framework.views.customViews.CustomImageView
-                  android:layout_width="wrap_content"
+                    android:tag="com.userexperior.ueSecureView"
+
+                    android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   app:srcCompat="@drawable/ic_add_image" />
 
@@ -500,7 +502,9 @@
                           app:fontFamily="@font/regular" />
 
                         <com.framework.views.customViews.CustomTextView
-                          android:id="@+id/bank_account_name"
+                            android:tag="com.userexperior.ueSecureView"
+
+                            android:id="@+id/bank_account_name"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:layout_marginStart="@dimen/size_1"

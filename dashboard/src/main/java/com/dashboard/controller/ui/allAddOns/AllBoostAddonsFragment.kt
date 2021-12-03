@@ -60,7 +60,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
   }
 
   override fun onCreateView() {
-    super.onCreateView()
+     super.onCreateView()
     session = UserSessionManager(baseActivity)
     getDomainDetail()
     WebEngageController.trackEvent(BOOST_ADD_ONS_PAGE, PAGE_VIEW, session?.fpTag)
@@ -198,11 +198,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
   }
 }
 
-fun businessAddOnsClick(
-  type: ManageBusinessData.BusinessType,
-  baseActivity: AppCompatActivity,
-  session: UserSessionManager?
-) {
+fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: AppCompatActivity, session: UserSessionManager?) {
   when (type) {
     ManageBusinessData.BusinessType.ic_customer_call_d,
     ManageBusinessData.BusinessType.ic_customer_call_tracker_d,

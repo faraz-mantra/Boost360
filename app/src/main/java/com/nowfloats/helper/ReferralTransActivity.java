@@ -27,18 +27,21 @@ public class ReferralTransActivity extends AppCompatActivity {
     session = new UserSessionManager(getApplicationContext(), ReferralTransActivity.this);
     String email = "";
     String number = "";
+    String username = "";
     if (!TextUtils.isEmpty(session.getFPEmail())) email = session.getFPEmail();
     if (email.isEmpty()) email = session.getUserProfileEmail();
 
     if (!TextUtils.isEmpty(session.getFPPrimaryContactNumber())) number = session.getFPPrimaryContactNumber();
     if (number.isEmpty()) number = session.getUserPrimaryMobile();
     if (number.isEmpty()) number = session.getUserProfileMobile();
+    if (!number.isEmpty() && number.length() > 10) number = number.substring(number.length() - 10, number.length());
+
+    if (!TextUtils.isEmpty(session.getUserProfileName())) username = session.getUserProfileName();
+    if (username.isEmpty()) username = session.getFPName();
 
     if (!email.isEmpty()) {
-      InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
-          session.getUserProfileName(), email, number, REFERRAL_CAMPAIGN_CODE, null, null
-      );
-      Log.d("ReferralTransActivity", "Email: " + session.getFPEmail() + "Number: " + session.getUserPrimaryMobile());
+      Log.d("ReferralTransActivity", "Username: " + username + "Email: " + email + "Number: " + number);
+      InviteReferralsApi.getInstance(getApplicationContext()).userDetails(username, email, number, REFERRAL_CAMPAIGN_CODE, null, null);
       inviteReferralLogin();
     } else {
       Toast.makeText(getApplicationContext(), R.string.an_unexpacted_error, Toast.LENGTH_LONG).show();

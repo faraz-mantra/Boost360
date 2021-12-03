@@ -3,6 +3,7 @@ package com.appservice.ui.aptsetting.widgets
 import android.content.Intent
 import android.view.View
 import com.appservice.R
+import com.appservice.constant.Constants
 import com.appservice.model.aptsetting.UserFpDetailsResponse
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.BottomSheetSuccessfullyPublishedBinding
@@ -38,7 +39,7 @@ class BottomSheetSuccessfullyUpdated : BaseBottomSheetDialog<BottomSheetSuccessf
     setOnClickListener(binding?.civCancel, binding?.visitWebsite)
     this.fpDetails = arguments?.getSerializable(IntentConstant.CATALOG_DATA.name) as? UserFpDetailsResponse
     this.catalogName = arguments?.getString(IntentConstant.CATALOG_CUSTOM_NAME.name)
-    binding?.ctvLink?.text = fromHtml("<u>${sessionManager?.getDomainName()}/$catalogName</u>")
+    binding?.ctvLink?.text = fromHtml("<u>${sessionManager?.getDomainName()}/${Constants.CATALOG_PREFIX}$catalogName</u>")
   }
 
   override fun onClick(v: View) {
@@ -49,7 +50,7 @@ class BottomSheetSuccessfullyUpdated : BaseBottomSheetDialog<BottomSheetSuccessf
         dismiss()
       }
       binding?.visitWebsite -> {
-        val url = "${sessionManager?.getDomainName()}/$catalogName"
+        val url = "${sessionManager?.getDomainName()}/${Constants.CATALOG_PREFIX}$catalogName"
         WebEngageController.trackEvent(WEB_VIEW_PAGE, CLICK, url)
         val intent = Intent(baseActivity, WebViewActivity::class.java)
         intent.putExtra(com.onboarding.nowfloats.constant.IntentConstant.DOMAIN_URL.name, url)

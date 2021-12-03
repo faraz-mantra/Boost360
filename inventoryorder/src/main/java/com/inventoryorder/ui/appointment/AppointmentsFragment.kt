@@ -318,7 +318,12 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.DELIVERED -> {
-        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
+        val status = arrayListOf(
+          OrderSummaryModel.OrderStatus.FEEDBACK_PENDING.name,
+          OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED.name,
+          OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name
+        )
+        requestFilter = getRequestFilterData(status)
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.CANCELLED -> {
@@ -786,6 +791,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   override fun secondaryButtonClicked() {
     showShortToast(getString(R.string.coming_soon))
+    //TODO add tutorial video flow
   }
 
   override fun ternaryButtonClicked() {
