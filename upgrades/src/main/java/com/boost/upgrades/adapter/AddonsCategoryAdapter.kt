@@ -74,6 +74,9 @@ class AddonsCategoryAdapter(
       "Catalogue" -> {
         holder.image.setImageResource(R.drawable.addons_category_catalogue)
       }
+      "Staff Management" -> {
+        holder.image.setImageResource(R.drawable.addons_category_staffmanagement)
+      }
 
     }
     holder.title.setText(upgradeList.get(position))

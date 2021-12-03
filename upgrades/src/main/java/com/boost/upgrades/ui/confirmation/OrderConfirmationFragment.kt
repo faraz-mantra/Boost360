@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
+import com.boost.presignin.helper.ProcessFPDetails
+import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
@@ -14,6 +16,9 @@ import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
 import com.framework.analytics.SentryController
+import com.framework.extensions.observeOnce
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.framework.webengageconstant.*
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.order_confirmation_fragment.*
@@ -21,7 +26,7 @@ import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class OrderConfirmationFragment : BaseFragment() {
+class OrderConfirmationFragment : BaseFragment("MarketPlaceOrderConfirmationFragment") {
 
   lateinit var prefs: SharedPrefs
   var data = JSONObject()
@@ -72,6 +77,8 @@ class OrderConfirmationFragment : BaseFragment() {
     prefs.storeCartOrderInfo(null)
     prefs.storeApplyedCouponDetails(null)
 
+    updateFPDetails()
+
     try {
       if (arguments != null) {
         if (requireArguments().containsKey("payment_type") && requireArguments().getString("payment_type")
@@ -117,5 +124,17 @@ class OrderConfirmationFragment : BaseFragment() {
 
 
   }
+
+  private fun updateFPDetails() {
+    val map = HashMap<String, String>()
+    map["clientId"] = clientId
+    viewModel?.getFpDetails((activity as UpgradeActivity).fpid!! ?: "", map)?.observeOnce(viewLifecycleOwner, {
+      val response = it as? UserFpDetailsResponse
+      if (it.isSuccess() && response != null) {
+        ProcessFPDetails(UserSessionManager(requireActivity())).storeFPDetails(response)
+      }
+    })
+  }
+
 
 }

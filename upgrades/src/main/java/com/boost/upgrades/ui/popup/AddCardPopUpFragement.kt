@@ -259,5 +259,10 @@ class AddCardPopUpFragement : DialogFragment() {
     expiry_year_value.adapter = yearListAdapter
   }
 
+  override fun onResume() {
+    super.onResume()
+//    UserExperiorController.startScreen("MarketPlaceAddCardPopUpFragement")
+
+  }
 
 }
