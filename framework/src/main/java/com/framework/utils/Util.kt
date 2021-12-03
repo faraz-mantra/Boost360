@@ -53,6 +53,12 @@ import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
+import android.content.pm.PackageManager
+
+import android.content.pm.PackageInfo
+
+
+
 
 inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
 private const val TAG = "Util"
@@ -374,6 +380,17 @@ fun isService(category_code: String?): Boolean {
     "SVC", "DOC", "HOS", "SPA", "SAL" -> true
     else -> false
   }
+}
+
+fun getAppVersionName(): String? {
+  try {
+    val pInfo: PackageInfo = BaseApplication.instance.getPackageManager().getPackageInfo(BaseApplication.instance.packageName, 0)
+    val version = pInfo.versionName
+    return version
+  } catch (e: PackageManager.NameNotFoundException) {
+    e.printStackTrace()
+  }
+  return null
 }
 
 fun Drawable.setColorFilter2(color: Int,blendMode:BlendMode,porterDuffMode:PorterDuff.Mode){
