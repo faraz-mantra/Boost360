@@ -90,4 +90,8 @@ class LoginSignUpViewModel : BaseViewModel() {
   fun getCategoriesPlan(context: Context): LiveData<BaseResponse> {
     return CategoryRepository.getCategoriesPlan(context).toLiveData()
   }
+
+  fun getFirebaseToken(): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getFirebaseAuthToken().toLiveData()
+  }
 }
