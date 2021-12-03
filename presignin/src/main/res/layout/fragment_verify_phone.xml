@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_F5F8FD"
+        tools:context=".ui.newOnboarding.VerifyPhoneFragment">
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_title_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_8"
+            android:fontFamily="@font/inter_regular"
+            android:gravity="start"
+            android:text="An SMS with a 4-digit OTP was sent to"
+            android:textAlignment="gravity"
+            android:textColor="@color/black_2A2A2A"
+            android:textSize="@dimen/body_1"
+            app:layout_constraintEnd_toStartOf="@+id/endGuide"
+            app:layout_constraintStart_toEndOf="@+id/startGuide"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_phone_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_8"
+            android:fontFamily="@font/inter_regular"
+            android:gravity="start"
+            android:textAlignment="gravity"
+            android:textColor="@color/black_2A2A2A"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/endGuide"
+            app:layout_constraintStart_toEndOf="@+id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_phone"
+            tools:text="+91 984-529-0876" />
+
+        <com.boost.presignin.views.otptextview.OtpTextView
+            android:id="@+id/pin_otp_verify"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_25"
+            app:bar_active_color="@color/gray_727D82"
+            app:bar_enabled="true"
+            app:bar_height="1dp"
+            app:bar_inactive_color="@color/gray_727D82"
+            app:height="@dimen/_28sdp"
+            app:layout_constraintEnd_toEndOf="@id/endGuide"
+            app:layout_constraintStart_toStartOf="@id/startGuide"
+            app:layout_constraintTop_toBottomOf="@id/tv_phone_number"
+            app:length="4"
+            app:otp_box_background="@color/transparent"
+            app:otp_text_size="@dimen/heading_3"
+            app:width="@dimen/size_35"
+            tools:ignore="NotSibling" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_get_otp_on_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_25"
+            android:fontFamily="@font/inter_semi_bold"
+            android:gravity="start"
+            android:visibility="gone"
+            android:text="Get OTP on call"
+            android:textAlignment="gravity"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/body_1"
+            app:layout_constraintStart_toEndOf="@+id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/pin_otp_verify" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_resend_otp_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_25"
+            android:fontFamily="@font/inter_semi_bold"
+            android:gravity="start"
+            android:text="Resend OTP in 24s"
+            android:textAlignment="gravity"
+            android:textColor="@color/gray_DADADA"
+            android:textSize="@dimen/body_1"
+            app:layout_constraintStart_toEndOf="@+id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/pin_otp_verify" />
+
+        <LinearLayout
+
+            android:id="@+id/linearWhatsApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_28"
+            android:gravity="center_vertical"
+            app:layout_constraintHorizontal_bias="0"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/endGuide"
+            app:layout_constraintStart_toStartOf="@+id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/tv_resend_otp_in">
+
+            <com.framework.views.customViews.CustomCheckBox
+                android:id="@+id/chk_whatsapp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimary"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/send_me_business_updates_via"
+                android:textColor="@color/black_2A2A2A"
+                android:textSize="@dimen/subtitle_2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_4"
+                android:drawableStart="@drawable/ic_whatsapp_green_official"
+                android:drawablePadding="@dimen/size_2"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="center"
+                android:text="@string/whatsapp"
+                android:textColor="@color/black_2A2A2A"
+                android:textSize="@dimen/subtitle_2" />
+        </LinearLayout>
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_verify_otp"
+            style="@style/yellow_squared_button"
+            android:enabled="false"
+            android:text="@string/verify"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="UnknownId" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/startGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.06" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/endGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.94" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

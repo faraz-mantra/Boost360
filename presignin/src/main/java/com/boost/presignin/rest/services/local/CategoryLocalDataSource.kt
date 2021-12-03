@@ -7,6 +7,7 @@ import com.boost.presignin.model.plan.Plan15DaysResponse
 import com.boost.presignin.rest.response.ResponseDataCategory
 import com.framework.base.BaseResponse
 import com.boost.presignin.model.plan.Plan15DaysResponseItem
+import com.boost.presignin.rest.response.ResponseDataCategoryOv2
 import io.reactivex.Observable
 
 object CategoryLocalDataSource : AppBaseLocalService() {
@@ -14,7 +15,9 @@ object CategoryLocalDataSource : AppBaseLocalService() {
   fun getCategory(context: Context): Observable<BaseResponse> {
     return fromJsonRes(context, R.raw.category_data_model_v3, ResponseDataCategory::class.java)
   }
-
+  fun getCategoryOv2(context: Context): Observable<BaseResponse> {
+    return fromJsonRes(context, R.raw.category_data_model_v3, ResponseDataCategoryOv2::class.java)
+  }
   fun getCategoryPlan(context: Context): Observable<BaseResponse> {
     return fromJsonRes(context, R.raw.plans, Plan15DaysResponse::class.java)
   }

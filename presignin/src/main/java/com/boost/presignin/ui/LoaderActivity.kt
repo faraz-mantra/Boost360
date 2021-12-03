@@ -89,7 +89,6 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
         setFPDetailsToSentry(session)
         setFPDetailsToUserExperior(session)
         FirestoreManager.initData(session.fpTag ?: "", session.fPID ?: "", clientId)
-        FirebaseRemoteConfigUtil.initRemoteConfigData(this)
         startService()
         if (
           deepLinkViewType != null && deepLinkViewType.equals("CART_FRAGMENT", ignoreCase = true)
