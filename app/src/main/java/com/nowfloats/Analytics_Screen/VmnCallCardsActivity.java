@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.boost.upgrades.UpgradeActivity;
+import com.dashboard.utils.PremiumCode;
 import com.framework.views.customViews.CustomToolbar;
 import com.framework.views.zero.old.AppFragmentZeroCase;
 import com.framework.views.zero.old.AppOnZeroCaseClicked;
@@ -39,6 +40,7 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
+import com.onboarding.nowfloats.constant.SupportVideoType;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityVmnCallCardsBinding;
 
@@ -245,11 +247,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 
   private boolean isPremium() {
     List<String> keys = session.getStoreWidgets();
-
-    if (keys != null && keys.contains("CALLTRACKER")) {
-      return true;
-    }
-
+    if (keys != null && keys.contains(PremiumCode.CALLTRACKER.getValue())) return true;
     return false;
   }
 
@@ -578,16 +576,16 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
     intent.putExtra("fpid", session.getFPID());
     intent.putExtra("fpTag", session.getFpTag());
     intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
-    intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
+    intent.putStringArrayListExtra("userPurchsedWidgets", new ArrayList(session.getStoreWidgets()));
     if (session.getUserProfileEmail() != null) {
       intent.putExtra("email", session.getUserProfileEmail());
     } else {
-      intent.putExtra("email", "ria@nowfloats.com");
+      intent.putExtra("email", getString(R.string.ria_customer_mail));
     }
     if (session.getUserPrimaryMobile() != null) {
       intent.putExtra("mobileNo", session.getUserPrimaryMobile());
     } else {
-      intent.putExtra("mobileNo", "9160004303");
+      intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
     }
     intent.putExtra("profileUrl", session.getFPLogo());
     intent.putExtra("buyItemKey", "CALLTRACKER");
@@ -616,7 +614,12 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 
   @Override
   public void secondaryButtonClicked() {
-    Toast.makeText(this, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
+    try {
+      startActivity(new Intent(this, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
+              .putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name(), SupportVideoType.TOB.getValue()));
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override

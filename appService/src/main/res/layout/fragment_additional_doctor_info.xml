@@ -161,6 +161,8 @@
                     app:textType="BODY_3" />
 
                 <com.framework.views.customViews.CustomTextField
+                    android:tag="com.userexperior.ueSecureView"
+
                     android:id="@+id/ctf_consultation_type"
                     style="@style/match_wrap"
                     android:layout_marginTop="@dimen/size_5"

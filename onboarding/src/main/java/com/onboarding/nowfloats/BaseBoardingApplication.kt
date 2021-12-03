@@ -34,6 +34,7 @@ open class BaseBoardingApplication : BaseApplication() {
       RiaWithFloatsApiClient.shared.init(EndPoints.RIA_WITH_FLOATS_BASE_URL)
       WebActionsApiClient.shared.init(EndPoints.WEB_ACTION_BASE_URL)
       BoostFloatClient.shared.init(EndPoints.BOOST_FLOATS_BASE_URL)
+      DeveloperBoostKitDevApiClient.shared.init(EndPoints.DEVELOPER_API_BOOST_KIT_DEV_BASE_URL)
     }
   }
 }

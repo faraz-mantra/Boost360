@@ -284,17 +284,17 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
     intent.putExtra("fpName", session!!.fpName)
     intent.putExtra("fpid", session!!.fpid)
     intent.putExtra("loginid", session!!.userProfileId)
-    intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets)
+    intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(session?.storeWidgets?: arrayListOf()))
     intent.putExtra("fpTag", session!!.fpTag)
     if (session!!.userProfileEmail != null) {
       intent.putExtra("email", session!!.userProfileEmail)
     } else {
-      intent.putExtra("email", "ria@nowfloats.com")
+      intent.putExtra("email", getString(R.string.ria_customer_mail))
     }
     if (session!!.userPrimaryMobile != null) {
       intent.putExtra("mobileNo", session!!.userPrimaryMobile)
     } else {
-      intent.putExtra("mobileNo", "9160004303")
+      intent.putExtra("mobileNo", getString(R.string.ria_customer_number))
     }
     intent.putExtra("profileUrl", session!!.fpLogo)
     intent.putExtra("buyItemKey", "BOOKTABLE")

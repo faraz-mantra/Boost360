@@ -970,8 +970,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
       keys2.addAll(keys);
       Toast.makeText(HomeActivity.this, getString(R.string.refreshing_your_business_dashboard), Toast.LENGTH_LONG).show();
       for (int i = 0; i < keys2.size(); i++) {
-        if (!Constants.StoreWidgets.contains(keys2.get(i))) {
-          Constants.StoreWidgets.add(keys2.get(i));
+        if (!session.getStoreWidgets().contains(keys2.get(i))) {
+          session.getStoreWidgets().add(keys2.get(i));
         }
       }
     }
@@ -1584,16 +1584,16 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     intent.putExtra("isOpenCardFragment", isOpenCardFragment);
     intent.putExtra("screenType", screenType);
     intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
-    intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
+    intent.putStringArrayListExtra("userPurchsedWidgets", new ArrayList(session.getStoreWidgets()));
     if (session.getUserProfileEmail() != null) {
       intent.putExtra("email", session.getUserProfileEmail());
     } else {
-      intent.putExtra("email", "ria@nowfloats.com");
+      intent.putExtra("email", getString(R.string.ria_customer_mail));
     }
     if (session.getUserPrimaryMobile() != null) {
       intent.putExtra("mobileNo", session.getUserPrimaryMobile());
     } else {
-      intent.putExtra("mobileNo", "9160004303");
+      intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
     }
     if (buyItemKey != null && !buyItemKey.isEmpty()) intent.putExtra("buyItemKey", buyItemKey);
     intent.putExtra("profileUrl", session.getFPLogo());

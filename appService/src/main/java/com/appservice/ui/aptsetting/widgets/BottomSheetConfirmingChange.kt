@@ -37,9 +37,9 @@ class BottomSheetConfirmingChange : BaseBottomSheetDialog<BottomSheetConfirmingC
     sessionManager = UserSessionManager(baseActivity)
     setOnClickListener(binding?.btnGoBack, binding?.btnYesChange)
     this.fpDetails = arguments?.getSerializable(IntentConstant.CATALOG_DATA.name) as? UserFpDetailsResponse
-    this.catalogName = Constants.CATALOG_PREFIX+arguments?.getString(IntentConstant.CATALOG_CUSTOM_NAME.name)
+    this.catalogName = arguments?.getString(IntentConstant.CATALOG_CUSTOM_NAME.name)
     binding?.ctvNewDisplayText?.text = fromHtml("<b>New display text:</b> $catalogName")
-    binding?.ctvNewPageUrl?.text = fromHtml("<b>New page URL:</b><br /><u>${sessionManager?.getDomainName()}/$catalogName</u>")
+    binding?.ctvNewPageUrl?.text = fromHtml("<b>New page URL:</b><br /><u>${sessionManager?.getDomainName()}/${Constants.CATALOG_PREFIX}$catalogName</u>")
     binding?.ccbAgree?.setOnCheckedChangeListener { _, isChecked ->
       when (isChecked) {
         true -> binding?.btnYesChange?.visible()
