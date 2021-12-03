@@ -159,13 +159,14 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
     try {
       val query = JSONObject()
       query.put("WebsiteId", session!!.getFpTag())
-      val APICalls = RestAdapter.Builder()
-        .setEndpoint("https://webaction.api.boostkit.dev")
-        .setLogLevel(RestAdapter.LogLevel.FULL)
-        .setLog(AndroidLog("ggg"))
-        .build()
-        .create(RestaurantsAPIInterfaces::class.java)
+//      val APICalls = RestAdapter.Builder()
+//        .setEndpoint("https://webaction.api.boostkit.dev")
+//        .setLogLevel(RestAdapter.LogLevel.FULL)
+//        .setLog(AndroidLog("ggg"))
+//        .build()
+//        .create(RestaurantsAPIInterfaces::class.java)
 
+      val APICalls = Constants.restAdapterWebActionBoostKIt.create(RestaurantsAPIInterfaces::class.java)
       APICalls.getBookTable(query, 0, 1000, object : Callback<GetBookTableData?> {
         override fun success(getBookTableData: GetBookTableData?, response: Response) {
           if (getBookTableData == null || response.status != 200) {
@@ -228,13 +229,14 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
         "{\$set : {IsArchived: true }}"
       )
 
-      val APICalls = RestAdapter.Builder()
-        .setEndpoint("https://webaction.api.boostkit.dev")
-        .setLogLevel(RestAdapter.LogLevel.FULL)
-        .setLog(AndroidLog("ggg"))
-        .setConverter(GsonConverter(GsonBuilder().setLenient().create()))
-        .build()
-        .create(RestaurantsAPIInterfaces::class.java)
+//      val APICalls = RestAdapter.Builder()
+//        .setEndpoint("https://webaction.api.boostkit.dev")
+//        .setLogLevel(RestAdapter.LogLevel.FULL)
+//        .setLog(AndroidLog("ggg"))
+//        .setConverter(GsonConverter(GsonBuilder().setLenient().create()))
+//        .build()
+//        .create(RestaurantsAPIInterfaces::class.java)
+      val APICalls = Constants.restAdapterWebActionBoostKIt.create(RestaurantsAPIInterfaces::class.java)
 
       APICalls.deleteBookTable(requestBody, object : Callback<String?> {
         override fun success(data: String?, response: Response) {

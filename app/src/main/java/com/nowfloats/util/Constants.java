@@ -14,6 +14,7 @@ import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.NotificationCenter.NotificationInterface;
 import com.nowfloats.Volley.AppController;
+import com.nowfloats.network.WebActionAPIClient;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.thinksity.R;
@@ -101,9 +102,16 @@ public class Constants {
     //    public static RestAdapter validEmailAdapter = null;
     public static final RestAdapter validEmailAdapter = new RestAdapter.Builder().setEndpoint("https://bpi.briteverify.com").build();
     //    public static RestAdapter restAdapter = null;
+    public static final RestAdapter restAdapterWebActionBoostKIt = new RestAdapter.Builder()
+            .setEndpoint(Constants.WEB_ACTION_BOOST_KIT_API_URL)
+            .setRequestInterceptor(Utils.getAuthRequestInterceptor())
+            .setLogLevel(RestAdapter.LogLevel.FULL)
+            .setLog(new AndroidLog("ggg"))
+            .build();
     public static final RestAdapter restAdapter = new RestAdapter.Builder()
             .setEndpoint(Constants.NOW_FLOATS_API_URL)
             .setRequestInterceptor(Utils.getAuthRequestInterceptor())
+            .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
             .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static final RestAdapter restAdapterV2 = new RestAdapter.Builder()
             .setEndpoint(Constants.NOW_FLOATS_API_URL_V2)

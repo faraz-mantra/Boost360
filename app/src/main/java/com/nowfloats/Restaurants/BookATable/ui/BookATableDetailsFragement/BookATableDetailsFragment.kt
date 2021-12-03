@@ -21,6 +21,7 @@ import com.nowfloats.Restaurants.API.model.AddBookTable.AddBookTableData
 import com.nowfloats.Restaurants.API.model.DeleteBookTable.DeleteBookTableData
 import com.nowfloats.Restaurants.API.model.GetBookTable.Data
 import com.nowfloats.Restaurants.API.model.UpdateBookTable.UpdateBookTableData
+import com.nowfloats.util.Constants
 import com.nowfloats.util.Methods
 import com.thinksity.R
 import kotlinx.android.synthetic.main.book_a_table_details_fragment.*
@@ -180,13 +181,13 @@ class BookATableDetailsFragment : Fragment() {
           actionData,
           session!!.getFpTag()
         )
-        val APICalls = RestAdapter.Builder()
-          .setEndpoint("https://webaction.api.boostkit.dev")
-          .setLogLevel(RestAdapter.LogLevel.FULL)
-          .setLog(AndroidLog("ggg"))
-          .build()
-          .create(RestaurantsAPIInterfaces::class.java)
-
+//        val APICalls = RestAdapter.Builder()
+//          .setEndpoint("https://webaction.api.boostkit.dev")
+//          .setLogLevel(RestAdapter.LogLevel.FULL)
+//          .setLog(AndroidLog("ggg"))
+//          .build()
+//          .create(RestaurantsAPIInterfaces::class.java)
+        val APICalls = Constants.restAdapterWebActionBoostKIt.create(RestaurantsAPIInterfaces::class.java);
         APICalls.addBookTable(request, object : Callback<String?> {
           override fun success(s: String?, response: Response) {
             if (response.status != 200) {
@@ -250,13 +251,13 @@ class BookATableDetailsFragment : Fragment() {
           "{_id:'" + existingItemData._id + "'}",
           "{\$set :" + Gson().toJson(actionData) + "}"
         )
-        val APICalls = RestAdapter.Builder()
-          .setEndpoint("https://webaction.api.boostkit.dev")
-          .setLogLevel(RestAdapter.LogLevel.FULL)
-          .setLog(AndroidLog("ggg"))
-          .build()
-          .create(RestaurantsAPIInterfaces::class.java)
-
+//        val APICalls = RestAdapter.Builder()
+//          .setEndpoint("https://webaction.api.boostkit.dev")
+//          .setLogLevel(RestAdapter.LogLevel.FULL)
+//          .setLog(AndroidLog("ggg"))
+//          .build()
+//          .create(RestaurantsAPIInterfaces::class.java)
+        val APICalls = Constants.restAdapterWebActionBoostKIt.create(RestaurantsAPIInterfaces::class.java);
         APICalls.updateBookTable(requestBody, object : Callback<String?> {
           override fun success(s: String?, response: Response) {
             if (response.status != 200) {
@@ -302,14 +303,14 @@ class BookATableDetailsFragment : Fragment() {
         "{\$set : {IsArchived: true }}"
       )
 
-      val APICalls = RestAdapter.Builder()
-        .setEndpoint("https://webaction.api.boostkit.dev")
-        .setLogLevel(RestAdapter.LogLevel.FULL)
-        .setLog(AndroidLog("ggg"))
-        .setConverter(GsonConverter(GsonBuilder().setLenient().create()))
-        .build()
-        .create(RestaurantsAPIInterfaces::class.java)
-
+//      val APICalls = RestAdapter.Builder()
+//        .setEndpoint("https://webaction.api.boostkit.dev")
+//        .setLogLevel(RestAdapter.LogLevel.FULL)
+//        .setLog(AndroidLog("ggg"))
+//        .setConverter(GsonConverter(GsonBuilder().setLenient().create()))
+//        .build()
+//        .create(RestaurantsAPIInterfaces::class.java)
+      val APICalls = Constants.restAdapterWebActionBoostKIt.create(RestaurantsAPIInterfaces::class.java);
       APICalls.deleteBookTable(requestBody, object : Callback<String?> {
         override fun success(data: String?, response: Response) {
           if (response != null && response.status == 200) {

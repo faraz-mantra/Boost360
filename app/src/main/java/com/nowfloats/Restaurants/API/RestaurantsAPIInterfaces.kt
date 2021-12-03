@@ -28,7 +28,7 @@ interface RestaurantsAPIInterfaces {
   @POST("/api/v1/ordernow/update-data")
   fun updateBookTable(@Body body: UpdateBookTableData?, response: Callback<String?>?)
 
-  @Headers("Authorization: 5ad9c3d480f2510538ebde38", "Content-Type: application/json")
+  @Headers("X-Auth-Version: 2", "X-User-Id: 5ad9c3d480f2510538ebde38", "Content-Type: application/json")
   @POST("/api/v1/ordernow/update-data")
   fun deleteBookTable(@Body body: DeleteBookTableData?, response: Callback<String?>?)
 

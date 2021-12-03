@@ -2,7 +2,7 @@ package com.dashboard.rest.apiClients
 
 import com.framework.rest.BaseApiClient
 
-class WebActionApiBoostKitClientN : BaseApiClient(true) {
+class WebActionApiBoostKitClientN : BaseApiClient() {
 
     companion object {
         val shared = WebActionApiBoostKitClientN()

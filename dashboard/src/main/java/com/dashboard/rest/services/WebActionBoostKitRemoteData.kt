@@ -11,13 +11,16 @@ import retrofit2.http.*
 
 interface WebActionBoostKitRemoteData {
 
+    @Headers("X-Auth-Version: 2")
     @POST(EndPoints.OWNER_INFO_ADD_DATA)
-    fun addOwnersDataPost(@Header("Authorization") auth: String?, @Body body: RequestAddOwnersInfo?): Observable<Response<BaseResponse>>
+    fun addOwnersDataPost(@Header("X-User-Id") auth: String?, @Body body: RequestAddOwnersInfo?): Observable<Response<BaseResponse>>
 
+    @Headers("X-Auth-Version: 2")
     @POST(EndPoints.OWNER_INFO_UPDATE_DATA)
-    fun updateOwnersDataPost(@Header("Authorization") auth: String?, @Body body: UpdateOwnersDataRequest?): Observable<Response<BaseResponse>>
+    fun updateOwnersDataPost(@Header("X-User-Id") auth: String?, @Body body: UpdateOwnersDataRequest?): Observable<Response<BaseResponse>>
 
     //String.format({"$and:[{ WebsiteId : 'TANZO'}]}", websiteId)
+    @Headers("X-Auth-Version: 2")
     @GET(EndPoints.OWNER_INFO_DATA)
-    fun getOwnersDataPost(@Header("Authorization") token: String?, @Query("query") query: String?, @Query("limit") limit: Int?): Observable<Response<OwnersDataResponse>>
+    fun getOwnersDataPost(@Header("X-User-Id") token: String?, @Query("query") query: String?, @Query("limit") limit: Int?): Observable<Response<OwnersDataResponse>>
 }

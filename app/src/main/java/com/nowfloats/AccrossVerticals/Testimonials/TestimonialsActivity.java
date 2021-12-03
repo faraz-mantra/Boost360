@@ -40,6 +40,7 @@ import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.TestimonialData;
 import com.nowfloats.AccrossVerticals.API.model.GetToken.GetTokenData;
 import com.nowfloats.AccrossVerticals.API.model.GetToken.WebActionsItem;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.onboarding.nowfloats.constant.SupportVideoType;
@@ -183,12 +184,13 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
             if (!isLoad) showProgress();
             JSONObject query = new JSONObject();
             query.put("WebsiteId", session.getFpTag());
-            APIInterfaces APICalls = new RestAdapter.Builder()
-                    .setEndpoint("https://webaction.api.boostkit.dev")
-                    .setLogLevel(RestAdapter.LogLevel.FULL)
-                    .setLog(new AndroidLog("ggg"))
-                    .build()
-                    .create(APIInterfaces.class);
+//            APIInterfaces APICalls = new RestAdapter.Builder()
+//                    .setEndpoint("https://webaction.api.boostkit.dev")
+//                    .setLogLevel(RestAdapter.LogLevel.FULL)
+//                    .setLog(new AndroidLog("ggg"))
+//                    .build()
+//                    .create(APIInterfaces.class);
+            APIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(APIInterfaces.class);
             Log.v("headerToken", " " + headerToken);
             APICalls.getTestimonialsList(headerToken, testimonialType, query, 0, 1000, new Callback<GetTestimonialData>() {
                 @Override
@@ -251,14 +253,14 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
             requestBody.setUpdateValue("{$set : {IsArchived: true }}");
             requestBody.setMulti(true);
 
-            APIInterfaces APICalls = new RestAdapter.Builder()
-                    .setEndpoint("https://webaction.api.boostkit.dev")
-                    .setLogLevel(RestAdapter.LogLevel.FULL)
-                    .setLog(new AndroidLog("ggg"))
-                    .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
-                    .build()
-                    .create(APIInterfaces.class);
-
+//            APIInterfaces APICalls = new RestAdapter.Builder()
+//                    .setEndpoint("https://webaction.api.boostkit.dev")
+//                    .setLogLevel(RestAdapter.LogLevel.FULL)
+//                    .setLog(new AndroidLog("ggg"))
+//                    .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
+//                    .build()
+//                    .create(APIInterfaces.class);
+            APIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(APIInterfaces.class);
             APICalls.deleteTestimonials(headerToken, testimonialType, requestBody, new Callback<String>() {
                 @Override
                 public void success(String data, Response response) {

@@ -11,6 +11,10 @@ import retrofit2.http.Query
 
 interface WebActionBoostKitDataSource {
 
+  @Headers("X-Auth-Version: 2")
   @GET(value = EndPoints.GET_DATA)
-  fun getSelfBrandedKyc(@Header("Authorization") auth: String = "597ee93f5d64370820a6127c", @Query("query") query: String?): Observable<Response<PaymentKycDataResponse>>
+  fun getSelfBrandedKyc(
+          @Header("X-User-Id") auth: String = "597ee93f5d64370820a6127c",
+          @Query("query") query: String?
+  ): Observable<Response<PaymentKycDataResponse>>
 }
