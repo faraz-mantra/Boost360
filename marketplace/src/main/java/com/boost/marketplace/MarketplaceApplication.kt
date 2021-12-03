@@ -11,7 +11,7 @@ open class MarketplaceApplication: BaseApplication() {
 
         @JvmStatic
         fun initModule(application: MultiDexApplication) {
-            Log.e("DBCenterAPIApplication", ">> DBCenterAPIApplication")
+            Log.e("MarketplaceApplication", ">> MarketplaceApplication")
             BaseApplication.initModule(application)
             PreferencesUtils.initSharedPreferences(application)
         }

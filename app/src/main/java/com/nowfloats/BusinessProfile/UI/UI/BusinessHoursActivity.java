@@ -1,7 +1,6 @@
 package com.nowfloats.BusinessProfile.UI.UI;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,17 +25,12 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.framework.models.firestore.FirestoreManager;
+import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.framework.views.customViews.CustomButton;
 import com.nowfloats.BusinessProfile.UI.API.UploadProfileAsyncTask;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
-import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.signup.UI.API.Download_Facebook_Image;
-import com.nowfloats.signup.UI.API.Signup_Descriptinon;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
-import com.nowfloats.signup.UI.UI.WebSiteAddressActivity;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -59,7 +53,6 @@ import java.util.Locale;
 import static android.view.View.NO_ID;
 import static com.framework.webengageconstant.EventLabelKt.CLICK;
 import static com.framework.webengageconstant.EventLabelKt.CLICKING_USE_SAME_TIME_FOR_WHOLE_WEEK;
-import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
 import static com.framework.webengageconstant.EventLabelKt.TOGGLE_FRIDAY;
 import static com.framework.webengageconstant.EventLabelKt.TOGGLE_MONDAY;
 import static com.framework.webengageconstant.EventLabelKt.TOGGLE_SATURDAY;

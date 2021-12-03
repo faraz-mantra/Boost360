@@ -17,6 +17,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.appservice.AppServiceApplication;
 import com.boost.dbcenterapi.DBCenterAPIApplication;
+import com.boost.marketplace.MarketplaceApplication;
 import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignup.locale.LocaleManager;
 import com.dashboard.AppDashboardApplication;
@@ -130,6 +131,9 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     //upgrade module changes
     DBCenterAPIApplication.instance = this;
     DBCenterAPIApplication.initModule(this);
+    //marketplace module changes
+    MarketplaceApplication.instance = this;
+    MarketplaceApplication.initModule(this);
     initWebEngage();
     //Invite Referral
     InviteReferralsApplication.register(this);

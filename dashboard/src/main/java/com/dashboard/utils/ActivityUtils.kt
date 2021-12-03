@@ -177,8 +177,7 @@ fun AppCompatActivity.startFeviconImage(session: UserSessionManager?) {
 fun AppCompatActivity.startDomainDetail(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(DOMAIN_EMAIL_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val queries =
-      Intent(this, Class.forName("com.nowfloats.AccrossVerticals.domain.DomainEmailActivity"))
+    val queries = Intent(this, Class.forName("com.appservice.ui.domainbooking.DomainBookingActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
@@ -186,11 +185,7 @@ fun AppCompatActivity.startDomainDetail(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startSiteViewAnalytic(
-  session: UserSessionManager?,
-  type: String,
-  eventName: String = WEBSITE_VISITS_CHART_DURATION_CHANGED
-) {
+fun AppCompatActivity.startSiteViewAnalytic(session: UserSessionManager?, type: String, eventName: String = WEBSITE_VISITS_CHART_DURATION_CHANGED) {
   try {
     WebEngageController.trackEvent(eventName, EVENT_LABEL_NULL, TO_BE_ADDED)
     val intent =
