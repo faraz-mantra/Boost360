@@ -40,6 +40,7 @@ android {
 dependencies {
     api project(path: ':presignin')
     api project(path: ':dbcenterapi')
+    api project(path: ':marketplace')
     api project(path: ':festive_poster')
 
 
