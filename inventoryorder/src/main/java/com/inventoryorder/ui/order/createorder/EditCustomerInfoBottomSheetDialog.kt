@@ -36,7 +36,6 @@ class EditCustomerInfoBottomSheetDialog(private val contactDetails: ContactDetai
 
   override fun onClick(v: View) {
     super.onClick(v)
-    dismiss()
     when (v) {
       binding?.buttonDone -> {
         val name = binding?.editCustomerName?.text?.toString() ?: ""
@@ -67,9 +66,9 @@ class EditCustomerInfoBottomSheetDialog(private val contactDetails: ContactDetai
           showShortToast(getString(R.string.please_enter_valid_email))
           return
         }
-
         val contactDetails = ContactDetails(emailId = email, fullName = name, primaryContactNumber = phone)
         onClicked(contactDetails)
+        dismiss()
       }
     }
   }
