@@ -27,6 +27,7 @@ import com.framework.analytics.SentryController
 import com.framework.pref.*
 import com.framework.utils.DateUtils
 import com.framework.webengageconstant.*
+import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.floatMessage.MessageModel
@@ -601,7 +602,7 @@ fun AppCompatActivity.startOrderAptConsultList(session: UserSessionManager?, isO
 
 private fun getSessionOrder(session: UserSessionManager?): Bundle {
   val data = PreferenceData(
-    clientId_ORDER, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
+    AppConstant.CLIENT_ID_2, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
     session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
     session?.getFPDetails(Key_Preferences.LONGITUDE), session?.fP_AppExperienceCode
   )
