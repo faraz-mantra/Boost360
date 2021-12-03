@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_F5F8FD">
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_32"
+            android:fontFamily="@font/inter_bold"
+            android:gravity="start"
+            android:text="@string/your_website_is_almost_ready"
+            android:textAlignment="gravity"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="@dimen/text_18"
+            app:layout_constraintEnd_toStartOf="@id/endGuide"
+            app:layout_constraintStart_toEndOf="@id/startGuide"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:fontFamily="@font/inter_regular"
+            android:gravity="start"
+            android:text="@string/we_ve_picked_the_closest_matching_website_address_for_you_feel_free_to_customize_it"
+            android:textAlignment="gravity"
+            android:textColor="@color/black_2A2A2A"
+            android:textSize="@dimen/text_13"
+            app:layout_constraintEnd_toStartOf="@id/endGuide"
+            app:layout_constraintStart_toEndOf="@id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+        <include
+            android:id="@+id/address_input_layout"
+            layout="@layout/layout_website_address_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toStartOf="@+id/endGuide"
+            app:layout_constraintStart_toStartOf="@+id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/tv_subtitle" />
+
+
+        <LinearLayout
+            android:id="@+id/linear_secure_wrapper"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@+id/endGuide"
+            app:layout_constraintStart_toStartOf="@+id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/address_input_layout">
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/green_61CF96"
+                app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:src="@drawable/ic_presignin_https_lock" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="@string/secure"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/regular" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_secure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="start"
+                android:text="@string/this_url_is_completely_secure"
+                android:textAlignment="gravity"
+                android:textColor="@color/black_2A2A2A"
+                android:textSize="@dimen/text_12" />
+
+        </LinearLayout>
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_name_not_available_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_6"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:text="@string/this_link_is_already_in_use_please_choose_another"
+            android:textColor="@color/input_error_color"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:fontFamily="@font/regular"
+            app:layout_constraintEnd_toEndOf="@+id/address_input_layout"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/address_input_layout"
+            app:layout_constraintTop_toBottomOf="@+id/address_input_layout" />
+
+        <include
+            android:id="@+id/include_mobile_view"
+            layout="@layout/layout_website_name_mobile_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_next_step_3"
+            app:layout_constraintEnd_toStartOf="@+id/endGuide"
+            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintStart_toStartOf="@+id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/linear_secure_wrapper"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_next_step_3"
+            style="@style/yellow_squared_button"
+            android:enabled="true"
+            android:text="@string/launch_my_website"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="UnknownId" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/startGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.06" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/endGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.94" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
