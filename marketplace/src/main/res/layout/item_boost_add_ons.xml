@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white_smoke"
+    android:orientation="vertical">
+
+    <View
+      android:id="@+id/view"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_10" />
+
+    <com.framework.views.customViews.CustomCardView
+      android:id="@+id/content_parent"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_74"
+      android:clickable="true"
+      android:focusable="true"
+      app:cardBackgroundColor="@color/white_smoke"
+      app:cardElevation="@dimen/size_0">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_vertical"
+          android:orientation="horizontal">
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/img_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/greyish_brown"
+            app:srcCompat="@drawable/ic_rounded_end_accent_d" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/txt_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_9"
+            android:layout_marginEnd="@dimen/size_4"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/greyish_brown"
+            app:textType="HEADING_6"
+            tools:text="Customer Orders &amp; Enquiries" />
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/img_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/size_14"
+            android:padding="@dimen/size_5"
+            android:tint="@color/grey_dim_2"
+            android:translationY="@dimen/size_4"
+            app:srcCompat="@drawable/ic_arrow_down_accent_d" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/txt_sub_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_33"
+          android:layout_marginEnd="@dimen/size_36"
+          android:ellipsize="end"
+          android:includeFontPadding="false"
+          android:maxLines="2"
+          android:textColor="@color/warm_grey"
+          app:fontFamily="@font/regular"
+          app:textType="CAPTION"
+          tools:text="One place to manage all patient interactions." />
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.framework.views.customViews.CustomCardView>
+
+
+    <com.framework.views.viewgroups.BaseRecyclerView
+      android:id="@+id/rv_manage_business"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_18"
+      android:layout_marginEnd="@dimen/size_8"
+      android:layout_marginBottom="@dimen/size_14"
+      app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+      app:spanCount="4"
+      tools:itemCount="8"
+      tools:listitem="@layout/item_manage_business_d" />
+  </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
