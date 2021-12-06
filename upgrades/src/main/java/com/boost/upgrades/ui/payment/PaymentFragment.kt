@@ -58,7 +58,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
+class PaymentFragment : BaseFragment("MarketPlacePaymentFragment"), PaymentListener, BusinessDetailListener,
   MoreBanksListener, UpiPayListener, EmailPopupListener, AddCardListener {
 
   lateinit var root: View

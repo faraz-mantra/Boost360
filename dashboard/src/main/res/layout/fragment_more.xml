@@ -31,7 +31,9 @@
         <com.framework.views.roundedimageview.RoundedImageView
           android:id="@+id/riv_users_image"
           android:layout_width="@dimen/size_68"
-          android:layout_height="@dimen/size_68"
+            android:tag="com.userexperior.ueSecureView"
+
+            android:layout_height="@dimen/size_68"
           android:layout_marginTop="@dimen/size_4"
           android:scaleType="centerCrop"
           app:layout_constraintBottom_toBottomOf="parent"
@@ -65,7 +67,9 @@
           app:textType="CAPTION" />
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_name"
+            android:tag="com.userexperior.ueSecureView"
+
+            android:id="@+id/ctv_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_16"
@@ -188,7 +192,9 @@
                 android:id="@+id/riv_business_image"
                 android:layout_width="@dimen/size_42"
                 android:layout_height="@dimen/size_42"
-                android:clickable="true"
+                  android:tag="com.userexperior.ueSecureView"
+
+                  android:clickable="true"
                 android:focusable="true"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -203,7 +209,9 @@
                 tools:src="@drawable/dummy_staff_img" />
 
               <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ctv_business_name"
+                  android:tag="com.userexperior.ueSecureView"
+
+                  android:id="@+id/ctv_business_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_12"
@@ -221,7 +229,9 @@
                 tools:text="@string/business_name" />
 
               <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ctv_business_address"
+                  android:tag="com.userexperior.ueSecureView"
+
+                  android:id="@+id/ctv_business_address"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_12"

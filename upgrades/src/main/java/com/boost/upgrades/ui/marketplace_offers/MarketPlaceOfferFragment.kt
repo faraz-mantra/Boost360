@@ -51,7 +51,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class MarketPlaceOfferFragment : BaseFragment(), HistoryFragmentListener {
+class MarketPlaceOfferFragment : BaseFragment("MarketPlaceMarketPlaceOfferFragment"), HistoryFragmentListener {
 
   lateinit var root: View
 

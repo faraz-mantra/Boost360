@@ -84,5 +84,11 @@ class GSTINPopUpFragment : DialogFragment() {
 
   }
 
+  override fun onResume() {
+    super.onResume()
+//    UserExperiorController.startScreen("MarketPlaceGSTINPopUpFragment")
+
+  }
+
 
 }

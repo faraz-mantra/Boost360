@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.free_addons_fragment.paid_title
 import kotlinx.android.synthetic.main.free_addons_fragment.recycler_paidaddons
 
 
-class FreeAddonsFragment : BaseFragment(), MyAddonsListener {
+class FreeAddonsFragment : BaseFragment("MarketPlaceFreeAddonsFragment"), MyAddonsListener {
 
   lateinit var root: View
 

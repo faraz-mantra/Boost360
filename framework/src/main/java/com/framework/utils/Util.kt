@@ -1,14 +1,13 @@
 package com.framework.utils
 
 import android.app.Activity
-import android.app.Notification
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
 import android.content.ContentValues
-import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.graphics.*
 import android.net.Uri
 import android.os.Build
@@ -17,9 +16,8 @@ import android.os.SystemClock
 import android.provider.MediaStore
 import android.text.*
 import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.util.Log
 import android.text.style.*
+import android.util.Log
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.inputmethod.InputMethodManager
@@ -30,7 +28,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.FontRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
@@ -45,13 +42,13 @@ import com.framework.views.customViews.CustomTextView
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.internal.notify
 import java.io.*
 import java.text.NumberFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
+
 
 inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
 private const val TAG = "Util"
@@ -152,7 +149,7 @@ fun CustomTextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
       }
     }
     startIndexOfLink = this.text.toString().indexOf(link.first, startIndexOfLink + 1)
-//      if(startIndexOfLink == -1) continue // todo if you want to verify your texts contains links text
+//      if(startIndexOfLink == -1) continue //if you want to verify your texts contains links text
     spannableString.setSpan(clickableSpan, startIndexOfLink, startIndexOfLink + link.first.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
   }
   this.movementMethod = LinkMovementMethod.getInstance() // without LinkMovementMethod, link can not click
@@ -327,7 +324,7 @@ suspend fun Bitmap.saveImageToStorage(
       progress = (totalWritten * 100 / lenghtOfFile)
       Log.i(TAG, "saveImageToStorage: progress $progress")
       if (showNoti) {
-        notificationBuilder?.setProgress(100, progress, false)
+        notificationBuilder.setProgress(100, progress, false)
         NotiUtils.notificationManager?.notify(noti_id, notificationBuilder.build())
       }
       imageOutStream.write(buffer, 0, bufferedBytes)
@@ -335,9 +332,9 @@ suspend fun Bitmap.saveImageToStorage(
     if (showNoti) {
       if (progress >= 100) {
         Log.i(TAG, "saveImageToStorage: success")
-        notificationBuilder?.setContentTitle("Image Downloaded")
+        notificationBuilder.setContentTitle("Image Downloaded")
           ?.setProgress(0, 0, false)
-          ?.setContentIntent(getFileViewerIntent(fileUri, mimeType).getPendingIntent())
+          .setContentIntent(getFileViewerIntent(fileUri, mimeType).getPendingIntent())
         NotiUtils.notificationManager?.notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
       } else {
         Toast.makeText(BaseApplication.instance, "Failed To Save Image", Toast.LENGTH_SHORT).show()
@@ -390,4 +387,15 @@ fun Activity.makeCall(number: String) {
   callIntent.addCategory(Intent.CATEGORY_DEFAULT)
   callIntent.data = Uri.parse("tel:$number")
   this.startActivity(Intent.createChooser(callIntent, "Call by:"))
+}
+
+fun getAppVersionName(): String? {
+  try {
+    val pInfo: PackageInfo = BaseApplication.instance.packageManager.getPackageInfo(BaseApplication.instance.packageName, 0)
+    val version = pInfo.versionName
+    return version
+  } catch (e: PackageManager.NameNotFoundException) {
+    e.printStackTrace()
+  }
+  return null
 }
