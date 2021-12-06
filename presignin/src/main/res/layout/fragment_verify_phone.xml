@@ -14,12 +14,12 @@
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/size_8"
-      android:fontFamily="@font/inter_regular"
       android:gravity="start"
-      android:text="An SMS with a 4-digit OTP was sent to"
+      android:text="@string/an_sms_with_a_4_digit_otp_was_sent_to"
       android:textAlignment="gravity"
       android:textColor="@color/black_2A2A2A"
       android:textSize="@dimen/body_1"
+      app:fontFamily="@font/inter_regular"
       app:layout_constraintEnd_toStartOf="@+id/endGuide"
       app:layout_constraintStart_toEndOf="@+id/startGuide"
       app:layout_constraintTop_toTopOf="parent" />
@@ -65,7 +65,7 @@
       android:layout_marginTop="@dimen/size_25"
       android:fontFamily="@font/inter_semi_bold"
       android:gravity="start"
-      android:text="Get OTP on call"
+      android:text="@string/get_otp_on_call"
       android:textAlignment="gravity"
       android:textColor="@color/colorPrimary"
       android:textSize="@dimen/body_1"
@@ -77,26 +77,25 @@
       android:id="@+id/tv_resend_otp_in"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/size_25"
+      android:layout_marginTop="@dimen/size_22"
       android:fontFamily="@font/inter_semi_bold"
       android:gravity="start"
-      android:text="Resend OTP in 24s"
       android:textAlignment="gravity"
       android:textColor="@color/gray_DADADA"
       android:textSize="@dimen/body_1"
       app:layout_constraintStart_toEndOf="@+id/startGuide"
-      app:layout_constraintTop_toBottomOf="@+id/pin_otp_verify" />
+      app:layout_constraintTop_toBottomOf="@+id/pin_otp_verify"
+      tools:text="Resend OTP in 24s" />
 
     <LinearLayout
-
       android:id="@+id/linearWhatsApp"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/size_28"
+      android:layout_marginTop="@dimen/size_16"
       android:gravity="center_vertical"
-      android:visibility="gone"
       app:layout_constraintEnd_toStartOf="@+id/endGuide"
       app:layout_constraintHorizontal_bias="0"
+      android:layout_marginStart="-6dp"
       app:layout_constraintStart_toStartOf="@+id/startGuide"
       app:layout_constraintTop_toBottomOf="@+id/tv_resend_otp_in">
 
@@ -105,22 +104,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:buttonTint="@color/colorPrimary"
-        android:fontFamily="@font/inter_regular"
+        android:checked="true"
         android:text="@string/send_me_business_updates_via"
         android:textColor="@color/black_2A2A2A"
-        android:textSize="@dimen/subtitle_2" />
+        android:textSize="@dimen/subtitle_2"
+        app:fontFamily="@font/inter_regular" />
 
-      <TextView
-        android:layout_width="wrap_content"
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/size_4"
-        android:drawableStart="@drawable/ic_whatsapp_green_official"
-        android:drawablePadding="@dimen/size_2"
-        android:fontFamily="@font/inter_regular"
-        android:gravity="center"
-        android:text="@string/whatsapp"
-        android:textColor="@color/black_2A2A2A"
-        android:textSize="@dimen/subtitle_2" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="@dimen/_18sdp"
+          android:layout_height="@dimen/_18sdp"
+          app:srcCompat="@drawable/ic_whatsapp_green_official" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_4"
+          android:text="@string/whatsapp"
+          android:textColor="@color/black_2A2A2A"
+          android:textSize="@dimen/subtitle_2"
+          app:fontFamily="@font/inter_regular" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
     </LinearLayout>
 
     <com.framework.views.customViews.CustomTextView

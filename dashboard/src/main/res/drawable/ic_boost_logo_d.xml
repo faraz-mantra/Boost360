@@ -3,7 +3,7 @@
     android:top="@dimen/size_3"
     android:bottom="@dimen/size_3">
     <vector
-      android:width="98dp"
+      android:width="100dp"
       android:height="20dp"
       android:viewportWidth="1144"
       android:viewportHeight="162">

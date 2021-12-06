@@ -1,70 +1,71 @@
 package com.boost.presignin.model.category
 
 import com.framework.base.BaseResponse
+import java.io.Serializable
 
 data class ApiCategoryResponse(
-    val Data: List<ApiCategoryResponseData>,
-): BaseResponse()
+  val Data: ArrayList<ApiCategoryResponseData>? = null,
+) : BaseResponse(), Serializable
 
 data class ApiCategoryResponseData(
-    val _kid: String,
-    val categories: List<ApiCategoryResponseCategory>,
-    val createdon: String,
-    val isarchived: Boolean,
-    val rootaliasurl: ApiCategoryResponseRootaliasurl,
-    val schemaid: String,
-    val updatedon: String,
-    val userid: String,
-    val websiteid: String
-)
+  val _kid: String? = null,
+  val categories: ArrayList<ApiCategoryResponseCategory>? = null,
+  val createdon: String? = null,
+  val isarchived: Boolean? = null,
+  val rootaliasurl: ApiCategoryResponseRootaliasurl? = null,
+  val schemaid: String? = null,
+  val updatedon: String? = null,
+  val userid: String? = null,
+  val websiteid: String? = null
+) : Serializable
 
 data class ApiCategoryResponseCategory(
-    val _kid: String,
-    val _parentClassId: String,
-    val _parentClassName: String,
-    val _propertyName: String,
-    val appexperiencecodedetails: List<Appexperiencecodedetail>,
-    val createdon: String,
-    val isarchived: Boolean,
-    val name: String,
-    val updatedon: String,
-    val websiteid: String
-)
+  val _kid: String? = null,
+  val _parentClassId: String? = null,
+  val _parentClassName: String? = null,
+  val _propertyName: String? = null,
+  val appexperiencecodedetails: ArrayList<Appexperiencecodedetail>? = null,
+  val createdon: String? = null,
+  val isarchived: Boolean? = null,
+  val name: String? = null,
+  val updatedon: String? = null,
+  val websiteid: String? = null
+) : Serializable
 
 data class ApiCategoryResponseRootaliasurl(
-    val _kid: String,
-    val _parentClassId: String,
-    val _parentClassName: String,
-    val _propertyName: String,
-    val createdon: String,
-    val isarchived: Boolean,
-    val updatedon: String,
-    val url: String,
-    val websiteid: String
-)
+  val _kid: String? = null,
+  val _parentClassId: String? = null,
+  val _parentClassName: String? = null,
+  val _propertyName: String? = null,
+  val createdon: String? = null,
+  val isarchived: Boolean? = null,
+  val updatedon: String? = null,
+  val url: String? = null,
+  val websiteid: String? = null
+) : Serializable
 
 data class ApiCategoryResponsePreview(
-    val _kid: String,
-    val _parentClassId: String,
-    val _parentClassName: String,
-    val _propertyName: String,
-    val createdon: String,
-    val isarchived: Boolean,
-    val updatedon: String,
-    val url: String,
-    val websiteid: String
-)
+  val _kid: String? = null,
+  val _parentClassId: String? = null,
+  val _parentClassName: String? = null,
+  val _propertyName: String? = null,
+  val createdon: String? = null,
+  val isarchived: Boolean? = null,
+  val updatedon: String? = null,
+  val url: String? = null,
+  val websiteid: String? = null
+) : Serializable
 
 data class Appexperiencecodedetail(
-    val _kid: String,
-    val _parentClassId: String,
-    val _parentClassName: String,
-    val _propertyName: String,
-    val createdon: String,
-    val desktoppreview: ApiCategoryResponsePreview,
-    val isarchived: Boolean,
-    val mobilepreview: ApiCategoryResponsePreview,
-    val name: String,
-    val updatedon: String,
-    val websiteid: String
-)
+  val _kid: String? = null,
+  val _parentClassId: String? = null,
+  val _parentClassName: String? = null,
+  val _propertyName: String? = null,
+  val createdon: String? = null,
+  val desktoppreview: ApiCategoryResponsePreview? = null,
+  val isarchived: Boolean? = null,
+  val mobilepreview: ApiCategoryResponsePreview? = null,
+  val name: String? = null,
+  val updatedon: String? = null,
+  val websiteid: String? = null
+) : Serializable

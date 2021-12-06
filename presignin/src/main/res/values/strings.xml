@@ -114,6 +114,7 @@
     <string name="sit_tight">Sit tight.</string>
 
     <string name="boost360_terms_conditions" translatable="false"><![CDATA[Boost360 - Terms & Conditions]]></string>
+    <string name="boost360_privacy_policy" translatable="false">Boost360 - Privacy Policy</string>
     <string name="enter_a_valid_website_name">Enter a valid website name</string>
     <string name="ensure_that_the_entered_username_and_password_">Ensure that the entered username and password is correct.</string>
     <string name="share_your_business">Share your business...</string>
@@ -201,6 +202,10 @@
     <string name="we_ve_picked_the_closest_matching_website_address_for_you_feel_free_to_customize_it">We’ve picked the closest matching website address for you. Feel free to customize it.</string>
     <string name="your_website_is_almost_ready">Your website is almost ready!</string>
     <string name="your_business_category_was_selected">Your business category was selected</string>
-    <string name="please_select_your_whatsapp_updates_pref">Please select your preference for WhatsApp Updates!</string>
+<!--    <string name="please_select_your_whatsapp_updates_pref">Please select your preference for WhatsApp Updates!</string>-->
+    <string name="use_your_phone_number_to_login">You will be able to use your phone number to login</string>
+    <string name="_91_plus">+91</string>
+    <string name="an_sms_with_a_4_digit_otp_was_sent_to">An SMS with a 4-digit OTP was sent to</string>
+    <string name="get_otp_on_call">Get OTP on call</string>
 
 </resources>

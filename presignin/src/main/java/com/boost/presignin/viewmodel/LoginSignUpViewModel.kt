@@ -87,11 +87,11 @@ class LoginSignUpViewModel : BaseViewModel() {
     return WithFloatRepository.validateUsersPhone(requestValidatePhone = requestValidatePhone).toLiveData()
   }
 
-  fun whatsappOptIn(optType:Int,number:String,customerId:String): LiveData<BaseResponse> {
-    return RiaWithFloatRepository.whatsappOptIn(optType,number,customerId).toLiveData()
+  fun whatsappOptIn(optType: Int?, number: String?, customerId: String?): LiveData<BaseResponse> {
+    return RiaWithFloatRepository.whatsappOptIn(optType, number, customerId).toLiveData()
   }
 
-    fun getCategoriesPlan(context: Context): LiveData<BaseResponse> {
+  fun getCategoriesPlan(context: Context): LiveData<BaseResponse> {
     return CategoryRepository.getCategoriesPlan(context).toLiveData()
   }
 }

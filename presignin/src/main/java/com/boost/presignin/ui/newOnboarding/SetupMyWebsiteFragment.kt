@@ -1,49 +1,22 @@
 package com.boost.presignin.ui.newOnboarding
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
-import com.boost.presignin.constant.FragmentType
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentSetupMyWebsiteBinding
-import com.boost.presignin.helper.WebEngageController
-import com.boost.presignin.model.BusinessInfoModel
-import com.boost.presignin.model.authToken.saveAuthTokenData
-import com.boost.presignin.model.business.BusinessCreateRequest
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
 import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
-import com.boost.presignin.model.onboardingRequest.saveCategoryRequest
-import com.boost.presignin.model.signup.FloatingPointCreateResponse
 import com.boost.presignin.model.userprofile.BusinessProfileResponse
-import com.boost.presignin.ui.newOnboarding.bottomSheet.HelpSupportSuccessBottomSheet
 import com.boost.presignin.ui.newOnboarding.bottomSheet.NeedHelpBottomSheet
-import com.boost.presignin.ui.registration.RegistrationActivity
-import com.boost.presignin.ui.registration.SUCCESS_FRAGMENT
-import com.boost.presignin.viewmodel.CategoryVideoModel
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
-import com.framework.base.FRAGMENT_TYPE
-import com.framework.extensions.afterTextChanged
-import com.framework.extensions.gone
-import com.framework.extensions.observeOnce
-import com.framework.extensions.visible
-import com.framework.models.BaseViewModel
-import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
-import com.framework.pref.clientId
-import com.framework.pref.clientIdThinksity
-import com.framework.views.blur.BlurView
-import com.framework.views.blur.RenderScriptBlur
-import com.framework.webengageconstant.NO_EVENT_VALUE
-import com.framework.webengageconstant.PS_SIGNUP_SUCCESS
-import com.framework.webengageconstant.SIGNUP_SUCCESS
-import com.invitereferrals.invitereferrals.InviteReferralsApi
-import com.onboarding.nowfloats.viewmodel.category.CategoryViewModel
-import java.util.*
 
 class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, LoginSignUpViewModel>() {
 
@@ -81,15 +54,10 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
   override fun onCreateView() {
     super.onCreateView()
     this.session = UserSessionManager(baseActivity)
-    addFragment(
-      R.id.inner_container, SetupMyWebsiteStep1Fragment.newInstance(Bundle()
-        .apply
-        {
-          putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
-          putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent == true)
-
-        }), true
-    )
+    addFragment(R.id.inner_container, SetupMyWebsiteStep1Fragment.newInstance(Bundle().apply {
+      putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+      putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent == true)
+    }), true)
 
     parentFragmentManager.addOnBackStackChangedListener {
       Log.i(TAG, "onCreateView: ")
@@ -99,7 +67,6 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
         requireActivity().finish()
       }
     }
-    //initUI()
   }
 
   private fun setUpStepUI(fragment: Fragment) {
