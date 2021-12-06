@@ -2,13 +2,9 @@ package com.boost.presignin.rest.repository
 
 import com.boost.presignin.base.rest.AppBaseLocalService
 import com.boost.presignin.base.rest.AppBaseRepository
-import com.boost.presignin.model.verification.RequestValidateEmail
-import com.boost.presignin.model.verification.RequestValidatePhone
 import com.boost.presignin.rest.TaskCode
 import com.boost.presignin.rest.apiClients.BoostKitDevApiClient
-import com.boost.presignin.rest.apiClients.WithFloatsApiClient
 import com.boost.presignin.rest.services.remote.BoostKitDevRemoteData
-import com.boost.presignin.rest.services.remote.WithFloatsRemoteDataSource
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import retrofit2.Retrofit

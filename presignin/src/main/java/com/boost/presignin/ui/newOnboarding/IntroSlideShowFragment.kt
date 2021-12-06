@@ -60,7 +60,7 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
       adapter = AppBaseRecyclerViewAdapter(baseActivity, introItems, this@IntroSlideShowFragment)
       orientation = ViewPager2.ORIENTATION_HORIZONTAL
       binding?.introIndicatorNew?.setViewPager2(this)
-      offscreenPageLimit = introItems.size
+      offscreenPageLimit = 1
       registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
           currentPosition = position
@@ -69,8 +69,8 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
         }
 
         override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-          if (myState == ViewPager2.SCROLL_STATE_DRAGGING && currentPosition == position && currentPosition == 0) setCurrentItem(3, true)
-          else if (myState == ViewPager2.SCROLL_STATE_DRAGGING && currentPosition == position && currentPosition == 3) setCurrentItem(0, true)
+          if (myState == ViewPager2.SCROLL_STATE_DRAGGING && currentPosition == position && currentPosition == 0) currentItem = 3
+          else if (myState == ViewPager2.SCROLL_STATE_DRAGGING && currentPosition == position && currentPosition == 3) currentItem = 0
           super.onPageScrolled(position, positionOffset, positionOffsetPixels);
         }
 
@@ -106,6 +106,6 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
     val mCurrentPosition = binding?.viewpagerIntro?.currentItem ?: 0
     val isLast = (mCurrentPosition == lastPosition)
     val setItemPosition = if (isLast) 0 else mCurrentPosition + 1
-    binding?.viewpagerIntro?.setCurrentItem(setItemPosition, isLast.not())
+    binding?.viewpagerIntro?.currentItem = setItemPosition
   }
 }

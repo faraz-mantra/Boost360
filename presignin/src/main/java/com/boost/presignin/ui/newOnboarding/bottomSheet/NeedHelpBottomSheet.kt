@@ -9,26 +9,26 @@ import com.framework.models.BaseViewModel
 
 class NeedHelpBottomSheet : BaseBottomSheetDialog<SheetNeedHelpBinding, BaseViewModel>() {
 
-    override fun getLayout(): Int {
-        return R.layout.sheet_need_help
+  override fun getLayout(): Int {
+    return R.layout.sheet_need_help
+  }
+
+  override fun getViewModelClass(): Class<BaseViewModel> {
+    return BaseViewModel::class.java
+  }
+
+  override fun onCreateView() {
+    binding?.ivClose?.setOnClickListener {
+      dismiss()
     }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
+    binding?.tvCreateSupportRequest?.setOnClickListener {
+      //TODO call API create support
+      Intent().apply {
+        action = Intent.ACTION_DIAL
+        data = Uri.parse("tel:" + getString(R.string.expert_contact_number))
+        startActivity(this)
+      }
     }
-
-    override fun onCreateView() {
-        binding?.ivClose?.setOnClickListener {
-            dismiss()
-        }
-
-        binding?.tvCreateSupportRequest?.setOnClickListener {
-            //TODO call API create support
-            Intent().apply {
-                action = Intent.ACTION_DIAL
-                data = Uri.parse("tel:" + getString(R.string.expert_contact_number))
-                startActivity(this)
-            }
-        }
-    }
+  }
 }

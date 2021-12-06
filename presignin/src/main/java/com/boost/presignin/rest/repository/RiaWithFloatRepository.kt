@@ -18,13 +18,12 @@ object RiaWithFloatRepository : AppBaseRepository<RiaWithFloatDataSource, AppBas
     return RiaWithFloatDataSource::class.java
   }
 
-  fun whatsappOptIn(optType:Int,number:String,customerId:String): Observable<BaseResponse> {
+  fun whatsappOptIn(optType: Int?, number: String?, customerId: String?): Observable<BaseResponse> {
     val body = JsonObject().apply {
-      addProperty("optType",optType)
-      addProperty("whatsappNumber","91$number")
-      addProperty("customerId",customerId)
-      addProperty("optinId","919381915059")
-
+      addProperty("optType", optType)
+      addProperty("whatsappNumber", "91$number")
+      addProperty("customerId", customerId)
+      addProperty("optinId", "919381915059")
     }
     return makeRemoteRequest(remoteDataSource.whatsappOptIn(body = body), TaskCode.WHATSAPP_OPT_IN)
   }

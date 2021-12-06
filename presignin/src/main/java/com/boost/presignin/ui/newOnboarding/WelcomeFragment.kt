@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
+import com.boost.presignin.constant.FragmentType
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentSetupMyWebsiteBinding
 import com.boost.presignin.databinding.FragmentWelcomeBinding
@@ -47,12 +48,11 @@ class WelcomeFragment : AppBaseFragment<FragmentWelcomeBinding, BaseViewModel>()
   private fun setOnClickListeners() {
     binding?.btnSetUpMyWebsite?.setOnClickListener {
       startFragmentFromNewOnBoardingActivity(
-        activity = requireActivity(),
-        type = com.boost.presignin.constant.FragmentType.SET_UP_MY_WEBSITE_FRAGMENT,
+        activity = baseActivity,
+        type = FragmentType.SET_UP_MY_WEBSITE_FRAGMENT,
         bundle = Bundle().apply {
           putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
           putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent == true)
-
         },
         clearTop = true
       )

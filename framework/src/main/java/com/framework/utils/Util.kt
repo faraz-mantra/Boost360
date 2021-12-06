@@ -57,11 +57,10 @@ import android.content.pm.PackageManager
 
 import android.content.pm.PackageInfo
 
-
-
-
-inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
 private const val TAG = "Util"
+
+inline fun <reified T> genericType() = object : TypeToken<T>() {}.type
+
 fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis: Long = 1000) {
   var lastClickTime: Long = 0
   this.setOnClickListener {
@@ -71,7 +70,7 @@ fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis:
   }
 }
 
-fun Double.roundToFloat(numFractionDigits: Int):Float = "%.${numFractionDigits}f".format(this, Locale.ENGLISH).toFloat()
+fun Double.roundToFloat(numFractionDigits: Int): Float = "%.${numFractionDigits}f".format(this, Locale.ENGLISH).toFloat()
 
 fun Activity.hideKeyBoard() {
   val view = this.currentFocus
@@ -159,7 +158,7 @@ fun CustomTextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
       }
     }
     startIndexOfLink = this.text.toString().indexOf(link.first, startIndexOfLink + 1)
-//      if(startIndexOfLink == -1) continue // todo if you want to verify your texts contains links text
+//      if(startIndexOfLink == -1) continue //TODO if you want to verify your texts contains links text
     spannableString.setSpan(clickableSpan, startIndexOfLink, startIndexOfLink + link.first.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
   }
   this.movementMethod = LinkMovementMethod.getInstance() // without LinkMovementMethod, link can not click
@@ -213,50 +212,51 @@ fun View.toBitmap(): Bitmap? {
   return returnedBitmap
 }
 
-suspend fun Bitmap.shareAsImage(packageName:String?=null,text: String?=null){
-    val imagesFolder = File(BaseApplication.instance.getExternalFilesDir(null), "shared_images")
-    var uri: Uri? = null
-    try {
-      imagesFolder.mkdirs()
-      val file = File(imagesFolder, "shareimage${System.currentTimeMillis()}.jpg")
-      val stream = FileOutputStream(file)
-      compress(Bitmap.CompressFormat.JPEG, 100, stream)
-      stream.flush()
-      stream.close()
-      uri = FileProvider.getUriForFile(BaseApplication.instance, "${BaseApplication.instance.packageName}.provider", file)
-      val intent = Intent(Intent.ACTION_SEND)
-      intent.putExtra(Intent.EXTRA_STREAM, uri)
-      intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-      intent.type = "image/*"
-      packageName?.let {
-        intent.`package`= packageName
-      }
-      text?.let {
-        intent.putExtra(Intent.EXTRA_TEXT,text)
-      }
-      BaseApplication.instance.startActivity(intent)
-    } catch (e: Exception) {
-      Log.d("IOException: " , e.message.toString())
-      if (e is ActivityNotFoundException){
-        withContext(Dispatchers.Main){
-          when(packageName){
-            PackageNames.WHATSAPP->{
-              Toast.makeText(BaseApplication.instance,"Whatsapp is not installed on your device",Toast.LENGTH_LONG).show()
+suspend fun Bitmap.shareAsImage(packageName: String? = null, text: String? = null) {
+  val imagesFolder = File(BaseApplication.instance.getExternalFilesDir(null), "shared_images")
+  var uri: Uri? = null
+  try {
+    imagesFolder.mkdirs()
+    val file = File(imagesFolder, "shareimage${System.currentTimeMillis()}.jpg")
+    val stream = FileOutputStream(file)
+    compress(Bitmap.CompressFormat.JPEG, 100, stream)
+    stream.flush()
+    stream.close()
+    uri = FileProvider.getUriForFile(BaseApplication.instance, "${BaseApplication.instance.packageName}.provider", file)
+    val intent = Intent(Intent.ACTION_SEND)
+    intent.putExtra(Intent.EXTRA_STREAM, uri)
+    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    intent.type = "image/*"
+    packageName?.let {
+      intent.`package` = packageName
+    }
+    text?.let {
+      intent.putExtra(Intent.EXTRA_TEXT, text)
+    }
+    BaseApplication.instance.startActivity(intent)
+  } catch (e: Exception) {
+    Log.d("IOException: ", e.message.toString())
+    if (e is ActivityNotFoundException) {
+      withContext(Dispatchers.Main) {
+        when (packageName) {
+          PackageNames.WHATSAPP -> {
+            Toast.makeText(BaseApplication.instance, "Whatsapp is not installed on your device", Toast.LENGTH_LONG).show()
 
-            }
-            PackageNames.INSTAGRAM->{
-              Toast.makeText(BaseApplication.instance,"Instagram is not installed on your device",Toast.LENGTH_LONG).show()
+          }
+          PackageNames.INSTAGRAM -> {
+            Toast.makeText(BaseApplication.instance, "Instagram is not installed on your device", Toast.LENGTH_LONG).show()
 
-            }
           }
         }
-
       }
+
     }
+  }
 
 }
-fun Bitmap.saveAsImageToAppFolder(destPath:String): File? {
+
+fun Bitmap.saveAsImageToAppFolder(destPath: String): File? {
   var uri: Uri? = null
   val file = File(destPath)
 
@@ -268,8 +268,8 @@ fun Bitmap.saveAsImageToAppFolder(destPath:String): File? {
     stream.flush()
     stream.close()
     return file
-  }catch (e: IOException) {
-    Log.d("IOException: " , e.message.toString())
+  } catch (e: IOException) {
+    Log.d("IOException: ", e.message.toString())
     file.delete()
     return null
   }
@@ -278,12 +278,11 @@ fun Bitmap.saveAsImageToAppFolder(destPath:String): File? {
 }
 
 
-
 suspend fun Bitmap.saveImageToStorage(
 
-  filename: String=System.currentTimeMillis().toString()+".jpg",
-  showNoti:Boolean=false
-  ){
+  filename: String = System.currentTimeMillis().toString() + ".jpg",
+  showNoti: Boolean = false
+) {
   val noti_id = System.currentTimeMillis().toInt()
 
   try {
@@ -361,11 +360,11 @@ suspend fun Bitmap.saveImageToStorage(
   }
 }
 
-fun getFileViewerIntent(uri: Uri?,type:String): Intent {
+fun getFileViewerIntent(uri: Uri?, type: String): Intent {
   val newIntent = Intent(Intent.ACTION_VIEW)
   newIntent.setDataAndType(uri, type)
   newIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
- return newIntent
+  return newIntent
 }
 
 fun Intent.getPendingIntent(): PendingIntent? {
@@ -384,7 +383,7 @@ fun isService(category_code: String?): Boolean {
 
 fun getAppVersionName(): String? {
   try {
-    val pInfo: PackageInfo = BaseApplication.instance.getPackageManager().getPackageInfo(BaseApplication.instance.packageName, 0)
+    val pInfo: PackageInfo = BaseApplication.instance.packageManager.getPackageInfo(BaseApplication.instance.packageName, 0)
     val version = pInfo.versionName
     return version
   } catch (e: PackageManager.NameNotFoundException) {
@@ -393,4 +392,4 @@ fun getAppVersionName(): String? {
   return null
 }
 
-inline fun <reified T> convertJsonToObj(json: String?) = Gson().fromJson<T>(json, object: TypeToken<T>() {}.type)
+inline fun <reified T> convertJsonToObj(json: String?) = Gson().fromJson<T>(json, object : TypeToken<T>() {}.type)
