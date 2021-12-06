@@ -1,42 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <com.google.android.material.card.MaterialCardView
-        app:cardCornerRadius="@dimen/size_15"
-        android:layout_marginHorizontal="4dp"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="@dimen/size_60"
-        android:layout_height="@dimen/size_60"
-        app:cardBackgroundColor="@color/colorPrimary"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
-        <RelativeLayout
+    <RelativeLayout
+        android:id="@+id/root_layout"
+        android:background="@drawable/ic_poster_pack_selected"
+        android:layout_width="@dimen/size_70"
+        android:layout_height="@dimen/size_70">
+
+        <com.google.android.material.card.MaterialCardView
+            app:cardCornerRadius="@dimen/size_15"
+            android:layout_margin="3dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:cardBackgroundColor="@color/colorPrimary"
+            >
 
-            <LinearLayout
-                android:gravity="center"
-                android:layout_centerInParent="true"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <View
-                    android:background="@color/white"
-                    android:layout_width="@dimen/size_10"
-                    android:layout_height="1dp"/>
-
-                <com.framework.views.customViews.CustomTextView
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_marginVertical="4dp"
-                    android:text="SALES"
-                    android:textSize="8dp"
-                    android:letterSpacing="0.4"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/inter_medium"
-                    android:textAllCaps="true"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
 
-            </LinearLayout>
-        </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
+                    <View
+                        android:background="@color/white"
+                        android:layout_width="@dimen/size_10"
+                        android:layout_height="1dp"/>
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/tv_title"
+                        android:textSize="8dp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:layout_marginHorizontal="@dimen/size_4"
+                        android:gravity="center"
+                        android:layout_marginVertical="4dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/inter_medium"
+                        android:textAllCaps="true"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </RelativeLayout>
 </layout>

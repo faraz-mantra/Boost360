@@ -2,6 +2,7 @@ package com.festive.poster.ui.promoUpdates
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
@@ -33,7 +34,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
 
     private var adapter: AppBaseRecyclerViewAdapter<PosterPackModel>?=null
     private var sharedViewModel: FestivePosterSharedViewModel? = null
-
+    private var callbacks:TodaysPickFragment.Callbacks?=null
     private var session: UserSessionManager? = null
     var dataList: ArrayList<PosterPackModel>? = null
     private  val TAG = "TodaysPickFragment"
@@ -45,13 +46,18 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
         return FestivePosterViewModel::class.java
     }
     companion object {
-        fun newInstance(bundle: Bundle = Bundle()): TodaysPickFragment {
+        fun newInstance(bundle: Bundle = Bundle(),callbacks: Callbacks): TodaysPickFragment {
             val fragment = TodaysPickFragment()
             fragment.arguments = bundle
+            fragment.callbacks = callbacks
             return fragment
         }
 
 
+    }
+
+    interface Callbacks{
+        fun onDataLoaded(data:ArrayList<PosterPackModel>)
     }
 
     override fun onCreateView() {
@@ -60,10 +66,21 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
         session = UserSessionManager(requireActivity())
 
         getTemplateViewConfig()
-
+        setOnClickListener(binding?.cardBrowseAllTemplate)
 
 
     }
+
+    override fun onClick(v: View) {
+        super.onClick(v)
+        when(v){
+            binding?.cardBrowseAllTemplate->{
+                addFragment(R.id.container,BrowseAllFragment.newInstance(dataList!!,0),
+                    true,true)
+            }
+        }
+    }
+
 
     private fun setDummyData() {
         val dataList = arrayListOf(
@@ -143,7 +160,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
 
 
 
-                sharedViewModel?.posterPackList?.postValue(dataList)
+                callbacks?.onDataLoaded(dataList!!)
                 // rearrangeList()
                 adapter = AppBaseRecyclerViewAdapter(baseActivity, dataList!!, this)
                 binding?.rvTemplates?.adapter = adapter

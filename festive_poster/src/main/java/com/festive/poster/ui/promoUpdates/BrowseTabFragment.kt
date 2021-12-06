@@ -24,7 +24,7 @@ import com.framework.pref.UserSessionManager
 class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePosterViewModel>(),RecyclerItemClickListener {
 
     private var sharedViewModel: FestivePosterSharedViewModel?=null
-    var categoryList:ArrayList<PosterPackModel>?=null
+    var categoryList=ArrayList<PosterPackModel>()
     private var session: UserSessionManager? = null
 
     override fun getLayout(): Int {
@@ -44,12 +44,14 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
 
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
     override fun onCreateView() {
         super.onCreateView()
         sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
        // setupDummyList()
-        sharedViewModel?.shouldRefresh
-        setRealData()
+     //   setRealData()
 
     }
 
@@ -74,13 +76,18 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
         binding?.rvCat?.layoutManager = GridLayoutManager(requireActivity(),2)
     }
 
-    fun setRealData(){
-        sharedViewModel?.posterPackList?.observe(viewLifecycleOwner,{
-            categoryList = it
+    fun setRealData(data:ArrayList<PosterPackModel>){
+        categoryList.clear()
+        data.forEach { categoryList.add(it.copy()!!) }
+        categoryList.forEach { it.list_layout= RecyclerViewItemType.BROWSE_TAB_TEMPLATE_CAT.getLayout()}
+
+        if (isAdded){
             val adapter =AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,categoryList!!,this)
             binding?.rvCat?.adapter = adapter
             binding?.rvCat?.layoutManager = GridLayoutManager(requireActivity(),2)
-        })
+        }
+
+
 
     }
 
@@ -90,7 +97,7 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
         when(actionType){
             RecyclerViewActionType.BROWSE_TAB_POSTER_CAT_CLICKED.ordinal->{
-                addFragmentReplace(R.id.container,BrowseAllFragment.newInstance(),true)
+                addFragment(R.id.container,BrowseAllFragment.newInstance(categoryList,position),true,true)
             }
         }
     }

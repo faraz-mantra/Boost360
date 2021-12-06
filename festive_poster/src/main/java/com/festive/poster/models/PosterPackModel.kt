@@ -5,7 +5,10 @@ import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.recyclerView.AppBaseRecyclerViewItem
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.framework.utils.convertObjToString
+import com.framework.utils.convertStringToJsonObj
 import com.framework.utils.convertStringToList
+import com.framework.utils.convertStringToObj
 
 open class PosterPackModel(
   val tagsModel: PosterPackTagModel,
@@ -14,10 +17,15 @@ open class PosterPackModel(
   var isPurchased: Boolean = false,
   var list_layout:Int
 ) : AppBaseRecyclerViewItem {
+
+
   override fun getViewType(): Int {
     return list_layout
   }
 
+  fun copy(): PosterPackModel? {
+   return convertStringToObj<PosterPackModel>(convertObjToString(this)!!)
+  }
   var isSelected:Boolean = false
 
 

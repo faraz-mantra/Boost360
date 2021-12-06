@@ -29,15 +29,16 @@
                 <com.framework.views.customViews.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_marginVertical="@dimen/size_12"
-                    android:text="SALES"
                     android:letterSpacing="0.4"
+                    android:id="@+id/tv_title"
+                    android:gravity="center"
                     android:textColor="@color/white"
                     android:fontFamily="@font/inter_medium"
                     android:textAllCaps="true"
                     android:layout_height="wrap_content"/>
                 <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_size"
                     android:layout_width="wrap_content"
-                    android:text="(23)"
                     android:includeFontPadding="false"
                     android:textColor="@color/white"
                     android:fontFamily="@font/regular"

@@ -19,9 +19,14 @@ import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
+import com.framework.utils.convertStringToList
+import com.framework.utils.toArrayList
+import com.google.gson.Gson
 
 class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel>(),RecyclerItemClickListener {
 
+    private var selectedPos: Int=0
+    private var posterRvAdapter: AppBaseRecyclerViewAdapter<PosterModel>?=null
     private var categoryAdapter: AppBaseRecyclerViewAdapter<PosterPackModel>?=null
     var categoryList:ArrayList<PosterPackModel>?=null
 
@@ -33,7 +38,14 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel
         return BaseViewModel::class.java
     }
     companion object {
-        fun newInstance(bundle: Bundle = Bundle()): BrowseAllFragment {
+
+        val BK_POSTER_PACK_LIST="POSTER_PACK_LIST"
+        val BK_SELECTED_POS="BK_SELECTED_POS"
+
+        fun newInstance(dataList:ArrayList<PosterPackModel>,selectedPos:Int): BrowseAllFragment {
+            val bundle: Bundle = Bundle()
+            bundle.putString(BK_POSTER_PACK_LIST,Gson().toJson(dataList))
+            bundle.putInt(BK_SELECTED_POS,selectedPos)
             val fragment = BrowseAllFragment()
             fragment.arguments = bundle
             return fragment
@@ -44,6 +56,43 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel
 
     override fun onCreateView() {
         super.onCreateView()
+        selectedPos = arguments?.getInt(BK_SELECTED_POS)?:0
+        categoryList = convertStringToList<PosterPackModel>(arguments?.getString(
+            BK_POSTER_PACK_LIST)!!)?.toArrayList()
+       setDataOnUi()
+    }
+
+    private fun setDataOnUi() {
+        categoryList?.forEach {pack->
+
+            pack.list_layout =RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT.getLayout()
+            pack.posterList?.forEach {poster->
+                poster.layout_id = RecyclerViewItemType.TEMPLATE_VIEW_FOR_RV.getLayout()
+            }
+        }
+
+        switchToSelectedItem()
+
+
+        categoryAdapter =AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,categoryList!!,this)
+        binding?.rvCat?.adapter = categoryAdapter
+        binding?.rvCat?.layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false)
+
+
+    }
+
+    private fun switchToSelectedItem() {
+        val selectedItem = categoryList?.get(selectedPos)
+        selectedItem?.isSelected =true
+        binding?.tvCatTitle?.text = selectedItem?.tagsModel?.name
+        binding?.tvCatSize?.text = selectedItem?.posterList?.size.toString()
+        posterRvAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,
+            categoryList?.get(selectedPos)?.posterList!!)
+        binding?.rvPosters?.adapter = posterRvAdapter
+        binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
+    }
+
+    fun setDummyCats(){
         categoryList = ArrayList<PosterPackModel>()
 
         //dummy data
@@ -77,10 +126,11 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel
         binding?.rvCat?.adapter = categoryAdapter
         binding?.rvCat?.layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false)
 
-        setupPosterList()
+        setupDummyPosterList()
+
     }
 
-    fun setupPosterList(){
+    fun setupDummyPosterList(){
         val dataList = arrayListOf(
             PosterModel(
                 true,
@@ -114,8 +164,8 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel
             )
         )
 
-        val adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList)
-        binding?.rvPosters?.adapter = adapter
+        posterRvAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList)
+        binding?.rvPosters?.adapter = posterRvAdapter
         binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
 
 
@@ -127,6 +177,8 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel
                 categoryList?.forEach { it.isSelected =false }
                 categoryList?.get(position)?.isSelected=true
                 categoryAdapter?.notifyDataSetChanged()
+                selectedPos = position
+                switchToSelectedItem()
             }
         }
     }

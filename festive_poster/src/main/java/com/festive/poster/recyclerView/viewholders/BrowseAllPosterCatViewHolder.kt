@@ -1,5 +1,6 @@
 package com.festive.poster.recyclerView.viewholders
 
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.framework.BaseApplication
 import com.framework.base.BaseActivity
 import com.framework.views.itemdecoration.LineItemDecoration
 import com.google.android.material.tabs.TabLayoutMediator
@@ -26,10 +28,13 @@ class BrowseAllPosterCatViewHolder(binding: ListItemBrowseAllCatBinding) :
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     val model = item as PosterPackModel
     if (model.isSelected){
+        binding.rootLayout.background =AppCompatResources.getDrawable(BaseApplication.instance,R.drawable.ic_poster_pack_selected)
         binding.root.alpha =1F
     }else{
+      binding.rootLayout.background = null
       binding.root.alpha = 0.5F
     }
+    binding.tvTitle.text = model.tagsModel.tag
 
     binding.root.setOnClickListener {
       listener?.onItemClick(position,model,RecyclerViewActionType.BROWSE_ALL_POSTER_CAT_CLICKED.ordinal)
