@@ -177,21 +177,22 @@ class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>
       hideProgress()
       if (it.isSuccess()) {
         val result = it as? VerifyOtpResponse
-        if (result?.Result?.authTokens.isNullOrEmpty().not()) {
-          if (result?.Result?.authTokens?.size == 1) {
+        if (result?.Result?.authTokens.isNullOrEmpty().not() && result?.Result?.authTokens?.size!! >= 1) {
+          if (result.Result?.authTokens?.size == 1) {
             this.resultLogin = result.Result
             authTokenData()?.createAccessTokenAuth()
           } else {
             navigator?.startActivityFinish(
               MobileVerificationActivity::class.java,
               Bundle().apply {
-                putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, result?.Result)
+                putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, result.Result)
               })
           }
         } else {
           navigator?.startActivityFinish(
             RegistrationActivity::class.java,
-            args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) })
+            args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }
+          )
         }
       } else {
         binding?.wrongOtpErrorTv?.isVisible = true;
