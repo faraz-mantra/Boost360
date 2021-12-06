@@ -28,6 +28,7 @@ allprojects {
 }
 
 android {
+
     signingConfigs {
         config {
             keyAlias 'nfmanage'

@@ -1,19 +1,14 @@
-package com.boost.presignin.holders
+package com.boost.presignin.holder
 
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.View
-import android.widget.CompoundButton
-import androidx.core.content.ContextCompat
 import com.boost.presignin.R
 import com.boost.presignin.constant.RecyclerViewActionType
 import com.boost.presignin.databinding.ItemCategoryLayoutBinding
 import com.boost.presignin.model.category.CategoryDataModel
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewHolder
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
-import com.framework.extensions.invisible
-import com.framework.extensions.setTextColorCompat
-import com.framework.extensions.visible
 
 class CategoryRecyclerViewHolder constructor(binding: ItemCategoryLayoutBinding) :
   AppBaseRecyclerViewHolder<ItemCategoryLayoutBinding>(binding){
