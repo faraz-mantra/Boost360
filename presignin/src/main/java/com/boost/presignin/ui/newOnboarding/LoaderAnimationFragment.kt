@@ -13,34 +13,34 @@ import com.framework.models.BaseViewModel
 
 class LoaderAnimationFragment : AppBaseFragment<FragmentLoaderAnimationBinding, BaseViewModel>() {
 
-    companion object {
-        @JvmStatic
-        fun newInstance(bundle: Bundle? = null): LoaderAnimationFragment {
-            val fragment = LoaderAnimationFragment()
-            fragment.arguments = bundle
-            return fragment
-        }
+  companion object {
+    @JvmStatic
+    fun newInstance(bundle: Bundle? = null): LoaderAnimationFragment {
+      val fragment = LoaderAnimationFragment()
+      fragment.arguments = bundle
+      return fragment
     }
+  }
 
-    override fun getLayout(): Int {
-        return R.layout.fragment_loader_animation
-    }
+  override fun getLayout(): Int {
+    return R.layout.fragment_loader_animation
+  }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-       return BaseViewModel::class.java
-    }
+  override fun getViewModelClass(): Class<BaseViewModel> {
+    return BaseViewModel::class.java
+  }
 
-    override fun onCreateView() {
-        super.onCreateView()
-        setOnClickListeners()
-    }
+  override fun onCreateView() {
+    super.onCreateView()
+    setOnClickListeners()
+  }
 
-    private fun setOnClickListeners() {
-        binding?.tvPreviewWebsite?.setOnClickListener {
-            showShortToast(getString(R.string.coming_soon))
-        }
-        binding?.tvLaunchDashboard?.setOnClickListener {
-            showShortToast(getString(R.string.coming_soon))
-        }
+  private fun setOnClickListeners() {
+    binding?.tvPreviewWebsite?.setOnClickListener {
+      showShortToast(getString(R.string.coming_soon))
     }
+    binding?.tvLaunchDashboard?.setOnClickListener {
+      showShortToast(getString(R.string.coming_soon))
+    }
+  }
 }

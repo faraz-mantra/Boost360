@@ -31,274 +31,276 @@ import com.framework.utils.toArrayList
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 
-class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Binding, CategoryVideoModel>(),
-    RecyclerItemClickListener {
+class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Binding, CategoryVideoModel>(), RecyclerItemClickListener {
 
-    companion object {
-        @JvmStatic
-        fun newInstance(bundle: Bundle? = null): SetupMyWebsiteStep1Fragment {
-            val fragment = SetupMyWebsiteStep1Fragment()
-            fragment.arguments = bundle
-            return fragment
-        }
+  companion object {
+    @JvmStatic
+    fun newInstance(bundle: Bundle? = null): SetupMyWebsiteStep1Fragment {
+      val fragment = SetupMyWebsiteStep1Fragment()
+      fragment.arguments = bundle
+      return fragment
     }
+  }
 
-    private var noCatListAdapter: AppBaseRecyclerViewAdapter<CategoryDataModelOv2>?=null
-    private var notCatFoundList: ArrayList<CategoryDataModelOv2>?=null
-    private var apiCatResponse: ApiCategoryResponse?=null
-    private var selectedCat:CategoryDataModelOv2?=null
-    private var selectedCatSugg:CategorySuggestionUiModel?=null
-    private var categorylocalResponse: ResponseDataCategoryOv2?=null
-    private lateinit var baseAdapter: AppBaseRecyclerViewAdapter<CategoryDataModelOv2>
-    private var categoryList = ArrayList<CategoryDataModelOv2>()
-    private var apiCategoryList:ArrayList<CategorySuggestionUiModel>?=null
-    val noResultCat1UiTitle = "Do you sell products?"
-    var noResultCat1OriginalTitle:String?=null
+  private var noCatListAdapter: AppBaseRecyclerViewAdapter<CategoryDataModelOv2>? = null
+  private var notCatFoundList: ArrayList<CategoryDataModelOv2>? = null
+  private var apiCatResponse: ApiCategoryResponse? = null
+  private var selectedCat: CategoryDataModelOv2? = null
+  private var selectedCatSugg: CategorySuggestionUiModel? = null
+  private var categorylocalResponse: ResponseDataCategoryOv2? = null
+  private lateinit var baseAdapter: AppBaseRecyclerViewAdapter<CategoryDataModelOv2>
+  private var categoryList = ArrayList<CategoryDataModelOv2>()
+  private var apiCategoryList: ArrayList<CategorySuggestionUiModel>? = null
+  val noResultCat1UiTitle = "Do you sell products?"
+  var noResultCat1OriginalTitle: String? = null
 
-    val noResultCat2UiTitle="Do you provide services?"
-    var noResultCat2OriginalTitle:String?=null
+  val noResultCat2UiTitle = "Do you provide services?"
+  var noResultCat2OriginalTitle: String? = null
 
-    private val phoneNumber by lazy {
-        arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
-    }
-    private val whatsappConsent by lazy {
-        arguments?.getBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name)
-    }
-
-
-
-    override fun getLayout(): Int {
-      return R.layout.layout_set_up_my_website_step_1
-    }
-
-    override fun getViewModelClass(): Class<CategoryVideoModel> {
-        return CategoryVideoModel::class.java
-    }
-
-    override fun onCreateView() {
-        super.onCreateView()
-        setOnClickListeners()
-        WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-        baseAdapter = AppBaseRecyclerViewAdapter(baseActivity, ArrayList(), this)
-
-        binding?.autocompleteSearchCategory?.setOnFocusChangeListener { view, b ->
-            if (b){
-
-            }else{
-                binding?.layoutEtSugestion?.gone()
-                binding?.linearFeaturedCategories?.visible()
-            }
-
-        }
-
-        observeCategorySearch()
-
-        activity?.onBackPressedDispatcher?.addCallback(object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                CategoryDataModel.clearSelection()
-                baseActivity.finishAfterTransition()
-            }
-        })
-        binding?.rvCategories?.adapter = baseAdapter
-        binding?.rvCategories?.layoutManager = LinearLayoutManager(requireActivity())
-
-        viewModel?.getCategoriesOv2(requireContext())?.observeOnce(viewLifecycleOwner) {
-            if (it.error != null) return@observeOnce
-            categorylocalResponse = it as ResponseDataCategoryOv2
-            noResultCat1OriginalTitle= categorylocalResponse?.data?.find { it.experience_code=="RTL" }?.category_Name
-            noResultCat2OriginalTitle= categorylocalResponse?.data?.find { it.experience_code=="SVC" }?.category_Name
-
-            loadCategoryFromApi()
-
-            baseAdapter.addItems(categoryList.apply {
-                clear()
-                if (CategoryDataModelOv2.getSavedStateCategory() != null) {
-                    val data = categorylocalResponse?.data!!
-                    addAll(data)
-                } else
-                    addAll(categorylocalResponse?.data!!)
-            })
-        }
-
-       /* binding?.confirmButton?.setOnClickListener {
-            WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_CLICK, CATEGORY, NO_EVENT_VALUE)
-            CategoryDataModel.saveCategoryState(category)
-            addFragmentReplace(
-                com.framework.R.id.container,
-                BusinessDetailsFragment.newInstance(
-                    CategoryFloatsRequest(
-                        categoryDataModel = category, userBusinessMobile = phoneNumber,
-                        requestProfile = CreateProfileRequest(ProfileProperties = BusinessInfoModel(userMobile = phoneNumber))
-                    )
-                ), true
-            )
-        }*/
-
-    }
-
-    private fun observeCategorySearch() {
-        binding?.autocompleteSearchCategory?.addTextChangedListener {
-            if (apiCategoryList!=null){
-                binding?.layoutEtSugestion?.visible()
-                binding?.linearFeaturedCategories?.gone()
-                val filterdList = apiCategoryList?.filter { category->category.category.contains(it.toString(),ignoreCase = true)}!!.toArrayList()
-                filterdList.forEach { filterdCat->
-                    filterdCat.searchKeyword =it.toString()
-                }
-                if (filterdList.isEmpty()){
-                    handleSuggestionNoResult()
-                }else{
-                    binding?.tvNoResultFound?.gone()
-                    binding?.includeNoSearchResultFound?.root?.gone()
-                }
-
-                val adapter = AppBaseRecyclerViewAdapter<CategorySuggestionUiModel>(requireActivity() as BaseActivity<*, *>
-                    ,filterdList,this)
-                binding?.rvCatSuggestion?.adapter = adapter
-                binding?.rvCatSuggestion?.layoutManager = LinearLayoutManager(requireActivity())
-                binding?.rvCatSuggestion?.showDecoration()
-            }
-        }
-    }
-
-    private fun handleSuggestionNoResult() {
-        binding?.tvNoResultFound?.visible()
-        binding?.includeNoSearchResultFound?.root?.visible()
-        notCatFoundList = ArrayList<CategoryDataModelOv2>()
-        notCatFoundList?.add(
-            categorylocalResponse?.data?.find { it.experience_code=="RTL" }?.apply {
-                category_Name=noResultCat1UiTitle
-            }!!
-        )
-
-        notCatFoundList?.add(
-            categorylocalResponse?.data?.find { it.experience_code=="SVC" }?.apply {
-                category_Name=noResultCat2UiTitle
-            }!!
-        )
-
-       noCatListAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>
-            ,notCatFoundList!!,this)
-        binding?.includeNoSearchResultFound?.rvCategories?.adapter = noCatListAdapter
-        binding?.includeNoSearchResultFound?.rvCategories?.layoutManager = LinearLayoutManager(requireActivity())
+  private val phoneNumber by lazy {
+    arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
+  }
+  private val whatsappConsent by lazy {
+    arguments?.getBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name)
+  }
 
 
-    }
+  override fun getLayout(): Int {
+    return R.layout.layout_set_up_my_website_step_1
+  }
 
-    private fun loadCategoryFromApi() {
-        showProgress()
-        viewModel?.getCategoriesFromApi()?.observe(viewLifecycleOwner,{
+  override fun getViewModelClass(): Class<CategoryVideoModel> {
+    return CategoryVideoModel::class.java
+  }
 
-            apiCategoryList = ArrayList()
-            if (it.isSuccess()){
-              apiCatResponse =   it as ApiCategoryResponse
-                it.Data.firstOrNull()?.categories?.forEach { cat->
-                    cat.appexperiencecodedetails.forEach { appExpDet->
-                      val subCat =  categorylocalResponse!!.data!!.find { localCat->localCat.experience_code==appExpDet.name }!!.category_Name!!
-                        apiCategoryList?.add(CategorySuggestionUiModel(cat.name,subCat,appExpDet.name,""))
-                    }
-                }
+  override fun onCreateView() {
+    super.onCreateView()
+    setOnClickListeners()
+    WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
+    baseAdapter = AppBaseRecyclerViewAdapter(baseActivity, ArrayList(), this)
 
-            }
-            hideProgress()
-        })
-    }
+    binding?.autocompleteSearchCategory?.setOnFocusChangeListener { view, b ->
+      if (b) {
 
-    private fun setOnClickListeners() {
-        binding?.tvNextStep1?.setOnClickListener {
-          goToNextStep()
-        }
-        binding?.includeCatSuggSelected?.root?.setOnClickListener {
-            binding?.includeCatSuggSelected?.root?.gone()
-            binding?.autocompleteSearchCategory?.visible()
-            binding?.layoutEtSugestion?.visible()
-
-        }
-    }
-
-    override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        when (actionType) {
-            RecyclerViewActionType.CATEGORY_ITEM_CLICKED.ordinal -> {
-               setSelectedCat(item as CategoryDataModelOv2)
-                for (listItem in categoryList) {
-                    listItem.isSelected = (listItem.category_key == selectedCat?.category_key)
-                }
-                binding?.rvCategories?.post { baseAdapter.notifyDataSetChanged() }
-
-                if (notCatFoundList!=null){
-                    for (listItem in notCatFoundList!!) {
-                        listItem.isSelected = (listItem.category_key == selectedCat?.category_key)
-                    }
-                    noCatListAdapter?.notifyDataSetChanged()
-                }
-
-               // if (categoryList.filter { it.isSelected }.isNullOrEmpty()) binding?.confirmButton?.gone() else binding?.confirmButton?.visible()
-            }
-
-            RecyclerViewActionType.CATEGORY_SUGGESTION_CLICKED.ordinal->{
-                item as CategorySuggestionUiModel
-                selectedCatSugg = item
-                setSelectedCat(categoryList.find { it.experience_code==item.appExpCode }!!)
-                showCatSugesstionSelected()
-            }
-        }
-
-    }
-
-    private fun showCatSugesstionSelected() {
-        binding?.includeCatSuggSelected?.root?.visible()
+      } else {
         binding?.layoutEtSugestion?.gone()
-        binding?.includeCatSuggSelected?.tvCatSelected?.text = selectedCatSugg?.category
-        binding?.includeCatSuggSelected?.tvSubcat?.text = selectedCatSugg?.subCategory
+        binding?.linearFeaturedCategories?.visible()
+      }
 
     }
 
-    private fun goToNextStep() {
-        var mobilePreview: String? = null
+    observeCategorySearch()
 
-        selectedCat?.experience_code
+    activity?.onBackPressedDispatcher?.addCallback(object : OnBackPressedCallback(true) {
+      override fun handleOnBackPressed() {
+        CategoryDataModel.clearSelection()
+        baseActivity.finishAfterTransition()
+      }
+    })
+    binding?.rvCategories?.adapter = baseAdapter
+    binding?.rvCategories?.layoutManager = LinearLayoutManager(requireActivity())
 
-        var desktopPreview: String? = null
+    viewModel?.getCategoriesOv2(requireContext())?.observeOnce(viewLifecycleOwner) {
+      if (it.error != null) return@observeOnce
+      categorylocalResponse = it as ResponseDataCategoryOv2
+      noResultCat1OriginalTitle = categorylocalResponse?.data?.find { it.experience_code == "RTL" }?.category_Name
+      noResultCat2OriginalTitle = categorylocalResponse?.data?.find { it.experience_code == "SVC" }?.category_Name
 
-        loop@ for (cat in apiCatResponse?.Data?.firstOrNull()?.categories!!) {
+      loadCategoryFromApi()
 
-            mobilePreview = cat.appexperiencecodedetails.find { expCodeDet ->
-                expCodeDet.name == selectedCat?.experience_code || expCodeDet.name == selectedCatSugg?.appExpCode
-            }?.mobilepreview?.url
-            if (mobilePreview != null) break@loop
-        }
-        loop@ for (cat in apiCatResponse?.Data?.firstOrNull()?.categories!!) {
-            desktopPreview = cat.appexperiencecodedetails.find { expCodeDet ->
-                expCodeDet.name == selectedCat?.experience_code || expCodeDet.name == selectedCatSugg?.appExpCode
-            }?.desktoppreview?.url
-            if (desktopPreview != null) break@loop
-
-        }
-
-
-        if (selectedCat!=null){
-            if (selectedCat?.category_Name==noResultCat1UiTitle){
-                selectedCat?.category_Name = noResultCat1OriginalTitle
-            }
-            if (selectedCat?.category_Name==noResultCat2UiTitle){
-                selectedCat?.category_Name = noResultCat2OriginalTitle
-            }
-        }
-
-        addFragment(R.id.inner_container,BusinessCategoryPreviewFragment.newInstance(Bundle()
-            .apply
-            {
-                putString(IntentConstant.DESKTOP_PREVIEW.name,desktopPreview)
-                putString(IntentConstant.MOBILE_PREVIEW.name,mobilePreview)
-                putString(IntentConstant.EXTRA_PHONE_NUMBER.name,phoneNumber)
-                putString(IntentConstant.CATEGORY_SUGG_UI.name,Gson().toJson(selectedCatSugg))
-                putString(IntentConstant.CATEGORY_DATA.name,Gson().toJson(selectedCat))
-                putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name,whatsappConsent==true)
-            }),true)
+      baseAdapter.addItems(categoryList.apply {
+        clear()
+        if (CategoryDataModelOv2.getSavedStateCategory() != null) {
+          val data = categorylocalResponse?.data!!
+          addAll(data)
+        } else
+          addAll(categorylocalResponse?.data!!)
+      })
     }
 
-    fun setSelectedCat(cat:CategoryDataModelOv2){
-        selectedCat = cat
-        binding?.tvNextStep1?.isEnabled = true
+    /* binding?.confirmButton?.setOnClickListener {
+         WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_CLICK, CATEGORY, NO_EVENT_VALUE)
+         CategoryDataModel.saveCategoryState(category)
+         addFragmentReplace(
+             com.framework.R.id.container,
+             BusinessDetailsFragment.newInstance(
+                 CategoryFloatsRequest(
+                     categoryDataModel = category, userBusinessMobile = phoneNumber,
+                     requestProfile = CreateProfileRequest(ProfileProperties = BusinessInfoModel(userMobile = phoneNumber))
+                 )
+             ), true
+         )
+     }*/
+
+  }
+
+  private fun observeCategorySearch() {
+    binding?.autocompleteSearchCategory?.addTextChangedListener {
+      if (apiCategoryList != null) {
+        binding?.layoutEtSugestion?.visible()
+        binding?.linearFeaturedCategories?.gone()
+        val filterdList = apiCategoryList?.filter { category -> category.category.contains(it.toString(), ignoreCase = true) }!!.toArrayList()
+        filterdList.forEach { filterdCat ->
+          filterdCat.searchKeyword = it.toString()
+        }
+        if (filterdList.isEmpty()) {
+          handleSuggestionNoResult()
+        } else {
+          binding?.tvNoResultFound?.gone()
+          binding?.includeNoSearchResultFound?.root?.gone()
+        }
+
+        val adapter = AppBaseRecyclerViewAdapter<CategorySuggestionUiModel>(
+          requireActivity() as BaseActivity<*, *>, filterdList, this
+        )
+        binding?.rvCatSuggestion?.adapter = adapter
+        binding?.rvCatSuggestion?.layoutManager = LinearLayoutManager(requireActivity())
+        binding?.rvCatSuggestion?.showDecoration()
+      }
     }
+  }
+
+  private fun handleSuggestionNoResult() {
+    binding?.tvNoResultFound?.visible()
+    binding?.includeNoSearchResultFound?.root?.visible()
+    notCatFoundList = ArrayList<CategoryDataModelOv2>()
+    notCatFoundList?.add(
+      categorylocalResponse?.data?.find { it.experience_code == "RTL" }?.apply {
+        category_Name = noResultCat1UiTitle
+      }!!
+    )
+
+    notCatFoundList?.add(
+      categorylocalResponse?.data?.find { it.experience_code == "SVC" }?.apply {
+        category_Name = noResultCat2UiTitle
+      }!!
+    )
+
+    noCatListAdapter = AppBaseRecyclerViewAdapter(
+      requireActivity() as BaseActivity<*, *>, notCatFoundList!!, this
+    )
+    binding?.includeNoSearchResultFound?.rvCategories?.adapter = noCatListAdapter
+    binding?.includeNoSearchResultFound?.rvCategories?.layoutManager = LinearLayoutManager(requireActivity())
+
+
+  }
+
+  private fun loadCategoryFromApi() {
+    showProgress()
+    viewModel?.getCategoriesFromApi()?.observe(viewLifecycleOwner, {
+
+      apiCategoryList = ArrayList()
+      if (it.isSuccess()) {
+        apiCatResponse = it as ApiCategoryResponse
+        it.Data.firstOrNull()?.categories?.forEach { cat ->
+          cat.appexperiencecodedetails.forEach { appExpDet ->
+            val subCat = categorylocalResponse!!.data!!.find { localCat -> localCat.experience_code == appExpDet.name }!!.category_Name!!
+            apiCategoryList?.add(CategorySuggestionUiModel(cat.name, subCat, appExpDet.name, ""))
+          }
+        }
+
+      }
+      hideProgress()
+    })
+  }
+
+  private fun setOnClickListeners() {
+    binding?.tvNextStep1?.setOnClickListener {
+      goToNextStep()
+    }
+    binding?.includeCatSuggSelected?.root?.setOnClickListener {
+      binding?.includeCatSuggSelected?.root?.gone()
+      binding?.autocompleteSearchCategory?.visible()
+      binding?.layoutEtSugestion?.visible()
+
+    }
+  }
+
+  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+    when (actionType) {
+      RecyclerViewActionType.CATEGORY_ITEM_CLICKED.ordinal -> {
+        setSelectedCat(item as CategoryDataModelOv2)
+        for (listItem in categoryList) {
+          listItem.isSelected = (listItem.category_key == selectedCat?.category_key)
+        }
+        binding?.rvCategories?.post { baseAdapter.notifyDataSetChanged() }
+
+        if (notCatFoundList != null) {
+          for (listItem in notCatFoundList!!) {
+            listItem.isSelected = (listItem.category_key == selectedCat?.category_key)
+          }
+          noCatListAdapter?.notifyDataSetChanged()
+        }
+
+        // if (categoryList.filter { it.isSelected }.isNullOrEmpty()) binding?.confirmButton?.gone() else binding?.confirmButton?.visible()
+      }
+
+      RecyclerViewActionType.CATEGORY_SUGGESTION_CLICKED.ordinal -> {
+        item as CategorySuggestionUiModel
+        selectedCatSugg = item
+        setSelectedCat(categoryList.find { it.experience_code == item.appExpCode }!!)
+        showCatSugesstionSelected()
+      }
+    }
+
+  }
+
+  private fun showCatSugesstionSelected() {
+    binding?.includeCatSuggSelected?.root?.visible()
+    binding?.layoutEtSugestion?.gone()
+    binding?.includeCatSuggSelected?.tvCatSelected?.text = selectedCatSugg?.category
+    binding?.includeCatSuggSelected?.tvSubcat?.text = selectedCatSugg?.subCategory
+
+  }
+
+  private fun goToNextStep() {
+    var mobilePreview: String? = null
+
+    selectedCat?.experience_code
+
+    var desktopPreview: String? = null
+
+    loop@ for (cat in apiCatResponse?.Data?.firstOrNull()?.categories!!) {
+
+      mobilePreview = cat.appexperiencecodedetails.find { expCodeDet ->
+        expCodeDet.name == selectedCat?.experience_code || expCodeDet.name == selectedCatSugg?.appExpCode
+      }?.mobilepreview?.url
+      if (mobilePreview != null) break@loop
+    }
+    loop@ for (cat in apiCatResponse?.Data?.firstOrNull()?.categories!!) {
+      desktopPreview = cat.appexperiencecodedetails.find { expCodeDet ->
+        expCodeDet.name == selectedCat?.experience_code || expCodeDet.name == selectedCatSugg?.appExpCode
+      }?.desktoppreview?.url
+      if (desktopPreview != null) break@loop
+
+    }
+
+
+    if (selectedCat != null) {
+      if (selectedCat?.category_Name == noResultCat1UiTitle) {
+        selectedCat?.category_Name = noResultCat1OriginalTitle
+      }
+      if (selectedCat?.category_Name == noResultCat2UiTitle) {
+        selectedCat?.category_Name = noResultCat2OriginalTitle
+      }
+    }
+
+    addFragment(
+      R.id.inner_container, BusinessCategoryPreviewFragment.newInstance(Bundle()
+        .apply
+        {
+          putString(IntentConstant.DESKTOP_PREVIEW.name, desktopPreview)
+          putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
+          putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+          putString(IntentConstant.CATEGORY_SUGG_UI.name, Gson().toJson(selectedCatSugg))
+          putString(IntentConstant.CATEGORY_DATA.name, Gson().toJson(selectedCat))
+          putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent == true)
+        }), true
+    )
+  }
+
+  fun setSelectedCat(cat: CategoryDataModelOv2) {
+    selectedCat = cat
+    binding?.tvNextStep1?.isEnabled = true
+  }
 }
