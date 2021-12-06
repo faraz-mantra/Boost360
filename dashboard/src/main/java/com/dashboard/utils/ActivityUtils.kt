@@ -23,6 +23,7 @@ import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
 import com.festive.poster.ui.festivePoster.FestivePosterContainerActivity
+import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
 import com.framework.analytics.SentryController
 import com.framework.pref.*
 import com.framework.webengageconstant.*
@@ -1026,6 +1027,18 @@ fun Context.startHelpSupportVideoActivity(supportType:String){
     i.putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name, supportType)
     this.startActivity(i)
   } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startPromotionUpdates() {
+  try {
+//    WebEngageController.trackEvent(text, CLICK, TO_BE_ADDED)
+    val posterIntent = Intent(this,PromoUpdatesActivity::class.java)
+
+    startActivity(posterIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
 }

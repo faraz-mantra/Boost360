@@ -838,6 +838,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       QuickActionItem.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(session)
       QuickActionItem.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
       QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startTestimonial(session, true)
+      QuickActionItem.QuickActionType.POST_PROMO_UPDATE_TEXT_TAG -> baseActivity.startPromotionUpdates()
+
       QuickActionItem.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCustomPage(session, true)
       QuickActionItem.QuickActionType.ADD_STAFF_PROFILE -> baseActivity.startAddStaff(session)
       QuickActionItem.QuickActionType.LIST_SERVICES,

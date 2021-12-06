@@ -9,6 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.databinding.FragmentPromoLandingPageBinding
+import com.festive.poster.models.PosterPackModel
 import com.festive.poster.models.promoModele.SocialConnModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.framework.base.BaseActivity
@@ -17,7 +18,9 @@ import com.framework.utils.setColorFilter2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding, BaseViewModel>() {
+class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding, BaseViewModel>(),TodaysPickFragment.Callbacks {
+
+    val browseTabFragment =BrowseTabFragment.newInstance()
 
     override fun getLayout(): Int {
         return R.layout.fragment_promo_landing_page
@@ -71,8 +74,8 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
 
     private fun setupViewPager() {
         val fragmentList = arrayListOf(
-            TodaysPickFragment.newInstance(),
-            BrowseTabFragment.newInstance(),
+            TodaysPickFragment.newInstance(callbacks = this),
+            browseTabFragment,
             CreatePostFragment.newInstance()
         )
         val viewPagerAdapter = TabAdapter(fragmentList, this)
@@ -133,5 +136,9 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
         }.attach()
 
 
+    }
+
+    override fun onDataLoaded(data: ArrayList<PosterPackModel>) {
+        browseTabFragment.setRealData(data)
     }
 }

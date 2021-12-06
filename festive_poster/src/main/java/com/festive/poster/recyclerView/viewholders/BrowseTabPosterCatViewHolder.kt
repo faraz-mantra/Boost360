@@ -25,6 +25,8 @@ class BrowseTabPosterCatViewHolder(binding: ListItemBrowseTabTemplateCatBinding)
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     val model = item as PosterPackModel
 
+    binding.tvTitle.text=model.tagsModel.name
+    binding.tvSize.text = "(${model.posterList?.size})"
     binding.root.setOnClickListener {
       listener?.onItemClick(position,model,RecyclerViewActionType.BROWSE_TAB_POSTER_CAT_CLICKED.ordinal)
     }

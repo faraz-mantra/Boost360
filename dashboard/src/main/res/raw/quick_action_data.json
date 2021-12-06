@@ -25,6 +25,10 @@
           "title": "Add patient\ntestimonial"
         },
         {
+          "quickActionType": "POST_PROMO_UPDATE_TEXT_TAG",
+          "title": "Post promo\nupdate"
+        },
+        {
           "quickActionType": "ADD_SERVICE",
           "title": "Add a\nservice"
         },
@@ -58,6 +62,10 @@
           "quickActionType": "ADD_TESTIMONIAL",
           "title": "Add patient\ntestimonial"
         },
+        {
+          "quickActionType": "POST_PROMO_UPDATE_TEXT_TAG",
+          "title": "Post promo\nupdate"
+        },
 //        {
 //          "quickActionType": "ADD_FACULTY_MEMBER",
 //          "title": "Add a\ndoctor"
@@ -90,6 +98,10 @@
         {
           "quickActionType": "ADD_TESTIMONIAL",
           "title": "Add customer\ntestimonial"
+        },
+        {
+          "quickActionType": "POST_PROMO_UPDATE_TEXT_TAG",
+          "title": "Post promo\nupdate"
         },
         //        {
         //          "quickActionType": "ADD_FACULTY_MEMBER",
@@ -128,6 +140,10 @@
         {
           "quickActionType": "ADD_TESTIMONIAL",
           "title": "Add customer\ntestimonial"
+        },
+        {
+          "quickActionType": "POST_PROMO_UPDATE_TEXT_TAG",
+          "title": "Post promo\nupdate"
         },
         //        {
         //          "quickActionType": "ADD_FACULTY_MEMBER",
@@ -177,6 +193,10 @@
           "title": "Add customer\ntestimonial"
         },
         {
+          "quickActionType": "POST_PROMO_UPDATE_TEXT_TAG",
+          "title": "Post promo\nupdate"
+        },
+        {
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
         }
@@ -208,6 +228,10 @@
         {
           "quickActionType": "ADD_TESTIMONIAL",
           "title": "Add customer\ntestimonial"
+        },
+        {
+          "quickActionType": "POST_PROMO_UPDATE_TEXT_TAG",
+          "title": "Post promo\nupdate"
         },
         {
           "quickActionType": "ADD_TEAM_MEMBER",
@@ -291,6 +315,10 @@
           "isNew": true
         },
         {
+          "quickActionType": "POST_PROMO_UPDATE_TEXT_TAG",
+          "title": "Post promo\nupdate"
+        },
+        {
           "quickActionType": "ADD_NEARBY_ATTRACTION",
           "title": "Add nearby\nattraction"
         },
@@ -325,6 +353,10 @@
           "title": "Add customer\ntestimonial"
         },
         {
+          "quickActionType": "POST_PROMO_UPDATE_TEXT_TAG",
+          "title": "Post promo\nupdate"
+        },
+        {
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
         }
@@ -348,6 +380,10 @@
         {
           "quickActionType": "ADD_TESTIMONIAL",
           "title": "Add customer\ntestimonial"
+        },
+        {
+          "quickActionType": "POST_PROMO_UPDATE_TEXT_TAG",
+          "title": "Post promo\nupdate"
         },
         //        {
         //          "quickActionType": "ADD_FACULTY_MEMBER",
@@ -395,6 +431,10 @@
         {
           "quickActionType": "ADD_TESTIMONIAL",
           "title": "Add customer\ntestimonial"
+        },
+        {
+          "quickActionType": "POST_PROMO_UPDATE_TEXT_TAG",
+          "title": "Post promo\nupdate"
         },
         {
           "quickActionType": "ADD_CUSTOM_PAGE",

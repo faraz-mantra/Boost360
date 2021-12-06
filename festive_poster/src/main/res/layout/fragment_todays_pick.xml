@@ -29,6 +29,7 @@
                 android:layout_marginBottom="@dimen/size_16"
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/size_16"
+                android:id="@+id/card_browse_all_template"
                 android:layout_marginHorizontal="@dimen/size_24"
                 android:layout_height="83dp">
 
