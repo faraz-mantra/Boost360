@@ -201,8 +201,8 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
       if (it.isSuccess()) {
         val result = it as? VerifyOtpResponse
         binding?.tvResendOtpIn?.gone()
-        if (result?.Result?.authTokens.isNullOrEmpty()) {
-          this.resultLogin = result?.Result
+        if (result?.Result?.authTokens.isNullOrEmpty().not() && result?.Result?.authTokens?.size!! >= 1) {
+          this.resultLogin = result.Result
           loginId = resultLogin?.loginId
           apiWhatsappOptin()
         } else {
