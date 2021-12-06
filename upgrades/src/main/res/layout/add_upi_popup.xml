@@ -34,7 +34,7 @@
       app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-      android:id="@+id/upi_popup_value"
+        android:id="@+id/upi_popup_value"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:background="@drawable/edittext_bottom_line_bg"

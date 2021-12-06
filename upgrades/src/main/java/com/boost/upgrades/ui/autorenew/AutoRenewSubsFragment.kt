@@ -19,7 +19,7 @@ import com.boost.upgrades.utils.Constants
 import kotlinx.android.synthetic.main.auto_renew_fragment.*
 
 
-class AutoRenewSubsFragment : BaseFragment() {
+class AutoRenewSubsFragment : BaseFragment("MarketPlaceAutoRenewSubsFragment") {
 
   lateinit var root: View
 

@@ -68,7 +68,9 @@
                 app:textType="BODY_2" />
 
               <com.framework.views.customViews.CustomTextView
-                android:id="@+id/tvOrderAmount"
+                  android:tag="com.userexperior.ueSecureView"
+
+                  android:id="@+id/tvOrderAmount"
                 style="@style/match_wrap"
                 android:layout_gravity="end"
                 android:gravity="end"
@@ -83,7 +85,9 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/booking_date"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/booking_date"
               style="@style/wrap_wrap"
               android:layout_marginStart="@dimen/size_16"
               android:layout_marginTop="@dimen/size_18"
@@ -124,7 +128,9 @@
                     app:textType="BODY_1" />
 
                   <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tvPaymentMode"
+                      android:tag="com.userexperior.ueSecureView"
+
+                      android:id="@+id/tvPaymentMode"
                     style="@style/wrap_wrap"
                     android:layout_marginStart="@dimen/size_4"
                     android:ellipsize="end"
@@ -152,7 +158,9 @@
                     app:textType="BODY_1" />
 
                   <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tvStatus"
+                      android:tag="com.userexperior.ueSecureView"
+
+                      android:id="@+id/tvStatus"
                     style="@style/wrap_wrap"
                     android:layout_marginStart="@dimen/size_4"
                     android:ellipsize="end"
@@ -221,7 +229,9 @@
               app:textType="BODY_1" />
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/tvCustomerName"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/tvCustomerName"
               style="@style/wrap_wrap"
               android:layout_marginTop="@dimen/size_6"
               android:includeFontPadding="false"
@@ -232,7 +242,9 @@
               tools:text="Mr, Sanghmitra Sharma" />
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/tvCustomerAddress"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/tvCustomerAddress"
               style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_1"
               android:includeFontPadding="false"
@@ -251,7 +263,9 @@
               android:weightSum="2">
 
               <com.framework.views.customViews.CustomTextView
-                android:id="@+id/tvCustomerContactNumber"
+                  android:tag="com.userexperior.ueSecureView"
+
+                  android:id="@+id/tvCustomerContactNumber"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
@@ -304,7 +318,9 @@
               tools:ignore="RtlSymmetry" />
 
             <com.framework.views.viewgroups.BaseRecyclerView
-              android:id="@+id/recyclerViewBookingDetails"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/recyclerViewBookingDetails"
               style="@style/match_wrap"
               android:overScrollMode="never"
               android:paddingBottom="@dimen/size_16"
@@ -349,7 +365,9 @@
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvTotalOrderAmount"
-                style="@style/wrap_wrap"
+                  android:tag="com.userexperior.ueSecureView"
+
+                  style="@style/wrap_wrap"
                 android:layout_marginTop="@dimen/size_6"
                 android:textColor="@color/warm_grey_10"
                 app:fontFamily="@font/bold"
@@ -461,7 +479,9 @@
               app:textType="OVERLINE" />
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/time_elapsed"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/time_elapsed"
               style="@style/wrap_wrap"
               android:drawableStart="@drawable/ic_access_time"
               android:drawablePadding="@dimen/size_3"

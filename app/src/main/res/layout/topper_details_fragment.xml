@@ -54,7 +54,9 @@
             android:background="@drawable/ic_image_placeholder">
 
             <ImageView
-              android:id="@+id/toppers_profile_image"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/toppers_profile_image"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:scaleType="centerCrop"
@@ -186,7 +188,9 @@
             android:background="@drawable/ic_image_placeholder">
 
             <ImageView
-              android:id="@+id/topper_testimonial_image"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/topper_testimonial_image"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:scaleType="centerCrop"

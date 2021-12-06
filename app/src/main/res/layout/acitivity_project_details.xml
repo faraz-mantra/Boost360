@@ -244,7 +244,9 @@
         android:background="@drawable/dotted_line" />
 
       <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/image_recycler"
+          android:tag="com.userexperior.ueSecureView"
+
+          android:id="@+id/image_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"

@@ -80,43 +80,43 @@ android {
     flavorDimensions "default"
     productFlavors {
 
-        parttwo {
-            versionName "4.5.4"
-            applicationId "com.sibername"
-            dimension "default"
-        }
-        partthree {
-            versionName "1.0.6"
-            applicationId "com.kitsune.biz"
-            dimension "default"
-        }
-        partfour {
-            versionName "1.1.0"
-            applicationId "com.digitalseoz"
-            dimension "default"
-        }
-        partfive {
-            versionName "1.0.4"
-            applicationId "com.capture"
-            dimension "default"
-        }
-        partsix {
-            versionName "1.0.5"
-            applicationId "com.trivone.assist"
-            dimension "default"
-        }
-        partseven {
-            versionName "1.0.5"
-            applicationId "com.sukere"
-            dimension "default"
-        }
-
-        nowfloats_us {
-            versionName "1.0.11"
-            applicationId "com.redtim"
-            versionCode 2018070028
-            dimension "default"
-        }
+//        parttwo {
+//            versionName "4.5.4"
+//            applicationId "com.sibername"
+//            dimension "default"
+//        }
+//        partthree {
+//            versionName "1.0.6"
+//            applicationId "com.kitsune.biz"
+//            dimension "default"
+//        }
+//        partfour {
+//            versionName "1.1.0"
+//            applicationId "com.digitalseoz"
+//            dimension "default"
+//        }
+//        partfive {
+//            versionName "1.0.4"
+//            applicationId "com.capture"
+//            dimension "default"
+//        }
+//        partsix {
+//            versionName "1.0.5"
+//            applicationId "com.trivone.assist"
+//            dimension "default"
+//        }
+//        partseven {
+//            versionName "1.0.5"
+//            applicationId "com.sukere"
+//            dimension "default"
+//        }
+//
+//        nowfloats_us {
+//            versionName "1.0.11"
+//            applicationId "com.redtim"
+//            versionCode 2018070028
+//            dimension "default"
+//        }
         partone {
             versionName "6.0.13"
             applicationId "com.biz2.nowfloats"
@@ -127,6 +127,7 @@ android {
             buildConfigField "String", "GOOGLE_SERVER_CLIENT_SECRET", '"APvjD8ABZg5c8e-VeHBi3AAG"'
             buildConfigField "String", "RAZORPAY_KEY", '"rzp_live_NsMLSX2HTaiEC9"'
             buildConfigField "String", "RAZORPAY_SECREAT", '"Gfq8pQyFbu5BOoY5SeT6UuQk"'
+            buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
         }
     }
     packagingOptions {

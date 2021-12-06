@@ -134,4 +134,9 @@ class UPIPopUpFragement : DialogFragment() {
   fun clearData() {
     upi_popup_value.text.clear()
   }
+  override fun onResume() {
+    super.onResume()
+//    UserExperiorController.startScreen("MarketPlaceUPIPopUpFragement")
+
+  }
 }
