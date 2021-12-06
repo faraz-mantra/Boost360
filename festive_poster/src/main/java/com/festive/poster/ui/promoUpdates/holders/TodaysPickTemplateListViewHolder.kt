@@ -9,12 +9,13 @@ import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.framework.base.BaseActivity
 import com.google.android.material.tabs.TabLayoutMediator
 
-class TodaysPickTemplateViewHolder(binding: ListItemTodaysPickTemplateBinding):
+class TodaysPickTemplateListViewHolder(binding: ListItemTodaysPickTemplateBinding):
     AppBaseRecyclerViewHolder<ListItemTodaysPickTemplateBinding>(binding) {
 
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as PosterPackModel
+        binding.tvCatTitle.text = model.tagsModel.name
         model.posterList?.let {
             val adapter = AppBaseRecyclerViewAdapter(binding.root.context as BaseActivity<*, *>, it)
             binding.vpTemplate.adapter = adapter

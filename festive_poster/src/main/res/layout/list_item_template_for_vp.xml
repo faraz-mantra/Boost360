@@ -34,6 +34,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.framework.views.customViews.CustomImageView
+                        android:id="@+id/iv_svg"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@color/colorPrimary" />

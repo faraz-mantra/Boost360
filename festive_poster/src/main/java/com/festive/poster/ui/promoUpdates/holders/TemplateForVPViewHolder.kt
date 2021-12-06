@@ -7,6 +7,7 @@ import com.festive.poster.models.promoModele.TemplateModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.ui.promoUpdates.edit_post.EditPostActivity
+import com.festive.poster.utils.SvgUtils
 
 class TemplateForVPViewHolder(binding: ListItemTemplateForVpBinding):
     AppBaseRecyclerViewHolder<ListItemTemplateForVpBinding>(binding) {
@@ -14,6 +15,7 @@ class TemplateForVPViewHolder(binding: ListItemTemplateForVpBinding):
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as PosterModel
+        SvgUtils.loadImage(model.variants.firstOrNull()?.svgUrl!!, binding.ivSvg, model.keys,model.isPurchased)
         binding.btnEdit.setOnClickListener {
             binding.root.context.startActivity(Intent(binding.root.context, EditPostActivity::class.java))
         }

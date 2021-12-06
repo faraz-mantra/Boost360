@@ -8,7 +8,7 @@ import com.festive.poster.recyclerView.viewholders.*
 import com.festive.poster.ui.promoUpdates.holders.SoicalConnViewHolder
 import com.festive.poster.ui.promoUpdates.holders.TemplateForRVViewHolder
 import com.festive.poster.ui.promoUpdates.holders.TemplateForVPViewHolder
-import com.festive.poster.ui.promoUpdates.holders.TodaysPickTemplateViewHolder
+import com.festive.poster.ui.promoUpdates.holders.TodaysPickTemplateListViewHolder
 import com.framework.base.BaseActivity
 import java.util.*
 import kotlin.collections.ArrayList
@@ -28,7 +28,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.POSTER->PosterViewHolder(binding as ListItemPosterBinding)
       RecyclerViewItemType.POSTER_PACK_PURCHASED->PosterPackPurchasedViewHolder(binding as ListItemPurchasedPosterPackBinding) // Not currently used
       RecyclerViewItemType.POSTER_SHARE-> PosterShareViewHolder(binding as ListItemPosterShareBinding)
-      RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW-> TodaysPickTemplateViewHolder(binding as ListItemTodaysPickTemplateBinding)
+      RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW-> TodaysPickTemplateListViewHolder(binding as ListItemTodaysPickTemplateBinding)
       RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP-> TemplateForVPViewHolder(binding as ListItemTemplateForVpBinding)
       RecyclerViewItemType.TEMPLATE_VIEW_FOR_RV-> TemplateForRVViewHolder(binding as ListItemTemplateForRvBinding)
 
