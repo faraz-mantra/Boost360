@@ -1,273 +1,272 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_F5F8FD">
+
+    <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_above="@+id/tv_next_step_1"
+      app:layout_constraintBottom_toTopOf="@+id/tv_next_step_1">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white_F5F8FD">
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_above="@+id/tv_next_step_1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toTopOf="@+id/tv_next_step_1">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_28"
-                    android:fontFamily="@font/inter_bold"
-                    android:gravity="start"
-                    android:text="@string/how_will_you_describe_your_business"
-                    android:textAlignment="gravity"
-                    android:textColor="@color/black_4a4a4a"
-                    android:textSize="@dimen/text_16"
-                    app:layout_constraintEnd_toStartOf="@id/endGuide"
-                    app:layout_constraintStart_toEndOf="@id/startGuide"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tv_subtitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_4"
-                    android:fontFamily="@font/inter_regular"
-                    android:gravity="start"
-                    android:text="@string/this_will_help_us_understand_your_business_and_suggest_useful_features"
-                    android:textAlignment="gravity"
-                    android:textColor="@color/black_2A2A2A"
-                    android:textSize="@dimen/text_13"
-                    app:layout_constraintEnd_toStartOf="@id/endGuide"
-                    app:layout_constraintStart_toEndOf="@id/startGuide"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_title" />
-
-                <com.framework.views.customViews.CustomEditText
-                    android:id="@+id/autocomplete_search_category"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/size_51"
-                    android:layout_marginTop="@dimen/size_20"
-                    android:background="@drawable/rounded_rectangle_eceff1"
-                    android:backgroundTint="@color/white"
-                    android:drawableStart="@drawable/ic_search_offers"
-                    android:drawablePadding="@dimen/size_16"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/inter_semi_bold"
-                    android:hint="@string/ex_shopkeeper_doctor_boutique_etc"
-                    android:maxLines="1"
-                    android:padding="@dimen/size_8"
-                    android:paddingHorizontal="@dimen/size_16"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_13"
-                    app:layout_constraintEnd_toStartOf="@id/endGuide"
-                    app:layout_constraintStart_toEndOf="@id/startGuide"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_subtitle" />
-
-
-                <include
-                    android:visibility="gone"
-                    android:id="@+id/include_cat_sugg_selected"
-                    android:layout_marginTop="@dimen/size_20"
-                    app:layout_constraintEnd_toStartOf="@id/endGuide"
-                    app:layout_constraintStart_toEndOf="@id/startGuide"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_subtitle"
-                    android:layout_height="wrap_content"
-                    android:layout_width="0dp"
-                    layout="@layout/layout_cat_suggestion_selected"
-                    />
-
-                <LinearLayout
-                    android:visibility="gone"
-                    android:id="@+id/layout_et_sugestion"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toStartOf="@+id/endGuide"
-                    app:layout_constraintStart_toStartOf="@+id/startGuide"
-                    app:layout_constraintTop_toBottomOf="@+id/autocomplete_search_category">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_cat_suggestion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/tv_no_result_found"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="24dp"
-                        android:text="@string/no_result_found"
-                        android:textColor="@color/gray_B3B3B3"
-                        android:textSize="12sp"
-                        app:fontFamily="@font/regular" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.2dp"
-                        android:background="@color/color99E4E4E4" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/layout_did_you_mean"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="24dp"
-                        android:visibility="gone">
-
-                        <com.framework.views.customViews.CustomTextView
-                            android:id="@+id/customTextView10"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:text="Did you mean: Boutique"
-                            android:textColor="@color/black_4a4a4a"
-                            android:textSize="14sp"
-                            app:fontFamily="@font/semi_bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/customImageView7"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <com.framework.views.customViews.CustomImageView
-                            android:id="@+id/customImageView7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_presignin_arrow_up_left"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </LinearLayout>
-
-
-                <!--Enable visible this when search results found-->
-                <LinearLayout
-                    android:id="@+id/linear_featured_categories"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginTop="@dimen/size_19"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/autocomplete_search_category">
-
-                    <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/tv_featured_categories_title"
-                        android:layout_width="wrap_content"
-                        android:layout_marginHorizontal="24dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter_medium"
-                        android:gravity="start"
-                        android:text="@string/featured_categories"
-                        android:textAlignment="gravity"
-                        android:textColor="@color/black_2A2A2A"
-                        android:textSize="@dimen/text_13"
-                        app:layout_constraintEnd_toStartOf="@id/endGuide"
-                        app:layout_constraintStart_toEndOf="@id/startGuide"
-                        app:layout_constraintTop_toBottomOf="@+id/autocomplete_search_category" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_categories"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/size_12"
-                        app:layout_constraintBottom_toTopOf="@+id/tv_next_step_1"
-                        app:layout_constraintEnd_toStartOf="@id/endGuide"
-                        app:layout_constraintStart_toEndOf="@id/startGuide"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_featured_categories_title"
-                        tools:listitem="@layout/item_website_categories" />
-
-                </LinearLayout>
-
-                <!--Enable visible this when no search results found-->
-                <include
-                    android:visibility="gone"
-                    android:id="@+id/include_no_search_result_found"
-                    layout="@layout/layout_no_category_search_results"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_et_sugestion" />
-
-                <!--On click on Click here visible @+id/include_no_search_result_found layout below-->
-                <LinearLayout
-                    android:id="@+id/linear_still_cant_find"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toStartOf="@id/endGuide"
-                    app:layout_constraintStart_toEndOf="@id/startGuide"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_et_sugestion">
-
-                    <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/tv_still_cant"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter_semi_bold"
-                        android:gravity="start"
-                        android:text="@string/still_can_t_find_your_business_type"
-                        android:textAlignment="gravity"
-                        android:textColor="@color/black_4a4a4a"
-                        android:textSize="@dimen/text_14" />
-
-                    <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/tv_click_here_still"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_8"
-                        android:fontFamily="@font/inter_semi_bold"
-                        android:gravity="start"
-                        android:text="@string/click_here"
-                        android:textAlignment="gravity"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/text_14" />
-
-                </LinearLayout>
-
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/startGuide"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.06" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/endGuide"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.94" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.core.widget.NestedScrollView>
-
+        android:layout_height="match_parent">
 
         <com.framework.views.customViews.CustomTextView
-            android:layout_alignParentBottom="true"
-            android:id="@+id/tv_next_step_1"
-            style="@style/yellow_squared_button"
-            android:enabled="false"
-            android:text="@string/next"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="UnknownId" />
+          android:id="@+id/tv_title"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_28"
+          android:fontFamily="@font/inter_bold"
+          android:gravity="start"
+          android:text="@string/how_will_you_describe_your_business"
+          android:textAlignment="gravity"
+          android:textColor="@color/black_4a4a4a"
+          android:textSize="@dimen/text_16"
+          app:layout_constraintEnd_toStartOf="@id/endGuide"
+          app:layout_constraintStart_toEndOf="@id/startGuide"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_subtitle"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_4"
+          android:fontFamily="@font/inter_regular"
+          android:gravity="start"
+          android:text="@string/this_will_help_us_understand_your_business_and_suggest_useful_features"
+          android:textAlignment="gravity"
+          android:textColor="@color/black_2A2A2A"
+          android:textSize="@dimen/text_13"
+          app:layout_constraintEnd_toStartOf="@id/endGuide"
+          app:layout_constraintStart_toEndOf="@id/startGuide"
+          app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/autocomplete_search_category"
+          android:layout_width="0dp"
+          android:layout_height="@dimen/size_51"
+          android:layout_marginTop="@dimen/size_20"
+          android:background="@drawable/rounded_rectangle_eceff1"
+          android:backgroundTint="@color/white"
+          android:drawableStart="@drawable/ic_search_offers"
+          android:drawablePadding="@dimen/size_16"
+          android:ellipsize="end"
+          android:fontFamily="@font/inter_semi_bold"
+          android:hint="@string/ex_shopkeeper_doctor_boutique_etc"
+          android:maxLines="1"
+          android:padding="@dimen/size_8"
+          android:paddingHorizontal="@dimen/size_16"
+          android:scrollHorizontally="true"
+          android:singleLine="true"
+          android:textColor="@color/black"
+          android:textSize="@dimen/text_13"
+          app:layout_constraintEnd_toStartOf="@id/endGuide"
+          app:layout_constraintStart_toEndOf="@id/startGuide"
+          app:layout_constraintTop_toBottomOf="@+id/tv_subtitle" />
 
 
-    </RelativeLayout>
+        <include
+          android:id="@+id/include_cat_sugg_selected"
+          layout="@layout/layout_cat_suggestion_selected"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_20"
+          android:visibility="gone"
+          app:layout_constraintEnd_toStartOf="@id/endGuide"
+          app:layout_constraintStart_toEndOf="@id/startGuide"
+          app:layout_constraintTop_toBottomOf="@+id/tv_subtitle" />
+
+        <LinearLayout
+          android:id="@+id/layout_et_sugestion"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          android:orientation="vertical"
+          android:visibility="gone"
+          app:layout_constraintEnd_toStartOf="@+id/endGuide"
+          app:layout_constraintStart_toStartOf="@+id/startGuide"
+          app:layout_constraintTop_toBottomOf="@+id/autocomplete_search_category">
+
+          <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_cat_suggestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_no_result_found"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:text="@string/no_result_found"
+            android:textColor="@color/gray_B3B3B3"
+            android:textSize="12sp"
+            app:fontFamily="@font/regular" />
+
+          <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/color99E4E4E4" />
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_did_you_mean"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp"
+            android:visibility="gone">
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/customTextView10"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_marginEnd="16dp"
+              android:text="Did you mean: Boutique"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              app:fontFamily="@font/semi_bold"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toStartOf="@+id/customImageView7"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/customImageView7"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:src="@drawable/ic_presignin_arrow_up_left"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+          </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+
+        <!--Enable visible this when search results found-->
+        <LinearLayout
+          android:id="@+id/linear_featured_categories"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+
+          android:layout_marginTop="@dimen/size_19"
+          android:orientation="vertical"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/autocomplete_search_category">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_featured_categories_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:fontFamily="@font/inter_medium"
+            android:gravity="start"
+            android:text="@string/featured_categories"
+            android:textAlignment="gravity"
+            android:textColor="@color/black_2A2A2A"
+            android:textSize="@dimen/text_13"
+            app:layout_constraintEnd_toStartOf="@id/endGuide"
+            app:layout_constraintStart_toEndOf="@id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/autocomplete_search_category" />
+
+          <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_12"
+            app:layout_constraintBottom_toTopOf="@+id/tv_next_step_1"
+            app:layout_constraintEnd_toStartOf="@id/endGuide"
+            app:layout_constraintStart_toEndOf="@id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/tv_featured_categories_title"
+            tools:listitem="@layout/item_website_categories" />
+
+        </LinearLayout>
+
+        <!--Enable visible this when no search results found-->
+        <include
+          android:id="@+id/include_no_search_result_found"
+          layout="@layout/layout_no_category_search_results"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:visibility="gone"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/layout_et_sugestion" />
+
+        <!--On click on Click here visible @+id/include_no_search_result_found layout below-->
+        <LinearLayout
+          android:id="@+id/linear_still_cant_find"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
+          android:orientation="horizontal"
+          android:visibility="gone"
+          app:layout_constraintEnd_toStartOf="@id/endGuide"
+          app:layout_constraintStart_toEndOf="@id/startGuide"
+          app:layout_constraintTop_toBottomOf="@+id/layout_et_sugestion">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_still_cant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semi_bold"
+            android:gravity="start"
+            android:text="@string/still_can_t_find_your_business_type"
+            android:textAlignment="gravity"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="@dimen/text_14" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_click_here_still"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_8"
+            android:fontFamily="@font/inter_semi_bold"
+            android:gravity="start"
+            android:text="@string/click_here"
+            android:textAlignment="gravity"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_14" />
+
+        </LinearLayout>
+
+
+        <androidx.constraintlayout.widget.Guideline
+          android:id="@+id/startGuide"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          app:layout_constraintGuide_percent="0.06" />
+
+        <androidx.constraintlayout.widget.Guideline
+          android:id="@+id/endGuide"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          app:layout_constraintGuide_percent="0.94" />
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/tv_next_step_1"
+      style="@style/yellow_squared_button"
+      android:layout_alignParentBottom="true"
+      android:enabled="false"
+      android:text="@string/next"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      tools:ignore="UnknownId" />
+
+
+  </RelativeLayout>
 </layout>
