@@ -1,6 +1,7 @@
 package com.festive.poster.ui.promoUpdates
 
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
@@ -9,22 +10,29 @@ import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.FragmentBrowseTabBinding
 import com.festive.poster.models.PosterPackModel
 import com.festive.poster.models.PosterPackTagModel
+import com.festive.poster.models.response.GetTemplateViewConfigResponse
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.festive.poster.viewmodels.FestivePosterSharedViewModel
+import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.base.BaseActivity
+import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
+import com.framework.pref.UserSessionManager
 
-class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, BaseViewModel>(),RecyclerItemClickListener {
+class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePosterViewModel>(),RecyclerItemClickListener {
 
+    private var sharedViewModel: FestivePosterSharedViewModel?=null
     var categoryList:ArrayList<PosterPackModel>?=null
+    private var session: UserSessionManager? = null
 
     override fun getLayout(): Int {
         return R.layout.fragment_browse_tab
     }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
+    override fun getViewModelClass(): Class<FestivePosterViewModel> {
+        return FestivePosterViewModel::class.java
     }
     companion object {
         fun newInstance(bundle: Bundle = Bundle()): BrowseTabFragment {
@@ -38,7 +46,14 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, BaseViewModel
 
     override fun onCreateView() {
         super.onCreateView()
-        categoryList = ArrayList<PosterPackModel>()
+        sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
+       // setupDummyList()
+        sharedViewModel?.shouldRefresh
+        setRealData()
+
+    }
+
+    private fun setupDummyList() {
 
         //dummy data
         categoryList?.add(PosterPackModel(
@@ -57,8 +72,20 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, BaseViewModel
         val adapter =AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,categoryList!!,this)
         binding?.rvCat?.adapter = adapter
         binding?.rvCat?.layoutManager = GridLayoutManager(requireActivity(),2)
+    }
+
+    fun setRealData(){
+        sharedViewModel?.posterPackList?.observe(viewLifecycleOwner,{
+            categoryList = it
+            val adapter =AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,categoryList!!,this)
+            binding?.rvCat?.adapter = adapter
+            binding?.rvCat?.layoutManager = GridLayoutManager(requireActivity(),2)
+        })
 
     }
+
+
+
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
         when(actionType){

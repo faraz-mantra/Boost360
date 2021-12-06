@@ -8,8 +8,9 @@ import com.festive.poster.base.AppBaseFragment
 import com.framework.models.BaseViewModel
 
 
-internal class TabAdapter(val fragmentList: ArrayList<AppBaseFragment<out ViewDataBinding, BaseViewModel>>, fragmentActivity: FragmentActivity) :
-    FragmentStateAdapter(fragmentActivity) {
+internal class TabAdapter(val fragmentList: ArrayList<AppBaseFragment<out ViewDataBinding, out BaseViewModel>>,
+                          baseFragment: Fragment) :
+    FragmentStateAdapter(baseFragment) {
 
     override fun createFragment(position: Int): Fragment {
         return fragmentList[position] as Fragment

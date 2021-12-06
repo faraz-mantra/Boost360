@@ -7,9 +7,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.festive.poster.R
-import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.base.AppBaseFragment
-import com.festive.poster.databinding.ActivityPromoUpdatesBinding
 import com.festive.poster.databinding.FragmentPromoLandingPageBinding
 import com.festive.poster.models.promoModele.SocialConnModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
@@ -77,7 +75,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
             BrowseTabFragment.newInstance(),
             CreatePostFragment.newInstance()
         )
-        val viewPagerAdapter = TabAdapter(fragmentList, requireActivity())
+        val viewPagerAdapter = TabAdapter(fragmentList, this)
         binding?.viewPager?.apply {
             isUserInputEnabled = false
             adapter = viewPagerAdapter
