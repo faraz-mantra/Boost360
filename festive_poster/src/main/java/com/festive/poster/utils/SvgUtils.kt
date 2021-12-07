@@ -16,6 +16,8 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.festive.poster.models.PosterModel
+import com.festive.poster.utils.SvgUtils.getSvgAsAString
+import com.framework.BaseApplication
 import com.framework.constants.Constants
 import com.framework.constants.PackageNames
 import com.framework.glide.customsvgloader.*
@@ -170,52 +172,63 @@ object SvgUtils {
         ) {
             url?.let {
                 CoroutineScope(Dispatchers.IO).launch {
-                    var svgString = SvgRenderCacheUtil.instance.retrieveFromCache(url)
-                    if (svgString == null || svgString.isEmpty()) {
-                        svgString = SvgUtils.getSvgAsAString(url)
-                        svgString?.let { SvgRenderCacheUtil.instance.saveToCache(url, it) }
-                    }
-                    if (svgString != null && !svgString.isEmpty()) {
-                        svgString = SvgRenderCacheUtil.instance.replace(
-                            svgString,
-                            model.keys,
-                            context,
-                            model.isPurchased
-                        )
-                        val svg = SVG.getFromString(svgString)
-                        svg.renderDPI = context.resources?.displayMetrics?.densityDpi?.toFloat() ?: 480.0f
-                        svg.documentWidth = svg.documentWidth*4
-                        svg.documentHeight = svg.documentHeight*4
-                        val b = Bitmap.createBitmap(
-                            svg.documentWidth.toInt(),
-                            svg.documentHeight.toInt(), Bitmap.Config.ARGB_8888
-                        )
-                        val canvas = Canvas(b)
-                        svg.renderToCanvas(canvas)
+                        val b = svgToBitmap(model)
                         withContext(Dispatchers.Default) {
                             when (packageName) {
                                 PackageNames.INSTAGRAM ->{
-                                    b.shareAsImage(
+                                    b?.shareAsImage(
                                         PackageNames.INSTAGRAM,
                                         text = model.greeting_message
                                     )
                                 }
                                 PackageNames.WHATSAPP ->{
-                                    b.shareAsImage(
+                                    b?.shareAsImage(
                                         PackageNames.WHATSAPP,
                                         text = RegexUtils.addStarToNumbers(model.greeting_message)
                                     )
                                 }
-                                "" -> b.shareAsImage(text = model.greeting_message)
-                                else -> b.saveImageToStorage(showNoti = true)
+                                "" -> b?.shareAsImage(text = model.greeting_message)
+                                else -> b?.saveImageToStorage(showNoti = true)
                             }
                         }
                     }
                 }
 
             }
-        }
 
 
 
+
+    suspend fun svgToBitmap(model: PosterModel): Bitmap? {
+        val url = model.url()!!
+
+            var svgString = SvgRenderCacheUtil.instance.retrieveFromCache(url)
+            if (svgString == null || svgString.isEmpty()) {
+                svgString = getSvgAsAString(url)
+                svgString?.let { SvgRenderCacheUtil.instance.saveToCache(url, it) }
+            }
+            if (svgString != null && !svgString.isEmpty()) {
+                svgString = SvgRenderCacheUtil.instance.replace(
+                    svgString,
+                    model.keys,
+                    BaseApplication.instance,
+                    model.isPurchased
+                )
+                val svg = SVG.getFromString(svgString)
+                svg.renderDPI =
+                    BaseApplication.instance.resources?.displayMetrics?.densityDpi?.toFloat()
+                        ?: 480.0f
+                svg.documentWidth = svg.documentWidth * 4
+                svg.documentHeight = svg.documentHeight * 4
+                val b = Bitmap.createBitmap(
+                    svg.documentWidth.toInt(),
+                    svg.documentHeight.toInt(), Bitmap.Config.ARGB_8888
+                )
+                val canvas = Canvas(b)
+                svg.renderToCanvas(canvas)
+
+                return b
+            }
+        return null
+    }
 }

@@ -21,6 +21,7 @@ import com.festive.poster.models.response.UpgradeGetDataResponse
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.base.BaseActivity
@@ -28,6 +29,8 @@ import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.utils.toArrayList
+import com.framework.webengageconstant.Promotional_Update_Browse_All_Click
+import com.framework.webengageconstant.Promotional_Update_View_More_Click
 import com.google.gson.Gson
 
 class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePosterViewModel>(),RecyclerItemClickListener {
@@ -75,6 +78,8 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
         super.onClick(v)
         when(v){
             binding?.cardBrowseAllTemplate->{
+                WebEngageController.trackEvent(Promotional_Update_View_More_Click)
+
                 addFragment(R.id.container,BrowseAllFragment.newInstance(dataList!!,0),
                     true,true)
             }

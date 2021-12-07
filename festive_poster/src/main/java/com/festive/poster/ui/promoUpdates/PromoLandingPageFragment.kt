@@ -12,9 +12,12 @@ import com.festive.poster.databinding.FragmentPromoLandingPageBinding
 import com.festive.poster.models.PosterPackModel
 import com.festive.poster.models.promoModele.SocialConnModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
+import com.festive.poster.utils.WebEngageController
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 import com.framework.utils.setColorFilter2
+import com.framework.webengageconstant.Post_Promotional_Update_Click
+import com.framework.webengageconstant.Promotional_Update_Browse_All_Click
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -92,6 +95,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
 
                         }
                         1->{
+                            WebEngageController.trackEvent(Promotional_Update_Browse_All_Click)
 
 
                         }

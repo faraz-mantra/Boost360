@@ -277,6 +277,12 @@ fun Bitmap.saveAsImageToAppFolder(destPath:String): File? {
 
 }
 
+fun Bitmap.saveAsTempFile(): File? {
+ return saveAsImageToAppFolder(
+    BaseApplication.instance.externalCacheDir?.toString()+File.separator+"tempimage.png")
+
+}
+
 
 
 suspend fun Bitmap.saveImageToStorage(

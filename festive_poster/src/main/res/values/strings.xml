@@ -65,4 +65,6 @@
     <string name="no_stay_here">No stay here</string>
     <string name="yes_delete">Yes, delete</string>
     <string name="closing_this_page_will_not_save_the_changes_you_ve_made">Closing this page will not save the changes youve made.</string>
+    <string name="speech_prompt">Say something</string>
+    <string name="speech_not_supported">Speech to text not supported</string>
 </resources>
