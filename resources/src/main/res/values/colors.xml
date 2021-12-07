@@ -166,6 +166,6 @@
   <color name="white_F5F8FD">#F5F8FD</color>
   <color name="black_09121F">#09121F</color>
   <color name="grey_09121F">#ECEFF1</color>
-  <color name="grey_828282">828282</color>
+  <color name="grey_828282">#828282</color>
 
 </resources>
