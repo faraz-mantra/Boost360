@@ -23,9 +23,9 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     val binding = getViewDataBinding(inflater, recyclerViewItemType, parent)
     return when (recyclerViewItemType) {
       PAGINATION_LOADER -> PagingViewHolder(binding as PaginationLoaderBinding)
-      BUSINESS_SETUP_ITEM_VIEW -> BusinessSetupViewHolder(binding as ItemBusinessManagementBinding)
+      BUSINESS_SETUP_ITEM_VIEW -> BusinessSetupViewHolder(binding as ItemBusinessManagementDBinding)
       ALL_BOOST_ADD_ONS_VIEW -> BoostAddOnsViewHolder(binding as ItemBoostAddOnsBinding)
-      MANAGE_BUSINESS_ITEM_VIEW -> ManageBusinessViewHolder(binding as ItemManageBusinessDBinding)
+      MANAGE_BUSINESS_ITEM_VIEW -> ManageBusinessViewHolder(binding as ItemManageBusinessBinding)
     }
   }
 

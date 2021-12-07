@@ -13,9 +13,9 @@ enum class RecyclerViewItemType {
   fun getLayout(): Int {
     return when (this) {
       PAGINATION_LOADER -> R.layout.pagination_loader
-      BUSINESS_SETUP_ITEM_VIEW -> R.layout.item_business_management
+      BUSINESS_SETUP_ITEM_VIEW -> R.layout.item_business_management_d
       ALL_BOOST_ADD_ONS_VIEW -> R.layout.item_boost_add_ons
-      MANAGE_BUSINESS_ITEM_VIEW -> R.layout.item_manage_business_d
+      MANAGE_BUSINESS_ITEM_VIEW -> R.layout.item_manage_business
     }
   }
 }
