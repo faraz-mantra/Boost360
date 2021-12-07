@@ -51,4 +51,7 @@
   <color name="colorB3B3B3">#B3B3B3</color>
   <color name="colorFCAF17">#FCAF17</color>
 
+  <color name="white_99">#99FFFFFF</color>
+  <color name="grey_E0E2E9">#E0E2E9</color>
+
 </resources>

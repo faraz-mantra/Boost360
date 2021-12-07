@@ -300,4 +300,24 @@
     <style name="BlackBoldXL" parent="BoldXL">
         <item name="android:textColor">@color/textBlack</item>
     </style>
+
+    <!--Promotional Updates Themes-->
+    <style name="PromotionalUpdatesTheme" parent="BaseTheme">
+        <item name="android:statusBarColor">@color/white</item>
+    </style>
+
+    <style name="yellow_squared_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/size_52</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="background">@color/colorPrimary</item>
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="fontFamily">@font/inter_bold</item>
+        <item name="textSize">@dimen/text_16</item>
+        <item name="android:gravity">center</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="textColor">@color/white</item>
+    </style>
+
 </resources>

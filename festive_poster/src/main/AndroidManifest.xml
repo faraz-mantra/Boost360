@@ -18,7 +18,7 @@
             android:exported="true"/>
 
         <activity
-            android:theme="@style/TemplateTheme"
+            android:theme="@style/PromotionalUpdatesTheme"
             android:windowSoftInputMode="stateHidden|adjustPan"
             android:name="com.festive.poster.ui.promoUpdates.edit_post.EditPostActivity"
             android:screenOrientation="portrait"/>
