@@ -1,11 +1,11 @@
 package com.boost.marketplace.holder
 
-import com.boost.marketplace.databinding.ItemBusinessManagementBinding
+import com.boost.marketplace.databinding.ItemBusinessManagementDBinding
 import com.boost.marketplace.recyclerView.AppBaseRecyclerViewHolder
 import com.boost.marketplace.recyclerView.BaseRecyclerViewItem
 
-class BusinessSetupViewHolder(binding: ItemBusinessManagementBinding) :
-  AppBaseRecyclerViewHolder<ItemBusinessManagementBinding>(binding) {
+class BusinessSetupViewHolder(binding: ItemBusinessManagementDBinding) :
+  AppBaseRecyclerViewHolder<ItemBusinessManagementDBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)

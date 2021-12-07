@@ -2,13 +2,13 @@ package com.boost.marketplace.holder
 
 import android.view.View
 import com.boost.marketplace.constant.RecyclerViewActionType
-import com.boost.marketplace.databinding.ItemManageBusinessDBinding
+import com.boost.marketplace.databinding.ItemManageBusinessBinding
 import com.boost.marketplace.infra.api.models.live.addOns.ManageBusinessData
 import com.boost.marketplace.recyclerView.AppBaseRecyclerViewHolder
 import com.boost.marketplace.recyclerView.BaseRecyclerViewItem
 
-class ManageBusinessViewHolder(binding: ItemManageBusinessDBinding) :
-  AppBaseRecyclerViewHolder<ItemManageBusinessDBinding>(binding) {
+class ManageBusinessViewHolder(binding: ItemManageBusinessBinding) :
+  AppBaseRecyclerViewHolder<ItemManageBusinessBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
