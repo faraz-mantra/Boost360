@@ -169,13 +169,13 @@ public class TripAdvisorActivity extends AppCompatActivity {
         try {
             JSONObject query = new JSONObject();
             query.put("WebsiteId", session.getFpTag());
-            HotelAPIInterfaces APICalls = new RestAdapter.Builder()
-                    .setEndpoint("https://webaction.api.boostkit.dev")
-                    .setLogLevel(RestAdapter.LogLevel.FULL)
-                    .setLog(new AndroidLog("ggg"))
-                    .build()
-                    .create(HotelAPIInterfaces.class);
-
+//            HotelAPIInterfaces APICalls = new RestAdapter.Builder()
+//                    .setEndpoint("https://webaction.api.boostkit.dev")
+//                    .setLogLevel(RestAdapter.LogLevel.FULL)
+//                    .setLog(new AndroidLog("ggg"))
+//                    .build()
+//                    .create(HotelAPIInterfaces.class);
+            HotelAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(HotelAPIInterfaces.class);
             APICalls.getTripAdvisorData(query, 0, 1000, new Callback<GetTripAdvisorData>() {
                 @Override
                 public void success(GetTripAdvisorData getTripAdvisorData, Response response) {
@@ -213,13 +213,13 @@ public class TripAdvisorActivity extends AppCompatActivity {
             requestBody.setWebsiteId(session.getFpTag());
             requestBody.setActionData(actionData);
 
-            HotelAPIInterfaces APICalls = new RestAdapter.Builder()
-                    .setEndpoint("https://webaction.api.boostkit.dev")
-                    .setLogLevel(RestAdapter.LogLevel.FULL)
-                    .setLog(new AndroidLog("ggg"))
-                    .build()
-                    .create(HotelAPIInterfaces.class);
-
+//            HotelAPIInterfaces APICalls = new RestAdapter.Builder()
+//                    .setEndpoint("https://webaction.api.boostkit.dev")
+//                    .setLogLevel(RestAdapter.LogLevel.FULL)
+//                    .setLog(new AndroidLog("ggg"))
+//                    .build()
+//                    .create(HotelAPIInterfaces.class);
+            HotelAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(HotelAPIInterfaces.class);
 
             APICalls.addTripAdvisorData(requestBody, new Callback<String>() {
                 @Override
@@ -258,13 +258,13 @@ public class TripAdvisorActivity extends AppCompatActivity {
             requestBody.setQuery("{_id:'" + tripAdvisorData.getId() + "'}");
             requestBody.setUpdateValue("{$set :" + new Gson().toJson(actionData) + "}");
 
-            HotelAPIInterfaces APICalls = new RestAdapter.Builder()
-                    .setEndpoint("https://webaction.api.boostkit.dev")
-                    .setLogLevel(RestAdapter.LogLevel.FULL)
-                    .setLog(new AndroidLog("ggg"))
-                    .build()
-                    .create(HotelAPIInterfaces.class);
-
+//            HotelAPIInterfaces APICalls = new RestAdapter.Builder()
+//                    .setEndpoint("https://webaction.api.boostkit.dev")
+//                    .setLogLevel(RestAdapter.LogLevel.FULL)
+//                    .setLog(new AndroidLog("ggg"))
+//                    .build()
+//                    .create(HotelAPIInterfaces.class);
+            HotelAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(HotelAPIInterfaces.class);
             APICalls.updateTripAdvisorData(requestBody, new Callback<String>() {
                 @Override
                 public void success(String s, Response response) {

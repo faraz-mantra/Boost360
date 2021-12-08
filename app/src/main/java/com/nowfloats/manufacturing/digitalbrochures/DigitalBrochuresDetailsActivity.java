@@ -36,6 +36,7 @@ import com.nowfloats.manufacturing.API.model.DeleteBrochures.DeleteBrochuresData
 import com.nowfloats.manufacturing.API.model.GetBrochures.Data;
 import com.nowfloats.manufacturing.API.model.UpdateBrochures.UpdateBrochuresData;
 import com.nowfloats.manufacturing.digitalbrochures.Interfaces.DigitalBrochuresDetailsListener;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
@@ -189,13 +190,14 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
         request.setWebsiteId(session.getFpTag());
         request.setActionData(actionData);
 
-        ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
-            .setEndpoint("https://webaction.api.boostkit.dev")
-            .setLogLevel(RestAdapter.LogLevel.FULL)
-            .setLog(new AndroidLog("ggg"))
-            .build()
-            .create(ManufacturingAPIInterfaces.class);
+//        ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
+//            .setEndpoint("https://webaction.api.boostkit.dev")
+//            .setLogLevel(RestAdapter.LogLevel.FULL)
+//            .setLog(new AndroidLog("ggg"))
+//            .build()
+//            .create(ManufacturingAPIInterfaces.class);
 
+        ManufacturingAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(ManufacturingAPIInterfaces.class);
         APICalls.addBrochuresData(request, new Callback<String>() {
           @Override
           public void success(String s, Response response) {
@@ -266,13 +268,14 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
         requestBody.setUpdateValue("{$set :" + new Gson().toJson(actionData) + "}");
         requestBody.setMulti(true);
 
-        ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
-            .setEndpoint("https://webaction.api.boostkit.dev")
-            .setLogLevel(RestAdapter.LogLevel.FULL)
-            .setLog(new AndroidLog("ggg"))
-            .build()
-            .create(ManufacturingAPIInterfaces.class);
+//        ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
+//            .setEndpoint("https://webaction.api.boostkit.dev")
+//            .setLogLevel(RestAdapter.LogLevel.FULL)
+//            .setLog(new AndroidLog("ggg"))
+//            .build()
+//            .create(ManufacturingAPIInterfaces.class);
 
+        ManufacturingAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(ManufacturingAPIInterfaces.class);
         APICalls.updateBrochuresData(requestBody, new Callback<String>() {
           @Override
           public void success(String s, Response response) {
@@ -313,14 +316,15 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
       requestBody.setUpdateValue("{$set : {IsArchived: true }}");
       requestBody.setMulti(true);
 
-      ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
-          .setEndpoint("https://webaction.api.boostkit.dev")
-          .setLogLevel(RestAdapter.LogLevel.FULL)
-          .setLog(new AndroidLog("ggg"))
-          .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
-          .build()
-          .create(ManufacturingAPIInterfaces.class);
+//      ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
+//          .setEndpoint("https://webaction.api.boostkit.dev")
+//          .setLogLevel(RestAdapter.LogLevel.FULL)
+//          .setLog(new AndroidLog("ggg"))
+//          .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
+//          .build()
+//          .create(ManufacturingAPIInterfaces.class);
 
+      ManufacturingAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(ManufacturingAPIInterfaces.class);
       APICalls.deleteBrochuresData(requestBody, new Callback<String>() {
         @Override
         public void success(String data, Response response) {

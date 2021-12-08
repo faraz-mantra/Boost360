@@ -181,7 +181,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     }
 
     private void checkSelfBrandedKyc() {
-        StoreInterface boostKit = Constants.restAdapterBoostKit.create(StoreInterface.class);
+        StoreInterface boostKit = Constants.restAdapterWebActionBoostKIt.create(StoreInterface.class);
         boostKit.getSelfBrandedKyc(getQuery(), new Callback<PaymentKycDataResponse>() {
             @Override
             public void success(PaymentKycDataResponse data, Response response) {

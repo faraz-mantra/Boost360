@@ -27,6 +27,7 @@ import com.framework.views.zero.old.AppZeroCases;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.hotel.API.HotelAPIInterfaces;
 import com.nowfloats.manufacturing.API.ManufacturingAPIInterfaces;
 import com.nowfloats.manufacturing.API.model.DeleteBrochures.DeleteBrochuresData;
 import com.nowfloats.manufacturing.API.model.DeleteProject.DeleteProjectData;
@@ -142,13 +143,13 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
     try {
       JSONObject query = new JSONObject();
       query.put("WebsiteId", session.getFpTag());
-      ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
-          .setEndpoint("https://webaction.api.boostkit.dev")
-          .setLogLevel(RestAdapter.LogLevel.FULL)
-          .setLog(new AndroidLog("ggg"))
-          .build()
-          .create(ManufacturingAPIInterfaces.class);
-
+//      ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
+//          .setEndpoint("https://webaction.api.boostkit.dev")
+//          .setLogLevel(RestAdapter.LogLevel.FULL)
+//          .setLog(new AndroidLog("ggg"))
+//          .build()
+//          .create(ManufacturingAPIInterfaces.class);
+      ManufacturingAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(ManufacturingAPIInterfaces.class);
       APICalls.getBrochuresList(query, 0, 1000, new Callback<GetBrochuresData>() {
         @Override
         public void success(GetBrochuresData getBrochuresData, Response response) {
@@ -258,14 +259,14 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
       requestBody.setUpdateValue("{$set : {IsArchived: true }}");
       requestBody.setMulti(true);
 
-      ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
-          .setEndpoint("https://webaction.api.boostkit.dev")
-          .setLogLevel(RestAdapter.LogLevel.FULL)
-          .setLog(new AndroidLog("ggg"))
-          .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
-          .build()
-          .create(ManufacturingAPIInterfaces.class);
-
+//      ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
+//          .setEndpoint("https://webaction.api.boostkit.dev")
+//          .setLogLevel(RestAdapter.LogLevel.FULL)
+//          .setLog(new AndroidLog("ggg"))
+//          .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
+//          .build()
+//          .create(ManufacturingAPIInterfaces.class);
+      ManufacturingAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(ManufacturingAPIInterfaces.class);
       APICalls.deleteBrochuresData(requestBody, new Callback<String>() {
         @Override
         public void success(String data, Response response) {

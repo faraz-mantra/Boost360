@@ -423,13 +423,13 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
         request.setWebsiteId(session.getFpTag());
         request.setActionData(actionData);
 
-        HotelAPIInterfaces APICalls = new RestAdapter.Builder()
-            .setEndpoint("https://webaction.api.boostkit.dev")
-            .setLogLevel(RestAdapter.LogLevel.FULL)
-            .setLog(new AndroidLog("ggg"))
-            .build()
-            .create(HotelAPIInterfaces.class);
-
+//        HotelAPIInterfaces APICalls = new RestAdapter.Builder()
+//            .setEndpoint("https://webaction.api.boostkit.dev")
+//            .setLogLevel(RestAdapter.LogLevel.FULL)
+//            .setLog(new AndroidLog("ggg"))
+//            .build()
+//            .create(HotelAPIInterfaces.class);
+        HotelAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(HotelAPIInterfaces.class);
         APICalls.addOffer(request, new Callback<String>() {
           @Override
           public void success(String s, Response response) {
@@ -533,13 +533,13 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
         requestBody.setQuery("{_id:'" + existingItemData.getId() + "'}");
         requestBody.setUpdateValue("{$set :" + new Gson().toJson(actionData) + "}");
 
-        HotelAPIInterfaces APICalls = new RestAdapter.Builder()
-            .setEndpoint("https://webaction.api.boostkit.dev")
-            .setLogLevel(RestAdapter.LogLevel.FULL)
-            .setLog(new AndroidLog("ggg"))
-            .build()
-            .create(HotelAPIInterfaces.class);
-
+//        HotelAPIInterfaces APICalls = new RestAdapter.Builder()
+//            .setEndpoint("https://webaction.api.boostkit.dev")
+//            .setLogLevel(RestAdapter.LogLevel.FULL)
+//            .setLog(new AndroidLog("ggg"))
+//            .build()
+//            .create(HotelAPIInterfaces.class);
+        HotelAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(HotelAPIInterfaces.class);
         APICalls.updateOffer(requestBody, new Callback<String>() {
           @Override
           public void success(String s, Response response) {
@@ -579,14 +579,14 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
       requestBody.setUpdateValue("{$set : {IsArchived: true }}");
       requestBody.setMulti(true);
 
-      HotelAPIInterfaces APICalls = new RestAdapter.Builder()
-          .setEndpoint("https://webaction.api.boostkit.dev")
-          .setLogLevel(RestAdapter.LogLevel.FULL)
-          .setLog(new AndroidLog("ggg"))
-          .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
-          .build()
-          .create(HotelAPIInterfaces.class);
-
+//      HotelAPIInterfaces APICalls = new RestAdapter.Builder()
+//          .setEndpoint("https://webaction.api.boostkit.dev")
+//          .setLogLevel(RestAdapter.LogLevel.FULL)
+//          .setLog(new AndroidLog("ggg"))
+//          .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
+//          .build()
+//          .create(HotelAPIInterfaces.class);
+      HotelAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(HotelAPIInterfaces.class);
       APICalls.deleteOffer(requestBody, new Callback<String>() {
         @Override
         public void success(String s, Response response) {

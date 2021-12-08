@@ -130,13 +130,13 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
         try {
             JSONObject query = new JSONObject();
             query.put("WebsiteId", session.getFpTag());
-            HotelAPIInterfaces APICalls = new RestAdapter.Builder()
-                    .setEndpoint("https://webaction.api.boostkit.dev")
-                    .setLogLevel(RestAdapter.LogLevel.FULL)
-                    .setLog(new AndroidLog("ggg"))
-                    .build()
-                    .create(HotelAPIInterfaces.class);
-
+//            HotelAPIInterfaces APICalls = new RestAdapter.Builder()
+//                    .setEndpoint("https://webaction.api.boostkit.dev")
+//                    .setLogLevel(RestAdapter.LogLevel.FULL)
+//                    .setLog(new AndroidLog("ggg"))
+//                    .build()
+//                    .create(HotelAPIInterfaces.class);
+            HotelAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(HotelAPIInterfaces.class);
             APICalls.getOffersList(query, 0, 1000, new Callback<GetOffersResponse>() {
                 @Override
                 public void success(GetOffersResponse getOffersResponse, Response response) {
@@ -229,14 +229,14 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
             requestBody.setUpdateValue("{$set : {IsArchived: true }}");
             requestBody.setMulti(true);
 
-            HotelAPIInterfaces APICalls = new RestAdapter.Builder()
-                    .setEndpoint("https://webaction.api.boostkit.dev")
-                    .setLogLevel(RestAdapter.LogLevel.FULL)
-                    .setLog(new AndroidLog("ggg"))
-                    .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
-                    .build()
-                    .create(HotelAPIInterfaces.class);
-
+//            HotelAPIInterfaces APICalls = new RestAdapter.Builder()
+//                    .setEndpoint("https://webaction.api.boostkit.dev")
+//                    .setLogLevel(RestAdapter.LogLevel.FULL)
+//                    .setLog(new AndroidLog("ggg"))
+//                    .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
+//                    .build()
+//                    .create(HotelAPIInterfaces.class);
+            HotelAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(HotelAPIInterfaces.class);
             APICalls.deleteOffer(requestBody, new Callback<String>() {
                 @Override
                 public void success(String s, Response response) {

@@ -29,13 +29,13 @@ import com.framework.views.zero.old.AppZeroCases;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.education.helper.Constants;
 import com.nowfloats.manufacturing.API.ManufacturingAPIInterfaces;
 import com.nowfloats.manufacturing.API.model.DeleteTeams.DeleteTeamsData;
 import com.nowfloats.manufacturing.API.model.GetTeams.Data;
 import com.nowfloats.manufacturing.API.model.GetTeams.GetTeamsData;
 import com.nowfloats.manufacturing.projectandteams.Interfaces.TeamsActivityListener;
 import com.nowfloats.manufacturing.projectandteams.adapter.TeamAdapter;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;
@@ -128,13 +128,14 @@ public class TeamsActivity extends AppCompatActivity implements TeamsActivityLis
     try {
       JSONObject query = new JSONObject();
       query.put("WebsiteId", session.getFpTag());
-      ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
-          .setEndpoint("https://webaction.api.boostkit.dev")
-          .setLogLevel(RestAdapter.LogLevel.FULL)
-          .setLog(new AndroidLog("ggg"))
-          .build()
-          .create(ManufacturingAPIInterfaces.class);
+//      ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
+//          .setEndpoint("https://webaction.api.boostkit.dev")
+//          .setLogLevel(RestAdapter.LogLevel.FULL)
+//          .setLog(new AndroidLog("ggg"))
+//          .build()
+//          .create(ManufacturingAPIInterfaces.class);
 
+      ManufacturingAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(ManufacturingAPIInterfaces.class);
       APICalls.getTeamsList(query, 0, 1000, new Callback<GetTeamsData>() {
         @Override
         public void success(GetTeamsData getTeamsData, Response response) {
@@ -204,14 +205,15 @@ public class TeamsActivity extends AppCompatActivity implements TeamsActivityLis
       requestBody.setUpdateValue("{$set : {IsArchived: true }}");
       requestBody.setMulti(true);
 
-      ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
-          .setEndpoint("https://webaction.api.boostkit.dev")
-          .setLogLevel(RestAdapter.LogLevel.FULL)
-          .setLog(new AndroidLog("ggg"))
-          .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
-          .build()
-          .create(ManufacturingAPIInterfaces.class);
+//      ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
+//          .setEndpoint("https://webaction.api.boostkit.dev")
+//          .setLogLevel(RestAdapter.LogLevel.FULL)
+//          .setLog(new AndroidLog("ggg"))
+//          .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
+//          .build()
+//          .create(ManufacturingAPIInterfaces.class);
 
+      ManufacturingAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(ManufacturingAPIInterfaces.class);
       APICalls.deleteTeamsData(requestBody, new Callback<String>() {
         @Override
         public void success(String data, Response response) {

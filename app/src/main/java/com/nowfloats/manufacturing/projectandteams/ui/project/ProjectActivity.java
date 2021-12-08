@@ -34,6 +34,7 @@ import com.nowfloats.manufacturing.API.model.GetProjects.Data;
 import com.nowfloats.manufacturing.API.model.GetProjects.GetProjectsData;
 import com.nowfloats.manufacturing.projectandteams.Interfaces.ProjectActivityListener;
 import com.nowfloats.manufacturing.projectandteams.adapter.ProjectAdapter;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;
@@ -100,13 +101,14 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
     try {
       JSONObject query = new JSONObject();
       query.put("WebsiteId", session.getFpTag());
-      ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
-          .setEndpoint("https://webaction.api.boostkit.dev")
-          .setLogLevel(RestAdapter.LogLevel.FULL)
-          .setLog(new AndroidLog("ggg"))
-          .build()
-          .create(ManufacturingAPIInterfaces.class);
+//      ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
+//          .setEndpoint("https://webaction.api.boostkit.dev")
+//          .setLogLevel(RestAdapter.LogLevel.FULL)
+//          .setLog(new AndroidLog("ggg"))
+//          .build()
+//          .create(ManufacturingAPIInterfaces.class);
 
+      ManufacturingAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(ManufacturingAPIInterfaces.class);
       APICalls.getProjectsList(query, 0, 1000, new Callback<GetProjectsData>() {
         @Override
         public void success(GetProjectsData getProjectsData, Response response) {
@@ -185,14 +187,15 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
       requestBody.setUpdateValue("{$set : {IsArchived: true }}");
       requestBody.setMulti(true);
 
-      ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
-          .setEndpoint("https://webaction.api.boostkit.dev")
-          .setLogLevel(RestAdapter.LogLevel.FULL)
-          .setLog(new AndroidLog("ggg"))
-          .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
-          .build()
-          .create(ManufacturingAPIInterfaces.class);
+//      ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
+//          .setEndpoint("https://webaction.api.boostkit.dev")
+//          .setLogLevel(RestAdapter.LogLevel.FULL)
+//          .setLog(new AndroidLog("ggg"))
+//          .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
+//          .build()
+//          .create(ManufacturingAPIInterfaces.class);
 
+      ManufacturingAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(ManufacturingAPIInterfaces.class);
       APICalls.deleteProjectData(requestBody, new Callback<String>() {
         @Override
         public void success(String data, Response response) {

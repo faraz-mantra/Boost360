@@ -21,6 +21,7 @@ import com.boost.upgrades.UpgradeActivity;
 import com.framework.views.fabButton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.nowfloats.AccrossVerticals.API.APIInterfaces;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.hotel.API.HotelAPIInterfaces;
 import com.nowfloats.hotel.API.model.DeletePlacesAround.DeletePlacesAroundRequest;
@@ -140,13 +141,13 @@ public class PlacesNearByActivity extends AppCompatActivity implements PlaceNear
         try {
             JSONObject query = new JSONObject();
             query.put("WebsiteId", session.getFpTag());
-            HotelAPIInterfaces APICalls = new RestAdapter.Builder()
-                    .setEndpoint("https://webaction.api.boostkit.dev")
-                    .setLogLevel(RestAdapter.LogLevel.FULL)
-                    .setLog(new AndroidLog("ggg"))
-                    .build()
-                    .create(HotelAPIInterfaces.class);
-
+//            HotelAPIInterfaces APICalls = new RestAdapter.Builder()
+//                    .setEndpoint("https://webaction.api.boostkit.dev")
+//                    .setLogLevel(RestAdapter.LogLevel.FULL)
+//                    .setLog(new AndroidLog("ggg"))
+//                    .build()
+//                    .create(HotelAPIInterfaces.class);
+            HotelAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(HotelAPIInterfaces.class);
             APICalls.getPlacesAroundList(query, 0, 1000, new Callback<GetPlacesAroundModel>() {
                 @Override
                 public void success(GetPlacesAroundModel getPlacesAroundModel, Response response) {
@@ -199,14 +200,14 @@ public class PlacesNearByActivity extends AppCompatActivity implements PlaceNear
             requestBody.setUpdateValue("{$set : {IsArchived: true }}");
             requestBody.setMulti(true);
 
-            HotelAPIInterfaces APICalls = new RestAdapter.Builder()
-                    .setEndpoint("https://webaction.api.boostkit.dev")
-                    .setLogLevel(RestAdapter.LogLevel.FULL)
-                    .setLog(new AndroidLog("ggg"))
-                    .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
-                    .build()
-                    .create(HotelAPIInterfaces.class);
-
+//            HotelAPIInterfaces APICalls = new RestAdapter.Builder()
+//                    .setEndpoint("https://webaction.api.boostkit.dev")
+//                    .setLogLevel(RestAdapter.LogLevel.FULL)
+//                    .setLog(new AndroidLog("ggg"))
+//                    .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
+//                    .build()
+//                    .create(HotelAPIInterfaces.class);
+            HotelAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(HotelAPIInterfaces.class);
             APICalls.deletePlacesAround(requestBody, new Callback<String>() {
                 @Override
                 public void success(String data, Response response) {

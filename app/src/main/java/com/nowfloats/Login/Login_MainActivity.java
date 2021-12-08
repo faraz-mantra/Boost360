@@ -863,7 +863,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
     }
 
     private void checkSelfBrandedKyc() {
-        StoreInterface boostKit = Constants.restAdapterBoostKit.create(StoreInterface.class);
+        StoreInterface boostKit = Constants.restAdapterWebActionBoostKIt.create(StoreInterface.class);
         boostKit.getSelfBrandedKyc(getQuery(), new Callback<PaymentKycDataResponse>() {
             @Override
             public void success(PaymentKycDataResponse data, Response response) {

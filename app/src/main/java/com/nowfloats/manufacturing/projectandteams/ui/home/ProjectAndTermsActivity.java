@@ -139,13 +139,14 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
         try {
             JSONObject query = new JSONObject();
             query.put("WebsiteId", session.getFpTag());
-            ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
-                    .setEndpoint("https://webaction.api.boostkit.dev")
-                    .setLogLevel(RestAdapter.LogLevel.FULL)
-                    .setLog(new AndroidLog("ggg"))
-                    .build()
-                    .create(ManufacturingAPIInterfaces.class);
+//            ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
+//                    .setEndpoint("https://webaction.api.boostkit.dev")
+//                    .setLogLevel(RestAdapter.LogLevel.FULL)
+//                    .setLog(new AndroidLog("ggg"))
+//                    .build()
+//                    .create(ManufacturingAPIInterfaces.class);
 
+            ManufacturingAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(ManufacturingAPIInterfaces.class);
             APICalls.getProjectsList(query, 0, 1000, new Callback<GetProjectsData>() {
                 @Override
                 public void success(GetProjectsData getProjectsData, Response response) {
@@ -173,13 +174,14 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
         try {
             JSONObject query = new JSONObject();
             query.put("WebsiteId", session.getFpTag());
-            ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
-                    .setEndpoint("https://webaction.api.boostkit.dev")
-                    .setLogLevel(RestAdapter.LogLevel.FULL)
-                    .setLog(new AndroidLog("ggg"))
-                    .build()
-                    .create(ManufacturingAPIInterfaces.class);
+//            ManufacturingAPIInterfaces APICalls = new RestAdapter.Builder()
+//                    .setEndpoint("https://webaction.api.boostkit.dev")
+//                    .setLogLevel(RestAdapter.LogLevel.FULL)
+//                    .setLog(new AndroidLog("ggg"))
+//                    .build()
+//                    .create(ManufacturingAPIInterfaces.class);
 
+            ManufacturingAPIInterfaces APICalls = Constants.restAdapterWebActionBoostKIt.create(ManufacturingAPIInterfaces.class);
             APICalls.getTeamsList(query, 0, 1000, new Callback<GetTeamsData>() {
                 @Override
                 public void success(GetTeamsData getTeamsData, Response response) {
