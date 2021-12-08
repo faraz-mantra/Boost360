@@ -167,5 +167,8 @@
   <color name="black_09121F">#09121F</color>
   <color name="grey_09121F">#ECEFF1</color>
   <color name="grey_828282">#828282</color>
+  <color name="white_F5F7FA">#F5F7FA</color>
+  <color name="grey_535966">#535966</color>
+  <color name="grey_DADADA">#DADADA</color>
 
 </resources>

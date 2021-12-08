@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/size_9"
+            android:paddingVertical="@dimen/size_18"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/iv_close_preview"
+                android:layout_width="@dimen/size_12"
+                android:layout_height="@dimen/size_12"
+                android:src="@drawable/cross_nv_new" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_12"
+                android:fontFamily="@font/bold"
+                android:text="@string/preview"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_18" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <ScrollView
+            android:id="@+id/scroll_post_preview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@+id/barrier"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white_F5F7FA">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_post_preview"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/size_343"
+                    android:background="@color/grey_DADADA"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="6"
+                    tools:listitem="@layout/item_social_preview_viewpager" />
+
+               <!-- <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/pager_post_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_343"
+                    android:background="@color/grey_DADADA"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />-->
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_preview_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_26"
+                    android:layout_marginTop="@dimen/size_22"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="@string/preview"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="@dimen/text_16"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_post_preview" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_selected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/size_26"
+                    android:background="@drawable/rounded_orange_background_transparent"
+                    android:fontFamily="@font/inter_medium"
+                    android:textAllCaps="true"
+                    android:paddingHorizontal="@dimen/size_10"
+                    android:paddingVertical="@dimen/size_6"
+                    android:text="5 Selected"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_12"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_preview_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_preview_title" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_social_platforms"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/size_18"
+                    android:layout_marginTop="@dimen/size_20"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginBottom="@dimen/size_30"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_preview_title"
+                    tools:itemCount="6"
+                    tools:listitem="@layout/item_social_platform_promo_adap" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="top"
+            app:constraint_referenced_ids="tv_choose_a_promo_pack, tv_post_update"/>
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_choose_a_promo_pack"
+            style="@style/yellow_squared_button"
+            android:layout_gravity="bottom"
+            android:visibility="visible"
+            android:text="@string/choose_a_promo_updates_pack"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="UnknownId" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_post_update"
+            style="@style/yellow_squared_button"
+            android:layout_gravity="bottom"
+            android:visibility="gone"
+            android:text="Post on 5 platforms"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="UnknownId" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

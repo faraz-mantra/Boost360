@@ -73,6 +73,7 @@
                         android:fontFamily="@font/inter_medium"
                         android:paddingHorizontal="@dimen/size_10"
                         android:paddingVertical="@dimen/size_5"
+                        android:textAllCaps="false"
                         android:text="@string/tap_to_edit"
                         android:textColor="@color/white"
                         app:layout_constraintEnd_toEndOf="@+id/iv_template"

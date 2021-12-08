@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="336dp"
+        android:background="@color/grey_DADADA"
+        android:gravity="center">
+
+         <!--<androidx.cardview.widget.CardView
+             android:id="@+id/layout_suggest_domain_select"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             app:cardCornerRadius="@dimen/size_8"
+             app:cardElevation="@dimen/size_1"
+             app:cardUseCompatPadding="true"
+             app:cardMaxElevation="@dimen/size_1">-->
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_10">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/iv_preview"
+                android:layout_width="@dimen/size_198"
+                android:layout_height="@dimen/size_284"
+                android:layout_marginBottom="@dimen/size_32"
+                android:src="@drawable/post_preview_promo_2" />
+
+            <FrameLayout
+                android:layout_width="@dimen/size_48"
+                android:layout_height="@dimen/size_48"
+                android:layout_gravity="center_horizontal|bottom"
+                android:background="@drawable/grey_bachground_circle_solid_oval"/>
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/iv_social_icon"
+                android:layout_width="@dimen/size_42"
+                android:layout_height="@dimen/size_42"
+                android:layout_marginBottom="@dimen/size_3"
+                android:layout_gravity="center_horizontal|bottom"
+                android:src="@drawable/ic_instagram_promo_grey_boundary" />
+
+        </FrameLayout>
+
+        <!-- </androidx.cardview.widget.CardView>-->
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
