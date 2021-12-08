@@ -14,28 +14,33 @@ import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.Header;
+import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
 public interface APIInterfaces {
 
+    @Headers("X-Auth-Version: 2")
     @GET("/api/v1/{testimonials}/get-data")
-    void getTestimonialsList(@Header("Authorization") String token, @Path("testimonials") String testimonialType, @Query("query") JSONObject query, @Query("skip") int skip, @Query("limit") int limit, Callback<GetTestimonialData> response);
+    void getTestimonialsList(@Header("X-User-Id") String token, @Path("testimonials") String testimonialType, @Query("query") JSONObject query, @Query("skip") int skip, @Query("limit") int limit, Callback<GetTestimonialData> response);
 
 ////    @Headers({"Authorization: 59c8add5dd304111404e7f04"})
 //    @GET("/api/v1/testimonials/get-data")
 //    void getHotelsTestimonialsList(@Header("Authorization") String token,@Query("query") JSONObject query, @Query("skip") int skip, @Query("limit") int limit, Callback<GetTestimonialData> response);
 
+    @Headers("X-Auth-Version: 2")
     @POST("/api/v1/{testimonials}/add-data")
-    void addTestimonials(@Header("Authorization") String token, @Path("testimonials") String testimonialType, @Body AddTestimonialsData body, Callback<String> response);
+    void addTestimonials(@Header("X-User-Id") String token, @Path("testimonials") String testimonialType, @Body AddTestimonialsData body, Callback<String> response);
 
+    @Headers("X-Auth-Version: 2")
     @POST("/api/v1/{testimonials}/update-data")
-    void updateTestimonials(@Header("Authorization") String token, @Path("testimonials") String testimonialType, @Body UpdateTestimonialsData body, Callback<String> response);
+    void updateTestimonials(@Header("X-User-Id") String token, @Path("testimonials") String testimonialType, @Body UpdateTestimonialsData body, Callback<String> response);
 
     //    @Headers({"Authorization: 59c89bbb5d64370a04c9aea1","Content-Type: application/json"})
+    @Headers("X-Auth-Version: 2")
     @POST("/api/v1/{testimonials}/update-data")
-    void deleteTestimonials(@Header("Authorization") String token, @Path("testimonials") String testimonialType, @Body DeleteTestimonialsData body, Callback<String> response);
+    void deleteTestimonials(@Header("X-User-Id") String token, @Path("testimonials") String testimonialType, @Body DeleteTestimonialsData body, Callback<String> response);
 
     @GET("/DomainService/v1/domains/supportedTypes")
     void getDomainSupportType(@Query("clientId") String clientId, Callback<String[]> response);

@@ -24,51 +24,51 @@ import retrofit.http.Query;
 
 public interface ManufacturingAPIInterfaces {
 
-    @Headers({"Authorization: 59c89bbb5d64370a04c9aea1"})
+    @Headers({"X-Auth-Version: 2", "X-User-Id: 5ad9c3d480f2510538ebde38", "Content-Type: application/json"})
     @GET("/api/v1/projects/get-data")
     void getProjectsList(@Query("query") JSONObject query, @Query("skip") int skip, @Query("limit") int limit, Callback<GetProjectsData> response);
 
-    @Headers({"Authorization: 59c89bbb5d64370a04c9aea1", "Content-Type: application/json"})
+    @Headers({"X-Auth-Version: 2", "X-User-Id: 5ad9c3d480f2510538ebde38", "Content-Type: application/json"})
     @POST("/api/v1/projects/add-data")
     void addProjectData(@Body AddProjectData body, Callback<String> response);
 
-    @Headers({"Authorization: 59c89bbb5d64370a04c9aea1", "Content-Type: application/json"})
+    @Headers({"X-Auth-Version: 2", "X-User-Id: 5ad9c3d480f2510538ebde38", "Content-Type: application/json"})
     @POST("/api/v1/projects/update-data")
     void updateProjectData(@Body UpdateProjectData body, Callback<String> response);
 
-    @Headers({"Authorization: 59c89bbb5d64370a04c9aea1", "Content-Type: application/json"})
+    @Headers({"X-Auth-Version: 2", "X-User-Id: 5ad9c3d480f2510538ebde38", "Content-Type: application/json"})
     @POST("/api/v1/projects/update-data")
     void deleteProjectData(@Body DeleteProjectData body, Callback<String> response);
 
-    @Headers({"Authorization: 59c89bbb5d64370a04c9aea1"})
+    @Headers({"X-Auth-Version: 2", "X-User-Id: 5ad9c3d480f2510538ebde38", "Content-Type: application/json"})
     @GET("/api/v1/myteam/get-data")
     void getTeamsList(@Query("query") JSONObject query, @Query("skip") int skip, @Query("limit") int limit, Callback<GetTeamsData> response);
 
-    @Headers({"Authorization: 59c89bbb5d64370a04c9aea1", "Content-Type: application/json"})
+    @Headers({"X-Auth-Version: 2", "X-User-Id: 5ad9c3d480f2510538ebde38", "Content-Type: application/json"})
     @POST("/api/v1/myteam/add-data")
     void addTeamsData(@Body AddTeamsData body, Callback<String> response);
 
-    @Headers({"Authorization: 59c89bbb5d64370a04c9aea1", "Content-Type: application/json"})
+    @Headers({"X-Auth-Version: 2", "X-User-Id: 5ad9c3d480f2510538ebde38", "Content-Type: application/json"})
     @POST("/api/v1/myteam/update-data")
     void updateTeamsData(@Body UpdateTeamsData body, Callback<String> response);
 
-    @Headers({"Authorization: 59c89bbb5d64370a04c9aea1", "Content-Type: application/json"})
+    @Headers({"X-Auth-Version: 2", "X-User-Id: 5ad9c3d480f2510538ebde38", "Content-Type: application/json"})
     @POST("/api/v1/myteam/update-data")
     void deleteTeamsData(@Body DeleteTeamsData body, Callback<String> response);
 
-    @Headers({"Authorization: 59c89bbb5d64370a04c9aea1"})
+    @Headers({"X-Auth-Version: 2", "X-User-Id: 5ad9c3d480f2510538ebde38", "Content-Type: application/json"})
     @GET("/api/v1/uploadpdf/get-data")
     void getBrochuresList(@Query("query") JSONObject query, @Query("skip") int skip, @Query("limit") int limit, Callback<GetBrochuresData> response);
 
-    @Headers({"Authorization: 59c89bbb5d64370a04c9aea1", "Content-Type: application/json"})
+    @Headers({"X-Auth-Version: 2", "X-User-Id: 5ad9c3d480f2510538ebde38", "Content-Type: application/json"})
     @POST("/api/v1/uploadpdf/add-data")
     void addBrochuresData(@Body AddBrochuresData body, Callback<String> response);
 
-    @Headers({"Authorization: 59c89bbb5d64370a04c9aea1", "Content-Type: application/json"})
+    @Headers({"X-Auth-Version: 2", "X-User-Id: 5ad9c3d480f2510538ebde38", "Content-Type: application/json"})
     @POST("/api/v1/uploadpdf/update-data")
     void updateBrochuresData(@Body UpdateBrochuresData body, Callback<String> response);
 
-    @Headers({"Authorization: 59c89bbb5d64370a04c9aea1", "Content-Type: application/json"})
+    @Headers({"X-Auth-Version: 2", "X-User-Id: 5ad9c3d480f2510538ebde38", "Content-Type: application/json"})
     @POST("/api/v1/uploadpdf/update-data")
     void deleteBrochuresData(@Body DeleteBrochuresData body, Callback<String> response);
 

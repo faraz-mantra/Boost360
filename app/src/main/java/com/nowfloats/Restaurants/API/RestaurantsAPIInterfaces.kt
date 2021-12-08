@@ -10,7 +10,7 @@ import retrofit.http.*
 
 interface RestaurantsAPIInterfaces {
 
-  @Headers("Authorization: 5ad9c3d480f2510538ebde38")
+  @Headers("X-Auth-Version: 2", "X-User-Id: 5ad9c3d480f2510538ebde38", "Content-Type: application/json")
   @GET("/api/v1/ordernow/get-data")
   fun getBookTable(
     @Query("query") query: JSONObject?,
@@ -20,11 +20,11 @@ interface RestaurantsAPIInterfaces {
   )
 
 
-  @Headers("Authorization: 5ad9c3d480f2510538ebde38", "Content-Type: application/json")
+  @Headers("X-Auth-Version: 2", "X-User-Id: 5ad9c3d480f2510538ebde38", "Content-Type: application/json")
   @POST("/api/v1/ordernow/add-data")
   fun addBookTable(@Body body: AddBookTableData?, response: Callback<String?>?)
 
-  @Headers("Authorization: 5ad9c3d480f2510538ebde38", "Content-Type: application/json")
+  @Headers("X-Auth-Version: 2", "X-User-Id: 5ad9c3d480f2510538ebde38", "Content-Type: application/json")
   @POST("/api/v1/ordernow/update-data")
   fun updateBookTable(@Body body: UpdateBookTableData?, response: Callback<String?>?)
 
