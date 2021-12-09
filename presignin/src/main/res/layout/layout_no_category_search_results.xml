@@ -1,54 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+  xmlns:tools="http://schemas.android.com/tools">
 
-<LinearLayout
-    android:orientation="vertical"
+  <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
     <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tv_no_search_title"
-        android:layout_width="match_parent"
-        app:layout_constraintHorizontal_bias="0"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_28"
-        android:fontFamily="@font/inter_semi_bold"
-        android:gravity="start"
-        android:text="@string/could_not_find_your_business_type"
-        android:textAlignment="gravity"
-        android:textColor="@color/black_4a4a4a"
-        android:textSize="@dimen/text_16"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+      android:id="@+id/tv_no_search_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/size_24"
+      android:layout_marginTop="@dimen/size_28"
+      android:gravity="start"
+      android:text="@string/could_not_find_your_business_type"
+      android:textAlignment="gravity"
+      android:textColor="@color/black_4a4a4a"
+      app:fontFamily="@font/inter_semi_bold"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:textType="HEADING_6" />
 
     <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tv_no_search_subtitle"
-        android:layout_width="match_parent"
-        app:layout_constraintHorizontal_bias="0"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_6"
-        android:fontFamily="@font/inter_regular"
-        android:text="@string/choose_what_best_describes_your_business_the_best"
-        android:textAlignment="gravity"
-        android:textColor="@color/black_2A2A2A"
-        android:textSize="@dimen/text_13"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_no_search_title" />
+      android:id="@+id/tv_no_search_subtitle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/size_24"
+      android:layout_marginTop="@dimen/size_6"
+      android:text="@string/choose_what_best_describes_your_business_the_best"
+      android:textColor="@color/black_2A2A2A"
+      app:fontFamily="@font/inter_regular"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tv_no_search_title"
+      app:textType="BODY_1" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_categories"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/size_20"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_no_search_subtitle"
-        tools:listitem="@layout/item_website_categories" />
+      android:id="@+id/rv_categories"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="@dimen/size_20"
+      android:clipToPadding="false"
+      android:paddingBottom="@dimen/size_10"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tv_no_search_subtitle"
+      tools:itemCount="4"
+      tools:listitem="@layout/item_website_categories" />
 
-</LinearLayout>
+  </LinearLayout>
 </layout>

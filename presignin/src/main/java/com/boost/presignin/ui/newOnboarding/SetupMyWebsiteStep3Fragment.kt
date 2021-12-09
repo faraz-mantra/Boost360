@@ -26,7 +26,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.pref.*
-import com.framework.utils.convertJsonToObj
+import com.framework.views.blur.setBlur
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PS_SIGNUP_SUCCESS
 import com.framework.webengageconstant.SIGNUP_SUCCESS
@@ -49,23 +49,33 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
   var createProfileReq: CreateProfileRequest? = null
 
 
-  private val categoryModel by lazy {
-    convertJsonToObj<CategoryDataModelOv2?>(arguments?.getString(IntentConstant.CATEGORY_DATA.name))
-
+  private val phoneNumber by lazy {
+    arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
   }
 
   private val whatsappConsent by lazy {
     arguments?.getBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name)
   }
 
+  private val categoryLiveName by lazy {
+    arguments?.getString(IntentConstant.CATEGORY_SUGG_UI.name)
+  }
+
+  private val mobilePreview by lazy {
+    arguments?.getString(IntentConstant.MOBILE_PREVIEW.name)
+  }
+
+  private val desktopPreview by lazy {
+    arguments?.getString(IntentConstant.DESKTOP_PREVIEW.name)
+  }
+
+  private val categoryModel by lazy {
+    arguments?.getSerializable(IntentConstant.CATEGORY_DATA.name) as? CategoryDataModelOv2
+  }
+
   private val businessName by lazy {
     arguments?.getString(IntentConstant.EXTRA_BUSINESS_NAME.name)
   }
-
-  private val phoneNumber by lazy {
-    arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
-  }
-
 
   override fun getLayout(): Int {
     return R.layout.layout_set_up_my_website_step_3
@@ -77,6 +87,8 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
 
   override fun onCreateView() {
     super.onCreateView()
+    binding?.includeMobileView?.blurView?.setBlur(baseActivity, 4F)
+    binding?.includeMobileView?.tvCategoryName?.text = categoryModel?.category_Name ?: ""
     setOnClickListeners()
     binding?.addressInputLayout?.etInput?.setText(businessName.toString().lowercase())
     apiCheckDomain {
@@ -158,25 +170,16 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         session?.userProfileMobile = response.result?.profileProperties?.userMobile
         session?.storeISEnterprise(response.result?.isEnterprise.toString() + "")
         session?.storeIsThinksity((response.result?.sourceClientId != null && response.result?.sourceClientId == clientIdThinksity).toString() + "")
-        session?.storeFPDetails(
-          Key_Preferences.GET_FP_EXPERIENCE_CODE,
-          categoryFloatsReq?.categoryDataModel?.experience_code
-        )
+        session?.storeFPDetails(Key_Preferences.GET_FP_EXPERIENCE_CODE, categoryFloatsReq?.categoryDataModel?.experience_code)
         session?.storeFPID(authToken?.floatingPointId)
         session?.storeFpTag(authToken?.floatingPointTag)
         categoryFloatsReq?.floatingPointId = authToken?.floatingPointId!!
-        categoryFloatsReq?.fpTag = authToken?.floatingPointTag
+        categoryFloatsReq?.fpTag = authToken.floatingPointTag
         categoryFloatsReq?.requestProfile?.profileId = response.result?.loginId
         session?.saveCategoryRequest(categoryFloatsReq!!)
         session?.saveAuthTokenData(authToken)
         session?.setUserSignUpComplete(true)
-
-        startFragmentFromNewOnBoardingActivity(
-          activity = requireActivity(),
-          type = FragmentType.LOADING_ANIMATION_DASHBOARD_FRAGMENT,
-          bundle = Bundle(),
-          clearTop = true
-        )
+        startFragmentFromNewOnBoardingActivity(activity = baseActivity, type = FragmentType.LOADING_ANIMATION_DASHBOARD_FRAGMENT, bundle = Bundle(), clearTop = true)
       } else {
         val msg = it.message()
         showShortToast(if (msg.isNotEmpty()) msg else getString(R.string.error_create_business_fp))
@@ -186,10 +189,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
   }
 
   private fun initRequest() {
-    createProfileReq = CreateProfileRequest(
-      ProfileProperties =
-      BusinessInfoModel(userMobile = phoneNumber)
-    )
+    createProfileReq = CreateProfileRequest(ProfileProperties = BusinessInfoModel(userMobile = phoneNumber))
     categoryFloatsReq = CategoryFloatsRequest(createProfileReq)
     createProfileReq?.AuthToken = phoneNumber
     createProfileReq?.ClientId = clientId
@@ -200,10 +200,10 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
   }
 
   private fun getBusinessRequest(): BusinessCreateRequest {
-    val domain = binding!!.addressInputLayout.etInput.text.toString()
+    val domain = binding?.addressInputLayout?.etInput?.text?.toString()?:""
     val createRequest = BusinessCreateRequest()
     createRequest.autoFillSampleWebsiteData = true
-    createRequest.webTemplateId = categoryModel!!.webTemplateId
+    createRequest.webTemplateId = categoryModel?.webTemplateId
     createRequest.clientId = clientId
     createRequest.tag = domain
     createRequest.name = businessName
@@ -214,10 +214,10 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     // createRequest.email = floatsRequest?.userBusinessEmail
     createRequest.primaryNumberCountryCode = "+91"
     createRequest.uri = ""
-    createRequest.primaryCategory = categoryModel!!.category_key
-    createRequest.appExperienceCode = categoryModel!!.experience_code
+    createRequest.primaryCategory = categoryModel?.category_key
+    createRequest.appExperienceCode = categoryModel?.experience_code
     createRequest.whatsAppNumber = if (whatsappConsent == true) phoneNumber else null
-    createRequest.whatsAppNotificationOptIn = whatsappConsent!!
+    createRequest.whatsAppNotificationOptIn = whatsappConsent
     createRequest.boostXWebsiteUrl = "www.${domain.lowercase()}.nowfloats.com"
     return createRequest
   }
@@ -245,18 +245,12 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     if (this.responseCreateProfile == null) {
       viewModel?.createMerchantProfile(request = categoryFloatsReq?.requestProfile)?.observeOnce(viewLifecycleOwner, {
         val businessProfileResponse = it as? BusinessProfileResponse
-        if (it.isSuccess() && businessProfileResponse != null && businessProfileResponse.result?.loginId.isNullOrEmpty()
-            .not()
-        ) {
+        if (it.isSuccess() && businessProfileResponse != null && businessProfileResponse.result?.loginId.isNullOrEmpty().not()) {
           apiHitBusiness(businessProfileResponse)
         } else {
           hideProgress()
           val msg = it?.errorNMessage()
-          showShortToast(
-            if (msg.isNullOrEmpty()
-                .not()
-            ) msg else getString(R.string.unable_to_create_profile)
-          )
+          showShortToast(if (msg.isNullOrEmpty().not()) msg else getString(R.string.unable_to_create_profile))
         }
       })
     } else apiHitBusiness(this.responseCreateProfile!!)

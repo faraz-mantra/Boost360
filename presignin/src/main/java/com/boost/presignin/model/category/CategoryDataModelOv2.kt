@@ -3,46 +3,49 @@ package com.boost.presignin.model.category
 import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
+import com.appservice.utils.capitalizeUtil
 import com.boost.presignin.R
 import com.boost.presignin.constant.RecyclerViewItemType
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewItem
 import com.framework.base.BaseResponse
 import java.io.Serializable
 
-
 class CategoryDataModelOv2(
-    val experience_code: String? = null,
-    val webTemplateId: String? = null,
-    val category_key: String? = null,
-    var category_Name: String? = null,
-    val category_descriptor: String? = null,
-    val icon: String? = null,
-    val sections: ArrayList<SectionsFeature>? = null,
+  val experience_code: String? = null,
+  val webTemplateId: String? = null,
+  val category_key: String? = null,
+  var category_Name: String? = null,
+  val category_descriptor: String? = null,
+  val icon: String? = null,
+  val sections: List<SectionsFeature>? = null,
 ) : BaseResponse(), AppBaseRecyclerViewItem, Serializable {
   var sectionType: Boolean = false
   var isSelected = false
+  var textChangeRTLAndSVC = false
+
+  fun getCategoryWithoutNewLine(): String? {
+    return category_Name?.replace("\\n".toRegex(), " ")
+  }
+
+  fun getCategoryName(): String? {
+    return when (experience_code) {
+      "SVC" -> "Do you provide services?"
+      else -> "Do you sell products?" //"RTL"
+    }
+  }
 
   fun experienceCode(): String {
     return experience_code ?: ""
   }
 
-  companion object {
-    var saveeCategory: CategoryDataModelOv2? = null
-    fun saveCategoryState(category: CategoryDataModelOv2?) {
-      saveeCategory = category
-    }
-
-    fun getSavedStateCategory(): CategoryDataModelOv2? {
-      return saveeCategory
-    }
-
-    fun clearSelection() {
-      saveeCategory = null
+  fun getSectionsTitles(): String? {
+    return if (sections.isNullOrEmpty()) category_descriptor?.capitalizeUtil() else {
+      val item = sections.take(2)
+      "${item.firstOrNull()?.title ?: ""}, ${item.lastOrNull()?.title ?: ""}".capitalizeUtil()
     }
   }
 
   override fun getViewType(): Int {
-//    return if (sectionType) RecyclerViewItemType.SECTION_HEADER_ITEM.getLayout() else
     return RecyclerViewItemType.CATEGORY_ITEM_OV2.getLayout()
   }
 

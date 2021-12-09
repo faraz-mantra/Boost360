@@ -18,6 +18,7 @@ import com.boost.presignin.extensions.isPhoneValid
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.ui.login.LoginActivity
 import com.boost.presignin.ui.newOnboarding.bottomSheet.NeedHelpBottomSheet
+import com.boost.presignin.ui.newOnboarding.categoryService.startServiceCategory
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.analytics.SentryController
 import com.framework.extensions.afterTextChanged
@@ -59,6 +60,7 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
     requestPhonePicker()
     WebEngageController.trackEvent(PS_LOGIN_NUMBER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.tvRequestOtp, binding?.tvLoginWithEmail)
+    baseActivity.startServiceCategory()
   }
 
   override fun onClick(v: View) {

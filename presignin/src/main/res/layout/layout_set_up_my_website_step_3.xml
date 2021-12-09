@@ -39,6 +39,7 @@
       app:layout_constraintStart_toEndOf="@id/startGuide"
       app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
+
     <include
       android:id="@+id/address_input_layout"
       layout="@layout/layout_website_address_input"
@@ -46,9 +47,9 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="24dp"
       app:layout_constraintEnd_toStartOf="@+id/endGuide"
+      app:layout_constraintHorizontal_bias="0.0"
       app:layout_constraintStart_toStartOf="@+id/startGuide"
       app:layout_constraintTop_toBottomOf="@+id/tv_subtitle" />
-
 
     <LinearLayout
       android:id="@+id/linear_secure_wrapper"
@@ -66,7 +67,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/green_61CF96"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp">
 
         <LinearLayout
           android:layout_width="wrap_content"
@@ -129,7 +131,7 @@
       android:layout_height="0dp"
       app:layout_constraintBottom_toTopOf="@+id/tv_next_step_3"
       app:layout_constraintEnd_toStartOf="@+id/endGuide"
-      app:layout_constraintHeight_percent="0.4"
+      app:layout_constraintHeight_percent="0.42"
       app:layout_constraintStart_toStartOf="@+id/startGuide"
       app:layout_constraintTop_toBottomOf="@+id/linear_secure_wrapper"
       app:layout_constraintVertical_bias="1.0" />

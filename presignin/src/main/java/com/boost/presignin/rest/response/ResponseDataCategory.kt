@@ -9,5 +9,5 @@ class ResponseDataCategory(
 ) : BaseResponse()
 
 class ResponseDataCategoryOv2(
-  val data: List<CategoryDataModelOv2>? = null
+  val data: ArrayList<CategoryDataModelOv2>? = null
 ) : BaseResponse()

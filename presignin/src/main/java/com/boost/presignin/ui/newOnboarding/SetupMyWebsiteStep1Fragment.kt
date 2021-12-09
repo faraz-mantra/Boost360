@@ -1,29 +1,34 @@
 package com.boost.presignin.ui.newOnboarding
 
 import android.os.Bundle
+import android.text.Editable
+import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.addTextChangedListener
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.constant.RecyclerViewActionType
 import com.boost.presignin.databinding.LayoutSetUpMyWebsiteStep1Binding
 import com.boost.presignin.helper.WebEngageController
-import com.boost.presignin.model.CategorySuggestionUiModel
-import com.boost.presignin.model.category.*
+import com.boost.presignin.model.category.ApiCategoryResponseCategory
+import com.boost.presignin.model.category.CategoryDataModel
+import com.boost.presignin.model.category.CategoryDataModelOv2
+import com.boost.presignin.model.category.getCategoryLiveData
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
 import com.boost.presignin.recyclerView.RecyclerItemClickListener
 import com.boost.presignin.rest.response.ResponseDataCategoryOv2
+import com.boost.presignin.ui.newOnboarding.categoryService.startServiceCategory
 import com.boost.presignin.viewmodel.CategoryVideoModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.utils.showDecoration
-import com.framework.utils.toArrayList
-import com.framework.webengageconstant.*
-import com.google.gson.Gson
+import com.framework.utils.hideKeyBoard
+import com.framework.utils.showKeyBoard
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.PAGE_VIEW
+import com.framework.webengageconstant.PS_BUSINESS_CATEGORY_LOAD
 
 class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Binding, CategoryVideoModel>(), RecyclerItemClickListener {
 
@@ -37,19 +42,17 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
   }
 
   private var noCatListAdapter: AppBaseRecyclerViewAdapter<CategoryDataModelOv2>? = null
-  private var notCatFoundList: ArrayList<CategoryDataModelOv2>? = null
-  private var apiCatResponse: ApiCategoryResponse? = null
-  private var selectedCat: CategoryDataModelOv2? = null
-  private var selectedCatSugg: CategorySuggestionUiModel? = null
-  private var categorylocalResponse: ResponseDataCategoryOv2? = null
-  private var baseAdapter: AppBaseRecyclerViewAdapter<CategoryDataModelOv2>? = null
-  private var categoryList = ArrayList<CategoryDataModelOv2>()
-  private var apiCategoryList: ArrayList<CategorySuggestionUiModel>? = null
-  val noResultCat1UiTitle = "Do you sell products?"
-  var noResultCat1OriginalTitle: String? = null
+  private var adapterCategoryLocal: AppBaseRecyclerViewAdapter<CategoryDataModelOv2>? = null
 
-  val noResultCat2UiTitle = "Do you provide services?"
-  var noResultCat2OriginalTitle: String? = null
+  private val categoryListLive: List<ApiCategoryResponseCategory>?
+    get() {
+      return getCategoryLiveData()
+    }
+
+  private var categoryList: ArrayList<CategoryDataModelOv2> = arrayListOf()
+  private var categoryNoDataList: ArrayList<CategoryDataModelOv2> = arrayListOf()
+  private var selectedCategory: CategoryDataModelOv2? = null
+  private var selectedCategoryLive: ApiCategoryResponseCategory? = null
 
   private val phoneNumber by lazy {
     arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
@@ -69,17 +72,30 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
 
   override fun onCreateView() {
     super.onCreateView()
-    setOnClickListeners()
     WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    baseAdapter = AppBaseRecyclerViewAdapter(baseActivity, ArrayList(), this)
+    setOnClickListeners()
+    initialize()
+    loadLocalCategoryData()
+  }
 
-    binding?.autocompleteSearchCategory?.setOnFocusChangeListener { view, b ->
-      if (b) {
-      } else {
-        binding?.layoutEtSugestion?.gone()
-        binding?.linearFeaturedCategories?.visible()
+  private fun loadLocalCategoryData() {
+    adapterLocalCategory()
+    viewModel?.getCategoriesOv2(baseActivity)?.observeOnce(viewLifecycleOwner) { it0 ->
+      val response = it0 as? ResponseDataCategoryOv2
+      if (it0.isSuccess() && response?.data.isNullOrEmpty().not()) {
+        categoryList = response!!.data!!
+        categoryNoDataList = ArrayList(response.data!!.filter { (it.experience_code == "RTL" || it.experience_code == "SVC") })
+        adapterCategoryLocal?.notify(categoryList)
       }
     }
+  }
+
+  private fun adapterLocalCategory() {
+    adapterCategoryLocal = AppBaseRecyclerViewAdapter(baseActivity, ArrayList(), this)
+    binding?.rvCategories?.adapter = adapterCategoryLocal
+  }
+
+  private fun initialize() {
     observeCategorySearch()
     activity?.onBackPressedDispatcher?.addCallback(object : OnBackPressedCallback(true) {
       override fun handleOnBackPressed() {
@@ -87,85 +103,73 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
         baseActivity.finishAfterTransition()
       }
     })
-    binding?.rvCategories?.adapter = baseAdapter
-    binding?.rvCategories?.layoutManager = LinearLayoutManager(requireActivity())
-
-    viewModel?.getCategoriesOv2(baseActivity)?.observeOnce(viewLifecycleOwner) {
-      if (it.error != null) return@observeOnce
-      categorylocalResponse = it as ResponseDataCategoryOv2
-      noResultCat1OriginalTitle = categorylocalResponse?.data?.find { it.experience_code == "RTL" }?.category_Name
-      noResultCat2OriginalTitle = categorylocalResponse?.data?.find { it.experience_code == "SVC" }?.category_Name
-      loadCategoryFromApi()
-      baseAdapter?.addItems(categoryList.apply {
-        clear()
-        if (CategoryDataModelOv2.getSavedStateCategory() != null) {
-          val data = categorylocalResponse?.data!!
-          addAll(data)
-        } else addAll(categorylocalResponse?.data!!)
-      })
+    binding?.autocompleteSearchCategory?.setOnFocusChangeListener { _, b ->
+      if (binding?.includeCatSuggSelected?.root?.visibility != View.VISIBLE) {
+        if (b.not() && binding?.autocompleteSearchCategory?.text?.toString().isNullOrEmpty()) {
+          binding?.layoutEtSugestion?.gone()
+          binding?.linearFeaturedCategories?.visible()
+          binding?.tvTitle?.visible()
+          binding?.tvSubtitle?.visible()
+        } else {
+          binding?.layoutEtSugestion?.visible()
+          binding?.linearFeaturedCategories?.gone()
+          binding?.tvTitle?.gone()
+          binding?.tvSubtitle?.gone()
+          searchCategoryLiveItem(binding?.autocompleteSearchCategory?.text)
+        }
+      }
     }
-    /* binding?.confirmButton?.setOnClickListener {
-         WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_CLICK, CATEGORY, NO_EVENT_VALUE)
-         CategoryDataModel.saveCategoryState(category)
-         addFragmentReplace(
-             com.framework.R.id.container,
-             BusinessDetailsFragment.newInstance(
-                 CategoryFloatsRequest(
-                     categoryDataModel = category, userBusinessMobile = phoneNumber,
-                     requestProfile = CreateProfileRequest(ProfileProperties = BusinessInfoModel(userMobile = phoneNumber))
-                 )
-             ), true
-         )
-     }*/
+    if (getCategoryLiveData().isNullOrEmpty()) baseActivity.startServiceCategory()
   }
 
   private fun observeCategorySearch() {
-    binding?.autocompleteSearchCategory?.addTextChangedListener {
-      if (apiCategoryList != null) {
-        binding?.layoutEtSugestion?.visible()
-        binding?.linearFeaturedCategories?.gone()
-        val filteredList = apiCategoryList?.filter { category -> category.category.contains(it.toString(), ignoreCase = true) }?.toArrayList() ?: arrayListOf()
-        filteredList.forEach { list -> list.searchKeyword = it.toString() }
-        if (filteredList.isNullOrEmpty()) {
-          handleSuggestionNoResult()
-        } else {
-          binding?.tvNoResultFound?.gone()
-          binding?.includeNoSearchResultFound?.root?.gone()
-        }
-        val adapter = AppBaseRecyclerViewAdapter(baseActivity, filteredList, this)
-        binding?.rvCatSuggestion?.adapter = adapter
-        binding?.rvCatSuggestion?.layoutManager = LinearLayoutManager(baseActivity)
-        binding?.rvCatSuggestion?.showDecoration()
+    binding?.autocompleteSearchCategory?.addTextChangedListener { str -> searchCategoryLiveItem(str) }
+  }
+
+  private fun searchCategoryLiveItem(str: Editable?) {
+    if (categoryList.isNullOrEmpty().not() && categoryListLive.isNullOrEmpty().not() && str?.toString().isNullOrEmpty().not()) {
+      binding?.layoutEtSugestion?.visible()
+      binding?.linearFeaturedCategories?.gone()
+      categoryListLive?.filter {
+        it.getNameLower().startsWith(str.toString().lowercase())
+            || it.getNameLower().contains(str.toString().lowercase())
+      }?.take(40).apply { setSearchAdapterListItem(str) }
+    } else (categoryListLive ?: arrayListOf()).take(40).apply { setSearchAdapterListItem(str) }
+  }
+
+  private fun List<ApiCategoryResponseCategory>?.setSearchAdapterListItem(str: Editable?) {
+    val newFilterList = getFinalList(str)
+    if (newFilterList.isNullOrEmpty().not()) {
+      binding?.tvNoResultFound?.gone()
+      binding?.includeNoSearchResultFound?.root?.gone()
+    } else handleSuggestionNoResult()
+    setAdapterSearch(newFilterList)
+  }
+
+  private fun List<ApiCategoryResponseCategory>?.getFinalList(str: Editable?): ArrayList<ApiCategoryResponseCategory> {
+    val newFilterList = arrayListOf<ApiCategoryResponseCategory>()
+    this?.forEach { cItem ->
+      cItem.appexperiencecodedetails?.forEach { exp ->
+        cItem.fpExperienceCode = exp
+        cItem.subCategory = categoryList.firstOrNull { it.experience_code == exp.name }?.getCategoryWithoutNewLine()
+        cItem.searchKeyword = str.toString()
+        newFilterList.add(cItem)
       }
     }
+    return newFilterList
+  }
+
+  private fun setAdapterSearch(filteredList: ArrayList<ApiCategoryResponseCategory>) {
+    AppBaseRecyclerViewAdapter(baseActivity, filteredList, this).apply { binding?.rvCatSuggestion?.adapter = this }
   }
 
   private fun handleSuggestionNoResult() {
     binding?.tvNoResultFound?.visible()
     binding?.includeNoSearchResultFound?.root?.visible()
-    notCatFoundList = ArrayList()
-    categorylocalResponse?.data?.find { it.experience_code == "RTL" }?.apply { category_Name = noResultCat1UiTitle }?.let { it1 -> notCatFoundList?.add(it1) }
-    categorylocalResponse?.data?.find { it.experience_code == "SVC" }?.apply { category_Name = noResultCat2UiTitle }?.let { it1 -> notCatFoundList?.add(it1) }
-    noCatListAdapter = AppBaseRecyclerViewAdapter(baseActivity, notCatFoundList ?: arrayListOf(), this)
+    val list = ArrayList<CategoryDataModelOv2>()
+    list.addAll(categoryNoDataList)
+    noCatListAdapter = AppBaseRecyclerViewAdapter(baseActivity, ArrayList(list.map { it.textChangeRTLAndSVC = true;it }), this)
     binding?.includeNoSearchResultFound?.rvCategories?.adapter = noCatListAdapter
-    binding?.includeNoSearchResultFound?.rvCategories?.layoutManager = LinearLayoutManager(requireActivity())
-  }
-
-  private fun loadCategoryFromApi() {
-    showProgress()
-    viewModel?.getCategoriesFromApi()?.observeOnce(viewLifecycleOwner, {
-      apiCategoryList = ArrayList()
-      apiCatResponse = it as? ApiCategoryResponse
-      if (apiCatResponse?.isSuccess() == true) {
-        apiCatResponse?.Data?.firstOrNull()?.categories?.forEach { cat ->
-          cat.appexperiencecodedetails?.forEach { appExpDet ->
-            val subCat = categorylocalResponse?.data?.find { localCat -> localCat.experience_code == appExpDet.name }?.category_Name
-            apiCategoryList?.add(CategorySuggestionUiModel(cat.name ?: "", subCat ?: "", appExpDet.name ?: "", ""))
-          }
-        }
-      }
-      hideProgress()
-    })
   }
 
   private fun setOnClickListeners() {
@@ -173,82 +177,75 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     binding?.includeCatSuggSelected?.root?.setOnClickListener {
       binding?.includeCatSuggSelected?.root?.gone()
       binding?.autocompleteSearchCategory?.visible()
-      binding?.layoutEtSugestion?.visible()
-
+      binding?.tvNextStep1?.isEnabled = false
+      selectedCategoryLive = null
+      selectedCategory = null
+      baseActivity.showKeyBoard(binding?.autocompleteSearchCategory)
     }
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.CATEGORY_ITEM_CLICKED.ordinal -> {
-        setSelectedCat(item as CategoryDataModelOv2)
-        for (listItem in categoryList) {
-          listItem.isSelected = (listItem.category_key == selectedCat?.category_key)
-        }
-        binding?.rvCategories?.post { baseAdapter?.notifyDataSetChanged() }
-
-        if (notCatFoundList != null) {
-          for (listItem in notCatFoundList ?: arrayListOf()) {
-            listItem.isSelected = (listItem.category_key == selectedCat?.category_key)
-          }
+        val dataCategory = (item as? CategoryDataModelOv2) ?: return
+        if (binding?.includeNoSearchResultFound?.root?.visibility == View.VISIBLE) {
+          categoryNoDataList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
           noCatListAdapter?.notifyDataSetChanged()
+        } else {
+          categoryList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
+          adapterCategoryLocal?.notifyDataSetChanged()
         }
-        // if (categoryList.filter { it.isSelected }.isNullOrEmpty()) binding?.confirmButton?.gone() else binding?.confirmButton?.visible()
+        selectedCategoryLive = null
+        setSelectedCat(dataCategory)
       }
       RecyclerViewActionType.CATEGORY_SUGGESTION_CLICKED.ordinal -> {
-        item as CategorySuggestionUiModel
-        selectedCatSugg = item
-        setSelectedCat(categoryList.find { it.experience_code == item.appExpCode }!!)
-        showCatSugesstionSelected()
+        selectedCategoryLive = (item as? ApiCategoryResponseCategory) ?: return
+        baseActivity.hideKeyBoard()
+        val dataCategory = categoryList.firstOrNull { it.experience_code == selectedCategoryLive?.fpExperienceCode?.name }
+        dataCategory?.let {
+          showCatSuggestionSelected(it)
+          setSelectedCat(it)
+        }
       }
     }
   }
 
-  private fun showCatSugesstionSelected() {
+  private fun showCatSuggestionSelected(category: CategoryDataModelOv2) {
+    binding?.tvTitle?.visible()
+    binding?.tvSubtitle?.visible()
     binding?.includeCatSuggSelected?.root?.visible()
+    binding?.linearFeaturedCategories?.visible()
+    binding?.autocompleteSearchCategory?.gone()
+    binding?.includeNoSearchResultFound?.root?.gone()
     binding?.layoutEtSugestion?.gone()
-    binding?.includeCatSuggSelected?.tvCatSelected?.text = selectedCatSugg?.category
-    binding?.includeCatSuggSelected?.tvSubcat?.text = selectedCatSugg?.subCategory
+    binding?.includeCatSuggSelected?.tvCatSelected?.text = selectedCategoryLive?.name
+    binding?.includeCatSuggSelected?.tvSubcat?.text = "in ${category?.getCategoryWithoutNewLine()}"
+    setAdapterCategory(category)
+  }
+
+  private fun setAdapterCategory(dataCategory: CategoryDataModelOv2) {
+    categoryList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
+    adapterCategoryLocal?.notifyDataSetChanged()
   }
 
   private fun goToNextStep() {
-    var mobilePreview: String? = null
-    selectedCat?.experience_code
-    var desktopPreview: String? = null
-    loop@ for (cat in apiCatResponse?.Data?.firstOrNull()?.categories ?: arrayListOf()) {
-      mobilePreview = cat.appexperiencecodedetails?.find { expCodeDet ->
-        expCodeDet.name == selectedCat?.experience_code || expCodeDet.name == selectedCatSugg?.appExpCode
-      }?.mobilepreview?.url
-      if (mobilePreview != null) break@loop
+    if (selectedCategoryLive == null) {
+      selectedCategoryLive = categoryListLive?.firstOrNull { it0 -> (it0.appexperiencecodedetails?.firstOrNull { it.name == selectedCategory?.experience_code } != null) }
+      selectedCategoryLive?.name = ""
+      selectedCategoryLive?.fpExperienceCode = selectedCategoryLive?.appexperiencecodedetails?.firstOrNull { it.name == selectedCategory?.experience_code }
     }
-    loop@ for (cat in apiCatResponse?.Data?.firstOrNull()?.categories ?: arrayListOf()) {
-      desktopPreview = cat.appexperiencecodedetails?.find { expCodeDet ->
-        expCodeDet.name == selectedCat?.experience_code || expCodeDet.name == selectedCatSugg?.appExpCode
-      }?.desktoppreview?.url
-      if (desktopPreview != null) break@loop
-    }
-
-    if (selectedCat != null) {
-      if (selectedCat?.category_Name == noResultCat1UiTitle) {
-        selectedCat?.category_Name = noResultCat1OriginalTitle
-      }
-      if (selectedCat?.category_Name == noResultCat2UiTitle) {
-        selectedCat?.category_Name = noResultCat2OriginalTitle
-      }
-    }
-
     addFragment(R.id.inner_container, BusinessCategoryPreviewFragment.newInstance(Bundle().apply {
-      putString(IntentConstant.DESKTOP_PREVIEW.name, desktopPreview)
-      putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
+      putString(IntentConstant.DESKTOP_PREVIEW.name, selectedCategoryLive?.fpExperienceCode?.desktoppreview?.url)
+      putString(IntentConstant.MOBILE_PREVIEW.name, selectedCategoryLive?.fpExperienceCode?.mobilepreview?.url)
       putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
-      putString(IntentConstant.CATEGORY_SUGG_UI.name, Gson().toJson(selectedCatSugg))
-      putString(IntentConstant.CATEGORY_DATA.name, Gson().toJson(selectedCat))
-      putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent == true)
+      putString(IntentConstant.CATEGORY_SUGG_UI.name, selectedCategoryLive?.name ?: "")
+      putSerializable(IntentConstant.CATEGORY_DATA.name, selectedCategory)
+      putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent?:false)
     }), true)
   }
 
-  fun setSelectedCat(cat: CategoryDataModelOv2) {
-    selectedCat = cat
+  fun setSelectedCat(category: CategoryDataModelOv2) {
+    selectedCategory = category
     binding?.tvNextStep1?.isEnabled = true
   }
 }
