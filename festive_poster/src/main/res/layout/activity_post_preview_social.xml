@@ -68,15 +68,6 @@
                     tools:itemCount="6"
                     tools:listitem="@layout/item_social_preview_viewpager" />
 
-               <!-- <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/pager_post_preview"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_343"
-                    android:background="@color/grey_DADADA"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />-->
-
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tv_preview_title"
                     android:layout_width="wrap_content"

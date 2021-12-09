@@ -5,6 +5,8 @@ import com.festive.poster.R
 import com.festive.poster.databinding.BsheetPostingProgressBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
+import java.util.*
+import kotlin.concurrent.schedule
 
 class PostingProgressBottomSheet :
     BaseBottomSheetDialog<BsheetPostingProgressBinding, BaseViewModel>() {
@@ -28,6 +30,9 @@ class PostingProgressBottomSheet :
     }
 
     override fun onCreateView() {
-
+        Timer("Progress Posting Update", false).schedule(2000) {
+            dismiss()
+            PostSuccessBottomSheet().show(baseActivity.supportFragmentManager, PostSuccessBottomSheet::class.java.name)
+        }
     }
 }

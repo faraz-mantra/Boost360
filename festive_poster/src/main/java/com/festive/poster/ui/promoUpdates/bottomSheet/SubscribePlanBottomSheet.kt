@@ -29,9 +29,9 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
     }
 
     override fun onCreateView() {
-        binding?.btnGetPack?.setOnClickListener {
+        /*binding?.btnGetPack?.setOnClickListener {
             dismiss()
-        }
+        }*/
 
         binding?.rivCloseBottomSheet?.setOnClickListener {
             dismiss()
@@ -48,15 +48,19 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
 
     private fun updatePackageSelectionUI(buttonPositionSelected: Int = 0){
         if (buttonPositionSelected == 0){
-            binding?.ivSelectionIndicator1?.setBackgroundResource(R.drawable.ic_tick_green_round)
+            binding?.ivSelectionIndicator1?.setImageResource(R.drawable.ic_tick_green_round)
+            binding?.ivSelectionIndicator1?.setBackgroundResource(0)
+            binding?.ivSelectionIndicator2?.setImageResource(0)
             binding?.ivSelectionIndicator2?.setBackgroundResource(R.drawable.bg_grey_stroke_circle)
             binding?.ivOfferPercent1?.visible()
             binding?.ivOfferPercent2?.gone()
             binding?.linearRegularAmount?.setBackgroundResource(R.drawable.bg_yellow_stroke_et)
             binding?.linearDiscountAmount?.setBackgroundResource(R.drawable.bg_grey_stroke_et)
         }else{
+            binding?.ivSelectionIndicator1?.setImageResource(0)
             binding?.ivSelectionIndicator1?.setBackgroundResource(R.drawable.bg_grey_stroke_circle)
-            binding?.ivSelectionIndicator2?.setBackgroundResource(R.drawable.ic_tick_green_round)
+            binding?.ivSelectionIndicator2?.setImageResource(R.drawable.ic_tick_green_round)
+            binding?.ivSelectionIndicator2?.setBackgroundResource(0)
             binding?.ivOfferPercent1?.gone()
             binding?.ivOfferPercent2?.visible()
             binding?.linearRegularAmount?.setBackgroundResource(R.drawable.bg_grey_stroke_et)

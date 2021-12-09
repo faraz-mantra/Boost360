@@ -15,7 +15,7 @@ class SocialPreviewModel(
     fun getData(context: Context): ArrayList<SocialPreviewModel> {
         return arrayListOf(
             SocialPreviewModel(
-                previewPageResource = R.drawable.post_preview_promo_1,
+                previewPageResource = R.drawable.post_preview_promo_2,
                 socialIconResource = R.drawable.ic_instagram_promo_grey_boundary
             ),
             SocialPreviewModel(
@@ -23,7 +23,7 @@ class SocialPreviewModel(
                 socialIconResource = R.drawable.ic_twitter_promo_grey_boundary
             ),
             SocialPreviewModel(
-                previewPageResource = R.drawable.post_preview_promo_1,
+                previewPageResource = R.drawable.post_preview_promo_2,
                 socialIconResource = R.drawable.ic_myshop_promo_grey_boundary
             ),
             SocialPreviewModel(
