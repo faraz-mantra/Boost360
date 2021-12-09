@@ -77,4 +77,8 @@
     <string name="posting_update_on">Posting update on…</string>
     <string name="website_subscribers_facebook_instagram_gmb_twitter"><![CDATA[Website, Subscribers, Facebook,\nInstagram, GMB & Twitter.]]></string>
     <string name="channel_not_found">Channel not found</string>
+    <string name="update_posted_successfully">Update posted successfully!</string>
+    <string name="also_promote_with_your_contacts_on">Also, promote with your contacts on:</string>
+    <string name="insta_dm_dm">Insta DM</string>
+    <string name="more">More…</string>
 </resources>

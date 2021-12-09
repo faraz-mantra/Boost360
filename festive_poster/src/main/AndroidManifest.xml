@@ -6,9 +6,6 @@
 
     <application android:name=".FestivePosterApplication">
         <activity
-            android:name=".ui.promoUpdates.PostPreviewSocialActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.festivePoster.FestivePosterContainerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/TemplateTheme" />
@@ -19,6 +16,11 @@
             android:theme="@style/TemplateTheme" />
         <activity
             android:name=".ui.promoUpdates.edit_post.EditPostActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/TemplateTheme"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".ui.promoUpdates.PostPreviewSocialActivity"
             android:screenOrientation="portrait"
             android:theme="@style/TemplateTheme"
             android:windowSoftInputMode="stateHidden|adjustPan" />

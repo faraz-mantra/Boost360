@@ -11,6 +11,9 @@ class SocialPreviewViewPagerViewHolder(binding: ItemSocialPreviewViewpagerBindin
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as SocialPreviewModel
 
+        binding.ivPreview.setImageResource(model.previewPageResource ?: 0)
+        binding.ivSocialIcon.setImageResource(model.socialIconResource ?: 0)
+
         super.bind(position, item)
     }
 

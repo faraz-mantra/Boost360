@@ -20,9 +20,11 @@ class SocialPlatformOptionListViewHolder(binding: ItemSocialPlatformPromoAdapBin
 
         if (model.isConnected == true) {
             binding.ivLock.gone()
+            binding.checkboxSocialSelected.visible()
             binding.tvSocialSubtitleStatus.text = model.socialSubTitleData ?: ""
         } else {
             binding.ivLock.visible()
+            binding.checkboxSocialSelected.gone()
             binding.tvSocialSubtitleStatus.text =
                 fromHtml("<font color=#E39595>Not connected</font>")
         }

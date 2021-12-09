@@ -31,8 +31,7 @@
                 android:layout_marginTop="@dimen/size_32"
                 android:layout_marginBottom="@dimen/size_15"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                 />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tv_title"
@@ -150,6 +149,7 @@
                     android:id="@+id/iv_selection_indicator_1"
                     android:layout_width="@dimen/size_16"
                     android:layout_height="@dimen/size_16"
+                    android:scaleType="fitXY"
                     android:layout_marginHorizontal="@dimen/size_2"
                     android:layout_marginVertical="@dimen/size_2"
                     android:layout_gravity="top|end"
@@ -161,6 +161,7 @@
                     android:layout_height="@dimen/size_14"
                     android:fontFamily="@font/inter_bold"
                     android:textSize="@dimen/text_10"
+                    android:visibility="gone"
                     android:textColor="@color/white"
                     android:gravity="center"
                     android:text="19% OFF"
@@ -239,18 +240,11 @@
             </FrameLayout>
 
             <com.framework.views.customViews.CustomMaterialButton
+                style="@style/CustomRoundedYellowButton"
                 android:id="@+id/btn_get_pack"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_54"
                 android:layout_marginHorizontal="@dimen/size_22"
                 android:layout_marginTop="@dimen/size_12"
-                android:backgroundTint="@color/colorPrimary"
-                android:fontFamily="@font/inter_medium"
                 android:text="Get annual pack for ₹600"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_16"
-                app:cornerRadius="@dimen/size_10"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/frame_package_1" />

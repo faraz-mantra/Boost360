@@ -27,6 +27,8 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
     }
 
     override fun onCreateView() {
-
+        binding?.ivClosePostSuccess?.setOnClickListener {
+            dismiss()
+        }
     }
 }
