@@ -40,6 +40,7 @@ android {
 dependencies {
 
     api project(path: ':resources')
+    implementation project(path: ':onboarding')
 
 
 }

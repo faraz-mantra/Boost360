@@ -22,7 +22,7 @@ inline fun <reified T> convertStringToList(json: String): List<T>? {
   return Gson().fromJson<ArrayList<T>>(json, type)
 }
 
-inline fun <reified T> convertStringToObj(json: String): T? {
+inline fun <reified T> convertStringToObj(json: String?): T? {
   return Gson().fromJson(json, object : TypeToken<T>() {}.type)
 }
 

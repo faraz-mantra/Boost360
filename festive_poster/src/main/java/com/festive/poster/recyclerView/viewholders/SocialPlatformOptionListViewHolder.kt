@@ -13,10 +13,10 @@ class SocialPlatformOptionListViewHolder(binding: ItemSocialPlatformPromoAdapBin
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as SocialPlatformModel
-        binding.ivSocialIcon.setImageResource(model.socialImageResource ?: 0)
+        binding.ivSocialIcon.setImageDrawable(model.socialImageResource)
         binding.tvSocialTitle.text = model.socialTitle ?: ""
-        binding.checkboxSocialSelected.isChecked = model.isSelected ?: false
-        binding.checkboxSocialSelected.isEnabled = model.isConnected == true
+        binding.checkboxSocialSelected.isChecked = model.isConnected ?: false
+        binding.checkboxSocialSelected.isEnabled = model.isEnabled == true
 
         if (model.isConnected == true) {
             binding.ivLock.gone()
