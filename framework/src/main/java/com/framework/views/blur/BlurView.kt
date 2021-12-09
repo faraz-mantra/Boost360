@@ -1,9 +1,12 @@
 package com.framework.views.blur
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.Log
+import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
@@ -117,4 +120,13 @@ class BlurView : FrameLayout {
   companion object {
     private val TAG = BlurView::class.java.simpleName
   }
+}
+
+fun BlurView.setBlur(activity: Activity, value: Float) {
+  val decorView: View? = activity.window?.decorView
+  val rootView: ViewGroup = decorView?.findViewById(android.R.id.content) as ViewGroup
+  val windowBackground: Drawable = decorView.background
+  this.setupWith(rootView)?.setFrameClearDrawable(windowBackground)
+    ?.setBlurAlgorithm(RenderScriptBlur(activity))?.setBlurRadius(value)
+    ?.setHasFixedTransformationMatrix(true)
 }

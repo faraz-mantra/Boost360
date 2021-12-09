@@ -30,7 +30,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       CATEGORY_ITEM_OV2 -> CategoryOv2RecyclerViewHolder(binding as ItemWebsiteCategoriesBinding)
       BUSINESS_LIST_ITEM -> BusinessListViewHolder(binding as RecyclerItemFpInfoBinding)
       INTRO_NEW_SLIDES -> IntroSlidesViewHolder(binding as ItemIntroNewSlidesBinding)
-      CATEGORY_SUGGESTION_ITEM->CategorySuggestionViewholder(binding as ListItemCategorySuggestionBinding)
+      CATEGORY_SUGGESTION_ITEM -> CategorySuggestionViewHolder(binding as ListItemCategorySuggestionBinding)
     }
   }
 

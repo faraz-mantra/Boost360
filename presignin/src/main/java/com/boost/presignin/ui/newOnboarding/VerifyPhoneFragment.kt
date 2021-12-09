@@ -73,7 +73,6 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
     WebEngageController.trackEvent(PS_VERIFY_OTP_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.tvPhoneNumber?.text = phoneNumber.toString()
     Handler().postDelayed({ onCodeSent() }, 500)
-    // init SMS Manager
     SmsManager.initManager(baseActivity, this)
   }
 
@@ -201,8 +200,8 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
       if (it.isSuccess()) {
         val result = it as? VerifyOtpResponse
         binding?.tvResendOtpIn?.gone()
-        if (result?.Result?.authTokens.isNullOrEmpty().not() && result?.Result?.authTokens?.size!! >= 1) {
-          this.resultLogin = result.Result
+        if ((result?.Result?.authTokens.isNullOrEmpty().not() && result?.Result?.authTokens?.size!! >= 1).not()) {
+          this.resultLogin = result?.Result
           loginId = resultLogin?.loginId
           apiWhatsappOptin()
         } else {
@@ -238,9 +237,8 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
       activity = baseActivity, type = FragmentType.WELCOME_FRAGMENT,
       bundle = Bundle().apply {
         putString(IntentConstant.EXTRA_PHONE_NUMBER.name, enteredPhone)
-        putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, false)
-      },
-      clearTop = false
+        putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, binding?.chkWhatsapp?.isChecked ?: false)
+      }, clearTop = false
     )
   }
 

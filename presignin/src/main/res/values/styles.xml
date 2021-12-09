@@ -17,9 +17,10 @@
     <item name="colorPrimary">@color/primary_grey_dark</item>
     <item name="colorPrimaryDark">@color/primary_grey</item>
   </style>
+
   <style name="AppTheme.Registration" parent="AppTheme.Pre.Signin">
     <!-- Customize your theme here. -->
-   <item name="android:statusBarColor">@color/gray_f0f0f0</item>
+    <item name="android:statusBarColor">@color/gray_f0f0f0</item>
   </style>
 
   <style name="FullScreenDialog" parent="Theme.AppCompat.Light.Dialog">
@@ -272,13 +273,11 @@
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">@dimen/size_50</item>
     <item name="android:background">@color/disable_enable_button_selector</item>
-    <item name="background">@color/disable_enable_button_selector</item>
-    <item name="backgroundTint">@color/disable_enable_button_selector</item>
-    <item name="fontFamily">@font/inter_bold</item>
-    <item name="textSize">@dimen/text_16</item>
+    <item name="android:backgroundTint">@color/disable_enable_button_selector</item>
+    <item name="android:fontFamily">@font/inter_bold</item>
+    <item name="android:textSize">@dimen/text_16</item>
     <item name="android:gravity">center</item>
     <item name="android:textColor">@color/white</item>
-    <item name="textColor">@color/white</item>
   </style>
 
   <style name="ThemeOverlay.AppTheme.TextInputEditText.Outlined" parent="">

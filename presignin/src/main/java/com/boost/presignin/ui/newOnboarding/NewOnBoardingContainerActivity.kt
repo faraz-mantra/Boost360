@@ -153,8 +153,7 @@ fun startFragmentFromNewOnBoardingActivity(activity: Activity, type: FragmentTyp
   val intent = Intent(activity, NewOnBoardingContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
-  if (clearTop) intent.flags =
-    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+  if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
   activity.startActivity(intent)
 }
 
@@ -162,8 +161,7 @@ fun startFragmentFromNewOnBoardingActivityFinish(activity: Activity, type: Fragm
   val intent = Intent(activity, NewOnBoardingContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
-  if (clearTop) intent.flags =
-    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+  if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
   activity.startActivity(intent)
   activity.finish()
 }
