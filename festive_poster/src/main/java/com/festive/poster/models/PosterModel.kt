@@ -39,4 +39,8 @@ open class PosterModel(
     var isPurchased:Boolean=false
     get() = details.isPurchased
 
+    fun url(): String? {
+        return variants.firstOrNull()?.svgUrl
+    }
+
 }

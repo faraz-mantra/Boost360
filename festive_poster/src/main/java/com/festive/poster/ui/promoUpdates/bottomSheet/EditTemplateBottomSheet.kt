@@ -18,14 +18,21 @@ import java.io.InputStreamReader
 
 class EditTemplateBottomSheet : BaseBottomSheetDialog<BsheetEditPostBinding, BaseViewModel>() {
 
+
+    private var callbacks:EditTemplateBottomSheet.Callbacks?=null
     companion object {
         @JvmStatic
-        fun newInstance(): EditTemplateBottomSheet {
+        fun newInstance(callbacks:Callbacks): EditTemplateBottomSheet {
             val bundle = Bundle().apply {}
             val fragment = EditTemplateBottomSheet()
+            fragment.callbacks = callbacks
             fragment.arguments = bundle
             return fragment
         }
+    }
+
+    interface Callbacks{
+        fun onDone(header1:String,header2:String)
     }
 
     override fun getLayout(): Int {
@@ -49,8 +56,10 @@ class EditTemplateBottomSheet : BaseBottomSheetDialog<BsheetEditPostBinding, Bas
         super.onClick(v)
         when (v) {
             binding?.btnDone -> {
-                replaceText("SMILEY DENTAL CLINIC", binding?.etHeader1?.text.toString(), v)
-                replaceText("Straighten your teeth with Invisible braces starting at RS.399/-", binding?.etHeader2?.text.toString(), v)
+                callbacks?.onDone(binding?.etHeader1?.text.toString(),
+                    binding?.etHeader2?.text.toString())
+              //  replaceText("SMILEY DENTAL CLINIC", binding?.etHeader1?.text.toString(), v)
+              //  replaceText("Straighten your teeth with Invisible braces starting at RS.399/-", binding?.etHeader2?.text.toString(), v)
                 dismiss()
             }
 
@@ -60,6 +69,7 @@ class EditTemplateBottomSheet : BaseBottomSheetDialog<BsheetEditPostBinding, Bas
         }
     }
 
+/*
     fun replaceText(key: String, value: String, v: View){
 
         var reader: BufferedReader? = null;
@@ -103,4 +113,5 @@ class EditTemplateBottomSheet : BaseBottomSheetDialog<BsheetEditPostBinding, Bas
             }
         }
     }
+*/
 }

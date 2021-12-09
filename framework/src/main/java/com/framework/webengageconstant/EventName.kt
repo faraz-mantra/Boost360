@@ -545,3 +545,26 @@ const val DOMAIN_SEARCHED_SELECTED_DOMAIN_CLICK = "Domain searched selected doma
 const val DOMAIN_CONFIRMING_GO_BACK_BUTTON_CLICK = "Domain confirming go back button click"
 const val DOMAIN_SEARCHED_CREATE_SUCCESS = "Domain searched create success"
 const val DOMAIN_CREATE_CALL_INVOKED_CLICK = "Domain create call invoked click"
+
+
+//PROMO UPDATES
+const val Post_Promotional_Update_Click="Post_Promotional_Update_Click"
+const val Promotional_Update_Home_Loaded="Promotional_Update_Home_Loaded"
+const val Promotional_Update_Social_Accounts_Connect_Click="Promotional_Update_Social_Accounts_Connect_Click"
+const val Promotional_Update_WhatsApp_Share_Click="Promotional_Update_WhatsApp_Share_Click"
+const val Promotional_Update_Post_Click="Promotional_Update_Post_Click"
+const val Promotional_Update_Edit_Click="Promotional_Update_Edit_Click"
+const val Promotional_Update_Browse_All_Click="Promotional_Update_Browse_All_Click"
+const val Promtoional_Update_View_Updates_Click="Promtoional_Update_View_Updates_Click"
+const val Promotional_Update_View_More_Click="Promotional_Update_View_More_Click"
+const val Promotional_Update_Browse_All_Loaded="Promotional_Update_Browse_All_Loaded"
+const val Promotional_Update_Category_Click="Promotional_Update_Category_Click"
+const val Promotional_Update_Category_Loaded="Promotional_Update_Category_Loaded"
+const val Promotional_Update_Category_Album_View_Click="Promotional_Update_Category_Album_View_Click"
+/*
+const val
+const val
+const val
+const val
+const val
+const val*/

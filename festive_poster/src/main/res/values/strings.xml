@@ -65,6 +65,8 @@
     <string name="no_stay_here">No stay here</string>
     <string name="yes_delete">Yes, delete</string>
     <string name="closing_this_page_will_not_save_the_changes_you_ve_made">Closing this page will not save the changes youve made.</string>
+    <string name="speech_prompt">Say something</string>
+    <string name="speech_not_supported">Speech to text not supported</string>
     <string name="business_promotion_is_now_very_easy">Business\npromotion is\nnow very easy.</string>
     <string name="get_access_to_1000_fresh_tailor_made_customisable_posts_to_instantly_promote_your_business_with_your_customers_on_your_business_website_and_social_media"><![CDATA[Get access to 1000+ fresh, tailor made & customisable\nposts to instantly promote your business with your\ncustomers on your business website and social media.]]></string>
     <string name="price_includes_all_applicable_taxes">*price includes all applicable taxes</string>

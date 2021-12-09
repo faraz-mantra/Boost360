@@ -12,9 +12,11 @@ import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.databinding.ActivityPromoUpdatesBinding
 import com.festive.poster.models.promoModele.SocialConnModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
+import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.framework.models.BaseViewModel
 import com.framework.utils.setColorFilter2
+import com.framework.webengageconstant.Post_Promotional_Update_Click
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -32,6 +34,8 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseVi
 
     override fun onCreateView() {
         super.onCreateView()
+        WebEngageController.trackEvent(Post_Promotional_Update_Click)
+
         sharedViewModel = ViewModelProvider(this).get(FestivePosterSharedViewModel::class.java)
        // sharedViewModel?.shouldRefresh=true
         observeFragmentStack()

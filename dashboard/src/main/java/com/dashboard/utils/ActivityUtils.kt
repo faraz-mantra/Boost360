@@ -1033,7 +1033,7 @@ fun Context.startHelpSupportVideoActivity(supportType:String){
 
 fun AppCompatActivity.startPromotionUpdates() {
   try {
-//    WebEngageController.trackEvent(text, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(Post_Promotional_Update_Click)
     val posterIntent = Intent(this,PromoUpdatesActivity::class.java)
 
     startActivity(posterIntent)
