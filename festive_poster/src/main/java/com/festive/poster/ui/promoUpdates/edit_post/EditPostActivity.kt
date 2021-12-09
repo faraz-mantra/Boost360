@@ -26,6 +26,7 @@ import com.festive.poster.ui.promoUpdates.bottomSheet.DeleteDraftBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.EditTemplateBottomSheet
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
+import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.festive.poster.viewmodels.UpdatesViewModel
 import com.framework.extensions.afterTextChanged
 import com.framework.extensions.observeOnce
@@ -46,7 +47,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
 
-class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, UpdatesViewModel>() {
+class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterViewModel>() {
 
 
     private var sessionLocal: UserSessionManager?=null
@@ -55,8 +56,8 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, UpdatesViewMode
         return R.layout.activity_edit_post
     }
 
-    override fun getViewModelClass(): Class<UpdatesViewModel> {
-        return UpdatesViewModel::class.java
+    override fun getViewModelClass(): Class<FestivePosterViewModel> {
+        return FestivePosterViewModel::class.java
     }
 
     companion object {
@@ -81,30 +82,11 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, UpdatesViewMode
         SvgUtils.loadImage(posterModel?.url()!!,binding!!.ivTemplate,posterModel!!.keys,posterModel!!.isPurchased)
         binding?.captionLayout?.etInput?.isEnabled = false
         binding?.btnTapToEdit?.setOnClickListener {
-            EditTemplateBottomSheet().show(supportFragmentManager, EditTemplateBottomSheet::class.java.name)
-            /*val bSheet = BottomSheetDialog(this,R.style.BottomSheetTheme)
-            val binding = DataBindingUtil.inflate<BsheetEditPostBinding>(layoutInflater,R.layout.bsheet_edit_post,null,false)
-            bSheet.setContentView(binding.root)
-            bSheet.show()
-
-            binding.btnDone.setOnClickListener {
-                replaceText("SMILEY DENTAL CLINIC",binding.etHeader1.text.toString())
-                replaceText("Straighten your teeth with Invisible braces starting at RS.399/-",
-                binding.etHeader2.text.toString())
-                bSheet.dismiss()
-            }
-
-            binding.btnCancel.setOnClickListener {
-                bSheet.dismiss()
-            }
-
-            binding?.etHeader1?.afterTextChanged {
-                binding.tvTitleCount.text = fromHtml("<font color=#09121F>${it.length}</font><font color=#9DA4B2> /17</font>")
-            }
-
-            binding?.etHeader2?.afterTextChanged {
-                binding.tvSubtitleCount.text = fromHtml("<font color=#09121F>${it.length}</font><font color=#9DA4B2> /80</font>")
-            }*/
+            EditTemplateBottomSheet.newInstance(object :EditTemplateBottomSheet.Callbacks{
+                override fun onDone(header1: String, header2: String) {
+                    saveKeyValue()
+                }
+            }).show(supportFragmentManager, EditTemplateBottomSheet::class.java.name)
         }
         binding?.captionLayout?.inputLayout?.setOnClickListener {
             CaptionBottomSheet.newInstance(object :CaptionBottomSheet.Callbacks{
@@ -115,12 +97,27 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, UpdatesViewMode
         }
 
         binding?.ivCloseEditing?.setOnClickListener {
-            DeleteDraftBottomSheet().show(supportFragmentManager, DeleteDraftBottomSheet::class.java.name)
+            DeleteDraftBottomSheet.newInstance(object :DeleteDraftBottomSheet.Callbacks{
+                override fun onDelete() {
+                    finish()
+                }
+            }).show(supportFragmentManager, DeleteDraftBottomSheet::class.java.name)
         }
 
         binding?.tvPreviewAndPost?.setOnClickListener {
             saveUpdatePost()
         }
+    }
+
+    fun saveKeyValue(){
+
+        viewModel.saveKeyValue(sessionLocal?.fPID,
+        sessionLocal?.fpTag, arrayListOf(posterModel?.id!!), hashMapOf("test" to "test")
+        ).observe(this,{
+            if (it.isSuccess()){
+
+            }
+        })
     }
 
     /* fun replaceText(key:String,value:String){
@@ -186,30 +183,31 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, UpdatesViewMode
             true,
             socialShare
         )
-        viewModel.putBizMessageUpdate(request).observeOnce(this, {
-            if (it.isSuccess() && it.stringResponse.isNullOrEmpty().not()) {
 
-                lifecycleScope.launch {
-                    val bodyImage = SvgUtils.svgToBitmap(posterModel!!)?.saveAsTempFile()?.asRequestBody("image/*".toMediaTypeOrNull())
-                    val s_uuid = UUID.randomUUID().toString().replace("-", "")
-                    viewModel.putBizImageUpdate(
-                        clientId, "sequential", s_uuid, 1, 1,
-                        socialShare, it.stringResponse, true, bodyImage
-                    ).observeOnce(this@EditPostActivity, { it1 ->
-                        if (it1.isSuccess()) {
-                            // successResult()
-                        } else showShortToast("Image uploading error, please try again.")
-
-                        hideProgress()
-                    })
-                }
-
-                }
-             else {
-                 hideProgress()
-                showShortToast("Post updating error, please try again.")
-            }
-        })
+//        viewModel.putBizMessageUpdate(request).observeOnce(this, {
+//            if (it.isSuccess() && it.stringResponse.isNullOrEmpty().not()) {
+//
+//                lifecycleScope.launch {
+//                    val bodyImage = SvgUtils.svgToBitmap(posterModel!!)?.saveAsTempFile()?.asRequestBody("image/*".toMediaTypeOrNull())
+//                    val s_uuid = UUID.randomUUID().toString().replace("-", "")
+//                    viewModel.putBizImageUpdate(
+//                        clientId, "sequential", s_uuid, 1, 1,
+//                        socialShare, it.stringResponse, true, bodyImage
+//                    ).observeOnce(this@EditPostActivity, { it1 ->
+//                        if (it1.isSuccess()) {
+//                            // successResult()
+//                        } else showShortToast("Image uploading error, please try again.")
+//
+//                        hideProgress()
+//                    })
+//                }
+//
+//                }
+//             else {
+//                 hideProgress()
+//                showShortToast("Post updating error, please try again.")
+//            }
+//        })
     }
 
 //    private fun getRequestBizImage(): RequestBody {

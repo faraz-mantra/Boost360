@@ -11,15 +11,21 @@ import com.framework.models.BaseViewModel
 
 class DeleteDraftBottomSheet : BaseBottomSheetDialog<BsheetDeleteDraftBinding, BaseViewModel>() {
 
+    private var callbacks:DeleteDraftBottomSheet.Callbacks?=null
     companion object {
         @JvmStatic
-        fun newInstance(): DeleteDraftBottomSheet {
+        fun newInstance(callbacks: Callbacks): DeleteDraftBottomSheet {
             val bundle = Bundle().apply {}
             val fragment = DeleteDraftBottomSheet()
+            fragment.callbacks = callbacks
             fragment.arguments = bundle
             return fragment
         }
     }
+    interface Callbacks{
+        fun onDelete()
+    }
+
 
     override fun getLayout(): Int {
         return R.layout.bsheet_delete_draft
@@ -31,6 +37,7 @@ class DeleteDraftBottomSheet : BaseBottomSheetDialog<BsheetDeleteDraftBinding, B
 
     override fun onCreateView() {
         binding?.btnYesDelete?.setOnClickListener {
+            callbacks?.onDelete()
             dismiss()
         }
 

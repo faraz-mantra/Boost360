@@ -17,10 +17,13 @@ import com.festive.poster.models.promoModele.TodaysPickModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.festive.poster.utils.WebEngageController
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 import com.framework.utils.convertStringToList
 import com.framework.utils.toArrayList
+import com.framework.webengageconstant.Promotional_Update_Browse_All_Loaded
+import com.framework.webengageconstant.Promotional_Update_Category_Click
 import com.google.gson.Gson
 
 class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel>(),RecyclerItemClickListener {
@@ -56,6 +59,7 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel
 
     override fun onCreateView() {
         super.onCreateView()
+        WebEngageController.trackEvent(Promotional_Update_Browse_All_Loaded)
         selectedPos = arguments?.getInt(BK_SELECTED_POS)?:0
         categoryList = convertStringToList<PosterPackModel>(arguments?.getString(
             BK_POSTER_PACK_LIST)!!)?.toArrayList()
@@ -174,6 +178,8 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
         when(actionType){
             RecyclerViewActionType.BROWSE_ALL_POSTER_CAT_CLICKED.ordinal->{
+                WebEngageController.trackEvent(Promotional_Update_Category_Click)
+
                 categoryList?.forEach { it.isSelected =false }
                 categoryList?.get(position)?.isSelected=true
                 categoryAdapter?.notifyDataSetChanged()

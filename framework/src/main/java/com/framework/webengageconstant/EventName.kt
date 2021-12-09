@@ -557,14 +557,11 @@ const val Promotional_Update_Edit_Click="Promotional_Update_Edit_Click"
 const val Promotional_Update_Browse_All_Click="Promotional_Update_Browse_All_Click"
 const val Promtoional_Update_View_Updates_Click="Promtoional_Update_View_Updates_Click"
 const val Promotional_Update_View_More_Click="Promotional_Update_View_More_Click"
-/*const val
-const val
-const val
-const val
-const val
-const val
-const val
-const val
+const val Promotional_Update_Browse_All_Loaded="Promotional_Update_Browse_All_Loaded"
+const val Promotional_Update_Category_Click="Promotional_Update_Category_Click"
+const val Promotional_Update_Category_Loaded="Promotional_Update_Category_Loaded"
+const val Promotional_Update_Category_Album_View_Click="Promotional_Update_Category_Album_View_Click"
+/*
 const val
 const val
 const val
