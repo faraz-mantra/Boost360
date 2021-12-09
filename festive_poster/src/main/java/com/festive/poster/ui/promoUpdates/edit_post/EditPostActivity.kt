@@ -14,9 +14,12 @@ import java.io.InputStreamReader
 import java.util.*
 import android.content.*
 import androidx.lifecycle.lifecycleScope
+import android.content.Intent
+import android.view.View
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.databinding.ActivityEditPostBinding
+import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
 import com.festive.poster.databinding.BsheetEditPostBinding
 import com.festive.poster.models.PostUpdateTaskRequest
 import com.festive.poster.models.PosterModel
@@ -24,6 +27,8 @@ import com.festive.poster.ui.festivePoster.PosterHelpSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.CaptionBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.DeleteDraftBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.EditTemplateBottomSheet
+import com.framework.base.BaseActivity
+import com.framework.models.BaseViewModel
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterViewModel
@@ -74,7 +79,7 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
 
         posterModel = convertStringToObj(intent.getStringExtra(IK_POSTER)!!)
         initUI()
-       // binding?.ivTemplate?.setImageAsset("frame_14.svg")
+        setOnClickListener(binding?.btnTapToEdit, binding?.captionLayout?.etInput, binding?.ivCloseEditing, binding?.tvPreviewAndPost)
 
     }
 
@@ -164,6 +169,24 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
              }
          }
      }*/
+
+    override fun onClick(v: View?) {
+        super.onClick(v)
+        when (v) {
+            binding?.btnTapToEdit -> {
+                EditTemplateBottomSheet().show(supportFragmentManager, EditTemplateBottomSheet::class.java.name)
+            }
+            binding?.captionLayout?.etInput -> {
+                CaptionBottomSheet().show(supportFragmentManager, CaptionBottomSheet::class.java.name)
+            }
+            binding?.ivCloseEditing -> {
+                DeleteDraftBottomSheet().show(supportFragmentManager, DeleteDraftBottomSheet::class.java.name)
+            }
+            binding?.tvPreviewAndPost -> {
+                binding?.root?.context?.startActivity(Intent(binding?.root?.context, PostPreviewSocialActivity::class.java))
+            }
+        }
+    }
 
     private fun saveUpdatePost() {
         showProgress()
