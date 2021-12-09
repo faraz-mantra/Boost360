@@ -13,6 +13,7 @@ const val FESTIVE_POSTER_NAME = "festive_poster_name"
 const val DASHBOARD_FESTIVAL_BUTTON_VISIBILITY = "dashboard_festive_poster_button_visible"
 const val FEATURE_DOMAIN_BOOKING_ENABLE = "feature_domain_booking_enable"
 const val IN_APP_UPDATE_TYPE_IMMEDIATE = "in_app_update_type_immediate"
+const val K_ADMIN_URL = "k_admin_url"
 
 object FirebaseRemoteConfigUtil {
 
@@ -44,6 +45,11 @@ object FirebaseRemoteConfigUtil {
   fun festivePosterName(): String? {
     Log.d(TAG, "Config festive poster name: ${remoteConfig?.getBoolean(DASHBOARD_FESTIVAL_BUTTON_VISIBILITY) ?: false}")
     return remoteConfig?.getString(FESTIVE_POSTER_NAME)
+  }
+  
+  fun kAdminUrl(): String? {
+    Log.d(TAG, "kAdminUrl: ${remoteConfig?.getString(K_ADMIN_URL)}")
+    return remoteConfig?.getString(K_ADMIN_URL)
   }
 
   fun featureDomainEnable(): Boolean {
