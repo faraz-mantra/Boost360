@@ -2,8 +2,6 @@ package com.festive.poster.ui.promoUpdates.edit_post
 
 import android.app.Activity
 import androidx.databinding.DataBindingUtil
-import com.framework.base.BaseActivity
-import com.framework.models.BaseViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.util.Log
 
@@ -75,6 +73,8 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
         }
     }
     override fun onCreateView() {
+        binding?.captionLayout?.etInput?.isEnabled = false
+
         sessionLocal = UserSessionManager(this)
 
         posterModel = convertStringToObj(intent.getStringExtra(IK_POSTER)!!)
@@ -85,33 +85,9 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
 
     private fun initUI() {
         SvgUtils.loadImage(posterModel?.url()!!,binding!!.ivTemplate,posterModel!!.keys,posterModel!!.isPurchased)
-        binding?.captionLayout?.etInput?.isEnabled = false
-        binding?.btnTapToEdit?.setOnClickListener {
-            EditTemplateBottomSheet.newInstance(object :EditTemplateBottomSheet.Callbacks{
-                override fun onDone(header1: String, header2: String) {
-                    saveKeyValue()
-                }
-            }).show(supportFragmentManager, EditTemplateBottomSheet::class.java.name)
-        }
-        binding?.captionLayout?.inputLayout?.setOnClickListener {
-            CaptionBottomSheet.newInstance(object :CaptionBottomSheet.Callbacks{
-                override fun onDone(value: String) {
-                    binding?.captionLayout?.etInput?.setText(value)
-                }
-            }).show(supportFragmentManager, CaptionBottomSheet::class.java.name)
-        }
 
-        binding?.ivCloseEditing?.setOnClickListener {
-            DeleteDraftBottomSheet.newInstance(object :DeleteDraftBottomSheet.Callbacks{
-                override fun onDelete() {
-                    finish()
-                }
-            }).show(supportFragmentManager, DeleteDraftBottomSheet::class.java.name)
-        }
 
-        binding?.tvPreviewAndPost?.setOnClickListener {
-            saveUpdatePost()
-        }
+
     }
 
     fun saveKeyValue(){
@@ -174,16 +150,29 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
         super.onClick(v)
         when (v) {
             binding?.btnTapToEdit -> {
-                EditTemplateBottomSheet().show(supportFragmentManager, EditTemplateBottomSheet::class.java.name)
+                EditTemplateBottomSheet.newInstance(object :EditTemplateBottomSheet.Callbacks{
+                    override fun onDone(header1: String, header2: String) {
+                        saveKeyValue()
+                    }
+                }).show(supportFragmentManager, EditTemplateBottomSheet::class.java.name)
             }
             binding?.captionLayout?.etInput -> {
-                CaptionBottomSheet().show(supportFragmentManager, CaptionBottomSheet::class.java.name)
+                CaptionBottomSheet.newInstance(object :CaptionBottomSheet.Callbacks{
+                    override fun onDone(value: String) {
+                        binding?.captionLayout?.etInput?.setText(value)
+                    }
+                }).show(supportFragmentManager, CaptionBottomSheet::class.java.name)
             }
             binding?.ivCloseEditing -> {
-                DeleteDraftBottomSheet().show(supportFragmentManager, DeleteDraftBottomSheet::class.java.name)
+                DeleteDraftBottomSheet.newInstance(object :DeleteDraftBottomSheet.Callbacks{
+                    override fun onDelete() {
+                        finish()
+                    }
+                }).show(supportFragmentManager, DeleteDraftBottomSheet::class.java.name)
             }
             binding?.tvPreviewAndPost -> {
-                binding?.root?.context?.startActivity(Intent(binding?.root?.context, PostPreviewSocialActivity::class.java))
+               // saveUpdatePost()
+                 binding?.root?.context?.startActivity(Intent(binding?.root?.context, PostPreviewSocialActivity::class.java))
             }
         }
     }
