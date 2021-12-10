@@ -7,12 +7,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.framework.views.customViews.CustomImageView
+    <com.framework.views.customViews.CustomCardView
       android:id="@+id/iv_mobile_overlay"
-      android:layout_width="@dimen/size_190"
-      android:layout_height="@dimen/size_290"
+      android:layout_width="@dimen/size_60"
+      android:layout_height="@dimen/size_140"
       android:layout_marginTop="@dimen/size_12"
-      android:src="@drawable/rounded_mobile_preview_rectangle"
+      app:cardBackgroundColor="@color/black_333333"
+      app:cardCornerRadius="@dimen/size_10"
+      app:cardElevation="0dp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
@@ -20,11 +22,10 @@
     <com.framework.views.customViews.CustomCardView
       android:id="@+id/iv_green_bar"
       android:layout_width="0dp"
-      android:layout_height="@dimen/size_290"
-      android:layout_marginStart="@dimen/size_5"
-      android:layout_marginTop="@dimen/size_8"
-      android:layout_marginEnd="@dimen/size_5"
-      app:cardCornerRadius="@dimen/size_20"
+      android:layout_height="@dimen/size_134"
+      android:layout_marginHorizontal="@dimen/size_2"
+      android:layout_marginVertical="@dimen/size_3"
+      app:cardCornerRadius="@dimen/size_8"
       app:layout_constraintEnd_toEndOf="@+id/iv_mobile_overlay"
       app:layout_constraintStart_toStartOf="@+id/iv_mobile_overlay"
       app:layout_constraintTop_toTopOf="@+id/iv_mobile_overlay">

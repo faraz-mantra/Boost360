@@ -2,11 +2,12 @@ package com.boost.presignin.ui.newOnboarding
 
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
+import com.appservice.utils.capitalizeUtil
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.LayoutSetUpMyWebsiteStep2Binding
-import com.boost.presignin.model.category.CategoryDataModelOv2
+import com.boost.presignin.model.category.CategoryDataModel
 import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
 import com.framework.extensions.visible
@@ -46,7 +47,7 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
   }
 
   private val categoryModel by lazy {
-    arguments?.getSerializable(IntentConstant.CATEGORY_DATA.name) as? CategoryDataModelOv2
+    arguments?.getSerializable(IntentConstant.CATEGORY_DATA.name) as? CategoryDataModel
   }
 
   override fun getLayout(): Int {
@@ -59,8 +60,8 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
 
   override fun onCreateView() {
     super.onCreateView()
-    binding?.includeMobileView?.blurView?.setBlur(baseActivity, 4F)
-    binding?.includeMobileView?.tvCategoryName?.text = categoryModel?.category_Name ?: ""
+    binding?.includeMobileView?.blurView?.setBlur(baseActivity, 1F)
+    binding?.includeMobileView?.tvCategoryName?.text = categoryModel?.getCategoryWithoutNewLine() ?: ""
     setOnClickListeners()
   }
 
@@ -82,7 +83,7 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
 
     binding?.businessNameInputLayout?.etInput?.afterTextChanged {
       binding?.tvNextStep2?.isEnabled = it.isEmpty().not()
-      binding?.includeMobileView?.tvTitle?.text = it
+      binding?.includeMobileView?.tvTitle?.text = it.capitalizeUtil()
       binding?.businessNameInputLayout?.tvWordCount?.text = fromHtml("<font color=${if (it.isEmpty()) "#9DA4B2" else "#09121F"}>${it.length}</font><font color=#9DA4B2> /40</font>")
     }
 

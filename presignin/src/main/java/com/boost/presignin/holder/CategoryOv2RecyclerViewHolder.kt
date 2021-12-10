@@ -5,17 +5,17 @@ import androidx.core.view.isInvisible
 import com.boost.presignin.R
 import com.boost.presignin.constant.RecyclerViewActionType
 import com.boost.presignin.databinding.ItemWebsiteCategoriesBinding
-import com.boost.presignin.model.category.CategoryDataModelOv2
+import com.boost.presignin.model.category.CategoryDataModel
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewHolder
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
 
 class CategoryOv2RecyclerViewHolder constructor(binding: ItemWebsiteCategoriesBinding) : AppBaseRecyclerViewHolder<ItemWebsiteCategoriesBinding>(binding) {
 
-  private var model: CategoryDataModelOv2? = null
+  private var model: CategoryDataModel? = null
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
-    model = item as? CategoryDataModelOv2
+    model = item as? CategoryDataModel
     setViews(model)
   }
 
@@ -37,7 +37,7 @@ class CategoryOv2RecyclerViewHolder constructor(binding: ItemWebsiteCategoriesBi
 
   }
 
-  private fun setViews(model: CategoryDataModelOv2?) {
+  private fun setViews(model: CategoryDataModel?) {
     val activity = this.activity ?: return
     binding.tvCategoryTitle.text = if (model?.textChangeRTLAndSVC == false) model.getCategoryWithoutNewLine() else model?.getCategoryName()
     binding.tvCategoryExamples.text = model?.getSectionsTitles()

@@ -6,7 +6,7 @@ import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.LayoutBusinessCategoryPreviewBinding
-import com.boost.presignin.model.category.CategoryDataModelOv2
+import com.boost.presignin.model.category.CategoryDataModel
 import com.boost.presignin.viewmodel.CategoryVideoModel
 import com.framework.extensions.gone
 import com.framework.extensions.visible
@@ -48,7 +48,7 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
   }
 
   private val categoryModel by lazy {
-    arguments?.getSerializable(IntentConstant.CATEGORY_DATA.name) as? CategoryDataModelOv2
+    arguments?.getSerializable(IntentConstant.CATEGORY_DATA.name) as? CategoryDataModel
   }
 
   override fun getLayout(): Int {

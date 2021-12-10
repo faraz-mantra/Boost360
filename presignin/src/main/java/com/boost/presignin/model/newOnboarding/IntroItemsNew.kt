@@ -14,6 +14,7 @@ class IntroItemNew(
   @DrawableRes val imageResource: Int? = null,
   @RawRes val lottieRawResource: Int = R.raw.new_lottie_merchants_1,
   val isLottieRepeat: Boolean = false,
+  val count: Int = 0,
   @ColorRes val slideBackgroundColor: Int = R.color.white_F4F8FA
 ) : Serializable, AppBaseRecyclerViewItem {
 
@@ -31,7 +32,8 @@ class IntroItemNew(
         imageResource = null,
         lottieRawResource = R.raw.new_lottie_marketing_2,
         isLottieRepeat = false,
-        slideBackgroundColor = R.color.white_F4F8FA
+        slideBackgroundColor = R.color.white_F4F8FA,
+        count = 1
       ),
       IntroItemNew(
         title = c.getString(R.string.new_into_3_title),

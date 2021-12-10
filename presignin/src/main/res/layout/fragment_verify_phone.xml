@@ -26,17 +26,18 @@
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/tv_phone_number"
-      android:layout_width="0dp"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/size_8"
-      android:fontFamily="@font/inter_regular"
+      android:drawableEnd="@drawable/ic_edit_pencil"
+      android:fontFamily="@font/inter_semi_bold"
       android:gravity="start"
       android:textAlignment="gravity"
+      android:drawablePadding="@dimen/size_4"
       android:textColor="@color/black_2A2A2A"
-      android:textSize="18sp"
-      app:layout_constraintEnd_toStartOf="@+id/endGuide"
-      app:layout_constraintStart_toEndOf="@+id/startGuide"
+      app:layout_constraintStart_toStartOf="@+id/startGuide"
       app:layout_constraintTop_toBottomOf="@+id/tv_title_phone"
+      app:textType="BODY_1"
       tools:text="+91 984-529-0876" />
 
     <com.boost.presignin.views.otptextview.OtpTextView
@@ -91,11 +92,12 @@
       android:id="@+id/linearWhatsApp"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_marginStart="-6dp"
       android:layout_marginTop="@dimen/size_16"
       android:gravity="center_vertical"
+      android:visibility="gone"
       app:layout_constraintEnd_toStartOf="@+id/endGuide"
       app:layout_constraintHorizontal_bias="0"
-      android:layout_marginStart="-6dp"
       app:layout_constraintStart_toStartOf="@+id/startGuide"
       app:layout_constraintTop_toBottomOf="@+id/tv_resend_otp_in">
 
