@@ -125,5 +125,17 @@
   <string name="no_service_created_yet">No service added yet</string>
   <string name="lets_add_food_item_to_this_menu">Let\'s add food items to your menu</string>
     <string name="no_call_tracked_yet">No call tracked yet!</string>
+    <string name="thank_you_for_nreporting_the_issue">Thank you for\nreporting the issue.</string>
+  <string name="we_ve_created_a_ticket_against_the_issue_you_ve_reported_you_ll_also_receive_an_email_with_the_expected_sla_for_same_for_any_related_quiry_please_write_an_email_to_ria_nowfloats_com">We’ve created a ticket against the issue you’ve reported. You’ll also receive an email with the expected SLA for same. For any related quiry please write an email to ria@nowfloats.com.</string>
+    <string name="done">Done</string>
+    <string name="uh_oh">Uh oh!</string>
+  <string name="update_could_not_be_posted_on_one_or_more_channels">Update could not be posted on one or more channels.</string>
+    <string name="report_an_error">Report an error</string>
+    <string name="reporting_an_issue">Reporting an issue.</string>
+    <string name="how_should_we_inform_you_about_the_resolution">How should we inform you about the resolution?</string>
+  <string name="share_what_happened">Share what happened*</string>
+    <string name="please_share_what_happened_with_steps_if_possible_which_led_to_this_error">Please share what happened (with steps, if possible) which led to this error.</string>
+  <string name="your_mobile_number_or_email_id">Your mobile number or email ID</string>
+  <string name="submit_report">Submit report</string>
 
 </resources>
