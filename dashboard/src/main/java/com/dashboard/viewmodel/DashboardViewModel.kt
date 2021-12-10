@@ -174,6 +174,10 @@ class DashboardViewModel : BaseViewModel() {
   fun disableBadgeNotification(request: DisableBadgeNotificationRequest): LiveData<BaseResponse> {
     return UsCentralNowFloatsCloudRepository.disableBadgeNotification(request).toLiveData()
   }
+
+  fun republishWebsite(fpTag: String?): LiveData<BaseResponse>{
+    return API2WithFloatsRepository.republishWebsite(fpTag = fpTag?:"").toLiveData()
+  }
 }
 
 
