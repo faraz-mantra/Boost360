@@ -3,13 +3,16 @@ package com.festive.poster.ui.promoUpdates.bottomSheet
 import android.os.Bundle
 import com.festive.poster.R
 import com.festive.poster.databinding.BsheetSubscribePlanValidityBinding
+import com.festive.poster.utils.MarketPlaceUtils
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.framework.pref.UserSessionManager
 
 class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidityBinding, BaseViewModel>() {
 
+    var session:UserSessionManager?=null
     companion object {
         @JvmStatic
         fun newInstance(): SubscribePlanBottomSheet {
@@ -32,6 +35,12 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
         /*binding?.btnGetPack?.setOnClickListener {
             dismiss()
         }*/
+        session = UserSessionManager(requireActivity())
+
+
+        binding?.btnGetPack?.setOnClickListener {
+            gotoMarketPlace()
+        }
 
         binding?.rivCloseBottomSheet?.setOnClickListener {
             dismiss()
@@ -67,4 +76,9 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
             binding?.linearDiscountAmount?.setBackgroundResource(R.drawable.bg_yellow_stroke_et)
         }
     }
+
+    private fun gotoMarketPlace() {
+        MarketPlaceUtils.initiateAddonMarketplace(session!!,true,"","",true,requireContext())
+    }
+
 }

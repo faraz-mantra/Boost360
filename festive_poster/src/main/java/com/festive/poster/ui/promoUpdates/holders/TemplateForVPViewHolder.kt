@@ -6,6 +6,7 @@ import com.festive.poster.models.PosterModel
 import com.festive.poster.models.promoModele.TemplateModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
+import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
 import com.festive.poster.ui.promoUpdates.edit_post.EditPostActivity
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
@@ -33,6 +34,11 @@ class TemplateForVPViewHolder(binding: ListItemTemplateForVpBinding):
         }
         binding.tvTemplateDesc.text =model.greeting_message
 
+        binding.btnPost.setOnClickListener {
+            WebEngageController.trackEvent(Promotional_Update_Post_Click)
+            activity?.let { it1 -> PostPreviewSocialActivity.launchActivity(it1,null,model) }
+
+        }
         SvgUtils.loadImage(variant?.svgUrl!!, binding.ivSvg, model.keys,model.isPurchased)
         binding.btnEdit.setOnClickListener {
             EditPostActivity.launchActivity(binding.root.context,model)

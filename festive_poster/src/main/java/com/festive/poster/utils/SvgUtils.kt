@@ -44,7 +44,10 @@ object SvgUtils {
         return requestBuilder
     }
 
-    fun loadImage(url: String, view: ImageView, model: List<PosterKeyModel>, isPurchased: Boolean){
+    fun loadImage(url: String?, view: ImageView, model: List<PosterKeyModel>?, isPurchased: Boolean?){
+        if (url==null||model==null){
+            return
+        }
         val uri = Uri.parse(url)
         val listener = SvgDrawableListener(model, url,isPurchased)
         Log.d(TAG, "loadImage() called with: url = $url, model = $model $view")
@@ -166,10 +169,13 @@ object SvgUtils {
 
     fun shareUncompressedSvg(
             url: String?,
-            model: PosterModel,
+            model: PosterModel?,
             context: Context,
             packageName:String?=null
         ) {
+        if (url==null||model==null){
+            return
+        }
             url?.let {
                 CoroutineScope(Dispatchers.IO).launch {
                         val b = svgToBitmap(model)

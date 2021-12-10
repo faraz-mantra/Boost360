@@ -30,7 +30,7 @@
             app:layout_constraintTop_toTopOf="@+id/off_white_view" />
 
         <com.framework.views.customViews.CustomImageView
-            android:id="@+id/customImageView3"
+            android:id="@+id/iv_poster_icon"
             android:layout_width="@dimen/size_100"
             android:layout_height="@dimen/size_78"
             android:layout_marginTop="@dimen/size_20"
@@ -62,7 +62,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/customImageView3"
+            app:layout_constraintTop_toBottomOf="@+id/iv_poster_icon"
             app:layout_constraintVertical_bias="0.0" />
 
         <View
@@ -90,16 +90,16 @@
             app:layout_constraintTop_toTopOf="@+id/white_view" />
 
         <com.framework.views.customViews.CustomImageView
-            android:id="@+id/customImageView4"
+            android:id="@+id/iv_whatsapp"
             android:layout_width="@dimen/size_50"
             android:layout_height="@dimen/size_50"
             android:layout_marginEnd="@dimen/size_62"
             android:src="@drawable/ic_whatsapp_share_green_overlay_promo"
-            app:layout_constraintBottom_toBottomOf="@+id/customImageView6"
-            app:layout_constraintEnd_toStartOf="@+id/customImageView6"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_instagram"
+            app:layout_constraintEnd_toStartOf="@+id/iv_instagram"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/white_view"
-            app:layout_constraintTop_toTopOf="@+id/customImageView6" />
+            app:layout_constraintTop_toTopOf="@+id/iv_instagram" />
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_whatsapp"
@@ -110,12 +110,12 @@
             android:text="@string/whatsapp"
             android:textColor="@color/black_4a4a4a"
             android:textSize="@dimen/text_12"
-            app:layout_constraintStart_toStartOf="@+id/customImageView4"
-            app:layout_constraintTop_toBottomOf="@+id/customImageView4"
-            app:layout_constraintEnd_toEndOf="@+id/customImageView4"/>
+            app:layout_constraintStart_toStartOf="@+id/iv_whatsapp"
+            app:layout_constraintTop_toBottomOf="@+id/iv_whatsapp"
+            app:layout_constraintEnd_toEndOf="@+id/iv_whatsapp"/>
 
         <com.framework.views.customViews.CustomImageView
-            android:id="@+id/customImageView6"
+            android:id="@+id/iv_instagram"
             android:layout_width="@dimen/size_50"
             android:layout_height="@dimen/size_50"
             android:layout_marginTop="@dimen/size_28"
@@ -135,21 +135,21 @@
             android:text="@string/insta_dm_dm"
             android:textColor="@color/black_4a4a4a"
             android:textSize="@dimen/text_12"
-            app:layout_constraintStart_toStartOf="@+id/customImageView6"
-            app:layout_constraintTop_toBottomOf="@+id/customImageView6"
-            app:layout_constraintEnd_toEndOf="@+id/customImageView6"/>
+            app:layout_constraintStart_toStartOf="@+id/iv_instagram"
+            app:layout_constraintTop_toBottomOf="@+id/iv_instagram"
+            app:layout_constraintEnd_toEndOf="@+id/iv_instagram"/>
 
         <com.framework.views.customViews.CustomImageView
-            android:id="@+id/customImageView5"
+            android:id="@+id/iv_other"
             android:layout_width="@dimen/size_50"
             android:layout_height="@dimen/size_50"
             android:layout_marginStart="@dimen/size_62"
             android:src="@drawable/ic_share_orange_overlay_promo"
-            app:layout_constraintBottom_toBottomOf="@+id/customImageView6"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_instagram"
             app:layout_constraintEnd_toEndOf="@+id/white_view"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/customImageView6"
-            app:layout_constraintTop_toTopOf="@+id/customImageView6" />
+            app:layout_constraintStart_toEndOf="@+id/iv_instagram"
+            app:layout_constraintTop_toTopOf="@+id/iv_instagram" />
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_share"
@@ -160,9 +160,9 @@
             android:text="@string/more"
             android:textColor="@color/black_4a4a4a"
             android:textSize="@dimen/text_12"
-            app:layout_constraintStart_toStartOf="@+id/customImageView5"
-            app:layout_constraintTop_toBottomOf="@+id/customImageView5"
-            app:layout_constraintEnd_toEndOf="@+id/customImageView5"/>
+            app:layout_constraintStart_toStartOf="@+id/iv_other"
+            app:layout_constraintTop_toBottomOf="@+id/iv_other"
+            app:layout_constraintEnd_toEndOf="@+id/iv_other"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

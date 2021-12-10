@@ -91,7 +91,6 @@
                     android:textAllCaps="true"
                     android:paddingHorizontal="@dimen/size_10"
                     android:paddingVertical="@dimen/size_6"
-                    android:text="5 Selected"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/text_12"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_preview_title"

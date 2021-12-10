@@ -9,6 +9,7 @@
 
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/layout_social_conn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

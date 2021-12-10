@@ -34,7 +34,8 @@ import java.lang.RuntimeException
 class CaptionBottomSheet : BaseBottomSheetDialog<BsheetAddCaptionBinding, BaseViewModel>() {
 
 
-    private var sttResultLauncher :ActivityResultLauncher<Intent>?=null
+    private var sttUtils:STTUtils?=null
+
     private var callbacks:CaptionBottomSheet.Callbacks?=null
     private var mSpannable: Spannable? = null
     private var hashTagIsComing = 0
@@ -72,13 +73,9 @@ class CaptionBottomSheet : BaseBottomSheetDialog<BsheetAddCaptionBinding, BaseVi
     }
 
     override fun onCreateView() {
-
-        sttResultLauncher= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result->
-            val data = result?.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-            binding?.captionLayout?.etInput?.append((data?.get(0)?.toString() ?: "") + ". ")
-        }
+        initStt()
         binding?.ivVoiceOver?.setOnClickListener {
-            promptSpeechInput()
+            sttUtils?.promptSpeechInput()
         }
         binding?.rivCloseBottomSheet?.setOnClickListener {
             dismiss()
@@ -90,6 +87,16 @@ class CaptionBottomSheet : BaseBottomSheetDialog<BsheetAddCaptionBinding, BaseVi
         }
         addHashTagFunction()
         //handle()
+    }
+
+    private fun initStt() {
+        sttUtils = STTUtils(object :STTUtils.Callbacks{
+            override fun onDone(text: String?) {
+                binding?.captionLayout?.etInput?.append((text ?: "") + ". ")
+
+            }
+        })
+        sttUtils?.init(this)
     }
 
     private fun addHashTagFunction() {
@@ -129,21 +136,7 @@ class CaptionBottomSheet : BaseBottomSheetDialog<BsheetAddCaptionBinding, BaseVi
         mSpannable?.setSpan(StyleSpan(Typeface.BOLD), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
     }
 
-    private fun promptSpeechInput() {
-        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-        intent.putExtra(
-            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-        )
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.speech_prompt))
-        try {
-            sttResultLauncher?.launch(intent)
-        } catch (a: ActivityNotFoundException) {
-            showShortToast(getString(R.string.speech_not_supported))
-            SentryController.captureException(a)
-        }
-    }
+
 
 
 }

@@ -12,6 +12,7 @@ import android.view.View.LAYER_TYPE_HARDWARE
 import androidx.lifecycle.lifecycleScope
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
+import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.ActivityPostPreviewSocialBinding
 import com.festive.poster.models.PostUpdateTaskRequest
@@ -21,6 +22,7 @@ import com.festive.poster.models.promoModele.SocialPreviewModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.festive.poster.ui.promoUpdates.bottomSheet.PostSuccessBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.PostingProgressBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.SubscribePlanBottomSheet
 import com.festive.poster.ui.promoUpdates.edit_post.EditPostActivity
@@ -63,6 +65,8 @@ import kotlin.collections.ArrayList
 
 class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBinding, PostUpdatesViewModel>(), RecyclerItemClickListener {
 
+    private var uiChannelList: ArrayList<SocialPlatformModel>?=null
+    private var posterProgressSheet: PostingProgressBottomSheet?=null
     private var connectedChannels: ArrayList<String> = arrayListOf()
     private var session:UserSessionManager?=null
     private val captionIntent by lazy {
@@ -75,7 +79,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         val IK_CAPTION_KEY="IK_CAPTION_KEY"
         val IK_POSTER="IK_POSTER"
 
-        fun launchActivity(activity:Activity,caption:String,posterModel: PosterModel){
+        fun launchActivity(activity:Activity,caption:String?,posterModel: PosterModel){
             activity.startActivity(Intent(activity,PostPreviewSocialActivity::class.java)
                 .putExtra(IK_CAPTION_KEY,caption)
                 .putExtra(EditPostActivity.IK_POSTER, Gson().toJson(posterModel))
@@ -112,12 +116,13 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     private fun initUI() {
         binding?.tvChooseAPromoPack?.setOnClickListener {
-            saveUpdatePost()
             SubscribePlanBottomSheet().show(supportFragmentManager, SubscribePlanBottomSheet::class.java.name)
         }
 
         binding?.tvPostUpdate?.setOnClickListener {
-            PostingProgressBottomSheet().show(supportFragmentManager, PostingProgressBottomSheet::class.java.name)
+            posterProgressSheet =  PostingProgressBottomSheet.newInstance(posterModel)
+            saveUpdatePost()
+            posterProgressSheet?.show(supportFragmentManager, PostingProgressBottomSheet::class.java.name)
         }
 
         binding?.ivClosePreview?.setOnClickListener {
@@ -157,70 +162,47 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
 
+        when(actionType){
+            RecyclerViewActionType.SOCIAL_CHANNEL_CHECK_CLICKED.ordinal->{
+                binding?.tvSelected?.text = getString(R.string.placeholder_selected,getCheckedChannelCount())
+
+            }
+        }
     }
 
     fun setChannels(){
         val requestFloatsModel = NavigatorManager.getRequest()
-        if (requestFloatsModel==null){
+        if (true/*requestFloatsModel==null*/){
             getChannelsFromJson()
         }else{
-            val  channelList = requestFloatsModel.categoryDataModel?.channels
+            val  channelList = requestFloatsModel?.categoryDataModel?.channels
 
             if (channelList.isNullOrEmpty()){
                 showLongToast(getString(R.string.channel_not_found))
             }else{
-                setChannelAdapter(channelList)
+                setChannelAdapter(/*channelList*/)
             }
         }
 
     }
 
-    fun setChannelAdapter(channelList:ArrayList<ChannelModel>){
+    fun setChannelAdapter(){
         //   val socialPlatformModel = SocialPlatformModel().getData(this@PostPreviewSocialActivity)
-        val moduleChannelList =ArrayList<SocialPlatformModel>()
-
-        channelList.forEach { model->
-            val listItem = SocialPlatformModel(model.getName(),null,
-                model.getDrawable(this),
-                true,
-                model.isSelected)
-
-            if (model.type==ChannelType.G_SEARCH.name){
-                listItem.isEnabled=false
-                listItem.isConnected=true
-            }
-
-
-            listItem.socialSubTitleData =  when {
-                model.isWhatsAppChannel() -> {
-                    model.channelActionData?.active_whatsapp_number?.takeIf { it.isNotEmpty() }?.let { it }
-                        ?: model.getName()
-                }
-                model.isGoogleBusinessChannel() -> {
-                    model.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() }?.let { it }
-                        ?: model.getName()
-//        binding.nameLink.text = model.channelAccessToken?.LocationName?.takeIf { it.isNotEmpty() }?.let { it } ?: model.getName()
-                }
-                model.isGoogleSearch() -> {
-                    model.websiteUrl?.takeIf { it.isNotEmpty() }?.let { it } ?: model.getName()
-                }
-                else ->
-                    model.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() }?.let { it }
-                        ?: model.getName()
-            }
-            moduleChannelList.add(listItem)
-
-        }
         binding?.rvSocialPlatforms?.apply {
             adapter = AppBaseRecyclerViewAdapter(
                 this@PostPreviewSocialActivity,
-                moduleChannelList,
+                uiChannelList!!,
                 this@PostPreviewSocialActivity
             )
         }
 
+        binding?.tvSelected?.text = getString(R.string.placeholder_selected,getCheckedChannelCount())
+
     }
 
+    fun getCheckedChannelCount(): Int {
+       return uiChannelList?.filter { it.isEnabled==true }?.size?:0
+    }
     private fun getChannelsFromJson() {
             NavigatorManager.clearRequest()
             val experienceCode = session?.fP_AppExperienceCode
@@ -237,12 +219,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                         val categoryData =
                             categoryList?.singleOrNull { c -> c.experienceCode() == experienceCode }
                         if (categoryData != null) {
-                          //  getChannelAccessToken(categoryData, floatingPoint, fpTag)
-                              if (categoryData.channels.isNullOrEmpty()){
-                                  showLongToast(getString(R.string.channel_not_found))
-                              }else{
-                                  setChannelAdapter(categoryData.channels!!)
-                              }
+                            getChannelAccessToken(categoryData, floatingPoint, fpTag)
+
                         } else errorMessage(resources.getString(com.onboarding.nowfloats.R.string.error_getting_category_data))
                     }
                 })
@@ -250,7 +228,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     }
 
-   /* private fun getChannelAccessToken(
+    private fun getChannelAccessToken(
         categoryData: CategoryDataModel?,
         floatingPoint: String?,
         fpTag: String?
@@ -279,6 +257,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         floatingPoint: String?,
         fpTag: String?
     ) {
+        uiChannelList= ArrayList()
         val requestFloatsNew = RequestFloatsModel()
         requestFloatsNew.categoryDataModel = categoryData
         requestFloatsNew.isUpdate = true
@@ -289,96 +268,134 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         requestFloatsNew.categoryDataModel?.channels?.map {
             if (it.isGoogleSearch()) it.websiteUrl = session?.getDomainName(false)
         }
-        if (channelsAccessToken != null) {
+
             connectedChannels?.clear()
+            var title:String?=null
+            var subTitle:String?=null
+            var isConnected=false
             requestFloatsNew.categoryDataModel?.channels?.forEach { it1 ->
-                var data: ChannelAccessToken? = null
-                when {
-                    it1.getAccessTokenType() == ChannelsType.AccountType.facebookpage.name -> {
-                        val fbPage = channelsAccessToken.facebookpage
-                        if (fbPage?.status?.equals(CHANNEL_STATUS_SUCCESS, true) == true) {
-                            data = ChannelAccessToken(
-                                type = ChannelsType.AccountType.facebookpage.name,
-                                userAccessTokenKey = null,
-                                userAccountId = fbPage.account?.accountId,
-                                userAccountName = fbPage.account?.accountName
-                            )
-                            requestFloatsNew.channelAccessTokens?.add(data)
-                            it1.isSelected = true
-                            it1.channelAccessToken = data
-                            connectedChannels?.add(ChannelsType.AccountType.facebookpage.name)
-                        }
-                    }
-                    it1.getAccessTokenType() == ChannelsType.AccountType.facebookshop.name -> {
-                        val fpShop = channelsAccessToken.facebookshop
-                        if (channelsAccessToken.facebookshop?.status?.equals(
-                                CHANNEL_STATUS_SUCCESS,
-                                true
-                            ) == true
-                        ) {
-                            data = ChannelAccessToken(
-                                type = ChannelsType.AccountType.facebookshop.name,
-                                userAccessTokenKey = null,
-                                userAccountId = fpShop?.account?.userAccountId,
-                                userAccountName = null,
-                                pixelId = null,
-                                catalogId = fpShop?.account?.catalogId,
-                                merchantSettingsId = fpShop?.account?.merchantSettingsId
-                            )
-                            requestFloatsNew.channelAccessTokens?.add(data)
-                            it1.isSelected = true
-                            it1.channelAccessToken = data
-                            connectedChannels.add(ChannelsType.AccountType.facebookshop.name)
-                        }
-                    }
-                    it1.getAccessTokenType() == ChannelsType.AccountType.twitter.name -> {
-                        val twitter = channelsAccessToken.twitter
-                        if (channelsAccessToken.twitter?.status?.equals(CHANNEL_STATUS_SUCCESS, true) == true) {
-                            data = ChannelAccessToken(
-                                type = ChannelsType.AccountType.twitter.name,
-                                userAccessTokenKey = null,
-                                userAccountId = twitter?.account?.accountId,
-                                userAccountName = twitter?.account?.accountName
-                            )
-                            requestFloatsNew.channelAccessTokens?.add(data)
-                            it1.isSelected = true
-                            it1.channelAccessToken = data
-                            connectedChannels.add(ChannelsType.AccountType.twitter.name)
-                        }
-                    }
-                    it1.getAccessTokenType() == ChannelsType.AccountType.googlemybusiness.name -> {
-                        val gmb = channelsAccessToken.googlemybusiness
-                        if (channelsAccessToken.googlemybusiness?.status?.equals(
-                                CHANNEL_STATUS_SUCCESS,
-                                true
-                            ) == true
-                        ) {
-                            data = ChannelAccessToken(
-                                type = ChannelsType.AccountType.googlemybusiness.name,
-                                token_expiry = null,
-                                invalid = null,
-                                token_response = ChannelTokenResponse(),
-                                refresh_token = null,
-                                userAccountName = gmb?.account?.accountName,
-                                userAccountId = gmb?.account?.accountId,
-                                LocationId = gmb?.account?.locationId,
-                                LocationName = gmb?.account?.locationName,
-                                userAccessTokenKey = null,
-                                verified_location = null
-                            )
-                            requestFloatsNew.channelAccessTokens?.add(data)
-                            it1.isSelected = true
-                            it1.channelAccessToken = data
-                            connectedChannels.add(ChannelsType.AccountType.googlemybusiness.name)
-                        }
-                    }
+                /*if (it1.isWhatsAppChannel()){
+                    return
+                }*/
+                if (it1.type==ChannelType.G_SEARCH.name){
+                    isConnected=true
+                    subTitle=session?.getDomainName(false)
+                }else{
+                    subTitle=null
+                    isConnected=false
                 }
+                title = it1.getName()
+                var data: ChannelAccessToken? = null
+                if (channelsAccessToken!=null){
+                    when {
+                        it1.getAccessTokenType() == ChannelsType.AccountType.facebookpage.name -> {
+                            val fbPage = channelsAccessToken.facebookpage
+                            if (fbPage?.status?.equals(CHANNEL_STATUS_SUCCESS, true) == true) {
+                                data = ChannelAccessToken(
+                                    type = ChannelsType.AccountType.facebookpage.name,
+                                    userAccessTokenKey = null,
+                                    userAccountId = fbPage.account?.accountId,
+                                    userAccountName = fbPage.account?.accountName
+                                )
+                                title =fbPage.account?.accountName
+                                subTitle = fbPage.account?.accountId
+                                isConnected = true
+                                requestFloatsNew.channelAccessTokens?.add(data)
+                                it1.isSelected = true
+                                it1.channelAccessToken = data
+                                connectedChannels?.add(ChannelsType.AccountType.facebookpage.name)
+                            }
+                        }
+                        it1.getAccessTokenType() == ChannelsType.AccountType.facebookshop.name -> {
+                            val fpShop = channelsAccessToken.facebookshop
+                            if (channelsAccessToken.facebookshop?.status?.equals(
+                                    CHANNEL_STATUS_SUCCESS,
+                                    true
+                                ) == true
+                            ) {
+                                data = ChannelAccessToken(
+                                    type = ChannelsType.AccountType.facebookshop.name,
+                                    userAccessTokenKey = null,
+                                    userAccountId = fpShop?.account?.userAccountId,
+                                    userAccountName = null,
+                                    pixelId = null,
+                                    catalogId = fpShop?.account?.catalogId,
+                                    merchantSettingsId = fpShop?.account?.merchantSettingsId
+                                )
+                                subTitle = fpShop?.account?.userAccountId
+                                isConnected = true
+                                requestFloatsNew.channelAccessTokens?.add(data)
+                                it1.isSelected = true
+                                it1.channelAccessToken = data
+                                connectedChannels.add(ChannelsType.AccountType.facebookshop.name)
+                            }
+                        }
+                        it1.getAccessTokenType() == ChannelsType.AccountType.twitter.name -> {
+                            val twitter = channelsAccessToken.twitter
+                            if (channelsAccessToken.twitter?.status?.equals(CHANNEL_STATUS_SUCCESS, true) == true) {
+                                data = ChannelAccessToken(
+                                    type = ChannelsType.AccountType.twitter.name,
+                                    userAccessTokenKey = null,
+                                    userAccountId = twitter?.account?.accountId,
+                                    userAccountName = twitter?.account?.accountName
+                                )
+                                title =twitter?.account?.accountName
+                                subTitle = twitter?.account?.accountId
+                                isConnected = true
+                                requestFloatsNew.channelAccessTokens?.add(data)
+                                it1.isSelected = true
+                                it1.channelAccessToken = data
+                                connectedChannels.add(ChannelsType.AccountType.twitter.name)
+                            }
+                        }
+                        it1.getAccessTokenType() == ChannelsType.AccountType.googlemybusiness.name -> {
+                            val gmb = channelsAccessToken.googlemybusiness
+                            if (channelsAccessToken.googlemybusiness?.status?.equals(
+                                    CHANNEL_STATUS_SUCCESS,
+                                    true
+                                ) == true
+                            ) {
+                                data = ChannelAccessToken(
+                                    type = ChannelsType.AccountType.googlemybusiness.name,
+                                    token_expiry = null,
+                                    invalid = null,
+                                    token_response = ChannelTokenResponse(),
+                                    refresh_token = null,
+                                    userAccountName = gmb?.account?.accountName,
+                                    userAccountId = gmb?.account?.accountId,
+                                    LocationId = gmb?.account?.locationId,
+                                    LocationName = gmb?.account?.locationName,
+                                    userAccessTokenKey = null,
+                                    verified_location = null
+                                )
+                                title =gmb?.account?.accountName
+                                subTitle = gmb?.account?.accountId
+                                isConnected = true
+                                requestFloatsNew.channelAccessTokens?.add(data)
+                                it1.isSelected = true
+                                it1.channelAccessToken = data
+                                connectedChannels.add(ChannelsType.AccountType.googlemybusiness.name)
+                            }
+                        }
+                    }
+
+                }
+
+
+                uiChannelList?.add(SocialPlatformModel(title,subTitle,isConnected,isConnected).apply {
+                    generateImageResource(it1.getType(),this@PostPreviewSocialActivity)
+                })
             }
-        }
-        getWhatsAppData(requestFloatsNew, channelsAccessToken)
+            if (categoryData?.channels.isNullOrEmpty()){
+                showLongToast(getString(R.string.channel_not_found))
+            }else{
+                setChannelAdapter()
+            }
+
+     //   getWhatsAppData(requestFloatsNew, channelsAccessToken)
     }
 
-    private fun getWhatsAppData(
+  /*  private fun getWhatsAppData(
         requestFloatsNew: RequestFloatsModel,
         channelsAccessToken: ChannelsType?
     ) {
@@ -482,6 +499,9 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                     ).observeOnce(this@PostPreviewSocialActivity, { it1 ->
                         if (it1.isSuccess()) {
                             // successResult()
+                                posterProgressSheet?.dismiss()
+                            PostSuccessBottomSheet.newInstance(posterModel).show(supportFragmentManager, PostSuccessBottomSheet::class.java.name)
+
                         } else showShortToast("Image uploading error, please try again.")
 
                     })

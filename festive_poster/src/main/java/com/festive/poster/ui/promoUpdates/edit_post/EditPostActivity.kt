@@ -17,6 +17,7 @@ import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.utils.STTUtils
 import com.framework.utils.convertStringToObj
 import com.framework.webengageconstant.EVENT_LABEL_NULL
 import com.framework.webengageconstant.POST_AN_UPDATE
@@ -25,6 +26,8 @@ import com.google.gson.Gson
 
 class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterViewModel>() {
 
+
+    private var sttUtils:STTUtils?=null
 
     private var sessionLocal: UserSessionManager?=null
     var posterModel:PosterModel?=null
@@ -46,13 +49,13 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
         }
     }
     override fun onCreateView() {
-        binding?.captionLayout?.etInput?.isEnabled = false
-
+        initStt()
         sessionLocal = UserSessionManager(this)
 
         posterModel = convertStringToObj(intent.getStringExtra(IK_POSTER)!!)
         initUI()
-        setOnClickListener(binding?.btnTapToEdit, binding?.captionLayout?.etInput, binding?.ivCloseEditing, binding?.tvPreviewAndPost)
+        setOnClickListener(binding?.btnTapToEdit, binding?.captionLayout?.etInput,
+            binding?.ivCloseEditing, binding?.tvPreviewAndPost,binding?.ivVoiceOver)
 
     }
 
@@ -72,6 +75,16 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
 
             }
         })
+    }
+
+    private fun initStt() {
+        sttUtils = STTUtils(object : STTUtils.Callbacks{
+            override fun onDone(text: String?) {
+                binding?.captionLayout?.etInput?.append((text ?: "") + ". ")
+
+            }
+        })
+        sttUtils?.init(this)
     }
 
     /* fun replaceText(key:String,value:String){
@@ -145,7 +158,14 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
             }
             binding?.tvPreviewAndPost -> {
                // saveUpdatePost()
-                 binding?.root?.context?.startActivity(Intent(binding?.root?.context, PostPreviewSocialActivity::class.java))
+                posterModel?.let {
+                    PostPreviewSocialActivity.launchActivity(this,binding?.captionLayout?.etInput.toString(),
+                        it
+                    )
+                }
+            }
+            binding?.ivVoiceOver->{
+                sttUtils?.promptSpeechInput()
             }
         }
     }

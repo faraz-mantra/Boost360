@@ -3,22 +3,74 @@ package com.festive.poster.models.promoModele
 import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes
+import androidx.core.content.res.ResourcesCompat
 import com.festive.poster.R
 import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.recyclerView.AppBaseRecyclerViewItem
+import com.onboarding.nowfloats.model.channel.ChannelType
+import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import java.io.Serializable
 
 class SocialPlatformModel(
     val socialTitle: String? = null,
     var socialSubTitleData: String? = null,
-    val socialImageResource: Drawable? = null,
     var isEnabled: Boolean? = false,
     var isConnected: Boolean? = false
 ) : Serializable, AppBaseRecyclerViewItem {
 
+    var icon:Drawable?=null
+
+    fun generateTitle(channelAccessToken: ChannelAccessToken){
+
+
+    }
+
+    fun generateImageResource(type:ChannelType?,context: Context)
+    {
+        icon= when (type) {
+            ChannelType.G_SEARCH -> ResourcesCompat.getDrawable(
+                context.resources,
+                R.drawable.ic_promo_my_website,
+                context.theme
+            )
+            ChannelType.FB_PAGE -> ResourcesCompat.getDrawable(
+                context.resources,
+                R.drawable.ic_promo_flag_orange,
+                context.theme
+            )
+            ChannelType.G_MAPS -> ResourcesCompat.getDrawable(
+                context.resources,
+                com.onboarding.nowfloats.R.drawable.ic_google_maps_n,
+                context.theme
+            )
+            ChannelType.FB_SHOP -> ResourcesCompat.getDrawable(
+                context.resources,
+                R.drawable.ic_promo_flag_orange,
+                context.theme
+            )
+            ChannelType.WAB -> ResourcesCompat.getDrawable(
+                context.resources,
+                com.onboarding.nowfloats.R.drawable.ic_whatsapp_business_n,
+                context.theme
+            )
+            ChannelType.T_FEED -> ResourcesCompat.getDrawable(
+                context.resources,
+                R.drawable.ic_promo_twitter,
+                context.theme
+            )
+            ChannelType.G_BUSINESS -> ResourcesCompat.getDrawable(
+                context.resources,
+                com.onboarding.nowfloats.R.drawable.ic_google_maps_n,
+                context.theme
+            )
+            else -> null
+        }
+
+    }
+
     fun getData(context: Context): ArrayList<SocialPlatformModel> {
         return arrayListOf(
-            SocialPlatformModel(
+            /*SocialPlatformModel(
                 socialTitle = "Jerin Dany",
                 socialSubTitleData = "http//facebook.com/MyShop",
             //    socialImageResource = R.drawable.ic_promo_flag_orange,
@@ -59,7 +111,7 @@ class SocialPlatformModel(
              //   socialImageResource = R.drawable.ic_promo_emailers,
                 isEnabled = false,
                 isConnected = true
-            )
+            )*/
         )
     }
 

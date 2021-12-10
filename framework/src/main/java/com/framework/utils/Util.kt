@@ -406,3 +406,10 @@ fun Drawable.setColorFilter2(color: Int,blendMode:BlendMode,porterDuffMode:Porte
     setColorFilter(color,porterDuffMode)
   }
 }
+
+fun showToast(text: String?,duration:Int =Toast.LENGTH_LONG){
+  if (text==null){
+    return
+  }
+  Toast.makeText(BaseApplication.instance, text, duration).show()
+}
