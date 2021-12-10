@@ -202,6 +202,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
       WebEngageController.trackEvent(PS_VERIFY_OTP_VERIFY, OTP_VERIFY_CLICK, NO_EVENT_VALUE)
       val otp = binding?.pinOtpVerify?.otp
       viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId)?.observeOnce(viewLifecycleOwner, {
+        hideProgress()
         if (it.isSuccess()) {
           val result = it as? VerifyOtpResponse
           binding?.tvResendOtpIn?.gone()
@@ -209,14 +210,8 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
             this.resultLogin = result.Result
             loginId = resultLogin?.loginId
             if (binding?.linearWhatsApp?.visibility == View.VISIBLE) apiWhatsappOptin() else showBusinessWhatsapp()
-          } else {
-            hideProgress()
-            moveToWelcomeScreen(phoneNumber)
-          }
-        } else {
-          hideProgress()
-          showLongToast(getString(R.string.wrong_otp_tv))
-        }
+          } else moveToWelcomeScreen(phoneNumber)
+        } else showLongToast(getString(R.string.wrong_otp_tv))
       })
     }
   }
@@ -243,7 +238,8 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
       navigator?.startActivityFinish(
         MobileVerificationActivity::class.java,
         Bundle().apply {
-          putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, resultLogin())
+          putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);
+          putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, resultLogin())
         })
     }
   }
