@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.inputmethod.EditorInfo
+import com.appservice.utils.capitalizeUtil
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.FragmentType
@@ -14,7 +15,7 @@ import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.BusinessInfoModel
 import com.boost.presignin.model.authToken.saveAuthTokenData
 import com.boost.presignin.model.business.BusinessCreateRequest
-import com.boost.presignin.model.category.CategoryDataModelOv2
+import com.boost.presignin.model.category.CategoryDataModel
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
 import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.onboardingRequest.saveCategoryRequest
@@ -70,7 +71,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
   }
 
   private val categoryModel by lazy {
-    arguments?.getSerializable(IntentConstant.CATEGORY_DATA.name) as? CategoryDataModelOv2
+    arguments?.getSerializable(IntentConstant.CATEGORY_DATA.name) as? CategoryDataModel
   }
 
   private val businessName by lazy {
@@ -87,8 +88,10 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
 
   override fun onCreateView() {
     super.onCreateView()
-    binding?.includeMobileView?.blurView?.setBlur(baseActivity, 4F)
-    binding?.includeMobileView?.tvCategoryName?.text = categoryModel?.category_Name ?: ""
+    session = UserSessionManager(baseActivity)
+    binding?.includeMobileView?.blurView?.setBlur(baseActivity, 1F)
+    binding?.includeMobileView?.tvCategoryName?.text = categoryModel?.getCategoryWithoutNewLine() ?: ""
+    binding?.includeMobileView?.tvTitle?.text = businessName?.capitalizeUtil()
     setOnClickListeners()
     binding?.addressInputLayout?.etInput?.setText(businessName.toString().lowercase())
     apiCheckDomain {
@@ -189,18 +192,21 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
   }
 
   private fun initRequest() {
+    val domain = binding?.addressInputLayout?.etInput?.text?.toString() ?: ""
     createProfileReq = CreateProfileRequest(ProfileProperties = BusinessInfoModel(userMobile = phoneNumber))
-    categoryFloatsReq = CategoryFloatsRequest(createProfileReq)
     createProfileReq?.AuthToken = phoneNumber
     createProfileReq?.ClientId = clientId
     createProfileReq?.LoginKey = phoneNumber
     createProfileReq?.LoginSecret = ""
     createProfileReq?.Provider = "EMAIL"
-    categoryFloatsReq?.businessName = businessName
+    categoryFloatsReq = CategoryFloatsRequest(
+      requestProfile = createProfileReq, categoryDataModel = categoryModel, webSiteUrl = "$domain${getString(R.string.nowfloats_dot_com)}",
+      businessName = businessName, desktopPreview = desktopPreview, mobilePreview = mobilePreview
+    )
   }
 
   private fun getBusinessRequest(): BusinessCreateRequest {
-    val domain = binding?.addressInputLayout?.etInput?.text?.toString()?:""
+    val domain = binding?.addressInputLayout?.etInput?.text?.toString() ?: ""
     val createRequest = BusinessCreateRequest()
     createRequest.autoFillSampleWebsiteData = true
     createRequest.webTemplateId = categoryModel?.webTemplateId
@@ -241,7 +247,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
 
   private fun apiHitCreateMerchantProfile() {
     initRequest()
-    showProgress("We're creating your online ${categoryFloatsReq?.categoryDataModel?.category_Name}...")
+    showProgress("We're creating your online ${categoryFloatsReq?.categoryDataModel?.getCategoryWithoutNewLine()}...")
     if (this.responseCreateProfile == null) {
       viewModel?.createMerchantProfile(request = categoryFloatsReq?.requestProfile)?.observeOnce(viewLifecycleOwner, {
         val businessProfileResponse = it as? BusinessProfileResponse
@@ -275,6 +281,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_green_stroke_et)
         binding?.addressInputLayout?.ivStatus?.visible()
         binding?.addressInputLayout?.ivIcon?.visible()
+        binding?.tvNextStep3?.text = getString(R.string.launch_my_website)
       }
       2 -> {
         binding?.addressInputLayout?.etInput?.isEnabled = false
@@ -285,6 +292,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_red_stroke_et)
         binding?.addressInputLayout?.ivStatus?.visible()
         binding?.addressInputLayout?.ivIcon?.visible()
+        binding?.tvNextStep3?.text = getString(R.string.launch_my_website)
       }
       else -> {
         binding?.addressInputLayout?.etInput?.isEnabled = true
@@ -293,6 +301,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_grey_stroke_et)
         binding?.addressInputLayout?.ivIcon?.gone()
         binding?.addressInputLayout?.ivStatus?.gone()
+        binding?.tvNextStep3?.text = getString(R.string.next)
       }
     }
   }

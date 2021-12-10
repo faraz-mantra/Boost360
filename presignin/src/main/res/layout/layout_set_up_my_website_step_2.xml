@@ -24,7 +24,7 @@
         android:text="@string/what_is_the_name_of_your_business"
         android:textAlignment="gravity"
         android:textColor="@color/black_4a4a4a"
-        android:textSize="@dimen/text_18"
+        android:textSize="@dimen/text_16"
         app:layout_constraintEnd_toStartOf="@id/endGuide"
         app:layout_constraintStart_toEndOf="@id/startGuide"
         app:layout_constraintTop_toTopOf="parent" />

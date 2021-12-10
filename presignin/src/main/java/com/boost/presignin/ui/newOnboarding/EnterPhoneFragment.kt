@@ -59,7 +59,7 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
     initUI()
     requestPhonePicker()
     WebEngageController.trackEvent(PS_LOGIN_NUMBER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    setOnClickListener(binding?.tvRequestOtp, binding?.tvLoginWithEmail)
+    setOnClickListener(binding?.tvRequestOtp)
     baseActivity.startServiceCategory()
   }
 
@@ -69,10 +69,10 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
       binding?.tvRequestOtp -> {
         sendOtp(binding?.phoneEt?.text.toString())
       }
-      binding?.tvLoginWithEmail -> {
-        WebEngageController.trackEvent(PS_LOGIN_USERNAME_CLICK, CLICK_LOGIN_USERNAME, NO_EVENT_VALUE)
-        navigator?.startActivity(LoginActivity::class.java)
-      }
+//      binding?.tvLoginWithEmail -> {
+//        WebEngageController.trackEvent(PS_LOGIN_USERNAME_CLICK, CLICK_LOGIN_USERNAME, NO_EVENT_VALUE)
+//        navigator?.startActivity(LoginActivity::class.java)
+//      }
     }
   }
 
@@ -85,7 +85,7 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
       if (it.isSuccess() && it.parseResponse()) {
         startFragmentFromNewOnBoardingActivity(
           activity = baseActivity, type = FragmentType.VERIFY_PHONE_FRAGMENT,
-          bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }, clearTop = false
+          bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }
         )
       } else showShortToast(if (it.message.isNullOrEmpty().not()) it.message else getString(R.string.otp_not_sent))
       hideProgress()

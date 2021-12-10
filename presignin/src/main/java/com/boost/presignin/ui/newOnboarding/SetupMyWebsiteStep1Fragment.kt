@@ -9,16 +9,16 @@ import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.constant.RecyclerViewActionType
+import com.boost.presignin.constant.RecyclerViewItemType
 import com.boost.presignin.databinding.LayoutSetUpMyWebsiteStep1Binding
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.category.ApiCategoryResponseCategory
 import com.boost.presignin.model.category.CategoryDataModel
-import com.boost.presignin.model.category.CategoryDataModelOv2
 import com.boost.presignin.model.category.getCategoryLiveData
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
 import com.boost.presignin.recyclerView.RecyclerItemClickListener
-import com.boost.presignin.rest.response.ResponseDataCategoryOv2
+import com.boost.presignin.rest.response.ResponseDataCategory
 import com.boost.presignin.ui.newOnboarding.categoryService.startServiceCategory
 import com.boost.presignin.viewmodel.CategoryVideoModel
 import com.framework.extensions.gone
@@ -41,17 +41,17 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     }
   }
 
-  private var noCatListAdapter: AppBaseRecyclerViewAdapter<CategoryDataModelOv2>? = null
-  private var adapterCategoryLocal: AppBaseRecyclerViewAdapter<CategoryDataModelOv2>? = null
+  private var noCatListAdapter: AppBaseRecyclerViewAdapter<CategoryDataModel>? = null
+  private var adapterCategoryLocal: AppBaseRecyclerViewAdapter<CategoryDataModel>? = null
 
   private val categoryListLive: List<ApiCategoryResponseCategory>?
     get() {
       return getCategoryLiveData()
     }
 
-  private var categoryList: ArrayList<CategoryDataModelOv2> = arrayListOf()
-  private var categoryNoDataList: ArrayList<CategoryDataModelOv2> = arrayListOf()
-  private var selectedCategory: CategoryDataModelOv2? = null
+  private var categoryList: ArrayList<CategoryDataModel> = arrayListOf()
+  private var categoryNoDataList: ArrayList<CategoryDataModel> = arrayListOf()
+  private var selectedCategory: CategoryDataModel? = null
   private var selectedCategoryLive: ApiCategoryResponseCategory? = null
 
   private val phoneNumber by lazy {
@@ -81,10 +81,10 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
   private fun loadLocalCategoryData() {
     adapterLocalCategory()
     viewModel?.getCategoriesOv2(baseActivity)?.observeOnce(viewLifecycleOwner) { it0 ->
-      val response = it0 as? ResponseDataCategoryOv2
+      val response = it0 as? ResponseDataCategory
       if (it0.isSuccess() && response?.data.isNullOrEmpty().not()) {
-        categoryList = response!!.data!!
-        categoryNoDataList = ArrayList(response.data!!.filter { (it.experience_code == "RTL" || it.experience_code == "SVC") })
+        categoryList = ArrayList(response!!.data!!.map { it.recyclerViewItem = RecyclerViewItemType.CATEGORY_ITEM_OV2.getLayout();it })
+        categoryNoDataList = ArrayList(categoryList.filter { (it.experience_code == "RTL" || it.experience_code == "SVC") })
         adapterCategoryLocal?.notify(categoryList)
       }
     }
@@ -166,7 +166,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
   private fun handleSuggestionNoResult() {
     binding?.tvNoResultFound?.visible()
     binding?.includeNoSearchResultFound?.root?.visible()
-    val list = ArrayList<CategoryDataModelOv2>()
+    val list = ArrayList<CategoryDataModel>()
     list.addAll(categoryNoDataList)
     noCatListAdapter = AppBaseRecyclerViewAdapter(baseActivity, ArrayList(list.map { it.textChangeRTLAndSVC = true;it }), this)
     binding?.includeNoSearchResultFound?.rvCategories?.adapter = noCatListAdapter
@@ -187,7 +187,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.CATEGORY_ITEM_CLICKED.ordinal -> {
-        val dataCategory = (item as? CategoryDataModelOv2) ?: return
+        val dataCategory = (item as? CategoryDataModel) ?: return
         if (binding?.includeNoSearchResultFound?.root?.visibility == View.VISIBLE) {
           categoryNoDataList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
           noCatListAdapter?.notifyDataSetChanged()
@@ -210,7 +210,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     }
   }
 
-  private fun showCatSuggestionSelected(category: CategoryDataModelOv2) {
+  private fun showCatSuggestionSelected(category: CategoryDataModel) {
     binding?.tvTitle?.visible()
     binding?.tvSubtitle?.visible()
     binding?.includeCatSuggSelected?.root?.visible()
@@ -223,7 +223,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     setAdapterCategory(category)
   }
 
-  private fun setAdapterCategory(dataCategory: CategoryDataModelOv2) {
+  private fun setAdapterCategory(dataCategory: CategoryDataModel) {
     categoryList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
     adapterCategoryLocal?.notifyDataSetChanged()
   }
@@ -240,11 +240,11 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
       putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
       putString(IntentConstant.CATEGORY_SUGG_UI.name, selectedCategoryLive?.name ?: "")
       putSerializable(IntentConstant.CATEGORY_DATA.name, selectedCategory)
-      putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent?:false)
+      putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent ?: false)
     }), true)
   }
 
-  fun setSelectedCat(category: CategoryDataModelOv2) {
+  fun setSelectedCat(category: CategoryDataModel) {
     selectedCategory = category
     binding?.tvNextStep1?.isEnabled = true
   }

@@ -6,14 +6,15 @@
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.newOnboarding.LoaderAnimationFragment">
+    android:background="@color/white_F5F8FD"
+    tools:context=".ui.newOnboarding.OnboardSuccessFragment">
 
     <com.framework.views.customViews.CustomImageView
       android:id="@+id/customImageView9"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/size_25"
-      android:src="@drawable/ic_party_tick"
+      android:layout_width="@dimen/size_40"
+      android:layout_height="@dimen/size_40"
+      android:layout_marginTop="@dimen/size_50"
+      android:src="@drawable/ic_registration_success"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
@@ -26,13 +27,13 @@
       android:layout_marginTop="@dimen/size_28"
       android:fontFamily="@font/inter_semi_bold"
       android:gravity="center"
-      android:text="Congratulations Pinkcity Trade World!"
       android:textAlignment="gravity"
       android:textColor="@color/black_4a4a4a"
       android:textSize="@dimen/text_18"
       app:layout_constraintEnd_toEndOf="@+id/customImageView9"
       app:layout_constraintStart_toStartOf="@+id/customImageView9"
-      app:layout_constraintTop_toBottomOf="@+id/customImageView9" />
+      app:layout_constraintTop_toBottomOf="@+id/customImageView9"
+      tools:text="Congratulations Pinkcity Trade World!" />
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/tv_subtitle"
@@ -49,22 +50,12 @@
       app:layout_constraintStart_toStartOf="@+id/tv_title"
       app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
-    <com.framework.views.customViews.CustomImageView
-      android:id="@+id/customImageView10"
-      android:layout_width="wrap_content"
-      android:layout_height="@dimen/size_180"
-      android:layout_marginTop="@dimen/size_48"
-      android:src="@drawable/ic_laptop_launch_dashboard"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/tv_subtitle" />
-
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/tv_preview_website"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginHorizontal="@dimen/size_15"
-      android:layout_marginTop="@dimen/size_48"
+      android:layout_marginTop="@dimen/size_30"
       android:drawableEnd="@drawable/ic_arrow_right_yellow"
       android:drawablePadding="@dimen/size_8"
       android:fontFamily="@font/inter_semi_bold"
@@ -74,18 +65,53 @@
       android:textColor="@color/colorPrimary"
       android:textSize="@dimen/text_14"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="@+id/customImageView10"
-      app:layout_constraintTop_toBottomOf="@+id/customImageView10" />
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tv_subtitle" />
+
+    <FrameLayout
+      android:id="@+id/customImageView10"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintBottom_toTopOf="@+id/tv_launch_dashboard"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tv_preview_website">
+
+      <include
+        android:id="@+id/desktop_preview"
+        layout="@layout/item_desktop_preview_success"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom" />
+
+      <include
+        android:id="@+id/mobile_preview"
+        layout="@layout/item_mobile_preview_rounded"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="@dimen/size_24"
+        android:layout_marginBottom="@dimen/size_11" />
+    </FrameLayout>
+
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/tv_launch_dashboard"
       style="@style/yellow_squared_button"
       android:enabled="true"
-      android:text="@string/finish_and_go_to_dashboard"
+      android:text="@string/finish_setup"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       tools:ignore="UnknownId" />
+
+    <com.airbnb.lottie.LottieAnimationView
+      android:id="@+id/lottie_animation"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_500"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

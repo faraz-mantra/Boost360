@@ -162,6 +162,7 @@
   <string name="enter_your_phone_number">Enter your phone number</string>
   <string name="verify_your_number">Verify your Number</string>
   <string name="setup_my_website">Setup my Website</string>
+  <string name="setup_up_my_website">Set up my website</string>
   <string name="empty_string" />
 
   <string name="new_into_1_title">Join 1 lakh+ merchants and create your website in minutes</string>
@@ -195,15 +196,14 @@
   <string name="preview">Preview</string>
   <string name="you_have_successfully_created_your_website">You have successfully created your website</string>
   <string name="preview_website">Preview website</string>
-  <string name="finish_and_go_to_dashboard">Finish and go to dashboard</string>
+  <string name="finish_setup">Finish setup</string>
   <string name="secure">Secure | https://</string>
   <string name="this_link_is_already_in_use_please_choose_another">This link is already in use! Please choose another.</string>
   <string name="no_result_found">No results found</string>
-  <string name="we_ve_picked_the_closest_matching_website_address_for_you_feel_free_to_customize_it">We’ve picked the closest matching website address for you. Feel free to customize it.</string>
+  <string name="found_website_address_des">We found a website address for you. You can customize it or purchase a custom domain later.</string>
   <string name="your_website_is_almost_ready">Your website is almost ready!</string>
   <string name="your_business_category_was_selected">Your business category was selected</string>
-  <!--    <string name="please_select_your_whatsapp_updates_pref">Please select your preference for WhatsApp Updates!</string>-->
-  <string name="use_your_phone_number_to_login">You will be able to use your phone number to login</string>
+  <string name="use_your_phone_number_to_login">You can use your phone number to login or sign up to Boost360</string>
   <string name="_91_plus">+91</string>
   <string name="an_sms_with_a_4_digit_otp_was_sent_to">An SMS with a 4-digit OTP was sent to</string>
   <string name="get_otp_on_call">Get OTP on call</string>

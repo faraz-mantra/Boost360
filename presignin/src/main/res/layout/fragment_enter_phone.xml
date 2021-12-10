@@ -74,35 +74,33 @@
     </LinearLayout>
 
 
-    <com.framework.views.customViews.CustomTextView
-      android:id="@+id/tv_login_with_email"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="16dp"
-      android:gravity="center"
-      android:text="@string/login_with_username_or_email"
-      android:textColor="@color/colorAccentLight"
-      android:textSize="14sp"
-      app:fontFamily="@font/semi_bold"
-      app:layout_constraintEnd_toStartOf="@+id/endGuide"
-      app:layout_constraintStart_toStartOf="@+id/startGuide"
-      app:layout_constraintTop_toBottomOf="@+id/phone_et_container" />
+    <!--    <com.framework.views.customViews.CustomTextView-->
+    <!--      android:id="@+id/tv_login_with_email"-->
+    <!--      android:layout_width="0dp"-->
+    <!--      android:layout_height="wrap_content"-->
+    <!--      android:layout_marginTop="16dp"-->
+    <!--      android:gravity="center"-->
+    <!--      android:text="@string/login_with_username_or_email"-->
+    <!--      android:textColor="@color/colorAccentLight"-->
+    <!--      android:textSize="14sp"-->
+    <!--      app:fontFamily="@font/semi_bold"-->
+    <!--      app:layout_constraintEnd_toStartOf="@+id/endGuide"-->
+    <!--      app:layout_constraintStart_toStartOf="@+id/startGuide"-->
+    <!--      app:layout_constraintTop_toBottomOf="@+id/phone_et_container" />-->
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/accept_tnc_phone"
       style="@style/psn_subheading_style"
       android:layout_width="0dp"
-      android:layout_marginBottom="28dp"
+      android:layout_marginTop="@dimen/size_30"
       android:fontFamily="@font/inter_regular"
       android:gravity="center"
       android:textColorHighlight="@color/greyish_brown"
       android:textColorLink="@color/colorAccentLight"
       android:textSize="@dimen/text_11"
-      app:layout_constraintBottom_toTopOf="@+id/tv_request_otp"
       app:layout_constraintEnd_toStartOf="@+id/endGuide"
-      app:layout_constraintHorizontal_bias="0.0"
-      app:layout_constraintStart_toEndOf="@+id/startGuide"
-      tools:ignore="UnknownId"
+      app:layout_constraintStart_toStartOf="@+id/startGuide"
+      app:layout_constraintTop_toBottomOf="@+id/phone_et_container"
       tools:text="@string/enter_phone_t_n_c" />
 
     <com.framework.views.customViews.CustomTextView

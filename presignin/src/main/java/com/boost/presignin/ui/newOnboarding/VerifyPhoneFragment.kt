@@ -39,6 +39,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
   private var resultLogin: VerificationRequestResult? = null
   private var loginId: String? = null
   private var isCounterRunning = false
+  private var isSuccessApi = false
 
   private val phoneNumber by lazy {
     arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
@@ -69,9 +70,9 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
   override fun onCreateView() {
     this.session = UserSessionManager(baseActivity)
     setOnListeners()
-    setOnClickListener(binding?.tvVerifyOtp, binding?.tvResendOtpIn)
+    setOnClickListener(binding?.tvVerifyOtp, binding?.tvResendOtpIn, binding?.tvPhoneNumber)
     WebEngageController.trackEvent(PS_VERIFY_OTP_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    binding?.tvPhoneNumber?.text = phoneNumber.toString()
+    binding?.tvPhoneNumber?.text = "+91 ${phoneNumber.toString()}"
     Handler().postDelayed({ onCodeSent() }, 500)
     SmsManager.initManager(baseActivity, this)
   }
@@ -84,6 +85,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
         binding?.pinOtpVerify?.setOTP("")
         sendOtp(phoneNumber)
       }
+      binding?.tvPhoneNumber -> baseActivity.finish()
     }
   }
 
@@ -193,43 +195,57 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
   }
 
   fun verify() {
-    showProgress(getString(R.string.verify_otp))
-    WebEngageController.trackEvent(PS_VERIFY_OTP_VERIFY, OTP_VERIFY_CLICK, NO_EVENT_VALUE)
-    val otp = binding?.pinOtpVerify?.otp
-    viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId)?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        val result = it as? VerifyOtpResponse
-        binding?.tvResendOtpIn?.gone()
-        if ((result?.Result?.authTokens.isNullOrEmpty().not() && result?.Result?.authTokens?.size!! >= 1).not()) {
-          this.resultLogin = result?.Result
-          loginId = resultLogin?.loginId
-          apiWhatsappOptin()
+    if (isSuccessApi) {
+      apiWhatsappOptin()
+    } else {
+      showProgress(getString(R.string.verify_otp))
+      WebEngageController.trackEvent(PS_VERIFY_OTP_VERIFY, OTP_VERIFY_CLICK, NO_EVENT_VALUE)
+      val otp = binding?.pinOtpVerify?.otp
+      viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId)?.observeOnce(viewLifecycleOwner, {
+        if (it.isSuccess()) {
+          val result = it as? VerifyOtpResponse
+          binding?.tvResendOtpIn?.gone()
+          if (result?.Result?.authTokens.isNullOrEmpty().not() && result?.Result?.authTokens?.size!! >= 1) {
+            this.resultLogin = result.Result
+            loginId = resultLogin?.loginId
+            if (binding?.linearWhatsApp?.visibility == View.VISIBLE) apiWhatsappOptin() else showBusinessWhatsapp()
+          } else {
+            hideProgress()
+            moveToWelcomeScreen(phoneNumber)
+          }
         } else {
           hideProgress()
-          moveToWelcomeScreen(phoneNumber)
+          showLongToast(getString(R.string.wrong_otp_tv))
         }
-      } else {
-        hideProgress()
-        showLongToast(getString(R.string.wrong_otp_tv))
-      }
-    })
+      })
+    }
+  }
+
+  private fun showBusinessWhatsapp() {
+    isSuccessApi = true
+    binding?.linearWhatsApp?.visible()
   }
 
   private fun apiWhatsappOptin() {
-    viewModel?.whatsappOptIn(0, phoneNumber, customerId = loginId)?.observeOnce(viewLifecycleOwner, {
-      hideProgress()
-      if (it.isSuccess()) {
-        if (resultLogin()?.authTokens?.size == 1) {
-          authTokenData()?.createAccessTokenAuth()
-        } else {
-          navigator?.startActivityFinish(
-            MobileVerificationActivity::class.java,
-            Bundle().apply {
-              putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, resultLogin())
-            })
-        }
-      } else showShortToast(it.message())
-    })
+    if (binding?.chkWhatsapp?.isChecked == true) {
+      showProgress()
+      viewModel?.whatsappOptIn(0, phoneNumber, customerId = loginId)?.observeOnce(viewLifecycleOwner, {
+        hideProgress()
+        if (it.isSuccess()) loadNextPage() else showShortToast(it.message())
+      })
+    } else loadNextPage()
+  }
+
+  private fun loadNextPage() {
+    if (resultLogin()?.authTokens?.size == 1) {
+      authTokenData()?.createAccessTokenAuth()
+    } else {
+      navigator?.startActivityFinish(
+        MobileVerificationActivity::class.java,
+        Bundle().apply {
+          putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, resultLogin())
+        })
+    }
   }
 
   private fun moveToWelcomeScreen(enteredPhone: String?) {
@@ -238,7 +254,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
       bundle = Bundle().apply {
         putString(IntentConstant.EXTRA_PHONE_NUMBER.name, enteredPhone)
         putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, binding?.chkWhatsapp?.isChecked ?: false)
-      }, clearTop = false
+      }
     )
   }
 

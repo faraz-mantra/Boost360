@@ -1,18 +1,11 @@
-package com.boost.presignin.ui.registration
+package com.boost.presignin.ui.newOnboarding
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.SpannableStringBuilder
-import android.text.style.ForegroundColorSpan
-import android.text.style.StyleSpan
-import android.text.style.UnderlineSpan
 import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
-import com.boost.presignin.databinding.FragmentRegistrationSuccessBinding
+import com.boost.presignin.databinding.FragmentLoaderAnimationBinding
 import com.boost.presignin.helper.ProcessFPDetails
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.accessToken.AccessTokenRequest
@@ -33,18 +26,21 @@ import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.analytics.SentryController
 import com.framework.analytics.UserExperiorController
 import com.framework.extensions.observeOnce
+import com.framework.glide.util.glideLoad
+import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.saveAccessTokenAuth
 import com.framework.webengageconstant.*
-import java.util.*
+import java.util.ArrayList
+import java.util.HashMap
 import kotlin.system.exitProcess
 
 private const val TIME_INTERVAL = 2000 // # milliseconds, desired time passed between two back presses.
 
 private var mBackPressed: Long = 0
 
-class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessBinding, LoginSignUpViewModel>() {
+class OnboardSuccessFragment : AppBaseFragment<FragmentLoaderAnimationBinding, LoginSignUpViewModel>() {
 
   private var floatsRequest: CategoryFloatsRequest? = null
   private var authToken: AuthTokenDataItem? = null
@@ -52,11 +48,15 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
 
   companion object {
     @JvmStatic
-    fun newInstance() = RegistrationSuccessFragment()
+    fun newInstance(bundle: Bundle? = null): OnboardSuccessFragment {
+      val fragment = OnboardSuccessFragment()
+      fragment.arguments = bundle
+      return fragment
+    }
   }
 
   override fun getLayout(): Int {
-    return R.layout.fragment_registration_success
+    return R.layout.fragment_loader_animation
   }
 
   override fun getViewModelClass(): Class<LoginSignUpViewModel> {
@@ -64,60 +64,45 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
   }
 
   override fun onCreateView() {
+    super.onCreateView()
     WebEngageController.trackEvent(PS_REGISTRATION_SUCCESS_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     session = UserSessionManager(baseActivity)
     floatsRequest = session?.getCategoryRequest()
     authToken = session?.getAuthTokenData()
+    setOnClickListeners()
     if (floatsRequest != null || authToken != null) {
-      val businessName = floatsRequest?.businessName
-      val categoryName = floatsRequest?.categoryDataModel?.category_Name
-      val name = floatsRequest?.requestProfile?.ProfileProperties?.userName
-      val websiteUrl = floatsRequest?.webSiteUrl
-
-      binding?.headingTv?.text = String.format(getString(R.string.congratulations_n_s), name)
-      binding?.businessNameTv?.text = businessName;
-
-      val amountSpannableString = SpannableString(" $categoryName ").apply {
-        setSpan(ForegroundColorSpan(Color.rgb(0, 0, 0)), 0, length, 0)
-        setSpan(StyleSpan(Typeface.BOLD), 0, length, 0)
-      }
-
-
-      val your = getString(R.string.you);
-      binding?.subheading?.text = SpannableStringBuilder().apply {
-        append(your)
-        append(amountSpannableString)
-        append(getString(R.string.registration_complete_subheading))
-      }
-
-
-      val underLineSpan = SpannableString(websiteUrl).apply {
-        setSpan(UnderlineSpan(), 0, length, 0)
-      }
-      binding?.websiteTv?.text = SpannableStringBuilder().apply { append(underLineSpan) }
-
-      binding?.lottieAnimation?.setAnimation(R.raw.lottie_anim_congratulation)
-      binding?.lottieAnimation?.repeatCount = 0
-      binding?.lottieAnimation?.playAnimation()
-
-      binding?.previewAccountBt?.setOnClickListener {
-        WebEngageController.trackEvent(PS_REGISTRATION_PREVIEW_CLICK, CLICK, NO_EVENT_VALUE)
-        val bundle = Bundle()
-        bundle.putSerializable("request", floatsRequest)
-        navigator?.startActivity(WebPreviewActivity::class.java, bundle)
-      }
-      binding?.dashboardBt?.setOnClickListener { createAccessTokenAuth() }
+      binding?.tvTitle?.text = "Congratulations ${floatsRequest?.categoryDataModel?.getCategoryWithoutNewLine()}!"
+      baseActivity.glideLoad(binding?.desktopPreview?.imgDesktop!!, floatsRequest?.desktopPreview ?: "", R.drawable.mobile_preview_website)
+      baseActivity.glideLoad(binding?.mobilePreview?.imgMobile!!, floatsRequest?.mobilePreview ?: "", R.drawable.mobile_preview_website)
+      setLottySuccess()
       onBackPressed()
     } else logout()
+
+  }
+
+  private fun setLottySuccess() {
+    binding?.lottieAnimation?.setAnimation(R.raw.lottie_anim_congratulation)
+    binding?.lottieAnimation?.repeatCount = 0
+    binding?.lottieAnimation?.playAnimation()
+  }
+
+  private fun setOnClickListeners() {
+    binding?.tvPreviewWebsite?.setOnClickListener {
+      WebEngageController.trackEvent(PS_REGISTRATION_PREVIEW_CLICK, CLICK, NO_EVENT_VALUE)
+      val bundle = Bundle()
+      bundle.putSerializable("request", floatsRequest)
+      navigator?.startActivity(WebPreviewActivity::class.java, bundle)
+    }
+    binding?.tvLaunchDashboard?.setOnClickListener {
+      createAccessTokenAuth()
+    }
   }
 
   private fun createAccessTokenAuth() {
     showProgress(getString(R.string.business_setup_process))
     WebEngageController.trackEvent(PS_REGISTRATION_DASHBOARD_CLICK, CLICK, NO_EVENT_VALUE)
     val request = AccessTokenRequest(
-      authToken = authToken?.authenticationToken,
-      clientId = clientId,
-      fpId = authToken?.floatingPointId
+      authToken = authToken?.authenticationToken, clientId = clientId, fpId = authToken?.floatingPointId
     )
     viewModel?.createAccessToken(request)?.observeOnce(viewLifecycleOwner, {
       val result = it as? AccessTokenResponse
@@ -170,20 +155,17 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
 
   private fun startDashboard() {
     try {
-      val dashboardIntent =
-        Intent(baseActivity, Class.forName("com.dashboard.controller.DashboardActivity"))
+      val dashboardIntent = Intent(baseActivity, Class.forName("com.dashboard.controller.DashboardActivity"))
       dashboardIntent.putExtras(requireActivity().intent)
       val bundle = Bundle()
       bundle.putParcelableArrayList("message", ArrayList())
       dashboardIntent.putExtras(bundle)
-      dashboardIntent.flags =
-        Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+      dashboardIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
       startActivity(dashboardIntent)
       baseActivity.finish()
       hideProgress()
     } catch (e: Exception) {
       SentryController.captureException(e)
-
       e.printStackTrace()
     }
   }

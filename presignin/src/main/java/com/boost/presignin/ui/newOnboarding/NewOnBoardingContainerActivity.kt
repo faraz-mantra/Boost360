@@ -10,8 +10,8 @@ import androidx.core.content.ContextCompat
 import com.appservice.base.AppBaseActivity
 import com.boost.presignin.R
 import com.boost.presignin.constant.FragmentType
+import com.boost.presignin.constant.FragmentType.Companion.fromValue
 import com.boost.presignin.databinding.ActivityNewOnboarddingContainerBinding
-import com.boost.presignin.dialog.WebViewDialog
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.exceptions.IllegalFragmentTypeException
@@ -31,7 +31,8 @@ class NewOnBoardingContainerActivity : AppBaseActivity<ActivityNewOnboarddingCon
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    intent?.extras?.getInt(FRAGMENT_TYPE)?.let { type = FragmentType.values()[it] }
+    intent?.extras?.getString(FRAGMENT_TYPE)?.let { type = fromValue(it) }
+    if (type == null) intent?.extras?.getInt(FRAGMENT_TYPE)?.let { type = FragmentType.values()[it] }
     super.onCreate(savedInstanceState)
   }
 
@@ -96,8 +97,7 @@ class NewOnBoardingContainerActivity : AppBaseActivity<ActivityNewOnboarddingCon
           FragmentType.ENTER_PHONE_FRAGMENT -> R.string.enter_your_phone_number
           FragmentType.SET_UP_MY_WEBSITE_FRAGMENT -> R.string.setup_my_website
           FragmentType.VERIFY_PHONE_FRAGMENT -> R.string.verify_your_number
-          FragmentType.WELCOME_FRAGMENT,
-          FragmentType.INTRO_SLIDE_SHOW_FRAGMENT -> R.string.empty_string
+          FragmentType.WELCOME_FRAGMENT, FragmentType.INTRO_SLIDE_SHOW_FRAGMENT -> R.string.empty_string
           else -> R.string.empty_string
         }
       )
@@ -122,7 +122,7 @@ class NewOnBoardingContainerActivity : AppBaseActivity<ActivityNewOnboarddingCon
         WelcomeFragment.newInstance(intent.extras)
       }
       FragmentType.LOADING_ANIMATION_DASHBOARD_FRAGMENT -> {
-        LoaderAnimationFragment.newInstance(intent.extras)
+        OnboardSuccessFragment.newInstance(intent.extras)
       }
       else -> throw IllegalFragmentTypeException()
     }
@@ -149,7 +149,7 @@ class NewOnBoardingContainerActivity : AppBaseActivity<ActivityNewOnboarddingCon
   }
 }
 
-fun startFragmentFromNewOnBoardingActivity(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean) {
+fun startFragmentFromNewOnBoardingActivity(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
   val intent = Intent(activity, NewOnBoardingContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -157,7 +157,7 @@ fun startFragmentFromNewOnBoardingActivity(activity: Activity, type: FragmentTyp
   activity.startActivity(intent)
 }
 
-fun startFragmentFromNewOnBoardingActivityFinish(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean) {
+fun startFragmentFromNewOnBoardingActivityFinish(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
   val intent = Intent(activity, NewOnBoardingContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
