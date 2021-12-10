@@ -35,6 +35,16 @@ android {
     }
 
     dataBinding.enabled = true
+    sourceSets {
+        main {
+            java {
+                srcDirs 'src/main/java', 'src/partone/java'
+            }
+            res {
+                srcDirs 'src/main/res', 'src/partone/res'
+            }
+        }
+    }
 }
 
 dependencies {
