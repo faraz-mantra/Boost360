@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <TextView
+    android:id="@+id/home_promo_banner_title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fontFamily="@font/open_sans"
+    android:paddingStart="@dimen/_5sdp"
+    android:paddingBottom="@dimen/_5sdp"
+    tools:text="Here's a colorful treat!"
+    android:textColor="@color/common_text_color"
+    android:textFontWeight="600"
+    android:textSize="@dimen/txt_16sp"
+    android:textStyle="bold"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+
+  <ImageView
+    android:id="@+id/package_primary_image"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:src="@drawable/group"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintDimensionRatio="16:9"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/home_promo_banner_title"
+   />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
