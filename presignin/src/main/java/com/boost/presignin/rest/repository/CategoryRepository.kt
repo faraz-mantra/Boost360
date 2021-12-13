@@ -15,6 +15,10 @@ object CategoryRepository : AppBaseRepository<CategoryRemoteDataSource, Category
     return makeLocalRequest(CategoryLocalDataSource.getCategory(context), TaskCode.GET_CATEGORIES)
   }
 
+  fun getCategoriesOv2(context: Context): Observable<BaseResponse> {
+    return makeLocalRequest(CategoryLocalDataSource.getCategoryOv2(context), TaskCode.GET_CATEGORIES)
+  }
+
   fun getCategoriesPlan(context: Context): Observable<BaseResponse> {
     return makeLocalRequest(
       CategoryLocalDataSource.getCategoryPlan(context),

@@ -1017,7 +1017,7 @@
                 android:orientation="vertical">
 
                 <com.framework.views.customViews.CustomImageView
-                  android:layout_width="@dimen/size_122"
+                  android:layout_width="@dimen/size_132"
                   android:layout_height="@dimen/size_24"
                   app:srcCompat="@drawable/ic_boost_logo_d" />
 

@@ -20,9 +20,10 @@ import androidx.annotation.DrawableRes;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.framework.R;
+import com.framework.views.customViews.CustomImageView;
 
 
-public class RoundedImageView extends AppCompatImageView {
+public class RoundedImageView extends CustomImageView {
 
   public static final String TAG = "RoundedImageView";
   public static final float DEFAULT_RADIUS = 0f;

@@ -3,13 +3,12 @@ package com.boost.presignin.model.category
 import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
+import com.appservice.utils.capitalizeUtil
 import com.boost.presignin.R
 import com.boost.presignin.constant.RecyclerViewItemType
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewItem
 import com.framework.base.BaseResponse
 import java.io.Serializable
-
-const val CATEGORY_DASHBOARD_DATA = "CATEGORY_DASHBOARD_DATA"
 
 class CategoryDataModel(
   val experience_code: String? = null,
@@ -20,11 +19,32 @@ class CategoryDataModel(
   val icon: String? = null,
   val sections: ArrayList<SectionsFeature>? = null,
 ) : BaseResponse(), AppBaseRecyclerViewItem, Serializable {
+  var recyclerViewItem: Int = RecyclerViewItemType.CATEGORY_ITEM.getLayout()
   var sectionType: Boolean = false
   var isSelected = false
 
+  var textChangeRTLAndSVC = false
+
+  fun getCategoryWithoutNewLine(): String? {
+    return category_Name?.replace("\\n".toRegex(), " ")
+  }
+
+  fun getCategoryName(): String? {
+    return when (experience_code) {
+      "SVC" -> "Do you provide services?"
+      else -> "Do you sell products?" //"RTL"
+    }
+  }
+
   fun experienceCode(): String {
     return experience_code ?: ""
+  }
+
+  fun getSectionsTitles(): String? {
+    return if (sections.isNullOrEmpty()) category_descriptor?.capitalizeUtil() else {
+      val item = sections.take(2)
+      "${item.firstOrNull()?.title ?: ""}, ${item.lastOrNull()?.title ?: ""}".capitalizeUtil()
+    }
   }
 
   companion object {
@@ -44,7 +64,8 @@ class CategoryDataModel(
 
   override fun getViewType(): Int {
 //    return if (sectionType) RecyclerViewItemType.SECTION_HEADER_ITEM.getLayout() else
-    return RecyclerViewItemType.CATEGORY_ITEM.getLayout()
+//    RecyclerViewItemType.CATEGORY_ITEM_OV2.getLayout()
+    return recyclerViewItem
   }
 
   fun getSelectedItem() {

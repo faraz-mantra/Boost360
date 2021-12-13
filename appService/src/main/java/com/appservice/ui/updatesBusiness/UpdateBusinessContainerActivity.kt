@@ -44,9 +44,9 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
   }
 
   override fun customTheme(): Int? {
-    return when(type){
-      FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT-> R.style.AddUpdateTheme
-      else->return super.customTheme()
+    return when (type) {
+      FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT -> R.style.AddUpdateTheme
+      else -> return super.customTheme()
     }
   }
 
@@ -110,7 +110,6 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
       else -> UpdatesBusinessFragment.newInstance()
     }
   }
-
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)

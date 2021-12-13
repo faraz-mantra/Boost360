@@ -26,6 +26,8 @@ data class CategoryFloatsRequest(
   var userBusinessEmail: String? = "",
   @SerializedName("userBusinessMobile")
   var userBusinessMobile: String? = null,
+  var mobilePreview: String? = null,
+  var desktopPreview: String? = null,
 ) : Serializable {
 
   fun getWebSiteId(): String? {

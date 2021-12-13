@@ -43,10 +43,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
         val lastPosition: Int? = binding?.introViewpager?.adapter?.itemCount?.minus(1)
         val mCurrentPosition = binding?.introViewpager?.currentItem ?: 0
         val isLast = (mCurrentPosition == lastPosition)
-        binding?.introViewpager?.setCurrentItem(
-          if (isLast) 0 else mCurrentPosition + 1,
-          isLast.not()
-        )
+        binding?.introViewpager?.setCurrentItem(if (isLast) 0 else mCurrentPosition + 1, isLast.not())
         nextPageTimer()
       }
     }
@@ -56,17 +53,11 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     binding?.acceptTnc?.makeLinks(
       Pair("terms", View.OnClickListener {
         WebEngageController.trackEvent(BOOST_360_TERMS_CLICK, CLICKED, NO_EVENT_VALUE)
-        openTNCDialog(
-          "https://www.getboost360.com/tnc?src=android&stage=presignup",
-          resources.getString(R.string.boost360_terms_conditions)
-        )
+        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
       }),
       Pair("conditions", View.OnClickListener {
         WebEngageController.trackEvent(BOOST_360_CONDITIONS_CLICK, CLICKED, NO_EVENT_VALUE)
-        openTNCDialog(
-          "https://www.getboost360.com/tnc?src=android&stage=presignup",
-          resources.getString(R.string.boost360_terms_conditions)
-        )
+        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
       })
     )
   }
@@ -84,21 +75,19 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     initTncString()
     nextPageTimer()
     binding?.introViewpager?.apply {
-      adapter = IntroAdapter(
-        supportFragmentManager,
-        lifecycle,
-        items,
-        { setNextPage() },
-        { isVideoPlaying = it;
-          Log.i(TAG, "is video playing changed: "+it)})
+      adapter = IntroAdapter(supportFragmentManager, lifecycle, items, { setNextPage() },
+        {
+          isVideoPlaying = it
+          Log.i(TAG, "is video playing changed: $it")
+        })
       orientation = ViewPager2.ORIENTATION_HORIZONTAL
       binding?.introIndicator?.setViewPager2(binding!!.introViewpager)
       binding?.introViewpager?.offscreenPageLimit = items.size
-      binding?.introViewpager?.registerOnPageChangeCallback(object :CircularViewPagerHandler(this){
+      binding?.introViewpager?.registerOnPageChangeCallback(object : CircularViewPagerHandler(this) {
         override fun onPageSelected(position: Int) {
           super.onPageSelected(position)
           Log.i(TAG, "onPageSelected: ")
-          if(position!=0&&isVideoPlaying){
+          if (position != 0 && isVideoPlaying) {
             isVideoPlaying = false
             nextPageTimer()
           }
