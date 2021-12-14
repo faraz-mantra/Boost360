@@ -120,7 +120,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
       binding?.connectedBg?.setBackgroundColor(getColor(R.color.colorAccent))
       baseActivity.getToolbar()?.setBackgroundColor(getColor(R.color.colorAccent))
       baseActivity.window.statusBarColor = getColor(R.color.colorAccent)
-      baseActivity.getToolbar()?.getTitleTextView()?.gravity = Gravity.START
+      baseActivity.getToolbar()?.getToolbarTitleTextView()?.gravity = Gravity.START
     }
   }
 
