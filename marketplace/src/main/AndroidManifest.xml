@@ -3,14 +3,17 @@
     package="com.boost.marketplace">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application>
+        <activity
+            android:name=".ui.details.FeatureDetailsActivity"
+            android:exported="true" />
         <activity
             android:name=".ui.home.MarketPlaceActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BoostMarketplaceScreenStyle"
-            android:windowSoftInputMode="adjustResize"/>
-
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
