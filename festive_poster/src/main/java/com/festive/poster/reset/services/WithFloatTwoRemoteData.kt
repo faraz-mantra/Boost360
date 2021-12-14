@@ -1,5 +1,6 @@
 package com.festive.poster.reset.services
 
+import com.festive.poster.models.MerchantSummaryResponse
 import com.festive.poster.models.PostUpdateTaskRequest
 import com.festive.poster.reset.EndPoints
 import okhttp3.RequestBody
@@ -37,4 +38,9 @@ interface WithFloatTwoRemoteData {
 //  fun getDeliveryDetails(): Observable<Response<ResponseBody>>
 
 
+  @GET(EndPoints.GET_MERCHANT_SUMMARY)
+  fun getMerchantSummary(
+    @Query("clientId") clientId: String?,
+    @Query("fpTag") fpTag: String?
+  ): Observable<Response<MerchantSummaryResponse>>
 }

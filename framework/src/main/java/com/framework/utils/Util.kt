@@ -56,8 +56,8 @@ import kotlin.collections.ArrayList
 import android.content.pm.PackageManager
 
 import android.content.pm.PackageInfo
-
-
+import com.framework.R
+import java.util.regex.Pattern.UNICODE_CHARACTER_CLASS
 
 
 inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
@@ -412,4 +412,28 @@ fun showToast(text: String?,duration:Int =Toast.LENGTH_LONG){
     return
   }
   Toast.makeText(BaseApplication.instance, text, duration).show()
+}
+
+fun highlightHashTag(text: String?): SpannableString {
+  val spannable = SpannableString(text)
+
+  if (text.isNullOrEmpty().not()){
+    var last_index = 0
+    text?.trim()?.split(Regex("\\s+"))?.forEach {
+      Log.i(TAG, "addHashTagFunction: $it")
+      if (it.isNotEmpty() && it[0] == '#'){
+        val boldSpan = StyleSpan(Typeface
+          .BOLD)
+        val foregroundSpan = ForegroundColorSpan(ContextCompat.getColor(BaseApplication.instance, R.color.black))
+        spannable.setSpan(foregroundSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannable.setSpan(boldSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+      }
+
+      last_index+=it.length-1
+
+    }
+  }
+
+  return spannable
 }

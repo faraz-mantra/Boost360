@@ -17,7 +17,7 @@ class SocialPlatformOptionListViewHolder(binding: ItemSocialPlatformPromoAdapBin
         val model = item as SocialPlatformModel
         binding.ivSocialIcon.setImageDrawable(model.icon)
         binding.tvSocialTitle.text = model.socialTitle ?: ""
-        binding.checkboxSocialSelected.isChecked = model.isConnected ?: false
+        binding.checkboxSocialSelected.isChecked = model.isChecked ?: false
         binding.checkboxSocialSelected.isEnabled = model.isEnabled == true
 
         if (model.isConnected == true) {
@@ -31,7 +31,7 @@ class SocialPlatformOptionListViewHolder(binding: ItemSocialPlatformPromoAdapBin
                 fromHtml("<font color=#E39595>Not connected</font>")
         }
         binding.checkboxSocialSelected.setOnCheckedChangeListener { compoundButton, b ->
-            model.isEnabled=b
+            model.isChecked=b
             listener?.onItemClick(position,model,RecyclerViewActionType.SOCIAL_CHANNEL_CHECK_CLICKED.ordinal)
         }
 

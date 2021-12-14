@@ -81,4 +81,9 @@
     <string name="insta_dm_dm">Insta DM</string>
     <string name="more">More…</string>
     <string name="placeholder_selected">%1$d selected</string>
+    <string name="email_sub">Email subscribers</string>
+    <string name="placeholder_recipients">%1$d recipients</string>
+    <string name="no_recipients">%1$d recipients</string>
+    <string name="post_on_placeholder_platform">Post on %1$d platform</string>
+
 </resources>

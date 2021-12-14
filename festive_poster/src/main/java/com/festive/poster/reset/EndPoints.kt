@@ -27,6 +27,7 @@ object EndPoints {
 
     const val GET_BIZ_WEB_UPDATE_BY_ID = "discover/v1/bizFloatForWeb/{id}"
     const val PUT_BIZ_MESSAGE = "discover/v1/FloatingPoint/createBizMessage"
+    const val GET_MERCHANT_SUMMARY = "/Support/v1/dashboard/GetMerchantSummary"
 
 
 }

@@ -35,6 +35,9 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   }
 
 
+  fun getMerchantSummary(clientId: String?,fpTag:String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getMerchantSummary(clientId,fpTag), TaskCode.GET_MERCHANT_SUMMARY)
+  }
 
   fun putBizImageUpdate(
     clientId: String?,

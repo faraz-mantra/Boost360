@@ -1,8 +1,19 @@
 package com.festive.poster.ui.promoUpdates.edit_post
 
+import android.app.Activity
 import android.content.*
 import android.content.Intent
+import android.graphics.Typeface
+import android.text.Editable
+import android.text.Spannable
+import android.text.Spanned
+import android.text.TextWatcher
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.View
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.databinding.ActivityEditPostBinding
@@ -19,9 +30,11 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.STTUtils
 import com.framework.utils.convertStringToObj
+import com.framework.utils.highlightHashTag
 import com.framework.webengageconstant.EVENT_LABEL_NULL
 import com.framework.webengageconstant.POST_AN_UPDATE
 import com.google.gson.Gson
+import java.lang.Exception
 
 
 class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterViewModel>() {
@@ -31,6 +44,8 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
 
     private var sessionLocal: UserSessionManager?=null
     var posterModel:PosterModel?=null
+    private var mSpannable: Spannable? = null
+    private var hashTagIsComing = 0
     override fun getLayout(): Int {
         return R.layout.activity_edit_post
     }
@@ -61,8 +76,8 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
 
     private fun initUI() {
         SvgUtils.loadImage(posterModel?.url()!!,binding!!.ivTemplate,posterModel!!.keys,posterModel!!.isPurchased)
-
-
+        binding!!.captionLayout.etInput.isFocusableInTouchMode =false
+        addHashTagFunction()
 
     }
 
@@ -80,8 +95,7 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
     private fun initStt() {
         sttUtils = STTUtils(object : STTUtils.Callbacks{
             override fun onDone(text: String?) {
-                binding?.captionLayout?.etInput?.append((text ?: "") + ". ")
-
+                binding?.captionLayout?.etInput?.setText(highlightHashTag(text))
             }
         })
         sttUtils?.init(this)
@@ -143,9 +157,14 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
                 }).show(supportFragmentManager, EditTemplateBottomSheet::class.java.name)
             }
             binding?.captionLayout?.etInput -> {
-                CaptionBottomSheet.newInstance(object :CaptionBottomSheet.Callbacks{
+
+                CaptionBottomSheet.newInstance(binding?.captionLayout?.etInput?.text.toString()
+                    ,object :CaptionBottomSheet.Callbacks{
                     override fun onDone(value: String) {
-                        binding?.captionLayout?.etInput?.setText(value)
+                        getWindow().setSoftInputMode(
+                            WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+                        )
+                        binding?.captionLayout?.etInput?.setText(highlightHashTag(value))
                     }
                 }).show(supportFragmentManager, CaptionBottomSheet::class.java.name)
             }
@@ -159,7 +178,7 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
             binding?.tvPreviewAndPost -> {
                // saveUpdatePost()
                 posterModel?.let {
-                    PostPreviewSocialActivity.launchActivity(this,binding?.captionLayout?.etInput.toString(),
+                    PostPreviewSocialActivity.launchActivity(this,binding?.captionLayout?.etInput?.text.toString(),
                         it
                     )
                 }
@@ -178,4 +197,41 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
 //        return responseBody!!
 //    }
 
+
+    private fun addHashTagFunction() {
+        mSpannable = binding?.captionLayout?.etInput?.text
+
+        binding?.captionLayout?.etInput?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
+                var startChar: String? = null
+
+                try {
+                    startChar = text[start].toString()
+                } catch (ex: Exception) {
+                    startChar = ""
+                }
+
+                if (startChar == "#") {
+                    changeTheColor(text.toString().substring(start), start, start + count)
+                    hashTagIsComing++
+                }
+
+                if (startChar == " ") {
+                    hashTagIsComing = 0
+                }
+
+                if (hashTagIsComing !== 0) {
+                    changeTheColor(text.toString().substring(start), start, start + count)
+                    hashTagIsComing++
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+    }
+
+    private fun changeTheColor(s: String, start: Int, end: Int) {
+        mSpannable?.setSpan(ForegroundColorSpan(ContextCompat.getColor(this, R.color.black_4a4a4a)), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        mSpannable?.setSpan(StyleSpan(Typeface.BOLD), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
 }

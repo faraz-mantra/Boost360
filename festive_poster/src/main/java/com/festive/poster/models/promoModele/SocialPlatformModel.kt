@@ -15,7 +15,8 @@ class SocialPlatformModel(
     val socialTitle: String? = null,
     var socialSubTitleData: String? = null,
     var isEnabled: Boolean? = false,
-    var isConnected: Boolean? = false
+    var isConnected: Boolean? = false,
+    var isChecked:Boolean?=false
 ) : Serializable, AppBaseRecyclerViewItem {
 
     var icon:Drawable?=null
@@ -35,12 +36,12 @@ class SocialPlatformModel(
             )
             ChannelType.FB_PAGE -> ResourcesCompat.getDrawable(
                 context.resources,
-                R.drawable.ic_promo_flag_orange,
+                R.drawable.ic_fb_promo_channel,
                 context.theme
             )
             ChannelType.G_MAPS -> ResourcesCompat.getDrawable(
                 context.resources,
-                com.onboarding.nowfloats.R.drawable.ic_google_maps_n,
+                R.drawable.ic_gmb_promo_channel,
                 context.theme
             )
             ChannelType.FB_SHOP -> ResourcesCompat.getDrawable(
@@ -60,7 +61,7 @@ class SocialPlatformModel(
             )
             ChannelType.G_BUSINESS -> ResourcesCompat.getDrawable(
                 context.resources,
-                com.onboarding.nowfloats.R.drawable.ic_google_maps_n,
+                R.drawable.ic_gmb_promo_channel,
                 context.theme
             )
             else -> null

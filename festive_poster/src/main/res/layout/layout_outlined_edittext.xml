@@ -20,7 +20,6 @@
 
             <com.framework.views.customViews.CustomEditText
                 android:id="@+id/et_input"
-                android:focusableInTouchMode="false"
                 android:layout_width="0dp"
                 android:gravity="start"
                 android:layout_height="0dp"

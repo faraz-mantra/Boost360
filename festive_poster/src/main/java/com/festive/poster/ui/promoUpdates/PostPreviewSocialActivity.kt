@@ -15,6 +15,7 @@ import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.ActivityPostPreviewSocialBinding
+import com.festive.poster.models.MerchantSummaryResponse
 import com.festive.poster.models.PostUpdateTaskRequest
 import com.festive.poster.models.PosterModel
 import com.festive.poster.models.promoModele.SocialPlatformModel
@@ -35,6 +36,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.getDomainName
@@ -69,9 +71,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     private var posterProgressSheet: PostingProgressBottomSheet?=null
     private var connectedChannels: ArrayList<String> = arrayListOf()
     private var session:UserSessionManager?=null
-    private val captionIntent by lazy {
-        intent?.getStringExtra(IK_CAPTION_KEY)
-    }
+    private var captionIntent :String?=null
     private val posterModel by lazy {
         convertStringToObj<PosterModel?>(intent?.getStringExtra(IK_POSTER))
     }
@@ -109,6 +109,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     override fun onCreateView() {
         session = UserSessionManager(this)
+        captionIntent =intent?.getStringExtra(IK_CAPTION_KEY)
+
 
         initUI()
 
@@ -197,6 +199,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         }
 
         binding?.tvSelected?.text = getString(R.string.placeholder_selected,getCheckedChannelCount())
+        binding?.tvPostUpdate?.text = getString(R.string.post_on_placeholder_platform,getCheckedChannelCount())
 
     }
 
@@ -204,6 +207,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
        return uiChannelList?.filter { it.isEnabled==true }?.size?:0
     }
     private fun getChannelsFromJson() {
+        binding?.progressBar?.visible()
             NavigatorManager.clearRequest()
             val experienceCode = session?.fP_AppExperienceCode
             if (experienceCode.isNullOrEmpty().not()) {
@@ -273,15 +277,18 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             var title:String?=null
             var subTitle:String?=null
             var isConnected=false
+            var isEnabled=false
             requestFloatsNew.categoryDataModel?.channels?.forEach { it1 ->
                 /*if (it1.isWhatsAppChannel()){
                     return
                 }*/
                 if (it1.type==ChannelType.G_SEARCH.name){
                     isConnected=true
+                    isEnabled = false
                     subTitle=session?.getDomainName(false)
                 }else{
                     subTitle=null
+                    isEnabled=true
                     isConnected=false
                 }
                 title = it1.getName()
@@ -381,89 +388,98 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
                 }
 
-
-                uiChannelList?.add(SocialPlatformModel(title,subTitle,isConnected,isConnected).apply {
-                    generateImageResource(it1.getType(),this@PostPreviewSocialActivity)
-                })
+                if (shouldAddToChannelList(it1)){
+                    uiChannelList?.add(SocialPlatformModel(title,subTitle,isEnabled,isConnected,isConnected).apply {
+                        generateImageResource(it1.getType(),this@PostPreviewSocialActivity)
+                    })
+                }
             }
             if (categoryData?.channels.isNullOrEmpty()){
                 showLongToast(getString(R.string.channel_not_found))
             }else{
-                setChannelAdapter()
+                fetchSubscriberCount()
             }
 
      //   getWhatsAppData(requestFloatsNew, channelsAccessToken)
     }
 
-  /*  private fun getWhatsAppData(
-        requestFloatsNew: RequestFloatsModel,
-        channelsAccessToken: ChannelsType?
-    ) {
-        viewModel.getWhatsappBusiness(request = requestFloatsNew.fpTag, auth = WA_KEY)
-            ?.observeOnce(this, {
-                if (it.isSuccess()) {
-                    val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
-                    if (response != null && response.active_whatsapp_number.isNullOrEmpty().not()) {
-                        val channelActionData = ChannelActionData(response.active_whatsapp_number?.trim())
-                        requestFloatsNew.channelActionDatas?.add(channelActionData)
-                        connectedChannels.add(ChannelsType.AccountType.WAB.name)
-                        requestFloatsNew.categoryDataModel?.channels?.forEach { it1 ->
-                            if (it1.isWhatsAppChannel()) {
-                                it1.isSelected = true
-                                it1.channelActionData = channelActionData
-                            }
-                        }
-                    }
-                }
-                ChannelAccessStatusResponse.saveDataConnectedChannel(connectedChannels)
-                NavigatorManager.updateRequest(requestFloatsNew)
-                setSharePrefDataFpPageAndTwitter(channelsAccessToken)
-                hideProgress()
-            })
+    private fun shouldAddToChannelList(channel: ChannelModel): Boolean {
+
+        if (channel.isWhatsAppChannel()||channel.isFacebookShop()){
+            return false
+        }
+        return true
     }
 
-    private fun setSharePrefDataFpPageAndTwitter(channelsAccessToken: ChannelsType?) {
-        val editorFp = pref?.edit()
-        editorFp?.putBoolean("fbShareEnabled", false)
-        editorFp?.putString("fbAccessId", null)
-        editorFp?.putBoolean("fbPageShareEnabled", false)
-        editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, "")
-        editorFp?.putString("fbPageAccessId", null)
-        editorFp?.putInt("fbStatus", 0)
-        val fpPage = channelsAccessToken?.facebookpage
-        if (fpPage != null && fpPage.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
-            editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, fpPage.account?.accountName ?: "")
-            editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, true)
-            editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 1)
-            editorFp?.putString("fbPageAccessId", fpPage.account?.accountId ?: "")
-        } else {
-            editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, null)
-            editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, false)
-            editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 0)
-        }
-        val timeLine = channelsAccessToken?.facebookusertimeline
-        if (timeLine != null && timeLine.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
-            editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, timeLine.account?.accountName)
-            if (timeLine.account?.accountName.isNullOrEmpty()
-                    .not()
-            ) editorFp?.putBoolean("fbShareEnabled", true)
-            editorFp?.putString("fbAccessId", timeLine.account?.accountId)
-        }
-        editorFp?.apply()
+    /*  private fun getWhatsAppData(
+          requestFloatsNew: RequestFloatsModel,
+          channelsAccessToken: ChannelsType?
+      ) {
+          viewModel.getWhatsappBusiness(request = requestFloatsNew.fpTag, auth = WA_KEY)
+              ?.observeOnce(this, {
+                  if (it.isSuccess()) {
+                      val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
+                      if (response != null && response.active_whatsapp_number.isNullOrEmpty().not()) {
+                          val channelActionData = ChannelActionData(response.active_whatsapp_number?.trim())
+                          requestFloatsNew.channelActionDatas?.add(channelActionData)
+                          connectedChannels.add(ChannelsType.AccountType.WAB.name)
+                          requestFloatsNew.categoryDataModel?.channels?.forEach { it1 ->
+                              if (it1.isWhatsAppChannel()) {
+                                  it1.isSelected = true
+                                  it1.channelActionData = channelActionData
+                              }
+                          }
+                      }
+                  }
+                  ChannelAccessStatusResponse.saveDataConnectedChannel(connectedChannels)
+                  NavigatorManager.updateRequest(requestFloatsNew)
+                  setSharePrefDataFpPageAndTwitter(channelsAccessToken)
+                  hideProgress()
+              })
+      }
 
-        val twitter = channelsAccessToken?.twitter
-        val editorTwitter = mPrefTwitter?.edit()
-        if (twitter != null && twitter.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
-            editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, twitter.account?.accountName)
-            editorTwitter?.putBoolean(PreferenceConstant.PREF_KEY_TWITTER_LOGIN, true)
-        } else {
-            editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, null)
-            editorTwitter?.putBoolean(PreferenceConstant.PREF_KEY_TWITTER_LOGIN, false)
-        }
-        editorTwitter?.apply()
-    }
+      private fun setSharePrefDataFpPageAndTwitter(channelsAccessToken: ChannelsType?) {
+          val editorFp = pref?.edit()
+          editorFp?.putBoolean("fbShareEnabled", false)
+          editorFp?.putString("fbAccessId", null)
+          editorFp?.putBoolean("fbPageShareEnabled", false)
+          editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, "")
+          editorFp?.putString("fbPageAccessId", null)
+          editorFp?.putInt("fbStatus", 0)
+          val fpPage = channelsAccessToken?.facebookpage
+          if (fpPage != null && fpPage.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
+              editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, fpPage.account?.accountName ?: "")
+              editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, true)
+              editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 1)
+              editorFp?.putString("fbPageAccessId", fpPage.account?.accountId ?: "")
+          } else {
+              editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, null)
+              editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, false)
+              editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 0)
+          }
+          val timeLine = channelsAccessToken?.facebookusertimeline
+          if (timeLine != null && timeLine.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
+              editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, timeLine.account?.accountName)
+              if (timeLine.account?.accountName.isNullOrEmpty()
+                      .not()
+              ) editorFp?.putBoolean("fbShareEnabled", true)
+              editorFp?.putString("fbAccessId", timeLine.account?.accountId)
+          }
+          editorFp?.apply()
 
-*/
+          val twitter = channelsAccessToken?.twitter
+          val editorTwitter = mPrefTwitter?.edit()
+          if (twitter != null && twitter.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
+              editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, twitter.account?.accountName)
+              editorTwitter?.putBoolean(PreferenceConstant.PREF_KEY_TWITTER_LOGIN, true)
+          } else {
+              editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, null)
+              editorTwitter?.putBoolean(PreferenceConstant.PREF_KEY_TWITTER_LOGIN, false)
+          }
+          editorTwitter?.apply()
+      }
+
+  */
     private fun errorMessage(message: String) {
         hideProgress()
         showLongToast(message)
@@ -477,13 +493,14 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
            if (twitterSharingEnabled.value == true) socialShare += "TWITTER."*/
         val merchantId = if (session?.iSEnterprise == "true") null else session?.fPID
         val parentId = if (session?.iSEnterprise == "true") session?.fPParentId else null
+        val sendToSubscribe = uiChannelList?.find { it.socialTitle==getString(R.string.email_sub) }?.isChecked
         val request = PostUpdateTaskRequest(
             clientId,
             captionIntent,
             true,
             merchantId,
             parentId,
-            true,
+            sendToSubscribe,
             socialShare
         )
 
@@ -495,7 +512,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                     val s_uuid = UUID.randomUUID().toString().replace("-", "")
                     viewModel.putBizImageUpdate(
                         clientId, "sequential", s_uuid, 1, 1,
-                        socialShare, it.stringResponse, true, bodyImage
+                        socialShare, it.stringResponse, sendToSubscribe, bodyImage
                     ).observeOnce(this@PostPreviewSocialActivity, { it1 ->
                         if (it1.isSuccess()) {
                             // successResult()
@@ -514,4 +531,24 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         })
     }
 
+    fun fetchSubscriberCount(){
+        viewModel.getMerchantSummary(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session?.fpTag).observeOnce(this, {
+            val response = it as? MerchantSummaryResponse
+            val subscriber = response?.Entity?.firstOrNull()?.get("NoOfSubscribers")
+            val subTitle = if (subscriber==0){
+                getString(R.string.no_recipients)
+
+            }else{
+                getString(R.string.placeholder_recipients,subscriber)
+            }
+            uiChannelList?.add(SocialPlatformModel(getString(R.string.email_sub),subTitle,true,true,true).apply {
+                icon =getDrawable(R.drawable.ic_promo_emailers)
+            })
+
+            binding?.progressBar?.gone()
+
+            setChannelAdapter()
+
+        })
+    }
 }

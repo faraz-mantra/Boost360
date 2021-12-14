@@ -47,4 +47,8 @@ class PostUpdatesViewModel : BaseViewModel() {
       currentChunkNumber, socialParmeters, bizMessageId, sendToSubscribers, requestBody
     ).toLiveData()
   }
+
+  fun getMerchantSummary(clientId: String?,fpTag: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getMerchantSummary(clientId,fpTag).toLiveData()
+  }
 }

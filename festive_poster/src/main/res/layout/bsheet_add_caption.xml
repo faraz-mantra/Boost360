@@ -8,18 +8,26 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.framework.views.customViews.CustomImageView
-        android:id="@+id/riv_close_bottomSheet"
-        android:layout_width="@dimen/size_40"
-        android:layout_height="@dimen/size_40"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/size_15"
-        android:src="@drawable/ic_help_bsheet_close" />
+    <RelativeLayout
+        android:background="@android:color/transparent"
+        android:paddingBottom="@dimen/size_24"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/riv_close_bottomSheet"
+            android:layout_centerHorizontal="true"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/size_15"
+            android:src="@drawable/ic_help_bsheet_close" />
+    </RelativeLayout>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_24"
         android:background="@drawable/shape_fposter_white_top_rounded_rect">
 
         <FrameLayout
