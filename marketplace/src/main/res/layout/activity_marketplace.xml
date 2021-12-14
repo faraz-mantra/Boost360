@@ -8,50 +8,67 @@
 
   </data>
 
-<!--  <com.google.android.material.appbar.AppBarLayout-->
-<!--    android:id="@+id/general_appbar"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:background="@null">-->
-
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--      android:layout_width="match_parent"-->
-<!--      android:layout_height="match_parent">-->
-
-<!--      <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
-
-<!--        <androidx.cardview.widget.CardView-->
-<!--          android:layout_width="wrap_content"-->
-<!--          android:layout_height="wrap_content"-->
-<!--          android:foregroundGravity="center"-->
-<!--          android:shape="ring"-->
-<!--          app:cardCornerRadius="75dp"-->
-<!--          app:cardBackgroundColor="#EFEFEF"-->
-<!--          android:layout_margin="10dp"-->
-<!--          app:layout_constraintBottom_toBottomOf="parent"-->
-<!--          app:layout_constraintStart_toStartOf="parent"-->
-<!--          app:layout_constraintTop_toTopOf="parent">-->
-
-<!--          <ImageView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:background="@drawable/ic_back_button_black" />-->
-
-<!--        </androidx.cardview.widget.CardView>-->
 
 
-
-
-<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
-<!--    </androidx.appcompat.widget.Toolbar>-->
-
-<!--  </com.google.android.material.appbar.AppBarLayout>-->
   <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/home_screen_main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+      <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/general_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/_2sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+          android:id="@+id/home_screen_toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:shape="ring"
+              app:cardCornerRadius="75dp"
+              app:cardElevation="0dp"
+              android:layout_margin="10dp"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent">
+
+              <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:paddingTop="3dp"
+                android:paddingStart="2dp"
+                android:background="#EFEFEF">
+
+                <ImageView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:background="@drawable/ic_back_button_black" />
+
+              </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+      </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
       android:layout_width="match_parent"
@@ -84,7 +101,7 @@
               android:layout_width="@dimen/size_60"
               android:layout_height="@dimen/size_60"
               android:layout_gravity="center_horizontal"
-              android:layout_marginTop="10dp"
+              android:layout_marginTop="35dp"
               android:background="@color/white"
               app:cardCornerRadius="5dp"
               app:cardElevation="4dp">
@@ -105,7 +122,7 @@
               android:layout_gravity="center"
               android:layout_marginTop="10dp"
               android:fontFamily="@font/regular"
-              android:text="Welcome to Boost 360"
+              android:text="@string/welcome_to_boost_360"
               android:textColor="@color/black"
               android:textSize="14sp" />
 
@@ -115,7 +132,7 @@
               android:layout_gravity="center"
               android:layout_marginTop="5dp"
               android:fontFamily="@font/regular"
-              android:text="Feature Marketplace"
+              android:text="@string/feature_marketplace"
               android:textColor="@color/black"
               android:textSize="23sp"
               android:textStyle="bold" />
@@ -126,11 +143,12 @@
               android:layout_gravity="center"
               android:layout_marginTop="20dp"
               android:includeFontPadding="false"
-              android:text="MY CURRENT PLAN "
+              android:text="@string/my_current_plan"
               android:textColor="#FFB900"
               android:textSize="14sp"
               android:textStyle="bold"
-              app:drawableEndCompat="@drawable/ic_my_cuurent_plan_arrow" />
+              android:drawablePadding="10dp"
+              android:drawableEnd="@drawable/ic_my_cuurent_plan_arrow"
 
 
             <RelativeLayout

@@ -28,7 +28,7 @@
     app:layout_constraintTop_toTopOf="parent" />
 
 
-  <ImageView
+  <com.framework.views.customViews.CustomImageView
     android:id="@+id/package_primary_image"
     android:layout_width="0dp"
     android:layout_height="0dp"
