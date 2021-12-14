@@ -1,9 +1,11 @@
 package com.appservice.ui.aptsetting.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.appservice.R
 import com.appservice.model.aptsetting.AddBankAccountRequest
 import com.appservice.model.aptsetting.PaymentProfileResponse
@@ -35,7 +37,6 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
 
   companion object {
     fun newInstance(): FragmentAddAccountDetails {
-
       return FragmentAddAccountDetails()
     }
   }
@@ -44,7 +45,6 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
     super.onCreateView()
     setOnClickListener(binding?.submitBtn)
     getAccountDetails()
-    sessionLocal = UserSessionManager(requireActivity())
   }
 
   private fun getAccountDetails() {
@@ -106,9 +106,10 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
   private fun onAddingBankAccount(it: BaseResponse) {
     hideProgress()
     if (it.isSuccess()) {
-      val bundle = Bundle()
-      bundle.putBoolean(IntentConstant.IS_EDIT.name, false)
-      startFragmentActivity(FragmentType.APPOINTMENT_PAYMENT_SETTINGS, bundle, true, isResult = false)
+      val intent = Intent()
+      intent.putExtra(IntentConstant.IS_BACK_PRESS.name, true)
+      baseActivity.setResult(AppCompatActivity.RESULT_OK, intent)
+      baseActivity.onBackPressed()
     }
   }
 

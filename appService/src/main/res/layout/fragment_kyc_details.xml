@@ -255,7 +255,7 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_1"
               android:layout_marginTop="@dimen/size_14"
-              android:text="@string/account_number"
+              android:text="@string/account_number_"
               android:textColor="@color/greyish_brown"
               app:fontFamily="@font/regular"
               app:textType="BODY_1" />
