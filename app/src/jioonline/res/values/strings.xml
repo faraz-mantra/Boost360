@@ -650,6 +650,10 @@
 
   <string name="sentry_url">https://59f88b513d054d9a9e09fd0afef2b9f3@o282435.ingest.sentry.io/6085786</string>
 
+  <string name="you_can_create_a_support_request_and_someone_from_the_boost_team_will_assist_you">You can create a support request and someone from the JioOnline team will assist you.</string>
+  <string name="someone_from_boost_will_get_in_touch_with_you">Someone from JioOnline will get in touch with you.</string>
+  <string name="use_your_phone_number_to_login">You can use your phone number to login or sign up to JioOnline</string>
+
   <!--   florisboard Keyboard-->
   <string name="app_name_k">JioOnline keyboard</string>
   <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when JioOnline keyboard is not enabled in the system">JioOnline keyboard is not enabled in the system and thus won\'t be available as an input method in the input picker. Click here to resolve this issue.</string>
