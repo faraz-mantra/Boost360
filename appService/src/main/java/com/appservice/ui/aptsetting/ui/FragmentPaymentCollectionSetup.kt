@@ -1,5 +1,7 @@
 package com.appservice.ui.aptsetting.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.view.View
 import com.appservice.R
 import com.appservice.model.aptsetting.DeliveryDetailsResponse
@@ -8,6 +10,7 @@ import com.appservice.model.aptsetting.PaymentProfileResponse
 import com.appservice.ui.aptsetting.widgets.BottomSheetBoostPaymentConfig
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
+import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentPaymentCollectionSetupBinding
 import com.appservice.rest.TaskCode
 import com.appservice.ui.catalog.startFragmentActivity
@@ -41,7 +44,6 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
 
   override fun onCreateView() {
     super.onCreateView()
-    sessionLocal = UserSessionManager(requireActivity())
     WebEngageController.trackEvent(PAYMENT_COLLECTION_SETUP_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.boostPaymentGateway, binding?.btnAddAccount, binding?.btnConfirm)
     getDeliveryStatus()
@@ -70,8 +72,7 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
 
   private fun updateDeliveryStatus() {
     showProgress()
-    hitApi(
-      liveData = viewModel?.setupDelivery(
+    hitApi(liveData = viewModel?.setupDelivery(
         DeliverySetup(
           isPickupAllowed = false, isBusinessLocationPickupAllowed = binding?.toggleCod?.isOn,
           isWarehousePickupAllowed = false, isHomeDeliveryAllowed = false, flatDeliveryCharge = "0",
@@ -112,7 +113,7 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
         binding?.llBankStatus?.visible()
         binding?.ctvAccountText?.gone()
         binding?.arrowRight?.visible()
-        binding?.edtBankAccount?.setOnClickListener { startFragmentActivity(FragmentType.EDIT_ACCOUNT_DETAILS) }
+        binding?.edtBankAccount?.setOnClickListener { startFragmentActivity(FragmentType.EDIT_ACCOUNT_DETAILS,isResult = true) }
         binding?.llDisclaimer?.visible()
         binding?.bankAddedStatus?.text = "Bank Account Added (${(paymentProfileResponse.result?.bankAccountDetails?.getVerifyText())})"
         binding?.bankNameAccountNumber?.text = "${paymentProfileResponse.result?.bankAccountDetails?.bankName} - ${paymentProfileResponse.result?.bankAccountDetails?.accountNumber}"
@@ -151,11 +152,19 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
     hideProgress()
   }
 
-
   private fun onDeliveryDetailsReceived(it: BaseResponse) {
     hideProgress()
     val data = it as? DeliveryDetailsResponse
     binding?.toggleCod?.isOn = data?.result?.isBusinessLocationPickupAllowed ?: false
     getAccountDetails()
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
+      if (data?.extras?.getBoolean(IntentConstant.IS_UPDATED.name) == true) {
+        getAccountDetails()
+      }
+    }
   }
 }

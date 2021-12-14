@@ -460,6 +460,18 @@ fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
     e.printStackTrace()
   }
 }
+fun AppCompatActivity.startEcommerceAppointmentSetting(session: UserSessionManager?) {
+  try {
+    val type = if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
+      com.appservice.constant.FragmentType.APPOINTMENT_SETTINGS
+    } else {
+      com.appservice.constant.FragmentType.ECOMMERCE_SETTINGS
+    }
+    startFragmentActivity(type)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
 
 fun AppCompatActivity.startListStaff(session: UserSessionManager?) {
   try {

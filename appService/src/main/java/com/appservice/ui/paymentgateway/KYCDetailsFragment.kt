@@ -376,27 +376,23 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
 
     when {
       panCarImage == null && dataKyc?.panCardDocument.isNullOrEmpty() -> {
-        showShortToast("Please select valid pan card file")
+        showShortToast(getString(R.string.valid_pan_card_image))
         return false
       }
       panNumber.isNullOrEmpty() -> {
-        showShortToast("Pan number can't empty.")
+        showShortToast(getString(R.string.pan_number_not_empty))
         return false
       }
       !isPanNumberValid(panNumber) -> {
-        showShortToast("Please enter a valid pan number.")
+        showShortToast(getString(R.string.pan_number_invalid))
         return false
       }
       panName.isNullOrEmpty() -> {
-        showShortToast("Pan name can't empty.")
+        showShortToast(getString(R.string.pan_name_not_empty))
         return false
       }
       !isValidName(panName) -> {
-        showShortToast("Please enter a valid name.")
-        return false
-      }
-      bankStatementImage == null && dataKyc?.bankAccountStatement.isNullOrEmpty() -> {
-        showShortToast("Please select valid bank statement file")
+        showShortToast(getString(R.string.pan_name_invalid))
         return false
       }
       binding?.addDifferent?.isChecked == true -> {
@@ -430,7 +426,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         }
       }
       bankStatementImage == null && dataKyc?.bankAccountStatement.isNullOrEmpty() -> {
-        showShortToast("Please select valid bank statement file")
+        showShortToast(getString(R.string.invalid_bank_statement_file))
         return false
       }
     }
