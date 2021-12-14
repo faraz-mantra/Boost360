@@ -82,6 +82,8 @@ const val deeplink_purchased_plans = "your_purchased_plans"
 const val deeplink_digital_channels = "digital_channels"
 const val deeplink_call_tracker_add_on = "call_tracker_add_on"
 const val deeplink_service_catalogue = "service_catalogue"
+const val deeplink_ecommerce_setting = "e_commerce_setting"
+const val deeplink_appointment_setting = "appointment_setting"
 const val deeplink_all_custom_pages = "all_custom_pages"
 const val deeplink_analytics_website_visits = "total_website_visits"
 const val deeplink_analytics_website_visitors = "total_website_visitors"
@@ -233,6 +235,8 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startVmnCallCard(session)
         } else if (url.contains(deeplink_service_catalogue)) {
           baseActivity.startListServiceProduct(session)
+        } else if (url.contains(deeplink_ecommerce_setting) || url.contains(deeplink_appointment_setting)) {
+          baseActivity.startEcommerceAppointmentSetting(session)
         } else if (url.contains(deeplink_all_custom_pages)) {
           baseActivity.startCustomPage(session, false)
         } else if (url.contains(deeplink_analytics_website_visits)) {

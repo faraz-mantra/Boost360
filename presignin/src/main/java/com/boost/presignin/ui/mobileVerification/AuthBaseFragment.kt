@@ -16,6 +16,7 @@ import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.service.APIService
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.analytics.SentryController
+import com.framework.analytics.UserExperiorController
 import com.framework.extensions.observeOnce
 import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
@@ -110,6 +111,7 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
       if (it.isSuccess() && response != null) {
         ProcessFPDetails(session).storeFPDetails(response)
         SentryController.setUser(UserSessionManager(baseActivity))
+        UserExperiorController.setUserAttr(UserSessionManager(baseActivity))
         FirestoreManager.initData(session.fpTag ?: "", session.fPID ?: "", clientId)
         startService()
         startDashboard()
@@ -136,6 +138,7 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
       baseActivity.finish()
       hideProgress()
     } catch (e: Exception) {
+      hideProgress()
       SentryController.captureException(e)
       e.printStackTrace()
     }

@@ -24,6 +24,8 @@
 
                 <com.festive.poster.customviews.CustomSvgImageView
                     android:id="@+id/iv_svg"
+                    android:tag="com.userexperior.ueSecureView"
+
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"

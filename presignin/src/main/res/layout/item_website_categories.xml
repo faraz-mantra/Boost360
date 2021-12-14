@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/iv_bar"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/ic_presignin_category_selected_bar"
+      android:visibility="visible" />
+
+    <com.framework.views.customViews.CustomCardView
+      android:id="@+id/layout_suggest_domain_select"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/_12sdp"
+      android:layout_marginEnd="@dimen/_16sdp"
+      app:cardCornerRadius="@dimen/size_10"
+      app:cardUseCompatPadding="true">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/size_16"
+        android:background="@drawable/rounded_rectangle_eceff1">
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/iv_cat_img"
+          android:layout_width="@dimen/size_32"
+          android:layout_height="@dimen/size_32"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          tools:src="@drawable/ic_website_category" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_category_title"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_12"
+          app:fontFamily="@font/inter_medium"
+          android:layout_marginTop="@dimen/size_6"
+          android:textColor="@color/black_2A2A2A"
+          app:layout_constraintEnd_toStartOf="@+id/radioAsBusinessWebsite"
+          app:layout_constraintStart_toEndOf="@+id/iv_cat_img"
+          app:layout_constraintTop_toTopOf="parent"
+          app:textType="BODY_1"
+          tools:text="@string/featured_categories" />
+
+        <com.framework.views.customViews.CustomRadioButton
+          android:id="@+id/radioAsBusinessWebsite"
+          android:layout_width="@dimen/size_20"
+          android:layout_height="@dimen/size_20"
+          android:background="@drawable/check_selector_domain_booking"
+          android:button="@null"
+          android:checked="false"
+          android:layout_marginTop="@dimen/size_4"
+          android:gravity="center"
+          app:buttonCompat="@null"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_category_examples"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          app:fontFamily="@font/inter_regular"
+          android:layout_marginHorizontal="@dimen/size_12"
+          android:layout_marginTop="@dimen/size_6"
+          android:textColor="@color/gray_B3B3B3"
+          app:layout_constraintEnd_toStartOf="@+id/radioAsBusinessWebsite"
+          app:layout_constraintStart_toEndOf="@+id/iv_cat_img"
+          app:layout_constraintTop_toBottomOf="@+id/tv_category_title"
+          app:textType="CAPTION"
+          tools:text="Ex: Kirana Store, Boutique, Stationery and others from retail sector" />
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.framework.views.customViews.CustomCardView>
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

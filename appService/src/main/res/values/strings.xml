@@ -79,20 +79,20 @@
     <string name="submit_documents_for_kyc">Submit documents for KYC</string>
     <string name="submit">Submit</string>
     <string name="pan_details">Pan details</string>
-    <string name="pan_number_individual_or_company">PAN number (individual or company)</string>
+    <string name="pan_number_individual_or_company">PAN number (individual or company)*</string>
     <string name="enter_pan_number">Enter PAN number</string>
-    <string name="name_as_mentioned_on_pan_card">Name as mentioned on PAN card</string>
+    <string name="name_as_mentioned_on_pan_card">Name as mentioned on PAN card*</string>
     <string name="enter_name">Enter name</string>
     <string name="pan_card_image">PAN card image</string>
     <string name="bank_details">Bank details</string>
     <string name="account_number">Account number</string>
     <string name="enter_account_no">Enter account No.</string>
-    <string name="account_holder_s_name">Account holder\'s name</string>
-    <string name="name_of_the_bank">Name of the bank</string>
+    <string name="account_holder_s_name">Account holder\'s name*</string>
+    <string name="name_of_the_bank">Name of the bank*</string>
     <string name="enter_bank_name">Enter bank name</string>
-    <string name="ifsc_code">IFSC code</string>
+    <string name="ifsc_code">IFSC code*</string>
     <string name="enter_ifsc_code">Enter IFSC code</string>
-    <string name="latest_bank_statement_last_1_month">Latest bank statement (Last 1 month)</string>
+    <string name="latest_bank_statement_last_1_month">Latest bank statement (Last 1 month)*</string>
     <string name="upload">upload</string>
     <string name="jpg_png_pdf">jpg/png/pdf</string>
     <string name="maximum_5">Maximum 5</string>
@@ -1073,6 +1073,12 @@
   <string name="booked_on">Booked on</string>
   <string name="to_enable_reach_customer_support_at_ria_">To enable this feature reach customer support at ria@nowfloats.com</string>
   <string name="invalid_bank_account_number">Invalid bank account number</string>
+  <string name="valid_pan_card_image">Please select valid pan card file</string>
+  <string name="pan_number_not_empty">Pan number can\'t empty.</string>
+  <string name="pan_number_invalid">Please enter a valid pan number.</string>
+  <string name="pan_name_not_empty">Pan name can\'t empty.</string>
+  <string name="pan_name_invalid">Please enter a valid name.</string>
+  <string name="invalid_bank_statement_file">Please select valid bank statement file</string>
 
 
   <string name="toolbar_doctor_details">Doctor Details</string>

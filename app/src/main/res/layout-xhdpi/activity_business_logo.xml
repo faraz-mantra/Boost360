@@ -60,7 +60,9 @@
               card_view:cardCornerRadius="8dp">
 
               <ImageView
-                android:id="@+id/logoimageView"
+                  android:tag="com.userexperior.ueSecureView"
+
+                  android:id="@+id/logoimageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"

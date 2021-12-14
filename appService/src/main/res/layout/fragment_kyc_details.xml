@@ -50,7 +50,9 @@
               app:layout_constraintTop_toTopOf="parent">
 
               <com.framework.views.customViews.CustomImageView
-                android:id="@+id/image_pan_card"
+                  android:tag="com.userexperior.ueSecureView"
+
+                  android:id="@+id/image_pan_card"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop" />
@@ -187,7 +189,9 @@
                 android:orientation="vertical">
 
                 <com.framework.views.customViews.CustomTextView
-                  android:id="@+id/account"
+                    android:tag="com.userexperior.ueSecureView"
+
+                    android:id="@+id/account"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="@string/a_c_no_34565xxxxx45465"
@@ -195,7 +199,9 @@
                   app:textType="HEADING_5" />
 
                 <com.framework.views.customViews.CustomTextView
-                  android:id="@+id/bank_detail"
+                    android:tag="com.userexperior.ueSecureView"
+
+                    android:id="@+id/bank_detail"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:ellipsize="end"
@@ -249,7 +255,7 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_1"
               android:layout_marginTop="@dimen/size_14"
-              android:text="@string/account_number"
+              android:text="@string/account_number_"
               android:textColor="@color/greyish_brown"
               app:fontFamily="@font/regular"
               app:textType="BODY_1" />
@@ -470,7 +476,9 @@
             android:paddingVertical="@dimen/size_10">
 
             <com.framework.views.customViews.CustomImageView
-              android:layout_width="wrap_content"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="center_vertical"
               android:layout_marginStart="@dimen/size_20"
@@ -500,7 +508,9 @@
             app:textType="BODY_1" />
 
           <com.framework.views.viewgroups.BaseRecyclerView
-            android:id="@+id/rvAdditionalDocs"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/rvAdditionalDocs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

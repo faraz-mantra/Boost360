@@ -27,7 +27,9 @@
           android:padding="@dimen/size_10">
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_amount"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/text_amount"
             style="@style/wrap_match"
             android:layout_weight="1"
             android:ellipsize="end"
@@ -63,7 +65,9 @@
             app:layout_constraintTop_toBottomOf="@+id/text_amount" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/ctv_appointment_id"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/ctv_appointment_id"
             style="@style/wrap_match"
             android:layout_marginStart="@dimen/size_1"
             android:layout_marginEnd="@dimen/size_2"
@@ -153,7 +157,9 @@
             app:layout_constraintTop_toTopOf="parent" />
 
           <com.framework.views.roundedimageview.RoundedImageView
-            android:id="@+id/image_service_provider"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/image_service_provider"
             android:layout_width="@dimen/size_60"
             android:layout_height="@dimen/size_60"
             android:layout_marginStart="@dimen/size_3"
@@ -167,32 +173,36 @@
             app:srcCompat="@drawable/placeholder_image" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_service_name"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/size_10"
-            android:layout_marginEnd="@dimen/size_2"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:fontFamily="@font/semi_bold"
-            android:gravity="center_vertical"
-            android:includeFontPadding="false"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textAlignment="gravity"
-            android:textColor="@color/black_4a4a4a"
-            android:textSize="14sp"
-            app:autoSizeMaxTextSize="12sp"
-            app:autoSizeMinTextSize="8sp"
-            app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="none"
-            app:layout_constraintEnd_toStartOf="@id/text_appointment_amount"
-            app:layout_constraintStart_toEndOf="@id/image_service_provider"
-            app:layout_constraintTop_toTopOf="@id/image_service_provider"
-            tools:text="Simple Massage" />
+              android:id="@+id/text_service_name"
+
+              android:layout_width="246dp"
+              android:layout_height="15dp"
+              android:layout_marginStart="@dimen/size_10"
+              android:layout_marginEnd="@dimen/size_2"
+              android:layout_weight="1"
+              android:ellipsize="end"
+              android:fontFamily="@font/semi_bold"
+              android:gravity="center_vertical"
+              android:includeFontPadding="false"
+              android:maxLines="1"
+              android:singleLine="true"
+              android:tag="com.userexperior.ueSecureView"
+              android:textAlignment="gravity"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              app:autoSizeMaxTextSize="12sp"
+              app:autoSizeMinTextSize="8sp"
+              app:autoSizeStepGranularity="1sp"
+              app:autoSizeTextType="none"
+              app:layout_constraintEnd_toStartOf="@id/text_appointment_amount"
+              app:layout_constraintStart_toEndOf="@id/image_service_provider"
+              app:layout_constraintTop_toTopOf="@id/image_service_provider"
+              tools:text="Simple Massage" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_appointment_amount"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/text_appointment_amount"
             style="@style/wrap_match"
             android:layout_marginStart="@dimen/size_10"
             android:layout_marginEnd="@dimen/size_5"
@@ -213,7 +223,9 @@
             tools:text="₹2,000.00" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_date"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/text_date"
             style="@style/wrap_match"
             android:layout_marginStart="@dimen/size_10"
             android:layout_marginTop="@dimen/size_2"
@@ -235,7 +247,9 @@
             tools:text="11:00 AM on Mon, 12 Jan 2020" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_staff"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/text_staff"
             style="@style/wrap_match"
             android:layout_marginStart="@dimen/size_10"
             android:layout_marginTop="@dimen/size_2"
@@ -289,7 +303,9 @@
               app:layout_constraintTop_toBottomOf="@id/text_date" />
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_service_location_dropdown"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/text_service_location_dropdown"
               style="@style/wrap_match"
               android:layout_marginStart="@dimen/size_10"
               android:layout_marginTop="@dimen/size_4"
@@ -343,7 +359,9 @@
               app:layout_constraintTop_toBottomOf="@id/text_date" />
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_payment_type_dropdown"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/text_payment_type_dropdown"
               style="@style/wrap_match"
               android:layout_marginStart="@dimen/size_10"
               android:layout_marginTop="@dimen/size_4"
@@ -397,7 +415,9 @@
               app:layout_constraintTop_toBottomOf="@id/text_date" />
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_payment_status_dropdown"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/text_payment_status_dropdown"
               style="@style/wrap_match"
               android:layout_marginStart="@dimen/size_10"
               android:layout_marginTop="@dimen/size_4"
@@ -505,7 +525,9 @@
             app:layout_constraintTop_toTopOf="@id/image_person" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_customer_name"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/text_customer_name"
             style="@style/wrap_match"
             android:layout_marginStart="@dimen/size_1"
             android:layout_marginTop="@dimen/size_16"
@@ -526,7 +548,9 @@
             tools:text="Mr, Sanghmitra Sharma" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_customer_phone"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/text_customer_phone"
             style="@style/wrap_match"
             android:layout_marginTop="@dimen/size_5"
             android:layout_weight="1"
@@ -546,7 +570,9 @@
             tools:text="+91 88888 8888" />
 
           <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_customer_email"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:id="@+id/text_customer_email"
             style="@style/wrap_match"
             android:layout_marginTop="@dimen/size_5"
             android:layout_weight="1"
@@ -664,7 +690,9 @@
               app:autoSizeTextType="uniform" />
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_addr_value"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/text_addr_value"
               style="@style/wrap_match"
               android:layout_marginStart="@dimen/size_1"
               android:layout_marginTop="@dimen/size_6"

@@ -99,7 +99,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
       WebPreSignInBottomDialog().apply {
         setData(baseActivity.getString(R.string.get_boost_360_tnc))
         onClicked = {
-          floatsRequest?.webSiteUrl = "$website.nowfloats.com"
+          floatsRequest?.webSiteUrl = "$website${getString(R.string.nowfloats_dot_com)}"
           WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK, CLICK, NO_EVENT_VALUE)
           apiHitCreateMerchantProfile()
         }

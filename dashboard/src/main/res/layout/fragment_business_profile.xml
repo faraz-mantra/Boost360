@@ -37,12 +37,15 @@
             <com.framework.views.customViews.CustomImageView
               android:id="@+id/business_image"
               android:layout_width="match_parent"
-              android:layout_height="@dimen/size_180"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:layout_height="@dimen/size_180"
               android:visibility="gone"
               app:srcCompat="@color/placeholder_bg" />
 
             <LinearLayout
-              android:id="@+id/image_add_btn"
+                android:tag="com.userexperior.ueSecureView"
+                android:id="@+id/image_add_btn"
               android:layout_width="match_parent"
               android:layout_height="@dimen/size_180"
               android:background="@color/white_smoke_1"
@@ -146,7 +149,9 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/ctv_business_name"
-          style="@style/BusinessProfileTextField"
+            android:tag="com.userexperior.ueSecureView"
+
+            style="@style/BusinessProfileTextField"
           android:background="@drawable/bg_rect_edit_txt_gray_business"
           android:singleLine="true"
           android:textColor="@color/black_4a4a4a"
@@ -209,7 +214,9 @@
             android:id="@+id/ctv_website"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/size_10"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:padding="@dimen/size_10"
             android:textColor="@color/black_4a4a4a"
             tools:text="https://samplebusiness.nowfloats.com" />
 
@@ -295,7 +302,9 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_business_contacts"
-              android:layout_width="match_parent"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:padding="@dimen/size_10"
               android:textColor="@color/black_4a4a4a"
@@ -358,7 +367,9 @@
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_weight="0.8"
-              android:padding="@dimen/size_10"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:padding="@dimen/size_10"
               android:textColor="@color/black_4a4a4a"
               tools:text="http://brajmadhav.com" />
 

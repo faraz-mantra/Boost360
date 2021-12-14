@@ -2,7 +2,6 @@ package com.framework.analytics
 
 import android.util.Log
 import com.appsflyer.AppsFlyerLib
-import com.framework.BaseApplication
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.webengage.sdk.android.Analytics
 import com.webengage.sdk.android.User
@@ -29,16 +28,16 @@ object NFWebEngageController {
   fun trackEvent(event_name: String, event_label: String, event_value: String? = NO_EVENT_VALUE) {
     val trackEvent: MutableMap<String, Any> = HashMap()
     trackEvent["event_name"] = event_name
-    trackEvent["fptag/event_value"] = event_value ?: ""
+    trackEvent["fptag/event_value"] = event_value?:""
     trackEvent["event_label"] = event_label
     if (event_label == "rev") {
-      trackEvent["revenue"] = event_value ?: ""
+      trackEvent["revenue"] = event_value?:""
     }
     weAnalytics.track(event_name, trackEvent)
     weAnalytics.screenNavigated(event_name)
     //Firebase Analytics Event...
-    FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, event_value ?: "")
-
+    FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, event_value?:"")
+    UserExperiorController.trackEvent(event_name, HashMap(trackEvent))
     //AppsFlyerEvent...
     try {
       AppsFlyerLib.getInstance()
@@ -52,6 +51,7 @@ object NFWebEngageController {
     if (event_value.size > 0) {
       weAnalytics.track(event_name, event_value)
       weAnalytics.screenNavigated(event_name)
+      UserExperiorController.trackEvent(event_name, event_value)
 
       //Firebase Analytics Event...
       FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, "")
@@ -68,6 +68,8 @@ object NFWebEngageController {
     } else {
       weAnalytics.track(event_name)
       weAnalytics.screenNavigated(event_name)
+      UserExperiorController.trackEvent(event_name)
+
     }
   }
 
@@ -82,6 +84,7 @@ object NFWebEngageController {
       event_value["event_label"] = event_label
       weAnalytics.track(event_name, event_value)
       weAnalytics.screenNavigated(event_name)
+      UserExperiorController.trackEvent(event_name, event_value)
 
       //Firebase Analytics Event...
       FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, "")
@@ -98,6 +101,8 @@ object NFWebEngageController {
     } else {
       weAnalytics.track(event_name)
       weAnalytics.screenNavigated(event_name)
+      UserExperiorController.trackEvent(event_name)
+
     }
   }
 
@@ -139,6 +144,7 @@ object NFWebEngageController {
       }
       if (params.isNotEmpty())
         AppsFlyerLib.getInstance().setAdditionalData(params)
+
     }
   }
 
@@ -157,6 +163,7 @@ object NFWebEngageController {
       }
       AppsFlyerLib.getInstance().setCustomerUserId(userId)
       isUserLoggedIn = true
+
     }
   }
 
@@ -183,7 +190,6 @@ object NFWebEngageController {
     } catch (e: Exception) {
       e.printStackTrace()
     }
-
   }
 
   fun setFPTag(fpTag: String) {
@@ -193,6 +199,7 @@ object NFWebEngageController {
       }
       Log.d(TAG, "Setting FP Tag" + fpTag)
       weUser.setAttribute("fpTag", fpTag)
+      UserExperiorController.setFpTag(fpTag)
 
       //Firebase Analytics User Property.
       FirebaseAnalyticsUtilsHelper.setUserProperty("fpTag", fpTag)
@@ -204,12 +211,12 @@ object NFWebEngageController {
     } catch (e: java.lang.Exception) {
       e.printStackTrace()
     }
-
   }
 
   fun logout() {
     Log.d(TAG, "Loggind user out from analytics")
     weUser.logout()
+    UserExperiorController.logout()
 
     //Reset Firebase Analytics User Session Event.
     FirebaseAnalyticsUtilsHelper.resetIdentifyUser()
@@ -217,5 +224,4 @@ object NFWebEngageController {
     //End AppsFlyer Analytics User Session Event.
     AppsFlyerLib.getInstance().setCustomerUserId(null)
   }
-
 }

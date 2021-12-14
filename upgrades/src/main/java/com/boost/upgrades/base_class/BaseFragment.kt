@@ -30,7 +30,7 @@ import java.util.HashMap
  * A simple [Fragment] subclass.
  *
  */
-open class BaseFragment : Fragment(), OnBackPressed {
+open class BaseFragment(val screenName:String) : Fragment(), OnBackPressed {
 
 
   val REQUEST_ID_MULTIPLE_PERMISSIONS = 1
@@ -226,5 +226,10 @@ open class BaseFragment : Fragment(), OnBackPressed {
   override fun onBackPressed() {
   }
 
+  override fun onResume() {
+    super.onResume()
+//    UserExperiorController.startScreen(screenName)
+
+  }
 
 }
