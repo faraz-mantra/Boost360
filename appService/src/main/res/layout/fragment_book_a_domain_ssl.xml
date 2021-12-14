@@ -74,6 +74,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
+                            android:tag="com.userexperior.ueSecureView"
+
                             android:fontFamily="@font/barlow_condensed_semi_bold"
                             android:gravity="center"
                             android:maxLines="1"

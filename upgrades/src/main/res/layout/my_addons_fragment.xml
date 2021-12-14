@@ -81,7 +81,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
         android:fontFamily="@font/open_sans_semibold"
-        android:text="MY ADD-ONS"
+        android:text="My Add-ons"
         android:textColor="@color/white"
         android:textSize="@dimen/_11sdp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -123,4 +123,9 @@ class ExternalEmailPopUpFragement : DialogFragment() {
   fun clearData() {
     external_email_popup_value.text.clear()
   }
+  override fun onResume() {
+    super.onResume()
+//    UserExperiorController.startScreen("MarketPlaceExternalEmailPopUpFragement")
+
+  }
 }

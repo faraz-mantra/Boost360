@@ -13,7 +13,9 @@ import com.anachat.chatsdk.AnaCore;
 import com.appservice.AppServiceApplication;
 import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignin.ui.intro.IntroActivity;
+import com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity;
 import com.dashboard.AppDashboardApplication;
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil;
 import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.framework.utils.PreferencesUtils;
 import com.google.gson.Gson;
@@ -1033,7 +1035,12 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         _context.deleteDatabase("updates_db");  //DELETE MARKETPLACE DB
       }
       clearAuth();
+
       Intent i = new Intent(activity, IntroActivity.class);
+      if (FirebaseRemoteConfigUtil.INSTANCE.featureNewOnBoardingFlowEnable()) {
+        i = new Intent(activity, NewOnBoardingContainerActivity.class);
+        i.putExtra("FRAGMENT_TYPE", Constants.NEW_ON_BOARDING_FRAGMENT.INTRO_SLIDES_SHOW.getValue());
+      }
       i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
       activity.startActivity(i);
       activity.overridePendingTransition(0, 0);

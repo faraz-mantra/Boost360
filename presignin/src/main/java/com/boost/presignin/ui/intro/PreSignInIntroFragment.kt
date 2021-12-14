@@ -22,7 +22,7 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
   private val TAG = "IntroFragment"
   private var buffering = true
   private var videoDuration: Long = 0
-  private var player:SimpleExoPlayer?=null
+  private var player: SimpleExoPlayer? = null
   private var timer: com.boost.presignin.timer.CountDownTimer? = null
   private var mute = false
   private val introItem by lazy { requireArguments().getSerializable(INTRO_ITEM) as IntroItem }
@@ -50,59 +50,47 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
 
   override fun onCreateView() {
     super.onCreateView()
-
     player = SimpleExoPlayer.Builder(requireContext()).build()
     binding?.videoView?.player = player
-
     binding?.introItem = introItem;
     introItem.imageResource?.let { binding?.presiginIntroImg?.setImageResource(it) }
 
     if (position == 0) {
       binding?.presiginIntroImg?.setOnClickListener {
-        WebEngageController.trackEvent(
-          PS_INTRO_VIDEO_SPLASH_CLICKED,
-          START_INTRO_VIDEO,
-          NO_EVENT_VALUE
-        )
+        WebEngageController.trackEvent(PS_INTRO_VIDEO_SPLASH_CLICKED, START_INTRO_VIDEO, NO_EVENT_VALUE)
         binding?.videoViewContainer?.isVisible = true;
         binding?.introImgContainer?.isVisible = false;
         binding?.progressBar?.isVisible = true
-        val mediaItem= MediaItem.fromUri(getString(R.string.intro_video_url))
-// Set the media item to be played.
-// Set the media item to be played.
+        val mediaItem = MediaItem.fromUri(getString(R.string.intro_video_url))
         player?.setMediaItem(mediaItem)
-// Prepare the player.
-// Prepare the player.
         player?.prepare()
-// Start the playback.
-// Start the playback.
         player?.play()
         playPause?.let { it5 -> it5(true) }
 
         player?.addListener(object : Player.Listener {
           override fun onPlaybackStateChanged(state: Int) {
-            Log.i(TAG, "onPlaybackStateChanged: "+state)
-            when(state){
-              Player.STATE_READY->{
-                videoDuration = player?.duration?:0
-                Log.i(TAG, "video duration: "+videoDuration)
+            Log.i(TAG, "onPlaybackStateChanged: $state")
+            when (state) {
+              Player.STATE_READY -> {
+                videoDuration = player?.duration ?: 0
+                Log.i(TAG, "video duration: $videoDuration")
                 binding?.progressBar?.isVisible = false
                 binding?.videoViewContainer?.isVisible = true
-                setVideoTimerCountDown(videoDuration,player?.currentPosition?:0)
-                val seconds = (videoDuration.minus(player?.currentPosition?:0)).div(1000).toInt()
-                Log.i(TAG, "seconds: "+seconds)
+                setVideoTimerCountDown(videoDuration, player?.currentPosition ?: 0)
+                val seconds = (videoDuration.minus(player?.currentPosition ?: 0)).div(1000).toInt()
+                Log.i(TAG, "seconds: $seconds")
                 binding?.videoTime?.text =
-                    getString(R.string.intro_video_time, seconds.toString())
+                  getString(R.string.intro_video_time, seconds.toString())
 
               }
-              Player.STATE_IDLE->{
+              Player.STATE_IDLE -> {
                 Log.i(TAG, "buffering: ")
                 buffering = true
                 binding?.progressBar?.isVisible = true
                 buffering = true
                 timer?.pause()
               }
-              Player.STATE_ENDED->{
+              Player.STATE_ENDED -> {
                 binding?.introImgContainer?.post {
                   binding?.introImgContainer?.isVisible = true
                   binding?.videoViewContainer?.isVisible = false
@@ -118,7 +106,7 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
           mediaPlayer = it
           videoDuration = mediaPlayer?.duration ?: 0
         }
-        binding?.videoView?.setVideoPath("https://cdn.nowfloats.com/jioonline/android/videos/JioOnlineHighResolution.mp4")
+        binding?.videoView?.setVideoPath(getString(R.string.intro_video_url))
         binding?.videoView?.start()
         binding?.videoView?.setOnInfoListener { p0, p1, p2 ->
           when (p1) {
@@ -163,9 +151,9 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
         player?.play()
         playPause?.let { it5 -> it5(true) }
 
-        if (timer?.isStarted == true){
+        if (timer?.isStarted == true) {
           timer?.resume()
-        }else{
+        } else {
           timer?.start()
         }
         it.isVisible = false
@@ -191,7 +179,7 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
       binding?.introImgContainer?.isVisible = true
       binding?.videoViewContainer?.isVisible = false
       binding?.progressBar?.isVisible = false
-      (requireActivity() as? IntroActivity)?.slideNextPage()
+      (baseActivity as? IntroActivity)?.slideNextPage()
     }
   }
 
@@ -201,50 +189,42 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
 
   private fun setVideoTimerCountDown(videoDuration: Long, currentPosition: Long) {
     try {
-
-      timer =
-        object : com.boost.presignin.timer.CountDownTimer((videoDuration - currentPosition).toLong(), 1000) {
-          override fun onTick(millisUntilFinished: Long) {
-            val videoDuration = (millisUntilFinished / 1000).toInt()
-            Log.i(TAG, "onTick: "+videoDuration)
-            binding?.videoTime?.post {
-              if (videoDuration == 0) {
-                timer?.cancel()
-                binding?.videoTime?.text =
-                  String.format(getString(R.string.intro_video_time), "00")
-              } else {
-                binding?.videoTime?.text =
-                  String.format(getString(R.string.intro_video_time), videoDuration)
-              }
+      timer = object : com.boost.presignin.timer.CountDownTimer((videoDuration - currentPosition).toLong(), 1000) {
+        override fun onTick(millisUntilFinished: Long) {
+          val videoDuration = (millisUntilFinished / 1000).toInt()
+          Log.i(TAG, "onTick: $videoDuration")
+          binding?.videoTime?.post {
+            if (videoDuration == 0) {
+              timer?.cancel()
+              binding?.videoTime?.text = String.format(getString(R.string.intro_video_time), "00")
+            } else {
+              binding?.videoTime?.text = String.format(getString(R.string.intro_video_time), videoDuration)
             }
           }
-
-          override fun onFinish() {
-            Log.e("videoCompleted", "&&&&&&&&&&&&&")
-
-          }
         }
-      if (player?.isPlaying == true){
-        timer?.start()
-      }else{
 
+        override fun onFinish() {
+          Log.e("videoCompleted", "&&&&&&&&&&&&&")
+
+        }
+      }
+      if (player?.isPlaying == true) {
+        timer?.start()
+      } else {
       }
     } catch (e: Exception) {
-      Log.e("TimerCountDown", e.localizedMessage)
+      Log.e("TimerCountDown", e.localizedMessage ?: "SetVideoTimerCountDown Error")
       SentryController.captureException(e)
-
     }
   }
 
-  fun setTimerText(seconds:Int){
-    Log.i(TAG, "setTimerText: "+seconds)
+  fun setTimerText(seconds: Int) {
+    Log.i(TAG, "setTimerText: $seconds")
     if (seconds == 0) {
       timer?.cancel()
-      binding?.videoTime?.text =
-        String.format(getString(R.string.intro_video_time), "00")
+      binding?.videoTime?.text = String.format(getString(R.string.intro_video_time), "00")
     } else {
-      binding?.videoTime?.text =
-        String.format(getString(R.string.intro_video_time), videoDuration)
+      binding?.videoTime?.text = String.format(getString(R.string.intro_video_time), videoDuration)
     }
   }
 
@@ -252,10 +232,10 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
     super.onPause()
     Log.i(TAG, "onPause: ")
     if (position == 0) {
-        player?.pause()
-        if (binding?.introImgContainer?.isVisible == false){
-          binding?.playPauseLottie?.isVisible = true;
-        }
+      player?.pause()
+      if (binding?.introImgContainer?.isVisible == false) {
+        binding?.playPauseLottie?.isVisible = true;
+      }
     }
     timer?.pause()
   }
@@ -263,8 +243,6 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
   override fun onStop() {
     super.onStop()
     Log.i(TAG, "onStop: ")
-    //timer?.cancel()
-   // player?.release()
   }
 
   override fun onDestroy() {

@@ -24,7 +24,7 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.history_fragment.*
 import kotlinx.android.synthetic.main.my_addons_fragment.*
 
-class HistoryFragment : BaseFragment(), HistoryFragmentListener {
+class HistoryFragment : BaseFragment("MarketPlaceHistoryFragment"), HistoryFragmentListener {
 
   lateinit var root: View
 

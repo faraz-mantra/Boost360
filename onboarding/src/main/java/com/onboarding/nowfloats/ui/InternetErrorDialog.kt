@@ -3,6 +3,7 @@ package com.onboarding.nowfloats.ui
 import com.framework.base.BaseDialogFragment
 import com.framework.models.BaseViewModel
 import com.framework.utils.NetworkUtils
+import com.framework.views.blur.setBlur
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.DialogInternetErrorBinding
 
@@ -23,7 +24,7 @@ class InternetErrorDialog : BaseDialogFragment<DialogInternetErrorBinding, BaseV
   }
 
   override fun onCreateView() {
-    binding?.blurView?.setBlur(4F)
+    binding?.blurView?.setBlur(baseActivity,4F)
     isCancelable = false
     binding?.retryBtn?.setOnClickListener {
       if (NetworkUtils.isNetworkConnected()) {

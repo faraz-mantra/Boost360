@@ -75,6 +75,7 @@
                 app:srcCompat="@drawable/ic_custome_domain" />
 
               <TextView
+                android:tag="com.userexperior.ueSecureView"
                 android:id="@+id/tv_domain_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class HistoryDetailsFragment : BaseFragment() {
+class HistoryDetailsFragment : BaseFragment("MarketPlaceHistoryDetailsFragment") {
 
   lateinit var root: View
   lateinit var historyDetailsAdapter: HistoryDetailsAdapter

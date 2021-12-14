@@ -81,7 +81,9 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/business_name_tv"
-          style="@style/psn_heading_style"
+            android:tag="com.userexperior.ueSecureView"
+
+            style="@style/psn_heading_style"
           android:layout_width="wrap_content"
           android:layout_marginTop="0dp"
           android:fontFamily="@font/regular"
@@ -91,7 +93,9 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/website_tv"
-          style="@style/psn_subheading_style"
+            android:tag="com.userexperior.ueSecureView"
+
+            style="@style/psn_subheading_style"
           android:layout_width="wrap_content"
           android:layout_marginTop="@dimen/_4sdp"
           android:fontFamily="@font/regular"

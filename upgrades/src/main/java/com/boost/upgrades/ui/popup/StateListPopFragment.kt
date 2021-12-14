@@ -141,4 +141,9 @@ class StateListPopFragment : DialogFragment(), StateListener {
     }, 300)
 
   }
+  override fun onResume() {
+    super.onResume()
+//    UserExperiorController.startScreen("MarketPlaceStateListPopFragment")
+
+  }
 }

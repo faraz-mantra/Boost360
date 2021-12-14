@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_F5F8FD"
+    tools:context=".ui.newOnboarding.WelcomeFragment">
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/customImageView6"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginVertical="@dimen/size_40"
+      android:scaleType="fitXY"
+      android:src="@drawable/ic_welcome_new"
+      app:layout_constraintBottom_toTopOf="@+id/tvWelcome"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.0" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/tvWelcome"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/size_16"
+      android:fontFamily="@font/inter_bold"
+      android:gravity="center"
+      android:text="@string/welcome_page_str"
+      android:textAlignment="gravity"
+      android:textColor="@color/black_2A2A2A"
+      android:textSize="@dimen/text_35"
+      app:layout_constraintBottom_toTopOf="@+id/customTextView8"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/customTextView8"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/size_67"
+      android:fontFamily="@font/inter_regular"
+      android:gravity="center"
+      android:text="@string/let_us_help_you_go_online"
+      android:textAlignment="gravity"
+      android:textColor="@color/black_2A2A2A"
+      android:textSize="@dimen/text_17"
+      app:layout_constraintBottom_toTopOf="@+id/btn_set_up_my_website"
+      app:layout_constraintEnd_toEndOf="@+id/btn_set_up_my_website"
+      app:layout_constraintStart_toStartOf="@+id/btn_set_up_my_website" />
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/btn_set_up_my_website"
+      style="@style/started_button"
+      android:layout_marginHorizontal="@dimen/size_25"
+      android:layout_marginBottom="@dimen/size_25"
+      android:fontFamily="@font/inter_medium"
+      android:text="@string/setup_up_my_website"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

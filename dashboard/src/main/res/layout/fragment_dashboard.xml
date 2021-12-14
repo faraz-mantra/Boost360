@@ -467,13 +467,12 @@
               android:orientation="horizontal">
 
               <com.framework.views.customViews.CustomCardView
-                android:id="@+id/btn_business_logo"
-                android:layout_width="@dimen/size_68"
-                android:layout_height="@dimen/size_68"
-                android:layout_marginStart="@dimen/size_15"
-                android:layout_marginTop="@dimen/size_1"
-                android:layout_marginEnd="@dimen/size_1"
-                android:layout_marginBottom="@dimen/size_1"
+                  android:tag="com.userexperior.ueSecureView"
+
+                  android:id="@+id/btn_business_logo"
+                android:layout_width="@dimen/size_67"
+                android:layout_height="@dimen/size_67"
+                android:layout_marginStart="@dimen/size_16"
                 android:clickable="true"
                 android:focusable="true"
                 app:cardBackgroundColor="@color/snow_white"
@@ -492,7 +491,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:scaleType="fitCenter"
+                      android:tag="com.userexperior.ueSecureView"
+
+                      android:scaleType="fitCenter"
                     app:srcCompat="@drawable/ic_add_logo_d" />
                 </com.framework.views.customViews.CustomCardView>
 
@@ -508,12 +509,14 @@
                 android:orientation="vertical">
 
                 <com.framework.views.customViews.CustomTextView
-                  android:id="@+id/txt_business_name"
+                    android:tag="com.userexperior.ueSecureView"
+
+                    android:id="@+id/txt_business_name"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:ellipsize="end"
                   android:includeFontPadding="false"
-                  android:lineSpacingExtra="-3dp"
+                  android:lineSpacingExtra="-6dp"
                   android:maxLines="2"
                   android:textColor="@color/white"
                   app:fontFamily="@font/bold"
@@ -538,10 +541,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_2"
-                    android:layout_marginTop="@dimen/size_2"
+                    android:layout_marginTop="@dimen/size_1"
                     android:drawableStart="@drawable/ic_website_d"
                     android:drawablePadding="@dimen/size_4"
-                    android:ellipsize="end"
+                      android:tag="com.userexperior.ueSecureView"
+
+                      android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:includeFontPadding="false"
                     android:maxLines="1"
@@ -1016,7 +1021,7 @@
                 android:orientation="vertical">
 
                 <com.framework.views.customViews.CustomImageView
-                  android:layout_width="@dimen/size_122"
+                  android:layout_width="@dimen/size_132"
                   android:layout_height="@dimen/size_24"
                   app:srcCompat="@drawable/ic_boost_logo_d" />
 

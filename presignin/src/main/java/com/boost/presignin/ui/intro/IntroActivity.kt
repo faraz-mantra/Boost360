@@ -44,10 +44,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
         val lastPosition: Int? = binding?.introViewpager?.adapter?.itemCount?.minus(1)
         val mCurrentPosition = binding?.introViewpager?.currentItem ?: 0
         val isLast = (mCurrentPosition == lastPosition)
-        binding?.introViewpager?.setCurrentItem(
-          if (isLast) 0 else mCurrentPosition + 1,
-          isLast.not()
-        )
+        binding?.introViewpager?.setCurrentItem(if (isLast) 0 else mCurrentPosition + 1, isLast.not())
         nextPageTimer()
       }
     }
@@ -57,17 +54,11 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     binding?.acceptTnc?.makeLinks(
       Pair("terms", View.OnClickListener {
         WebEngageController.trackEvent(BOOST_360_TERMS_CLICK, CLICKED, NO_EVENT_VALUE)
-        openTNCDialog(
-          resources.getString(R.string.boost_360_tnc_presignup),
-          resources.getString(R.string.boost360_terms_conditions)
-        )
+        openTNCDialog(resources.getString(R.string.boost_360_tnc_presignup), resources.getString(R.string.boost360_terms_conditions))
       }),
       Pair("conditions", View.OnClickListener {
         WebEngageController.trackEvent(BOOST_360_CONDITIONS_CLICK, CLICKED, NO_EVENT_VALUE)
-        openTNCDialog(
-          resources.getString(R.string.boost_360_tnc_presignup),
-          resources.getString(R.string.boost360_terms_conditions)
-        )
+        openTNCDialog(resources.getString(R.string.boost_360_tnc_presignup), resources.getString(R.string.boost360_terms_conditions))
       })
     )
   }
@@ -85,21 +76,19 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     initTncString()
     nextPageTimer()
     binding?.introViewpager?.apply {
-      adapter = IntroAdapter(
-        supportFragmentManager,
-        lifecycle,
-        items,
-        { setNextPage() },
-        { isVideoPlaying = it;
-          Log.i(TAG, "is video playing changed: "+it)})
+      adapter = IntroAdapter(supportFragmentManager, lifecycle, items, { setNextPage() },
+        {
+          isVideoPlaying = it
+          Log.i(TAG, "is video playing changed: $it")
+        })
       orientation = ViewPager2.ORIENTATION_HORIZONTAL
       binding?.introIndicator?.setViewPager2(binding!!.introViewpager)
       binding?.introViewpager?.offscreenPageLimit = items.size
-      binding?.introViewpager?.registerOnPageChangeCallback(object :CircularViewPagerHandler(this){
+      binding?.introViewpager?.registerOnPageChangeCallback(object : CircularViewPagerHandler(this) {
         override fun onPageSelected(position: Int) {
           super.onPageSelected(position)
           Log.i(TAG, "onPageSelected: ")
-          if(position!=0&&isVideoPlaying){
+          if (position != 0 && isVideoPlaying) {
             isVideoPlaying = false
             nextPageTimer()
           }
@@ -111,10 +100,10 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
       if (RootUtil.isDeviceRooted.not()) {
 //    navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "8097789896") })
         WebEngageController.trackEvent(PS_INTRO_SCREEN_START, GET_START_CLICKED, NO_EVENT_VALUE)
-        if (packageName.equals("com.jio.online", ignoreCase = true)) {
-          startActivity(Intent(this@IntroActivity, LoginActivity::class.java))
-        } else {
+        if (packageName.equals("com.jio.online", ignoreCase = true).not()) {
           startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
+        }else{
+          startActivity(Intent(this@IntroActivity, LoginActivity::class.java))
         }
       } else {
         dialogRootError()
@@ -127,7 +116,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
   private fun dialogRootError() {
     AlertDialog.Builder(ContextThemeWrapper(this, R.style.CustomAlertDialogTheme))
       .setCancelable(false)
-      .setTitle("JioOnline 360 can't be used on this device!")
+      .setTitle("JioOnline can't be used on this device!")
       .setMessage("Sorry, your device isn't passing JioOnline security checks. This may be because your device is rooted or is running an uncertified or custom OS build.")
       .setPositiveButton("Close") { dialog: DialogInterface, _: Int ->
         dialog.dismiss()
