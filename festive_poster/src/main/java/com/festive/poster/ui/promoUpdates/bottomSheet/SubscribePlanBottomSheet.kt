@@ -2,6 +2,7 @@ package com.festive.poster.ui.promoUpdates.bottomSheet
 
 import android.os.Bundle
 import com.festive.poster.R
+import com.festive.poster.constant.Constants
 import com.festive.poster.databinding.BsheetSubscribePlanValidityBinding
 import com.festive.poster.utils.MarketPlaceUtils
 import com.framework.base.BaseBottomSheetDialog
@@ -78,7 +79,7 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
     }
 
     private fun gotoMarketPlace() {
-        MarketPlaceUtils.initiateAddonMarketplace(session!!,true,"","",true,requireContext())
+        MarketPlaceUtils.initiateAddonMarketplace(session!!,true,"",Constants.PROMO_WIDGET_KEY,true,requireContext())
     }
 
 }

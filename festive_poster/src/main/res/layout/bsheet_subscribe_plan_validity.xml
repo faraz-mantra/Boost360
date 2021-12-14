@@ -26,6 +26,7 @@
                 android:id="@+id/iv_promo_mic"
                 android:layout_width="@dimen/size_111"
                 android:layout_height="@dimen/size_94"
+                android:src="@drawable/ic_promo_sub_mic"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="@dimen/size_32"
                 android:layout_marginTop="@dimen/size_32"

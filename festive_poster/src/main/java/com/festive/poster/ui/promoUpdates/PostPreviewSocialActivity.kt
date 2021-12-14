@@ -29,6 +29,7 @@ import com.festive.poster.ui.promoUpdates.bottomSheet.SubscribePlanBottomSheet
 import com.festive.poster.ui.promoUpdates.edit_post.EditPostActivity
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
+import com.festive.poster.utils.isPromoWidgetActive
 import com.festive.poster.viewmodels.PostUpdatesViewModel
 import com.framework.base.BaseActivity
 import com.framework.exceptions.NoNetworkException
@@ -139,7 +140,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             adapter  = AppBaseRecyclerViewAdapter(this@PostPreviewSocialActivity, socialPreviewModel, this@PostPreviewSocialActivity)
         }
 
-        isUserPremium(true)
+        isUserPremium(isPromoWidgetActive())
     }
 
     private fun isUserPremium(isUserPremium:Boolean = false){
