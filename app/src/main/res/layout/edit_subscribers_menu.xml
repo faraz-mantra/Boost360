@@ -18,7 +18,7 @@
       android:layout_height="@dimen/size_24"
       android:paddingHorizontal="@dimen/size_4"
       android:layout_marginEnd="@dimen/size_2"
-      android:src="@drawable/ic_baseline_more_vert_24" />
+      android:src="@drawable/ic_baseline_more_menu" />
   </androidx.appcompat.widget.LinearLayoutCompat>
 
 </layout>
