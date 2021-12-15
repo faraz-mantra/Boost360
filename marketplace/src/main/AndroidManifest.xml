@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.boost.marketplace">
+  package="com.boost.marketplace">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application>
         <activity
             android:name=".ui.details.FeatureDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.browse.BrowseFeaturesActivity"
             android:exported="true" />
         <activity
             android:name=".ui.home.MarketPlaceActivity"

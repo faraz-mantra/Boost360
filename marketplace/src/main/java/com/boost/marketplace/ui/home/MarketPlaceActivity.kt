@@ -5,14 +5,14 @@ import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityMarketplaceBinding
 import com.boost.marketplace.ui.details.FeatureDetailsViewModel
 
-class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, FeatureDetailsViewModel>() {
+class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPlaceHomeViewModel>() {
 
     override fun getLayout(): Int {
         return R.layout.activity_marketplace
     }
 
-    override fun getViewModelClass(): Class<FeatureDetailsViewModel> {
-        return FeatureDetailsViewModel::class.java
+    override fun getViewModelClass(): Class<MarketPlaceHomeViewModel> {
+        return MarketPlaceHomeViewModel::class.java
     }
 
 

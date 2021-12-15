@@ -1,5 +1,6 @@
 package com.boost.dbcenterapi.data.api_model.GetAllFeatures.response
 
+import com.framework.models.BaseRecyclerViewItem
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import java.util.*
@@ -38,4 +39,4 @@ data class PromoBanners(
   val expiry_date: String,
   @SerializedName("cta_offer_identifier")
   val cta_offer_identifier: String,
-) : Serializable
+)
