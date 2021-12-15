@@ -1,4 +1,4 @@
-package com.boost.marketplace.constant
+package com.boost.marketplace.infra.constant
 
 import androidx.annotation.LayoutRes
 import com.boost.marketplace.R
@@ -8,7 +8,8 @@ enum class RecyclerViewItemType {
   BUSINESS_SETUP_ITEM_VIEW,
   ALL_BOOST_ADD_ONS_VIEW,
   MANAGE_BUSINESS_ITEM_VIEW,
-  PROMO_BANNER;
+  PROMO_BANNER,
+  FEATURES_BY_CATEGORY;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -18,6 +19,7 @@ enum class RecyclerViewItemType {
       ALL_BOOST_ADD_ONS_VIEW -> R.layout.item_boost_add_ons
       MANAGE_BUSINESS_ITEM_VIEW -> R.layout.item_manage_business
       PROMO_BANNER ->R.layout.item_promo_banner
+      FEATURES_BY_CATEGORY ->R.layout.item_features_by_category
     }
   }
 }

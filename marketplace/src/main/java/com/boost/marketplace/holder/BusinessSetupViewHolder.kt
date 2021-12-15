@@ -1,7 +1,7 @@
 package com.boost.marketplace.holder
 
 import com.boost.marketplace.databinding.ItemBusinessManagementDBinding
-import com.boost.marketplace.recyclerView.AppBaseRecyclerViewHolder
+import com.boost.marketplace.infra.recyclerView.AppBaseRecyclerViewHolder
 import com.boost.marketplace.recyclerView.BaseRecyclerViewItem
 
 class BusinessSetupViewHolder(binding: ItemBusinessManagementDBinding) :
