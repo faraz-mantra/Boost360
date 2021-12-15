@@ -1,4 +1,4 @@
-package com.boost.marketplace.infra.rest
+package com.boost.dbcenterapi.data.rest
 
 enum class TaskCode {
   POST_UPDATE_FACEBOOK_PAGE_TOKEN1,

@@ -45,4 +45,3 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     }
 }
 
-}

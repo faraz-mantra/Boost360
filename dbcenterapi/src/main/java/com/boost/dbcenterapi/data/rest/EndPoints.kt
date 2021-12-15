@@ -1,4 +1,4 @@
-package com.boost.marketplace.infra.rest
+package com.boost.dbcenterapi.data.rest
 
 object EndPoints {
 

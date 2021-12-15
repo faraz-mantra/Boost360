@@ -1,4 +1,4 @@
-package com.boost.marketplace.infra.rest.apiClients
+package com.boost.dbcenterapi.data.rest.apiClients
 
 import com.framework.rest.BaseApiClient
 

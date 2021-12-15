@@ -1,10 +1,8 @@
-package com.boost.marketplace.infra.rest.services
+package com.boost.dbcenterapi.data.rest.services
 
-import com.boost.marketplace.infra.api.models.business.model.BusinessProfileUpdateRequest
-import com.boost.marketplace.infra.rest.EndPoints
+import com.boost.dbcenterapi.data.rest.EndPoints
 import com.framework.base.BaseResponse
 import com.framework.models.UserProfileData
-import com.onboarding.nowfloats.model.googleAuth.FirebaseTokenResponse
 import com.framework.pref.clientId2
 import com.google.gson.JsonObject
 import io.reactivex.Observable
@@ -12,7 +10,6 @@ import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
-import java.io.File
 
 interface MarketplaceApiService {
 
@@ -28,15 +25,15 @@ interface MarketplaceApiService {
   ): Observable<Response<ResponseBody>>
 
 
-  @POST(EndPoints.FLOATING_POINT_UPDATE)
-  fun updateBusinessProfile(
-    @Body profileUpdateRequest: BusinessProfileUpdateRequest
-  ): Observable<Response<ResponseBody>>
+//  @POST(EndPoints.FLOATING_POINT_UPDATE)
+//  fun updateBusinessProfile(
+//    @Body profileUpdateRequest: BusinessProfileUpdateRequest
+//  ): Observable<Response<ResponseBody>>
 
-  @GET(EndPoints.GET_FIREBASE_TOKEN)
-  fun getFirebaseToken(
-    @Query("clientId") client_id: String?
-  ):Observable<Response<FirebaseTokenResponse>>
+//  @GET(EndPoints.GET_FIREBASE_TOKEN)
+//  fun getFirebaseToken(
+//    @Query("clientId") client_id: String?
+//  ):Observable<Response<FirebaseTokenResponse>>
 
   @PUT(EndPoints.UPLOAD_USER_PROFILE_IMAGE)
   fun uploadUserProfileImage(

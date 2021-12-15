@@ -1,11 +1,10 @@
-package com.boost.marketplace.recyclerView
+package com.boost.dbcenterapi.recycleritem
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.boost.marketplace.infra.constant.RecyclerViewItemType
 import com.framework.base.BaseActivity
 
 abstract class BaseRecyclerViewAdapter<T : BaseRecyclerViewItem>(
@@ -52,9 +51,9 @@ abstract class BaseRecyclerViewAdapter<T : BaseRecyclerViewItem>(
 
   protected fun getViewDataBinding(
     inflater: LayoutInflater,
-    recyclerViewItemType: RecyclerViewItemType,
+    recyclerViewItemType: Int,
     parent: ViewGroup
   ): ViewDataBinding {
-    return DataBindingUtil.inflate(inflater, recyclerViewItemType.getLayout(), parent, false)
+    return DataBindingUtil.inflate(inflater, recyclerViewItemType, parent, false)
   }
 }

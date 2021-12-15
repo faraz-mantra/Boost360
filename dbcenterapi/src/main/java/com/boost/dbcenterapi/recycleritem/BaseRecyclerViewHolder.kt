@@ -1,4 +1,4 @@
-package com.boost.marketplace.recyclerView
+package com.boost.dbcenterapi.recycleritem
 
 import android.view.View
 import androidx.databinding.ViewDataBinding

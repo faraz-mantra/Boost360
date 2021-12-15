@@ -1,8 +1,8 @@
-package com.boost.marketplace.base.rest
+package com.boost.dbcenterapi.base.rest
 
-import com.boost.marketplace.MarketplaceApplication
-import com.boost.marketplace.infra.rest.TaskCode
-import com.boost.marketplace.infra.rest.apiClients.WithFloatsApiClient
+import com.boost.dbcenterapi.DBCenterAPIApplication
+import com.boost.dbcenterapi.data.rest.TaskCode
+import com.boost.dbcenterapi.data.rest.apiClients.WithFloatsApiClient
 import com.framework.base.BaseRepository
 import com.framework.base.BaseResponse
 import com.framework.pref.UserSessionManager
@@ -36,7 +36,7 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
 
   private fun unauthorizedUserCheck(taskCode: Int?) {
     if (taskCode == 401) {
-      MarketplaceApplication.instance.apply {
+      DBCenterAPIApplication.instance.apply {
         UserSessionManager(this).logoutUser(this, true)
       }
     }

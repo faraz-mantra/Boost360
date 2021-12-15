@@ -1,13 +1,11 @@
-package com.boost.marketplace.infra.rest.repository
+package com.boost.dbcenterapi.data.rest.repository
 
-import com.boost.marketplace.base.rest.AppBaseRepository
-import com.boost.marketplace.infra.api.models.business.model.BusinessProfileUpdateRequest
-import com.boost.marketplace.infra.rest.TaskCode
-import com.boost.marketplace.infra.rest.apiClients.WithFloatsTwoApiClient
-import com.boost.marketplace.infra.rest.services.MarketplaceApiService
-import com.boost.marketplace.infra.rest.services.local.DashboardLocalDataSource
+import com.boost.dbcenterapi.base.rest.AppBaseRepository
+import com.boost.dbcenterapi.data.rest.TaskCode
+import com.boost.dbcenterapi.data.rest.apiClients.WithFloatsTwoApiClient
+import com.boost.dbcenterapi.data.rest.services.MarketplaceApiService
+import com.boost.dbcenterapi.data.rest.services.local.DashboardLocalDataSource
 import com.framework.base.BaseResponse
-import com.framework.pref.clientId
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
@@ -23,17 +21,17 @@ object WithFloatTwoRepositoryD : AppBaseRepository<MarketplaceApiService, Dashbo
       ), TaskCode.UPLOAD_BUSINESS_IMAGE
     )
   }
+//
+//  fun updateBusinessProfile(profileUpdateRequest: BusinessProfileUpdateRequest): Observable<BaseResponse> {
+//    return makeRemoteRequest(
+//      remoteDataSource.updateBusinessProfile(profileUpdateRequest = profileUpdateRequest),
+//      TaskCode.UPDATE_BUSINESS_PROFILE
+//    )
+//  }
 
-  fun updateBusinessProfile(profileUpdateRequest: BusinessProfileUpdateRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.updateBusinessProfile(profileUpdateRequest = profileUpdateRequest),
-      TaskCode.UPDATE_BUSINESS_PROFILE
-    )
-  }
-
-  fun getFirebaseAuthToken(): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getFirebaseToken(client_id = clientId), TaskCode.GET_FIREBASE_TOKEN)
-  }
+//  fun getFirebaseAuthToken(): Observable<BaseResponse> {
+//    return makeRemoteRequest(remoteDataSource.getFirebaseToken(client_id = clientId), TaskCode.GET_FIREBASE_TOKEN)
+//  }
 
   fun uploadUserProfileImage(clientId: String?,loginId:String?,fileName:String, file: RequestBody?): Observable<BaseResponse> {
     return makeRemoteRequest(

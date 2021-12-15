@@ -1,6 +1,6 @@
-package com.boost.marketplace.base.rest
+package com.boost.dbcenterapi.base.rest
 
-import com.boost.marketplace.infra.rest.TaskCode
+import com.boost.dbcenterapi.data.rest.TaskCode
 import com.framework.base.BaseLocalService
 import com.framework.base.BaseResponse
 

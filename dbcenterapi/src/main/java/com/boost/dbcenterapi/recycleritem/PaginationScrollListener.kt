@@ -1,4 +1,4 @@
-package com.boost.marketplace.recyclerView
+package com.boost.dbcenterapi.recycleritem
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView

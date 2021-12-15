@@ -1,3 +1,3 @@
-package com.boost.marketplace.recyclerView
+package com.boost.dbcenterapi.recycleritem
 
 interface AppBaseRecyclerViewItem : BaseRecyclerViewItem
