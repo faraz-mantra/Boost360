@@ -11,7 +11,7 @@ import com.boost.marketplace.infra.utils.INITIAL_POSITION
 import com.boost.marketplace.infra.utils.ROTATED_POSITION
 import com.boost.marketplace.infra.utils.rotateImage
 import com.boost.marketplace.recyclerView.AppBaseRecyclerViewAdapter
-import com.boost.marketplace.recyclerView.AppBaseRecyclerViewHolder
+import com.boost.marketplace.infra.recyclerView.AppBaseRecyclerViewHolder
 import com.boost.marketplace.recyclerView.BaseRecyclerViewItem
 import com.boost.marketplace.recyclerView.RecyclerItemClickListener
 import com.framework.extensions.gone

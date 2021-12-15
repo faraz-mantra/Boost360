@@ -148,7 +148,7 @@
               android:textSize="14sp"
               android:textStyle="bold"
               android:drawablePadding="10dp"
-              android:drawableEnd="@drawable/ic_my_cuurent_plan_arrow"
+              android:drawableEnd="@drawable/ic_my_cuurent_plan_arrow"/>
 
 
             <RelativeLayout
@@ -246,8 +246,7 @@
               android:clipToPadding="false"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toBottomOf="@id/mp_package_name"
-              tools:listitem="@layout/marketplace_snippet_item" />
+              app:layout_constraintTop_toBottomOf="@id/mp_package_name"/>
 
             <com.framework.views.dotsindicator.DotsIndicator
               android:id="@+id/mp_package_indicator"
@@ -361,7 +360,7 @@
             <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="EXPLORE ALL FEATURES"
+              android:text="@string/explore_all_features"
               android:textColor="@color/white"
               android:textStyle="bold" />
           </LinearLayout>
@@ -377,7 +376,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:fontFamily="@font/regular"
-              android:text="Watch Boost 360 features in action."
+              android:text="@string/watch_boost_360_features_in_action"
               android:textColor="@color/black"
               android:textSize="16sp"
               android:textStyle="bold" />
@@ -405,7 +404,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:fontFamily="@font/regular"
-            android:text="Partner Offerings"
+            android:text="@string/partner_offerings"
             android:textColor="@color/black"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -418,8 +417,7 @@
             android:clipToPadding="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/marketplace_snippet_item" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
           <com.framework.views.dotsindicator.DotsIndicator
             android:id="@+id/mp_home_partner_indicator"
@@ -454,7 +452,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:fontFamily="@font/bold"
-            android:text="Find features by category"
+            android:text="@string/find_features_by_category"
             android:textColor="@color/black"
             android:textFontWeight="600"
             android:textSize="16sp"
@@ -637,7 +635,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:gravity="center"
-                  android:text="REFER\nBOOST 360\n GET\n 20% OFF."
+                  android:text="@string/refer_nboost_360_n_get_n_20_off"
                   android:textColor="#FF9F00"
                   android:textSize="24sp"
                   android:textStyle="bold" />
@@ -672,7 +670,7 @@
               android:paddingTop="10dp"
               android:paddingEnd="20dp"
               android:paddingBottom="10dp"
-              android:text="Start referring"
+              android:text="@string/start_referring"
               android:textColor="@color/white"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="parent"
@@ -695,7 +693,7 @@
               android:paddingTop="10dp"
               android:paddingEnd="30dp"
               android:paddingBottom="10dp"
-              android:text="View referral items"
+              android:text="@string/view_referral_items"
               android:textColor="#FFB900"
               android:textFontWeight="700"
               android:textSize="13sp"
@@ -739,7 +737,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:fontFamily="@font/bold"
-                android:text="Help us make\nBoost better"
+                android:text="@string/help_us_make_nboost_better"
                 android:textSize="18sp" />
 
             </LinearLayout>
@@ -761,7 +759,7 @@
               android:paddingTop="10dp"
               android:paddingEnd="30dp"
               android:paddingBottom="10dp"
-              android:text="Give feedback"
+              android:text="@string/give_feedback"
               android:textColor="#FFB900"
               android:textFontWeight="700"
               android:textSize="14sp"

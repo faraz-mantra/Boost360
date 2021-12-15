@@ -1,4 +1,4 @@
-package com.boost.marketplace.recyclerView
+package com.boost.marketplace.infra.recyclerView
 
 import android.content.Context
 import android.content.res.Resources
@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.ViewDataBinding
+import com.boost.marketplace.recyclerView.BaseRecyclerViewHolder
 
 abstract class AppBaseRecyclerViewHolder<Binding : ViewDataBinding>(binding: Binding) :
   BaseRecyclerViewHolder<Binding>(binding), View.OnClickListener {

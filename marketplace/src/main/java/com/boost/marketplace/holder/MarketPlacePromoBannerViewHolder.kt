@@ -3,7 +3,7 @@ package com.boost.marketplace.holder
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PromoBanners
 import com.boost.marketplace.constant.RecyclerViewActionType
 import com.boost.marketplace.databinding.ItemPromoBannerBinding
-import com.boost.marketplace.recyclerView.AppBaseRecyclerViewHolder
+import com.boost.marketplace.infra.recyclerView.AppBaseRecyclerViewHolder
 import com.boost.marketplace.recyclerView.BaseRecyclerViewItem
 import com.framework.glide.util.glideLoad
 import com.inventoryorder.R

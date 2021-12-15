@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.marketplace.R
-import com.boost.marketplace.constant.RecyclerViewItemType.*
+import com.boost.marketplace.infra.constant.RecyclerViewItemType.*
 import com.boost.marketplace.databinding.*
 import com.boost.marketplace.holder.*
 import com.framework.base.BaseActivity
@@ -27,6 +27,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       ALL_BOOST_ADD_ONS_VIEW -> BoostAddOnsViewHolder(binding as ItemBoostAddOnsBinding)
       MANAGE_BUSINESS_ITEM_VIEW -> ManageBusinessViewHolder(binding as ItemManageBusinessBinding)
       PROMO_BANNER ->MarketPlacePromoBannerViewHolder(binding as ItemPromoBannerBinding)
+      FEATURES_BY_CATEGORY->FeaturesByCategoryViewHolder(binding as ItemFeaturesByCategoryBinding)
     }
   }
 

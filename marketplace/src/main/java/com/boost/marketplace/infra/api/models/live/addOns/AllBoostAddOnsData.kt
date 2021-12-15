@@ -1,6 +1,6 @@
 package com.boost.marketplace.infra.api.models.live.addOns
 
-import com.boost.marketplace.constant.RecyclerViewItemType
+import com.boost.marketplace.infra.constant.RecyclerViewItemType
 import com.boost.marketplace.recyclerView.AppBaseRecyclerViewItem
 import com.framework.base.BaseResponse
 

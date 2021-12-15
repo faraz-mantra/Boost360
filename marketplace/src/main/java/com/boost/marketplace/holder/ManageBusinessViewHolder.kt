@@ -4,7 +4,7 @@ import android.view.View
 import com.boost.marketplace.constant.RecyclerViewActionType
 import com.boost.marketplace.databinding.ItemManageBusinessBinding
 import com.boost.marketplace.infra.api.models.live.addOns.ManageBusinessData
-import com.boost.marketplace.recyclerView.AppBaseRecyclerViewHolder
+import com.boost.marketplace.infra.recyclerView.AppBaseRecyclerViewHolder
 import com.boost.marketplace.recyclerView.BaseRecyclerViewItem
 
 class ManageBusinessViewHolder(binding: ItemManageBusinessBinding) :

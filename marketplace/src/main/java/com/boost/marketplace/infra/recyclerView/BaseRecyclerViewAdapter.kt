@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.boost.marketplace.constant.RecyclerViewItemType
+import com.boost.marketplace.infra.constant.RecyclerViewItemType
 import com.framework.base.BaseActivity
 
 abstract class BaseRecyclerViewAdapter<T : BaseRecyclerViewItem>(
