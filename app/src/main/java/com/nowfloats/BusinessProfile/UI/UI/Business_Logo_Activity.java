@@ -11,11 +11,15 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.StyleSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -101,6 +105,12 @@ public class Business_Logo_Activity
         }
         binding.appBar.toolbarTitle.setText(getResources().getString(R.string.business_logo));
 
+        String fullText = getString(R.string.free_1_logo_png_powered_by_buildmylogo);
+        SpannableString spannable = new SpannableString(fullText);
+        String boldText = "BuildMyLogo";
+        spannable.setSpan(new StyleSpan(Typeface.BOLD),fullText.indexOf(boldText),fullText.indexOf(boldText)+fullText.length()
+        , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        binding.tvBuildMyLogo.setText(spannable);
         /*toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -211,6 +221,12 @@ public class Business_Logo_Activity
             }
         });
 
+        binding.createLogoLogtron.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
 //        uploadButton.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
