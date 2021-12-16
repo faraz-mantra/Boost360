@@ -4,10 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import com.appservice.base.AppBaseFragment
 import com.boost.presignin.R
 import com.boost.presignin.constant.FragmentType
@@ -55,11 +52,12 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
   }
 
   override fun onCreateView() {
+    baseActivity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
     setOnListeners()
     initUI()
     requestPhonePicker()
     WebEngageController.trackEvent(PS_LOGIN_NUMBER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    setOnClickListener(binding?.tvRequestOtp)
+    setOnClickListener(binding?.tvRequestOtp, binding?.tvLoginWithEmail)
     baseActivity.startServiceCategory()
   }
 
@@ -69,10 +67,10 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
       binding?.tvRequestOtp -> {
         sendOtp(binding?.phoneEt?.text.toString())
       }
-//      binding?.tvLoginWithEmail -> {
-//        WebEngageController.trackEvent(PS_LOGIN_USERNAME_CLICK, CLICK_LOGIN_USERNAME, NO_EVENT_VALUE)
-//        navigator?.startActivity(LoginActivity::class.java)
-//      }
+      binding?.tvLoginWithEmail -> {
+        WebEngageController.trackEvent(PS_LOGIN_USERNAME_CLICK, CLICK_LOGIN_USERNAME, NO_EVENT_VALUE)
+        navigator?.startActivity(LoginActivity::class.java)
+      }
     }
   }
 
@@ -131,18 +129,18 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
     binding?.acceptTncPhone?.makeLinks(
       Pair("Terms of Use", View.OnClickListener {
         WebEngageController.trackEvent(BOOST_360_TERMS_CLICK, CLICKED, NO_EVENT_VALUE)
-        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
+        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.terms_of_use))
       }),
       Pair("Privacy Policy", View.OnClickListener {
         WebEngageController.trackEvent(BOOST_360_CONDITIONS_CLICK, CLICKED, NO_EVENT_VALUE)
-        openTNCDialog("https://www.getboost360.com/privacy?src=android&stage=presignup", resources.getString(R.string.boost360_privacy_policy))
+        openTNCDialog("https://www.getboost360.com/privacy?src=android&stage=presignup", resources.getString(R.string.privacy_policy))
       })
     )
   }
 
   private fun openTNCDialog(url: String, title: String) {
     val webViewDialog = WebViewDialog()
-    webViewDialog.setData(false, url, title)
+    webViewDialog.setData(isAcceptDeclineShow = false, url, title, isNewFlow = true)
     webViewDialog.onClickType = {}
     webViewDialog.show(requireActivity().supportFragmentManager, title)
   }

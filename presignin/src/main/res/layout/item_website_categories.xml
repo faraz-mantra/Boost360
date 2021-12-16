@@ -44,11 +44,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/size_12"
+            android:textSize="@dimen/text_13"
+            android:fontFamily="@font/semi_bold"
             android:textColor="@color/black_2A2A2A"
             app:layout_constraintEnd_toStartOf="@+id/radioAsBusinessWebsite"
             app:layout_constraintStart_toEndOf="@+id/iv_cat_img"
             app:layout_constraintTop_toTopOf="@+id/iv_cat_img"
-            app:textType="BODY_1"
             tools:text="@string/featured_categories" />
 
         <com.framework.views.customViews.CustomRadioButton
@@ -74,7 +75,7 @@
           app:layout_constraintEnd_toStartOf="@+id/radioAsBusinessWebsite"
           app:layout_constraintStart_toEndOf="@+id/iv_cat_img"
           app:layout_constraintTop_toBottomOf="@+id/tv_category_title"
-          app:textType="CAPTION"
+          android:textSize="@dimen/text_12"
           tools:text="Ex: Kirana Store, Boutique, Stationery and others from retail sector" />
 
       </androidx.constraintlayout.widget.ConstraintLayout>

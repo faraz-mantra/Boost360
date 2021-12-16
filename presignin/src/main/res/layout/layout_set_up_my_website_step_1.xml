@@ -26,24 +26,26 @@
             android:text="@string/how_will_you_describe_your_business"
             android:textAlignment="gravity"
             android:textColor="@color/black_4a4a4a"
+            android:fontFamily="@font/bold"
             android:textSize="@dimen/text_16"
             app:layout_constraintEnd_toStartOf="@id/endGuide"
             app:layout_constraintStart_toEndOf="@id/startGuide"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tv_subtitle"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/size_4"
-          android:gravity="start"
-          android:text="@string/this_will_help_us_understand_your_business_and_suggest_useful_features"
-          android:textAlignment="gravity"
-          android:textColor="@color/black_2A2A2A"
-          android:textSize="@dimen/text_13"
-          app:layout_constraintEnd_toStartOf="@id/endGuide"
-          app:layout_constraintStart_toEndOf="@id/startGuide"
-          app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+            android:id="@+id/tv_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:fontFamily="@font/regular"
+            android:gravity="start"
+            android:text="@string/this_will_help_us_understand_your_business_and_suggest_useful_features"
+            android:textAlignment="gravity"
+            android:textColor="@color/black_2A2A2A"
+            android:textSize="@dimen/text_13"
+            app:layout_constraintEnd_toStartOf="@id/endGuide"
+            app:layout_constraintStart_toEndOf="@id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
         <LinearLayout
           android:id="@+id/layout_et_sugestion"
@@ -161,15 +163,16 @@
             android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/tv_featured_categories_title"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginHorizontal="@dimen/size_24"
-              android:gravity="start"
-              android:text="@string/featured_categories"
-              android:textAlignment="gravity"
-              android:textColor="@color/black_2A2A2A"
-              android:textSize="@dimen/text_13" />
+                android:id="@+id/tv_featured_categories_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_24"
+                android:fontFamily="@font/semi_bold"
+                android:gravity="start"
+                android:text="@string/featured_categories"
+                android:textAlignment="gravity"
+                android:textColor="@color/black_2A2A2A"
+                android:textSize="@dimen/text_13" />
 
             <androidx.recyclerview.widget.RecyclerView
               android:id="@+id/rv_categories"
@@ -252,14 +255,14 @@
 
 
     <com.framework.views.customViews.CustomTextView
-      android:id="@+id/tv_next_step_1"
-      style="@style/yellow_squared_button"
-      android:layout_alignParentBottom="true"
-      android:enabled="false"
-      android:text="@string/next"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      tools:ignore="UnknownId" />
+        android:id="@+id/tv_next_step_1"
+        style="@style/yellow_squared_button"
+        android:layout_alignParentBottom="true"
+        android:enabled="false"
+        android:text="@string/next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="UnknownId" />
   </RelativeLayout>
 </layout>

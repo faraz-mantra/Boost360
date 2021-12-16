@@ -180,7 +180,7 @@
   <string name="ex_shopkeeper_doctor_boutique_etc">Ex: Shopkeeper, Doctor, Boutique, etc.</string>
   <string name="featured_categories">Featured categories:</string>
   <string name="what_is_the_name_of_your_business">What is the name of your business?</string>
-  <string name="this_will_help_suggest_available_website_address">This will help suggest available website address</string>
+  <string name="this_will_help_suggest_available_website_address">This will help us pick the best available\nwebsite address for you</string>
   <string name="business_name">Business Name</string>
   <string name="launch_my_website">Launch my website</string>
   <string name="website_address">Website Address</string>
@@ -201,7 +201,7 @@
   <string name="secure">Secure | https://</string>
   <string name="this_link_is_already_in_use_please_choose_another">This link is already in use! Please choose another.</string>
   <string name="no_result_found">No results found</string>
-  <string name="found_website_address_des">We found a website address for you. You can customize it or purchase a custom domain later.</string>
+  <string name="found_website_address_des">We found a website address for you. You can\ncustomize it or purchase a custom domain later.</string>
   <string name="your_website_is_almost_ready">Your website is almost ready!</string>
   <string name="your_business_category_was_selected">Your business category was selected</string>
   <string name="use_your_phone_number_to_login">You can use your phone number to login or sign up to Boost360</string>
@@ -212,6 +212,10 @@
   <string name="desktop">Desktop</string>
   <string name="_0_40">0 /40</string>
   <string name="get_to_know_our_experts">Get to know our experts</string>
-  <string name="onboarding_need_help_message">Please feel free speak to our expert to get the help you need</string>
+  <string name="onboarding_need_help_message">Please feel free speak to our expert to get the\nhelp you need.</string>
 
+  <string name="terms_of_use" translatable="false">Terms of Use</string>
+  <string name="privacy_policy" translatable="false">Privacy Policy</string>
+  <string name="_940558450">940558450</string>
+  <string name="here_is_a_quick_preview_of_how_your_website_will_look_on_various_devices">Here is a quick preview of how your website will\nlook on various devices</string>
 </resources>

@@ -2,11 +2,15 @@ package com.boost.presignin.ui.newOnboarding
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import com.appservice.base.AppBaseActivity
 import com.boost.presignin.R
 import com.boost.presignin.constant.FragmentType
@@ -33,6 +37,7 @@ class NewOnBoardingContainerActivity : AppBaseActivity<ActivityNewOnboarddingCon
   override fun onCreate(savedInstanceState: Bundle?) {
     intent?.extras?.getString(FRAGMENT_TYPE)?.let { type = fromValue(it) }
     if (type == null) intent?.extras?.getInt(FRAGMENT_TYPE)?.let { type = FragmentType.values()[it] }
+    //makeFullScreen()
     super.onCreate(savedInstanceState)
   }
 
@@ -61,6 +66,9 @@ class NewOnBoardingContainerActivity : AppBaseActivity<ActivityNewOnboarddingCon
 
   override fun customTheme(): Int? {
     return when (type) {
+      FragmentType.INTRO_SLIDE_SHOW_FRAGMENT -> R.style.AppTheme_NewOnBoarding_Transparent_status
+      FragmentType.VERIFY_PHONE_FRAGMENT,
+      FragmentType.ENTER_PHONE_FRAGMENT -> R.style.AppTheme_NewOnBoarding_Resize
       else -> super.customTheme()
     }
   }
@@ -125,6 +133,21 @@ class NewOnBoardingContainerActivity : AppBaseActivity<ActivityNewOnboarddingCon
         OnboardSuccessFragment.newInstance(intent.extras)
       }
       else -> throw IllegalFragmentTypeException()
+    }
+  }
+
+  private fun makeFullScreen() {
+    if (type == FragmentType.INTRO_SLIDE_SHOW_FRAGMENT) {
+      window.apply {
+        clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+          decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        } else {
+          decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        }
+        statusBarColor = Color.TRANSPARENT
+      }
     }
   }
 
