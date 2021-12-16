@@ -274,7 +274,7 @@
     <item name="android:layout_height">@dimen/size_50</item>
     <item name="android:background">@color/disable_enable_button_selector</item>
     <item name="android:backgroundTint">@color/disable_enable_button_selector</item>
-    <item name="android:fontFamily">@font/inter_bold</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
     <item name="android:textSize">@dimen/text_16</item>
     <item name="android:gravity">center</item>
     <item name="android:textColor">@color/white</item>

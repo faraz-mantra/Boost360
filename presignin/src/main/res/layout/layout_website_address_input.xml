@@ -37,7 +37,6 @@
         android:textAlignment="gravity"
         android:textColor="@color/black_4a4a4a"
         android:textSize="@dimen/text_14"
-        app:fontFamily="@font/inter_semi_bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tv_website_extension"
         app:layout_constraintHorizontal_bias="0.0"

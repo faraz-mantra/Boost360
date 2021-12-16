@@ -40,18 +40,16 @@
           tools:src="@drawable/ic_website_category" />
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tv_category_title"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginHorizontal="@dimen/size_12"
-          app:fontFamily="@font/inter_medium"
-          android:layout_marginTop="@dimen/size_6"
-          android:textColor="@color/black_2A2A2A"
-          app:layout_constraintEnd_toStartOf="@+id/radioAsBusinessWebsite"
-          app:layout_constraintStart_toEndOf="@+id/iv_cat_img"
-          app:layout_constraintTop_toTopOf="parent"
-          app:textType="BODY_1"
-          tools:text="@string/featured_categories" />
+            android:id="@+id/tv_category_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:textColor="@color/black_2A2A2A"
+            app:layout_constraintEnd_toStartOf="@+id/radioAsBusinessWebsite"
+            app:layout_constraintStart_toEndOf="@+id/iv_cat_img"
+            app:layout_constraintTop_toTopOf="@+id/iv_cat_img"
+            app:textType="BODY_1"
+            tools:text="@string/featured_categories" />
 
         <com.framework.views.customViews.CustomRadioButton
           android:id="@+id/radioAsBusinessWebsite"
@@ -70,7 +68,6 @@
           android:id="@+id/tv_category_examples"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-          app:fontFamily="@font/inter_regular"
           android:layout_marginHorizontal="@dimen/size_12"
           android:layout_marginTop="@dimen/size_6"
           android:textColor="@color/gray_B3B3B3"

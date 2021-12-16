@@ -19,7 +19,6 @@
       android:textAlignment="gravity"
       android:textColor="@color/black_2A2A2A"
       android:textSize="@dimen/body_1"
-      app:fontFamily="@font/inter_regular"
       app:layout_constraintEnd_toStartOf="@+id/endGuide"
       app:layout_constraintStart_toEndOf="@+id/startGuide"
       app:layout_constraintTop_toTopOf="parent" />
@@ -30,7 +29,6 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/size_8"
       android:drawableEnd="@drawable/ic_edit_pencil"
-      android:fontFamily="@font/inter_semi_bold"
       android:gravity="start"
       android:textAlignment="gravity"
       android:drawablePadding="@dimen/size_4"
@@ -55,7 +53,7 @@
       app:layout_constraintTop_toBottomOf="@id/tv_phone_number"
       app:length="4"
       app:otp_box_background="@color/transparent"
-      app:otp_text_size="@dimen/heading_3"
+      app:otp_text_size="@dimen/heading_6"
       app:width="@dimen/size_35"
       tools:ignore="NotSibling" />
 
@@ -64,7 +62,6 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/size_25"
-      android:fontFamily="@font/inter_semi_bold"
       android:gravity="start"
       android:text="@string/get_otp_on_call"
       android:textAlignment="gravity"
@@ -79,7 +76,6 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/size_22"
-      android:fontFamily="@font/inter_semi_bold"
       android:gravity="start"
       android:textAlignment="gravity"
       android:textColor="@color/gray_DADADA"
@@ -109,8 +105,7 @@
         android:checked="true"
         android:text="@string/send_me_business_updates_via"
         android:textColor="@color/black_2A2A2A"
-        android:textSize="@dimen/subtitle_2"
-        app:fontFamily="@font/inter_regular" />
+        android:textSize="@dimen/subtitle_2" />
 
       <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -130,8 +125,7 @@
           android:layout_marginStart="@dimen/size_4"
           android:text="@string/whatsapp"
           android:textColor="@color/black_2A2A2A"
-          android:textSize="@dimen/subtitle_2"
-          app:fontFamily="@font/inter_regular" />
+          android:textSize="@dimen/subtitle_2"/>
       </androidx.appcompat.widget.LinearLayoutCompat>
 
     </LinearLayout>
