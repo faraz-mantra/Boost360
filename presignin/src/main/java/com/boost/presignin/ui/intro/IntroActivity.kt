@@ -15,7 +15,6 @@ import com.boost.presignin.model.IntroItem
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
-import com.framework.smsVerification.AppSignatureHashHelper
 import com.framework.utils.makeLinks
 import com.framework.webengageconstant.*
 
@@ -61,7 +60,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
 
   private fun openTNCDialog(url: String, title: String) {
     WebViewDialog().apply {
-      setData(false, url, title)
+      setData(false, url, title, false)
       onClickType = { }
       show(this@IntroActivity.supportFragmentManager, title)
     }

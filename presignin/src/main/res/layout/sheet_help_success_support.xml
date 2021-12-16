@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_12"
         android:backgroundTint="@color/black_4a4a4a"
-        android:background="@drawable/bg_rounded_top_white">
+        android:background="@drawable/bg_rounded_16_radius_rect">
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/need_title_sheet"
