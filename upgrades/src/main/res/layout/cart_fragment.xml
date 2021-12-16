@@ -51,7 +51,7 @@
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/open_sans_semibold"
         android:gravity="center"
-        android:text="Cart summary"
+        android:text="Cart Summary"
         android:textColor="@color/common_text_color"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -586,7 +586,7 @@
               android:layout_weight="1"
               android:fontFamily="@font/open_sans_semibold"
               android:paddingStart="@dimen/_10sdp"
-              android:text="Select Validity (months)"
+              android:text="Select validity (months)"
               android:textColor="@color/common_text_color" />
 
             <TextView
@@ -901,15 +901,17 @@
               android:textColor="@color/common_text_color" />
 
             <TextView
-              android:id="@+id/cart_amount_value"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_alignParentEnd="true"
-              android:fontFamily="@font/open_sans"
-              android:padding="@dimen/_5sdp"
-              android:text="₹0"
-              android:textColor="@color/common_text_color"
-              tools:text="₹900" />
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/cart_amount_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="@font/open_sans"
+                android:padding="@dimen/_5sdp"
+                android:text="₹0"
+                android:textColor="@color/common_text_color"
+                tools:text="₹900" />
 
             <TextView
               android:id="@+id/igst_title"
@@ -922,16 +924,18 @@
               android:textColor="@color/common_text_color" />
 
             <TextView
-              android:id="@+id/igst_value"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_below="@id/cart_amount_title"
-              android:layout_alignParentEnd="true"
-              android:fontFamily="@font/open_sans"
-              android:padding="@dimen/_5sdp"
-              android:text="₹0"
-              android:textColor="@color/common_text_color"
-              tools:text="₹30" />
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/igst_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cart_amount_title"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="@font/open_sans"
+                android:padding="@dimen/_5sdp"
+                android:text="₹0"
+                android:textColor="@color/common_text_color"
+                tools:text="₹30" />
 
             <TextView
               android:id="@+id/coupon_discount_title"
@@ -944,15 +948,17 @@
               android:textColor="@color/common_text_color" />
 
             <TextView
-              android:id="@+id/coupon_discount_value"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_below="@id/igst_title"
-              android:layout_alignParentEnd="true"
-              android:fontFamily="@font/open_sans"
-              android:padding="@dimen/_5sdp"
-              android:text="0"
-              android:textColor="#0068e0" />
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/coupon_discount_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/igst_title"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="@font/open_sans"
+                android:padding="@dimen/_5sdp"
+                android:text="0"
+                android:textColor="#0068e0" />
 
             <LinearLayout
               android:id="@+id/gstin_layout"
@@ -1042,7 +1048,9 @@
                 android:textColor="@color/app_text_yellow" />
 
               <TextView
-                android:id="@+id/entered_tan_number"
+                  android:tag="com.userexperior.ueSecureView"
+
+                  android:id="@+id/entered_tan_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_5sdp"
@@ -1130,7 +1138,9 @@
 
 
             <TextView
-              android:id="@+id/cart_grand_total"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/cart_grand_total"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:fontFamily="@font/open_sans_semibold"

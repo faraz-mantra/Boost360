@@ -1,6 +1,7 @@
 package com.inventoryorder.ui.tutorials
 
 import android.content.DialogInterface
+import android.net.Uri
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -14,6 +15,7 @@ import com.framework.exoFullScreen.preparePlayer
 import com.framework.exoFullScreen.setSource
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.google.android.exoplayer2.MediaItem
 import com.inventoryorder.R
 import com.inventoryorder.base.AppBaseFragment
 import com.inventoryorder.constant.IntentConstant
@@ -34,6 +36,7 @@ class TutorialVideosBottomSheet :
   private var playbackPosition: Long = 0
   private var videosItem: VIDEOSItem? = null
   private var viewClose: View? = null
+
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_tutorials_on_staff_profile
@@ -118,13 +121,11 @@ class TutorialVideosBottomSheet :
 
   private fun initializePlayer() {
     MediaPlayer.initialize(baseActivity)
-    viewClose = MediaPlayer.exoPlayer?.preparePlayer(binding?.playerView!!, baseActivity)
-    MediaPlayer.exoPlayer?.setSource(
-      playbackPosition,
-      baseActivity,
-      videosItem?.videoUrl.toString()
-    )
-    MediaPlayer.startPlayer()
+    val player =MediaPlayer.exoPlayer
+    binding?.playerView?.player = player
+    player?.setMediaItem(MediaItem.fromUri(Uri.parse(videosItem?.videoUrl.toString())))
+    player?.prepare()
+    player?.play()
   }
 }
 

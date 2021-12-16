@@ -35,7 +35,7 @@ import com.appservice.utils.WebEngageController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.firestore.FirestoreManager
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.pref.clientId
 import com.framework.views.zero.old.AppFragmentZeroCase
@@ -419,8 +419,8 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       intent.putExtra("fpTag", sessionLocal.fpTag)
       intent.putExtra("accountType", sessionLocal.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
       intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(sessionLocal.getStoreWidgets() ?: ArrayList()))
-      intent.putExtra("email", sessionLocal.fPEmail ?: "ria@nowfloats.com")
-      intent.putExtra("mobileNo", sessionLocal.fPPrimaryContactNumber ?: "9160004303")
+      intent.putExtra("email", sessionLocal.fPEmail ?: getString(R.string.ria_customer_mail))
+      intent.putExtra("mobileNo", sessionLocal.fPPrimaryContactNumber ?: getString(R.string.ria_customer_number))
       intent.putExtra("profileUrl", sessionLocal.fPLogo)
       intent.putExtra("buyItemKey", "${StatusKyc.STAFFPROFILE.name}15")// feature key
       baseActivity.startActivity(intent)

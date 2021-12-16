@@ -31,7 +31,7 @@ import com.framework.webengageconstant.*
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.my_addons_fragment.*
 
-class MyAddonsFragment : BaseFragment(), MyAddonsListener {
+class MyAddonsFragment : BaseFragment("MarketPlaceMyAddonsFragment"), MyAddonsListener {
 
   lateinit var root: View
   lateinit var freeAddonsAdapter: FreeAddonsAdapter

@@ -1,8 +1,11 @@
 package com.nowfloats.Analytics_Screen.Graph;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,6 +28,8 @@ import com.nowfloats.Analytics_Screen.Graph.fragments.UniqueVisitorsFragment;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.onboarding.nowfloats.constant.IntentConstant;
+import com.onboarding.nowfloats.constant.SupportVideoType;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -60,6 +65,10 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
 
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+            toolbar.setNavigationOnClickListener(view -> {
+                onBackPressed();
+            });
         }
 
         mVisitsType = (VisitsType) getIntent().getSerializableExtra(VISITS_TYPE);
@@ -88,7 +97,6 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
         tvMonth.setOnClickListener(this);
         tvWeek.setOnClickListener(this);
         tvYear.setOnClickListener(this);
-
         changeTab(UniqueVisitorsFragment.BatchType.dy);
     }
 
@@ -243,16 +251,16 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                onBackPressed();
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void onChartBarClicked(HashMap<String, String> map, int views) {
@@ -309,5 +317,34 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
             }
             return null;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_help_support, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.menu_item_help_support) {
+            try {
+                startActivity(new Intent(this, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
+                        .putExtra(IntentConstant.SUPPORT_VIDEO_TYPE.name(), SupportVideoType.ANALYTICS.getValue()));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

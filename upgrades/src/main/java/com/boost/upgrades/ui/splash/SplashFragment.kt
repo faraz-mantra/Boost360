@@ -222,5 +222,10 @@ class SplashFragment : DialogFragment() {
       (activity as UpgradeActivity).clientid
     )
   }
+  override fun onResume() {
+    super.onResume()
+//    UserExperiorController.startScreen("MarketPlaceSplashFragment")
+
+  }
 
 }

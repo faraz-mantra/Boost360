@@ -4,10 +4,9 @@ import android.app.Application
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
+import com.appservice.rest.repository.AzureWebsiteNewRepository
 import com.appservice.rest.repository.WithFloatTwoRepository
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.promoMarketOfferFilter
-import com.boost.dbcenterapi.data.remote.NewApiInterface
-import com.boost.dbcenterapi.utils.Utils
+import com.dashboard.model.DisableBadgeNotificationRequest
 import com.dashboard.rest.repository.*
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
@@ -478,6 +477,10 @@ class DashboardViewModel : BaseViewModel() {
 
   fun getUserProfileData(loginId:String?): LiveData<BaseResponse> {
     return WithFloatTwoRepositoryD.getUserProfileData(loginId).toLiveData()
+  }
+
+  fun disableBadgeNotification(request: DisableBadgeNotificationRequest): LiveData<BaseResponse> {
+    return UsCentralNowFloatsCloudRepository.disableBadgeNotification(request).toLiveData()
   }
 }
 

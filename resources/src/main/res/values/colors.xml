@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <color name="dark_grey">#888888</color>
   <color name="accent_dark">#F2994A</color>
   <color name="accent_30">#4DFFB900</color>
   <color name="greyish_brown">#4A4A4A</color>
@@ -117,6 +118,9 @@
   <color name="grey_A1A1A1">#A1A1A1</color>
   <color name="black_2A2A2A">#2A2A2A</color>
   <color name="black_4a4a4a">#4A4A4A</color>
+  <color name="green_15C216">#15C216</color>
+  <color name="black_333333">#333333</color>
+  <color name="black_747474">#747474</color>
   <color name="black_4a4a4a_50">#804A4A4A</color>
   <color name="black_4a4a4a_30">#4D4A4A4A</color>
   <color name="black_4f4f4f">#4f4f4f</color>
@@ -134,6 +138,8 @@
   <color name="grey_light_2">#898989</color>
   <color name="grey_light_3">#CECECE</color>
   <color name="white_4">#fbfbfb</color>
+  <color name="white_e2e2e2">#E2E2E2</color>
+  <color name="white_f8f8f8">#F8F8F8</color>
   <color name="grey_f9f9f9">#f9f9f9</color>
   <color name="colorLightGrey">#E4E4E4</color>
   <color name="light_blue_grey">#54617A</color>
@@ -149,9 +155,12 @@
   <color name="red_E39595">#E39595</color>
   <color name="red_button">#E39595</color>
   <color name="black_202A2A2A">#202A2A2A</color>
+  <color name="black_322A2A2A">#322A2A2A</color>
   <color name="black_3C3C3C">#3C3C3C</color>
   <color name="colorAccentPositive">@color/colorAccent</color>
   <color name="colorAccentNegative">@color/black_4a4a4a</color>
 
   <color name="grey_bg">#F8F8F8</color>
+  <color name="black_1e1e1e">#1E1E1E</color>
+
 </resources>

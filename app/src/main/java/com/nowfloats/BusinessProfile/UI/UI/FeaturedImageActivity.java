@@ -31,7 +31,7 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.framework.analytics.SentryController;
-import com.framework.models.firestore.FirestoreManager;
+import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.nowfloats.BusinessProfile.UI.API.uploadIMAGEURI;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.EditImageActivity;
@@ -44,6 +44,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
+import com.onboarding.nowfloats.constant.SupportVideoType;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityFeaturedImageBinding;
@@ -51,6 +52,7 @@ import com.thinksity.databinding.ActivityFeaturedImageBinding;
 import java.io.File;
 import java.io.InputStream;
 
+import static com.dashboard.utils.ActivityUtilsKt.startHelpSupportVideoActivity;
 import static com.framework.webengageconstant.EventLabelKt.MANAGE_CONTENT;
 import static com.framework.webengageconstant.EventLabelKt.UPDATED_FEATURED_IMAGE;
 import static com.framework.webengageconstant.EventNameKt.FEATURED_IMAGE_ADDED;
@@ -308,8 +310,10 @@ public class FeaturedImageActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
+        if (item.getItemId() == R.id.menu_item_help_featured_image) {
+            startHelpSupportVideoActivity(FeaturedImageActivity.this, SupportVideoType.FEATURED_IMAGE.getValue());
+            return true;
+        }
         finish();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         return super.onOptionsItemSelected(item);

@@ -19,7 +19,7 @@ import android.widget.Toast;
 import androidx.databinding.DataBindingUtil;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.framework.models.firestore.FirestoreManager;
+import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.github.florent37.viewtooltip.ViewTooltip;
 import com.google.gson.Gson;
 import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
@@ -406,7 +406,7 @@ public class ContactInformationActivity extends BaseActivity {
 
         StringBuilder webWidgets = new StringBuilder();
 
-        for (String widget : Constants.StoreWidgets) {
+        for (String widget : session.getStoreWidgets()) {
             webWidgets.append(widget).append("#");
         }
 

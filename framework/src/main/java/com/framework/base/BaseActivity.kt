@@ -162,7 +162,7 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
     val toolbar = getToolbar() ?: return
     toolbar.title = title
     getToolbarTitleColor()?.let { toolbar.setTitleTextColor(it) }
-    toolbar.getTitleTextView()?.let { titleView ->
+    toolbar.getToolbarTitleTextView()?.let { titleView ->
       titleView.setToolbarTitleGravity()
       getToolbarTitleTypeface()?.let { titleView.typeface = it }
       getToolbarTitleSize()?.let { titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, it) }
@@ -174,7 +174,7 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
     val toolbar = getToolbar() ?: return
     toolbar.subtitle = subTitle
     getToolbarTitleColor()?.let { toolbar.setSubtitleTextColor(it) }
-    toolbar.getSubTitleTextView()?.let { subTitleView ->
+    toolbar.getToolbarSubTitleTextView()?.let { subTitleView ->
       subTitleView.setToolbarTitleGravity()
       getToolbarSubTitleSize()?.let { subTitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, it) }
       getSubtitleAlpha()?.let { subTitleView.alpha = it }

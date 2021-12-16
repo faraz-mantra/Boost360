@@ -1,15 +1,11 @@
 package com.appservice.base
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.databinding.ViewDataBinding
@@ -17,17 +13,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.constant.PreferenceConstant
-import com.appservice.model.StatusKyc
 import com.framework.analytics.SentryController
 import com.framework.base.BaseFragment
 import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
-import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
-import com.onboarding.nowfloats.ui.webview.WebViewTNCDialog
 
 abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseFragment<Binding, ViewModel>() {
 
@@ -42,9 +36,14 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
       )
     }
 
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    sessionLocal = UserSessionManager(baseActivity)
+    progressView = ProgressDialog.newInstance()
+  }
+
   override fun onCreateView() {
     progressView = ProgressDialog.newInstance()
-    sessionLocal = UserSessionManager(baseActivity)
   }
 
   protected open fun hideProgress() {
@@ -119,8 +118,8 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
       intent.putExtra("fpTag", sessionLocal.fpTag)
       intent.putExtra("accountType", sessionLocal.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
       intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(sessionLocal.getStoreWidgets() ?: ArrayList()))
-      intent.putExtra("email", sessionLocal.userProfileEmail ?: "ria@nowfloats.com")
-      intent.putExtra("mobileNo", sessionLocal.userPrimaryMobile ?: "9160004303")
+      intent.putExtra("email", sessionLocal.userProfileEmail ?: getString(R.string.ria_customer_mail))
+      intent.putExtra("mobileNo", sessionLocal.userPrimaryMobile ?: getString(R.string.ria_customer_number))
       intent.putExtra("profileUrl", sessionLocal.fPLogo)
       intent.putExtra("buyItemKey", buyItemKey)
       baseActivity.startActivity(intent)

@@ -10,10 +10,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
@@ -23,7 +23,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.framework.analytics.SentryController;
-import com.framework.models.firestore.FirestoreManager;
+import com.framework.firebaseUtils.firestore.FirestoreManager;
+import com.framework.views.zero.old.AppFragmentZeroCase;
+import com.framework.views.zero.old.AppOnZeroCaseClicked;
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
+import com.framework.views.zero.old.AppZeroCases;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nowfloats.CustomPage.Model.CustomPageEvent;
 import com.nowfloats.CustomPage.Model.CustomPageLink;
@@ -34,10 +38,10 @@ import com.nowfloats.on_boarding.OnBoardingApiCalls;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
-import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
-import com.nowfloats.widget.WidgetKey;
+import com.onboarding.nowfloats.constant.SupportVideoType;
+import com.otaliastudios.cameraview.frame.Frame;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -49,14 +53,15 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.dashboard.utils.ActivityUtilsKt.startHelpSupportVideoActivity;
 import static com.framework.webengageconstant.EventLabelKt.CLICKED_POST_A_CUSTOMPAGE;
 import static com.framework.webengageconstant.EventNameKt.CREATE_ACUSTOMPAGE;
 
 /**
  * Created by guru on 25/08/2015.
  */
-public class CustomPageFragment extends Fragment {
-    public static RecyclerView recyclerView;
+public class CustomPageFragment extends Fragment implements AppOnZeroCaseClicked {
+    public static RecyclerView  recyclerView;
     public static CustomPageAdapter custompageAdapter;
     public ArrayList<CustomPageModel> dataModel = new ArrayList<CustomPageModel>();
     public static ArrayList<String> posList = new ArrayList<>();
@@ -68,8 +73,11 @@ public class CustomPageFragment extends Fragment {
     Activity activity;
     CustomPageLink customPageLink;
     private LinearLayout emptylayout, progress_layout;
+    private FrameLayout mainLayout, childContainer;
     private TextView titleTextView;
     private ImageView delete;
+
+    private AppFragmentZeroCase appFragmentZeroCase;
 
     @Override
     public void onResume() {
@@ -112,10 +120,15 @@ public class CustomPageFragment extends Fragment {
         recyclerView.setLayoutManager(mLinearLayoutManager);
         recyclerView.setItemAnimator(new FadeInUpAnimator());
         emptylayout = (LinearLayout) view.findViewById(R.id.emptycustompage);
+        mainLayout = (FrameLayout) view.findViewById(R.id.mainLayout);
+        childContainer = (FrameLayout) view.findViewById(R.id.child_container_custom_page);
         progress_layout = (LinearLayout) view.findViewById(R.id.progress_custom_page);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.setItemAnimator(null);
         final FloatingActionButton addProduct = view.findViewById(R.id.fab_custom_page);
+        appFragmentZeroCase = new AppRequestZeroCaseBuilder(AppZeroCases.CUSTOM_PAGES, this, getActivity()).getRequest().build();
+        getActivity().getSupportFragmentManager().beginTransaction().add(childContainer.getId(), appFragmentZeroCase).commit();
+
         addProduct.setOnClickListener(v -> addProduct());
         if ((activity instanceof CustomPageActivity) && ((CustomPageActivity) activity).isAdd) addProduct();
         isRefreshList();
@@ -171,9 +184,13 @@ public class CustomPageFragment extends Fragment {
         dataModel = (ArrayList<CustomPageModel>) response.model;
         if (dataModel != null) {
             onCustomPageAddedOrUpdated(!dataModel.isEmpty());
-            if (dataModel.isEmpty()) emptylayout.setVisibility(View.VISIBLE);
-            else emptylayout.setVisibility(View.GONE);
-
+            if (dataModel.isEmpty()) {
+                emptyView();
+                //emptylayout.setVisibility(View.VISIBLE);
+            }else{
+                nonEmptyView();
+                //emptylayout.setVisibility(View.GONE);
+            }
             if (!session.getOnBoardingStatus() && dataModel.size() != session.getCustomPageCount()) {
                 session.setCustomPageCount(dataModel.size());
                 OnBoardingApiCalls.updateData(session.getFpTag(), String.format("custom_page:%s", dataModel.size() > 0 ? "true" : "false"));
@@ -187,7 +204,8 @@ public class CustomPageFragment extends Fragment {
             custompageAdapter.notifyDataSetChanged();
             recyclerView.invalidate();
         } else {
-            emptylayout.setVisibility(View.VISIBLE);
+            emptyView();
+            //emptylayout.setVisibility(View.VISIBLE);
         }
         progress_layout.setVisibility(View.GONE);
     }
@@ -412,5 +430,37 @@ public class CustomPageFragment extends Fragment {
                 openAddCustomPageActivity();
 //            }
 //        }
+    }
+
+    private void nonEmptyView() {
+        mainLayout.setVisibility(View.VISIBLE);
+        childContainer.setVisibility(View.GONE);
+    }
+
+
+    private void emptyView() {
+        mainLayout.setVisibility(View.GONE);
+        childContainer.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void primaryButtonClicked() {
+        addProduct();
+    }
+
+    @Override
+    public void secondaryButtonClicked() {
+        startHelpSupportVideoActivity(activity, SupportVideoType.CUSTOM_PAGES.getValue());
+    }
+
+    @Override
+    public void ternaryButtonClicked() {
+
+    }
+
+    @Override
+    public void appOnBackPressed() {
+
     }
 }

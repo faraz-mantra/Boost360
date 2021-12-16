@@ -42,7 +42,7 @@ import com.appservice.viewmodel.ServiceViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.firestore.FirestoreManager
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
@@ -55,6 +55,7 @@ import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.*
 import com.google.android.material.snackbar.Snackbar
+import com.onboarding.nowfloats.constant.SupportVideoType
 import com.squareup.picasso.Target
 import kotlinx.android.synthetic.main.fragment_add_account_start.view.*
 import kotlinx.android.synthetic.main.fragment_service_detail.*
@@ -74,6 +75,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   private var isNonPhysicalExperience: Boolean? = null
   private var currencyType: String? = "INR"
   private var layoutManagerN: LinearLayoutManager? = null
+  private var isZeroCaseCalled = true
 
   /* Paging */
   private var isLoadingD = false
@@ -254,25 +256,38 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         startFragmentActivity(FragmentType.APPOINTMENT_SETTINGS)
         return true
       }
+      R.id.menu_item_help_service -> {
+        startActivity(Intent(baseActivity, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
+          .putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name, SupportVideoType.PRODUCT_CATALOGUE.value))
+        return true
+      }
       else -> super.onOptionsItemSelected(item)
     }
   }
 
+  override fun onPrepareOptionsMenu(menu: Menu) {
+    super.onPrepareOptionsMenu(menu)
+    menu.findItem(R.id.action_service_configuration).isVisible = isZeroCaseCalled.not()
+    menu.findItem(R.id.menu_item_help_service).isVisible = isZeroCaseCalled
+  }
 
   private fun setEmptyView(visibility: Int) {
     Log.i(TAG, "setEmptyView: ")
     when (visibility) {
       View.GONE -> {
-        setHasOptionsMenu(true)
+        isZeroCaseCalled = false
         binding?.mainlayout?.visible()
         binding?.childContainer?.gone()
       }
       View.VISIBLE -> {
-        setHasOptionsMenu(false)
+        isZeroCaseCalled = true
         binding?.mainlayout?.gone()
         binding?.childContainer?.visible()
       }
     }
+
+    setHasOptionsMenu(true)
+    baseActivity.invalidateOptionsMenu()
     if (visibility == View.VISIBLE) setListingView(View.GONE) else setListingView(View.VISIBLE)
   }
 
@@ -407,7 +422,8 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   }
 
   override fun ternaryButtonClicked() {
-
+    startActivity(Intent(baseActivity, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
+      .putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name, SupportVideoType.PRODUCT_CATALOGUE.value))
   }
 
   override fun appOnBackPressed() {

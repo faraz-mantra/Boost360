@@ -86,15 +86,15 @@
               tools:visibility="visible" />
 
             <androidx.viewpager2.widget.ViewPager2
-              android:id="@+id/pager_digital_card"
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/size_200"
-              android:layout_marginTop="@dimen/size_18"
-              android:clipChildren="false"
-              android:clipToPadding="false"
-              android:focusable="true"
-              android:focusableInTouchMode="true"
-              android:orientation="horizontal" />
+                android:id="@+id/pager_digital_card"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_200"
+                android:layout_marginTop="@dimen/size_18"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal" />
           </RelativeLayout>
 
           <com.framework.views.dotsindicator.DotsIndicator

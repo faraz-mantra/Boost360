@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
@@ -20,6 +21,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.framework.R
+import com.framework.analytics.UserExperiorController
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
 import com.framework.utils.hideKeyBoard
@@ -43,20 +45,18 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
   protected abstract fun getViewModelClass(): Class<ViewModel>
   protected abstract fun onCreateView()
 
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    baseActivity = activity as BaseActivity<*, *>
+    viewModel = ViewModelProvider(this).get(getViewModelClass())
+  }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     setHasOptionsMenu(true)
-    baseActivity = activity as BaseActivity<*, *>
     binding = DataBindingUtil.inflate(inflater, getLayout(), container, false)
     binding?.lifecycleOwner = this
     navigator = Navigator(baseActivity)
     return binding?.root
-  }
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    viewModel = ViewModelProvider(this).get(getViewModelClass())
-
   }
 
   override fun onPrepareOptionsMenu(menu: Menu) {
@@ -75,6 +75,13 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
     for (observable in observables) {
       observable?.let { compositeDisposable.add(it) }
     }
+  }
+
+
+  override fun onResume() {
+    super.onResume()
+    Log.d("user experior", "onResume: userexperior ${binding!!::class.simpleName}${viewModel!!::class.simpleName}")
+    UserExperiorController.startScreen("${binding!!::class.simpleName}${viewModel!!::class.simpleName}")
   }
 
   fun showSnackBarNegative(msg: String) {

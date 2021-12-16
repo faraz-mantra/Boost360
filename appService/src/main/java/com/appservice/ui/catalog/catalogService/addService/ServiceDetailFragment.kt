@@ -37,10 +37,10 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
-import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
-import com.framework.models.caplimit_feature.PropertiesItem
-import com.framework.models.caplimit_feature.filterFeature
-import com.framework.models.caplimit_feature.getCapData
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.firebaseUtils.caplimit_feature.PropertiesItem
+import com.framework.firebaseUtils.caplimit_feature.filterFeature
+import com.framework.firebaseUtils.caplimit_feature.getCapData
 import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder

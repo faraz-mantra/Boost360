@@ -39,7 +39,9 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-          android:id="@+id/topper_row_profile_image"
+            android:tag="com.userexperior.ueSecureView"
+
+            android:id="@+id/topper_row_profile_image"
           android:layout_width="40dp"
           android:layout_height="40dp"
           android:layout_margin="@dimen/_10sdp"
@@ -59,7 +61,9 @@
           app:layout_constraintTop_toTopOf="@id/topper_row_profile_image">
 
           <TextView
-            android:layout_width="wrap_content"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:fontFamily="@font/semi_bold"
@@ -75,7 +79,9 @@
             android:layout_height="wrap_content">
 
             <TextView
-              android:id="@+id/user_rank"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/user_rank"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text='@{ourTopperResponseData.rank != null &amp;&amp; ourTopperResponseData.rank!=""? ourTopperResponseData.rank : "-"}'
@@ -92,7 +98,9 @@
               android:background="@color/primary_color" />
 
             <TextView
-              android:id="@+id/program_availed"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/program_availed"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text='@{ourTopperResponseData.programavailed!= null &amp;&amp; ourTopperResponseData.programavailed!=""? ourTopperResponseData.programavailed : "-"}'
@@ -109,7 +117,9 @@
               android:background="@color/primary_color" />
 
             <TextView
-              android:id="@+id/duration"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/duration"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text='@{ourTopperResponseData.coursecategory!= null &amp;&amp; ourTopperResponseData.coursecategory!=""? ourTopperResponseData.coursecategory : "-"}'
@@ -152,14 +162,18 @@
         app:layout_constraintTop_toBottomOf="@id/dummy_view">
 
         <ImageView
-          android:id="@+id/topper_testimonial_image"
+            android:tag="com.userexperior.ueSecureView"
+
+            android:id="@+id/topper_testimonial_image"
           android:layout_width="50dp"
           android:layout_height="50dp"
           android:src="@{ourTopperResponseData.testimonialimage.url}"
           app:srcCompat="@drawable/ic_facebook_menu" />
 
         <TextView
-          android:id="@+id/testimonials_text"
+            android:tag="com.userexperior.ueSecureView"
+
+            android:id="@+id/testimonials_text"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/_10sdp"

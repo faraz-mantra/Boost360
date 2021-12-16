@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.domainbooking.ConfirmingDomainFragment">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_e5e5e5">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/secondary_layout_book_domain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_corners_curved_bg"
+            android:elevation="4dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/secondary_layout_confirm_domain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bottom_corners_curved_bg"
+                    android:backgroundTint="@color/black_4a4a4a"
+                    android:elevation="8dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="@dimen/size_90"
+                        android:layout_height="@dimen/size_90"
+                        android:layout_marginTop="@dimen/size_32"
+                        app:srcCompat="@drawable/ic_globe_www" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:tag="com.userexperior.ueSecureView"
+
+                        android:id="@+id/tv_suggested_domain_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="@dimen/size_16"
+                        android:fontFamily="@font/barlow_condensed_semi_bold"
+                        android:gravity="center"
+                        android:text="samplestorewebsite.com"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_30"
+                        android:textStyle="bold" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/tv_confirm_domain_instruction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/size_36"
+                        android:layout_marginHorizontal="@dimen/size_28"
+                        android:fontFamily="@font/regular"
+                        android:gravity="center"
+                        android:textAlignment="gravity"
+                        android:text="@string/confirming_domain_instructions"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_12" />
+                </LinearLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.06" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.94" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/customTextView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_24"
+                android:fontFamily="@font/barlow_regular"
+                android:gravity="center"
+                android:text="@string/status"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/text_12"
+                app:fontFamily="@font/regular"
+                app:layout_constraintStart_toEndOf="@+id/guideStart"
+                app:layout_constraintTop_toBottomOf="@+id/secondary_layout_confirm_domain" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_green_tick"
+                android:fontFamily="@font/barlow_regular"
+                android:gravity="center"
+                android:text="Active"
+                android:drawablePadding="@dimen/size_4"
+                android:textColor="@color/green_15C216"
+                android:textSize="@dimen/text_12"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/customTextView9"
+                app:layout_constraintEnd_toStartOf="@+id/guideEnd"
+                app:layout_constraintTop_toTopOf="@+id/customTextView9" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/size_8"
+                android:background="@color/white_e2e2e2"
+                app:layout_constraintEnd_toStartOf="@id/guideEnd"
+                app:layout_constraintStart_toEndOf="@id/guideStart"
+                app:layout_constraintTop_toBottomOf="@+id/customTextView9" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/customTextView94"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_24"
+                android:fontFamily="@font/barlow_regular"
+                android:gravity="center"
+                android:text="@string/bought_on"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/text_12"
+                app:fontFamily="@font/regular"
+                app:layout_constraintStart_toEndOf="@+id/guideStart"
+                app:layout_constraintTop_toBottomOf="@+id/customTextView9" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/barlow_regular"
+                android:gravity="center"
+                android:text="2 Jan 2021"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/text_12"
+                android:textStyle="bold"
+                app:fontFamily="@font/regular"
+                app:layout_constraintBottom_toBottomOf="@+id/customTextView94"
+                app:layout_constraintEnd_toStartOf="@+id/guideEnd"
+                app:layout_constraintTop_toTopOf="@+id/customTextView94" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/size_8"
+                android:background="@color/white_e2e2e2"
+                app:layout_constraintEnd_toStartOf="@id/guideEnd"
+                app:layout_constraintStart_toEndOf="@id/guideStart"
+                app:layout_constraintTop_toBottomOf="@+id/customTextView94" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/customTextView943"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_24"
+                android:fontFamily="@font/barlow_regular"
+                android:gravity="center"
+                android:text="@string/validity_till"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/text_12"
+                app:fontFamily="@font/regular"
+                app:layout_constraintStart_toEndOf="@+id/guideStart"
+                app:layout_constraintTop_toBottomOf="@+id/customTextView94" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/barlow_regular"
+                android:gravity="center"
+                android:text="30 Dec 2021"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/text_12"
+                android:textStyle="bold"
+                app:fontFamily="@font/regular"
+                app:layout_constraintBottom_toBottomOf="@+id/customTextView943"
+                app:layout_constraintEnd_toStartOf="@+id/guideEnd"
+                app:layout_constraintTop_toTopOf="@+id/customTextView943" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/size_8"
+                android:layout_marginBottom="98dp"
+                android:background="@color/white_e2e2e2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/guideEnd"
+                app:layout_constraintStart_toEndOf="@id/guideStart"
+                app:layout_constraintTop_toBottomOf="@+id/customTextView943" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.framework.views.customViews.CustomMaterialButton
+            android:id="@+id/btn_confirm_apply_domain"
+            style="@style/CustomYellowButton"
+            android:layout_marginStart="@dimen/size_24"
+            android:layout_marginVertical="@dimen/size_12"
+            android:layout_marginEnd="@dimen/size_24"
+            android:layout_gravity="top"
+            app:elevation="@dimen/size_5"
+            app:layout_anchor="@id/btn_go_back"
+            android:text="@string/confirm_and_apply_domain"/>
+
+        <com.framework.views.customViews.CustomMaterialButton
+            android:id="@+id/btn_go_back"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_54"
+            android:layout_marginTop="@dimen/size_12"
+            android:layout_marginHorizontal="@dimen/size_24"
+            android:layout_marginBottom="@dimen/size_32"
+            android:backgroundTint="@color/white"
+            android:layout_gravity="bottom"
+            android:text="@string/go_back"
+            android:textSize="@dimen/text_14"
+            app:elevation="@dimen/size_5"
+            android:textAllCaps="false"
+            android:fontFamily="@font/semi_bold"
+            android:textColor="@color/colorPrimary"
+            app:cornerRadius="@dimen/size_10"
+            app:strokeColor="@color/colorPrimary" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

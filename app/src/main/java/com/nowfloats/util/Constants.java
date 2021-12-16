@@ -12,9 +12,10 @@ import com.google.gson.GsonBuilder;
 import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.NotificationCenter.NotificationInterface;
-import com.nowfloats.Store.iapUtils.Purchase;
+import com.nowfloats.Volley.AppController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.thinksity.R;
 import com.thinksity.Specific;
 
 import org.json.JSONArray;
@@ -208,7 +209,6 @@ public class Constants {
     public static String clientId2 = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21";
     public static String clientId1 = "39EB5FD120DC4394A10301B108030CB70FA553E91F984C829AB6ADE23B6767B7";
     public static String license_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmtfDikZcbWSvq3f+pEsAL5KQCNy3X96j++Z1PnjvidpJCEe0/S1xdPs4CfT3JkeQl7SNps/9cPu3EuOOFdx76QPpAqlqXHMKMwM9H+ikx5iUWPSilRjwLfJNjbJZT2xpuI6k32VyHhqLyU4rR95nrAPTGrocyyV1jtTFSYt77YZew8YfeePlcB2STLP3Ookho37Ah1QovelfdaG5ZNWz5OPYKnificSPyYjioYkfUmpnUJvN0INYMGFKefhfPtWPx5UCiQp15A6ir4wH0wVL3/QksonIb0JMiXpuXvWuggNb1AqEtdiPuBTleU5GovKL+HToKjwQu8NSuJsb3EacIwIDAQAB";
-    public static Purchase lastPurchase = null;
     public static String GOOGLE_API_KEY = "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
     public static String teleCountry = "in";
     public static DisplayMetrics DISPLAY_METRICS = null;
@@ -464,7 +464,7 @@ public class Constants {
     public static String FACEBOOK_URL = Specific.FACEBOOK_URL;
     public static String PACKAGE_NAME = Specific.PACKAGE_NAME;
     public static String DEFAULT_PACKAGE_NAME_WEB_ERROR = "com.biz.nowfloats";
-    public static String SUPPORT_EMAIL_ID = Specific.CONTACT_EMAIL_ID;
+    public static String SUPPORT_EMAIL_ID = AppController.getInstance().getString(R.string.ria_customer_mail);
     /**
      * Dev URL
      */

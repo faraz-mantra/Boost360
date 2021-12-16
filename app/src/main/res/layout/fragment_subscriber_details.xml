@@ -36,7 +36,8 @@
       android:fontFamily="@font/semi_bold"
       android:gravity="center"
       android:text="@string/email"
-      android:textColor="@color/white"
+        android:tag="com.userexperior.ueSecureView"
+        android:textColor="@color/white"
       android:textSize="22sp"
       app:textAllCaps="false"
       tools:ignore="NestedWeights" />

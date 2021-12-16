@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.appservice.constant.FragmentType;
 import com.appservice.constant.IntentConstant;
-import com.framework.models.firestore.FirestoreManager;
+import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.framework.utils.ContentSharing;
 import com.framework.views.zero.old.AppFragmentZeroCase;
 import com.framework.views.zero.old.AppOnZeroCaseClicked;
@@ -38,6 +38,7 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.nowfloats.widget.WidgetKey;
+import com.onboarding.nowfloats.constant.SupportVideoType;
 import com.squareup.picasso.Target;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityProductCatalogBinding;
@@ -51,6 +52,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import static com.appservice.ui.catalog.CatalogServiceContainerActivityKt.startFragmentActivityNew;
+import static com.dashboard.utils.ActivityUtilsKt.startHelpSupportVideoActivity;
 import static com.framework.webengageconstant.EventLabelKt.CLICK;
 import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
 import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_PRODUCTS_CATALOGUE_ADD_NEW;
@@ -509,7 +511,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
     @Override
     public void secondaryButtonClicked() {
-
+        startHelpSupportVideoActivity(this, SupportVideoType.PRODUCT_CATALOGUE.getValue());
     }
 
     @Override

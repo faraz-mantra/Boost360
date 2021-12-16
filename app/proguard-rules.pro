@@ -149,7 +149,6 @@
 -keep class * extends android.content.BroadcastReceiver
 -keep class * extends android.content.ContentProvider
 -keep class com.android.vending.licensing.ILicensingService
--keep public class com.android.vending.billing.IInAppBillingService
 -keep class com.aviary.android.feather.sdk.internal.headless.moa.MoaResult
 -keep class com.aviary.android.feather.sdk.internal.headless.filters.NativeFilterProxy
 -keep class com.aviary.android.feather.sdk.utils.AviaryIntentConfigurationValidator
@@ -473,4 +472,9 @@
 -optimizations !method/inlining/
 -keepclasseswithmembers class * {
 public void onPayment*(...);
+}
+
+-keep class wseemann.media.**{ *; }
+-keep class wseemann.media.FFmpegMediaMetadataRetriever {
+*** mNativeContext;
 }

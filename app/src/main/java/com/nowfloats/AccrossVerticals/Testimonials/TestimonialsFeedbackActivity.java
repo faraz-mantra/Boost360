@@ -35,8 +35,8 @@ import androidx.core.content.FileProvider;
 import com.boost.upgrades.UpgradeActivity;
 import com.bumptech.glide.Glide;
 import com.framework.analytics.SentryController;
-import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem;
-import com.framework.models.caplimit_feature.PropertiesItem;
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem;
+import com.framework.firebaseUtils.caplimit_feature.PropertiesItem;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.AccrossVerticals.API.APIInterfaces;
@@ -63,6 +63,7 @@ import com.thinksity.R;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -74,8 +75,8 @@ import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
-import static com.framework.models.caplimit_feature.CapLimitFeatureResponseItemKt.filterFeature;
-import static com.framework.models.caplimit_feature.CapLimitFeatureResponseItemKt.getCapData;
+import static com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItemKt.filterFeature;
+import static com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItemKt.getCapData;
 import static com.framework.pref.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 import static com.framework.utils.UtilKt.hideKeyBoard;
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_MANAGE_CONTENT;
@@ -754,16 +755,16 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     intent.putExtra("fpid", session.getFPID());
     intent.putExtra("fpTag", session.getFpTag());
     intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
-    intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
+    intent.putStringArrayListExtra("userPurchsedWidgets", new ArrayList(session.getStoreWidgets()));
     if (session.getUserProfileEmail() != null) {
       intent.putExtra("email", session.getUserProfileEmail());
     } else {
-      intent.putExtra("email", "ria@nowfloats.com");
+      intent.putExtra("email", getString(R.string.ria_customer_mail));
     }
     if (session.getUserPrimaryMobile() != null) {
       intent.putExtra("mobileNo", session.getUserPrimaryMobile());
     } else {
-      intent.putExtra("mobileNo", "9160004303");
+      intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
     }
     intent.putExtra("profileUrl", session.getFPLogo());
     intent.putExtra("buyItemKey", CapLimitFeatureResponseItem.FeatureType.TESTIMONIALS.name());

@@ -25,7 +25,7 @@ data class Data(
 
   @SerializedName("isarchived")
   val isarchived: Boolean,
-  @SerializedName("rootaliasurl")
+  @SerializedName("rootAliasUrl")
   val rootaliasurl: Rootaliasurl,
   @SerializedName("schemaid")
   val schemaid: String,

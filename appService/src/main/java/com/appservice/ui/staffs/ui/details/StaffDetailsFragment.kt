@@ -37,7 +37,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
-import com.framework.models.firestore.FirestoreManager
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 import java.io.ByteArrayOutputStream
@@ -89,7 +89,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     isEdit = (staffDetails != null && staffDetails?.id.isNullOrEmpty().not())
     if (isEdit == true) {
       updatePreviousData()
-      (requireActivity() as StaffFragmentContainerActivity).getToolbar()?.getTitleTextView()?.gravity = Gravity.START
+      (requireActivity() as StaffFragmentContainerActivity).getToolbar()?.getToolbarTitleTextView()?.gravity = Gravity.START
     }
 //    else {
 //      (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor = getColor(R.color.color_primary_dark)

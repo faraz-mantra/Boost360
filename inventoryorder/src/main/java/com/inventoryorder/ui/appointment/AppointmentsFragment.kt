@@ -15,11 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.firestore.FirestoreManager
-import com.framework.views.zero.FragmentZeroCase
-import com.framework.views.zero.OnZeroCaseClicked
-import com.framework.views.zero.RequestZeroCaseBuilder
-import com.framework.views.zero.ZeroCases
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
@@ -105,12 +101,11 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
     requestFilter = getRequestFilterData(arrayListOf())
-    getSellerOrdersFilterApi(requestFilter, isFirst = true)
     binding?.swipeRefresh?.setColorSchemeColors(getColor(R.color.colorAccent))
     binding?.swipeRefresh?.setOnRefreshListener { loadNewData() }
     this.zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.APPOINTMENT, this, baseActivity).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
-
+    getSellerOrdersFilterApi(requestFilter, isFirst = true)
   }
 
   override fun onClick(v: View) {
@@ -172,6 +167,8 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
           val isDataNotEmpty = (response != null && response.Items.isNullOrEmpty().not())
           onInClinicAptAddedOrUpdated(isDataNotEmpty)//Dr score
           if (isDataNotEmpty) {
+            binding?.tvNoData?.gone()
+
             nonEmptyView()
             orderList.clear()
             removeLoader()
@@ -184,7 +181,19 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
             isLastPageD = (orderList.size == TOTAL_ELEMENTS)
             setAdapterNotify(orderList)
             setToolbarTitle(resources.getString(R.string.appointments) + " ($TOTAL_ELEMENTS)")
-          } else emptyView()
+          } else {
+            if (filterItem==null||filterItem?.type?.let { FilterModel.FilterType.fromType(it) }==FilterModel.FilterType.ALL_APPOINTMENTS){
+              emptyView()
+              Log.i(TAG, "getSellerOrdersFilterApi: no filter")
+            }else{
+              binding?.tvNoData?.visible()
+              orderList.clear()
+              removeLoader()
+              setAdapterNotify(orderList)
+              setToolbarTitle(resources.getString(R.string.appointments) + " (0)")
+            }
+
+          }
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
             nonEmptyView()
@@ -198,7 +207,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
             orderList.clear()
             orderList.addAll(orderListFinalList)
             setAdapterNotify(orderList)
-          } else emptyView()
+          }
         }
       } else showLongToast(it.message())
     })
@@ -309,7 +318,12 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.DELIVERED -> {
-        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
+        val status = arrayListOf(
+          OrderSummaryModel.OrderStatus.FEEDBACK_PENDING.name,
+          OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED.name,
+          OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name
+        )
+        requestFilter = getRequestFilterData(status)
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.CANCELLED -> {
@@ -777,6 +791,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   override fun secondaryButtonClicked() {
     showShortToast(getString(R.string.coming_soon))
+    //TODO add tutorial video flow
   }
 
   override fun ternaryButtonClicked() {

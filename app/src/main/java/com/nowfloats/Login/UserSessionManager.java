@@ -15,7 +15,7 @@ import com.boost.dbcenterapi.DBCenterAPIApplication;
 import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignin.ui.intro.IntroActivity;
 import com.dashboard.AppDashboardApplication;
-import com.framework.models.firestore.FirestoreManager;
+import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.framework.utils.PreferencesUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -202,7 +202,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
   }
 
   public String getUserProfileName() {
-    return pref.getString(PROFILE_NAME, null);
+    return pref.getString(PROFILE_NAME, "");
   }
 
   public void setUserProfileName(String name) {

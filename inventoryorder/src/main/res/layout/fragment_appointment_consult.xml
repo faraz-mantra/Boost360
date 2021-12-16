@@ -296,7 +296,8 @@
         <com.framework.views.customViews.CustomEditText
           android:id="@+id/edt_patient_name"
           style="@style/match_wrap"
-          android:layout_marginHorizontal="@dimen/size_16"
+            android:digits="0123456789qwertzuiopasdfghjklyxcvbnmABCDEFGHIJKLMNOPQRSTUVWXYZ "
+            android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginVertical="@dimen/size_8"
           android:background="@drawable/et_bg"
           android:focusable="true"

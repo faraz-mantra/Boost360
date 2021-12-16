@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_active_domain_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_24"
+        android:layout_marginTop="@dimen/size_22"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/vw_yellow_bg">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="8dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="@dimen/size_58"
+                android:layout_height="@dimen/size_58"
+                android:layout_marginStart="@dimen/size_12"
+                android:layout_marginVertical="@dimen/size_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_globe_www" />
+
+            <View
+                android:id="@+id/vw_ticket_line_dotted"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="@dimen/size_18"
+                android:background="@drawable/line_dotted"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_domain_value"
+                android:layout_width="0dp"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_18"
+                android:layout_marginEnd="@dimen/size_12"
+                android:layout_marginTop="@dimen/size_10"
+                android:ellipsize="end"
+                android:fontFamily="@font/bold"
+                android:textAlignment="gravity"
+                android:maxLines="2"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="-6dp"
+                android:gravity="center_vertical|start"
+                android:text="thinkwalls.net"
+                android:textAllCaps="false"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold"
+                app:fontFamily="@font/regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_domain_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_4"
+                android:background="@color/green_light_1"
+                android:gravity="center"
+                android:padding="@dimen/size_2"
+                android:text="Active"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_8"
+                app:cornerRadius="@dimen/size_8"
+                app:fontFamily="@font/regular"
+                app:layout_constraintStart_toStartOf="@+id/tv_domain_value"
+                app:layout_constraintTop_toBottomOf="@+id/tv_domain_value" />
+
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_booked_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_12"
+                android:layout_marginTop="@dimen/size_8"
+                android:gravity="center"
+                android:text="@string/booked_on"
+                android:textColor="@color/gray_text_hint"
+                android:textSize="@dimen/text_10"
+                app:fontFamily="@font/regular"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vw_ticket_line_dotted" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_booked_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_4"
+                android:layout_marginBottom="@dimen/size_8"
+                android:gravity="center"
+                android:text="N/A"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/text_12"
+                app:fontFamily="@font/regular"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_booked_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_booked_title" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_expire_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/size_12"
+                android:gravity="center"
+                android:text="@string/expire_on"
+                android:textColor="@color/gray_text_hint"
+                android:textSize="@dimen/text_10"
+                app:fontFamily="@font/regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_booked_title" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_expire_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_4"
+                android:layout_marginBottom="@dimen/size_8"
+                android:gravity="center"
+                android:text="N/A"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/text_12"
+                app:fontFamily="@font/regular"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tv_expire_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_expire_title" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</layout>

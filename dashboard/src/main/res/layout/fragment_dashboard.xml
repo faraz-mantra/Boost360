@@ -464,7 +464,9 @@
               android:orientation="horizontal">
 
               <com.framework.views.customViews.CustomCardView
-                android:id="@+id/btn_business_logo"
+                  android:tag="com.userexperior.ueSecureView"
+
+                  android:id="@+id/btn_business_logo"
                 android:layout_width="@dimen/size_67"
                 android:layout_height="@dimen/size_67"
                 android:layout_marginStart="@dimen/size_16"
@@ -486,7 +488,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:scaleType="fitCenter"
+                      android:tag="com.userexperior.ueSecureView"
+
+                      android:scaleType="fitCenter"
                     app:srcCompat="@drawable/ic_add_logo_d" />
                 </com.framework.views.customViews.CustomCardView>
 
@@ -502,7 +506,9 @@
                 android:orientation="vertical">
 
                 <com.framework.views.customViews.CustomTextView
-                  android:id="@+id/txt_business_name"
+                    android:tag="com.userexperior.ueSecureView"
+
+                    android:id="@+id/txt_business_name"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:ellipsize="end"
@@ -535,7 +541,9 @@
                     android:layout_marginTop="@dimen/size_1"
                     android:drawableStart="@drawable/ic_website_d"
                     android:drawablePadding="@dimen/size_4"
-                    android:ellipsize="end"
+                      android:tag="com.userexperior.ueSecureView"
+
+                      android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:includeFontPadding="false"
                     android:maxLines="1"
@@ -1018,7 +1026,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginTop="@dimen/size_3"
-                  android:textColor="@color/colorLightGrey"
+                  android:textColor="@color/dark_grey"
                   app:textType="CAPTION"
                   tools:text="Version 1.6.17" />
 

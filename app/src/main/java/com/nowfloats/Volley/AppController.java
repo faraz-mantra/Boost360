@@ -22,6 +22,7 @@ import com.boost.presignup.locale.LocaleManager;
 import com.dashboard.AppDashboardApplication;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.framework.analytics.UserExperiorController;
 import com.festive.poster.FestivePosterApplication;
 import com.framework.utils.AppsFlyerUtils;
 import com.google.firebase.FirebaseApp;
@@ -131,7 +132,9 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     DBCenterAPIApplication.instance = this;
     DBCenterAPIApplication.initModule(this);
     initWebEngage();
-    //Invite Referral
+      UserExperiorController.INSTANCE.startRecording(this);
+
+      //Invite Referral
     InviteReferralsApplication.register(this);
     InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null);
     //Koin
