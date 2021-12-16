@@ -51,6 +51,8 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
+import com.onboarding.nowfloats.constant.IntentConstant;
+import com.onboarding.nowfloats.ui.webview.WebViewActivity;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityBusinessLogoBinding;
 
@@ -108,7 +110,7 @@ public class Business_Logo_Activity
         String fullText = getString(R.string.free_1_logo_png_powered_by_buildmylogo);
         SpannableString spannable = new SpannableString(fullText);
         String boldText = "BuildMyLogo";
-        spannable.setSpan(new StyleSpan(Typeface.BOLD),fullText.indexOf(boldText),fullText.indexOf(boldText)+fullText.length()
+        spannable.setSpan(new StyleSpan(Typeface.BOLD),fullText.indexOf(boldText),fullText.indexOf(boldText)+boldText.length()
         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         binding.tvBuildMyLogo.setText(spannable);
         /*toolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -225,6 +227,9 @@ public class Business_Logo_Activity
             @Override
             public void onClick(View view) {
 
+                Intent intent =new Intent(Business_Logo_Activity.this,WebViewActivity.class);
+                intent.putExtra(IntentConstant.DOMAIN_URL.name(),"https://www.buildmylogo.co/aff.php?aff=300&promocode=Boost360FreeLogo");
+                startActivity(intent);
             }
         });
 
