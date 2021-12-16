@@ -66,7 +66,7 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
     } else {
       binding?.viewEmptyProfile?.gone()
       binding?.viewProfile?.visible()
-      binding?.imgProfile?.let { baseActivity.glideLoad(it, merchantProfileDetails?.ImageUrl ?: "", R.drawable.placeholder_image_n) }
+      binding?.imgProfile?.let { baseActivity.glideLoad(it, merchantProfileDetails?.ImageUrl ?: "", R.drawable.placeholder_image_n, isLoadBitmap = true) }
     }
 
     binding?.txtName?.setText(merchantProfileDetails?.UserName ?: "")
