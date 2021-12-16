@@ -12,7 +12,6 @@
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/size_28"
-      android:fontFamily="@font/inter_bold"
       android:gravity="start"
       android:text="@string/your_business_category_was_selected"
       android:textAlignment="gravity"
@@ -30,7 +29,6 @@
       android:background="@drawable/rounded_edit_white"
       android:drawablePadding="@dimen/size_16"
       android:ellipsize="end"
-      android:fontFamily="@font/inter_medium"
       android:gravity="center_vertical"
       android:hint="@string/ex_shopkeeper_doctor_boutique_etc"
       android:maxLines="1"
@@ -85,8 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_8"
             android:text="@string/mobile"
-            android:textColor="@color/colorAccent"
-            app:fontFamily="@font/inter_medium" />
+            android:textColor="@color/colorAccent" />
         </LinearLayout>
 
         <LinearLayout
@@ -111,8 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_8"
             android:text="@string/desktop"
-            android:textColor="@color/black_4a4a4a"
-            app:fontFamily="@font/inter_medium" />
+            android:textColor="@color/black_4a4a4a" />
         </LinearLayout>
       </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
