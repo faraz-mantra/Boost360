@@ -50,7 +50,7 @@ dependencies {
     implementation 'com.github.GrenderG:Toasty:1.4.2'
 
     //room
-    implementation 'androidx.room:room-runtime:2.2.4'
+    api 'androidx.room:room-runtime:2.2.4'
     implementation "androidx.room:room-rxjava2:2.2.5"
     kapt 'androidx.room:room-compiler:2.2.4'
 

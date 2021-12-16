@@ -85,5 +85,10 @@
     <string name="placeholder_recipients">%1$d recipients</string>
     <string name="no_recipients">%1$d recipients</string>
     <string name="post_on_placeholder_platform">Post on %1$d platform</string>
+    <string name="now">Now</string>
+    <string name="placeholder_per_month">₹%1$d/month</string>
+    <string name="placeholder_per_year">₹%1$d/year</string>
+    <string name="get_annual_pack_for_placeholder">Get annual pack for ₹%1$d</string>
+    <string name="get_monthly_pack_for_placeholder">Get monthly pack for ₹%1$d</string>
 
 </resources>

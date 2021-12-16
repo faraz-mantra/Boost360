@@ -43,6 +43,7 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseVi
         addFragmentReplace(binding?.container?.id,PromoLandingPageFragment.newInstance(),true)
     }
 
+
     override fun onClick(v: View?) {
         super.onClick(v)
         when(v){

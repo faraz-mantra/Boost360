@@ -1,9 +1,11 @@
 package com.festive.poster.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.festive.poster.R
+import com.framework.BaseApplication
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.ADDON_MARKETPLACE_PAGE_CLICK
@@ -57,5 +59,32 @@ object MarketPlaceUtils {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    fun launchCartActivity(activity:Activity){
+        val session = UserSessionManager(BaseApplication.instance)
+        val intent = Intent(
+            activity,
+            Class.forName("com.boost.cart.CartActivity")
+        )
+        intent.putExtra("fpid", session.fPID)
+        intent.putExtra("expCode", session.fP_AppExperienceCode)
+        intent.putExtra("isDeepLink", false)
+        intent.putStringArrayListExtra(
+            "userPurchsedWidgets",
+            session.getStoreWidgets() as ArrayList<String>?
+        )
+        if (session.userProfileEmail != null) {
+            intent.putExtra("email", session.userProfileEmail)
+        } else {
+            intent.putExtra("email", BaseApplication.instance.getString(R.string.ria_customer_mail))
+        }
+        if (session.userPrimaryMobile != null) {
+            intent.putExtra("mobileNo", session.userPrimaryMobile)
+        } else {
+            intent.putExtra("mobileNo", BaseApplication.instance.getString(R.string.ria_customer_mail))
+        }
+        intent.putExtra("profileUrl",session.fPLogo)
+        activity.startActivity(intent)
     }
 }

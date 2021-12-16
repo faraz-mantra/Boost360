@@ -38,6 +38,8 @@ android {
 
 dependencies {
     api project(path: ':framework')
+    api project(path: ':dbcenterapi')
+
     //calednar row
     api 'com.michalsvec:single-row-calednar:1.0.0'
     // MY added libraries
