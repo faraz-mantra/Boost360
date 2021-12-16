@@ -6,7 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
-import com.boost.upgrades.data.api_model.GetAllWidgets.Review
+import com.boost.dbcenterapi.data.api_model.GetAllWidgets.Review
 import java.util.*
 
 class ReviewViewPagerAdapter(val list: ArrayList<Review>) :

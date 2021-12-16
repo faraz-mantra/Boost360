@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
@@ -19,18 +20,17 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
+import com.boost.cart.CartActivity
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.SimplePageTransformer
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.IncludedFeature
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.PrimaryImage
-import com.boost.upgrades.data.model.CartModel
-import com.boost.upgrades.data.model.FeaturesModel
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PrimaryImage
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.upgrades.interfaces.CompareBackListener
 import com.boost.upgrades.interfaces.CompareListener
-import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.freeaddons.FreeAddonsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.utils.*
@@ -46,7 +46,6 @@ import kotlinx.android.synthetic.main.compare_package_fragment.package_back
 import kotlinx.android.synthetic.main.compare_package_fragment.package_cart_icon
 import kotlinx.android.synthetic.main.compare_package_fragment.package_indicator2
 import kotlinx.android.synthetic.main.compare_package_fragment.package_viewpager
-import kotlinx.android.synthetic.main.home_fragment.*
 import org.json.JSONObject
 
 
@@ -149,11 +148,36 @@ class ComparePackageFragment : BaseFragment(), CompareListener,CompareBackListen
         }
 
         package_cart_icon.setOnClickListener {
-            (activity as UpgradeActivity).addFragment(
-                    CartFragment.newInstance(),
-                    Constants.CART_FRAGMENT
+            val intent = Intent(
+                requireContext(),
+                CartActivity::class.java
             )
-//            Constants.COMPARE_BACK_VALUE = 1
+            intent.putExtra("fpid", (activity as UpgradeActivity).fpid)
+            intent.putExtra("expCode", (activity as UpgradeActivity).experienceCode)
+            intent.putExtra("isDeepLink", (activity as UpgradeActivity).isDeepLink)
+            intent.putExtra("deepLinkViewType", (activity as UpgradeActivity).deepLinkViewType)
+            intent.putExtra("deepLinkDay", (activity as UpgradeActivity).deepLinkDay)
+            intent.putExtra("isOpenCardFragment", (activity as UpgradeActivity).isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                (activity as UpgradeActivity).accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                (activity as UpgradeActivity).userPurchsedWidgets
+            )
+            if ((activity as UpgradeActivity).email != null) {
+                intent.putExtra("email", (activity as UpgradeActivity).email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if ((activity as UpgradeActivity).mobileNo != null) {
+                intent.putExtra("mobileNo", (activity as UpgradeActivity).mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", (activity as UpgradeActivity).profileUrl)
+            startActivity(intent)
         }
         initializePackageViewPager()
 

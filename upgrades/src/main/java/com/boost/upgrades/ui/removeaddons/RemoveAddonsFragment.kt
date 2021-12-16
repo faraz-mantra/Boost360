@@ -13,8 +13,8 @@ import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.RemoveAddonsAdapter
-import com.boost.upgrades.data.model.CartModel
-import com.boost.upgrades.database.LocalStorage
+import com.boost.dbcenterapi.upgradeDB.model.*
+//import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.RemoveItemsListener
 import com.boost.upgrades.utils.Constants.Companion.REMOVE_ADDONS_CONFIRMATION_FRAGMENT
 import com.boost.upgrades.utils.Utils.longToast
@@ -27,7 +27,7 @@ class RemoveAddonsFragment : BaseFragment(), RemoveItemsListener {
   private lateinit var removeAddonsViewModelFactory: RemoveAddonsViewModelFactory
   lateinit var removeAddonsAdapter: RemoveAddonsAdapter
 
-  lateinit var localStorage: LocalStorage
+//  lateinit var localStorage: LocalStorage
 
   var cart_list: MutableList<CartModel>? = null
 
@@ -52,7 +52,7 @@ class RemoveAddonsFragment : BaseFragment(), RemoveItemsListener {
 
     removeAddonsAdapter = RemoveAddonsAdapter((activity as UpgradeActivity), ArrayList(), this)
 
-    localStorage = LocalStorage.getInstance(context!!)!!
+//    localStorage = LocalStorage.getInstance(context!!)!!
 
 //        cart_list = localStorage.getCartItems() as MutableList<UpdatesModel>?
 

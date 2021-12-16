@@ -15,8 +15,8 @@ import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.HistoryAdapter
-import com.boost.upgrades.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
-import com.boost.upgrades.data.api_model.GetPurchaseOrder.Result
+import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
+import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.Result
 import com.boost.upgrades.interfaces.HistoryFragmentListener
 import com.boost.upgrades.ui.historydetails.HistoryDetailsFragment
 import com.boost.upgrades.utils.Constants.Companion.HISTORY_DETAILS_FRAGMENT

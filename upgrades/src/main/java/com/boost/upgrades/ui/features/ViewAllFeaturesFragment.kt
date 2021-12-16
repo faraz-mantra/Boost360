@@ -15,9 +15,9 @@ import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.AllFeatureAdaptor
-import com.boost.upgrades.data.model.FeaturesModel
-import com.boost.upgrades.data.remote.ApiInterface
-import com.boost.upgrades.database.LocalStorage
+import com.boost.dbcenterapi.upgradeDB.model.*
+import com.boost.dbcenterapi.data.remote.ApiInterface
+//import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.utils.WebEngageController
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_ALL_FEATURES_LOADED
 import com.framework.webengageconstant.ALL_FEATURES
@@ -33,7 +33,7 @@ class ViewAllFeaturesFragment : BaseFragment() {
 
   lateinit var retrofit: Retrofit
   lateinit var ApiService: ApiInterface
-  lateinit var localStorage: LocalStorage
+//  lateinit var localStorage: LocalStorage
   lateinit var allFeatureAdaptor: AllFeatureAdaptor
   lateinit var viewAllFeaturesViewModelFactory: ViewAllFeaturesViewModelFactory
   var purchasedPackages = ArrayList<String>()
@@ -67,7 +67,7 @@ class ViewAllFeaturesFragment : BaseFragment() {
     allFeatureAdaptor =
       AllFeatureAdaptor(activity as UpgradeActivity, ArrayList(), purchasedPackages)
 
-    localStorage = LocalStorage.getInstance(context!!)!!
+//    localStorage = LocalStorage.getInstance(context!!)!!
 
 
 

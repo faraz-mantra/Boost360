@@ -1,7 +1,6 @@
 package com.nowfloats.Volley;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -17,6 +16,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.appservice.AppServiceApplication;
+import com.boost.dbcenterapi.DBCenterAPIApplication;
 import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignup.locale.LocaleManager;
 import com.dashboard.AppDashboardApplication;
@@ -105,7 +105,6 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         }
       }
     }
-
     return dir.delete();
   }
 
@@ -129,6 +128,9 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     FlorisApplication.initModule(this);
     FestivePosterApplication.instance = this;
     FestivePosterApplication.initModule(this);
+    //upgrade module changes
+    DBCenterAPIApplication.instance = this;
+    DBCenterAPIApplication.initModule(this);
     initWebEngage();
       UserExperiorController.INSTANCE.startRecording(this);
 

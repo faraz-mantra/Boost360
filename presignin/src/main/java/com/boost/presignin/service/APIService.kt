@@ -8,6 +8,7 @@ import android.os.IBinder
 import android.util.Log
 import com.appservice.model.accountDetails.saveBanKDetail
 import com.appservice.model.kycData.saveBusinessKycDetail
+import com.boost.dbcenterapi.utils.DataLoader
 import com.boost.presignin.model.other.AccountDetailsResponse
 import com.boost.presignin.model.other.PaymentKycDataResponse
 import com.boost.presignin.rest.repository.WebActionBoostKitRepository
@@ -51,13 +52,16 @@ class APIService : Service() {
         return START_STICKY
     }
 
-    private fun hitAPIs() {
-        registerRia()
-        nfxGetSocialTokens()
-        hitSelfBrandedKycAPI()
-        checkUserAccountDetails()
-        getAndSaveKAdminFeatureSupportVideos()
-    }
+  private fun hitAPIs() {
+    registerRia()
+    nfxGetSocialTokens()
+    hitSelfBrandedKycAPI()
+    checkUserAccountDetails()
+    //Migrate Upgrade DB
+    DataLoader.loadMarketPlaceData(application,userSessionManager?.fP_AppExperienceCode,userSessionManager?.fpTag)
+    getAndSaveKAdminFeatureSupportVideos()
+
+  }
 
     private fun checkUserAccountDetails() {
         WithFloatRepository.checkUserAccount(userSessionManager?.fPID, clientId).toLiveData()

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/cardView"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:focusable="true">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+      android:id="@+id/imageLayout"
+      android:layout_width="6dp"
+      android:layout_height="6dp"
+      android:layout_margin="@dimen/_10sdp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <ImageView
+        android:id="@+id/dot_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_bullet_icon"
+        android:scaleType="fitCenter" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="50dp"
+      android:layout_marginStart="@dimen/_10sdp"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/imageLayout"
+      app:layout_constraintTop_toTopOf="parent">
+
+
+      <TextView
+        android:id="@+id/state_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:lineSpacingExtra="1.3sp"
+        android:textColor="#2a2a2a"
+        android:textSize="@dimen/_12sdp"
+        tools:text="Andhra Pradesh" />
+
+      <TextView
+        android:id="@+id/state_tin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        tools:text="37"
+        android:textSize="12sp"
+        android:layout_marginStart="3dp"/>
+
+    </LinearLayout>
+
+    <ImageView
+      android:id="@+id/selected_state"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginRight="@dimen/_14dp"
+      android:src="@drawable/ic_deselected"
+      android:visibility="visible"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
+

@@ -5,10 +5,10 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
-import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
-import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse
-import com.boost.upgrades.data.remote.ApiInterface
+import com.boost.dbcenterapi.data.api_model.customerId.create.CreateCustomerIDResponse
+import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
+import com.boost.dbcenterapi.data.api_model.customerId.get.GetCustomerIDResponse
+import com.boost.dbcenterapi.data.remote.ApiInterface
 import com.boost.upgrades.utils.Utils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

@@ -10,8 +10,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.data.api_model.customerId.StateModel
-import com.boost.upgrades.data.api_model.stateCode.Data
+import com.boost.dbcenterapi.data.api_model.customerId.StateModel
+import com.boost.dbcenterapi.data.api_model.stateCode.Data
 import com.boost.upgrades.interfaces.StateListener
 
 

@@ -21,32 +21,26 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
+import com.boost.cart.CartActivity
 import com.boost.upgrades.interfaces.CompareBackListener
-import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
 import com.boost.upgrades.ui.home.HomeFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
-import com.boost.upgrades.ui.splash.SplashFragment
 import com.boost.upgrades.utils.*
-import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.HOME_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
-import com.boost.upgrades.utils.Constants.Companion.ORDER_CONFIRMATION_FRAGMENT
-import com.boost.upgrades.utils.Constants.Companion.PAYMENT_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils
-import com.boost.upgrades.utils.WebEngageController
 import com.framework.webengageconstant.*
 import com.boost.upgrades.utils.NetworkConnectivitySpeed.checkNetworkType
 import com.framework.analytics.SentryController
-import com.framework.pref.TokenResult
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -57,9 +51,6 @@ import java.lang.IllegalStateException
 
 class UpgradeActivity : AppCompatActivity() {
 
-  private val splashFragment = SplashFragment()
-
-  private var cartFragment: CartFragment? = null
 
   lateinit var razorpay: Razorpay
 
@@ -76,6 +67,8 @@ class UpgradeActivity : AppCompatActivity() {
   var isDeepLink: Boolean = false
   var isOpenCardFragment: Boolean = false
   var isBackCart: Boolean = false
+  var isOpenHomeFragment:Boolean = false
+  var isOpenAddOnsFragment:Boolean = false
 
   var deepLinkViewType: String = ""
   var deepLinkDay: Int = 7
@@ -108,6 +101,8 @@ class UpgradeActivity : AppCompatActivity() {
     profileUrl = intent.getStringExtra("profileUrl")
     accountType = intent.getStringExtra("accountType")
     isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
+    isOpenHomeFragment = intent.getBooleanExtra("isComingFromOrderConfirm",false)
+    isOpenAddOnsFragment = intent.getBooleanExtra("isComingFromOrderConfirmActivation",false)
     //user buying item directly
     widgetFeatureCode = intent.getStringExtra("buyItemKey")
     userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
@@ -126,6 +121,7 @@ class UpgradeActivity : AppCompatActivity() {
 
 
   fun initView() {
+
 
     if (fpid != null) {
       val bundle = Bundle()
@@ -149,9 +145,38 @@ class UpgradeActivity : AppCompatActivity() {
         } else finish()
       }
       if (isDeepLink || isOpenCardFragment) {
-        cartFragment = CartFragment.newInstance()
-        cartFragment?.let { addFragment(it, CART_FRAGMENT) }
+        val intent = Intent(
+          this@UpgradeActivity,
+          CartActivity::class.java
+        )
+        intent.putExtra("fpid", fpid)
+        intent.putExtra("expCode", experienceCode)
+        intent.putExtra("isDeepLink", isDeepLink)
+        intent.putExtra("deepLinkViewType", deepLinkViewType)
+        intent.putExtra("deepLinkDay", deepLinkDay)
+        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+        intent.putExtra(
+          "accountType",
+          accountType
+        )
+        intent.putStringArrayListExtra(
+          "userPurchsedWidgets",
+          userPurchsedWidgets
+        )
+        if (email != null) {
+          intent.putExtra("email", email)
+        } else {
+          intent.putExtra("email", "ria@nowfloats.com")
+        }
+        if (mobileNo != null) {
+          intent.putExtra("mobileNo", mobileNo)
+        } else {
+          intent.putExtra("mobileNo", "9160004303")
+        }
+        intent.putExtra("profileUrl", profileUrl)
+        startActivity(intent)
       }
+      navigateScreens()
     } else {
       Toasty.error(
         this,
@@ -204,39 +229,39 @@ class UpgradeActivity : AppCompatActivity() {
         val tag = currentFragment?.tag
         Log.e("back pressed tag", ">>>$tag")
         if (tag != null) {
-          if (tag == CART_FRAGMENT) {
-            WebEngageController.trackEvent(
-              ADDONS_MARKETPLACE_CLICKED_BACK_BUTTON_CART_SCREEN,
-              ADDONS_MARKETPLACE,
-              NO_EVENT_VALUE
-            )
-            supportFragmentManager.addOnBackStackChangedListener {
-              val currentFragment =
-                supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
-              if (currentFragment != null) {
-                val tag = currentFragment.tag
-                Log.e("Add tagu", ">>>$tag")
-                if (tag == Constants.COMPARE_FRAGMENT) {
-                  Log.e("Add tags", ">>>$tag")
-                  compareBackListener!!.backComparePress()
-                } else if (tag == Constants.HOME_FRAGMENT) {
-                  compareBackListener!!.backComparePress()
-                }
-              }
-            }
-          }
-          if (tag == PAYMENT_FRAGMENT)
-            WebEngageController.trackEvent(
-              ADDONS_MARKETPLACE_CLICKED_BACK_BUTTON_PAYMENTSCREEN,
-              ADDONS_MARKETPLACE,
-              NO_EVENT_VALUE
-            )
-          if (tag == ORDER_CONFIRMATION_FRAGMENT) {
-            if (isDeepLink) goHomeActivity()
-            else goToHomeFragment()
-          } else if ((isDeepLink || isOpenCardFragment) && (tag == HOME_FRAGMENT)) {
-            if (cartFragment != null && cartFragment?.isRenewalListNotEmpty() == true) alertDialog()
-            else goHomeActivity()
+//          if (tag == CART_FRAGMENT) {
+//            WebEngageController.trackEvent(
+//              ADDONS_MARKETPLACE_CLICKED_BACK_BUTTON_CART_SCREEN,
+//              ADDONS_MARKETPLACE,
+//              NO_EVENT_VALUE
+//            )
+//            supportFragmentManager.addOnBackStackChangedListener {
+//              val currentFragment =
+//                supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
+//              if (currentFragment != null) {
+//                val tag = currentFragment.tag
+//                Log.e("Add tagu", ">>>$tag")
+//                if (tag == Constants.COMPARE_FRAGMENT) {
+//                  Log.e("Add tags", ">>>$tag")
+//                  compareBackListener!!.backComparePress()
+//                } else if (tag == Constants.HOME_FRAGMENT) {
+//                  compareBackListener!!.backComparePress()
+//                }
+//              }
+//            }
+//          }
+//          if (tag == PAYMENT_FRAGMENT)
+//            WebEngageController.trackEvent(
+//              ADDONS_MARKETPLACE_CLICKED_BACK_BUTTON_PAYMENTSCREEN,
+//              ADDONS_MARKETPLACE,
+//              NO_EVENT_VALUE
+//            )
+//          if (tag == ORDER_CONFIRMATION_FRAGMENT) {
+//            if (isDeepLink) goHomeActivity()
+//            else goToHomeFragment()
+//          } else
+            if ((isDeepLink || isOpenCardFragment) && (tag == HOME_FRAGMENT)) {
+              goHomeActivity()
           } else fragmentManager!!.popBackStack()
         }
       } else {
@@ -318,9 +343,10 @@ class UpgradeActivity : AppCompatActivity() {
       fragmentManager!!.popBackStack(VIEW_ALL_FEATURE, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     } else if (detailsFragment != null) {
       fragmentManager!!.popBackStack(DETAILS_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-    } else {
-      fragmentManager!!.popBackStack(CART_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
+//    else {
+//      fragmentManager!!.popBackStack(CART_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+//    }
   }
 
   fun goBackToMyAddonsScreen() {
@@ -436,6 +462,35 @@ class UpgradeActivity : AppCompatActivity() {
     } else {
       loadingStatus = false
       progressDialog.dismiss()
+    }
+  }
+
+  override fun onNewIntent(intent: Intent?) {
+    super.onNewIntent(intent)
+    Log.e(this::class.java.simpleName, "onNewIntent")
+    setIntent(intent)
+  }
+
+  override fun onResume() {
+    super.onResume()
+    Log.e(this::class.java.simpleName, "onResume")
+    if(intent!=null) {
+      isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
+      isOpenHomeFragment = intent.getBooleanExtra("isComingFromOrderConfirm", false)
+      isOpenAddOnsFragment = intent.getBooleanExtra("isComingFromOrderConfirmActivation", false)
+      userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
+      navigateScreens()
+    }
+  }
+
+  fun navigateScreens(){
+//    if(isOpenHomeFragment){
+//      addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
+//    }
+    if(isOpenAddOnsFragment){
+      val args = Bundle()
+      args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+      addFragmentHome(MyAddonsFragment.newInstance(), MYADDONS_FRAGMENT,args)
     }
   }
 

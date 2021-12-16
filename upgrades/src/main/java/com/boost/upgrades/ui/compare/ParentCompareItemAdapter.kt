@@ -10,12 +10,12 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.CompareItemAdapter
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
-import com.boost.upgrades.data.model.FeaturesModel
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.upgrades.interfaces.CompareListener
 import com.bumptech.glide.Glide
 //import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
@@ -262,7 +262,7 @@ parentViewHolder.package_submit.setOnClickListener{
 
         var offeredBundlePrice = 0
         var originalBundlePrice = 0
-        val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1) bundles.min_purchase_months else 1
+        val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) bundles.min_purchase_months!! else 1
         CompositeDisposable().add(
                 AppDatabase.getInstance(activity.application)!!
                         .featuresDao()
@@ -286,7 +286,7 @@ parentViewHolder.package_submit.setOnClickListener{
                                         offeredBundlePrice = originalBundlePrice
 
                                     }
-                                    if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1){
+                                    if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1){
                                         holder.tv_price.setText("₹" +
                                                 NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
                                                 "/" + bundles.min_purchase_months + " months")
@@ -299,9 +299,9 @@ parentViewHolder.package_submit.setOnClickListener{
                                         holder.tv_inlcuded_add_on.setText("Includes these "+ it.size+ " add-ons")
                                     }
 
-                                    if(bundles.primary_image != null && !bundles.primary_image.url.isNullOrEmpty()){
-                                        Glide.with(holder.itemView.context).load(bundles.primary_image.url).into(holder.package_profile_image)
-                                        Glide.with(holder.itemView.context).load(bundles.primary_image.url).into(holder.package_profile_image_compare_new)
+                                    if(bundles.primary_image != null && !bundles.primary_image!!.url.isNullOrEmpty()){
+                                        Glide.with(holder.itemView.context).load(bundles.primary_image!!.url).into(holder.package_profile_image)
+                                        Glide.with(holder.itemView.context).load(bundles.primary_image!!.url).into(holder.package_profile_image_compare_new)
                                     } else {
                                         holder.package_profile_image.setImageResource(R.drawable.rectangle_copy_18)
                                         holder.package_profile_image_compare_new.setImageResource(R.drawable.rectangle_copy_18)

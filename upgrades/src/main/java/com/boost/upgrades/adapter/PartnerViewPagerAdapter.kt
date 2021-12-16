@@ -5,17 +5,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.PartnerZone
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PartnerZone
 import com.boost.upgrades.interfaces.HomeListener
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.text.NumberFormat
 import java.util.*
 
 class PartnerViewPagerAdapter(
