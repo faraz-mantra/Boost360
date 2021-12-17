@@ -266,8 +266,6 @@
 
   <style name="AppTheme_NewOnBoarding_Transparent_status" parent="AppTheme.NewOnBoarding">
     <item name="android:statusBarColor">@android:color/transparent</item>
-    <item name="android:windowFullscreen">true</item>
-    <item name="android:windowTranslucentStatus">true</item>
   </style>
 
   <style name="AppTheme_NewOnBoarding_Resize" parent="AppTheme.NewOnBoarding">

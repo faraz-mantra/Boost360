@@ -7,6 +7,7 @@ import android.os.Looper
 import android.view.Window
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.translationMatrix
 import androidx.viewpager2.widget.ViewPager2
 import com.boost.presignin.R
 import com.boost.presignin.adapter.IntroNewAdapter
