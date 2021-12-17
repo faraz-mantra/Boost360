@@ -34,11 +34,11 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
     )
   }
 
-  fun getTemplateConfig(floatingPointId: String?,floatingPointTag: String?): Observable<BaseResponse> {
+  fun getTemplateConfig(fKey:String,floatingPointId: String?,floatingPointTag: String?): Observable<BaseResponse> {
     val body =JsonObject().apply {
       addProperty("floatingPointId",floatingPointId)
       addProperty("floatingPointTag",floatingPointTag)
-      addProperty("featureKey","FESTIVEPOSTERS")
+      addProperty("featureKey",fKey)
     }
     return NowFloatsRepository.makeRemoteRequest(
       remoteDataSource.getTemplateViewConfig(body),

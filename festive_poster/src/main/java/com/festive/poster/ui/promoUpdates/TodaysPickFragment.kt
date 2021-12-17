@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
+import com.festive.poster.constant.Constants
 import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.FragmentTodaysPickBinding
 import com.festive.poster.models.PosterDetailsModel
@@ -106,7 +107,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
 
     private fun getTemplateViewConfig() {
         showProgress()
-        viewModel?.getTemplateConfig(session?.fPID, session?.fpTag)
+        viewModel?.getTemplateConfig(Constants.FESTIVE_POSTER_WKEY,session?.fPID, session?.fpTag)
             ?.observeOnce(viewLifecycleOwner, {
                 val response = it as? GetTemplateViewConfigResponse
                 response?.let {
@@ -144,12 +145,18 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                         dataList?.add(PosterPackModel(pack_tag, templateList.toArrayList(),isPurchased = pack_tag.isPurchased,list_layout = RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()))
 
                     }
-                    getPriceOfPosterPacks()
+                   // getPriceOfPosterPacks()
+                    callbacks?.onDataLoaded(dataList!!)
+                    // rearrangeList()
+                    adapter = AppBaseRecyclerViewAdapter(baseActivity, dataList!!, this)
+                    binding?.rvTemplates?.adapter = adapter
+                    binding?.rvTemplates?.layoutManager = LinearLayoutManager(requireActivity())
+                    hideProgress()
                 }
             })
     }
 
-    private fun getPriceOfPosterPacks() {
+   /* private fun getPriceOfPosterPacks() {
         viewModel?.getUpgradeData()?.observeOnce(viewLifecycleOwner, {
             val response = it as? UpgradeGetDataResponse
             response?.let {
@@ -165,15 +172,10 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
 
 
 
-                callbacks?.onDataLoaded(dataList!!)
-                // rearrangeList()
-                adapter = AppBaseRecyclerViewAdapter(baseActivity, dataList!!, this)
-                binding?.rvTemplates?.adapter = adapter
-                binding?.rvTemplates?.layoutManager = LinearLayoutManager(requireActivity())
-                hideProgress()
+
             }
         })
-    }
+    }*/
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
 

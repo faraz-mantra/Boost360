@@ -90,5 +90,6 @@
     <string name="placeholder_per_year">₹%1$d/year</string>
     <string name="get_annual_pack_for_placeholder">Get annual pack for ₹%1$d</string>
     <string name="get_monthly_pack_for_placeholder">Get monthly pack for ₹%1$d</string>
+    <string name="placeholder_percent_off">%1$d% OFF</string>
 
 </resources>

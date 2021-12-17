@@ -8,32 +8,23 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
 
 class SocialPreviewModel(
-    @DrawableRes val previewPageResource: Int? = null,
-    @DrawableRes val socialIconResource: Int? = null
+    val title:String,
+    val desc:String,
+    val layout_id:Int
 ) : Serializable, AppBaseRecyclerViewItem {
 
-    fun getData(context: Context): ArrayList<SocialPreviewModel> {
-        return arrayListOf(
-            SocialPreviewModel(
-                previewPageResource = R.drawable.post_preview_promo_2,
-                socialIconResource = R.drawable.ic_instagram_promo_grey_boundary
-            ),
-            SocialPreviewModel(
-                previewPageResource = R.drawable.post_preview_promo_2,
-                socialIconResource = R.drawable.ic_twitter_promo_grey_boundary
-            ),
-            SocialPreviewModel(
-                previewPageResource = R.drawable.post_preview_promo_2,
-                socialIconResource = R.drawable.ic_myshop_promo_grey_boundary
-            ),
-            SocialPreviewModel(
-                previewPageResource = R.drawable.post_preview_promo_2,
-                socialIconResource = R.drawable.ic_instagram_promo_grey_boundary
+    companion object{
+        fun getData(): ArrayList<SocialPreviewModel> {
+            return arrayListOf(
+                SocialPreviewModel("","",RecyclerViewItemType.VIEWPAGER_TWITTER_PREVIEW.getLayout()),
+                SocialPreviewModel("","",RecyclerViewItemType.VIEWPAGER_TWITTER_PREVIEW.getLayout()),
+                SocialPreviewModel("","",RecyclerViewItemType.VIEWPAGER_TWITTER_PREVIEW.getLayout())
             )
-        )
+        }
     }
 
+
     override fun getViewType(): Int {
-        return RecyclerViewItemType.VIEWPAGER_SOCIAL_PREVIEW.getLayout()
+        return layout_id
     }
 }

@@ -15,7 +15,7 @@ enum class RecyclerViewItemType {
   BROWSE_TAB_TEMPLATE_CAT,
   BROWSE_ALL_TEMPLATE_CAT,
   SOCIAL_PLATFORM_POST_OPTIONS_LIST,
-  VIEWPAGER_SOCIAL_PREVIEW;
+  VIEWPAGER_TWITTER_PREVIEW;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -31,7 +31,7 @@ enum class RecyclerViewItemType {
       BROWSE_TAB_TEMPLATE_CAT->R.layout.list_item_browse_tab_template_cat
       BROWSE_ALL_TEMPLATE_CAT->R.layout.list_item_browse_all_cat
       SOCIAL_PLATFORM_POST_OPTIONS_LIST -> R.layout.item_social_platform_promo_adap
-      VIEWPAGER_SOCIAL_PREVIEW -> R.layout.item_social_preview_viewpager
+      VIEWPAGER_TWITTER_PREVIEW -> R.layout.social_preview_twitter
     }
   }
 }

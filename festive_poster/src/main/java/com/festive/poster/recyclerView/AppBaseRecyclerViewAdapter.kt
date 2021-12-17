@@ -36,7 +36,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.BROWSE_TAB_TEMPLATE_CAT->BrowseTabPosterCatViewHolder(binding as ListItemBrowseTabTemplateCatBinding)
       RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT->BrowseAllPosterCatViewHolder(binding as ListItemBrowseAllCatBinding)
       RecyclerViewItemType.SOCIAL_PLATFORM_POST_OPTIONS_LIST->SocialPlatformOptionListViewHolder(binding as ItemSocialPlatformPromoAdapBinding)
-      RecyclerViewItemType.VIEWPAGER_SOCIAL_PREVIEW->SocialPreviewViewPagerViewHolder(binding as ItemSocialPreviewViewpagerBinding)
+      RecyclerViewItemType.VIEWPAGER_TWITTER_PREVIEW->TwitterPreviewViewPagerViewHolder(binding as SocialPreviewTwitterBinding)
     }
   }
 

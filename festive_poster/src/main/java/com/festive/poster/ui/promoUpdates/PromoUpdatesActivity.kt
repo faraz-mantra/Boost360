@@ -34,6 +34,7 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseVi
 
     override fun onCreateView() {
         super.onCreateView()
+
         WebEngageController.trackEvent(Post_Promotional_Update_Click)
 
         sharedViewModel = ViewModelProvider(this).get(FestivePosterSharedViewModel::class.java)

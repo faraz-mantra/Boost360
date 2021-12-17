@@ -31,8 +31,8 @@ class FestivePosterViewModel: BaseViewModel() {
         return NowFloatsRepository.getTemplates(floatingPointId,floatingPointTag,tags).toLiveData()
     }
 
-    fun getTemplateConfig(floatingPointId: String?,floatingPointTag: String?): LiveData<BaseResponse> {
-        return NowFloatsRepository.getTemplateConfig(floatingPointId,floatingPointTag).toLiveData()
+    fun getTemplateConfig(fKey:String,floatingPointId: String?,floatingPointTag: String?): LiveData<BaseResponse> {
+        return NowFloatsRepository.getTemplateConfig(fKey,floatingPointId,floatingPointTag).toLiveData()
     }
 
     fun getFeatureDetails(fpId:String?,clientId:String?): LiveData<BaseResponse> {

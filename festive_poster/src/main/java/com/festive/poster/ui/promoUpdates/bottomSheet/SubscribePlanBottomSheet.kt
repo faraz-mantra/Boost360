@@ -20,6 +20,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
+import com.framework.utils.showToast
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -27,6 +28,7 @@ import io.reactivex.schedulers.Schedulers
 class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidityBinding, FestivePosterViewModel>() {
 
     private var feature_promo: UpgradeGetDataFeature?=null
+    private val TAG = "SubscribePlanBottomShee"
     var session:UserSessionManager?=null
     enum class Validity{
         MONTHLY,
@@ -87,9 +89,34 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
                 if (feature_promo!=null){
                     binding!!.progressBar.gone()
                     binding!!.dataLayout.visible()
-                    binding!!.tvMonthPrice.text = getString(R.string.placeholder_per_month,feature_promo!!.price.toInt())
-                    binding!!.tvYearPrice.text = getString(R.string.placeholder_per_year,feature_promo!!.price.times(12).toInt())
-                    updatePackageSelectionUI(1)
+                    val monthlyPrice = feature_promo!!.price
+                    val yearlyPrice = feature_promo!!.price.times(12)
+
+                    if (feature_promo!!.discount_percent>0.0){
+                        binding!!.ivOfferPercent1.text = getString(R.string.placeholder_percent_off,feature_promo!!.discount_percent.toInt())
+
+                        binding!!.tvOriginalMonthlyPrice.text = getString(R.string.placeholder_per_month,
+                            monthlyPrice.toInt())
+                        binding!!.tvOriginalYearPrice.text = getString(R.string.placeholder_per_month,
+                            monthlyPrice.toInt())
+
+                        val m_discountPrice = (feature_promo!!.discount_percent*monthlyPrice).div(100)
+                        val m_discountedPrice = monthlyPrice.minus(m_discountPrice)
+                        binding!!.tvDiscountedMonthPrice.text = getString(R.string.placeholder_per_month,m_discountedPrice.toInt())
+                        val y_discountPrice = (feature_promo!!.discount_percent*yearlyPrice).div(100)
+                        val y_discountedPrice = yearlyPrice.minus(y_discountPrice)
+                        binding!!.tvDiscountedMonthPrice.text = getString(R.string.placeholder_per_month,y_discountedPrice.toInt())
+
+                    }else{
+                        binding!!.tvOriginalYearPrice.gone()
+                        binding!!.tvOriginalMonthlyPrice.gone()
+                        binding!!.ivOfferPercent1.gone()
+                        binding!!.ivOfferPercent2.gone()
+                        binding!!.tvDiscountedMonthPrice.text = getString(R.string.placeholder_per_month,monthlyPrice.toInt())
+                        binding!!.tvDiscountedYearlyPrice.text = getString(R.string.placeholder_per_year,yearlyPrice.toInt())
+                    }
+                    updatePackageSelectionUI(0)
+
                 }
 
 
@@ -111,6 +138,7 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
             }
             val discountPrice = (it.discount_percent*price).div(100)
             val discountedPrice = price.minus(discountPrice)
+
             val cartItem = CartModel(it._kid,it.boost_widget_key,it.feature_code,it.name,
                 it.description_title,null,discountedPrice,price,discountPrice.toInt(),
                 1,minPurchaseMonth,"features")
@@ -138,22 +166,21 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
             binding?.ivSelectionIndicator1?.setBackgroundResource(0)
             binding?.ivSelectionIndicator2?.setImageResource(0)
             binding?.ivSelectionIndicator2?.setBackgroundResource(R.drawable.bg_grey_stroke_circle)
-            binding?.ivOfferPercent1?.visible()
             binding?.ivOfferPercent2?.gone()
             binding?.linearRegularAmount?.setBackgroundResource(R.drawable.bg_yellow_stroke_et)
             binding?.linearDiscountAmount?.setBackgroundResource(R.drawable.bg_grey_stroke_et)
             binding?.btnGetPack?.text = getString(R.string.get_monthly_pack_for_placeholder,feature_promo?.price?.toInt())
         }else{
-            validity =Validity.YEARLY
+            showToast(getString(R.string.coming_soon))
+/*            validity =Validity.YEARLY
             binding?.ivSelectionIndicator1?.setImageResource(0)
             binding?.ivSelectionIndicator1?.setBackgroundResource(R.drawable.bg_grey_stroke_circle)
             binding?.ivSelectionIndicator2?.setImageResource(R.drawable.ic_tick_green_round)
             binding?.ivSelectionIndicator2?.setBackgroundResource(0)
             binding?.ivOfferPercent1?.gone()
-            binding?.ivOfferPercent2?.visible()
             binding?.linearRegularAmount?.setBackgroundResource(R.drawable.bg_grey_stroke_et)
             binding?.linearDiscountAmount?.setBackgroundResource(R.drawable.bg_yellow_stroke_et)
-            binding?.btnGetPack?.text = getString(R.string.get_annual_pack_for_placeholder,feature_promo?.price?.times(12)?.toInt())
+            binding?.btnGetPack?.text = getString(R.string.get_annual_pack_for_placeholder,feature_promo?.price?.times(12)?.toInt())*/
 
         }
     }

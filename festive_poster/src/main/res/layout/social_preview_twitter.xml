@@ -3,111 +3,215 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/size_250"
+        android:layout_height="@dimen/size_300">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_margin="@dimen/size_24"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="270dp"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="@dimen/size_20"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
 
-            <com.framework.views.customViews.CustomCardView
-                android:id="@+id/customCardView"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                app:cardCornerRadius="@dimen/size_15"
-                app:layout_constraintBottom_toBottomOf="@+id/customTextView12"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <com.framework.views.customViews.CustomImageView
-                android:id="@+id/customImageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_down_grey"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="#BDC5CD" />
-
-
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/customTextView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:fontFamily="@font/bold"
-                tools:text="Payal Jain"
-                android:textColor="@color/black_4a4a4a"
-                android:textSize="@dimen/size_16"
-                app:layout_constraintStart_toEndOf="@+id/customCardView"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/customTextView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                tools:text="payaljain"
-                app:layout_constraintBottom_toBottomOf="@+id/customTextView9"
-                app:layout_constraintStart_toEndOf="@+id/customTextView9"
-                app:layout_constraintTop_toTopOf="@+id/customTextView9" />
-
-
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/customTextView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:fontFamily="@font/bold"
-                android:text="\u00b7"
-                android:textSize="@dimen/size_20"
-                app:layout_constraintBottom_toBottomOf="@+id/customTextView10"
-                app:layout_constraintStart_toEndOf="@+id/customTextView10"
-                app:layout_constraintTop_toTopOf="@+id/customTextView10" />
-
-            <com.framework.views.customViews.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/now"
-                android:fontFamily="@font/regular"
-                app:layout_constraintBottom_toBottomOf="@+id/customTextView11"
-                app:layout_constraintStart_toEndOf="@+id/customTextView11"
-                app:layout_constraintTop_toTopOf="@+id/customTextView11" />
-
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/customTextView12"
-                android:textSize="@dimen/size_12"
-                android:fontFamily="@font/regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Bangalore"
-                app:layout_constraintStart_toStartOf="@+id/customTextView9"
-                app:layout_constraintTop_toBottomOf="@+id/customTextView9" />
-
-
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/customTextView13"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:fontFamily="@font/regular_medium"
-                app:layout_constraintTop_toBottomOf="@+id/customCardView"
-                tools:text="50 to 60 percent off the entire site and store for Black Friday. Above that, you have free shipiing on all orders, plus an extra 20.
+                android:layout_height="match_parent"
+                android:layout_margin="16dp">
+
+                <com.framework.views.customViews.CustomCardView
+                    android:id="@+id/customCardView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:cardCornerRadius="@dimen/size_15"
+                    app:layout_constraintBottom_toBottomOf="@+id/customTextView12"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/customImageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_down_grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="#BDC5CD" />
+
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/customTextView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/bold"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/customCardView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Payal Jain" />
+
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/customTextView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textSize="@dimen/size_7"
+                    app:layout_constraintBottom_toBottomOf="@+id/customTextView9"
+                    app:layout_constraintStart_toEndOf="@+id/customTextView9"
+                    app:layout_constraintTop_toTopOf="@+id/customTextView9"
+                    tools:text="payaljain" />
+
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/customTextView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/bold"
+                    android:text="\u00b7"
+                    android:textSize="@dimen/size_20"
+                    app:layout_constraintBottom_toBottomOf="@+id/customTextView10"
+                    app:layout_constraintStart_toEndOf="@+id/customTextView10"
+                    app:layout_constraintTop_toTopOf="@+id/customTextView10" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/now"
+                    android:textSize="@dimen/size_8"
+                    app:layout_constraintBottom_toBottomOf="@+id/customTextView11"
+                    app:layout_constraintStart_toEndOf="@+id/customTextView11"
+                    app:layout_constraintTop_toTopOf="@+id/customTextView11" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/customTextView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:textSize="6dp"
+                    app:layout_constraintStart_toStartOf="@+id/customTextView9"
+                    app:layout_constraintTop_toBottomOf="@+id/customTextView9"
+                    tools:text="Bangalore" />
+
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/customTextView13"
+                    android:layout_width="match_parent"
+                    android:textSize="6sp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:fontFamily="@font/regular_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/customCardView"
+                    tools:text="50 to 60 percent off the entire site and store for Black Friday. Above that, you have free shipiing on all orders, plus an extra 20.
 
 #bigbilliondays #smile #2020 " />
 
-            <com.framework.views.customViews.CustomImageView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintHeight_percent="0.5"
-                app:layout_constraintTop_toBottomOf="@+id/customTextView13" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/customImageView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintHeight_percent="0.4"
+                    app:layout_constraintTop_toBottomOf="@+id/customTextView13" />
 
-    </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toStartOf="@+id/customImageView4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/customImageView3">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="@dimen/size_15"
+                        android:layout_height="@dimen/size_15"
+                        android:src="@drawable/ic_twitter_comment" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:textSize="6sp"
+                        app:fontFamily="@font/regular"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_4"
+                        android:text="2" />
+
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="@dimen/size_15"
+                        android:layout_height="@dimen/size_15"
+                        android:layout_marginStart="@dimen/size_32"
+                        android:src="@drawable/ic_twitter_retweet" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:textSize="6sp"
+                        app:fontFamily="@font/regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_4"
+                        android:text="2" />
+
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="@dimen/size_15"
+                        android:layout_height="@dimen/size_15"
+                        android:layout_marginStart="@dimen/size_32"
+                        android:src="@drawable/ic_twitter_heart" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:textSize="6sp"
+                        app:fontFamily="@font/regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_4"
+                        android:text="2" />
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:textSize="6sp"
+                        app:fontFamily="@font/regular"
+                        android:layout_width="@dimen/size_15"
+                        android:layout_height="@dimen/size_15"
+                        android:layout_marginStart="@dimen/size_32"
+                        android:src="@drawable/ic_twitter_share" />
+
+
+                </LinearLayout>
+
+                <com.framework.views.customViews.CustomImageView
+                    android:textSize="6sp"
+                    app:fontFamily="@font/regular"
+                    android:id="@+id/customImageView4"
+                    android:layout_width="@dimen/size_15"
+                    android:layout_height="@dimen/size_15"
+                    android:src="@drawable/ic_twitter_activity"
+                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/customImageView6"
+            android:layout_width="wrap_content"
+            android:elevation="@dimen/size_4"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_twitter_social_preview"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -12,6 +12,7 @@ import com.festive.poster.databinding.FragmentPromoLandingPageBinding
 import com.festive.poster.models.PosterPackModel
 import com.festive.poster.models.promoModele.SocialConnModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
+import com.festive.poster.ui.promoUpdates.bottomSheet.SubscribePlanBottomSheet
 import com.festive.poster.utils.WebEngageController
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
@@ -76,6 +77,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
     }
 
     private fun setupViewPager() {
+
         val fragmentList = arrayListOf(
             TodaysPickFragment.newInstance(callbacks = this),
             browseTabFragment,
@@ -85,7 +87,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
         binding?.viewPager?.apply {
             isUserInputEnabled = false
             adapter = viewPagerAdapter
-            offscreenPageLimit = 3
+            offscreenPageLimit = 1
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
 
@@ -143,6 +145,6 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
     }
 
     override fun onDataLoaded(data: ArrayList<PosterPackModel>) {
-        browseTabFragment.setRealData(data)
+       // browseTabFragment.setRealData(data)
     }
 }

@@ -36,8 +36,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:id="@+id/data_layout"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -47,6 +47,7 @@
                     android:id="@+id/iv_promo_mic"
                     android:layout_width="@dimen/size_111"
                     android:layout_height="@dimen/size_94"
+                    android:src="@drawable/promo_plan_mic"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="@dimen/size_32"
                     android:layout_marginTop="@dimen/size_32"
@@ -145,9 +146,9 @@
                         android:orientation="vertical">
 
                         <com.framework.views.customViews.CustomTextView
-                            android:id="@+id/tv_month_price"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/size_50"
+                            android:id="@+id/tv_discounted_month_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
                             android:textAlignment="gravity"
                             android:textColor="@color/black_4a4a4a"
@@ -156,14 +157,14 @@
                             tools:text="₹60/month" />
 
                         <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/tv_original_monthly_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="₹720/year"
+                            tools:text="₹720/year"
                             android:textAlignment="gravity"
                             android:textColor="@color/black_4a4a4a"
                             android:textSize="@dimen/text_10"
-                            android:visibility="gone"
                             app:fontFamily="@font/inter_regular" />
 
                     </LinearLayout>
@@ -187,10 +188,10 @@
                         android:background="@drawable/ic_rectangle_green_discount_promo"
                         android:fontFamily="@font/inter_bold"
                         android:gravity="center"
-                        android:text="19% OFF"
+                        android:text="@string/placeholder_percent_off"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_10"
-                        android:visibility="gone" />
+                        />
 
                 </FrameLayout>
 
@@ -215,7 +216,7 @@
                         android:orientation="vertical">
 
                         <com.framework.views.customViews.CustomTextView
-                            android:id="@+id/tv_year_price"
+                            android:id="@+id/tv_original_year_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/size_5"
@@ -227,6 +228,7 @@
                             tools:text="₹600/month" />
 
                         <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/tv_discounted_yearly_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"

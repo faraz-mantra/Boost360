@@ -135,7 +135,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
         setChannels()
 
-        val socialPreviewModel = SocialPreviewModel().getData(this@PostPreviewSocialActivity)
+        val socialPreviewModel = SocialPreviewModel.getData()
         binding?.rvPostPreview?.apply {
             adapter  = AppBaseRecyclerViewAdapter(this@PostPreviewSocialActivity, socialPreviewModel, this@PostPreviewSocialActivity)
         }

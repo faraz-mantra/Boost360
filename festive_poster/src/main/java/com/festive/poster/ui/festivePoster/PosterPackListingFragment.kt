@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
+import com.festive.poster.constant.Constants
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.FragmentPosterPackListingBinding
@@ -76,7 +77,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
   private fun getTemplateViewConfig() {
     sharedViewModel?.posterPackLoadListener?.value = false
     showShimmerAnimation()
-    viewModel?.getTemplateConfig(session?.fPID, session?.fpTag)
+    viewModel?.getTemplateConfig(Constants.FESTIVE_POSTER_WKEY,session?.fPID, session?.fpTag)
       ?.observeOnce(viewLifecycleOwner, {
         Log.i(TAG, "template config: ${Gson().toJson(it)}")
           val response = it as? GetTemplateViewConfigResponse
