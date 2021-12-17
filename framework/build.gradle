@@ -149,10 +149,13 @@ dependencies {
     api 'com.github.dhaval2404:imagepicker:2.1'
 
     //room
-    implementation 'androidx.room:room-runtime:2.2.4'
-    implementation "androidx.room:room-rxjava2:2.2.5"
-    kapt 'androidx.room:room-compiler:2.2.4'
+    api 'androidx.room:room-runtime:2.3.0'
+    api "androidx.room:room-rxjava2:2.3.0"
+    kapt 'androidx.room:room-compiler:2.3.0'
 
     //json
-    implementation "com.squareup.moshi:moshi-kotlin:1.8.0"
+    api "com.squareup.moshi:moshi-kotlin:1.11.0"
+
+    api 'com.github.GrenderG:Toasty:1.4.2'
+
 }

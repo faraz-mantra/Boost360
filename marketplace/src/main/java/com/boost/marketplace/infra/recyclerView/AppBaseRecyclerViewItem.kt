@@ -1,3 +1,0 @@
-package com.boost.marketplace.recyclerView
-
-interface AppBaseRecyclerViewItem : BaseRecyclerViewItem

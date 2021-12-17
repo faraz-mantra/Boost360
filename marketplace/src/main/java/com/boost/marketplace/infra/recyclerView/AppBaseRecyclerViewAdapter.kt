@@ -1,13 +1,18 @@
-package com.boost.marketplace.recyclerView
+package com.boost.marketplace.infra.recyclerView
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
+import com.boost.dbcenterapi.recycleritem.AppBaseRecyclerViewItem
+import com.boost.dbcenterapi.recycleritem.BaseRecyclerViewAdapter
+import com.boost.dbcenterapi.recycleritem.BaseRecyclerViewHolder
+import com.boost.dbcenterapi.recycleritem.RecyclerItemClickListener
 import com.boost.marketplace.R
-import com.boost.marketplace.constant.RecyclerViewItemType.*
+import com.boost.dbcenterapi.recycleritem.RecyclerViewItemType.*
 import com.boost.marketplace.databinding.*
 import com.boost.marketplace.holder.*
+import com.boost.marketplace.infra.constant.getLayout
 import com.framework.base.BaseActivity
 import java.util.*
 
@@ -19,13 +24,13 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
 
   override fun getViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder<*> {
     val inflater = LayoutInflater.from(parent.context)
-    val recyclerViewItemType = values().first { it.getLayout() == viewType }
-    val binding = getViewDataBinding(inflater, recyclerViewItemType, parent)
+    val recyclerViewItemType = values().first { it.ordinal == viewType }
+    val binding = getViewDataBinding(inflater,  getLayout(recyclerViewItemType), parent)
     return when (recyclerViewItemType) {
       PAGINATION_LOADER -> PagingViewHolder(binding as PaginationLoaderBinding)
       BUSINESS_SETUP_ITEM_VIEW -> BusinessSetupViewHolder(binding as ItemBusinessManagementDBinding)
-      ALL_BOOST_ADD_ONS_VIEW -> BoostAddOnsViewHolder(binding as ItemBoostAddOnsBinding)
-      MANAGE_BUSINESS_ITEM_VIEW -> ManageBusinessViewHolder(binding as ItemManageBusinessBinding)
+      PROMO_BANNER ->MarketPlacePromoBannerViewHolder(binding as ItemPromoBannerBinding)
+      FEATURES_BY_CATEGORY->FeaturesByCategoryViewHolder(binding as ItemFeaturesByCategoryBinding)
     }
   }
 
@@ -40,7 +45,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
 
   override fun getItemViewType(position: Int): Int {
     return if (isLoaderVisible) {
-      return if (position == list.size - 1) PAGINATION_LOADER.getLayout() else super.getItemViewType(
+      return if (position == list.size - 1) PAGINATION_LOADER.ordinal else super.getItemViewType(
         position
       )
     } else super.getItemViewType(position)
@@ -137,4 +142,5 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     notifyItemRangeChanged(0, itemCount)
   }
   // New Function
+
 }

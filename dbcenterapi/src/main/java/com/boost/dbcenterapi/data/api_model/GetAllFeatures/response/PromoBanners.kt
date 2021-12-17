@@ -1,5 +1,8 @@
 package com.boost.dbcenterapi.data.api_model.GetAllFeatures.response
 
+import com.boost.dbcenterapi.recycleritem.AppBaseRecyclerViewItem
+import com.boost.dbcenterapi.recycleritem.RecyclerViewItemType
+import com.framework.models.BaseRecyclerViewItem
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import java.util.*
@@ -38,4 +41,10 @@ data class PromoBanners(
   val expiry_date: String,
   @SerializedName("cta_offer_identifier")
   val cta_offer_identifier: String,
-) : Serializable
+) : Serializable,AppBaseRecyclerViewItem {
+
+  override fun getViewType(): Int {
+    return RecyclerViewItemType.PROMO_BANNER.ordinal
+
+  }
+}

@@ -1,6 +1,3 @@
 <resources>
     <string name="app_name">Marketplace</string>
-    <string name="marketoffer_howtoOne">Open the boost app/website/mobile-web, search for packs and choose your preferred <b>packs/addon</b>.<br /></string>
-    <string name="marketoffer_termSix">Offer valid from %1$s - %2$s.For more information regarding money click here.<br /></string>
-    <string name="features_details">In-clinic appointments</string>
 </resources>
