@@ -9,6 +9,7 @@ import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
 import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerViewHolder
 import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
 import dev.patrickgold.florisboard.customization.model.response.staff.DataItem
+import dev.patrickgold.florisboard.customization.util.RecyclerViewActionType
 import dev.patrickgold.florisboard.databinding.ItemStaffProfileBinding
 import java.util.*
 import kotlin.collections.ArrayList
@@ -27,7 +28,7 @@ class StaffProfileViewHolder(binding: ItemStaffProfileBinding, val listener: OnI
       binding.btnShare.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blue_accent_10))
       binding.btnShare.setTextColor(ContextCompat.getColor(binding.root.context, R.color.accent_blue))
       binding.imageIcon.removeGreyscale()
-      binding.btnShare.setNoDoubleClickListener({ listener?.onItemClick(position, data) })
+      binding.btnShare.setNoDoubleClickListener({ listener?.onItemClick(position, data, RecyclerViewActionType.STAFF_PROFILE_CLICK.ordinal) })
     } else {
       binding.btnShare.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.bg_grey_light))
       binding.btnShare.setTextColor(ContextCompat.getColor(binding.root.context, R.color.gray_light_4))

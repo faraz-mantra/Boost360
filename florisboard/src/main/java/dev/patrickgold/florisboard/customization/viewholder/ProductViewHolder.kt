@@ -9,6 +9,7 @@ import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
 import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerViewHolder
 import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
 import dev.patrickgold.florisboard.customization.model.response.Product
+import dev.patrickgold.florisboard.customization.util.RecyclerViewActionType
 import dev.patrickgold.florisboard.databinding.AdapterItemProductNewBinding
 
 class ProductViewHolder(binding: AdapterItemProductNewBinding, val listener: OnItemClickListener?) : BaseRecyclerViewHolder<AdapterItemProductNewBinding>(binding) {
@@ -43,7 +44,7 @@ class ProductViewHolder(binding: AdapterItemProductNewBinding, val listener: OnI
 
     binding.tvDescription.text = product.description
     binding.btnShare.setOnClickListener {
-      listener?.onItemClick(position, product)
+      listener?.onItemClick(position, product, RecyclerViewActionType.PRODUCT_SERVICE_SHARE_CLICK.ordinal)
     }
   }
 }

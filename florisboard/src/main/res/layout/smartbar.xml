@@ -69,6 +69,7 @@
       android:layout_height="match_parent"
       app:tabIndicatorColor="@color/accent_blue"
       app:tabMode="scrollable"
+      app:tabIconTint="@color/accent_blue"
       app:tabSelectedTextColor="@color/accent_blue"
       app:tabTextColor="@color/black_4a4a4a">
 
@@ -101,13 +102,19 @@
         android:layout_height="wrap_content"
         android:tag="4"
         android:text="Staff"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
       <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:tag="5"
         android:text="Business card" />
+
+      <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="6"
+        android:text="More" />
     </com.google.android.material.tabs.TabLayout>
 
     <LinearLayout

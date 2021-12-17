@@ -10,6 +10,7 @@ import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
 import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerViewHolder
 import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
 import dev.patrickgold.florisboard.customization.model.response.FloatUpdate
+import dev.patrickgold.florisboard.customization.util.RecyclerViewActionType
 import dev.patrickgold.florisboard.databinding.AdapterItemUpdateBinding
 
 class FloatUpdateViewHolder(binding: AdapterItemUpdateBinding, val listener: OnItemClickListener?) : BaseRecyclerViewHolder<AdapterItemUpdateBinding>(binding) {
@@ -27,7 +28,7 @@ class FloatUpdateViewHolder(binding: AdapterItemUpdateBinding, val listener: OnI
     binding.tvDescription.text = float.getMessageLength()
     val timeString = (float.createdOn?.subSequence(float.createdOn?.indexOf("(")!! + 1, float.createdOn?.length!! - 2) as String).toLong()
     binding.ctvDateTime.text = getDate(timeString, KEYBOARD_DISPLAY_DATE)
-    binding.btnShare.setOnClickListener { listener?.onItemClick(position, float) }
+    binding.btnShare.setOnClickListener { listener?.onItemClick(position, float, RecyclerViewActionType.FLOAT_UPDATE_CLICK.ordinal) }
   }
 }
 

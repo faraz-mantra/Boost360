@@ -10,6 +10,8 @@ import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatus
 import com.onboarding.nowfloats.model.profile.MerchantProfileResponse
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
 import dev.patrickgold.florisboard.customization.model.response.*
+import dev.patrickgold.florisboard.customization.model.response.moreAction.MoreActionResponse
+import dev.patrickgold.florisboard.customization.model.response.moreAction.MoreData
 import dev.patrickgold.florisboard.customization.model.response.shareUser.ShareUserDetailResponse
 import dev.patrickgold.florisboard.customization.model.response.staff.GetStaffListingRequest
 import dev.patrickgold.florisboard.customization.model.response.staff.StaffResult
@@ -247,6 +249,24 @@ class BusinessFeaturesViewModel(context: Context) {
         }
       } catch (e: Exception) {
         if (prefBCards == null) _error.postValue(e.localizedMessage)
+      }
+    }
+  }
+
+  private val _moreAction = MutableLiveData<List<MoreData>>()
+  val moreAction: LiveData<List<MoreData>>
+    get() = _moreAction
+
+  fun getMoreActionList(context: Context, fpExperienceCode: String) {
+    job = CoroutineScope(Dispatchers.IO).launch {
+      try {
+        val moreDataResponse = WebActionBoostRepository.getMoreActionData(context) as? MoreActionResponse
+        withContext(Dispatchers.Main) {
+          if (moreDataResponse?.data != null && moreDataResponse.status == 200) _moreAction.value = moreDataResponse.getDataMoreDataTYpe(fpExperienceCode)?.items ?: arrayListOf()
+          else _moreAction.value = arrayListOf()
+        }
+      } catch (e: Exception) {
+        _error.postValue(e.localizedMessage)
       }
     }
   }

@@ -19,7 +19,10 @@ enum class FeaturesEnum {
   VISITING_CARD_EIGHT_ITEM,
   VISITING_CARD_NINE_ITEM,
   VISITING_CARD_TEN_ITEM,
-  STAFF_LISTING_VIEW;
+  STAFF_LISTING_VIEW,
+  MORE_ACTION_VIEW_ITEM,
+  MORE_FIRST_VIEW_ITEM,
+  MORE_SECOND_VIEW_ITEM;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -40,6 +43,9 @@ enum class FeaturesEnum {
       VISITING_CARD_NINE_ITEM -> com.onboarding.nowfloats.R.layout.item_visiting_card_nine
       VISITING_CARD_TEN_ITEM -> com.onboarding.nowfloats.R.layout.item_visiting_card_ten
       STAFF_LISTING_VIEW -> R.layout.item_staff_profile
+      MORE_ACTION_VIEW_ITEM -> R.layout.item_action_more
+      MORE_FIRST_VIEW_ITEM -> R.layout.item_more_first
+      MORE_SECOND_VIEW_ITEM -> R.layout.item_more_second
     }
   }
 }
