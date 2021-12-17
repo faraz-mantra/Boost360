@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <androidx.core.widget.NestedScrollView
+    android:id="@+id/msg_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/grey_bg"
+    android:fillViewport="true"
+    android:visibility="gone">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:layout_margin="@dimen/size_10"
+      android:gravity="center_horizontal"
+      android:orientation="vertical">
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/msg_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/msg_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_6"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:textSize="@dimen/text_18" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/msg_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_6"
+        android:fontFamily="@font/regular"
+        android:gravity="center" />
+
+      <com.framework.views.customViews.CustomMaterialButton
+        android:id="@+id/msg_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_10"
+        android:backgroundTint="@color/btn_bg"
+        android:textAllCaps="false"
+        app:cornerRadius="@dimen/size_10"
+        app:icon="@drawable/ic_lockkey"
+        app:iconGravity="textStart" />
+    </LinearLayout>
+
+  </androidx.core.widget.NestedScrollView>
+</layout>

@@ -69,7 +69,7 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
 
   private fun setupUi() {
     if (categoryLiveName.isNullOrEmpty().not()) {
-      val totalString = categoryLiveName + " in " + categoryModel?.category_Name
+      val totalString = categoryLiveName + "in " + categoryModel?.category_Name
       binding?.autocompleteSearchCategory?.text = makeSectionOfTextBold(totalString, categoryLiveName ?: "", font = R.font.inter_medium)
     } else {
       binding?.autocompleteSearchCategory?.text = makeSectionOfTextBold(categoryModel?.category_Name ?: "", categoryModel?.category_Name ?: "", font = R.font.inter_medium)
