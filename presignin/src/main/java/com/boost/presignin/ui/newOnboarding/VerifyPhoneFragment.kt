@@ -121,12 +121,16 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    inflater.inflate(R.menu.menu_help_on_boarding_new, menu)
+    inflater.inflate(R.menu.menu_help_setup_my_website, menu)
+    val menuItem = menu.findItem(R.id.help_new)
+    menuItem.actionView.setOnClickListener {
+      menu.performIdentifierAction(menuItem.itemId, 0)
+    }
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
-      R.id.menu_item_help_onboard -> {
+      R.id.help_new -> {
         NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
         return true
       }

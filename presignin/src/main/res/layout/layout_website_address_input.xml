@@ -21,7 +21,7 @@
 
       <com.framework.views.customViews.CustomEditText
           android:id="@+id/et_input"
-          android:layout_width="0dp"
+          android:layout_width="wrap_content"
           android:layout_height="match_parent"
           android:layout_marginVertical="@dimen/size_4"
           android:layout_marginStart="@dimen/size_8"
