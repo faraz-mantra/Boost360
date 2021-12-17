@@ -133,12 +133,12 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     // initialize business features views
     this.binding = BusinessFeaturesLayoutBinding.bind(inputView.findViewById(R.id.business_features))
 
-    binding.productShareRvList.also {
+    binding.rvKeyboard.productShareRvList.also {
       it.adapter = this.adapterProductService
       (it.layoutManager as? LinearLayoutManager)?.let { it1 -> it.paginationListenerProduct(it1) }
     }
 
-    binding.updateRvList.also {
+    binding.rvKeyboard.updateRvList.also {
       it.adapter = this.adapterUpdates
       (it.layoutManager as? LinearLayoutManager)?.let { it1 -> it.paginationListenerProduct(it1) }
     }
@@ -149,13 +149,13 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       it.setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
     }
 
-    binding.staffRvList.also {
+    binding.rvKeyboard.staffRvList.also {
       it.layoutManager = GridLayoutManager(mContext, 2, GridLayoutManager.VERTICAL, false)
       it.adapter = this.adapterStaff
       (it.layoutManager as? LinearLayoutManager)?.let { it1 -> it.paginationListenerProduct(it1, false) }
     }
 
-    binding.rvListPhotos.also {
+    binding.rvPhotoView.rvListPhotos.also {
       it.layoutManager = GridLayoutManager(mContext, gridType.countGrid, GridLayoutManager.VERTICAL, false)
       it.adapter = this.adapterPhoto
     }
@@ -225,7 +225,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   private fun loadDataBasesOnTab() {
     resetAdapters()
     binding.lockView.msgLayout.gone()
-    if (session?.getStoreWidgets()?.contains("BOOSTKEYBOARD") == true) {
+    if (session?.getStoreWidgets()?.contains("BOOSTKEYBOARD") == false) {
       binding.businessFeatureProgress.visible()
       when (businessFeatureEnum) {
         BusinessFeatureEnum.INVENTORY_SERVICE -> {
@@ -233,14 +233,14 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
           visibleSelectType(isI = true)
           initializePaging()
           this.adapterProductService.clearList()
-          binding.productShareRvList.removeAllViewsInLayout()
+          binding.rvKeyboard.productShareRvList.removeAllViewsInLayout()
           viewModel.getProducts(session?.fpTag, clientId, offSet, "SINGLE")
         }
         BusinessFeatureEnum.UPDATES -> {
           visibleSelectType(isII = true)
           initializePaging()
           this.adapterUpdates.clearList()
-          binding.updateRvList.removeAllViewsInLayout()
+          binding.rvKeyboard.updateRvList.removeAllViewsInLayout()
           viewModel.getUpdates(session?.fPID, clientId, offSet, limit)
         }
         BusinessFeatureEnum.PHOTOS -> {
@@ -251,6 +251,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         }
         BusinessFeatureEnum.BUSINESS_CARD -> {
           visibleSelectType(isIV = true)
+          viewModel.checkInternetForBusinessCard()
           this.adapterBusinessCard.clearList()
           if (messageBusiness.isEmpty() && _connectedChannels.isEmpty()) getChannelAccessToken(true)
           businessCardDataLoad()
@@ -260,7 +261,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
           if (session?.getStoreWidgets()?.contains("STAFFPROFILE") == true) {
             initializePaging()
             this.adapterStaff.clearList()
-            binding.staffRvList.removeAllViewsInLayout()
+            binding.rvKeyboard.staffRvList.removeAllViewsInLayout()
             viewModel.getStaffList(getFilterRequest(offSet, limit))
           } else {
             binding.businessFeatureProgress.gone()
@@ -323,8 +324,8 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       try {
         mContext.startActivity(Intent(Settings.ACTION_DATA_ROAMING_SETTINGS).apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK; })
       } catch (e: Exception) {
-        Toast.makeText(mContext, "Unable to find network settings. Please do it manually from phone's settings", Toast.LENGTH_LONG).show()
         Log.e(TAG, "updateUiInternetNotAvailable:  ${e.localizedMessage}")
+        Toast.makeText(mContext, "Unable to find network settings. Please do it manually from phone's settings", Toast.LENGTH_LONG).show()
       }
     }
   }
@@ -360,45 +361,33 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   }
 
   private fun visibleSelectType(isI: Boolean = false, isII: Boolean = false, isIII: Boolean = false, isIV: Boolean = false, isV: Boolean = false, isVI: Boolean = false) {
-    binding.productShareRvList.visibility = if (isI) View.VISIBLE else View.GONE
-    binding.updateRvList.visibility = if (isII) View.VISIBLE else View.GONE
-    binding.clSelectionLayout.visibility = if (isIII) View.VISIBLE else View.GONE
-    binding.rvListPhotos.visibility = if (isIII) View.VISIBLE else View.GONE
+    binding.rvKeyboard.productShareRvList.visibility = if (isI) View.VISIBLE else View.GONE
+    binding.rvKeyboard.updateRvList.visibility = if (isII) View.VISIBLE else View.GONE
+    binding.rvPhotoView.root.visibility = if (isIII) View.VISIBLE else View.GONE
     binding.businessCardView.root.visibility = if (isIV) View.VISIBLE else View.GONE
-    binding.staffRvList.visibility = if (isV) View.VISIBLE else View.GONE
+    binding.rvKeyboard.staffRvList.visibility = if (isV) View.VISIBLE else View.GONE
     binding.moreActionView.root.visibility = if (isVI) View.VISIBLE else View.GONE
   }
 
   private fun errorObserveListener() {
-    viewModel.error.observeForever {
-      Log.e(TAG, "errorObserveListener: $it")
+    viewModel.error.observeForever { error ->
+      Log.e(TAG, "errorObserveListener: $error")
       binding.businessFeatureProgress.gone()
-      if (it == Constants.TOKEN_EXPIRED_MESSAGE) {
-        updateUiNotLoginned()
-      } else if (it.contains("failed to connect", ignoreCase = true) || it.contains("Unable to resolve host", ignoreCase = true)) {
-        updateUiInternetNotAvailable()
-      } else {
-        updateUiErrorFetchingInformation()
+      if (error.contains(this.businessFeatureEnum?.name ?: "", ignoreCase = true)) {
+        if (
+          error.contains(Constants.FAILED_TO_CONNECT, ignoreCase = true) ||
+          error.contains(Constants.UNABLE_TO_RESOLVED_HOST, ignoreCase = true) ||
+          error.contains(Constants.NO_INTERNET_CONNECTION, ignoreCase = true)
+        ) updateUiInternetNotAvailable()
+        else if (error.contains(Constants.TOKEN_EXPIRED_MESSAGE, ignoreCase = true)) updateUiNotLoginned()
+        else updateUiErrorFetchingInformation()
       }
     }
   }
 
-  /*private fun apiObserveMerchantSummary() {
-    viewModel.merchantSummary.observeForever {
-      Log.i(TAG, "apiObserveMerchantSummary: " + Gson().toJson(it))
-
-      val productCount = it.getCount(if (session?.isNonPhysicalProductExperienceCode == true)
-        "NoOfServices" else "NoOfProducts")
-      SmartbarView.getSmartViewBinding().
-      businessFeatureTabLayout.getTabAt(1)?.text =
-        "${getProductType(session?.fP_AppExperienceCode ?: "")}" +
-                " (${productCount})"
-
-    }
-  }*/
   private fun apiObserveUserDetails() {
     viewModel.details.observeForever {
-      Log.i(TAG, "apiObserveUserDetails: " + Gson().toJson(it.FPWebWidgets))
+      Log.i(TAG, "apiObserveUserDetails: ${it.FPWebWidgets}")
       it.FPWebWidgets?.let { list ->
         session?.storeFPDetails(Key_Preferences.STORE_WIDGETS, convertListObjToString(list))
         SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).lastSyncTime = System.currentTimeMillis()
@@ -415,7 +404,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         this.photosSet.clear()
         this.photosSet.addAll(it)
         this.photosSet.map { it1 -> it1.gridType = this.gridType }
-        binding.rvListPhotos.layoutManager = GridLayoutManager(mContext, gridType.countGrid, GridLayoutManager.VERTICAL, false)
+        binding.rvPhotoView.rvListPhotos.layoutManager = GridLayoutManager(mContext, gridType.countGrid, GridLayoutManager.VERTICAL, false)
         this.adapterPhoto.notifyNewList(this.photosSet.toList())
         SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(3)?.text = BusinessFeatureEnum.PHOTOS.value + " (${photosSet.size})"
       } else {
@@ -565,32 +554,32 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   }
 
   private fun clickListenerPhoto() {
-    binding.btnSelectGrid.setOnClickListener {
+    binding.rvPhotoView.btnSelectGrid.setOnClickListener {
       tapPhotoSelect = tapPhotoSelect.not()
       visiblePhotoTopView()
     }
-    binding.btnChangeGridLayout.setOnClickListener {
+    binding.rvPhotoView.btnChangeGridLayout.setOnClickListener {
       tapPhotoSelect = tapPhotoSelect.not()
       visiblePhotoTopView()
     }
-    binding.btnShare.setOnClickListener { }
-    binding.photoGridOne.setOnClickListener { adapterNotifyGrid(Photo.ViewGridType.FIRST_GRID) }
-    binding.photoGridTwo.setOnClickListener { adapterNotifyGrid(Photo.ViewGridType.SECOND_GRID) }
-    binding.photoGridThree.setOnClickListener { adapterNotifyGrid(Photo.ViewGridType.THIRD_GRID) }
-    binding.photoGridFour.setOnClickListener { adapterNotifyGrid(Photo.ViewGridType.FOUR_GRID) }
+    binding.rvPhotoView.btnShare.setOnClickListener { }
+    binding.rvPhotoView.photoGridOne.setOnClickListener { adapterNotifyGrid(Photo.ViewGridType.FIRST_GRID) }
+    binding.rvPhotoView.photoGridTwo.setOnClickListener { adapterNotifyGrid(Photo.ViewGridType.SECOND_GRID) }
+    binding.rvPhotoView.photoGridThree.setOnClickListener { adapterNotifyGrid(Photo.ViewGridType.THIRD_GRID) }
+    binding.rvPhotoView.photoGridFour.setOnClickListener { adapterNotifyGrid(Photo.ViewGridType.FOUR_GRID) }
     visiblePhotoTopView()
   }
 
   private fun adapterNotifyGrid(grid: Photo.ViewGridType) {
     this.gridType = grid
     val bacRound = ContextCompat.getDrawable(mContext, R.drawable.ic_mask_bac_f)
-    binding.photoGridOne.apply { setGridImageIcon((gridType == Photo.ViewGridType.FIRST_GRID), bacRound) }
-    binding.photoGridTwo.apply { setGridImageIcon(gridType == Photo.ViewGridType.SECOND_GRID, bacRound) }
-    binding.photoGridThree.apply { setGridImageIcon(gridType == Photo.ViewGridType.THIRD_GRID, bacRound) }
-    binding.photoGridFour.apply { setGridImageIcon(gridType == Photo.ViewGridType.FOUR_GRID, bacRound) }
-    binding.imgGridImage.setImageResource(this.gridType.icon)
+    binding.rvPhotoView.photoGridOne.apply { setGridImageIcon((gridType == Photo.ViewGridType.FIRST_GRID), bacRound) }
+    binding.rvPhotoView.photoGridTwo.apply { setGridImageIcon(gridType == Photo.ViewGridType.SECOND_GRID, bacRound) }
+    binding.rvPhotoView.photoGridThree.apply { setGridImageIcon(gridType == Photo.ViewGridType.THIRD_GRID, bacRound) }
+    binding.rvPhotoView.photoGridFour.apply { setGridImageIcon(gridType == Photo.ViewGridType.FOUR_GRID, bacRound) }
+    binding.rvPhotoView.imgGridImage.setImageResource(this.gridType.icon)
     this.photosSet.map { it.gridType = this.gridType }
-    binding.rvListPhotos.layoutManager = GridLayoutManager(mContext, gridType.countGrid, GridLayoutManager.VERTICAL, false)
+    binding.rvPhotoView.rvListPhotos.layoutManager = GridLayoutManager(mContext, gridType.countGrid, GridLayoutManager.VERTICAL, false)
     this.adapterPhoto.notifyDataSetChanged()
   }
 
@@ -867,7 +856,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
               count += 1
               if (selectedImage.size == count && currentSelectedFeature == BusinessFeatureEnum.PHOTOS) {
                 doCommitContentMultiple(imageUriArray)
-                binding.btnCancel.performClick()
+                binding.rvPhotoView.btnCancel.performClick()
               }
               listenerRequest = null
               return false
@@ -879,7 +868,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
               count += 1
               if (selectedImage.size == count && currentSelectedFeature == BusinessFeatureEnum.PHOTOS) {
                 doCommitContentMultiple(imageUriArray)
-                binding.btnCancel.performClick()
+                binding.rvPhotoView.btnCancel.performClick()
               }
               listenerRequest = null
               return false
@@ -920,22 +909,22 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   }
 
   private fun updateLayout() {
-    binding.btnImageShare.setOnClickListener { multipleImageToUriListGet() }
-    binding.btnCancel.setOnClickListener { removeSelected() }
+    binding.rvPhotoView.btnImageShare.setOnClickListener { multipleImageToUriListGet() }
+    binding.rvPhotoView.btnCancel.setOnClickListener { removeSelected() }
     visiblePhotoTopView()
   }
 
   private fun visiblePhotoTopView() {
     val selectedPhoto = photosSet.filter { it.selected }
     if (selectedPhoto.isNotEmpty()) {
-      binding.tabPhotoView.gone()
-      binding.changePhotoGridView.gone()
-      binding.containerShareImage.visible()
-      binding.btnImageShare.text = "Share ${selectedPhoto.size} ${if (selectedPhoto.size > 1) "images" else "image"}"
+      binding.rvPhotoView.tabPhotoView.gone()
+      binding.rvPhotoView.changePhotoGridView.gone()
+      binding.rvPhotoView.containerShareImage.visible()
+      binding.rvPhotoView.btnImageShare.text = "Share ${selectedPhoto.size} ${if (selectedPhoto.size > 1) "images" else "image"}"
     } else {
-      binding.containerShareImage.gone()
-      binding.changePhotoGridView.visibility = if (tapPhotoSelect) View.GONE else View.VISIBLE
-      binding.tabPhotoView.visibility = if (tapPhotoSelect) View.VISIBLE else View.GONE
+      binding.rvPhotoView.containerShareImage.gone()
+      binding.rvPhotoView.changePhotoGridView.visibility = if (tapPhotoSelect) View.GONE else View.VISIBLE
+      binding.rvPhotoView.tabPhotoView.visibility = if (tapPhotoSelect) View.VISIBLE else View.GONE
     }
   }
 

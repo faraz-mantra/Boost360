@@ -69,7 +69,7 @@
       android:layout_height="match_parent"
       app:tabIndicatorColor="@color/accent_blue"
       app:tabMode="scrollable"
-      app:tabIconTint="@color/accent_blue"
+      app:tabInlineLabel="true"
       app:tabSelectedTextColor="@color/accent_blue"
       app:tabTextColor="@color/black_4a4a4a">
 

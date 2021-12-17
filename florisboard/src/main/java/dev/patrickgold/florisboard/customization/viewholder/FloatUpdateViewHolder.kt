@@ -2,6 +2,7 @@ package dev.patrickgold.florisboard.customization.viewholder
 
 import android.view.View
 import androidx.core.content.ContextCompat
+import com.appservice.utils.capitalizeUtil
 import com.bumptech.glide.Glide
 import com.framework.utils.DateUtils.KEYBOARD_DISPLAY_DATE
 import com.framework.utils.DateUtils.getDate
