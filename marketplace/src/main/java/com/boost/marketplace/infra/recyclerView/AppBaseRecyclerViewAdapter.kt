@@ -31,8 +31,14 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       BUSINESS_SETUP_ITEM_VIEW -> BusinessSetupViewHolder(binding as ItemBusinessManagementDBinding)
       PROMO_BANNER ->MarketPlacePromoBannerViewHolder(binding as ItemPromoBannerBinding)
       FEATURES_BY_CATEGORY->FeaturesByCategoryViewHolder(binding as ItemFeaturesByCategoryBinding)
+      MARKETPLACE_OFFERS->MarketPlaceOfferDetailsViewHolder(binding as ItemMarketplaceoffersInfoBinding)
+      MARKETPLACE_OFFERS->MarketPlaceOfferTermsViewHolder(binding as ItemMarketplaceoffersInfoBinding)
+
+
     }
   }
+
+
 
   fun runLayoutAnimation(
     recyclerView: RecyclerView?,

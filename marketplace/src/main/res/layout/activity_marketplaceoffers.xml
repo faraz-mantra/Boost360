@@ -387,7 +387,7 @@
                                 android:background="@color/transparent"
                                 android:overScrollMode="never"
                                 tools:itemCount="2"
-                                tools:listitem="@layout/marketplaceoffers_info_item" />
+                                tools:listitem="@layout/item_marketplaceoffers_info" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -435,7 +435,7 @@
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     tools:itemCount="2"
-                                    tools:listitem="@layout/marketplaceoffers_info_item" />
+                                    tools:listitem="@layout/item_marketplaceoffers_info" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </LinearLayout>

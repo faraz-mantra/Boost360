@@ -13,5 +13,6 @@ import com.boost.marketplace.R
       BUSINESS_SETUP_ITEM_VIEW -> R.layout.item_business_management_d
       PROMO_BANNER ->R.layout.item_promo_banner
       FEATURES_BY_CATEGORY ->R.layout.item_features_by_category
+      MARKETPLACE_OFFERS ->R.layout.item_marketplaceoffers_info
     }
   }
