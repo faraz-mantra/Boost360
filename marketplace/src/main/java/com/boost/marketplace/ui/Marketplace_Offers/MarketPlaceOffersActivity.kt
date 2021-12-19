@@ -1,53 +1,70 @@
 package com.boost.marketplace.ui.Marketplace_Offers
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.marketplace.R
-import com.boost.marketplace.databinding.MarketplaceoffersBinding
-import kotlinx.android.synthetic.main.marketplaceoffers.*
+import com.boost.marketplace.base.AppBaseActivity
+import com.boost.marketplace.databinding.ActivityMarketplaceoffersBinding
 
 
-class MarketPlaceOffersActivity : AppCompatActivity() {
+class MarketPlaceOffersActivity : AppBaseActivity<ActivityMarketplaceoffersBinding, MarketPlaceOffersViewModel>() {
 
-    lateinit var binding: MarketplaceoffersBinding
+    override fun getLayout(): Int {
+        return R.layout.activity_marketplaceoffers
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-      binding= DataBindingUtil.setContentView(this, R.layout.activity_marketplaceoffers)
 
-        initializeDetailsRecycler()
-        initializeTermsRecycler()
 
-        binding.dateFromToLayout.setOnClickListener {
-
-        }
-        binding.availCouponSubmit.setOnClickListener {
-
-        }
-
-        binding.packageBack.setOnClickListener {
-
-        }
-        binding.help.setOnClickListener {
-
-        }
     }
 
-    private fun initializeDetailsRecycler() {
-        val gridLayoutManager = LinearLayoutManager(MarketPlaceOffersActivity())
-        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        recyclerOfferDetails.apply {
-            layoutManager = gridLayoutManager
-        }
+    override fun getViewModelClass(): Class<MarketPlaceOffersViewModel> {
+        return MarketPlaceOffersViewModel::class.java
     }
 
-    private fun initializeTermsRecycler() {
-        val gridLayoutManager = LinearLayoutManager(MarketPlaceOffersActivity())
-        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        recyclerTerms.apply {
-            layoutManager = gridLayoutManager
-        }
-    }
+
+
+
+
 }
+
+
+
+
+
+//    lateinit var binding: MarketPlaceOffersActivity
+
+  //  override fun onCreate(savedInstanceState: Bundle?) {
+     //   super.onCreate(savedInstanceState)
+    //  binding= DataBindingUtil.setContentView(this, R.layout.activity_marketplaceoffers)
+//
+//        initializeDetailsRecycler()
+//        initializeTermsRecycler()
+//
+//        binding.dateFromToLayout.setOnClickListener {
+//
+//        }
+//        binding.availCouponSubmit.setOnClickListener {
+//
+//        }
+//
+//        binding.package_back.setOnClickListener {
+//
+//        }
+//        binding.help.setOnClickListener {
+//
+//        }
+//    }
+//
+//    private fun initializeDetailsRecycler() {
+//        val gridLayoutManager = LinearLayoutManager(MarketPlaceOffersActivity())
+//        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+//        recyclerOfferDetails.apply {
+//            layoutManager = gridLayoutManager
+//        }
+//    }
+//
+//    private fun initializeTermsRecycler() {
+//        val gridLayoutManager = LinearLayoutManager(MarketPlaceOffersActivity())
+//        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+//        recyclerTerms.apply {
+//            layoutManager = gridLayoutManager
+//        }
+//    }
+//}
