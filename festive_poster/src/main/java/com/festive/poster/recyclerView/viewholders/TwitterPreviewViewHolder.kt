@@ -6,7 +6,7 @@ import com.festive.poster.models.promoModele.SocialPreviewModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 
-class TwitterPreviewViewPagerViewHolder(binding: SocialPreviewTwitterBinding) :
+class TwitterPreviewViewHolder(binding: SocialPreviewTwitterBinding) :
     AppBaseRecyclerViewHolder<SocialPreviewTwitterBinding>(binding) {
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {

@@ -17,8 +17,10 @@ class SocialPreviewModel(
         fun getData(): ArrayList<SocialPreviewModel> {
             return arrayListOf(
                 SocialPreviewModel("","",RecyclerViewItemType.VIEWPAGER_TWITTER_PREVIEW.getLayout()),
-                SocialPreviewModel("","",RecyclerViewItemType.VIEWPAGER_TWITTER_PREVIEW.getLayout()),
-                SocialPreviewModel("","",RecyclerViewItemType.VIEWPAGER_TWITTER_PREVIEW.getLayout())
+                SocialPreviewModel("","",RecyclerViewItemType.FB_PREVIEW.getLayout()),
+                SocialPreviewModel("","",RecyclerViewItemType.WEBSITE_PREVIEW.getLayout()),
+                SocialPreviewModel("","",RecyclerViewItemType.GMB_PREVIEW.getLayout())
+
             )
         }
     }
