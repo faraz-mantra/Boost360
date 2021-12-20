@@ -1,5 +1,6 @@
 package com.boost.marketplace.infra.recyclerView
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
@@ -28,12 +29,14 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     val binding = getViewDataBinding(inflater,  getLayout(recyclerViewItemType), parent)
     return when (recyclerViewItemType) {
       PAGINATION_LOADER -> PagingViewHolder(binding as PaginationLoaderBinding)
-      BUSINESS_SETUP_ITEM_VIEW -> BusinessSetupViewHolder(binding as ItemBusinessManagementDBinding)
       PROMO_BANNER ->MarketPlacePromoBannerViewHolder(binding as ItemPromoBannerBinding)
       FEATURES_BY_CATEGORY->FeaturesByCategoryViewHolder(binding as ItemFeaturesByCategoryBinding)
+      PACKS -> PacksViewHolder(binding as ItemPacksBinding)
+      VIDEOS -> VideosViewHolder(binding as ItemVideosBinding)
     }
   }
 
+  @SuppressLint("NotifyDataSetChanged")
   fun runLayoutAnimation(
     recyclerView: RecyclerView?,
     anim: Int = R.anim.layout_animation_fall_down
@@ -55,6 +58,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     list?.let { updateList(it) }
   }
 
+  @SuppressLint("NotifyDataSetChanged")
   open fun addItems(addList: ArrayList<T>?) {
     addList?.let { list.addAll(it) }
     notifyDataSetChanged()
