@@ -5,6 +5,7 @@ import com.festive.poster.databinding.ItemSocialPlatformPromoAdapBinding
 import com.festive.poster.models.promoModele.SocialPlatformModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
+import com.festive.poster.utils.isPromoWidgetActive
 import com.framework.extensions.gone
 import com.framework.extensions.invisible
 import com.framework.extensions.visible
@@ -18,7 +19,7 @@ class SocialPlatformOptionListViewHolder(binding: ItemSocialPlatformPromoAdapBin
         binding.ivSocialIcon.setImageDrawable(model.icon)
         binding.tvSocialTitle.text = model.socialTitle ?: ""
         binding.checkboxSocialSelected.isChecked = model.isChecked ?: false
-        binding.checkboxSocialSelected.isEnabled = model.isEnabled == true
+        binding.checkboxSocialSelected.isEnabled =  model.isEnabled == true
 
         if (model.isConnected == true) {
             binding.ivLock.invisible()

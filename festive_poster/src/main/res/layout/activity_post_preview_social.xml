@@ -25,8 +25,9 @@
 
             <com.framework.views.customViews.CustomImageView
                 android:id="@+id/iv_close_preview"
-                android:layout_width="@dimen/size_12"
-                android:layout_height="@dimen/size_12"
+                android:padding="@dimen/size_4"
+                android:layout_width="@dimen/size_20"
+                android:layout_height="@dimen/size_20"
                 android:src="@drawable/cross_nv_new" />
 
             <com.framework.views.customViews.CustomTextView
@@ -55,18 +56,26 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white_F5F7FA">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_post_preview"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/size_343"
+                <RelativeLayout
+                    android:id="@+id/previews"
                     android:background="@color/grey_DADADA"
-                    android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:itemCount="6"
-                    tools:listitem="@layout/item_social_preview_viewpager" />
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_343">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_centerInParent="true"
+                        android:id="@+id/rv_post_preview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="6"
+                        tools:listitem="@layout/social_preview_fb" />
+
+                </RelativeLayout>
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tv_preview_title"
@@ -79,7 +88,7 @@
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="@dimen/text_16"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_post_preview" />
+                    app:layout_constraintTop_toBottomOf="@+id/previews" />
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tv_selected"
@@ -105,7 +114,7 @@
                     android:theme="@style/progressBar"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_post_preview" />
+                    app:layout_constraintTop_toBottomOf="@+id/previews" />
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_social_platforms"
                     android:layout_width="0dp"

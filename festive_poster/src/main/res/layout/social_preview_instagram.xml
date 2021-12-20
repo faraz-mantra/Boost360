@@ -28,7 +28,13 @@
                     android:layout_height="20dp"
                     app:cardCornerRadius="@dimen/size_15"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" >
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="match_parent"
+                        android:src="@drawable/ic_fposter_profile_img_placeholder"
+                        android:layout_height="match_parent"/>
+                </com.framework.views.customViews.CustomCardView>
 
 
                 <com.framework.views.customViews.CustomImageView

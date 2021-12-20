@@ -31,35 +31,30 @@ import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.utils.isPromoWidgetActive
 import com.festive.poster.viewmodels.PostUpdatesViewModel
-import com.framework.base.BaseActivity
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.BaseViewModel
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.getDomainName
 import com.framework.utils.convertStringToObj
 import com.framework.utils.saveAsTempFile
+import com.framework.utils.toArrayList
 import com.framework.webengageconstant.EVENT_LABEL_NULL
 import com.framework.webengageconstant.POST_AN_UPDATE
 import com.google.gson.Gson
-import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.constant.PreferenceConstant
 import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.RequestFloatsModel
 import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
-import com.onboarding.nowfloats.model.channel.request.ChannelActionData
 import com.onboarding.nowfloats.model.channel.statusResponse.CHANNEL_STATUS_SUCCESS
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelsType
 import com.onboarding.nowfloats.rest.response.category.ResponseDataCategory
-import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
-import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.WA_KEY
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -68,7 +63,8 @@ import kotlin.collections.ArrayList
 
 class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBinding, PostUpdatesViewModel>(), RecyclerItemClickListener {
 
-    private var uiChannelList: ArrayList<SocialPlatformModel>?=null
+    private var uiChBoxChannelList: ArrayList<SocialPlatformModel>?=null
+    private var uiPreviewChannelList: ArrayList<SocialPreviewModel>?=null
     private var posterProgressSheet: PostingProgressBottomSheet?=null
     private var connectedChannels: ArrayList<String> = arrayListOf()
     private var session:UserSessionManager?=null
@@ -135,12 +131,10 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
         setChannels()
 
-        val socialPreviewModel = SocialPreviewModel.getData()
-        binding?.rvPostPreview?.apply {
-            adapter  = AppBaseRecyclerViewAdapter(this@PostPreviewSocialActivity, socialPreviewModel, this@PostPreviewSocialActivity)
-        }
 
-        isUserPremium(isPromoWidgetActive())
+
+
+        isUserPremium(true)
     }
 
     private fun isUserPremium(isUserPremium:Boolean = false){
@@ -167,6 +161,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
         when(actionType){
             RecyclerViewActionType.SOCIAL_CHANNEL_CHECK_CLICKED.ordinal->{
+                uiPreviewChannelList?.get(position)?.shouldShow = uiChBoxChannelList?.get(position)?.isChecked == true
+                setupPreviewList()
                 binding?.tvSelected?.text = getString(R.string.placeholder_selected,getCheckedChannelCount())
 
             }
@@ -194,7 +190,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         binding?.rvSocialPlatforms?.apply {
             adapter = AppBaseRecyclerViewAdapter(
                 this@PostPreviewSocialActivity,
-                uiChannelList!!,
+                uiChBoxChannelList!!,
                 this@PostPreviewSocialActivity
             )
         }
@@ -205,7 +201,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     }
 
     fun getCheckedChannelCount(): Int {
-       return uiChannelList?.filter { it.isEnabled==true }?.size?:0
+       return uiChBoxChannelList?.filter { it.isChecked==true }?.size?:0
     }
     private fun getChannelsFromJson() {
         binding?.progressBar?.visible()
@@ -262,7 +258,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         floatingPoint: String?,
         fpTag: String?
     ) {
-        uiChannelList= ArrayList()
+        uiChBoxChannelList= ArrayList()
+        uiPreviewChannelList = ArrayList()
         val requestFloatsNew = RequestFloatsModel()
         requestFloatsNew.categoryDataModel = categoryData
         requestFloatsNew.isUpdate = true
@@ -279,6 +276,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             var subTitle:String?=null
             var isConnected=false
             var isEnabled=false
+            var layout_id=-1
             requestFloatsNew.categoryDataModel?.channels?.forEach { it1 ->
                 /*if (it1.isWhatsAppChannel()){
                     return
@@ -286,9 +284,11 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                 if (it1.type==ChannelType.G_SEARCH.name){
                     isConnected=true
                     isEnabled = false
+                    layout_id = RecyclerViewItemType.WEBSITE_PREVIEW.getLayout()
                     subTitle=session?.getDomainName(false)
                 }else{
                     subTitle=null
+                    layout_id = -1
                     isEnabled=true
                     isConnected=false
                 }
@@ -312,7 +312,11 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                                 it1.isSelected = true
                                 it1.channelAccessToken = data
                                 connectedChannels?.add(ChannelsType.AccountType.facebookpage.name)
+
+                                layout_id = RecyclerViewItemType.FB_PREVIEW.getLayout()
+
                             }
+
                         }
                         it1.getAccessTokenType() == ChannelsType.AccountType.facebookshop.name -> {
                             val fpShop = channelsAccessToken.facebookshop
@@ -354,6 +358,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                                 it1.isSelected = true
                                 it1.channelAccessToken = data
                                 connectedChannels.add(ChannelsType.AccountType.twitter.name)
+                                layout_id = RecyclerViewItemType.VIEWPAGER_TWITTER_PREVIEW.getLayout()
+
                             }
                         }
                         it1.getAccessTokenType() == ChannelsType.AccountType.googlemybusiness.name -> {
@@ -383,6 +389,9 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                                 it1.isSelected = true
                                 it1.channelAccessToken = data
                                 connectedChannels.add(ChannelsType.AccountType.googlemybusiness.name)
+
+                                layout_id = RecyclerViewItemType.GMB_PREVIEW.getLayout()
+
                             }
                         }
                     }
@@ -390,18 +399,30 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                 }
 
                 if (shouldAddToChannelList(it1)){
-                    uiChannelList?.add(SocialPlatformModel(title,subTitle,isEnabled,isConnected,isConnected).apply {
+                    uiChBoxChannelList?.add(SocialPlatformModel(title,subTitle,isEnabled,isConnected,isConnected).apply {
                         generateImageResource(it1.getType(),this@PostPreviewSocialActivity)
                     })
+
+                    uiPreviewChannelList?.add(SocialPreviewModel(posterModel!!,title,captionIntent,layout_id,isConnected))
                 }
             }
+
             if (categoryData?.channels.isNullOrEmpty()){
                 showLongToast(getString(R.string.channel_not_found))
             }else{
                 fetchSubscriberCount()
             }
 
+            setupPreviewList()
+
      //   getWhatsAppData(requestFloatsNew, channelsAccessToken)
+    }
+
+    private fun setupPreviewList() {
+        val filteredList = uiPreviewChannelList?.filter { it.shouldShow && it.layout_id!=-1 }?.toArrayList()
+        binding?.rvPostPreview?.apply {
+            adapter  = AppBaseRecyclerViewAdapter(this@PostPreviewSocialActivity, filteredList!!, this@PostPreviewSocialActivity)
+        }
     }
 
     private fun shouldAddToChannelList(channel: ChannelModel): Boolean {
@@ -494,7 +515,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
            if (twitterSharingEnabled.value == true) socialShare += "TWITTER."*/
         val merchantId = if (session?.iSEnterprise == "true") null else session?.fPID
         val parentId = if (session?.iSEnterprise == "true") session?.fPParentId else null
-        val sendToSubscribe = uiChannelList?.find { it.socialTitle==getString(R.string.email_sub) }?.isChecked
+        val sendToSubscribe = uiChBoxChannelList?.find { it.socialTitle==getString(R.string.email_sub) }?.isChecked
         val request = PostUpdateTaskRequest(
             clientId,
             captionIntent,
@@ -542,7 +563,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             }else{
                 getString(R.string.placeholder_recipients,subscriber)
             }
-            uiChannelList?.add(SocialPlatformModel(getString(R.string.email_sub),subTitle,true,true,true).apply {
+            uiChBoxChannelList?.add(SocialPlatformModel(getString(R.string.email_sub),subTitle,true,true,true).apply {
                 icon =getDrawable(R.drawable.ic_promo_emailers)
             })
 

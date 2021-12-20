@@ -29,13 +29,19 @@
                     app:cardCornerRadius="@dimen/size_15"
                     app:layout_constraintBottom_toBottomOf="@+id/customTextView12"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" >
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="match_parent"
+                        android:src="@drawable/ic_fposter_profile_img_placeholder"
+                        android:layout_height="match_parent"/>
+                </com.framework.views.customViews.CustomCardView>
 
 
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/customImageView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/size_10"
+                    android:layout_height="@dimen/size_10"
                     android:src="@drawable/ic_arrow_down_grey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -43,7 +49,7 @@
 
 
                 <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/customTextView9"
+                    android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -61,10 +67,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:textSize="@dimen/size_7"
-                    app:layout_constraintBottom_toBottomOf="@+id/customTextView9"
-                    app:layout_constraintStart_toEndOf="@+id/customTextView9"
-                    app:layout_constraintTop_toTopOf="@+id/customTextView9"
-                    tools:text="payaljain" />
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+                    app:layout_constraintStart_toEndOf="@+id/tv_title"
+                    app:layout_constraintTop_toTopOf="@+id/tv_title"
+                    tools:text="" />
 
 
                 <com.framework.views.customViews.CustomTextView
@@ -96,13 +102,13 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/regular"
                     android:textSize="6dp"
-                    app:layout_constraintStart_toStartOf="@+id/customTextView9"
-                    app:layout_constraintTop_toBottomOf="@+id/customTextView9"
-                    tools:text="Bangalore" />
+                    app:layout_constraintStart_toStartOf="@+id/tv_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                    android:text="Bangalore" />
 
 
                 <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/customTextView13"
+                    android:id="@+id/tv_caption"
                     android:layout_width="match_parent"
                     android:textSize="6sp"
                     android:layout_height="wrap_content"
@@ -114,12 +120,12 @@
 #bigbilliondays #smile #2020 " />
 
                 <com.framework.views.customViews.CustomImageView
-                    android:id="@+id/customImageView3"
+                    android:id="@+id/iv_svg"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="16dp"
                     app:layout_constraintHeight_percent="0.4"
-                    app:layout_constraintTop_toBottomOf="@+id/customTextView13" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_caption" />
 
 
                 <LinearLayout
@@ -131,7 +137,7 @@
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toStartOf="@+id/customImageView4"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/customImageView3">
+                    app:layout_constraintTop_toBottomOf="@+id/iv_svg">
 
                     <com.framework.views.customViews.CustomImageView
                         android:layout_width="@dimen/size_15"

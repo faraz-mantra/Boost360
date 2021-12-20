@@ -30,13 +30,13 @@
                     android:textSize="6sp"
                     android:id="@+id/tv_caption"
                     app:fontFamily="@font/regular_medium"
-                    app:layout_constraintTop_toBottomOf="@+id/customImageView3"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_svg"
                     tools:text="50 to 60 percent off the entire site and store for Black Friday. Above that, you have free shipiing on all orders, plus an extra 20.
 
 #bigbilliondays #smile #2020 " />
 
                 <com.framework.views.customViews.CustomImageView
-                    android:id="@+id/customImageView3"
+                    android:id="@+id/iv_svg"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="16dp"
