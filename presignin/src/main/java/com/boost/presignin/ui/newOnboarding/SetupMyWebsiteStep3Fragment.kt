@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.inputmethod.EditorInfo
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import com.appservice.utils.capitalizeUtil
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
@@ -273,6 +275,8 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
   private fun websiteNameFieldUiVisibility(websiteNameFieldVisibility: Int = 0) {
     when (websiteNameFieldVisibility) {
       1 -> {
+        val layoutParams = binding?.addressInputLayout?.etInput?.layoutParams as? ConstraintLayout.LayoutParams
+        layoutParams?.width = ConstraintSet.WRAP_CONTENT
         binding?.addressInputLayout?.etInput?.isEnabled = false
         binding?.tvNextStep3?.isEnabled = true
         binding?.tvNameNotAvailableError?.gone()
@@ -284,6 +288,8 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         binding?.tvNextStep3?.text = getString(R.string.launch_my_website)
       }
       2 -> {
+        val layoutParams = binding?.addressInputLayout?.etInput?.layoutParams as? ConstraintLayout.LayoutParams
+        layoutParams?.width = ConstraintSet.WRAP_CONTENT
         binding?.addressInputLayout?.etInput?.isEnabled = false
         binding?.tvNextStep3?.isEnabled = false
         binding?.tvNameNotAvailableError?.visible()
@@ -295,6 +301,9 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         binding?.tvNextStep3?.text = getString(R.string.launch_my_website)
       }
       else -> {
+        val layoutParams = binding?.addressInputLayout?.etInput?.layoutParams as? ConstraintLayout.LayoutParams
+        layoutParams?.width = ConstraintSet.MATCH_CONSTRAINT
+        binding?.addressInputLayout?.etInput?.layoutParams = layoutParams
         binding?.addressInputLayout?.etInput?.isEnabled = true
         binding?.tvNameNotAvailableError?.gone()
         binding?.linearSecureWrapper?.gone()
