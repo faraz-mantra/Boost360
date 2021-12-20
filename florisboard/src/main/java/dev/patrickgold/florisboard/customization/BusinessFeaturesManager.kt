@@ -241,13 +241,14 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       when (businessFeatureEnum) {
         BusinessFeatureEnum.INVENTORY_SERVICE -> {
           SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(tagPosition)?.text = getProductType(session?.fP_AppExperienceCode ?: "")
-          visibleSelectType(isI = true)
           initializePaging()
           if (isProductType(session?.fP_AppExperienceCode)) {
+            visibleSelectType(isIP = true)
             this.adapterProduct.clearList()
             binding.rvKeyboard.productRvList.removeAllViewsInLayout()
             viewModel.getProducts(session?.fpTag, clientId, offSet, "SINGLE")
           } else {
+            visibleSelectType(isIS = true)
             this.adapterService.clearList()
             binding.rvKeyboard.serviceRvList.removeAllViewsInLayout()
             viewModel.getServices(session?.fpTag, session?.fPID, offset = offSet, limit = limit)
@@ -377,9 +378,12 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     binding.lockView.msgBtn.setOnClickListener { startStaffActivity(mContext) }
   }
 
-  private fun visibleSelectType(isI: Boolean = false, isII: Boolean = false, isIII: Boolean = false, isIV: Boolean = false, isV: Boolean = false, isVI: Boolean = false) {
-    binding.rvKeyboard.productRvList.visibility = if (isI) View.VISIBLE else View.GONE
-    binding.rvKeyboard.serviceRvList.visibility = if (isI) View.VISIBLE else View.GONE
+  private fun visibleSelectType(
+    isIP: Boolean = false, isIS: Boolean = false, isII: Boolean = false, isIII: Boolean = false,
+    isIV: Boolean = false, isV: Boolean = false, isVI: Boolean = false
+  ) {
+    binding.rvKeyboard.productRvList.visibility = if (isIP) View.VISIBLE else View.GONE
+    binding.rvKeyboard.serviceRvList.visibility = if (isIS) View.VISIBLE else View.GONE
     binding.rvKeyboard.updateRvList.visibility = if (isII) View.VISIBLE else View.GONE
     binding.rvPhotoView.root.visibility = if (isIII) View.VISIBLE else View.GONE
     binding.businessCardView.root.visibility = if (isIV) View.VISIBLE else View.GONE
@@ -758,7 +762,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   private fun shareUpdates(item: BaseRecyclerItem) {
     val float = item as? FloatUpdate
     if (NetworkUtils.isNetworkConnected()) {
-      val templateBuilder=session?.shareUpdates(float?.message!!, float.url, session?.userProfileMobile, float.imageUri)
+      val templateBuilder = session?.shareUpdates(float?.message!!, float.url, session?.userProfileMobile, float.imageUri)
       pathToUriGet(float?.imageUri, templateBuilder.toString(), BusinessFeatureEnum.UPDATES)
     } else Toast.makeText(mContext, mContext.getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
   }
