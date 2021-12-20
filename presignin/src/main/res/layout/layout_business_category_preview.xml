@@ -156,7 +156,7 @@
         android:visibility="gone" />
     </FrameLayout>
 
-    <com.framework.views.customViews.CustomTextView
+    <com.framework.views.customViews.CustomMaterialButton
       android:id="@+id/tv_next_step"
       style="@style/yellow_squared_button"
       android:text="@string/next"

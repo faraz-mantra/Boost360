@@ -138,7 +138,7 @@
 
     </LinearLayout>
 
-    <com.framework.views.customViews.CustomTextView
+    <com.framework.views.customViews.CustomMaterialButton
       android:id="@+id/tv_verify_otp"
       style="@style/yellow_squared_button"
       android:enabled="false"

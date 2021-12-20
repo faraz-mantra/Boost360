@@ -95,7 +95,7 @@
     </FrameLayout>
 
 
-    <com.framework.views.customViews.CustomTextView
+    <com.framework.views.customViews.CustomMaterialButton
       android:id="@+id/tv_launch_dashboard"
       style="@style/yellow_squared_button"
       android:enabled="true"
