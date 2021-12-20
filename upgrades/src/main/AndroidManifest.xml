@@ -6,7 +6,7 @@
     <application>
         <activity
             android:name=".UpgradeActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/BoostUpgradeScreenStyle"
             android:windowSoftInputMode="adjustResize" />

@@ -189,7 +189,9 @@ class OrderConfirmationFragment : BaseFragment() {
 
   private fun goToAddOnsFragment() {
     try {
-      val intent = Intent(context, Class.forName("com.boost.upgrades.UpgradeActivity"))
+//      val intent = Intent(context, Class.forName("com.boost.upgrades.UpgradeActivity"))
+      val intent = Intent(context, Class.forName("com.dashboard.controller.DashboardActivity"))
+      intent.putExtra("navigateTo", "upgrades")
       intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       intent.putExtra("isComingFromOrderConfirmActivation",true)
       intent.putExtra("expCode", session?.fP_AppExperienceCode)

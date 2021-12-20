@@ -265,6 +265,23 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun intentDataCheckAndDeepLink(intent: Intent?) {
     Log.i(TAG, "intentDataCheckAndDeepLink: ")
     if (intent?.extras != null) {
+      if(intent.extras!!.containsKey("navigateTo")){
+        var intentActivity = Intent()
+        when(intent.getStringExtra("navigateTo")){
+          "upgrades" ->{
+            intentActivity = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
+          }
+          "cart" ->{
+            intentActivity = Intent(this, Class.forName("com.boost.cart.CartActivity"))
+          }
+          "payment" ->{
+            intentActivity = Intent(this, Class.forName("com.boost.payment.PaymentActivity"))
+          }
+        }
+        intentActivity.putExtras(intent)
+        startActivity(intentActivity)
+        return
+      }
       if (intent.extras!!.containsKey("url")) mDeepLinkUrl = intent.extras!!.getString("url")
       if (intent.extras!!.containsKey("payload")) mPayload = intent.extras!!.getString("payload")
     }
