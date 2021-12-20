@@ -4,25 +4,26 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white_F5F8FD"
-    tools:context=".ui.newOnboarding.EnterPhoneFragment">
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/white_F5F8FD"
+      android:fitsSystemWindows="true"
+      tools:context=".ui.newOnboarding.EnterPhoneFragment">
 
     <com.framework.views.customViews.CustomTextView
-      android:id="@+id/subheading_phone"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/size_8"
-      android:gravity="start"
-      android:text="@string/use_your_phone_number_to_login"
-      android:textAlignment="gravity"
-      android:textColor="@color/black_2A2A2A"
-      android:textSize="@dimen/body_1"
-      app:fontFamily="@font/inter_regular"
-      app:layout_constraintEnd_toStartOf="@+id/endGuide"
-      app:layout_constraintStart_toEndOf="@+id/startGuide"
-      app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/subheading_phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_8"
+        android:fontFamily="@font/regular"
+        android:gravity="start"
+        android:text="@string/use_your_phone_number_to_login"
+        android:textAlignment="gravity"
+        android:textColor="@color/black_2A2A2A"
+        android:textSize="@dimen/body_1"
+        app:layout_constraintEnd_toStartOf="@+id/endGuide"
+        app:layout_constraintStart_toEndOf="@+id/startGuide"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
       android:id="@+id/phone_et_container"
@@ -37,13 +38,13 @@
       app:layout_constraintTop_toBottomOf="@id/subheading_phone">
 
       <com.framework.views.customViews.CustomTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_16"
-        android:text="@string/_91_plus"
-        android:textColor="@color/black"
-        android:textSize="@dimen/body_2"
-        app:fontFamily="@font/inter_semi_bold" />
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_16"
+          android:fontFamily="@font/semi_bold"
+          android:text="@string/_91_plus"
+          android:textColor="@color/black"
+          android:textSize="@dimen/body_2" />
 
       <View
         android:layout_width="1dp"
@@ -53,65 +54,68 @@
         android:background="@color/white_ECEFF1" />
 
       <com.framework.views.customViews.CustomEditText
-        android:id="@+id/phone_et"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_16"
-        android:background="@null"
-        android:digits="0123456789"
-        android:hint="XXX-XXX-XXXXX"
-        android:inputType="phone"
-        android:letterSpacing="0.07"
-        android:maxLength="10"
-        android:textColor="@color/black"
-        android:textCursorDrawable="@drawable/cursor_drawable"
-        android:textSize="@dimen/body_2"
-        app:fontFamily="@font/inter_semi_bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/subheading" />
+          android:id="@+id/phone_et"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_16"
+          android:background="@null"
+          android:digits="0123456789"
+          android:fontFamily="@font/semi_bold"
+          android:hint="@string/_940558450"
+          android:inputType="phone"
+          android:letterSpacing="0.07"
+          tools:text="98763729272"
+          android:maxLength="10"
+          android:textColor="@color/black"
+          android:textColorHint="@color/gray_DADADA"
+          android:textCursorDrawable="@drawable/cursor_drawable"
+          android:textSize="@dimen/body_2"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/subheading" />
 
     </LinearLayout>
 
 
-    <!--    <com.framework.views.customViews.CustomTextView-->
-    <!--      android:id="@+id/tv_login_with_email"-->
-    <!--      android:layout_width="0dp"-->
-    <!--      android:layout_height="wrap_content"-->
-    <!--      android:layout_marginTop="16dp"-->
-    <!--      android:gravity="center"-->
-    <!--      android:text="@string/login_with_username_or_email"-->
-    <!--      android:textColor="@color/colorAccentLight"-->
-    <!--      android:textSize="14sp"-->
-    <!--      app:fontFamily="@font/semi_bold"-->
-    <!--      app:layout_constraintEnd_toStartOf="@+id/endGuide"-->
-    <!--      app:layout_constraintStart_toStartOf="@+id/startGuide"-->
-    <!--      app:layout_constraintTop_toBottomOf="@+id/phone_et_container" />-->
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_login_with_email"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_25"
+          android:gravity="start"
+          android:text="@string/login_with_username_or_email"
+          android:textColor="@color/colorAccentLight"
+          android:textSize="14sp"
+          app:fontFamily="@font/semi_bold"
+          app:layout_constraintEnd_toStartOf="@+id/endGuide"
+          app:layout_constraintStart_toStartOf="@+id/startGuide"
+          app:layout_constraintTop_toBottomOf="@+id/phone_et_container" />
 
     <com.framework.views.customViews.CustomTextView
-      android:id="@+id/accept_tnc_phone"
-      style="@style/psn_subheading_style"
-      android:layout_width="0dp"
-      android:layout_marginTop="@dimen/size_30"
-      android:fontFamily="@font/inter_regular"
-      android:gravity="center"
-      android:textColorHighlight="@color/greyish_brown"
-      android:textColorLink="@color/colorAccentLight"
-      android:textSize="@dimen/text_11"
-      app:layout_constraintEnd_toStartOf="@+id/endGuide"
-      app:layout_constraintStart_toStartOf="@+id/startGuide"
-      app:layout_constraintTop_toBottomOf="@+id/phone_et_container"
-      tools:text="@string/enter_phone_t_n_c" />
+        android:id="@+id/accept_tnc_phone"
+        style="@style/psn_subheading_style"
+        android:layout_width="0dp"
+        android:layout_marginTop="@dimen/size_25"
+        android:fontFamily="@font/regular"
+        android:gravity="start|center_vertical"
+        android:textColorHighlight="@color/greyish_brown"
+        android:textColorLink="@color/colorAccentLight"
+        android:textSize="@dimen/text_11"
+        android:textColor="@color/black_2A2A2A"
+        app:layout_constraintEnd_toStartOf="@+id/endGuide"
+        app:layout_constraintStart_toStartOf="@+id/startGuide"
+        app:layout_constraintTop_toBottomOf="@+id/tv_login_with_email"
+        tools:text="@string/enter_phone_t_n_c" />
 
     <com.framework.views.customViews.CustomTextView
-      android:id="@+id/tv_request_otp"
-      style="@style/yellow_squared_button"
-      android:background="@color/disable_enable_button_selector"
-      android:enabled="false"
-      android:text="@string/request_otp"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent" />
+        android:id="@+id/tv_request_otp"
+        style="@style/yellow_squared_button"
+        android:enabled="false"
+        android:text="@string/request_otp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
       android:id="@+id/startGuide"

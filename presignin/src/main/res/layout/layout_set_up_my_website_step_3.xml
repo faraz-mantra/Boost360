@@ -10,34 +10,34 @@
     android:background="@color/white_F5F8FD">
 
     <com.framework.views.customViews.CustomTextView
-      android:id="@+id/tv_title"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/size_32"
-      android:fontFamily="@font/inter_bold"
-      android:gravity="start"
-      android:text="@string/your_website_is_almost_ready"
-      android:textAlignment="gravity"
-      android:textColor="@color/black_4a4a4a"
-      android:textSize="@dimen/text_16"
-      app:layout_constraintEnd_toStartOf="@id/endGuide"
-      app:layout_constraintStart_toEndOf="@id/startGuide"
-      app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_32"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="start"
+        android:text="@string/your_website_is_almost_ready"
+        android:textAlignment="gravity"
+        android:textColor="@color/black_4a4a4a"
+        android:textSize="@dimen/text_18"
+        app:layout_constraintEnd_toStartOf="@id/endGuide"
+        app:layout_constraintStart_toEndOf="@id/startGuide"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.framework.views.customViews.CustomTextView
-      android:id="@+id/tv_subtitle"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/size_4"
-      android:fontFamily="@font/inter_regular"
-      android:gravity="start"
-      android:text="@string/found_website_address_des"
-      android:textAlignment="gravity"
-      android:textColor="@color/black_2A2A2A"
-      android:textSize="@dimen/text_13"
-      app:layout_constraintEnd_toStartOf="@id/endGuide"
-      app:layout_constraintStart_toEndOf="@id/startGuide"
-      app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+        android:id="@+id/tv_subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_4"
+        android:fontFamily="@font/regular"
+        android:gravity="start"
+        android:text="@string/found_website_address_des"
+        android:textAlignment="gravity"
+        android:textColor="@color/black_2A2A2A"
+        android:textSize="@dimen/text_13"
+        app:layout_constraintEnd_toStartOf="@id/endGuide"
+        app:layout_constraintStart_toEndOf="@id/startGuide"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
 
     <include
@@ -99,7 +99,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:fontFamily="@font/inter_regular"
         android:gravity="start"
         android:text="@string/this_url_is_completely_secure"
         android:textAlignment="gravity"
