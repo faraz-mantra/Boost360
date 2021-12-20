@@ -2,7 +2,8 @@ package dev.patrickgold.florisboard.customization.util
 
 enum class RecyclerViewActionType {
   FLOAT_UPDATE_CLICK,
-  PRODUCT_SERVICE_SHARE_CLICK,
+  PRODUCT_SHARE_CLICK,
+  SERVICE_SHARE_CLICK,
   PHOTO_CLICK,
   USER_DETAIL_CLICK,
   STAFF_PROFILE_CLICK,

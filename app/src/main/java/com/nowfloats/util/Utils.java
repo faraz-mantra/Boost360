@@ -18,6 +18,7 @@ import android.util.TypedValue;
 import android.view.inputmethod.InputMethodManager;
 
 import com.framework.BaseApplication;
+import com.framework.pref.TokenResult;
 import com.framework.pref.TokenResultKt;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
@@ -456,8 +457,10 @@ public class Utils {
   }
 
   public static String getAuthToken() {
-    return "Bearer " + TokenResultKt.getAccessTokenAuth(new
-        com.framework.pref.UserSessionManager(BaseApplication.Companion.getInstance())).getToken();
+    TokenResult tokenResult = TokenResultKt.getAccessTokenAuth(new com.framework.pref.UserSessionManager(BaseApplication.Companion.getInstance()));
+    if (tokenResult != null && tokenResult.getToken() != null && !tokenResult.getToken().isEmpty()) {
+      return "Bearer " + tokenResult.getToken();
+    } else return "";
   }
 
   public static OkHttpClient getAuthClient(String url) {

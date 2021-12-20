@@ -12,16 +12,16 @@
     android:background="@color/lightgray">
 
     <include
-      android:id="@+id/rv_photo_view"
-      layout="@layout/change_tap_photo_view"
+      android:id="@+id/rv_keyboard"
+      layout="@layout/recycler_items_feature_keyboard"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
     <include
-      android:id="@+id/rv_keyboard"
-      layout="@layout/recycler_items_feature_keyboard"
+      android:id="@+id/rv_photo_view"
+      layout="@layout/change_tap_photo_view"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"

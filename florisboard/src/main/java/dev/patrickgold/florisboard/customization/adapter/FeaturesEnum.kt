@@ -6,6 +6,7 @@ import dev.patrickgold.florisboard.R
 enum class FeaturesEnum {
   LOADER,
   PRODUCTS,
+  SERVICES,
   UPDATES,
   PHOTOS,
   DETAILS,
@@ -30,6 +31,7 @@ enum class FeaturesEnum {
       LOADER -> R.layout.pagination_loader_keyboard
       UPDATES -> R.layout.adapter_item_update
       PRODUCTS -> R.layout.adapter_item_product_new
+      SERVICES -> R.layout.adapter_item_product_new
       PHOTOS -> R.layout.adapter_item_photos
       DETAILS -> R.layout.adapter_item_details
       VISITING_CARD_ONE_ITEM -> com.onboarding.nowfloats.R.layout.item_visiting_card_one
