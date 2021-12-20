@@ -19,94 +19,95 @@ import dev.patrickgold.florisboard.ime.core.FlorisApplication;
 
 public class Util {
 
-    public static String getDataFromServer(String content,
-                                           String requestMethod, String serverUrl, String contentType,
-                                           GetGalleryImagesAsyncTask.GetGalleryImagesInterface galleryInterface) {
-        String response = "", responseMessage = "";
-        Boolean success = false;
-        DataOutputStream outputStream = null;
-        try {
+  public static String getDataFromServer(
+      String content, String requestMethod, String serverUrl, String contentType,
+      GetGalleryImagesAsyncTask.GetGalleryImagesInterface galleryInterface
+  ) {
+    String response = "", responseMessage = "";
+    Boolean success = false;
+    DataOutputStream outputStream = null;
+    try {
 
-            URL new_url = new URL(serverUrl);
-            HttpURLConnection connection = (HttpURLConnection) new_url
-                    .openConnection();
+      URL new_url = new URL(serverUrl);
+      HttpURLConnection connection = (HttpURLConnection) new_url
+          .openConnection();
 
-            // Allow Inputs & Outputs
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-            connection.setUseCaches(true);
-            // Enable PUT method
-            connection.setRequestMethod(requestMethod);
-            connection.setRequestProperty("Connection", "Keep-Alive");
-            connection.setRequestProperty("Authorization", "Bearer "+ TokenResultKt.getAccessTokenAuth(new
-                    com.framework.pref.UserSessionManager(BaseApplication.Companion.getInstance())).getToken());
-            connection.setRequestProperty("Content-Type", contentType);
+      // Allow Inputs & Outputs
+      connection.setDoInput(true);
+      connection.setDoOutput(true);
+      connection.setUseCaches(true);
+      // Enable PUT method
+      connection.setRequestMethod(requestMethod);
+      connection.setRequestProperty("Connection", "Keep-Alive");
+      connection.setRequestProperty("Authorization", "Bearer " + TokenResultKt.getAccessTokenAuth(new
+          com.framework.pref.UserSessionManager(BaseApplication.Companion.getInstance())).getToken());
+      connection.setRequestProperty("Content-Type", contentType);
 
-            outputStream = new DataOutputStream(connection.getOutputStream());
+      outputStream = new DataOutputStream(connection.getOutputStream());
 
-            byte[] BytesToBeSent = content.getBytes();
-            if (BytesToBeSent != null) {
-                outputStream.write(BytesToBeSent, 0, BytesToBeSent.length);
-            }
-            int responseCode = connection.getResponseCode();
+      byte[] BytesToBeSent = content.getBytes();
+      if (BytesToBeSent != null) {
+        outputStream.write(BytesToBeSent, 0, BytesToBeSent.length);
+      }
+      int responseCode = connection.getResponseCode();
 
-            responseMessage = connection.getResponseMessage();
+      responseMessage = connection.getResponseMessage();
 
-            if (responseCode == 200 || responseCode == 202) {
-                success = true;
+      if (responseCode == 200 || responseCode == 202) {
+        success = true;
 
-            }else {
-                galleryInterface.onFailed(responseCode);
-            }
+      } else {
+        galleryInterface.onFailed(responseCode);
+      }
 
-            InputStreamReader inputStreamReader = null;
-            BufferedReader bufferedReader = null;
-            try {
-                inputStreamReader = new InputStreamReader(
-                        connection.getInputStream());
-                bufferedReader = new BufferedReader(inputStreamReader);
+      InputStreamReader inputStreamReader = null;
+      BufferedReader bufferedReader = null;
+      try {
+        inputStreamReader = new InputStreamReader(
+            connection.getInputStream());
+        bufferedReader = new BufferedReader(inputStreamReader);
 
-                StringBuilder responseContent = new StringBuilder();
+        StringBuilder responseContent = new StringBuilder();
 
-                String temp = null;
+        String temp = null;
 
-                boolean isFirst = true;
+        boolean isFirst = true;
 
-                while ((temp = bufferedReader.readLine()) != null) {
-                    if (!isFirst)
-                        responseContent.append("\n");
-                    responseContent.append(temp);
-                    isFirst = false;
-                }
-
-                response = responseContent.toString();
-
-            } catch (Exception e) {
-
-            } finally {
-                try {
-                    inputStreamReader.close();
-                } catch (Exception e) {
-
-                }
-                try {
-                    bufferedReader.close();
-                } catch (Exception e) {
-                }
-
-            }
-
-        } catch (Exception ex) {
-            success = false;
-        } finally {
-            try {
-                outputStream.flush();
-                outputStream.close();
-            } catch (Exception e) {
-
-            }
+        while ((temp = bufferedReader.readLine()) != null) {
+          if (!isFirst)
+            responseContent.append("\n");
+          responseContent.append(temp);
+          isFirst = false;
         }
 
-        return response;
+        response = responseContent.toString();
+
+      } catch (Exception e) {
+
+      } finally {
+        try {
+          inputStreamReader.close();
+        } catch (Exception e) {
+
+        }
+        try {
+          bufferedReader.close();
+        } catch (Exception e) {
+        }
+
+      }
+
+    } catch (Exception ex) {
+      success = false;
+    } finally {
+      try {
+        outputStream.flush();
+        outputStream.close();
+      } catch (Exception e) {
+
+      }
     }
+
+    return response;
+  }
 }

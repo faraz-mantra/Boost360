@@ -44,7 +44,7 @@ class ProductViewHolder(binding: AdapterItemProductNewBinding, val listener: OnI
 
     binding.tvDescription.text = product.description
     binding.btnShare.setOnClickListener {
-      listener?.onItemClick(position, product, RecyclerViewActionType.PRODUCT_SERVICE_SHARE_CLICK.ordinal)
+      listener?.onItemClick(position, product, RecyclerViewActionType.PRODUCT_SHARE_CLICK.ordinal)
     }
   }
 }

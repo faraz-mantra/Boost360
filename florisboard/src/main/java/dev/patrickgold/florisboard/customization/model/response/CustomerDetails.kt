@@ -20,7 +20,7 @@ data class CustomerDetails(
   @SerializedName("PrimaryNumber")
   var primaryNumber: String? = null,
   @SerializedName("RootAliasUri")
-  var rootAliasUri: String,
+  var rootAliasUri: String? = null,
   var lat: Double = 0.0,
   var lng: Double = 0.0,
   var FPWebWidgets:ArrayList<String>?=null,

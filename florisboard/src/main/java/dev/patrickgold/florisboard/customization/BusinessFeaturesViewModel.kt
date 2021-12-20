@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.appservice.model.serviceProduct.service.ServiceSearchListingResponse
 import com.framework.utils.NetworkUtils
 import com.google.gson.Gson
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
@@ -64,7 +65,7 @@ class BusinessFeaturesViewModel(context: Context) {
         }
       } catch (e: Exception) {
         withContext(Dispatchers.Main) {
-          Log.e(TAG, "getMerchantSummary: + ${e.localizedMessage}")
+          Log.e(TAG, "getMerchantSummary:  ${e.localizedMessage}")
           if (prefMerchant == null) _error.postValue(e.localizedMessage)
         }
       }
@@ -93,7 +94,7 @@ class BusinessFeaturesViewModel(context: Context) {
         }
       } catch (e: Exception) {
         withContext(Dispatchers.Main) {
-          Log.e(TAG, "getUpdates: + ${e.localizedMessage}")
+          Log.e(TAG, "getUpdates:  ${e.localizedMessage}")
           if (prefUpdates == null) _error.postValue(BusinessFeatureEnum.UPDATES.name)
         }
       }
@@ -112,10 +113,10 @@ class BusinessFeaturesViewModel(context: Context) {
       try {
         val products = BusinessFeatureRepository.getAllProducts(fpTag, clientId, skipBy, identifierType)
         withContext(Dispatchers.Main) {
-          Log.i(TAG, "getProducts: " + products.code())
+          Log.i(TAG, "getProducts: ${products.code()}")
           if (products.isSuccessful) {
             val data: ProductResponse = products.body() ?: ProductResponse()
-            if (skipBy == 0) sharedPref.save(PrefConstants.PREF_PRODUCTS, Gson().toJson(data))
+            if (skipBy == 0) sharedPref.save(PrefConstants.PREF_PRODUCTS, Gson().toJson(data.apply { isRefreshList = true }))
             _products.postValue(data)
           } else {
             if (products.code() == Constants.UNAUTHORIZED_STATUS_CODE) {
@@ -123,20 +124,53 @@ class BusinessFeaturesViewModel(context: Context) {
             } else {
               _error.value = "${errorHandle(products.errorBody())} ${BusinessFeatureEnum.INVENTORY_SERVICE.name}"
             }
-            products.errorBody()
           }
         }
       } catch (e: Exception) {
         withContext(Dispatchers.Main) {
-          Log.e(TAG, "getProducts: + ${e.localizedMessage}")
+          Log.e(TAG, "getProducts: ${e.localizedMessage}")
           if (prefProducts == null) _error.postValue(BusinessFeatureEnum.INVENTORY_SERVICE.name)
         }
       }
     }
   }
 
-  private val _details = MutableLiveData<CustomerDetails>()
-  val details: LiveData<CustomerDetails>
+  private val _services = MutableLiveData<ServiceSearchListingResponse>()
+  val services: LiveData<ServiceSearchListingResponse>
+    get() = _services
+
+  fun getServices(fpTag: String?, fpId: String?, searchString: String? = "", offset: Int? = 0, limit: Int? = 0) {
+    if (internetCheck(BusinessFeatureEnum.INVENTORY_SERVICE.name)) return
+    val prefServices = sharedPref.serviceList
+    if (prefServices != null && offset == 0) _services.postValue(prefServices)
+    job = CoroutineScope(Dispatchers.IO).launch {
+      try {
+        val servicesRes = NowFloatRepository.getAllServices(fpTag, fpId, searchString, offset, limit)
+        withContext(Dispatchers.Main) {
+          Log.i(TAG, "getServices:  ${servicesRes.code()}")
+          if (servicesRes.isSuccessful) {
+            val data: ServiceSearchListingResponse = servicesRes.body() ?: ServiceSearchListingResponse()
+            if (offset == 0) sharedPref.save(PrefConstants.PREF_SERVICES, Gson().toJson(data.apply { isRefreshList = true }))
+            _services.postValue(data)
+          } else {
+            if (servicesRes.code() == Constants.UNAUTHORIZED_STATUS_CODE) {
+              _error.value = "${Constants.TOKEN_EXPIRED_MESSAGE} ${BusinessFeatureEnum.INVENTORY_SERVICE.name}"
+            } else {
+              _error.value = "${errorHandle(servicesRes.errorBody())} ${BusinessFeatureEnum.INVENTORY_SERVICE.name}"
+            }
+          }
+        }
+      } catch (e: Exception) {
+        withContext(Dispatchers.Main) {
+          Log.e(TAG, "getServices: ${e.localizedMessage}")
+          if (prefServices == null) _error.postValue(BusinessFeatureEnum.INVENTORY_SERVICE.name)
+        }
+      }
+    }
+  }
+
+  private val _details = MutableLiveData<CustomerDetails?>()
+  val details: LiveData<CustomerDetails?>
     get() = _details
 
   fun getDetails(fpTag: String?, clientId: String) {
@@ -144,14 +178,13 @@ class BusinessFeaturesViewModel(context: Context) {
     CoroutineScope(Dispatchers.IO).launch {
       try {
         val details = BusinessFeatureRepository.getAllDetails(fpTag, clientId)
-        Log.i(TAG, "getDetails: " + details.code())
+        Log.i(TAG, "getDetails:  ${details.code()}")
         withContext(Dispatchers.Main) {
-          if (details.isSuccessful) {
-            _details.value = details.body()
-          }
+          if (details.isSuccessful) _details.value = details.body() else _details.value = null
         }
       } catch (e: Exception) {
-        Log.e(TAG, "getDetails: + ${e.localizedMessage}")
+        _details.value = null
+        Log.e(TAG, "getDetails:  ${e.localizedMessage}")
       }
     }
   }
@@ -171,7 +204,7 @@ class BusinessFeaturesViewModel(context: Context) {
         }
       } catch (e: Exception) {
         withContext(Dispatchers.Main) {
-          Log.e(TAG, "getChannelsAccessTokenStatus: + ${e.localizedMessage}")
+          Log.e(TAG, "getChannelsAccessTokenStatus: ${e.localizedMessage}")
           _channelStatus.value = ChannelAccessStatusResponse(success = false)
         }
       }
@@ -193,7 +226,7 @@ class BusinessFeaturesViewModel(context: Context) {
         }
       } catch (e: Exception) {
         withContext(Dispatchers.Main) {
-          Log.e(TAG, "getWhatsAppBusiness: + ${e.localizedMessage}")
+          Log.e(TAG, "getWhatsAppBusiness: ${e.localizedMessage}")
           _channelWhatsApp.value = ChannelWhatsappResponse()
         }
       }
@@ -215,7 +248,7 @@ class BusinessFeaturesViewModel(context: Context) {
         }
       } catch (e: Exception) {
         withContext(Dispatchers.Main) {
-          Log.e(TAG, "getBoostVisitingMessage: + ${e.localizedMessage}")
+          Log.e(TAG, "getBoostVisitingMessage: ${e.localizedMessage}")
           _shareUserDetail.value = ShareUserDetailResponse()
         }
       }
@@ -241,7 +274,7 @@ class BusinessFeaturesViewModel(context: Context) {
         }
       } catch (e: Exception) {
         withContext(Dispatchers.Main) {
-          Log.e(TAG, "getMerchantProfile: + ${e.localizedMessage}")
+          Log.e(TAG, "getMerchantProfile:  ${e.localizedMessage}")
           _merchantProfile.value = MerchantProfileResponse()
           sharedPref.save(PrefConstants.PREF_BUSINESS_CARD, Gson().toJson(MerchantProfileResponse()))
         }
@@ -265,7 +298,7 @@ class BusinessFeaturesViewModel(context: Context) {
         }
       } catch (e: Exception) {
         withContext(Dispatchers.Main) {
-          Log.e(TAG, "getMoreActionList: + ${e.localizedMessage}")
+          Log.e(TAG, "getMoreActionList: ${e.localizedMessage}")
           _error.postValue(BusinessFeatureEnum.MORE.name)
         }
       }
@@ -302,7 +335,7 @@ class BusinessFeaturesViewModel(context: Context) {
         }, fpId)
       } catch (e: Exception) {
         withContext(Dispatchers.Main) {
-          Log.e(TAG, "getPhotos: + ${e.localizedMessage}")
+          Log.e(TAG, "getPhotos: ${e.localizedMessage}")
           if (prefPhotos == null) _error.postValue(BusinessFeatureEnum.PHOTOS.name)
         }
       }
@@ -335,7 +368,7 @@ class BusinessFeaturesViewModel(context: Context) {
         }
       } catch (e: Exception) {
         withContext(Dispatchers.Main) {
-          Log.e(TAG, "getStaffList: + ${e.localizedMessage}")
+          Log.e(TAG, "getStaffList: ${e.localizedMessage}")
           if (prefStaff == null) _error.postValue(BusinessFeatureEnum.STAFF.name)
         }
       }
@@ -352,7 +385,7 @@ class BusinessFeaturesViewModel(context: Context) {
       val message: String? = jObjError?.getJSONObject("error")?.getString("message")
       if (message.isNullOrEmpty().not()) message else jObjError?.toString()
     } catch (e: Exception) {
-      "${e.localizedMessage}"
+      e.localizedMessage
     }
   }
 
