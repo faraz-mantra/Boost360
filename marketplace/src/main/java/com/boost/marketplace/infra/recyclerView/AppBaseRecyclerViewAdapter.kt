@@ -33,6 +33,9 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       FEATURES_BY_CATEGORY->FeaturesByCategoryViewHolder(binding as ItemFeaturesByCategoryBinding)
       MARKETPLACE_OFFERS->MarketPlaceOfferDetailsViewHolder(binding as ItemMarketplaceoffersInfoBinding)
       MARKETPLACE_OFFERS->MarketPlaceOfferTermsViewHolder(binding as ItemMarketplaceoffersInfoBinding)
+      FEATURES_MODEL->MyPlanPremiumFeaturesViewHolder(binding as ItemMyplanFeaturesBinding)
+      FEATURES_MODEL->MyPlanFreeFeaturesViewHolder(binding as ItemMyplanFeaturesBinding)
+      RESULT->MyPlanHistoryOrdersViewHolder(binding as ItemOrderHistoryBinding)
 
 
     }

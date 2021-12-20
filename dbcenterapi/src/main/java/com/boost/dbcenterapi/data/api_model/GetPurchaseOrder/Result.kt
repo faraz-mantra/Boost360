@@ -1,5 +1,9 @@
 package com.boost.dbcenterapi.data.api_model.GetPurchaseOrder
 
+import com.boost.dbcenterapi.recycleritem.AppBaseRecyclerViewItem
+import com.boost.dbcenterapi.recycleritem.RecyclerViewItemType
+import java.io.Serializable
+
 data class Result(
   val ComboPackageId: Any,
   val CreatedOn: String,
@@ -30,4 +34,10 @@ data class Result(
   val taxAmount: Double,
   val totalMonthsValidity: Double,
   val widgetKey: Any
-)
+): Serializable, AppBaseRecyclerViewItem {
+
+  override fun getViewType(): Int {
+    return RecyclerViewItemType.RESULT.ordinal
+
+  }
+}
