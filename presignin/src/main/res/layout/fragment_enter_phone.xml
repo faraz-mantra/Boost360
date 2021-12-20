@@ -107,7 +107,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_login_with_email"
         tools:text="@string/enter_phone_t_n_c" />
 
-    <com.framework.views.customViews.CustomTextView
+    <com.framework.views.customViews.CustomMaterialButton
         android:id="@+id/tv_request_otp"
         style="@style/yellow_squared_button"
         android:enabled="false"

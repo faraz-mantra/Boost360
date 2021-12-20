@@ -89,9 +89,9 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
   }
 
   override fun onCreateView() {
+    binding?.includeMobileView?.blurView?.setBlur(baseActivity, 1F)
     super.onCreateView()
     session = UserSessionManager(baseActivity)
-    binding?.includeMobileView?.blurView?.setBlur(baseActivity, 1F)
     binding?.includeMobileView?.tvCategoryName?.text = categoryModel?.getCategoryWithoutNewLine() ?: ""
     binding?.includeMobileView?.tvTitle?.text = businessName?.capitalizeUtil()
     setOnClickListeners()
