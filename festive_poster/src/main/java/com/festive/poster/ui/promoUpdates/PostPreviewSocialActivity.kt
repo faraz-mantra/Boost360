@@ -19,6 +19,7 @@ import com.festive.poster.models.MerchantSummaryResponse
 import com.festive.poster.models.PostUpdateTaskRequest
 import com.festive.poster.models.PosterModel
 import com.festive.poster.models.promoModele.SocialPlatformModel
+import com.festive.poster.models.promoModele.SocialPreviewChannel
 import com.festive.poster.models.promoModele.SocialPreviewModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
@@ -63,6 +64,7 @@ import kotlin.collections.ArrayList
 
 class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBinding, PostUpdatesViewModel>(), RecyclerItemClickListener {
 
+    private var chkChannelAdapter: AppBaseRecyclerViewAdapter<SocialPlatformModel>?=null
     private var uiChBoxChannelList: ArrayList<SocialPlatformModel>?=null
     private var uiPreviewChannelList: ArrayList<SocialPreviewModel>?=null
     private var posterProgressSheet: PostingProgressBottomSheet?=null
@@ -113,6 +115,12 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        isUserPremium(true)
+        chkChannelAdapter?.notifyDataSetChanged()
+
+    }
     private fun initUI() {
         binding?.tvChooseAPromoPack?.setOnClickListener {
             SubscribePlanBottomSheet().show(supportFragmentManager, SubscribePlanBottomSheet::class.java.name)
@@ -134,7 +142,6 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
 
 
-        isUserPremium(true)
     }
 
     private fun isUserPremium(isUserPremium:Boolean = false){
@@ -161,7 +168,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
         when(actionType){
             RecyclerViewActionType.SOCIAL_CHANNEL_CHECK_CLICKED.ordinal->{
-                uiPreviewChannelList?.get(position)?.shouldShow = uiChBoxChannelList?.get(position)?.isChecked == true
+                val model = uiChBoxChannelList?.get(position)
+                uiPreviewChannelList?.find { it.channelType==model?.channelType }?.shouldShow = model?.isChecked == true
                 setupPreviewList()
                 binding?.tvSelected?.text = getString(R.string.placeholder_selected,getCheckedChannelCount())
 
@@ -187,12 +195,13 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     fun setChannelAdapter(){
         //   val socialPlatformModel = SocialPlatformModel().getData(this@PostPreviewSocialActivity)
+        chkChannelAdapter = AppBaseRecyclerViewAdapter(
+            this@PostPreviewSocialActivity,
+            uiChBoxChannelList!!,
+            this@PostPreviewSocialActivity
+        )
         binding?.rvSocialPlatforms?.apply {
-            adapter = AppBaseRecyclerViewAdapter(
-                this@PostPreviewSocialActivity,
-                uiChBoxChannelList!!,
-                this@PostPreviewSocialActivity
-            )
+            adapter = chkChannelAdapter
         }
 
         binding?.tvSelected?.text = getString(R.string.placeholder_selected,getCheckedChannelCount())
@@ -277,6 +286,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             var isConnected=false
             var isEnabled=false
             var layout_id=-1
+            var channelType:SocialPreviewChannel?=null
             requestFloatsNew.categoryDataModel?.channels?.forEach { it1 ->
                 /*if (it1.isWhatsAppChannel()){
                     return
@@ -285,11 +295,13 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                     isConnected=true
                     isEnabled = false
                     layout_id = RecyclerViewItemType.WEBSITE_PREVIEW.getLayout()
+                    channelType = SocialPreviewChannel.WEBSITE
                     subTitle=session?.getDomainName(false)
                 }else{
                     subTitle=null
                     layout_id = -1
                     isEnabled=true
+                    channelType = null
                     isConnected=false
                 }
                 title = it1.getName()
@@ -315,7 +327,9 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
                                 layout_id = RecyclerViewItemType.FB_PREVIEW.getLayout()
 
+
                             }
+                            channelType = SocialPreviewChannel.FACEBOOK
 
                         }
                         it1.getAccessTokenType() == ChannelsType.AccountType.facebookshop.name -> {
@@ -360,7 +374,10 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                                 connectedChannels.add(ChannelsType.AccountType.twitter.name)
                                 layout_id = RecyclerViewItemType.VIEWPAGER_TWITTER_PREVIEW.getLayout()
 
+
                             }
+                            channelType = SocialPreviewChannel.TWITTER
+
                         }
                         it1.getAccessTokenType() == ChannelsType.AccountType.googlemybusiness.name -> {
                             val gmb = channelsAccessToken.googlemybusiness
@@ -392,18 +409,21 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
                                 layout_id = RecyclerViewItemType.GMB_PREVIEW.getLayout()
 
+
                             }
+                            channelType = SocialPreviewChannel.GMB
+
                         }
                     }
 
                 }
 
                 if (shouldAddToChannelList(it1)){
-                    uiChBoxChannelList?.add(SocialPlatformModel(title,subTitle,isEnabled,isConnected,isConnected).apply {
-                        generateImageResource(it1.getType(),this@PostPreviewSocialActivity)
+                    uiChBoxChannelList?.add(SocialPlatformModel(title,subTitle,isEnabled,isConnected,isConnected,channelType!!).apply {
+                        generateImageResource(this@PostPreviewSocialActivity)
                     })
 
-                    uiPreviewChannelList?.add(SocialPreviewModel(posterModel!!,title,captionIntent,layout_id,isConnected))
+                    uiPreviewChannelList?.add(SocialPreviewModel(posterModel!!,title,captionIntent,layout_id,isConnected,channelType!!))
                 }
             }
 
@@ -427,7 +447,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     private fun shouldAddToChannelList(channel: ChannelModel): Boolean {
 
-        if (channel.isWhatsAppChannel()||channel.isFacebookShop()){
+        if (channel.isWhatsAppChannel()||channel.getAccessTokenType()==ChannelsType.AccountType.facebookshop.name){
             return false
         }
         return true
@@ -510,12 +530,14 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     private fun saveUpdatePost() {
         WebEngageController.trackEvent(POST_AN_UPDATE, EVENT_LABEL_NULL, session?.fpTag)
         var socialShare = ""
-        /*   if (fbStatusEnabled.value == true) socialShare += "FACEBOOK."
+           if (uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.FACEBOOK }?.isChecked == true) socialShare += "FACEBOOK."
+/*
            if (fbPageStatusEnable.value == true) socialShare += "FACEBOOK_PAGE."
-           if (twitterSharingEnabled.value == true) socialShare += "TWITTER."*/
+*/
+        if (uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.TWITTER }?.isChecked == true) socialShare += "TWITTER."
         val merchantId = if (session?.iSEnterprise == "true") null else session?.fPID
         val parentId = if (session?.iSEnterprise == "true") session?.fPParentId else null
-        val sendToSubscribe = uiChBoxChannelList?.find { it.socialTitle==getString(R.string.email_sub) }?.isChecked
+        val sendToSubscribe = uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.EMAIL }?.isChecked
         val request = PostUpdateTaskRequest(
             clientId,
             captionIntent,
@@ -541,13 +563,18 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                                 posterProgressSheet?.dismiss()
                             PostSuccessBottomSheet.newInstance(posterModel).show(supportFragmentManager, PostSuccessBottomSheet::class.java.name)
 
-                        } else showShortToast("Image uploading error, please try again.")
+                        } else{
+                            posterProgressSheet?.dismiss()
+                            showShortToast("Image uploading error, please try again.")
+                        }
 
                     })
                 }
 
                 }
              else {
+                posterProgressSheet?.dismiss()
+
                 showShortToast("Post updating error, please try again.")
             }
         })
@@ -563,7 +590,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             }else{
                 getString(R.string.placeholder_recipients,subscriber)
             }
-            uiChBoxChannelList?.add(SocialPlatformModel(getString(R.string.email_sub),subTitle,true,true,true).apply {
+            uiChBoxChannelList?.add(SocialPlatformModel(getString(R.string.email_sub),subTitle,true,
+                true,true,SocialPreviewChannel.EMAIL).apply {
                 icon =getDrawable(R.drawable.ic_promo_emailers)
             })
 

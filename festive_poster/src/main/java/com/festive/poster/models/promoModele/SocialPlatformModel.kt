@@ -16,7 +16,8 @@ class SocialPlatformModel(
     var socialSubTitleData: String? = null,
     var isEnabled: Boolean? = false,
     var isConnected: Boolean? = false,
-    var isChecked:Boolean?=false
+    var isChecked:Boolean?=false,
+    var channelType:SocialPreviewChannel
 ) : Serializable, AppBaseRecyclerViewItem {
 
     var icon:Drawable?=null
@@ -26,40 +27,40 @@ class SocialPlatformModel(
 
     }
 
-    fun generateImageResource(type:ChannelType?,context: Context)
+    fun generateImageResource(context: Context)
     {
-        icon= when (type) {
-            ChannelType.G_SEARCH -> ResourcesCompat.getDrawable(
+        icon= when (channelType) {
+            SocialPreviewChannel.WEBSITE -> ResourcesCompat.getDrawable(
                 context.resources,
                 R.drawable.ic_promo_my_website,
                 context.theme
             )
-            ChannelType.FB_PAGE -> ResourcesCompat.getDrawable(
+            SocialPreviewChannel.FACEBOOK -> ResourcesCompat.getDrawable(
                 context.resources,
                 R.drawable.ic_fb_promo_channel,
                 context.theme
             )
-            ChannelType.G_MAPS -> ResourcesCompat.getDrawable(
+            SocialPreviewChannel.GMB -> ResourcesCompat.getDrawable(
                 context.resources,
                 R.drawable.ic_gmb_promo_channel,
                 context.theme
             )
-            ChannelType.FB_SHOP -> ResourcesCompat.getDrawable(
+        /*    SocialPreviewChannel.WEBSITE -> ResourcesCompat.getDrawable(
                 context.resources,
                 R.drawable.ic_promo_flag_orange,
                 context.theme
-            )
-            ChannelType.WAB -> ResourcesCompat.getDrawable(
+            )*/
+/*            ChannelType.WAB -> ResourcesCompat.getDrawable(
                 context.resources,
                 com.onboarding.nowfloats.R.drawable.ic_whatsapp_business_n,
                 context.theme
-            )
-            ChannelType.T_FEED -> ResourcesCompat.getDrawable(
+            )*/
+            SocialPreviewChannel.TWITTER-> ResourcesCompat.getDrawable(
                 context.resources,
                 R.drawable.ic_promo_twitter,
                 context.theme
             )
-            ChannelType.G_BUSINESS -> ResourcesCompat.getDrawable(
+            SocialPreviewChannel.GMB -> ResourcesCompat.getDrawable(
                 context.resources,
                 R.drawable.ic_gmb_promo_channel,
                 context.theme
