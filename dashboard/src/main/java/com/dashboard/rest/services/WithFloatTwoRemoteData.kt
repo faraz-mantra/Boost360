@@ -36,7 +36,7 @@ interface WithFloatTwoRemoteData {
   @GET(EndPoints.GET_FIREBASE_TOKEN)
   fun getFirebaseToken(
     @Query("clientId") client_id: String?
-  ):Observable<Response<FirebaseTokenResponse>>
+  ): Observable<Response<FirebaseTokenResponse>>
 
   @PUT(EndPoints.UPLOAD_USER_PROFILE_IMAGE)
   fun uploadUserProfileImage(
@@ -46,27 +46,27 @@ interface WithFloatTwoRemoteData {
     @Body file: RequestBody?
   ): Observable<Response<ResponseBody>>
 
-  @GET(EndPoints.GET_USER_PROFILE_DETAILS+"/{loginId}")
+  @GET(EndPoints.GET_USER_PROFILE_DETAILS + "/{loginId}")
   fun userProfileData(
     @Path("loginId") loginId: String?,
-    @Query("clientId") clientId: String?= clientId2,
-    ): Observable<Response<UserProfileData>>
+    @Query("clientId") clientId: String? = clientId2,
+  ): Observable<Response<UserProfileData>>
 
   @POST(EndPoints.UPDATE_USER_NAME)
   fun updateUserName(
-    @Query("clientId") clientId: String?= clientId2,
+    @Query("clientId") clientId: String? = clientId2,
     @Body jsonObject: JsonObject
   ): Observable<Response<BaseResponse>>
 
   @GET(EndPoints.SEND_OTP_EMAIL)
   fun sendOTPEmail(
     @Query("emailId") emailId: String?,
-    @Query("clientId") clientId: String?= clientId2,
+    @Query("clientId") clientId: String? = clientId2,
   ): Observable<Response<ResponseBody>>
 
   @POST(EndPoints.UPDATE_EMAIL)
   fun updateEmail(
-    @Query("clientId") clientId: String?= clientId2,
+    @Query("clientId") clientId: String? = clientId2,
     @Body jsonObject: JsonObject
   ): Observable<Response<BaseResponse>>
 
@@ -74,24 +74,24 @@ interface WithFloatTwoRemoteData {
   fun sendOTPMobile(
     @Query("mobileNumber") mobileNumber: String?,
     @Query("messageTemplate") messageTemplate: String? = "Your one time Boost 360 verification code is [OTP]. The code is valid for 10 minutes, Please DO NOT share this code with anyone.#W5izmPg6WcR",
-    @Query("clientId") clientId: String?= clientId2,
+    @Query("clientId") clientId: String? = clientId2,
   ): Observable<Response<ResponseBody>>
 
   @POST(EndPoints.UPDATE_MOBILE)
   fun updateMobile(
-    @Query("clientId") clientId: String?= clientId2,
+    @Query("clientId") clientId: String? = clientId2,
     @Body jsonObject: JsonObject
   ): Observable<Response<BaseResponse>>
 
   @POST(EndPoints.UPDATE_WHATSAPP)
   fun updateWhatsapp(
-    @Query("clientId") clientId: String?= clientId2,
+    @Query("clientId") clientId: String? = clientId2,
     @Body jsonObject: JsonObject
   ): Observable<Response<BaseResponse>>
 
   @GET(EndPoints.REPUBLISH_WEBSITE)
   fun republishWebsite(
-    @Query("clientId") clientId:String,
-    @Query("key") fpTag:String
-  ): Observable<Response<Any>>
+    @Query("clientId") clientId: String,
+    @Query("key") fpTag: String
+  ): Observable<Response<ResponseBody>>
 }

@@ -92,7 +92,7 @@ object WithFloatTwoRepositoryD : AppBaseRepository<WithFloatTwoRemoteData, Dashb
     return makeRemoteRequest(remoteDataSource.updateWhatsapp(jsonObject = jsonObject), TaskCode.UPDATE_USER_WHATSAPP)
   }
 
-  fun republishWebsite(fpTag: String): Observable<BaseResponse> {
+  fun republishWebsite(clientId: String,fpTag: String): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.republishWebsite(clientId = clientId, fpTag = fpTag), TaskCode.REPUBLISH_WEBSITE)
   }
 

@@ -260,7 +260,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     republishWebsiteBtn?.setOnClickListener {
       RepublishProgressBottomSheet().apply {
         onRepublishSuccess = { openSuccessDialog() }
-        show(parentFragmentManager, RepublishProgressBottomSheet::javaClass.name)
+        show(baseActivity.supportFragmentManager, RepublishProgressBottomSheet::javaClass.name)
       }
       this.popupWindow?.dismiss()
     }
@@ -282,14 +282,14 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
           TypeSuccess.CLOSE.name -> dismiss()
         }
       }
-      show(parentFragmentManager, WebSiteThemeResetBottomSheet::javaClass.name)
+      show(baseActivity.supportFragmentManager, WebSiteThemeResetBottomSheet::javaClass.name)
     }
   }
 
   private fun openWebViewDialog(url: String, title: String) {
     WebViewDialog().apply {
       setData(url, title)
-      show(this@WebsiteFragment.parentFragmentManager, WebViewDialog::javaClass.name)
+      show(baseActivity.supportFragmentManager, WebViewDialog::javaClass.name)
     }
   }
 }
