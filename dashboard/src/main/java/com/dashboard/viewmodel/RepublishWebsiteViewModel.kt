@@ -8,8 +8,8 @@ import com.framework.models.toLiveData
 
 class RepublishWebsiteViewModel : BaseViewModel() {
 
-  fun republishWebsite(fpTag: String?): LiveData<BaseResponse> {
-    return WithFloatTwoRepositoryD.republishWebsite(fpTag = fpTag ?: "").toLiveData()
+  fun republishWebsite(clientId: String,fpTag: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepositoryD.republishWebsite(clientId,fpTag = fpTag ?: "").toLiveData()
   }
 
 }
