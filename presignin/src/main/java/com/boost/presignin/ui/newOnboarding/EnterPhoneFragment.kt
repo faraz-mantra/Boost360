@@ -148,10 +148,8 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.menu_help_setup_my_website, menu)
-    val menuItem = menu.findItem(R.id.help_new)
-    menuItem.actionView.setOnClickListener {
-      menu.performIdentifierAction(menuItem.itemId, 0)
-    }
+    val menuItem: MenuItem? = menu.findItem(R.id.help_new)
+    menuItem?.actionView?.setOnClickListener { menu.performIdentifierAction(menuItem.itemId, 0) }
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
