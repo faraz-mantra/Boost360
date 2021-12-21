@@ -1,13 +1,15 @@
 package com.framework.pref
 
 import android.util.DisplayMetrics
+import com.framework.BuildConfig
 import java.util.*
 
 val REFERRAL_CAMPAIGN_CODE = 26277
 
 var PREF_NAME = "nowfloatsPrefs"
 
-val clientId: String get() = clientId2
+//val clientId: String get() = clientId2
+val clientId: String get() = BuildConfig.CLIENT_ID
 
 var clientIdThinksity = "217FF5B9CE214CDDAC4985C853AE7F75AAFA11AF2C4B47CB877BCA26EC217E6D"
 
