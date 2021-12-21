@@ -3,6 +3,7 @@ package com.dashboard
 import android.util.Log
 import androidx.multidex.MultiDexApplication
 import com.dashboard.rest.EndPoints
+import com.dashboard.rest.EndPoints.API_2_WITH_FLOATS_BASE
 import com.dashboard.rest.EndPoints.BOOST_KIT_NEW_BASE
 import com.dashboard.rest.EndPoints.DEV_BOOST_KIT_URL
 import com.dashboard.rest.EndPoints.NOW_FLOATS_BASE
@@ -40,6 +41,7 @@ open class AppDashboardApplication : BaseApplication() {
       WebActionApiBoostKitClientN.shared.init(WEB_ACTION_API_BASE)
       WebActionKitSuneClientN.shared.init(WEB_ACTION_KITSUNE_BASE)
       UsCentralNowFloatsCloudApiClient.shared.init(US_CENTRAL_NOW_FLOATS_CLOUD_FUNCTIONS)
+      API2WithFloatsApiClient.shared.init(API_2_WITH_FLOATS_BASE)
     }
   }
 

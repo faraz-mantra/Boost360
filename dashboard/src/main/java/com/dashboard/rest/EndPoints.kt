@@ -67,5 +67,9 @@ object EndPoints {
   const val US_CENTRAL_NOW_FLOATS_CLOUD_FUNCTIONS = "https://us-central1-nowfloats-boost.cloudfunctions.net/"
   const val DISABLE_NOTIFICATION = "disableNotification"
 
+  //TODO API 2 WITH FLOATS BASE
+  const val API_2_WITH_FLOATS_BASE = "http://api2.withfloats.com/"
+  const val REPUBLISH_WEBSITE = "kitsune/v2/InvalidateFLMCache"
+
 }
 
