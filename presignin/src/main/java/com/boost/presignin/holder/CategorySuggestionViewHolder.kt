@@ -14,7 +14,7 @@ class CategorySuggestionViewHolder(binding: ListItemCategorySuggestionBinding) :
     super.bind(position, item)
     val data = item as? ApiCategoryResponseCategory ?: return
     binding.tvSubCat.text = "in " + data.subCategory
-    binding.tvCat.text = makeSectionOfTextBold(data.name ?: "", data.searchKeyword ?: "",font = R.font.inter_medium)
+    binding.tvCat.text = makeSectionOfTextBold(data.name ?: "", data.searchKeyword ?: "",font = R.font.regular_medium)
     binding.root.setOnClickListener { onItemClick(position, item) }
   }
 

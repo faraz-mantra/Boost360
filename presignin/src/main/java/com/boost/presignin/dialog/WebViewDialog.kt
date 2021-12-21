@@ -25,6 +25,7 @@ class WebViewDialog : DialogFragment() {
   private var domainUrl = ""
   private var title = ""
   private var isAcceptDeclineShow = false
+  private var isNewFlow = false
 
   companion object {
     const val DECLINE = "decline"
@@ -34,10 +35,11 @@ class WebViewDialog : DialogFragment() {
   var onClickType: (type: String) -> Unit = { }
 
 
-  fun setData(isAcceptDeclineShow: Boolean, domainUrl: String, title: String) {
+  fun setData(isAcceptDeclineShow: Boolean, domainUrl: String, title: String, isNewFlow:Boolean) {
     this.isAcceptDeclineShow = isAcceptDeclineShow
     this.domainUrl = domainUrl
     this.title = title
+    this.isNewFlow = isNewFlow
   }
 
   override fun onCreateView(
@@ -59,7 +61,9 @@ class WebViewDialog : DialogFragment() {
   }
 
   override fun getTheme(): Int {
-    return R.style.FullScreenDialog
+    return if (isNewFlow)
+      R.style.FullScreenDialog_status_bar_white
+    else R.style.FullScreenDialog
   }
 
   @SuppressLint("SetJavaScriptEnabled")

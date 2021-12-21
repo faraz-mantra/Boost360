@@ -122,7 +122,7 @@ class FloatingActionButton : AppCompatTextView {
     )
     fabRippleColor = ta.getColor(
       R.styleable.FloatingActionButton_fabRippleColor,
-      ContextCompat.getColor(context, R.color.colorPrimary)
+      ContextCompat.getColor(context, R.color.quantum_grey)
     )
 
     ta.recycle()

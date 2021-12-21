@@ -19,6 +19,9 @@ object WebActionBoostRepository : AppBaseRepository<WebActionBoostRemoteData, Fl
     return localDataSource.getBoostVisitingMessage(context)
   }
 
+  suspend fun getMoreActionData(context: Context): BaseResponse {
+    return localDataSource.getMoreActionData(context)
+  }
   override fun getRemoteDataSourceClass(): Class<WebActionBoostRemoteData> = WebActionBoostRemoteData::class.java
 
   override fun getLocalDataSourceInstance(): FlorisBoardLocalDataSource = FlorisBoardLocalDataSource()
