@@ -60,7 +60,7 @@ object FirebaseRemoteConfigUtil {
 
   fun featureNewOnBoardingFlowEnable(): Boolean {
     Log.d(TAG, "Config feature NEW ONBOARDING enable: ${remoteConfig?.getBoolean(NEW_ONBOARDING_WITH_UPDATED_CATEGORIES_AND_GUI_ACTIVE) ?: false}")
-    return false//remoteConfig?.getBoolean(NEW_ONBOARDING_WITH_UPDATED_CATEGORIES_AND_GUI_ACTIVE) ?: false
+    return remoteConfig?.getBoolean(NEW_ONBOARDING_WITH_UPDATED_CATEGORIES_AND_GUI_ACTIVE) ?: false
   }
 
   fun appUpdateType(): UpdateType {

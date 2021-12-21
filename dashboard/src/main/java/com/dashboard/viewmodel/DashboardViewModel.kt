@@ -50,7 +50,7 @@ class DashboardViewModel : BaseViewModel() {
   }
 
   fun getCapLimitFeatureDetails(fpId: String?, clientId: String?): LiveData<BaseResponse> {
-    return AzureWebsiteNewRepository.getCapLimitFeatureDetails(fpId,clientId).toLiveData()
+    return AzureWebsiteNewRepository.getCapLimitFeatureDetails(fpId, clientId).toLiveData()
   }
 
   fun getChannelsInsight(nowfloatsId: String?, identifier: String?): LiveData<BaseResponse> {
@@ -163,11 +163,11 @@ class DashboardViewModel : BaseViewModel() {
     return PluginFloatRepository.getDomainDetailsForFloatingPoint(fpTag, map).toLiveData()
   }
 
-  fun getMerchantSummary(clientId: String?,fpTag: String?): LiveData<BaseResponse> {
-   return WithFloatTwoRepository.getMerchantSummary(clientId,fpTag).toLiveData()
+  fun getMerchantSummary(clientId: String?, fpTag: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getMerchantSummary(clientId, fpTag).toLiveData()
   }
 
-  fun getUserProfileData(loginId:String?): LiveData<BaseResponse> {
+  fun getUserProfileData(loginId: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepositoryD.getUserProfileData(loginId).toLiveData()
   }
 

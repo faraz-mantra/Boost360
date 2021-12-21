@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <RelativeLayout
+    android:id="@+id/business_card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.framework.views.customViews.CustomCardView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_margin="@dimen/size_3"
+      app:cardBackgroundColor="@color/white_smoke"
+      app:cardCornerRadius="@dimen/size_10"
+      app:cardElevation="0dp">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_1"
+          android:background="@color/blue_accent_10" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:gravity="bottom"
+          android:orientation="horizontal"
+          app:divider="@drawable/divider"
+          app:showDividers="middle">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/btn_share_image_business"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_30"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/share_only_image"
+            android:textAllCaps="true"
+            android:textColor="@color/accent_blue" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/btn_share_image_text_business"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_30"
+            android:layout_weight="1"
+            android:background="@color/blue_light_e5f1fc"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="@string/share_with_text"
+            android:textAllCaps="true"
+            android:textColor="@color/accent_blue"
+            tools:ignore="UnusedAttribute" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.framework.views.customViews.CustomCardView>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="@dimen/size_4"
+      android:layout_marginBottom="@dimen/size_34"
+      android:orientation="vertical">
+
+      <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager_profile"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+  </RelativeLayout>
+</layout>
