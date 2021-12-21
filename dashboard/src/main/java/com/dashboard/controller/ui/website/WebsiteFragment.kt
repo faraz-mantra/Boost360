@@ -23,6 +23,8 @@ import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.ui.dashboard.checkIsPremiumUnlock
+import com.dashboard.controller.ui.websiteTheme.bottomsheet.*
+import com.dashboard.controller.ui.websiteTheme.dialog.WebViewDialog
 import com.dashboard.databinding.FragmentWebsiteBinding
 import com.dashboard.databinding.FragmentWebsitePagerBinding
 import com.dashboard.model.live.websiteItem.WebsiteActionItem
@@ -36,6 +38,7 @@ import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager
 import com.framework.glide.util.glideLoad
 import com.framework.pref.BASE_IMAGE_URL
 import com.framework.pref.Key_Preferences
@@ -249,12 +252,45 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       shareMore()
       this.popupWindow?.dismiss()
     }
+    val republishWebsiteBtn = this.popupWindow?.contentView?.findViewById<LinearLayoutCompat>(R.id.ll_republish)
+    republishWebsiteBtn?.setOnClickListener {
+      val republishProgressBottomSheet = RepublishProgressBottomSheet()
+      republishProgressBottomSheet.onRepublishSuccess = {
+        when (it) {
+          SuccessType.ON_PROGRESS_COMPLETE.name -> {
+            openSuccessDialog()
+          }
+        }
+    }
+      republishProgressBottomSheet.show(parentFragmentManager, RepublishProgressBottomSheet::javaClass.name)
+      this.popupWindow?.dismiss()
+    }
     this.popupWindow?.elevation = 5.0F
     this.popupWindow?.showAsDropDown(anchor, 0, 20)
   }
 
   private fun shareMore() {
     ContentSharing.shareWebsiteTheme(requireActivity(), businessName!!, websiteLink!!, businessContact!!)
+  }
+
+  private fun openSuccessDialog() {
+    val websiteUpdateSheet = WebsiteThemeUpdatedSuccessfullySheet()
+    websiteUpdateSheet.onClicked = {
+      when (it) {
+        TypeSuccess.VISIT_WEBSITE.name -> {
+          openWebViewDialog(binding?.txtDomainName?.text.toString(), session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME) ?: "")
+        }
+        TypeSuccess.CLOSE.name -> websiteUpdateSheet.dismiss()
+      }
+    }
+    websiteUpdateSheet.show(parentFragmentManager, WebSiteThemeResetBottomSheet::javaClass.name)
+  }
+
+  private fun openWebViewDialog(url: String, title: String) {
+    WebViewDialog().apply {
+      setData(url, title)
+      show(this@WebsiteFragment.parentFragmentManager, WebViewDialog::javaClass.name)
+    }
   }
 }
 
