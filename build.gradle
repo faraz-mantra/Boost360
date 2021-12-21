@@ -7,7 +7,7 @@ buildscript {
         jcenter()
         google()
         mavenCentral()
-        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+//        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.2.1'
@@ -35,9 +35,9 @@ allprojects {
         maven {
             url "https://sdk.smartlook.com/android/release"
         }
-        maven {
-            url "https://dl.bintray.com/notifyvisitors/invitereferrals"
-        }
+//        maven {
+//            url "https://dl.bintray.com/notifyvisitors/invitereferrals"
+//        }
     }
 }
 subprojects {
