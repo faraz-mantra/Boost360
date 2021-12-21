@@ -21,6 +21,7 @@ class WebsiteThemeUpdatedSuccessfullySheet : BaseBottomSheetDialog<BottomSheetTh
   private lateinit var businessContact: String
   private lateinit var userSessionManager: UserSessionManager
   var onClicked: (value: String) -> Unit = { }
+
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_theme_updated_successfully
   }
@@ -31,14 +32,8 @@ class WebsiteThemeUpdatedSuccessfullySheet : BaseBottomSheetDialog<BottomSheetTh
 
   override fun onCreateView() {
     setOnClickListener(
-      binding?.rivCloseBottomSheet,
-      binding?.visitWebsite,
-      binding?.btnFb,
-      binding?.btnCopyMessage,
-      binding?.btnTwitter,
-      binding?.btnLinkedin,
-      binding?.shareWhatsapp,
-      binding?.btnShare
+      binding?.rivCloseBottomSheet, binding?.visitWebsite, binding?.btnFb, binding?.btnCopyMessage,
+      binding?.btnTwitter, binding?.btnLinkedin, binding?.shareWhatsapp, binding?.btnShare
     )
     isCancelable = false
     binding?.txtMessage?.text = getString(R.string.website_updated)
@@ -58,47 +53,12 @@ class WebsiteThemeUpdatedSuccessfullySheet : BaseBottomSheetDialog<BottomSheetTh
         onClicked(TypeSuccess.CLOSE.name)
       }
       binding?.visitWebsite -> onClicked(TypeSuccess.VISIT_WEBSITE.name)
-      binding?.btnFb -> ContentSharing.shareWebsiteTheme(
-        requireActivity(),
-        businessName,
-        websiteLink,
-        businessContact,
-        isFb = true
-      )
-      binding?.btnTwitter -> ContentSharing.shareWebsiteTheme(
-        requireActivity(),
-        businessName,
-        websiteLink,
-        businessContact,
-        isTwitter = true
-      )
-      binding?.shareWhatsapp -> ContentSharing.shareWebsiteTheme(
-        requireActivity(),
-        businessName,
-        websiteLink,
-        businessContact,
-        isWhatsApp = true
-      )
-      binding?.btnLinkedin -> ContentSharing.shareWebsiteTheme(
-        requireActivity(),
-        businessName,
-        websiteLink,
-        businessContact,
-        isLinkedin = true
-      )
-      binding?.btnShare -> ContentSharing.shareWebsiteTheme(
-        requireActivity(),
-        businessName,
-        websiteLink,
-        businessContact
-      )
-      binding?.btnCopyMessage -> ContentSharing.shareWebsiteTheme(
-        requireActivity(),
-        businessName,
-        websiteLink,
-        businessContact,
-        isCopy = true
-      )
+      binding?.btnFb -> ContentSharing.shareWebsiteTheme(baseActivity, businessName, websiteLink, businessContact, isFb = true)
+      binding?.btnTwitter -> ContentSharing.shareWebsiteTheme(baseActivity, businessName, websiteLink, businessContact, isTwitter = true)
+      binding?.shareWhatsapp -> ContentSharing.shareWebsiteTheme(baseActivity, businessName, websiteLink, businessContact, isWhatsApp = true)
+      binding?.btnLinkedin -> ContentSharing.shareWebsiteTheme(baseActivity, businessName, websiteLink, businessContact, isLinkedin = true)
+      binding?.btnShare -> ContentSharing.shareWebsiteTheme(baseActivity, businessName, websiteLink, businessContact)
+      binding?.btnCopyMessage -> ContentSharing.shareWebsiteTheme(baseActivity, businessName, websiteLink, businessContact, isCopy = true)
     }
   }
 }

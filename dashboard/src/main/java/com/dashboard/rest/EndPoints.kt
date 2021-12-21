@@ -27,6 +27,7 @@ object EndPoints {
   const val CREATE_BUSINESS_LOGO = "Discover/v1/floatingPoint/createLogoImage/"
   //FIREBASE TOKEN
   const val GET_FIREBASE_TOKEN = "discover/v1/FloatingPoint/GetFirebaseAuthToken"
+  const val REPUBLISH_WEBSITE = "kitsune/v2/InvalidateFLMCache"
 
 
   //TODO NOWFLOAT API

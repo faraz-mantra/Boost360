@@ -19,7 +19,6 @@
         android:id="@+id/tv_cat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:fontFamily="@font/inter_medium"
         app:textType="BODY_1"
         tools:text="Boutique" />
 
@@ -28,7 +27,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_4"
-        app:fontFamily="@font/inter_medium"
         app:textType="CAPTION"
         tools:text="In Retail" />
     </LinearLayout>

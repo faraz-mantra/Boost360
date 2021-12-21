@@ -7,6 +7,7 @@ import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
 import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerViewHolder
 import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
 import dev.patrickgold.florisboard.customization.model.response.CustomerDetails
+import dev.patrickgold.florisboard.customization.util.RecyclerViewActionType
 import dev.patrickgold.florisboard.databinding.AdapterItemDetailsBinding
 
 class DetailsViewHolder(binding: AdapterItemDetailsBinding, val listener: OnItemClickListener?) : BaseRecyclerViewHolder<AdapterItemDetailsBinding>(binding) {
@@ -22,6 +23,6 @@ class DetailsViewHolder(binding: AdapterItemDetailsBinding, val listener: OnItem
     contactName.text = customerDetails.contactName
     businessName.text = customerDetails.name
     website.text = customerDetails.rootAliasUri
-    btnShare.setOnClickListener { listener?.onItemClick(position, customerDetails) }
+    btnShare.setOnClickListener { listener?.onItemClick(position, customerDetails, RecyclerViewActionType.USER_DETAIL_CLICK.ordinal) }
   }
 }

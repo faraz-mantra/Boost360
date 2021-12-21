@@ -2,28 +2,30 @@ package com.boost.presignin.ui.newOnboarding
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
-import android.view.Window
+import android.view.View
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import com.appservice.base.AppBaseActivity
 import com.boost.presignin.R
 import com.boost.presignin.constant.FragmentType
 import com.boost.presignin.constant.FragmentType.Companion.fromValue
-import com.boost.presignin.databinding.ActivityNewOnboarddingContainerBinding
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
+import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 
-class NewOnBoardingContainerActivity : AppBaseActivity<ActivityNewOnboarddingContainerBinding, BaseViewModel>() {
+class NewOnBoardingContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var type: FragmentType? = null
 
   override fun getLayout(): Int {
-    return R.layout.activity_new_onboardding_container
+    return R.layout.activity_fragment_container
   }
 
   override fun getViewModelClass(): Class<BaseViewModel> {
@@ -34,6 +36,7 @@ class NewOnBoardingContainerActivity : AppBaseActivity<ActivityNewOnboarddingCon
     intent?.extras?.getString(FRAGMENT_TYPE)?.let { type = fromValue(it) }
     if (type == null) intent?.extras?.getInt(FRAGMENT_TYPE)?.let { type = FragmentType.values()[it] }
     super.onCreate(savedInstanceState)
+    this.makeStatusBarTransparent()
   }
 
   override fun onCreateView() {
@@ -51,18 +54,28 @@ class NewOnBoardingContainerActivity : AppBaseActivity<ActivityNewOnboarddingCon
   }
 
   override fun getToolbar(): CustomToolbar? {
-    return binding?.toolbar
-  }
-
-  private fun setToolbarTitleNew(title: String) {
-    binding?.title?.text = title
-    getToolbarTitleColor()?.let { binding?.title?.setTextColor(it) }
+    return binding?.appBarLayout?.toolbar
   }
 
   override fun customTheme(): Int? {
     return when (type) {
+//      FragmentType.INTRO_SLIDE_SHOW_FRAGMENT -> R.style.FullScreenTheme
+      FragmentType.VERIFY_PHONE_FRAGMENT,
+      FragmentType.ENTER_PHONE_FRAGMENT -> R.style.AppTheme_NewOnBoarding_Resize
       else -> super.customTheme()
     }
+  }
+
+  override fun getToolbarTitle(): String? {
+    return getString(
+      when (type) {
+        FragmentType.ENTER_PHONE_FRAGMENT -> R.string.enter_your_phone_number
+        FragmentType.SET_UP_MY_WEBSITE_FRAGMENT -> R.string.setup_my_website
+        FragmentType.VERIFY_PHONE_FRAGMENT -> R.string.verify_your_number
+        FragmentType.WELCOME_FRAGMENT, FragmentType.INTRO_SLIDE_SHOW_FRAGMENT -> R.string.empty_string
+        else -> R.string.empty_string
+      }
+    )
   }
 
   override fun getToolbarBackgroundColor(): Int {
@@ -85,23 +98,8 @@ class NewOnBoardingContainerActivity : AppBaseActivity<ActivityNewOnboarddingCon
 
   private fun setFragment() {
     val fragment = getFragmentInstance(type)
-    setFragmentTitle(type)
     fragment?.arguments = intent.extras
     binding?.container?.id?.let { addFragmentReplace(it, fragment, shouldAddToBackStack()) }
-  }
-
-  private fun setFragmentTitle(type: FragmentType?) {
-    setToolbarTitleNew(
-      resources.getString(
-        when (type) {
-          FragmentType.ENTER_PHONE_FRAGMENT -> R.string.enter_your_phone_number
-          FragmentType.SET_UP_MY_WEBSITE_FRAGMENT -> R.string.setup_my_website
-          FragmentType.VERIFY_PHONE_FRAGMENT -> R.string.verify_your_number
-          FragmentType.WELCOME_FRAGMENT, FragmentType.INTRO_SLIDE_SHOW_FRAGMENT -> R.string.empty_string
-          else -> R.string.empty_string
-        }
-      )
-    )
   }
 
   private fun getFragmentInstance(type: FragmentType?): BaseFragment<*, *>? {
@@ -128,10 +126,18 @@ class NewOnBoardingContainerActivity : AppBaseActivity<ActivityNewOnboarddingCon
     }
   }
 
-  private fun makeFullScreen(type: FragmentType?) {
+  fun Activity.makeStatusBarTransparent() {
     if (type == FragmentType.INTRO_SLIDE_SHOW_FRAGMENT) {
-      requestWindowFeature(Window.FEATURE_NO_TITLE)
-      this.window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+      window.apply {
+        clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+          decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        } else {
+          decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        }
+        statusBarColor = Color.TRANSPARENT
+      }
     }
   }
 
