@@ -20,7 +20,7 @@ import com.boost.upgrades.utils.Constants.Companion.REMOVE_ADDONS_CONFIRMATION_F
 import com.boost.upgrades.utils.Utils.longToast
 import kotlinx.android.synthetic.main.remove_addons_fragment.*
 
-class RemoveAddonsFragment : BaseFragment(), RemoveItemsListener {
+class RemoveAddonsFragment : BaseFragment("MarketPlaceRemoveAddonsFragment"), RemoveItemsListener {
 
   lateinit var root: View
   private lateinit var viewModel: RemoveAddonsViewModel

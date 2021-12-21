@@ -77,6 +77,11 @@ class TANPopUpFragment : DialogFragment() {
 
 
   }
+  override fun onResume() {
+    super.onResume()
+//    UserExperiorController.startScreen("MarketPlaceTANPopUpFragment")
+
+  }
 
 
 }

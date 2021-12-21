@@ -73,7 +73,7 @@ import com.boost.cart.CartActivity
 import com.framework.analytics.SentryController
 
 
-class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
+class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, CompareBackListener {
 
     lateinit var root: View
     private lateinit var viewModel: HomeViewModel
@@ -1267,7 +1267,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             if (it.size > 0) {
                 updatePartnerViewPager(it)
                 partner_layout.visibility = View.VISIBLE
-            } else {
+            }
+            else {
                 partner_layout.visibility = View.GONE
             }
         })

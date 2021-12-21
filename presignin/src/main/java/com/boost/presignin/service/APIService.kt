@@ -52,16 +52,16 @@ class APIService : Service() {
         return START_STICKY
     }
 
-  private fun hitAPIs() {
-    registerRia()
-    nfxGetSocialTokens()
-    hitSelfBrandedKycAPI()
-    checkUserAccountDetails()
-    //Migrate Upgrade DB
-    DataLoader.loadMarketPlaceData(application,userSessionManager?.fP_AppExperienceCode,userSessionManager?.fpTag)
-    getAndSaveKAdminFeatureSupportVideos()
+    private fun hitAPIs() {
+        registerRia()
+        nfxGetSocialTokens()
+        hitSelfBrandedKycAPI()
+        checkUserAccountDetails()
+        getAndSaveKAdminFeatureSupportVideos()
 
-  }
+        //Migrate Upgrade DB
+        DataLoader.loadMarketPlaceData(application,userSessionManager?.fP_AppExperienceCode,userSessionManager?.fpTag)
+    }
 
     private fun checkUserAccountDetails() {
         WithFloatRepository.checkUserAccount(userSessionManager?.fPID, clientId).toLiveData()
