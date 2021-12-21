@@ -10,6 +10,9 @@ import com.appservice.model.serviceProduct.service.ItemsItem
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
+import com.framework.utils.removeENotationAndRoundTo
+import com.framework.utils.roundTo
+import java.text.DecimalFormat
 
 class ServiceListingViewHolder(binding: RecyclerItemServiceListingBinding) : AppBaseRecyclerViewHolder<RecyclerItemServiceListingBinding>(binding) {
 
@@ -22,10 +25,10 @@ class ServiceListingViewHolder(binding: RecyclerItemServiceListingBinding) : App
 
     if (data.price ?: 0.0 <= data.discountedPrice ?: 0.0) binding.labelBasePrice.gone() else binding.labelBasePrice.visible()
 
-    binding.labelPrice.text = "${data.currency ?: "INR"} ${data.discountedPrice}"
+    binding.labelPrice.text = "${data.currency ?: "INR"} ${data.discountedPrice?.removeENotationAndRoundTo(1)}"
 
     binding.labelBasePrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-    binding.labelBasePrice.text = "${data.currency ?: "INR"} ${data.price}"
+    binding.labelBasePrice.text = "${data.currency ?: "INR"} ${data.price?.removeENotationAndRoundTo(1)}"
 
     apply {
       activity?.glideLoad(binding.cardThumbnail, data.tileImage, R.drawable.placeholder_image_n)

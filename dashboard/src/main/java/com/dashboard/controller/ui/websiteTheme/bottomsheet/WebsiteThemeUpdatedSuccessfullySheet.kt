@@ -14,7 +14,7 @@ enum class TypeSuccess {
   CLOSE, VISIT_WEBSITE, PUBLISH_CHANGES, DISCARD, GO_BACK
 }
 
-class WebsiteThemeUpdatedSuccessfullySheet : BaseBottomSheetDialog<BottomSheetThemeUpdatedSuccessfullyBinding, BaseViewModel>() {
+class WebsiteThemeUpdatedSuccessfullySheet(val isRepublishFlow: Boolean) : BaseBottomSheetDialog<BottomSheetThemeUpdatedSuccessfullyBinding, BaseViewModel>() {
 
   private lateinit var websiteLink: String
   private lateinit var businessName: String
@@ -43,6 +43,10 @@ class WebsiteThemeUpdatedSuccessfullySheet : BaseBottomSheetDialog<BottomSheetTh
     businessName = userSessionManager.fPName!!
     businessContact = userSessionManager.fPPrimaryContactNumber!!
 
+    if (isRepublishFlow){
+      binding?.visitWebsite?.text = getString(R.string.view_changes_live)
+      binding?.btnCancel?.text = getString(R.string.share_on_more)
+    }
   }
 
   override fun onClick(v: View) {
