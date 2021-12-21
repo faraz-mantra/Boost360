@@ -69,6 +69,13 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     notifyDataSetChanged()
   }
 
+   fun addupdates(purchaseResult: List<T>) {
+    val initPosition = list.size
+    list.clear()
+    list.addAll(purchaseResult)
+    notifyItemRangeInserted(initPosition, list.size)
+  }
+
   override fun getItemCount(): Int {
     return if (list.isNotEmpty()) list.size else 0
   }
@@ -151,5 +158,8 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     notifyItemRangeChanged(0, itemCount)
   }
   // New Function
+
+
+
 
 }
