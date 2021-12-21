@@ -135,7 +135,7 @@
       app:layout_constraintTop_toBottomOf="@+id/linear_secure_wrapper"
       app:layout_constraintVertical_bias="1.0" />
 
-    <com.framework.views.customViews.CustomTextView
+    <com.framework.views.customViews.CustomMaterialButton
       android:id="@+id/tv_next_step_3"
       style="@style/yellow_squared_button"
       android:enabled="true"

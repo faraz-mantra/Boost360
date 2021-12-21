@@ -90,7 +90,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.framework.views.customViews.CustomTextView
+    <com.framework.views.customViews.CustomMaterialButton
       android:id="@+id/tv_next_step_2"
       style="@style/yellow_squared_button"
       android:layout_alignParentStart="true"

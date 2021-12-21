@@ -52,7 +52,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/need_title_sheet" />
 
-        <com.framework.views.customViews.CustomTextView
+        <com.framework.views.customViews.CustomMaterialButton
             android:id="@+id/tv_create_support_request"
             style="@style/yellow_squared_button"
             android:text="@string/call_our_expert"
