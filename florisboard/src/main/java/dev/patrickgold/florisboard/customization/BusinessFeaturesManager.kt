@@ -236,7 +236,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   private fun loadDataBasesOnTab() {
     resetAdapters()
     binding.lockView.msgLayout.gone()
-    if (session?.getStoreWidgets()?.contains("BOOSTKEYBOARD") == false) {
+    if (session?.getStoreWidgets()?.contains("BOOSTKEYBOARD") == true) {
       binding.businessFeatureProgress.visible()
       when (businessFeatureEnum) {
         BusinessFeatureEnum.INVENTORY_SERVICE -> {
