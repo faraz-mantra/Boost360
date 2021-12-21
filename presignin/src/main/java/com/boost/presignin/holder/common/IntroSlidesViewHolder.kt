@@ -23,14 +23,14 @@ class IntroSlidesViewHolder constructor(binding: ItemIntroNewSlidesBinding) : Ap
 
     binding.lottieAnimationIntro.apply {
       setAnimation(model.lottieRawResource)
-      repeatCount = LottieDrawable.INFINITE
+      repeatCount = if (!model.isLottieRepeat) 1 else LottieDrawable.INFINITE
       repeatMode = LottieDrawable.RESTART
       playAnimation()
     }
     binding.tvIntroTitle.text = model.title
     binding.lottieAnimationIntro.addAnimatorListener(object : Animator.AnimatorListener {
       override fun onAnimationRepeat(animation: Animator?) {
-        //onItemClick(position, item)
+        onItemClick(position, item)
       }
 
       override fun onAnimationEnd(animation: Animator?) {

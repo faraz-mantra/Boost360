@@ -1,24 +1,25 @@
 package com.boost.presignin.ui.newOnboarding
 
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.appcompat.content.res.AppCompatResources
+import android.view.Window
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.translationMatrix
 import androidx.viewpager2.widget.ViewPager2
 import com.boost.presignin.R
+import com.boost.presignin.adapter.IntroNewAdapter
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.FragmentType
 import com.boost.presignin.constant.IntentConstant
-import com.boost.presignin.constant.RecyclerViewActionType
 import com.boost.presignin.databinding.FragmentIntroSlideShowBinding
 import com.boost.presignin.model.newOnboarding.IntroItemNew
-import com.boost.presignin.recyclerView.AppBaseRecyclerViewAdapter
-import com.boost.presignin.recyclerView.BaseRecyclerViewItem
-import com.boost.presignin.recyclerView.RecyclerItemClickListener
+import com.boost.presignin.ui.intro.CircularViewPagerHandler
 import com.framework.models.BaseViewModel
 
-class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, BaseViewModel>(), RecyclerItemClickListener {
+class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, BaseViewModel>() {
 
   private var myState = 0
   private var currentPosition = 0
@@ -57,11 +58,11 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
   private fun initUI() {
     introItems = IntroItemNew().getData(baseActivity)
     binding?.viewpagerIntro?.apply {
-      adapter = AppBaseRecyclerViewAdapter(baseActivity, introItems, this@IntroSlideShowFragment)
+      adapter = IntroNewAdapter(childFragmentManager, lifecycle, introItems) { setNextPage(it) }
       orientation = ViewPager2.ORIENTATION_HORIZONTAL
       binding?.introIndicatorNew?.setViewPager2(this)
-      offscreenPageLimit = 1
-      registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+      this.offscreenPageLimit = 1
+      this.registerOnPageChangeCallback(object : CircularViewPagerHandler(this) {
         override fun onPageSelected(position: Int) {
           currentPosition = position
           binding?.consWrapperIntro?.setBackgroundColor(ContextCompat.getColor(baseActivity, IntroItemNew().getData(baseActivity)[position].slideBackgroundColor ?: 0))
@@ -82,20 +83,20 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
     }
   }
 
+  private fun setNextPage(pos: Int?) {
+    if (currentPosition == pos) changePageOnAnimationEnd()
+  }
+
+
   private fun setOnListeners() {
     binding?.btnGetStarted?.setOnClickListener {
       startFragmentFromNewOnBoardingActivity(
         activity = baseActivity, type = FragmentType.ENTER_PHONE_FRAGMENT,
-        bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "phoneNumber") }, clearTop = false
+        bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "") }, clearTop = false
       )
     }
   }
 
-  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-    when (actionType) {
-      RecyclerViewActionType.INTRO_LOTTIE_ANIMATION_COMPLETE_INVOKE.ordinal -> changePageOnAnimationEnd()
-    }
-  }
 
   private fun nextPageTimer() {
     handler.postDelayed(nextRunnable, 5000)
@@ -108,4 +109,5 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
     val setItemPosition = if (isLast) 0 else mCurrentPosition + 1
     binding?.viewpagerIntro?.currentItem = setItemPosition
   }
+
 }

@@ -7,8 +7,7 @@
     android:id="@+id/cons_wrapper_intro"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:fitsSystemWindows="true"
+    android:background="@color/white_F4F8FA"
     tools:context=".ui.newOnboarding.IntroSlideShowFragment">
 
     <androidx.viewpager2.widget.ViewPager2
@@ -20,32 +19,33 @@
       app:layout_constraintTop_toTopOf="parent" />
 
     <com.framework.views.dotsindicator.DotsIndicator
-      android:id="@+id/intro_indicator_new"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_horizontal"
-      android:layout_marginBottom="@dimen/size_20"
-      app:dotsColor="@color/black_4a4a4a_30"
-      app:dotsCornerRadius="@dimen/_6dp"
-      app:dotsSize="@dimen/size_6"
-      app:dotsSpacing="@dimen/size_6"
-      app:dotsWidthFactor="4"
-      app:layout_constraintBottom_toTopOf="@id/btn_get_started"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:progressMode="false"
-      app:selectedDotColor="@color/colorPrimary" />
+        android:id="@+id/intro_indicator_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/size_25"
+        app:dotsColor="@color/black_4a4a4a_30"
+        app:dotsCornerRadius="@dimen/_6dp"
+        app:dotsSize="@dimen/size_6"
+        app:dotsSpacing="@dimen/size_6"
+        app:dotsWidthFactor="4"
+        app:layout_constraintBottom_toTopOf="@id/btn_get_started"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:progressMode="false"
+        app:selectedDotColor="@color/colorPrimary" />
 
     <com.framework.views.customViews.CustomButton
-      android:id="@+id/btn_get_started"
-      style="@style/started_button"
-      android:layout_marginHorizontal="@dimen/size_20"
-      android:layout_marginBottom="@dimen/size_20"
-      android:fontFamily="@font/inter_medium"
-      android:text="@string/get_started"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent" />
+        android:id="@+id/btn_get_started"
+        style="@style/started_button"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginBottom="@dimen/size_25"
+        android:text="@string/get_started"
+        android:textSize="@dimen/text_16"
+        android:fontFamily="@font/semi_bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -49,7 +49,7 @@
                             android:id="@+id/title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/text_16"
                             android:layout_gravity="start|center_vertical"
                             android:gravity="start|center_vertical"
                             app:fontFamily="@font/semi_bold"

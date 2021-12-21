@@ -105,7 +105,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
 
   private fun setUserDetail(merchantProfileDetails: UserProfileDataResult?) {
     if (merchantProfileDetails?.ImageUrl.isNullOrEmpty().not()) {
-      binding?.rivUsersImage?.let { baseActivity.glideLoad(it, merchantProfileDetails?.ImageUrl ?: "", R.drawable.placeholder_image_n) }
+      binding?.rivUsersImage?.let { baseActivity.glideLoad(it, merchantProfileDetails?.ImageUrl ?: "", R.drawable.placeholder_image_n, isLoadBitmap = true) }
     } else {
       binding?.rivUsersImage?.setImageResource(R.drawable.ic_user_circle_dark_grey)
     }

@@ -1,36 +1,19 @@
 package com.boost.presignin.ui.newOnboarding
 
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.View
-import androidx.activity.OnBackPressedCallback
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
-import com.boost.presignin.constant.RecyclerViewActionType
 import com.boost.presignin.databinding.LayoutBusinessCategoryPreviewBinding
-import com.boost.presignin.databinding.LayoutSetUpMyWebsiteStep1Binding
-import com.boost.presignin.helper.WebEngageController
-import com.boost.presignin.model.CategorySuggestionUiModel
 import com.boost.presignin.model.category.CategoryDataModel
-import com.boost.presignin.model.category.CategoryDataModelOv2
-import com.boost.presignin.recyclerView.AppBaseRecyclerViewAdapter
-import com.boost.presignin.recyclerView.BaseRecyclerViewItem
-import com.boost.presignin.recyclerView.RecyclerItemClickListener
-import com.boost.presignin.rest.response.ResponseDataCategoryOv2
 import com.boost.presignin.viewmodel.CategoryVideoModel
 import com.framework.extensions.gone
-import com.bumptech.glide.Glide
-import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.utils.convertJsonToObj
-import com.framework.webengageconstant.*
+import com.framework.glide.util.glideLoad
+import com.framework.utils.makeSectionOfTextBold
 
-class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPreviewBinding, CategoryVideoModel>(), RecyclerItemClickListener {
+class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPreviewBinding, CategoryVideoModel>() {
 
   private val TAG = "BusinessCategoryPreview"
 
@@ -43,14 +26,17 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
     }
   }
 
-  private lateinit var baseAdapter: AppBaseRecyclerViewAdapter<CategoryDataModelOv2>
-  private var categoryList = ArrayList<CategoryDataModelOv2>()
+
   private val phoneNumber by lazy {
     arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
   }
 
   private val whatsappConsent by lazy {
-    arguments?.getString(IntentConstant.WHATSAPP_CONSENT_FLAG.name)
+    arguments?.getBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name)
+  }
+
+  private val categoryLiveName by lazy {
+    arguments?.getString(IntentConstant.CATEGORY_SUGG_UI.name)
   }
 
   private val mobilePreview by lazy {
@@ -60,14 +46,10 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
   private val desktopPreview by lazy {
     arguments?.getString(IntentConstant.DESKTOP_PREVIEW.name)
   }
+
   private val categoryModel by lazy {
-    convertJsonToObj<CategoryDataModelOv2?>(arguments?.getString(IntentConstant.CATEGORY_DATA.name))
-
+    arguments?.getSerializable(IntentConstant.CATEGORY_DATA.name) as? CategoryDataModel
   }
-  private val categorySuggUiModel by lazy {
-    convertJsonToObj<CategorySuggestionUiModel?>(arguments?.getString(IntentConstant.CATEGORY_SUGG_UI.name))
-  }
-
 
   override fun getLayout(): Int {
     return R.layout.layout_business_category_preview
@@ -86,38 +68,37 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
   }
 
   private fun setupUi() {
-    if (categorySuggUiModel != null) {
-      val totalString = categorySuggUiModel?.category + " in " + categorySuggUiModel?.subCategory
-      val spannableString = SpannableString(totalString)
-      val boldStart = totalString.indexOf(categorySuggUiModel?.category!!)
-      spannableString.setSpan(
-        ForegroundColorSpan(getColor(R.color.black_4a4a4a)), boldStart,
-        boldStart + (categorySuggUiModel?.category?.length ?: 0),
-        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-      )
-      binding?.autocompleteSearchCategory?.text = spannableString
-      Log.i(TAG, "setupUi: $mobilePreview")
+    if (categoryLiveName.isNullOrEmpty().not()) {
+      val totalString = categoryLiveName + "\nin " + categoryModel?.category_Name
+      binding?.autocompleteSearchCategory?.text = makeSectionOfTextBold(totalString, categoryLiveName ?: "", font = R.font.regular_medium)
     } else {
-      binding?.autocompleteSearchCategory?.text = categoryModel?.category_Name
+      binding?.autocompleteSearchCategory?.text = makeSectionOfTextBold(categoryModel?.category_Name ?: "", categoryModel?.category_Name ?: "", font = R.font.regular_medium)
     }
-    binding?.ivWebsitePreview?.let { Glide.with(this).load(mobilePreview).into(it) }
+    baseActivity.glideLoad(binding?.desktopPreview?.imgDesktop!!, desktopPreview ?: "", R.drawable.mobile_preview_website)
+    baseActivity.glideLoad(binding?.mobilePreview?.imgMobile!!, mobilePreview ?: "", R.drawable.mobile_preview_website)
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
       binding?.tvNextStep -> {
-        addFragment(R.id.inner_container, SetupMyWebsiteStep2Fragment.newInstance(Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }), true)
+        addFragment(R.id.inner_container, SetupMyWebsiteStep2Fragment.newInstance(Bundle().apply {
+          putString(IntentConstant.DESKTOP_PREVIEW.name, desktopPreview)
+          putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
+          putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+          putString(IntentConstant.CATEGORY_SUGG_UI.name, categoryLiveName)
+          putSerializable(IntentConstant.CATEGORY_DATA.name, categoryModel)
+          putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent?:false)
+        }), true)
       }
       binding?.layoutMobile -> {
         setUpButtonSelectedUI()
       }
       binding?.layoutDesktop -> {
-        setUpButtonSelectedUI(isMobilePreviewMode = false)
+        setUpButtonSelectedUI(false)
       }
       binding?.autocompleteSearchCategory -> {
-        requireActivity().onBackPressed()
-
+        baseActivity.onBackPressed()
       }
     }
   }
@@ -127,21 +108,21 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
     if (isMobilePreviewMode) {
       binding?.layoutMobile?.setBackgroundResource(R.drawable.ic_presignin_bg_yellow_solid_stroke)
       binding?.layoutDesktop?.setBackgroundResource(0)
+      binding?.titleMobile?.setTextColor(getColor(R.color.colorAccent))
+      binding?.titleDesktop?.setTextColor(getColor(R.color.black_4a4a4a))
       binding?.ivMobile?.visible()
       binding?.ivDesktop?.gone()
-      Glide.with(this).load(mobilePreview).into(binding?.ivWebsitePreview!!)
+      binding?.desktopPreview?.root?.gone()
+      binding?.mobilePreview?.root?.visible()
     } else {
       binding?.layoutMobile?.setBackgroundResource(0)
       binding?.layoutDesktop?.setBackgroundResource(R.drawable.ic_presignin_bg_yellow_solid_stroke)
+      binding?.titleMobile?.setTextColor(getColor(R.color.black_4a4a4a))
+      binding?.titleDesktop?.setTextColor(getColor(R.color.colorAccent))
       binding?.ivMobile?.gone()
       binding?.ivDesktop?.visible()
-      Glide.with(this).load(desktopPreview).into(binding?.ivWebsitePreview!!)
-    }
-  }
-
-  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-    when (actionType) {
-
+      binding?.desktopPreview?.root?.visible()
+      binding?.mobilePreview?.root?.gone()
     }
   }
 }
