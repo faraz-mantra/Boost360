@@ -23,6 +23,8 @@ import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.ui.dashboard.checkIsPremiumUnlock
+import com.dashboard.controller.ui.websiteTheme.bottomsheet.*
+import com.dashboard.controller.ui.websiteTheme.dialog.WebViewDialog
 import com.dashboard.databinding.FragmentWebsiteBinding
 import com.dashboard.databinding.FragmentWebsitePagerBinding
 import com.dashboard.model.live.websiteItem.WebsiteActionItem
@@ -36,6 +38,7 @@ import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager
 import com.framework.glide.util.glideLoad
 import com.framework.pref.BASE_IMAGE_URL
 import com.framework.pref.Key_Preferences
@@ -58,7 +61,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   private var businessName: String? = null
   private var businessContact: String? = null
   private var popupWindow: PopupWindow? = null
-  private  val TAG = "WebsiteFragment"
+  private val TAG = "WebsiteFragment"
   override fun getLayout(): Int {
     return R.layout.fragment_website
   }
@@ -85,42 +88,46 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   private fun setupViewPager() {
     binding?.pager?.adapter = CategoriesPagerAdapter(baseActivity, childFragmentManager)
     binding?.tabLayout?.setupWithViewPager(binding?.pager)
-    for (i in 0..binding?.tabLayout?.tabCount!!){
-      val tab:TabLayout.Tab? = binding?.tabLayout?.getTabAt(i)
-      if (tab != null){
-        val tabTextView:TextView = TextView(baseActivity)
+    for (i in 0..binding?.tabLayout?.tabCount!!) {
+      val tab: TabLayout.Tab? = binding?.tabLayout?.getTabAt(i)
+      if (tab != null) {
+        val tabTextView: TextView = TextView(baseActivity)
         tab.customView = tabTextView
         tabTextView.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
         tabTextView.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
         tabTextView.text = tab.text
-        if (i == 0){
+        if (i == 0) {
           // This set the font style of the first tab
-          tabTextView.setTypeface(SANS_SERIF,BOLD)
+          tabTextView.setTypeface(SANS_SERIF, BOLD)
           tabTextView.setTextColor(getColor(R.color.colorAccent))
 
         }
-        if (i == 1){
+        if (i == 1) {
           // This set the font style of the first tab
-          tabTextView.setTypeface(null,NORMAL)
+          tabTextView.setTypeface(null, NORMAL)
         }
       }
     }
-    binding?.tabLayout!!.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+    binding?.tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
       override fun onTabSelected(tab: TabLayout.Tab?) {
         val text: TextView = tab?.customView as TextView
         text.setTypeface(null, BOLD)
         text.setTextColor(getColor(R.color.colorAccent))
 
       }
+
       override fun onTabUnselected(tab: TabLayout.Tab?) {
         val text: TextView = tab?.customView as TextView
         text.setTypeface(null, NORMAL)
-        text.setTextColor(getColor(R.color.black_4a4a4a                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ))
+        text.setTextColor(
+          getColor(R.color.black_4a4a4a)
+        )
 
       }
+
       override fun onTabReselected(tab: TabLayout.Tab?) {
       }
-  })
+    })
   }
 
   override fun onResume() {
@@ -249,12 +256,41 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       shareMore()
       this.popupWindow?.dismiss()
     }
+    val republishWebsiteBtn = this.popupWindow?.contentView?.findViewById<LinearLayoutCompat>(R.id.ll_republish)
+    republishWebsiteBtn?.setOnClickListener {
+      RepublishProgressBottomSheet().apply {
+        onRepublishSuccess = { openSuccessDialog() }
+        show(baseActivity.supportFragmentManager, RepublishProgressBottomSheet::javaClass.name)
+      }
+      this.popupWindow?.dismiss()
+    }
     this.popupWindow?.elevation = 5.0F
     this.popupWindow?.showAsDropDown(anchor, 0, 20)
   }
 
   private fun shareMore() {
-    ContentSharing.shareWebsiteTheme(requireActivity(), businessName!!, websiteLink!!, businessContact!!)
+    ContentSharing.shareWebsiteTheme(baseActivity, businessName ?: "", websiteLink ?: "", businessContact ?: "")
+  }
+
+  private fun openSuccessDialog() {
+    WebsiteThemeUpdatedSuccessfullySheet().apply {
+      onClicked = {
+        when (it) {
+          TypeSuccess.VISIT_WEBSITE.name -> {
+            openWebViewDialog(binding?.txtDomainName?.text.toString(), session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME) ?: "")
+          }
+          TypeSuccess.CLOSE.name -> dismiss()
+        }
+      }
+      show(baseActivity.supportFragmentManager, WebSiteThemeResetBottomSheet::javaClass.name)
+    }
+  }
+
+  private fun openWebViewDialog(url: String, title: String) {
+    WebViewDialog().apply {
+      setData(url, title)
+      show(baseActivity.supportFragmentManager, WebViewDialog::javaClass.name)
+    }
   }
 }
 
