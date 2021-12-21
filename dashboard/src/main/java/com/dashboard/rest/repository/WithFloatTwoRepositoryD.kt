@@ -36,60 +36,64 @@ object WithFloatTwoRepositoryD : AppBaseRepository<WithFloatTwoRemoteData, Dashb
     return makeRemoteRequest(remoteDataSource.getFirebaseToken(client_id = clientId), TaskCode.GET_FIREBASE_TOKEN)
   }
 
-  fun uploadUserProfileImage(clientId: String?,loginId:String?,fileName:String, file: RequestBody?): Observable<BaseResponse> {
+  fun uploadUserProfileImage(clientId: String?, loginId: String?, fileName: String, file: RequestBody?): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.uploadUserProfileImage(
-        clientId = clientId, loginId=loginId,
-        fileName=fileName, file = file
+        clientId = clientId, loginId = loginId,
+        fileName = fileName, file = file
       ), TaskCode.UPLOAD_USER_PROFILE_IMAGE
     )
   }
 
-  fun getUserProfileData(loginId:String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.userProfileData(loginId=loginId,), TaskCode.GET_USER_PROFILE_DETAILS)
+  fun getUserProfileData(loginId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.userProfileData(loginId = loginId), TaskCode.GET_USER_PROFILE_DETAILS)
   }
 
-  fun updateUserName(userName:String?, loginId:String?): Observable<BaseResponse> {
+  fun updateUserName(userName: String?, loginId: String?): Observable<BaseResponse> {
     val jsonObject = JsonObject().apply {
-      addProperty("UserName",userName)
-      addProperty("LoginId",loginId)
+      addProperty("UserName", userName)
+      addProperty("LoginId", loginId)
     }
-    return makeRemoteRequest(remoteDataSource.updateUserName(jsonObject=jsonObject), TaskCode.UPDATE_USER_NAME)
+    return makeRemoteRequest(remoteDataSource.updateUserName(jsonObject = jsonObject), TaskCode.UPDATE_USER_NAME)
   }
 
-  fun sendOtpEmail(emailId:String?, ): Observable<BaseResponse> {
+  fun sendOtpEmail(emailId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.sendOTPEmail(emailId), TaskCode.SEND_OTP_EMAIL)
   }
 
-  fun updateEmail(email:String?, otp:String?, loginId:String?): Observable<BaseResponse> {
+  fun updateEmail(email: String?, otp: String?, loginId: String?): Observable<BaseResponse> {
     val jsonObject = JsonObject().apply {
-      addProperty("Email",email)
-      addProperty("OTP",otp)
-      addProperty("LoginId",loginId)
+      addProperty("Email", email)
+      addProperty("OTP", otp)
+      addProperty("LoginId", loginId)
     }
-    return makeRemoteRequest(remoteDataSource.updateEmail(jsonObject=jsonObject), TaskCode.UPDATE_USER_EMAIL)
+    return makeRemoteRequest(remoteDataSource.updateEmail(jsonObject = jsonObject), TaskCode.UPDATE_USER_EMAIL)
   }
 
-  fun sendOtpMobile(mobile:String?, ): Observable<BaseResponse> {
+  fun sendOtpMobile(mobile: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.sendOTPMobile(mobile), TaskCode.SEND_OTP_MOBILE)
   }
 
-  fun updateMobile(mobile:String?, otp:String?, loginId:String?): Observable<BaseResponse> {
+  fun updateMobile(mobile: String?, otp: String?, loginId: String?): Observable<BaseResponse> {
     val jsonObject = JsonObject().apply {
-      addProperty("MobileNo",mobile)
-      addProperty("OTP",otp)
-      addProperty("LoginId",loginId)
+      addProperty("MobileNo", mobile)
+      addProperty("OTP", otp)
+      addProperty("LoginId", loginId)
     }
-    return makeRemoteRequest(remoteDataSource.updateMobile(jsonObject=jsonObject), TaskCode.UPDATE_USER_MOBILE)
+    return makeRemoteRequest(remoteDataSource.updateMobile(jsonObject = jsonObject), TaskCode.UPDATE_USER_MOBILE)
   }
 
-  fun updateWhatsapp(mobile:String?, optIn:Boolean?, loginId:String?): Observable<BaseResponse> {
+  fun updateWhatsapp(mobile: String?, optIn: Boolean?, loginId: String?): Observable<BaseResponse> {
     val jsonObject = JsonObject().apply {
-      addProperty("WhatsappNo",mobile)
-      addProperty("OptIn",optIn)
-      addProperty("LoginId",loginId)
+      addProperty("WhatsappNo", mobile)
+      addProperty("OptIn", optIn)
+      addProperty("LoginId", loginId)
     }
-    return makeRemoteRequest(remoteDataSource.updateWhatsapp(jsonObject=jsonObject), TaskCode.UPDATE_USER_WHATSAPP)
+    return makeRemoteRequest(remoteDataSource.updateWhatsapp(jsonObject = jsonObject), TaskCode.UPDATE_USER_WHATSAPP)
+  }
+
+  fun republishWebsite(fpTag: String): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.republishWebsite(clientId = clientId, fpTag = fpTag), TaskCode.REPUBLISH_WEBSITE)
   }
 
   override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {

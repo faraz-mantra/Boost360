@@ -88,4 +88,10 @@ interface WithFloatTwoRemoteData {
     @Query("clientId") clientId: String?= clientId2,
     @Body jsonObject: JsonObject
   ): Observable<Response<BaseResponse>>
+
+  @GET(EndPoints.REPUBLISH_WEBSITE)
+  fun republishWebsite(
+    @Query("clientId") clientId:String,
+    @Query("key") fpTag:String
+  ): Observable<Response<Any>>
 }

@@ -39,7 +39,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/size_4"
-        android:fontFamily="@font/regular"
         android:text="@string/website_updated"
         android:textAllCaps="false"
         android:textColor="@color/yellow_ffb900"
@@ -91,7 +90,7 @@
         android:drawablePadding="@dimen/size_8"
         android:fontFamily="@font/semi_bold"
         android:gravity="center"
-        android:paddingHorizontal="85dp"
+        android:paddingHorizontal="@dimen/size_85"
         android:stateListAnimator="@null"
         android:text="@string/share_on_whatsapp"
         android:textAllCaps="false"
@@ -122,8 +121,8 @@
 
         <com.framework.views.customViews.CustomCardView
           android:id="@+id/btn_copy_message"
-          android:layout_width="@dimen/size_40"
-                    android:layout_height="@dimen/size_40"
+          android:layout_width="@dimen/size_30"
+          android:layout_height="@dimen/size_30"
           android:layout_marginStart="@dimen/size_20"
           app:cardBackgroundColor="@color/white_one"
           app:cardCornerRadius="@dimen/size_15"
@@ -168,7 +167,7 @@
           android:layout_width="@dimen/size_36"
           android:layout_height="@dimen/size_36"
           android:layout_marginStart="@dimen/size_4"
-          android:padding="@dimen/size_2"
+          android:padding="@dimen/size_3"
           app:srcCompat="@drawable/ic_share_rounded" />
 
 

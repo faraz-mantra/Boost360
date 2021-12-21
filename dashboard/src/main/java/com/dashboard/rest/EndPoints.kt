@@ -27,6 +27,7 @@ object EndPoints {
   const val CREATE_BUSINESS_LOGO = "Discover/v1/floatingPoint/createLogoImage/"
   //FIREBASE TOKEN
   const val GET_FIREBASE_TOKEN = "discover/v1/FloatingPoint/GetFirebaseAuthToken"
+  const val REPUBLISH_WEBSITE = "kitsune/v2/InvalidateFLMCache"
 
 
   //TODO NOWFLOAT API
@@ -66,10 +67,6 @@ object EndPoints {
   // TODO US CENTRAL NOW FLOATS API
   const val US_CENTRAL_NOW_FLOATS_CLOUD_FUNCTIONS = "https://us-central1-nowfloats-boost.cloudfunctions.net/"
   const val DISABLE_NOTIFICATION = "disableNotification"
-
-  //TODO API 2 WITH FLOATS BASE
-  const val API_2_WITH_FLOATS_BASE = "http://api2.withfloats.com/"
-  const val REPUBLISH_WEBSITE = "kitsune/v2/InvalidateFLMCache"
 
 }
 

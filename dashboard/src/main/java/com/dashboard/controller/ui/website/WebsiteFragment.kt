@@ -61,7 +61,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   private var businessName: String? = null
   private var businessContact: String? = null
   private var popupWindow: PopupWindow? = null
-  private  val TAG = "WebsiteFragment"
+  private val TAG = "WebsiteFragment"
   override fun getLayout(): Int {
     return R.layout.fragment_website
   }
@@ -88,42 +88,46 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   private fun setupViewPager() {
     binding?.pager?.adapter = CategoriesPagerAdapter(baseActivity, childFragmentManager)
     binding?.tabLayout?.setupWithViewPager(binding?.pager)
-    for (i in 0..binding?.tabLayout?.tabCount!!){
-      val tab:TabLayout.Tab? = binding?.tabLayout?.getTabAt(i)
-      if (tab != null){
-        val tabTextView:TextView = TextView(baseActivity)
+    for (i in 0..binding?.tabLayout?.tabCount!!) {
+      val tab: TabLayout.Tab? = binding?.tabLayout?.getTabAt(i)
+      if (tab != null) {
+        val tabTextView: TextView = TextView(baseActivity)
         tab.customView = tabTextView
         tabTextView.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
         tabTextView.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
         tabTextView.text = tab.text
-        if (i == 0){
+        if (i == 0) {
           // This set the font style of the first tab
-          tabTextView.setTypeface(SANS_SERIF,BOLD)
+          tabTextView.setTypeface(SANS_SERIF, BOLD)
           tabTextView.setTextColor(getColor(R.color.colorAccent))
 
         }
-        if (i == 1){
+        if (i == 1) {
           // This set the font style of the first tab
-          tabTextView.setTypeface(null,NORMAL)
+          tabTextView.setTypeface(null, NORMAL)
         }
       }
     }
-    binding?.tabLayout!!.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+    binding?.tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
       override fun onTabSelected(tab: TabLayout.Tab?) {
         val text: TextView = tab?.customView as TextView
         text.setTypeface(null, BOLD)
         text.setTextColor(getColor(R.color.colorAccent))
 
       }
+
       override fun onTabUnselected(tab: TabLayout.Tab?) {
         val text: TextView = tab?.customView as TextView
         text.setTypeface(null, NORMAL)
-        text.setTextColor(getColor(R.color.black_4a4a4a                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ))
+        text.setTextColor(
+          getColor(R.color.black_4a4a4a)
+        )
 
       }
+
       override fun onTabReselected(tab: TabLayout.Tab?) {
       }
-  })
+    })
   }
 
   override fun onResume() {
@@ -254,15 +258,10 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     }
     val republishWebsiteBtn = this.popupWindow?.contentView?.findViewById<LinearLayoutCompat>(R.id.ll_republish)
     republishWebsiteBtn?.setOnClickListener {
-      val republishProgressBottomSheet = RepublishProgressBottomSheet()
-      republishProgressBottomSheet.onRepublishSuccess = {
-        when (it) {
-          SuccessType.ON_PROGRESS_COMPLETE.name -> {
-            openSuccessDialog()
-          }
-        }
-    }
-      republishProgressBottomSheet.show(parentFragmentManager, RepublishProgressBottomSheet::javaClass.name)
+      RepublishProgressBottomSheet().apply {
+        onRepublishSuccess = { openSuccessDialog() }
+        show(parentFragmentManager, RepublishProgressBottomSheet::javaClass.name)
+      }
       this.popupWindow?.dismiss()
     }
     this.popupWindow?.elevation = 5.0F
@@ -270,20 +269,21 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   }
 
   private fun shareMore() {
-    ContentSharing.shareWebsiteTheme(requireActivity(), businessName!!, websiteLink!!, businessContact!!)
+    ContentSharing.shareWebsiteTheme(baseActivity, businessName ?: "", websiteLink ?: "", businessContact ?: "")
   }
 
   private fun openSuccessDialog() {
-    val websiteUpdateSheet = WebsiteThemeUpdatedSuccessfullySheet()
-    websiteUpdateSheet.onClicked = {
-      when (it) {
-        TypeSuccess.VISIT_WEBSITE.name -> {
-          openWebViewDialog(binding?.txtDomainName?.text.toString(), session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME) ?: "")
+    WebsiteThemeUpdatedSuccessfullySheet().apply {
+      onClicked = {
+        when (it) {
+          TypeSuccess.VISIT_WEBSITE.name -> {
+            openWebViewDialog(binding?.txtDomainName?.text.toString(), session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME) ?: "")
+          }
+          TypeSuccess.CLOSE.name -> dismiss()
         }
-        TypeSuccess.CLOSE.name -> websiteUpdateSheet.dismiss()
       }
+      show(parentFragmentManager, WebSiteThemeResetBottomSheet::javaClass.name)
     }
-    websiteUpdateSheet.show(parentFragmentManager, WebSiteThemeResetBottomSheet::javaClass.name)
   }
 
   private fun openWebViewDialog(url: String, title: String) {
