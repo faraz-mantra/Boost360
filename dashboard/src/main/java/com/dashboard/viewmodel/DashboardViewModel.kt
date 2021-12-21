@@ -176,7 +176,7 @@ class DashboardViewModel : BaseViewModel() {
   }
 
   fun republishWebsite(fpTag: String?): LiveData<BaseResponse>{
-    return API2WithFloatsRepository.republishWebsite(fpTag = fpTag?:"").toLiveData()
+    return WithFloatTwoRepositoryD.republishWebsite(fpTag = fpTag?:"").toLiveData()
   }
 }
 
