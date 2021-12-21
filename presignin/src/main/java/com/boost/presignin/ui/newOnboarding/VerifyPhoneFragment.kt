@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.TextPaint
 import android.text.style.ClickableSpan
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import androidx.core.content.ContextCompat
 import com.boost.presignin.R
 import com.boost.presignin.constant.FragmentType
@@ -68,6 +65,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
 
 
   override fun onCreateView() {
+    baseActivity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     this.session = UserSessionManager(baseActivity)
     setOnListeners()
     setOnClickListener(binding?.tvVerifyOtp, binding?.tvResendOtpIn, binding?.tvPhoneNumber)
@@ -123,12 +121,16 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    inflater.inflate(R.menu.menu_help_on_boarding_new, menu)
+    inflater.inflate(R.menu.menu_help_setup_my_website, menu)
+    val menuItem = menu.findItem(R.id.help_new)
+    menuItem.actionView.setOnClickListener {
+      menu.performIdentifierAction(menuItem.itemId, 0)
+    }
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
-      R.id.menu_item_help_onboard -> {
+      R.id.help_new -> {
         NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
         return true
       }

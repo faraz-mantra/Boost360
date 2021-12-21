@@ -104,7 +104,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
   private var isManualSelectionModeEnd: Boolean = false
 
   private var showFeatureUI: Boolean = false
-  private var businessFeaturesManager: BusinessFeaturesManager?=null
+  private var businessFeaturesManager: BusinessFeaturesManager? = null
 
   companion object {
     private var instance: TextInputManager? = null
@@ -295,7 +295,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     if (keyboardMode == KeyboardMode.BUSINESS_FEATURES) {
       val tabPos = SmartbarView.getSmartViewBinding().businessFeatureTabLayout.selectedTabPosition
       businessFeaturesManager?.showSelectedBusinessFeature(tabPos, BusinessFeatureEnum.values()[tabPos])
-      smartbarView?.isBusinessFeatureVisible=true
+      smartbarView?.isBusinessFeatureVisible = true
     }
   }
 
@@ -827,13 +827,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
   }
 
   override fun onTabSelected(tab: TabLayout.Tab?) {
-    SharedPrefUtil.fromBoostPref().getsBoostPref(FlorisApplication.instance).tabPosition = tab?.position?:0
+    SharedPrefUtil.fromBoostPref().getsBoostPref(FlorisApplication.instance).tabPosition = tab?.position ?: 0
     if (showFeatureUI) setActiveKeyboardMode(KeyboardMode.BUSINESS_FEATURES) else setActiveKeyboardMode(KeyboardMode.CHARACTERS)
     val tabPosition = tab?.position
     tabPosition?.let {
-
-      BusinessFeatureEnum.values()[it] }?.let { businessFeaturesManager?.showSelectedBusinessFeature(tabPosition, it) }
-
+      BusinessFeatureEnum.values()[it]
+    }?.let { businessFeaturesManager?.showSelectedBusinessFeature(tabPosition, it) }
   }
 
   override fun onTabUnselected(tab: TabLayout.Tab?) {

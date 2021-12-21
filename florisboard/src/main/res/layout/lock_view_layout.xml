@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.core.widget.NestedScrollView
+    android:id="@+id/msg_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_bg"
+    android:fillViewport="true"
+    android:visibility="gone">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_centerInParent="true"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      android:paddingHorizontal="@dimen/size_16"
+      android:paddingVertical="@dimen/size_8">
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/msg_icon"
+        android:layout_width="@dimen/size_58"
+        android:layout_height="@dimen/size_58" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/msg_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_4"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:textColor="@color/black_4a4a4a"
+        app:textType="HEADING_7" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/msg_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_4"
+        android:gravity="center"
+        android:textColor="@color/black_4a4a4a"
+        app:textType="CAPTION" />
+
+      <com.framework.views.customViews.CustomMaterialButton
+        android:id="@+id/msg_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_8"
+        android:backgroundTint="@color/colorAccentLight"
+        android:textAllCaps="false"
+        app:cornerRadius="@dimen/size_10"
+        app:icon="@drawable/ic_lockkey"
+        app:iconGravity="textStart" />
+    </LinearLayout>
+
+  </androidx.core.widget.NestedScrollView>
+</layout>

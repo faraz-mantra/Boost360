@@ -65,7 +65,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
 
   private fun openTNCDialog(url: String, title: String) {
     WebViewDialog().apply {
-      setData(false, url, title)
+      setData(false, url, title,false)
       onClickType = { }
       show(this@IntroActivity.supportFragmentManager, title)
     }

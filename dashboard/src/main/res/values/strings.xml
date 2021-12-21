@@ -358,5 +358,7 @@
   <string name="profile_info_content"><![CDATA[Your email, mobile no., username & password, payment info etc.]]></string>
   <string name="install">Install</string>
   <string name="download_complete">Download Complete</string>
+  <string name="re_publish_website">Re-publish website</string>
+  <string name="re_publishing">Re-publishing…</string>
 
 </resources>

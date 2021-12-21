@@ -1073,6 +1073,7 @@
   <string name="booked_on">Booked on</string>
   <string name="to_enable_reach_customer_support_at_ria_">To enable this feature reach customer support at ria@nowfloats.com</string>
   <string name="invalid_bank_account_number">Invalid bank account number</string>
+  <string name="help">Help</string>
   <string name="valid_pan_card_image">Please select valid pan card file</string>
   <string name="pan_number_not_empty">Pan number can\'t empty.</string>
   <string name="pan_number_invalid">Please enter a valid pan number.</string>
