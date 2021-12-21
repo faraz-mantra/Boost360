@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_12"
         android:backgroundTint="@color/black_4a4a4a"
-        android:background="@drawable/bg_rounded_top_white">
+        android:background="@drawable/bg_rounded_16_radius_rect">
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/need_title_sheet"
@@ -45,7 +45,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_25"
             android:layout_marginTop="@dimen/size_6"
-            android:fontFamily="@font/inter_regular"
             android:gravity="start"
             android:text="@string/someone_from_boost_will_get_in_touch_with_you"
             android:textAlignment="gravity"

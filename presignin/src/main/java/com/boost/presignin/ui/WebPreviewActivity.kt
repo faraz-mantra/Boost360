@@ -29,14 +29,11 @@ class WebPreviewActivity : AppBaseActivity<ActivityWebPreviewBinding, BaseViewMo
 
   override fun onCreateView() {
     val floatsRequest = intent.extras?.getSerializable("request") as? CategoryFloatsRequest
-    binding?.headingTv?.text = floatsRequest?.categoryDataModel?.category_Name
+    binding?.headingTv?.text = floatsRequest?.categoryDataModel?.getCategoryName()
     binding?.ctvUrl?.text = floatsRequest?.webSiteUrl
     binding?.closeIcon?.setOnClickListener { finish() }
     binding?.shareIcon?.setOnClickListener {
-      shareViaAnyApp(
-        null,
-        "${floatsRequest?.businessName} ${floatsRequest?.categoryDataModel?.category_descriptor} ${floatsRequest?.webSiteUrl}"
-      )
+      shareViaAnyApp(null, "${floatsRequest?.businessName} ${floatsRequest?.categoryDataModel?.category_descriptor} ${floatsRequest?.webSiteUrl}")
     }
     loadData(floatsRequest?.webSiteUrl!!)
   }

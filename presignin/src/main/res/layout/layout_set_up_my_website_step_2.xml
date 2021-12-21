@@ -19,12 +19,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_32"
-        android:fontFamily="@font/inter_bold"
         android:gravity="start"
         android:text="@string/what_is_the_name_of_your_business"
         android:textAlignment="gravity"
         android:textColor="@color/black_4a4a4a"
         android:textSize="@dimen/text_18"
+          android:fontFamily="@font/semi_bold"
         app:layout_constraintEnd_toStartOf="@id/endGuide"
         app:layout_constraintStart_toEndOf="@id/startGuide"
         app:layout_constraintTop_toTopOf="parent" />
@@ -34,12 +34,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_4"
-        android:fontFamily="@font/inter_regular"
         android:gravity="start"
         android:text="@string/this_will_help_suggest_available_website_address"
         android:textAlignment="gravity"
         android:textColor="@color/black_2A2A2A"
         android:textSize="@dimen/text_13"
+          android:fontFamily="@font/regular"
         app:layout_constraintEnd_toStartOf="@id/endGuide"
         app:layout_constraintStart_toEndOf="@id/startGuide"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
@@ -55,12 +55,6 @@
         app:layout_constraintEnd_toStartOf="@id/endGuide"
         app:layout_constraintStart_toEndOf="@id/startGuide"
         app:layout_constraintTop_toBottomOf="@+id/tv_subtitle">
-
-        <!--<com.framework.views.customViews.CustomEditText
-            android:id="@+id/ed_input_business_name"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColorHint="@color/black_66" />-->
 
         <include
           android:id="@+id/business_name_input_layout"

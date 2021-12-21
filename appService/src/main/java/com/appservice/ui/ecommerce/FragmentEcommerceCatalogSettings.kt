@@ -8,6 +8,8 @@ import com.appservice.ui.aptsetting.widgets.BottomSheetCatalogDisplayName
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentEcomCatalogSettingBinding
+import com.appservice.model.aptsetting.AppointmentStatusResponse
+import com.appservice.model.aptsetting.CatalogSetup
 import com.appservice.ui.aptsetting.widgets.BottomSheetConfirmingChange
 import com.appservice.ui.aptsetting.widgets.BottomSheetSuccessfullyUpdated
 import com.appservice.utils.WebEngageController
@@ -45,7 +47,14 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
     sessionLocal = UserSessionManager(requireActivity())
     WebEngageController.trackEvent(ECOMMERCE_CATLOG_SETUP_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.ctvChangeServices, binding?.ctvProductVerbUrl)
+    val data=arguments?.getSerializable(IntentConstant.OBJECT_DATA.name) as?  AppointmentStatusResponse.TilesModel
+    val catalogSetup = data?.tile as? CatalogSetup
+    setData(catalogSetup)
     getFpDetails()
+  }
+
+  private fun setData(catalogSetup: CatalogSetup?) {
+    binding?.edtTextSlab?.hint = "${(catalogSetup?.defaultGSTSlab?:0).toString()}%"
   }
 
   private fun getFpDetails() {

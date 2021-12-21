@@ -69,20 +69,20 @@ fun Context.glideLoad(mImageView: RoundedImageView?, url: String?) {
   }
 }
 
-fun Context.glideLoad(mImageView: RoundedImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
-  try {
-    if (url.isNullOrEmpty()) {
-      Glide.with(this).load(placeholder).into(mImageView)
-      return
-    }
-    val glide = Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-    placeholder?.let { glide.placeholder(it) }
-    if (isCrop) glide.centerCrop()
-    glide.into(mImageView)
-  } catch (e: Exception) {
-    Log.e("GlideUtil", "Error: ${e.localizedMessage}")
-  }
-}
+//fun Context.glideLoad(mImageView: RoundedImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
+//  try {
+//    if (url.isNullOrEmpty()) {
+//      Glide.with(this).load(placeholder).into(mImageView)
+//      return
+//    }
+//    val glide = Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+//    placeholder?.let { glide.placeholder(it) }
+//    if (isCrop) glide.centerCrop()
+//    glide.into(mImageView)
+//  } catch (e: Exception) {
+//    Log.e("GlideUtil", "Error: ${e.localizedMessage}")
+//  }
+//}
 
 fun Context.glideLoad(mImageView: CustomImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
   try {

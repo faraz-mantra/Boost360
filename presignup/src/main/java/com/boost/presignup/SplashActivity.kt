@@ -2,23 +2,16 @@ package com.boost.presignup
 
 import android.animation.Animator
 import android.content.Intent
-import android.content.SharedPreferences
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Base64
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.boost.presignup.utils.DynamicLinkParams
 import com.boost.presignup.utils.FirebaseDynamicLinksManager
+import com.framework.base.FRAGMENT_TYPE
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureNewOnBoardingFlowEnable
 import com.framework.pref.UserSessionManager
 import com.framework.utils.AppsFlyerUtils
-import com.onboarding.nowfloats.managers.NavigatorManager
 import kotlinx.android.synthetic.main.activity_splash.*
-import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
 
 class SplashActivity : AppCompatActivity() {
 
@@ -124,9 +117,15 @@ class SplashActivity : AppCompatActivity() {
 
   private fun startNewSignUpSuccess() {
     try {
-      val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.registration.RegistrationActivity"))
-      intent.putExtra("FRAGMENT_TYPE", 101)
-      startActivity(intent)
+      if (featureNewOnBoardingFlowEnable()) {
+        val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity"))
+        intent.putExtra(FRAGMENT_TYPE, "LOADING_ANIMATION_DASHBOARD_FRAGMENT")
+        startActivity(intent)
+      }else {
+        val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.registration.RegistrationActivity"))
+        intent.putExtra(FRAGMENT_TYPE, 101)
+        startActivity(intent)
+      }
       finish()
     } catch (e: Exception) {
       e.printStackTrace()
@@ -142,9 +141,8 @@ class SplashActivity : AppCompatActivity() {
     try {
       val intent : Intent = if (featureNewOnBoardingFlowEnable()) {
         Intent(applicationContext, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity")).
-        putExtra("FRAGMENT_TYPE", 1) // 0 stands for New screen Enter Phone Number ordinal from FragmentType in Presignin constants
-      }else
-        Intent(applicationContext, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
+        putExtra(FRAGMENT_TYPE, "INTRO_SLIDE_SHOW_FRAGMENT") // 0 stands for New screen Enter Phone Number ordinal from FragmentType in Presignin constants
+      }else Intent(applicationContext, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
       startActivity(intent)
       finish()
     } catch (e: Exception) {

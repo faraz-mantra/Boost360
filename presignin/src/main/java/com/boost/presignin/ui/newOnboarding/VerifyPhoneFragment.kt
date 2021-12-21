@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.TextPaint
 import android.text.style.ClickableSpan
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import androidx.core.content.ContextCompat
 import com.boost.presignin.R
 import com.boost.presignin.constant.FragmentType
@@ -39,6 +36,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
   private var resultLogin: VerificationRequestResult? = null
   private var loginId: String? = null
   private var isCounterRunning = false
+  private var isSuccessApi = false
 
   private val phoneNumber by lazy {
     arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
@@ -67,13 +65,13 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
 
 
   override fun onCreateView() {
+    baseActivity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     this.session = UserSessionManager(baseActivity)
     setOnListeners()
-    setOnClickListener(binding?.tvVerifyOtp, binding?.tvResendOtpIn)
+    setOnClickListener(binding?.tvVerifyOtp, binding?.tvResendOtpIn, binding?.tvPhoneNumber)
     WebEngageController.trackEvent(PS_VERIFY_OTP_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    binding?.tvPhoneNumber?.text = phoneNumber.toString()
+    binding?.tvPhoneNumber?.text = "+91 ${phoneNumber.toString()}"
     Handler().postDelayed({ onCodeSent() }, 500)
-    // init SMS Manager
     SmsManager.initManager(baseActivity, this)
   }
 
@@ -85,6 +83,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
         binding?.pinOtpVerify?.setOTP("")
         sendOtp(phoneNumber)
       }
+      binding?.tvPhoneNumber -> baseActivity.finish()
     }
   }
 
@@ -122,12 +121,16 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    inflater.inflate(R.menu.menu_help_on_boarding_new, menu)
+    inflater.inflate(R.menu.menu_help_setup_my_website, menu)
+    val menuItem = menu.findItem(R.id.help_new)
+    menuItem.actionView.setOnClickListener {
+      menu.performIdentifierAction(menuItem.itemId, 0)
+    }
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
-      R.id.menu_item_help_onboard -> {
+      R.id.help_new -> {
         NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
         return true
       }
@@ -194,43 +197,53 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
   }
 
   fun verify() {
-    showProgress(getString(R.string.verify_otp))
-    WebEngageController.trackEvent(PS_VERIFY_OTP_VERIFY, OTP_VERIFY_CLICK, NO_EVENT_VALUE)
-    val otp = binding?.pinOtpVerify?.otp
-    viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId)?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        val result = it as? VerifyOtpResponse
-        binding?.tvResendOtpIn?.gone()
-        if (result?.Result?.authTokens.isNullOrEmpty().not() && result?.Result?.authTokens?.size!! >= 1) {
-          this.resultLogin = result.Result
-          loginId = resultLogin?.loginId
-          apiWhatsappOptin()
-        } else {
-          hideProgress()
-          moveToWelcomeScreen(phoneNumber)
-        }
-      } else {
+    if (isSuccessApi) {
+      apiWhatsappOptin()
+    } else {
+      showProgress(getString(R.string.verify_otp))
+      WebEngageController.trackEvent(PS_VERIFY_OTP_VERIFY, OTP_VERIFY_CLICK, NO_EVENT_VALUE)
+      val otp = binding?.pinOtpVerify?.otp
+      viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId)?.observeOnce(viewLifecycleOwner, {
         hideProgress()
-        showLongToast(getString(R.string.wrong_otp_tv))
-      }
-    })
+        if (it.isSuccess()) {
+          val result = it as? VerifyOtpResponse
+          binding?.tvResendOtpIn?.gone()
+          if (result?.Result?.authTokens.isNullOrEmpty().not() && result?.Result?.authTokens?.size!! >= 1) {
+            this.resultLogin = result.Result
+            loginId = resultLogin?.loginId
+            if (binding?.linearWhatsApp?.visibility == View.VISIBLE) apiWhatsappOptin() else showBusinessWhatsapp()
+          } else moveToWelcomeScreen(phoneNumber)
+        } else showLongToast(getString(R.string.wrong_otp_tv))
+      })
+    }
+  }
+
+  private fun showBusinessWhatsapp() {
+    isSuccessApi = true
+    binding?.linearWhatsApp?.visible()
   }
 
   private fun apiWhatsappOptin() {
-    viewModel?.whatsappOptIn(0, phoneNumber, customerId = loginId)?.observeOnce(viewLifecycleOwner, {
-      hideProgress()
-      if (it.isSuccess()) {
-        if (resultLogin()?.authTokens?.size == 1) {
-          authTokenData()?.createAccessTokenAuth()
-        } else {
-          navigator?.startActivityFinish(
-            MobileVerificationActivity::class.java,
-            Bundle().apply {
-              putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, resultLogin())
-            })
-        }
-      } else showShortToast(it.message())
-    })
+    if (binding?.chkWhatsapp?.isChecked == true) {
+      showProgress()
+      viewModel?.whatsappOptIn(0, phoneNumber, customerId = loginId)?.observeOnce(viewLifecycleOwner, {
+        hideProgress()
+        if (it.isSuccess()) loadNextPage() else showShortToast(it.message())
+      })
+    } else loadNextPage()
+  }
+
+  private fun loadNextPage() {
+    if (resultLogin()?.authTokens?.size == 1) {
+      authTokenData()?.createAccessTokenAuth()
+    } else {
+      navigator?.startActivityFinish(
+        MobileVerificationActivity::class.java,
+        Bundle().apply {
+          putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);
+          putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, resultLogin())
+        })
+    }
   }
 
   private fun moveToWelcomeScreen(enteredPhone: String?) {
@@ -238,9 +251,8 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
       activity = baseActivity, type = FragmentType.WELCOME_FRAGMENT,
       bundle = Bundle().apply {
         putString(IntentConstant.EXTRA_PHONE_NUMBER.name, enteredPhone)
-        putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, false)
-      },
-      clearTop = false
+        putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, binding?.chkWhatsapp?.isChecked ?: false)
+      }
     )
   }
 

@@ -13,6 +13,5 @@ interface BoostKitDevRemoteData {
 
   @Headers("Authorization: ${Constants.AUTH_KEY}")
   @GET(EndPoints.GET_CATEGORIES)
-  fun getCategories(@Query("website") website:String="619cc4d1d0d3a1000142190d"): Observable<Response<ApiCategoryResponse>>
-
+  fun getCategories(@Query("website") website: String = "619cc4d1d0d3a1000142190d"): Observable<Response<ApiCategoryResponse>>
 }

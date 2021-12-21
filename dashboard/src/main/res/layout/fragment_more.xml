@@ -31,11 +31,11 @@
         <com.framework.views.roundedimageview.RoundedImageView
           android:id="@+id/riv_users_image"
           android:layout_width="@dimen/size_68"
-            android:tag="com.userexperior.ueSecureView"
-
-            android:layout_height="@dimen/size_68"
+          android:layout_height="@dimen/size_68"
           android:layout_marginTop="@dimen/size_4"
+          android:background="@color/gray_light_1"
           android:scaleType="centerCrop"
+          android:tag="com.userexperior.ueSecureView"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
@@ -44,9 +44,8 @@
           app:riv_corner_radius="@dimen/size_10"
           app:riv_mutate_background="true"
           app:riv_oval="false"
-          tools:ignore="MissingClass"
-          android:background="@color/gray_light_1"
-          app:srcCompat="@drawable/ic_user_circle_dark_grey" />
+          app:srcCompat="@drawable/ic_user_circle_dark_grey"
+          tools:ignore="MissingClass" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/ctv_type"
@@ -67,15 +66,15 @@
           app:textType="CAPTION" />
 
         <com.framework.views.customViews.CustomTextView
-            android:tag="com.userexperior.ueSecureView"
+          android:id="@+id/ctv_name"
 
-            android:id="@+id/ctv_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_16"
           android:fontFamily="@font/semi_bold"
           android:gravity="center"
           android:includeFontPadding="false"
+          android:tag="com.userexperior.ueSecureView"
           android:textColor="@color/white"
           app:layout_constraintStart_toEndOf="@+id/riv_users_image"
           app:layout_constraintTop_toBottomOf="@+id/ctv_type"
@@ -191,11 +190,11 @@
                 android:id="@+id/riv_business_image"
                 android:layout_width="@dimen/size_42"
                 android:layout_height="@dimen/size_42"
-                  android:tag="com.userexperior.ueSecureView"
+                android:clickable="true"
 
-                  android:clickable="true"
                 android:focusable="true"
                 android:scaleType="centerCrop"
+                android:tag="com.userexperior.ueSecureView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -208,9 +207,8 @@
                 tools:src="@drawable/dummy_staff_img" />
 
               <com.framework.views.customViews.CustomTextView
-                  android:tag="com.userexperior.ueSecureView"
+                android:id="@+id/ctv_business_name"
 
-                  android:id="@+id/ctv_business_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_12"
@@ -219,6 +217,7 @@
                 android:gravity="start"
                 android:includeFontPadding="false"
                 android:maxLines="1"
+                android:tag="com.userexperior.ueSecureView"
                 android:textColor="@color/white"
                 android:textFontWeight="700"
                 app:layout_constraintEnd_toStartOf="@+id/arrow_bottom"
@@ -228,9 +227,8 @@
                 tools:text="@string/business_name" />
 
               <com.framework.views.customViews.CustomTextView
-                  android:tag="com.userexperior.ueSecureView"
+                android:id="@+id/ctv_business_address"
 
-                  android:id="@+id/ctv_business_address"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_12"
@@ -239,6 +237,7 @@
                 android:gravity="start"
                 android:includeFontPadding="false"
                 android:maxLines="1"
+                android:tag="com.userexperior.ueSecureView"
                 android:textColor="@color/gray_eeee"
                 app:layout_constraintBottom_toBottomOf="@+id/riv_business_image"
                 app:layout_constraintEnd_toStartOf="@+id/arrow_bottom"

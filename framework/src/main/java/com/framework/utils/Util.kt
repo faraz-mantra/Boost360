@@ -1,14 +1,13 @@
 package com.framework.utils
 
 import android.app.Activity
-import android.app.Notification
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
 import android.content.ContentValues
-import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.graphics.*
 import android.net.Uri
 import android.os.Build
@@ -17,20 +16,19 @@ import android.os.SystemClock
 import android.provider.MediaStore
 import android.text.*
 import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.util.Log
 import android.text.style.*
+import android.util.Log
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.FontRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
@@ -40,22 +38,19 @@ import com.airbnb.lottie.SimpleColorFilter
 import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
 import com.framework.BaseApplication
+import com.framework.R
 import com.framework.constants.PackageNames
 import com.framework.views.customViews.CustomTextView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.internal.notify
 import java.io.*
 import java.text.NumberFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
-import android.content.pm.PackageManager
-
-import android.content.pm.PackageInfo
 
 private const val TAG = "Util"
 
@@ -125,6 +120,33 @@ fun AppCompatTextView.setIconifiedText(text: String, @DrawableRes iconResId: Int
     }
   }.let { setText(it) }
 }
+
+
+fun makeSectionOfTextBold(text: String, textToBold: String, @ColorRes color: Int = android.R.color.black, @FontRes font: Int = R.font.semi_bold): SpannableStringBuilder? {
+  val builder = SpannableStringBuilder()
+  if (textToBold.isNotEmpty() && textToBold.trim { it <= ' ' } != "") {
+
+    //for counting start/end indexes
+    val testText = text.lowercase(Locale.US)
+    val testTextToBold = textToBold.lowercase(Locale.US)
+    val startingIndex = testText.indexOf(testTextToBold)
+    val endingIndex = startingIndex + testTextToBold.length
+    //for counting start/end indexes
+    if (startingIndex < 0 || endingIndex < 0) {
+      return builder.append(text)
+    } else if (startingIndex >= 0 && endingIndex >= 0) {
+      builder.append(text)
+      val font = ResourcesCompat.getFont(BaseApplication.instance, font)?.style ?: Typeface.BOLD
+      val color = ContextCompat.getColor(BaseApplication.instance, color)
+      builder.setSpan(StyleSpan(font), startingIndex, endingIndex, 0)
+      builder.setSpan(ForegroundColorSpan(color), startingIndex, endingIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
+  } else {
+    return builder.append(text)
+  }
+  return builder
+}
+
 
 fun getNumberFormat(value: String): String {
   return try {

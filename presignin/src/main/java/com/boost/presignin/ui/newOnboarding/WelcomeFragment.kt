@@ -52,9 +52,8 @@ class WelcomeFragment : AppBaseFragment<FragmentWelcomeBinding, BaseViewModel>()
         type = FragmentType.SET_UP_MY_WEBSITE_FRAGMENT,
         bundle = Bundle().apply {
           putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
-          putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent == true)
-        },
-        clearTop = true
+          putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent?:false)
+        }
       )
     }
   }

@@ -4,10 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import com.appservice.base.AppBaseFragment
 import com.boost.presignin.R
 import com.boost.presignin.constant.FragmentType
@@ -18,6 +15,7 @@ import com.boost.presignin.extensions.isPhoneValid
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.ui.login.LoginActivity
 import com.boost.presignin.ui.newOnboarding.bottomSheet.NeedHelpBottomSheet
+import com.boost.presignin.ui.newOnboarding.categoryService.startServiceCategory
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.analytics.SentryController
 import com.framework.extensions.afterTextChanged
@@ -54,11 +52,13 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
   }
 
   override fun onCreateView() {
+    baseActivity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
     setOnListeners()
     initUI()
     requestPhonePicker()
     WebEngageController.trackEvent(PS_LOGIN_NUMBER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.tvRequestOtp, binding?.tvLoginWithEmail)
+    baseActivity.startServiceCategory()
   }
 
   override fun onClick(v: View) {
@@ -83,7 +83,7 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
       if (it.isSuccess() && it.parseResponse()) {
         startFragmentFromNewOnBoardingActivity(
           activity = baseActivity, type = FragmentType.VERIFY_PHONE_FRAGMENT,
-          bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }, clearTop = false
+          bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }
         )
       } else showShortToast(if (it.message.isNullOrEmpty().not()) it.message else getString(R.string.otp_not_sent))
       hideProgress()
@@ -129,30 +129,34 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
     binding?.acceptTncPhone?.makeLinks(
       Pair("Terms of Use", View.OnClickListener {
         WebEngageController.trackEvent(BOOST_360_TERMS_CLICK, CLICKED, NO_EVENT_VALUE)
-        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
+        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.terms_of_use))
       }),
       Pair("Privacy Policy", View.OnClickListener {
         WebEngageController.trackEvent(BOOST_360_CONDITIONS_CLICK, CLICKED, NO_EVENT_VALUE)
-        openTNCDialog("https://www.getboost360.com/privacy?src=android&stage=presignup", resources.getString(R.string.boost360_privacy_policy))
+        openTNCDialog("https://www.getboost360.com/privacy?src=android&stage=presignup", resources.getString(R.string.privacy_policy))
       })
     )
   }
 
   private fun openTNCDialog(url: String, title: String) {
     val webViewDialog = WebViewDialog()
-    webViewDialog.setData(false, url, title)
+    webViewDialog.setData(isAcceptDeclineShow = false, url, title, isNewFlow = true)
     webViewDialog.onClickType = {}
     webViewDialog.show(requireActivity().supportFragmentManager, title)
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    inflater.inflate(R.menu.menu_help_on_boarding_new, menu)
+    inflater.inflate(R.menu.menu_help_setup_my_website, menu)
+    val menuItem = menu.findItem(R.id.help_new)
+    menuItem.actionView.setOnClickListener {
+      menu.performIdentifierAction(menuItem.itemId, 0)
+    }
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
-      R.id.menu_item_help_onboard -> {
+      R.id.help_new -> {
         NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
         return true
       }
