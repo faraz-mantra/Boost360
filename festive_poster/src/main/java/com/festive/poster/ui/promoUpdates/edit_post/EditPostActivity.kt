@@ -95,7 +95,7 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
     private fun initStt() {
         sttUtils = STTUtils(object : STTUtils.Callbacks{
             override fun onDone(text: String?) {
-                binding?.captionLayout?.etInput?.setText(highlightHashTag(text))
+                binding?.captionLayout?.etInput?.setText(highlightHashTag(text,R.color.black_4a4a4a))
             }
         })
         sttUtils?.init(this)
@@ -164,7 +164,7 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
                         getWindow().setSoftInputMode(
                             WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
                         )
-                        binding?.captionLayout?.etInput?.setText(highlightHashTag(value))
+                        binding?.captionLayout?.etInput?.setText(highlightHashTag(value,R.color.black_4a4a4a))
                     }
                 }).show(supportFragmentManager, CaptionBottomSheet::class.java.name)
             }

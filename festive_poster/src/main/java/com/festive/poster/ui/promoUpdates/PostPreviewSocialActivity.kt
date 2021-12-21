@@ -117,8 +117,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     override fun onResume() {
         super.onResume()
-        isUserPremium(true)
-        chkChannelAdapter?.notifyDataSetChanged()
+        isUserPremium(isPromoWidgetActive())
 
     }
     private fun initUI() {

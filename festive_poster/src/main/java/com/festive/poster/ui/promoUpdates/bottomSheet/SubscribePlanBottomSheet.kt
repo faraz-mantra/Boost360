@@ -63,6 +63,7 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
 
         binding?.btnGetPack?.setOnClickListener {
             addItemToCart()
+
         }
 
         binding?.rivCloseBottomSheet?.setOnClickListener {
@@ -150,6 +151,7 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete {
+                    dismiss()
                     MarketPlaceUtils.launchCartActivity(requireActivity())
                 }
                 .doOnError {
