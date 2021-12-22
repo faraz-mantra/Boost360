@@ -116,9 +116,9 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
   private fun dialogRootError() {
     AlertDialog.Builder(ContextThemeWrapper(this, R.style.CustomAlertDialogTheme))
       .setCancelable(false)
-      .setTitle("JioOnline can't be used on this device!")
-      .setMessage("Sorry, your device isn't passing JioOnline security checks. This may be because your device is rooted or is running an uncertified or custom OS build.")
-      .setPositiveButton("Close") { dialog: DialogInterface, _: Int ->
+      .setTitle(getString(R.string.boost_divice_title))
+      .setMessage(getString(R.string.sorry_boost_security_check_desc))
+      .setPositiveButton(getString(R.string.close)) { dialog: DialogInterface, _: Int ->
         dialog.dismiss()
       }.show()
   }

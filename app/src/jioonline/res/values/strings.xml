@@ -653,6 +653,11 @@
   <string name="you_can_create_a_support_request_and_someone_from_the_boost_team_will_assist_you">You can create a support request and someone from the JioOnline team will assist you.</string>
   <string name="someone_from_boost_will_get_in_touch_with_you">Someone from JioOnline will get in touch with you.</string>
   <string name="use_your_phone_number_to_login">You can use your phone number to login or sign up to JioOnline</string>
+  <string name="psn_login_now">Login now</string>
+  <string name="boost_divice_title">JioOnline can\'t be used on this device!</string>
+  <string name="sorry_boost_security_check_desc">Sorry, your device isn\'t passing JioOnline security checks. This may be because your device is rooted or is running an uncertified or custom OS build.</string>
+  <string name="deep_base_url">jio.bizdigital.com</string>
+  <string name="deep_base_onelink_url">jio.onelink.me</string>
 
   <!--   florisboard Keyboard-->
   <string name="app_name_k">JioOnline keyboard</string>
