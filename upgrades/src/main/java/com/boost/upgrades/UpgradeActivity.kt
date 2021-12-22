@@ -45,6 +45,7 @@ import com.boost.upgrades.utils.NetworkConnectivitySpeed.checkNetworkType
 import com.framework.analytics.SentryController
 import com.framework.pref.TokenResult
 import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.framework.pref.getAccessTokenAuth
 import com.framework.utils.BuildConfigUtil
 import com.razorpay.Razorpay
@@ -81,7 +82,7 @@ class UpgradeActivity : AppCompatActivity() {
   var deepLinkDay: Int = 7
   var compareBackListener: CompareBackListener? = null
 
-  var clientid: String = "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5"
+  var clientid: String = clientId
   private var widgetFeatureCode: String? = null
 
   private var initialLoadUpgradeActivity: Int = 0

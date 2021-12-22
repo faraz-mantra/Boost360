@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.framework.BuildConfig;
 import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.nowfloats.AccrossVerticals.API.APIInterfaces;
 import com.nowfloats.AccrossVerticals.API.model.GetDomain.GetDomainData;
@@ -31,7 +32,7 @@ import retrofit.client.Response;
 public class DomainEmailActivity extends AppCompatActivity {
 
     public UserSessionManager session;
-    public String clientid = "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5";
+    public String clientid = BuildConfig.CLIENT_ID;
     private ProgressDialog vmnProgressBar;
     private Fragment currentFragment = null;
     private FragmentManager fragmentManager = null;
