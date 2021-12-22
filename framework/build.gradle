@@ -91,12 +91,14 @@ dependencies {
 
     // REST
     api "com.google.code.gson:gson:2.8.6"
-    api "com.squareup.retrofit2:retrofit:2.8.1"
+    api "com.squareup.retrofit2:retrofit:2.9.0"
     api "com.squareup.okhttp3:okhttp:4.3.1"
-    api "com.squareup.retrofit2:converter-gson:2.8.1"
+    api "com.squareup.retrofit2:converter-gson:2.9.0"
     api "com.squareup.okhttp3:logging-interceptor:4.3.1"
-    api "com.squareup.retrofit2:adapter-rxjava2:2.6.2"
-    api "com.squareup.retrofit2:converter-scalars:2.8.1"
+    api "com.squareup.retrofit2:adapter-rxjava2:2.9.0"
+    api "com.squareup.retrofit2:converter-scalars:2.9.0"
+    api "com.squareup.retrofit2:converter-moshi:2.5.0"
+    api "com.squareup.moshi:moshi-kotlin:1.11.0"
 
     // Multi Dex
     api 'androidx.multidex:multidex:2.0.1'
@@ -148,11 +150,10 @@ dependencies {
     //image picker
     api 'com.github.dhaval2404:imagepicker:2.1'
 
-    //room
-    implementation 'androidx.room:room-runtime:2.2.4'
-    implementation "androidx.room:room-rxjava2:2.2.5"
-    kapt 'androidx.room:room-compiler:2.2.4'
+    api 'com.github.GrenderG:Toasty:1.4.2'
 
-    //json
-    implementation "com.squareup.moshi:moshi-kotlin:1.8.0"
+    //sdp
+    api 'com.intuit.sdp:sdp-android:1.0.6'
+    api 'com.intuit.ssp:ssp-android:1.0.6'
+
 }

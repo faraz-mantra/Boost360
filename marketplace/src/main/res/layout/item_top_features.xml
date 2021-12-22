@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/cardView"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_margin="5dp"
+  android:background="@drawable/mp_home_all_side_curve_bg"
+  android:clickable="true"
+  android:elevation="2dp"
+  android:focusable="true"
+  android:paddingBottom="0dp">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <RelativeLayout
+      android:id="@+id/imageLayout"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginStart="3dp"
+      android:layout_marginTop="0dp"
+      android:layout_marginEnd="3dp"
+      android:layout_marginBottom="6dp"
+      app:layout_constraintDimensionRatio="1:1"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/backgroundwhite"
+        android:padding="6dp"
+        android:scaleType="fitCenter"
+        tools:src="@drawable/placeholder_rect" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="3dp"
+      android:layout_marginEnd="3dp"
+      android:gravity="center_vertical"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/imageLayout">
+
+      <TextView
+        android:id="@+id/details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/open_sans_semibold"
+        android:lineSpacingExtra="1.3sp"
+        android:maxLines="2"
+        android:textColor="@color/common_text_color"
+        android:textSize="12sp"
+        tools:text="Facebook Ads (upto 75 leads)" />
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="10dp">
+
+        <TextView
+          android:id="@+id/upgrade_list_price"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="7dp"
+          android:fontFamily="@font/open_sans"
+          android:textColor="#FFB900"
+          android:textFontWeight="400"
+          android:textSize="11sp"
+          tools:text="₹400/month" />
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+

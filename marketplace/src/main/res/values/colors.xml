@@ -351,4 +351,7 @@
     <color name="fullscreen_color">#a5000000</color>
     <color name="light_blue">#0068e0</color>
 
+    <color name="colorAccentPositive">@color/colorAccent</color>
+    <color name="colorAccentNegative">@color/black_4a4a4a</color>
+
 </resources>

@@ -3,23 +3,31 @@
   xmlns:app="http://schemas.android.com/apk/res-auto">
   <item
     android:id="@+id/action_add"
-    android:icon="@drawable/ic_add"
+    android:icon="@drawable/ic_marketplace_cart"
     app:showAsAction="ifRoom"
-    android:title="Add">
+    android:title="@string/cart">
   </item>
   <item
-    android:id="@+id/action_my_plan_history"
-    app:showAsAction="never"
-    android:title="My Plan History">
+    android:id="@+id/overflowMenu"
+    android:icon="@drawable/ic_baseline_more_menu"
+    android:title="@string/home_more_menu"
+    app:showAsAction="always">
+    <menu>
+      <item
+        android:id="@+id/plan_history"
+        android:icon="@drawable/ic_clock_counter_clockwise"
+        android:title="@string/my_plan_history"
+        />
+      <item
+        android:id="@+id/offer_coupons"
+        android:icon="@drawable/ic_circle_wavy"
+        android:title="@string/view_offer_coupons"
+        />
+      <item
+        android:id="@+id/help_section"
+        android:icon="@drawable/ic_help_white"
+        android:title="@string/need_help"/>
+    </menu>
   </item>
-  <item
-    android:id="@+id/action_view_offer_coupons"
-    app:showAsAction="never"
-    android:title="View Offer Coupons">
-  </item>
-  <item
-    android:id="@+id/action_settings"
-    app:showAsAction="never"
-    android:title="Need Help">
-  </item>
+
 </menu>

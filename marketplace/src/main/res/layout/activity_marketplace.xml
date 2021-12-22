@@ -8,8 +8,6 @@
 
   </data>
 
-
-
   <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/home_screen_main_layout"
     android:layout_width="match_parent"
@@ -19,7 +17,7 @@
         android:id="@+id/general_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="@dimen/_2sdp"
+        android:elevation="2dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -98,8 +96,8 @@
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
-              android:layout_width="@dimen/size_60"
-              android:layout_height="@dimen/size_60"
+              android:layout_width="60dp"
+              android:layout_height="60dp"
               android:layout_gravity="center_horizontal"
               android:layout_marginTop="35dp"
               android:background="@color/white"
@@ -107,8 +105,8 @@
               app:cardElevation="4dp">
 
               <ImageView
-                android:layout_width="@dimen/size_30"
-                android:layout_height="@dimen/size_30"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:src="@drawable/ic_boost_logo_arrow" />
@@ -163,6 +161,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="10dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:visibility="gone"
@@ -186,7 +185,7 @@
                   android:layout_height="wrap_content"
                   android:layout_centerHorizontal="true"
                   android:layout_marginTop="10dp"
-                  app:dotsColor="@color/gray_light"
+                  app:dotsColor="#ffb900"
                   app:dotsCornerRadius="8dp"
                   app:dotsSize="6dp"
                   app:dotsSpacing="4dp"
@@ -195,7 +194,7 @@
                   app:layout_constraintStart_toStartOf="parent"
                   app:layout_constraintTop_toBottomOf="@id/mp_banner_viewpager"
                   app:progressMode="false"
-                  app:selectedDotColor="@color/orange" />
+                  app:selectedDotColor="@color/color_primary" />
 
 
               </androidx.constraintlayout.widget.ConstraintLayout>
@@ -218,6 +217,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="10dp"
             android:clickable="true"
             android:focusable="true"
             android:visibility="visible"
@@ -229,7 +229,7 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="15dp"
               android:fontFamily="@font/regular"
-              android:text="Save upto 60% with feature packs"
+              android:text="@string/save_upto_60_with_feature_packs"
               android:textColor="@color/white"
               android:textFontWeight="600"
               android:textSize="16sp"
@@ -263,14 +263,14 @@
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toBottomOf="@id/mp_package_viewpager"
               app:progressMode="false"
-              app:selectedDotColor="@color/orange" />
+              app:selectedDotColor="#ffb900" />
           </androidx.constraintlayout.widget.ConstraintLayout>
         </RelativeLayout>
 
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@color/orange"
+          android:background="#ffb900"
           android:orientation="vertical">
 
           <LinearLayout
@@ -434,7 +434,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mp_home_partner_viewpager"
             app:progressMode="false"
-            app:selectedDotColor="@color/yellow_orange_22" />
+            app:selectedDotColor="#ffb900" />
 
         </LinearLayout>
 
@@ -572,7 +572,7 @@
                 android:background="@drawable/ic_callnowbg"
                 android:text="Call Now"
                 android:textAllCaps="true"
-                android:textColor="@color/orange"
+                android:textColor="#ffb900"
                 android:textSize="11sp"
                 android:textStyle="bold" />
 

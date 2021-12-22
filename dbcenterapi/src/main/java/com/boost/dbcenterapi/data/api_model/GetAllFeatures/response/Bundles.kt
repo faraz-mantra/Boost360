@@ -1,5 +1,9 @@
 package com.boost.dbcenterapi.data.api_model.GetAllFeatures.response
 
+import com.boost.dbcenterapi.recycleritem.AppBaseRecyclerViewItem
+import com.boost.dbcenterapi.recycleritem.RecyclerViewItemType
+import java.io.Serializable
+
 data class Bundles(
   val _kid: String,
   val included_features: List<IncludedFeature>,
@@ -11,4 +15,11 @@ data class Bundles(
   val exclusive_to_categories: List<String>?,
   val exclusive_for_customers: List<String>?,
   val desc: String?
-)
+):Serializable,AppBaseRecyclerViewItem {
+
+  var recyclerViewItem =  RecyclerViewItemType.PACKS.ordinal
+
+  override fun getViewType(): Int {
+    return recyclerViewItem
+  }
+}
