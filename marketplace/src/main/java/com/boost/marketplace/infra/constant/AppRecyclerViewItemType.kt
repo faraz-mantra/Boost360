@@ -16,5 +16,6 @@ import com.boost.marketplace.R
       MARKETPLACE_OFFERS ->R.layout.item_marketplaceoffers_info
       FEATURES_MODEL ->R.layout.item_myplan_features
       RESULT -> R.layout.item_order_history
+      PACKS_BUNDLES -> R.layout.item_packs_list
     }
   }

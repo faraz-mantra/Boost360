@@ -7,7 +7,8 @@ enum class RecyclerViewItemType {
   FEATURES_BY_CATEGORY,
   MARKETPLACE_OFFERS,
   FEATURES_MODEL,
-  RESULT;
+  RESULT,
+  PACKS_BUNDLES;
 
 
 

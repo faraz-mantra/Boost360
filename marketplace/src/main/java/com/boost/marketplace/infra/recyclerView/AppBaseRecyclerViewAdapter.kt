@@ -36,6 +36,9 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       FEATURES_MODEL->MyPlanPremiumFeaturesViewHolder(binding as ItemMyplanFeaturesBinding)
       FEATURES_MODEL->MyPlanFreeFeaturesViewHolder(binding as ItemMyplanFeaturesBinding)
       RESULT->MyPlanHistoryOrdersViewHolder(binding as ItemOrderHistoryBinding)
+      PACKS_BUNDLES->Packs_ViewHolder(binding as ItemPacksListBinding)
+      PACKS_BUNDLES->ComparePacksViewHolder(binding as ActivityPacksBinding)
+
 
 
     }
