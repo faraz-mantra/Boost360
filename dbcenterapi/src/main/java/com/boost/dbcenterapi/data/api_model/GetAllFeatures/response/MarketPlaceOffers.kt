@@ -1,5 +1,7 @@
 package com.boost.dbcenterapi.data.api_model.GetAllFeatures.response
 
+import com.boost.dbcenterapi.recycleritem.AppBaseRecyclerViewItem
+import com.boost.dbcenterapi.recycleritem.RecyclerViewItemType
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import java.util.*
@@ -26,4 +28,10 @@ data class MarketPlaceOffers(
   val extra_information: String,
   @SerializedName("expiry_date")
   val expiry_date: String
-) : Serializable
+) : Serializable, AppBaseRecyclerViewItem {
+
+  override fun getViewType(): Int {
+    return RecyclerViewItemType.MARKETPLACE_OFFERS.ordinal
+
+  }
+}

@@ -3,6 +3,9 @@ package com.boost.dbcenterapi.upgradeDB.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.boost.dbcenterapi.recycleritem.AppBaseRecyclerViewItem
+import com.boost.dbcenterapi.recycleritem.RecyclerViewItemType
+import java.io.Serializable
 
 @Entity(tableName = "Features")
 data class FeaturesModel(
@@ -76,4 +79,10 @@ data class FeaturesModel(
 
   @ColumnInfo(name = "exclusive_to_categories")
   var exclusive_to_categories: String? = null
-)
+): Serializable, AppBaseRecyclerViewItem {
+
+  override fun getViewType(): Int {
+    return RecyclerViewItemType.FEATURES_MODEL.ordinal
+
+  }
+}

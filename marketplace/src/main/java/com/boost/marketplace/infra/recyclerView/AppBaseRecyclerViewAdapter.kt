@@ -34,10 +34,20 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       PACKS -> PacksViewHolder(binding as ItemPacksBinding)
       VIDEOS -> VideosViewHolder(binding as ItemVideosBinding)
       PARTNER -> PartnerViewHolder(binding as ItemPartnerBinding)
+      MARKETPLACE_OFFERS->MarketPlaceOfferDetailsViewHolder(binding as ItemMarketplaceoffersInfoBinding)
+      MARKETPLACE_OFFERS->MarketPlaceOfferTermsViewHolder(binding as ItemMarketplaceoffersInfoBinding)
+      FEATURES_MODEL->MyPlanPremiumFeaturesViewHolder(binding as ItemMyplanFeaturesBinding)
+      FEATURES_MODEL->MyPlanFreeFeaturesViewHolder(binding as ItemMyplanFeaturesBinding)
+      RESULT->MyPlanHistoryOrdersViewHolder(binding as ItemOrderHistoryBinding)
+      PACKS_BUNDLES->Packs_ViewHolder(binding as ItemPacksListBinding)
+      PACKS_BUNDLES->ComparePacksViewHolder(binding as ActivityPacksBinding)
+
+
+
     }
   }
 
-  @SuppressLint("NotifyDataSetChanged")
+@SuppressLint("NotifyDataSetChanged")
   fun runLayoutAnimation(
     recyclerView: RecyclerView?,
     anim: Int = R.anim.layout_animation_fall_down
@@ -63,6 +73,13 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
   open fun addItems(addList: ArrayList<T>?) {
     addList?.let { list.addAll(it) }
     notifyDataSetChanged()
+  }
+
+   fun addupdates(purchaseResult: List<T>) {
+    val initPosition = list.size
+    list.clear()
+    list.addAll(purchaseResult)
+    notifyItemRangeInserted(initPosition, list.size)
   }
 
   override fun getItemCount(): Int {
