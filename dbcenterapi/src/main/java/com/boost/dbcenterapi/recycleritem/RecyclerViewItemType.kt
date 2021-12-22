@@ -5,5 +5,6 @@ enum class RecyclerViewItemType {
   PROMO_BANNER,
   FEATURES_BY_CATEGORY,
   PACKS,
-  VIDEOS;
+  VIDEOS,
+  PARTNER;
 }

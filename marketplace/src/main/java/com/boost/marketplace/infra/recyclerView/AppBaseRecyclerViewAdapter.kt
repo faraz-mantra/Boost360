@@ -33,6 +33,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       FEATURES_BY_CATEGORY->FeaturesByCategoryViewHolder(binding as ItemFeaturesByCategoryBinding)
       PACKS -> PacksViewHolder(binding as ItemPacksBinding)
       VIDEOS -> VideosViewHolder(binding as ItemVideosBinding)
+      PARTNER -> PartnerViewHolder(binding as ItemPartnerBinding)
     }
   }
 
