@@ -204,7 +204,7 @@
   <string name="found_website_address_des">We found a website address for you. You can\ncustomize it or purchase a custom domain later.</string>
   <string name="your_website_is_almost_ready">Your website is almost ready!</string>
   <string name="your_business_category_was_selected">Your business category was selected</string>
-  <string name="use_your_phone_number_to_login">You can use your phone number to login or sign up to Boost360</string>
+  <string name="use_your_phone_number_to_login">You can use your phone number to login or sign up to Boost 360</string>
   <string name="_91_plus">+91</string>
   <string name="an_sms_with_a_4_digit_otp_was_sent_to">An SMS with a 4-digit OTP was sent to</string>
   <string name="get_otp_on_call">Get OTP on call</string>
@@ -216,6 +216,6 @@
 
   <string name="terms_of_use" translatable="false">Terms of Use</string>
   <string name="privacy_policy" translatable="false">Privacy Policy</string>
-  <string name="_940558450">9405584500</string>
+  <string name="_940558450">XXX-XXX-XXXX</string>
   <string name="here_is_a_quick_preview_of_how_your_website_will_look_on_various_devices">Here is a quick preview of how your website will\nlook on various devices</string>
 </resources>
