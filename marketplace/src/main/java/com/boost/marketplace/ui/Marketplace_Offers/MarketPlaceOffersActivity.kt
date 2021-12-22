@@ -43,8 +43,9 @@ class MarketPlaceOffersActivity : AppBaseActivity<ActivityMarketplaceoffersBindi
         return MarketPlaceOffersViewModel::class.java
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+    override fun onCreateView()  {
+        super.onCreateView()
 
       //  val jsonString = requireArguments().getString("marketOffersData")
      //   marketOffersData = Gson().fromJson(this!!.getString("MarketPlaceOffers"), MarketPlaceOffers::class.java)

@@ -12,4 +12,8 @@ class PacksActivity : AppBaseActivity<ActivityPacksBinding, PacksViewModel>() {
     override fun getViewModelClass(): Class<PacksViewModel> {
         TODO("Not yet implemented")
     }
+
+    override fun onCreateView() {
+        super.onCreateView()
+    }
 }

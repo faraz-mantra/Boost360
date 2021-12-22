@@ -17,4 +17,9 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Hisor
         return HisoryOrdersViewModel::class.java
     }
 
+
+    override fun onCreateView() {
+        super.onCreateView()
+    }
+
 }

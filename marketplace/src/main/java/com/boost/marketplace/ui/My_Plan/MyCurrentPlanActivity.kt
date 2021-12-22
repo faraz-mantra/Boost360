@@ -21,8 +21,9 @@ class MyCurrentPlanActivity : AppBaseActivity<ActivityMyCurrentPlanBinding,MyCur
     }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView() {
+        super.onCreateView()
+
 
         binding?.arrowBtn?.setOnClickListener(View.OnClickListener {
             cardViewVisibilty()

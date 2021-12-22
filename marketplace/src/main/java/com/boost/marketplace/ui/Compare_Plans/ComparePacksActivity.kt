@@ -15,4 +15,18 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
     override fun getViewModelClass(): Class<ComparePacksViewModel> {
         TODO("Not yet implemented")
     }
+
+    override fun onCreateView() {
+        super.onCreateView()
+
+
+
+
+
+
+
+
+    }
+
+
 }
