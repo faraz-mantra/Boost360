@@ -361,5 +361,7 @@
   <string name="re_publish_website">Re-publish website</string>
   <string name="re_publishing">Re-publishing…</string>
   <string name="view_changes_live">View changes live</string>
+  <string name="deep_base_url">boost.nowfloats.com</string>
+  <string name="deep_base_onelink_url">nowfloat.onelink.me</string>
 
 </resources>

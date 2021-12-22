@@ -1,5 +1,6 @@
 package com.boost.presignin.ui.newOnboarding
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -17,6 +18,7 @@ import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentIntroSlideShowBinding
 import com.boost.presignin.model.newOnboarding.IntroItemNew
 import com.boost.presignin.ui.intro.CircularViewPagerHandler
+import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.framework.models.BaseViewModel
 
 class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, BaseViewModel>() {
@@ -90,10 +92,14 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
 
   private fun setOnListeners() {
     binding?.btnGetStarted?.setOnClickListener {
-      startFragmentFromNewOnBoardingActivity(
-        activity = baseActivity, type = FragmentType.ENTER_PHONE_FRAGMENT,
-        bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "") }, clearTop = false
-      )
+      if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true).not()) {
+        startActivity(Intent(baseActivity, MobileVerificationActivity::class.java))
+      }else {
+        startFragmentFromNewOnBoardingActivity(
+          activity = baseActivity, type = FragmentType.ENTER_PHONE_FRAGMENT,
+          bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "") }, clearTop = false
+        )
+      }
     }
   }
 

@@ -29,8 +29,8 @@
   <color name="button_background_white_1a">#1AFFFFFF</color>
   <color name="ButtonStrokeWhite">@color/white</color>
   <color name="dashboard_high_score_pink">#EC008C</color>
-  <color name="website_toolbar_color">#4E4E4E</color>
-  <color name="website_toolbar_color_lite">#4E4E4E</color>
+  <color name="website_toolbar_color">@color/black_4a4a4a</color>
+  <color name="website_toolbar_color_lite">@color/black_4a4a4a</color>
   <color name="website_button_lite">@color/gray_light_4</color>
   <color name="website_button_tint">@color/gray_66666</color>
   <color name="text_color_light_white">@color/white</color>
