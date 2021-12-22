@@ -160,6 +160,10 @@ fun Double.roundTo(n: Int): Double {
   return "%.${n}f".format(this).toDouble()
 }
 
+fun Double.removeENotationAndRoundTo(n: Int): Double {
+  return "%.${n}f".format(this.toString().replace("E", "").toDouble()).toDouble()
+}
+
 fun CustomTextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
   val spannableString = SpannableString(this.text)
   var startIndexOfLink = -1
