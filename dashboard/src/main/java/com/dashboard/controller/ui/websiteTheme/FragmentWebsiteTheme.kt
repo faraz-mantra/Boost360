@@ -277,7 +277,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
   }
 
   private fun openSuccessDialog() {
-    val websiteUpdateSheet = WebsiteThemeUpdatedSuccessfullySheet()
+    val websiteUpdateSheet = WebsiteThemeUpdatedSuccessfullySheet(isRepublishFlow = false)
     websiteUpdateSheet.onClicked = {
       when (it) {
         TypeSuccess.VISIT_WEBSITE.name -> {
