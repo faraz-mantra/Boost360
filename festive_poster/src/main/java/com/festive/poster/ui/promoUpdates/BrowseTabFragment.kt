@@ -143,6 +143,7 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
                             list_layout = RecyclerViewItemType.BROWSE_TAB_TEMPLATE_CAT.getLayout()))
 
                     }
+                    sharedViewModel?.browseAllPosterPackList = dataList
                     // getPriceOfPosterPacks()
                     // rearrangeList()
                     val adapter =AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList,this)

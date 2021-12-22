@@ -29,5 +29,8 @@ object EndPoints {
     const val PUT_BIZ_MESSAGE = "discover/v1/FloatingPoint/createBizMessage"
     const val GET_MERCHANT_SUMMARY = "/Support/v1/dashboard/GetMerchantSummary"
 
+    const val USER_ALL_DETAILS = "/discover/v2/floatingPoint/nf-web/{fpTag}"
+
+
 
 }

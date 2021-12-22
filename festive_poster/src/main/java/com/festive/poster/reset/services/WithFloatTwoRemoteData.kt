@@ -1,5 +1,6 @@
 package com.festive.poster.reset.services
 
+import com.festive.poster.models.CustomerDetails
 import com.festive.poster.models.MerchantSummaryResponse
 import com.festive.poster.models.PostUpdateTaskRequest
 import com.festive.poster.reset.EndPoints
@@ -17,6 +18,9 @@ interface WithFloatTwoRemoteData {
     @Path("id") id: String?,
     @Query("clientId") clientId: String?
   ): Observable<Response<ResponseBody>>
+
+  @GET(EndPoints.USER_ALL_DETAILS)
+  fun getUserDetails(@Path("fpTag") fpTag: String?, @QueryMap queries: Map<String, String>): Observable<Response<CustomerDetails>>
 
   @PUT(EndPoints.PUT_BIZ_MESSAGE)
   fun putBizMessageUpdate(@Body request: PostUpdateTaskRequest?): Observable<Response<Any>>

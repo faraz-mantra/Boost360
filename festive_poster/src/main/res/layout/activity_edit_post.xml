@@ -53,6 +53,8 @@
 
                     <com.caverock.androidsvg.SVGImageView
                         android:id="@+id/iv_template"
+                        android:scaleType="fitXY"
+
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/size_300"
                         app:layout_constraintBottom_toBottomOf="parent"

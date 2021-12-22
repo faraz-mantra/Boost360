@@ -16,6 +16,7 @@ import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.ActivityPostPreviewSocialBinding
+import com.festive.poster.models.CustomerDetails
 import com.festive.poster.models.MerchantSummaryResponse
 import com.festive.poster.models.PostUpdateTaskRequest
 import com.festive.poster.models.PosterModel
@@ -43,6 +44,7 @@ import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.getDomainName
+import com.framework.utils.convertListObjToString
 import com.framework.utils.convertStringToObj
 import com.framework.utils.saveAsTempFile
 import com.framework.utils.toArrayList
@@ -114,8 +116,9 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     override fun onCreateView() {
         session = UserSessionManager(this)
+
         captionIntent =intent?.getBundleExtra(MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IK_CAPTION_KEY)
-        if (captionIntent==null) captionIntent =posterModel?.details?.Description
+        if (captionIntent.isNullOrEmpty()) captionIntent =posterModel?.details?.Description
 
 
         initUI()
@@ -124,9 +127,26 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     override fun onResume() {
         super.onResume()
-        isUserPremium(isPromoWidgetActive())
+
+        refreshUserWidgets()
 
     }
+
+    private fun refreshUserWidgets() {
+        showProgress()
+        viewModel.getUserDetails(session?.fpTag, clientId).observe(this,{
+            if (it.isSuccess()){
+               val detail = it as? CustomerDetails
+                detail?.FPWebWidgets?.let { list ->
+                    session?.storeFPDetails(Key_Preferences.STORE_WIDGETS, convertListObjToString(list))
+                    isUserPremium(isPromoWidgetActive())
+
+                }
+            }
+            hideProgress()
+        })
+    }
+
     private fun initUI() {
         binding?.tvChooseAPromoPack?.setOnClickListener {
             SubscribePlanBottomSheet.newInstance(object :SubscribePlanBottomSheet.Callbacks{

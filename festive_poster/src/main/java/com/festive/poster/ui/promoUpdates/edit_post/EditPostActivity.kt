@@ -77,7 +77,7 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
     private fun initUI() {
         SvgUtils.loadImage(posterModel?.url()!!,binding!!.ivTemplate,posterModel!!.keys,posterModel!!.isPurchased)
         binding!!.captionLayout.etInput.isFocusableInTouchMode =false
-        addHashTagFunction()
+        binding?.captionLayout?.etInput?.setText(highlightHashTag(posterModel?.details?.Description,R.color.black_4a4a4a))
 
     }
 
@@ -198,37 +198,7 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
 //    }
 
 
-    private fun addHashTagFunction() {
-        mSpannable = binding?.captionLayout?.etInput?.text
 
-        binding?.captionLayout?.etInput?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
-                var startChar: String? = null
-
-                try {
-                    startChar = text[start].toString()
-                } catch (ex: Exception) {
-                    startChar = ""
-                }
-
-                if (startChar == "#") {
-                    changeTheColor(text.toString().substring(start), start, start + count)
-                    hashTagIsComing++
-                }
-
-                if (startChar == " ") {
-                    hashTagIsComing = 0
-                }
-
-                if (hashTagIsComing !== 0) {
-                    changeTheColor(text.toString().substring(start), start, start + count)
-                    hashTagIsComing++
-                }
-            }
-            override fun afterTextChanged(s: Editable?) {}
-        })
-    }
 
     private fun changeTheColor(s: String, start: Int, end: Int) {
         mSpannable?.setSpan(ForegroundColorSpan(ContextCompat.getColor(this, R.color.black_4a4a4a)), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)

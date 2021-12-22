@@ -20,6 +20,10 @@ class PostUpdatesViewModel : BaseViewModel() {
     return WithFloatTwoRepository.putBizMessageUpdate(request).toLiveData()
   }
 
+  fun getUserDetails(fpTag: String?, clientId: String): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getUserDetails(fpTag,clientId).toLiveData()
+  }
+
   fun getCategories(context: Context): LiveData<BaseResponse> {
     return CategoryRepository.getCategories(context).toLiveData()
   }
@@ -27,10 +31,12 @@ class PostUpdatesViewModel : BaseViewModel() {
   fun getChannelsAccessTokenStatus(nowfloatsId: String?): LiveData<BaseResponse> {
     return ChannelRepository.getChannelsStatus(nowfloatsId).toLiveData()
   }
+
   fun getWhatsappBusiness(request: String?, auth: String): LiveData<BaseResponse> {
     return WhatsAppRepository.getWhatsappBusiness(auth = auth, request = getJsonRequest(request))
       .toLiveData()
   }
+
   fun putBizImageUpdate(
     clientId: String?,
     requestType: String?,

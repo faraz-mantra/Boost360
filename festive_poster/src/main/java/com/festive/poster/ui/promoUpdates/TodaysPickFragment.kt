@@ -80,9 +80,12 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
         when(v){
             binding?.cardBrowseAllTemplate->{
                 WebEngageController.trackEvent(Promotional_Update_View_More_Click)
+                val dataList = sharedViewModel?.browseAllPosterPackList
+                if (dataList!=null){
+                    addFragment(R.id.container,BrowseAllFragment.newInstance(dataList,0),
+                        true,true)
+                }
 
-                addFragment(R.id.container,BrowseAllFragment.newInstance(dataList!!,0),
-                    true,true)
             }
         }
     }
