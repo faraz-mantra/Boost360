@@ -43,8 +43,8 @@ data class PromoBanners(
   val cta_offer_identifier: String,
 ) : Serializable,AppBaseRecyclerViewItem {
 
+  var recyclerViewItem =  RecyclerViewItemType.PROMO_BANNER.ordinal
   override fun getViewType(): Int {
-    return RecyclerViewItemType.PROMO_BANNER.ordinal
-
+    return recyclerViewItem
   }
 }

@@ -9,14 +9,18 @@ import androidx.databinding.ViewDataBinding
 import com.boost.marketplace.R
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
+import com.framework.pref.UserSessionManager
 
 abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseActivity<Binding, ViewModel>() {
 
   private var progressView: ProgressDialog? = null
+  protected lateinit var  session: UserSessionManager
+
 
   override fun onCreate(savedInstanceState: Bundle?) {
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     progressView = ProgressDialog.newInstance()
+    session = UserSessionManager(this)
     super.onCreate(savedInstanceState)
   }
 
