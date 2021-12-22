@@ -527,7 +527,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
 
   private fun updateBooking() {
     showProgress()
-    viewModel?.updateExtraPropertyOrder(AppConstant.CLIENT_ID_2, request = updateExtraPropertyRequest)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.updateExtraPropertyOrder(AppConstant.CLIENT_ID_ORDER, request = updateExtraPropertyRequest)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         WebEngageController.trackEvent(if (isVideoConsult) CONSULATION_UPDATED else APPOINTMENT_UPDATED, ADDED, TO_BE_ADDED)
         hitApiUpdateAptConsult(updateExtraPropertyRequest?.extraProperties)
@@ -562,7 +562,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
 
   private fun createBooking() {
     showProgress()
-    viewModel?.postOrderInitiate(AppConstant.CLIENT_ID_2, orderInitiateRequest)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+    viewModel?.postOrderInitiate(AppConstant.CLIENT_ID_ORDER, orderInitiateRequest)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
       if (it.isSuccess()) {
         WebEngageController.trackEvent(if (isVideoConsult) CONSULATION_CREATE else APPOINTMENT_CREATE, ADDED, TO_BE_ADDED)
         onInClinicAptConsultAddedOrUpdated(true);

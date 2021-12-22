@@ -11,6 +11,7 @@ import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
+import com.framework.pref.clientId
 import com.framework.rest.ServiceInterceptor
 import com.framework.utils.BuildConfigUtil
 import com.framework.webengageconstant.*
@@ -247,7 +248,7 @@ class CustomFirebaseAuthHelpers constructor(
 
     val userInfo = UserProfileRequest(
       personIdToken,
-      "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5",
+      clientId,
       loginKey,
       userPassword,
       ProfileProperties(email, userMobile, personName, userPassword), provider, null
@@ -304,7 +305,7 @@ class CustomFirebaseAuthHelpers constructor(
   fun verifyUserProfileAPI(loginKey: String, loginSecret: String, provider: String) {
     val userInfo = UserProfileVerificationRequest(
       "", provider,
-      loginKey, loginSecret, "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5"
+      loginKey, loginSecret, clientId
     )
 
     ApiService.verifyUserProfileAny(userInfo).enqueue(object : Callback<ResponseBody> {

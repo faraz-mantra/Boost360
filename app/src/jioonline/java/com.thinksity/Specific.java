@@ -6,7 +6,6 @@ package com.thinksity;
 public class Specific {
 
     public static String clientId2 	= "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5";
-//    public static String clientId2 	= "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5";
     public static String client_ID_1 = "39EB5FD120DC4394A10301B108030CB70FA553E91F984C829AB6ADE23B6767B7";
     public static String client_ID_2_webcreatorservice = "DA92AD580F614449B2B7B8B62DFC7AE72D201733A6D74E73B8050C541579A26C";
     public static String client_ID_3_imagechunkprocessor = "BFFEB94156C24961BBF4D4B4CC3663BB883E2EFA875148CE9C08BAB702663FAE";
@@ -36,6 +35,5 @@ public class Specific {
     public static final String TWITTER_URL = "";
     public static final String TWITTER_ID_URL = "";
     public static final String TWILIO_AUTHY_API_KEY = "gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5";
-    public static final Boolean IS_JIO_DASHBOARD= true;
 
 }

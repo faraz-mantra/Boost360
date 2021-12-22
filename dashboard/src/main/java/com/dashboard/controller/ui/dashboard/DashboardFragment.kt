@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.graphics.*
 import android.net.Uri
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -65,10 +64,6 @@ import com.framework.pref.Key_Preferences.GET_FP_DETAILS_WEBSITE
 import com.framework.utils.*
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.framework.webengageconstant.*
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.google.firebase.remoteconfig.ktx.remoteConfig
-import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.model.mapDetail.TOTAL_MAP_VISIT
 import com.inventoryorder.model.mapDetail.VisitsModelResponse
@@ -484,7 +479,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun apiBusinessSummary() {
-    viewModel?.getSellerSummaryV2_5(AppConstant.CLIENT_ID_2, session?.fpTag, getRequestSellerSummary(null))?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getSellerSummaryV2_5(AppConstant.CLIENT_ID_ORDER, session?.fpTag, getRequestSellerSummary(null))?.observeOnce(viewLifecycleOwner, {
       val response1 = it as? OrderSummaryResponse
       if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveTotalOrder(TOTAL_SELLER_SUMMARY)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
@@ -515,7 +510,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun apiRoiBusinessReport(filterDate: FilterDateModel, isLoader: Boolean = false) {
     if (isLoader) showProgress()
-    viewModel?.getSellerSummaryV2_5(AppConstant.CLIENT_ID_2, session?.fpTag, getRequestSellerSummary(filterDate))?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getSellerSummaryV2_5(AppConstant.CLIENT_ID_ORDER, session?.fpTag, getRequestSellerSummary(filterDate))?.observeOnce(viewLifecycleOwner, {
       val response1 = it as? OrderSummaryResponse
       if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveData(SELLER_BUSINESS_REPORT)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"

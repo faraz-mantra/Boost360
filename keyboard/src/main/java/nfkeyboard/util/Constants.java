@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Constants {
 
     public final static String BASE_IMAGE_URL = "https://content.withfloats.com";
-    public final static String clientId = "2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5";
+    public final static String clientId = "BuildConfig.CLIENT_ID";
     public final static String HTTP_POST = "POST";
     public final static String NOW_FLOATS_API_URL = "https://api2.withfloats.com";
     public static final String BG_SERVICE_CONTENT_TYPE_JSON = "application/json";
