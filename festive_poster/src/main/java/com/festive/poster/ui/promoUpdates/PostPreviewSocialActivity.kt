@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.Paint
+import android.os.Bundle
 import android.view.View
 import android.view.View.LAYER_TYPE_HARDWARE
 import androidx.lifecycle.lifecycleScope
@@ -28,10 +29,12 @@ import com.festive.poster.ui.promoUpdates.bottomSheet.PostSuccessBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.PostingProgressBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.SubscribePlanBottomSheet
 import com.festive.poster.ui.promoUpdates.edit_post.EditPostActivity
+import com.festive.poster.utils.MarketPlaceUtils
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.utils.isPromoWidgetActive
 import com.festive.poster.viewmodels.PostUpdatesViewModel
+import com.framework.constants.Constants.MARKET_PLACE_ORIGIN_NAV_DATA
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -72,7 +75,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     private var session:UserSessionManager?=null
     private var captionIntent :String?=null
     private val posterModel by lazy {
-        convertStringToObj<PosterModel?>(intent?.getStringExtra(IK_POSTER))
+        convertStringToObj<PosterModel?>(intent?.getBundleExtra(MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IK_POSTER))
     }
     companion object{
         val IK_CAPTION_KEY="IK_CAPTION_KEY"
@@ -80,8 +83,11 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
         fun launchActivity(activity:Activity,caption:String?,posterModel: PosterModel){
             activity.startActivity(Intent(activity,PostPreviewSocialActivity::class.java)
-                .putExtra(IK_CAPTION_KEY,caption)
-                .putExtra(EditPostActivity.IK_POSTER, Gson().toJson(posterModel))
+                .putExtra(MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
+                    putString(IK_CAPTION_KEY,caption)
+                    putString(EditPostActivity.IK_POSTER, Gson().toJson(posterModel))
+                })
+
 
             )
         }
@@ -108,7 +114,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     override fun onCreateView() {
         session = UserSessionManager(this)
-        captionIntent =intent?.getStringExtra(IK_CAPTION_KEY)
+        captionIntent =intent?.getBundleExtra(MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IK_CAPTION_KEY)
+        if (captionIntent==null) captionIntent =posterModel?.details?.Description
 
 
         initUI()
@@ -122,7 +129,13 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     }
     private fun initUI() {
         binding?.tvChooseAPromoPack?.setOnClickListener {
-            SubscribePlanBottomSheet().show(supportFragmentManager, SubscribePlanBottomSheet::class.java.name)
+            SubscribePlanBottomSheet.newInstance(object :SubscribePlanBottomSheet.Callbacks{
+                override fun onBuyClick() {
+                    MarketPlaceUtils.launchCartActivity(this@PostPreviewSocialActivity,
+                        PostPreviewSocialActivity::class.java.name,posterModel!!,captionIntent)
+
+                }
+            }).show(supportFragmentManager, SubscribePlanBottomSheet::class.java.name)
         }
 
         binding?.tvPostUpdate?.setOnClickListener {

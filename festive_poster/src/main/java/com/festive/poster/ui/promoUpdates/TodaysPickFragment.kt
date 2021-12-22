@@ -107,11 +107,11 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
 
     private fun getTemplateViewConfig() {
         showProgress()
-        viewModel?.getTemplateConfig(Constants.FESTIVE_POSTER_WKEY,session?.fPID, session?.fpTag)
+        viewModel?.getTemplateConfig(Constants.PROMO_WIDGET_KEY,session?.fPID, session?.fpTag)
             ?.observeOnce(viewLifecycleOwner, {
                 val response = it as? GetTemplateViewConfigResponse
                 response?.let {
-                    val tagArray = prepareTagForApi(response.Result.templatePacks.tags)
+                    val tagArray = prepareTagForApi(response.Result.todayPick.tags)
                     fetchTemplates(tagArray, response)
                 }
 
@@ -132,7 +132,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                 dataList = ArrayList()
                 val templates_response = it as? GetTemplatesResponse
                 templates_response?.let {
-                    response.Result.templatePacks.tags.forEach { pack_tag ->
+                    response.Result.todayPick.tags.forEach { pack_tag ->
                         val templateList = ArrayList<PosterModel>()
                         templates_response.Result.templates.forEach { template ->
                             var posterTag = template.tags.find { posterTag -> posterTag == pack_tag.tag }

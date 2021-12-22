@@ -16,6 +16,8 @@ import com.boost.payment.utils.SharedPrefs
 import com.boost.payment.utils.Utils
 import com.boost.payment.utils.WebEngageController
 import com.framework.analytics.SentryController
+import com.framework.constants.Constants.MARKET_PLACE_ORIGIN_ACTIVITY
+import com.framework.constants.Constants.MARKET_PLACE_ORIGIN_NAV_DATA
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
@@ -65,6 +67,7 @@ class OrderConfirmationFragment : BaseFragment() {
 //      } catch (e: Exception) {
 //      }
 //    }
+
     session = UserSessionManager(activity as PaymentActivity)
     prefs = SharedPrefs(activity as PaymentActivity)
     return inflater.inflate(R.layout.order_confirmation_fragment, container, false)
@@ -106,7 +109,8 @@ class OrderConfirmationFragment : BaseFragment() {
     }
 
     back_button.setOnClickListener {
-      goToHomeFragment()
+      //goToHomeFragment()
+      (activity as PaymentActivity).onBackPressed()
       (activity as PaymentActivity).finish()
       Toast.makeText(requireContext(), "Redirect based on needs...", Toast.LENGTH_SHORT).show()
     }
@@ -152,35 +156,45 @@ class OrderConfirmationFragment : BaseFragment() {
 
   private fun goToHomeFragment() {
     try {
-      val intent = Intent(context, Class.forName("com.boost.upgrades.UpgradeActivity"))
-      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-      intent.putExtra("isComingFromOrderConfirm",true)
-      intent.putExtra("expCode", session?.fP_AppExperienceCode)
-      intent.putExtra("fpName", session?.fPName)
-      intent.putExtra("fpid", session?.fPID)
-      intent.putExtra("fpTag", session?.fpTag)
-      intent.putExtra("screenType", screenType)
-      intent.putExtra("accountType", session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
-      intent.putExtra("boost_widget_key","TESTIMONIALS")
-      intent.putExtra("feature_code","TESTIMONIALS")
+      val originData = requireActivity().intent.getBundleExtra(MARKET_PLACE_ORIGIN_NAV_DATA)
+      if (originData!=null){
+        val intent = Intent(context, Class.forName(originData?.getString(MARKET_PLACE_ORIGIN_ACTIVITY)))
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(MARKET_PLACE_ORIGIN_NAV_DATA,originData)
+        startActivity(intent)
 
-      intent.putStringArrayListExtra(
-        "userPurchsedWidgets",
-        session?.getStoreWidgets() as ArrayList<String>
-      )
-      if (session?.userProfileEmail != null) {
-        intent.putExtra("email", session?.userProfileEmail)
-      } else {
-        intent.putExtra("email", "ria@nowfloats.com")
+      }else{
+        val intent = Intent(context, Class.forName("com.boost.upgrades.UpgradeActivity"))
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("isComingFromOrderConfirm",true)
+        intent.putExtra("expCode", session?.fP_AppExperienceCode)
+        intent.putExtra("fpName", session?.fPName)
+        intent.putExtra("fpid", session?.fPID)
+        intent.putExtra("fpTag", session?.fpTag)
+        intent.putExtra("screenType", screenType)
+        intent.putExtra("accountType", session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
+        intent.putExtra("boost_widget_key","TESTIMONIALS")
+        intent.putExtra("feature_code","TESTIMONIALS")
+
+        intent.putStringArrayListExtra(
+          "userPurchsedWidgets",
+          session?.getStoreWidgets() as ArrayList<String>
+        )
+        if (session?.userProfileEmail != null) {
+          intent.putExtra("email", session?.userProfileEmail)
+        } else {
+          intent.putExtra("email", "ria@nowfloats.com")
+        }
+        if (session?.userPrimaryMobile != null) {
+          intent.putExtra("mobileNo", session?.userPrimaryMobile)
+        } else {
+          intent.putExtra("mobileNo", "9160004303")
+        }
+        if (buyItemKey != null && buyItemKey!!.isNotEmpty()) intent.putExtra("buyItemKey", buyItemKey)
+        intent.putExtra("profileUrl", session?.fPLogo)
+        startActivity(intent)
       }
-      if (session?.userPrimaryMobile != null) {
-        intent.putExtra("mobileNo", session?.userPrimaryMobile)
-      } else {
-        intent.putExtra("mobileNo", "9160004303")
-      }
-      if (buyItemKey != null && buyItemKey!!.isNotEmpty()) intent.putExtra("buyItemKey", buyItemKey)
-      intent.putExtra("profileUrl", session?.fPLogo)
-      startActivity(intent)
+
     } catch (e: Exception) {
       SentryController.captureException(e)
       e.printStackTrace()

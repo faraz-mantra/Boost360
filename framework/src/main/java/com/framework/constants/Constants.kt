@@ -17,4 +17,8 @@ object Constants {
     val shimmerDrawable = ShimmerDrawable().apply {
         setShimmer(shimmer)
     }
+
+    val MARKET_PLACE_ORIGIN_NAV_DATA="MP_NAV_DATA"
+    val MARKET_PLACE_ORIGIN_ACTIVITY="MP_ORIGIN_ACTIVITY"
+
 }

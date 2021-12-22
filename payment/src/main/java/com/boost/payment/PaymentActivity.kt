@@ -1,5 +1,6 @@
 package com.boost.payment
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,21 +9,26 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.boost.payment.base_class.BaseFragment
+import com.boost.payment.ui.confirmation.OrderConfirmationFragment
 import com.boost.payment.ui.payment.PaymentFragment
 import com.boost.payment.utils.Constants
 import com.boost.payment.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.payment.utils.SharedPrefs
 import com.framework.analytics.SentryController
+import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import java.lang.IllegalStateException
+import java.util.ArrayList
 
 class PaymentActivity : AppCompatActivity() {
 
+    private var session: UserSessionManager?=null
     lateinit var prefs: SharedPrefs
-
+    var screenType: String = ""
+    var buyItemKey: String? = ""
     lateinit var razorpay: Razorpay
     var fpid: String? = null
     var fpName: String? = null
@@ -38,6 +44,7 @@ class PaymentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
+        session = UserSessionManager(this)
 
         fpid = intent.getStringExtra("fpid")
         fpName = intent.getStringExtra("fpName")
@@ -56,10 +63,10 @@ class PaymentActivity : AppCompatActivity() {
     private fun initView() {
 
         supportFragmentManager.addOnBackStackChangedListener {
-            val currentFragment =
+            currentFragment =
                 supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
             if (currentFragment != null) {
-                val tag = currentFragment.tag
+                val tag = currentFragment?.tag
                 Log.e("Add tag", ">>>$tag")
                 tellFragments()
             } else {
@@ -90,6 +97,76 @@ class PaymentActivity : AppCompatActivity() {
         for (f in fragments) {
             if (f != null && f is BaseFragment)
                 f.onBackPressed()
+        }
+    }
+
+    override fun onBackPressed() {
+        //super.onBackPressed()
+        goToHomeFragment()
+
+    }
+    fun goToHomeFragment() {
+        if (currentFragment is OrderConfirmationFragment) {
+
+            try {
+                val originData =
+                    intent.getBundleExtra(com.framework.constants.Constants.MARKET_PLACE_ORIGIN_NAV_DATA)
+                if (originData != null) {
+                    val intent = Intent(
+                        this,
+                        Class.forName(originData?.getString(com.framework.constants.Constants.MARKET_PLACE_ORIGIN_ACTIVITY))
+                    )
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra(
+                        com.framework.constants.Constants.MARKET_PLACE_ORIGIN_NAV_DATA,
+                        originData
+                    )
+                    startActivity(intent)
+
+                } else {
+                    val intent = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra("isComingFromOrderConfirm", true)
+                    intent.putExtra("expCode", session?.fP_AppExperienceCode)
+                    intent.putExtra("fpName", session?.fPName)
+                    intent.putExtra("fpid", session?.fPID)
+                    intent.putExtra("fpTag", session?.fpTag)
+                    intent.putExtra("screenType", screenType)
+                    intent.putExtra(
+                        "accountType",
+                        session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY)
+                    )
+                    intent.putExtra("boost_widget_key", "TESTIMONIALS")
+                    intent.putExtra("feature_code", "TESTIMONIALS")
+
+                    intent.putStringArrayListExtra(
+                        "userPurchsedWidgets",
+                        session?.getStoreWidgets() as ArrayList<String>
+                    )
+                    if (session?.userProfileEmail != null) {
+                        intent.putExtra("email", session?.userProfileEmail)
+                    } else {
+                        intent.putExtra("email", "ria@nowfloats.com")
+                    }
+                    if (session?.userPrimaryMobile != null) {
+                        intent.putExtra("mobileNo", session?.userPrimaryMobile)
+                    } else {
+                        intent.putExtra("mobileNo", "9160004303")
+                    }
+                    if (buyItemKey != null && buyItemKey!!.isNotEmpty()) intent.putExtra(
+                        "buyItemKey",
+                        buyItemKey
+                    )
+                    intent.putExtra("profileUrl", session?.fPLogo)
+                    startActivity(intent)
+                }
+
+            } catch (e: Exception) {
+                SentryController.captureException(e)
+                e.printStackTrace()
+            }
+        }else{
+            super.onBackPressed()
         }
     }
 

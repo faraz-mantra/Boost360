@@ -11,6 +11,7 @@ import com.festive.poster.databinding.BsheetSubscribePlanValidityBinding
 import com.festive.poster.models.response.UpgradeGetDataFeature
 import com.festive.poster.models.response.UpgradeGetDataResponse
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
+import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
 import com.festive.poster.utils.MarketPlaceUtils
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.BaseApplication
@@ -35,11 +36,16 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
         YEARLY
     }
     var validity:Validity?=null
+    interface Callbacks{
+        fun onBuyClick()
+    }
+    var callbacks:Callbacks?=null
     companion object {
         @JvmStatic
-        fun newInstance(): SubscribePlanBottomSheet {
+        fun newInstance(callbacks: Callbacks): SubscribePlanBottomSheet {
             val bundle = Bundle().apply {}
             val fragment = SubscribePlanBottomSheet()
+            fragment.callbacks = callbacks
             fragment.arguments = bundle
             return fragment
         }
@@ -152,7 +158,7 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete {
                     dismiss()
-                    MarketPlaceUtils.launchCartActivity(requireActivity())
+                    callbacks?.onBuyClick()
                 }
                 .doOnError {
 

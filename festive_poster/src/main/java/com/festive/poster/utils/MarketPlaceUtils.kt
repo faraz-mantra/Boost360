@@ -3,14 +3,20 @@ package com.festive.poster.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.festive.poster.R
+import com.festive.poster.models.PosterModel
+import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
 import com.framework.BaseApplication
+import com.framework.constants.Constants.MARKET_PLACE_ORIGIN_ACTIVITY
+import com.framework.constants.Constants.MARKET_PLACE_ORIGIN_NAV_DATA
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.ADDON_MARKETPLACE_PAGE_CLICK
 import com.framework.webengageconstant.CLICK
 import com.framework.webengageconstant.TO_BE_ADDED
+import com.google.gson.Gson
 import java.util.ArrayList
 
 object MarketPlaceUtils {
@@ -61,7 +67,7 @@ object MarketPlaceUtils {
         }
     }
 
-    fun launchCartActivity(activity:Activity){
+    fun launchCartActivity(activity:Activity,originActivityName:String,posterModel: PosterModel,caption:String?){
         val session = UserSessionManager(BaseApplication.instance)
         val intent = Intent(
             activity,
@@ -70,6 +76,11 @@ object MarketPlaceUtils {
         intent.putExtra("fpid", session.fPID)
         intent.putExtra("expCode", session.fP_AppExperienceCode)
         intent.putExtra("isDeepLink", false)
+        intent.putExtra(MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
+            putString(MARKET_PLACE_ORIGIN_ACTIVITY,originActivityName)
+            putString(PostPreviewSocialActivity.IK_POSTER,Gson().toJson(posterModel))
+            putString(PostPreviewSocialActivity.IK_CAPTION_KEY,caption)
+        })
         intent.putStringArrayListExtra(
             "userPurchsedWidgets",
             session.getStoreWidgets() as ArrayList<String>?
