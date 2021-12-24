@@ -151,8 +151,8 @@ class DashboardViewModel : BaseViewModel() {
     return WithFloatTwoRepositoryD.uploadBusinessLogo(clientId, fpId, reqType, reqId, totalChunks, currentChunkNumber, file).toLiveData()
   }
 
-  fun getUpgradePremiumBanner(website_id: String? = "5e7a3cf46e0572000109a5b2"): LiveData<BaseResponse> {
-    return DevBoostKitRepository.getUpgradePremiumBanner(website_id = website_id).toLiveData()
+  fun getUpgradePremiumBanner(): LiveData<BaseResponse> {
+    return DevBoostKitRepository.getUpgradePremiumBanner().toLiveData()
   }
 
   fun getUpgradeDashboardBanner(website_id: String? = "5fd88e1fb456eb000133ad31"): LiveData<BaseResponse> {
