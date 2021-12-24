@@ -51,11 +51,11 @@
           android:id="@+id/layout_et_sugestion"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/_46sdp"
+          android:layout_marginTop="@dimen/size_46"
           android:background="@drawable/rounded_edit_white"
           android:orientation="vertical"
           android:paddingTop="@dimen/size_10"
-          android:visibility="gone"
+          android:visibility="visible"
           app:layout_constraintEnd_toStartOf="@+id/endGuide"
           app:layout_constraintStart_toStartOf="@+id/startGuide"
           app:layout_constraintTop_toBottomOf="@+id/tv_subtitle">

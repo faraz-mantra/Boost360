@@ -80,6 +80,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
   private Uri primaryUri;
   private ProgressDialog dialog;
   private static final String TAG = "BackgroundImageGalleryA";
+  private boolean apiDataLoaded=false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +103,8 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
     initImageRecyclerView(binding.imageList);
     getBackgroundImages();
-    binding.btnAdd.setOnClickListener(view -> openImageChooser());
+    binding.btnAdd.setOnClickListener(view ->
+            openImageChooser());
   }
 
 
@@ -123,6 +125,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
   }
 
   private void getBackgroundImages() {
+    apiDataLoaded = false;
     binding.pbLoading.setVisibility(View.VISIBLE);
 
     ImageApi imageApi = Constants.restAdapter.create(ImageApi.class);
@@ -133,7 +136,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
       public void success(List<String> strings, Response response) {
 
         binding.pbLoading.setVisibility(View.GONE);
-
+        apiDataLoaded=true;
         if (strings != null && strings.size() > 0) {
           adapter.setData(strings);
         }
@@ -175,6 +178,12 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 //            Methods.showFeatureNotAvailDialog(BackgroundImageGalleryActivity.this);
 //            return;
 //        }
+
+    if (apiDataLoaded&&adapter.images.size()>=8){
+      Toast.makeText(this, getString(R.string.cannot_upload_more_than_8), Toast.LENGTH_SHORT).show();
+      return;
+    }
+
 
     final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
     imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
@@ -284,7 +293,12 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
       try {
         Bitmap CameraBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), primaryUri);
         String imageUrl = Methods.getRealPathFromURI(this, primaryUri);
+
         String path = Util.saveBitmap(imageUrl, this, "ImageFloat" + System.currentTimeMillis());
+        if (isFileLargeThan2Mb(path)){
+          Toast.makeText(this, getString(R.string.files_size_less_2mb), Toast.LENGTH_SHORT).show();
+          return;
+        }
         Log.i(TAG, "onActivityResult: " + path);
         uploadPrimaryPicture(path);
         WebEngageController.trackEvent(UPLOAD_BACKGROUND_IMAGE, UPDATE_BACKGROUND_IMAGE, session.getFpTag());
@@ -299,6 +313,10 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
       Uri picUri = data.getData();
       if (picUri != null) {
         String path = Methods.getPath(this, picUri);
+        if (isFileLargeThan2Mb(path)){
+          Toast.makeText(this, getString(R.string.files_size_less_2mb), Toast.LENGTH_SHORT).show();
+          return;
+        }
         path = Util.saveBitmap(path, BackgroundImageGalleryActivity.this, "ImageFloat" + System.currentTimeMillis());
         if (!TextUtils.isEmpty(path)) uploadPrimaryPicture(path);
       }
@@ -317,7 +335,16 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
     }
   }
 
+  private Boolean isFileLargeThan2Mb(String path) {
+    long sizeInMb = new File(path).length()/1048576;
+    if (sizeInMb>2){
+      return true;
+    }
+    return false;
+  }
+
   public void uploadPrimaryPicture(String path) {
+
     if (!Methods.isOnline(BackgroundImageGalleryActivity.this)) {
       return;
     }
@@ -344,6 +371,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
   @Override
   public void onPreUpload() {
+    apiDataLoaded =false;
 
     dialog = ProgressDialog.show(this, "", getString(R.string.uploadin_image));
     dialog.setCancelable(false);
@@ -351,6 +379,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
   @Override
   public void onPostUpload(boolean isSuccess, String response) {
+    apiDataLoaded =true;
 
     if (isSuccess) {
       Methods.showSnackBarPositive(this, getString(R.string.image_added_successfully));

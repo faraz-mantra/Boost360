@@ -97,8 +97,11 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
 
   private fun initialize() {
     observeCategorySearch()
-    activity?.onBackPressedDispatcher?.addCallback(object : OnBackPressedCallback(true) {
+    requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
       override fun handleOnBackPressed() {
+       /* if (binding?.layoutEtSugestion?.visibility == View.VISIBLE) {
+          backPressedFromSearch()
+        }*/
         CategoryDataModel.clearSelection()
         baseActivity.finishAfterTransition()
       }
@@ -208,6 +211,16 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
         }
       }
     }
+  }
+
+  private fun backPressedFromSearch(){
+    binding?.tvTitle?.visible()
+    binding?.tvSubtitle?.visible()
+    binding?.includeCatSuggSelected?.root?.gone()
+    binding?.linearFeaturedCategories?.visible()
+    binding?.autocompleteSearchCategory?.visible()
+    binding?.includeNoSearchResultFound?.root?.gone()
+    binding?.layoutEtSugestion?.gone()
   }
 
   private fun showCatSuggestionSelected(category: CategoryDataModel) {
