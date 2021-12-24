@@ -18,7 +18,7 @@ object UserExperiorController {
     val LIVE_KEY="0efa1c36-15ec-43ba-93e7-e00ff1355f4b"
 
     fun startRecording(application: Application){
-        UserExperior.startRecording(application, DEV_KEY);
+        UserExperior.startRecording(application, LIVE_KEY);
     }
 
 
@@ -26,13 +26,13 @@ object UserExperiorController {
         UserExperior.setUserIdentifier(fpId)
     }
 
-    fun setUserAttr(fpTag:String?,mobile: String?, business_name: String?,
+    fun setUserAttr(fpID:String?,mobile: String?, business_name: String?,
                     category: String?,name:String?,app_version:String?){
         val userProperties: HashMap<String, Any?> = HashMap()
 
-        setUserIdentifier(fpTag)
-        userProperties["name"] = name
-        userProperties["mobile"] =mobile
+        setUserIdentifier(fpID)
+//        userProperties["name"] = name
+//        userProperties["mobile"] =mobile
         userProperties["business_name"] = business_name
         userProperties["category"] = category
         userProperties["app_version"] = app_version
@@ -41,7 +41,7 @@ object UserExperiorController {
     }
 
     fun setUserAttr(session:UserSessionManager){
-        setUserAttr(session.fPID,session.userProfileMobile,session.fPName,session.fpTag,session.userProfileName,
+        setUserAttr(session.fPID,session.userProfileMobile,session.fPName,session.fP_AppExperienceCode,session.userProfileName,
             getAppVersionName())
     }
 

@@ -33,8 +33,9 @@ object EndPoints {
   const val GET_FP_DETAILS = "/Discover/v3/floatingPoint/nf-app/{fpid}"
   const val POST_BUSINESS_DOMAIN_URL = "discover/v1/floatingPoint/verifyUniqueTag"
   const val POST_BUSINESS_DOMAIN_SUGGEST = "discover/v1/floatingPoint/suggestTag"
-
   const val REGISTER_CHANNEL = "/Discover/v1/floatingpoint/notification/registerChannel"
+  //FIREBASE TOKEN
+  const val GET_FIREBASE_TOKEN = "discover/v1/FloatingPoint/GetFirebaseAuthToken"
 
   //todo NFX API
   var NFX_WITH_NOWFLOATS: String = "https://nfx.withfloats.com"

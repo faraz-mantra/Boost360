@@ -238,7 +238,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 .positiveText(getString(R.string.ok))
                 .negativeText(getString(R.string.cancel))
                 .negativeColorRes(R.color.black_4a4a4a)
-                .positiveColorRes(R.color.colorAccent_jio)
+                .positiveColorRes(R.color.colorAccentLight)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onNegative(MaterialDialog dialog) {
@@ -379,7 +379,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 .positiveText(postiveBtn)
                 .negativeText(negativeBtn)
                 .negativeColorRes(R.color.black_4a4a4a)
-                .positiveColorRes(R.color.colorAccent_jio)
+                .positiveColorRes(R.color.colorAccentLight)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {

@@ -268,6 +268,9 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     if (nameAccount.isNullOrEmpty()) {
       showShortToast(getString(R.string.bank_account_cannot_empty))
       return false
+    } else if (!ValidationUtils.isValidName(nameAccount)) {
+      showShortToast(getString(R.string.bank_account_name_invalid))
+      return false
     } else if (accountNumber.isNullOrEmpty()) {
       showShortToast(getString(R.string.bank_number_can_not_empty))
       return false

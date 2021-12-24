@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -11,34 +12,35 @@
     <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/input_layout"
       android:layout_width="match_parent"
-      android:layout_height="45dp"
-      android:background="@drawable/bg_grey_stroke_et"
+      android:layout_height="@dimen/size_51"
+      android:background="@drawable/bg_grey_stroke_et_onboard"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintTop_toTopOf="parent">
 
       <com.framework.views.customViews.CustomEditText
-        android:id="@+id/et_input"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginVertical="@dimen/size_4"
-        android:layout_marginStart="@dimen/size_8"
-        android:layout_marginEnd="@dimen/size_4"
-        android:background="@color/white_F5F8FD"
-        android:ellipsize="end"
-        android:imeOptions="actionDone"
-        android:maxLength="40"
-        android:paddingHorizontal="@dimen/size_4"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:scrollHorizontally="true"
-        android:singleLine="true"
-        android:textColor="@color/black_4a4a4a"
-        android:textSize="@dimen/text_14"
-        app:fontFamily="@font/inter_semi_bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/linear_edit_wrapper"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+          android:id="@+id/et_input"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_marginVertical="@dimen/size_4"
+          android:layout_marginStart="@dimen/size_8"
+          android:layout_marginEnd="@dimen/size_4"
+          android:background="@color/white_F5F8FD"
+          android:ellipsize="end"
+          android:fontFamily="@font/regular"
+          android:imeOptions="actionDone"
+          android:maxLength="40"
+          android:paddingHorizontal="@dimen/size_4"
+          android:paddingTop="10dp"
+          android:paddingBottom="10dp"
+          android:scrollHorizontally="true"
+          android:singleLine="true"
+          android:textColor="@color/black_4a4a4a"
+          tools:text="fhchhjbvjhjh"
+          android:textSize="@dimen/text_14"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toStartOf="@+id/linear_edit_wrapper"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
 
       <LinearLayout
         android:id="@+id/linear_edit_wrapper"
@@ -53,15 +55,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tv_word_count"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="16dp"
-          android:fontFamily="@font/inter_semi_bold"
-          android:text="@string/_0_40"
-          android:textAlignment="gravity"
-          android:textColor="@color/gray_9DA4B2"
-          android:textSize="@dimen/text_12" />
+            android:id="@+id/tv_word_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/regular_medium"
+            android:text="@string/_0_40"
+            android:textAlignment="gravity"
+            android:textColor="@color/gray_9DA4B2"
+            android:textSize="@dimen/text_12" />
 
         <com.framework.views.customViews.CustomImageView
           android:id="@+id/iv_icon"
@@ -85,17 +87,19 @@
 
 
     <com.framework.views.customViews.CustomTextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="8dp"
-      android:layout_marginBottom="4dp"
-      android:background="@color/white_F5F8FD"
-      android:paddingHorizontal="4dp"
-      android:text="@string/business_name"
-      android:textSize="12sp"
-      app:layout_constraintBottom_toTopOf="@+id/input_layout"
-      app:layout_constraintStart_toStartOf="@+id/input_layout"
-      app:layout_constraintTop_toTopOf="@id/input_layout" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="4dp"
+        android:background="@color/white_F5F8FD"
+        android:fontFamily="@font/regular"
+        android:paddingHorizontal="4dp"
+        android:text="@string/business_name"
+        android:textColor="@color/black_4a4a4a_50"
+        android:textSize="@dimen/text_12"
+        app:layout_constraintBottom_toTopOf="@+id/input_layout"
+        app:layout_constraintStart_toStartOf="@+id/input_layout"
+        app:layout_constraintTop_toTopOf="@id/input_layout" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

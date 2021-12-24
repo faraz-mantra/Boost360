@@ -154,7 +154,7 @@
   <string name="error_right_fptag">This link is intended for the business %1$s! and you are not authorized to access this page. Please make sure you are signed in to the right Boost account.</string>
   <string name="no_internet_connection">No Internet Connection</string>
   <string name="settings">Setting</string>
-  <string name="expert_contact_number">+91 63669 37299</string>
+  <string name="expert_contact_number">+91 6366937299</string>
   <string name="can_not_find_category_speak_expert">Can’t find your category? speak to our expert</string>
   <string name="back">Back</string>
 
@@ -180,7 +180,7 @@
   <string name="ex_shopkeeper_doctor_boutique_etc">Ex: Shopkeeper, Doctor, Boutique, etc.</string>
   <string name="featured_categories">Featured categories:</string>
   <string name="what_is_the_name_of_your_business">What is the name of your business?</string>
-  <string name="this_will_help_suggest_available_website_address">This will help suggest available website address</string>
+  <string name="this_will_help_suggest_available_website_address">This will help us pick the best available\nwebsite address for you</string>
   <string name="business_name">Business Name</string>
   <string name="launch_my_website">Launch my website</string>
   <string name="website_address">Website Address</string>
@@ -188,6 +188,7 @@
   <string name="you_can_create_a_support_request_and_someone_from_the_boost_team_will_assist_you">You can create a support request and someone from the Boost team will assist you.</string>
   <string name="create_support_request">Create Support Request</string>
   <string name="call_us">Call Us</string>
+  <string name="call_our_expert">Call our expert</string>
   <string name="could_not_find_your_business_type">Could not find your business type?</string>
   <string name="choose_what_best_describes_your_business_the_best">Choose what best describes your business the best</string>
   <string name="still_can_t_find_your_business_type">Still can’t find your business type?</string>
@@ -200,10 +201,10 @@
   <string name="secure">Secure | https://</string>
   <string name="this_link_is_already_in_use_please_choose_another">This link is already in use! Please choose another.</string>
   <string name="no_result_found">No results found</string>
-  <string name="found_website_address_des">We found a website address for you. You can customize it or purchase a custom domain later.</string>
+  <string name="found_website_address_des">We found a website address for you. You can\ncustomize it or purchase a custom domain later.</string>
   <string name="your_website_is_almost_ready">Your website is almost ready!</string>
   <string name="your_business_category_was_selected">Your business category was selected</string>
-  <string name="use_your_phone_number_to_login">You can use your phone number to login or sign up to Boost360</string>
+  <string name="use_your_phone_number_to_login">You can use your phone number to login or sign up to Boost 360</string>
   <string name="_91_plus">+91</string>
   <string name="an_sms_with_a_4_digit_otp_was_sent_to">An SMS with a 4-digit OTP was sent to</string>
   <string name="get_otp_on_call">Get OTP on call</string>
@@ -211,5 +212,10 @@
   <string name="desktop">Desktop</string>
   <string name="_0_40">0 /40</string>
   <string name="get_to_know_our_experts">Get to know our experts</string>
+  <string name="onboarding_need_help_message">Please feel free speak to our expert to get the\nhelp you need.</string>
 
+  <string name="terms_of_use" translatable="false">Terms of Use</string>
+  <string name="privacy_policy" translatable="false">Privacy Policy</string>
+  <string name="_940558450">XXX-XXX-XXXX</string>
+  <string name="here_is_a_quick_preview_of_how_your_website_will_look_on_various_devices">Here is a quick preview of how your website will\nlook on various devices</string>
 </resources>

@@ -76,7 +76,7 @@
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
             android:scaleType="fitCenter"
-            app:backgroundTint="@color/colorAccent_jio"
+            app:backgroundTint="@color/colorAccentLight"
             app:srcCompat="@drawable/ic_add_white" />
     </FrameLayout>
 

@@ -25,14 +25,14 @@ class IntroItemNew(
         imageResource = null,
         lottieRawResource = R.raw.new_lottie_merchants_1,
         isLottieRepeat = false,
-        slideBackgroundColor = R.color.white_F4F8FA
+        slideBackgroundColor = R.color.white_F5F8FD
       ),
       IntroItemNew(
         title = c.getString(R.string.new_into_2_title),
         imageResource = null,
         lottieRawResource = R.raw.new_lottie_marketing_2,
         isLottieRepeat = false,
-        slideBackgroundColor = R.color.white_F4F8FA,
+        slideBackgroundColor = R.color.white_F5F8FD,
         count = 1
       ),
       IntroItemNew(
@@ -40,14 +40,14 @@ class IntroItemNew(
         imageResource = null,
         lottieRawResource = R.raw.new_lottie_selling_products_3,
         isLottieRepeat = true,
-        slideBackgroundColor = R.color.white_F4F8FA
+        slideBackgroundColor = R.color.white_F5F8FD
       ),
       IntroItemNew(
         title = c.getString(R.string.new_into_4_title),
         imageResource = null,
         lottieRawResource = R.raw.lottie_intro_4_collect,
         isLottieRepeat = true,
-        slideBackgroundColor = R.color.white_F7F7F4
+        slideBackgroundColor = R.color.white_F5F8FD
       ),
     )
   }

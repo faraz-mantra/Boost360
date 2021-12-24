@@ -51,7 +51,7 @@ public class BusinessDetailsActivity extends AppCompatActivity implements View.O
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY) + ", " +
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY));
 
-        String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" + getString(R.string.google_map_key); //AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg
+        String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" + getString(R.string.google_map_key);
         try {
             Glide.with(this)
                     .load(url)

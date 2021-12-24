@@ -160,6 +160,10 @@ fun Double.roundTo(n: Int): Double {
   return "%.${n}f".format(this).toDouble()
 }
 
+fun Double.removeENotationAndRoundTo(n: Int): Double {
+  return "%.${n}f".format(this.toString().replace("E", "").toDouble()).toDouble()
+}
+
 fun CustomTextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
   val spannableString = SpannableString(this.text)
   var startIndexOfLink = -1
@@ -401,6 +405,23 @@ fun isService(category_code: String?): Boolean {
     "SVC", "DOC", "HOS", "SPA", "SAL" -> true
     else -> false
   }
+}
+
+inline fun <reified T> read(): T {
+  val value: String = readLine()!!
+  return when (T::class) {
+    Int::class -> value.toInt() as T
+    String::class -> value as T
+    // add other types here if need
+    else -> throw IllegalStateException("Unknown Generic Type")
+  }
+}
+
+fun Activity.makeCall(number: String) {
+  val callIntent = Intent(Intent.ACTION_DIAL)
+  callIntent.addCategory(Intent.CATEGORY_DEFAULT)
+  callIntent.data = Uri.parse("tel:$number")
+  this.startActivity(Intent.createChooser(callIntent, "Call by:"))
 }
 
 fun getAppVersionName(): String? {

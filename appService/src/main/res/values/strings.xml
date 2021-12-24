@@ -79,20 +79,20 @@
     <string name="submit_documents_for_kyc">Submit documents for KYC</string>
     <string name="submit">Submit</string>
     <string name="pan_details">Pan details</string>
-    <string name="pan_number_individual_or_company">PAN number (individual or company)</string>
+    <string name="pan_number_individual_or_company">PAN number (individual or company)*</string>
     <string name="enter_pan_number">Enter PAN number</string>
-    <string name="name_as_mentioned_on_pan_card">Name as mentioned on PAN card</string>
+    <string name="name_as_mentioned_on_pan_card">Name as mentioned on PAN card*</string>
     <string name="enter_name">Enter name</string>
     <string name="pan_card_image">PAN card image</string>
     <string name="bank_details">Bank details</string>
     <string name="account_number">Account number</string>
     <string name="enter_account_no">Enter account No.</string>
-    <string name="account_holder_s_name">Account holder\'s name</string>
-    <string name="name_of_the_bank">Name of the bank</string>
+    <string name="account_holder_s_name">Account holder\'s name*</string>
+    <string name="name_of_the_bank">Name of the bank*</string>
     <string name="enter_bank_name">Enter bank name</string>
-    <string name="ifsc_code">IFSC code</string>
+    <string name="ifsc_code">IFSC code*</string>
     <string name="enter_ifsc_code">Enter IFSC code</string>
-    <string name="latest_bank_statement_last_1_month">Latest bank statement (Last 1 month)</string>
+    <string name="latest_bank_statement_last_1_month">Latest bank statement (Last 1 month)*</string>
     <string name="upload">upload</string>
     <string name="jpg_png_pdf">jpg/png/pdf</string>
     <string name="maximum_5">Maximum 5</string>
@@ -272,10 +272,10 @@
     <!--  end of staff modules strings-->
     <string name="why_do_we_need_your_bank_account">Why do we need your bank account?</string>
     <string name="collect_boost_business_website_desc">This account is being used to send you money collected from your customers who are making payments on your boost Business website.</string>
-    <string name="product_category">Product category*</string>
+    <string name="product_category_">Product category*</string>
     <string name="select_or_create_a_service_category">Select or create a service category</string>
     <string name="write_the_name_of_your_product">Write the name of your product</string>
-    <string name="product_name">Product name*</string>
+    <string name="product_name_">Product name*</string>
     <string name="this_information_is_required_if_you_select">This information is required if you select delivery service.</string>
     <string name="product_specifications">Product specifications</string>
     <string name="in_case_this_product_is_associated_with_certified_by_any_brand">In case this product is associated with/certified by any brand.</string>
@@ -321,12 +321,12 @@
     <string name="enter_duration_in_minutes">Enter duration in minutes</string>
     <string name="service_duration_minutes">Service duration (minutes)*</string>
     <string name="describe_this_service_in_around_2000_characters_at_max">Describe this service in around 2000 characters at max...</string>
-    <string name="service_description">Service description*</string>
+    <string name="service_description_">Service description*</string>
     <string name="create_a_service_category">Create a service category</string>
     <string name="this_will_help_you_group_multiple_services_under_this_category">This will help you group multiple services under this category</string>
-    <string name="service_category">Service category*</string>
+    <string name="service_category_">Service category*</string>
     <string name="write_the_name_of_your_service">Write the name of your service</string>
-    <string name="service_name">Service Name*</string>
+    <string name="service_name_">Service Name*</string>
     <string name="service_adding_error">Service adding error, please try again.</string>
     <string name="service_timing_adding_error">Service timing adding error, please try again.</string>
     <string name="service_updating_error">Service updating error, please try again.</string>
@@ -631,6 +631,7 @@
     <string name="update_offer">Update offer</string>
     <string name="business_closed">Business closed</string>
     <string name="bank_account_cannot_empty">Bank account name can\'t empty.</string>
+    <string name="bank_account_name_invalid">Bank account name invalid.</string>
     <string name="bank_number_can_not_empty">Bank account number can\'t empty.</string>
     <string name="confirm_bank_account_cannot_empty">Confirm bank account number can\'t empty.</string>
     <string name="enter_a_valid_account_number">Enter valid confirm account number.</string>
@@ -674,7 +675,7 @@
     <string name="business_license">Business License*</string>
     <string name="type_doctor_s_business_license">Type doctor’s business license</string>
     <string name="education_years_of_experience_mobile_number_etc">Education, years of experience, mobile number, etc.</string>
-    <string name="save_details">Save Details</string>
+    <string name="save_details">Save details</string>
     <string name="consultation_hours">Consultation hours</string>
     <string name="select_doctor_s_consultation_hours">Select doctor’s consultation hours</string>
     <string name="select_services">Select services</string>
@@ -700,7 +701,6 @@
     <string name="select_appointment_type">Select appointment type</string>
     <string name="the_type_of_consultation_that_patients_will_get">The type of consultation that patients will get</string>
     <string name="consultation_will_be_given_through_video_call">Consultation will be given through video call.</string>
-    <string name="video_consultation">Video consultation</string>
     <string name="in_person_consultation">In-person consultation</string>
     <string name="consultation_to_be_provided_to_patients_in_person">Consultation to be provided to patients in person.</string>
     <string name="in_person_video_consultation"><![CDATA[In-person & video consultation]]></string>
@@ -760,7 +760,7 @@
     <string name="get_direct_payment_in_your_bank_account_instantly">Get direct payment in your bank account instantly</string>
     <string name="done_caps">Done</string>
     <string name="create_a_product_category">Create a product category</string>
-    <string name="product_description">Product description*</string>
+    <string name="product_description_">Product description*</string>
     <string name="describe_this_product_in_around_2000_characters_at_max">Describe this product in around 2000 characters at max...</string>
     <string name="pricing_info">Pricing info</string>
     <string name="want_to_sell_this_product_online">Want to sell this product online?</string>
@@ -1075,4 +1075,11 @@
   <string name="booked_on">Booked on</string>
   <string name="to_enable_reach_customer_support_at_ria_">To enable this feature reach customer support at ria@nowfloats.com</string>
   <string name="invalid_bank_account_number">Invalid bank account number</string>
+  <string name="help">Help</string>
+  <string name="valid_pan_card_image">Please select valid pan card file</string>
+  <string name="pan_number_not_empty">Pan number can\'t empty.</string>
+  <string name="pan_number_invalid">Please enter a valid pan number.</string>
+  <string name="pan_name_not_empty">Pan name can\'t empty.</string>
+  <string name="pan_name_invalid">Please enter a valid name.</string>
+  <string name="invalid_bank_statement_file">Please select valid bank statement file</string>
 </resources>

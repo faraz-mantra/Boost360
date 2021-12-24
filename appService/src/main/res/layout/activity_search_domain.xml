@@ -33,7 +33,7 @@
             android:indeterminate="true"
             android:visibility="gone"
             android:layout_marginTop="@dimen/size_8"
-            android:indeterminateTint="@color/colorPrimary"
+            android:indeterminateTint="@color/colorAccent"
             app:layout_constraintEnd_toEndOf="@+id/ed_search_box"
             app:layout_constraintStart_toStartOf="@+id/ed_search_box"
             app:layout_constraintTop_toBottomOf="@+id/ed_search_box" />
@@ -139,7 +139,7 @@
             android:drawablePadding="@dimen/size_8"
             android:fontFamily="@font/regular_medium"
             android:text="@string/learn_how_to_choose_a_great_domain"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorAccentLight"
             android:textSize="@dimen/text_14"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -150,7 +150,7 @@
             android:id="@+id/btn_continue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorAccentLight"
             android:gravity="center"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent">
