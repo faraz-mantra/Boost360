@@ -12,6 +12,7 @@ import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
 import com.framework.rest.ServiceInterceptor
+import com.framework.utils.BuildConfigUtil
 import com.framework.webengageconstant.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -61,7 +62,8 @@ class CustomFirebaseAuthHelpers constructor(
 
   init {
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-      .requestIdToken(activity.getString(R.string.server_client_id))
+//        .requestIdToken(activity.getString(R.string.server_client_id))
+      .requestIdToken(BuildConfigUtil.getBuildConfigField("GOOGLE_SERVER_CLIENT_ID") ?: "")
       .requestEmail()
       .build()
     retrofit = Retrofit.Builder()

@@ -8,7 +8,7 @@
 
   <application
     android:theme="@style/AppTheme.Pre.Signin"
-    android:usesCleartextTraffic="true"
+    android:usesCleartextTraffic="false"
     android:windowSoftInputMode="adjustPan"
     tools:ignore="UnusedAttribute">
 

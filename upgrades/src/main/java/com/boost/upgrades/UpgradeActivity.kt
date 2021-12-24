@@ -36,7 +36,6 @@ import com.boost.upgrades.utils.Constants.Companion.HOME_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.ORDER_CONFIRMATION_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.PAYMENT_FRAGMENT
-import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils
@@ -47,6 +46,7 @@ import com.framework.analytics.SentryController
 import com.framework.pref.TokenResult
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
+import com.framework.utils.BuildConfigUtil
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -164,7 +164,8 @@ class UpgradeActivity : AppCompatActivity() {
 
   private fun initRazorPay() {
     try {
-      razorpay = Razorpay(this, RAZORPAY_KEY)
+      val razorPayKey: String = BuildConfigUtil.getBuildConfigField("RAZORPAY_KEY") ?: ""
+      razorpay = Razorpay(this, razorPayKey)
     } catch (e: Exception) {
       SentryController.captureException(e)
       e.printStackTrace()

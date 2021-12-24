@@ -2,6 +2,8 @@ package com.nowfloats.AccrossVerticals.Testimonials;
 
 import static com.dashboard.utils.ActivityUtilsKt.startHelpSupportVideoActivity;
 
+import static com.framework.pref.Key_Preferences.PRODUCT_CATEGORY_VERB;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -286,17 +288,19 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         }
     }
 
-    @Override
-    public void shareOptionClicked(TestimonialData data) {
-        String productType = CodeUtilsKt.getProductType(session.getFP_AppExperienceCode());
-        String subDomain = "";
-        if (productType.equals("PRODUCTS")) {
-            subDomain = "all-products";
-        } else {
-            subDomain = "all-services";
-        }
-        ContentSharing.Companion.shareTestimonial(this, data.getDescription(), data.getUsername(), session.getRootAliasURI() + "/testimonials", session.getRootAliasURI() + "/" + subDomain, session.getFPPrimaryContactNumber(), false);
+  @Override
+  public void shareOptionClicked(TestimonialData data) {
+    String productType = CodeUtilsKt.getProductType(session.getFP_AppExperienceCode());
+    String subDomain = "";
+    String fpDetails = session.getFPDetails(PRODUCT_CATEGORY_VERB);
+    if (fpDetails.isEmpty()) {
+      if (productType.equals("PRODUCTS")) {
+        fpDetails = "products";
+      } else fpDetails = "services";
     }
+    subDomain = "all-" + fpDetails;
+    ContentSharing.Companion.shareTestimonial(this, data.getDescription(), data.getUsername(), session.getRootAliasURI() + "/testimonials", session.getRootAliasURI() + "/" + subDomain, session.getFPPrimaryContactNumber(), false);
+  }
 
     void updateRecyclerMenuOption(int pos, boolean status) {
         testimonialsAdapter.menuOption(pos, status);

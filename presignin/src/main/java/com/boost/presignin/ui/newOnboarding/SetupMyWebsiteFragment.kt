@@ -80,16 +80,16 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
       }
       is SetupMyWebsiteStep2Fragment -> {
         binding?.ivStep1Setup?.setImageResource(R.drawable.ic_tick_circle_green_solid_filled)
-        binding?.view1?.background = ContextCompat.getDrawable(requireContext(), R.color.green_61CF96)
+        binding?.view1?.background = ContextCompat.getDrawable(requireContext(), R.color.green_7ED321)
         binding?.ivStep2Setup?.setImageResource(R.drawable.ic_tick_circle_green_hollow)
         binding?.view2?.background = ContextCompat.getDrawable(requireContext(), R.color.gray_33727D82)
         binding?.ivStep3Setup?.setImageResource(R.drawable.ic_tick_circle_gray_hollow)
       }
       is SetupMyWebsiteStep3Fragment -> {
         binding?.ivStep1Setup?.setImageResource(R.drawable.ic_tick_circle_green_solid_filled)
-        binding?.view1?.background = ContextCompat.getDrawable(requireContext(), R.color.green_61CF96)
+        binding?.view1?.background = ContextCompat.getDrawable(requireContext(), R.color.green_7ED321)
         binding?.ivStep2Setup?.setImageResource(R.drawable.ic_tick_circle_green_solid_filled)
-        binding?.view2?.background = ContextCompat.getDrawable(requireContext(), R.color.green_61CF96)
+        binding?.view2?.background = ContextCompat.getDrawable(requireContext(), R.color.green_7ED321)
         binding?.ivStep3Setup?.setImageResource(R.drawable.ic_tick_circle_green_hollow)
       }
     }
@@ -98,16 +98,17 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    inflater.inflate(R.menu.menu_help_on_boarding_new, menu)
+    inflater.inflate(R.menu.menu_help_setup_my_website, menu)
+    val menuItem = menu.findItem(R.id.help_new)
+    menuItem.actionView.setOnClickListener {
+      menu.performIdentifierAction(menuItem.itemId, 0)
+    }
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
-      R.id.menu_item_help_onboard -> {
-        NeedHelpBottomSheet().show(
-          parentFragmentManager,
-          NeedHelpBottomSheet::class.java.name
-        )
+      R.id.help_new -> {
+        NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
         return true
       }
       else -> super.onOptionsItemSelected(item)

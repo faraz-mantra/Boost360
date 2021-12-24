@@ -137,6 +137,7 @@
           android:drawableEnd="@drawable/ic_down_arrow_gray"
           android:focusable="false"
           android:hint="18%"
+          android:id="@+id/edt_text_slab"
           android:padding="@dimen/_14dp"
           android:singleLine="true"
           android:visibility="visible" />

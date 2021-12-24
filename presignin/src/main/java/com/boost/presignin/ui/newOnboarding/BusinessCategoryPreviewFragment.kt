@@ -70,9 +70,9 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
   private fun setupUi() {
     if (categoryLiveName.isNullOrEmpty().not()) {
       val totalString = categoryLiveName + " in " + categoryModel?.category_Name
-      binding?.autocompleteSearchCategory?.text = makeSectionOfTextBold(totalString, categoryLiveName ?: "", font = R.font.inter_medium)
+      binding?.autocompleteSearchCategory?.text = makeSectionOfTextBold(totalString, categoryLiveName ?: "", font = R.font.regular_medium)
     } else {
-      binding?.autocompleteSearchCategory?.text = makeSectionOfTextBold(categoryModel?.category_Name ?: "", categoryModel?.category_Name ?: "", font = R.font.inter_medium)
+      binding?.autocompleteSearchCategory?.text = makeSectionOfTextBold(categoryModel?.category_Name ?: "", categoryModel?.category_Name ?: "", font = R.font.regular_medium)
     }
     baseActivity.glideLoad(binding?.desktopPreview?.imgDesktop!!, desktopPreview ?: "", R.drawable.mobile_preview_website)
     baseActivity.glideLoad(binding?.mobilePreview?.imgMobile!!, mobilePreview ?: "", R.drawable.mobile_preview_website)

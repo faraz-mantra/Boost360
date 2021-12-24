@@ -1,6 +1,7 @@
 package com.boost.presignin.ui.newOnboarding
 
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import com.appservice.utils.capitalizeUtil
 import com.boost.presignin.R
@@ -13,6 +14,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.framework.utils.fromHtml
+import com.framework.utils.showKeyBoard
 import com.framework.views.blur.setBlur
 
 class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Binding, BaseViewModel>() {
@@ -87,16 +89,26 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
       binding?.businessNameInputLayout?.tvWordCount?.text = fromHtml("<font color=${if (it.isEmpty()) "#9DA4B2" else "#09121F"}>${it.length}</font><font color=#9DA4B2> /40</font>")
     }
 
-    binding?.businessNameInputLayout?.etInput?.setOnEditorActionListener { _, actionId, _ ->
+    binding?.businessNameInputLayout?.etInput?.setOnEditorActionListener { v, actionId, _ ->
       if (actionId == EditorInfo.IME_ACTION_DONE) {
-        binding?.businessNameInputLayout?.etInput?.isEnabled = false
-        binding?.businessNameInputLayout?.tvWordCount?.gone()
-        binding?.businessNameInputLayout?.ivIcon?.visible()
+        if (binding?.businessNameInputLayout?.etInput!!.text?.trim()?.isEmpty() == false) {
+            binding?.businessNameInputLayout?.etInput?.isEnabled = false
+            binding?.businessNameInputLayout?.tvWordCount?.gone()
+            binding?.businessNameInputLayout?.ivIcon?.visible()
+        }
       }
       false
     }
 
+    binding?.businessNameInputLayout?.etInput?.onFocusChangeListener =
+      View.OnFocusChangeListener { _, hasFocus ->
+        if (hasFocus){
+          binding?.businessNameInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_dark_stroke_et_onboard)
+        }
+    }
+
     binding?.businessNameInputLayout?.ivIcon?.setOnClickListener {
+      baseActivity.showKeyBoard(binding?.businessNameInputLayout?.etInput)
       binding?.businessNameInputLayout?.etInput?.isEnabled = true
       binding?.businessNameInputLayout?.tvWordCount?.visible()
       binding?.businessNameInputLayout?.ivIcon?.gone()

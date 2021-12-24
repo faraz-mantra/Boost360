@@ -4,7 +4,10 @@ import BusinessDomainRequest
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
 import android.view.inputmethod.EditorInfo
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import com.appservice.utils.capitalizeUtil
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
@@ -27,6 +30,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.pref.*
+import com.framework.utils.showKeyBoard
 import com.framework.views.blur.setBlur
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PS_SIGNUP_SUCCESS
@@ -88,8 +92,8 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
 
   override fun onCreateView() {
     super.onCreateView()
-    session = UserSessionManager(baseActivity)
     binding?.includeMobileView?.blurView?.setBlur(baseActivity, 1F)
+    session = UserSessionManager(baseActivity)
     binding?.includeMobileView?.tvCategoryName?.text = categoryModel?.getCategoryWithoutNewLine() ?: ""
     binding?.includeMobileView?.tvTitle?.text = businessName?.capitalizeUtil()
     setOnClickListeners()
@@ -133,18 +137,28 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
 
     binding?.addressInputLayout?.etInput?.setOnEditorActionListener { _, actionId, _ ->
       if (actionId == EditorInfo.IME_ACTION_DONE) {
-        binding?.addressInputLayout?.etInput?.isEnabled = false
-        binding?.addressInputLayout?.ivIcon?.visible()
-        apiCheckDomain {
-          websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1)
+        if (binding?.addressInputLayout?.etInput!!.text?.trim()?.isEmpty() == false) {
+          binding?.addressInputLayout?.etInput?.isEnabled = false
+          binding?.addressInputLayout?.ivIcon?.visible()
+          apiCheckDomain {
+            websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1)
+          }
+          //websiteNameFieldUiVisibility()
         }
-        //websiteNameFieldUiVisibility()
       }
       false
     }
 
+    binding?.addressInputLayout?.etInput?.onFocusChangeListener =
+      View.OnFocusChangeListener { _, hasFocus ->
+        if (hasFocus){
+          binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_dark_stroke_et_onboard)
+        }
+      }
+
     binding?.addressInputLayout?.ivIcon?.setOnClickListener {
       websiteNameFieldUiVisibility()
+      baseActivity.showKeyBoard(binding?.addressInputLayout?.etInput)
     }
   }
 
@@ -182,7 +196,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         session?.saveCategoryRequest(categoryFloatsReq!!)
         session?.saveAuthTokenData(authToken)
         session?.setUserSignUpComplete(true)
-        startFragmentFromNewOnBoardingActivity(activity = baseActivity, type = FragmentType.LOADING_ANIMATION_DASHBOARD_FRAGMENT, bundle = Bundle(), clearTop = true)
+        startFragmentFromNewOnBoardingActivity(activity = baseActivity, type = FragmentType.LOADING_ANIMATION_DASHBOARD_FRAGMENT, bundle = arguments ?: Bundle(), clearTop = true)
       } else {
         val msg = it.message()
         showShortToast(if (msg.isNotEmpty()) msg else getString(R.string.error_create_business_fp))
@@ -247,7 +261,8 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
 
   private fun apiHitCreateMerchantProfile() {
     initRequest()
-    showProgress("We're creating your online ${categoryFloatsReq?.categoryDataModel?.getCategoryWithoutNewLine()}...")
+    showProgress("We're creating your online ${businessName}...")
+    //showProgress("We're creating your online ${categoryFloatsReq?.categoryDataModel?.getCategoryWithoutNewLine()}...")
     if (this.responseCreateProfile == null) {
       viewModel?.createMerchantProfile(request = categoryFloatsReq?.requestProfile)?.observeOnce(viewLifecycleOwner, {
         val businessProfileResponse = it as? BusinessProfileResponse
@@ -273,6 +288,8 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
   private fun websiteNameFieldUiVisibility(websiteNameFieldVisibility: Int = 0) {
     when (websiteNameFieldVisibility) {
       1 -> {
+        val layoutParams = binding?.addressInputLayout?.etInput?.layoutParams as? ConstraintLayout.LayoutParams
+        layoutParams?.width = ConstraintSet.WRAP_CONTENT
         binding?.addressInputLayout?.etInput?.isEnabled = false
         binding?.tvNextStep3?.isEnabled = true
         binding?.tvNameNotAvailableError?.gone()
@@ -284,6 +301,8 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         binding?.tvNextStep3?.text = getString(R.string.launch_my_website)
       }
       2 -> {
+        val layoutParams = binding?.addressInputLayout?.etInput?.layoutParams as? ConstraintLayout.LayoutParams
+        layoutParams?.width = ConstraintSet.WRAP_CONTENT
         binding?.addressInputLayout?.etInput?.isEnabled = false
         binding?.tvNextStep3?.isEnabled = false
         binding?.tvNameNotAvailableError?.visible()
@@ -295,6 +314,9 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         binding?.tvNextStep3?.text = getString(R.string.launch_my_website)
       }
       else -> {
+        val layoutParams = binding?.addressInputLayout?.etInput?.layoutParams as? ConstraintLayout.LayoutParams
+        layoutParams?.width = ConstraintSet.MATCH_CONSTRAINT
+        binding?.addressInputLayout?.etInput?.layoutParams = layoutParams
         binding?.addressInputLayout?.etInput?.isEnabled = true
         binding?.tvNameNotAvailableError?.gone()
         binding?.linearSecureWrapper?.gone()

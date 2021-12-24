@@ -29,6 +29,17 @@
     <item name="android:padding">0dp</item>
     <item name="android:windowIsFloating">false</item>
     <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:statusBarColor">@color/white</item>
+    <item name="android:windowCloseOnTouchOutside">false</item>
+  </style>
+
+  <style name="FullScreenDialog_status_bar_white" parent="FullScreenDialog">
+    <item name="android:backgroundDimEnabled">false</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:padding">0dp</item>
+    <item name="android:windowIsFloating">false</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:statusBarColor">@color/white_F5F8FD</item>
     <item name="android:windowCloseOnTouchOutside">false</item>
   </style>
 
@@ -253,6 +264,20 @@
     <item name="colorPrimaryDark">#676767</item>
   </style>
 
+  <style name="FullScreenTheme" parent="BaseTheme">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/black_4a4a4a</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:windowTranslucentStatus">true</item>
+    <item name="editTextStyle">@style/ComposeEditText</item>
+    <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+  </style>
+
+  <style name="AppTheme_NewOnBoarding_Resize" parent="AppTheme.NewOnBoarding">
+    <item name="android:windowSoftInputMode">adjustResize</item>
+  </style>
+
   <style name="New_OnBoarding_Fullscreen" parent="AppTheme.Pre.Signin">
     <item name="android:windowTranslucentStatus">true</item>
     <item name="android:windowTranslucentNavigation">true</item>
@@ -272,12 +297,14 @@
   <style name="yellow_squared_button">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">@dimen/size_50</item>
-    <item name="android:background">@color/disable_enable_button_selector</item>
+    <item name="android:background">@color/colorAccentLight</item>
     <item name="android:backgroundTint">@color/disable_enable_button_selector</item>
-    <item name="android:fontFamily">@font/inter_bold</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
     <item name="android:textSize">@dimen/text_16</item>
+    <item name="textAllCaps">false</item>
     <item name="android:gravity">center</item>
     <item name="android:textColor">@color/white</item>
+    <item name="android:letterSpacing">0.0</item>
   </style>
 
   <style name="ThemeOverlay.AppTheme.TextInputEditText.Outlined" parent="">

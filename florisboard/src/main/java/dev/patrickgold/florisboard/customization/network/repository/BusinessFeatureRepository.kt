@@ -1,12 +1,13 @@
 package dev.patrickgold.florisboard.customization.network.repository
 
-import com.framework.base.BaseResponse
-import dev.patrickgold.florisboard.customization.model.response.*
+import dev.patrickgold.florisboard.customization.model.response.CustomerDetails
+import dev.patrickgold.florisboard.customization.model.response.MerchantSummaryResponse
+import dev.patrickgold.florisboard.customization.model.response.ProductResponse
+import dev.patrickgold.florisboard.customization.model.response.Updates
 import dev.patrickgold.florisboard.customization.network.GetGalleryImagesAsyncTask
 import dev.patrickgold.florisboard.customization.network.client.BusinessFeatureApiClient
 import dev.patrickgold.florisboard.customization.network.service.AppBaseLocalService
 import dev.patrickgold.florisboard.customization.network.service.BusinessFeaturesRemoteData
-import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.Retrofit
 import java.util.*

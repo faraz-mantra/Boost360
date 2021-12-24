@@ -1,7 +1,5 @@
 package dev.patrickgold.florisboard.customization.util;
 
-import java.util.ArrayList;
-
 /**
  * Created by Shimona on 01-06-2018.
  */
@@ -23,7 +21,10 @@ public class Constants {
 
   public static String storePrimaryImage = null;
 
-  public static int UNAUTHORIZED_STATUS_CODE= 401;
+  public static int UNAUTHORIZED_STATUS_CODE = 401;
 
-  public static String TOKEN_EXPIRED_MESSAGE= "Token Expired. Please Login Again";
+  public static String TOKEN_EXPIRED_MESSAGE = "Token Expired. Please Login Again";
+  public static String NO_INTERNET_CONNECTION = "Internet not available";
+  public static String FAILED_TO_CONNECT = "Failed to connect";
+  public static String UNABLE_TO_RESOLVED_HOST = "Unable to resolve host";
 }
