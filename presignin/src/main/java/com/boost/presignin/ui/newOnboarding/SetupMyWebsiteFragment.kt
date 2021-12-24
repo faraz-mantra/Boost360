@@ -80,16 +80,16 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
       }
       is SetupMyWebsiteStep2Fragment -> {
         binding?.ivStep1Setup?.setImageResource(R.drawable.ic_tick_circle_green_solid_filled)
-        binding?.view1?.background = ContextCompat.getDrawable(requireContext(), R.color.green_61CF96)
+        binding?.view1?.background = ContextCompat.getDrawable(requireContext(), R.color.green_7ED321)
         binding?.ivStep2Setup?.setImageResource(R.drawable.ic_tick_circle_green_hollow)
         binding?.view2?.background = ContextCompat.getDrawable(requireContext(), R.color.gray_33727D82)
         binding?.ivStep3Setup?.setImageResource(R.drawable.ic_tick_circle_gray_hollow)
       }
       is SetupMyWebsiteStep3Fragment -> {
         binding?.ivStep1Setup?.setImageResource(R.drawable.ic_tick_circle_green_solid_filled)
-        binding?.view1?.background = ContextCompat.getDrawable(requireContext(), R.color.green_61CF96)
+        binding?.view1?.background = ContextCompat.getDrawable(requireContext(), R.color.green_7ED321)
         binding?.ivStep2Setup?.setImageResource(R.drawable.ic_tick_circle_green_solid_filled)
-        binding?.view2?.background = ContextCompat.getDrawable(requireContext(), R.color.green_61CF96)
+        binding?.view2?.background = ContextCompat.getDrawable(requireContext(), R.color.green_7ED321)
         binding?.ivStep3Setup?.setImageResource(R.drawable.ic_tick_circle_green_hollow)
       }
     }
