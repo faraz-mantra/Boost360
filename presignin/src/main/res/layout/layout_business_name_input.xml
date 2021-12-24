@@ -28,7 +28,6 @@
           android:ellipsize="end"
           android:fontFamily="@font/regular"
           android:imeOptions="actionDone"
-          android:textCursorDrawable="@drawable/color_cursor"
           android:maxLength="40"
           android:paddingHorizontal="@dimen/size_4"
           android:paddingTop="10dp"

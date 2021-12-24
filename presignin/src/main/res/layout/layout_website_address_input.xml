@@ -33,7 +33,6 @@
           android:imeOptions="actionDone"
           android:paddingStart="@dimen/size_4"
           android:paddingEnd="0dp"
-          android:textCursorDrawable="@drawable/color_cursor"
           android:scrollHorizontally="true"
           android:singleLine="true"
           android:textAlignment="gravity"
