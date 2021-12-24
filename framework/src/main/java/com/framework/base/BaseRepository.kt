@@ -5,10 +5,7 @@ import com.framework.exceptions.BaseException
 import com.framework.exceptions.NoNetworkException
 import com.framework.utils.NetworkUtils
 import io.reactivex.Observable
-import okhttp3.Request
 import okhttp3.ResponseBody
-import org.json.JSONObject
-import retrofit2.HttpException
 import retrofit2.Response
 import retrofit2.Retrofit
 
