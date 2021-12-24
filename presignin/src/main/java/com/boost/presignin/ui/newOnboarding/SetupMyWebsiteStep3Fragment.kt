@@ -92,7 +92,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
 
   override fun onCreateView() {
     super.onCreateView()
-    //binding?.includeMobileView?.blurView?.setBlur(baseActivity, 1F)
+    binding?.includeMobileView?.blurView?.setBlur(baseActivity, 1F)
     session = UserSessionManager(baseActivity)
     binding?.includeMobileView?.tvCategoryName?.text = categoryModel?.getCategoryWithoutNewLine() ?: ""
     binding?.includeMobileView?.tvTitle?.text = businessName?.capitalizeUtil()
