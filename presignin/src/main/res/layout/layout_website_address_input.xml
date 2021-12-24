@@ -33,6 +33,7 @@
           android:imeOptions="actionDone"
           android:paddingStart="@dimen/size_4"
           android:paddingEnd="0dp"
+          android:textCursorDrawable="@drawable/color_cursor"
           android:scrollHorizontally="true"
           android:singleLine="true"
           android:textAlignment="gravity"
@@ -44,7 +45,7 @@
           app:layout_constraintHorizontal_chainStyle="packed"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
-          tools:text="hcghcgchgsfdgddvdbvdfvdbbb" />
+          tools:text="xyzjbcjhscc" />
 
       <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_website_extension"
