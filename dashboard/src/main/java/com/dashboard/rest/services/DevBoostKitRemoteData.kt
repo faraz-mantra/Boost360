@@ -3,18 +3,20 @@ package com.dashboard.rest.services
 import com.dashboard.model.live.dashboardBanner.DashboardPremiumBannerResponse
 import com.dashboard.model.live.premiumBanner.UpgradePremiumFeatureResponse
 import com.dashboard.rest.EndPoints
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
+import retrofit2.http.Url
 
 interface DevBoostKitRemoteData {
 
-  @GET(EndPoints.UPGRADE_PREMIUM_BANNER)
+  @GET
   fun getUpgradePremiumBanner(
     @Header("Authorization") auth: String,
-    @Query("website") website_id: String?,
+    @Url url: String? = FirebaseRemoteConfigUtil.kAdminUrl(),
   ): Observable<Response<UpgradePremiumFeatureResponse>>
 
   @GET(EndPoints.UPGRADE_DASHBOARD_BANNER)

@@ -304,6 +304,7 @@
     <item name="textAllCaps">false</item>
     <item name="android:gravity">center</item>
     <item name="android:textColor">@color/white</item>
+    <item name="android:letterSpacing">0.0</item>
   </style>
 
   <style name="ThemeOverlay.AppTheme.TextInputEditText.Outlined" parent="">
