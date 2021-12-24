@@ -82,6 +82,7 @@ import com.inventoryorder.model.summaryCall.CallSummaryResponse
 import com.inventoryorder.rest.response.OrderSummaryResponse
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
+import com.nowfloats.instagram.views.InstagramContainerActivity
 import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.model.channel.insights.ChannelInsightsResponse
 import com.onboarding.nowfloats.model.channel.statusResponse.CHANNEL_STATUS_SUCCESS
@@ -156,6 +157,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     getPremiumBanner()
     getChannelAccessToken()
     displayFestiveButtonView()
+    startActivity(Intent(requireActivity(),InstagramContainerActivity::class.java))
   }
 
   private fun displayFestiveButtonView() {

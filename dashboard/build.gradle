@@ -39,4 +39,6 @@ android {
 dependencies {
     api project(path: ':presignin')
     api project(path: ':festive_poster')
+    api project(path: ':instagram')
+
 }

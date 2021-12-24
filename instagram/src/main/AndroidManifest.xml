@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.nowfloats.instagram">
+
+
+    <application
+        >
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".views.InstagramContainerActivity"
+            android:theme="@style/BaseTheme">
+        </activity>
+    </application>
+</manifest>
