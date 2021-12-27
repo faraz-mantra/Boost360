@@ -11,11 +11,14 @@ import com.boost.dbcenterapi.recycleritem.BaseRecyclerViewHolder
 import com.boost.dbcenterapi.recycleritem.RecyclerItemClickListener
 import com.boost.marketplace.R
 import com.boost.dbcenterapi.recycleritem.RecyclerViewItemType.*
+import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.databinding.*
 import com.boost.marketplace.holder.*
 import com.boost.marketplace.infra.constant.getLayout
+import com.bumptech.glide.Glide
 import com.framework.base.BaseActivity
 import java.util.*
+import kotlin.collections.ArrayList
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
   activity: BaseActivity<*, *>,
@@ -81,6 +84,17 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     list.addAll(purchaseResult)
     notifyItemRangeInserted(initPosition, list.size)
   }
+
+  fun addupdates(upgradeModel: List<T>, noOfMonth: Int) {
+    var minMonth = 1
+    minMonth = noOfMonth
+    val initPosition = list.size
+    list.clear()
+    list.addAll(upgradeModel)
+    notifyItemRangeInserted(initPosition, list.size)
+  }
+
+
 
   override fun getItemCount(): Int {
     return if (list.isNotEmpty()) list.size else 0

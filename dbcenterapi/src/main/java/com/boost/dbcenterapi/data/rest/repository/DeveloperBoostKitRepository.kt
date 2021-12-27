@@ -29,6 +29,7 @@ object DeveloperBoostKitRepository : AppBaseRepository<MarketplaceApiService, Ap
   override fun getRemoteDataSourceClass(): Class<MarketplaceApiService> {
     return MarketplaceApiService::class.java
 
+
   }
 
   override fun getLocalDataSourceInstance(): DashboardLocalDataSource {

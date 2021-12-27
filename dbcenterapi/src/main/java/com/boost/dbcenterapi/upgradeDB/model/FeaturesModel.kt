@@ -79,6 +79,7 @@ data class FeaturesModel(
 
   @ColumnInfo(name = "exclusive_to_categories")
   var exclusive_to_categories: String? = null
+
 ): Serializable, AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {

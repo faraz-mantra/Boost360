@@ -29,9 +29,9 @@ data class MarketPlaceOffers(
   @SerializedName("expiry_date")
   val expiry_date: String
 ) : Serializable, AppBaseRecyclerViewItem {
-
+var recyclerViewItemType= RecyclerViewItemType.MARKETPLACE_OFFERS.ordinal
   override fun getViewType(): Int {
-    return RecyclerViewItemType.MARKETPLACE_OFFERS.ordinal
+    return recyclerViewItemType
 
   }
 }

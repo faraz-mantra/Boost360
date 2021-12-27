@@ -13,7 +13,11 @@ class MarketPlaceOfferDetailsViewHolder(binding: ItemMarketplaceoffersInfoBindin
          var list = ArrayList<String>()
         val data = item as? MarketPlaceOffers ?: return
        binding.offerDetails.setText(Html.fromHtml(list.get(position)))
+
+
+        }
     }
 
 
-}
+
+
