@@ -15,7 +15,7 @@
             android:name=".ui.home.MarketPlaceActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/BoostMarketplaceScreenStyle"
+            android:theme="@style/AppTheme.Pre.MarketPlace"
             android:windowSoftInputMode="adjustResize" />
     </application>
 

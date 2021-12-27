@@ -20,5 +20,6 @@ import com.boost.marketplace.R
       RESULT -> R.layout.item_order_history
       PACKS_BUNDLES -> R.layout.item_packs_list
       FEATURE_DETAILS -> R.layout.item_features_details
+      TOP_FEATURES ->R.layout.item_packs_list
     }
   }

@@ -11,5 +11,6 @@ enum class RecyclerViewItemType {
   FEATURES_MODEL,
   RESULT,
   PACKS_BUNDLES,
-  FEATURE_DETAILS;
+  FEATURE_DETAILS,
+  TOP_FEATURES;
 }
