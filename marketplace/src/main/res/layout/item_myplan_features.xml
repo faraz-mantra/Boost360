@@ -33,16 +33,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp">
 
-            <ImageView
-                android:id="@+id/single_paidaddon_arrowIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/_8sdp"
-                android:src="@drawable/next"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+
 
             <RelativeLayout
                 android:id="@+id/imageLayout"
@@ -70,7 +61,7 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/single_paidaddon_arrowIcon"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageLayout"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -150,7 +141,7 @@
                 android:gravity="center"
                 android:text="View details"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15ssp"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

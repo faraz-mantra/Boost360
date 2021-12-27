@@ -10,8 +10,9 @@ class MarketPlaceOfferTermsViewHolder(binding: ItemMarketplaceoffersInfoBinding)
     AppBaseRecyclerViewHolder<ItemMarketplaceoffersInfoBinding>(binding) {
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         super.bind(position, item)
+
         var list = ArrayList<String>()
-        val data = item as? MarketPlaceOffers ?: return
+
         binding.offerDetails.setText(Html.fromHtml(list.get(position)))
     }
 

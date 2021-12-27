@@ -36,12 +36,12 @@
       app:layout_constraintTop_toTopOf="parent">
 
       <ImageView
-        android:id="@+id/single_paidaddon_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/backgroundwhite"
-        android:padding="8dp"
-        android:scaleType="fitCenter" />
+          android:id="@+id/single_paidaddon_image"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@drawable/group"
+          android:padding="8dp"
+          android:scaleType="fitCenter" />
 
     </RelativeLayout>
 

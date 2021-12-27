@@ -12,6 +12,6 @@ class InvoiceActivity : AppBaseActivity<ActivityInvoiceBinding, InvoiceViewModel
     }
 
     override fun getViewModelClass(): Class<InvoiceViewModel> {
-        TODO("Not yet implemented")
+      return InvoiceViewModel::class.java
     }
 }
