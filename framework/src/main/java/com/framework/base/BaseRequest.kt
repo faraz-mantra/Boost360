@@ -1,3 +1,5 @@
 package com.framework.base
 
-open class BaseRequest
+import java.io.Serializable
+
+open class BaseRequest: Serializable

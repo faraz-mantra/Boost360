@@ -1,14 +1,13 @@
 package com.framework.utils
 
 import android.app.Activity
-import android.app.Notification
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
 import android.content.ContentValues
-import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.graphics.*
 import android.net.Uri
 import android.os.Build
@@ -17,20 +16,19 @@ import android.os.SystemClock
 import android.provider.MediaStore
 import android.text.*
 import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.util.Log
 import android.text.style.*
+import android.util.Log
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.FontRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
@@ -40,27 +38,24 @@ import com.airbnb.lottie.SimpleColorFilter
 import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
 import com.framework.BaseApplication
+import com.framework.R
 import com.framework.constants.PackageNames
 import com.framework.views.customViews.CustomTextView
+import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.internal.notify
 import java.io.*
 import java.text.NumberFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
-import android.content.pm.PackageManager
 
-import android.content.pm.PackageInfo
-
-
-
-
-inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
 private const val TAG = "Util"
+
+inline fun <reified T> genericType() = object : TypeToken<T>() {}.type
+
 fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis: Long = 1000) {
   var lastClickTime: Long = 0
   this.setOnClickListener {
@@ -70,7 +65,7 @@ fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis:
   }
 }
 
-fun Double.roundToFloat(numFractionDigits: Int):Float = "%.${numFractionDigits}f".format(this, Locale.ENGLISH).toFloat()
+fun Double.roundToFloat(numFractionDigits: Int): Float = "%.${numFractionDigits}f".format(this, Locale.ENGLISH).toFloat()
 
 fun Activity.hideKeyBoard() {
   val view = this.currentFocus
@@ -126,6 +121,33 @@ fun AppCompatTextView.setIconifiedText(text: String, @DrawableRes iconResId: Int
   }.let { setText(it) }
 }
 
+
+fun makeSectionOfTextBold(text: String, textToBold: String, @ColorRes color: Int = android.R.color.black, @FontRes font: Int = R.font.semi_bold): SpannableStringBuilder? {
+  val builder = SpannableStringBuilder()
+  if (textToBold.isNotEmpty() && textToBold.trim { it <= ' ' } != "") {
+
+    //for counting start/end indexes
+    val testText = text.lowercase(Locale.US)
+    val testTextToBold = textToBold.lowercase(Locale.US)
+    val startingIndex = testText.indexOf(testTextToBold)
+    val endingIndex = startingIndex + testTextToBold.length
+    //for counting start/end indexes
+    if (startingIndex < 0 || endingIndex < 0) {
+      return builder.append(text)
+    } else if (startingIndex >= 0 && endingIndex >= 0) {
+      builder.append(text)
+      val font = ResourcesCompat.getFont(BaseApplication.instance, font)?.style ?: Typeface.BOLD
+      val color = ContextCompat.getColor(BaseApplication.instance, color)
+      builder.setSpan(StyleSpan(font), startingIndex, endingIndex, 0)
+      builder.setSpan(ForegroundColorSpan(color), startingIndex, endingIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
+  } else {
+    return builder.append(text)
+  }
+  return builder
+}
+
+
 fun getNumberFormat(value: String): String {
   return try {
     NumberFormat.getNumberInstance(Locale.US).format(value.toInt().toLong())
@@ -136,6 +158,10 @@ fun getNumberFormat(value: String): String {
 
 fun Double.roundTo(n: Int): Double {
   return "%.${n}f".format(this).toDouble()
+}
+
+fun Double.removeENotationAndRoundTo(n: Int): Double {
+  return "%.${n}f".format(this.toString().replace("E", "").toDouble()).toDouble()
 }
 
 fun CustomTextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
@@ -158,7 +184,7 @@ fun CustomTextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
       }
     }
     startIndexOfLink = this.text.toString().indexOf(link.first, startIndexOfLink + 1)
-//      if(startIndexOfLink == -1) continue // todo if you want to verify your texts contains links text
+//      if(startIndexOfLink == -1) continue //TODO if you want to verify your texts contains links text
     spannableString.setSpan(clickableSpan, startIndexOfLink, startIndexOfLink + link.first.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
   }
   this.movementMethod = LinkMovementMethod.getInstance() // without LinkMovementMethod, link can not click
@@ -212,50 +238,51 @@ fun View.toBitmap(): Bitmap? {
   return returnedBitmap
 }
 
-suspend fun Bitmap.shareAsImage(packageName:String?=null,text: String?=null){
-    val imagesFolder = File(BaseApplication.instance.getExternalFilesDir(null), "shared_images")
-    var uri: Uri? = null
-    try {
-      imagesFolder.mkdirs()
-      val file = File(imagesFolder, "shareimage${System.currentTimeMillis()}.jpg")
-      val stream = FileOutputStream(file)
-      compress(Bitmap.CompressFormat.JPEG, 100, stream)
-      stream.flush()
-      stream.close()
-      uri = FileProvider.getUriForFile(BaseApplication.instance, "${BaseApplication.instance.packageName}.provider", file)
-      val intent = Intent(Intent.ACTION_SEND)
-      intent.putExtra(Intent.EXTRA_STREAM, uri)
-      intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-      intent.type = "image/*"
-      packageName?.let {
-        intent.`package`= packageName
-      }
-      text?.let {
-        intent.putExtra(Intent.EXTRA_TEXT,text)
-      }
-      BaseApplication.instance.startActivity(intent)
-    } catch (e: Exception) {
-      Log.d("IOException: " , e.message.toString())
-      if (e is ActivityNotFoundException){
-        withContext(Dispatchers.Main){
-          when(packageName){
-            PackageNames.WHATSAPP->{
-              Toast.makeText(BaseApplication.instance,"Whatsapp is not installed on your device",Toast.LENGTH_LONG).show()
+suspend fun Bitmap.shareAsImage(packageName: String? = null, text: String? = null) {
+  val imagesFolder = File(BaseApplication.instance.getExternalFilesDir(null), "shared_images")
+  var uri: Uri? = null
+  try {
+    imagesFolder.mkdirs()
+    val file = File(imagesFolder, "shareimage${System.currentTimeMillis()}.jpg")
+    val stream = FileOutputStream(file)
+    compress(Bitmap.CompressFormat.JPEG, 100, stream)
+    stream.flush()
+    stream.close()
+    uri = FileProvider.getUriForFile(BaseApplication.instance, "${BaseApplication.instance.packageName}.provider", file)
+    val intent = Intent(Intent.ACTION_SEND)
+    intent.putExtra(Intent.EXTRA_STREAM, uri)
+    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    intent.type = "image/*"
+    packageName?.let {
+      intent.`package` = packageName
+    }
+    text?.let {
+      intent.putExtra(Intent.EXTRA_TEXT, text)
+    }
+    BaseApplication.instance.startActivity(intent)
+  } catch (e: Exception) {
+    Log.d("IOException: ", e.message.toString())
+    if (e is ActivityNotFoundException) {
+      withContext(Dispatchers.Main) {
+        when (packageName) {
+          PackageNames.WHATSAPP -> {
+            Toast.makeText(BaseApplication.instance, "Whatsapp is not installed on your device", Toast.LENGTH_LONG).show()
 
-            }
-            PackageNames.INSTAGRAM->{
-              Toast.makeText(BaseApplication.instance,"Instagram is not installed on your device",Toast.LENGTH_LONG).show()
+          }
+          PackageNames.INSTAGRAM -> {
+            Toast.makeText(BaseApplication.instance, "Instagram is not installed on your device", Toast.LENGTH_LONG).show()
 
-            }
           }
         }
-
       }
+
     }
+  }
 
 }
-fun Bitmap.saveAsImageToAppFolder(destPath:String): File? {
+
+fun Bitmap.saveAsImageToAppFolder(destPath: String): File? {
   var uri: Uri? = null
   val file = File(destPath)
 
@@ -267,8 +294,8 @@ fun Bitmap.saveAsImageToAppFolder(destPath:String): File? {
     stream.flush()
     stream.close()
     return file
-  }catch (e: IOException) {
-    Log.d("IOException: " , e.message.toString())
+  } catch (e: IOException) {
+    Log.d("IOException: ", e.message.toString())
     file.delete()
     return null
   }
@@ -277,12 +304,11 @@ fun Bitmap.saveAsImageToAppFolder(destPath:String): File? {
 }
 
 
-
 suspend fun Bitmap.saveImageToStorage(
 
-  filename: String=System.currentTimeMillis().toString()+".jpg",
-  showNoti:Boolean=false
-  ){
+  filename: String = System.currentTimeMillis().toString() + ".jpg",
+  showNoti: Boolean = false
+) {
   val noti_id = System.currentTimeMillis().toInt()
 
   try {
@@ -360,11 +386,11 @@ suspend fun Bitmap.saveImageToStorage(
   }
 }
 
-fun getFileViewerIntent(uri: Uri?,type:String): Intent {
+fun getFileViewerIntent(uri: Uri?, type: String): Intent {
   val newIntent = Intent(Intent.ACTION_VIEW)
   newIntent.setDataAndType(uri, type)
   newIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
- return newIntent
+  return newIntent
 }
 
 fun Intent.getPendingIntent(): PendingIntent? {
@@ -381,9 +407,26 @@ fun isService(category_code: String?): Boolean {
   }
 }
 
+inline fun <reified T> read(): T {
+  val value: String = readLine()!!
+  return when (T::class) {
+    Int::class -> value.toInt() as T
+    String::class -> value as T
+    // add other types here if need
+    else -> throw IllegalStateException("Unknown Generic Type")
+  }
+}
+
+fun Activity.makeCall(number: String) {
+  val callIntent = Intent(Intent.ACTION_DIAL)
+  callIntent.addCategory(Intent.CATEGORY_DEFAULT)
+  callIntent.data = Uri.parse("tel:$number")
+  this.startActivity(Intent.createChooser(callIntent, "Call by:"))
+}
+
 fun getAppVersionName(): String? {
   try {
-    val pInfo: PackageInfo = BaseApplication.instance.getPackageManager().getPackageInfo(BaseApplication.instance.packageName, 0)
+    val pInfo: PackageInfo = BaseApplication.instance.packageManager.getPackageInfo(BaseApplication.instance.packageName, 0)
     val version = pInfo.versionName
     return version
   } catch (e: PackageManager.NameNotFoundException) {
@@ -391,3 +434,5 @@ fun getAppVersionName(): String? {
   }
   return null
 }
+
+inline fun <reified T> convertJsonToObj(json: String?) = Gson().fromJson<T>(json, object : TypeToken<T>() {}.type)

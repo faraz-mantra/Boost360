@@ -64,11 +64,6 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
         storageSwitchTv.setOnTouchListener(this);
         keyboardSwitchTv.setOnTouchListener(this);
         microphoneSwitchTv.setOnTouchListener(this);
-
-
-        keyboardSettingSwitchTv.setText(String.format("Enable %s keyboard", AppController.getApplicationName(getActivity()).toLowerCase(Locale.ROOT)));
-        keyboardSwitchTv.setText(String.format("Select %s keyboard", AppController.getApplicationName(getActivity()).toLowerCase(Locale.ROOT)));
-
         return view;
     }
 

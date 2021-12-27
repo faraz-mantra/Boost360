@@ -2,11 +2,11 @@
 <resources>
   <color name="colorAccent">#ffb900</color>
   <color name="colorPrimary">#ffb900</color>
-  <color name="colorAccent_jio">#ffb900</color>
   <color name="colorAccentLight">#ffb900</color>
   <color name="primary_4a4a4a_jio">@color/black_4a4a4a</color>
   <color name="colorPrimary_10">#1AFFB900</color>
   <color name="colorPrimaryDark">#d99d00</color>
+  <color name="colorAccentLightDark">@color/colorPrimaryDark</color>
   <color name="accentLight_1">#FFD461</color>
   <color name="accentLight_2">#FFF1CC</color>
   <color name="colorPrimaryVariant">#5092F5</color>
@@ -39,6 +39,8 @@
   <color name="transparent">#00000000</color>
   <color name="shadow">#33000000</color>
   <color name="color_dialog_bg">#FDFDFE</color>
+  <color name="color_border_4a4a4a">#4a4a4a</color>
+  <color name="color_border_ffb900">#ffb900</color>
 
   <!-- fab-->
   <color name="colorFabText">#F5F5F5</color>
@@ -48,5 +50,6 @@
   <color name="shimmerGrey">#dddddd</color>
   <color name="colorLightBlack">#333333</color>
   <color name="gray_e5e5e5">#E5E5E5</color>
+  <color name="grey_f0f0f0">#f0f0f0</color>
 
 </resources>

@@ -54,7 +54,7 @@
       android:layout_width="match_parent"
       android:layout_height="55dp"
       android:layout_marginTop="@dimen/size_10"
-      android:backgroundTint="@color/red_E39595"
+      android:backgroundTint="@color/red_button"
       android:fontFamily="@font/semi_bold"
       android:text="@string/logout"
       android:textAllCaps="false"

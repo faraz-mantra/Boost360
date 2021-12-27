@@ -18,10 +18,9 @@ import com.boost.upgrades.data.api_model.gst.GSTApiResponse
 import com.boost.upgrades.data.api_model.paymentprofile.GetLastPaymentDetails
 import com.boost.upgrades.data.api_model.stateCode.GetStates
 import com.boost.upgrades.data.remote.ApiInterface
-import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
-import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_SECREAT
 import com.boost.upgrades.utils.Utils
 import com.framework.analytics.SentryController
+import com.framework.utils.BuildConfigUtil
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.luminaire.apolloar.base_class.BaseViewModel
@@ -248,7 +247,9 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
   }
 
   fun getRazorPayToken(customerId: String) {
-    val header = Credentials.basic(RAZORPAY_KEY, RAZORPAY_SECREAT)
+    val razorPayKey: String = BuildConfigUtil.getBuildConfigField("RAZORPAY_KEY") ?: ""
+    val razorPaySecret: String = BuildConfigUtil.getBuildConfigField("RAZORPAY_SECREAT") ?: ""
+    val header = Credentials.basic(razorPayKey, razorPaySecret)
     compositeDisposable.add(
       ApiService.getRazorPayTokens(header, customerId)
         .subscribeOn(Schedulers.io())

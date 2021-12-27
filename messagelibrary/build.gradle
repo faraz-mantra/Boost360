@@ -9,7 +9,9 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
         versionName "1.0"
-
+        resValue "string", "nxf_team_url", (project.findProperty("FIREBASE_NFX_TEAM_URL") ?: "")
+        resValue "string", "api_key", (project.findProperty("FIREBASE_API_KEY") ?: "")
+        resValue "string", "application_id", (project.findProperty("FIREBASE_APPLICATION_ID") ?: "")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -28,4 +30,3 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.firebase:firebase-database:17.0.0'
 }
-apply plugin: 'com.google.gms.google-services'

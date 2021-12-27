@@ -8,9 +8,16 @@ import java.util.*
 
 
 fun getProductType(category_code: String?): String {
-  return when (category_code) {
-    "SVC", "DOC", "HOS", "SPA", "SAL" -> "Services"
+  return when  {
+    isProductType(category_code).not() -> "Services"
     else -> "Products"
+  }
+}
+
+fun isProductType(category_code: String?): Boolean {
+  return when (category_code) {
+    "SVC", "DOC", "HOS", "SPA", "SAL" -> false
+    else -> true
   }
 }
 

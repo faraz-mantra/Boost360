@@ -5,6 +5,11 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+  <permission
+    android:name="com.dashboard.CUSTOM_PERMISSION"
+    android:label="dashboard_permission"
+    android:protectionLevel="dangerous" />
+
   <application
     android:requestLegacyExternalStorage="true"
     tools:ignore="UnusedAttribute">
@@ -12,8 +17,10 @@
 
     <activity
       android:name=".controller.DashboardActivity"
+      android:exported="true"
       android:label="@string/dashboard"
       android:launchMode="singleTask"
+      android:permission="com.dashboard.CUSTOM_PERMISSION"
       android:screenOrientation="portrait"
       android:theme="@style/DashboardTheme"
       android:windowSoftInputMode="adjustPan">
@@ -31,12 +38,17 @@
           android:scheme="http" />
 
         <data
-            android:host="boost.nowfloats.com"
-            android:pathPrefix="/"
-            android:scheme="http" />
+          android:host="boost.nowfloats.com"
+          android:pathPrefix="/"
+          android:scheme="http" />
+
+        <data
+          android:host="nowfloat.onelink.me"
+          android:pathPrefix="/FX0L"
+          android:scheme="https" />
       </intent-filter>
       <intent-filter>
-        <action android:name="com.dashboard.controller.DashboardActivity"/>
+        <action android:name="com.dashboard.controller.DashboardActivity" />
         <category android:name="android.intent.category.DEFAULT" />
       </intent-filter>
     </activity>

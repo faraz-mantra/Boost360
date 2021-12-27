@@ -87,7 +87,7 @@
       android:includeFontPadding="false"
       android:text="@string/done"
       android:textColor="@color/white"
-      app:backgroundTint="@color/colorPrimary"
+      app:backgroundTint="@color/colorAccentLight"
       app:icon="@drawable/ic_camera_d"
       app:iconGravity="textStart"
       app:iconTint="@color/white"

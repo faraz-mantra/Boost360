@@ -314,13 +314,13 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
       }
       RecyclerViewActionType.PRODUCT_DATA_SHARE_CLICK.ordinal -> {
         shareProduct(
-          product?.Name, product?.Price.toString(), product?.ProductUrl, sessionLocal.userPrimaryMobile, product?.ImageUri,
+          product?.Name, "${product?.getDiscountedPrice()}", product?.ProductUrl, sessionLocal.userPrimaryMobile, product?.ImageUri,
           isWhatsApp = false, isService = false, isFb = false, activity = requireActivity()
         )
       }
       RecyclerViewActionType.PRODUCT_WHATS_APP_SHARE.ordinal -> {
         shareProduct(
-          product?.Name, product?.Price.toString(), product?.ProductUrl, sessionLocal.userPrimaryMobile, product?.ImageUri,
+          product?.Name, "${product?.getDiscountedPrice()}", product?.ProductUrl, sessionLocal.userPrimaryMobile, product?.ImageUri,
           isWhatsApp = true, isService = false, isFb = false, activity = requireActivity()
         )
       }

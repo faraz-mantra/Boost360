@@ -5,9 +5,6 @@
   <string name="noti_msg_orders" translatable="false">New order details, click to take action!</string>
   <string name="gmb_integration_Successful" translatable="false">Your business has been synced with Google My Business</string>
   <string name="gmb_upload_data" translatable="false">Google My Business Profile updated.</string>
-  <string name="twitter_consumer_key" translatable="false">4CiUg5gcIbvYre8XjGd8GsElV</string>
-  <string name="twitter_consumer_secret" translatable="false">4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9</string>
-  <!--    <string name="google_map_key" translatable="false">AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg</string>-->
   <string name="google_map_key" translatable="false">AIzaSyD6mt4XepThpyfQg7AtV9WX25SnLlfBwnc</string>
   <string name="app_name">Thinksity</string>
   <string name="action_settings">Settings</string>
@@ -900,8 +897,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="demo_plan">You are currently on a demo plan. To get more out of your website, upgrade to one of our paid plans.</string>
   <string name="free_plan">You are currently on a free plan. To get more out of your website, upgrade to one of our paid plans.</string>
   <string name="account_detail">Account Details</string>
-  <string name="active">ACTIVE</string>
-  <string name="expired">EXPIRED</string>
+  <string name="active">Active</string>
+  <string name="expired">Expired</string>
   <string name="feching_search_detail">Fetching Search details&#8230;</string>
   <string name="week">Week</string>
   <string name="unique_visitors">Website visitors</string>
@@ -3027,7 +3024,6 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="browse_secondary_images">Browse secondary images</string>
   <string name="brand_if_any">Brand (If any)</string>
   <string name="write_the_name_of_the_brand">Write the name of the brand</string>
-  <string name="product_name_">Product name</string>
   <string name="write_the_name_of_your_base_product">Write the name of your base product</string>
   <string name="write_the_item_type_eg_book_smartphone_etc">Write the item type eg. Book, Smartphone etc.</string>
   <string name="variant_information">Variant information</string>
@@ -3074,8 +3070,13 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="missed">Missed</string>
   <string name="connected">Connected</string>
   <string name="tracked_calls">Tracked calls on</string>
+  <string name="enable_boost_keyboard">Enable Boost keyboard</string>
+  <string name="select_boost_keyboard">Select Boost keyboard</string>
+  <string name="allow_access">Allow access</string>
+    <string name="files_size_less_2mb">Make sure your file size is lesser than 2 MB!</string>
+    <string name="cannot_upload_more_than_8">You can not upload more than 8 background images for better website experience.</string>
 
-  <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
+    <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
   <!--    <string name="ir_statusBarColor">#ffb900</string>-->
 
 </resources>

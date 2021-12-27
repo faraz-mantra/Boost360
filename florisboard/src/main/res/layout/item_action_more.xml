@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/size_16"
+      android:layout_marginStart="@dimen/size_2"
+      android:gravity="center_vertical"
+      android:orientation="horizontal">
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/icon_image"
+        android:layout_width="@dimen/size_16"
+        android:layout_height="@dimen/size_18"
+        app:srcCompat="@drawable/ic_quick_action" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_6"
+        android:includeFontPadding="false"
+        android:textColor="@color/black_4a4a4a"
+        app:fontFamily="@font/semi_bold"
+        app:textType="HEADING_6"
+        tools:text="Quick actions" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <com.framework.views.viewgroups.BaseRecyclerView
+      android:id="@+id/rv_more_item"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      tools:itemCount="10"
+      android:layout_marginTop="@dimen/size_12"
+      app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
+      tools:listitem="@layout/item_more_first" />
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

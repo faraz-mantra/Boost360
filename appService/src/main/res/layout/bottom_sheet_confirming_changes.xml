@@ -85,7 +85,7 @@
         android:textSize="10sp"
         android:text="@string/i_understand_that_url_change_may_have_a_negative_impact_on_the_search"
         android:textColor="@color/black_4a4a4a"
-        app:buttonTint="@color/yellow_ffb900"
+        app:buttonTint="@color/colorAccent"
         tools:ignore="RtlSymmetry,SmallSp" />
 
       <androidx.constraintlayout.widget.ConstraintLayout

@@ -286,19 +286,14 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                   Log.d("CUSTOM_PAGE_CHECK", "" + s);
                   materialProgress.dismiss();
                   if (response.getStatus() == 200 || response.getStatus() == 201 || response.getStatus() == 202) {
-                    if (s != null && !s.isEmpty()) {
-                      MixPanelController.track("CreateCustomPage", null);
-                      long time = System.currentTimeMillis();
-                      dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
-                      WebEngageController.trackEvent(POST_ACUSTOMPAGE, SUCCESSFULLY_ADDED_CUSTOMPAGE, session.getFpTag());
-                      Methods.showSnackBarPositive(activity, getString(R.string.page_successfully_created));
-                      isNewDataAdded = true;
-                      onCustomPageAddedOrUpdated();
-                      onBackPressed();
-                    } else {
-                      Methods.showSnackBarNegative(activity, getString(R.string.enter_different_title_try_again));
-                      WebEngageController.trackEvent(POST_ACUSTOMPAGE, ENTER_DIFFERENT_TITLE_AND_TRY_AGAIN, session.getFpTag());
-                    }
+                    MixPanelController.track("CreateCustomPage", null);
+                    long time = System.currentTimeMillis();
+                    dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
+                    WebEngageController.trackEvent(POST_ACUSTOMPAGE, SUCCESSFULLY_ADDED_CUSTOMPAGE, session.getFpTag());
+                    Methods.showSnackBarPositive(activity, getString(R.string.page_successfully_created));
+                    isNewDataAdded = true;
+                    onCustomPageAddedOrUpdated();
+                    onBackPressed();
                   } else {
                     Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
                     WebEngageController.trackEvent(POST_ACUSTOMPAGE, SOMETHING_WENT_WRONG_PLEASE_TRY_AGAIN, session.getFpTag());

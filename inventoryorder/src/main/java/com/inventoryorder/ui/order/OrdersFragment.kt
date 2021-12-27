@@ -71,7 +71,7 @@ import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
 open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerItemClickListener, AppOnZeroCaseClicked {
-  private var totalOrders: Int=0
+  private var totalOrders: Int = 0
   private lateinit var zeroCaseFragment: AppFragmentZeroCase
   lateinit var mPopupWindow: PopupWindow
   private lateinit var requestFilter: OrderFilterRequest
@@ -91,7 +91,8 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private var currentPage = PAGE_START
   private var isLastPageD = false
   private var orderItemType = OrderSummaryModel.OrderSummaryType.TOTAL.type
-  private  val TAG = "OrdersFragment"
+  private val TAG = "OrdersFragment"
+
   companion object {
     @JvmStatic
     fun newInstance(bundle: Bundle? = null): OrdersFragment {
@@ -115,7 +116,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     }
     this.zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.ORDERS, this, baseActivity).getRequest().build()
 
-    addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
+    addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment, false)
 
   }
 
@@ -194,7 +195,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
             orderList.addAll(orderListFinalList)
             isLastPageD = (orderListFinalList.size == TOTAL_ELEMENTS)
             setAdapterNotify(orderList)
-          }else{
+          } else {
             binding?.tvNoOrder?.visible()
           }
         } else {
@@ -210,7 +211,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
             orderList.clear()
             orderList.addAll(orderListFinalList)
             setAdapterNotify(orderList)
-          }else{
+          } else {
             binding?.tvNoOrder?.visible()
 
           }
@@ -242,23 +243,29 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   }
 
 
-  private fun apiSellerSummary() {
-    showProgressLoad()
-    viewModel?.getSellerSummary(clientId, fpTag)?.observeOnce(viewLifecycleOwner, Observer {
+  private fun apiSellerSummary(isFirst: Boolean = true) {
+    if (isFirst) showProgressLoad()
+    viewModel?.getSellerSummary(clientId, fpTag)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         val response = it as? OrderSummaryResponse
-        totalOrders = response?.Data?.TotalOrders?:0
-        if (totalOrders==0){
+        totalOrders = response?.Data?.TotalOrders ?: 0
+        if (totalOrders == 0) {
           emptyView()
-        }else{
+        } else {
           nonEmptyView()
           setToolbarTitle(resources.getString(R.string.orders))
           typeList = response?.Data?.getOrderType()
-          typeList?.let { it1 -> setAdapterSellerSummary(it1) } ?: errorOnSummary(null)
+          if (isFirst) typeList?.let { it1 -> setAdapterSellerSummary(it1) } ?: errorOnSummary(null) else refreshStatus(typeList)
         }
-
       } else errorOnSummary(it?.message)
     })
+  }
+
+  private fun refreshStatus(typeList: ArrayList<OrderSummaryModel>?) {
+    if (typeAdapter != null) {
+      val list: ArrayList<OrderSummaryModel>? = typeList?.map { (if (it.type == orderItemType) it.isSelected);it } as? ArrayList<OrderSummaryModel>
+      typeAdapter?.notify(list)
+    }
   }
 
   private fun showProgressLoad() {
@@ -286,12 +293,16 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     orderListFinalList.clear()
     requestFilter = getRequestFilterData(arrayListOf())
     getSellerOrdersFilterApi(requestFilter, isFirst = true)
-    binding?.typeRecycler?.post {
-      typeAdapter = AppBaseRecyclerViewAdapter(baseActivity, typeList, this)
-      binding?.typeRecycler?.layoutManager =
-        LinearLayoutManager(baseActivity, LinearLayoutManager.HORIZONTAL, false)
-      binding?.typeRecycler?.adapter = typeAdapter
-      binding?.typeRecycler?.let { typeAdapter?.runLayoutAnimation(it) }
+    if (typeAdapter == null) {
+      binding?.typeRecycler?.post {
+        typeAdapter = AppBaseRecyclerViewAdapter(baseActivity, typeList, this)
+        binding?.typeRecycler?.layoutManager = LinearLayoutManager(baseActivity, LinearLayoutManager.HORIZONTAL, false)
+        binding?.typeRecycler?.adapter = typeAdapter
+        binding?.typeRecycler?.let { typeAdapter?.runLayoutAnimation(it) }
+      }
+    } else {
+      val list: ArrayList<OrderSummaryModel>? = typeList.map { (if (it.type == orderItemType) it.isSelected);it } as? ArrayList<OrderSummaryModel>
+      typeAdapter?.notify(list)
     }
   }
 
@@ -465,25 +476,24 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   private fun apiCancelOrder(cancellingEntity: String, reasonText: String) {
     showProgress()
-    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)
-      ?.observeOnce(viewLifecycleOwner, {
-        if (it.isSuccess()) {
-          val data = it as? OrderConfirmStatus
-          if (reasonText.isNotEmpty()) {
-            updateReason(
-              resources.getString(R.string.order_cancel),
-              UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name,
-              ExtraPropertiesOrder(cancellationRemark = reasonText)
-            )
-          } else {
-            apiGetOrderDetails()
-            showLongToast(resources.getString(R.string.order_cancel))
-          }
+    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        val data = it as? OrderConfirmStatus
+        if (reasonText.isNotEmpty()) {
+          updateReason(
+            resources.getString(R.string.order_cancel),
+            UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name,
+            ExtraPropertiesOrder(cancellationRemark = reasonText)
+          )
         } else {
-          showLongToast(it.message())
-          hideProgress()
+          apiGetOrderDetails()
+          showLongToast(resources.getString(R.string.order_cancel))
         }
-      })
+      } else {
+        showLongToast(it.message())
+        hideProgress()
+      }
+    })
   }
 
   private fun updateReason(
@@ -569,13 +579,13 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   }
 
   private fun apiGetOrderDetails() {
+    apiSellerSummary(false)
     viewModel?.getOrderDetails(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
       hideProgress()
       val response = (it as? OrderDetailResponse)?.Data
       if (it.isSuccess() && response != null) {
         if (position != null && orderList.size > position!!) {
-          orderListFinalList =
-            orderListFinalList.map { item -> if (item._id.equals(response._id)) response else item } as ArrayList<OrderItem>
+          orderListFinalList = orderListFinalList.map { item -> if (item._id.equals(response._id)) response else item } as ArrayList<OrderItem>
           orderAdapter?.setRefreshItem(position!!, response)
         } else loadNewData()
       } else loadNewData()

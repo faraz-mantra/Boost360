@@ -113,7 +113,7 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
                         .positiveText("Delete")
                         .negativeText("Cancel")
                         .negativeColorRes(R.color.black_4a4a4a)
-                        .positiveColorRes(R.color.colorAccent_jio)
+                        .positiveColorRes(R.color.colorAccentLight)
                         .callback(new MaterialDialog.ButtonCallback() {
                             @Override
                             public void onPositive(MaterialDialog dialog) {
