@@ -1,8 +1,10 @@
 package com.onboarding.nowfloats.model.googleAuth
 
 import com.framework.base.BaseResponse
+import com.google.gson.annotations.SerializedName
 
 class FirebaseTokenResponse(
-    val Result:String?
-):BaseResponse() {
+  @SerializedName("Result")
+  val Result: String?
+) : BaseResponse() {
 }

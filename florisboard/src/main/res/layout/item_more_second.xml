@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <com.framework.views.customViews.CustomCardView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/size_10"
+    app:cardElevation="@dimen/size_1"
+    app:cardUseCompatPadding="true">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:orientation="horizontal">
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_10"
+        android:layout_marginEnd="@dimen/size_2"
+        android:paddingVertical="@dimen/size_10"
+        android:textColor="@color/cerulean_blue"
+        app:fontFamily="@font/semi_bold"
+        app:textType="BODY_1"
+        tools:text="Return refund/cancellation" />
+
+      <View
+        android:layout_width="@dimen/size_1"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/size_8"
+        android:background="@color/lightest_grey" />
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/icon_eye"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_18"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        app:srcCompat="@drawable/ic_eye_f" />
+
+      <View
+        android:layout_width="@dimen/size_1"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/size_8"
+        android:background="@color/lightest_grey" />
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/icon_share"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_18"
+        android:layout_marginEnd="@dimen/size_10"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        app:srcCompat="@drawable/ic_sharenetwork_f" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+  </com.framework.views.customViews.CustomCardView>
+</layout>

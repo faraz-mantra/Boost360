@@ -10,6 +10,7 @@ import com.boost.presignin.rest.apiClients.WithFloatsApiTwoClient
 import com.boost.presignin.rest.services.remote.WithFloatTwoRemoteData
 import com.boost.presignin.model.login.UserProfileVerificationRequest
 import com.framework.base.BaseResponse
+import com.framework.pref.clientId
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -84,6 +85,11 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
 
   fun post_RegisterRia(@Body map: HashMap<String?, String?>?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.post_RegisterRia(map), TaskCode.REGISTER_RIA);
+  }
+
+
+  fun getFirebaseAuthToken(): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getFirebaseToken(client_id = clientId), TaskCode.GET_FIREBASE_TOKEN)
   }
 
   override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {

@@ -126,18 +126,24 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
       }
     });
     etSunOpen = (EditText) findViewById(R.id.et_sun_open);
-    etMonOpen = (EditText) findViewById(R.id.et_mon_open);
-    etTueOpen = (EditText) findViewById(R.id.et_tue_open);
-    etWedOpen = (EditText) findViewById(R.id.et_wed_open);
-    etThuOpen = (EditText) findViewById(R.id.et_thu_open);
-    etFriOpen = (EditText) findViewById(R.id.et_fri_open);
-    etSatOpen = (EditText) findViewById(R.id.et_sat_open);
     etSunClose = (EditText) findViewById(R.id.et_sun_close);
+
+    etMonOpen = (EditText) findViewById(R.id.et_mon_open);
     etMonClose = (EditText) findViewById(R.id.et_mon_close);
+
+    etTueOpen = (EditText) findViewById(R.id.et_tue_open);
     etTueClose = (EditText) findViewById(R.id.et_tue_close);
+
+    etWedOpen = (EditText) findViewById(R.id.et_wed_open);
     etWedClose = (EditText) findViewById(R.id.et_wed_close);
+
+    etThuOpen = (EditText) findViewById(R.id.et_thu_open);
     etThuClose = (EditText) findViewById(R.id.et_thu_close);
+
+    etFriOpen = (EditText) findViewById(R.id.et_fri_open);
     etFriClose = (EditText) findViewById(R.id.et_fri_close);
+
+    etSatOpen = (EditText) findViewById(R.id.et_sat_open);
     etSatClose = (EditText) findViewById(R.id.et_sat_close);
 
     switchSun = (SwitchCompat) findViewById(R.id.switch_sun);

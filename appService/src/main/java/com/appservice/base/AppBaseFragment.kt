@@ -30,10 +30,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
 
   protected val pref: SharedPreferences?
     get() {
-      return baseActivity.getSharedPreferences(
-        PreferenceConstant.NOW_FLOATS_PREFS,
-        Context.MODE_PRIVATE
-      )
+      return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
     }
 
   override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,10 +1,5 @@
 package com.onboarding.nowfloats.ui.updateChannel.digitalChannel
 
-import android.Manifest
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +13,7 @@ import com.framework.glide.util.glideLoad
 import com.framework.models.BaseViewModel
 import com.framework.utils.ConversionUtils
 import com.framework.utils.ScreenUtils
+import com.framework.utils.makeCall
 import com.nowfloats.facebook.graph.FacebookGraphManager
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.IntentConstant
@@ -115,7 +111,7 @@ class DigitalChannelInfoDialog :
     when (v) {
       binding?.confirm -> this.dismiss()
       binding?.dismiss -> this.dismiss()
-      binding?.clickHelp -> callHelpLineNumber()
+      binding?.clickHelp -> baseActivity.makeCall(getString(R.string.contact_us_number_n))
       binding?.disableBtn, binding?.optInOutBtn -> showLongToast(getString(R.string.coming_soon))
       binding?.disconnectBtn -> {
         channelModel?.let { onClickedDisconnect(it) }
@@ -124,23 +120,6 @@ class DigitalChannelInfoDialog :
       binding?.title -> {
         openBrowser()
       }
-    }
-  }
-
-  private fun callHelpLineNumber() {
-    try {
-      val intent = Intent(Intent.ACTION_CALL)
-      intent.data = Uri.parse("tel:18601231233")
-      if (ContextCompat.checkSelfPermission(
-          baseActivity,
-          Manifest.permission.CALL_PHONE
-        ) == PackageManager.PERMISSION_GRANTED
-      ) {
-        baseActivity.startActivity(intent)
-      } else requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), 1)
-    } catch (e: ActivityNotFoundException) {
-      SentryController.captureException(e)
-      showLongToast(getString(R.string.error_in_your_phone_call))
     }
   }
 

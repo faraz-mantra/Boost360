@@ -44,6 +44,7 @@ import com.facebook.LoggingBehavior;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.framework.utils.BuildConfigUtil;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -1380,8 +1381,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                         .setmUserAccessTokenKey(twitterSession.getAuthToken().token)
                         .setmUserAccessTokenSecret(twitterSession.getAuthToken().secret)
                         .setmUserAccountId(String.valueOf(twitterSession.getUserId()))
-                        .setmAppAccessTokenKey(Constants.TWITTER_TOK)
-                        .setmAppAccessTokenSecret(Constants.TWITTER_SEC)
+                        .setmAppAccessTokenKey(BuildConfigUtil.INSTANCE.getBuildConfigFieldN("twitter_consumer_key"))
+                        .setmAppAccessTokenSecret(BuildConfigUtil.INSTANCE.getBuildConfigFieldN("twitter_consumer_secret"))
                         .setmCallType(TWITTERTYPE)
                         .setmName(username);
                 requestClient.connectNfx();

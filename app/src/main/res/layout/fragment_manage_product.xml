@@ -162,7 +162,7 @@
           <TextView
             android:id="@+id/label_product_name"
             style="@style/ProductLabelTextStyle"
-            android:text="@string/product_name_" />
+            android:text="@string/product_name" />
 
           <ImageButton
             android:id="@+id/ib_info_product_name"

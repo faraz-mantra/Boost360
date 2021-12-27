@@ -67,5 +67,5 @@ fun getBusinessKycDetail(): DataKyc? {
 }
 
 fun DataKyc.saveBusinessKycDetail() {
-  com.framework.utils.PreferencesUtils.instance.saveData(BUSINESS_KYC_SAVE, convertObjToString(this))
+  PreferencesUtils.instance.saveData(BUSINESS_KYC_SAVE, convertObjToString(this))
 }

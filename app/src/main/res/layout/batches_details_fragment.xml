@@ -118,7 +118,7 @@
       android:gravity="center"
       android:paddingTop="@dimen/_10sdp"
       android:paddingBottom="@dimen/_10sdp"
-      android:text="Save"
+      android:text="@string/save"
       android:textAllCaps="false"
       android:textColor="@color/white" />
 

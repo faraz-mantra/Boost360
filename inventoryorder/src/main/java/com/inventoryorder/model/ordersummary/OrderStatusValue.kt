@@ -127,13 +127,13 @@ enum class OrderStatusValue(
     OrderSummaryModel.OrderType.APPOINTMENT.name,
     OrderSummaryModel.OrderStatus.DELIVERY_COMPLETED.name,
     "Customer served",
-    R.drawable.ic_done
+    R.drawable.ic_done_white
   ),
   FEEDBACK_PENDING_2(
     OrderSummaryModel.OrderType.APPOINTMENT.name,
     OrderSummaryModel.OrderStatus.FEEDBACK_PENDING.name,
     "Customer served",
-    R.drawable.ic_done
+    R.drawable.ic_done_white
   ),
   FEEDBACK_RECEIVED_2(
     OrderSummaryModel.OrderType.APPOINTMENT.name,
@@ -157,7 +157,7 @@ enum class OrderStatusValue(
     OrderSummaryModel.OrderType.APPOINTMENT.name,
     OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name,
     "Customer served",
-    R.drawable.ic_done
+    R.drawable.ic_done_white
   ),
   ORDER_CANCELLED_2(
     OrderSummaryModel.OrderType.APPOINTMENT.name,

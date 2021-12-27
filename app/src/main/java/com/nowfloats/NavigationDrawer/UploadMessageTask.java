@@ -2,14 +2,10 @@ package com.nowfloats.NavigationDrawer;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
-import android.widget.ImageView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.Home_View_Card_Delete;
-import com.nowfloats.NavigationDrawer.API.twitter.PostImageTweetInBackgroundAsyncTask;
 import com.nowfloats.NavigationDrawer.model.PostImageSuccessEvent;
 import com.nowfloats.NavigationDrawer.model.PostTaskModel;
 import com.nowfloats.NavigationDrawer.model.PostTextSuccessEvent;
@@ -291,73 +287,6 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
         }
     }
 
-    public void sendDataToServer(HashMap<String, String> values, final String txtId, final byte[] bitmapdata) {
-        try {
-            UploadPostInterface anInterface = Constants.restAdapter.create(UploadPostInterface.class);
-            anInterface.uploadPic(bitmapdata, values, new Callback<String>() {
-                @Override
-                public void success(String imgId, Response response) {
-                    int responseCode = response.getStatus();
-                    if (responseCode == 200 || responseCode == 202) {
-                        try {
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
-                            ImageView touch = new ImageView(appContext);
-                            touch.setImageBitmap(bitmap);
-                            new MaterialDialog.Builder(appContext).customView(touch, true).title(R.string.title_test_bitmap_array).show();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        success = true;
-                        if (Constants.twitterShareEnabled && obj.message != null) {
-                            PostImageTweetInBackgroundAsyncTask tweet = new PostImageTweetInBackgroundAsyncTask(appContext, obj.message, txtId, path, session);
-                            tweet.execute();
-                        }
-                    }
-
-                    if (!Util.isNullOrEmpty(imgId)) Constants.serviceResponse = imgId;
-                    else Constants.serviceResponse = "";
-
-                    Log.d("Upload Task", "Constants.serviceResponse : " + Constants.serviceResponse);
-
-                    if (path != null && !path.equals("")) {
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    Thread.sleep(8000);
-                                    Log.i("IMAGE---wait", " for 8 SEconDS");
-                                    if (Home_Main_Fragment.bus != null)
-                                        Home_Main_Fragment.bus.post(new PostImageSuccessEvent(txtId));
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }).start();
-                    }
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    success = false;
-                    Log.i("Image UPLOAD FAILED", "" + error.getMessage());
-                    Methods.showSnackBarNegative(appContext, appContext.getString(R.string.image_uploading_failed_try_again));
-                    JSONObject obj2 = new JSONObject();
-                    try {
-                        obj2.put("dealId", txtId);
-                        obj2.put("clientId", Constants.clientId1);
-                    } catch (Exception ex1) {
-                        ex1.printStackTrace();
-                    }
-                    Home_View_Card_Delete deleteCard = new Home_View_Card_Delete(appContext, Constants.DeleteCard, obj2, 0, null, 1);
-                    deleteCard.execute();
-                }
-            });
-        } catch (Exception e) {
-            success = false;
-            e.printStackTrace();
-        }
-    }
 
     public interface UploadPostInterface {
         @PUT("/Discover/v1/FloatingPoint/createBizMessage")

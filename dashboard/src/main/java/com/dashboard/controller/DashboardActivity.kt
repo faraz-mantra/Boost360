@@ -43,9 +43,6 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.appUpdateType
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.initRemoteConfigData
-import com.framework.firebaseUtils.UpdateType
-import com.framework.glide.util.glideLoad
-import com.framework.imagepicker.ImagePicker
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.firebaseUtils.caplimit_feature.saveCapData
 import com.framework.firebaseUtils.firestore.FirestoreManager.initData
@@ -54,28 +51,28 @@ import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.getBa
 import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.initDataBadges
 import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.readDrScoreDocument
 import com.framework.firebaseUtils.firestore.badges.BadgesModel
+import com.framework.glide.util.glideLoad
+import com.framework.imagepicker.ImagePicker
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.KEY_FP_CART_COUNT
 import com.framework.utils.*
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
 import com.framework.webengageconstant.*
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.UpdateAvailability
-import com.google.android.play.core.tasks.Task
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.ActivityResult
+import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
-import com.google.firebase.auth.FirebaseAuth
+import com.google.android.play.core.install.model.UpdateAvailability
+import com.google.android.play.core.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
-import com.onboarding.nowfloats.model.googleAuth.FirebaseTokenResponse
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.webengage.sdk.android.WebEngage
 import com.zopim.android.sdk.api.ZopimChat
@@ -148,7 +145,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     session?.let { initDataBadges(it.fpTag ?: "", it.fPID ?: "", clientId) }
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
     initRemoteConfigData(this)
-    registerFirebaseToken()
     reloadCapLimitData()
     checkForUpdate()
   }
@@ -203,25 +199,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       if (it.isSuccess()) {
         val capLimitList = it.arrayResponse as? Array<CapLimitFeatureResponseItem>
         capLimitList?.toCollection(ArrayList())?.saveCapData()
-      }
-    })
-  }
-
-  private fun registerFirebaseToken() {
-    viewModel.getFirebaseToken().observe(this, {
-      val response = it as? FirebaseTokenResponse
-      val token = response?.Result
-      Log.i(TAG, "registerFirebaseToken: $token")
-      token?.let { it1 ->
-        FirebaseAuth.getInstance().signInWithCustomToken(it1).addOnCompleteListener(this) { task ->
-          if (task.isSuccessful) {
-            // Sign in success, update UI with the signed-in user's information
-            Log.d(TAG, "signInWithCustomToken:success")
-          } else {
-            // If sign in fails, display a message to the user.
-            Log.w(TAG, "signInWithCustomToken:failure", task.exception)
-          }
-        }
       }
     })
   }

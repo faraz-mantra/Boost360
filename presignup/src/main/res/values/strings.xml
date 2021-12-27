@@ -2,7 +2,6 @@
 
   <string name="facebook_app_id" translatable="false">539836972828386</string>
   <string name="fb_login_protocol_scheme" translatable="false">fb539836972828386</string>
-  <string name="server_client_id" translatable="false">87687526880-c469m17sot79ece3vv902osuplr9rgn3.apps.googleusercontent.com</string>
 
   <string name="app_name">My Library</string>
   <string name="replay_intro">Replay Intro</string>

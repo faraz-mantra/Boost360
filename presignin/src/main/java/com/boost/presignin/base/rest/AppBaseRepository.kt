@@ -34,7 +34,7 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
     unauthorizedUserCheck(response.status)
   }
 
-  private fun unauthorizedUserCheck(taskCode: Int?) {
+  open fun unauthorizedUserCheck(taskCode: Int?) {
     if (taskCode == 401) {
       AppPreSignInApplication.instance.apply {
         UserSessionManager(this).logoutUser(this, true)
