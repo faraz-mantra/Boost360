@@ -5,23 +5,24 @@ import com.nowfloats.instagram.recyclerView.AppBaseRecyclerViewAdapter
 import com.nowfloats.instagram.base.AppBaseFragment
 import com.framework.models.BaseViewModel
 import com.nowfloats.instagram.R
+import com.nowfloats.instagram.databinding.FragmentIgIntStep1Binding
 import com.nowfloats.instagram.databinding.FragmentIgIntroScreenBinding
 import com.nowfloats.instagram.models.IGFeaturesModel
 
-class IGIntroScreenFragment: AppBaseFragment<FragmentIgIntroScreenBinding, BaseViewModel>() {
+class IGIntStep1Fragment: AppBaseFragment<FragmentIgIntStep1Binding, BaseViewModel>() {
 
 
     companion object{
 
-        fun newInstance():IGIntroScreenFragment{
-            val fragment = IGIntroScreenFragment()
+        fun newInstance():IGIntStep1Fragment{
+            val fragment = IGIntStep1Fragment()
             return fragment
         }
     }
 
 
     override fun getLayout(): Int {
-        return R.layout.fragment_ig_intro_screen
+        return R.layout.fragment_ig_int_step1
     }
 
     override fun getViewModelClass(): Class<BaseViewModel> {
@@ -43,7 +44,6 @@ class IGIntroScreenFragment: AppBaseFragment<FragmentIgIntroScreenBinding, BaseV
         )
 
         val adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,featureList)
-        binding!!.vpFeatures.adapter = adapter
-        binding!!.dotIndicator.setViewPager2(binding!!.vpFeatures)
+
     }
 }

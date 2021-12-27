@@ -3,4 +3,11 @@
     <string name="instagram_connection">Instagram connection</string>
     <string name="connect_your_instagram_professional_account_with_boost_360">Connect your Instagram professional account with Boost 360</string>
     <string name="get_started">Get Started</string>
+    <string name="step_1">Step 1</string>
+    <string name="step_2">Step 2</string>
+    <string name="step_3">Step 3</string>
+    <string name="step_4">Step 4</string>
+    <string name="create_your_instagram_page">Create your Instagram page</string>
+    <string name="create_your_instagram_account_or_log_in_if_you_already_have_one">Create your Instagram account. Or log in if you already have one.</string>
+    <string name="watch_video_for_instructions">Watch video for instructions</string>
 </resources>

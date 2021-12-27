@@ -47,18 +47,36 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="24dp"
-                app:layout_constraintBottom_toTopOf="@+id/materialButton"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/dot_indicator"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
+            <com.framework.views.dotsindicator.DotsIndicator
+                android:id="@+id/dot_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
+                app:dotsColor="@color/light_grey_1"
+                app:dotsCornerRadius="@dimen/_6dp"
+                app:dotsSize="@dimen/size_5"
+                app:dotsSpacing="@dimen/size_2"
+                app:dotsWidthFactor="2.5"
+                app:layout_constraintBottom_toTopOf="@+id/materialButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:progressMode="false"
+                app:selectedDotColor="@color/colorPrimary" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/materialButton"
                 android:text="@string/get_started"
+                style="@style/PrimaryButtonNormal"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_60"
+                android:layout_height="@dimen/size_50"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="24dp"
