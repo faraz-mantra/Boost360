@@ -5,13 +5,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PrimaryImage
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PromoBanners
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
 import com.boost.dbcenterapi.recycleritem.BaseRecyclerViewItem
 import com.boost.dbcenterapi.recycleritem.RecyclerItemClickListener
 import com.boost.dbcenterapi.recycleritem.RecyclerViewItemType
+import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.dbcenterapi.upgradeDB.model.YoutubeVideoModel
+import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityMarketplaceBinding
@@ -27,6 +27,25 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
   private var adapterMarketPromoBanner: AppBaseRecyclerViewAdapter<PromoBanners>? = null
   private var adapterPack: AppBaseRecyclerViewAdapter<Bundles>? = null
+  private var adapterVideos :AppBaseRecyclerViewAdapter<YoutubeVideoModel>? = null
+  private var adapterFeaturesByCategory: AppBaseRecyclerViewAdapter<FeaturesModel>? = null
+  private var adapterPartnerZone :AppBaseRecyclerViewAdapter<PartnerZone>? = null
+
+
+
+
+  var badgeNumber = 0
+  var fpRefferalCode: String = ""
+  var feedBackLink: String? = null
+  lateinit var prefs: SharedPrefs
+  var packageInCartStatus = false
+  var offeredBundlePrice = 0
+  var originalBundlePrice = 0
+  var featuresList: List<FeaturesModel>? = null
+  private var itemsArrayList : ArrayList<String>? = ArrayList()
+  private var packsArrayList : ArrayList<String>? = ArrayList()
+  private var itemTypeArrayList :ArrayList<String>? = ArrayList()
+
 
 
   override fun onCreateView() {
@@ -71,46 +90,54 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     }
   }
 
-//  private fun setMarketPlacePromoBannerData(marketBannerFilter: ArrayList<PromoBanners>) {
-//    binding?.mpBannerViewpager?.apply {
-//      if (marketBannerFilter.isNotEmpty()) {
-////                marketBannerFilter.map { it.recyclerViewItem = RecyclerViewItemType.PROMO_BANNER.ordinal;it }
-//        if (adapterMarketPromoBanner == null) {
-//          adapterMarketPromoBanner = AppBaseRecyclerViewAdapter(this@MarketPlaceActivity, marketBannerFilter,this )
-//          offscreenPageLimit = 3
-//          adapter = adapterMarketPromoBanner
-//          binding?.mpBannerDotIndicator?.setViewPager2(this)
-//          setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-//        } else adapterMarketPromoBanner?.notify(marketBannerFilter)
-//      }
-//    }
-//  }
+  private fun setMarketPlacePromoBannerData(marketBannerFilter: ArrayList<PromoBanners>) {
+    binding?.mpBannerViewpager?.apply {
+      if (marketBannerFilter.isNotEmpty()) {
+//                marketBannerFilter.map { it.recyclerViewItem = RecyclerViewItemType.PROMO_BANNER.ordinal;it }
+        if (adapterMarketPromoBanner == null) {
+          adapterMarketPromoBanner = AppBaseRecyclerViewAdapter(this@MarketPlaceActivity, marketBannerFilter,this@MarketPlaceActivity )
+          offscreenPageLimit = 3
+          adapter = adapterMarketPromoBanner
+          binding?.mpBannerDotIndicator?.setViewPager2(this)
+          setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+        } else adapterMarketPromoBanner?.notify(marketBannerFilter)
+      }
+    }
+  }
 
-//  private fun setPackData(packData:ArrayList<Bundles>) {
-//    binding?.mpPackageViewpager?.apply {
-//      if (packData.isNotEmpty()){
-//        if (adapterPack == null){
-//          adapterPack = AppBaseRecyclerViewAdapter(this@MarketPlaceActivity,packData,this)
-//          offscreenPageLimit = 3
-//          adapter = adapterPack
-//          binding?.mpPackageIndicator.setViewPager2(this)
-//          setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-//        }else adapterPack?.notify(packData)
-//      }
-//    }
-//  }
+  private fun setPackData(packData:ArrayList<Bundles>) {
+    binding?.mpPackageViewpager?.apply {
+      if (packData.isNotEmpty()){
+        if (adapterPack == null){
+          adapterPack = AppBaseRecyclerViewAdapter(this@MarketPlaceActivity,packData,this@MarketPlaceActivity)
+          offscreenPageLimit = 3
+          adapter = adapterPack
+          binding?.mpPackageIndicator?.setViewPager2(this)
+          setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+        }else adapterPack?.notify(packData)
+      }
+    }
+  }
 
-  private fun setFeaturesByCategoryData(){
+  private fun setFeaturesByCategoryData(featuresData:ArrayList<FeaturesModel>){
+    binding?.addonsCategoryRecycler?.apply {
+      if(featuresData.isNotEmpty()){
+        if(adapterFeaturesByCategory == null){
+          adapterFeaturesByCategory = AppBaseRecyclerViewAdapter(this@MarketPlaceActivity,featuresData,this@MarketPlaceActivity)
+          adapter = adapterFeaturesByCategory
+        }
+      }
+    }
 
   }
-//  fun loadData() {
+  fun loadData() {
 //    val pref = requireActivity().getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
 //    val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
 //    var code: String = (activity as UpgradeActivity).experienceCode!!
 //    if (!code.equals("null", true)) {
 //      viewModel.setCurrentExperienceCode(code, fpTag!!)
 //    }
-//
+
 //    viewModel.loadUpdates(
 //      (activity as? UpgradeActivity)?.getAccessToken() ?: "",
 //      (activity as UpgradeActivity).fpid!!,
@@ -118,7 +145,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //      (activity as UpgradeActivity).experienceCode,
 //      (activity as UpgradeActivity).fpTag
 //    )
-//  }
+//    viewModel.getAllFeaturesForMarketplace(application,)
+  }
 
 //  private fun initMvvm() {
 //

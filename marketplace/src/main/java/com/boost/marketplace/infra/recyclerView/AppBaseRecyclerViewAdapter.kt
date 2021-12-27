@@ -43,7 +43,6 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       PACKS_BUNDLES->ComparePacksViewHolder(binding as ActivityPacksBinding)
 
 
-
     }
   }
 

@@ -3,6 +3,9 @@ package com.boost.dbcenterapi.upgradeDB.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.boost.dbcenterapi.recycleritem.AppBaseRecyclerViewItem
+import com.boost.dbcenterapi.recycleritem.RecyclerViewItemType
+import java.io.Serializable
 
 
 @Entity(tableName = "YoutubeVideo")
@@ -24,4 +27,11 @@ data class YoutubeVideoModel(
   @ColumnInfo(name = "youtube_link")
   var youtube_link: String? = null
 
-)
+):Serializable,AppBaseRecyclerViewItem {
+
+  var recyclerViewItem =  RecyclerViewItemType.VIDEOS.ordinal
+
+  override fun getViewType(): Int {
+    return recyclerViewItem
+  }
+}
