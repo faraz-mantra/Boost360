@@ -41,9 +41,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RESULT->MyPlanHistoryOrdersViewHolder(binding as ItemOrderHistoryBinding)
       PACKS_BUNDLES->Packs_ViewHolder(binding as ItemPacksListBinding)
       PACKS_BUNDLES->ComparePacksViewHolder(binding as ActivityPacksBinding)
-
-
-
+      FEATURE_DETAILS->FeatureDetailsViewHolder(binding as ItemFeaturesDetailsBinding)
     }
   }
 
@@ -83,7 +81,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
   }
 
   override fun getItemCount(): Int {
-    return if (list.isNotEmpty()) list.size else 0
+    return 5//if (list.isNotEmpty()) list.size else 0
   }
 
 
