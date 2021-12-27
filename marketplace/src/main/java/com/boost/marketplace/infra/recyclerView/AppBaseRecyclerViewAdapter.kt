@@ -45,6 +45,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       PACKS_BUNDLES->Packs_ViewHolder(binding as ItemPacksListBinding)
       PACKS_BUNDLES->ComparePacksViewHolder(binding as ActivityPacksBinding)
       FEATURE_DETAILS->FeatureDetailsViewHolder(binding as ItemFeaturesDetailsBinding)
+      TOP_FEATURES ->TopFeaturesViewHolder(binding as ItemPacksListBinding)
     }
   }
 

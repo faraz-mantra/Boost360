@@ -9,6 +9,13 @@
     <item name="android:windowAnimationStyle">@null</item>
   </style>
 
+  <style name="AppTheme.Pre.MarketPlace" parent="Theme.AppCompat.Light">
+    <item name="colorPrimary">#EDEDED</item>
+    <item name="colorPrimaryDark">#EDEDED</item>
+    <item name="colorAccent">#EDEDED</item>
+    <item name="android:windowAnimationStyle">@null</item>
+  </style>
+
   <style name="BoostMarketplaceScreenStyle" parent="AppTheme.Pre.Upgrade">
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>

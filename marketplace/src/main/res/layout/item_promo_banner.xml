@@ -7,9 +7,11 @@
 
   </data>
 
-  <androidx.constraintlayout.widget.ConstraintLayout
+
+  <androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
       android:id="@+id/home_promo_banner_title"
@@ -18,26 +20,32 @@
       android:fontFamily="@font/open_sans"
       android:paddingStart="5dp"
       android:paddingBottom="5dp"
+      android:layout_marginStart="@dimen/size_15"
       android:textColor="@color/common_text_color"
-      android:textFontWeight="600"
       android:textSize="16sp"
       android:textStyle="bold"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      tools:text="Here's a colorful treat!" />
+      android:text="Here's a colorful treat!" />
 
 
-    <com.framework.views.customViews.CustomImageView
-      android:id="@+id/package_primary_image"
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-      android:src="@drawable/promo_placeholder"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintDimensionRatio="16:9"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/home_promo_banner_title" />
+    <com.framework.views.customViews.CustomCardView
+      android:id="@+id/maim_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginStart="@dimen/size_15"
+      android:layout_marginTop="@dimen/size_2"
+      android:layout_marginEnd="@dimen/size_15"
+      app:cardBackgroundColor="@android:color/transparent"
+      app:cardCornerRadius="@dimen/size_10"
+      app:cardElevation="0dp"
+      app:cardUseCompatPadding="true">
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/package_primary_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/promo_banner_placeholder"
+        android:scaleType="fitXY" />
+    </com.framework.views.customViews.CustomCardView>
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

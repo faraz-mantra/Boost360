@@ -16,9 +16,9 @@ class PartnerViewHolder(binding:ItemPartnerBinding):AppBaseRecyclerViewHolder<It
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
-    val data = item as? PartnerZone ?: return
-    activity?.glideLoad(binding.mpPartnerPrimaryImage, data.image.url ?: "", R.drawable.placeholder_image_n)
-    binding.mpPartnerTitle.text =item.title
+//    val data = item as? PartnerZone ?: return
+//    activity?.glideLoad(binding.mpPartnerPrimaryImage, data.image.url ?: "", R.drawable.placeholder_image_n)
+//    binding.mpPartnerTitle.text =item.title
 
 
   }
