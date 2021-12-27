@@ -1,6 +1,7 @@
 package com.boost.marketplace.ui.home
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -14,11 +15,15 @@ import com.boost.dbcenterapi.upgradeDB.model.YoutubeVideoModel
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
+import com.boost.marketplace.constant.RecyclerViewActionType
 import com.boost.marketplace.databinding.ActivityMarketplaceBinding
 import com.boost.marketplace.infra.api.models.test.TestData
 import com.boost.marketplace.infra.api.models.test.getData
 import com.boost.marketplace.ui.details.FeatureDetailsViewModel
 import com.boost.marketplace.infra.recyclerView.AppBaseRecyclerViewAdapter
+import com.boost.marketplace.ui.Marketplace_Offers.MarketPlaceOffersActivity
+import com.boost.marketplace.ui.Packs.PacksActivity
+import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.framework.base.BaseActivity
 import com.framework.pref.UserSessionManager
 import com.framework.views.dotsindicator.OffsetPageTransformer
@@ -835,7 +840,15 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //  }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-    TODO("Not yet implemented")
+    var intent:Intent? = null
+    if(actionType == RecyclerViewActionType.MARKETPLACE_PROMO_BANNER_CLICK.ordinal) {
+      intent = Intent(this, MarketPlaceOffersActivity::class.java)
+    }else if(actionType == RecyclerViewActionType.PACKS_CLICK.ordinal) {
+      intent = Intent(this, PacksActivity::class.java)
+    }else if(actionType == RecyclerViewActionType.TOP_FEATURES_CLICK.ordinal) {
+      intent = Intent(this, FeatureDetailsActivity::class.java)
+    }
+    startActivity(intent)
   }
 
 }

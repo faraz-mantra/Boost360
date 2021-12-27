@@ -14,13 +14,13 @@ class MarketPlacePromoBannerViewHolder(binding: ItemPromoBannerBinding) :AppBase
     super.bind(position, item)
 //    val data = item as? PromoBanners ?: return
 //    activity?.glideLoad(binding.packagePrimaryImage, data.image?.url ?: "", R.drawable.placeholder_image_n)
-//    binding.packagePrimaryImage.setOnClickListener {
-//      listener?.onItemClick(
-//        position,
-//        item,
-//        RecyclerViewActionType.MARKETPLACE_PROMO_BANNER_CLICK.ordinal
-//      )
-//    }
+    binding.packagePrimaryImage.setOnClickListener {
+      listener?.onItemClick(
+        position,
+        item,
+        RecyclerViewActionType.MARKETPLACE_PROMO_BANNER_CLICK.ordinal
+      )
+    }
 
   }
 
