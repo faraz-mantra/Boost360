@@ -1,7 +1,6 @@
 package com.framework.errorHandling
 
 import android.content.DialogInterface
-import android.os.Bundle
 import com.framework.R
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.databinding.BsheetReportAnIssueBinding
@@ -39,7 +38,7 @@ class ReportIssueBottomSheet(val errorCode: String?) : BaseBottomSheetDialog<Bsh
         progressBottomSheet.show(parentFragmentManager, ProgressBottomSheet::class.java.name)
         SalesAssistErrorRepository.createErrorTicket(
             fpTag = sessionManager?.fpTag ?: "SHUBHAMCOACHING",
-            subject = "",//errorCode,
+            subject = errorCode,
             comment = binding?.etErrorDesc?.text.toString(),
             submitterEmail = binding?.etErrorDesccasc?.text.toString()
         ).toLiveData().observeOnce(viewLifecycleOwner, {
