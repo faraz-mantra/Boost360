@@ -38,7 +38,7 @@
             android:id="@+id/need_subtitle_sheet"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_6"
+            android:layout_marginTop="@dimen/size_4"
             android:layout_marginStart="@dimen/size_25"
             android:fontFamily="@font/regular"
             android:layout_marginEnd="@dimen/size_25"
