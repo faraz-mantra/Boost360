@@ -56,4 +56,6 @@
   <color name="grey_E2E2E2">#E2E2E2</color>
   <color name="grey_BBBBBB">#BBBBBB</color>
 
+  <color name="color_error_code">#eb5757</color>
+
 </resources>

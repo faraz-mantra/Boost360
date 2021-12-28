@@ -2,9 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -22,9 +24,9 @@
                 android:layout_height="match_parent">
 
                 <com.framework.views.customViews.CustomImageView
-                    android:id="@+id/customImageView"
-                    android:layout_width="26dp"
-                    android:layout_height="26dp"
+                    android:id="@+id/iv_close"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_marginTop="19dp"
                     android:layout_marginEnd="22dp"
                     android:src="@drawable/ic_close_grey"
@@ -42,12 +44,12 @@
                     android:text="@string/reporting_an_issue"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="24sp"
-                    app:layout_constraintEnd_toStartOf="@+id/customImageView"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_close"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/customTextView"
+                    android:id="@+id/tv_error_code"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="27dp"
@@ -70,7 +72,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/customTextView" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_error_code" />
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/customTextViewdaf"
@@ -83,7 +85,7 @@
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/customTextView"
+                    app:layout_constraintStart_toStartOf="@+id/tv_error_code"
                     app:layout_constraintTop_toTopOf="@+id/vw_off_white" />
 
                 <com.framework.views.customViews.CustomEditText
@@ -139,13 +141,13 @@
                 <com.framework.views.customViews.CustomMaterialButton
                     android:id="@+id/btn_done"
                     style="@style/CustomRoundedYellowButton"
-                    android:layout_marginHorizontal="36dp"
+                    android:layout_width="0dp"
                     android:layout_marginTop="26dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginBottom="33dp"
                     android:text="@string/submit_report"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/et_error_desccasc"
+                    app:layout_constraintStart_toStartOf="@+id/et_error_desccasc"
                     app:layout_constraintTop_toBottomOf="@+id/et_error_desccasc" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

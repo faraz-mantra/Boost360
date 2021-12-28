@@ -1,5 +1,6 @@
 package com.framework.errorHandling
 
+import android.content.DialogInterface
 import android.os.Bundle
 import com.framework.R
 import com.framework.base.BaseBottomSheetDialog
@@ -28,5 +29,18 @@ class ThankYouResponseBottomSheet : BaseBottomSheetDialog<BsheetThankYouResponse
     }
 
     override fun onCreateView() {
+        binding?.btnDone?.setOnClickListener {
+            finishWithActivity()
+        }
+    }
+
+    fun finishWithActivity(){
+        dismiss()
+        baseActivity.finish()
+    }
+
+    override fun onCancel(dialog: DialogInterface) {
+        super.onCancel(dialog)
+        baseActivity.finish()
     }
 }
