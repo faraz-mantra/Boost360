@@ -18,6 +18,8 @@ import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentIntroSlideShowBinding
 import com.boost.presignin.model.newOnboarding.IntroItemNew
 import com.boost.presignin.ui.intro.CircularViewPagerHandler
+import com.framework.enums.IntentConstants
+import com.framework.errorHandling.ErrorOccurredBottomSheet
 import com.framework.errorHandling.ErrorTransparentActivity
 import com.framework.models.BaseViewModel
 
@@ -92,11 +94,10 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
 
   private fun setOnListeners() {
     binding?.btnGetStarted?.setOnClickListener {
-      startActivity(Intent(baseActivity, ErrorTransparentActivity::class.java))
-      /*startFragmentFromNewOnBoardingActivity(
+      startFragmentFromNewOnBoardingActivity(
         activity = baseActivity, type = FragmentType.ENTER_PHONE_FRAGMENT,
         bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "") }, clearTop = false
-      )*/
+      )
     }
   }
 

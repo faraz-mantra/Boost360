@@ -1,6 +1,12 @@
 package com.framework.base
 
+import android.content.Intent
+import androidx.core.content.ContextCompat.startActivity
+import com.framework.BaseApplication
 import com.framework.analytics.SentryController
+import com.framework.enums.IntentConstants
+import com.framework.errorHandling.ErrorFlowInvokeObject
+import com.framework.errorHandling.ErrorTransparentActivity
 import com.framework.exceptions.BaseException
 import com.framework.exceptions.NoNetworkException
 import com.framework.utils.NetworkUtils
@@ -46,6 +52,10 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
         if (rawRequest.contains(DATA_EXCHANGE_URL).not()) {
           SentryController.captureException(Exception(it.errorBody()?.string() ?: ""))
         }
+
+        //Error Handling Invoked for logging the error to Support Team
+        ErrorFlowInvokeObject.errorOccurred(response.status?:0)
+
         return@map response
       }
     }.onErrorReturn {
@@ -56,6 +66,10 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
       response.taskcode = taskCode
       onFailure(response, taskCode)
       SentryController.captureException(Exception(it.localizedMessage))
+
+      //Error Handling Invoked for logging the error to Support Team
+      ErrorFlowInvokeObject.errorOccurred(response.status?:0)
+
       response
     }
   }

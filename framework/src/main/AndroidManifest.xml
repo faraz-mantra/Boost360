@@ -21,11 +21,12 @@
   </queries>
 
   <application
-      android:theme="@style/BaseTheme" >
+      android:theme="@style/BaseTheme">
 
     <activity
         android:name="com.framework.errorHandling.ErrorTransparentActivity"
         android:screenOrientation="portrait"
+        android:windowSoftInputMode="adjustResize"
         android:theme="@style/Theme.MaterialComponent.NoAction" />
 
   </application>
