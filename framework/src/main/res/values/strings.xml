@@ -147,6 +147,6 @@
     <string name="boost_file">boost_file</string>
 
     <string name="error_code">Error code</string>
-    <string name="please_wait_creating_a_ticket">Please wait. Creating a Ticket…</string>
+    <string name="please_wait_creating_a_ticket">Please wait. Creating a support Ticket…</string>
 
 </resources>

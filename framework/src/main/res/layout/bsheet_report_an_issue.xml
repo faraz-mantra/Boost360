@@ -71,8 +71,10 @@
                     android:background="@drawable/rounded_rect_20_rad"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_error_code" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_error_code"
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/customTextViewdaf"
@@ -132,6 +134,12 @@
                     android:paddingHorizontal="12dp"
                     android:hint="@string/your_mobile_number_or_email_id"
                     android:paddingVertical="8dp"
+                    android:maxLines="1"
+                    android:maxLength="50"
+                    android:minLines="1"
+                    android:scrollHorizontally="true"
+                    android:inputType="text"
+                    android:ellipsize="end"
                     android:textColorHint="@color/grey_BBBBBB"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="@+id/customTextViewdafacasc"
