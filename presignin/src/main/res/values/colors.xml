@@ -33,6 +33,7 @@
   <color name="input_error_color">#FF5C00</color>
   <color name="color99E4E4E4">#99E4E4E4</color>
   <color name="colorB3B3B3">#B3B3B3</color>
+  <color name="grey_676767">#676767</color>
 
   <!--new colors added -->
   <color name="ButtoncolorAccent">#ffb900</color>

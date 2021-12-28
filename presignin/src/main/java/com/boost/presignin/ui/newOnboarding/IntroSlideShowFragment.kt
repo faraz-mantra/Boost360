@@ -97,6 +97,16 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
     }
   }
 
+  private fun moveToWelcomeScreen(enteredPhone: String?) {
+    startFragmentFromNewOnBoardingActivity(
+      activity = baseActivity, type = FragmentType.WELCOME_FRAGMENT,
+      bundle = Bundle().apply {
+        putString(IntentConstant.EXTRA_PHONE_NUMBER.name, enteredPhone)
+        putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, false)
+      }
+    )
+  }
+
 
   private fun nextPageTimer() {
     handler.postDelayed(nextRunnable, 5000)

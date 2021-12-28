@@ -51,8 +51,8 @@ class IntroSlideItemFragment : AppBaseFragment<ItemIntroNewSlidesBinding, BaseVi
       setAnimation(introSlideItem.lottieRawResource)
       repeatCount = if (!introSlideItem.isLottieRepeat) introSlideItem.count else LottieDrawable.INFINITE
       repeatMode = LottieDrawable.RESTART
-      playAnimation()
     }
+
     binding?.tvIntroTitle?.text = introSlideItem.title
     binding?.lottieAnimationIntro?.addAnimatorListener(object : Animator.AnimatorListener {
       override fun onAnimationRepeat(animation: Animator?) {
@@ -75,7 +75,7 @@ class IntroSlideItemFragment : AppBaseFragment<ItemIntroNewSlidesBinding, BaseVi
 
   override fun onResume() {
     super.onResume()
-    //binding?.lottieAnimationIntro?.playAnimation()
+    binding?.lottieAnimationIntro?.playAnimation()
     Log.i("scsdbcj", "skjdbsjd")
   }
 }
