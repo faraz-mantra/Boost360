@@ -3,14 +3,14 @@ package dev.patrickgold.florisboard.customization.util
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import com.appservice.constant.FragmentType
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.setFragmentType
+import com.appservice.ui.keyboardSetting.KeyboardContainerActivity
 import com.appservice.ui.staffs.ui.StaffFragmentContainerActivity
 import com.appservice.ui.updatesBusiness.UpdateBusinessContainerActivity
 import com.dashboard.controller.DashboardFragmentContainerActivity
 import com.dashboard.controller.setFragmentType
-import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.utils.getAptType
 import com.dashboard.utils.getBundleData
 import com.dashboard.utils.getSessionOrder
@@ -75,7 +75,7 @@ fun startOrderCreateN(mContext: Context) {
   try {
     if (isInstall(mContext)) return
     val session = UserSessionManager(mContext)
-    if (getProductType(session.fP_AppExperienceCode).equals("PRODUCTS",true)) {
+    if (getProductType(session.fP_AppExperienceCode).equals("PRODUCTS", true)) {
       val bundle = getSessionOrder(session)
       val intent = Intent(mContext, FragmentContainerOrderActivity::class.java)
       intent.putExtras(bundle)
@@ -292,6 +292,20 @@ fun startStaffActivity(mContext: Context) {
     if (isInstall(mContext)) return
     val intent = Intent(mContext, Class.forName("com.appservice.ui.staffs.ui.StaffFragmentContainerActivity"))
     intent.putExtra("FRAGMENT_TYPE", "STAFF_PROFILE_LISTING_FRAGMENT")
+    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    mContext.startActivity(intent)
+  } catch (e: Exception) {
+    e.printStackTrace()
+    startBoostActivity(mContext)
+  }
+}
+
+fun startKeyboardSetupActivity(mContext: Context) {
+  try {
+    if (isInstall(mContext)) return
+    WebEngageController.trackEvent(KEYBOARD_SETUP_CLICK, CLICK, TO_BE_ADDED)
+    val intent = Intent(mContext, KeyboardContainerActivity::class.java)
+    intent.setFragmentType(FragmentType.KEYBOARD_SETUP_FRAGMENT)
     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     mContext.startActivity(intent)
   } catch (e: Exception) {

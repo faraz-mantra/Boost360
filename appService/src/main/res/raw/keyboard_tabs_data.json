@@ -1,0 +1,131 @@
+{
+  "data": [
+    {
+      "types": "SPA,SAL,SVC",
+      "action_item": [
+        {
+          "type": "service_product_id",
+          "title": "Services",
+          "description": "Access your services catalog, create offers",
+          "premiumCode": "",
+          "isEnabled": true
+        },
+        {
+          "type": "updates_id",
+          "title": "Updates",
+          "description": "Easy access to all your business updates",
+          "premiumCode": "",
+          "isEnabled": true
+        },
+        {
+          "type": "photos_id",
+          "title": "Photos",
+          "description": "Your website photo gallery",
+          "premiumCode": "",
+          "isEnabled": true
+        },
+        {
+          "type": "business_card_id",
+          "title": "Business card",
+          "description": "Share your digital businesses card in single tap",
+          "premiumCode": "",
+          "isEnabled": true
+        },
+        {
+          "type": "staff_listing_id",
+          "title": "Staff Listing",
+          "description": "Easy access to all your staff profiles",
+          "premiumCode": "STAFFPROFILE",
+          "isEnabled": true
+        },
+        {
+          "type": "more_id",
+          "title": "More",
+          "description": "One place for all Boost 360 links",
+          "premiumCode": "",
+          "isEnabled": true
+        }
+      ]
+    },
+    {
+      "types": "DOC,HOS",
+      "action_item": [
+        {
+          "type": "service_product_id",
+          "title": "Services",
+          "description": "Access your services catalog, create offers",
+          "premiumCode": "",
+          "isEnabled": true
+        },
+        {
+          "type": "updates_id",
+          "title": "Updates",
+          "description": "Easy access to all your business updates",
+          "premiumCode": "",
+          "isEnabled": true
+        },
+        {
+          "type": "photos_id",
+          "title": "Photos",
+          "description": "Your website photo gallery",
+          "premiumCode": "",
+          "isEnabled": true
+        },
+        {
+          "type": "business_card_id",
+          "title": "Business card",
+          "description": "Share your digital businesses card in single tap",
+          "premiumCode": "",
+          "isEnabled": true
+        },
+        {
+          "type": "more_id",
+          "title": "More",
+          "description": "One place for all Boost 360 links",
+          "premiumCode": "",
+          "isEnabled": true
+        }
+      ]
+    },
+    {
+      "types": "RTL,EDU,HOT,MFG,CAF",
+      "action_item": [
+        {
+          "type": "service_product_id",
+          "title": "Products",
+          "description": "Access your products catalog, create offers",
+          "premiumCode": "",
+          "isEnabled": true
+        },
+        {
+          "type": "updates_id",
+          "title": "Updates",
+          "description": "Easy access to all your business updates",
+          "premiumCode": "",
+          "isEnabled": true
+        },
+        {
+          "type": "photos_id",
+          "title": "Photos",
+          "description": "Your website photo gallery",
+          "premiumCode": "",
+          "isEnabled": true
+        },
+        {
+          "type": "business_card_id",
+          "title": "Business card",
+          "description": "Share your digital businesses card in single tap",
+          "premiumCode": "",
+          "isEnabled": true
+        },
+        {
+          "type": "more_id",
+          "title": "More",
+          "description": "One place for all Boost 360 links",
+          "premiumCode": "",
+          "isEnabled": true
+        }
+      ]
+    }
+  ]
+}

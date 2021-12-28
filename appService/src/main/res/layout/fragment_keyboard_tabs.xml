@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/white_smoke"
+      android:orientation="vertical">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_14">
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="@dimen/size_18"
+          android:layout_height="@dimen/size_18"
+          android:layout_marginTop="@dimen/size_2"
+          app:srcCompat="@drawable/ic_info_black"
+          app:tint="@color/black_333333" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_10"
+          android:includeFontPadding="false"
+          android:text="This is where you can show/hide keyboard menu tabs appearing on the top bar. Drag up or down the cards to re-arrange the tabs."
+          android:textColor="@color/black_333333"
+          app:textType="CAPTION" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <com.framework.views.viewgroups.BaseRecyclerView
+        android:id="@+id/baseRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/size_12"
+        android:paddingBottom="@dimen/size_80"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="6"
+        tools:listitem="@layout/item_keyboard_tab" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+  </androidx.core.widget.NestedScrollView>
+</layout>

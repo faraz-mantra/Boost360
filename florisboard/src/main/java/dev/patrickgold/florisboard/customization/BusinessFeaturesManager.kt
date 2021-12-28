@@ -26,6 +26,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.dashboard.utils.startKeyboardSetupActivity
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.pref.*
@@ -169,7 +170,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
 
     binding.moreActionView.rvMoreAction.also { it.adapter = this.adapterMoreAction }
 
-    this.binding.moreActionView.btnSetting.setOnClickListener { Toast.makeText(mContext, mContext.getString(R.string.coming_soon), Toast.LENGTH_SHORT).show() }
+    this.binding.moreActionView.btnSetting.setOnClickListener { startKeyboardSetupActivity(mContext) }
     getChannelAccessToken()
 
     apiObserveProduct()

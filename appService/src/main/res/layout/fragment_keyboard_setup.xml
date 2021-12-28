@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_smoke"
+    android:fillViewport="true">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_14">
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="@dimen/size_18"
+          android:layout_height="@dimen/size_18"
+          android:layout_marginTop="@dimen/size_2"
+          app:srcCompat="@drawable/ic_info_black"
+          app:tint="@color/black_333333" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_10"
+          android:includeFontPadding="false"
+          android:text="@string/style_or_customise_keyboard_menu_tabs"
+          android:textColor="@color/black_333333"
+          app:textType="CAPTION" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/size_14"
+        android:paddingTop="@dimen/size_18"
+        android:paddingBottom="@dimen/size_12">
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="@dimen/size_22"
+          android:layout_height="@dimen/size_22"
+          app:srcCompat="@drawable/ic_theme_style_keyboard"
+          app:tint="@color/black_333333" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_10"
+            android:includeFontPadding="false"
+            android:text="@string/theme_and_style"
+            android:textColor="@color/black_4a4a4a"
+            app:fontFamily="@font/bold"
+            app:textType="BODY_1" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_10"
+            android:includeFontPadding="false"
+            android:text="@string/customise_the_look_and_feel_of_your_keyboard"
+            android:textColor="@color/grey_dark_2"
+            app:textType="CAPTION" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_60"
+        android:layout_marginTop="@dimen/size_2"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/size_14">
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:includeFontPadding="false"
+          android:text="@string/enable_dark_theme"
+          android:textColor="@color/black_4a4a4a"
+          app:textType="BODY_1" />
+
+        <com.appservice.views.toggle.widget.LabeledSwitch
+          android:id="@+id/switch_dark_mode"
+          android:layout_width="@dimen/size_50"
+          android:layout_height="@dimen/size_22"
+          android:checked="true"
+          android:clickable="true"
+          android:focusable="false"
+          android:focusableInTouchMode="false"
+          app:colorBorder="@android:color/transparent"
+          app:colorOff="@color/light_grey_bcbcbc"
+          app:colorOn="@color/light_green_1"
+          app:textOff="NO"
+          app:textOn="YES"
+          app:txtColorOff="@color/white"
+          app:txtColorOn="@color/white" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_60"
+        android:layout_marginTop="@dimen/size_2"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/size_14">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:orientation="vertical">
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/auto_darken_at_evening"
+            android:textColor="@color/black_4a4a4a"
+            app:textType="BODY_1" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="From 6 pm to 6 am"
+            android:textColor="@color/grey_dark_2"
+            app:textType="CAPTION" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <com.appservice.views.toggle.widget.LabeledSwitch
+          android:id="@+id/switch_auto_darken"
+          android:layout_width="@dimen/size_50"
+          android:layout_height="@dimen/size_22"
+          android:clickable="true"
+          android:focusable="false"
+          android:focusableInTouchMode="false"
+          app:colorBorder="@android:color/transparent"
+          app:colorOff="@color/light_grey_bcbcbc"
+          app:colorOn="@color/light_green_1"
+          app:textOff="NO"
+          app:textOn="YES"
+          app:txtColorOff="@color/white"
+          app:txtColorOn="@color/white" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_2"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/size_14">
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:includeFontPadding="false"
+          android:text="@string/keypad_outlines_type"
+          android:textColor="@color/black_4a4a4a"
+          app:textType="BODY_1" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_22"
+          android:orientation="horizontal">
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/outline_one"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_100"
+            android:layout_marginEnd="@dimen/size_8"
+            android:layout_weight="1"
+            android:background="@null"
+            app:srcCompat="@drawable/ic_keypad_outline_1" />
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/outline_two"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_100"
+            android:layout_marginStart="@dimen/size_8"
+            android:layout_weight="1"
+            android:background="@drawable/stroke_accent_keyboard"
+            app:srcCompat="@drawable/ic_keypad_outline_2" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/size_14"
+        android:paddingTop="@dimen/size_24"
+        android:paddingBottom="@dimen/size_6">
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="@dimen/size_22"
+          android:layout_height="@dimen/size_22"
+          app:srcCompat="@drawable/ic_more_add_keyboard" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_10"
+          android:includeFontPadding="false"
+          android:text="@string/manage_keyboard_tabs"
+          android:textColor="@color/black_4a4a4a"
+          app:fontFamily="@font/bold"
+          app:textType="HEADING_6" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/btn_keyboard_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_60"
+        android:layout_marginTop="@dimen/size_2"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/size_14"
+        tools:targetApi="m">
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:ellipsize="end"
+          android:includeFontPadding="false"
+          android:maxLines="1"
+          android:text="Services, Updates, Photos, Business car..."
+          android:textColor="@color/black_4a4a4a"
+          app:textType="BODY_1" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="@dimen/size_18"
+          android:layout_height="@dimen/size_18"
+          app:srcCompat="@drawable/ic_arrow_right_keyboard"
+          app:tint="@color/black_333333" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </androidx.core.widget.NestedScrollView>
+</layout>

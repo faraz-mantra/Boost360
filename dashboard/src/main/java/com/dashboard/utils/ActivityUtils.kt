@@ -15,6 +15,8 @@ import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.setFragmentType
 import com.appservice.ui.catalog.startFragmentActivity
+import com.appservice.ui.keyboardSetting.KeyboardContainerActivity
+import com.appservice.ui.keyboardSetting.startKeyboardFragmentActivityNew
 import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
 import com.appservice.ui.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.updatesBusiness.startUpdateFragmentActivity
@@ -977,6 +979,24 @@ fun AppCompatActivity.startYouTube(session: UserSessionManager?, url: String) {
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     intent.setPackage("com.google.android.youtube")
     startActivity(intent)
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startKeyboardSetupActivity() {
+  try {
+    WebEngageController.trackEvent(KEYBOARD_SETUP_CLICK, CLICK, TO_BE_ADDED)
+    startKeyboardFragmentActivityNew(this, com.appservice.constant.FragmentType.KEYBOARD_SETUP_FRAGMENT)
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startKeyboardTabsActivity() {
+  try {
+    WebEngageController.trackEvent(KEYBOARD_TABS_CLICK, CLICK, TO_BE_ADDED)
+    startKeyboardFragmentActivityNew(this, com.appservice.constant.FragmentType.KEYBOARD_TABS_FRAGMENT)
   } catch (e: Exception) {
     e.printStackTrace()
   }

@@ -547,3 +547,9 @@ const val DOMAIN_SEARCHED_SELECTED_DOMAIN_CLICK = "Domain searched selected doma
 const val DOMAIN_CONFIRMING_GO_BACK_BUTTON_CLICK = "Domain confirming go back button click"
 const val DOMAIN_SEARCHED_CREATE_SUCCESS = "Domain searched create success"
 const val DOMAIN_CREATE_CALL_INVOKED_CLICK = "Domain create call invoked click"
+
+
+const val KEYBOARD_SETUP_CLICK = "Keyboard setup click"
+const val KEYBOARD_TABS_CLICK = "Keyboard tabs click"
+
+

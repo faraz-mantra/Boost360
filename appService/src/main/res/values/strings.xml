@@ -1082,4 +1082,11 @@
   <string name="pan_name_not_empty">Pan name can\'t empty.</string>
   <string name="pan_name_invalid">Please enter a valid name.</string>
   <string name="invalid_bank_statement_file">Please select valid bank statement file</string>
+  <string name="style_or_customise_keyboard_menu_tabs">Decide how you want to use keyboard. Choose style or customise keyboard menu tabs.</string>
+  <string name="theme_and_style">Theme and style</string>
+  <string name="customise_the_look_and_feel_of_your_keyboard">Customise the look and feel of your keyboard</string>
+  <string name="enable_dark_theme">Enable dark theme</string>
+  <string name="auto_darken_at_evening">Auto darken at evening</string>
+  <string name="keypad_outlines_type">Keypad outlines type</string>
+  <string name="manage_keyboard_tabs">Manage keyboard tabs</string>
 </resources>

@@ -827,12 +827,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
   }
 
   override fun onTabSelected(tab: TabLayout.Tab?) {
-    SharedPrefUtil.fromBoostPref().getsBoostPref(FlorisApplication.instance).tabPosition = tab?.position ?: 0
     if (showFeatureUI) setActiveKeyboardMode(KeyboardMode.BUSINESS_FEATURES) else setActiveKeyboardMode(KeyboardMode.CHARACTERS)
     val tabPosition = tab?.position
-    tabPosition?.let {
-      BusinessFeatureEnum.values()[it]
-    }?.let { businessFeaturesManager?.showSelectedBusinessFeature(tabPosition, it) }
+    tabPosition?.let { BusinessFeatureEnum.values()[it] }?.let { businessFeaturesManager?.showSelectedBusinessFeature(tabPosition, it) }
   }
 
   override fun onTabUnselected(tab: TabLayout.Tab?) {

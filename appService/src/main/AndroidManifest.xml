@@ -46,10 +46,17 @@
       android:screenOrientation="portrait"
       android:theme="@style/TestimonialTheme"
       android:windowSoftInputMode="adjustPan" />
+
     <activity
       android:name=".ui.updatesBusiness.UpdateBusinessContainerActivity"
       android:screenOrientation="portrait"
       android:theme="@style/UpdateTheme"
+      android:windowSoftInputMode="adjustResize" />
+
+    <activity
+      android:name=".ui.keyboardSetting.KeyboardContainerActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/KeyboardSetting"
       android:windowSoftInputMode="adjustResize" />
 
     <activity

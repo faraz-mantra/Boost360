@@ -141,10 +141,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
       FragmentType.FRAGMENT_WEBSITE_THEME -> FragmentWebsiteTheme.newInstance()
       FragmentType.FRAGMENT_BUSINESS_PROFILE -> BusinessProfileFragment.newInstance()
       FragmentType.FRAGMENT_WEBSITE_NAV -> CustomisationNavFragment.newInstance()
-      FragmentType.FRAGMENT_USER_PROFILE -> {
-        userFragment = UserProfileFragment.newInstance()
-        userFragment
-      }
+      FragmentType.FRAGMENT_USER_PROFILE -> UserProfileFragment.newInstance().apply { userFragment = this }
       FragmentType.FRAGMENT_USER_PROFILE_IMAGE_CROP -> CropProfileImageFragment.newInstance()
       else -> throw IllegalFragmentTypeException()
     }
@@ -170,10 +167,6 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   fun onRefresh() {
     if (userFragment != null) userFragment?.onResume()
   }
-
-}
-
-fun fetchUserProfileData() {
 
 }
 

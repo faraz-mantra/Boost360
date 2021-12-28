@@ -21,18 +21,12 @@ abstract class AppBaseRecyclerViewHolder<Binding : ViewDataBinding>(binding: Bin
 
   protected fun getColor(@ColorRes color: Int): Int? {
     return getResources()?.let {
-      ResourcesCompat.getColor(
-        it,
-        color,
-        getApplicationContext()?.theme
-      )
+      ResourcesCompat.getColor(it, color, getApplicationContext()?.theme)
     }
   }
 
   protected fun setClickListeners(vararg views: View?) {
-    for (view in views) {
-      view?.setOnClickListener(this)
-    }
+    for (view in views) { view?.setOnClickListener(this) }
   }
 
   protected fun showLongToast(string: CharSequence) {

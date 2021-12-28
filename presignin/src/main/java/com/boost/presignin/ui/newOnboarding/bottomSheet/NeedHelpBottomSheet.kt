@@ -18,12 +18,8 @@ class NeedHelpBottomSheet : BaseBottomSheetDialog<SheetNeedHelpBinding, BaseView
   }
 
   override fun onCreateView() {
-    binding?.ivClose?.setOnClickListener {
-      dismiss()
-    }
-
+    binding?.ivClose?.setOnClickListener { dismiss() }
     binding?.tvCreateSupportRequest?.setOnClickListener {
-      //TODO call API create support
       Intent().apply {
         action = Intent.ACTION_DIAL
         data = Uri.parse("tel:" + getString(R.string.expert_contact_number))
