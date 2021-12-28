@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
+import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentLoaderAnimationBinding
 import com.boost.presignin.helper.ProcessFPDetails
 import com.boost.presignin.helper.WebEngageController
@@ -55,6 +56,10 @@ class OnboardSuccessFragment : AppBaseFragment<FragmentLoaderAnimationBinding, L
     }
   }
 
+  private val businessName by lazy {
+    arguments?.getString(IntentConstant.EXTRA_BUSINESS_NAME.name)
+  }
+
   override fun getLayout(): Int {
     return R.layout.fragment_loader_animation
   }
@@ -71,7 +76,7 @@ class OnboardSuccessFragment : AppBaseFragment<FragmentLoaderAnimationBinding, L
     authToken = session?.getAuthTokenData()
     setOnClickListeners()
     if (floatsRequest != null || authToken != null) {
-      binding?.tvTitle?.text = "Congratulations ${floatsRequest?.categoryDataModel?.getCategoryWithoutNewLine()}!"
+      binding?.tvTitle?.text = "Congratulations ${if(businessName.isNullOrBlank()) floatsRequest?.categoryDataModel?.getCategoryWithoutNewLine() else businessName}!"
       baseActivity.glideLoad(binding?.desktopPreview?.imgDesktop!!, floatsRequest?.desktopPreview ?: "", R.drawable.mobile_preview_website)
       baseActivity.glideLoad(binding?.mobilePreview?.imgMobile!!, floatsRequest?.mobilePreview ?: "", R.drawable.mobile_preview_website)
       setLottySuccess()

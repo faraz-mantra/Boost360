@@ -106,9 +106,9 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
         baseActivity.finishAfterTransition()
       }
     })
-    binding?.autocompleteSearchCategory?.setOnFocusChangeListener { _, b ->
+    binding?.autocompleteSearchCategory?.setOnFocusChangeListener { _, hasFocus ->
       if (binding?.includeCatSuggSelected?.root?.visibility != View.VISIBLE) {
-        if (b.not() && binding?.autocompleteSearchCategory?.text?.toString().isNullOrEmpty()) {
+        if (hasFocus.not() && binding?.autocompleteSearchCategory?.text?.toString().isNullOrEmpty()) {
           binding?.layoutEtSugestion?.gone()
           binding?.linearFeaturedCategories?.visible()
           binding?.tvTitle?.visible()

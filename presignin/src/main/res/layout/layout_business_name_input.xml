@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -11,8 +12,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/input_layout"
       android:layout_width="match_parent"
-      android:layout_height="45dp"
-      android:background="@drawable/bg_grey_stroke_et"
+      android:layout_height="@dimen/size_51"
+      android:background="@drawable/bg_grey_stroke_et_onboard"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintTop_toTopOf="parent">
 
@@ -34,6 +35,7 @@
           android:scrollHorizontally="true"
           android:singleLine="true"
           android:textColor="@color/black_4a4a4a"
+          tools:text="fhchhjbvjhjh"
           android:textSize="@dimen/text_14"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toStartOf="@+id/linear_edit_wrapper"
