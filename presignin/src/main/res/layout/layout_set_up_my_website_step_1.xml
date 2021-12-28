@@ -9,14 +9,16 @@
     android:background="@color/white_F5F8FD">
 
     <androidx.core.widget.NestedScrollView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_above="@+id/tv_next_step_1"
-      app:layout_constraintBottom_toTopOf="@+id/tv_next_step_1">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tv_next_step_1"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true">
 
       <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_title"
@@ -48,25 +50,25 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
         <LinearLayout
-          android:id="@+id/layout_et_sugestion"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/size_46"
-          android:background="@drawable/rounded_edit_white"
-          android:orientation="vertical"
-          android:paddingTop="@dimen/size_10"
-          android:visibility="visible"
-          app:layout_constraintEnd_toStartOf="@+id/endGuide"
-          app:layout_constraintStart_toStartOf="@+id/startGuide"
-          app:layout_constraintTop_toBottomOf="@+id/tv_subtitle">
+            android:id="@+id/layout_et_sugestion"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_46"
+            android:background="@drawable/rounded_edit_white"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/size_10"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/endGuide"
+            app:layout_constraintStart_toStartOf="@+id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/tv_subtitle">
 
           <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_cat_suggestion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_10"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="4" />
+              android:id="@+id/rv_cat_suggestion"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_10"
+              app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+              tools:itemCount="4" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_no_result_found"
@@ -118,49 +120,53 @@
           </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
+
+        <!--Enable visible this when no search results found-->
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:id="@+id/linear_view"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          app:layout_constraintEnd_toStartOf="@id/endGuide"
-          app:layout_constraintStart_toEndOf="@id/startGuide"
-          app:layout_constraintTop_toBottomOf="@+id/tv_subtitle">
-
-          <com.framework.views.customViews.CustomEditText
-            android:id="@+id/autocomplete_search_category"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_50"
-            android:layout_marginHorizontal="@dimen/size_24"
-            android:layout_marginTop="@dimen/size_20"
-            android:background="@drawable/rounded_edit_white"
-            android:drawableStart="@drawable/ic_search_offers"
-            android:drawablePadding="@dimen/size_16"
-            android:hint="@string/ex_shopkeeper_doctor_boutique_etc"
-            android:maxLines="1"
-            android:padding="@dimen/size_8"
-            android:paddingHorizontal="@dimen/size_16"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_14" />
-
-          <include
-            android:id="@+id/include_cat_sugg_selected"
-            layout="@layout/layout_cat_suggestion_selected"
+            android:id="@+id/linear_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/size_24"
-            android:layout_marginTop="@dimen/size_20"
-            android:visibility="gone" />
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@id/endGuide"
+            app:layout_constraintHorizontal_bias="0.51"
+            app:layout_constraintStart_toEndOf="@id/startGuide"
+            app:layout_constraintTop_toBottomOf="@+id/tv_subtitle">
+
+          <com.framework.views.customViews.CustomEditText
+              android:id="@+id/autocomplete_search_category"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/size_50"
+              android:layout_marginHorizontal="@dimen/size_24"
+              android:layout_marginTop="@dimen/size_20"
+              android:background="@drawable/rounded_edit_white"
+              android:drawableStart="@drawable/ic_search_onboarding"
+              android:drawablePadding="@dimen/size_16"
+              android:hint="@string/ex_shopkeeper_doctor_boutique_etc"
+              android:maxLines="1"
+              android:padding="@dimen/size_8"
+              android:paddingHorizontal="@dimen/size_16"
+              android:scrollHorizontally="true"
+              android:singleLine="true"
+              android:textColor="@color/black"
+              android:textColorHint="@color/gray_B3B3B3"
+              android:textSize="@dimen/text_14" />
+
+          <include
+              android:id="@+id/include_cat_sugg_selected"
+              layout="@layout/layout_cat_suggestion_selected"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginHorizontal="@dimen/size_24"
+              android:layout_marginTop="@dimen/size_20"
+              android:visibility="gone" />
 
           <!--Enable visible this when search results found-->
           <LinearLayout
-            android:id="@+id/linear_featured_categories"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_18"
-            android:orientation="vertical">
+              android:id="@+id/linear_featured_categories"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_18"
+              android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tv_featured_categories_title"
@@ -175,21 +181,19 @@
                 android:textSize="@dimen/text_13" />
 
             <androidx.recyclerview.widget.RecyclerView
-              android:id="@+id/rv_categories"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/size_12"
-              android:clipToPadding="false"
-              android:paddingBottom="@dimen/size_10"
-              app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-              tools:itemCount="4"
-              tools:listitem="@layout/item_website_categories" />
+                android:id="@+id/rv_categories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_12"
+                android:clipToPadding="false"
+                android:paddingBottom="@dimen/size_20"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="4"
+                tools:listitem="@layout/item_website_categories" />
 
           </LinearLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-        <!--Enable visible this when no search results found-->
         <include
           android:id="@+id/include_no_search_result_found"
           layout="@layout/layout_no_category_search_results"
@@ -260,9 +264,6 @@
         android:layout_alignParentBottom="true"
         android:enabled="false"
         android:text="@string/next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="UnknownId" />
   </RelativeLayout>
 </layout>

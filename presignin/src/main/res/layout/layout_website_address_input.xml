@@ -44,7 +44,7 @@
           app:layout_constraintHorizontal_chainStyle="packed"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
-          tools:text="hcghcgchgsfdgddvdbvdfvdbbb" />
+          tools:text="xyzjbcjhscc" />
 
       <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_website_extension"
