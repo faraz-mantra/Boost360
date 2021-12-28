@@ -391,3 +391,19 @@ fun getAppVersionName(): String? {
   }
   return null
 }
+
+fun spanBold(fullText:String,vararg boldTextList:String): SpannableString {
+  val spannable = SpannableString(fullText)
+  boldTextList.forEach { boldText->
+    spannable.setSpan(StyleSpan(Typeface.BOLD),fullText.indexOf(boldText),fullText.indexOf(boldText)+boldText.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+  }
+  return spannable
+}
+
+fun spanRegular(fullText:String,vararg regularTextList:String,@FontRes fontId:Int): SpannableString {
+  val spannable = SpannableString(fullText)
+  regularTextList.forEach { reguText->
+    spannable.setSpan(StyleSpan(ResourcesCompat.getFont(BaseApplication.instance, fontId)!!.style),fullText.indexOf(reguText),fullText.indexOf(reguText)+reguText.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+  }
+  return spannable
+}

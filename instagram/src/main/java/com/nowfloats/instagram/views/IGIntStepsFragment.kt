@@ -1,0 +1,139 @@
+package com.nowfloats.instagram.views
+
+import android.graphics.Typeface
+import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.StyleSpan
+import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import com.framework.BaseApplication
+import com.framework.base.BaseActivity
+import com.nowfloats.instagram.recyclerView.AppBaseRecyclerViewAdapter
+import com.nowfloats.instagram.base.AppBaseFragment
+import com.framework.models.BaseViewModel
+import com.framework.utils.spanBold
+import com.framework.utils.spanRegular
+import com.nowfloats.instagram.R
+import com.nowfloats.instagram.databinding.FragmentIgIntStepsBinding
+import com.nowfloats.instagram.models.IGFeaturesModel
+
+class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BaseViewModel>() {
+
+
+    enum class Step{
+        STEP1,
+        STEP2,
+        STEP3,
+        STEP4,
+        NEXT_SCREEN
+    }
+    var currentStep:String?=null
+    var nextStep:Step=Step.STEP1
+    companion object{
+        val BK_STEP="BK_STEP"
+        fun newInstance(step:Step):IGIntStepsFragment{
+            val fragment = IGIntStepsFragment()
+            val bundle = Bundle().apply {
+                putString(BK_STEP,step.name)
+            }
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
+
+
+    override fun getLayout(): Int {
+        return R.layout.fragment_ig_int_steps
+    }
+
+    override fun getViewModelClass(): Class<BaseViewModel> {
+        return BaseViewModel::class.java
+    }
+
+    override fun onCreateView() {
+        super.onCreateView()
+        currentStep = arguments?.getString(BK_STEP)
+        setupUi()
+        setOnClickListener(binding!!.btnBack,binding!!.btnNext)
+
+    }
+
+    private fun setupUi() {
+        binding!!.tvBtnDesc.typeface = ResourcesCompat.getFont(BaseApplication.instance, R.font.semi_bold)
+        binding!!.btnNext.setBackgroundColor(ContextCompat.getColor(requireActivity(),R.color.white))
+        binding!!.btnNext.setTextColor(ContextCompat.getColor(requireActivity(),R.color.colorPrimary))
+        when(currentStep){
+            Step.STEP1.name->{
+                binding!!.tvTitle.text = getString(R.string.create_your_instagram_page)
+                binding!!.tvDesc.text=getString(R.string.create_your_instagram_account_or_log_in_if_you_already_have_one)
+                binding!!.tvBtnDesc.text = getString(R.string.logged_in_to_your_instagram_account)
+                binding!!.btnNext.text = getString(R.string.goto_step2)
+                nextStep = Step.STEP2
+            }
+            Step.STEP2.name->{
+                binding!!.tvTitle.text = getString(R.string.switch_to_professional_account)
+                val boldText = "Settings ➜ Switch to Professional Account."
+                binding!!.tvDesc.text=spanBold(getString(R.string.your_instagram_page_is_initially_a_personal_account_to_start_posting_your_business_updates_via_boost_360_you_need_to_convert_it_to_a_professional_account_from_instagram_go_to_settings_switch_to_professional_account),
+                boldText)
+                binding!!.tvBtnDesc.text = getString(R.string.switched_your_account)
+                binding!!.btnNext.text = getString(R.string.goto_step3)
+                nextStep = Step.STEP3
+            }
+            Step.STEP3.name->{
+                binding!!.tvTitle.text = getString(R.string.set_up_two_factor_authentication)
+                val boldText1 = "Settings ➜ Security ➜ Two-factor Authentication"
+                val boldText2 = "Get Started"
+                val boldText3 = "Enable Text Message"
+
+                binding!!.tvDesc.text= spanBold(
+                    getString(R.string.next_set_up_two_factor_authentication_in_your_instagram_account_go_to_settings_security_two_factor_authentication_tap_on_get_started_and_enable_text_message),boldText1,boldText2,boldText3)
+                binding!!.tvBtnDesc.text = getString(R.string.completed_two_factor_authentication)
+                binding!!.btnNext.text = getString(R.string.goto_step4)
+                nextStep = Step.STEP4
+            }
+            Step.STEP4.name->{
+                val boldText1 = "Settings ➜ Instagram ➜ Connect to Instagram."
+                binding!!.tvTitle.text = getString(R.string.connect_your_facebook_page_with_instagram)
+                binding!!.tvDesc.text= spanBold(
+                    getString(R.string.linking_your_instagram_page_to_facebook_makes_it_easier_to_operate_your_social_media_accounts_to_connect_open_your_facebook_page_and_go_to_settings_instagram_connect_to_instagram),boldText1)
+
+                val boldText2 = "Connected Facebook with Instagram?"
+
+                binding!!.tvBtnDesc.typeface = ResourcesCompat.getFont(BaseApplication.instance, R.font.regular)
+                binding!!.tvBtnDesc.text = spanBold(
+                    getString(R.string.connected_facebook_with_instagram_if_yes_then_just_tap_on_authorise_boost_360_button_below_to_allow_boost_360_to_access_sync_your_instagram_account_info_post_updates_on_your_behalf_and_read_related_channel_insights),
+                boldText2)
+                binding!!.btnNext.text = getString(R.string.autho_boost_360)
+                binding!!.btnNext.setBackgroundColor(ContextCompat.getColor(requireActivity(),R.color.colorPrimary))
+                binding!!.btnNext.setTextColor(ContextCompat.getColor(requireActivity(),R.color.white))
+                nextStep = Step.NEXT_SCREEN
+
+            }
+
+        }
+    }
+
+    override fun onClick(v: View) {
+        super.onClick(v)
+        when(v){
+            binding!!.btnBack->{
+                requireActivity().onBackPressed()
+            }
+            binding!!.btnNext->{
+                if (nextStep==Step.NEXT_SCREEN){
+                    addFragmentReplace(R.id.container,IGIntStatusFragment.newInstance(
+                    ),true)
+                }else{
+                    addFragmentReplace(R.id.container,IGIntStepsFragment.newInstance(
+                        nextStep
+                    ),true)
+                }
+
+            }
+        }
+    }
+
+
+}

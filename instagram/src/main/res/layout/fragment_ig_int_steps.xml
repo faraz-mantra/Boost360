@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -18,12 +19,12 @@
 
 
         <com.framework.views.customViews.CustomTextView
-            android:id="@+id/customTextView"
+            android:id="@+id/tv_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="24dp"
-            android:text="@string/create_your_instagram_page"
+            tools:text="@string/connect_your_facebook_page_with_instagram"
             android:textColor="@color/black_333333"
             android:textSize="18sp"
             app:fontFamily="@font/semi_bold"
@@ -36,20 +37,21 @@
         <com.framework.views.customViews.CustomTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/tv_desc"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             app:fontFamily="@font/regular"
             android:textSize="@dimen/size_12"
-            android:text="@string/create_your_instagram_account_or_log_in_if_you_already_have_one"
+            tools:text="@string/linking_your_instagram_page_to_facebook_makes_it_easier_to_operate_your_social_media_accounts_to_connect_open_your_facebook_page_and_go_to_settings_instagram_connect_to_instagram"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/customTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:background="@color/white_f8f8f8"
-            app:layout_constraintHeight_percent="0.6"
+            app:layout_constraintHeight_percent="0.7"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent">
 
@@ -64,22 +66,47 @@
                 android:textSize="@dimen/size_12"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.exoplayer2.ui.PlayerView
-                android:id="@+id/player"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/player_view"
+                app:cardCornerRadius="@dimen/size_10"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_170"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.35"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
-                app:layout_constraintVertical_bias="0"
                 android:layout_marginEnd="24dp"
-                app:layout_constraintBottom_toTopOf="@+id/materialButton"
+                app:layout_constraintBottom_toTopOf="@+id/tv_btn_desc"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/customTextView2" />
+                app:layout_constraintTop_toBottomOf="@+id/customTextView2"
+                app:layout_constraintVertical_bias="0" >
 
+                <com.google.android.exoplayer2.ui.PlayerView
+                    android:layout_width="match_parent"
+                    android:layout_margin="@dimen/size_6"
+                    android:layout_height="match_parent"/>
+                
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_btn_desc"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="8dp"
+                tools:text="@string/logged_in_to_your_instagram_account"
+                android:textColor="@color/black_747474"
+                android:textSize="12sp"
+                app:fontFamily="@font/semi_bold"
+                app:layout_constraintBottom_toTopOf="@+id/btn_next"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/materialButton2"
+                android:id="@+id/btn_back"
                 android:layout_width="@dimen/size_50"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_height="@dimen/size_50"
@@ -93,7 +120,7 @@
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/materialButton"
+                android:id="@+id/btn_next"
                 android:layout_width="0dp"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 app:strokeColor="@color/colorPrimary"
@@ -103,10 +130,10 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="24dp"
-                android:text="@string/get_started"
+                tools:text="@string/get_started"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/materialButton2" />
+                app:layout_constraintStart_toEndOf="@+id/btn_back" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

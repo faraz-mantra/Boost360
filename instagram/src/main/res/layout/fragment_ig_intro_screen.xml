@@ -65,14 +65,14 @@
                 app:dotsSize="@dimen/size_5"
                 app:dotsSpacing="@dimen/size_2"
                 app:dotsWidthFactor="2.5"
-                app:layout_constraintBottom_toTopOf="@+id/materialButton"
+                app:layout_constraintBottom_toTopOf="@+id/btn_next"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:progressMode="false"
                 app:selectedDotColor="@color/colorPrimary" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/materialButton"
+                android:id="@+id/btn_next"
                 android:text="@string/get_started"
                 style="@style/PrimaryButtonNormal"
                 android:layout_width="match_parent"

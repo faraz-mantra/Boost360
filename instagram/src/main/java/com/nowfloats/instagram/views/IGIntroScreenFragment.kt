@@ -1,5 +1,6 @@
 package com.nowfloats.instagram.views
 
+import android.view.View
 import com.framework.base.BaseActivity
 import com.nowfloats.instagram.recyclerView.AppBaseRecyclerViewAdapter
 import com.nowfloats.instagram.base.AppBaseFragment
@@ -31,7 +32,7 @@ class IGIntroScreenFragment: AppBaseFragment<FragmentIgIntroScreenBinding, BaseV
     override fun onCreateView() {
         super.onCreateView()
         setupSlider()
-
+        setOnClickListener(binding?.btnNext)
     }
 
     private fun setupSlider() {
@@ -45,5 +46,17 @@ class IGIntroScreenFragment: AppBaseFragment<FragmentIgIntroScreenBinding, BaseV
         val adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,featureList)
         binding!!.vpFeatures.adapter = adapter
         binding!!.dotIndicator.setViewPager2(binding!!.vpFeatures)
+    }
+
+    override fun onClick(v: View) {
+        super.onClick(v)
+        when(v){
+            binding!!.btnNext->{
+                addFragmentReplace(R.id.container,IGIntStepsFragment.newInstance(
+                    IGIntStepsFragment.Step.STEP1
+                ),true)
+
+            }
+        }
     }
 }
