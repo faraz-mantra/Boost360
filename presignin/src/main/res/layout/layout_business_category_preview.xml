@@ -11,7 +11,7 @@
         android:id="@+id/tv_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_28"
+        android:layout_marginTop="@dimen/size_20"
         android:fontFamily="@font/bold"
         android:gravity="start"
         android:text="@string/your_business_category_was_selected"

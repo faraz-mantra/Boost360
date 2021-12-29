@@ -286,7 +286,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
         TypeSuccess.CLOSE.name -> goBack()
       }
     }
-    websiteUpdateSheet.show(parentFragmentManager, WebSiteThemeResetBottomSheet::javaClass.name)
+    websiteUpdateSheet.show(baseActivity.supportFragmentManager, WebSiteThemeResetBottomSheet::javaClass.name)
   }
 
   private fun goBack() {

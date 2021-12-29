@@ -198,13 +198,14 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
 
   fun verify() {
     if (isSuccessApi) {
-      apiWhatsappOptin()
+      if (this.resultLogin != null) apiWhatsappOptin() else moveToWelcomeScreen(phoneNumber)
     } else {
       showProgress(getString(R.string.verify_otp))
       WebEngageController.trackEvent(PS_VERIFY_OTP_VERIFY, OTP_VERIFY_CLICK, NO_EVENT_VALUE)
       val otp = binding?.pinOtpVerify?.otp
       viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId)?.observeOnce(viewLifecycleOwner, {
         hideProgress()
+        this.resultLogin = null
         if (it.isSuccess()) {
           val result = it as? VerifyOtpResponse
           binding?.tvResendOtpIn?.gone()
@@ -212,7 +213,9 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
             this.resultLogin = result.Result
             loginId = resultLogin?.loginId
             if (binding?.linearWhatsApp?.visibility == View.VISIBLE) apiWhatsappOptin() else showBusinessWhatsapp()
-          } else moveToWelcomeScreen(phoneNumber)
+          } else {
+            if (binding?.linearWhatsApp?.visibility == View.VISIBLE) moveToWelcomeScreen(phoneNumber) else showBusinessWhatsapp()
+          }
         } else showLongToast(getString(R.string.wrong_otp_tv))
       })
     }
