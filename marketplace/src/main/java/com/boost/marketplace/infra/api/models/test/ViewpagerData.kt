@@ -15,6 +15,6 @@ data class ViewpagerData(var package_title:String?=null, var recyclerViewItemTyp
 
 fun getDatas(recyclerViewItem: Int): ArrayList<ViewpagerData> {
     val datas = ViewpagerData(recyclerViewItemType = recyclerViewItem)
-    return  arrayListOf(datas,datas,datas,datas,datas,datas,datas,datas,datas,datas,datas,datas,datas)
+    return  arrayListOf(datas,datas,datas)
 }
 

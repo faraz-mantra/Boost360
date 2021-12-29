@@ -256,6 +256,7 @@
                     android:textFontWeight="600"
                     android:textSize="@dimen/txt_11sp"
                     android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/rl_cardView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/rl_cardView" />
@@ -314,7 +315,7 @@
                     android:id="@+id/package_addCartNew"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/orange_button_click_effect"
+                    android:background="@drawable/button_bckgrnd"
                     android:fontFamily="@font/open_sans_semibold"
                     android:gravity="center"
                     android:padding="@dimen/_10sdp"

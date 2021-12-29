@@ -96,7 +96,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
 
 
   override fun getItemCount(): Int {
-    return 5//if (list.isNotEmpty()) list.size else 0
+    return if (list.isNotEmpty()) list.size else 0
   }
 
 

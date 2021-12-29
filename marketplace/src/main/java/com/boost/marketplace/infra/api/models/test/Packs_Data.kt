@@ -13,7 +13,7 @@ data class Packs_Data(var details:String?=null, var recyclerViewItemType: Int= R
     }
 }
 
-fun getDatas1(recyclerViewItem: Int): ArrayList<ViewpagerData> {
-    val datas = ViewpagerData(recyclerViewItemType = recyclerViewItem)
-    return  arrayListOf(datas,datas,datas)
+fun getDatas2(recyclerViewItem: Int): ArrayList<Packs_Data> {
+    val datas1 = Packs_Data(recyclerViewItemType = recyclerViewItem)
+    return  arrayListOf(datas1,datas1,datas1,datas1,datas1,datas1,datas1,datas1,datas1,datas1,datas1,datas1,datas1,datas1,datas1)
 }

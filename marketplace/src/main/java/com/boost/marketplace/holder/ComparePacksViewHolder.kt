@@ -9,12 +9,13 @@ import com.boost.marketplace.databinding.ItemComparePacksBinding
 import com.boost.marketplace.infra.api.models.test.Packs_Data
 import com.boost.marketplace.infra.api.models.test.ViewpagerData
 import com.boost.marketplace.infra.api.models.test.getDatas
+import com.boost.marketplace.infra.api.models.test.getDatas2
 import com.boost.marketplace.infra.recyclerView.AppBaseRecyclerViewAdapter
 
 class ComparePacksViewHolder(binding: ItemComparePacksBinding)  :
     AppBaseRecyclerViewHolder<ItemComparePacksBinding>(binding), RecyclerItemClickListener {
 
-    private var adapterPacks: AppBaseRecyclerViewAdapter<ViewpagerData>? = null
+    private var adapterPacks: AppBaseRecyclerViewAdapter<Packs_Data>? = null
     // var list: ArrayList<Packs_Data>? = null
 
 
@@ -31,7 +32,7 @@ class ComparePacksViewHolder(binding: ItemComparePacksBinding)  :
                 adapterPacks = activity?.let {
                     AppBaseRecyclerViewAdapter(
                         it,
-                        getDatas(RecyclerViewItemType.TOP_FEATURES.ordinal),
+                        getDatas2(RecyclerViewItemType.TOP_FEATURES.ordinal),
                         this@ComparePacksViewHolder
                     )
 
