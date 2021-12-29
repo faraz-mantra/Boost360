@@ -96,9 +96,10 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
             // If sign in fails, display a message to the user.
             Log.w("registerFirebaseToken", "signInWithCustomToken:failure", task.exception)
           }
+          authTokenDataItem.storeFpDetails()
         }
       }
-      authTokenDataItem.storeFpDetails()
+
     })
   }
 
