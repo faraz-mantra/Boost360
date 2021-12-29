@@ -5,13 +5,10 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import androidx.annotation.ColorInt
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 
 
 /**
@@ -29,64 +26,40 @@ import androidx.annotation.Nullable
  *
  * Blur is done on the main thread.
  */
-class BlockingBlurController(
-  @param:NonNull val blurView: View,
-  @param:NonNull private val rootView: ViewGroup,
-  @param:ColorInt private var overlayColor: Int
-) : BlurController {
-  private val scaleFactor = BlurController.DEFAULT_SCALE_FACTOR
+internal class BlockingBlurController(val blurView: View, private val rootView: ViewGroup, @param:ColorInt private var overlayColor: Int) : BlurController {
   private var blurRadius = BlurController.DEFAULT_BLUR_RADIUS
-  private var roundingWidthScaleFactor = 1f
-  private var roundingHeightScaleFactor = 1f
-  private var blurAlgorithm: BlurAlgorithm?
-  private var internalCanvas: Canvas? = null
-  private var internalBitmap: Bitmap? = null
+  private lateinit var blurAlgorithm: BlurAlgorithm
+  private lateinit var internalCanvas: BlurViewCanvas
+  private lateinit var internalBitmap: Bitmap
   private val rootLocation = IntArray(2)
   private val blurViewLocation = IntArray(2)
-  private val drawListener =
-    ViewTreeObserver.OnPreDrawListener { // Not invalidating a View here, just updating the Bitmap.
-      // This relies on the HW accelerated bitmap drawing behavior in Android
-      // If the bitmap was drawn on HW accelerated canvas, it holds a reference to it and on next
-      // drawing pass the updated content of the bitmap will be rendered on the screen
-      updateBlur()
-      true
-    }
+  private val sizeScaler: SizeScaler = SizeScaler(BlurController.DEFAULT_SCALE_FACTOR)
+  private var scaleFactor = 1f
+  private val drawListener = ViewTreeObserver.OnPreDrawListener { // Not invalidating a View here, just updating the Bitmap.
+    // This relies on the HW accelerated bitmap drawing behavior in Android
+    // If the bitmap was drawn on HW accelerated canvas, it holds a reference to it and on next
+    // drawing pass the updated content of the bitmap will be rendered on the screen
+    updateBlur()
+    true
+  }
   private var blurEnabled = true
   private var initialized = false
-
-  @Nullable
   private var frameClearDrawable: Drawable? = null
   private var hasFixedTransformationMatrix = false
   private val paint = Paint(Paint.FILTER_BITMAP_FLAG)
-  private fun downScaleSize(value: Float): Int {
-    return Math.ceil(value / scaleFactor.toDouble()).toInt()
-  }
-
-  /**
-   * Rounds a value to the nearest divisible by [.ROUNDING_VALUE] to meet stride requirement
-   */
-  private fun roundSize(value: Int): Int {
-    return if (value % ROUNDING_VALUE == 0) {
-      value
-    } else value - value % ROUNDING_VALUE + ROUNDING_VALUE
-  }
-
   fun init(measuredWidth: Int, measuredHeight: Int) {
-    if (isZeroSized(measuredWidth, measuredHeight)) {
+    if (sizeScaler.isZeroSized(measuredWidth, measuredHeight)) {
+      // Will be initialized later when the View reports a size change
       blurView.setWillNotDraw(true)
       return
     }
     blurView.setWillNotDraw(false)
     allocateBitmap(measuredWidth, measuredHeight)
-    internalCanvas = internalBitmap?.let { Canvas(it) }
+    internalCanvas = BlurViewCanvas(internalBitmap)
     initialized = true
     if (hasFixedTransformationMatrix) {
       setupInternalCanvasMatrix()
     }
-  }
-
-  private fun isZeroSized(measuredWidth: Int, measuredHeight: Int): Boolean {
-    return downScaleSize(measuredHeight.toFloat()) == 0 || downScaleSize(measuredWidth.toFloat()) == 0
   }
 
   fun updateBlur() {
@@ -94,58 +67,25 @@ class BlockingBlurController(
       return
     }
     if (frameClearDrawable == null) {
-      internalBitmap?.eraseColor(Color.TRANSPARENT)
+      internalBitmap.eraseColor(Color.TRANSPARENT)
     } else {
-      internalCanvas?.let { frameClearDrawable?.draw(it) }
+      frameClearDrawable!!.draw(internalCanvas)
     }
     if (hasFixedTransformationMatrix) {
       rootView.draw(internalCanvas)
     } else {
-      internalCanvas?.save()
+      internalCanvas.save()
       setupInternalCanvasMatrix()
       rootView.draw(internalCanvas)
-      internalCanvas?.restore()
+      internalCanvas.restore()
     }
     blurAndSave()
   }
 
-  /**
-   * Deferring initialization until view is laid out
-   */
-  private fun deferBitmapCreation() {
-    blurView.viewTreeObserver.addOnGlobalLayoutListener(object :
-      ViewTreeObserver.OnGlobalLayoutListener {
-      override fun onGlobalLayout() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-          blurView.viewTreeObserver.removeOnGlobalLayoutListener(this)
-        } else {
-          legacyRemoveOnGlobalLayoutListener()
-        }
-        val measuredWidth = blurView.measuredWidth
-        val measuredHeight = blurView.measuredHeight
-        init(measuredWidth, measuredHeight)
-      }
-
-      fun legacyRemoveOnGlobalLayoutListener() {
-        blurView.viewTreeObserver.removeGlobalOnLayoutListener(this)
-      }
-    })
-  }
-
   private fun allocateBitmap(measuredWidth: Int, measuredHeight: Int) {
-    val nonRoundedScaledWidth = downScaleSize(measuredWidth.toFloat())
-    val nonRoundedScaledHeight = downScaleSize(measuredHeight.toFloat())
-    val scaledWidth = roundSize(nonRoundedScaledWidth)
-    val scaledHeight = roundSize(nonRoundedScaledHeight)
-    roundingHeightScaleFactor = nonRoundedScaledHeight.toFloat() / scaledHeight
-    roundingWidthScaleFactor = nonRoundedScaledWidth.toFloat() / scaledWidth
-    internalBitmap = blurAlgorithm?.supportedBitmapConfig?.let {
-      Bitmap.createBitmap(
-        scaledWidth,
-        scaledHeight,
-        it
-      )
-    }
+    val bitmapSize: SizeScaler.Size = sizeScaler.scale(measuredWidth, measuredHeight)
+    scaleFactor = bitmapSize.scaleFactor
+    internalBitmap = Bitmap.createBitmap(bitmapSize.width, bitmapSize.height, blurAlgorithm!!.supportedBitmapConfig!!)
   }
 
   /**
@@ -156,26 +96,26 @@ class BlockingBlurController(
     blurView.getLocationOnScreen(blurViewLocation)
     val left = blurViewLocation[0] - rootLocation[0]
     val top = blurViewLocation[1] - rootLocation[1]
-    val scaleFactorX = scaleFactor * roundingWidthScaleFactor
-    val scaleFactorY = scaleFactor * roundingHeightScaleFactor
-    val scaledLeftPosition = -left / scaleFactorX
-    val scaledTopPosition = -top / scaleFactorY
-    internalCanvas!!.translate(scaledLeftPosition, scaledTopPosition)
-    internalCanvas!!.scale(1 / scaleFactorX, 1 / scaleFactorY)
+    val scaledLeftPosition = -left / scaleFactor
+    val scaledTopPosition = -top / scaleFactor
+    internalCanvas.translate(scaledLeftPosition, scaledTopPosition)
+    internalCanvas.scale(1 / scaleFactor, 1 / scaleFactor)
   }
 
   override fun draw(canvas: Canvas?): Boolean {
     if (!blurEnabled || !initialized) {
       return true
     }
-    // Not blurring own children
-    if (canvas === internalCanvas) {
+    // Not blurring itself or other BlurViews to not cause recursive draw calls
+    // Related: https://github.com/Dimezis/BlurView/issues/110
+    //          https://github.com/Dimezis/BlurView/issues/110
+    if (canvas is BlurViewCanvas) {
       return false
     }
     updateBlur()
     canvas!!.save()
-    canvas.scale(scaleFactor * roundingWidthScaleFactor, scaleFactor * roundingHeightScaleFactor)
-    internalBitmap?.let { canvas.drawBitmap(it, 0f, 0f, paint) }
+    canvas.scale(scaleFactor, scaleFactor)
+    canvas.drawBitmap(internalBitmap!!, 0f, 0f, paint)
     canvas.restore()
     if (overlayColor != TRANSPARENT) {
       canvas.drawColor(overlayColor)
@@ -184,9 +124,9 @@ class BlockingBlurController(
   }
 
   private fun blurAndSave() {
-    internalBitmap = blurAlgorithm?.blur(internalBitmap, blurRadius)
-    if ((blurAlgorithm?.canModifyBitmap() == true).not()) {
-      internalCanvas?.setBitmap(internalBitmap)
+    blurAlgorithm.blur(internalBitmap, blurRadius)?.let { internalBitmap =it  }
+    if (!blurAlgorithm.canModifyBitmap() && ::internalBitmap.isInitialized) {
+      internalCanvas.setBitmap(internalBitmap)
     }
   }
 
@@ -198,7 +138,7 @@ class BlockingBlurController(
 
   override fun destroy() {
     setBlurAutoUpdate(false)
-    blurAlgorithm!!.destroy()
+    blurAlgorithm.destroy()
     initialized = false
   }
 
@@ -207,12 +147,12 @@ class BlockingBlurController(
     return this
   }
 
-  override fun setBlurAlgorithm(algorithm: BlurAlgorithm?): BlurViewFacade? {
+  override fun setBlurAlgorithm(algorithm: BlurAlgorithm): BlurViewFacade? {
     blurAlgorithm = algorithm
     return this
   }
 
-  override fun setFrameClearDrawable(@Nullable frameClearDrawable: Drawable?): BlurViewFacade? {
+  override fun setFrameClearDrawable(frameClearDrawable: Drawable?): BlurViewFacade? {
     this.frameClearDrawable = frameClearDrawable
     return this
   }
@@ -246,11 +186,6 @@ class BlockingBlurController(
   }
 
   companion object {
-    // Bitmap size should be divisible by ROUNDING_VALUE to meet stride requirement.
-    // This will help avoiding an extra bitmap allocation when passing the bitmap to RenderScript for blur.
-    // Usually it's 16, but on Samsung devices it's 64 for some reason.
-    private const val ROUNDING_VALUE = 64
-
     @ColorInt
     val TRANSPARENT = 0
   }
@@ -265,8 +200,6 @@ class BlockingBlurController(
     blurAlgorithm = NoOpBlurAlgorithm()
     val measuredWidth = blurView.measuredWidth
     val measuredHeight = blurView.measuredHeight
-    if (isZeroSized(measuredWidth, measuredHeight)) {
-      deferBitmapCreation()
-    } else init(measuredWidth, measuredHeight)
+    init(measuredWidth, measuredHeight)
   }
 }
