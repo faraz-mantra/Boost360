@@ -1,7 +1,6 @@
 package com.framework.views.blur
 
 import android.graphics.Bitmap
-import androidx.annotation.NonNull
 
 
 internal class NoOpBlurAlgorithm : BlurAlgorithm {
@@ -14,7 +13,6 @@ internal class NoOpBlurAlgorithm : BlurAlgorithm {
     return true
   }
 
-  @get:NonNull
   override val supportedBitmapConfig: Bitmap.Config
     get() = Bitmap.Config.ARGB_8888
 }

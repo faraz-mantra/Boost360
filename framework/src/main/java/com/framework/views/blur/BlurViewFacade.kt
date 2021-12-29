@@ -2,7 +2,6 @@ package com.framework.views.blur
 
 import android.graphics.drawable.Drawable
 import androidx.annotation.ColorInt
-import androidx.annotation.Nullable
 
 
 interface BlurViewFacade {
@@ -39,7 +38,7 @@ interface BlurViewFacade {
    * Optional, by default frame is cleared with a transparent color.
    * @return [BlurViewFacade]
    */
-  fun setFrameClearDrawable(@Nullable frameClearDrawable: Drawable?): BlurViewFacade?
+  fun setFrameClearDrawable(frameClearDrawable: Drawable?): BlurViewFacade?
 
   /**
    * @param radius sets the blur radius
@@ -52,7 +51,7 @@ interface BlurViewFacade {
    * @param algorithm sets the blur algorithm
    * @return [BlurViewFacade]
    */
-  fun setBlurAlgorithm(algorithm: BlurAlgorithm?): BlurViewFacade?
+  fun setBlurAlgorithm(algorithm: BlurAlgorithm): BlurViewFacade?
 
   /**
    * Sets the color overlay to be drawn on top of blurred content
