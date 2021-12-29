@@ -12,7 +12,9 @@
     android:layout_height="match_parent"
     android:layout_gravity="end"
     android:orientation="horizontal"
-    android:weightSum="10">
+    android:visibility="gone"
+    android:weightSum="10"
+    tools:visibility="visible">
 
     <LinearLayout
       android:layout_width="0dp"
@@ -24,7 +26,9 @@
       android:layout_height="match_parent"
       android:layout_weight="9.5"
       android:background="@color/white"
-      android:orientation="vertical">
+      android:orientation="vertical"
+      android:visibility="gone"
+      tools:visibility="visible">
 
       <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -223,8 +227,8 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginVertical="0.4dp"
-                android:backgroundTint="@color/white_grey_progress"
                 android:background="@drawable/ic_dr_progress_bg"
+                android:backgroundTint="@color/white_grey_progress"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

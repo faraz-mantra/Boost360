@@ -111,7 +111,7 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
       binding?.phoneEt?.setText(cred?.id.toString().replace("+91", ""))
       val isPhoneValid = binding?.phoneEt?.text.toString().isPhoneValid()
       binding?.tvRequestOtp?.isEnabled = isPhoneValid
-      //if (isPhoneValid) binding?.tvRequestOtp?.performClick()
+      if (isPhoneValid) binding?.tvRequestOtp?.performClick()
     }
   }
 
