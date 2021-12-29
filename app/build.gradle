@@ -63,6 +63,7 @@ android {
             }
         }
         release {
+            debuggable true
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -200,7 +201,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'com.makeramen:roundedimageview:1.5.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.4.2'
-    implementation 'com.facebook.android:facebook-android-sdk:4.42.0'
+    implementation 'com.facebook.android:facebook-android-sdk:5.15.3'
     implementation 'com.twitter.sdk.android:twitter-core:3.0.0'
     implementation 'com.wdullaer:materialdatetimepicker:1.0.1'
     implementation 'androidx.multidex:multidex:2.0.1'

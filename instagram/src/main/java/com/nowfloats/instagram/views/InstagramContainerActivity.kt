@@ -41,6 +41,8 @@ class InstagramContainerActivity:
 
                     }
                 }
+            }else{
+                finish()
             }
         }
     }
@@ -73,5 +75,6 @@ class InstagramContainerActivity:
             }
         }
     }
+
 
 }

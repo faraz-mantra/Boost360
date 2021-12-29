@@ -1,26 +1,43 @@
 package com.nowfloats.instagram.views
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookException
+import com.facebook.login.LoginResult
 import com.framework.BaseApplication
 import com.framework.base.BaseActivity
 import com.nowfloats.instagram.recyclerView.AppBaseRecyclerViewAdapter
 import com.nowfloats.instagram.base.AppBaseFragment
 import com.framework.models.BaseViewModel
+import com.framework.utils.PreferencesUtils
 import com.framework.utils.spanBold
 import com.framework.utils.spanRegular
+import com.nowfloats.facebook.FacebookLoginHelper
+import com.nowfloats.facebook.constants.FacebookGraphRequestType
+import com.nowfloats.facebook.constants.FacebookPermissions
+import com.nowfloats.facebook.graph.FacebookGraphManager
+import com.nowfloats.facebook.models.BaseFacebookGraphResponse
+import com.nowfloats.facebook.models.userPages.FacebookGraphUserPagesResponse
 import com.nowfloats.instagram.R
 import com.nowfloats.instagram.databinding.FragmentIgIntStepsBinding
 import com.nowfloats.instagram.models.IGFeaturesModel
 
-class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BaseViewModel>() {
+class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BaseViewModel>(),FacebookLoginHelper,FacebookGraphManager.GraphRequestUserAccountCallback {
 
+
+    private var accessToken: AccessToken?=null
+    private val TAG = "IGIntStepsFragment"
+    private val callbackManager = CallbackManager.Factory.create()
 
     enum class Step{
         STEP1,
@@ -54,10 +71,17 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BaseViewMod
 
     override fun onCreateView() {
         super.onCreateView()
+        registerFacebookLoginCallback(this, callbackManager)
+
         currentStep = arguments?.getString(BK_STEP)
         setupUi()
         setOnClickListener(binding!!.btnBack,binding!!.btnNext)
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        callbackManager.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun setupUi() {
@@ -123,8 +147,27 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BaseViewMod
             }
             binding!!.btnNext->{
                 if (nextStep==Step.NEXT_SCREEN){
-                    addFragmentReplace(R.id.container,IGIntStatusFragment.newInstance(
-                    ),true)
+                    /*addFragmentReplace(R.id.container,IGIntStatusFragment.newInstance(
+                    ),true)*/
+                    loginWithFacebook(
+                        this, listOf(
+                            FacebookPermissions.email,
+                            FacebookPermissions.public_profile,
+                            FacebookPermissions.read_insights,
+                            FacebookPermissions.pages_show_list,
+                            FacebookPermissions.pages_manage_cta,
+                            FacebookPermissions.ads_management,
+                            FacebookPermissions.pages_read_engagement,
+                            FacebookPermissions.pages_manage_posts,
+                            FacebookPermissions.pages_read_user_content,
+                            FacebookPermissions.pages_manage_metadata,
+                            FacebookPermissions.manage_pages,
+                            FacebookPermissions.business_management,
+                            FacebookPermissions.instagram_basic,
+                            FacebookPermissions.instagram_content_publish,
+                            FacebookPermissions.instagram_manage_insights,
+                            )
+                    )
                 }else{
                     addFragmentReplace(R.id.container,IGIntStepsFragment.newInstance(
                         nextStep
@@ -133,6 +176,36 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BaseViewMod
 
             }
         }
+    }
+
+    override fun onFacebookLoginSuccess(result: LoginResult?) {
+        Log.i(TAG, "onFacebookLoginSuccess: ")
+        accessToken = result?.accessToken ?: return
+        accessToken?.let {
+            PreferencesUtils.instance.saveFacebookUserToken(it.token)
+            PreferencesUtils.instance.saveFacebookUserId(it.userId)
+            FacebookGraphManager.requestUserPages(accessToken, this)
+        }
+
+    }
+
+    override fun onFacebookLoginCancel() {
+        Log.i(TAG, "onFacebookLoginCancel: ")
+    }
+
+    override fun onFacebookLoginError(error: FacebookException?) {
+        Log.e(TAG, "onFacebookLoginError: ${error?.localizedMessage}")
+    }
+
+    override fun onCompleted(
+        type: FacebookGraphRequestType,
+        facebookGraphResponse: BaseFacebookGraphResponse?
+    ) {
+        val response = facebookGraphResponse as? FacebookGraphUserPagesResponse
+        val pages = response?.data ?: return
+        val page = pages.firstOrNull() ?: return
+        page.id?.let { FacebookGraphManager.requestIGAccount(it,accessToken) }
+
     }
 
 
