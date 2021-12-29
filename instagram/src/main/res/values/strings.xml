@@ -26,8 +26,11 @@
     <string name="connected_facebook_with_instagram_if_yes_then_just_tap_on_authorise_boost_360_button_below_to_allow_boost_360_to_access_sync_your_instagram_account_info_post_updates_on_your_behalf_and_read_related_channel_insights"><![CDATA[Connected Facebook with Instagram?\n\nIf yes, then just tap on ‘Authorise Boost 360’ button below to allow Boost 360 to access & sync your instagram account info, post updates on your behalf and read related channel insights.\n]]></string>
     <string name="autho_boost_360">Authorise Boost 360</string>
     <string name="instagram_integration_successful">Instagram integration successful</string>
-    <string name="congratulations_boost_360_is_successfully_connected_to_your_instagram_account_rameshstore">Congratulations, Boost 360 is successfully connected to your Instagram account @rameshstore</string>
+    <string name="congratulations_boost_360_is_successfully_connected_to_your_instagram_account_placeholder">Congratulations, Boost 360 is successfully connected to your Instagram account %1$s</string>
     <string name="all_your_business_updates_will_be_auto_posted_on_your_instagram_account">All your business updates will be auto-posted on your Instagram account.</string>
     <string name="view_instagram_dashboard">View Instagram dashboard</string>
     <string name="need_help_contact_support_for_assistance">Need help? Contact support for assistance.</string>
+    <string name="re_check_previous_steps">Re-check previous steps</string>
+    <string name="looks_like_the_process_has_not_been_completed_properly_you_will_not_be_able_to_integrate_boost_360_with_instagram_if_you_do_not_complete_the_previous_steps">Looks like the process has not been completed properly. You will not be able to integrate Boost 360 with Instagram if you do not complete the previous steps.</string>
+    <string name="instagram_integration_failed">Instagram integration failed</string>
 </resources>

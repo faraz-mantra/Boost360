@@ -127,6 +127,8 @@ fun ChannelModel.getName(): String {
     ChannelType.WAB -> instance.resources.getString(R.string.whatsapp_business)
     ChannelType.T_FEED -> instance.resources.getString(R.string.twitter_profile)
     ChannelType.G_BUSINESS -> instance.resources.getString(R.string.google_business)
+    ChannelType.INSTAGRAM -> instance.resources.getString(R.string.instagram)
+
     null -> ""
   }
 }
@@ -140,6 +142,8 @@ fun ChannelModel.getName1(): String {
     ChannelType.WAB -> instance.resources.getString(R.string.whatsapp_business1)
     ChannelType.T_FEED -> instance.resources.getString(R.string.twitter_profile1)
     ChannelType.G_BUSINESS -> instance.resources.getString(R.string.google_business_n1)
+    ChannelType.INSTAGRAM -> instance.resources.getString(R.string.instagram)
+
     null -> ""
   }
 }
@@ -153,6 +157,8 @@ fun ChannelModel.getNameAlternate(): String {
     ChannelType.WAB -> "WA Profile"
     ChannelType.T_FEED -> "Twitter"
     ChannelType.G_BUSINESS -> "Maps"
+    ChannelType.INSTAGRAM -> "Instagram"
+
     null -> ""
   }
 }
@@ -166,6 +172,8 @@ fun ChannelModel.getAccessTokenType(): String {
     ChannelType.WAB -> ChannelType.WAB.name
     ChannelType.T_FEED -> ChannelAccessToken.AccessTokenType.twitter.name
     ChannelType.G_BUSINESS -> ChannelAccessToken.AccessTokenType.googlemybusiness.name
+    ChannelType.INSTAGRAM -> ChannelAccessToken.AccessTokenType.instagram.name
+
     null -> ""
   }
 }

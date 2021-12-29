@@ -24,14 +24,14 @@
             android:translationY="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_ig_int_success"
+            tools:src="@drawable/ic_ig_int_success"
             app:layout_constraintBottom_toTopOf="@+id/customImageView2"
             app:layout_constraintEnd_toEndOf="@+id/customImageView2"
             app:layout_constraintStart_toEndOf="@+id/customImageView2"
             app:layout_constraintTop_toTopOf="@+id/customImageView2" />
 
         <com.framework.views.customViews.CustomTextView
-            android:id="@+id/customTextView"
+            android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -47,69 +47,78 @@
             app:layout_constraintTop_toBottomOf="@+id/customImageView2" />
 
         <com.framework.views.customViews.CustomTextView
-            android:id="@+id/customTextView3"
+            android:id="@+id/tv_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
-            android:text="@string/congratulations_boost_360_is_successfully_connected_to_your_instagram_account_rameshstore"
+            tools:text="@string/looks_like_the_process_has_not_been_completed_properly_you_will_not_be_able_to_integrate_boost_360_with_instagram_if_you_do_not_complete_the_previous_steps"
             android:textSize="@dimen/size_12"
             app:fontFamily="@font/regular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/customTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
 
-        <com.framework.views.customViews.CustomImageView
-            android:id="@+id/customImageView4"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="48dp"
-            android:src="@drawable/ic_gallery_ig"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/customTextView3" />
-
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/customTextView4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:textColor="@color/black_4a4a4a"
-            android:layout_marginEnd="24dp"
-            android:text="@string/all_your_business_updates_will_be_auto_posted_on_your_instagram_account"
-            android:textSize="@dimen/size_12"
-            app:fontFamily="@font/regular"
-            app:layout_constraintBottom_toBottomOf="@+id/customImageView4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/customImageView4"
-            app:layout_constraintTop_toTopOf="@+id/customImageView4" />
-
-        <com.framework.views.customViews.CustomImageView
-            android:id="@+id/customImageView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:id="@+id/layout_features"
             android:layout_marginTop="32dp"
-            android:src="@drawable/ic_presentationchart"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/customImageView4" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_desc">
 
-        <com.framework.views.customViews.CustomTextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="24dp"
-            android:textColor="@color/black_4a4a4a"
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/customImageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:src="@drawable/ic_gallery_ig"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            android:text="@string/all_your_business_updates_will_be_auto_posted_on_your_instagram_account"
-            android:textSize="@dimen/size_12"
-            app:fontFamily="@font/regular"
-            app:layout_constraintBottom_toBottomOf="@+id/customImageView5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/customImageView4"
-            app:layout_constraintTop_toTopOf="@+id/customImageView5" />
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/customTextView4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="24dp"
+                android:text="@string/all_your_business_updates_will_be_auto_posted_on_your_instagram_account"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/size_12"
+                app:fontFamily="@font/regular"
+                app:layout_constraintBottom_toBottomOf="@+id/customImageView4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/customImageView4"
+                app:layout_constraintTop_toTopOf="@+id/customImageView4" />
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/customImageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="32dp"
+                android:src="@drawable/ic_presentationchart"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/customImageView4" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="24dp"
+                android:text="@string/all_your_business_updates_will_be_auto_posted_on_your_instagram_account"
+
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/size_12"
+                app:fontFamily="@font/regular"
+                app:layout_constraintBottom_toBottomOf="@+id/customImageView5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/customImageView4"
+                app:layout_constraintTop_toTopOf="@+id/customImageView5" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
         <com.google.android.material.button.MaterialButton
@@ -120,13 +129,13 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="16dp"
-            android:text="@string/view_instagram_dashboard"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+            tools:text="@string/re_check_previous_steps"
+            app:layout_constraintBottom_toTopOf="@+id/layout_help"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <LinearLayout
-            android:id="@+id/linearLayout5"
+            android:id="@+id/layout_help"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
@@ -142,10 +151,10 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_headphone"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/customTextView5" />
+                app:layout_constraintEnd_toStartOf="@+id/tv_help" />
 
             <com.framework.views.customViews.CustomTextView
-                android:id="@+id/customTextView5"
+                android:id="@+id/tv_help"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_12"

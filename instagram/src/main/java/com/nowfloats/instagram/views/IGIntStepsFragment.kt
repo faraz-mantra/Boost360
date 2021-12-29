@@ -19,9 +19,10 @@ import com.framework.base.BaseActivity
 import com.nowfloats.instagram.recyclerView.AppBaseRecyclerViewAdapter
 import com.nowfloats.instagram.base.AppBaseFragment
 import com.framework.models.BaseViewModel
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.spanBold
-import com.framework.utils.spanRegular
 import com.nowfloats.facebook.FacebookLoginHelper
 import com.nowfloats.facebook.constants.FacebookGraphRequestType
 import com.nowfloats.facebook.constants.FacebookPermissions
@@ -31,13 +32,18 @@ import com.nowfloats.facebook.models.userPages.FacebookGraphUserPagesResponse
 import com.nowfloats.instagram.R
 import com.nowfloats.instagram.databinding.FragmentIgIntStepsBinding
 import com.nowfloats.instagram.models.IGFeaturesModel
+import com.onboarding.nowfloats.model.channel.ChannelType
+import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
+import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRequest
+import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
 
-class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BaseViewModel>(),FacebookLoginHelper,FacebookGraphManager.GraphRequestUserAccountCallback {
+class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCreateViewModel>(),FacebookLoginHelper,FacebookGraphManager.GraphRequestUserAccountCallback {
 
 
     private var accessToken: AccessToken?=null
     private val TAG = "IGIntStepsFragment"
     private val callbackManager = CallbackManager.Factory.create()
+    private var session:UserSessionManager?=null
 
     enum class Step{
         STEP1,
@@ -65,12 +71,13 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BaseViewMod
         return R.layout.fragment_ig_int_steps
     }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
+    override fun getViewModelClass(): Class<BusinessCreateViewModel> {
+        return BusinessCreateViewModel::class.java
     }
 
     override fun onCreateView() {
         super.onCreateView()
+        session = UserSessionManager(requireActivity())
         registerFacebookLoginCallback(this, callbackManager)
 
         currentStep = arguments?.getString(BK_STEP)
@@ -147,9 +154,10 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BaseViewMod
             }
             binding!!.btnNext->{
                 if (nextStep==Step.NEXT_SCREEN){
-                    /*addFragmentReplace(R.id.container,IGIntStatusFragment.newInstance(
-                    ),true)*/
-                    loginWithFacebook(
+                    addFragmentReplace(R.id.container,IGIntStatusFragment.newInstance(
+                        IGIntStatusFragment.Status.FAILURE
+                    ),true)
+                    /*loginWithFacebook(
                         this, listOf(
                             FacebookPermissions.email,
                             FacebookPermissions.public_profile,
@@ -168,6 +176,8 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BaseViewMod
                             FacebookPermissions.instagram_manage_insights,
                             )
                     )
+
+                     */
                 }else{
                     addFragmentReplace(R.id.container,IGIntStepsFragment.newInstance(
                         nextStep
@@ -208,5 +218,15 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BaseViewMod
 
     }
 
+    fun updateChannelAccessToken(){
+        val channelAccessToken = ChannelAccessToken(ChannelType.INSTAGRAM.name)
+
+        viewModel?.updateChannelAccessToken(
+            UpdateChannelAccessTokenRequest(
+                channelAccessToken,
+                clientId,
+                session?.fPID!!
+            ))
+    }
 
 }

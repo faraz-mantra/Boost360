@@ -400,10 +400,12 @@ fun spanBold(fullText:String,vararg boldTextList:String): SpannableString {
   return spannable
 }
 
-fun spanRegular(fullText:String,vararg regularTextList:String,@FontRes fontId:Int): SpannableString {
+fun spanColor(fullText:String,@ColorRes color: Int,vararg colorTextList:String): SpannableString {
   val spannable = SpannableString(fullText)
-  regularTextList.forEach { reguText->
-    spannable.setSpan(StyleSpan(ResourcesCompat.getFont(BaseApplication.instance, fontId)!!.style),fullText.indexOf(reguText),fullText.indexOf(reguText)+reguText.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+  colorTextList.forEach { text->
+    spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(
+      BaseApplication.instance,color
+    )),fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
   }
   return spannable
 }

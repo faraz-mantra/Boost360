@@ -47,7 +47,8 @@ dependencies {
     kapt 'com.android.databinding:compiler:3.1.4'
 
     api project(path: ':resources')
-    api project(path: ':facebook')
+    api project(path: ':onboarding')
+
 
 
 }
