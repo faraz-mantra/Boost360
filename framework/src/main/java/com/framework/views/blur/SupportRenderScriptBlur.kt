@@ -2,19 +2,16 @@ package com.framework.views.blur
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.os.Build
 import android.renderscript.Allocation
-import android.renderscript.Element
 import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicBlur
-import androidx.annotation.RequiresApi
-
+import android.renderscript.Element;
 
 /**
  * Blur using RenderScript, processed on GPU.
- * Requires API 17+
+ * Uses Renderscript from support library
  */
-class RenderScriptBlur @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1) constructor(context: Context?) : BlurAlgorithm {
+class SupportRenderScriptBlur(context: Context?) : BlurAlgorithm {
   private val renderScript: RenderScript = RenderScript.create(context)
   private val blurScript: ScriptIntrinsicBlur = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript))
   private var outAllocation: Allocation? = null
@@ -29,15 +26,14 @@ class RenderScriptBlur @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1) co
    * @param blurRadius blur radius (1..25)
    * @return blurred bitmap
    */
-  @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
   override fun blur(bitmap: Bitmap?, blurRadius: Float): Bitmap? {
     //Allocation will use the same backing array of pixels as bitmap if created with USAGE_SHARED flag
-    val inAllocation = Allocation.createFromBitmap(renderScript, bitmap)
+    val inAllocation: Allocation = Allocation.createFromBitmap(renderScript, bitmap)
     if (!canReuseAllocation(bitmap)) {
       if (outAllocation != null) {
-        outAllocation!!.destroy()
+        outAllocation?.destroy()
       }
-      outAllocation = Allocation.createTyped(renderScript, inAllocation.type)
+      outAllocation = Allocation.createTyped(renderScript, inAllocation.getType())
       lastBitmapWidth = bitmap!!.width
       lastBitmapHeight = bitmap.height
     }
@@ -45,7 +41,7 @@ class RenderScriptBlur @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1) co
     blurScript.setInput(inAllocation)
     //do not use inAllocation in forEach. it will cause visual artifacts on blurred Bitmap
     blurScript.forEach(outAllocation)
-    outAllocation!!.copyTo(bitmap)
+    outAllocation?.copyTo(bitmap)
     inAllocation.destroy()
     return bitmap
   }
