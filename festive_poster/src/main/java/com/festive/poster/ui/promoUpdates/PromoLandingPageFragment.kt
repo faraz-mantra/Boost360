@@ -2,6 +2,7 @@ package com.festive.poster.ui.promoUpdates
 
 import android.graphics.BlendMode
 import android.graphics.PorterDuff
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
@@ -16,7 +17,7 @@ import com.festive.poster.ui.promoUpdates.bottomSheet.SubscribePlanBottomSheet
 import com.festive.poster.utils.WebEngageController
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
-import com.framework.utils.setColorFilter2
+import com.framework.utils.setColorFilterApiQ
 import com.framework.webengageconstant.Post_Promotional_Update_Click
 import com.framework.webengageconstant.Promotional_Update_Browse_All_Click
 import com.google.android.material.tabs.TabLayout
@@ -111,13 +112,21 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val tabIconColor: Int =
                     ContextCompat.getColor(requireActivity(), R.color.colorPrimary)
-                tab!!.icon!!.setColorFilter2(tabIconColor,BlendMode.SRC_IN, PorterDuff.Mode.SRC_IN)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    tab!!.icon!!.setColorFilterApiQ(tabIconColor,BlendMode.SRC_IN)
+                }else{
+                    tab!!.icon!!.setColorFilter(tabIconColor,PorterDuff.Mode.SRC_IN)
+                }
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
                 val tabIconColor: Int =
                     ContextCompat.getColor(requireActivity(), R.color.colorB3B3B3)
-                tab!!.icon!!.setColorFilter2(tabIconColor,BlendMode.SRC_IN, PorterDuff.Mode.SRC_IN)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    tab!!.icon!!.setColorFilterApiQ(tabIconColor,BlendMode.SRC_IN)
+                }else{
+                    tab!!.icon!!.setColorFilter(tabIconColor,PorterDuff.Mode.SRC_IN)
+                }
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {

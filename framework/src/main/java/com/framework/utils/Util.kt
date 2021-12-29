@@ -56,6 +56,7 @@ import kotlin.collections.ArrayList
 import android.content.pm.PackageManager
 
 import android.content.pm.PackageInfo
+import androidx.annotation.RequiresApi
 import com.framework.R
 import java.util.regex.Pattern.UNICODE_CHARACTER_CLASS
 
@@ -399,12 +400,9 @@ fun getAppVersionName(): String? {
   return null
 }
 
-fun Drawable.setColorFilter2(color: Int,blendMode:BlendMode,porterDuffMode:PorterDuff.Mode){
-  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+@RequiresApi(Build.VERSION_CODES.Q)
+fun Drawable.setColorFilterApiQ(color: Int, blendMode:BlendMode){
     colorFilter = BlendModeColorFilter(color, blendMode)
-  } else {
-    setColorFilter(color,porterDuffMode)
-  }
 }
 
 fun showToast(text: String?,duration:Int =Toast.LENGTH_LONG){
