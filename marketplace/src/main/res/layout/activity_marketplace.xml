@@ -149,46 +149,46 @@
 
 
               <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/mp_banner_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:visibility="visible"
-                tools:ignore="TouchTargetSizeCheck"
-                tools:visibility="visible">
+                  android:id="@+id/mp_banner_layout"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="5dp"
+                  android:layout_marginTop="16dp"
+                  android:layout_marginEnd="5dp"
+                  android:layout_marginBottom="10dp"
+                  android:clickable="true"
+                  android:focusable="true"
+                  android:visibility="visible"
+                  tools:ignore="TouchTargetSizeCheck"
+                  tools:visibility="visible">
 
                 <androidx.viewpager2.widget.ViewPager2
-                  android:id="@+id/mp_banner_viewpager"
-                  android:layout_width="match_parent"
-                  android:layout_height="@dimen/size_240"
-                  android:clipChildren="false"
-                  android:clipToPadding="false"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toTopOf="parent"
-                  tools:listitem="@layout/item_promo_banner" />
+                    android:id="@+id/mp_banner_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_240"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/item_promo_banner" />
 
                 <com.framework.views.dotsindicator.DotsIndicator
-                  android:id="@+id/mp_banner_dot_indicator"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_centerHorizontal="true"
-                  android:layout_marginTop="10dp"
-                  app:dotsColor="#ffb900"
-                  app:dotsCornerRadius="8dp"
-                  app:dotsSize="6dp"
-                  app:dotsSpacing="4dp"
-                  app:dotsWidthFactor="2.5"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toBottomOf="@id/mp_banner_viewpager"
-                  app:progressMode="false"
-                  app:selectedDotColor="@color/color_primary" />
+                    android:id="@+id/mp_banner_dot_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    app:dotsColor="#ffb900"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="6dp"
+                    app:dotsSpacing="4dp"
+                    app:dotsWidthFactor="2.5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mp_banner_viewpager"
+                    app:progressMode="false"
+                    app:selectedDotColor="@color/color_primary" />
 
 
               </androidx.constraintlayout.widget.ConstraintLayout>

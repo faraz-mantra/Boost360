@@ -49,7 +49,7 @@
             android:layout_height="0dp"
             android:scrollbars="none"
             android:overScrollMode="never"
-            app:layout_constraintBottom_toTopOf="@id/package_addCartNew"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/all_side_curve_bg"
             android:layout_marginBottom="5dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -69,6 +69,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
+
 
                 <RelativeLayout
                     android:id="@+id/rl_cardView"
@@ -156,14 +158,16 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/open_sans_bold"
                                     android:maxLines="2"
-                                    android:text="ONLINE \nBUSINESS PRO"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/app_text_yellow"
+                                    android:text="Online Pack"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/colorPrimary"
                                     android:textFontWeight="800"
-                                    android:textSize="@dimen/txt_18sp"
+                                    android:textSize="@dimen/txt_20sp"
                                     android:textStyle="bold"
                                     app:layout_constraintBottom_toTopOf="@id/package_amount_layout"
-                                    app:layout_constraintEnd_toEndOf="parent" />
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                                 <LinearLayout
                                     android:id="@+id/package_amount_layout"
@@ -198,13 +202,30 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="20dp"
                                 android:layout_marginTop="5dp"
+                                android:orientation="horizontal"
                                 android:paddingTop="10dp"
                                 android:paddingBottom="10dp"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/package_profile_image"
-                                android:orientation="horizontal">
+                                app:layout_constraintTop_toBottomOf="@+id/package_profile_image">
 
                             </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/pack_discount_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginStart="10dp"
+                                android:background="@drawable/ic_pack_discount_bg"
+                                android:elevation="2dp"
+                                android:gravity="center"
+                                android:text="@string/discount_off"
+                                android:textColor="@color/white"
+                                android:textSize="13sp"
+                                app:layout_constraintBottom_toTopOf="@+id/const_title"
+                                app:layout_constraintStart_toEndOf="@+id/package_profile_image"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="1.0" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </androidx.cardview.widget.CardView>
@@ -228,7 +249,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
-                    android:layout_marginBottom="@dimen/_10sdp"
                     android:fontFamily="@font/open_sans"
                     android:paddingTop="10dp"
                     android:text="Includes these 2 add-ons"
@@ -256,8 +276,8 @@
                     android:id="@+id/primary_layout"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:fillViewport="true"
                     android:layout_marginTop="@dimen/_3sdp"
+                    android:fillViewport="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -280,13 +300,30 @@
                         android:nestedScrollingEnabled="false"
                         android:overScrollMode="never"
                         android:visibility="visible"
-                        tools:itemCount="9"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:spanCount="3"
+                        tools:itemCount="9"
                         tools:listitem="@layout/item_packs_list" />
                     <!--</androidx.core.widget.NestedScrollView>-->
+
+
                 </LinearLayout>
                 <!--</androidx.core.widget.NestedScrollView>-->
+
+                <TextView
+                    android:id="@+id/package_addCartNew"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/orange_button_click_effect"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
+                    android:padding="@dimen/_10sdp"
+                    android:text="Add to cart"
+                    android:textSize="@dimen/txt_14sp"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -295,20 +332,20 @@
             <!--</androidx.core.widget.NestedScrollView>-->
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/package_addCartNew"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/orange_button_click_effect"
-            android:fontFamily="@font/open_sans_semibold"
-            android:gravity="center"
-            android:padding="@dimen/_10sdp"
-            android:text="Add Package to cart"
-            android:textSize="@dimen/txt_14sp"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+<!--        <TextView-->
+<!--            android:id="@+id/package_addCartNew"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/orange_button_click_effect"-->
+<!--            android:fontFamily="@font/open_sans_semibold"-->
+<!--            android:gravity="center"-->
+<!--            android:padding="@dimen/_10sdp"-->
+<!--            android:text="Add Package to cart"-->
+<!--            android:textSize="@dimen/txt_14sp"-->
+<!--            android:textColor="@color/white"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -18,7 +18,6 @@ import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityMarketplaceoffersBinding
 import com.boost.marketplace.infra.recyclerView.AppBaseRecyclerViewAdapter
 import com.bumptech.glide.Glide
-import com.utsman.recycling.setupAdapter
 import kotlinx.android.synthetic.main.activity_marketplaceoffers.*
 import kotlinx.android.synthetic.main.item_marketplaceoffers_info.view.*
 import kotlinx.android.synthetic.main.item_packs_list.view.*
@@ -27,7 +26,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class MarketPlaceOffersActivity : AppBaseActivity<ActivityMarketplaceoffersBinding, MarketPlaceOffersViewModel>() {
+class MarketPlaceOffersActivity :
+    AppBaseActivity<ActivityMarketplaceoffersBinding, MarketPlaceOffersViewModel>() {
+
+
+    var marketOffersData: MarketPlaceOffers? = null
+    lateinit var marketOfferDetailAdapter: AppBaseRecyclerViewAdapter<MarketPlaceOffers>
+    lateinit var marketOfferTermsAdapter: AppBaseRecyclerViewAdapter<MarketPlaceOffers>
+    lateinit var prefs: SharedPrefs
+
 
     override fun getLayout(): Int {
         return R.layout.activity_marketplaceoffers
@@ -41,75 +48,7 @@ class MarketPlaceOffersActivity : AppBaseActivity<ActivityMarketplaceoffersBindi
     override fun onCreateView() {
         super.onCreateView()
 
-        val listData = listOf(
-            "Daily Stories",
-            "Custom Domain",
-            "In-Clinic Appointments",
-            "Email Accounts",
-        )
-        val listLoop = listOf(
-            "Daily Stories",
-            "Custom Domain",
-            "Email Accounts",
-        )
 
-        binding?.marketoffersImage?.setImageResource(R.drawable.group)
-
-        binding?.recyclerOfferDetails?.setupAdapter<String>(R.layout.item_marketplaceoffers_info) { adapter, context, list ->
-            bind { itemView, position, item ->
-                itemView.offer_details.text = item
-                itemView.setOnClickListener {
-
-                }
-            }
-            submitList(listData)
-
-            Handler().postDelayed({
-                listLoop.map { item ->
-                    submitItem(item)
-                }
-            }, 1000)
-        }
-
-        binding?.recyclerTerms?.setupAdapter<String>(R.layout.item_marketplaceoffers_info) { adapter, context, list ->
-            bind { itemView, position, item ->
-                itemView.offer_details.text = item
-                itemView.setOnClickListener {
-
-                }
-            }
-            submitList(listData)
-
-            Handler().postDelayed({
-                listLoop.map { item ->
-                    submitItem(item)
-                }
-            }, 1000)
-        }
-    }
-}
-
-
-//    var marketOffersData: MarketPlaceOffers? = null
-//     lateinit var marketOfferDetailAdapter: AppBaseRecyclerViewAdapter<MarketPlaceOffers>
-//     lateinit var marketOfferTermsAdapter: AppBaseRecyclerViewAdapter<MarketPlaceOffers>
-//    lateinit var prefs: SharedPrefs
-//
-//
-//    override fun getLayout(): Int {
-//        return R.layout.activity_marketplaceoffers
-//    }
-//
-//    override fun getViewModelClass(): Class<MarketPlaceOffersViewModel> {
-//        return MarketPlaceOffersViewModel::class.java
-//    }
-//
-//
-//    override fun onCreateView() {
-//        super.onCreateView()
-//
-//
-//
 //
 //        marketOffersData = intent.extras?.getSerializable("marketOffersData") as? MarketPlaceOffers
 //        //   marketOffersData = Gson().fromJson<MarketPlaceOffers>(jsonString, object : TypeToken<MarketPlaceOffers>() {}.type)
@@ -117,12 +56,13 @@ class MarketPlaceOffersActivity : AppBaseActivity<ActivityMarketplaceoffersBindi
 //
 //        initializeDetailsRecycler()
 //        initializeTermsRecycler()
-//       //  loadData()
+//        //  loadData()
 //        initMvvm()
 //
 //        binding!!.offerTitle.text = marketOffersData!!.title
 //        binding!!.availCouponTxt.text = marketOffersData!!.coupon_code
-//        binding?.offerValidityTxt?.text = getConvertedExpiryDateFormat(marketOffersData!!.expiry_date)
+//        binding?.offerValidityTxt?.text =
+//            getConvertedExpiryDateFormat(marketOffersData!!.expiry_date)
 //        if (marketOffersData?.extra_information != null) {
 //            var list: ArrayList<String> = arrayListOf()
 //            var listTerms: ArrayList<String> = arrayListOf()
@@ -152,7 +92,7 @@ class MarketPlaceOffersActivity : AppBaseActivity<ActivityMarketplaceoffersBindi
 //                        " " + terms.contains("S2coupon_code") + terms.contains("S2from_date") + marketOffersData!!.coupon_code
 //                    )
 //
-//                   listTerms.add(terms)
+//                    listTerms.add(terms)
 //                    Log.v("listTerms", " " + terms)
 //                }
 //
@@ -170,7 +110,7 @@ class MarketPlaceOffersActivity : AppBaseActivity<ActivityMarketplaceoffersBindi
 //
 //
 //            }
-//          updateRecycler(list)
+//            updateRecycler(list)
 ////            marketOfferDetailAdapter = MarketOfferDetailAdapter(list, this)
 //        }
 //
@@ -200,7 +140,8 @@ class MarketPlaceOffersActivity : AppBaseActivity<ActivityMarketplaceoffersBindi
 //        }
 //
 //        if (marketOffersData!!.image != null && !marketOffersData!!.image!!.url.isNullOrEmpty()) {
-//            Glide.with(MarketPlaceOffersActivity()).load(marketOffersData!!.image!!.url).into(binding?.marketoffersImage!!)
+//            Glide.with(MarketPlaceOffersActivity()).load(marketOffersData!!.image!!.url)
+//                .into(binding?.marketoffersImage!!)
 //        } else {
 //            binding?.marketoffersImage?.setImageResource(R.drawable.rectangle_copy_18)
 //        }
@@ -285,7 +226,7 @@ class MarketPlaceOffersActivity : AppBaseActivity<ActivityMarketplaceoffersBindi
 //
 //    fun updateRecycler(list: List<String>) {
 //        Log.v("updateRecycler", " " + list)
-//     //   marketOfferDetailAdapter?.addupdates(list)
+//        //   marketOfferDetailAdapter?.addupdates(list)
 //        recyclerOfferDetails.adapter = marketOfferDetailAdapter
 //        marketOfferDetailAdapter?.notifyDataSetChanged()
 //    }
@@ -308,10 +249,11 @@ class MarketPlaceOffersActivity : AppBaseActivity<ActivityMarketplaceoffersBindi
 //
 //    fun updateTermsRecycler(list: List<String>) {
 //        Log.v("updateRecycler", " " + list)
-//      //  marketOfferTermsAdapter?.addupdates(list)
+//        //  marketOfferTermsAdapter?.addupdates(list)
 //        recyclerTerms.adapter = marketOfferTermsAdapter
 //        marketOfferDetailAdapter?.notifyDataSetChanged()
 //    }
-//    }
-//
-//
+    }
+}
+
+

@@ -21,8 +21,8 @@ import com.boost.marketplace.infra.api.models.test.TestData
 import com.boost.marketplace.infra.api.models.test.getData
 import com.boost.marketplace.ui.details.FeatureDetailsViewModel
 import com.boost.marketplace.infra.recyclerView.AppBaseRecyclerViewAdapter
+import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
 import com.boost.marketplace.ui.Marketplace_Offers.MarketPlaceOffersActivity
-import com.boost.marketplace.ui.Packs.PacksActivity
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.framework.base.BaseActivity
 import com.framework.pref.UserSessionManager
@@ -844,7 +844,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     if(actionType == RecyclerViewActionType.MARKETPLACE_PROMO_BANNER_CLICK.ordinal) {
       intent = Intent(this, MarketPlaceOffersActivity::class.java)
     }else if(actionType == RecyclerViewActionType.PACKS_CLICK.ordinal) {
-      intent = Intent(this, PacksActivity::class.java)
+      intent = Intent(this, ComparePacksActivity::class.java)
     }else if(actionType == RecyclerViewActionType.TOP_FEATURES_CLICK.ordinal) {
       intent = Intent(this, FeatureDetailsActivity::class.java)
     }

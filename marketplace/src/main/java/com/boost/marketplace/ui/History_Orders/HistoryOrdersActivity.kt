@@ -18,7 +18,7 @@ import com.boost.marketplace.ui.Marketplace_Offers.MarketPlaceOffersViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
 import com.google.gson.Gson
-import com.utsman.recycling.setupAdapter
+
 import kotlinx.android.synthetic.main.activity_history_orders.*
 import kotlinx.android.synthetic.main.item_myplan_features.*
 import kotlinx.android.synthetic.main.item_myplan_features.view.*
@@ -53,28 +53,28 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Hisor
 //
 //        }
 
-        val listData = listOf(
-            "Daily Stories",
-            "Custom Domain", "Daily Stories", "Daily Stories",
-            "Email Accounts",
-        )
-
-        binding?.orderHistoryRecycler?.setupAdapter<String>(R.layout.item_order_history) { adapter, context, list ->
-            bind { itemView, position, item ->
-                itemView.title.text = item
-                itemView.btn_invoice.setOnClickListener {
-                    val appInfo: Intent = Intent(
-                        this@HistoryOrdersActivity,
-                        InvoiceActivity::class.java
-                    )
-                    startActivity(appInfo)
-
-                }
-            }
-
-            submitList(listData)
-
-        }
+//        val listData = listOf(
+//            "Daily Stories",
+//            "Custom Domain", "Daily Stories", "Daily Stories",
+//            "Email Accounts",
+//        )
+//
+//        binding?.orderHistoryRecycler?.setupAdapter<String>(R.layout.item_order_history) { adapter, context, list ->
+//            bind { itemView, position, item ->
+//                itemView.title.text = item
+//                itemView.btn_invoice.setOnClickListener {
+//                    val appInfo: Intent = Intent(
+//                        this@HistoryOrdersActivity,
+//                        InvoiceActivity::class.java
+//                    )
+//                    startActivity(appInfo)
+//
+//                }
+//            }
+//
+//            submitList(listData)
+//
+//        }
    }
 //    private fun loadData() {
 //        viewModel.loadPurchasedItems(
