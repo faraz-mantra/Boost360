@@ -6,11 +6,11 @@ import com.framework.enums.IntentConstants
 
 object ErrorFlowInvokeObject {
 
-    fun errorOccurred(errorCode: Int) {
+    fun errorOccurred(errorCode: Int, correlationId:String) {
         when (errorCode) {
             400, in 500..599 -> {
                 BaseApplication.instance.startActivity(Intent(BaseApplication.instance, ErrorTransparentActivity::class.java)
-                    .putExtra(IntentConstants.ERROR_CODE_OCCURRED.name, errorCode.toString())
+                    .putExtra(IntentConstants.ERROR_CODE_OCCURRED.name, correlationId)
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS))
             }
         }

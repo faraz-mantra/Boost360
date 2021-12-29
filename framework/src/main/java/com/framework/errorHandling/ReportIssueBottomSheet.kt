@@ -26,7 +26,7 @@ class ReportIssueBottomSheet(val errorCode: String?) : BaseBottomSheetDialog<Bsh
         progressBottomSheet = ProgressBottomSheet()
         binding?.tvErrorCode?.text = fromHtml("<font color=#4a4a4a>${getString(R.string.error_code)}</font> <font color=#eb5757>${errorCode?: "N/A"}</font>")
         binding?.btnDone?.setOnClickListener {
-            createErrorTicket("Test Subject")
+            createErrorTicket(errorCode.toString())
         }
 
         binding?.ivClose?.setOnClickListener {
