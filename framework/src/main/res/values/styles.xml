@@ -132,7 +132,7 @@
   <style name="CustomRoundedYellowButton">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">52dp</item>
-    <item name="backgroundTint">@color/colorPrimary</item>
+    <item name="backgroundTint">@color/disable_enable_button_selector</item>
     <item name="android:textAllCaps">false</item>
     <item name="textColor">@color/white</item>
     <item name="android:letterSpacing">0.0</item>
@@ -146,10 +146,20 @@
     <item name="android:windowIsTranslucent">true</item>
     <item name="android:windowBackground">@android:color/transparent</item>
     <item name="android:windowContentOverlay">@null</item>
-    <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
+    <item name="bottomSheetDialogTheme">@style/BottomSheetTheme_windowsoft_resize</item>
     <item name="android:windowNoTitle">true</item>
     <item name="android:backgroundDimEnabled">true</item>
     <item name="colorPrimaryDark">@android:color/transparent</item>
+  </style>
+
+  <style name="BottomSheetTheme_windowsoft_resize" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+    <item name="colorSecondary">@color/black_4a4a4a</item>
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowIsFloating">false</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:windowSoftInputMode">adjustResize</item>
+    <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
   </style>
 
   <style name="ButtonStyle">

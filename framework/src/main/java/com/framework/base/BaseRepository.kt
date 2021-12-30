@@ -1,6 +1,8 @@
 package com.framework.base
 
 import android.util.Log
+import com.framework.BaseApplication
+import com.framework.R
 import com.framework.analytics.SentryController
 import com.framework.errorHandling.ErrorFlowInvokeObject
 import com.framework.exceptions.BaseException
@@ -50,7 +52,10 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
         }
 
         //Error Handling Invoked for logging the error to Support Team
-        ErrorFlowInvokeObject.errorOccurred(response.status?:0, it.raw().request.headers.toMultimap()["x-correlation-id"]?.get(0)?:"")
+        ErrorFlowInvokeObject.errorOccurred(
+          errorCode = response.status?:0,
+          errorMessage = response.message?:BaseApplication.instance.getString(R.string.something_went_wrong_please_tell_what_happened),
+          correlationId = it.raw().request.headers.toMultimap()["x-correlation-id"]?.get(0)?:"")
 
         return@map response
       }

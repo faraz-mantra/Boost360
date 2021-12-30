@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import com.framework.R
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.databinding.BsheetReportAnIssueBinding
+import com.framework.extensions.afterTextChanged
 import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
@@ -31,6 +32,11 @@ class ReportIssueBottomSheet(val errorCode: String?) : BaseBottomSheetDialog<Bsh
 
         binding?.ivClose?.setOnClickListener {
             finishWithActivity()
+        }
+
+        binding?.etErrorDesc?.afterTextChanged {
+            binding?.tvWordCount?.text = (280 - it.length).toString()
+            binding?.btnDone?.isEnabled = it.isNotEmpty()
         }
     }
 

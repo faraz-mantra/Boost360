@@ -148,5 +148,7 @@
 
     <string name="error_code">Error code</string>
     <string name="please_wait_creating_a_ticket">Please wait. Creating a support Ticket…</string>
+    <string name="something_went_wrong_please_tell_what_happened">Something happened. Please tell us what went wrong!</string>
+    <string name="_280">280</string>
 
 </resources>
