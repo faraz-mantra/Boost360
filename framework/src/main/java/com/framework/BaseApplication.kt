@@ -1,7 +1,7 @@
 package com.framework
 
-import android.app.Application
 import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
@@ -12,14 +12,17 @@ import com.framework.rest.errorTicketGenerate.SalesAssignErrorApiClient
 
 open class BaseApplication : MultiDexApplication() {
 
+  val mFTActivityLifecycleCallbacks = FTActivityLifecycleCallbacks()
+
   override fun onCreate() {
     super.onCreate()
     instance = this
+    registerActivityLifecycleCallbacks(mFTActivityLifecycleCallbacks)
     AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
   }
 
   companion object {
-    lateinit var instance: Application
+    lateinit var instance: MultiDexApplication
 
     @JvmStatic
     fun initModule(application: MultiDexApplication) {
@@ -31,6 +34,10 @@ open class BaseApplication : MultiDexApplication() {
     fun apiInitialize() {
       DrScoreApiClient.shared.init(DR_SCORE_BASE)
       SalesAssignErrorApiClient.shared.init(SALES_ASSIST_API)
+    }
+
+    fun currentActivity(): AppCompatActivity? {
+      return (instance as? BaseApplication)?.mFTActivityLifecycleCallbacks?.currentActivity as? AppCompatActivity
     }
   }
 
