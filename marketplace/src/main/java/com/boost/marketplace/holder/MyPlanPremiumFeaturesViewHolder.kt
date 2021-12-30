@@ -16,27 +16,29 @@ class MyPlanPremiumFeaturesViewHolder(binding: ItemMyplanFeaturesBinding):
     private var list = ArrayList<FeaturesModel>()
 
 
-
-    override fun bind(position: Int, item: com.boost.dbcenterapi.recycleritem.BaseRecyclerViewItem) {
+    override fun bind(
+        position: Int,
+        item: com.boost.dbcenterapi.recycleritem.BaseRecyclerViewItem
+    ) {
         super.bind(position, item)
-        val cryptocurrencyItem = list[position]
-        upgradeListItem(cryptocurrencyItem)
-        val isVisble: Boolean =true
-        binding.detailsView.visibility=if (isVisble) View.VISIBLE else View.GONE
-
-//        binding.mainLayout.setOnClickListener {
-//            cryptocurrencyItem.visibility = !cryptocurrencyItem.visibility
+//        val cryptocurrencyItem = list[position]
+//        upgradeListItem(cryptocurrencyItem)
+//        val isVisble: Boolean =true
+//        binding.detailsView.visibility=if (isVisble) View.VISIBLE else View.GONE
 //
-//        }
+////        binding.mainLayout.setOnClickListener {
+////            cryptocurrencyItem.visibility = !cryptocurrencyItem.visibility
+////
+////        }
+//
+//
+//    }
+//    fun upgradeListItem(updateModel: FeaturesModel) {
+//        binding.paidAddonsName.text = updateModel.name
+//        Glide.with(Activity()).load(updateModel.primary_image).into(binding.singlePaidaddonImage)
+//
+//    }
 
 
     }
-    fun upgradeListItem(updateModel: FeaturesModel) {
-        binding.paidAddonsName.text = updateModel.name
-        Glide.with(Activity()).load(updateModel.primary_image).into(binding.singlePaidaddonImage)
-
-    }
-
-
-
 }

@@ -172,7 +172,6 @@
             android:layout_height="0dp"
             android:overScrollMode="never"
             android:scrollbars="none"
-            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -189,6 +188,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
                     style="@style/CardView.Light"
+                    android:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -268,6 +268,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:visibility="visible"
+
                             app:layout_constraintTop_toBottomOf="@+id/paid_addons_title">
 
                             <androidx.recyclerview.widget.RecyclerView
@@ -276,9 +277,10 @@
                                 android:layout_height="wrap_content"
                                 android:nestedScrollingEnabled="true"
                                 android:overScrollMode="never"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/paid_addons_title"
+                                app:layout_constraintTop_toTopOf="parent"
                                 tools:ignore="NotSibling,UnknownId"
                                 tools:itemCount="2"
                                 tools:listitem="@layout/item_myplan_features" />
@@ -293,7 +295,9 @@
                     style="@style/CardView.Light"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="15dp"
+                    android:visibility="visible"
+                    android:elevation="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cardView">
@@ -373,6 +377,7 @@
                                 android:layout_height="wrap_content"
                                 android:nestedScrollingEnabled="true"
                                 android:overScrollMode="never"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/paid_addons_title1"
