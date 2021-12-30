@@ -21,6 +21,6 @@ class ErrorTransparentActivity : BaseActivity<ActivityErrorTransparentBinding, B
     }
 
     private fun initUI() {
-        ErrorOccurredBottomSheet(intent.extras?.getString(IntentConstants.ERROR_CODE_OCCURRED.name)).show(supportFragmentManager, ErrorOccurredBottomSheet::class.java.name)
+        ErrorOccurredBottomSheet(intent.extras?.getString(IntentConstants.ERROR_CODE_OCCURRED.name), intent.extras?.getString(IntentConstants.ERROR_MESSAGE.name)).show(supportFragmentManager, ErrorOccurredBottomSheet::class.java.name)
     }
 }
