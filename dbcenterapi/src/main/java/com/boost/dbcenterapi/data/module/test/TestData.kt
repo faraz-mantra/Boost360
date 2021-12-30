@@ -1,4 +1,4 @@
-package com.boost.marketplace.infra.api.models.test
+package com.boost.dbcenterapi.infra.api.models.test
 
 import com.boost.dbcenterapi.recycleritem.AppBaseRecyclerViewItem
 import com.boost.dbcenterapi.recycleritem.RecyclerViewItemType

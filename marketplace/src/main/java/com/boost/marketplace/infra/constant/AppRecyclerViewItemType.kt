@@ -1,6 +1,7 @@
 package com.boost.marketplace.infra.constant
 
 import androidx.annotation.LayoutRes
+import com.boost.dbcenterapi.recycleritem.RecyclerStringItemType
 import com.boost.dbcenterapi.recycleritem.RecyclerViewItemType
 import com.boost.dbcenterapi.recycleritem.RecyclerViewItemType.*
 import com.boost.marketplace.R
@@ -21,5 +22,14 @@ import com.boost.marketplace.R
       PACKS_BUNDLES -> R.layout.item_packs_list
       FEATURE_DETAILS -> R.layout.item_features_details
       TOP_FEATURES ->R.layout.item_packs_list
+      SECONDARY_IMAGES -> R.layout.secondary_image_item
     }
   }
+
+@LayoutRes
+fun getStringLayout(type: RecyclerStringItemType): Int {
+  return when (type) {
+    RecyclerStringItemType.PAGINATION_LOADER -> R.layout.pagination_string_loader
+    RecyclerStringItemType.STRING_LIST -> R.layout.secondary_string_item
+  }
+}

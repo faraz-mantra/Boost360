@@ -1,4 +1,4 @@
-package com.boost.upgrades.ui.popup
+package com.boost.marketplace.ui.popup
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.viewpager2.widget.ViewPager2
-import com.boost.upgrades.R
-import com.boost.upgrades.adapter.ImagePreviewAdapter
+import com.boost.marketplace.R
+import com.boost.marketplace.adapter.ImagePreviewAdapter
 import kotlinx.android.synthetic.main.image_preview_popup.*
 
 class ImagePreviewPopUpFragement : DialogFragment() {

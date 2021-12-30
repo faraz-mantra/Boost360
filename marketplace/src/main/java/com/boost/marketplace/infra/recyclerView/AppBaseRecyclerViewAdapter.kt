@@ -46,6 +46,15 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       PACKS_BUNDLES->ComparePacksViewHolder(binding as ActivityPacksBinding)
       FEATURE_DETAILS->FeatureDetailsViewHolder(binding as ItemFeaturesDetailsBinding)
       TOP_FEATURES ->TopFeaturesViewHolder(binding as ItemPacksListBinding)
+      SECONDARY_IMAGES -> {
+        //custome view dimentions
+        val secondaryImagesViewHolder = SecondaryImagesViewHolder(binding as SecondaryImageItemBinding)
+        secondaryImagesViewHolder.itemView.layoutParams = ViewGroup.LayoutParams(
+          parent.width / 4,
+          parent.width / 4
+        )
+        return secondaryImagesViewHolder
+      }
     }
   }
 
@@ -96,7 +105,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
 
 
   override fun getItemCount(): Int {
-    return 5//if (list.isNotEmpty()) list.size else 0
+    return if (list.isNotEmpty()) list.size else 0
   }
 
 

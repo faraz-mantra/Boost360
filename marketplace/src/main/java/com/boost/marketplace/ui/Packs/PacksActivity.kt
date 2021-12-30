@@ -1,32 +1,16 @@
 package com.boost.marketplace.ui.Packs
 
-import android.graphics.Color
 import android.os.Handler
-import android.text.SpannableString
-import android.text.style.StrikethroughSpan
-import android.util.Log
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.recycleritem.BaseRecyclerViewItem
 import com.boost.dbcenterapi.recycleritem.RecyclerItemClickListener
-import com.boost.dbcenterapi.upgradeDB.model.CartModel
-import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
-import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityPacksBinding
-import com.boost.marketplace.infra.recyclerView.AppBaseRecyclerViewAdapter
-import com.bumptech.glide.Glide
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.utsman.recycling.setupAdapter
 import kotlinx.android.synthetic.main.activity_packs.*
 import kotlinx.android.synthetic.main.item_packs_list.view.*
-import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.HashMap
 
 class PacksActivity : AppBaseActivity<ActivityPacksBinding, PacksViewModel,>(),
     RecyclerItemClickListener  {
