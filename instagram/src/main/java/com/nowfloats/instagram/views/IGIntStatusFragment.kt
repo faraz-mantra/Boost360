@@ -1,6 +1,8 @@
 package com.nowfloats.instagram.views
 
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.View
 import com.framework.base.BaseActivity
 import com.framework.extensions.gone
@@ -9,6 +11,7 @@ import com.nowfloats.instagram.recyclerView.AppBaseRecyclerViewAdapter
 import com.nowfloats.instagram.base.AppBaseFragment
 import com.framework.models.BaseViewModel
 import com.framework.utils.spanBold
+import com.framework.utils.spanClick
 import com.framework.utils.spanColor
 import com.nowfloats.instagram.R
 import com.nowfloats.instagram.databinding.FragmentIgIntStatusBinding
@@ -18,6 +21,7 @@ import com.nowfloats.instagram.models.IGFeaturesModel
 class IGIntStatusFragment: AppBaseFragment<FragmentIgIntStatusBinding, BaseViewModel>() {
 
 
+    private val TAG = "IGIntStatusFragment"
     enum class Status{
         SUCCESS,
         FAILURE
@@ -70,9 +74,17 @@ class IGIntStatusFragment: AppBaseFragment<FragmentIgIntStatusBinding, BaseViewM
                 binding!!.tvDesc.text = getString(R.string.looks_like_the_process_has_not_been_completed_properly_you_will_not_be_able_to_integrate_boost_360_with_instagram_if_you_do_not_complete_the_previous_steps)
                 binding!!.btnNext.text = getString(R.string.re_check_previous_steps)
 
-                binding!!.tvHelp.text = spanColor(getString(R.string.need_help_contact_support_for_assistance),R.color.colorPrimary,
-                "Contact support")
 
+
+                binding!!.tvHelp.movementMethod = LinkMovementMethod.getInstance()
+                binding!!.tvHelp.text = spanClick(getString(R.string.need_help_contact_support_for_assistance),
+                    {
+                        Log.i(TAG, "setupUi: ")
+
+                    },
+                    "Contact support")
+                binding!!.tvHelp.text = spanColor(getString(R.string.need_help_contact_support_for_assistance),R.color.colorPrimary,
+                    "Contact support")
             }
         }
     }
