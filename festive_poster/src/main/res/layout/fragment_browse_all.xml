@@ -33,7 +33,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:text="Festival"
-                app:fontFamily="@font/inter_medium"
+                app:fontFamily="@font/regular_medium"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_cat" />
 

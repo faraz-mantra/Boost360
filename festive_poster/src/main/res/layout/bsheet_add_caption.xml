@@ -74,7 +74,7 @@
                 android:layout_marginTop="@dimen/size_6"
                 android:layout_marginStart="@dimen/size_20"
                 android:layout_marginBottom="@dimen/size_6"
-                android:fontFamily="@font/inter_regular"
+                android:fontFamily="@font/regular_medium"
                 android:text="Type ‘#’ in the caption to create your own hashtags"
                 android:textColor="@color/grey_light_2"
                 android:textSize="@dimen/text_10"/>
