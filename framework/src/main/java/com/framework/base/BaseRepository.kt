@@ -1,6 +1,5 @@
 package com.framework.base
 
-import android.util.Log
 import com.framework.BaseApplication
 import com.framework.R
 import com.framework.analytics.SentryController
@@ -50,13 +49,7 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
         if (rawRequest.contains(DATA_EXCHANGE_URL).not()) {
           SentryController.captureException(Exception(it.errorBody()?.string() ?: ""))
         }
-
-        //Error Handling Invoked for logging the error to Support Team
-        ErrorFlowInvokeObject.errorOccurred(
-          errorCode = response.status?:0,
-          errorMessage = response.message?:BaseApplication.instance.getString(R.string.something_went_wrong_please_tell_what_happened),
-          correlationId = it.raw().request.headers.toMultimap()["x-correlation-id"]?.get(0)?:"")
-
+        errorFlowInvoke(response, it)
         return@map response
       }
     }.onErrorReturn {
@@ -67,10 +60,6 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
       response.taskcode = taskCode
       onFailure(response, taskCode)
       SentryController.captureException(Exception(it.localizedMessage))
-
-      //Error Handling Invoked for logging the error to Support Team
-      //ErrorFlowInvokeObject.errorOccurred(response.status?:0, "Test Corelation ID ")
-
       response
     }
   }
@@ -107,6 +96,15 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
 
   open fun onSuccess(response: BaseResponse, taskCode: Int) {
 
+  }
+
+  private fun <T> errorFlowInvoke(response: BaseResponse, it: Response<T>) {
+    //Error Handling Invoked for logging the error to Support Team
+    ErrorFlowInvokeObject.errorOccurred(
+      errorCode = response.status ?: 0,
+      errorMessage = response.errorFlowMessage() ?: BaseApplication.instance.getString(R.string.something_went_wrong_please_tell_what_happened),
+      correlationId = it.raw().request.headers.toMultimap()["x-correlation-id"]?.get(0) ?: ""
+    )
   }
 }
 
