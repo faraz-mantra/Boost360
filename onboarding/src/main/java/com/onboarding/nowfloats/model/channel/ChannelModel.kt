@@ -216,6 +216,11 @@ fun ChannelModel.getDrawable(context: Context?): Drawable? {
       R.drawable.ic_google_maps_n,
       context.theme
     )
+    ChannelType.INSTAGRAM -> ResourcesCompat.getDrawable(
+      context.resources,
+      R.drawable.ic_instagram,
+      context.theme
+    )
     else -> null
   }
 }
