@@ -127,14 +127,13 @@
             android:layout_gravity="end"
             android:includeFontPadding="false"
             android:text="@string/edit"
-            android:textColor="@color/yellow_ffb900"
+            android:textColor="@color/colorAccentLight"
             app:fontFamily="@font/semi_bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:textAllCaps="true"
             app:textType="BODY_3" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

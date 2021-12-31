@@ -2,6 +2,10 @@
 <defaultsMap xmlns:tools="http://schemas.android.com/tools"
   tools:ignore="MissingDefaultResource">
   <entry>
+    <key>k_admin_url</key>
+    <value>https://developer.api.boostkit.dev/language/v1/upgrade/get-data?website=5e7a3cf46e0572000109a5b2</value>
+  </entry>
+  <entry>
     <key>festive_poster_name</key>
     <value>Share Festival Poster</value>
   </entry>
@@ -19,6 +23,10 @@
   </entry>
   <entry>
     <key>in_app_update_type_immediate</key>
+    <value>false</value>
+  </entry>
+  <entry>
+    <key>new_onboarding_with_updated_categories_and_gui_active</key>
     <value>false</value>
   </entry>
 </defaultsMap><!-- END xml_defaults -->

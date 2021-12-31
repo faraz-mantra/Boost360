@@ -224,9 +224,9 @@
             app:elevation="@dimen/size_5"
             android:textAllCaps="false"
             android:fontFamily="@font/semi_bold"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorAccentLight"
             app:cornerRadius="@dimen/size_10"
-            app:strokeColor="@color/colorPrimary" />
+            app:strokeColor="@color/colorAccentLight" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

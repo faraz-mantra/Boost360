@@ -6,6 +6,7 @@ import com.dashboard.R
 import com.dashboard.controller.DashboardFragmentContainerActivity
 import com.dashboard.databinding.SheetVerifyOtpEmailNumberBinding
 import com.dashboard.utils.WebEngageController
+import com.dashboard.utils.capitalizeUtil
 import com.dashboard.viewmodel.UserProfileViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
@@ -93,6 +94,8 @@ class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumbe
           (baseActivity as? DashboardFragmentContainerActivity)?.onRefresh()
           dismiss()
         } else {
+          val errorMessage = it.errorIPMessage()
+          if (errorMessage.isNullOrEmpty().not()) binding?.tvInvalidOtp?.text = errorMessage?.capitalizeUtil()
           binding?.tvInvalidOtp?.visible()
         }
         binding?.progressBar?.gone()
@@ -106,6 +109,8 @@ class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumbe
           (baseActivity as? DashboardFragmentContainerActivity)?.onRefresh()
           dismiss()
         } else {
+          val errorMessage = it.errorIPMessage()
+          if (errorMessage.isNullOrEmpty().not()) binding?.tvInvalidOtp?.text = errorMessage?.capitalizeUtil()
           binding?.tvInvalidOtp?.visible()
         }
         binding?.progressBar?.gone()

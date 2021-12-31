@@ -18,6 +18,8 @@ object Constants {
         setShimmer(shimmer)
     }
 
+    const val AUTH_KEY="597ee93f5d64370820a6127c"
+
     val MARKET_PLACE_ORIGIN_NAV_DATA="MP_NAV_DATA"
     val MARKET_PLACE_ORIGIN_ACTIVITY="MP_ORIGIN_ACTIVITY"
 

@@ -8,7 +8,9 @@ data class ServiceSearchListingResponse(
   val statusCode: Int? = null,
   @field:SerializedName("Result")
   val result: Result? = null,
-) : BaseResponse()
+) : BaseResponse(){
+  var isRefreshList: Boolean = false
+}
 
 data class Result(
   @field:SerializedName("Paging")

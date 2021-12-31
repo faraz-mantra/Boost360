@@ -135,4 +135,68 @@
     <item name="android:windowSoftInputMode">adjustResize</item>
   </style>
 
+
+  <style name="CustomRoundedYellowButton">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">52dp</item>
+    <item name="backgroundTint">@color/disable_enable_button_selector</item>
+    <item name="android:textAllCaps">false</item>
+    <item name="textColor">@color/white</item>
+    <item name="android:letterSpacing">0.0</item>
+    <item name="android:textColor">@color/white</item>
+    <item name="fontFamily">@font/semi_bold</item>
+    <item name="textSize">@dimen/body_2</item>
+    <item name="cornerRadius">10dp</item>
+  </style>
+
+  <style name="Theme.MaterialComponent.NoAction" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="bottomSheetDialogTheme">@style/BottomSheetTheme_windowsoft_resize</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:backgroundDimEnabled">true</item>
+    <item name="colorPrimaryDark">@android:color/transparent</item>
+  </style>
+
+  <style name="BottomSheetTheme_windowsoft_resize" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+    <item name="colorSecondary">@color/black_4a4a4a</item>
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowIsFloating">false</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:windowSoftInputMode">adjustResize</item>
+    <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
+  </style>
+
+  <style name="ButtonStyle">
+    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="fontFamily">@font/semi_bold</item>
+    <item name="android:textColor">@color/white</item>
+    <item name="android:paddingRight">6dp</item>
+    <item name="android:paddingStart">6dp</item>
+    <item name="android:textAllCaps">false</item>
+    <item name="android:drawableEnd">@null</item>
+    <item name="android:layout_height">46dp</item>
+    <item name="android:foreground">@null</item>
+  </style>
+
+  <style name="ButtonStyle.Red">
+    <item name="android:textSize">14sp</item>
+    <item name="android:stateListAnimator">@null</item>
+    <item name="android:gravity">center</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="android:textAllCaps">false</item>
+    <item name="paddingStart">28dp</item>
+    <item name="paddingEnd">28dp</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">42dp</item>
+    <item name="height">36dp</item>
+    <item name="textSize">14sp</item>
+    <item name="android:drawablePadding">8dp</item>
+    <item name="android:layout_gravity">center_horizontal</item>
+    <item name="android:textColor">@color/colorAccentLight</item>
+    <item name="android:background">@drawable/error_colored_rounded_rect</item>
+  </style>
+
 </resources>

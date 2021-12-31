@@ -276,7 +276,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
   }
 
   private fun openSuccessDialog() {
-    val websiteUpdateSheet = WebsiteThemeUpdatedSuccessfullySheet()
+    val websiteUpdateSheet = WebsiteThemeUpdatedSuccessfullySheet(isRepublishFlow = false)
     websiteUpdateSheet.onClicked = {
       when (it) {
         TypeSuccess.VISIT_WEBSITE.name -> {
@@ -285,7 +285,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
         TypeSuccess.CLOSE.name -> goBack()
       }
     }
-    websiteUpdateSheet.show(parentFragmentManager, WebSiteThemeResetBottomSheet::javaClass.name)
+    websiteUpdateSheet.show(baseActivity.supportFragmentManager, WebSiteThemeResetBottomSheet::javaClass.name)
   }
 
   private fun goBack() {

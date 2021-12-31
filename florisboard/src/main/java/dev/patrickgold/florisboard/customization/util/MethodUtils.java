@@ -48,56 +48,7 @@ public class MethodUtils {
     }
   }
 
-
-  public static void startBoostActivity(Context mContext) {
-    try {
-      PackageManager packageManager = mContext.getPackageManager();
-      if (!isPackageInstalled(mContext.getPackageName(), packageManager)) {
-        Toast.makeText(mContext, "App is not installed", Toast.LENGTH_SHORT).show();
-        return;
-      }
-      Intent LaunchIntent = packageManager.getLaunchIntentForPackage(mContext.getPackageName());
-      mContext.startActivity(LaunchIntent);
-    } catch (Exception e) {
-      Toast.makeText(mContext, "Unable to open Boost App ", Toast.LENGTH_SHORT).show();
-    }
-  }
-
-  public static void startKeyboardActivity(Context mContext) {
-    try {
-      PackageManager packageManager = mContext.getPackageManager();
-      if (!isPackageInstalled(mContext.getPackageName(), packageManager)) {
-        Toast.makeText(mContext, "App is not installed", Toast.LENGTH_SHORT).show();
-        return;
-      }
-      Intent intent = new Intent(mContext, Class.forName("com.nowfloats.helper.AppFragmentContainerActivity"));
-      intent.putExtra("FRAGMENT_TYPE", "ACCOUNT_KEYBOARD");
-      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-      mContext.startActivity(intent);
-    } catch (Exception e) {
-      e.printStackTrace();
-      startBoostActivity(mContext);
-    }
-  }
-
-  public static void startStaffActivity(Context mContext) {
-    try {
-      PackageManager packageManager = mContext.getPackageManager();
-      if (!isPackageInstalled(mContext.getPackageName(), packageManager)) {
-        Toast.makeText(mContext, "App is not installed", Toast.LENGTH_SHORT).show();
-        return;
-      }
-      Intent intent = new Intent(mContext, Class.forName("com.appservice.ui.staffs.ui.StaffFragmentContainerActivity"));
-      intent.putExtra("FRAGMENT_TYPE", "STAFF_PROFILE_LISTING_FRAGMENT");
-      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-      mContext.startActivity(intent);
-    } catch (Exception e) {
-      e.printStackTrace();
-      startBoostActivity(mContext);
-    }
-  }
-
-  private static boolean isPackageInstalled(String packagename, PackageManager manager) {
+  public static boolean isPackageInstalled(String packagename, PackageManager manager) {
     try {
       manager.getPackageInfo(packagename, 0);
       return true;

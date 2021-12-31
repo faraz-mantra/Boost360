@@ -10,6 +10,7 @@ import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerItem
 import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerViewHolder
 import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
 import dev.patrickgold.florisboard.customization.model.response.Photo
+import dev.patrickgold.florisboard.customization.util.RecyclerViewActionType
 import dev.patrickgold.florisboard.databinding.AdapterItemPhotosBinding
 import dev.patrickgold.florisboard.ime.core.FlorisApplication
 
@@ -30,7 +31,7 @@ class PhotoViewHolder(binding: AdapterItemPhotosBinding, val listener: OnItemCli
     }
     binding.root.setOnClickListener {
       photo.selected = !photo.selected
-      listener?.onItemClick(position, photo)
+      listener?.onItemClick(position, photo, RecyclerViewActionType.PHOTO_CLICK.ordinal)
     }
   }
 }

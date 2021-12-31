@@ -10,7 +10,7 @@
     android:strokeWidth="1"
     android:strokeColor="#EEEEEE" />
   <path
-    android:fillColor="#F2C94C"
+    android:fillColor="@color/colorAccent"
     android:fillType="evenOdd"
     android:pathData="M15.7029,23.9291C20.3027,23.9291 24.0316,20.2003 24.0316,15.6004C24.0316,11.0006 20.3027,7.2717 15.7029,7.2717C11.1031,7.2717 7.3742,11.0006 7.3742,15.6004C7.3742,20.2003 11.1031,23.9291 15.7029,23.9291Z" />
   <path

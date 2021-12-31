@@ -2,6 +2,9 @@ package com.boost.presignin.rest
 
 object EndPoints {
 
+  const val BOOST_KIT_DEV_BASE = "https://developer.api.boostkit.dev/"
+  const val GET_CATEGORIES="language/v1/categories/get-data"
+
   //TODO NFX API WITH FLOAT
   const val WITH_FLOATS_BASE = "https://api.withfloats.com/"
   const val PUT_CREATE_BUSINESS_URL = "discover/v5/FloatingPoint/create"
@@ -30,8 +33,9 @@ object EndPoints {
   const val GET_FP_DETAILS = "/Discover/v3/floatingPoint/nf-app/{fpid}"
   const val POST_BUSINESS_DOMAIN_URL = "discover/v1/floatingPoint/verifyUniqueTag"
   const val POST_BUSINESS_DOMAIN_SUGGEST = "discover/v1/floatingPoint/suggestTag"
-
   const val REGISTER_CHANNEL = "/Discover/v1/floatingpoint/notification/registerChannel"
+  //FIREBASE TOKEN
+  const val GET_FIREBASE_TOKEN = "discover/v1/FloatingPoint/GetFirebaseAuthToken"
 
   //todo NFX API
   var NFX_WITH_NOWFLOATS: String = "https://nfx.withfloats.com"
@@ -39,5 +43,10 @@ object EndPoints {
   //todo webaction boost kit api url
   const val WEB_ACTION_BOOST_KIT_API_URL = "https://webaction.api.boostkit.dev"
   const val GET_DATA = "/api/v1/kycdoc/get-data"
+
+  const val RIA_WITH_FLOATS_BASE = "https://ria.withfloats.com"
+  const val WHATSAPP_OPT_IN="/api/WhatsApp/OptIn"
+
 }
+
 

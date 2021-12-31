@@ -24,7 +24,7 @@
                 android:drawableStart="@drawable/ic_globe_yellow"
                 android:drawableEnd="@drawable/ic_arrow_right_black"
                 android:drawablePadding="8dp"
-                android:drawableTint="@color/colorPrimary"
+                android:drawableTint="@color/colorAccent"
                 android:gravity="center_vertical|start"
                 android:textAlignment="gravity"
                 android:paddingHorizontal="@dimen/size_12"

@@ -46,11 +46,11 @@ interface ApiInterface {
 //    fun CreatePurchaseOrder(@Body createPurchaseOrderRequest: CreatePurchaseOrderRequest): Observable<CreatePurchaseOrderResponse>
 
   @Headers("Content-Type: application/json")
-  @POST("http://api2.withfloats.com/Payment/v10/floatingpoint/CreatePurchaseOrder")
+  @POST("https://api2.withfloats.com/Payment/v10/floatingpoint/CreatePurchaseOrder")
   fun CreatePurchaseOrder(@Header("Authorization") auth: String, @Body createPurchaseOrderV2: CreatePurchaseOrderV2): Observable<CreatePurchaseOrderResponse>
 
   @Headers("Content-Type: application/json")
-  @POST("http://api2.withfloats.com/Payment/v11/floatingpoint/CreatePurchaseOrder")
+  @POST("https://api2.withfloats.com/Payment/v11/floatingpoint/CreatePurchaseOrder")
   fun CreatePurchaseAutoRenewOrder(@Header("Authorization") auth: String, @Body createPurchaseOrderV2: CreatePurchaseOrderV2): Observable<CreatePurchaseOrderResponse>
 
   @Headers("Content-Type: application/json")
