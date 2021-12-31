@@ -48,8 +48,8 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
         val rawRequest = it.raw().toString()
         if (rawRequest.contains(DATA_EXCHANGE_URL).not()) {
           SentryController.captureException(Exception(it.errorBody()?.string() ?: ""))
+          errorFlowInvoke(response, it)
         }
-        errorFlowInvoke(response, it)
         return@map response
       }
     }.onErrorReturn {
