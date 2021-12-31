@@ -1,7 +1,7 @@
 package com.framework.errorHandling
 
 import com.framework.R
-import com.framework.base.BaseBottomSheetDialog
+import com.framework.base.NewBaseBottomSheetDialog
 import com.framework.databinding.BsheetReportAnIssueBinding
 import com.framework.extensions.afterTextChanged
 import com.framework.extensions.observeOnce
@@ -10,7 +10,7 @@ import com.framework.models.toLiveData
 import com.framework.rest.errorTicketGenerate.SalesAssistErrorRepository
 import com.framework.utils.fromHtml
 
-class ReportIssueBottomSheet(val errorCode: String?) : BaseBottomSheetDialog<BsheetReportAnIssueBinding, BaseViewModel>() {
+class ReportIssueBottomSheet(val errorCode: String?) : NewBaseBottomSheetDialog<BsheetReportAnIssueBinding, BaseViewModel>() {
 
   private lateinit var progressBottomSheet: ProgressBottomSheet
 
@@ -25,13 +25,9 @@ class ReportIssueBottomSheet(val errorCode: String?) : BaseBottomSheetDialog<Bsh
   override fun onCreateView() {
     progressBottomSheet = ProgressBottomSheet()
     binding?.tvErrorCode?.text = fromHtml("<font color=#4a4a4a>${getString(R.string.error_code)}</font> <font color=#eb5757>${errorCode ?: "N/A"}</font>")
-    binding?.btnDone?.setOnClickListener {
-      createErrorTicket(errorCode.toString())
-    }
+    binding?.btnDone?.setOnClickListener { createErrorTicket(errorCode.toString()) }
 
-    binding?.ivClose?.setOnClickListener {
-      finishWithActivity()
-    }
+    binding?.ivClose?.setOnClickListener { dismiss() }
 
     binding?.etErrorDesc?.afterTextChanged {
       binding?.tvWordCount?.text = (280 - it.length).toString()
@@ -40,7 +36,7 @@ class ReportIssueBottomSheet(val errorCode: String?) : BaseBottomSheetDialog<Bsh
   }
 
   fun createErrorTicket(errorCode: String) {
-    progressBottomSheet.show(parentFragmentManager, ProgressBottomSheet::class.java.name)
+    progressBottomSheet.show(baseActivity.supportFragmentManager, ProgressBottomSheet::class.java.name)
     SalesAssistErrorRepository.createErrorTicket(
       fpTag = sessionManager?.fpTag ?: "SHUBHAMCOACHING",
       subject = errorCode,
@@ -49,17 +45,12 @@ class ReportIssueBottomSheet(val errorCode: String?) : BaseBottomSheetDialog<Bsh
     ).toLiveData().observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         progressBottomSheet.dismiss()
+        ThankYouResponseBottomSheet().show(baseActivity.supportFragmentManager, ThankYouResponseBottomSheet::class.java.name)
         dismiss()
-        ThankYouResponseBottomSheet().show(parentFragmentManager, ThankYouResponseBottomSheet::class.java.name)
       } else {
         progressBottomSheet.dismiss()
         showShortToast(getString(R.string.places_try_again))
       }
     })
   }
-
-  fun finishWithActivity() {
-    dismiss()
-  }
-
 }

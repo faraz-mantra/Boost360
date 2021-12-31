@@ -62,6 +62,9 @@ import com.framework.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_WEBSITE
 import com.framework.utils.*
+import com.framework.utils.DateUtils.getAmountYearDate
+import com.framework.utils.DateUtils.getCurrentDate
+import com.framework.utils.DateUtils.parseDate
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.framework.webengageconstant.*
 import com.google.firebase.ktx.Firebase
@@ -1124,8 +1127,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 fun UserSessionManager.getRequestMap(startDate: String, endDate: String): Map<String, String> {
   val map = HashMap<String, String>()
   map["batchType"] = VisitsModelResponse.BatchType.yy.name
-  map["startDate"] = startDate
-  map["endDate"] = endDate
+  map["startDate"] = if (startDate.isNotEmpty()) startDate else getCurrentDate().parseDate(DateUtils.FORMAT_YYYY_MM_DD) ?: ""
+  map["endDate"] = if (endDate.isNotEmpty()) endDate else getAmountYearDate(-5).parseDate(DateUtils.FORMAT_YYYY_MM_DD) ?: ""
   map["clientId"] = clientId
   map["scope"] = if (this.iSEnterprise == "true") "Enterprise" else "Store"
   return map
@@ -1137,8 +1140,7 @@ fun UserSessionManager?.checkIsPremiumUnlock(value: String?): Boolean {
 
 fun getLocalSession(session: UserSessionManager): LocalSessionModel {
   var imageUri = session.getFPDetails(GET_FP_DETAILS_LogoUrl)
-  if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) imageUri =
-    BASE_IMAGE_URL + imageUri
+  if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) imageUri = BASE_IMAGE_URL + imageUri
   val city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
   val country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
   val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country"

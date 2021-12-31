@@ -1,178 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <androidx.cardview.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:cardBackgroundColor="@color/white"
+      app:cardCornerRadius="20dp"
+      app:cardElevation="2dp"
+      app:cardUseCompatPadding="true"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent">
+        android:layout_height="match_parent">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="2dp"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/iv_close"
+          android:layout_width="16dp"
+          android:layout_height="16dp"
+          android:layout_marginTop="19dp"
+          android:layout_marginEnd="22dp"
+          android:src="@drawable/ic_close_grey"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_report_issue"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="27dp"
+          android:layout_marginTop="26dp"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="start"
+          android:text="@string/reporting_an_issue"
+          android:textColor="@color/black_4a4a4a"
+          android:textSize="24sp"
+          app:layout_constraintEnd_toStartOf="@+id/iv_close"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
 
-                <com.framework.views.customViews.CustomImageView
-                    android:id="@+id/iv_close"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginTop="19dp"
-                    android:layout_marginEnd="22dp"
-                    android:src="@drawable/ic_close_grey"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_error_code"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="27dp"
+          android:layout_marginTop="2dp"
+          android:fontFamily="@font/regular"
+          android:gravity="start"
+          android:textColor="@color/black_4a4a4a"
+          android:textSize="12sp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/tv_report_issue"
+          tools:text="Error code 4567356342RTREWERGGFD234532456645654" />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tv_report_issue"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="27dp"
-                    android:layout_marginTop="26dp"
-                    android:fontFamily="@font/semi_bold"
-                    android:gravity="start"
-                    android:text="@string/reporting_an_issue"
-                    android:textColor="@color/black_4a4a4a"
-                    android:textSize="24sp"
-                    app:layout_constraintEnd_toStartOf="@+id/iv_close"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+        <View
+          android:id="@+id/vw_off_white"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:layout_marginTop="21dp"
+          android:background="@drawable/rounded_rect_20_rad"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.0"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/tv_error_code"
+          app:layout_constraintVertical_bias="1.0" />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tv_error_code"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="27dp"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/regular"
-                    android:gravity="start"
-                    tools:text="Error code 4567356342RTREWERGGFD234532456645654"
-                    android:textColor="@color/black_4a4a4a"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_report_issue" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/customTextViewdaf"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="20dp"
+          android:fontFamily="@font/regular"
+          android:gravity="start"
+          android:text="@string/share_what_happened"
+          android:textColor="@color/black_4a4a4a"
+          android:textSize="12sp"
+          app:layout_constraintStart_toStartOf="@+id/tv_error_code"
+          app:layout_constraintTop_toTopOf="@+id/vw_off_white" />
 
-                <View
-                    android:id="@+id/vw_off_white"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="21dp"
-                    android:background="@drawable/rounded_rect_20_rad"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_error_code"
-                    app:layout_constraintVertical_bias="1.0" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_word_count"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/regular"
+          android:gravity="start"
+          android:text="@string/_280"
+          android:textColor="@color/black_4a4a4a"
+          android:textSize="11sp"
+          app:layout_constraintBottom_toBottomOf="@+id/customTextViewdaf"
+          app:layout_constraintEnd_toEndOf="@+id/et_error_desc"
+          app:layout_constraintTop_toTopOf="@+id/customTextViewdaf" />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/customTextViewdaf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/regular"
-                    android:gravity="start"
-                    android:text="@string/share_what_happened"
-                    android:textColor="@color/black_4a4a4a"
-                    android:textSize="12sp"
-                    app:layout_constraintStart_toStartOf="@+id/tv_error_code"
-                    app:layout_constraintTop_toTopOf="@+id/vw_off_white" />
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/et_error_desc"
+          android:layout_width="0dp"
+          android:layout_height="95dp"
+          android:layout_marginHorizontal="27dp"
+          android:layout_marginTop="4dp"
+          android:background="@drawable/rounded_rect_10_rad"
+          android:fontFamily="@font/regular"
+          android:gravity="start|top"
+          android:hint="@string/please_share_what_happened_with_steps_if_possible_which_led_to_this_error"
+          android:maxLength="280"
+          android:paddingHorizontal="12dp"
+          android:paddingVertical="8dp"
+          android:textColorHint="@color/grey_BBBBBB"
+          android:textSize="14sp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/customTextViewdaf" />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tv_word_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/regular"
-                    android:gravity="start"
-                    android:text="@string/_280"
-                    android:textColor="@color/black_4a4a4a"
-                    android:textSize="11sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/customTextViewdaf"
-                    app:layout_constraintEnd_toEndOf="@+id/et_error_desc"
-                    app:layout_constraintTop_toTopOf="@+id/customTextViewdaf" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/customTextViewdafacasc"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="12dp"
+          android:fontFamily="@font/regular"
+          android:gravity="start"
+          android:text="@string/how_should_we_inform_you_about_the_resolution"
+          android:textColor="@color/black_4a4a4a"
+          android:textSize="12sp"
+          app:layout_constraintEnd_toEndOf="@+id/et_error_desc"
+          app:layout_constraintStart_toStartOf="@+id/et_error_desc"
+          app:layout_constraintTop_toBottomOf="@+id/et_error_desc" />
 
-                <com.framework.views.customViews.CustomEditText
-                    android:id="@+id/et_error_desc"
-                    android:layout_width="0dp"
-                    android:layout_height="95dp"
-                    android:layout_marginTop="4dp"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/regular"
-                    android:maxLength="280"
-                    android:gravity="start|top"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp"
-                    android:textColorHint="@color/grey_BBBBBB"
-                    android:hint="@string/please_share_what_happened_with_steps_if_possible_which_led_to_this_error"
-                    android:background="@drawable/rounded_rect_10_rad"
-                    android:layout_marginHorizontal="27dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/customTextViewdaf" />
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/et_error_desccasc"
+          android:layout_width="0dp"
+          android:layout_height="37dp"
+          android:layout_marginTop="4dp"
+          android:background="@drawable/rounded_rect_10_rad"
+          android:ellipsize="end"
+          android:fontFamily="@font/regular"
+          android:gravity="start|top"
+          android:hint="@string/your_mobile_number_or_email_id"
+          android:inputType="text"
+          android:maxLength="50"
+          android:maxLines="1"
+          android:minLines="1"
+          android:paddingHorizontal="12dp"
+          android:paddingVertical="8dp"
+          android:scrollHorizontally="true"
+          android:textColorHint="@color/grey_BBBBBB"
+          android:textSize="14sp"
+          app:layout_constraintEnd_toEndOf="@+id/customTextViewdafacasc"
+          app:layout_constraintStart_toStartOf="@+id/customTextViewdafacasc"
+          app:layout_constraintTop_toBottomOf="@+id/customTextViewdafacasc" />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/customTextViewdafacasc"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:fontFamily="@font/regular"
-                    android:gravity="start"
-                    android:text="@string/how_should_we_inform_you_about_the_resolution"
-                    android:textColor="@color/black_4a4a4a"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="@+id/et_error_desc"
-                    app:layout_constraintStart_toStartOf="@+id/et_error_desc"
-                    app:layout_constraintTop_toBottomOf="@+id/et_error_desc" />
+        <com.framework.views.customViews.CustomButton
+          android:id="@+id/btn_done"
+          style="@style/CustomRoundedYellowButton"
+          android:layout_width="0dp"
+          android:layout_height="42dp"
+          android:layout_marginTop="26dp"
+          android:layout_marginBottom="33dp"
+          android:background="@drawable/fab_rounded_square_bg"
+          android:enabled="false"
+          android:stateListAnimator="@null"
+          android:text="@string/submit_report"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="@+id/et_error_desccasc"
+          app:layout_constraintStart_toStartOf="@+id/et_error_desccasc"
+          app:layout_constraintTop_toBottomOf="@+id/et_error_desccasc" />
 
-                <com.framework.views.customViews.CustomEditText
-                    android:id="@+id/et_error_desccasc"
-                    android:layout_width="0dp"
-                    android:layout_height="37dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/rounded_rect_10_rad"
-                    android:fontFamily="@font/regular"
-                    android:gravity="start|top"
-                    android:paddingHorizontal="12dp"
-                    android:hint="@string/your_mobile_number_or_email_id"
-                    android:paddingVertical="8dp"
-                    android:maxLines="1"
-                    android:maxLength="50"
-                    android:minLines="1"
-                    android:scrollHorizontally="true"
-                    android:inputType="text"
-                    android:ellipsize="end"
-                    android:textColorHint="@color/grey_BBBBBB"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="@+id/customTextViewdafacasc"
-                    app:layout_constraintStart_toStartOf="@+id/customTextViewdafacasc"
-                    app:layout_constraintTop_toBottomOf="@+id/customTextViewdafacasc" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <com.framework.views.customViews.CustomMaterialButton
-                    android:id="@+id/btn_done"
-                    style="@style/CustomRoundedYellowButton"
-                    android:layout_width="0dp"
-                    android:layout_marginTop="26dp"
-                    android:layout_marginBottom="33dp"
-                    android:enabled="false"
-                    android:text="@string/submit_report"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/et_error_desccasc"
-                    app:layout_constraintStart_toStartOf="@+id/et_error_desccasc"
-                    app:layout_constraintTop_toBottomOf="@+id/et_error_desccasc" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -22,7 +23,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : BaseViewModel?> : BottomSheetDialogFragment(), View.OnClickListener {
+abstract class NewBaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : BaseViewModel?> : BottomSheetDialogFragment(), View.OnClickListener {
 
   companion object {
     val RESULT_OK = -1
@@ -35,7 +36,7 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
 
   var callback: BottomSheetDialogResult? = null
 
-  protected lateinit var baseActivity: BaseActivity<*, *>
+  protected lateinit var baseActivity: AppCompatActivity
   protected lateinit var root: View
   protected var viewModel: ViewModel? = null
   protected var binding: Binding? = null
@@ -49,10 +50,9 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
   protected lateinit var dialog: BottomSheetDialog
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    baseActivity = activity as BaseActivity<*, *>
+    baseActivity = activity as AppCompatActivity
     binding = DataBindingUtil.inflate(inflater, getLayout(), container, false)
     binding?.lifecycleOwner = this
-    navigator = Navigator(baseActivity)
     sessionManager = UserSessionManager(baseActivity)
     viewModel = ViewModelProviders.of(this).get(getViewModelClass())
     return binding?.root
@@ -72,7 +72,7 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
           }
           state = getBottomSheetInitialState()
           isSkipCollapse()?.let { it1 -> skipCollapsed = it1 }
-          this@BaseBottomSheetDialog.isDraggable()?.let { it1 -> isDraggable = it1 }
+          this@NewBaseBottomSheetDialog.isDraggable()?.let { it1 -> isDraggable = it1 }
         }
         bottomSheet.parent.requestLayout()
       } catch (e: Exception) {
@@ -132,13 +132,14 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     }
   }
 
-  open fun addFragment(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean,showAnim:Boolean=false) {
+  open fun addFragment(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean, showAnim:Boolean=false) {
     if (activity?.supportFragmentManager?.isDestroyed == true) return
     if (containerID == null || fragment == null) return
 
     val fragmentTransaction = baseActivity.supportFragmentManager.beginTransaction()
     if (showAnim){
       fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+
     }
     if (addToBackStack) {
       fragmentTransaction.addToBackStack(fragment.javaClass.name)
@@ -146,13 +147,14 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     fragmentTransaction.add(containerID, fragment, fragment.javaClass.name).commit()
   }
 
-  open fun addFragmentReplace(containerId: Int?, fragment: Fragment?, addToBackStack: Boolean,showAnim:Boolean=false) {
+  open fun addFragmentReplace(containerId: Int?, fragment: Fragment?, addToBackStack: Boolean, showAnim:Boolean=false) {
     if (requireActivity().supportFragmentManager.isDestroyed) return
     if (containerId == null || fragment == null) return
 
     val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
     if (showAnim){
-      fragmentTransaction?.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+      fragmentTransaction?.
+      setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
     }
     if (addToBackStack) {
       fragmentTransaction.addToBackStack(fragment.javaClass.name)
