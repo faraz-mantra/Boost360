@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.framework.utils.InAppReviewUtils
 import com.framework.views.customViews.CustomToolbar
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
@@ -159,6 +160,7 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    InAppReviewUtils.showInAppReview(this,InAppReviewUtils.Events.WEBSITE_PREVIEW_CROSS)
     finish()
     return false
   }

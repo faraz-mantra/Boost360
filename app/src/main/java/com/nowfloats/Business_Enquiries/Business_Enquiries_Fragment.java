@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.framework.firebaseUtils.firestore.FirestoreManager;
+import com.framework.utils.InAppReviewUtils;
 import com.framework.views.zero.old.AppFragmentZeroCase;
 import com.framework.views.zero.old.AppOnZeroCaseClicked;
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
@@ -193,5 +194,14 @@ public class Business_Enquiries_Fragment extends Fragment implements AppOnZeroCa
   @Override
   public void appOnBackPressed() {
 
+  }
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    if (adapter.getItemCount()>1){
+      InAppReviewUtils.INSTANCE.showInAppReview(requireActivity(),InAppReviewUtils.Events.OUT_OF_CUSTOMER_MESSAGES);
+
+    }
   }
 }

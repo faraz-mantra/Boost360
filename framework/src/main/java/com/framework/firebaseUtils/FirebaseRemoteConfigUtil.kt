@@ -3,6 +3,7 @@ package com.framework.firebaseUtils
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.framework.R
+import com.framework.utils.InAppReviewUtils
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfig
@@ -70,6 +71,10 @@ object FirebaseRemoteConfigUtil {
     } else {
       UpdateType.FLEXIBLE
     }
+  }
+
+  fun isInAppReviewFlagEnabled(event:InAppReviewUtils.Events): Boolean {
+    return remoteConfig?.getBoolean(event.name) ?: false
   }
 }
 
