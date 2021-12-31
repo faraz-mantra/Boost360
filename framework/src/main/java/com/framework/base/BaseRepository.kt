@@ -1,14 +1,14 @@
 package com.framework.base
 
+import com.framework.BaseApplication
+import com.framework.R
 import com.framework.analytics.SentryController
+import com.framework.errorHandling.ErrorFlowInvokeObject
 import com.framework.exceptions.BaseException
 import com.framework.exceptions.NoNetworkException
 import com.framework.utils.NetworkUtils
 import io.reactivex.Observable
-import okhttp3.Request
 import okhttp3.ResponseBody
-import org.json.JSONObject
-import retrofit2.HttpException
 import retrofit2.Response
 import retrofit2.Retrofit
 
@@ -49,6 +49,7 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
         if (rawRequest.contains(DATA_EXCHANGE_URL).not()) {
           SentryController.captureException(Exception(it.errorBody()?.string() ?: ""))
         }
+        errorFlowInvoke(response, it)
         return@map response
       }
     }.onErrorReturn {
@@ -95,6 +96,15 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
 
   open fun onSuccess(response: BaseResponse, taskCode: Int) {
 
+  }
+
+  private fun <T> errorFlowInvoke(response: BaseResponse, it: Response<T>) {
+    //Error Handling Invoked for logging the error to Support Team
+    ErrorFlowInvokeObject.errorOccurred(
+      errorCode = response.status ?: 0,
+      errorMessage = response.errorFlowMessage() ?: BaseApplication.instance.getString(R.string.something_went_wrong_please_tell_what_happened),
+      correlationId = it.raw().request.headers.toMultimap()["x-correlation-id"]?.get(0) ?: ""
+    )
   }
 }
 

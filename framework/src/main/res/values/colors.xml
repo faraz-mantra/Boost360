@@ -51,5 +51,11 @@
   <color name="colorLightBlack">#333333</color>
   <color name="gray_e5e5e5">#E5E5E5</color>
   <color name="grey_f0f0f0">#f0f0f0</color>
+  <color name="red_E39595">#E39595</color>
+  <color name="grey_f8f8f8">#F8F8F8</color>
+  <color name="grey_E2E2E2">#E2E2E2</color>
+  <color name="grey_BBBBBB">#BBBBBB</color>
+
+  <color name="color_error_code">#eb5757</color>
 
 </resources>
