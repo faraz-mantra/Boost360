@@ -3,6 +3,7 @@ package com.framework.base
 import okhttp3.ResponseBody
 import okio.Buffer
 import okio.BufferedSource
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.Serializable
 import java.nio.charset.Charset
@@ -18,6 +19,7 @@ open class BaseResponse(
   var responseBody: ResponseBody? = null,
 ) : Serializable {
 
+  //Deprecate
   fun message(): String {
     val message = message ?: "Something went wrong!"
     return try {
@@ -28,6 +30,7 @@ open class BaseResponse(
     }
   }
 
+  //Deprecate
   fun errorMessage(): String? {
     val message = message ?: "Something went wrong!"
     return try {
@@ -39,6 +42,7 @@ open class BaseResponse(
     }
   }
 
+  //Deprecate
   fun errorNMessage(): String? {
     val message = message ?: "Something went wrong!"
     return try {
@@ -50,24 +54,69 @@ open class BaseResponse(
     }
   }
 
-  fun errorFlowMessage(): String? {
-    val message = message
-    return try {
-      val jsonObj = JSONObject(message)
-      val error = jsonObj.getJSONArray("errors")
-      val jsonResult = if (error.length() >= 1) error.get(0) as? JSONObject else null
-      return jsonResult?.getString("message") ?: jsonObj.getString("Message") ?: jsonObj.getString("EXCEPTION") ?: message
-    } catch (ex: Exception) {
-      message
-    }
-  }
-
+  //Deprecate
   fun errorIPMessage(): String? {
     val message = message
     return try {
       val jsonObj = JSONObject(message)
       val error = jsonObj.getJSONObject("Error").getJSONObject("ErrorList")
       return error.getString("INVALID PARAMETERS")
+    } catch (ex: Exception) {
+      message
+    }
+  }
+
+  //New Error message filter
+  fun errorFlowMessage(): String? {
+    val message = message
+    return try {
+      val jsonObj = JSONObject(message)
+      val error: JSONArray? = jsonObj.getJSONArray("errors")
+      val jsonResult = if (error?.length() ?: 0 >= 1) error?.get(0) as? JSONObject else null
+      return jsonResult?.getString("message") ?: jsonObj.getString("Message") ?: jsonObj.getString("EXCEPTION") ?: messageN()
+    } catch (ex: Exception) {
+      messageN()
+    }
+  }
+
+  fun messageN(): String? {
+    val message = message
+    return try {
+      val jsonObj = JSONObject(message)
+      jsonObj.getString("Message") ?: jsonObj.getString("message") ?: errorMessageN()
+    } catch (ex: Exception) {
+      errorMessageN()
+    }
+  }
+
+  fun errorMessageN(): String? {
+    val message = message
+    return try {
+      val jsonObj = JSONObject(message)
+      val error: JSONObject? = jsonObj.getJSONObject("Error")
+      error?.getString("ErrorDescription") ?: error?.getString("errorDescription") ?: errorNMessageN()
+    } catch (ex: Exception) {
+      errorNMessageN()
+    }
+  }
+
+  fun errorNMessageN(): String? {
+    val message = message
+    return try {
+      val jsonObj = JSONObject(message)
+      val error: JSONObject? = jsonObj.getJSONObject("Error")?.getJSONObject("ErrorList")
+      return error?.getString("EXCEPTION") ?: errorIPMessageN()
+    } catch (ex: Exception) {
+      errorIPMessageN()
+    }
+  }
+
+  fun errorIPMessageN(): String? {
+    val message = message
+    return try {
+      val jsonObj = JSONObject(message)
+      val error: JSONObject? = jsonObj.getJSONObject("Error")?.getJSONObject("ErrorList")
+      return error?.getString("INVALID PARAMETERS")
     } catch (ex: Exception) {
       message
     }

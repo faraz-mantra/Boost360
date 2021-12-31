@@ -2,14 +2,14 @@ package com.framework.errorHandling
 
 import android.view.View
 import com.framework.R
-import com.framework.base.BaseBottomSheetDialog
+import com.framework.base.NewBaseBottomSheetDialog
 import com.framework.databinding.BsheetErrorOccurredBinding
 import com.framework.glide.util.glideLoad
 import com.framework.models.BaseViewModel
 import com.framework.pref.BASE_IMAGE_URL
 import com.framework.pref.Key_Preferences
 
-class ErrorOccurredBottomSheet(val errorCode: String?, val errorMessage: String?) : BaseBottomSheetDialog<BsheetErrorOccurredBinding, BaseViewModel>() {
+class ErrorOccurredBottomSheet(val errorCode: String?, val errorMessage: String?) : NewBaseBottomSheetDialog<BsheetErrorOccurredBinding, BaseViewModel>() {
 
   override fun getLayout(): Int {
     return R.layout.bsheet_error_occurred
@@ -31,7 +31,6 @@ class ErrorOccurredBottomSheet(val errorCode: String?, val errorMessage: String?
         baseActivity.glideLoad(mImageView = it, url = imageLogoUri!!, placeholder = R.drawable.gradient_white, isLoadBitmap = true)
       } else it.setImageResource(R.drawable.placeholder_error)
     }
-
     setOnClickListener(binding?.btnReportAnError, binding?.btnTryAgain, binding?.ivClose)
   }
 
@@ -39,17 +38,11 @@ class ErrorOccurredBottomSheet(val errorCode: String?, val errorMessage: String?
     super.onClick(v)
     when (v) {
       binding?.btnReportAnError -> {
+        ReportIssueBottomSheet(errorCode).show(baseActivity.supportFragmentManager, ReportIssueBottomSheet::class.java.name)
         dismiss()
-        ReportIssueBottomSheet(errorCode).show(parentFragmentManager, ReportIssueBottomSheet::class.java.name)
       }
       binding?.btnTryAgain,
-      binding?.ivClose -> {
-        finishWithActivity()
-      }
+      binding?.ivClose -> dismiss()
     }
-  }
-
-  fun finishWithActivity() {
-    dismiss()
   }
 }
