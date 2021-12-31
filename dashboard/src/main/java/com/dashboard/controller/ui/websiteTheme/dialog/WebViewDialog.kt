@@ -18,6 +18,7 @@ import com.dashboard.R
 import com.dashboard.databinding.DialogWebviewBinding
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.utils.InAppReviewUtils
 import com.onboarding.nowfloats.utils.getWebViewUrl
 
 class WebViewDialog : DialogFragment() {
@@ -42,7 +43,10 @@ class WebViewDialog : DialogFragment() {
     if (title.isNotEmpty()) binding.ctvBusinessName.text = title
     binding.ctvWebsiteUrl.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     binding.ctvWebsiteUrl.text = domainUrl
-    binding.backBtn.setOnClickListener { dismiss() }
+    binding.backBtn.setOnClickListener {
+      dismiss()
+      InAppReviewUtils.showInAppReview(requireActivity(),InAppReviewUtils.Events.WEBSITE_PREVIEW_CROSS)
+    }
   }
 
   override fun getTheme(): Int {
