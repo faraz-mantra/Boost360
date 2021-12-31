@@ -5,6 +5,10 @@ import android.text.format.DateUtils
 import android.util.Log
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -98,6 +102,12 @@ object DateUtils {
   fun getAmountDate(amount: Int): Date {
     val cal = Calendar.getInstance()
     cal.add(Calendar.DATE, amount)
+    return cal.time
+  }
+
+  fun getAmountYearDate(amount: Int): Date {
+    val cal = Calendar.getInstance()
+    cal.add(Calendar.YEAR, amount)
     return cal.time
   }
 
