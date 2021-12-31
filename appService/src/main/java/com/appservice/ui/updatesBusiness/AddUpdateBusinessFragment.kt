@@ -443,7 +443,7 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
 
 
   override fun onStop() {
-    if (totalUpdates?.div(3)==0){
+    if (totalUpdates?:0%3==0){
       InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.THIRD_UPDATE)
     }
     super.onStop()
