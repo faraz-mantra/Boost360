@@ -28,7 +28,7 @@ class ErrorOccurredBottomSheet(val errorCode: String?, val errorMessage: String?
 
     binding?.ivBusinessImage?.let {
       if (imageLogoUri.isNullOrEmpty().not()) {
-        baseActivity.glideLoad(mImageView = it, url = imageLogoUri!!, placeholder = R.drawable.gradient_white, isLoadBitmap = true)
+        baseActivity.glideLoad(mImageView = it, url = imageLogoUri?:"", placeholder = R.drawable.gradient_white, isLoadBitmap = true)
       } else it.setImageResource(R.drawable.placeholder_error)
     }
     setOnClickListener(binding?.btnReportAnError, binding?.btnTryAgain, binding?.ivClose)
