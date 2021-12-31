@@ -73,7 +73,7 @@ open class BaseResponse(
       val jsonObj = JSONObject(message)
       val error: JSONArray? = jsonObj.getJSONArray("errors")
       val jsonResult = if (error?.length() ?: 0 >= 1) error?.get(0) as? JSONObject else null
-      return jsonResult?.getString("message") ?: jsonObj.getString("Message") ?: jsonObj.getString("EXCEPTION") ?: messageN()
+      return jsonResult?.getStringValue("message") ?: jsonObj.getStringValue("Message") ?: jsonObj.getStringValue("EXCEPTION") ?: messageN()
     } catch (ex: Exception) {
       messageN()
     }
@@ -83,7 +83,7 @@ open class BaseResponse(
     val message = message
     return try {
       val jsonObj = JSONObject(message)
-      jsonObj.getString("Message") ?: jsonObj.getString("message") ?: errorMessageN()
+      jsonObj.getStringValue("Message") ?: jsonObj.getStringValue("message") ?: errorMessageN()
     } catch (ex: Exception) {
       errorMessageN()
     }
@@ -94,7 +94,7 @@ open class BaseResponse(
     return try {
       val jsonObj = JSONObject(message)
       val error: JSONObject? = jsonObj.getJSONObject("Error")
-      error?.getString("ErrorDescription") ?: error?.getString("errorDescription") ?: errorNMessageN()
+      error?.getStringValue("ErrorDescription") ?: error?.getStringValue("errorDescription") ?: errorNMessageN()
     } catch (ex: Exception) {
       errorNMessageN()
     }
@@ -105,7 +105,7 @@ open class BaseResponse(
     return try {
       val jsonObj = JSONObject(message)
       val error: JSONObject? = jsonObj.getJSONObject("Error")?.getJSONObject("ErrorList")
-      return error?.getString("EXCEPTION") ?: errorIPMessageN()
+      return error?.getStringValue("EXCEPTION") ?: errorIPMessageN()
     } catch (ex: Exception) {
       errorIPMessageN()
     }
@@ -116,11 +116,20 @@ open class BaseResponse(
     return try {
       val jsonObj = JSONObject(message)
       val error: JSONObject? = jsonObj.getJSONObject("Error")?.getJSONObject("ErrorList")
-      return error?.getString("INVALID PARAMETERS")
+      return error?.getStringValue("INVALID PARAMETERS") ?: message
     } catch (ex: Exception) {
       message
     }
   }
+
+  fun JSONObject.getStringValue(name: String): String? {
+    return try {
+      this.getString(name)
+    } catch (e: Exception) {
+      null
+    }
+  }
+
 
   fun isSuccess(): Boolean {
     return status == 200 || status == 201 || status == 202 || status == 204
