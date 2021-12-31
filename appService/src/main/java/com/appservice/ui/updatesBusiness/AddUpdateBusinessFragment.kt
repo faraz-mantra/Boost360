@@ -37,6 +37,7 @@ import com.framework.firebaseUtils.caplimit_feature.getCapData
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.PREF_KEY_TWITTER_LOGIN
 import com.framework.pref.Key_Preferences.PREF_NAME_TWITTER
+import com.framework.utils.InAppReviewUtils
 import com.framework.utils.hasHTMLTags
 import com.framework.utils.hideKeyBoard
 import com.framework.utils.showKeyBoard
@@ -56,6 +57,7 @@ const val imagePost = "image_post"
 
 class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBinding, UpdatesViewModel>() {
 
+  private var totalUpdates: Int?=null
   private val REQ_CODE_SPEECH_INPUT = 122
   private var isUpdate: Boolean = false
   private var toSubscribers = MutableLiveData(false)
@@ -166,6 +168,7 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
     if (isUpdate.not() && capLimitUpdate != null) {
       viewModel?.getMessageUpdates(sessionLocal.getRequestUpdate(PaginationScrollListener.PAGE_START))?.observeOnce(viewLifecycleOwner, {
         val data = it as? BusinessUpdateResponse
+        totalUpdates = data?.totalCount
         if (data?.totalCount != null && capLimitUpdate.getValueN() != null && data.totalCount!! >= capLimitUpdate.getValueN()!!) {
           baseActivity.hideKeyBoard()
           showAlertCapLimit("Can't add the business update, please activate your premium Add-ons plan.",CapLimitFeatureResponseItem.FeatureType.LATESTUPDATES.name)
@@ -437,6 +440,14 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
     sessionLocal.storeFPDetails(msgPost, "")
     sessionLocal.storeFPDetails(imagePost, "")
   }
+
+
+  override fun onStop() {
+    if (totalUpdates?.div(3)==0){
+      InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.THIRD_UPDATE)
+    }
+    super.onStop()
+  }
 }
 
 
@@ -476,4 +487,6 @@ fun AppCompatActivity.startDigitalChannel(session: UserSessionManager, channelTy
     e.printStackTrace()
     SentryController.captureException(e)
   }
+
+
 }

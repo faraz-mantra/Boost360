@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.boost.upgrades.UpgradeActivity;
 import com.dashboard.utils.PremiumCode;
+import com.framework.utils.InAppReviewUtils;
 import com.framework.views.customViews.CustomToolbar;
 import com.framework.views.zero.old.AppFragmentZeroCase;
 import com.framework.views.zero.old.AppOnZeroCaseClicked;
@@ -630,5 +631,13 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
   @Override
   public void appOnBackPressed() {
 
+  }
+
+  @Override
+  protected void onStop() {
+    super.onStop();
+    if (vmnCallAdapter.getItemCount()>1){
+      InAppReviewUtils.INSTANCE.showInAppReview(this, InAppReviewUtils.Events.OUT_OF_CUSTOMER_CALLS);
+    }
   }
 }

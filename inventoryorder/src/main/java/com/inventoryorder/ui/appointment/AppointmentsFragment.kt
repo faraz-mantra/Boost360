@@ -16,6 +16,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.firebaseUtils.firestore.FirestoreManager
+import com.framework.utils.InAppReviewUtils
 import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
@@ -799,6 +800,13 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   override fun appOnBackPressed() {
 
+  }
+
+  override fun onStop() {
+    if (orderListFinalList.size>1){
+      InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.OUT_OF_CUSTOMER_ORDERS)
+    }
+    super.onStop()
   }
 
 
