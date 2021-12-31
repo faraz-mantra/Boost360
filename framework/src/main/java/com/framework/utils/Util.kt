@@ -6,8 +6,6 @@ import android.content.ActivityNotFoundException
 import android.content.ContentValues
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -53,14 +51,13 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
-private const val TAG = "Util"
 import android.content.pm.PackageManager
 
 import android.content.pm.PackageInfo
 import androidx.annotation.RequiresApi
-import com.framework.R
 import java.util.regex.Pattern.UNICODE_CHARACTER_CLASS
 
+private const val TAG = "Util"
 
 inline fun <reified T> genericType() = object : TypeToken<T>() {}.type
 
