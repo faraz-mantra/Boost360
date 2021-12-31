@@ -87,19 +87,16 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
       val response = it as? FirebaseTokenResponse
       val token = response?.Result
       Log.i("registerFirebaseToken", "registerFirebaseToken: $token")
-      token?.let { it1 ->
-        FirebaseAuth.getInstance().signInWithCustomToken(it1).addOnCompleteListener(baseActivity) { task ->
-          if (task.isSuccessful) {
-            // Sign in success, update UI with the signed-in user's information
-            Log.d("registerFirebaseToken", "signInWithCustomToken:success")
-          } else {
-            // If sign in fails, display a message to the user.
-            Log.w("registerFirebaseToken", "signInWithCustomToken:failure", task.exception)
-          }
-          authTokenDataItem.storeFpDetails()
+      FirebaseAuth.getInstance().signInWithCustomToken(token ?: "").addOnCompleteListener(baseActivity) { task ->
+        if (task.isSuccessful) {
+          // Sign in success, update UI with the signed-in user's information
+          Log.d("registerFirebaseToken", "signInWithCustomToken:success")
+        } else {
+          // If sign in fails, display a message to the user.
+          Log.w("registerFirebaseToken", "signInWithCustomToken:failure", task.exception)
         }
+        authTokenDataItem.storeFpDetails()
       }
-
     })
   }
 

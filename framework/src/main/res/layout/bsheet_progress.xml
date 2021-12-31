@@ -7,8 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/size_20"
-        app:cardElevation="@dimen/size_2"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="2dp"
         app:cardUseCompatPadding="true">
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -23,22 +23,22 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/bold"
                 android:gravity="start"
-                android:layout_marginTop="@dimen/size_22"
-                android:text="@string/re_publishing"
+                android:layout_marginTop="22dp"
+                tools:text="Title"
                 android:textColor="@color/black_4a4a4a"
-                android:textSize="@dimen/text_16" />
+                android:textSize="16dp" />
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/linearProgressIndicator"
                 android:layout_width="match_parent"
                 android:layout_height="14dp"
                 android:indeterminate="true"
-                app:trackCornerRadius="@dimen/size_10"
-                app:trackThickness="@dimen/size_8"
+                app:trackCornerRadius="10dp"
+                app:trackThickness="8dp"
                 app:trackColor="@color/grey_f0f0f0"
-                android:layout_marginTop="@dimen/size_8"
-                android:layout_marginBottom="@dimen/size_31"
-                android:layout_marginHorizontal="@dimen/size_52"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginHorizontal="52dp"
                 app:indeterminateAnimationType="disjoint"
                 app:indicatorColor="@color/colorPrimary"/>
 
