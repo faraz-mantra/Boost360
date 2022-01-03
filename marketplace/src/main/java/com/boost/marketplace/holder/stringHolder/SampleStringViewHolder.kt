@@ -2,8 +2,6 @@ package com.boost.marketplace.holder.stringHolder
 
 import com.boost.dbcenterapi.recycleritem.*
 import com.boost.marketplace.constant.RecyclerViewActionType
-import com.boost.marketplace.databinding.ItemPacksBinding
-import com.boost.marketplace.databinding.SecondaryImageItemBinding
 import com.boost.marketplace.databinding.SecondaryStringItemBinding
 
 class SampleStringViewHolder(binding: SecondaryStringItemBinding) : AppBaseRecyclerStringHolder<SecondaryStringItemBinding>(binding) {
@@ -12,7 +10,7 @@ class SampleStringViewHolder(binding: SecondaryStringItemBinding) : AppBaseRecyc
     super.bind(position, item)
 
     binding.root.setOnClickListener {
-      listener?.onItemClick(
+      listener?.onStringItemClick(
         position,
         item,
         RecyclerViewActionType.SECONDARY_IMAGE_CLICK.ordinal

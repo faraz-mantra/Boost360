@@ -72,7 +72,7 @@ class FeatureDetailsActivity :
     }
 
     private fun initMvvm() {
-
+    viewModel
     }
 
     override fun onClick(v: View?) {
@@ -95,7 +95,7 @@ class FeatureDetailsActivity :
         }
     }
 
-    override fun onItemClick(position: Int, item: String?, actionType: Int) {
+    override fun onStringItemClick(position: Int, item: String?, actionType: Int) {
 
     }
 

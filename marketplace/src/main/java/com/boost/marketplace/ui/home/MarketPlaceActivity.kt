@@ -3,12 +3,13 @@ package com.boost.marketplace.ui.home
 import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
 import com.boost.dbcenterapi.infra.api.models.test.StringData
-import com.boost.dbcenterapi.recycleritem.RecyclerStringItemClickListener
-import com.boost.dbcenterapi.recycleritem.RecyclerStringItemType
-import com.boost.dbcenterapi.recycleritem.RecyclerViewItemType
+import com.boost.dbcenterapi.infra.api.models.test.TestData
+import com.boost.dbcenterapi.infra.api.models.test.getData
+import com.boost.dbcenterapi.recycleritem.*
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.R
@@ -16,20 +17,21 @@ import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.constant.RecyclerViewActionType
 import com.boost.marketplace.databinding.ActivityMarketplaceBinding
 import com.boost.marketplace.infra.recyclerView.AppBaseRecyclerStringAdapter
+import com.boost.marketplace.infra.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.marketplace.ui.Marketplace_Offers.MarketPlaceOffersActivity
 import com.boost.marketplace.ui.Packs.PacksActivity
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.framework.views.dotsindicator.OffsetPageTransformer
 
 class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPlaceHomeViewModel>(),
-  RecyclerStringItemClickListener {
+  RecyclerStringItemClickListener, RecyclerItemClickListener {
 
-  private var adapterMarketPromoBanner: AppBaseRecyclerStringAdapter<StringData>? = null
-  private var adapterPack: AppBaseRecyclerStringAdapter<StringData>? = null
-  private var adapterVideos :AppBaseRecyclerStringAdapter<StringData>? = null
-  private var adapterFeaturesByCategory: AppBaseRecyclerStringAdapter<StringData>? = null
-  private var adapterPartnerZone :AppBaseRecyclerStringAdapter<StringData>? = null
-  private var adapterTopFeatures: AppBaseRecyclerStringAdapter<StringData>? = null
+  private var adapterMarketPromoBanner: AppBaseRecyclerViewAdapter<TestData>? = null
+  private var adapterPack: AppBaseRecyclerViewAdapter<TestData>? = null
+  private var adapterVideos :AppBaseRecyclerViewAdapter<TestData>? = null
+  private var adapterFeaturesByCategory: AppBaseRecyclerViewAdapter<TestData>? = null
+  private var adapterPartnerZone :AppBaseRecyclerViewAdapter<TestData>? = null
+  private var adapterTopFeatures: AppBaseRecyclerViewAdapter<TestData>? = null
 
 
 
@@ -98,8 +100,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
   private fun setMarketPlacePromoBannerData() {
     binding?.mpBannerViewpager?.apply {
         if (adapterMarketPromoBanner == null) {
-          adapterMarketPromoBanner = AppBaseRecyclerStringAdapter(this@MarketPlaceActivity,
-            StringData(arrayListOf("","",""), RecyclerStringItemType.STRING_LIST.ordinal),this@MarketPlaceActivity )
+          adapterMarketPromoBanner = AppBaseRecyclerViewAdapter(this@MarketPlaceActivity, getData(RecyclerViewItemType.PROMO_BANNER.ordinal),this@MarketPlaceActivity )
           offscreenPageLimit = 3
           adapter = adapterMarketPromoBanner
           binding?.mpBannerDotIndicator?.setViewPager2(this)
@@ -111,8 +112,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
   private fun setPackData() {
     binding?.mpPackageViewpager?.apply {
         if (adapterPack == null){
-          adapterPack = AppBaseRecyclerStringAdapter(this@MarketPlaceActivity,
-            StringData(arrayListOf("","",""), RecyclerStringItemType.STRING_LIST.ordinal),this@MarketPlaceActivity )
+          adapterPack = AppBaseRecyclerViewAdapter(this@MarketPlaceActivity, getData(RecyclerViewItemType.PACKS.ordinal),this@MarketPlaceActivity )
           offscreenPageLimit = 3
           adapter = adapterPack
           binding?.mpPackageIndicator?.setViewPager2(this)
@@ -124,8 +124,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
   private fun setPartnerData(){
     binding?.mpHomePartnerViewpager?.apply {
       if(adapterPartnerZone == null){
-        adapterPartnerZone = AppBaseRecyclerStringAdapter(this@MarketPlaceActivity,
-          StringData(arrayListOf("","",""), RecyclerStringItemType.STRING_LIST.ordinal),this@MarketPlaceActivity )
+        adapterPartnerZone = AppBaseRecyclerViewAdapter(this@MarketPlaceActivity, getData(RecyclerViewItemType.PROMO_BANNER.ordinal),this@MarketPlaceActivity )
         offscreenPageLimit = 3
         adapter = adapterPartnerZone
         binding?.mpHomePartnerIndicator?.setViewPager2(this)
@@ -137,8 +136,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
   private fun setFeaturesByCategoryData(){
     binding?.addonsCategoryRecycler?.apply {
         if(adapterFeaturesByCategory == null){
-          adapterFeaturesByCategory = AppBaseRecyclerStringAdapter(this@MarketPlaceActivity,
-            StringData(arrayListOf("","",""), RecyclerStringItemType.STRING_LIST.ordinal),this@MarketPlaceActivity )
+          adapterFeaturesByCategory = AppBaseRecyclerViewAdapter(this@MarketPlaceActivity, getData(RecyclerViewItemType.TOP_FEATURES.ordinal),this@MarketPlaceActivity )
           adapter = adapterFeaturesByCategory
       }
     }
@@ -147,8 +145,9 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
   private fun setTopFeaturesData(){
     binding?.topFetauresRecycler?.apply {
       if (adapterTopFeatures == null){
-        adapterTopFeatures = AppBaseRecyclerStringAdapter(this@MarketPlaceActivity,
-          StringData(arrayListOf("","",""), RecyclerStringItemType.STRING_LIST.ordinal),this@MarketPlaceActivity )
+        adapterTopFeatures = AppBaseRecyclerViewAdapter(this@MarketPlaceActivity, getData(RecyclerViewItemType.TOP_FEATURES.ordinal),this@MarketPlaceActivity )
+//        adapterTopFeatures = AppBaseRecyclerStringAdapter(this@MarketPlaceActivity,
+//          StringData(arrayListOf("","",""), RecyclerStringItemType.STRING_LIST.ordinal),this@MarketPlaceActivity )
         adapter = adapterTopFeatures
       }
     }
@@ -156,8 +155,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
   private fun setVideosData(){
     binding?.mpHomeFeaturesVideoRv?.apply {
       if(adapterVideos == null){
-        adapterVideos = AppBaseRecyclerStringAdapter(this@MarketPlaceActivity,
-          StringData(arrayListOf("","",""), RecyclerStringItemType.STRING_LIST.ordinal),this@MarketPlaceActivity )
+        adapterVideos = AppBaseRecyclerViewAdapter(this@MarketPlaceActivity, getData(RecyclerViewItemType.PROMO_BANNER.ordinal),this@MarketPlaceActivity )
         adapter = adapterVideos
       }
     }
@@ -837,15 +835,21 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 ////        })
 //  }
 
-  override fun onItemClick(position: Int, item: String?, actionType: Int) {
+  override fun onStringItemClick(position: Int, item: String?, actionType: Int) {
+    var intent:Intent? = null
+    if(actionType == RecyclerViewActionType.SECONDARY_IMAGE_CLICK.ordinal) {
+      intent = Intent(this, FeatureDetailsActivity::class.java)
+    }
+    startActivity(intent)
+  }
+
+  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     var intent:Intent? = null
     if(actionType == RecyclerViewActionType.MARKETPLACE_PROMO_BANNER_CLICK.ordinal) {
       intent = Intent(this, MarketPlaceOffersActivity::class.java)
     }else if(actionType == RecyclerViewActionType.PACKS_CLICK.ordinal) {
       intent = Intent(this, PacksActivity::class.java)
     }else if(actionType == RecyclerViewActionType.TOP_FEATURES_CLICK.ordinal) {
-      intent = Intent(this, FeatureDetailsActivity::class.java)
-    }else if(actionType == RecyclerViewActionType.SECONDARY_IMAGE_CLICK.ordinal) {
       intent = Intent(this, FeatureDetailsActivity::class.java)
     }
     startActivity(intent)
