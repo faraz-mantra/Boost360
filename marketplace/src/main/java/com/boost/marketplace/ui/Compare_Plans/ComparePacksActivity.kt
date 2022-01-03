@@ -39,7 +39,6 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
                 adaptercomparepacks = AppBaseRecyclerViewAdapter(
                     this@ComparePacksActivity,
                     getDatas(RecyclerViewItemType.PACKS_BUNDLES.ordinal), this@ComparePacksActivity)
-                offscreenPageLimit = 3
                 adapter = adaptercomparepacks
                 binding?.packageIndicator2?.setViewPager2(this)
                 setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position)
