@@ -804,7 +804,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   override fun onStop() {
     if (orderListFinalList.size>1){
-      InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.OUT_OF_CUSTOMER_ORDERS)
+      InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.in_app_review_out_of_customer_orders)
     }
     super.onStop()
   }

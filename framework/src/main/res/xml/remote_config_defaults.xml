@@ -29,4 +29,45 @@
     <key>new_onboarding_with_updated_categories_and_gui_active</key>
     <value>false</value>
   </entry>
+
+  <!-- in app review events -->
+  <entry>
+    <key>in_app_review_website_preview_cross</key>
+    <value>true</value>
+  </entry>
+
+  <entry>
+    <key>in_app_review_third_update</key>
+    <value>true</value>
+  </entry>
+
+  <entry>
+    <key>in_app_review_out_of_customer_messages</key>
+    <value>true</value>
+  </entry>
+
+  <entry>
+    <key>in_app_review_out_of_customer_calls</key>
+    <value>true</value>
+  </entry>
+
+  <entry>
+    <key>in_app_review_out_of_customer_orders</key>
+    <value>true</value>
+  </entry>
+
+  <entry>
+    <key>in_app_review_rate_us_on_store</key>
+    <value>true</value>
+  </entry>
+
+  <entry>
+    <key>in_app_review_first_promo_update</key>
+    <value>true</value>
+  </entry>
+
+  <entry>
+    <key>in_app_review_first_purchase</key>
+    <value>true</value>
+  </entry>
 </defaultsMap><!-- END xml_defaults -->

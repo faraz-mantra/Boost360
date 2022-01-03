@@ -74,7 +74,8 @@ object FirebaseRemoteConfigUtil {
   }
 
   fun isInAppReviewFlagEnabled(event:InAppReviewUtils.Events): Boolean {
-    return remoteConfig?.getBoolean(event.name) ?: false
+    val status =remoteConfig?.getBoolean(event.name)
+    return status ?: false
   }
 }
 

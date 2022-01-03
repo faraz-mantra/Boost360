@@ -286,7 +286,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       val url = resources.getString(R.string.settings_rate_us_link)
       baseActivity.startMobileSite(session, url, ABOUT_BOOST_PLAY_STORE_RATING)
     }*/
-    InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.RATE_US_ON_STORE)
+    InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.in_app_review_rate_us_on_store)
 
   }
 
