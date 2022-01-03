@@ -9,14 +9,14 @@ import com.google.android.play.core.review.model.ReviewErrorCode
 object InAppReviewUtils {
 
     enum class Events{
-        WEBSITE_PREVIEW_CROSS,
-        THIRD_UPDATE,
-        OUT_OF_CUSTOMER_MESSAGES,
-        OUT_OF_CUSTOMER_CALLS,
-        OUT_OF_CUSTOMER_ORDERS,
-        RATE_US_ON_STORE,
-        FIRST_PROMO_UPDATE,
-        FIRST_PURCHASE
+        in_app_review_website_preview_cross,
+        in_app_review_third_update,
+        in_app_review_out_of_customer_messages,
+        in_app_review_out_of_customer_calls,
+        in_app_review_out_of_customer_orders,
+        in_app_review_rate_us_on_store,
+        in_app_review_first_promo_update,
+        in_app_review_first_purchase
 
 
     }

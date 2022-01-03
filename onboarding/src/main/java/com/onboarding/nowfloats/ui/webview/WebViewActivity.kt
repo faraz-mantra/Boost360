@@ -160,7 +160,7 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    InAppReviewUtils.showInAppReview(this,InAppReviewUtils.Events.WEBSITE_PREVIEW_CROSS)
+    InAppReviewUtils.showInAppReview(this,InAppReviewUtils.Events.in_app_review_website_preview_cross)
     finish()
     return false
   }

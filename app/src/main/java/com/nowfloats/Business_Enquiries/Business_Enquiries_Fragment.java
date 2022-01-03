@@ -200,7 +200,7 @@ public class Business_Enquiries_Fragment extends Fragment implements AppOnZeroCa
   public void onStop() {
     super.onStop();
     if (adapter.getItemCount()>1){
-      InAppReviewUtils.INSTANCE.showInAppReview(requireActivity(),InAppReviewUtils.Events.OUT_OF_CUSTOMER_MESSAGES);
+      InAppReviewUtils.INSTANCE.showInAppReview(requireActivity(),InAppReviewUtils.Events.in_app_review_out_of_customer_messages);
 
     }
   }

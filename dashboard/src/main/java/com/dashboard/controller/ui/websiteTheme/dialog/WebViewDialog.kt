@@ -45,7 +45,7 @@ class WebViewDialog : DialogFragment() {
     binding.ctvWebsiteUrl.text = domainUrl
     binding.backBtn.setOnClickListener {
       dismiss()
-      InAppReviewUtils.showInAppReview(requireActivity(),InAppReviewUtils.Events.WEBSITE_PREVIEW_CROSS)
+      InAppReviewUtils.showInAppReview(requireActivity(),InAppReviewUtils.Events.in_app_review_website_preview_cross)
     }
   }
 

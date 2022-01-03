@@ -637,7 +637,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
   protected void onStop() {
     super.onStop();
     if (vmnCallAdapter.getItemCount()>1){
-      InAppReviewUtils.INSTANCE.showInAppReview(this, InAppReviewUtils.Events.OUT_OF_CUSTOMER_CALLS);
+      InAppReviewUtils.INSTANCE.showInAppReview(this, InAppReviewUtils.Events.in_app_review_out_of_customer_calls);
     }
   }
 }

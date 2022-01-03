@@ -444,7 +444,7 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
 
   override fun onStop() {
     if (totalUpdates?:0%3==0){
-      InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.THIRD_UPDATE)
+      InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.in_app_review_third_update)
     }
     super.onStop()
   }
