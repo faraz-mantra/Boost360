@@ -10,6 +10,8 @@ import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
 import androidx.annotation.WorkerThread
+import androidx.core.net.toUri
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils
 import java.io.*
 import java.util.*
 
@@ -123,13 +125,8 @@ object Utility {
   @WorkerThread
   @Throws(IOException::class)
   private fun getCameraPhotoOrientation(file: File): Int {
-    val exif = ExifInterface(
-      file.absolutePath
-    )
-    val orientation = exif.getAttributeInt(
-      ExifInterface.TAG_ORIENTATION,
-      ExifInterface.ORIENTATION_NORMAL
-    )
+    val exif = ExifInterface(file.absolutePath)
+    val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
     var rotate = 0
     when (orientation) {
       ExifInterface.ORIENTATION_ROTATE_270 -> rotate = 270
@@ -139,5 +136,23 @@ object Utility {
       }
     }
     return rotate
+  }
+
+  /**
+   * Rotate an image if required.
+   *
+   * @param img           The image bitmap
+   * @param selectedImage Image URI
+   * @return The resulted Bitmap after manipulation
+   */
+  @Throws(IOException::class)
+   fun rotateImageIfRequired(img: Bitmap, selectedImagePath: String?): Bitmap? {
+    val ei = ExifInterface(selectedImagePath?.toUri()?.path ?:"")
+    return when (ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) {
+      ExifInterface.ORIENTATION_ROTATE_90 -> TransformationUtils.rotateImage(img, 90)
+      ExifInterface.ORIENTATION_ROTATE_180 -> TransformationUtils.rotateImage(img, 180)
+      ExifInterface.ORIENTATION_ROTATE_270 -> TransformationUtils.rotateImage(img, 270)
+      else -> img
+    }
   }
 }

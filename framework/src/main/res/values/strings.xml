@@ -135,6 +135,7 @@
   <string name="uh_oh">Uh oh!</string>
   <string name="update_could_not_be_posted_on_one_or_more_channels">Update could not be posted on one or more channels.</string>
   <string name="report_an_error">Report an error</string>
+  <string name="try_again_">Try again</string>
   <string name="reporting_an_issue">Reporting an issue.</string>
   <string name="how_should_we_inform_you_about_the_resolution">How should we inform you about the resolution?</string>
   <string name="share_what_happened">Share what happened*</string>

@@ -2,11 +2,11 @@ package com.framework.errorHandling
 
 import android.os.Bundle
 import com.framework.R
-import com.framework.base.BaseBottomSheetDialog
+import com.framework.base.NewBaseBottomSheetDialog
 import com.framework.databinding.BsheetThankYouResponseBinding
 import com.framework.models.BaseViewModel
 
-class ThankYouResponseBottomSheet : BaseBottomSheetDialog<BsheetThankYouResponseBinding, BaseViewModel>() {
+class ThankYouResponseBottomSheet : NewBaseBottomSheetDialog<BsheetThankYouResponseBinding, BaseViewModel>() {
 
   companion object {
     @JvmStatic
@@ -26,12 +26,6 @@ class ThankYouResponseBottomSheet : BaseBottomSheetDialog<BsheetThankYouResponse
   }
 
   override fun onCreateView() {
-    binding?.btnDone?.setOnClickListener {
-      finishWithActivity()
-    }
-  }
-
-  fun finishWithActivity() {
-    dismiss()
+    binding?.btnDone?.setOnClickListener { dismiss() }
   }
 }

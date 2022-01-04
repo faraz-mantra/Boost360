@@ -91,8 +91,7 @@ object FirestoreManager {
       this.model = DrScoreModel()
 //      val docRef = getDocumentReference()
 //      updateDocument(docRef, this.model.serializeToMap())
-      if (this.fpTag.isNotEmpty()) DrScoreRepository.createDrScoreData(CreateDrRequest(fpTag = this.fpTag))
-        .apiCreateUpdate()
+      if (this.fpTag.isNotEmpty()) DrScoreRepository.createDrScoreData(CreateDrRequest(fpTag = this.fpTag)).apiCreateUpdate()
     }
   }
 
