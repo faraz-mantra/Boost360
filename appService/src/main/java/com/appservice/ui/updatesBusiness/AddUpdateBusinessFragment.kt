@@ -365,13 +365,8 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
     val parentId = if (sessionLocal.iSEnterprise == "true") sessionLocal.fPParentId else null
     val isPictureMessage = postImage != null
     val request = PostUpdateTaskRequest(
-      clientId,
-      binding?.edtDesc?.text?.toString(),
-      isPictureMessage,
-      merchantId,
-      parentId,
-      toSubscribers.value,
-      socialShare
+      clientId, binding?.edtDesc?.text?.toString(), isPictureMessage,
+      merchantId, parentId, toSubscribers.value, socialShare
     )
     viewModel?.putBizMessageUpdate(request)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess() && it.stringResponse.isNullOrEmpty().not()) {
