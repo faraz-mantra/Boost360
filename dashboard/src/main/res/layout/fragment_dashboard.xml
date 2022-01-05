@@ -467,14 +467,14 @@
               android:orientation="horizontal">
 
               <com.framework.views.customViews.CustomCardView
-                  android:tag="com.userexperior.ueSecureView"
+                android:id="@+id/btn_business_logo"
 
-                  android:id="@+id/btn_business_logo"
                 android:layout_width="@dimen/size_67"
                 android:layout_height="@dimen/size_67"
                 android:layout_marginStart="@dimen/size_16"
                 android:clickable="true"
                 android:focusable="true"
+                android:tag="com.userexperior.ueSecureView"
                 app:cardBackgroundColor="@color/snow_white"
                 app:cardCornerRadius="@dimen/size_6">
 
@@ -491,9 +491,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                      android:tag="com.userexperior.ueSecureView"
+                    android:scaleType="fitCenter"
 
-                      android:scaleType="fitCenter"
+                    android:tag="com.userexperior.ueSecureView"
                     app:srcCompat="@drawable/ic_add_logo_d" />
                 </com.framework.views.customViews.CustomCardView>
 
@@ -509,15 +509,15 @@
                 android:orientation="vertical">
 
                 <com.framework.views.customViews.CustomTextView
-                    android:tag="com.userexperior.ueSecureView"
+                  android:id="@+id/txt_business_name"
 
-                    android:id="@+id/txt_business_name"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:ellipsize="end"
                   android:includeFontPadding="false"
                   android:lineSpacingExtra="-6dp"
                   android:maxLines="2"
+                  android:tag="com.userexperior.ueSecureView"
                   android:textColor="@color/white"
                   app:fontFamily="@font/bold"
                   app:textType="HEADING_7"
@@ -544,12 +544,12 @@
                     android:layout_marginTop="@dimen/size_1"
                     android:drawableStart="@drawable/ic_website_d"
                     android:drawablePadding="@dimen/size_4"
-                      android:tag="com.userexperior.ueSecureView"
+                    android:ellipsize="end"
 
-                      android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:includeFontPadding="false"
                     android:maxLines="1"
+                    android:tag="com.userexperior.ueSecureView"
                     android:textAlignment="gravity"
                     android:textColor="@color/dashboard_business_url"
                     app:autoSizeMaxTextSize="16sp"
@@ -655,8 +655,8 @@
                 android:layout_width="@dimen/size_44"
                 android:layout_height="@dimen/size_44"
                 android:layout_marginStart="@dimen/size_6"
-                app:lottie_autoPlay="true"
                 android:layout_marginTop="@dimen/size_1"
+                app:lottie_autoPlay="true"
                 app:lottie_loop="true"
                 app:lottie_rawRes="@raw/yellow_new_lotty" />
             </LinearLayout>

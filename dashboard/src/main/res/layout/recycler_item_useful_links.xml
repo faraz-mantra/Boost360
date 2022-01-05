@@ -4,7 +4,7 @@
 
   <com.framework.views.customViews.CustomCardView
     android:layout_width="match_parent"
-    android:layout_height="@dimen/size_136"
+    android:layout_height="@dimen/size_138"
     android:clickable="true"
     android:elevation="@dimen/size_2"
     android:focusable="true"

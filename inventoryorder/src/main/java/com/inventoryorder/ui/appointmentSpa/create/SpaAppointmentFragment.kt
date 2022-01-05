@@ -290,6 +290,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
 
   private fun setArrayAdapter() {
     binding?.editServiceName?.apply {
+      isCursorVisible = false
       serviceAdapter = CustomArrayAdapter(baseActivity, R.layout.layout_service_item, serviceList!!)
       threshold = 1
       (serviceAdapter as? CustomArrayAdapter)?.initList()
@@ -307,6 +308,11 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
         getBookingSlots(bookingSlotsRequest)
       }
     }
+
+    binding?.editServiceName?.setOnClickListener {
+      binding?.editServiceName?.setText("")
+    }
+
     binding?.editServiceName?.addTextChangedListener(object : TextWatcher {
       override fun afterTextChanged(s: Editable?) {
         binding?.groupTiming?.visibility = View.GONE

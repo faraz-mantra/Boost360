@@ -20,6 +20,9 @@ import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.*
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils.rotateImage
+import com.framework.imagepicker.Utility
+
 
 class CropProfileImageFragment : AppBaseFragment<FragmentCropProfileImageBinding, UserProfileViewModel>() {
 
@@ -55,7 +58,7 @@ class CropProfileImageFragment : AppBaseFragment<FragmentCropProfileImageBinding
     setOnClickListener(binding?.btnDone)
     imagePath = arguments?.getString(BK_IMAGE_PATH)
     bitmap = BitmapFactory.decodeFile(imagePath)
-    binding?.cropImg?.setImageBitmap(bitmap)
+    binding?.cropImg?.setImageBitmap(Utility.rotateImageIfRequired(bitmap!!, imagePath))
     viewListeners()
   }
 
@@ -135,6 +138,4 @@ class CropProfileImageFragment : AppBaseFragment<FragmentCropProfileImageBinding
     }
     return f
   }
-
-
 }

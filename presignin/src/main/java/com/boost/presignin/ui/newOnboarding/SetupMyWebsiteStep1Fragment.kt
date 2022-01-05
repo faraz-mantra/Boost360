@@ -99,9 +99,9 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     observeCategorySearch()
     requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
       override fun handleOnBackPressed() {
-       /* if (binding?.layoutEtSugestion?.visibility == View.VISIBLE) {
-          backPressedFromSearch()
-        }*/
+        /* if (binding?.layoutEtSugestion?.visibility == View.VISIBLE) {
+           backPressedFromSearch()
+         }*/
         CategoryDataModel.clearSelection()
         baseActivity.finishAfterTransition()
       }
@@ -153,10 +153,13 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     val newFilterList = arrayListOf<ApiCategoryResponseCategory>()
     this?.forEach { cItem ->
       cItem.appexperiencecodedetails?.forEach { exp ->
-        cItem.fpExperienceCode = exp
-        cItem.subCategory = categoryList.firstOrNull { it.experience_code == exp.name }?.getCategoryWithoutNewLine()
-        cItem.searchKeyword = str.toString()
-        newFilterList.add(cItem)
+        val categoryName = categoryList.firstOrNull { it.experience_code == exp.name }?.getCategoryWithoutNewLine()
+        if (categoryName.isNullOrEmpty().not()) {
+          cItem.fpExperienceCode = exp
+          cItem.subCategory = categoryName
+          cItem.searchKeyword = str.toString()
+          newFilterList.add(cItem)
+        }
       }
     }
     return newFilterList
@@ -213,7 +216,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     }
   }
 
-  private fun backPressedFromSearch(){
+  private fun backPressedFromSearch() {
     binding?.tvTitle?.visible()
     binding?.tvSubtitle?.visible()
     binding?.includeCatSuggSelected?.root?.gone()
