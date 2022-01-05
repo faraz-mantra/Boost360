@@ -1,36 +1,22 @@
 package com.boost.marketplace.ui.My_Plan
 
-import android.annotation.SuppressLint
-import android.app.ProgressDialog
-import android.content.Intent
-import android.os.Bundle
-import android.os.Handler
 import android.transition.AutoTransition
 import android.transition.TransitionManager
-import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.MarketPlaceOffers
 import com.boost.dbcenterapi.recycleritem.BaseRecyclerViewItem
 import com.boost.dbcenterapi.recycleritem.RecyclerItemClickListener
 import com.boost.dbcenterapi.recycleritem.RecyclerViewItemType
-import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityMyCurrentPlanBinding
-import com.boost.marketplace.holder.MyPlanFreeFeaturesViewHolder
 import com.boost.marketplace.infra.api.models.test.*
 import com.boost.marketplace.infra.recyclerView.AppBaseRecyclerViewAdapter
-import com.boost.marketplace.ui.History_Orders.HistoryOrdersActivity
 
-import com.boost.marketplace.ui.home.MarketPlaceActivity
-import com.bumptech.glide.Glide
 import com.framework.webengageconstant.*
-import es.dmoral.toasty.Toasty
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.VisitingCardSheet
 import kotlinx.android.synthetic.main.activity_my_current_plan.*
+
 import kotlinx.android.synthetic.main.item_myplan_features.*
 import kotlinx.android.synthetic.main.item_myplan_features.view.*
 import kotlinx.android.synthetic.main.item_order_history.view.*
@@ -40,9 +26,9 @@ class MyCurrentPlanActivity : AppBaseActivity<ActivityMyCurrentPlanBinding,MyCur
     RecyclerItemClickListener {
 
 
-   private var freeAddonsAdapter: AppBaseRecyclerViewAdapter<TestData>?=null
-    private var freeAddons: AppBaseRecyclerViewAdapter<Packs_Data>?=null
-  //  private var adapterPacks: AppBaseRecyclerViewAdapter<Packs_Data>? = null
+    private var freeAddonsAdapter: AppBaseRecyclerViewAdapter<TestData>? = null
+    private var freeAddons: AppBaseRecyclerViewAdapter<Packs_Data>? = null
+    //  private var adapterPacks: AppBaseRecyclerViewAdapter<Packs_Data>? = null
 
 
     override fun getLayout(): Int {
@@ -82,15 +68,15 @@ class MyCurrentPlanActivity : AppBaseActivity<ActivityMyCurrentPlanBinding,MyCur
 
         binding?.recycler?.apply {
             if (freeAddonsAdapter == null) {
-               freeAddonsAdapter = AppBaseRecyclerViewAdapter(
+                freeAddonsAdapter = AppBaseRecyclerViewAdapter(
                     this@MyCurrentPlanActivity,
                     getData(RecyclerViewItemType.FEATURES_MODEL.ordinal), this@MyCurrentPlanActivity
                 )
-                adapter=freeAddonsAdapter
+                adapter = freeAddonsAdapter
             }
 
         }
-     //   recycler.adapter = freeAddonsAdapter
+        //   recycler.adapter = freeAddonsAdapter
     }
 
     private fun initializePaidAddonsRecyclerView() {
@@ -99,7 +85,8 @@ class MyCurrentPlanActivity : AppBaseActivity<ActivityMyCurrentPlanBinding,MyCur
             if (freeAddons == null) {
                 freeAddons = AppBaseRecyclerViewAdapter(
                     this@MyCurrentPlanActivity,
-                    getDatas2(RecyclerViewItemType.FEATURES_MODEL.ordinal), this@MyCurrentPlanActivity
+                    getDatas2(RecyclerViewItemType.FEATURES_MODEL.ordinal),
+                    this@MyCurrentPlanActivity
                 )
                 adapter = freeAddons
 
@@ -112,34 +99,42 @@ class MyCurrentPlanActivity : AppBaseActivity<ActivityMyCurrentPlanBinding,MyCur
         if (binding?.expandableView1?.visibility == View.GONE) {
             TransitionManager.beginDelayedTransition(cardView1, AutoTransition())
             binding!!.expandableView1.visibility = View.VISIBLE
-           binding?. arrowBtn1?.setBackgroundResource(R.drawable.ic_keyboard_arrow_up_black_24dp)
+            binding?.arrowBtn1?.animate()?.rotation(180f)?.start()
         } else {
             TransitionManager.beginDelayedTransition(cardView1, AutoTransition())
-           binding?.expandableView1?.visibility = View.GONE
-           binding?.arrowBtn1?.setBackgroundResource(R.drawable.ic_keyboard_arrow_down_black_24dp)
+            binding?.expandableView1?.visibility = View.GONE
+            binding?.arrowBtn1?.animate()?.rotation(0f)?.start()
         }
     }
-
 
 
     private fun cardViewVisibilty() {
         if (binding?.expandableView?.visibility == View.GONE) {
             TransitionManager.beginDelayedTransition(cardView, AutoTransition())
             binding?.expandableView!!.visibility = View.VISIBLE
-           binding?.arrowBtn?.setBackgroundResource(R.drawable.ic_keyboard_arrow_up_black_24dp)
+            binding?.arrowBtn?.animate()?.rotation(180f)?.start()
         } else {
             TransitionManager.beginDelayedTransition(cardView, AutoTransition())
             binding?.expandableView?.visibility = View.GONE
-            binding?.arrowBtn?.setBackgroundResource(R.drawable.ic_keyboard_arrow_down_black_24dp)
+            binding?.arrowBtn?.animate()?.rotation(0f)?.start()
         }
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        binding?.expandableView?.setOnClickListener {
-            Toast.makeText(this, "Clicked on More Button", Toast.LENGTH_LONG).show()
-        }
+
+//        val dialog = BottomSheetDialog(this@MyCurrentPlanActivity)
+//        val view = layoutInflater.inflate(R.layout.bottom_sheet_myplan, null)
+//        dialog.setContentView(view)
+//        dialog.show()
+        val dialogCard = MyPlanBottomSheet()
+      //  dialogCard.setData(getLocalSession(it), shareChannelText)
+        dialogCard.show(this@MyCurrentPlanActivity.supportFragmentManager, MyPlanBottomSheet::class.java.name)
+
+
+
 
     }
+
 
 
 }

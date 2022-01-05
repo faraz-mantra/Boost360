@@ -27,10 +27,10 @@ class MyPlanFreeFeaturesViewHolder(binding: ItemMyplanFeaturesBinding) :
     }
 
    override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        listener?.onItemClick(position, item, actionType)
-        binding.mainLayout.setOnClickListener {
-            Toast.makeText(getApplicationContext(), "Clicked ", Toast.LENGTH_LONG).show()
-        }
+//        listener?.onItemClick(position, item, actionType)
+//        binding.mainLayout.setOnClickListener {
+//            Toast.makeText(getApplicationContext(), "Clicked ", Toast.LENGTH_LONG).show()
+//        }
     }
 }
 

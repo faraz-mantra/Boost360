@@ -268,7 +268,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:visibility="visible"
-
                             app:layout_constraintTop_toBottomOf="@+id/paid_addons_title">
 
                             <androidx.recyclerview.widget.RecyclerView
