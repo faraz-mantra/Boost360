@@ -63,20 +63,20 @@
             app:layout_constraintTop_toTopOf="@id/text_service_name" />
 
           <com.framework.views.customViews.CustomAutoCompleteTextView
-            android:id="@+id/edit_service_name"
-            style="@style/EditTextStyle"
-            android:layout_marginTop="@dimen/size_6"
-            android:layout_marginBottom="@dimen/size_10"
-            android:completionThreshold="0"
-            android:gravity="center_vertical"
-            android:hint="@string/select_service"
-            android:textCursorDrawable="@drawable/cursor_drawable"
-            android:inputType="textNoSuggestions"
-            android:singleLine="true"
-            app:drawableEndCompat="@drawable/ic_arrow_down_orange"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_service_name"
-            tools:targetApi="m" />
+              android:id="@+id/edit_service_name"
+              style="@style/EditTextStyle"
+              android:layout_marginTop="@dimen/size_6"
+              android:layout_marginBottom="@dimen/size_10"
+              android:completionThreshold="0"
+              android:gravity="center_vertical"
+              android:hint="@string/select_service"
+              android:inputType="textNoSuggestions"
+              android:singleLine="true"
+              android:textCursorDrawable="@drawable/cursor_drawable"
+              app:drawableEndCompat="@drawable/ic_arrow_down_orange"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@id/text_service_name"
+              tools:targetApi="m" />
 
           <androidx.constraintlayout.widget.Group
             android:id="@+id/group_timing"

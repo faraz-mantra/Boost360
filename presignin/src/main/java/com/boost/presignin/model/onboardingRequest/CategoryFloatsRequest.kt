@@ -33,7 +33,6 @@ data class CategoryFloatsRequest(
   fun getWebSiteId(): String? {
     return if (isUpdate == true) fpTag else domainName
   }
-
 }
 
 fun UserSessionManager.getCategoryRequest(): CategoryFloatsRequest? {

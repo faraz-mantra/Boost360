@@ -83,6 +83,5 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
     @Override
     protected void onResume() {
         super.onResume();
-        if (customPageFragment != null) customPageFragment.isRefreshList();
     }
 }
