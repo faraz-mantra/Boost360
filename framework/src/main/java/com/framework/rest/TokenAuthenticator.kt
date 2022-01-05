@@ -4,7 +4,6 @@ import android.util.Log
 import com.framework.BaseApplication
 import com.framework.pref.*
 import com.framework.rest.tokenCreate.AccessTokenRequest
-import com.framework.rest.tokenCreate.EndPoints
 import com.framework.rest.tokenCreate.RefreshTokenApi
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.runBlocking

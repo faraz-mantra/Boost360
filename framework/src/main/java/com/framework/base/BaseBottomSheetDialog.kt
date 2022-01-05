@@ -48,11 +48,7 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
   private var resultCancelled = true
   protected lateinit var dialog: BottomSheetDialog
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     baseActivity = activity as BaseActivity<*, *>
     binding = DataBindingUtil.inflate(inflater, getLayout(), container, false)
     binding?.lifecycleOwner = this
@@ -67,9 +63,7 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     dialog.setOnShowListener {
       try {
         val dialog = it as? BottomSheetDialog ?: return@setOnShowListener
-        val bottomSheet =
-          dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-            ?: return@setOnShowListener
+        val bottomSheet = dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) ?: return@setOnShowListener
         BottomSheetBehavior.from(bottomSheet).apply {
           isPeekHeightSetMatch()?.let {
             isFitToContents = true
@@ -145,7 +139,6 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     val fragmentTransaction = baseActivity.supportFragmentManager.beginTransaction()
     if (showAnim){
       fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-
     }
     if (addToBackStack) {
       fragmentTransaction.addToBackStack(fragment.javaClass.name)
@@ -159,8 +152,7 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
 
     val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
     if (showAnim){
-      fragmentTransaction?.
-      setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+      fragmentTransaction?.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
     }
     if (addToBackStack) {
       fragmentTransaction.addToBackStack(fragment.javaClass.name)
