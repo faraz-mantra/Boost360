@@ -3,7 +3,6 @@ package com.boost.marketplace.ui.Marketplace_Offers
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.os.Handler
 import android.text.SpannableString
 import android.text.TextPaint
 import android.text.style.ClickableSpan
@@ -13,10 +12,11 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.MarketPlaceOffers
 import com.boost.dbcenterapi.utils.SharedPrefs
+import com.boost.marketplace.Adapters.MarketOfferDetailAdapter
+import com.boost.marketplace.Adapters.MarketOfferTermsAdapter
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityMarketplaceoffersBinding
-import com.boost.marketplace.infra.recyclerView.AppBaseRecyclerViewAdapter
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_marketplaceoffers.*
 import kotlinx.android.synthetic.main.item_marketplaceoffers_info.view.*
@@ -31,9 +31,10 @@ class MarketPlaceOffersActivity :
 
 
     var marketOffersData: MarketPlaceOffers? = null
-    lateinit var marketOfferDetailAdapter: AppBaseRecyclerViewAdapter<MarketPlaceOffers>
-    lateinit var marketOfferTermsAdapter: AppBaseRecyclerViewAdapter<MarketPlaceOffers>
+    lateinit var marketOfferDetailAdapter: MarketOfferDetailAdapter
+    lateinit var marketOfferTermsAdapter: MarketOfferTermsAdapter
     lateinit var prefs: SharedPrefs
+   // lateinit var viewModel: MarketPlaceOffersViewModel
 
 
     override fun getLayout(): Int {
@@ -48,7 +49,9 @@ class MarketPlaceOffersActivity :
     override fun onCreateView() {
         super.onCreateView()
 
-
+        marketOfferDetailAdapter = MarketOfferDetailAdapter(ArrayList())
+        marketOfferTermsAdapter = MarketOfferTermsAdapter(ArrayList())
+     //   WebEngageController.trackEvent(ADDONS_MARKETPLACE_OFFERS_LOADED, PAGE_VIEW, NO_EVENT_VALUE)
 
         marketOffersData = intent.extras?.getSerializable("marketOffersData") as? MarketPlaceOffers
         //   marketOffersData = Gson().fromJson<MarketPlaceOffers>(jsonString, object : TypeToken<MarketPlaceOffers>() {}.type)
@@ -56,13 +59,13 @@ class MarketPlaceOffersActivity :
 
         initializeDetailsRecycler()
         initializeTermsRecycler()
-        //  loadData()
+          loadData()
         initMvvm()
 
-        binding!!.offerTitle.text = marketOffersData!!.title
-        binding!!.availCouponTxt.text = marketOffersData!!.coupon_code
+        binding?.offerTitle?.text = marketOffersData?.title
+        binding?.availCouponTxt?.text = marketOffersData?.coupon_code
         binding?.offerValidityTxt?.text =
-            getConvertedExpiryDateFormat(marketOffersData!!.expiry_date)
+            marketOffersData?.expiry_date?.let { getConvertedExpiryDateFormat(it) }
         if (marketOffersData?.extra_information != null) {
             var list: ArrayList<String> = arrayListOf()
             var listTerms: ArrayList<String> = arrayListOf()
@@ -117,8 +120,8 @@ class MarketPlaceOffersActivity :
         val ss = SpannableString(
             resources.getString(
                 R.string.marketoffer_termSix,
-                getConvertedDateFormat(marketOffersData!!.createdon),
-                getConvertedExpiryDateFormat(marketOffersData!!.expiry_date)
+                marketOffersData?.let { getConvertedDateFormat(it.createdon) },
+                marketOffersData?.let { getConvertedExpiryDateFormat(it.expiry_date) }
             )
         )
         val clickableSpan: ClickableSpan = object : ClickableSpan() {
@@ -134,14 +137,16 @@ class MarketPlaceOffersActivity :
             }
         }
 
-        if (intent.extras?.containsKey("showCartIcon")!!) {
+        if (intent.extras?.containsKey("showCartIcon") == true) {
             offer_info_icon.visibility = View.INVISIBLE
             avail_coupon_submit.visibility = View.GONE
         }
 
-        if (marketOffersData!!.image != null && !marketOffersData!!.image!!.url.isNullOrEmpty()) {
-            Glide.with(MarketPlaceOffersActivity()).load(marketOffersData!!.image!!.url)
-                .into(binding?.marketoffersImage!!)
+        if (marketOffersData?.image != null && !marketOffersData?.image?.url.isNullOrEmpty()) {
+            binding?.marketoffersImage?.let {
+                Glide.with(MarketPlaceOffersActivity()).load(marketOffersData?.image?.url)
+                    .into(it)
+            }
         } else {
             binding?.marketoffersImage?.setImageResource(R.drawable.rectangle_copy_18)
         }
@@ -184,10 +189,10 @@ class MarketPlaceOffersActivity :
 
     }
 
-//    private fun loadData() {
-//      //  Log.d("marketOffersCoupon", " " + marketOffersData!!.coupon_code)
-//        viewModel.getOffersByCouponId(marketOffersData!!.coupon_code)
-//    }
+    private fun loadData() {
+        Log.d("marketOffersCoupon", " " + marketOffersData?.coupon_code)
+        marketOffersData?.coupon_code?.let { viewModel.getOffersByCouponId(it) }
+    }
 
     private fun initMvvm() {
         viewModel.marketOffersCouponResult().observe(this, androidx.lifecycle.Observer {
@@ -226,7 +231,7 @@ class MarketPlaceOffersActivity :
 
     fun updateRecycler(list: List<String>) {
         Log.v("updateRecycler", " " + list)
-        //   marketOfferDetailAdapter?.addupdates(list)
+           marketOfferDetailAdapter?.addupdates(list)
         recyclerOfferDetails.adapter = marketOfferDetailAdapter
         marketOfferDetailAdapter?.notifyDataSetChanged()
     }
@@ -249,7 +254,7 @@ class MarketPlaceOffersActivity :
 
     fun updateTermsRecycler(list: List<String>) {
         Log.v("updateRecycler", " " + list)
-        //  marketOfferTermsAdapter?.addupdates(list)
+          marketOfferTermsAdapter?.addupdates(list)
         recyclerTerms.adapter = marketOfferTermsAdapter
         marketOfferDetailAdapter?.notifyDataSetChanged()
     }
