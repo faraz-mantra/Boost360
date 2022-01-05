@@ -17,7 +17,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Pre.MarketPlace"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.Marketplace_Offers.MarketPlaceOffersActivity"
+        <activity android:name=".ui.marketplace_Offers.MarketPlaceOffersActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.My_Plan.MyCurrentPlanActivity"
             android:screenOrientation="portrait" />

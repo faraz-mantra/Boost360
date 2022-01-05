@@ -1,4 +1,4 @@
-package com.boost.marketplace.ui.Marketplace_Offers
+package com.boost.marketplace.ui.marketplace_Offers
 
 import android.content.ClipData
 import android.content.ClipboardManager

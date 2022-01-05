@@ -22,8 +22,8 @@ import com.boost.marketplace.infra.api.models.test.getData
 import com.boost.marketplace.ui.details.FeatureDetailsViewModel
 import com.boost.marketplace.infra.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
-import com.boost.marketplace.ui.Marketplace_Offers.MarketPlaceOffersActivity
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
+import com.boost.marketplace.ui.marketplace_Offers.MarketPlaceOffersActivity
 import com.framework.base.BaseActivity
 import com.framework.pref.UserSessionManager
 import com.framework.views.dotsindicator.OffsetPageTransformer
