@@ -17,13 +17,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Pre.MarketPlace"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.Marketplace_Offers.MarketPlaceOffersActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.Packs.PacksActivity"
+        <activity android:name=".ui.marketplace_Offers.MarketPlaceOffersActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.My_Plan.MyCurrentPlanActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.Compare_Plans.ComparePacksActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.Compare_Plans.ComparePacksActivity" />
+        <activity android:name=".ui.Invoice.InvoiceActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.History_Orders.HistoryOrdersActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

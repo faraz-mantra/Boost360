@@ -41,8 +41,6 @@ import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.constant.RecyclerViewActionType
 import com.boost.marketplace.databinding.ActivityMarketplaceBinding
-import com.boost.marketplace.ui.Marketplace_Offers.MarketPlaceOffersActivity
-import com.boost.marketplace.ui.Packs.PacksActivity
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
@@ -56,6 +54,7 @@ import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
 import com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity
 import com.boost.marketplace.ui.browse.BrowseFeaturesActivity
+import com.boost.marketplace.ui.marketplace_Offers.MarketPlaceOffersActivity
 import com.framework.analytics.SentryController
 import com.framework.webengageconstant.*
 import com.inventoryorder.utils.DynamicLinkParams
@@ -77,7 +76,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     lateinit var addonsCategoryAdapter: AddonsCategoryAdapter
     lateinit var videosListAdapter: VideosListAdapter
 
-//    private var deepLinkUtil: DeepLinkUtil? = null
+    //    private var deepLinkUtil: DeepLinkUtil? = null
     var badgeNumber = 0
     var fpRefferalCode: String = ""
     var feedBackLink: String? = null
@@ -1491,9 +1490,9 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 banner_viewpager.setPageTransformer(SimplePageTransformer())
 
                 val itemDecoration = HorizontalMarginItemDecoration(
-                        applicationContext,
+                    applicationContext,
 //                        R.dimen.viewpager_current_item_horizontal_margin
-                        R.dimen.viewpager_current_item_horizontal_margin1
+                    R.dimen.viewpager_current_item_horizontal_margin1
                 )
                 banner_viewpager.addItemDecoration(itemDecoration)
             }
@@ -1607,7 +1606,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         if (actionType == RecyclerViewActionType.MARKETPLACE_PROMO_BANNER_CLICK.ordinal) {
             intent = Intent(this, MarketPlaceOffersActivity::class.java)
         } else if (actionType == RecyclerViewActionType.PACKS_CLICK.ordinal) {
-            intent = Intent(this, PacksActivity::class.java)
+            intent = Intent(this, ComparePacksActivity::class.java)
         } else if (actionType == RecyclerViewActionType.TOP_FEATURES_CLICK.ordinal) {
             intent = Intent(this, FeatureDetailsActivity::class.java)
         } else if (actionType == RecyclerViewActionType.SECONDARY_IMAGE_CLICK.ordinal) {
@@ -1637,8 +1636,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
           args.putString("bundleData", Gson().toJson(item))
           packageFragment.arguments = args
           addFragment(packageFragment, PACKAGE_FRAGMENT)*/
-        
-        
+
+
 //        val packageFragment = PackageFragmentNew.newInstance()
 //        val args = Bundle()
 //        args.putString("bundleData", Gson().toJson(item))
@@ -2292,11 +2291,11 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
         package_viewpager.setPageTransformer(SimplePageTransformer())
 
-    val itemDecoration = HorizontalMarginItemDecoration(
-        applicationContext,
-        R.dimen.viewpager_current_item_horizontal_margin
-    )
-    package_viewpager.addItemDecoration(itemDecoration)
+        val itemDecoration = HorizontalMarginItemDecoration(
+            applicationContext,
+            R.dimen.viewpager_current_item_horizontal_margin
+        )
+        package_viewpager.addItemDecoration(itemDecoration)
 
     }
 
@@ -2505,7 +2504,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             )
         }
     }
-    
+
     fun callExpertContact(phone: String?) {
         Log.d("callExpertContact", " " + phone)
         if (phone != null) {
@@ -2692,8 +2691,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                                         val intent = Intent(this, MarketPlaceOffersActivity::class.java)
                                                                         intent.putExtra("marketOffersData",
                                                                             Gson().toJson(
-                                                                            selectedMarketOfferModel
-                                                                        ))
+                                                                                selectedMarketOfferModel
+                                                                            ))
                                                                         startActivity(intent)
 
 

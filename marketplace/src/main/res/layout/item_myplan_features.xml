@@ -73,7 +73,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_checked" />
+                        android:src="@drawable/ic_tick_green" />
 
                     <TextView
                         android:id="@+id/title"
@@ -94,7 +94,8 @@
                     android:lineSpacingExtra="1.3sp"
                     android:textColor="#2a2a2a"
                     android:textSize="@dimen/_10sdp"
-                    tools:text="Facebook Ads (upto 75 leads)" />
+                    android:visibility="visible"
+                    tools:text="Facebook Adss (upto 75 leads)" />
 
                 <LinearLayout
                     android:id="@+id/paid_addons_activate"
@@ -113,9 +114,23 @@
                         android:textColor="#747474"
                         android:textSize="@dimen/_8sdp" />
 
+
+
                 </LinearLayout>
 
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/arrow_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/_15ssp"
+                android:background="@drawable/ic_shape"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -124,7 +139,8 @@
             android:id="@+id/detailsView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible"
+            android:visibility="gone"
+            android:animateLayoutChanges="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

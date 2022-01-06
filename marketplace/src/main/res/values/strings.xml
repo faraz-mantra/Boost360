@@ -19,6 +19,7 @@
     <string name="home_more_menu">Home More Menu</string>
     <string name="save_upto_60_with_feature_packs">Save upto 60% with feature packs</string>
     <string name="discount_saving">35% SAVING</string>
+    <string name="discount_off">35% OFF</string>
     <string name="online_pack">Online pack</string>
     <string name="need_help_desc">Please feel free to <a href="mailto: ria@nowfloats.com">send an email at ria@nowfloats.com</a>. Alternatively you can <a href="tel:18601231233">call us at 1860 123 1233</a>.</string>
     <string name="need_help_title">We\'re here to help.</string>
@@ -28,4 +29,5 @@
     <string name="features_details">In-clinic appointments</string>
   <string name="browse_features">Browse features</string>
   <string name="actual_feature_price"><strike>₹60/month</strike></string>
+    <string name="added_to_carts">Added to cart</string>
 </resources>
