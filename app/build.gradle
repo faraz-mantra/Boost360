@@ -119,7 +119,7 @@ android {
 //            dimension "default"
 //        }
         partone {
-            versionName "6.0.13"
+            versionName "6.0.14"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "twitter_consumer_key", '"4CiUg5gcIbvYre8XjGd8GsElV"'
