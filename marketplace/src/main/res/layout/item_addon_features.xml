@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+<androidx.cardview.widget.CardView
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  app:cardCornerRadius="5dp"
+  android:layout_margin="@dimen/_10sdp"
+  app:cardBackgroundColor="@color/white"
+  app:cardElevation="1dp">
+
+<androidx.appcompat.widget.LinearLayoutCompat
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+
+  <androidx.appcompat.widget.AppCompatImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"/>
+
+  <androidx.appcompat.widget.AppCompatTextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="Customer\nTestimonials"/>
+
+  <androidx.appcompat.widget.AppCompatTextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="₹60/month"/>
+
+  <androidx.appcompat.widget.AppCompatTextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="60 per/month"/>
+</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.cardview.widget.CardView>
+</layout>

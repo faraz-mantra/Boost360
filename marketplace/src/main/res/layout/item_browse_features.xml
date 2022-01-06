@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <data>
+
+  </data>
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+      android:id="@+id/feature_name_ll"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trending"
+        android:textSize="@dimen/_16ssp"
+        android:textStyle="bold"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Features that manufacturers are liking most."
+        android:textStyle="normal"
+        android:textSize="@dimen/_12ssp"/>
+    </LinearLayout>
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:foregroundGravity="center"
+      android:layout_alignParentEnd="true"
+      android:layout_margin="@dimen/_10sdp"
+      android:src="@drawable/ic_browse_features_show_hide"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/feature_name_ll"
+      android:layout_margin="@dimen/_10sdp"/>
+
+  </RelativeLayout>
+</layout>
