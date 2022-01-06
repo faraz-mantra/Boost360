@@ -21,7 +21,7 @@ class Packs_ViewHolder(binding:ItemPacksListBinding)  :
         super.bind(position, item)
 
         binding.details.setText(upgradeList.get(position).name)
-        binding.title.setText(upgradeList.get(position).target_business_usecase)
+//        binding.title.setText(upgradeList.get(position).target_business_usecase)
 
        Glide.with(activity!!).load(upgradeList.get(position).primary_image).into(binding.imageView2)
 

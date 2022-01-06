@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -54,6 +55,7 @@
                     android:id="@+id/package_primary_image_copy"
                     android:layout_width="50dp"
                     android:visibility="gone"
+                    tools:visibility="visible"
                     android:layout_height="50dp"
                     android:layout_centerInParent="true"
                     android:layout_marginStart="@dimen/_8sdp"
@@ -101,6 +103,7 @@
                         android:text="Just for"
                         android:textColor="#9b9b9b"
                         android:textSize="@dimen/_8sdp"
+                        tools:visibility="visible"
                         android:visibility="gone" />
 
                     <TextView

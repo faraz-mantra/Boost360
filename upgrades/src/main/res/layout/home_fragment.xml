@@ -324,68 +324,68 @@
       </RelativeLayout>
 
       <RelativeLayout
-        android:id="@+id/mp_view_cart_rl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/banner_rl_layout"
-        android:layout_marginTop="5dp"
-        android:visibility="visible"
-        android:orientation="vertical">
-
-        <androidx.cardview.widget.CardView
+          android:id="@+id/mp_view_cart_rl"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_margin="10dp"
-          app:cardElevation="0dp"
-          android:foreground="@drawable/mp_review_cart_yellow_border"
-          app:cardCornerRadius="15dp">
+          android:layout_below="@id/banner_rl_layout"
+          android:layout_marginTop="5dp"
+          android:orientation="vertical"
+          android:visibility="visible">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:foreground="@drawable/mp_review_cart_yellow_border"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp">
 
           <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
 
             <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
-
-              <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="25dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <ImageView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:src="@drawable/ic_review_cart" />
-
-                <RelativeLayout
+              <LinearLayout
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_marginStart="14dp">
+                  android:layout_margin="25dp"
+                  android:orientation="horizontal">
 
-                  <TextView
-                    android:id="@+id/mp_no_of_cart_items_tv"
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/bold"
-                    android:textColor="#333333"
-                    android:textSize="18sp"
-                    tools:text="6 items waiting in cart" />
+                    android:src="@drawable/ic_review_cart" />
 
-                  <TextView
-                    android:id="@+id/mp_items_name_tv"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/mp_no_of_cart_items_tv"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/regular"
-                    android:lines="2"
-                    android:scrollHorizontally="true"
-                    android:textAlignment="viewStart"
-                    android:textSize="14sp"
-                    tools:text="unlimited content, IVR, call\ntracker and staff profiles +1 more" />
+                    android:layout_marginStart="14dp">
+
+                  <TextView
+                      android:id="@+id/mp_no_of_cart_items_tv"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:fontFamily="@font/bold"
+                      android:textColor="#333333"
+                      android:textSize="18sp"
+                      tools:text="6 items waiting in cart" />
+
+                  <TextView
+                      android:id="@+id/mp_items_name_tv"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_below="@id/mp_no_of_cart_items_tv"
+                      android:ellipsize="end"
+                      android:fontFamily="@font/regular"
+                      android:lines="2"
+                      android:scrollHorizontally="true"
+                      android:textAlignment="viewStart"
+                      android:textSize="14sp"
+                      tools:text="unlimited content, IVR, call\ntracker and staff profiles +1 more" />
 
                 </RelativeLayout>
 
@@ -393,45 +393,45 @@
               </LinearLayout>
 
               <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/yellow" />
-
-              <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                  android:id="@+id/mp_talk_expert_tv"
-                  android:layout_width="0dp"
-                  android:layout_height="wrap_content"
-                  android:layout_margin="14dp"
-                  android:layout_weight="1"
-                  android:fontFamily="@font/semi_bold"
-                  android:gravity="center"
-                  android:text="Talk to expert"
-                  android:textColor="@color/orange"
-                  android:textSize="14sp" />
-
-                <View
-                  android:layout_width="1dp"
-                  android:layout_height="match_parent"
-                  android:layout_gravity="center"
+                  android:layout_width="match_parent"
+                  android:layout_height="1dp"
                   android:background="@color/yellow" />
 
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:weightSum="2">
+
                 <TextView
-                  android:id="@+id/mp_review_cart_tv"
-                  android:layout_width="0dp"
-                  android:layout_height="match_parent"
-                  android:layout_margin="14dp"
-                  android:layout_weight="1"
-                  android:fontFamily="@font/bold"
-                  android:gravity="center"
-                  android:text="Review cart"
-                  android:textColor="@color/orange"
-                  android:textSize="14sp" />
+                    android:id="@+id/mp_talk_expert_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="14dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/semi_bold"
+                    android:gravity="center"
+                    android:text="Talk to expert"
+                    android:textColor="@color/orange"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@color/yellow" />
+
+                <TextView
+                    android:id="@+id/mp_review_cart_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="14dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:text="Review cart"
+                    android:textColor="@color/orange"
+                    android:textSize="14sp" />
 
               </LinearLayout>
 
@@ -439,15 +439,15 @@
             </LinearLayout>
 
             <ImageView
-              android:id="@+id/mp_review_cart_close_iv"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_alignParentEnd="true"
-              android:layout_marginStart="10dp"
-              android:layout_marginTop="10dp"
-              android:layout_marginEnd="10dp"
-              android:layout_marginBottom="10dp"
-              android:src="@drawable/ic_review_cart_close" />
+                android:id="@+id/mp_review_cart_close_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/ic_review_cart_close" />
           </RelativeLayout>
 
 
@@ -604,6 +604,7 @@
           android:paddingBottom="@dimen/_10sdp"
           android:textColor="@color/white"
           android:visibility="gone"
+          tools:visibility="visible"
           android:fontFamily="@font/open_sans_bold"
           android:text="Compare packs"
           app:layout_constraintBottom_toBottomOf="parent"
@@ -664,7 +665,8 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="5dp"
-          android:visibility="gone">
+          android:visibility="gone"
+          tools:visibility="visible">
 
           <TextView
             android:layout_width="wrap_content"
@@ -793,7 +795,7 @@
             android:text="View all"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -1034,7 +1036,7 @@
           android:paddingTop="@dimen/_10sdp"
           android:paddingEnd="@dimen/_15sdp"
           android:paddingBottom="@dimen/_10sdp"
-          tools:visibility="gone">
+          tools:visibility="visible">
 
 
           <ImageView
@@ -1266,7 +1268,8 @@
             android:text="View"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:visibility="gone" />
+            android:visibility="gone"
+              tools:visibility="visible"/>
 
         </RelativeLayout>
 
@@ -1394,7 +1397,8 @@
                 android:layout_marginEnd="32dp"
                 android:background="@drawable/invitation_code_bg"
                 android:padding="1dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                  tools:visibility="visible">
 
 
                 <TextView
@@ -1544,6 +1548,7 @@
             android:textColor="#747474"
             android:textSize="@dimen/txt_10sp"
             android:visibility="gone"
+              tools:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/share_fb_1" />

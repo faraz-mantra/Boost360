@@ -2,7 +2,7 @@ package com.boost.dbcenterapi.base.rest
 
 import com.boost.dbcenterapi.DBCenterAPIApplication
 import com.boost.dbcenterapi.data.rest.TaskCode
-import com.boost.dbcenterapi.data.rest.apiClients.DeveloperBoostKitApiClient
+import com.boost.dbcenterapi.data.rest.apiClients.MarketplaceNewApiClient
 import com.framework.base.BaseRepository
 import com.framework.base.BaseResponse
 import com.framework.pref.UserSessionManager
@@ -17,7 +17,7 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
   }
 
   override fun getApiClient(): Retrofit {
-    return DeveloperBoostKitApiClient.shared.retrofit
+    return MarketplaceNewApiClient.shared.retrofit
   }
 
   fun makeLocalRequest(observable: Observable<BaseResponse>, taskCode: TaskCode): Observable<BaseResponse> {

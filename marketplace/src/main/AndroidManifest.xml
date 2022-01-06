@@ -23,6 +23,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.My_Plan.MyCurrentPlanActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".ui.Compare_Plans.ComparePacksActivity" />
     </application>
 
 </manifest>

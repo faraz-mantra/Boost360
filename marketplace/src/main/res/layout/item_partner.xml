@@ -9,7 +9,7 @@
 
 
   <com.framework.views.customViews.CustomImageView
-    android:id="@+id/mp_partner_primary_image"
+    android:id="@+id/partner_primary_image"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:layout_height="match_parent"

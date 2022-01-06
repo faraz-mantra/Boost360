@@ -8,19 +8,18 @@
   </data>
 
 
-  <androidx.appcompat.widget.LinearLayoutCompat
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
-      android:id="@+id/home_promo_banner_title"
-      android:layout_width="match_parent"
+      android:id="@+id/banner_title"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:fontFamily="@font/open_sans"
       android:paddingStart="5dp"
       android:paddingBottom="5dp"
-      android:layout_gravity="center"
       android:layout_marginStart="@dimen/size_15"
       android:textColor="@color/common_text_color"
       android:textSize="16sp"
@@ -28,7 +27,7 @@
       android:text="Here's a colorful treat!" />
 
 
-    <com.framework.views.customViews.CustomCardView
+    <androidx.cardview.widget.CardView
       android:id="@+id/maim_view"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -40,13 +39,12 @@
       app:cardElevation="0dp"
       app:cardUseCompatPadding="true">
 
-      <com.framework.views.customViews.CustomImageView
+      <ImageView
         android:id="@+id/package_primary_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/promo_banner_placeholder"
-        android:scaleType="fitXY" />
-    </com.framework.views.customViews.CustomCardView>
+        android:layout_height="wrap_content"
+        android:src="@drawable/promo_banner_placeholder"/>
+    </androidx.cardview.widget.CardView>
 
-  </androidx.appcompat.widget.LinearLayoutCompat>
+  </LinearLayout>
 </layout>
