@@ -25,7 +25,7 @@ class CompareItemAdapter( cryptoCurrencies: List<FeaturesModel>?)
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
     val itemView = LayoutInflater.from(parent?.context).inflate(
-      R.layout.item_packs_list, parent, false
+      R.layout.item_pack_list, parent, false
     )
     context = itemView.context
 
@@ -79,7 +79,7 @@ class CompareItemAdapter( cryptoCurrencies: List<FeaturesModel>?)
 
     val image = itemView.findViewById<ImageView>(R.id.imageView2)!!
     val name = itemView.findViewById<TextView>(R.id.details)!!
-    val title = itemView.findViewById<TextView>(R.id.title)!!
+   val title = itemView.findViewById<TextView>(R.id.title)!!
 
 
   }

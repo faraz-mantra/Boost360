@@ -127,7 +127,6 @@
                                 android:layout_height="@dimen/pad_70dp"
                                 android:layout_margin="20dp"
                                 android:src="@drawable/ic_package_image"
-
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -137,7 +136,6 @@
                                 android:layout_height="@dimen/pad_70dp"
                                 android:layout_margin="20dp"
                                 android:src="@drawable/ic_package_image"
-
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -314,7 +312,7 @@
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:spanCount="3"
                         tools:itemCount="9"
-                        tools:listitem="@layout/item_packs_list" />
+                        tools:listitem="@layout/item_pack_list" />
                     <!--</androidx.core.widget.NestedScrollView>-->
 
 
