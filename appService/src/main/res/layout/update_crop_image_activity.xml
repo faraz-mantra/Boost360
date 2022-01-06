@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_50"
+            android:background="@color/black_333333"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/customImageView6"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            app:tint="@color/white"
+            android:layout_marginStart="24dp"
+            android:src="@drawable/cross_nv_new"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/customTextView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/edit_image"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            app:fontFamily="@font/bold"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
+            app:layout_constraintStart_toEndOf="@+id/customImageView6"
+            app:layout_constraintTop_toTopOf="@+id/toolbar2" />
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/customImageView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:src="@drawable/ic_delete"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar2"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+
+        <com.theartofdev.edmodo.cropper.CropImageView
+            android:id="@+id/iv_crop"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="48dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <LinearLayout
+                android:id="@+id/layout_change_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.framework.views.customViews.CustomCardView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:cardCornerRadius="22dp">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_refresh" />
+
+
+                </com.framework.views.customViews.CustomCardView>
+
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/change_image"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/regular" />
+
+            </LinearLayout>
+
+
+            <com.framework.views.customViews.CustomCardView
+                android:layout_width="60dp"
+                android:id="@+id/layout_tick"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="16dp"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardCornerRadius="30dp">
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:src="@drawable/ic_tick"
+                    app:tint="@color/white" />
+
+
+            </com.framework.views.customViews.CustomCardView>
+
+            <LinearLayout
+                android:id="@+id/layout_rotate"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.framework.views.customViews.CustomCardView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:cardCornerRadius="22dp">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_rotate" />
+
+
+                </com.framework.views.customViews.CustomCardView>
+
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/rotate"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/regular" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

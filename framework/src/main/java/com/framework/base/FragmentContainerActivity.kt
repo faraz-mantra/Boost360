@@ -60,3 +60,7 @@ abstract class FragmentContainerActivity : BaseActivity<ActivityFragmentContaine
 fun Intent.setFragmentType(type: Int) {
   this.putExtra(FRAGMENT_TYPE, type)
 }
+
+fun Intent.setFragmentType(type: String) {
+  this.putExtra(FRAGMENT_TYPE, type)
+}

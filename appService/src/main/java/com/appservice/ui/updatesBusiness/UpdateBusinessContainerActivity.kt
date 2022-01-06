@@ -54,6 +54,13 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
     return binding?.appBarLayout?.toolbar
   }
 
+  override fun isHideToolbar(): Boolean {
+    if (type==FragmentType.BUSINESS_KYC_VIEW){
+      return true
+    }
+    return super.isHideToolbar()
+  }
+
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> ContextCompat.getColor(
@@ -106,8 +113,9 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
     return when (type) {
       FragmentType.UPDATE_BUSINESS_FRAGMENT -> UpdatesBusinessFragment.newInstance()
       FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT -> AddUpdateBusinessFragment.newInstance()
+      FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2 -> AddUpdateBusinessFragmentV2.newInstance()
       FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> DetailUpdateBusinessFragment.newInstance()
-      else -> UpdatesBusinessFragment.newInstance()
+      else -> AddUpdateBusinessFragmentV2.newInstance()
     }
   }
 

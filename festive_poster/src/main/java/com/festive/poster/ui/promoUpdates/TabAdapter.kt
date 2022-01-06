@@ -5,10 +5,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.festive.poster.base.AppBaseFragment
+import com.framework.base.BaseFragment
 import com.framework.models.BaseViewModel
 
 
-internal class TabAdapter(val fragmentList: ArrayList<AppBaseFragment<out ViewDataBinding, out BaseViewModel>>,
+internal class TabAdapter(val fragmentList: ArrayList<BaseFragment<out ViewDataBinding, out BaseViewModel>>,
                           baseFragment: Fragment) :
     FragmentStateAdapter(baseFragment) {
 

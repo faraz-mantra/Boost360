@@ -1,11 +1,13 @@
 package com.festive.poster.ui.promoUpdates
 
+import android.content.Intent
 import android.graphics.BlendMode
 import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.databinding.ViewDataBinding
 import androidx.viewpager2.widget.ViewPager2
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
@@ -16,16 +18,21 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.ui.promoUpdates.bottomSheet.SubscribePlanBottomSheet
 import com.festive.poster.utils.WebEngageController
 import com.framework.base.BaseActivity
+import com.framework.base.BaseFragment
+import com.framework.base.setFragmentType
 import com.framework.models.BaseViewModel
 import com.framework.utils.setColorFilterApiQ
+import com.framework.views.BlankFragment
 import com.framework.webengageconstant.Post_Promotional_Update_Click
 import com.framework.webengageconstant.Promotional_Update_Browse_All_Click
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import io.sentry.Breadcrumb.ui
 
 class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding, BaseViewModel>(),TodaysPickFragment.Callbacks {
 
     val browseTabFragment =BrowseTabFragment.newInstance()
+    var currentPage:Int=0
 
     override fun getLayout(): Int {
         return R.layout.fragment_promo_landing_page
@@ -82,7 +89,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
         val fragmentList = arrayListOf(
             TodaysPickFragment.newInstance(callbacks = this),
             browseTabFragment,
-            CreatePostFragment.newInstance()
+            BlankFragment()
         )
         val viewPagerAdapter = TabAdapter(fragmentList, this)
         binding?.viewPager?.apply {
@@ -92,15 +99,24 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
 
+
                     when(position){
                         0->{
 
-
+                            currentPage=0
                         }
                         1->{
                             WebEngageController.trackEvent(Promotional_Update_Browse_All_Click)
 
+                            currentPage=1
 
+                        }
+                        2->{
+                            val intent = Intent(requireActivity(),
+                                Class.forName(
+                                    "com.appservice.ui.updatesBusiness.UpdateBusinessContainerActivity"))
+                            intent.setFragmentType("ADD_UPDATE_BUSINESS_FRAGMENT")
+                            startActivity(intent)
                         }
                     }
                 }
@@ -117,6 +133,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
                 }else{
                     tab!!.icon!!.setColorFilter(tabIconColor,PorterDuff.Mode.SRC_IN)
                 }
+
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -155,5 +172,10 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
 
     override fun onDataLoaded(data: ArrayList<PosterPackModel>) {
        // browseTabFragment.setRealData(data)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding!!.viewPager.currentItem = currentPage
     }
 }
