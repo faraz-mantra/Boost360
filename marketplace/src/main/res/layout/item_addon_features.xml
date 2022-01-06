@@ -9,7 +9,7 @@
 <androidx.cardview.widget.CardView
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
-  app:cardCornerRadius="5dp"
+  app:cardCornerRadius="10dp"
   android:layout_margin="@dimen/_10sdp"
   app:cardBackgroundColor="@color/white"
   app:cardElevation="1dp">
@@ -17,21 +17,31 @@
 <androidx.appcompat.widget.LinearLayoutCompat
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
+  android:layout_margin="@dimen/_15sdp"
   android:orientation="vertical">
 
   <androidx.appcompat.widget.AppCompatImageView
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"/>
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    app:srcCompat="@drawable/browse_features_img"/>
 
   <androidx.appcompat.widget.AppCompatTextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:layout_marginTop="7dp"
+    android:layout_gravity="center"
+    android:textSize="14sp"
+    android:textColor="@color/black"
     android:text="Customer\nTestimonials"/>
 
   <androidx.appcompat.widget.AppCompatTextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:textSize="13sp"
+    android:layout_marginTop="7dp"
     android:gravity="center"
     android:text="₹60/month"/>
 
@@ -39,7 +49,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:text="60 per/month"/>
+    android:layout_gravity="center"
+    android:textSize="10sp"
+    android:text="@string/actual_feature_price" />
 </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.cardview.widget.CardView>
 </layout>
