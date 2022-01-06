@@ -23,6 +23,13 @@ android {
         }
     }
 
+    flavorDimensions "default"
+    productFlavors {
+        partone {
+            dimension "default"
+        }
+    }
+
     buildscript {
         repositories {
             mavenCentral()

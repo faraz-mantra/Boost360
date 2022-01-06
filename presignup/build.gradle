@@ -28,6 +28,13 @@ android {
         }
     }
 
+    flavorDimensions "default"
+    productFlavors {
+        partone {
+            dimension "default"
+        }
+    }
+
     dataBinding {
         enabled = true
     }
