@@ -148,34 +148,42 @@
                                 android:orientation="vertical"
                                 android:padding="@dimen/_7sdp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintBottom_toTopOf="@+id/package_compare_layout"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@id/package_profile_image">
+                                app:layout_constraintStart_toEndOf="@id/package_profile_image"
+                                app:layout_constraintTop_toTopOf="parent">
 
                                 <TextView
                                     android:id="@+id/package_title"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginStart="9dp"
+                                    android:layout_marginEnd="9dp"
+                                    android:layout_marginBottom="13dp"
                                     android:fontFamily="@font/open_sans_bold"
-                                    android:maxLines="2"
                                     android:text="Online Pack"
+                                    android:maxLines="2"
                                     android:textAllCaps="false"
-                                    android:textColor="@color/colorPrimary"
+                                    android:textColor="#4A4A4A"
                                     android:textFontWeight="800"
                                     android:textSize="@dimen/txt_20sp"
                                     android:textStyle="bold"
-                                    app:layout_constraintBottom_toTopOf="@id/package_amount_layout"
+                                    app:layout_constraintBottom_toTopOf="@+id/package_amount_layout"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toBottomOf="@+id/pack_discount_tv" />
 
                                 <LinearLayout
                                     android:id="@+id/package_amount_layout"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginStart="9dp"
+                                    android:layout_marginEnd="9dp"
+
+                                    app:layout_constraintTop_toBottomOf="@+id/package_title"
                                     android:gravity="center_vertical"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@id/package_title">
+
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent">
 
                                     <TextView
                                         android:id="@+id/tv_price"
@@ -185,47 +193,48 @@
                                         android:paddingStart="0dp"
                                         android:paddingEnd="@dimen/_5sdp"
                                         android:text="₹2,559/month"
-                                        android:textColor="#4A4A4A"
+                                        android:textColor="#FFB900"
                                         android:textFontWeight="600"
                                         android:textSize="@dimen/txt_12sp"
                                         android:textStyle="bold" />
 
+                                    <TextView
+                                        android:id="@+id/upgrade_list_orig_cost"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#747474"
+                                        android:textSize="@dimen/_8sdp"
+                                        app:layout_constraintStart_toStartOf="@+id/money"
+                                        app:layout_constraintTop_toBottomOf="@+id/money"
+                                        tools:text="₹699/month" />
+
 
                                 </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/pack_discount_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="9dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="4dp"
+                                    android:background="@drawable/ic_pack_discount_bg"
+                                    android:elevation="2dp"
+                                    android:gravity="center"
+                                    android:text="@string/discount_off"
+                                    android:textColor="@color/white"
+                                    android:textSize="13sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/package_title"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintVertical_chainStyle="packed" />
 
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
-                            <LinearLayout
-                                android:id="@+id/package_compare_layout"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginStart="20dp"
-                                android:layout_marginTop="5dp"
-                                android:orientation="horizontal"
-                                android:paddingTop="10dp"
-                                android:paddingBottom="10dp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/package_profile_image">
 
-                            </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/pack_discount_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_marginStart="10dp"
-                                android:background="@drawable/ic_pack_discount_bg"
-                                android:elevation="2dp"
-                                android:gravity="center"
-                                android:text="@string/discount_off"
-                                android:textColor="@color/white"
-                                android:textSize="13sp"
-                                app:layout_constraintBottom_toTopOf="@+id/const_title"
-                                app:layout_constraintStart_toEndOf="@+id/package_profile_image"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_bias="1.0" />
+
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </androidx.cardview.widget.CardView>
