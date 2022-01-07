@@ -260,8 +260,8 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
   }
 
   fun getRazorPayToken(customerId: String) {
-    val razorPayKey: String = BuildConfigUtil.getBuildConfigField("RAZORPAY_KEY") ?: ""
-    val razorPaySecret: String = BuildConfigUtil.getBuildConfigField("RAZORPAY_SECREAT") ?: ""
+    val razorPayKey: String = com.boost.upgrades.BuildConfig.RAZORPAY_KEY
+    val razorPaySecret: String = com.boost.upgrades.BuildConfig.RAZORPAY_SECREAT
     val header = Credentials.basic(razorPayKey, razorPaySecret)
     compositeDisposable.add(
       ApiService.getRazorPayTokens(header, customerId)
