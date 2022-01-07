@@ -33,9 +33,13 @@ android {
     productFlavors {
         partone {
             dimension "default"
+            buildConfigField "String", "RAZORPAY_KEY", '"rzp_live_NsMLSX2HTaiEC9"'
+            buildConfigField "String", "RAZORPAY_SECREAT", '"Gfq8pQyFbu5BOoY5SeT6UuQk"'
         }
         jioonline {
             dimension "default"
+            buildConfigField "String", "RAZORPAY_KEY", '"rzp_live_o8qdD1DZ3PHBn0"'
+            buildConfigField "String", "RAZORPAY_SECREAT", '"Gfq8pQyFbu5BOoY5SeT6UuQk"'
         }
     }
 

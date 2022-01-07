@@ -26,9 +26,13 @@ android {
     productFlavors {
         partone {
             dimension "default"
+            buildConfigField "String", "GOOGLE_SERVER_CLIENT_ID", '"87687526880-dm4f3tml0ht88oer6gcc10r62l72pm1a.apps.googleusercontent.com"'
+            buildConfigField "String", "GOOGLE_SERVER_CLIENT_SECRET", '"APvjD8ABZg5c8e-VeHBi3AAG"'
         }
         jioonline {
             dimension "default"
+            buildConfigField "String", "GOOGLE_SERVER_CLIENT_ID", '"87687526880-dm4f3tml0ht88oer6gcc10r62l72pm1a.apps.googleusercontent.com"'
+            buildConfigField "String", "GOOGLE_SERVER_CLIENT_SECRET", '"APvjD8ABZg5c8e-VeHBi3AAG"'
         }
     }
 

@@ -20,6 +20,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "default"
+    productFlavors {
+        partone {
+            dimension "default"
+        }
+        jioonline {
+            dimension "default"
+        }
+    }
 }
 
 dependencies {

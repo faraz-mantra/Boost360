@@ -27,7 +27,7 @@ interface GoogleLoginHelper {
 
   fun googleLoginCallback(activity: Activity, type: String) {
     if (type == GMB_SIGN_IN && validClientID().not()) return
-    val clientIdGoogle=  BuildConfigUtil.getBuildConfigField("GOOGLE_SERVER_CLIENT_ID") ?: ""
+    val clientIdGoogle=  auth.google.BuildConfig.GOOGLE_SERVER_CLIENT_ID
     val mGoogleSignInClient = GoogleGraphManager.getClient(activity, clientIdGoogle, type)
     val signInIntent = mGoogleSignInClient.signInIntent
     activity.startActivityForResult(signInIntent, RC_SIGN_IN)
@@ -46,20 +46,20 @@ interface GoogleLoginHelper {
 
   fun logoutGoogle(activity: Activity, type: String) {
     if (type == GMB_SIGN_IN && validClientID().not()) return
-    val clientIdGoogle=  BuildConfigUtil.getBuildConfigField("GOOGLE_SERVER_CLIENT_ID") ?: ""
+    val clientIdGoogle=  auth.google.BuildConfig.GOOGLE_SERVER_CLIENT_ID
     GoogleGraphManager.getClient(activity, clientIdGoogle, type).signOut()
       .addOnCompleteListener(activity) { onGoogleLogout() }
   }
 
   fun revokeAccess(activity: Activity, type: String) {
     if (type == GMB_SIGN_IN && validClientID().not()) return
-    val clientIdGoogle=  BuildConfigUtil.getBuildConfigField("GOOGLE_SERVER_CLIENT_ID") ?: ""
+    val clientIdGoogle=  auth.google.BuildConfig.GOOGLE_SERVER_CLIENT_ID
     GoogleGraphManager.getClient(activity, clientIdGoogle, type).revokeAccess()
       .addOnCompleteListener(activity) { onRevokeAccess() }
   }
 
   fun validClientID(): Boolean {
-    val clientIdGoogle=  BuildConfigUtil.getBuildConfigField("GOOGLE_SERVER_CLIENT_ID") ?: ""
+    val clientIdGoogle=  auth.google.BuildConfig.GOOGLE_SERVER_CLIENT_ID
     val message = GoogleGraphManager.validateServerClientID(clientIdGoogle)
     if (message.isNotEmpty()) {
       onGoogleLoginError(ApiException(Status(400, message)))

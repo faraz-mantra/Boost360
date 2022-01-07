@@ -23,6 +23,16 @@ android {
         }
     }
 
+    flavorDimensions "default"
+    productFlavors {
+        partone {
+            dimension "default"
+        }
+        jioonline {
+            dimension "default"
+        }
+    }
+
     buildscript {
         repositories {
             mavenCentral()
