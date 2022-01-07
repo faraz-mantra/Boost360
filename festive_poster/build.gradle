@@ -45,9 +45,6 @@ android {
 }
 
 dependencies {
-
-    api project(path: ':resources')
-    implementation project(path: ':onboarding')
-
-
+    api project(path: ':onboarding')
+    api project(path: ':dbcenterapi')
 }

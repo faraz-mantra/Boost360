@@ -45,5 +45,4 @@ android {
 
 dependencies {
     api project(path: ':onboarding')
-    implementation project(path: ':cart')
 }
