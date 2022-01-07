@@ -23,6 +23,13 @@ android {
         }
     }
 
+    flavorDimensions "default"
+    productFlavors {
+        partone {
+            dimension "default"
+        }
+    }
+
     buildscript {
         repositories {
             mavenCentral()
@@ -34,7 +41,7 @@ android {
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     // Kotlin
-    api "androidx.core:core-ktx:1.3.2"
+    api "androidx.core:core-ktx:1.7.0"
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     // Facebook Core
     api "com.facebook.android:facebook-android-sdk:5.15.3"

@@ -28,6 +28,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "default"
+    productFlavors {
+        partone {
+            dimension "default"
+            buildConfigField "String", "RAZORPAY_KEY", '"rzp_live_NsMLSX2HTaiEC9"'
+            buildConfigField "String", "RAZORPAY_SECREAT", '"Gfq8pQyFbu5BOoY5SeT6UuQk"'
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -119,7 +129,7 @@ dependencies {
     implementation files('libs/razorpay-android-3.8.8.aar')
 //
     //wenengage analytics
-    implementation 'com.webengage:android-sdk:3.+'
+    implementation 'com.webengage:android-sdk:3.18.9'
 
     implementation 'com.google.firebase:firebase-analytics-ktx:18.0.1'
 

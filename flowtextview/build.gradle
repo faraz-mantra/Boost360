@@ -2,18 +2,25 @@ apply plugin: 'com.android.library'
 
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "21.1.2"
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 30
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+
+    flavorDimensions "default"
+    productFlavors {
+        partone {
+            dimension "default"
         }
     }
 }
