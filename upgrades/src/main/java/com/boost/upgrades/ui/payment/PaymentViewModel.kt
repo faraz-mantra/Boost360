@@ -8,6 +8,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.boost.upgrades.BuildConfig
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
 import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
@@ -247,8 +248,8 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
   }
 
   fun getRazorPayToken(customerId: String) {
-    val razorPayKey: String = BuildConfigUtil.getBuildConfigField("RAZORPAY_KEY") ?: ""
-    val razorPaySecret: String = BuildConfigUtil.getBuildConfigField("RAZORPAY_SECREAT") ?: ""
+    val razorPayKey: String = BuildConfig.RAZORPAY_KEY
+    val razorPaySecret: String = BuildConfig.RAZORPAY_SECREAT
     val header = Credentials.basic(razorPayKey, razorPaySecret)
     compositeDisposable.add(
       ApiService.getRazorPayTokens(header, customerId)

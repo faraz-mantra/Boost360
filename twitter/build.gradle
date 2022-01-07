@@ -26,9 +26,13 @@ android {
     productFlavors {
         partone {
             dimension "default"
+            buildConfigField "String", "twitter_consumer_key", '"4CiUg5gcIbvYre8XjGd8GsElV"'
+            buildConfigField "String", "twitter_consumer_secret", '"4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9"'
         }
         jioonline {
             dimension "default"
+            buildConfigField "String", "twitter_consumer_key", '"TE20KJRCg35Sg3o8lM7OvTGRM"'
+            buildConfigField "String", "twitter_consumer_secret", '"mvHwpYzH4y2nJFdZfIHsyyEBnaZibMmtg3P5VnKKwGgIwFAn0M"'
         }
     }
 
