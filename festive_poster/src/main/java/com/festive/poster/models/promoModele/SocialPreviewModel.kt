@@ -9,7 +9,7 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
 
 class SocialPreviewModel(
-    val posterModel: PosterModel,
+    val posterImg: String?,
     val title:String?,
     val desc:String?,
     val layout_id:Int,

@@ -11,7 +11,9 @@ import com.appservice.databinding.BsheetUpdateDraftBinding
 import com.appservice.databinding.UpdateCropImageActivityBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.framework.base.BaseBottomSheetDialog
+import com.framework.constants.Constants
 import com.framework.models.BaseViewModel
 import com.framework.utils.saveAsImageToAppFolder
 import com.framework.utils.saveAsTempFile
@@ -43,7 +45,7 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
     }
 
     override fun onCreateView() {
-        setOnClickListener(binding!!.layoutChangeImage,binding!!.layoutTick,binding!!.layoutRotate)
+        setOnClickListener(binding!!.layoutChangeImage,binding!!.layoutTick,binding!!.layoutRotate,binding!!.ivDelete)
 
         path = intent.getStringExtra(IK_IMAGE_PATH)
         showImageInUi()
@@ -55,7 +57,8 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
             withContext(Dispatchers.Default){
                 val bitmap = Glide.with(this@UpdateCropImageActivity).asBitmap().load(
                     File(path)
-                ).diskCacheStrategy(DiskCacheStrategy.NONE).submit().get()
+                ).apply(RequestOptions.skipMemoryCacheOf(true))
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).submit().get()
                 runOnUi {
                     binding!!.ivCrop.setImageBitmap(bitmap)
 
@@ -86,7 +89,12 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
 
             binding!!.layoutTick->{
                 binding!!.ivCrop.croppedImage.saveAsImageToAppFolder(getExternalFilesDir(null)?.path+File.separator
-                +UpdateImagePickerBSheet.fileName)
+                + Constants.UPDATE_PIC_FILE_NAME)
+                finish()
+            }
+            binding!!.ivDelete->{
+                File(getExternalFilesDir(null)?.path+File.separator
+                        + Constants.UPDATE_PIC_FILE_NAME).delete()
                 finish()
             }
 

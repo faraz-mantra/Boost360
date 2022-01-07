@@ -119,13 +119,13 @@
                     android:text="@string/tell_your_customers_what_s_new"
                     android:textColor="@color/color191919"
                     app:fontFamily="@font/semi_bold"
-                    app:layout_constraintEnd_toStartOf="@+id/customTextView12"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_count"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/iv_img" />
 
 
                 <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/customTextView12"
+                    android:id="@+id/tv_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
@@ -148,7 +148,12 @@
                     app:layout_constraintTop_toBottomOf="@+id/customTextView10">
 
                     <com.framework.views.customViews.CustomEditText
-                        android:id="@+id/customEditText"
+                        android:id="@+id/et_update"
+                        android:gravity="start"
+                        android:padding="8dp"
+                        android:textSize="12sp"
+                        android:hint="@string/write_about_your_customer_location_recent_updates_timing_etc"
+                        android:fontFamily="@font/regular"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/size_150"
                         android:background="@color/white"
@@ -159,35 +164,36 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
+                        android:id="@+id/iv_mic"
                         android:layout_marginBottom="8dp"
                         android:src="@drawable/ic_voice_over_mic"
-                        app:layout_constraintBottom_toBottomOf="@+id/customEditText"
-                        app:layout_constraintEnd_toEndOf="@+id/customEditText" />
+                        app:layout_constraintBottom_toBottomOf="@+id/et_update"
+                        app:layout_constraintEnd_toEndOf="@+id/et_update" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/linearLayout2"
+                        android:id="@+id/layout_hashtag_tip"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorFFF8E6"
                         android:orientation="horizontal"
                         android:padding="4dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/customEditText">
+                        app:layout_constraintTop_toBottomOf="@+id/et_update">
 
                         <com.framework.views.customViews.CustomTextView
-                            android:id="@+id/customTextView11"
+                            android:id="@+id/tv_hashtag_tip"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="@string/type_in_the_caption_to_create_your_own_hashtags"
                             android:textSize="@dimen/txt_10sp"
                             app:fontFamily="@font/regular"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/customImageView7"
+                            app:layout_constraintEnd_toStartOf="@+id/iv_hashtag_cross"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.framework.views.customViews.CustomImageView
-                            android:id="@+id/customImageView7"
+                            android:id="@+id/iv_hashtag_cross"
                             android:layout_width="10dp"
                             android:layout_height="10dp"
                             android:layout_marginEnd="8dp"
@@ -208,7 +214,8 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="24dp"
-                    android:text="Add Image"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/add_image_optional"
                     android:textAllCaps="false"
                     app:cornerRadius="10dp"
                     app:icon="@drawable/ic_gallery_round"

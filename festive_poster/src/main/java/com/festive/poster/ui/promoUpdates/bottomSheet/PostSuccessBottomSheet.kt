@@ -11,20 +11,23 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.constants.PackageNames
 import com.framework.models.BaseViewModel
 import com.framework.utils.convertStringToObj
+import com.framework.utils.loadFromFile
+import com.framework.utils.shareAsImage
 import com.google.gson.Gson
+import java.io.File
 
 class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, BaseViewModel>() {
 
 
-    private var posterModel:PosterModel?=null
+    private var posterImgPath:String?=null
 
     companion object {
         val IK_POSTER="IK_POSTER"
 
         @JvmStatic
-        fun newInstance(posterModel: PosterModel?): PostSuccessBottomSheet {
+        fun newInstance(posterImgPath: String?): PostSuccessBottomSheet {
             val bundle = Bundle().apply {}
-            bundle.putString(PostingProgressBottomSheet.IK_POSTER, Gson().toJson(posterModel))
+            bundle.putString(PostingProgressBottomSheet.IK_POSTER, posterImgPath)
 
             val fragment = PostSuccessBottomSheet()
             fragment.arguments = bundle
@@ -41,11 +44,11 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
     }
 
     override fun onCreateView() {
-        posterModel = convertStringToObj<PosterModel?>(arguments?.getString(PostPreviewSocialActivity.IK_POSTER))
+        posterImgPath = arguments?.getString(PostPreviewSocialActivity.IK_POSTER)
 
         setOnClickListener(binding?.ivWhatsapp,binding?.ivInstagram,binding?.ivOther)
-        SvgUtils.loadImage(posterModel?.variants?.firstOrNull()?.svgUrl,binding?.ivPosterIcon!!,
-            posterModel?.keys,posterModel?.isPurchased)
+
+        binding!!.ivPosterIcon.loadFromFile(File(posterImgPath),false)
         binding?.ivClosePostSuccess?.setOnClickListener {
             dismiss()
         }
@@ -53,18 +56,21 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
 
     override fun onClick(v: View) {
         super.onClick(v)
+        val imgFile = File(posterImgPath)
+
         when(v){
             binding?.ivWhatsapp->{
-                SvgUtils.shareUncompressedSvg(posterModel?.variants?.firstOrNull()?.svgUrl,
-                posterModel,requireActivity(),PackageNames.WHATSAPP)
+
+                imgFile.shareAsImage(requireActivity(),PackageNames.WHATSAPP)
+
             }
             binding?.ivInstagram->{
-                SvgUtils.shareUncompressedSvg(posterModel?.variants?.firstOrNull()?.svgUrl,
-                    posterModel,requireActivity(),PackageNames.INSTAGRAM)
+                imgFile.shareAsImage(requireActivity(),PackageNames.INSTAGRAM)
+
             }
             binding?.ivOther->{
-                SvgUtils.shareUncompressedSvg(posterModel?.variants?.firstOrNull()?.svgUrl,
-                    posterModel,requireActivity(),"")
+                imgFile.shareAsImage(requireActivity(),null)
+
             }
         }
     }

@@ -14,6 +14,7 @@ import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.databinding.ActivityEditPostBinding
@@ -26,14 +27,20 @@ import com.festive.poster.ui.promoUpdates.bottomSheet.EditTemplateBottomSheet
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterViewModel
+import com.framework.constants.Constants
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.STTUtils
 import com.framework.utils.convertStringToObj
 import com.framework.utils.highlightHashTag
+import com.framework.utils.saveAsImageToAppFolder
 import com.framework.webengageconstant.EVENT_LABEL_NULL
 import com.framework.webengageconstant.POST_AN_UPDATE
 import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
 import java.lang.Exception
 
 
@@ -178,9 +185,20 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
             binding?.tvPreviewAndPost -> {
                // saveUpdatePost()
                 posterModel?.let {
-                    PostPreviewSocialActivity.launchActivity(this,binding?.captionLayout?.etInput?.text.toString(),
-                        it
-                    )
+                    lifecycleScope.launch {
+                        withContext(Dispatchers.Default){
+                           val file =  SvgUtils.svgToBitmap(it)
+                                ?.saveAsImageToAppFolder(getExternalFilesDir(null)?.path+File.separator+Constants.UPDATE_PIC_FILE_NAME)
+                            if (file?.exists() == true){
+                                PostPreviewSocialActivity.launchActivity(this@EditPostActivity,binding?.captionLayout?.etInput?.text.toString(),
+                                    file.path
+                                    )
+                            }
+
+                        }
+
+                    }
+
                 }
             }
             binding?.ivVoiceOver->{

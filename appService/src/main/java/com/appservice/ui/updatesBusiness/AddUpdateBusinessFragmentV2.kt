@@ -2,10 +2,17 @@ package com.appservice.ui.updatesBusiness
 
 import android.app.Activity
 import android.content.*
+import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
 import android.speech.RecognizerIntent
+import android.text.Editable
+import android.text.Spannable
 import android.text.SpannableString
+import android.text.TextWatcher
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -17,6 +24,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
 import androidx.lifecycle.MutableLiveData
 import com.appservice.R
@@ -37,6 +45,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.framework.analytics.SentryController
+import com.framework.constants.Constants
 import com.framework.extensions.*
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
@@ -47,10 +56,7 @@ import com.framework.firebaseUtils.caplimit_feature.getCapData
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.PREF_KEY_TWITTER_LOGIN
 import com.framework.pref.Key_Preferences.PREF_NAME_TWITTER
-import com.framework.utils.FileUtils
-import com.framework.utils.hasHTMLTags
-import com.framework.utils.hideKeyBoard
-import com.framework.utils.showKeyBoard
+import com.framework.utils.*
 import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
 import com.onboarding.nowfloats.constant.FragmentType
@@ -65,23 +71,14 @@ import java.util.*
 
 class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2Binding, UpdatesViewModel>() {
 
+
+
+  private var sttUtils: STTUtils?=null
+  private val TAG = "AddUpdateBusinessFragme"
   private var startForCropImageResult: ActivityResultLauncher<Intent>?=null
-  private val REQ_CODE_SPEECH_INPUT = 122
-  private val RC_GALLERY=101
-  private var isUpdate: Boolean = false
-  private var toSubscribers = MutableLiveData(false)
-  private var fbStatusEnabled = MutableLiveData(false)
-  private var twitterSharingEnabled = MutableLiveData(false)
-  private var fbPageStatusEnable =MutableLiveData(false)
   private var updateFloat: UpdateFloat? = null
-  private var postImagePath: String? = null
-  private var firsTime=true
+  private var posterImagePath: String? = null
 
-
-  private val postImage: File?
-    get() {
-      return if (postImagePath.isNullOrEmpty().not()) File(postImagePath) else null
-    }
 
   private val mSharedPreferences: SharedPreferences?
     get() {
@@ -89,6 +86,8 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     }
 
   companion object {
+    val msgPost = "msg_post"
+    val imagePost = "image_post"
     @JvmStatic
     fun newInstance(bundle: Bundle? = null): AddUpdateBusinessFragmentV2 {
       val fragment = AddUpdateBusinessFragmentV2()
@@ -112,31 +111,116 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
           result: ActivityResult ->
         val imgFile = File(
-          requireActivity().getExternalFilesDir(null)?.path+File.separator+UpdateImagePickerBSheet.fileName)
+          requireActivity().getExternalFilesDir(null)?.path+File.separator+Constants.UPDATE_PIC_FILE_NAME)
         if (imgFile.exists()){
-          Glide.with(this).load(imgFile).apply(RequestOptions.skipMemoryCacheOf(true))
-            .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(binding!!.ivImg)
-          binding!!.ivImg.visible()
-          binding!!.btnEdit.visible()
-          binding!!.btnAddImage.gone()
+            loadImage(imgFile.path)
+        }else{
+          loadImage(null)
         }
       }
   }
 
+  private fun loadImage(path: String?) {
+    posterImagePath = path
+    sessionLocal.storeFPDetails(imagePost,path)
+    if (path.isNullOrEmpty()){
+      binding!!.ivImg.setImageResource(0)
+      binding!!.ivImg.gone()
+      binding!!.btnEdit.gone()
+      binding!!.btnAddImage.visible()
+    }else{
+      binding!!.ivImg.loadFromFile(File(path),false)
+      binding!!.ivImg.visible()
+      binding!!.btnEdit.visible()
+      binding!!.btnAddImage.gone()
+    }
+
+  }
+
   override fun onCreateView() {
     super.onCreateView()
-
-
+    initUI()
+    initStt()
+    addHashTagFunction()
     baseActivity.onBackPressedDispatcher.addCallback(
       viewLifecycleOwner,
       object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
+          if (binding!!.etUpdate.text.toString().isNotEmpty()||posterImagePath!=null){
+            UpdateDraftBSheet().show(parentFragmentManager,UpdateDraftBSheet::class.java.name)
 
-          UpdateDraftBSheet().show(parentFragmentManager,UpdateDraftBSheet::class.java.name)
+          }
         }
       })
 
-    setOnClickListener(binding!!.btnAddImage,binding!!.btnEdit)
+    setOnClickListener(binding!!.btnAddImage,binding!!.btnEdit,binding!!.ivMic,binding!!.ivHashtagCross,
+      binding!!.tvPreviewAndPost)
+  }
+
+  private fun initUI() {
+    binding!!.tvHashtagTip.text = spanColor(
+      getString(R.string.type_in_the_caption_to_create_your_own_hashtags),
+      R.color.blue_4889f8,
+      "#"
+      )
+
+    binding!!.btnAddImage.text = spanBold(
+      getString(R.string.add_image_optional),
+      "Add Image"
+    )
+    binding!!.etUpdate.setText(sessionLocal.getFPDetails(msgPost))
+
+      loadImage(sessionLocal.getFPDetails(imagePost))
+
+
+  }
+
+
+  private fun initStt() {
+    sttUtils = STTUtils(object : STTUtils.Callbacks{
+      override fun onDone(text: String?) {
+        binding?.etUpdate?.append((text ?: "") + ". ")
+
+      }
+    })
+    sttUtils?.init(this)
+  }
+
+  private fun addHashTagFunction() {
+
+
+    val mSpannable = binding?.etUpdate?.text
+
+    binding?.etUpdate?.addTextChangedListener(object : TextWatcher {
+      override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+      override fun onTextChanged(short_text: CharSequence, start: Int, before: Int, count: Int) {
+
+        val text = binding?.etUpdate?.text.toString()
+        var last_index = 0
+        text.trim().split(Regex("\\s+")).forEach {
+          Log.i(TAG, "addHashTagFunction: $it")
+          if (it.isNotEmpty() && it[0] == '#'){
+            val boldSpan = StyleSpan(
+              Typeface
+              .BOLD)
+            val foregroundSpan = ForegroundColorSpan(ContextCompat.getColor(requireActivity(), R.color.black))
+            mSpannable?.setSpan(foregroundSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            mSpannable?.setSpan(boldSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+          }
+
+          last_index+=it.length-1
+
+        }
+
+      }
+      override fun afterTextChanged(s: Editable?) {
+        sessionLocal.storeFPDetails(msgPost,s.toString())
+
+        binding!!.tvCount.text = s.toString().length.toString()
+      }
+    })
+
   }
 
 
@@ -152,13 +236,30 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       }
       binding!!.btnEdit->{
         UpdateCropImageActivity.launchActivity(
-          requireActivity().getExternalFilesDir(null)?.path+File.separator+UpdateImagePickerBSheet.fileName,
+          requireActivity().getExternalFilesDir(null)?.path+File.separator+Constants.UPDATE_PIC_FILE_NAME,
           requireActivity(),
           startForCropImageResult
         )
       }
+
+      binding!!.ivMic->{
+        sttUtils?.promptSpeechInput()
+      }
+
+      binding!!.ivHashtagCross->{
+        binding!!.layoutHashtagTip.gone()
+      }
+      binding!!.tvPreviewAndPost->{
+        startActivity(Intent(requireActivity(), Class.forName(
+          "com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity"))
+          .putExtra(Constants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
+            putString("IK_CAPTION_KEY",binding!!.etUpdate.text.toString())
+            putString("IK_POSTER", posterImagePath)
+          }))
+      }
     }
   }
+
 
 
 

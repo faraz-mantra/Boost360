@@ -67,7 +67,7 @@ object MarketPlaceUtils {
         }
     }
 
-    fun launchCartActivity(activity:Activity,originActivityName:String,posterModel: PosterModel,caption:String?){
+    fun launchCartActivity(activity:Activity,originActivityName:String,posterImgPath:String?,caption:String?){
         val session = UserSessionManager(BaseApplication.instance)
         val intent = Intent(
             activity,
@@ -78,7 +78,7 @@ object MarketPlaceUtils {
         intent.putExtra("isDeepLink", false)
         intent.putExtra(MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
             putString(MARKET_PLACE_ORIGIN_ACTIVITY,originActivityName)
-            putString(PostPreviewSocialActivity.IK_POSTER,Gson().toJson(posterModel))
+            putString(PostPreviewSocialActivity.IK_POSTER,posterImgPath)
             putString(PostPreviewSocialActivity.IK_CAPTION_KEY,caption)
         })
         intent.putStringArrayListExtra(

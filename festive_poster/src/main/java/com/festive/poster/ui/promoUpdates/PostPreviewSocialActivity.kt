@@ -64,6 +64,7 @@ import com.onboarding.nowfloats.rest.response.category.ResponseDataCategory
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -76,18 +77,19 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     private var connectedChannels: ArrayList<String> = arrayListOf()
     private var session:UserSessionManager?=null
     private var captionIntent :String?=null
-    private val posterModel by lazy {
-        convertStringToObj<PosterModel?>(intent?.getBundleExtra(MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IK_POSTER))
+    private val posterImgPath by lazy {
+        intent?.getBundleExtra(MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IK_POSTER)
     }
+
     companion object{
         val IK_CAPTION_KEY="IK_CAPTION_KEY"
         val IK_POSTER="IK_POSTER"
 
-        fun launchActivity(activity:Activity,caption:String?,posterModel: PosterModel){
+        fun launchActivity(activity:Activity,caption:String?,posterImgPath:String){
             activity.startActivity(Intent(activity,PostPreviewSocialActivity::class.java)
                 .putExtra(MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
                     putString(IK_CAPTION_KEY,caption)
-                    putString(EditPostActivity.IK_POSTER, Gson().toJson(posterModel))
+                    putString(EditPostActivity.IK_POSTER, posterImgPath)
                 })
 
 
@@ -116,9 +118,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     override fun onCreateView() {
         session = UserSessionManager(this)
-
         captionIntent =intent?.getBundleExtra(MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IK_CAPTION_KEY)
-        if (captionIntent.isNullOrEmpty()) captionIntent =posterModel?.details?.Description
 
 
         initUI()
@@ -152,14 +152,14 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             SubscribePlanBottomSheet.newInstance(object :SubscribePlanBottomSheet.Callbacks{
                 override fun onBuyClick() {
                     MarketPlaceUtils.launchCartActivity(this@PostPreviewSocialActivity,
-                        PostPreviewSocialActivity::class.java.name,posterModel!!,captionIntent)
+                        PostPreviewSocialActivity::class.java.name,posterImgPath,captionIntent)
 
                 }
             }).show(supportFragmentManager, SubscribePlanBottomSheet::class.java.name)
         }
 
         binding?.tvPostUpdate?.setOnClickListener {
-            posterProgressSheet =  PostingProgressBottomSheet.newInstance(posterModel)
+            posterProgressSheet =  PostingProgressBottomSheet.newInstance(posterImgPath)
             saveUpdatePost()
             posterProgressSheet?.show(supportFragmentManager, PostingProgressBottomSheet::class.java.name)
         }
@@ -455,7 +455,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                         generateImageResource(this@PostPreviewSocialActivity)
                     })
 
-                    uiPreviewChannelList?.add(SocialPreviewModel(posterModel!!,title,captionIntent,layout_id,isConnected,channelType!!))
+                    uiPreviewChannelList?.add(SocialPreviewModel(posterImgPath,title,captionIntent,layout_id,isConnected,channelType!!))
                 }
             }
 
@@ -570,10 +570,11 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         val merchantId = if (session?.iSEnterprise == "true") null else session?.fPID
         val parentId = if (session?.iSEnterprise == "true") session?.fPParentId else null
         val sendToSubscribe = uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.EMAIL }?.isChecked
+        val isPicMes = posterImgPath!=null
         val request = PostUpdateTaskRequest(
             clientId,
             captionIntent,
-            true,
+            isPicMes,
             merchantId,
             parentId,
             sendToSubscribe,
@@ -583,24 +584,27 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         viewModel.putBizMessageUpdate(request).observeOnce(this, {
             if (it.isSuccess() && it.stringResponse.isNullOrEmpty().not()) {
 
-                lifecycleScope.launch {
-                    val bodyImage = SvgUtils.svgToBitmap(posterModel!!)?.saveAsTempFile()?.asRequestBody("image/*".toMediaTypeOrNull())
-                    val s_uuid = UUID.randomUUID().toString().replace("-", "")
-                    viewModel.putBizImageUpdate(
-                        clientId, "sequential", s_uuid, 1, 1,
-                        socialShare, it.stringResponse, sendToSubscribe, bodyImage
-                    ).observeOnce(this@PostPreviewSocialActivity, { it1 ->
-                        if (it1.isSuccess()) {
-                            // successResult()
+                if (isPicMes){
+                    lifecycleScope.launch {
+                        val bodyImage = File(posterImgPath).asRequestBody("image/*".toMediaTypeOrNull())
+                        val s_uuid = UUID.randomUUID().toString().replace("-", "")
+                        viewModel.putBizImageUpdate(
+                            clientId, "sequential", s_uuid, 1, 1,
+                            socialShare, it.stringResponse, sendToSubscribe, bodyImage
+                        ).observeOnce(this@PostPreviewSocialActivity, { it1 ->
+                            if (it1.isSuccess()) {
+                                // successResult()
                                 posterProgressSheet?.dismiss()
-                            PostSuccessBottomSheet.newInstance(posterModel).show(supportFragmentManager, PostSuccessBottomSheet::class.java.name)
+                                PostSuccessBottomSheet.newInstance(posterImgPath).show(supportFragmentManager, PostSuccessBottomSheet::class.java.name)
 
-                        } else{
-                            posterProgressSheet?.dismiss()
-                            showShortToast("Image uploading error, please try again.")
-                        }
+                            } else{
+                                posterProgressSheet?.dismiss()
+                                showShortToast("Image uploading error, please try again.")
+                            }
 
-                    })
+                        })
+                    }
+
                 }
 
                 }

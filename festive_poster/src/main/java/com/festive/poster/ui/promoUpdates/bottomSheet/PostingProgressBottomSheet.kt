@@ -9,22 +9,24 @@ import com.festive.poster.utils.SvgUtils
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.framework.utils.convertStringToObj
+import com.framework.utils.loadFromFile
 import com.google.gson.Gson
+import java.io.File
 import java.util.*
 import kotlin.concurrent.schedule
 
 class PostingProgressBottomSheet :
     BaseBottomSheetDialog<BsheetPostingProgressBinding, BaseViewModel>() {
 
-    private var posterModel:PosterModel?=null
+    private var posterImgPath:String?=null
     companion object {
 
         val IK_POSTER="IK_POSTER"
 
         @JvmStatic
-        fun newInstance(posterModel: PosterModel?): PostingProgressBottomSheet {
+        fun newInstance(posterImgPath: String?): PostingProgressBottomSheet {
             val bundle = Bundle()
-            bundle.putString(IK_POSTER,Gson().toJson(posterModel))
+            bundle.putString(IK_POSTER,posterImgPath)
             val fragment = PostingProgressBottomSheet()
             fragment.arguments = bundle
             return fragment
@@ -40,8 +42,9 @@ class PostingProgressBottomSheet :
     }
 
     override fun onCreateView() {
-        posterModel = convertStringToObj<PosterModel?>(arguments?.getString(PostPreviewSocialActivity.IK_POSTER))
-        SvgUtils.loadImage(posterModel?.variants?.firstOrNull()?.svgUrl,binding?.ivPostIcon!!,
-        posterModel?.keys,posterModel?.isPurchased)
+        posterImgPath = arguments?.getString(PostPreviewSocialActivity.IK_POSTER)
+        if (posterImgPath!=null){
+            binding!!.ivPostIcon.loadFromFile(File(posterImgPath!!),false)
+        }
     }
 }

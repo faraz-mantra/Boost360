@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
 import android.content.ContentValues
+import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.graphics.*
@@ -54,7 +55,11 @@ import kotlin.collections.ArrayList
 import android.content.pm.PackageManager
 
 import android.content.pm.PackageInfo
+import android.widget.ImageView
 import androidx.annotation.RequiresApi
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import java.util.regex.Pattern.UNICODE_CHARACTER_CLASS
 
 private const val TAG = "Util"
@@ -484,3 +489,57 @@ fun highlightHashTag(text: String?,@ColorRes colorId:Int): SpannableString {
 }
 
 inline fun <reified T> convertJsonToObj(json: String?) = Gson().fromJson<T>(json, object : TypeToken<T>() {}.type)
+
+fun spanBold(fullText:String,vararg boldTextList:String): SpannableString {
+  val spannable = SpannableString(fullText)
+  boldTextList.forEach { boldText->
+    spannable.setSpan(StyleSpan(Typeface.BOLD),fullText.indexOf(boldText),fullText.indexOf(boldText)+boldText.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+  }
+  return spannable
+}
+
+fun spanColor(fullText:String,@ColorRes color: Int,vararg colorTextList:String): SpannableString {
+  val spannable = SpannableString(fullText)
+  colorTextList.forEach { text->
+    spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(
+      BaseApplication.instance,color
+    )),fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+  }
+  return spannable
+}
+
+fun spanClick(fullText:String,function: () -> (Unit),vararg colorTextList:String): SpannableString {
+  val spannable = SpannableString(fullText)
+  colorTextList.forEach { text->
+    spannable.setSpan(object :ClickableSpan(){
+      override fun onClick(p0: View) {
+        function.invoke()
+      }
+
+    },fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+  }
+  return spannable
+}
+
+
+fun File.shareAsImage(context:Context,packageName: String?){
+  val uri = Uri.fromFile(this)
+  val intent = Intent(Intent.ACTION_SEND)
+  intent.type = "image/*"
+  intent.putExtra(Intent.EXTRA_STREAM, uri)
+  if (packageName!=null){
+    intent.setPackage(packageName)
+  }
+  context.startActivity(intent)
+}
+
+fun ImageView.loadFromFile(imgFile:File,cache:Boolean=true){
+ val builder = Glide.with(this).load(imgFile)
+  if (cache.not()){
+    builder.apply(RequestOptions.skipMemoryCacheOf(true))
+      .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(this)
+  }else{
+    builder.into(this)
+
+  }
+}

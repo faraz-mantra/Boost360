@@ -1099,4 +1099,6 @@
     <string name="choose_from_phone_gallery">Choose from phone gallery</string>
   <string name="browse_other_images">Browse other images....</string>
     <string name="tap_to_edit">Tap to Edit</string>
+    <string name="write_about_your_customer_location_recent_updates_timing_etc">Write about your customer, location, recent updates, timing, etc.</string>
+    <string name="add_image_optional">Add Image (Optional)</string>
 </resources>
