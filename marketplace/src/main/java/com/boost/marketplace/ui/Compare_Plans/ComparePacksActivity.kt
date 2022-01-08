@@ -1,5 +1,6 @@
 package com.boost.marketplace.ui.Compare_Plans
 
+import android.animation.Animator
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityComparePacksBinding
@@ -14,9 +15,11 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.boost.cart.adapter.SimplePageTransformer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PrimaryImage
@@ -25,12 +28,15 @@ import com.boost.dbcenterapi.recycleritem.RecyclerItemClickListener
 import com.boost.dbcenterapi.recycleritem.RecyclerViewItemType
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.dbcenterapi.utils.CircleAnimationUtil
 import com.boost.dbcenterapi.utils.Constants
 import com.boost.dbcenterapi.utils.SharedPrefs
+import com.boost.dbcenterapi.utils.WebEngageController
 import com.boost.marketplace.Adapters.ParentCompareItemAdapter
 import com.boost.marketplace.infra.api.models.test.ViewpagerData
 import com.boost.marketplace.infra.api.models.test.getDatas
 import com.boost.marketplace.infra.recyclerView.AppBaseRecyclerViewAdapter
+import com.boost.marketplace.interfaces.CompareListener
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_COMPARE_PACKAGE_LOADED
 import com.framework.webengageconstant.NO_EVENT_VALUE
@@ -39,10 +45,13 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_compare_packs.*
+import kotlinx.android.synthetic.main.activity_compare_packs.package_viewpager
+import kotlinx.android.synthetic.main.activity_marketplace.*
 
 import org.json.JSONObject
 
 class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, ComparePacksViewModel>(),
+    CompareListener,
     RecyclerItemClickListener {
 
     lateinit var packageAdaptor: ParentCompareItemAdapter
@@ -82,8 +91,9 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
 
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        packageAdaptor = ParentCompareItemAdapter(ArrayList())
-//        WebEngageController.trackEvent(ADDONS_MARKETPLACE_COMPARE_PACKAGE_LOADED, PAGE_VIEW, NO_EVENT_VALUE)
+        packageAdaptor = ParentCompareItemAdapter(ArrayList(),this)
+        binding?.shimmerViewCompare?.startShimmer()
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_COMPARE_PACKAGE_LOADED, PAGE_VIEW, NO_EVENT_VALUE)
         prefs = SharedPrefs(this)
 
         viewModel = ViewModelProviders.of(this).get(ComparePacksViewModel::class.java)
@@ -98,7 +108,7 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
 //            R.dimen.viewpager_current_item_horizontal_margin
 //        )
 //        package_viewpager.addItemDecoration(itemDecoration)
-//        shimmer_view_compare.startShimmer()
+      // binding?.shimmerViewCompare?.startShimmer()
 //        if(requireArguments().containsKey("showCartIcon")){
 //            package_cart_icon.visibility = View.INVISIBLE
 //        }
@@ -109,9 +119,9 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
 //        upgradeTextBottom.setMovementMethod(LinkMovementMethod.getInstance())
 //        upgradeTextBottom.setHighlightColor(resources.getColor(R.color.common_text_color))
 
-//        package_back.setOnClickListener {
-//            (activity as UpgradeActivity).popFragmentFromBackStack()
-//        }
+        package_back.setOnClickListener {
+            super.onBackPressed()
+        }
 
 //        package_cart_icon.setOnClickListener {
 //            val intent = Intent(
@@ -246,10 +256,10 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
                 }
 
                 featureCount++
-//                if(shimmer_view_compare.isShimmerStarted) {
-//                    shimmer_view_compare.stopShimmer()
-//                    shimmer_view_compare.visibility = View.GONE
-//                }
+                if(shimmer_view_compare.isShimmerStarted) {
+                    shimmer_view_compare.stopShimmer()
+                    shimmer_view_compare.visibility = View.GONE
+                }
                 updatePackageViewPager(upgradeList)
 //                updateBannerViewPager(upgradeList, it as ArrayList<FeaturesModel>)
             }
@@ -461,19 +471,25 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
 
     private fun initializePackageViewPager() {
         binding?.packageViewpager?.adapter = packageAdaptor
-//        package_viewpager.offscreenPageLimit = 4
+        package_viewpager.offscreenPageLimit = 4
         binding?.packageIndicator2?.setViewPager2(package_viewpager)
 
-//        setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position)
-//        }
-        val itemDecoration = HorizontalMarginItemDecoration(applicationContext, R.dimen.viewpager_current_item_horizontal_margin)
+
+
+           binding?.packageViewpager?.setPageTransformer(SimplePageTransformer())
+
+        val itemDecoration = com.boost.dbcenterapi.utils.HorizontalMarginItemDecoration(
+            applicationContext,
+//                        R.dimen.viewpager_current_item_horizontal_margin
+            R.dimen.viewpager_current_item_horizontal_margin
+        )
         binding?.packageViewpager!!.addItemDecoration(itemDecoration)
 
 
 
     }
 
-//    override fun onPackageClicked(item: Bundles?,imageView: ImageView) {
+    override fun onPackageClicked(item: Bundles?,imageView: ImageView) {
 //        if (!packageInCartStatus) {
 //            if (item != null) {
 //                prefs.storeAddedPackageDesc(item.desc!!)
@@ -482,7 +498,7 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
 //                for(i in item.included_features){
 //                    itemIds.add(i.feature_code)
 //                }
-//                makeFlyAnimation(imageView)
+                makeFlyAnimation(imageView)
 //
 //                CompositeDisposable().add(
 //                    AppDatabase.getInstance(requireActivity().application)!!
@@ -552,9 +568,9 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
 //
 //            }
 //        }
-//    }
+    }
 
-//    override fun onLearnMoreClicked(item: Bundles?) {
+    override fun onLearnMoreClicked(item: Bundles?) {
 //        val packageFragment = PackageFragment.newInstance()
 //        val args = Bundle()
 //        args.putString("bundleData", Gson().toJson(item))
@@ -567,24 +583,24 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
 //            prefs.storeCompareState(0)
 //            viewModel.loadPackageUpdates()
 //        }
-//    }
+   }
 
-//    private fun makeFlyAnimation(targetView: ImageView) {
-//
-//        CircleAnimationUtil().attachActivity(activity).setTargetView(targetView).setMoveDuration(600)
-//            .setDestView(package_cart_icon).setAnimationListener(object : Animator.AnimatorListener {
-//                override fun onAnimationStart(animation: Animator) {}
-//                override fun onAnimationEnd(animation: Animator) {
-//                    viewModel.getCartItems()
-//
-//
-//                }
-//
-//                override fun onAnimationCancel(animation: Animator) {}
-//                override fun onAnimationRepeat(animation: Animator) {}
-//            }).startAnimation()
-//
-//    }
+    private fun makeFlyAnimation(targetView: ImageView) {
+
+        CircleAnimationUtil().attachActivity(this).setTargetView(targetView).setMoveDuration(600)
+            .setDestView(package_cart_icon).setAnimationListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator) {}
+                override fun onAnimationEnd(animation: Animator) {
+                    viewModel.getCartItems()
+
+
+                }
+
+                override fun onAnimationCancel(animation: Animator) {}
+                override fun onAnimationRepeat(animation: Animator) {}
+            }).startAnimation()
+
+    }
 
 
 

@@ -25,28 +25,28 @@ class MyPlanPremiumFeaturesViewHolder(binding: ItemMyplanFeaturesBinding) :
         item: com.boost.dbcenterapi.recycleritem.BaseRecyclerViewItem) {
         super.bind(position, item)
 
-        binding.mainLayout.setOnClickListener {
-            if (binding.detailsView.visibility == View.GONE) {
-                TransitionManager.beginDelayedTransition(binding.mainLayout, AutoTransition())
-                binding.detailsView.visibility = View.VISIBLE
-            } else {
-                TransitionManager.beginDelayedTransition(binding.mainLayout, AutoTransition())
-                binding.detailsView.visibility = View.GONE
-            }
-        }
-        binding.detailsInfo.setOnClickListener {
-            listener?.onItemClick(position, item, RecyclerViewActionType.MY_PLAN_PREMIUM_CLICK.ordinal)
-
-        }
+//        binding.mainLayout.setOnClickListener {
+//            if (binding.detailsView.visibility == View.GONE) {
+//                TransitionManager.beginDelayedTransition(binding.mainLayout, AutoTransition())
+//                binding.detailsView.visibility = View.VISIBLE
+//            } else {
+//                TransitionManager.beginDelayedTransition(binding.mainLayout, AutoTransition())
+//                binding.detailsView.visibility = View.GONE
+//            }
+//        }
+//        binding.detailsInfo.setOnClickListener {
+//            listener?.onItemClick(position, item, RecyclerViewActionType.MY_PLAN_PREMIUM_CLICK.ordinal)
+//
+//        }
 
 
     }
-
-    fun upgradeListItem(updateModel: FeaturesModel) {
-        binding.paidAddonsName.text = updateModel.name
-        Glide.with(Activity()).load(updateModel.primary_image)
-            .into(binding.singlePaidaddonImage)
-    }
+//
+//    fun upgradeListItem(updateModel: FeaturesModel) {
+//        binding.paidAddonsName.text = updateModel.name
+//        Glide.with(Activity()).load(updateModel.primary_image)
+//            .into(binding.singlePaidaddonImage)
+//    }
 }
 
 

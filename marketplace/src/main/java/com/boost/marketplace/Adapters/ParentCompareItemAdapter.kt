@@ -2,6 +2,8 @@ package com.boost.marketplace.Adapters
 
 import android.app.Application
 import android.graphics.Color
+import android.text.SpannableString
+import android.text.style.StrikethroughSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +18,8 @@ import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.marketplace.R
+import com.boost.marketplace.adapter.PackageViewPagerAdapter
+import com.boost.marketplace.interfaces.CompareListener
 import com.bumptech.glide.Glide
 //import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -26,7 +30,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.LinkedHashSet
 
-class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>) : RecyclerView.Adapter<ParentCompareItemAdapter.ParentViewHolder>() {
+class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeListener: CompareListener) : RecyclerView.Adapter<ParentCompareItemAdapter.ParentViewHolder>() {
     // An object of RecyclerView.RecycledViewPool
     // is created to share the Views
     // between the child and
@@ -176,7 +180,7 @@ parentViewHolder.package_submit.setOnClickListener{
   //  parentViewHolder.package_submit.background = ContextCompat.getDrawable(activity.application, R.drawable.button_added_to_cart)
     parentViewHolder.package_submit.setTextColor(Color.parseColor("#bbbbbb"))
     parentViewHolder.package_submit.setText("Added To Cart")
-//    homeListener.onPackageClicked(parentItem,parentViewHolder.package_profile_image_compare_new)
+    homeListener.onPackageClicked(parentItem,parentViewHolder.package_profile_image_compare_new)
 }
 
     }
@@ -217,10 +221,13 @@ parentViewHolder.package_submit.setOnClickListener{
         val ChildRecyclerView: RecyclerView
         val package_submit: TextView
         val tv_price: TextView
-//        val package_profile_image: ImageView
+        val package_profile_image: ImageView
 //        val parent_item_title: TextView
         val tv_inlcuded_add_on: TextView
         val package_profile_image_compare_new:ImageView
+        val bundleDiscount :TextView
+        val origCost:TextView
+
 
         init {
             PackageItemTitle = itemView
@@ -235,9 +242,9 @@ parentViewHolder.package_submit.setOnClickListener{
             tv_price = itemView
                     .findViewById(
                             R.id.tv_price)
-//            package_profile_image = itemView
-//                    .findViewById(
-//                            R.id.package_profile_image)
+            package_profile_image = itemView
+                    .findViewById(
+                            R.id.package_profile_image)
 //            parent_item_title = itemView
 //                    .findViewById(
 //                            R.id.parent_item_title)
@@ -245,6 +252,8 @@ parentViewHolder.package_submit.setOnClickListener{
                     .findViewById(
                             R.id.tv_inlcuded_add_on)
             package_profile_image_compare_new = itemView.findViewById(R.id.package_profile_image_compare_new)
+             bundleDiscount = itemView.findViewById(R.id.pack_discount_tv)
+             origCost = itemView.findViewById(R.id.upgrade_list_orig_cost)
 
         }
     }
@@ -283,24 +292,49 @@ parentViewHolder.package_submit.setOnClickListener{
                                         offeredBundlePrice = originalBundlePrice
 
                                     }
+                                    if(bundles.overall_discount_percent > 0){
+                                        offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100)
+                                        holder.bundleDiscount.visibility = View.VISIBLE
+//                                        holder.bundlePriceLabel.visibility = View.GONE
+                                        holder.bundleDiscount.setText(bundles.overall_discount_percent.toString() + "% OFF")
+                                    } else {
+                                        offeredBundlePrice = originalBundlePrice
+                                        holder.bundleDiscount.visibility = View.GONE
+//                                        holder.bundlePriceLabel.visibility = View.VISIBLE
+                                    }
+
+
                                     if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1){
                                         holder.tv_price.setText("₹" +
                                                 NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
                                                 "/" + bundles.min_purchase_months + " months")
                                         holder.tv_inlcuded_add_on.setText("Includes these "+ it.size+ " add-ons")
 
+                                        if (offeredBundlePrice != originalBundlePrice) {
+                                            spannableString(holder, originalBundlePrice, bundles.min_purchase_months!!)
+                                            holder.origCost.visibility = View.VISIBLE
+                                        } else {
+                                            holder.origCost.visibility = View.GONE
+                                        }
+
                                     }else{
                                         holder.tv_price.setText("₹" +
                                                 NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)
                                                 + "/month")
                                         holder.tv_inlcuded_add_on.setText("Includes these "+ it.size+ " add-ons")
+                                        if (offeredBundlePrice != originalBundlePrice) {
+                                            spannableString(holder, originalBundlePrice, 1)
+                                            holder.origCost.visibility = View.VISIBLE
+                                        } else {
+                                            holder.origCost.visibility = View.GONE
+                                        }
                                     }
 
                                     if(bundles.primary_image != null && !bundles.primary_image!!.url.isNullOrEmpty()){
-                                     //   Glide.with(holder.itemView.context).load(bundles.primary_image!!.url).into(holder.package_profile_image)
+                                        Glide.with(holder.itemView.context).load(bundles.primary_image!!.url).into(holder.package_profile_image)
                                         Glide.with(holder.itemView.context).load(bundles.primary_image!!.url).into(holder.package_profile_image_compare_new)
                                     } else {
-                                      //  holder.package_profile_image.setImageResource(R.drawable.rectangle_copy_18)
+                                        holder.package_profile_image.setImageResource(R.drawable.rectangle_copy_18)
                                         holder.package_profile_image_compare_new.setImageResource(R.drawable.rectangle_copy_18)
                                     }
                                 },
@@ -309,6 +343,22 @@ parentViewHolder.package_submit.setOnClickListener{
                                 }
                         )
         )
+    }
+    fun spannableString(holder: ParentViewHolder, value: Int, minMonth: Int) {
+        val origCost: SpannableString
+        if(minMonth > 1){
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")
+        }else{
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
+        }
+
+        origCost.setSpan(
+            StrikethroughSpan(),
+            0,
+            origCost.length,
+            0
+        )
+        holder.origCost.setText(origCost)
     }
 
     fun isItemAddedInCart(holder: ParentViewHolder, bundles: Bundles){

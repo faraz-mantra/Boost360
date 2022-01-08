@@ -39,7 +39,7 @@ class MarketPlaceOffersViewModel:BaseViewModel() {
     fun loadUpdates(list: List<String>) {
         Log.v("loadUpdates", " " + list);
         CompositeDisposable().add(
-            AppDatabase.getInstance(getApplication() as Application)!!
+            AppDatabase.getInstance(Application())!!
                 .featuresDao()
                 .getallFeaturesInList(list)
                 .subscribeOn(Schedulers.io())
@@ -61,7 +61,7 @@ class MarketPlaceOffersViewModel:BaseViewModel() {
     fun addItemToCart(cartItem: CartModel) {
         updatesLoader.postValue(true)
         Completable.fromAction {
-            AppDatabase.getInstance(getApplication() as Application)!!.cartDao()
+            AppDatabase.getInstance(Application())!!.cartDao()
                 .insertToCart(cartItem)
         }
             .subscribeOn(Schedulers.io())
@@ -79,7 +79,7 @@ class MarketPlaceOffersViewModel:BaseViewModel() {
     fun getCartItems() {
         updatesLoader.postValue(true)
         CompositeDisposable().add(
-            AppDatabase.getInstance(getApplication() as Application)!!
+            AppDatabase.getInstance(Application())!!
                 .cartDao()
                 .getCartItems()
                 .subscribeOn(Schedulers.io())
@@ -99,7 +99,7 @@ class MarketPlaceOffersViewModel:BaseViewModel() {
     fun getOffersByCouponId(couponId: String) {
         updatesLoader.postValue(true)
         CompositeDisposable().add(
-            AppDatabase.getInstance(getApplication() as Application)!!
+            AppDatabase.getInstance(Application())!!
                 .marketOffersDao()
                 .getMarketOffersByCouponCode(couponId)
                 .subscribeOn(Schedulers.io())

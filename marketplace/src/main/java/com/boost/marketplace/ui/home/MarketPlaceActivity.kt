@@ -1910,6 +1910,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                                        MARKET_OFFER_FRAGMENT
 //                                    )
 
+                                    val intent = Intent(this,MarketPlaceOffersActivity::class.java)
+                                    intent.putExtra("marketOffersData", Gson().toJson(selectedMarketOfferModel))
+                                    startActivity(intent)
+
                                 }, {
                                     it.printStackTrace()
                                 })

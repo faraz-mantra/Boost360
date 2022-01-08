@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
 import com.bumptech.glide.Glide
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class CompareItemAdapter( cryptoCurrencies: List<FeaturesModel>?)
@@ -38,9 +41,12 @@ class CompareItemAdapter( cryptoCurrencies: List<FeaturesModel>?)
 
   override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
 
-    holder.name.setText(upgradeList.get(position).name)
-    holder.title.setText(upgradeList.get(position).target_business_usecase)
+   // holder.title.setText(upgradeList.get(position).target_business_usecase)
 
+    val cryptocurrencyItem = upgradeList[position]
+    holder.upgradeListItem(cryptocurrencyItem)
+
+    holder.name.setText(upgradeList.get(position).name)
     Glide.with(context).load(upgradeList.get(position).primary_image).into(holder.image)
 //    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 //    if (position == upgradeList.size - 1) {
@@ -79,7 +85,14 @@ class CompareItemAdapter( cryptoCurrencies: List<FeaturesModel>?)
 
     val image = itemView.findViewById<ImageView>(R.id.imageView2)!!
     val name = itemView.findViewById<TextView>(R.id.details)!!
-   val title = itemView.findViewById<TextView>(R.id.title)!!
+    val title = itemView.findViewById<TextView>(R.id.title)!!
+
+    fun upgradeListItem(updateModel: FeaturesModel) {
+      val discount = 100 - updateModel.discount_percent
+      val price = (discount * updateModel.price) / 100
+      title.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
+
+    }
 
 
   }
