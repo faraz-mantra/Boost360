@@ -759,7 +759,8 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:orientation="vertical"
-                            tools:itemCount="10" />
+                            tools:itemCount="10"
+                            tools:listitem="@layout/video_item"/>
                     </LinearLayout>
 
 

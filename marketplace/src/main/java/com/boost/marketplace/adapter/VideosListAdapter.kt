@@ -27,15 +27,9 @@ class VideosListAdapter(videoList: List<YoutubeVideoModel>, listen: HomeListener
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     val itemView = LayoutInflater.from(parent?.context).inflate(
-      R.layout.videos_item, parent, false
-    )
-    val lp = ViewGroup.LayoutParams(
-      350,
-      350
+      R.layout.video_item, parent, false
     )
     context = itemView.context
-
-    itemView.layoutParams = lp
     return ViewHolder(itemView)
   }
 
@@ -59,7 +53,7 @@ class VideosListAdapter(videoList: List<YoutubeVideoModel>, listen: HomeListener
         .into(holder.image)
     }
     holder.title.setText(list.get(position).title)
-    holder.videoTiming.setText(list.get(position).duration)
+    holder.videoType.setText(list.get(position).desc)
 
     holder.itemView.setOnClickListener {
       listener.onPlayYouTubeVideo(list.get(position))
@@ -70,7 +64,7 @@ class VideosListAdapter(videoList: List<YoutubeVideoModel>, listen: HomeListener
   class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val image = itemView.findViewById<ImageView>(R.id.primary_image)
     val title = itemView.findViewById<TextView>(R.id.video_title)
-    val videoTiming = itemView.findViewById<TextView>(R.id.video_timing_text)
+    val videoType = itemView.findViewById<TextView>(R.id.video_type)
   }
 
 }
