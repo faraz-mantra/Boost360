@@ -12,5 +12,8 @@ class BrowseFeaturesActivity : AppBaseActivity<ActivityBrowseFeaturesBinding, Br
   }
 
   override fun getViewModelClass(): Class<BrowseFeaturesViewModel> {
-    return BrowseFeaturesViewModel::class.java  }
+    return BrowseFeaturesViewModel::class.java
+  }
+
+
 }

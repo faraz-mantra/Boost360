@@ -55,6 +55,7 @@ import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
 import com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity
 import com.boost.marketplace.ui.browse.BrowseFeaturesActivity
 import com.boost.marketplace.ui.marketplace_Offers.MarketPlaceOffersActivity
+import com.boost.marketplace.ui.webview.WebViewActivity
 import com.framework.analytics.SentryController
 import com.framework.webengageconstant.*
 import com.inventoryorder.utils.DynamicLinkParams
@@ -156,7 +157,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         featureDealsAdapter = FeatureDealsAdapter(ArrayList(), ArrayList(), this, this)
         partnerViewPagerAdapter = PartnerViewPagerAdapter(ArrayList(), this, this)
         bannerViewPagerAdapter = BannerViewPagerAdapter(ArrayList(), this, this)
-        upgradeAdapter = UpgradeAdapter(this, ArrayList())
+        upgradeAdapter = UpgradeAdapter(ArrayList(), this)
         addonsCategoryAdapter = AddonsCategoryAdapter(this, ArrayList(), this)
         videosListAdapter = VideosListAdapter(ArrayList(), this)
 
@@ -1609,8 +1610,60 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             intent = Intent(this, ComparePacksActivity::class.java)
         } else if (actionType == RecyclerViewActionType.TOP_FEATURES_CLICK.ordinal) {
             intent = Intent(this, FeatureDetailsActivity::class.java)
+
+            intent.putExtra("fpid", fpid)
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("isDeepLink", isDeepLink)
+            intent.putExtra("deepLinkViewType", deepLinkViewType)
+            intent.putExtra("deepLinkDay", deepLinkDay)
+            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                userPurchsedWidgets
+            )
+            if (email != null) {
+                intent.putExtra("email", email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                intent.putExtra("mobileNo", mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", profileUrl)
         } else if (actionType == RecyclerViewActionType.SECONDARY_IMAGE_CLICK.ordinal) {
             intent = Intent(this, FeatureDetailsActivity::class.java)
+
+            intent.putExtra("fpid", fpid)
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("isDeepLink", isDeepLink)
+            intent.putExtra("deepLinkViewType", deepLinkViewType)
+            intent.putExtra("deepLinkDay", deepLinkDay)
+            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                userPurchsedWidgets
+            )
+            if (email != null) {
+                intent.putExtra("email", email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                intent.putExtra("mobileNo", mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", profileUrl)
         }
         startActivity(intent)
     }
@@ -1864,6 +1917,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                                Constants.WEB_VIEW_FRAGMENT
 //                            )
 
+                            val intent = Intent(this, WebViewActivity::class.java)
+                            intent.putExtra("title","")
+                            intent.putExtra("link", item!!.cta_web_link)
+                            startActivity(intent)
                         }
 
 
@@ -1909,6 +1966,13 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                                        marketPlaceOfferFragment,
 //                                        MARKET_OFFER_FRAGMENT
 //                                    )
+                                    val intent = Intent(this, MarketPlaceOffersActivity::class.java)
+                                    intent.putExtra("marketOffersData",
+                                        Gson().toJson(
+                                            selectedMarketOfferModel
+                                        ))
+                                    startActivity(intent)
+
 
                                 }, {
                                     it.printStackTrace()
@@ -2058,6 +2122,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                webViewFragment,
 //                Constants.WEB_VIEW_FRAGMENT
 //            )
+            val intent = Intent(this, com.boost.marketplace.ui.webview.WebViewActivity::class.java)
+            intent.putExtra("title","")
+            intent.putExtra("link", item!!.cta_web_link)
+            startActivity(intent)
         }
     }
 
@@ -2092,6 +2160,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //            viewallFeatures,
 //            VIEW_ALL_FEATURE
 //        )
+        val intent = Intent(this, BrowseFeaturesActivity::class.java)
+        intent.putExtra("categoryType", categoryType)
+        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+        startActivity(intent)
     }
 
     override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
@@ -2702,7 +2774,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                             )
                                                         } else {
                                                             Log.v("getItemPromoBanner3", " " + item)
-//                                                            if (item.contains("http")) {
+                                                            if (item.contains("http")) {
 //                                                                val webViewFragment: WebViewFragment =
 //                                                                    WebViewFragment.newInstance()
 //                                                                val args = Bundle()
@@ -2713,7 +2785,11 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                                                                    webViewFragment,
 //                                                                    Constants.WEB_VIEW_FRAGMENT
 //                                                                )
-//                                                            }
+                                                                val intent = Intent(this, com.boost.marketplace.ui.webview.WebViewActivity::class.java)
+                                                                intent.putExtra("title","")
+                                                                intent.putExtra("link", item)
+                                                                startActivity(intent)
+                                                            }
 
                                                         }
                                                     }, {

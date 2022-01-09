@@ -110,7 +110,7 @@
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:layout_margin="4dp"
-                                    android:src="@drawable/cart48" />
+                                    android:src="@drawable/ic_cart" />
                             </LinearLayout>
 
 
@@ -288,7 +288,7 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
-                                android:id="@+id/people_brought"
+                                android:id="@+id/title_bottom2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans"
@@ -300,7 +300,7 @@
                                 app:layout_constraintTop_toBottomOf="@id/title_top_1" />
 
                             <TextView
-                                android:id="@+id/addons_title"
+                                android:id="@+id/title_top"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_50sdp"
@@ -313,7 +313,7 @@
 
 
                             <TextView
-                                android:id="@+id/create_account"
+                                android:id="@+id/title_bottom3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans"
@@ -321,7 +321,7 @@
                                 android:textColor="@color/common_text_color"
                                 android:textSize="@dimen/_12sdp"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/addons_title" />
+                                app:layout_constraintTop_toBottomOf="@id/title_top" />
 
 
                             <TextView
@@ -334,7 +334,7 @@
                                 android:textFontWeight="600"
                                 android:textSize="@dimen/_12sdp"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/create_account" />
+                                app:layout_constraintTop_toBottomOf="@id/title_bottom3" />
 
                             <androidx.cardview.widget.CardView
                                 android:id="@+id/base_container"
@@ -496,10 +496,10 @@
                                     android:layout_weight="1">
 
                                     <TextView
+                                        android:id="@+id/cost_per_month"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_centerInParent="true"
-                                        android:layout_marginStart="@dimen/_5sdp"
                                         android:layout_marginTop="@dimen/_15sdp"
                                         android:layout_marginEnd="@dimen/_25sdp"
                                         android:layout_marginBottom="@dimen/_15sdp"
@@ -510,11 +510,15 @@
                                         android:text="₹165/unit/month" />
 
                                     <ImageView
+                                        android:id="@+id/cost_per_month_check"
                                         android:layout_width="@dimen/_15sdp"
                                         android:layout_height="@dimen/_15sdp"
                                         android:layout_alignParentTop="true"
                                         android:layout_alignParentEnd="true"
-                                        android:layout_margin="@dimen/_9sdp"
+                                        android:layout_marginStart="@dimen/_9sdp"
+                                        android:layout_marginTop="@dimen/_9sdp"
+                                        android:layout_marginEnd="@dimen/_7sdp"
+                                        android:layout_marginBottom="@dimen/_9sdp"
                                         android:background="@drawable/rounded_border_gray" />
                                 </RelativeLayout>
 
@@ -524,10 +528,10 @@
                                     android:layout_weight="1">
 
                                     <TextView
+                                        android:id="@+id/cost_per_year"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_centerInParent="true"
-                                        android:layout_marginStart="@dimen/_5sdp"
                                         android:layout_marginTop="@dimen/_15sdp"
                                         android:layout_marginEnd="@dimen/_25sdp"
                                         android:layout_marginBottom="@dimen/_15sdp"
@@ -538,15 +542,34 @@
                                         android:text="₹165/unit/month" />
 
                                     <ImageView
+                                        android:id="@+id/cost_per_year_check"
                                         android:layout_width="@dimen/_15sdp"
                                         android:layout_height="@dimen/_15sdp"
                                         android:layout_alignParentTop="true"
                                         android:layout_alignParentEnd="true"
                                         android:layout_marginStart="@dimen/_9sdp"
                                         android:layout_marginTop="@dimen/_9sdp"
-                                        android:layout_marginEnd="@dimen/_9sdp"
+                                        android:layout_marginEnd="@dimen/_7sdp"
                                         android:layout_marginBottom="@dimen/_9sdp"
                                         android:background="@drawable/ic_checked" />
+
+                                    <TextView
+                                        android:id="@+id/cost_per_year_discount"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="@dimen/_15sdp"
+                                        android:layout_alignParentTop="true"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginStart="@dimen/_9sdp"
+                                        android:layout_marginTop="@dimen/_9sdp"
+                                        android:layout_marginEnd="@dimen/_9sdp"
+                                        android:layout_marginBottom="@dimen/_9sdp"
+                                        android:background="@drawable/ic_feature_discount"
+                                        android:fontFamily="@font/open_sans_semibold"
+                                        android:gravity="center"
+                                        android:text="19% Saving"
+                                        android:textColor="@color/white"
+                                        android:textSize="10sp" />
+
                                 </RelativeLayout>
 
                             </LinearLayout>
@@ -621,7 +644,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
-                    android:id="@+id/facebook_ads"
+                    android:id="@+id/widgetLearnMore"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#d8d8d8"
@@ -629,9 +652,10 @@
                     android:drawableEnd="@drawable/ic_arrow_right_grey"
                     android:drawablePadding="@dimen/_10sdp"
                     android:fontFamily="@font/open_sans"
-                    android:padding="@dimen/_15sdp"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_15sdp"
+                    android:paddingBottom="@dimen/_5sdp"
                     android:text="Learn why running a facebook ad campaign is always a good idea."
                     android:textColor="@color/common_text_color"
                     android:textFontWeight="600"
@@ -642,26 +666,32 @@
                     android:id="@+id/about_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    app:layout_constraintTop_toBottomOf="@id/facebook_ads">
+                    app:layout_constraintTop_toBottomOf="@id/widgetLearnMore">
+
+                    <View
+                        android:id="@+id/dummy_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_8sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:background="#d8d8d8"/>
 
                         <TextView
                             android:id="@+id/xheader"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
                             android:gravity="start"
                             android:lineSpacingExtra="1.3sp"
                             android:paddingStart="20dp"
                             android:paddingTop="20dp"
                             android:paddingEnd="20dp"
+                            android:background="@color/white"
                             android:paddingBottom="@dimen/_5sdp"
                             android:text="@string/the_luxury_of_traveling_with_yacht_charter_companies"
                             android:textColor="#4a4a4a"
                             android:textSize="@dimen/_13ssp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toBottomOf="@id/dummy_view" />
 
                         <LinearLayout
                             android:id="@+id/secondary_images_panel"
@@ -669,6 +699,7 @@
                             android:layout_height="wrap_content"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
+                            android:background="@color/white"
                             app:layout_constraintTop_toBottomOf="@+id/xheader">
 
                             <androidx.recyclerview.widget.RecyclerView
@@ -677,9 +708,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="20dp"
                                 android:clipToPadding="false"
-                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 android:orientation="horizontal"
                                 android:nestedScrollingEnabled="false"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 android:overScrollMode="never"
                                 tools:listitem="@layout/secondary_image_item"/>
 
@@ -701,7 +732,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:lineSpacingExtra="1.3sp"
-                                android:maxLines="10"
                                 android:paddingStart="22dp"
                                 android:paddingTop="@dimen/_5sdp"
                                 android:paddingEnd="22dp"
