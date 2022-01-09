@@ -19,11 +19,11 @@ class GMBPreviewViewHolder(binding: SocialPreviewGmbBinding) :
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as SocialPreviewModel
 
-        if (model.posterImg==null){
-            binding.materialCardView.minimumHeight=300
+        if (model.posterImg.isNullOrEmpty()){
+            binding.materialCardView.minimumHeight=400
             binding.ivPoster.gone()
         }else{
-            binding.materialCardView.minimumHeight=700
+            binding.materialCardView.minimumHeight=800
             binding.ivPoster.loadFromFile(File(model.posterImg),false)
         }
         binding.materialCardView.requestLayout()

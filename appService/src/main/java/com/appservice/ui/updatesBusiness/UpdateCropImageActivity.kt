@@ -90,11 +90,14 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
             binding!!.layoutTick->{
                 binding!!.ivCrop.croppedImage.saveAsImageToAppFolder(getExternalFilesDir(null)?.path+File.separator
                 + Constants.UPDATE_PIC_FILE_NAME)
+                setResult(Activity.RESULT_OK)
+
                 finish()
             }
             binding!!.ivDelete->{
                 File(getExternalFilesDir(null)?.path+File.separator
                         + Constants.UPDATE_PIC_FILE_NAME).delete()
+                setResult(Activity.RESULT_OK)
                 finish()
             }
 

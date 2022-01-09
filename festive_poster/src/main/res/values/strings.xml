@@ -94,5 +94,6 @@
     <string name="buy">BUY</string>
     <string name="like">Like</string>
     <string name="comment">Comment</string>
+    <string name="Create">Create</string>
 
 </resources>

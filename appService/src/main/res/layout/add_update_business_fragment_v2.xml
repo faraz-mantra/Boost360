@@ -96,6 +96,7 @@
                     <com.framework.views.customViews.CustomImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
                         android:src="@drawable/ic_crop" />
 
 
@@ -115,7 +116,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:text="@string/tell_your_customers_what_s_new"
                     android:textColor="@color/color191919"
                     app:fontFamily="@font/semi_bold"
@@ -134,76 +135,85 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/customTextView10" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout6"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
-                    android:background="@drawable/bg_border_afafaf_color"
-                    android:padding="2dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/customTextView10">
-
-                    <com.framework.views.customViews.CustomEditText
-                        android:id="@+id/et_update"
-                        android:gravity="start"
-                        android:padding="8dp"
-                        android:textSize="12sp"
-                        android:hint="@string/write_about_your_customer_location_recent_updates_timing_etc"
-                        android:fontFamily="@font/regular"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_150"
-                        android:background="@color/white"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                    <com.framework.views.customViews.CustomImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:id="@+id/iv_mic"
-                        android:layout_marginBottom="8dp"
-                        android:src="@drawable/ic_voice_over_mic"
-                        app:layout_constraintBottom_toBottomOf="@+id/et_update"
-                        app:layout_constraintEnd_toEndOf="@+id/et_update" />
+                    app:layout_constraintTop_toBottomOf="@+id/customTextView10"
+                    app:strokeColor="@color/colorAFAFAF"
+                    app:strokeWidth="1dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/layout_hashtag_tip"
+                        android:id="@+id/constraintLayout6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/colorFFF8E6"
-                        android:orientation="horizontal"
-                        android:padding="4dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/et_update">
 
-                        <com.framework.views.customViews.CustomTextView
-                            android:id="@+id/tv_hashtag_tip"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="@string/type_in_the_caption_to_create_your_own_hashtags"
-                            android:textSize="@dimen/txt_10sp"
-                            app:fontFamily="@font/regular"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/iv_hashtag_cross"
-                            app:layout_constraintStart_toStartOf="parent"
+                        android:padding="2dp">
+
+                        <com.framework.views.customViews.CustomEditText
+                            android:id="@+id/et_update"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_150"
+                            android:background="@color/white"
+                            android:fontFamily="@font/regular"
+                            android:gravity="start"
+                            android:hint="@string/write_about_your_customer_location_recent_updates_timing_etc"
+                            android:padding="8dp"
+                            android:textSize="12sp"
                             app:layout_constraintTop_toTopOf="parent" />
+
 
                         <com.framework.views.customViews.CustomImageView
-                            android:id="@+id/iv_hashtag_cross"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
+                            android:id="@+id/iv_mic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
-                            android:src="@drawable/cross_nv_new"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:layout_marginBottom="8dp"
+                            android:src="@drawable/ic_voice_over_mic"
+                            app:layout_constraintBottom_toBottomOf="@+id/et_update"
+                            app:layout_constraintEnd_toEndOf="@+id/et_update" />
 
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/layout_hashtag_tip"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorFFF8E6"
+                            android:orientation="horizontal"
+                            android:padding="4dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/et_update">
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:id="@+id/tv_hashtag_tip"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/type_in_the_caption_to_create_your_own_hashtags"
+                                android:textSize="@dimen/txt_10sp"
+                                app:fontFamily="@font/regular"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/iv_hashtag_cross"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <com.framework.views.customViews.CustomImageView
+                                android:id="@+id/iv_hashtag_cross"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_marginEnd="8dp"
+                                android:src="@drawable/cross_nv_new"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
 
 
                 <com.framework.views.customViews.CustomMaterialButton
@@ -222,7 +232,7 @@
                     app:iconGravity="textStart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout6"
+                    app:layout_constraintTop_toBottomOf="@+id/card_input"
                     app:strokeColor="@color/colorAFAFAF" />
 
 
@@ -232,6 +242,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="16dp"
                     android:gravity="center"
                     android:text="@string/supported_format_jpeg_png_size_square_800_x_800px_minimum"
                     android:textSize="9dp"

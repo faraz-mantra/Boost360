@@ -317,7 +317,6 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             var subTitle:String?=null
             var isConnected=false
             var isEnabled=false
-            var layout_id=-1
             var channelType:SocialPreviewChannel?=null
             requestFloatsNew.categoryDataModel?.channels?.forEach { it1 ->
                 /*if (it1.isWhatsAppChannel()){
@@ -326,12 +325,10 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                 if (it1.type==ChannelType.G_SEARCH.name){
                     isConnected=true
                     isEnabled = false
-                    layout_id = RecyclerViewItemType.WEBSITE_PREVIEW.getLayout()
                     channelType = SocialPreviewChannel.WEBSITE
                     subTitle=session?.getDomainName(false)
                 }else{
                     subTitle=null
-                    layout_id = -1
                     isEnabled=true
                     channelType = null
                     isConnected=false
@@ -357,7 +354,6 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                                 it1.channelAccessToken = data
                                 connectedChannels?.add(ChannelsType.AccountType.facebookpage.name)
 
-                                layout_id = RecyclerViewItemType.FB_PREVIEW.getLayout()
 
 
                             }
@@ -404,7 +400,6 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                                 it1.isSelected = true
                                 it1.channelAccessToken = data
                                 connectedChannels.add(ChannelsType.AccountType.twitter.name)
-                                layout_id = RecyclerViewItemType.VIEWPAGER_TWITTER_PREVIEW.getLayout()
 
 
                             }
@@ -439,7 +434,6 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                                 it1.channelAccessToken = data
                                 connectedChannels.add(ChannelsType.AccountType.googlemybusiness.name)
 
-                                layout_id = RecyclerViewItemType.GMB_PREVIEW.getLayout()
 
 
                             }
@@ -455,8 +449,15 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                         generateImageResource(this@PostPreviewSocialActivity)
                     })
 
-                    uiPreviewChannelList?.add(SocialPreviewModel(posterImgPath,title,captionIntent,layout_id,isConnected,channelType!!))
+                    uiPreviewChannelList?.add(SocialPreviewModel(posterImgPath,title,captionIntent,isConnected,channelType!!))
                 }
+                uiPreviewChannelList?.add(SocialPreviewModel(posterImgPath,title,
+                    captionIntent,isConnected,SocialPreviewChannel.TWITTER))
+                uiPreviewChannelList?.add(SocialPreviewModel(posterImgPath,title,
+                    captionIntent,isConnected,SocialPreviewChannel.FACEBOOK))
+                uiPreviewChannelList?.add(SocialPreviewModel(posterImgPath,title,
+                    captionIntent,isConnected,SocialPreviewChannel.INSTAGRAM))
+
             }
 
             if (categoryData?.channels.isNullOrEmpty()){
@@ -471,7 +472,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     }
 
     private fun setupPreviewList() {
-        val filteredList = uiPreviewChannelList?.filter { it.shouldShow && it.layout_id!=-1 }?.toArrayList()
+        val filteredList = uiPreviewChannelList?.filter { it.shouldShow }?.toArrayList()
         binding?.rvPostPreview?.apply {
             adapter  = AppBaseRecyclerViewAdapter(this@PostPreviewSocialActivity, filteredList!!, this@PostPreviewSocialActivity)
         }

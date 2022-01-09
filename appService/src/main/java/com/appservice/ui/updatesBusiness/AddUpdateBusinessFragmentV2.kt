@@ -2,6 +2,7 @@ package com.appservice.ui.updatesBusiness
 
 import android.app.Activity
 import android.content.*
+import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
@@ -110,15 +111,64 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     startForCropImageResult =
       registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
           result: ActivityResult ->
-        val imgFile = File(
+        if (result.resultCode==Activity.RESULT_OK){
+          val imgFile = File(
           requireActivity().getExternalFilesDir(null)?.path+File.separator+Constants.UPDATE_PIC_FILE_NAME)
-        if (imgFile.exists()){
+        if (imgFile.exists()&&isImageValid(imgFile)){
             loadImage(imgFile.path)
         }else{
           loadImage(null)
         }
+        toggleContinue()
       }
+        }
+
   }
+
+  private fun isImageValid(imgFile: File): Boolean {
+    if (imgFile.extension.equals("JPEG",ignoreCase = true)||
+      imgFile.extension.equals("JPG",ignoreCase = true)||
+      imgFile.extension.equals("PNG",ignoreCase = true)){
+
+      val bitMapOption: BitmapFactory.Options = BitmapFactory.Options()
+      bitMapOption.inJustDecodeBounds = true
+      BitmapFactory.decodeFile(imgFile.path, bitMapOption)
+      val imageWidth: Int = bitMapOption.outWidth
+      val imageHeight: Int = bitMapOption.outHeight
+
+      if (imageWidth>=800||imageHeight>=800){
+          if (imgFile.sizeInMb<=2){
+            return true
+          }else{
+            showLongToast(getString(R.string.image_file_size_is_bigger_than_2mb))
+            return false
+          }
+      }else{
+        showLongToast(getString(R.string.image_resolution_is_smaller_than_800_x_800_px))
+        return false
+      }
+
+    }else{
+      showLongToast(getString(R.string.image_format_is_not_supported_please_use_jpeg_jpg_or_png))
+      return false
+    }
+  }
+
+
+  private fun capLimitCheck() {
+    val featureUpdate = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureType.LATESTUPDATES)
+    val capLimitUpdate = featureUpdate?.filterProperty(PropertiesItem.KeyType.LIMIT)
+    if (/*isUpdate.not() && */capLimitUpdate != null) {
+      viewModel?.getMessageUpdates(sessionLocal.getRequestUpdate(PaginationScrollListener.PAGE_START))?.observeOnce(viewLifecycleOwner, {
+        val data = it as? BusinessUpdateResponse
+        if (data?.totalCount != null && capLimitUpdate.getValueN() != null && data.totalCount!! >= capLimitUpdate.getValueN()!!) {
+          baseActivity.hideKeyBoard()
+          showAlertCapLimit("Can't add the business update, please activate your premium Add-ons plan.",CapLimitFeatureResponseItem.FeatureType.LATESTUPDATES.name)
+        }
+      })
+    }
+  }
+
 
   private fun loadImage(path: String?) {
     posterImagePath = path
@@ -141,6 +191,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     super.onCreateView()
     initUI()
     initStt()
+    capLimitCheck()
     addHashTagFunction()
     baseActivity.onBackPressedDispatcher.addCallback(
       viewLifecycleOwner,
@@ -169,12 +220,31 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       "Add Image"
     )
     binding!!.etUpdate.setText(sessionLocal.getFPDetails(msgPost))
+    binding!!.tvCount.text = sessionLocal.getFPDetails(msgPost)?.length.toString()
 
-      loadImage(sessionLocal.getFPDetails(imagePost))
 
+    loadImage(sessionLocal.getFPDetails(imagePost))
+
+    toggleContinue()
 
   }
 
+  fun toggleContinue(){
+    if (binding!!.etUpdate.text.toString().isNullOrEmpty()&&posterImagePath.isNullOrEmpty()){
+      disableContinue()
+    }else{
+      enableContinue()
+    }
+  }
+  fun disableContinue(){
+    binding!!.tvPreviewAndPost.isEnabled = false
+    binding!!.tvPreviewAndPost.setBackgroundColor(ContextCompat.getColor(requireActivity(),R.color.gray_DADADA))
+  }
+
+  fun enableContinue(){
+    binding!!.tvPreviewAndPost.isEnabled = true
+    binding!!.tvPreviewAndPost.setBackgroundColor(ContextCompat.getColor(requireActivity(),R.color.colorPrimary))
+  }
 
   private fun initStt() {
     sttUtils = STTUtils(object : STTUtils.Callbacks{
@@ -218,6 +288,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
         sessionLocal.storeFPDetails(msgPost,s.toString())
 
         binding!!.tvCount.text = s.toString().length.toString()
+        toggleContinue()
       }
     })
 

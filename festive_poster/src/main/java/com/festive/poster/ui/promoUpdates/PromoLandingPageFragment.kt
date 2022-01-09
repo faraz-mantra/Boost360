@@ -156,13 +156,13 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
             currentTab.icon=when(currentPosition){
                 0->AppCompatResources.getDrawable(requireActivity(),R.drawable.ic_sundim)
                 1->AppCompatResources.getDrawable(requireActivity(),R.drawable.ic_circlesfour)
-                2->AppCompatResources.getDrawable(requireActivity(),R.drawable.ic_magnifyingglass)
+                2->AppCompatResources.getDrawable(requireActivity(),R.drawable.ic_pencilsimple)
                 else -> null
             }
             currentTab.text = when (currentPosition) {
                 0 -> getString(R.string.for_today)
                 1 -> getString(R.string.browse)
-                2 -> getString(R.string.find)
+                2 -> getString(R.string.Create)
                 else -> ""
             }
         }.attach()

@@ -67,9 +67,9 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_post_preview"
+                        android:layout_marginBottom="@dimen/size_24"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:itemCount="6"
@@ -77,60 +77,69 @@
 
                 </RelativeLayout>
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tv_preview_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_26"
-                    android:layout_marginTop="@dimen/size_22"
-                    android:fontFamily="@font/regular_medium"
-                    android:text="@string/preview"
-                    android:textColor="@color/black_4a4a4a"
-                    android:textSize="@dimen/text_16"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:background="@color/white_F5F7FA"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/previews" />
+                    app:layout_constraintTop_toBottomOf="@+id/previews"
+                    android:layout_height="wrap_content">
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tv_selected"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/size_26"
-                    android:background="@drawable/rounded_orange_background_transparent"
-                    android:fontFamily="@font/regular_medium"
-                    android:textAllCaps="true"
-                    android:paddingHorizontal="@dimen/size_10"
-                    android:paddingVertical="@dimen/size_6"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/text_12"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_preview_title"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tv_preview_title" />
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/tv_preview_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="24dp"
+                        android:fontFamily="@font/regular_medium"
+                        android:text="@string/preview"
+                        android:textColor="@color/black_4a4a4a"
+                        android:textSize="@dimen/text_16"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:theme="@style/progressBar"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/previews" />
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_social_platforms"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/size_18"
-                    android:layout_marginTop="@dimen/size_20"
-                    android:nestedScrollingEnabled="false"
-                    android:orientation="vertical"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginBottom="@dimen/size_30"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_preview_title"
-                    tools:itemCount="6"
-                    tools:listitem="@layout/item_social_platform_promo_adap" />
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/tv_selected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/size_26"
+                        android:background="@drawable/rounded_orange_background_transparent"
+                        android:fontFamily="@font/regular_medium"
+                        android:textAllCaps="true"
+                        android:paddingHorizontal="@dimen/size_10"
+                        android:paddingVertical="@dimen/size_6"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_12"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_preview_title"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tv_preview_title" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:theme="@style/progressBar"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="parent" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_social_platforms"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/size_18"
+                        android:layout_marginTop="@dimen/size_20"
+                        android:nestedScrollingEnabled="false"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginBottom="@dimen/size_30"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_preview_title"
+                        tools:itemCount="6"
+                        tools:listitem="@layout/item_social_platform_promo_adap" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

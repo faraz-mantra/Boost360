@@ -17,11 +17,11 @@ class TwitterPreviewViewHolder(binding: SocialPreviewTwitterBinding) :
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as SocialPreviewModel
-        if (model.posterImg==null){
-            binding.materialCardView.minimumHeight=300
+        if (model.posterImg.isNullOrEmpty()){
+            binding.materialCardView.minimumHeight=400
             binding.ivSvg.gone()
         }else{
-            binding.materialCardView.minimumHeight=700
+            binding.materialCardView.minimumHeight=800
             binding.ivSvg.loadFromFile(File(model.posterImg),false)
         }
         binding.materialCardView.requestLayout()
