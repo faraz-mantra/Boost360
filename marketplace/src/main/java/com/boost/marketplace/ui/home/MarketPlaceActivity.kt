@@ -1534,6 +1534,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             shimmer_view_recomm_addons.stopShimmer()
             shimmer_view_recomm_addons.visibility = View.GONE
         }
+        val temp: List<FeaturesModel> = arrayListOf()
+
         upgradeAdapter.addupdates(list)
         recycler.adapter = upgradeAdapter
         upgradeAdapter.notifyDataSetChanged()
@@ -1966,13 +1968,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                                        marketPlaceOfferFragment,
 //                                        MARKET_OFFER_FRAGMENT
 //                                    )
-                                    val intent = Intent(this, MarketPlaceOffersActivity::class.java)
-                                    intent.putExtra("marketOffersData",
-                                        Gson().toJson(
-                                            selectedMarketOfferModel
-                                        ))
-                                    startActivity(intent)
 
+                                    val intent = Intent(this,MarketPlaceOffersActivity::class.java)
+                                    intent.putExtra("marketOffersData", Gson().toJson(selectedMarketOfferModel))
+                                    startActivity(intent)
 
                                 }, {
                                     it.printStackTrace()

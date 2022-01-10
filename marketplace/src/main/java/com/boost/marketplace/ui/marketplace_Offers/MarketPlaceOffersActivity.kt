@@ -3,24 +3,31 @@ package com.boost.marketplace.ui.marketplace_Offers
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.text.SpannableString
 import android.text.TextPaint
 import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.MarketPlaceOffers
 import com.boost.dbcenterapi.utils.SharedPrefs
+import com.boost.dbcenterapi.utils.WebEngageController
 import com.boost.marketplace.Adapters.MarketOfferDetailAdapter
 import com.boost.marketplace.Adapters.MarketOfferTermsAdapter
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityMarketplaceoffersBinding
+import com.boost.marketplace.ui.History_Orders.HistoryOrdersActivity
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.activity_marketplaceoffers.*
-import kotlinx.android.synthetic.main.item_marketplaceoffers_info.view.*
-import kotlinx.android.synthetic.main.item_packs_list.view.*
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_OFFERS_LOADED
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.PAGE_VIEW
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -51,11 +58,16 @@ class MarketPlaceOffersActivity :
 
         marketOfferDetailAdapter = MarketOfferDetailAdapter(ArrayList())
         marketOfferTermsAdapter = MarketOfferTermsAdapter(ArrayList())
-     //   WebEngageController.trackEvent(ADDONS_MARKETPLACE_OFFERS_LOADED, PAGE_VIEW, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_OFFERS_LOADED, PAGE_VIEW, NO_EVENT_VALUE)
 
-        marketOffersData = intent.extras?.getSerializable("marketOffersData") as? MarketPlaceOffers
-        //   marketOffersData = Gson().fromJson<MarketPlaceOffers>(jsonString, object : TypeToken<MarketPlaceOffers>() {}.type)
+//        marketOffersData = intent.extras?.getSerializable("marketOffersData") as? MarketPlaceOffers
+//        //   marketOffersData = Gson().fromJson<MarketPlaceOffers>(jsonString, object : TypeToken<MarketPlaceOffers>() {}.type)
+
+        val jsonString =intent.extras?.getString("marketOffersData")
+        marketOffersData = Gson().fromJson<MarketPlaceOffers>(jsonString, object : TypeToken<MarketPlaceOffers>() {}.type)
         prefs = SharedPrefs(this)
+
+        viewModel = ViewModelProviders.of(this).get(MarketPlaceOffersViewModel::class.java)
 
         initializeDetailsRecycler()
         initializeTermsRecycler()
@@ -138,13 +150,13 @@ class MarketPlaceOffersActivity :
         }
 
         if (intent.extras?.containsKey("showCartIcon") == true) {
-            offer_info_icon.visibility = View.INVISIBLE
-            avail_coupon_submit.visibility = View.GONE
+            binding?.offerInfoIcon?.visibility = View.INVISIBLE
+            binding?.availCouponSubmit?.visibility = View.GONE
         }
 
         if (marketOffersData?.image != null && !marketOffersData?.image?.url.isNullOrEmpty()) {
             binding?.marketoffersImage?.let {
-                Glide.with(MarketPlaceOffersActivity()).load(marketOffersData?.image?.url)
+                Glide.with(applicationContext).load(marketOffersData?.image?.url)
                     .into(it)
             }
         } else {
@@ -152,21 +164,22 @@ class MarketPlaceOffersActivity :
         }
 
         binding!!.packageBack.setOnClickListener {
-            TODO("Not yet implemented")
+           finish()
         }
 
         binding!!.help.setOnClickListener {
-            TODO("Not yet implemented")
+            val intent= Intent(this,HistoryOrdersActivity::class.java)
+            startActivity(intent)
         }
 
         binding!!.dateFromToLayout.setOnClickListener {
             val clipboard: ClipboardManager =
                 this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText(avail_coupon_txt.text, avail_coupon_txt.text)
+            val clip = ClipData.newPlainText(binding?.availCouponTxt?.text, binding?.availCouponTxt?.text)
             clipboard.setPrimaryClip(clip)
             Toast.makeText(
                 this,
-                "Coupon " + avail_coupon_txt.text + " copied!!",
+                "Coupon " + binding?.availCouponTxt?.text + " copied!!",
                 Toast.LENGTH_SHORT
             )
                 .show()
@@ -176,12 +189,12 @@ class MarketPlaceOffersActivity :
 
             val clipboard: ClipboardManager =
                 this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText(avail_coupon_txt.text, avail_coupon_txt.text)
+            val clip = ClipData.newPlainText(binding?.availCouponTxt?.text, binding?.availCouponTxt?.text)
             clipboard.setPrimaryClip(clip)
             super.onBackPressed()
             Toast.makeText(
                 this,
-                "Coupon " + avail_coupon_txt.text + " copied!!",
+                "Coupon " + binding?.availCouponTxt?.text + " copied!!",
                 Toast.LENGTH_SHORT
             )
                 .show()
@@ -191,8 +204,9 @@ class MarketPlaceOffersActivity :
 
     private fun loadData() {
         Log.d("marketOffersCoupon", " " + marketOffersData?.coupon_code)
-        marketOffersData?.coupon_code?.let { viewModel.getOffersByCouponId(it) }
+        viewModel.getOffersByCouponId(marketOffersData!!.coupon_code)
     }
+
 
     private fun initMvvm() {
         viewModel.marketOffersCouponResult().observe(this, androidx.lifecycle.Observer {
@@ -232,8 +246,8 @@ class MarketPlaceOffersActivity :
     fun updateRecycler(list: List<String>) {
         Log.v("updateRecycler", " " + list)
            marketOfferDetailAdapter?.addupdates(list)
-        recyclerOfferDetails.adapter = marketOfferDetailAdapter
-        marketOfferDetailAdapter?.notifyDataSetChanged()
+       binding?.recyclerOfferDetails?.adapter = marketOfferDetailAdapter
+      //  marketOfferDetailAdapter?.notifyDataSetChanged()
     }
 
     fun initializeDetailsRecycler() {
@@ -255,8 +269,8 @@ class MarketPlaceOffersActivity :
     fun updateTermsRecycler(list: List<String>) {
         Log.v("updateRecycler", " " + list)
           marketOfferTermsAdapter?.addupdates(list)
-        recyclerTerms.adapter = marketOfferTermsAdapter
-        marketOfferDetailAdapter?.notifyDataSetChanged()
+        binding?.recyclerTerms?.adapter = marketOfferTermsAdapter
+     //   marketOfferDetailAdapter?.notifyDataSetChanged()
     }
 
 }
