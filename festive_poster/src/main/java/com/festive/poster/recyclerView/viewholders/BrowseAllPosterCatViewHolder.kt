@@ -28,10 +28,12 @@ class BrowseAllPosterCatViewHolder(binding: ListItemBrowseAllCatBinding) :
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     val model = item as PosterPackModel
     if (model.isSelected){
-        binding.rootLayout.background =AppCompatResources.getDrawable(BaseApplication.instance,R.drawable.ic_poster_pack_selected)
+         getColor(R.color.color4ACDFF)?.let {
+        binding.borderCard.strokeColor=it
+        }
         binding.root.alpha =1F
     }else{
-      binding.rootLayout.background = null
+      binding.borderCard.strokeColor=0
       binding.root.alpha = 0.5F
     }
     binding.tvTitle.text = model.tagsModel.tag

@@ -26,6 +26,7 @@ import com.festive.poster.ui.promoUpdates.bottomSheet.EditTemplateBottomSheet
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterViewModel
+import com.framework.extensions.gone
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.STTUtils
@@ -70,7 +71,7 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
         posterModel = convertStringToObj(intent.getStringExtra(IK_POSTER)!!)
         initUI()
         setOnClickListener(binding?.btnTapToEdit, binding?.captionLayout?.etInput,
-            binding?.ivCloseEditing, binding?.tvPreviewAndPost,binding?.ivVoiceOver)
+            binding?.ivCloseEditing, binding?.tvPreviewAndPost,binding?.ivVoiceOver,binding?.ivCloseHashtag)
 
     }
 
@@ -149,6 +150,9 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
     override fun onClick(v: View?) {
         super.onClick(v)
         when (v) {
+            binding?.ivCloseHashtag->{
+                binding?.layoutHashtag?.gone()
+            }
             binding?.btnTapToEdit -> {
                 EditTemplateBottomSheet.newInstance(object :EditTemplateBottomSheet.Callbacks{
                     override fun onDone(header1: String, header2: String) {

@@ -67,6 +67,7 @@
 
                     <com.framework.views.customViews.CustomButton
                         android:id="@+id/btn_tap_to_edit"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_26"
@@ -173,6 +174,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/layout_hashtag"
+                    android:padding="@dimen/size_5"
                     android:layout_marginHorizontal="@dimen/size_20"
                     android:layout_marginVertical="@dimen/size_16"
                     android:background="@drawable/bg_tranparent_orange_no_border">

@@ -134,7 +134,7 @@
                         <com.framework.views.customViews.CustomImageView
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:src="@drawable/ic_whatsapp" />
+                            android:src="@drawable/ic_whatsapp_fposter" />
 
                         <com.framework.views.customViews.CustomTextView
                             style="@style/BlackMediumS"
