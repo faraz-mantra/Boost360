@@ -40,7 +40,7 @@ class CategoryOv2RecyclerViewHolder constructor(binding: ItemWebsiteCategoriesBi
   private fun setViews(model: CategoryDataModel?) {
     val activity = this.activity ?: return
     binding.tvCategoryTitle.text = if (model?.textChangeRTLAndSVC == false) model.getCategoryWithoutNewLine() else model?.getCategoryName()
-    binding.tvCategoryExamples.text = model?.getSectionsTitles()
+    binding.tvCategoryExamples.text = model?.category_descriptor
     val drawable = model?.getImage(activity) ?: return
     binding.ivCatImg.setImageDrawable(drawable)
     binding.ivCatImg.setTintColor(getColor(R.color.black_4a4a4a)!!)

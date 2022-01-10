@@ -97,7 +97,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     binding?.includeMobileView?.tvCategoryName?.text = categoryModel?.getCategoryWithoutNewLine() ?: ""
     binding?.includeMobileView?.tvTitle?.text = businessName?.capitalizeUtil()
     setOnClickListeners()
-    binding?.addressInputLayout?.etInput?.setText(businessName.toString().lowercase())
+    binding?.addressInputLayout?.etInput?.setText(businessName?.replace("\\s+".toRegex(), "")?.lowercase())
     apiCheckDomain {
       websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1)
     }
@@ -137,7 +137,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
 
     binding?.addressInputLayout?.etInput?.setOnEditorActionListener { _, actionId, _ ->
       if (actionId == EditorInfo.IME_ACTION_DONE) {
-        if (binding?.addressInputLayout?.etInput!!.text?.trim()?.isEmpty() == false) {
+        if (binding?.addressInputLayout?.etInput?.text?.trim()?.isEmpty() == false) {
           binding?.addressInputLayout?.etInput?.isEnabled = false
           binding?.addressInputLayout?.ivIcon?.visible()
           apiCheckDomain {
