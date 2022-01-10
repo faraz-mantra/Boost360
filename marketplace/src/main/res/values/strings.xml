@@ -30,4 +30,5 @@
   <string name="browse_features">Browse features</string>
   <string name="actual_feature_price"><strike>₹60/month</strike></string>
     <string name="added_to_carts">Added to cart</string>
+  <string name="how_it_works_text">This feature enables you to display your products on your website. You can easily add detailed information about your products and their prices through the inbuilt product catalogue to enable quick sales.</string>
 </resources>

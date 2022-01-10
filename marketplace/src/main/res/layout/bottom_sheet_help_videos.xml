@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="5dp"
+      android:background="#4A4A4A"
+      android:orientation="horizontal">
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/monitor_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/ic_help_videos_white" />
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toEndOf="@+id/monitor_play"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Learning about"
+          android:textColor="@color/white"
+          android:textSize="@dimen/txt_11sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Add-on Marketplace"
+          android:textColor="@color/white"
+          android:textSize="@dimen/txt_14sp"
+          android:textStyle="bold" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="20dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="20dp"
+          android:src="@drawable/ic_videos_translate" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/ic_videos_close" />
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="10dp"
+      android:orientation="vertical">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="start"
+          android:text="HOW IT WORKS:"
+          android:textColor="@color/black"
+          android:textSize="@dimen/txt_16sp"
+          android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/ic_videos_audio" />
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:lineSpacingExtra="1sp"
+        android:text="@string/how_it_works_text"
+        android:textColor="#4A4A4A"
+        android:textSize="@dimen/txt_16sp" />
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="start"
+          android:text="VIDEOS(3)"
+          android:textColor="@color/black"
+          android:textSize="@dimen/txt_16sp"
+          android:textStyle="bold" />
+
+        <com.framework.views.dotsindicator.DotsIndicator
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          app:dotsColor="#ffb900"
+          app:dotsCornerRadius="8dp"
+          app:dotsSize="6dp"
+          app:dotsSpacing="4dp"
+          app:dotsWidthFactor="2.5"
+          app:selectedDotColor="@color/color_primary" />
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <androidx.viewpager2.widget.ViewPager2
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        tools:listitem="@layout/item_help_videos_vp" />
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="start"
+          android:text="TIPS:"
+          android:textColor="@color/black"
+          android:textSize="@dimen/txt_16sp"
+          android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          android:src="@drawable/ic_videos_audio" />
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        tools:itemCount="2"
+        tools:listitem="@layout/item_help_videos_tips_rv" />
+
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:background="#F0F0F0"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="start"
+          android:padding="10dp"
+          android:text="Read FAQs"
+          android:textColor="@color/black"
+          android:textSize="@dimen/txt_16sp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:padding="10dp"
+          android:src="@drawable/ic_my_cuurent_plan_arrow" />
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:background="#F0F0F0"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="start"
+          android:padding="10dp"
+          android:text="Contact support"
+          android:textColor="@color/black"
+          android:textSize="@dimen/txt_16sp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:padding="10dp"
+          android:src="@drawable/ic_my_cuurent_plan_arrow" />
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</layout>
