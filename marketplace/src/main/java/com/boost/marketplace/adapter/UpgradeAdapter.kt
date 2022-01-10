@@ -78,7 +78,6 @@ class UpgradeAdapter(
 
     private var context: Context = itemView.context
 
-
     fun upgradeListItem(updateModel: FeaturesModel) {
       val discount = 100 - updateModel.discount_percent
       val price = (discount * updateModel.price) / 100
@@ -88,7 +87,6 @@ class UpgradeAdapter(
       if (updateModel.primary_image != null) {
         Glide.with(context).load(updateModel.primary_image).into(image)
       }
-
     }
   }
 }
