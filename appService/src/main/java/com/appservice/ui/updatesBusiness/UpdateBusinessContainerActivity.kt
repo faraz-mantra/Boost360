@@ -34,7 +34,10 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    intent?.extras?.getInt(FRAGMENT_TYPE)?.let { type = FragmentType.values()[it] }
+    intent?.extras?.getString(FRAGMENT_TYPE)?.let { type = FragmentType.fromValue(it) }
+   if (type==null){
+     intent?.extras?.getInt(FRAGMENT_TYPE)?.let { type = FragmentType.values()[it] }
+   }
     super.onCreate(savedInstanceState)
   }
 

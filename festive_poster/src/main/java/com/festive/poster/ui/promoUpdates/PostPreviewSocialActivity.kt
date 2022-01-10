@@ -451,12 +451,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
                     uiPreviewChannelList?.add(SocialPreviewModel(posterImgPath,title,captionIntent,isConnected,channelType!!))
                 }
-                uiPreviewChannelList?.add(SocialPreviewModel(posterImgPath,title,
-                    captionIntent,isConnected,SocialPreviewChannel.TWITTER))
-                uiPreviewChannelList?.add(SocialPreviewModel(posterImgPath,title,
-                    captionIntent,isConnected,SocialPreviewChannel.FACEBOOK))
-                uiPreviewChannelList?.add(SocialPreviewModel(posterImgPath,title,
-                    captionIntent,isConnected,SocialPreviewChannel.INSTAGRAM))
+
 
             }
 
