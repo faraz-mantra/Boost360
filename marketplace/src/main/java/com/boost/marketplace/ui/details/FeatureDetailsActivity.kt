@@ -46,6 +46,7 @@ import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.marketplace.adapter.FeaturePacksAdapter
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
+import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -660,10 +661,16 @@ class FeatureDetailsActivity :
         item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
         WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, ADDONS_MARKETPLACE, event_attributes)
 
-        val intent = Intent(this, ComparePacksActivity::class.java)
-        intent.putExtra("bundleData", Gson().toJson(item))
-        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
-        startActivity(intent)
+        val packagePopup = PackagePopUpFragement()
+        val args = Bundle()
+        args.putString("bundleData", Gson().toJson(item))
+        packagePopup.arguments = args
+        packagePopup.show(supportFragmentManager,"PACKAGE_POPUP")
+
+//        val intent = Intent(this, ComparePacksActivity::class.java)
+//        intent.putExtra("bundleData", Gson().toJson(item))
+//        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+//        startActivity(intent)
     }
 
 

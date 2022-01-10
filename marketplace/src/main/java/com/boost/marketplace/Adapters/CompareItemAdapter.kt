@@ -25,7 +25,7 @@ class CompareItemAdapter( cryptoCurrencies: List<FeaturesModel>?)
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
     val itemView = LayoutInflater.from(parent?.context).inflate(
-      R.layout.item_pack_list, parent, false
+      R.layout.item_packs_list, parent, false
     )
     context = itemView.context
 
@@ -39,7 +39,7 @@ class CompareItemAdapter( cryptoCurrencies: List<FeaturesModel>?)
   override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
 
     holder.name.setText(upgradeList.get(position).name)
-    holder.title.setText(upgradeList.get(position).target_business_usecase)
+    holder.price.setText("₹"+upgradeList.get(position).price+"/month")
 
     Glide.with(context).load(upgradeList.get(position).primary_image).into(holder.image)
 //    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
@@ -78,8 +78,8 @@ class CompareItemAdapter( cryptoCurrencies: List<FeaturesModel>?)
   class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     val image = itemView.findViewById<ImageView>(R.id.imageView2)!!
-    val name = itemView.findViewById<TextView>(R.id.details)!!
-   val title = itemView.findViewById<TextView>(R.id.title)!!
+    val name = itemView.findViewById<TextView>(R.id.title)!!
+   val price = itemView.findViewById<TextView>(R.id.price)!!
 
 
   }

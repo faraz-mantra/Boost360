@@ -72,8 +72,8 @@ class UpgradeAdapter(
 
   class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private var upgradeDetails = itemView.findViewById<TextView>(R.id.details)!!
-    private var upgradePrice = itemView.findViewById<TextView>(R.id.upgrade_list_price)!!
+    private var upgradeDetails = itemView.findViewById<TextView>(R.id.title)!!
+    private var upgradePrice = itemView.findViewById<TextView>(R.id.price)!!
     private var image = itemView.findViewById<ImageView>(R.id.imageView2)!!
 
     private var context: Context = itemView.context
