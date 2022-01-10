@@ -54,6 +54,7 @@ import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
 import com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity
 import com.boost.marketplace.ui.browse.BrowseFeaturesActivity
+import com.boost.marketplace.ui.coupons.OfferCouponsActivity
 import com.boost.marketplace.ui.marketplace_Offers.MarketPlaceOffersActivity
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.framework.analytics.SentryController
@@ -604,6 +605,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 return true
             }
             R.id.offer_coupons -> {
+                startSpecificActivity(OfferCouponsActivity::class.java)
                 Toast.makeText(applicationContext, "Clicked on Offer Coupons", Toast.LENGTH_LONG)
                     .show()
                 return true
@@ -627,6 +629,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     }
 
 
+  fun startSpecificActivity(otherActivityClass: Class<*>?) {
+    val intent = Intent(applicationContext, otherActivityClass)
+    startActivity(intent)
+  }
     fun startReferralView() {
         try {
             WebEngageController.trackEvent(REFER_A_FRIEND_CLICK, CLICK, TO_BE_ADDED)
