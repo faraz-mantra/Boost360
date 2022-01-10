@@ -35,7 +35,7 @@ class WebViewFragment : BaseFragment() {
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    root = inflater.inflate(R.layout.web_view_fragment, container, false)
+    root = inflater.inflate(R.layout.activity_website_view, container, false)
     link = requireArguments().getString("link") ?: ""
     Log.i(TAG, "onCreateView: "+link)
     return root

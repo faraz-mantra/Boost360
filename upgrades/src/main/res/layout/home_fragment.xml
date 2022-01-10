@@ -1283,7 +1283,7 @@
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@id/video_chat_layout"
-          tools:listitem="@layout/videos_item" />
+          tools:listitem="@layout/video_item" />
 
 
       </androidx.constraintlayout.widget.ConstraintLayout>

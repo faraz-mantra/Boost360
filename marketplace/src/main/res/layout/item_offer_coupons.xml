@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="20dp"
+      android:background="@drawable/ic_subtract"
+      android:orientation="vertical">
+
+      <TextView
+        android:id="@+id/offer_coupn_code_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:text="25PAY"
+        android:textColor="@color/black"
+        android:textSize="30sp" />
+
+      <TextView
+        android:id="@+id/offer_cb_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="3dp"
+        android:text="Get flat INR 25/- cashback using Amazon Pay."
+        android:textColor="#747474"
+        android:textSize="12sp" />
+
+      <View
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/dashed_line"/>
+
+      <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp">
+
+        <TextView
+          android:id="@+id/offer_learn_more_tv"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Use code 25PAY &amp; get flat INR 25/- cashback on transactions above INR 99/-.LEARN MORE"
+          android:textColor="#888888"
+          android:textColorLink="#4A4A4A"
+          android:textSize="@dimen/txt_10sp"/>
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+
+  </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

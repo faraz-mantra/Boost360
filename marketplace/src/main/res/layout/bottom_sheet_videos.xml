@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <data>
+
+  </data>
+
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="5dp"
+      android:background="@color/black"
+      android:orientation="horizontal">
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/monitor_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/ic_monitor_play" />
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toEndOf="@+id/monitor_play"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Videos on"
+          android:textSize="@dimen/txt_11sp"
+          android:textColor="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="How add-ons work?"
+          android:textStyle="bold"
+          android:textSize="@dimen/txt_14sp"
+          android:textColor="@color/white" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:text="Playing 1 of 4"
+        android:textSize="@dimen/txt_12sp"
+        android:textColor="@color/white" />
+    </RelativeLayout>
+
+    <com.google.android.exoplayer2.ui.PlayerView
+      android:id="@+id/video_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_margin="10dp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Watch how a chatbot makes your site 2x interactive"
+      android:textColor="@color/black"
+      android:layout_margin="10dp"
+      android:textSize="@dimen/txt_16sp"
+      android:textStyle="bold"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="10dp"
+      android:orientation="horizontal">
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/video_website_img1"/>
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_gravity="center"
+        android:textSize="@dimen/txt_11sp"
+        android:text="Website Chatbot"/>
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_video_arrow_right"/>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="10dp"
+      android:weightSum="2"
+      android:background="#F0F0F0"
+      android:orientation="horizontal">
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/mp_talk_expert_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="14dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:text="Video contents"
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_12sp" />
+
+      <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@color/gray707070" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/mp_review_cart_tv"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="14dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:text="All videos"
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_12sp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/videos_pop_up_recycler_view"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="10dp"/>
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</layout>

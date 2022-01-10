@@ -314,7 +314,7 @@
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:spanCount="3"
                         tools:itemCount="9"
-                        tools:listitem="@layout/item_pack_list" />
+                        tools:listitem="@layout/item_packs_list" />
                     <!--</androidx.core.widget.NestedScrollView>-->
 
 

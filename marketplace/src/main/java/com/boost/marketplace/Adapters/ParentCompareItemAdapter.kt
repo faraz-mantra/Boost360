@@ -1,6 +1,7 @@
 package com.boost.marketplace.Adapters
 
 import android.app.Application
+import android.content.Context
 import android.graphics.Color
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
@@ -25,6 +26,7 @@ import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_feature_details.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -38,6 +40,7 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
     private val viewPool = RecyclerView.RecycledViewPool()
 //    private var list = ArrayList<Bundles>()
     private var featureList = ArrayList<FeaturesModel>()
+    lateinit var context: Context
 
 /*    init {
         this.list = itemList as ArrayList<Bundles>
@@ -53,6 +56,7 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
                 .inflate(
                         R.layout.item_compare_packs,
                         viewGroup, false)
+    context = view.context
         return ParentViewHolder(view)
     }
 
@@ -177,9 +181,12 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
 
 
 parentViewHolder.package_submit.setOnClickListener{
-  //  parentViewHolder.package_submit.background = ContextCompat.getDrawable(activity.application, R.drawable.button_added_to_cart)
+    parentViewHolder.package_submit.background = ContextCompat.getDrawable(
+        context,
+        R.drawable.button_added_to_cart
+    )
     parentViewHolder.package_submit.setTextColor(Color.parseColor("#bbbbbb"))
-    parentViewHolder.package_submit.setText("Added To Cart")
+    parentViewHolder.package_submit.setText(context.getString(R.string.added_to_cart))
     homeListener.onPackageClicked(parentItem,parentViewHolder.package_profile_image_compare_new)
 }
 
@@ -380,12 +387,12 @@ parentViewHolder.package_submit.setOnClickListener{
 
                                 if (singleItem.item_id.equals(bundles!!._kid)) {
                                     Log.v("isItemAddedInCar12", " item_id: "+ singleItem.item_id + " kid: "+ bundles!!._kid + " "+ bundles!!.name)
-//                                    holder.package_submit.background = ContextCompat.getDrawable(
-//                                            activity.application,
-//                                            R.drawable.added_to_cart_grey
-//                                    )
+                                    holder.package_submit.background = ContextCompat.getDrawable(
+                                            context,
+                                            R.drawable.button_added_to_cart
+                                    )
                                     holder.package_submit.setTextColor(Color.parseColor("#bbbbbb"))
-                                    holder.package_submit.setText("Added To Cart")
+                                    holder.package_submit.setText(context.getString(R.string.added_to_cart))
                                 }
 //                                }
                             }

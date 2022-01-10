@@ -1,15 +1,19 @@
 package com.boost.marketplace.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.marketplace.R
+import com.boost.marketplace.interfaces.HomeListener
+import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.boost.marketplace.ui.home.MarketPlaceActivity
 import com.bumptech.glide.Glide
 import java.text.NumberFormat
@@ -18,8 +22,8 @@ import kotlin.collections.ArrayList
 
 
 class UpgradeAdapter(
-  val activity: MarketPlaceActivity,
-  cryptoCurrencies: List<FeaturesModel>?
+  cryptoCurrencies: List<FeaturesModel>?,
+  val activity: MarketPlaceActivity
 ) : RecyclerView.Adapter<UpgradeAdapter.upgradeViewHolder>() {
 
   private var upgradeList = ArrayList<FeaturesModel>()
@@ -53,9 +57,9 @@ class UpgradeAdapter(
 //      details.arguments = args
 //      activity.addFragment(details, Constants.DETAILS_FRAGMENT)
 
-//            val intent = Intent(this.context, Details::class.java)
-//            intent.putExtra("position",position)
-//            startActivity(this.context, intent, null)
+            val intent = Intent(this.context, FeatureDetailsActivity::class.java)
+            intent.putExtra("itemId", upgradeList.get(position).feature_code)
+            startActivity(this.context, intent, null)
     }
   }
 
@@ -68,8 +72,8 @@ class UpgradeAdapter(
 
   class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private var upgradeDetails = itemView.findViewById<TextView>(R.id.details)!!
-    private var upgradePrice = itemView.findViewById<TextView>(R.id.upgrade_list_price)!!
+    private var upgradeDetails = itemView.findViewById<TextView>(R.id.title)!!
+    private var upgradePrice = itemView.findViewById<TextView>(R.id.price)!!
     private var image = itemView.findViewById<ImageView>(R.id.imageView2)!!
 
     private var context: Context = itemView.context
