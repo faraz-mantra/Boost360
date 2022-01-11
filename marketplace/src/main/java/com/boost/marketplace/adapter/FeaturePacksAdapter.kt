@@ -19,6 +19,7 @@ import com.boost.marketplace.interfaces.DetailsFragmentListener
 import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.bumptech.glide.Glide
+import com.framework.analytics.SentryController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -34,7 +35,7 @@ class FeaturePacksAdapter(
   val activity: FeatureDetailsActivity,
   val listener: DetailsFragmentListener
 ) : RecyclerView.Adapter<FeaturePacksAdapter.upgradeViewHolder>() {
-  
+
   private lateinit var context: Context
   var addonTitle: String = ""
 
@@ -53,16 +54,20 @@ class FeaturePacksAdapter(
 
   override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
     holder.title.setText(bundleList.get(position).name)
-    if(bundleList.get(position).overall_discount_percent>0) {
+    if (bundleList.get(position).overall_discount_percent > 0) {
       holder.discount.visibility = View.VISIBLE
-      holder.discount.setText(bundleList.get(position).overall_discount_percent.toString() +"% saving")
-    }else{
+      holder.discount.setText(bundleList.get(position).overall_discount_percent.toString() + "% saving")
+    } else {
       holder.discount.visibility = View.GONE
     }
-    getPackageInfoFromDB(holder,bundleList.get(position))
+    try {
+      getPackageInfoFromDB(holder, bundleList.get(position))
+    } catch (e: Exception) {
+      SentryController.captureException(e)
+    }
     holder.desc.setText(bundleList.get(position).desc)
     holder.viewPacks.setOnClickListener {
-      val item : Bundles = Bundles(
+      val item: Bundles = Bundles(
         bundleList.get(position).bundle_id,
         Gson().fromJson<List<IncludedFeature>>(
           bundleList.get(position).included_features!!,
@@ -71,7 +76,7 @@ class FeaturePacksAdapter(
         bundleList.get(position).min_purchase_months,
         bundleList.get(position).name,
         bundleList.get(position).overall_discount_percent,
-        PrimaryImage( bundleList.get(position).primary_image!!),
+        PrimaryImage(bundleList.get(position).primary_image!!),
         bundleList.get(position).target_business_usecase,
         Gson().fromJson<List<String>>(
           bundleList.get(position).exclusive_to_categories!!,
@@ -131,8 +136,8 @@ class FeaturePacksAdapter(
                 }
               }
             }
-            if(bundles.overall_discount_percent > 0){
-              offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100)
+            if (bundles.overall_discount_percent > 0) {
+              offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent / 100)
               holder.discount.visibility = View.VISIBLE
 //                                        holder.bundlePriceLabel.visibility = View.GONE
               holder.discount.setText(bundles.overall_discount_percent.toString() + "% SAVING")
@@ -142,9 +147,11 @@ class FeaturePacksAdapter(
 //                                        holder.bundlePriceLabel.visibility = View.VISIBLE
             }
 
-              holder.desc.setText("₹" +
-                      NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
-                      "/year for "+addonTitle+" + "+(includedFeatures.size-1) + "more features")
+            holder.desc.setText(
+              "₹" +
+                  NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) +
+                  "/year for " + addonTitle + " + " + (includedFeatures.size - 1) + "more features"
+            )
           },
           {
             it.printStackTrace()

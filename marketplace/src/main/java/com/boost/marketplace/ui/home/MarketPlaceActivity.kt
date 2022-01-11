@@ -433,7 +433,11 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 " " + widgetFeatureCode + " " + screenType
             )
 //            args.putString("packageIdentifier", widgetFeatureCode)
-            getPackageItem(widgetFeatureCode)
+            try {
+                getPackageItem(widgetFeatureCode)
+            } catch (e: Exception) {
+                SentryController.captureException(e)
+            }
 
 //            args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
             /*addFragmentHome(
@@ -445,7 +449,11 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 progressDialog.hide()
             }
 
-            getItemPromoBanner(widgetFeatureCode)
+            try {
+                getItemPromoBanner(widgetFeatureCode)
+            } catch (e: Exception) {
+                SentryController.captureException(e)
+            }
         } else if (screenType == "expertContact") {
             if (progressDialog.isShowing) {
                 progressDialog.hide()
@@ -716,13 +724,17 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             viewModel.setCurrentExperienceCode(code, fpTag!!)
         }
 
-        viewModel.loadUpdates(
-            getAccessToken() ?: "",
-            this.fpid!!,
-            this.clientid,
-            this.experienceCode,
-            this.fpTag
-        )
+        try {
+            viewModel.loadUpdates(
+                getAccessToken() ?: "",
+                this.fpid!!,
+                this.clientid,
+                this.experienceCode,
+                this.fpTag
+            )
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
     }
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -1599,10 +1611,14 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 viewModel.setCurrentExperienceCode(code, fpTag!!)
             }
 
-            viewModel.loadPackageUpdates(
-                fpid!!,
-                clientid
-            )
+            try {
+                viewModel.loadPackageUpdates(
+                    fpid!!,
+                    clientid
+                )
+            } catch (e: Exception) {
+                SentryController.captureException(e)
+            }
         }
     }
 
@@ -2206,7 +2222,11 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                         .subscribe({
                             if (it == 0) {
                                 makeFlyAnimation(imageView)
-                                callBundleCart(item,imageView)
+                                try {
+                                    callBundleCart(item,imageView)
+                                } catch (e: Exception) {
+                                    SentryController.captureException(e)
+                                }
                             }else{
 
                             }
@@ -2443,23 +2463,27 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
                         //clear cartOrderInfo from SharedPref to requestAPI again
                         prefs.storeCartOrderInfo(null)
-                        viewModel.addItemToCartPackage1(
-                            CartModel(
-                                item!!._kid,
-                                null,
-                                null,
-                                item!!.name,
-                                "",
-                                item!!.primary_image!!.url,
-                                offeredBundlePrice.toDouble(),
-                                originalBundlePrice.toDouble(),
-                                item!!.overall_discount_percent,
-                                1,
-                                if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
-                                "bundles",
-                                null
+                        try {
+                            viewModel.addItemToCartPackage1(
+                                CartModel(
+                                    item!!._kid,
+                                    null,
+                                    null,
+                                    item!!.name,
+                                    "",
+                                    item!!.primary_image!!.url,
+                                    offeredBundlePrice.toDouble(),
+                                    originalBundlePrice.toDouble(),
+                                    item!!.overall_discount_percent,
+                                    1,
+                                    if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
+                                    "bundles",
+                                    null
+                                )
                             )
-                        )
+                        } catch (e: Exception) {
+                            SentryController.captureException(e)
+                        }
                         val event_attributes: HashMap<String, Any> = HashMap()
                         item!!.name?.let { it1 ->
                             event_attributes.put(

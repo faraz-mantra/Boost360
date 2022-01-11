@@ -11,6 +11,7 @@ import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.browse.BrowseFeaturesActivity
 import com.boost.marketplace.ui.home.MarketPlaceActivity
+import com.framework.analytics.SentryController
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

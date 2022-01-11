@@ -12,6 +12,7 @@ import com.boost.marketplace.adapter.BrowseParentFeaturesAdapter
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityBrowseFeaturesBinding
 import com.boost.marketplace.ui.home.MarketPlaceHomeViewModel
+import com.framework.analytics.SentryController
 import kotlinx.android.synthetic.main.activity_browse_features.*
 import kotlinx.android.synthetic.main.activity_marketplace.*
 
@@ -35,7 +36,11 @@ class BrowseFeaturesActivity :
 
         adapter = BrowseParentFeaturesAdapter(arrayListOf(), this)
         viewModel.setApplicationLifecycle(application,this)
-        viewModel.loadAllFeaturesfromDB()
+        try {
+            viewModel.loadAllFeaturesfromDB()
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
         initMvvm()
         initializeAddonCategoryRecycler()
     }

@@ -692,39 +692,47 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
     }
 
     fun getCartItems() {
-        CompositeDisposable().add(
-            AppDatabase.getInstance(application)!!
-                .cartDao()
-                .getCartItems()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    cartResult.postValue(it)
-                    updatesLoader.postValue(false)
-                }, {
-                    updatesError.postValue(it.message)
-                    updatesLoader.postValue(false)
-                }
-                )
-        )
+        try {
+            CompositeDisposable().add(
+                AppDatabase.getInstance(application)!!
+                    .cartDao()
+                    .getCartItems()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        cartResult.postValue(it)
+                        updatesLoader.postValue(false)
+                    }, {
+                        updatesError.postValue(it.message)
+                        updatesLoader.postValue(false)
+                    }
+                    )
+            )
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
     }
 
     fun getCartItemsBack() {
-        CompositeDisposable().add(
-            AppDatabase.getInstance(application)!!
-                .cartDao()
-                .getCartItems()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    cartResultBack.postValue(it)
-                    updatesLoader.postValue(false)
-                }, {
-                    updatesError.postValue(it.message)
-                    updatesLoader.postValue(false)
-                }
-                )
-        )
+        try {
+            CompositeDisposable().add(
+                AppDatabase.getInstance(application)!!
+                    .cartDao()
+                    .getCartItems()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        cartResultBack.postValue(it)
+                        updatesLoader.postValue(false)
+                    }, {
+                        updatesError.postValue(it.message)
+                        updatesLoader.postValue(false)
+                    }
+                    )
+            )
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
     }
 
     fun addItemToCart1(updatesModel: FeaturesModel, minMonth: Int) {
@@ -785,61 +793,65 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
             updatesModel.extended_properties
         )
 
-        CompositeDisposable().add(
-            AppDatabase.getInstance(application)!!
-                .cartDao()
-                .checkCartFeatureTableKeyExist()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    if (it == 1) {
-                        Completable.fromAction {
-                            AppDatabase.getInstance(application)!!.cartDao().emptyCart()
-                        }
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doOnError {
-                                //in case of error
+        try {
+            CompositeDisposable().add(
+                AppDatabase.getInstance(application)!!
+                    .cartDao()
+                    .checkCartFeatureTableKeyExist()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        if (it == 1) {
+                            Completable.fromAction {
+                                AppDatabase.getInstance(application)!!.cartDao().emptyCart()
                             }
-                            .doOnComplete {
-                                Completable.fromAction {
-                                    AppDatabase.getInstance(application)!!.cartDao()
-                                        .insertToCart(cartItem)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .doOnError {
+                                    //in case of error
                                 }
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .doOnComplete {
-                                        getCartItems()
-                                        updatesLoader.postValue(false)
+                                .doOnComplete {
+                                    Completable.fromAction {
+                                        AppDatabase.getInstance(application)!!.cartDao()
+                                            .insertToCart(cartItem)
                                     }
-                                    .doOnError {
-                                        updatesError.postValue(it.message)
-                                        updatesLoader.postValue(false)
-                                    }
-                                    .subscribe()
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .doOnComplete {
+                                            getCartItems()
+                                            updatesLoader.postValue(false)
+                                        }
+                                        .doOnError {
+                                            updatesError.postValue(it.message)
+                                            updatesLoader.postValue(false)
+                                        }
+                                        .subscribe()
+                                }
+                                .subscribe()
+                        } else {
+                            Completable.fromAction {
+                                AppDatabase.getInstance(application)!!.cartDao()
+                                    .insertToCart(cartItem)
                             }
-                            .subscribe()
-                    } else {
-                        Completable.fromAction {
-                            AppDatabase.getInstance(application)!!.cartDao()
-                                .insertToCart(cartItem)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .doOnComplete {
+                                    getCartItems()
+                                    updatesLoader.postValue(false)
+                                }
+                                .doOnError {
+                                    updatesError.postValue(it.message)
+                                    updatesLoader.postValue(false)
+                                }
+                                .subscribe()
                         }
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doOnComplete {
-                                getCartItems()
-                                updatesLoader.postValue(false)
-                            }
-                            .doOnError {
-                                updatesError.postValue(it.message)
-                                updatesLoader.postValue(false)
-                            }
-                            .subscribe()
-                    }
-                }, {
-//                            Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
-                })
-        )
+                    }, {
+    //                            Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
+                    })
+            )
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
 
 
     }
