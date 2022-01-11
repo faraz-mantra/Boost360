@@ -1,0 +1,9 @@
+{
+  "ndkVersionFromDsl": "22.1.7171670",
+  "sdkFolder": "/Users/apple/Library/Android/sdk",
+  "sideBySideNdkFolderNames": [
+    "21.4.7075529",
+    "22.1.7171670",
+    "23.1.7779620"
+  ]
+}

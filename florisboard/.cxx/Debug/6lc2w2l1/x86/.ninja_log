@@ -1,0 +1,22 @@
+# ninja log v5
+0	8	0	clean	5c2ee144a0187135
+3	1171	1640790576	utils/CMakeFiles/utils.dir/log.cpp.o	c8a1187f34bb1d85
+2	1240	1640790576	utils/CMakeFiles/utils.dir/jni_utils.cpp.o	5d07fb7c957e41c
+1240	1323	1640790576	utils/libutils.a	3af29174bd32adeb
+0	1372	1640790577	CMakeFiles/florisboard-native.dir/dev_patrickgold_florisboard_ime_nlp_SuggestionList.cpp.o	a2ee029e18f48aa1
+1172	2330	1640790577	ime/nlp/CMakeFiles/ime-nlp.dir/token.cpp.o	1921db0d73358b42
+2	2464	1640790578	nuspell/CMakeFiles/nuspell.dir/utils.cxx.o	7a97f817392480cc
+0	2492	1640790578	CMakeFiles/florisboard-native.dir/dev_patrickgold_florisboard_FlorisApplication.cpp.o	d0df2c68ab9c0ef2
+0	2694	1640790578	CMakeFiles/florisboard-native.dir/dev_patrickgold_florisboard_ime_spelling_SpellingDict.cpp.o	59635438016757e3
+1323	2710	1640790578	ime/nlp/CMakeFiles/ime-nlp.dir/suggestion_list.cpp.o	77834b645003b062
+2710	2771	1640790578	ime/nlp/libime-nlp.a	a8b9ccf91bc94b61
+1	3476	1640790579	nuspell/CMakeFiles/nuspell.dir/dictionary.cxx.o	c32de39f713f184e
+1	3758	1640790579	nuspell/CMakeFiles/nuspell.dir/suggester.cxx.o	2da1250f9c7a236c
+1	3803	1640790579	nuspell/CMakeFiles/nuspell.dir/checker.cxx.o	f79cc90d24cd59fd
+1372	3836	1640790579	ime/spelling/CMakeFiles/ime-spelling.dir/spellingdict.cpp.o	14a53fea0d0f5d88
+3836	3888	1640790579	ime/spelling/libime-spelling.a	70a15882eaa7735e
+1	5565	1640790581	nuspell/CMakeFiles/nuspell.dir/aff_data.cxx.o	db35edf3bdda38c
+5565	5625	1640790581	nuspell/libnuspell.a	cc8cd12f8ce1a714
+5625	5838	1640790581	/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/build/intermediates/cxx/Debug/6lc2w2l1/obj/x86/libflorisboard-native.so	67bc2a4763a899af
+0	11	0	clean	5c2ee144a0187135
+0	9	0	clean	5c2ee144a0187135

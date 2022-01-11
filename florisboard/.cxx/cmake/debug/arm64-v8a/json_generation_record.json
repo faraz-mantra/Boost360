@@ -1,0 +1,569 @@
+[
+  {
+    "level": "INFO",
+    "message": "Start JSON generation. Platform version: 23 min SDK version: arm64-v8a",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "rebuilding JSON /Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/android_gradle_build.json due to:",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "- expected json /Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/android_gradle_build.json file is not present, will remove stale json folder",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "- missing previous command file /Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/build_command.txt, will remove stale json folder",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "- command changed from previous, will remove stale json folder",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "created folder \u0027/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a\u0027",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "executing cmake Executable : /Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake\narguments : \n-H/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp\n-DCMAKE_CXX_FLAGS\u003d-fvisibility\u003dhidden -std\u003dc++17 -fexceptions -ffunction-sections -fdata-sections -DU_DISABLE_RENAMING\u003d1 -DU_STATIC_IMPLEMENTATION\u003d1\n-DCMAKE_C_FLAGS\u003d-fvisibility\u003dhidden -DU_STATIC_IMPLEMENTATION\u003d1\n-DCMAKE_FIND_ROOT_PATH\u003d/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/prefab/arm64-v8a/prefab\n-DCMAKE_BUILD_TYPE\u003dDebug\n-DCMAKE_TOOLCHAIN_FILE\u003d/Users/apple/Library/Android/sdk/ndk/22.1.7171670/build/cmake/android.toolchain.cmake\n-DANDROID_ABI\u003darm64-v8a\n-DANDROID_NDK\u003d/Users/apple/Library/Android/sdk/ndk/22.1.7171670\n-DANDROID_PLATFORM\u003dandroid-23\n-DCMAKE_ANDROID_ARCH_ABI\u003darm64-v8a\n-DCMAKE_ANDROID_NDK\u003d/Users/apple/Library/Android/sdk/ndk/22.1.7171670\n-DCMAKE_EXPORT_COMPILE_COMMANDS\u003dON\n-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003d/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/build/intermediates/cmake/debug/obj/arm64-v8a\n-DCMAKE_RUNTIME_OUTPUT_DIRECTORY\u003d/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/build/intermediates/cmake/debug/obj/arm64-v8a\n-DCMAKE_MAKE_PROGRAM\u003d/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja\n-DCMAKE_SYSTEM_NAME\u003dAndroid\n-DCMAKE_SYSTEM_VERSION\u003d23\n-DANDROID_STL\u003dc++_static\n-B/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a\n-GNinja\njvmArgs : \n\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "[\u003d\u003d \"CMake Server\" \u003d\u003d[\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"supportedProtocolVersions\":[{\"isExperimental\":true,\"major\":1,\"minor\":1}],\"type\":\"hello\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "]\u003d\u003d \"CMake Server\" \u003d\u003d]\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\n  \"type\": \"handshake\",\n  \"cookie\": \"gradle-cmake-cookie\",\n  \"protocolVersion\": {\n    \"isExperimental\": true,\n    \"major\": 1,\n    \"minor\": 1\n  },\n  \"sourceDirectory\": \"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp\",\n  \"buildDirectory\": \"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a\",\n  \"generator\": \"Ninja\"\n}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"gradle-cmake-cookie\",\"inReplyTo\":\"handshake\",\"type\":\"reply\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\n  \"type\": \"configure\",\n  \"cacheArguments\": [\n    \"\",\n    \"-DCMAKE_CXX_FLAGS\\u003d-fvisibility\\u003dhidden -std\\u003dc++17 -fexceptions -ffunction-sections -fdata-sections -DU_DISABLE_RENAMING\\u003d1 -DU_STATIC_IMPLEMENTATION\\u003d1\",\n    \"-DCMAKE_C_FLAGS\\u003d-fvisibility\\u003dhidden -DU_STATIC_IMPLEMENTATION\\u003d1\",\n    \"-DCMAKE_FIND_ROOT_PATH\\u003d/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/prefab/arm64-v8a/prefab\",\n    \"-DCMAKE_BUILD_TYPE\\u003dDebug\",\n    \"-DCMAKE_TOOLCHAIN_FILE\\u003d/Users/apple/Library/Android/sdk/ndk/22.1.7171670/build/cmake/android.toolchain.cmake\",\n    \"-DANDROID_ABI\\u003darm64-v8a\",\n    \"-DANDROID_NDK\\u003d/Users/apple/Library/Android/sdk/ndk/22.1.7171670\",\n    \"-DANDROID_PLATFORM\\u003dandroid-23\",\n    \"-DCMAKE_ANDROID_ARCH_ABI\\u003darm64-v8a\",\n    \"-DCMAKE_ANDROID_NDK\\u003d/Users/apple/Library/Android/sdk/ndk/22.1.7171670\",\n    \"-DCMAKE_EXPORT_COMPILE_COMMANDS\\u003dON\",\n    \"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\\u003d/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/build/intermediates/cmake/debug/obj/arm64-v8a\",\n    \"-DCMAKE_RUNTIME_OUTPUT_DIRECTORY\\u003d/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/build/intermediates/cmake/debug/obj/arm64-v8a\",\n    \"-DCMAKE_MAKE_PROGRAM\\u003d/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja\",\n    \"-DCMAKE_SYSTEM_NAME\\u003dAndroid\",\n    \"-DCMAKE_SYSTEM_VERSION\\u003d23\",\n    \"-DANDROID_STL\\u003dc++_static\"\n  ]\n}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"message\":\"CMake Warning at /Users/apple/Library/Android/sdk/ndk/22.1.7171670/build/cmake/android.toolchain.cmake:449 (message):\\n  An old version of CMake is being used that cannot automatically detect\\n  compiler attributes.  Compiler identification is being bypassed.  Some\\n  values may be wrong or missing.  Update to CMake 3.19 or newer to use\\n  CMake\u0027s built-in compiler identification.\\nCall Stack (most recent call first):\\n  /Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeDetermineSystem.cmake:94 (include)\\n  CMakeLists.txt:6 (project)\\n\\n\",\"title\":\"Warning\",\"type\":\"message\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "WARN",
+    "message": "CMake Warning at /Users/apple/Library/Android/sdk/ndk/22.1.7171670/build/cmake/android.toolchain.cmake:449 (message):\n  An old version of CMake is being used that cannot automatically detect\n  compiler attributes.  Compiler identification is being bypassed.  Some\n  values may be wrong or missing.  Update to CMake 3.19 or newer to use\n  CMake\u0027s built-in compiler identification.\nCall Stack (most recent call first):\n  /Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeDetermineSystem.cmake:94 (include)\n  CMakeLists.txt:6 (project)\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"message\":\"Check for working C compiler: /Users/apple/Library/Android/sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang\",\"type\":\"message\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "Check for working C compiler: /Users/apple/Library/Android/sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"message\":\"CMake Warning at /Users/apple/Library/Android/sdk/ndk/22.1.7171670/build/cmake/android.toolchain.cmake:449 (message):\\n  An old version of CMake is being used that cannot automatically detect\\n  compiler attributes.  Compiler identification is being bypassed.  Some\\n  values may be wrong or missing.  Update to CMake 3.19 or newer to use\\n  CMake\u0027s built-in compiler identification.\\nCall Stack (most recent call first):\\n  /Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/CMakeFiles/3.10.2/CMakeSystem.cmake:6 (include)\\n  /Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/CMakeFiles/CMakeTmp/CMakeLists.txt:2 (project)\\n\\n\",\"title\":\"Warning\",\"type\":\"message\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "WARN",
+    "message": "CMake Warning at /Users/apple/Library/Android/sdk/ndk/22.1.7171670/build/cmake/android.toolchain.cmake:449 (message):\n  An old version of CMake is being used that cannot automatically detect\n  compiler attributes.  Compiler identification is being bypassed.  Some\n  values may be wrong or missing.  Update to CMake 3.19 or newer to use\n  CMake\u0027s built-in compiler identification.\nCall Stack (most recent call first):\n  /Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/CMakeFiles/3.10.2/CMakeSystem.cmake:6 (include)\n  /Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/CMakeFiles/CMakeTmp/CMakeLists.txt:2 (project)\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":33,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"message\":\"Check for working C compiler: /Users/apple/Library/Android/sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang -- works\",\"type\":\"message\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "Check for working C compiler: /Users/apple/Library/Android/sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang -- works",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"message\":\"Detecting C compiler ABI info\",\"type\":\"message\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "Detecting C compiler ABI info",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":65,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"message\":\"Detecting C compiler ABI info - done\",\"type\":\"message\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "Detecting C compiler ABI info - done",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"message\":\"Detecting C compile features\",\"type\":\"message\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "Detecting C compile features",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":96,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":126,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":155,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"message\":\"Detecting C compile features - done\",\"type\":\"message\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "Detecting C compile features - done",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"message\":\"Check for working CXX compiler: /Users/apple/Library/Android/sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++\",\"type\":\"message\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "Check for working CXX compiler: /Users/apple/Library/Android/sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":184,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"message\":\"Check for working CXX compiler: /Users/apple/Library/Android/sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ -- works\",\"type\":\"message\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "Check for working CXX compiler: /Users/apple/Library/Android/sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ -- works",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"message\":\"Detecting CXX compiler ABI info\",\"type\":\"message\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "Detecting CXX compiler ABI info",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":211,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"message\":\"Detecting CXX compiler ABI info - done\",\"type\":\"message\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "Detecting CXX compiler ABI info - done",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"message\":\"Detecting CXX compile features\",\"type\":\"message\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "Detecting CXX compile features",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":237,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":262,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":287,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":311,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"message\":\"Detecting CXX compile features - done\",\"type\":\"message\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "Detecting CXX compile features - done",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":334,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":356,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":377,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":398,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":919,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":940,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":960,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":979,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"progressCurrent\":1000,\"progressMaximum\":1000,\"progressMessage\":\"Configuring\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"message\":\"Configuring done\",\"type\":\"message\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "Configuring done",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"configure\",\"type\":\"reply\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"type\":\"compute\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"compute\",\"progressCurrent\":200,\"progressMaximum\":1000,\"progressMessage\":\"Generating\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"compute\",\"progressCurrent\":400,\"progressMaximum\":1000,\"progressMessage\":\"Generating\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"compute\",\"progressCurrent\":600,\"progressMaximum\":1000,\"progressMessage\":\"Generating\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"compute\",\"progressCurrent\":800,\"progressMaximum\":1000,\"progressMessage\":\"Generating\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"compute\",\"progressCurrent\":1000,\"progressMaximum\":1000,\"progressMessage\":\"Generating\",\"progressMinimum\":0,\"type\":\"progress\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"compute\",\"message\":\"Generating done\",\"type\":\"message\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "Generating done",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"inReplyTo\":\"compute\",\"type\":\"reply\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"type\":\"cmakeInputs\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"buildFiles\":[{\"isCMake\":true,\"isTemporary\":false,\"sources\":[\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeDetermineSystem.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Platform/Android-Determine.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeSystem.cmake.in\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Platform/Android-Initialize.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeDetermineCCompiler.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeDetermineCompiler.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Platform/Android-Determine-C.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Platform/Android/Determine-Compiler.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeFindBinUtils.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/Clang-FindBinUtils.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeCCompiler.cmake.in\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeDetermineCXXCompiler.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeDetermineCompiler.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Platform/Android-Determine-CXX.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Platform/Android/Determine-Compiler.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeFindBinUtils.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/Clang-FindBinUtils.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeCXXCompiler.cmake.in\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeGenericSystem.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Platform/Android.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Platform/Linux.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Platform/UnixPaths.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeCInformation.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/Clang-C.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/Clang.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/GNU.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Platform/Android-Clang-C.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Platform/Android-Clang.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeTestCCompiler.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeTestCompilerCommon.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeDetermineCompilerABI.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeParseImplicitLinkInfo.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeCCompilerABI.c\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeDetermineCompileFeatures.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Internal/FeatureTesting.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/Clang-C-FeatureTests.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/Clang-C-FeatureTests.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/Clang-C-FeatureTests.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeCCompiler.cmake.in\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeCXXInformation.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/Clang-CXX.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/Clang.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Platform/Android-Clang-CXX.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Platform/Android-Clang.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeTestCXXCompiler.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeTestCompilerCommon.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeDetermineCompilerABI.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeParseImplicitLinkInfo.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeDetermineCompileFeatures.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Internal/FeatureTesting.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/Clang-CXX-FeatureTests.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/Clang-CXX-TestableFeatures.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/Clang-CXX-FeatureTests.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/Clang-CXX-TestableFeatures.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/Clang-CXX-FeatureTests.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/Clang-CXX-TestableFeatures.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/Clang-CXX-FeatureTests.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/Compiler/Clang-CXX-TestableFeatures.cmake\",\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeCXXCompiler.cmake.in\"]},{\"isCMake\":false,\"isTemporary\":false,\"sources\":[\"CMakeLists.txt\",\"/Users/apple/Library/Android/sdk/ndk/22.1.7171670/build/cmake/android.toolchain.cmake\",\"/Users/apple/Library/Android/sdk/ndk/22.1.7171670/build/cmake/platforms.cmake\",\"/Users/apple/Library/Android/sdk/ndk/22.1.7171670/build/cmake/compiler_id.cmake\",\"/Users/apple/Library/Android/sdk/ndk/22.1.7171670/build/cmake/android.toolchain.cmake\",\"nuspell/CMakeLists.txt\",\"utils/CMakeLists.txt\",\"ime/nlp/CMakeLists.txt\",\"ime/spelling/CMakeLists.txt\"]},{\"isCMake\":false,\"isTemporary\":true,\"sources\":[\"../../../.cxx/cmake/debug/arm64-v8a/CMakeFiles/3.10.2/CMakeSystem.cmake\",\"../../../.cxx/cmake/debug/arm64-v8a/CMakeFiles/3.10.2/CMakeCCompiler.cmake\",\"../../../.cxx/cmake/debug/arm64-v8a/CMakeFiles/3.10.2/CMakeCXXCompiler.cmake\",\"../../../.cxx/cmake/debug/arm64-v8a/CMakeFiles/feature_tests.c\",\"../../../.cxx/cmake/debug/arm64-v8a/CMakeFiles/feature_tests.c\",\"../../../.cxx/cmake/debug/arm64-v8a/CMakeFiles/feature_tests.c\",\"../../../.cxx/cmake/debug/arm64-v8a/CMakeFiles/3.10.2/CMakeCCompiler.cmake\",\"../../../.cxx/cmake/debug/arm64-v8a/CMakeFiles/feature_tests.cxx\",\"../../../.cxx/cmake/debug/arm64-v8a/CMakeFiles/feature_tests.cxx\",\"../../../.cxx/cmake/debug/arm64-v8a/CMakeFiles/feature_tests.cxx\",\"../../../.cxx/cmake/debug/arm64-v8a/CMakeFiles/feature_tests.cxx\",\"../../../.cxx/cmake/debug/arm64-v8a/CMakeFiles/3.10.2/CMakeCXXCompiler.cmake\"]}],\"cmakeRootDirectory\":\"/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10\",\"cookie\":\"\",\"inReplyTo\":\"cmakeInputs\",\"sourceDirectory\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp\",\"type\":\"reply\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"type\":\"codemodel\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"configurations\":[{\"name\":\"Debug\",\"projects\":[{\"buildDirectory\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a\",\"name\":\"florisboard\",\"sourceDirectory\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp\",\"targets\":[{\"artifacts\":[\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/build/intermediates/cmake/debug/obj/arm64-v8a/libflorisboard-native.so\"],\"buildDirectory\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a\",\"fileGroups\":[{\"compileFlags\":\"-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE\u003d2 -Wformat -Werror\u003dformat-security  -fvisibility\u003dhidden -std\u003dc++17 -fexceptions -ffunction-sections -fdata-sections -DU_DISABLE_RENAMING\u003d1 -DU_STATIC_IMPLEMENTATION\u003d1 -O0 -fno-limit-debug-info  -fPIC   -ffunction-sections -fdata-sections -fexceptions -std\u003dgnu++1z\",\"defines\":[\"florisboard_native_EXPORTS\"],\"includePath\":[{\"path\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/.\"},{\"path\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/../icu4c/prebuilt/include\"}],\"isGenerated\":false,\"language\":\"CXX\",\"sources\":[\"dev_patrickgold_florisboard_FlorisApplication.cpp\",\"dev_patrickgold_florisboard_ime_nlp_SuggestionList.cpp\",\"dev_patrickgold_florisboard_ime_spelling_SpellingDict.cpp\"]}],\"fullName\":\"libflorisboard-native.so\",\"linkFlags\":\"-Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libgcc_real.a -Wl,--exclude-libs,libatomic.a -static-libstdc++ -Wl,--build-id\u003dsha1 -Wl,--no-rosegment -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments\",\"linkLibraries\":\"-landroid -llog /Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/../icu4c/prebuilt/jniLibs/arm64-v8a/libicuuc.a /Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/../icu4c/prebuilt/jniLibs/arm64-v8a/libicudata.a nuspell/libnuspell.a utils/libutils.a ime/nlp/libime-nlp.a ime/spelling/libime-spelling.a -latomic -lm\",\"linkerLanguage\":\"CXX\",\"name\":\"florisboard-native\",\"sourceDirectory\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp\",\"sysroot\":\"/Users/apple/Library/Android/sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/darwin-x86_64/sysroot\",\"type\":\"SHARED_LIBRARY\"},{\"artifacts\":[\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/nuspell/libnuspell.a\"],\"buildDirectory\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/nuspell\",\"fileGroups\":[{\"isGenerated\":false,\"sources\":[\"aff_data.hxx\",\"checker.hxx\",\"suggester.hxx\",\"dictionary.hxx\",\"unicode.hxx\",\"utils.hxx\",\"structures.hxx\"]},{\"compileFlags\":\"-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE\u003d2 -Wformat -Werror\u003dformat-security  -fvisibility\u003dhidden -std\u003dc++17 -fexceptions -ffunction-sections -fdata-sections -DU_DISABLE_RENAMING\u003d1 -DU_STATIC_IMPLEMENTATION\u003d1 -O0 -fno-limit-debug-info  -fPIC   -std\u003dgnu++1z\",\"includePath\":[{\"path\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/.\"},{\"path\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/../icu4c/prebuilt/include\"}],\"isGenerated\":false,\"language\":\"CXX\",\"sources\":[\"aff_data.cxx\",\"checker.cxx\",\"suggester.cxx\",\"dictionary.cxx\",\"utils.cxx\"]}],\"fullName\":\"libnuspell.a\",\"linkerLanguage\":\"CXX\",\"name\":\"nuspell\",\"sourceDirectory\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/nuspell\",\"sysroot\":\"/Users/apple/Library/Android/sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/darwin-x86_64/sysroot\",\"type\":\"STATIC_LIBRARY\"},{\"artifacts\":[\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/utils/libutils.a\"],\"buildDirectory\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/utils\",\"fileGroups\":[{\"compileFlags\":\"-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE\u003d2 -Wformat -Werror\u003dformat-security  -fvisibility\u003dhidden -std\u003dc++17 -fexceptions -ffunction-sections -fdata-sections -DU_DISABLE_RENAMING\u003d1 -DU_STATIC_IMPLEMENTATION\u003d1 -O0 -fno-limit-debug-info  -fPIC   -std\u003dgnu++1z\",\"includePath\":[{\"path\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/.\"},{\"path\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/../icu4c/prebuilt/include\"}],\"isGenerated\":false,\"language\":\"CXX\",\"sources\":[\"jni_utils.cpp\",\"log.cpp\"]},{\"isGenerated\":false,\"sources\":[\"jni_utils.h\",\"log.h\"]}],\"fullName\":\"libutils.a\",\"linkerLanguage\":\"CXX\",\"name\":\"utils\",\"sourceDirectory\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/utils\",\"sysroot\":\"/Users/apple/Library/Android/sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/darwin-x86_64/sysroot\",\"type\":\"STATIC_LIBRARY\"},{\"artifacts\":[\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/ime/nlp/libime-nlp.a\"],\"buildDirectory\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/ime/nlp\",\"fileGroups\":[{\"compileFlags\":\"-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE\u003d2 -Wformat -Werror\u003dformat-security  -fvisibility\u003dhidden -std\u003dc++17 -fexceptions -ffunction-sections -fdata-sections -DU_DISABLE_RENAMING\u003d1 -DU_STATIC_IMPLEMENTATION\u003d1 -O0 -fno-limit-debug-info  -fPIC   -std\u003dgnu++1z\",\"includePath\":[{\"path\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/.\"},{\"path\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/../icu4c/prebuilt/include\"}],\"isGenerated\":false,\"language\":\"CXX\",\"sources\":[\"token.cpp\",\"suggestion_list.cpp\"]},{\"isGenerated\":false,\"sources\":[\"nlp.h\",\"token.h\",\"suggestion_list.h\"]}],\"fullName\":\"libime-nlp.a\",\"linkerLanguage\":\"CXX\",\"name\":\"ime-nlp\",\"sourceDirectory\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/ime/nlp\",\"sysroot\":\"/Users/apple/Library/Android/sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/darwin-x86_64/sysroot\",\"type\":\"STATIC_LIBRARY\"},{\"artifacts\":[\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/ime/spelling/libime-spelling.a\"],\"buildDirectory\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/ime/spelling\",\"fileGroups\":[{\"compileFlags\":\"-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE\u003d2 -Wformat -Werror\u003dformat-security  -fvisibility\u003dhidden -std\u003dc++17 -fexceptions -ffunction-sections -fdata-sections -DU_DISABLE_RENAMING\u003d1 -DU_STATIC_IMPLEMENTATION\u003d1 -O0 -fno-limit-debug-info  -fPIC   -std\u003dgnu++1z\",\"includePath\":[{\"path\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/.\"},{\"path\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/../icu4c/prebuilt/include\"}],\"isGenerated\":false,\"language\":\"CXX\",\"sources\":[\"spellingdict.cpp\"]},{\"isGenerated\":false,\"sources\":[\"spellingdict.h\"]}],\"fullName\":\"libime-spelling.a\",\"linkerLanguage\":\"CXX\",\"name\":\"ime-spelling\",\"sourceDirectory\":\"/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/ime/spelling\",\"sysroot\":\"/Users/apple/Library/Android/sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/darwin-x86_64/sysroot\",\"type\":\"STATIC_LIBRARY\"}]}]}],\"cookie\":\"\",\"inReplyTo\":\"codemodel\",\"type\":\"reply\"}\n",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "done executing cmake",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "write command file /Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/build_command.txt",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  },
+  {
+    "level": "INFO",
+    "message": "JSON generation completed without problems",
+    "file": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt",
+    "tag": "debug|arm64-v8a",
+    "diagnosticCode": "UNKNOWN"
+  }
+]

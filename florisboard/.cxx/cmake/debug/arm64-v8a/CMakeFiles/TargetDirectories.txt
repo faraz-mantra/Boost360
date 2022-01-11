@@ -1,0 +1,15 @@
+/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/CMakeFiles/rebuild_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/CMakeFiles/florisboard-native.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/nuspell/CMakeFiles/rebuild_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/nuspell/CMakeFiles/edit_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/nuspell/CMakeFiles/nuspell.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/utils/CMakeFiles/rebuild_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/utils/CMakeFiles/edit_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/utils/CMakeFiles/utils.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/ime/nlp/CMakeFiles/rebuild_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/ime/nlp/CMakeFiles/edit_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/ime/nlp/CMakeFiles/ime-nlp.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/ime/spelling/CMakeFiles/rebuild_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/ime/spelling/CMakeFiles/edit_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a/ime/spelling/CMakeFiles/ime-spelling.dir

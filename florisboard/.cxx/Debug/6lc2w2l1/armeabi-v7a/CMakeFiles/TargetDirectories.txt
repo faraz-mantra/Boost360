@@ -1,0 +1,15 @@
+/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/6lc2w2l1/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/6lc2w2l1/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/6lc2w2l1/armeabi-v7a/CMakeFiles/florisboard-native.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/6lc2w2l1/armeabi-v7a/nuspell/CMakeFiles/rebuild_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/6lc2w2l1/armeabi-v7a/nuspell/CMakeFiles/edit_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/6lc2w2l1/armeabi-v7a/nuspell/CMakeFiles/nuspell.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/6lc2w2l1/armeabi-v7a/utils/CMakeFiles/rebuild_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/6lc2w2l1/armeabi-v7a/utils/CMakeFiles/edit_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/6lc2w2l1/armeabi-v7a/utils/CMakeFiles/utils.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/6lc2w2l1/armeabi-v7a/ime/nlp/CMakeFiles/rebuild_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/6lc2w2l1/armeabi-v7a/ime/nlp/CMakeFiles/edit_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/6lc2w2l1/armeabi-v7a/ime/nlp/CMakeFiles/ime-nlp.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/6lc2w2l1/armeabi-v7a/ime/spelling/CMakeFiles/rebuild_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/6lc2w2l1/armeabi-v7a/ime/spelling/CMakeFiles/edit_cache.dir
+/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/6lc2w2l1/armeabi-v7a/ime/spelling/CMakeFiles/ime-spelling.dir

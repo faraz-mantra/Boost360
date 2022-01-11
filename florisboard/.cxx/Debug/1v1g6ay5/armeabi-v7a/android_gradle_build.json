@@ -1,0 +1,93 @@
+{
+  "stringTable": {},
+  "buildFiles": [
+    "/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/src/main/cpp/CMakeLists.txt",
+    "/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/src/main/cpp/utils/CMakeLists.txt",
+    "/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/src/main/cpp/nuspell/CMakeLists.txt",
+    "/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/src/main/cpp/ime/nlp/CMakeLists.txt",
+    "/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/src/main/cpp/ime/spelling/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja",
+      "-C",
+      "/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/1v1g6ay5/armeabi-v7a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja",
+    "-C",
+    "/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/1v1g6ay5/armeabi-v7a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "ime-nlp-Debug-armeabi-v7a": {
+      "buildCommandComponents": [
+        "/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja",
+        "-C",
+        "/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/1v1g6ay5/armeabi-v7a",
+        "ime-nlp"
+      ],
+      "buildType": "debug",
+      "abi": "armeabi-v7a",
+      "artifactName": "ime-nlp",
+      "output": "/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/1v1g6ay5/armeabi-v7a/ime/nlp/libime-nlp.a"
+    },
+    "ime-spelling-Debug-armeabi-v7a": {
+      "buildCommandComponents": [
+        "/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja",
+        "-C",
+        "/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/1v1g6ay5/armeabi-v7a",
+        "ime-spelling"
+      ],
+      "buildType": "debug",
+      "abi": "armeabi-v7a",
+      "artifactName": "ime-spelling",
+      "output": "/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/1v1g6ay5/armeabi-v7a/ime/spelling/libime-spelling.a"
+    },
+    "florisboard-native-Debug-armeabi-v7a": {
+      "buildCommandComponents": [
+        "/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja",
+        "-C",
+        "/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/1v1g6ay5/armeabi-v7a",
+        "florisboard-native"
+      ],
+      "buildType": "debug",
+      "abi": "armeabi-v7a",
+      "artifactName": "florisboard-native",
+      "output": "/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/build/intermediates/cxx/Debug/1v1g6ay5/obj/armeabi-v7a/libflorisboard-native.so",
+      "runtimeFiles": []
+    },
+    "utils-Debug-armeabi-v7a": {
+      "buildCommandComponents": [
+        "/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja",
+        "-C",
+        "/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/1v1g6ay5/armeabi-v7a",
+        "utils"
+      ],
+      "buildType": "debug",
+      "abi": "armeabi-v7a",
+      "artifactName": "utils",
+      "output": "/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/1v1g6ay5/armeabi-v7a/utils/libutils.a"
+    },
+    "nuspell-Debug-armeabi-v7a": {
+      "buildCommandComponents": [
+        "/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja",
+        "-C",
+        "/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/1v1g6ay5/armeabi-v7a",
+        "nuspell"
+      ],
+      "buildType": "debug",
+      "abi": "armeabi-v7a",
+      "artifactName": "nuspell",
+      "output": "/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/1v1g6ay5/armeabi-v7a/nuspell/libnuspell.a"
+    }
+  },
+  "toolchains": {},
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp",
+    "cxx"
+  ]
+}

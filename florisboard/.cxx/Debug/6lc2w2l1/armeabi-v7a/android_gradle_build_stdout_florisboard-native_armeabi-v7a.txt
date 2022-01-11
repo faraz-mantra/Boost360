@@ -1,0 +1,2 @@
+ninja: Entering directory `/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/6lc2w2l1/armeabi-v7a'
+ninja: no work to do.
