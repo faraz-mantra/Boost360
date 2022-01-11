@@ -8,7 +8,7 @@
   },
   "originalCxxBuildFolder": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a",
   "cxxBuildFolder": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a",
-  "abiPlatformVersion": 23,
+  "abiPlatformVersion": 21,
   "cmake": {
     "cmakeWrappingBaseFolder": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cxx/debug/arm64-v8a",
     "cmakeArtifactsBaseFolder": "/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/.cxx/cmake/debug/arm64-v8a",
@@ -53,7 +53,7 @@
         },
         {
           "name": "ANDROID_PLATFORM",
-          "value": "android-23"
+          "value": "android-21"
         },
         {
           "name": "CMAKE_ANDROID_ARCH_ABI",
@@ -85,7 +85,7 @@
         },
         {
           "name": "CMAKE_SYSTEM_VERSION",
-          "value": "23"
+          "value": "21"
         },
         {
           "name": "ANDROID_STL",

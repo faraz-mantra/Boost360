@@ -21,7 +21,7 @@ ANDROID_ABI:UNINITIALIZED=arm64-v8a
 ANDROID_NDK:UNINITIALIZED=/Users/apple/Library/Android/sdk/ndk/22.1.7171670
 
 //No help, variable specified on the command line.
-ANDROID_PLATFORM:UNINITIALIZED=android-23
+ANDROID_PLATFORM:UNINITIALIZED=android-21
 
 //No help, variable specified on the command line.
 ANDROID_STL:UNINITIALIZED=c++_static
@@ -208,7 +208,7 @@ CMAKE_STRIP:FILEPATH=/Users/apple/Library/Android/sdk/ndk/22.1.7171670/toolchain
 CMAKE_SYSTEM_NAME:UNINITIALIZED=Android
 
 //No help, variable specified on the command line.
-CMAKE_SYSTEM_VERSION:UNINITIALIZED=23
+CMAKE_SYSTEM_VERSION:UNINITIALIZED=21
 
 //The CMake toolchain file
 CMAKE_TOOLCHAIN_FILE:FILEPATH=/Users/apple/Library/Android/sdk/ndk/22.1.7171670/build/cmake/android.toolchain.cmake
