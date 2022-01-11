@@ -2,6 +2,7 @@ package com.boost.marketplace.ui.browse
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
+import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,6 +39,10 @@ class BrowseFeaturesActivity :
         viewModel.loadAllFeaturesfromDB()
         initMvvm()
         initializeAddonCategoryRecycler()
+        binding?.browseSearch?.setOnClickListener {
+            val intent= Intent(this,SearchActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     @SuppressLint("FragmentLiveDataObserve")

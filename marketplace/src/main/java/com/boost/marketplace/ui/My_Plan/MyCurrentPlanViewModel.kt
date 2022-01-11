@@ -2,6 +2,7 @@ package com.boost.marketplace.ui.My_Plan
 
 import android.app.Application
 import android.util.Log
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.boost.dbcenterapi.data.remote.ApiInterface
@@ -23,6 +24,16 @@ class MyCurrentPlanViewModel(): BaseViewModel() {
     val compositeDisposable = CompositeDisposable()
 
     var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
+
+    lateinit var application: Application
+    lateinit var lifecycleOwner: LifecycleOwner
+
+    fun setApplicationLifecycle(application: Application,
+                                lifecycleOwner: LifecycleOwner
+    ){
+        this.application = application
+        this.lifecycleOwner = lifecycleOwner
+    }
 
     fun getActiveFreeWidgets(): LiveData<List<FeaturesModel>> {
         return updatesResult
@@ -52,7 +63,7 @@ class MyCurrentPlanViewModel(): BaseViewModel() {
 //                                                        activeWidgetList.postValue(it.Result)
                         Log.i("FloatingPointWebWidgets", ">> " + it.Result)
                         compositeDisposable.add(
-                            AppDatabase.getInstance(Application())!!
+                            AppDatabase.getInstance(application)!!
                                 .featuresDao()
                                 .getallActiveFeatures(it.Result, true)
                                 .subscribeOn(Schedulers.io())
@@ -69,7 +80,7 @@ class MyCurrentPlanViewModel(): BaseViewModel() {
 
                         )
                         compositeDisposable.add(
-                            AppDatabase.getInstance(Application())!!
+                            AppDatabase.getInstance(application)!!
                                 .featuresDao()
                                 .getallActiveFeatures(it.Result, false)
                                 .subscribeOn(Schedulers.io())

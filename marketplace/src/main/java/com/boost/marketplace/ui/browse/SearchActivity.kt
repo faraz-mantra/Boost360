@@ -46,6 +46,6 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding,SearchViewModel>() 
 
             }
 
-        binding?.childRecyclerview?.adapter = packageAdaptor
+
     }
 }

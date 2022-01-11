@@ -71,6 +71,8 @@ class MyCurrentPlanActivity : AppBaseActivity<ActivityMyCurrentPlanBinding,MyCur
 //        myAddonsViewModelFactory =
 //            MyAddonsViewModelFactory(requireNotNull(this.application))
 
+        viewModel.setApplicationLifecycle(application,this)
+
         viewModel = ViewModelProviders.of(this)
             .get(MyCurrentPlanViewModel::class.java)
 
@@ -282,21 +284,6 @@ class MyCurrentPlanActivity : AppBaseActivity<ActivityMyCurrentPlanBinding,MyCur
         }
     }
 
-
-//
-//    override fun onFreeAddonsClicked(v: View?) {
-//
-//    }
-//
-//    override fun onPaidAddonsClicked(v: View?) {
-//
-//    }
-//
-//    override fun backComparePress() {
-//
-//    }
-
-
     private fun loadData() {
         viewModel.loadUpdates(
             getAccessToken(),
@@ -312,16 +299,14 @@ class MyCurrentPlanActivity : AppBaseActivity<ActivityMyCurrentPlanBinding,MyCur
     }
 
 
-
    @SuppressLint("FragmentLiveDataObserve")
     private fun initMVVM() {
-        viewModel.getActiveFreeWidgets().observe(this, Observer {
+        viewModel.getActiveFreeWidgets().observe(this, androidx.lifecycle.Observer{
             totalFreeItemList = it
-
             totalActiveFreeWidgetCount = totalFreeItemList!!.size
             totalActiveWidgetCount = totalActiveFreeWidgetCount + totalActivePremiumWidgetCount
 
-          setHeadlineTexts()
+            setHeadlineTexts()
 
             initializeFreeAddonsRecyclerView()
             initializePaidAddonsRecyclerView()
@@ -347,10 +332,9 @@ class MyCurrentPlanActivity : AppBaseActivity<ActivityMyCurrentPlanBinding,MyCur
                 }
             }
         })
-        viewModel.getActivePremiumWidgets().observe(this, Observer {
+        viewModel.getActivePremiumWidgets().observe(this, androidx.lifecycle.Observer {
             Log.i("getActiveWidgets", it.toString())
             totalPaidItemList = it
-
             totalActivePremiumWidgetCount = totalPaidItemList!!.size
             totalActiveWidgetCount = totalActiveFreeWidgetCount + totalActivePremiumWidgetCount
 
@@ -390,7 +374,7 @@ class MyCurrentPlanActivity : AppBaseActivity<ActivityMyCurrentPlanBinding,MyCur
                 }
             }
         })
-        viewModel.updatesLoader().observe(this, Observer {
+        viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
             if (it) {
                 val status = "Loading. Please wait..."
                 progressDialog.setMessage(status)
@@ -422,7 +406,7 @@ class MyCurrentPlanActivity : AppBaseActivity<ActivityMyCurrentPlanBinding,MyCur
     }
 
     private fun initializeFreeAddonsRecyclerView() {
-        val linearLayoutManager = LinearLayoutManager(applicationContext)
+        val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         binding?.recycler?.apply {
             layoutManager = linearLayoutManager
