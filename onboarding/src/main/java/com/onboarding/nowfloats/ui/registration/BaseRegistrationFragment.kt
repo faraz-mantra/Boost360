@@ -23,6 +23,7 @@ import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.navigator.ScreenModel
 import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen
 import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen.BUSINESS_INFO
+import com.onboarding.nowfloats.ui.registration.instagram.RegistrationBusinessInstagramFragment
 import com.onboarding.nowfloats.ui.startFragmentActivity
 import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
 
@@ -216,6 +217,8 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> :
       is RegistrationBusinessWebsiteFragment -> Screen.BUSINESS_SUBDOMAIN
       is RegistrationBusinessGoogleBusinessFragment -> Screen.BUSINESS_GOOGLE_PAGE
       is RegistrationBusinessFacebookPageFragment -> Screen.BUSINESS_FACEBOOK_PAGE
+      is RegistrationBusinessInstagramFragment -> Screen.BUSINESS_INSTAGRAM
+
       is RegistrationBusinessFacebookShopFragment -> Screen.BUSINESS_FACEBOOK_SHOP
       is RegistrationBusinessTwitterDetailsFragment -> Screen.BUSINESS_TWITTER
       is RegistrationBusinessWhatsAppFragment -> Screen.BUSINESS_WHATSAPP

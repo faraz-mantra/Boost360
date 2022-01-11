@@ -157,7 +157,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     getPremiumBanner()
     getChannelAccessToken()
     displayFestiveButtonView()
-    startActivity(Intent(requireActivity(),InstagramContainerActivity::class.java))
   }
 
   private fun displayFestiveButtonView() {

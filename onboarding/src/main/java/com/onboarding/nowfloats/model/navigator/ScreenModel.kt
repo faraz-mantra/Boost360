@@ -29,6 +29,7 @@ data class ScreenModel(
     BUSINESS_SUBDOMAIN,
     BUSINESS_GOOGLE_PAGE,
     BUSINESS_FACEBOOK_PAGE,
+    BUSINESS_INSTAGRAM,
     BUSINESS_FACEBOOK_SHOP,
     BUSINESS_TWITTER,
     BUSINESS_WHATSAPP,
@@ -56,6 +57,10 @@ data class ScreenModel(
         context,
         AppFragmentContainerActivity::class.java
       ).setFragmentType(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE)
+      Screen.BUSINESS_INSTAGRAM -> Intent(
+        context,
+        AppFragmentContainerActivity::class.java
+      ).setFragmentType(FragmentType.REGISTRATION_BUSINESS_INSTAGRAM)
       Screen.BUSINESS_FACEBOOK_SHOP -> Intent(
         context,
         AppFragmentContainerActivity::class.java

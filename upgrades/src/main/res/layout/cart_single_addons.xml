@@ -83,7 +83,7 @@
     app:layout_constraintBottom_toBottomOf="@id/cart_single_addons_bottom_view"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:srcCompat="@drawable/ic_close" />
+    app:srcCompat="@drawable/ic_ig_close" />
 
   <View
     android:id="@+id/cart_single_addons_bottom_view"

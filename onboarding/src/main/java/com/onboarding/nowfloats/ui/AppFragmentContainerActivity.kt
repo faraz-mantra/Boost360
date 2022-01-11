@@ -23,6 +23,7 @@ import com.onboarding.nowfloats.model.navigator.ScreenModel
 import com.onboarding.nowfloats.ui.category.CategorySelectorFragment
 import com.onboarding.nowfloats.ui.channel.ChannelPickerFragment
 import com.onboarding.nowfloats.ui.registration.*
+import com.onboarding.nowfloats.ui.registration.instagram.RegistrationBusinessInstagramFragment
 
 open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
@@ -43,6 +44,8 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
   private var registrationBusinessGoogleBusinessFragment: RegistrationBusinessGoogleBusinessFragment? = null
   private var registrationBusinessFacebookPageFragment: RegistrationBusinessFacebookPageFragment? = null
   private var registrationBusinessFacebookShopFragment: RegistrationBusinessFacebookShopFragment? = null
+  private var registrationBusinessInstagramFragment: RegistrationBusinessInstagramFragment? = null
+
   private var registrationBusinessTwitterDetailsFragment: RegistrationBusinessTwitterDetailsFragment? = null
   private var registrationBusinessWhatsAppFragment: RegistrationBusinessWhatsAppFragment? = null
   private var registrationBusinessApiFragment: RegistrationBusinessApiFragment? = null
@@ -164,6 +167,11 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
           RegistrationBusinessFacebookPageFragment.newInstance()
         registrationBusinessFacebookPageFragment
       }
+      FragmentType.REGISTRATION_BUSINESS_INSTAGRAM -> {
+        registrationBusinessInstagramFragment =
+          RegistrationBusinessInstagramFragment()
+        registrationBusinessInstagramFragment
+      }
       FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP -> {
         registrationBusinessFacebookShopFragment =
           RegistrationBusinessFacebookShopFragment.newInstance()
@@ -210,6 +218,11 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
       FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE -> {
         registrationBusinessFacebookPageFragment?.updateInfo()
         NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_FACEBOOK_PAGE)
+        super.onBackPressed()
+      }
+      FragmentType.REGISTRATION_BUSINESS_INSTAGRAM -> {
+        registrationBusinessInstagramFragment?.updateInfo()
+        NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_INSTAGRAM)
         super.onBackPressed()
       }
       FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP -> {
