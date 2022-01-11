@@ -1,6 +1,7 @@
 package com.boost.marketplace.Adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
+import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.bumptech.glide.Glide
 import java.text.NumberFormat
 import java.util.*
@@ -70,6 +72,9 @@ class CompareItemAdapter(cryptoCurrencies: List<FeaturesModel>?) :
 //      details.arguments = args
 
             //  activity.addFragment(details, Constants.DETAILS_FRAGMENT)
+            val intent = Intent(context, FeatureDetailsActivity::class.java)
+            intent.putExtra("itemId", upgradeList.get(position).boost_widget_key)
+            context.startActivity(intent)
         }
     }
 

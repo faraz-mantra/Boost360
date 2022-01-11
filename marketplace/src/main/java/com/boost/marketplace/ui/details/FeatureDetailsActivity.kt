@@ -538,7 +538,7 @@ class FeatureDetailsActivity :
 
     fun addUpdatePacks(list: ArrayList<BundlesModel>) {
         if(list.size>0) {
-            featurePacksAdapter.addupdates(list, addonDetails!!.name ?: "")
+            featurePacksAdapter.addupdates(list, addonDetails?.name ?: "")
             pack_recycler.adapter = featurePacksAdapter
             featurePacksAdapter.notifyDataSetChanged()
             pack_container.visibility = View.VISIBLE

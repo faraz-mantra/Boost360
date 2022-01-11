@@ -21,6 +21,8 @@ class BrowseFeaturesActivity :
 
     lateinit var adapter: BrowseParentFeaturesAdapter
     lateinit var progressDialog: ProgressDialog
+    var userPurchsedWidgets = ArrayList<String>()
+    var categoryType = String()
 
     override fun getLayout(): Int {
         return R.layout.activity_browse_features
@@ -36,12 +38,18 @@ class BrowseFeaturesActivity :
 
         adapter = BrowseParentFeaturesAdapter(arrayListOf(), this)
         viewModel.setApplicationLifecycle(application,this)
+        categoryType = intent.getStringExtra("categoryType") ?: ""
+        userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
         viewModel.loadAllFeaturesfromDB()
         initMvvm()
         initializeAddonCategoryRecycler()
         binding?.browseSearch?.setOnClickListener {
             val intent= Intent(this,SearchActivity::class.java)
+            intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
             startActivity(intent)
+        }
+        binding?.browseFeaturesBack?.setOnClickListener {
+            finish()
         }
     }
 
