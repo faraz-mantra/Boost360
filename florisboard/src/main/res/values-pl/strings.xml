@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name_k">Boost keyboard</string>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pauza</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Czekaj</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ikona trzech kropek. Jeśli jest widoczna, to oznacza, że po dłuższym naciśnięciu można użyć więcej liter.</string>
@@ -62,7 +62,6 @@
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Usuń</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Edytuj układ</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Ustawienia regionalne</string>
-    <string name="settings__localization__subtype_layout" comment="Label for keyboard layout dropdown in subtype dialog">Układ klawiatury</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Ten układ już istnieje!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Motyw klawiatury</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Niezdefiniowany</string>
@@ -160,7 +159,7 @@
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Mnożnik rozmiaru czcionki (portret)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Mnożnik rozmiaru czcionki (krajobraz)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Układ</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Tryb jednoręczny</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Tryb jednoręczny</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Wyłącz</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Tryb praworęczny</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Tryb leworęczny</string>
@@ -181,10 +180,6 @@
     <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Dolny odstęp (układ pionowy)</string>
     <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Dolny odstęp (układ poziomy)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Naciśnięcie klawisza</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Dźwięk po naciśnięciu klawisza</string>
-    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Głośność dźwięku po naciśnięciu klawisza</string>
-    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Wibracja przy naciśnięciu klawisza</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Siła wibracji przy naciskaniu klawiszy</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Widoczność PopUp</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Pokaż popup po naciśnięciu klawisza</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Opóznienie długiego przytrzymania</string>
@@ -201,9 +196,7 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Dwukrotne naciśnięcie klawisza spacji powoduje wstawienie kropki, po której następuje spacja</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gesty &amp; Glide pisanie</string>
     <string name="pref__glide__title" comment="Preference group title">Pisanie Glide</string>
-    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] Włącz pisanie Glide</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Wpisz słowo, przesuwając palcem po jego literach</string>
-    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Pokaż ślad ślizgu</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Zniknie po każdym słowie</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Gesty ogólne</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gesty klawisza spacji</string>
@@ -307,13 +300,12 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Konfiguracja ukończona!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Pobierz raport o błędach</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Przepraszamy za niedogodności, ale FlorisBoard zawiesił się z powodu nieoczekiwanego błędu. Jeśli chcesz zgłosić ten błąd, kliknij na \"Kopiuj do schowka\", a następnie na przycisk \"Otwórz zgłoszenie błędu\". Wypełnij raport o błędzie i wklej log. Pomoże to uczynić FlorisBoard lepszym i stabilniejszym dla wszystkich. Dziękujemy!</string>
-    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopiuj do schowka</string>
-    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">Otwórz formularz zgłaszania błędów (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zamknij</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Raporty o błędach FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard przestał działać…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Kliknij, by zobaczyć szczegóły</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard wydaje się wielokrotnie przerywać pracę…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Powracanie do poprzedniej klawiatury w celu zatrzymania nieskończonej pętli awarii. Stuknij, aby wyświetlić szczegóły błędu</string>
+    <!-- clipboard strings -->
+    <!-- glide strings -->
 </resources>

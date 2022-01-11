@@ -18,26 +18,28 @@ package dev.patrickgold.florisboard.ime.core
 
 import android.content.Context
 import android.content.res.Configuration
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Typeface
+import android.os.Build
+import android.text.TextPaint
 import android.util.AttributeSet
 import android.util.DisplayMetrics
-import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.LinearLayout
-import android.widget.ViewFlipper
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.util.ViewLayoutUtils
-import timber.log.Timber
+import dev.patrickgold.florisboard.common.ViewUtils
 import kotlin.math.roundToInt
 
 /**
- * Root view of the keyboard. Notifies [FlorisBoard] when it has been attached to a window.
+ * Root view of the keyboard.
  */
 class InputView : LinearLayout {
-    private var florisboard: FlorisBoard = FlorisBoard.getInstance()
-    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+    private val florisboard get() = FlorisBoard.getInstance()
+    private val prefs get() = Preferences.default()
 
     var desiredInputViewHeight: Float = resources.getDimension(R.dimen.inputView_baseHeight)
         private set
@@ -47,13 +49,26 @@ class InputView : LinearLayout {
         private set
     var desiredMediaKeyboardViewHeight: Float = resources.getDimension(R.dimen.mediaKeyboardView_baseHeight)
         private set
+    var heightFactor: Float = 1.0f
+        private set
+    var shouldGiveAdditionalSpace: Boolean = false
+        private set
 
-    var mainViewFlipper: ViewFlipper? = null
+    var desiredInlineSuggestionsMinWidth: Int = 0
         private set
-    var oneHandedCtrlPanelStart: ViewGroup? = null
+    var desiredInlineSuggestionsMinHeight: Int = 0
         private set
-    var oneHandedCtrlPanelEnd: ViewGroup? = null
+    var desiredInlineSuggestionsMaxWidth: Int = 0
         private set
+    var desiredInlineSuggestionsMaxHeight: Int = 0
+        private set
+
+    private val overlayTextPaint: TextPaint = TextPaint().apply {
+        color = Color.GREEN
+        textAlign = Paint.Align.RIGHT
+        textSize = resources.getDimension(R.dimen.devtools_memory_overlay_textSize)
+        typeface = Typeface.MONOSPACE
+    }
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -63,20 +78,8 @@ class InputView : LinearLayout {
         defStyleAttr
     )
 
-    override fun onAttachedToWindow() {
-        Timber.i("onAttachedToWindow()")
-
-        super.onAttachedToWindow()
-
-        mainViewFlipper = findViewById(R.id.main_view_flipper)
-        oneHandedCtrlPanelStart = findViewById(R.id.one_handed_ctrl_panel_start)
-        oneHandedCtrlPanelEnd = findViewById(R.id.one_handed_ctrl_panel_end)
-
-        florisboard.registerInputView(this)
-    }
-
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val heightFactor = when (resources.configuration.orientation) {
+        heightFactor = when (resources.configuration.orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> 1.0f
             else -> if (prefs.keyboard.oneHandedMode != OneHandedMode.OFF) {
                 prefs.keyboard.oneHandedModeScaleFactor / 100.0f
@@ -98,20 +101,17 @@ class InputView : LinearLayout {
         var baseSmartbarHeight = 0.16129f * baseHeight
         var baseTextInputHeight = baseHeight - baseSmartbarHeight
         val tim = florisboard.textInputManager
-        val shouldGiveAdditionalSpace = prefs.keyboard.numberRow &&
+        shouldGiveAdditionalSpace = prefs.keyboard.numberRow &&
                 !(tim.getActiveKeyboardMode() == KeyboardMode.NUMERIC ||
                 tim.getActiveKeyboardMode() == KeyboardMode.PHONE ||
                 tim.getActiveKeyboardMode() == KeyboardMode.PHONE2)
         if (shouldGiveAdditionalSpace) {
-            val additionalHeight = desiredTextKeyboardViewHeight * 0.18f
+            val additionalHeight = baseTextInputHeight * 0.25f
             baseHeight += additionalHeight
             baseTextInputHeight += additionalHeight
         }
         val smartbarDisabled = !prefs.smartbar.enabled ||
-                tim.keyVariation == KeyVariation.PASSWORD && prefs.keyboard.numberRow ||
-                tim.getActiveKeyboardMode() == KeyboardMode.NUMERIC ||
-                tim.getActiveKeyboardMode() == KeyboardMode.PHONE ||
-                tim.getActiveKeyboardMode() == KeyboardMode.PHONE2
+                tim.activeState.keyVariation == KeyVariation.PASSWORD && prefs.keyboard.numberRow && !prefs.suggestion.api30InlineSuggestionsEnabled
         if (smartbarDisabled) {
             baseHeight = baseTextInputHeight
             baseSmartbarHeight = 0.0f
@@ -122,14 +122,21 @@ class InputView : LinearLayout {
         desiredMediaKeyboardViewHeight = baseHeight
         // Add bottom offset for curved screens here. As the desired heights have already been set,
         //  adding a value to the height now will result in a bottom padding (aka offset).
-        baseHeight += ViewLayoutUtils.convertDpToPixel(
+        baseHeight += ViewUtils.dp2px(
             if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                florisboard.prefs.keyboard.bottomOffsetLandscape.toFloat()
+                prefs.keyboard.bottomOffsetLandscape.toFloat()
             } else {
-                florisboard.prefs.keyboard.bottomOffsetPortrait.toFloat()
-            },
-            context
+                prefs.keyboard.bottomOffsetPortrait.toFloat()
+            }
         )
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val width = MeasureSpec.getSize(widthMeasureSpec)
+            desiredInlineSuggestionsMinWidth = width / 3
+            desiredInlineSuggestionsMinHeight = desiredSmartbarHeight.toInt()
+            desiredInlineSuggestionsMaxWidth = (width / 1.5).toInt()
+            desiredInlineSuggestionsMaxHeight = desiredSmartbarHeight.toInt()
+        }
 
         super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(baseHeight.roundToInt(), MeasureSpec.EXACTLY))
     }
@@ -160,5 +167,35 @@ class InputView : LinearLayout {
         return ((minBaseSize + maxBaseSize) / 2.0f).coerceAtLeast(
             resources.getDimension(R.dimen.inputView_baseHeight)
         )
+    }
+
+    override fun dispatchDraw(canvas: Canvas?) {
+        super.dispatchDraw(canvas)
+        canvas ?: return
+
+        if (prefs.devtools.enabled && prefs.devtools.showHeapMemoryStats) {
+            try {
+                // Note: the below code only gets the heap size in MB, the actual RAM usage (native or others) can be
+                //  a lot higher
+                //  Source: https://stackoverflow.com/a/19267315/6801193
+                val runtime = Runtime.getRuntime()
+                val usedMemInMB = (runtime.totalMemory() - runtime.freeMemory()) / 1048576L
+                val maxHeapSizeInMB = runtime.maxMemory() / 1048576L
+                val availHeapSizeInMB = maxHeapSizeInMB - usedMemInMB
+                val output = listOf(
+                    "heap mem:",
+                    String.format("used=%4dMB", usedMemInMB),
+                    String.format("max=%4dMB", maxHeapSizeInMB),
+                    String.format("avail=%4dMB", availHeapSizeInMB),
+                )
+                val x = measuredWidth.toFloat()
+                var y = overlayTextPaint.descent() - overlayTextPaint.ascent()
+                for (line in output) {
+                    canvas.drawText(line, x, y, overlayTextPaint)
+                    y += overlayTextPaint.descent() - overlayTextPaint.ascent()
+                }
+            } catch (_: Throwable) {
+            }
+        }
     }
 }

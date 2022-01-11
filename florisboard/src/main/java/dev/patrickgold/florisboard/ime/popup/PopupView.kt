@@ -27,15 +27,16 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.util.ViewLayoutUtils
+import dev.patrickgold.florisboard.common.ViewUtils
 
 class PopupView : View, ThemeManager.OnThemeUpdatedListener {
     private val themeManager: ThemeManager = ThemeManager.default()
 
     private var backgroundDrawable: PaintDrawable = PaintDrawable().apply {
-        setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
+        setCornerRadius(ViewUtils.dp2px(6.0f))
     }
     private val labelPaint: Paint = Paint().apply {
         alpha = 255
@@ -47,7 +48,7 @@ class PopupView : View, ThemeManager.OnThemeUpdatedListener {
         typeface = Typeface.DEFAULT
     }
     private val threeDotsDrawable: Drawable? =
-        ContextCompat.getDrawable(context, R.drawable.ic_more_horiz)
+        ContextCompat.getDrawable(context, R.drawable.ic_more_horiz)?.mutate()
 
     val properties: Properties = Properties(
         width = resources.getDimension(R.dimen.key_width).toInt(),
@@ -71,6 +72,7 @@ class PopupView : View, ThemeManager.OnThemeUpdatedListener {
     )
 
     init {
+        layoutDirection = LAYOUT_DIRECTION_LOCALE
         visibility = GONE
         background = backgroundDrawable
     }
@@ -89,7 +91,7 @@ class PopupView : View, ThemeManager.OnThemeUpdatedListener {
         backgroundDrawable.apply {
             setTint(theme.getAttr(Theme.Attr.POPUP_BACKGROUND).toSolidColor().color)
         }
-        elevation = ViewLayoutUtils.convertDpToPixel(4.0f, context)
+        elevation = ViewUtils.dp2px(4.0f)
         threeDotsDrawable?.apply {
             setTint(theme.getAttr(Theme.Attr.POPUP_FOREGROUND).toSolidColor().color)
         }
@@ -99,11 +101,11 @@ class PopupView : View, ThemeManager.OnThemeUpdatedListener {
         }
     }
 
-    private fun applyProperties(anchor: View) {
+    private fun applyProperties(keyboardView: View, anchor: Key) {
         val anchorCoords = IntArray(2)
-        anchor.getLocationInWindow(anchorCoords)
-        val anchorX = anchorCoords[0]
-        val anchorY = anchorCoords[1] + anchor.measuredHeight
+        keyboardView.getLocationInWindow(anchorCoords)
+        val anchorX = anchorCoords[0] + anchor.visibleBounds.left
+        val anchorY = anchorCoords[1] + anchor.visibleBounds.top + anchor.visibleBounds.height()
         when (val lp = layoutParams) {
             is FrameLayout.LayoutParams -> lp.apply {
                 width = properties.width
@@ -133,8 +135,8 @@ class PopupView : View, ThemeManager.OnThemeUpdatedListener {
         }
     }
 
-    fun show(anchor: View) {
-        applyProperties(anchor)
+    fun show(keyboardView: View, anchor: Key) {
+        applyProperties(keyboardView, anchor)
         visibility = VISIBLE
         requestLayout()
         invalidate()
@@ -164,12 +166,21 @@ class PopupView : View, ThemeManager.OnThemeUpdatedListener {
         if (drawable != null && properties.shouldIndicateExtendedPopups) {
             val marginTop = measuredHeight * properties.innerLabelFactor
             val drawableSize = marginTop * 0.25f
-            drawable.setBounds(
-                (measuredWidth * 0.95f - drawableSize).toInt(),
-                marginTop.toInt(),
-                (measuredWidth * 0.95f).toInt(),
-                (marginTop + drawableSize).toInt()
-            )
+            if (layoutDirection == LAYOUT_DIRECTION_RTL) {
+                drawable.setBounds(
+                    (measuredWidth * 0.10f).toInt(),
+                    marginTop.toInt(),
+                    (measuredWidth * 0.10f + drawableSize).toInt(),
+                    (marginTop + drawableSize).toInt()
+                )
+            } else {
+                drawable.setBounds(
+                    (measuredWidth * 0.95f - drawableSize).toInt(),
+                    marginTop.toInt(),
+                    (measuredWidth * 0.95f).toInt(),
+                    (marginTop + drawableSize).toInt()
+                )
+            }
             drawable.draw(canvas)
         }
     }

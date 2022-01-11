@@ -106,7 +106,7 @@ fun parseRawEmojiSpecsFile(
                 if (line.startsWith(GROUP_IDENTIFIER, true)) {
                     // A new group begins
                     val rawGroupName = line.trim().substring(GROUP_IDENTIFIER.length)
-                    if (rawGroupName.toUpperCase(Locale.ENGLISH) == "COMPONENT") {
+                    if (rawGroupName.uppercase() == "COMPONENT") {
                         skipUntilNextGroup = true
                         continue
                     } else {
@@ -130,14 +130,14 @@ fun parseRawEmojiSpecsFile(
                         val dataC = data2[0].trim()
                         val dataQ = data2[1].trim()
                         val dataN = data[1].split(NAME_JUNK_SPLIT_REGEX)[1]
-                        if (dataQ.toLowerCase(Locale.ENGLISH) == FULLY_QUALIFIED) {
+                        if (dataQ.lowercase() == FULLY_QUALIFIED) {
                             // Only fully-qualified emojis are accepted
                             val dataCPs = dataC.split(" ")
                             val key = EmojiKeyData(listStringToListInt(dataCPs), dataN)
                             // Check if system font can render the emoji, else skip it as it makes
                             //  no include it in the emoji keyboard as it will be the default
                             //  glyph not found box.
-                            if (PaintCompat.hasGlyph(paint, key.getCodePointsAsString())) {
+                            if (PaintCompat.hasGlyph(paint, key.asString(isForDisplay = false))) {
                                 if (dataCPs.size > 1) {
                                     // Emoji COULD be an extension
                                     when (dataCPs[1]) {
@@ -151,7 +151,7 @@ fun parseRawEmojiSpecsFile(
                                         WHITE_HAIR,
                                         BALD -> {
                                             // Emoji is extension, add it as popup to last one
-                                            lastKey?.popup?.add(key)
+                                            lastKey?.popupList?.add(key)
                                         }
                                         else -> {
                                             // Emoji is standalone

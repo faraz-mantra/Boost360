@@ -27,19 +27,20 @@ import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.util.ViewLayoutUtils
+import dev.patrickgold.florisboard.common.ViewUtils
 import kotlin.math.min
 
 class PopupExtendedView : View, ThemeManager.OnThemeUpdatedListener {
     private val themeManager: ThemeManager = ThemeManager.default()
 
     private val activeBackgroundDrawable: PaintDrawable = PaintDrawable().apply {
-        setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
+        setCornerRadius(ViewUtils.dp2px(6.0f))
     }
     private var backgroundDrawable: PaintDrawable = PaintDrawable().apply {
-        setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
+        setCornerRadius(ViewUtils.dp2px(6.0f))
     }
     private val labelPaint: Paint = Paint().apply {
         alpha = 255
@@ -82,9 +83,10 @@ class PopupExtendedView : View, ThemeManager.OnThemeUpdatedListener {
     )
 
     init {
+        layoutDirection = LAYOUT_DIRECTION_LTR
         visibility = GONE
         background = backgroundDrawable
-        elevation = ViewLayoutUtils.convertDpToPixel(4.0f, context)
+        elevation = ViewUtils.dp2px(4.0f)
     }
 
     override fun onAttachedToWindow() {
@@ -111,11 +113,11 @@ class PopupExtendedView : View, ThemeManager.OnThemeUpdatedListener {
         }
     }
 
-    private fun applyProperties(anchor: View) {
+    private fun applyProperties(keyboardView: View, anchor: Key) {
         val anchorCoords = IntArray(2)
-        anchor.getLocationInWindow(anchorCoords)
-        val anchorX = anchorCoords[0]
-        val anchorY = anchorCoords[1] + anchor.measuredHeight
+        keyboardView.getLocationInWindow(anchorCoords)
+        val anchorX = anchorCoords[0] + anchor.visibleBounds.left
+        val anchorY = anchorCoords[1] + anchor.visibleBounds.top + anchor.visibleBounds.height()
         when (val lp = layoutParams) {
             is FrameLayout.LayoutParams -> lp.apply {
                 width = properties.width
@@ -146,8 +148,8 @@ class PopupExtendedView : View, ThemeManager.OnThemeUpdatedListener {
         }
     }
 
-    fun show(anchor: View) {
-        applyProperties(anchor)
+    fun show(keyboardView: View, anchor: Key) {
+        applyProperties(keyboardView, anchor)
         visibility = VISIBLE
         requestLayout()
         invalidate()

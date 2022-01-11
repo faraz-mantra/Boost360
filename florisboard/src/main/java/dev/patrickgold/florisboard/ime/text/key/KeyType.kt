@@ -16,14 +16,20 @@
 
 package dev.patrickgold.florisboard.ime.text.key
 
-import com.squareup.moshi.FromJson
-import java.util.*
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 /**
  * Enum for declaring the type of the key.
  * List of possible key types:
  *  [Wikipedia](https://en.wikipedia.org/wiki/Keyboard_layout#Key_types)
  */
+@Serializable(with = KeyTypeSerializer::class)
 enum class KeyType {
     CHARACTER,
     ENTER_EDITING,
@@ -36,16 +42,25 @@ enum class KeyType {
     PLACEHOLDER,
     UNSPECIFIED;
 
+    override fun toString(): String {
+        return super.toString().lowercase()
+    }
+
     companion object {
         fun fromString(string: String): KeyType {
-            return valueOf(string.toUpperCase(Locale.ENGLISH))
+            return valueOf(string.uppercase())
         }
     }
 }
 
-class KeyTypeAdapter {
-    @FromJson
-    fun fromJson(raw: String): KeyType {
-        return KeyType.fromString(raw)
+class KeyTypeSerializer : KSerializer<KeyType> {
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("KeyType", PrimitiveKind.STRING)
+
+    override fun serialize(encoder: Encoder, value: KeyType) {
+        encoder.encodeString(value.toString())
+    }
+
+    override fun deserialize(decoder: Decoder): KeyType {
+        return KeyType.fromString(decoder.decodeString())
     }
 }
