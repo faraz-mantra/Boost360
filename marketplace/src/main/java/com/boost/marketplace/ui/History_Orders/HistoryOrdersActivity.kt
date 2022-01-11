@@ -72,7 +72,7 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Hisor
         private fun loadData() {
         viewModel.loadPurchasedItems(
             (this).getAccessToken() ?:"",
-            intent.getStringExtra("userPurchsedWidgets")?:"" ,
+            intent.getStringExtra("fpid")?:"" ,
             (this).clientid
         )
     }

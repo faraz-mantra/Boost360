@@ -2,6 +2,7 @@ package com.boost.marketplace.ui.My_Plan
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
+import android.content.Intent
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.util.Log
@@ -20,6 +21,7 @@ import com.boost.marketplace.adapter.UpgradeAdapter
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityMyCurrentPlanBinding
 import com.boost.marketplace.interfaces.CompareBackListener
+import com.boost.marketplace.ui.History_Orders.HistoryOrdersActivity
 import com.boost.marketplace.ui.home.MarketPlaceActivity
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
@@ -37,6 +39,7 @@ class MyCurrentPlanActivity : AppBaseActivity<ActivityMyCurrentPlanBinding,MyCur
 
     lateinit var freeAddonsAdapter: FreeAddonsAdapter
     lateinit var paidAddonsAdapter: PaidAddonsAdapter
+    var fpid: String? = null
 
   //  lateinit var myAddonsViewModelFactory: MyAddonsViewModelFactory
 
@@ -75,6 +78,7 @@ class MyCurrentPlanActivity : AppBaseActivity<ActivityMyCurrentPlanBinding,MyCur
 //        myAddonsViewModelFactory =
 //            MyAddonsViewModelFactory(requireNotNull(this.application))
 
+        fpid = intent.getStringExtra("fpid")
         viewModel.setApplicationLifecycle(application,this)
 
         viewModel = ViewModelProviders.of(this)
@@ -95,58 +99,19 @@ class MyCurrentPlanActivity : AppBaseActivity<ActivityMyCurrentPlanBinding,MyCur
         initializePaidAddonsRecyclerView()
        // shimmer_view_paidaddon.startShimmer()
      //   shimmer_view_freeaddon.startShimmer()
-//        val profileURL = (activity as UpgradeActivity).profileUrl
+
+
+       binding?.historyorders?.setOnClickListener {
+           val intent= Intent(this,HistoryOrdersActivity::class.java)
+           intent.putExtra("fpid",fpid)
+           startActivity(intent)
+
+        }
 //
-//        if (profileURL.isNullOrEmpty() || profileURL.length < 2) {
-//            Glide.with(this)
-//                .load(R.drawable.group)
-//                .into(merchant_logo)
-//        } else {
-//            Glide.with(this)
-//                .load(profileURL)
-//                .into(merchant_logo)
-//        }
+        binding?.addonback?.setOnClickListener {
+            finish()
+        }
 
-     //   top_line_view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
-
-
-//        Glide.with(this).load(R.drawable.back_beau)
-//                .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))
-//                .into(back_image)
-
-
-//        verifybtn1.setOnClickListener {
-//            if (add_remove_layout.visibility == View.VISIBLE) {
-//                add_remove_layout.visibility = View.GONE
-//            } else {
-//                val args = Bundle()
-//                args.putStringArrayList(
-//                    "userPurchsedWidgets",
-//                    arguments?.getStringArrayList("userPurchsedWidgets")
-//                )
-//                (activity as UpgradeActivity).addFragmentHome(
-//                    ViewAllFeaturesFragment.newInstance(),
-//                    Constants.VIEW_ALL_FEATURE, args
-//                )
-//            }
-//        }
-
-//        view_orders_history.setOnClickListener {
-//            //            Toasty.info(requireContext(), R.string.feature_coming_soon).show()
-//            (activity as UpgradeActivity).addFragment(HistoryFragment.newInstance(), HISTORY_FRAGMENT)
-//        }
-//
-//        addons_back.setOnClickListener {
-//            (activity as UpgradeActivity).popFragmentFromBackStack()
-//        }
-
-//        paid_menu_layout.setOnClickListener {
-//            if (add_remove_layout.visibility == View.VISIBLE) {
-//                add_remove_layout.visibility = View.GONE
-//            } else {
-//                add_remove_layout.visibility = View.VISIBLE
-//            }
-//        }
 
         binding?.allAddonsViewLayout?.setOnClickListener {
 //            if (add_remove_layout.visibility == View.VISIBLE) {
@@ -154,95 +119,6 @@ class MyCurrentPlanActivity : AppBaseActivity<ActivityMyCurrentPlanBinding,MyCur
 //            }
         }
 
-//        add_paid_addons.setOnClickListener {
-//            add_remove_layout.visibility = View.GONE
-//            val args = Bundle()
-//            args.putStringArrayList(
-//                "userPurchsedWidgets",
-//                arguments?.getStringArrayList("userPurchsedWidgets")
-//            )
-//            (activity as UpgradeActivity).addFragmentHome(
-//                ViewAllFeaturesFragment.newInstance(),
-//                VIEW_ALL_FEATURE,
-//                args
-//            )
-//        }
-
-//        remove_paid_addons.setOnClickListener {
-//            add_remove_layout.visibility = View.GONE
-////            (activity as UpgradeActivity).addFragment(RemoveAddonsFragment.newInstance(), REMOVE_ADDONS_FRAGMENT)
-//            Toasty.warning(requireContext(), R.string.feature_coming_soon).show()
-//        }
-
-//        read_more_less_free_addons.setOnClickListener {
-//            if (add_remove_layout.visibility == View.VISIBLE) {
-//                add_remove_layout.visibility = View.GONE
-//            } else {
-//                if (totalFreeItemList != null) {
-//                    if (freeaddonsSeeMoreStatus && totalFreeItemList!!.size > 6) {
-//                        val lessList = totalFreeItemList!!.subList(0, 6)
-//                        updateFreeAddonsRecycler(lessList)
-//                        freeaddonsSeeMoreStatus = false
-//                        read_more_less_text_free_addons.setText("See more")
-//                        read_more_less_text_free_addons.setCompoundDrawablesWithIntrinsicBounds(
-//                            null,
-//                            null,
-//                            ContextCompat.getDrawable(requireContext(), R.drawable.addons_arrow_down),
-//                            null
-//                        )
-//                    } else {
-//                        updateFreeAddonsRecycler(totalFreeItemList!!)
-//                        freeaddonsSeeMoreStatus = true
-//                        read_more_less_text_free_addons.setText("See less")
-//                        read_more_less_text_free_addons.setCompoundDrawablesWithIntrinsicBounds(
-//                            null,
-//                            null,
-//                            ContextCompat.getDrawable(requireContext(), R.drawable.addons_arrow_up),
-//                            null
-//                        )
-//
-//
-//                        WebEngageController.trackEvent(
-//                            ADDONS_MARKETPLACE_FREE_ADDONS_SEE_MORE,
-//                            FREE_ADDONS,
-//                            NO_EVENT_VALUE
-//                        )
-//                    }
-//                }
-//            }
-//        }
-
-
-//        read_more_less_paid_addons.setOnClickListener {
-//            if (add_remove_layout.visibility == View.VISIBLE) {
-//                add_remove_layout.visibility = View.GONE
-//            } else {
-//                if (totalPaidItemList != null) {
-//                    if (paidaddonsSeeMoreStatus && totalPaidItemList!!.size > 4) {
-//                        val lessList = totalPaidItemList!!.subList(0, 4)
-//                        updatePaidAddonsRecycler(lessList)
-//                        paidaddonsSeeMoreStatus = false
-//                        read_more_less_text_paid_addons.setText("See more")
-//                        read_more_less_text_paid_addons.setCompoundDrawablesWithIntrinsicBounds(
-//                            null,
-//                            null,
-//                            ContextCompat.getDrawable(requireContext(), R.drawable.addons_arrow_down),
-//                            null
-//                        )
-//                    } else {
-//                        updatePaidAddonsRecycler(totalPaidItemList!!)
-//                        paidaddonsSeeMoreStatus = true
-//                        read_more_less_text_paid_addons.setText("See less")
-//                        read_more_less_text_paid_addons.setCompoundDrawablesWithIntrinsicBounds(
-//                            null,
-//                            null,
-//                            ContextCompat.getDrawable(requireContext(), R.drawable.addons_arrow_up),
-//                            null
-//                        )
-//                    }
-//                }
-//            }
-//        }
 
      //   WebEngageController.trackEvent(ADDONS_MARKETPLACE_MY_ADDONS_LOADED, MY_ADDONS, NO_EVENT_VALUE)
 

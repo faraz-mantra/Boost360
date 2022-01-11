@@ -136,6 +136,18 @@
                 android:textColor="@color/black_4a4a4a"
                 android:textSize="12sp" />
 
+            <TextView
+                android:id="@+id/txt_validity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginBottom="@dimen/size_16"
+                android:layout_marginHorizontal="@dimen/size_20"
+                android:fontFamily="@font/regular"
+                android:text="Validity"
+                android:textAllCaps="false"
+                android:textColor="@color/black_4a4a4a" />
+
             <Button
                 android:id="@+id/btn_use_feature"
                 android:layout_width="match_parent"
