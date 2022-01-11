@@ -1,5 +1,6 @@
 package com.framework.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
@@ -18,16 +19,18 @@ import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.*
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.FontRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -62,6 +65,34 @@ fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis:
     if (SystemClock.elapsedRealtime() - lastClickTime < blockInMillis) return@setOnClickListener
     lastClickTime = SystemClock.elapsedRealtime()
     listener.onClick(this)
+  }
+}
+
+fun AppCompatEditText.onDone(callback: () -> Unit) {
+  imeOptions = EditorInfo.IME_ACTION_DONE
+  maxLines = 1
+  setOnEditorActionListener { _, actionId, _ ->
+    if (actionId == EditorInfo.IME_ACTION_DONE) {
+      callback.invoke()
+      true
+    }
+    false
+  }
+}
+
+@SuppressLint("ClickableViewAccessibility")
+fun AppCompatEditText.onRightDrawableClicked(onClicked: (view: AppCompatEditText) -> Unit) {
+  this.setOnTouchListener { v, event ->
+    var hasConsumed = false
+    if (v is AppCompatEditText) {
+      if (event.x >= v.width - v.totalPaddingRight) {
+        if (event.action == MotionEvent.ACTION_UP) {
+          onClicked(this)
+        }
+        hasConsumed = true
+      }
+    }
+    hasConsumed
   }
 }
 

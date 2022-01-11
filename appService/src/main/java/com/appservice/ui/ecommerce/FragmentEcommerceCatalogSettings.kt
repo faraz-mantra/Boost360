@@ -65,7 +65,7 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
       hideProgress()
       this.response = it as? UserFpDetailsResponse
       if (it.isSuccess() && response != null) {
-        binding?.ctvProductVerb?.text = response?.productCategoryVerb(baseActivity)?.capitalizeUtil()
+        binding?.ctvProductVerb?.text = response?.productCategory(baseActivity)?.capitalizeUtil()
         binding?.ctvProductVerbUrl?.text = fromHtml("<pre>URL: <span style=\"color: #4a4a4a;\"><u>${sessionLocal.getDomainName()}<b>/${response?.productCategoryVerb(baseActivity)}</b></u></span></pre>")
         sessionLocal.storeFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB, response?.productCategoryVerb)
       }

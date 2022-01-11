@@ -25,7 +25,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
@@ -42,7 +41,6 @@ import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.framework.utils.BuildConfigUtil;
 import com.framework.views.customViews.CustomToolbar;
 import com.nowfloats.BusinessProfile.UI.Model.FacebookFeedPullModel;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
@@ -1079,8 +1077,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                         .setmUserAccessTokenKey(twitterSession.getAuthToken().token)
                         .setmUserAccessTokenSecret(twitterSession.getAuthToken().secret)
                         .setmUserAccountId(String.valueOf(twitterSession.getUserId()))
-                        .setmAppAccessTokenKey(BuildConfigUtil.INSTANCE.getBuildConfigFieldN("twitter_consumer_key"))
-                        .setmAppAccessTokenSecret(BuildConfigUtil.INSTANCE.getBuildConfigFieldN("twitter_consumer_secret"))
+                        .setmAppAccessTokenKey(com.nowfloats.twitter.BuildConfig.twitter_consumer_key)
+                        .setmAppAccessTokenSecret(com.nowfloats.twitter.BuildConfig.twitter_consumer_secret)
                         .setmCallType(TWITTERTYPE)
                         .setmName(username);
                 requestClient.connectNfx();
