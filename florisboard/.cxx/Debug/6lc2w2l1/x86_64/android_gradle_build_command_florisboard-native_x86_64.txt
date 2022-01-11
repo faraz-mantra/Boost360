@@ -1,7 +1,0 @@
-Executable : /Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja
-arguments : 
--C
-/Users/apple/Documents/patchinfotech/AndroidProject/TestKeyboard/florisboard/.cxx/Debug/6lc2w2l1/x86_64
-florisboard-native
-jvmArgs : 
-

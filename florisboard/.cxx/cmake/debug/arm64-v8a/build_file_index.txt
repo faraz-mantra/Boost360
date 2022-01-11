@@ -1,5 +1,0 @@
-/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/CMakeLists.txt
-/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/utils/CMakeLists.txt
-/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/nuspell/CMakeLists.txt
-/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/ime/nlp/CMakeLists.txt
-/Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/keyboard_upgrade/boost360-android-app/florisboard/src/main/cpp/ime/spelling/CMakeLists.txt
