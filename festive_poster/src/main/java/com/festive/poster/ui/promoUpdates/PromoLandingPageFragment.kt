@@ -115,7 +115,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
                             val intent = Intent(requireActivity(),
                                 Class.forName(
                                     "com.appservice.ui.updatesBusiness.UpdateBusinessContainerActivity"))
-                            intent.setFragmentType("ADD_UPDATE_BUSINESS_FRAGMENT")
+                            intent.setFragmentType("ADD_UPDATE_BUSINESS_FRAGMENT_V2")
                             startActivity(intent)
                         }
                     }

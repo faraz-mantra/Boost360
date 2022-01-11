@@ -58,7 +58,7 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
   }
 
   override fun isHideToolbar(): Boolean {
-    if (type==FragmentType.BUSINESS_KYC_VIEW){
+    if (type==FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2){
       return true
     }
     return super.isHideToolbar()
