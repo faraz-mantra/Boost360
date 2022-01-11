@@ -20,6 +20,7 @@ import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityMyCurrentPlanBinding
 import com.boost.marketplace.interfaces.CompareBackListener
 import com.boost.marketplace.ui.home.MarketPlaceActivity
+import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
 //import kotlinx.android.synthetic.main.activity_my_current_plan.*
@@ -285,12 +286,16 @@ class MyCurrentPlanActivity : AppBaseActivity<ActivityMyCurrentPlanBinding,MyCur
     }
 
     private fun loadData() {
+      try {
         viewModel.loadUpdates(
             getAccessToken(),
             intent.getStringExtra("userPurchsedWidgets")?:"" ,
             "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
 
         )
+      } catch (e: Exception) {
+        SentryController.captureException(e)
+      }
 
     }
 

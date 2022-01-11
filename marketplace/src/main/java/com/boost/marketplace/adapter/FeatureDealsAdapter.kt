@@ -18,6 +18,7 @@ import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.home.MarketPlaceActivity
 import com.bumptech.glide.Glide
+import com.framework.analytics.SentryController
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -59,7 +60,11 @@ class FeatureDealsAdapter(
     val diffInHours = TimeUnit.HOURS.convert(diffInMilliconds, TimeUnit.MILLISECONDS)
     val diffInDays = TimeUnit.DAYS.convert(diffInMilliconds, TimeUnit.MILLISECONDS)
 
-    getFeatureInfoFromDB(holder, list.get(position).feature_code, diffInMilliconds)
+    try {
+      getFeatureInfoFromDB(holder, list.get(position).feature_code, diffInMilliconds)
+    } catch (e: Exception) {
+      SentryController.captureException(e)
+    }
 
     if (diffInMilliconds > 0) {
       object : CountDownTimer(diffInMilliconds, 1000) {

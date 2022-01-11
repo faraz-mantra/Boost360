@@ -20,6 +20,7 @@ import com.boost.marketplace.databinding.ActivityHistoryOrdersBinding
 import com.boost.marketplace.infra.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.marketplace.interfaces.HistoryFragmentListener
 import com.boost.marketplace.ui.Invoice.InvoiceActivity
+import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
 import com.google.gson.Gson
@@ -70,12 +71,16 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Hisor
     }
 
         private fun loadData() {
-        viewModel.loadPurchasedItems(
-            (this).getAccessToken() ?:"",
-            intent.getStringExtra("userPurchsedWidgets")?:"" ,
-            (this).clientid
-        )
-    }
+            try {
+                viewModel.loadPurchasedItems(
+                    (this).getAccessToken() ?:"",
+                    intent.getStringExtra("userPurchsedWidgets")?:"" ,
+                    (this).clientid
+                )
+            } catch (e: Exception) {
+                SentryController.captureException(e)
+            }
+        }
     fun getAccessToken(): String {
         return UserSessionManager(this).getAccessTokenAuth()?.barrierToken() ?: ""
     }

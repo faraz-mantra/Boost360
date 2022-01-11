@@ -22,6 +22,7 @@ import com.boost.marketplace.R
 import com.boost.marketplace.adapter.PackageViewPagerAdapter
 import com.boost.marketplace.interfaces.CompareListener
 import com.bumptech.glide.Glide
+import com.framework.analytics.SentryController
 //import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -108,10 +109,18 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
 
 //        getPackageInfoFromDB(parentViewHolder,parentItem)
 //        isItemAddedInCart(parentViewHolder,parentItem)
+      try {
         getPackageInfoFromDB(parentViewHolder,list.get(position))
+      } catch (e: Exception) {
+        SentryController.captureException(e)
+      }
+      try {
         isItemAddedInCart(parentViewHolder,list.get(position))
+      } catch (e: Exception) {
+        SentryController.captureException(e)
+      }
 
-        val distinct: List<String> = LinkedHashSet(listSamp).toMutableList()
+      val distinct: List<String> = LinkedHashSet(listSamp).toMutableList()
 
         val layoutManager1 = GridLayoutManager(parentViewHolder.ChildRecyclerView.context,3,)
 //        val sectionAdapter1 = SectionedRecyclerViewAdapter()

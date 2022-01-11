@@ -11,6 +11,7 @@ import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.home.MarketPlaceActivity
+import com.framework.analytics.SentryController
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -77,7 +78,11 @@ class AddonsCategoryAdapter(
 
     }
     holder.title.setText(upgradeList.get(position))
-    getFeaturesCount(holder, position)
+    try {
+      getFeaturesCount(holder, position)
+    } catch (e: Exception) {
+      SentryController.captureException(e)
+    }
     holder.itemView.setOnClickListener {
       listener.onAddonsCategoryClicked(upgradeList.get(position))
     }

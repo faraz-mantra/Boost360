@@ -628,8 +628,16 @@ class FeatureDetailsActivity :
 //    }
 
     fun loadData() {
-        viewModel.loadAddonsFromDB(singleWidgetKey!!)
-        viewModel.getAllPackages()
+        try {
+            viewModel.loadAddonsFromDB(singleWidgetKey!!)
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
+        try {
+            viewModel.getAllPackages()
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
     }
 
     override fun onClick(v: View?) {

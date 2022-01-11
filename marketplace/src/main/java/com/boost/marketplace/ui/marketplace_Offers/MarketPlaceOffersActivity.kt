@@ -22,6 +22,7 @@ import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityMarketplaceoffersBinding
 import com.boost.marketplace.ui.History_Orders.HistoryOrdersActivity
 import com.bumptech.glide.Glide
+import com.framework.analytics.SentryController
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_OFFERS_LOADED
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PAGE_VIEW
@@ -204,7 +205,11 @@ class MarketPlaceOffersActivity :
 
     private fun loadData() {
         Log.d("marketOffersCoupon", " " + marketOffersData?.coupon_code)
-        viewModel.getOffersByCouponId(marketOffersData!!.coupon_code)
+        try {
+            viewModel.getOffersByCouponId(marketOffersData!!.coupon_code)
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
     }
 
 

@@ -160,25 +160,29 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
     }
 
     fun updateRecyclerViewItems(featuresList: ArrayList<FeaturesModel>?, bundleList: ArrayList<Bundles>?){
-        if(featuresList!=null && featuresList.size > 0) {
-            featureAdaptor.addupdates(featuresList, 1)
-            feature_recyclerview.adapter = featureAdaptor
-            featureAdaptor.notifyDataSetChanged()
-            feature_recyclerview.visibility = View.VISIBLE
-            addons_title.visibility = View.VISIBLE
-        } else{
-            feature_recyclerview.visibility = View.GONE
-            addons_title.visibility = View.GONE
+        if(featuresList!=null) {
+            if (featuresList.size > 0) {
+                featureAdaptor.addupdates(featuresList, 1)
+                feature_recyclerview.adapter = featureAdaptor
+                featureAdaptor.notifyDataSetChanged()
+                feature_recyclerview.visibility = View.VISIBLE
+                addons_title.visibility = View.VISIBLE
+            } else {
+                feature_recyclerview.visibility = View.GONE
+                addons_title.visibility = View.GONE
+            }
         }
-        if(bundleList!=null && bundleList.size>0){
-            packageAdaptor.addupdates(allBundles)
-            package_recyclerview.adapter = packageAdaptor
-            packageAdaptor.notifyDataSetChanged()
-            package_recyclerview.visibility = View.VISIBLE
-            package_title.visibility = View.VISIBLE
-        }else{
-            package_recyclerview.visibility = View.GONE
-            package_title.visibility = View.GONE
+        if(bundleList != null) {
+            if (bundleList.size > 0) {
+                packageAdaptor.addupdates(allBundles)
+                package_recyclerview.adapter = packageAdaptor
+                packageAdaptor.notifyDataSetChanged()
+                package_recyclerview.visibility = View.VISIBLE
+                package_title.visibility = View.VISIBLE
+            } else {
+                package_recyclerview.visibility = View.GONE
+                package_title.visibility = View.GONE
+            }
         }
     }
 
