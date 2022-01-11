@@ -1,12 +1,15 @@
 package com.boost.marketplace.Adapters
 
 import android.content.Context
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
@@ -59,6 +62,16 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
     if (list.size - 1 == position) {
       holder.view.visibility = View.GONE
     }
+    holder.mainlayout.setOnClickListener {
+      if (holder.detailsView.visibility==View.GONE) {
+        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
+          holder.detailsView.visibility= View.VISIBLE
+      } else {
+        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
+        holder.detailsView.visibility= View.GONE
+      }
+    }
+
   }
 
   fun addupdates(upgradeModel: List<FeaturesModel>) {
@@ -79,6 +92,8 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
     private var upgradeTitle = itemView.findViewById<TextView>(R.id.paid_addons_name)!!
     private var activateLayout = itemView.findViewById<LinearLayout>(R.id.paid_addons_activate)!!
     private var image = itemView.findViewById<ImageView>(R.id.single_paidaddon_image)!!
+     var mainlayout=itemView.findViewById<ConstraintLayout>(R.id.main_layout)
+     var detailsView=itemView.findViewById<ConstraintLayout>(R.id.detailsView)
 
     private var context: Context = itemView.context
 

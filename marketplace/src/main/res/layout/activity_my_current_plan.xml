@@ -225,10 +225,11 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="18dp"
                                     android:layout_marginTop="10dp"
+                                    android:fontFamily="@font/open_sans"
                                     android:gravity="center_vertical"
-                                    android:text="4 Free features"
+                                    android:text=" Free features"
                                     android:textColor="@color/black"
-                                    android:textSize="@dimen/_15ssp"
+                                    android:textSize="16dp"
                                     app:layout_constraintBottom_toTopOf="@id/paid_subtitle"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
@@ -263,20 +264,34 @@
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </RelativeLayout>
 
+                        <View
+                            android:id="@+id/top_line_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_3sdp"
+                            android:background="@drawable/line_strt"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toTopOf="@+id/expandableView"
+                             />
+
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/expandableView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fillViewport="true"
                             android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/paid_addons_title">
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/recycler"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:nestedScrollingEnabled="true"
+                                android:nestedScrollingEnabled="false"
                                 android:overScrollMode="never"
-                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -328,9 +343,10 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="18dp"
                                     android:layout_marginTop="10dp"
-                                    android:text="5 Premium features"
+                                    android:fontFamily="@font/open_sans"
+                                    android:text=" Premium features"
                                     android:textColor="@color/black"
-                                    android:textSize="@dimen/_15ssp"
+                                    android:textSize="16dp"
                                     app:layout_constraintBottom_toTopOf="@+id/paid_subtitle1"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
@@ -363,6 +379,16 @@
 
                         </RelativeLayout>
 
+                        <View
+                            android:id="@+id/top_line_view1"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_3sdp"
+                            android:background="@drawable/line_strt"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toTopOf="@+id/expandableView1"
+                            />
+
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/expandableView1"
                             android:layout_width="match_parent"
@@ -376,10 +402,10 @@
                                 android:layout_height="wrap_content"
                                 android:nestedScrollingEnabled="true"
                                 android:overScrollMode="never"
-                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/paid_addons_title1"
+                                app:layout_constraintBottom_toBottomOf="parent"
                                 tools:ignore="NotSibling,UnknownId"
                                 tools:listitem="@layout/item_myplan_paid_features" />
 

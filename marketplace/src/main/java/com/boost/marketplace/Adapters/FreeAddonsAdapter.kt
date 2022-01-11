@@ -1,11 +1,14 @@
 package com.boost.marketplace.Adapters
 
 import android.content.Context
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
@@ -37,7 +40,7 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
   }
 
   override fun getItemCount(): Int {
-    return list.size //5
+    return   list.size //5
   }
 
   override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
@@ -45,6 +48,18 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
     holder.upgradeListItem(cryptocurrencyItem)
 
     holder.singleTitle.text = cryptocurrencyItem.name
+
+    holder.mainLayout.setOnClickListener {
+
+      if (holder.detailsView.visibility == View.GONE) {
+        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
+        holder.detailsView.visibility = View.VISIBLE
+      }else {
+        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
+        holder.detailsView.visibility = View.GONE
+      }
+
+    }
    // Glide.with(context).load(cryptocurrencyItem.primary_image).into()
 
 //    holder.itemView.setOnClickListener {
@@ -71,12 +86,14 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
 
      var singleTitle = itemView.findViewById<TextView>(R.id.free_addons_name)!!
      var image = itemView.findViewById<ImageView>(R.id.single_freeaddon_image)!!
+    var mainLayout=itemView.findViewById<ConstraintLayout>(R.id.main_layout)
+    var detailsView=itemView.findViewById<ConstraintLayout>(R.id.detailsView)
 
     private var context: Context = itemView.context
 
 
     fun upgradeListItem(updateModel: FeaturesModel) {
-    //  singleTitle.text = updateModel.name
+      singleTitle.text = updateModel.name
       Glide.with(context).load(updateModel.primary_image).into(image)
 
     }
