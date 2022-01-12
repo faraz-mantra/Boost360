@@ -3,33 +3,23 @@ package com.boost.marketplace.ui.home
 import android.animation.Animator
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
-import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.webkit.WebViewClient
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.SimplePageTransformer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
-import com.boost.dbcenterapi.infra.api.models.test.StringData
 import com.boost.dbcenterapi.recycleritem.RecyclerStringItemClickListener
-import com.boost.dbcenterapi.recycleritem.RecyclerStringItemType
-import com.boost.dbcenterapi.recycleritem.RecyclerViewItemType
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
@@ -41,31 +31,32 @@ import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.constant.RecyclerViewActionType
 import com.boost.marketplace.databinding.ActivityMarketplaceBinding
-import com.boost.marketplace.ui.details.FeatureDetailsActivity
-import com.framework.pref.Key_Preferences
-import com.framework.pref.UserSessionManager
-import com.framework.pref.getAccessTokenAuth
-import com.framework.views.dotsindicator.OffsetPageTransformer
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_marketplace.*
 import com.boost.marketplace.interfaces.CompareBackListener
 import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
 import com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity
 import com.boost.marketplace.ui.browse.BrowseFeaturesActivity
 import com.boost.marketplace.ui.coupons.OfferCouponsActivity
+import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.boost.marketplace.ui.marketplace_Offers.MarketPlaceOffersActivity
+import com.boost.marketplace.ui.videos.VideosPopUpBottomSheet
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.framework.analytics.SentryController
+import com.framework.pref.Key_Preferences
+import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
 import com.framework.webengageconstant.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.util.HashMap
+import kotlinx.android.synthetic.main.activity_marketplace.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPlaceHomeViewModel>(),
     RecyclerStringItemClickListener, CompareBackListener, HomeListener {
@@ -2179,7 +2170,15 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             videoItem.title ?: NO_EVENT_VALUE
         )
         Log.i("onPlayYouTubeVideo", videoItem.youtube_link ?: "")
+
         val link: List<String> = videoItem.youtube_link!!.split('/')
+
+        val dialogCard = VideosPopUpBottomSheet()
+        val args = Bundle()
+        args.putString("title",videoItem.title)
+        args.putString("link", videoItem.youtube_link)
+        dialogCard.arguments = args
+        dialogCard.show(this.supportFragmentManager, VideosPopUpBottomSheet::class.java.name)
 //        videoPlayerWebView.getSettings().setJavaScriptEnabled(true)
 ////    videoPlayerWebView.getSettings().setPluginState(WebSettings.PluginState.ON)
 //        videoPlayerWebView.setWebViewClient(WebViewClient())
