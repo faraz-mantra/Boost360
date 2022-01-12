@@ -1,31 +1,21 @@
 package com.boost.marketplace.ui.History_Orders
 
-import android.annotation.SuppressLint
-import android.content.Intent
-import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.Result
 import com.boost.dbcenterapi.recycleritem.BaseRecyclerViewItem
 import com.boost.dbcenterapi.recycleritem.RecyclerItemClickListener
-import com.boost.dbcenterapi.recycleritem.RecyclerViewItemType
 import com.boost.marketplace.Adapters.HistoryOrdersParentAdapter
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityHistoryOrdersBinding
-import com.boost.marketplace.infra.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.marketplace.interfaces.HistoryFragmentListener
-import com.boost.marketplace.ui.Invoice.InvoiceActivity
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
-import com.google.gson.Gson
-
-import kotlinx.android.synthetic.main.item_myplan_features.view.title
 
 
 class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, HisoryOrdersViewModel>(),
@@ -74,7 +64,7 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Hisor
             try {
                 viewModel.loadPurchasedItems(
                     (this).getAccessToken() ?:"",
-                    intent.getStringExtra("userPurchsedWidgets")?:"" ,
+                    intent.getStringExtra("fpid")?:"" ,
                     (this).clientid
                 )
             } catch (e: Exception) {
