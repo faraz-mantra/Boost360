@@ -6,6 +6,7 @@ import com.framework.analytics.SentryController
 import com.framework.errorHandling.ErrorFlowInvokeObject
 import com.framework.exceptions.BaseException
 import com.framework.exceptions.NoNetworkException
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureErrorHandlingEnable
 import com.framework.utils.NetworkUtils
 import io.reactivex.Observable
 import okhttp3.ResponseBody
@@ -48,7 +49,9 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
         val rawRequest = it.raw().toString()
         if (rawRequest.contains(DATA_EXCHANGE_URL).not()) {
           SentryController.captureException(Exception(it.errorBody()?.string() ?: ""))
-          errorFlowInvoke(response, it)
+          if(featureErrorHandlingEnable()) {
+            errorFlowInvoke(response, it)
+          }
         }
         return@map response
       }

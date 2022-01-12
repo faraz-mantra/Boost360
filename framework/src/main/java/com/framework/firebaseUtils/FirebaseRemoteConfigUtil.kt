@@ -15,6 +15,7 @@ const val FEATURE_DOMAIN_BOOKING_ENABLE = "feature_domain_booking_enable"
 const val IN_APP_UPDATE_TYPE_IMMEDIATE = "in_app_update_type_immediate"
 const val K_ADMIN_URL = "k_admin_url"
 const val NEW_ONBOARDING_WITH_UPDATED_CATEGORIES_AND_GUI_ACTIVE = "new_onboarding_with_updated_categories_and_gui_active"
+const val FEATURE_ERROR_HANDLING_ENABLE = "feature_error_handling_enable"
 
 object FirebaseRemoteConfigUtil {
 
@@ -56,6 +57,11 @@ object FirebaseRemoteConfigUtil {
   fun featureDomainEnable(): Boolean {
     Log.d(TAG, "Config feature domain enable: ${remoteConfig?.getBoolean(FEATURE_DOMAIN_BOOKING_ENABLE) ?: false}")
     return remoteConfig?.getBoolean(FEATURE_DOMAIN_BOOKING_ENABLE) ?: false
+  }
+
+  fun featureErrorHandlingEnable(): Boolean {
+    Log.d(TAG, "featureErrorHandlingEnable: ${remoteConfig?.getBoolean(FEATURE_ERROR_HANDLING_ENABLE) ?: false}")
+    return remoteConfig?.getBoolean(FEATURE_ERROR_HANDLING_ENABLE) ?: false
   }
 
   fun featureNewOnBoardingFlowEnable(): Boolean {

@@ -22,6 +22,10 @@
     <value>false</value>
   </entry>
   <entry>
+    <key>feature_error_handling_enable</key>
+    <value>false</value>
+  </entry>
+  <entry>
     <key>in_app_update_type_immediate</key>
     <value>false</value>
   </entry>
