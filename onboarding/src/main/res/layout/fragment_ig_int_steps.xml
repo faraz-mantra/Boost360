@@ -66,7 +66,7 @@
                 android:textSize="@dimen/size_12"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.card.MaterialCardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/player_view"
                 app:cardCornerRadius="@dimen/size_10"
                 android:layout_width="match_parent"
@@ -85,8 +85,8 @@
                     android:layout_width="match_parent"
                     android:layout_margin="@dimen/size_6"
                     android:layout_height="match_parent"/>
-                
-            </com.google.android.material.card.MaterialCardView>
+
+            </androidx.cardview.widget.CardView>
 
 
             <com.framework.views.customViews.CustomTextView
@@ -105,7 +105,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <com.google.android.material.button.MaterialButton
+            <com.framework.views.customViews.CustomButton
                 android:id="@+id/btn_back"
                 android:layout_width="@dimen/size_50"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -119,7 +119,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
 
-            <com.google.android.material.button.MaterialButton
+            <com.framework.views.customViews.CustomButton
                 android:id="@+id/btn_next"
                 android:layout_width="0dp"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"

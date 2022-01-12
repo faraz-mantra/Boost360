@@ -154,10 +154,10 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
             }
             binding!!.btnNext->{
                 if (nextStep==Step.NEXT_SCREEN){
-                    addFragmentReplace(R.id.container,IGIntStatusFragment.newInstance(
+                  /*  addFragmentReplace(R.id.container,IGIntStatusFragment.newInstance(
                         IGIntStatusFragment.Status.FAILURE
-                    ),true)
-                    /*loginWithFacebook(
+                    ),true)*/
+                    loginWithFacebook(
                         this, listOf(
                             FacebookPermissions.email,
                             FacebookPermissions.public_profile,
@@ -177,7 +177,7 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
                             )
                     )
 
-                     */
+
                 }else{
                     addFragmentReplace(R.id.container,IGIntStepsFragment.newInstance(
                         nextStep
