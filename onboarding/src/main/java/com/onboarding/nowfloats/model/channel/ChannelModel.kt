@@ -105,6 +105,10 @@ fun ChannelModel.isFacebookShop(): Boolean {
   return getType() == ChannelType.FB_SHOP
 }
 
+fun ChannelModel.isInstagram(): Boolean {
+  return getType() == ChannelType.INSTAGRAM
+}
+
 fun ChannelModel.isFacebookPage(): Boolean {
   return getType() == ChannelType.FB_PAGE
 }
@@ -312,6 +316,9 @@ fun ChannelModel.getDrawableInActiveNew(context: Context?): Drawable? {
 
 fun Iterable<ChannelModel>.haveFacebookShop(): Boolean {
   return filterTo(ArrayList(), { it.isFacebookShop() }).isNotEmpty()
+}
+fun Iterable<ChannelModel>.haveInstagram(): Boolean {
+  return filterTo(ArrayList(), { it.isInstagram() }).isNotEmpty()
 }
 
 fun Iterable<ChannelModel>.haveFacebookPage(): Boolean {

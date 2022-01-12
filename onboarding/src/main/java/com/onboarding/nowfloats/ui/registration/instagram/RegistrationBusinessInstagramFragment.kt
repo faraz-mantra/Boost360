@@ -44,7 +44,7 @@ class RegistrationBusinessInstagramFragment:
                     }
                 }
             }else{
-                requireActivity().onBackPressed()
+                requireActivity().finish()
             }
         }
     }

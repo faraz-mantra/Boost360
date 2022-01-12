@@ -145,6 +145,14 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> :
     startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE, getBundle())
   }
 
+  protected fun gotoInstagram() {
+    NavigatorManager.pushToStackAndSaveRequest(
+      ScreenModel(getPreviousScreen(), getToolbarTitle()),
+      requestFloatsModel
+    )
+    startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_INSTAGRAM, getBundle())
+  }
+
   protected fun gotoGoogleBusinessPage() {
     NavigatorManager.pushToStackAndSaveRequest(
       ScreenModel(getPreviousScreen(), getToolbarTitle()),

@@ -146,6 +146,7 @@ class RegistrationBusinessFacebookPageFragment :
     )
 
     when {
+      channels.haveInstagram() -> gotoInstagram()
       channels.haveFacebookShop() -> gotoFacebookShop()
       channels.haveTwitterChannels() -> gotoTwitterDetails()
       channels.haveWhatsAppChannels() -> gotoWhatsAppCallDetails()

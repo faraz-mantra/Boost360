@@ -137,6 +137,7 @@ class RegistrationBusinessGoogleBusinessFragment :
       channelAccessToken
     )
     when {
+      channels.haveInstagram() -> gotoInstagram()
       channels.haveFacebookPage() -> gotoFacebookPage()
       channels.haveFacebookShop() -> gotoFacebookShop()
       channels.haveTwitterChannels() -> gotoTwitterDetails()

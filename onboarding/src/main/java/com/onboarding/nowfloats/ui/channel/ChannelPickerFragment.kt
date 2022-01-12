@@ -248,6 +248,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
       if (channels.haveGoogleBusinessChannel()) totalPages++
       if (channels.haveFacebookShop()) totalPages++
       if (channels.haveFacebookPage()) totalPages++
+      if (channels.haveInstagram()) totalPages++
       if (channels.haveTwitterChannels()) totalPages++
       if (channels.haveWhatsAppChannels()) totalPages++
     }
@@ -264,6 +265,10 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
       when {
         channels.haveFacebookPage() -> startFragmentActivity(
           FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE,
+          bundle
+        )
+        channels.haveInstagram() -> startFragmentActivity(
+          FragmentType.REGISTRATION_BUSINESS_INSTAGRAM,
           bundle
         )
         channels.haveFacebookShop() -> startFragmentActivity(

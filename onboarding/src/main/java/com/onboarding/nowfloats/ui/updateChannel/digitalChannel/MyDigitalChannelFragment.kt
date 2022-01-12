@@ -489,6 +489,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
       selectedChannels.let { channels ->
         if (channels.haveGoogleBusinessChannel()) totalPages++
         if (channels.haveFacebookShop()) totalPages++
+        if (channels.haveInstagram()) totalPages++
         if (channels.haveFacebookPage()) totalPages++
         if (channels.haveTwitterChannels()) totalPages++
         if (channels.haveWhatsAppChannels()) totalPages++
@@ -504,6 +505,10 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         )
         channels.haveFacebookPage() -> startFragmentActivity(
           FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE,
+          bundle
+        )
+        channels.haveInstagram()-> startFragmentActivity(
+          FragmentType.REGISTRATION_BUSINESS_INSTAGRAM,
           bundle
         )
         channels.haveFacebookShop() -> startFragmentActivity(
