@@ -38,6 +38,7 @@ import com.boost.marketplace.infra.api.models.test.ViewpagerData
 import com.boost.marketplace.infra.api.models.test.getDatas
 import com.boost.marketplace.infra.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.marketplace.interfaces.CompareListener
+import com.framework.analytics.SentryController
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_COMPARE_PACKAGE_LOADED
 import com.framework.webengageconstant.NO_EVENT_VALUE
@@ -181,8 +182,16 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
 //                viewModel.getAssociatedWidgetKeys(bundleData!!._kid)
 //            }*/
 //
-        viewModel.loadPackageUpdates()
-        viewModel.getCartItems()
+        try {
+            viewModel.loadPackageUpdates()
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
+        try {
+            viewModel.getCartItems()
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
     }
 
 

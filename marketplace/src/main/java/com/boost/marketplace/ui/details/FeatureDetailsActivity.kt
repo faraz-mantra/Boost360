@@ -538,7 +538,7 @@ class FeatureDetailsActivity :
 
     fun addUpdatePacks(list: ArrayList<BundlesModel>) {
         if(list.size>0) {
-            featurePacksAdapter.addupdates(list, addonDetails!!.name ?: "")
+            featurePacksAdapter.addupdates(list, addonDetails?.name ?: "")
             pack_recycler.adapter = featurePacksAdapter
             featurePacksAdapter.notifyDataSetChanged()
             pack_container.visibility = View.VISIBLE
@@ -628,8 +628,16 @@ class FeatureDetailsActivity :
 //    }
 
     fun loadData() {
-        viewModel.loadAddonsFromDB(singleWidgetKey!!)
-        viewModel.getAllPackages()
+        try {
+            viewModel.loadAddonsFromDB(singleWidgetKey!!)
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
+        try {
+            viewModel.getAllPackages()
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
     }
 
     override fun onClick(v: View?) {

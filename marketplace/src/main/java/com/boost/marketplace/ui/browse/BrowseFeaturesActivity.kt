@@ -13,6 +13,7 @@ import com.boost.marketplace.adapter.BrowseParentFeaturesAdapter
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityBrowseFeaturesBinding
 import com.boost.marketplace.ui.home.MarketPlaceHomeViewModel
+import com.framework.analytics.SentryController
 import kotlinx.android.synthetic.main.activity_browse_features.*
 import kotlinx.android.synthetic.main.activity_marketplace.*
 
@@ -21,6 +22,8 @@ class BrowseFeaturesActivity :
 
     lateinit var adapter: BrowseParentFeaturesAdapter
     lateinit var progressDialog: ProgressDialog
+    var userPurchsedWidgets = ArrayList<String>()
+    var categoryType = String()
 
     override fun getLayout(): Int {
         return R.layout.activity_browse_features
@@ -36,12 +39,22 @@ class BrowseFeaturesActivity :
 
         adapter = BrowseParentFeaturesAdapter(arrayListOf(), this)
         viewModel.setApplicationLifecycle(application,this)
-        viewModel.loadAllFeaturesfromDB()
+        categoryType = intent.getStringExtra("categoryType") ?: ""
+        userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
+        try {
+            viewModel.loadAllFeaturesfromDB()
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
         initMvvm()
         initializeAddonCategoryRecycler()
         binding?.browseSearch?.setOnClickListener {
             val intent= Intent(this,SearchActivity::class.java)
+            intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
             startActivity(intent)
+        }
+        binding?.browseFeaturesBack?.setOnClickListener {
+            finish()
         }
     }
 
