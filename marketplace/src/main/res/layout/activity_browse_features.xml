@@ -72,7 +72,6 @@
                             android:id="@+id/browse_search"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:onClick="search"
                             android:padding="@dimen/_14sdp"
                             android:src="@drawable/ic_search_white"
                             app:layout_constraintDimensionRatio="1:1"

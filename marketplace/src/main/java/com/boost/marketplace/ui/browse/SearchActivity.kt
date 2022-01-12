@@ -2,6 +2,7 @@ package com.boost.marketplace.ui.browse
 
 import android.app.ProgressDialog
 import android.content.Intent
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -20,6 +21,7 @@ import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivitySearchBinding
 import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
+import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.FEATURE_PACKS_CLICKED
 import com.google.gson.Gson
@@ -137,13 +139,9 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
         }
         for(singleBundle in allBundles){
             var addedState = false
-            if(singleBundle.name?.lowercase()?.indexOf(searchValue.lowercase())!=-1){
-                searchBundles.add(singleBundle)
-                break
-            }else{
                 for(singleFeatureBundle in singleBundle.included_features){
                     for(singleFeature in allFeatures){
-                        if(singleFeatureBundle.feature_code.equals(singleFeature.boost_widget_key) && singleFeature.name?.lowercase()?.indexOf(searchValue.lowercase()) != -1 ){
+                        if((singleFeatureBundle.feature_code.equals(singleFeature.boost_widget_key) && singleFeature.name?.lowercase()?.indexOf(searchValue.lowercase()) != -1 ) ||(singleBundle.name?.lowercase()?.indexOf(searchValue.lowercase())!=-1)){
                             searchBundles.add(singleBundle)
                             addedState = true
                             break
@@ -154,7 +152,6 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
                         break
                     }
                 }
-            }
         }
         updateRecyclerViewItems(searchFeatures, searchBundles)
     }
@@ -197,10 +194,18 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
         item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
         WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, ADDONS_MARKETPLACE, event_attributes)
 
-        val intent = Intent(applicationContext, ComparePacksActivity::class.java)
-        intent.putExtra("bundleData", Gson().toJson(item))
-        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
-        startActivity(intent)
+        val packagePopup = PackagePopUpFragement()
+        val args = Bundle()
+        args.putString("bundleData", Gson().toJson(item))
+        packagePopup.arguments = args
+        packagePopup.show(supportFragmentManager,"PACKAGE_POPUP")
+
+//        val intent = Intent(applicationContext, ComparePacksActivity::class.java)
+//        intent.putExtra("bundleData", Gson().toJson(item))
+//        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+//        startActivity(intent)
+
+
 
     }
 

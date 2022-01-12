@@ -349,6 +349,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //            )
             val intent = Intent(this, MyCurrentPlanActivity::class.java)
             intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+            intent.putExtra("fpid", fpid)
             startActivity(intent)
         }
 
