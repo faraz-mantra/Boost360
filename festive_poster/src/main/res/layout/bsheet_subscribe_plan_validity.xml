@@ -63,7 +63,7 @@
                     android:text="@string/business_promotion_is_now_very_easy"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="@dimen/text_23"
-                    app:fontFamily="@font/regular_medium"
+                    app:fontFamily="@font/bold"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_promo_mic"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/iv_promo_mic"
@@ -153,7 +153,7 @@
                             android:textAlignment="gravity"
                             android:textColor="@color/black_4a4a4a"
                             android:textSize="@dimen/text_14"
-                            app:fontFamily="@font/regular_medium"
+                            app:fontFamily="@font/semi_bold"
                             tools:text="₹60/month" />
 
                         <com.framework.views.customViews.CustomTextView
@@ -224,7 +224,7 @@
                             android:textAlignment="gravity"
                             android:textColor="@color/black_4a4a4a"
                             android:textSize="@dimen/text_14"
-                            app:fontFamily="@font/regular_medium"
+                            app:fontFamily="@font/semi_bold"
                             tools:text="₹600/month" />
 
                         <com.framework.views.customViews.CustomTextView

@@ -22,15 +22,24 @@
                 android:layout_height="match_parent"
                 android:layout_margin="16dp">
 
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/customTextView9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/posted_15_mins_ago"
+                    android:textSize="@dimen/size_5"
+                    app:fontFamily="@font/regular_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_svg" />
 
                 <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_caption"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:textSize="6sp"
-                    android:id="@+id/tv_caption"
                     app:fontFamily="@font/regular_medium"
-                    app:layout_constraintTop_toBottomOf="@+id/iv_svg"
+                    app:layout_constraintTop_toBottomOf="@+id/customTextView9"
                     tools:text="50 to 60 percent off the entire site and store for Black Friday. Above that, you have free shipiing on all orders, plus an extra 20.
 
 #bigbilliondays #smile #2020 " />
@@ -40,8 +49,7 @@
                     android:scaleType="fitXY"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintHeight_percent="0.5"
+                    app:layout_constraintHeight_percent="0.65"
                     app:layout_constraintTop_toTopOf="parent" />
 
 

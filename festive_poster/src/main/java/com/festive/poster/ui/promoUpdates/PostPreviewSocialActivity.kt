@@ -566,6 +566,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 /*
            if (fbPageStatusEnable.value == true) socialShare += "FACEBOOK_PAGE."
 */
+        if (uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.GMB}?.isChecked == true) socialShare += "GOOGLEMYBUSINESS."
+
         if (uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.TWITTER }?.isChecked == true) socialShare += "TWITTER."
         val merchantId = if (session?.iSEnterprise == "true") null else session?.fPID
         val parentId = if (session?.iSEnterprise == "true") session?.fPParentId else null

@@ -90,7 +90,7 @@
                     android:scaleType="fitXY"
 
                     android:layout_marginTop="8dp"
-                    app:layout_constraintHeight_percent="0.4"
+                    app:layout_constraintHeight_percent="0.65"
                     app:layout_constraintTop_toBottomOf="@+id/customCardView" />
 
 

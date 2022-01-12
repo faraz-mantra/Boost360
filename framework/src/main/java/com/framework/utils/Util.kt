@@ -436,3 +436,21 @@ fun highlightHashTag(text: String?,@ColorRes colorId:Int): SpannableString {
 
   return spannable
 }
+
+fun spanBold(fullText:String,vararg boldTextList:String): SpannableString {
+  val spannable = SpannableString(fullText)
+  boldTextList.forEach { boldText->
+    spannable.setSpan(StyleSpan(Typeface.BOLD),fullText.indexOf(boldText),fullText.indexOf(boldText)+boldText.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+  }
+  return spannable
+}
+
+fun spanColor(fullText:String,@ColorRes color: Int,vararg colorTextList:String): SpannableString {
+  val spannable = SpannableString(fullText)
+  colorTextList.forEach { text->
+    spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(
+      BaseApplication.instance,color
+    )),fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+  }
+  return spannable
+}

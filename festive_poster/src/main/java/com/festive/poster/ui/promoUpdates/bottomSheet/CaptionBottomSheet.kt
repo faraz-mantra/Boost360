@@ -29,9 +29,11 @@ import com.festive.poster.databinding.BsheetAddCaptionBinding
 import com.festive.poster.databinding.BsheetEditPostBinding
 import com.framework.analytics.SentryController
 import com.framework.base.BaseBottomSheetDialog
+import com.framework.extensions.gone
 import com.framework.models.BaseViewModel
 import com.framework.utils.STTUtils
 import com.framework.utils.highlightHashTag
+import com.framework.utils.spanColor
 import java.util.*
 import com.framework.views.customViews.CustomEditText
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -111,6 +113,10 @@ class CaptionBottomSheet : BaseBottomSheetDialog<BsheetAddCaptionBinding, BaseVi
     override fun onCreateView() {
 
         captionText = arguments?.getString(BK_CAPTION)
+        binding!!.tvHashtagSubtitle.text = spanColor(
+            getString(R.string.type_in_the_caption_to_create_your_own_hashtags),R.color.color395996,
+            "#"
+        )
         initStt()
         binding?.ivVoiceOver?.setOnClickListener {
             sttUtils?.promptSpeechInput()
@@ -123,6 +129,10 @@ class CaptionBottomSheet : BaseBottomSheetDialog<BsheetAddCaptionBinding, BaseVi
 
             callbacks?.onDone(binding!!.captionLayout.etInput.text.toString())
             dismiss()
+        }
+
+        binding?.ivCloseHashtag?.setOnClickListener {
+            binding!!.linearHash.gone()
         }
         addHashTagFunction()
 

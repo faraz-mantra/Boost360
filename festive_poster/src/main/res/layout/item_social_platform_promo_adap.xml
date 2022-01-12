@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_11"
-                android:fontFamily="@font/regular_medium"
+                android:fontFamily="@font/semi_bold"
                 android:textSize="@dimen/text_11"
                 android:textColor="@color/black_4a4a4a"
                 tools:text="Jerin Dany"

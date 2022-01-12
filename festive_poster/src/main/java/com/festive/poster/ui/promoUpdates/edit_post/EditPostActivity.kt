@@ -29,9 +29,7 @@ import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.extensions.gone
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
-import com.framework.utils.STTUtils
-import com.framework.utils.convertStringToObj
-import com.framework.utils.highlightHashTag
+import com.framework.utils.*
 import com.framework.webengageconstant.EVENT_LABEL_NULL
 import com.framework.webengageconstant.POST_AN_UPDATE
 import com.google.gson.Gson
@@ -80,6 +78,10 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
         binding!!.captionLayout.etInput.isFocusableInTouchMode =false
         binding?.captionLayout?.etInput?.setText(highlightHashTag(posterModel?.details?.Description,R.color.black_4a4a4a))
 
+        binding!!.tvHashtagSubtitle.text = spanColor(
+            getString(R.string.type_in_the_caption_to_create_your_own_hashtags),R.color.color395996,
+            "#"
+        )
     }
 
     fun saveKeyValue(){
