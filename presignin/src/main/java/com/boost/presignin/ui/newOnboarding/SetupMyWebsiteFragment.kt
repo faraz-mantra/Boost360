@@ -60,11 +60,10 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
     }), true)
 
     parentFragmentManager.addOnBackStackChangedListener {
-      Log.i(TAG, "onCreateView: ")
       if (getTopFragment() != null) {
         setUpStepUI(getTopFragment()!!)
       } else {
-        requireActivity().finish()
+        baseActivity.finish()
       }
     }
   }

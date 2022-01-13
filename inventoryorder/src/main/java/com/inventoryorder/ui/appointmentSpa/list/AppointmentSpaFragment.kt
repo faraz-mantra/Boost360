@@ -16,6 +16,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.firebaseUtils.firestore.FirestoreManager
+import com.framework.utils.InAppReviewUtils
 import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
@@ -792,6 +793,12 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
 
   }
 
+  override fun onStop() {
+    if (orderListFinalList.size>1){
+      InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.in_app_review_out_of_customer_orders)
+    }
+    super.onStop()
+  }
 
 
 //  private fun apiOrderListCall() {
