@@ -1,45 +1,35 @@
 {
   "type": "characters/extended_popups",
   "name": "tr",
-  "authors": [ "kisekinopureya" ],
+  "authors": [ "kisekinopureya", "patrickgold", "dvrnynr" ],
   "mapping": {
     "all": {
-      "a": {
-        "relevant": [
-          { "code":  226, "label": "â" }
-        ]
-      },
       "c": {
-        "relevant": [
-          { "code":  231, "label": "ç" }
-        ]
+        "main": { "$": "auto_text_key", "code":  231, "label": "ç" }
       },
       "g": {
-        "relevant": [
-          { "code":  287, "label": "ğ" }
-        ]
+        "main": { "$": "auto_text_key", "code":  287, "label": "ğ" }
       },
       "i": {
-        "relevant": [
-          { "code":  238, "label": "î" },
-          { "code":  305, "label": "ı" }
-        ]
+        "main": { "$": "case_selector",
+          "lower": { "code":  305, "label": "ı" },
+          "upper": { "code":   73, "label": "I" }
+        }
+      },
+      "ı": {
+        "main": { "$": "case_selector",
+          "lower": { "code":  105, "label": "i" },
+          "upper": { "code":  304, "label": "İ" }
+        }
       },
       "o": {
-        "relevant": [
-          { "code":  246, "label": "ö" }
-        ]
+        "main": { "$": "auto_text_key", "code":  246, "label": "ö" }
       },
       "s": {
-        "relevant": [
-          { "code": 351, "label": "ş" }
-        ]
+        "main": { "$": "auto_text_key", "code":  351, "label": "ş" }
       },
       "u": {
-        "relevant": [
-          { "code":  252, "label": "ü" },
-          { "code":  251, "label": "û" }
-        ]
+        "main": { "$": "auto_text_key", "code":  252, "label": "ü" }
       },
       "~right": {
         "main": { "code":   44, "label": "," },
@@ -66,10 +56,10 @@
       "~right": {
         "main": { "code": -255, "label": ".com" },
         "relevant": [
-          { "code": -255, "label": ".gov" },
-          { "code": -255, "label": ".edu" },
-          { "code": -255, "label": ".tr" },
+          { "code": -255, "label": ".gov.tr" },
           { "code": -255, "label": ".org" },
+          { "code": -255, "label": ".edu.tr" },
+          { "code": -255, "label": ".com.tr" },
           { "code": -255, "label": ".net" }
         ]
       }

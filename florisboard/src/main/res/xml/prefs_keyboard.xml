@@ -47,6 +47,13 @@
             app:title="@string/pref__keyboard__utility_key_action__label"
             app:useSimpleSummaryProvider="true"/>
 
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="keyboard__merge_hint_popups_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__merge_hint_popups_enabled__label"
+            android:summary="@string/pref__keyboard_merge_hint_popups_enabled__summary"/>
+
         <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:defaultValue="100"
@@ -174,45 +181,10 @@
         app:iconSpaceReserved="false"
         app:title="@string/pref__keyboard__group_keypress__label">
 
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="keyboard__sound_enabled"
+        <Preference
+            app:key="keyboard__input_feedback"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__keyboard__sound_enabled__label"/>
-
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
-            app:allowDividerAbove="false"
-            android:defaultValue="-1"
-            app:systemDefaultValue="-1"
-            app:systemDefaultValueText="@string/settings__system_default"
-            app:dependency="keyboard__sound_enabled"
-            app:key="keyboard__sound_volume"
-            app:min="0"
-            app:max="100"
-            app:iconSpaceReserved="false"
-            app:title="@string/pref__keyboard__sound_volume__label"
-            app:seekBarIncrement="1"
-            app:unit="%"/>
-
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="keyboard__vibration_enabled"
-            app:iconSpaceReserved="false"
-            app:title="@string/pref__keyboard__vibration_enabled__label"/>
-
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
-            app:allowDividerAbove="false"
-            android:defaultValue="-1"
-            app:systemDefaultValue="-1"
-            app:systemDefaultValueText="@string/settings__system_default"
-            app:dependency="keyboard__vibration_enabled"
-            app:key="keyboard__vibration_strength"
-            app:min="0"
-            app:max="100"
-            app:iconSpaceReserved="false"
-            app:title="@string/pref__keyboard__vibration_strength__label"
-            app:seekBarIncrement="1"
-            app:unit="%"/>
+            app:title="@string/settings__input_feedback__title"/>
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
@@ -231,6 +203,87 @@
             app:title="@string/pref__keyboard__long_press_delay__label"
             app:seekBarIncrement="10"
             app:unit=" ms"/>
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            app:key="keyboard__space_bar_switches_to_characters"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__space_bar_switches_to_characters__label"
+            app:summary="@string/pref__keyboard__space_bar_switches_to_characters__summary"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        android:title="@string/pref__clipboard__clipboard_category__label">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            app:key="clipboard__enable_internal"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__clipboard__use_internal_clipboard___label"
+            app:summary="@string/pref__clipboard__use_internal_clipboard_title__summary"/>
+
+        <SwitchPreferenceCompat
+            android:dependency="clipboard__enable_internal"
+            android:defaultValue="true"
+            app:key="clipboard__sync_to_floris"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__clipboard__sync_from_system_clipboard__label"
+            app:summary="@string/pref__clipboard__keyboard_sync_from_system_clipboard__summary"/>
+
+        <SwitchPreferenceCompat
+            android:dependency="clipboard__enable_internal"
+            android:defaultValue="false"
+            app:key="clipboard__sync_to_system"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__clipboard__sync_to_system_clipboard__label"
+            app:summary="@string/pref__clipboard__sync_to_system_clipboard__summary"/>
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            app:key="clipboard__enable_history"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__clipboard__enable_clipboard_history__label"
+            app:summary="@string/pref__clipboard__enable_clipboard_history__summary"/>
+
+        <SwitchPreferenceCompat
+            android:dependency="clipboard__enable_history"
+            android:defaultValue="true"
+            app:key="clipboard__clean_up_old"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__clipboard__clean_up_old_clipboard_items__label" />
+
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:dependency="clipboard__clean_up_old"
+            android:defaultValue="15"
+            app:key="clipboard__clean_up_after"
+            app:min="0"
+            app:max="120"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__clipboard__clean_up_old_after__label"
+            app:seekBarIncrement="5"
+            app:unit="@string/pref__unit_minutes"/>
+
+        <SwitchPreferenceCompat
+            android:dependency="clipboard__enable_history"
+            android:defaultValue="true"
+            app:key="clipboard__limit_history_size"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__clipboard__limit_history_size__label" />
+
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:dependency="clipboard__limit_history_size"
+            android:defaultValue="25"
+            app:key="clipboard__max_history_size"
+            app:min="5"
+            app:max="100"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__clipboard__max_history_size__label"
+            app:seekBarIncrement="5"
+            app:unit="@string/pref__unit_items"/>
 
     </PreferenceCategory>
 

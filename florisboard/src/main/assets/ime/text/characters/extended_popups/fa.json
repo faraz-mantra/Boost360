@@ -4,69 +4,27 @@
   "authors": [ "PHELAT" ],
   "mapping": {
     "all": {
-      "ض": {
-        "relevant": [
-          { "code": 1777, "label": "۱" }
-        ]
-      },
-      "ص": {
-        "relevant": [
-          { "code": 1778, "label": "۲" }
-        ]
-      },
-      "ث": {
-        "relevant": [
-          { "code": 1779, "label": "۳" }
-        ]
-      },
-      "ق": {
-        "relevant": [
-          { "code": 1780, "label": "۴" }
-        ]
-      },
-      "ف": {
-        "relevant": [
-          { "code": 1781, "label": "۵" }
-        ]
-      },
-      "غ": {
-        "relevant": [
-          { "code": 1782, "label": "۶" }
-        ]
-      },
-      "ع": {
-        "relevant": [
-          { "code": 1783, "label": "۷" }
-        ]
-      },
-      "ه": {
-        "relevant": [
-          { "code": 1784, "label": "۸" }
-        ]
-      },
-      "خ": {
-        "relevant": [
-          { "code": 1785, "label": "۹" }
-        ]
-      },
-      "ح": {
-        "relevant": [
-          { "code": 1776, "label": "۰" }
-        ]
-      },
       "ی": {
         "relevant": [
           { "code": 1574, "label": "ئ" },
-          { "code": 1610, "label": "ي" }
+          { "code": 1610, "label": "ي" },
+          { "code": 1746, "label": "ے" }
         ]
       },
       "ا": {
         "relevant": [
-          { "code": 1570, "label": "آ" },
           { "code": 1649, "label": "ٱ" },
           { "code": 1569, "label": "ء" },
           { "code": 1571, "label": "أ" },
-          { "code": 1573, "label": "إ" }
+          { "code": 1573, "label": "إ" },
+          { "code": 1570, "label": "آ" }
+        ]
+      },
+      "ه": {
+        "relevant": [
+          { "code": 1729, "label": "ہ" },
+          { "code": 1728, "label": "ۀ" },
+          { "code": 1726, "label": "ھ" }
         ]
       },
       "ت": {
@@ -76,8 +34,7 @@
       },
       "ک": {
         "relevant": [
-          { "code": 1706, "label": "ڪ"},
-          { "code": 1603, "label": "ك" }
+          { "code": 1706, "label": "ڪ"}
         ]
       },
       "ز": {
@@ -114,9 +71,9 @@
         "main": { "code": -255, "label": ".ir"},
         "relevant": [
           { "code": -255, "label": ".gov" },
+          { "code": -255, "label": ".org" },
           { "code": -255, "label": ".edu" },
           { "code": -255, "label": ".com" },
-          { "code": -255, "label": ".org" },
           { "code": -255, "label": ".net" }
         ]
       }

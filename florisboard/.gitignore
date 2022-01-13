@@ -1,0 +1,11 @@
+# Java class files
+*.class
+*.iml
+
+
+/build
+/library/build
+/mobihelp_sdk_android_v1.3.1/build
+/partone/release/output-metadata.json
+.cxx
+/.cxx

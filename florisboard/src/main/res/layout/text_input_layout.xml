@@ -1,40 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
-
-  <data>
-
-  </data>
-
-  <LinearLayout
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/text_input"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:alpha="0.9"
     android:orientation="vertical">
 
-    <include layout="@layout/smartbar" />
+    <include android:id="@+id/smartbar" layout="@layout/smartbar"/>
 
-    <!-- KeyboardViews will be inserted in ViewFlipper below dynamically -->
-    <dev.patrickgold.florisboard.ime.core.FlorisViewFlipper
-      android:id="@+id/text_input_view_flipper"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:measureAllChildren="true">
-
-      <dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
-        android:id="@+id/keyboard_preview"
+    <dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardView
+        android:id="@+id/main_keyboard_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:isLoadingPlaceholderKeyboard="true" />
+        android:layout_height="wrap_content"/>
 
-      <include
-        android:id="@+id/business_features"
-        layout="@layout/business_features_layout"
-        android:visibility="gone" />
-
-      <include layout="@layout/editing_layout" />
-
-    </dev.patrickgold.florisboard.ime.core.FlorisViewFlipper>
-  </LinearLayout>
-</layout>
+</LinearLayout>

@@ -32,14 +32,20 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.ThemeEditorActivityBinding
 import dev.patrickgold.florisboard.databinding.ThemeEditorGroupViewBinding
 import dev.patrickgold.florisboard.databinding.ThemeEditorMetaDialogBinding
-import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.extension.AssetRef
+import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
+import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
+import dev.patrickgold.florisboard.ime.text.key.CurrencySet
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardIconSet
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeValue
+import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.settings.components.ThemeAttrGroupView
 import dev.patrickgold.florisboard.settings.components.ThemeAttrView
 import kotlinx.coroutines.MainScope
@@ -51,13 +57,27 @@ import kotlinx.coroutines.launch
  */
 class ThemeEditorActivity : AppCompatActivity() {
     private lateinit var binding: ThemeEditorActivityBinding
-    private lateinit var layoutManager: LayoutManager
     private val mainScope = MainScope()
-    private lateinit var prefs: PrefHelper
+    private lateinit var layoutManager: LayoutManager
     private val themeManager: ThemeManager = ThemeManager.default()
 
+    private lateinit var textKeyboardIconSet: TextKeyboardIconSet
+    private val textComputingEvaluator = object : ComputingEvaluator by DefaultComputingEvaluator {
+        override fun evaluateVisible(data: KeyData): Boolean {
+            return data.code != KeyCode.SWITCH_TO_MEDIA_CONTEXT
+        }
+
+        override fun isSlot(data: KeyData): Boolean {
+            return CurrencySet.isCurrencySlot(data.code)
+        }
+
+        override fun getSlotData(data: KeyData): KeyData {
+            return TextKeyData(label = "$")
+        }
+    }
+
     private var editedTheme: Theme = Theme.empty()
-    private var editedThemeRef: AssetRef? = null
+    private var editedThemeRef: FlorisRef? = null
     private var isSaved: Boolean = false
 
     private var themeLabel: String = ""
@@ -78,13 +98,13 @@ class ThemeEditorActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        prefs = PrefHelper.getDefaultInstance(this)
-
         super.onCreate(savedInstanceState)
         binding = ThemeEditorActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        AssetRef.fromString(intent.getStringExtra(EXTRA_THEME_REF) ?: "").onSuccess { ref ->
+        layoutManager = LayoutManager()
+
+        FlorisRef.from(intent.getStringExtra(EXTRA_THEME_REF) ?: "").takeIf { it.isValid }?.let { ref ->
             editedThemeRef = ref
             themeManager.loadTheme(ref).onSuccess { theme ->
                 editedTheme = theme.copy()
@@ -93,21 +113,22 @@ class ThemeEditorActivity : AppCompatActivity() {
 
         binding.themeNameEditBtn.setOnClickListener { showMetaEditDialog() }
 
+        textKeyboardIconSet = TextKeyboardIconSet.new(this)
+        binding.keyboardPreview.setIconSet(textKeyboardIconSet)
+        binding.keyboardPreview.setComputingEvaluator(textComputingEvaluator)
+        binding.keyboardPreview.sync()
+
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         supportActionBar?.title = resources.getString(R.string.settings__theme_editor__title)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        layoutManager = LayoutManager(this).apply {
-            preloadComputedLayout(KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs)
-        }
-
         buildUi()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.theme_editor_menu, menu)
+        menuInflater.inflate(R.menu.help_menu, menu)
         return true
     }
 
@@ -322,9 +343,9 @@ class ThemeEditorActivity : AppCompatActivity() {
             }
         }
         mainScope.launch {
-            binding.keyboardPreview.computedLayout = layoutManager.fetchComputedLayoutAsync(
-                KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs
-            ).await()
+            binding.keyboardPreview.setComputedKeyboard(layoutManager.computeKeyboardAsync(
+                KeyboardMode.CHARACTERS, Subtype.DEFAULT
+            ).await())
             binding.keyboardPreview.onThemeUpdated(editedTheme)
         }
         sortGroups()

@@ -41,7 +41,8 @@ import com.webengage.sdk.android.WebEngageConfig;
 import java.io.File;
 import java.lang.reflect.Method;
 
-import dev.patrickgold.florisboard.ime.core.FlorisApplication;
+import dev.patrickgold.florisboard.FlorisApplication;
+
 
 public class AppController extends MultiDexApplication/* implements IAviaryClientCredentials*/ {
 

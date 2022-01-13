@@ -22,17 +22,18 @@ import android.view.View
 import android.widget.*
 import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.databinding.FlorisboardBinding
+import dev.patrickgold.florisboard.debug.LogTopic
+import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.ime.core.EditorInstance
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
-import dev.patrickgold.florisboard.ime.core.InputView
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyboardView
 import dev.patrickgold.florisboard.ime.media.emoticon.EmoticonKeyData
 import dev.patrickgold.florisboard.ime.media.emoticon.EmoticonKeyboardView
-import dev.patrickgold.florisboard.ime.text.key.KeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import kotlinx.coroutines.*
-import timber.log.Timber
 import java.util.*
 
 /**
@@ -57,8 +58,6 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
     private var tabLayout: TabLayout? = null
     private val tabViews = EnumMap<Tab, LinearLayout>(Tab::class.java)
 
-    private var mediaViewGroup: LinearLayout? = null
-
     companion object {
         private var instance: MediaInputManager? = null
 
@@ -75,27 +74,20 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
         florisboard.addEventListener(this)
     }
 
-    /**
-     * Called when a new input view has been registered. Used to initialize all media-relevant
-     * views and layouts.
-     * TODO: evaluate if the view initializing process can be optimized.
-     */
     @SuppressLint("ClickableViewAccessibility")
-    override fun onRegisterInputView(inputView: InputView) {
-        Timber.i("onRegisterInputView(inputView)")
+    override fun onInitializeInputUi(uiBinding: FlorisboardBinding) {
+        flogInfo(LogTopic.IMS_EVENTS)
 
-        launch(Dispatchers.Default) {
-            mediaViewGroup = inputView.findViewById(R.id.media_input)
-            mediaViewFlipper = inputView.findViewById(R.id.media_input_view_flipper)
+        mediaViewFlipper = uiBinding.media.mediaInputViewFlipper
 
-            // Init bottom buttons
-            inputView.findViewById<Button>(R.id.media_input_switch_to_text_input_button)
-                .setOnTouchListener { view, event -> onBottomButtonEvent(view, event) }
-            inputView.findViewById<ImageButton>(R.id.media_input_backspace_button)
-                .setOnTouchListener { view, event -> onBottomButtonEvent(view, event) }
+        // Init bottom buttons
+        uiBinding.media.mediaInputSwitchToTextInputButton
+            .setOnTouchListener { view, event -> onBottomButtonEvent(view, event) }
+        uiBinding.media.mediaInputBackspaceButton
+            .setOnTouchListener { view, event -> onBottomButtonEvent(view, event) }
 
-            tabLayout = inputView.findViewById(R.id.media_input_tabs)
-            tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        tabLayout = uiBinding.media.mediaInputTabs.also {
+            it.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     when (tab.position) {
                         0 -> setActiveTab(Tab.EMOJI)
@@ -107,15 +99,15 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
                 override fun onTabUnselected(tab: TabLayout.Tab) {}
                 override fun onTabReselected(tab: TabLayout.Tab) {}
             })
+        }
 
-            withContext(Dispatchers.Main) {
-                for (tab in Tab.values()) {
-                    val tabView = createTabViewFor(tab)
-                    tabViews[tab] = tabView
-                    mediaViewFlipper?.addView(tabView)
-                }
-                tabLayout?.selectTab(tabLayout?.getTabAt(0))
+        launch(Dispatchers.Main) {
+            for (tab in Tab.values()) {
+                val tabView = createTabViewFor(tab)
+                tabViews[tab] = tabView
+                mediaViewFlipper?.addView(tabView)
             }
+            tabLayout?.selectTab(tabLayout?.getTabAt(0))
         }
     }
 
@@ -123,7 +115,7 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
      * Clean-up of resources and stopping all coroutines.
      */
     override fun onDestroy() {
-        Timber.i("onDestroy()")
+        flogInfo(LogTopic.IMS_EVENTS)
 
         cancel()
         instance = null
@@ -135,14 +127,13 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
     private fun onBottomButtonEvent(view: View, event: MotionEvent?): Boolean {
         event ?: return false
         val data = when (view.id) {
-            R.id.media_input_switch_to_text_input_button -> KeyData.SWITCH_TO_TEXT_CONTEXT
-            R.id.media_input_backspace_button -> KeyData.DELETE
+            R.id.media_input_switch_to_text_input_button -> TextKeyData.SWITCH_TO_TEXT_CONTEXT
+            R.id.media_input_backspace_button -> TextKeyData.DELETE
             else -> return false
         }
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
-                florisboard.keyPressVibrate()
-                florisboard.keyPressSound(data)
+                florisboard.inputFeedbackManager.keyPress(data)
                 florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.down(data))
             }
             MotionEvent.ACTION_UP -> {
@@ -161,9 +152,9 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
      */
     private fun createTabViewFor(tab: Tab): LinearLayout {
         return when (tab) {
-            Tab.EMOJI -> EmojiKeyboardView(florisboard)
-            Tab.EMOTICON -> EmoticonKeyboardView(florisboard.context)
-            else -> LinearLayout(florisboard.context).apply {
+            Tab.EMOJI -> EmojiKeyboardView(florisboard.themeContext)
+            Tab.EMOTICON -> EmoticonKeyboardView(florisboard.themeContext)
+            else -> LinearLayout(florisboard.themeContext).apply {
                 addView(TextView(context).apply {
                     text = "not yet implemented"
                 })
@@ -184,7 +175,7 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
      * Sends a given [emojiKeyData] to the current input editor.
      */
     fun sendEmojiKeyPress(emojiKeyData: EmojiKeyData) {
-        activeEditorInstance.commitText(emojiKeyData.getCodePointsAsString())
+        activeEditorInstance.commitText(emojiKeyData.asString(isForDisplay = false))
     }
 
     /**

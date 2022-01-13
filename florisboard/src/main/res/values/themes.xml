@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="KeyboardThemeBase" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="KeyboardThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -20,7 +20,7 @@
     </style>
 
     <style name="KeyboardThemeBase.Night">
-        <item name="android:navigationBarColor" tools:targetApi="o_mr1">#F5F5F5</item>
+        <item name="android:navigationBarColor" tools:targetApi="o_mr1">#000000</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
         <item name="android:colorControlNormal">#B3FFFFFF</item><!-- White, semi transparent -->
         <item name="android:colorButtonNormal">#73FFFFFF</item><!-- White, semi transparent -->

@@ -1,12 +1,17 @@
 {
   "type": "characters/extended_popups",
   "name": "ru",
-  "authors": [ "williamtheaker" ],
+  "authors": [ "williamtheaker", "33kk" ],
   "mapping": {
     "all": {
       "е": {
         "relevant": [
-          { "code":  1105, "label": "ё" }
+          { "$": "auto_text_key", "code":  1105, "label": "ё" }
+        ]
+      },
+      "ь": {
+        "relevant": [
+          { "$": "auto_text_key", "code":  1098, "label": "ъ" }
         ]
       },
       "~right": {

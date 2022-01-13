@@ -31,11 +31,14 @@ import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsActivityBinding
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
+import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.settings.fragments.*
 import dev.patrickgold.florisboard.util.AppVersionUtils
 import dev.patrickgold.florisboard.util.PackageManagerUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
 
 internal const val FRAGMENT_TAG = "FRAGMENT_TAG"
 private const val PREF_RES_ID = "PREF_RES_ID"
@@ -44,17 +47,16 @@ private const val ADVANCED_REQ_CODE = 0x145F
 
 class SettingsMainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener,
-    SharedPreferences.OnSharedPreferenceChangeListener {
+    SharedPreferences.OnSharedPreferenceChangeListener,
+    CoroutineScope by MainScope() {
 
     lateinit var binding: SettingsActivityBinding
-    private lateinit var prefs: PrefHelper
-    lateinit var subtypeManager: SubtypeManager
+    lateinit var layoutManager: LayoutManager
+    private val prefs get() = Preferences.default()
+    val subtypeManager: SubtypeManager get() = SubtypeManager.default()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        prefs = PrefHelper.getDefaultInstance(this)
-        prefs.initDefaultPreferences()
-        prefs.sync()
-        subtypeManager = SubtypeManager(this, prefs)
+        layoutManager = LayoutManager()
 
         val mode = when (prefs.advanced.settingsTheme) {
             "light" -> AppCompatDelegate.MODE_NIGHT_NO
@@ -90,7 +92,7 @@ class SettingsMainActivity : AppCompatActivity(),
             R.id.settings__navigation__home -> {
                 supportActionBar?.title = String.format(
                     resources.getString(R.string.settings__home__title),
-                    resources.getString(R.string.app_name_k)
+                    resources.getString(R.string.floris_app_name)
                 )
                 loadFragment(HomeFragment())
                 true

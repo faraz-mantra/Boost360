@@ -18,18 +18,21 @@ package dev.patrickgold.florisboard.ime.onehanded
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 
 class OneHandedPanel : LinearLayout, ThemeManager.OnThemeUpdatedListener {
     private var florisboard: FlorisBoard? = null
     private var themeManager: ThemeManager? = null
+    private val prefs get() = Preferences.default()
 
     private var closeBtn: ImageButton? = null
     private var moveBtn: ImageButton? = null
@@ -55,14 +58,16 @@ class OneHandedPanel : LinearLayout, ThemeManager.OnThemeUpdatedListener {
         closeBtn = findViewWithTag("one_handed_ctrl_close")
         closeBtn?.setOnClickListener {
             florisboard?.let {
-                it.prefs.keyboard.oneHandedMode = OneHandedMode.OFF
+                it.inputFeedbackManager.keyPress()
+                prefs.keyboard.oneHandedMode = OneHandedMode.OFF
                 it.updateOneHandedPanelVisibility()
             }
         }
         moveBtn = findViewWithTag("one_handed_ctrl_move")
         moveBtn?.setOnClickListener {
             florisboard?.let {
-                it.prefs.keyboard.oneHandedMode = panelSide
+                it.inputFeedbackManager.keyPress()
+                prefs.keyboard.oneHandedMode = panelSide
                 it.updateOneHandedPanelVisibility()
             }
         }
@@ -94,9 +99,8 @@ class OneHandedPanel : LinearLayout, ThemeManager.OnThemeUpdatedListener {
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val florisboard = florisboard ?: return super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val width = (florisboard.inputView?.measuredWidth ?: 0) *
-            ((100 - florisboard.prefs.keyboard.oneHandedModeScaleFactor) / 100.0f)
+        val width = (Resources.getSystem().displayMetrics.widthPixels) *
+            ((100 - prefs.keyboard.oneHandedModeScaleFactor) / 100.0f)
         super.onMeasure(MeasureSpec.makeMeasureSpec(width.toInt(),  MeasureSpec.EXACTLY), heightMeasureSpec)
     }
 }

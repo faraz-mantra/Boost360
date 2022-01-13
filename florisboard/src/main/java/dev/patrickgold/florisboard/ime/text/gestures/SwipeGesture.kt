@@ -18,10 +18,15 @@ package dev.patrickgold.florisboard.ime.text.gestures
 
 import android.content.Context
 import android.view.MotionEvent
+import android.view.VelocityTracker
 import dev.patrickgold.florisboard.R
-import kotlin.math.PI
+import dev.patrickgold.florisboard.debug.LogTopic
+import dev.patrickgold.florisboard.debug.flogDebug
+import dev.patrickgold.florisboard.common.Pointer
+import dev.patrickgold.florisboard.common.PointerMap
+import dev.patrickgold.florisboard.common.ViewUtils
 import kotlin.math.abs
-import kotlin.math.atan
+import kotlin.math.atan2
 
 /**
  * Wrapper class which holds all enums, interfaces and classes for detecting a swipe gesture.
@@ -64,9 +69,12 @@ abstract class SwipeGesture {
      * @property listener The listener to report detected swipes to.
      */
     class Detector(private val context: Context, private val listener: Listener) {
-        private var pointerDataMap: MutableMap<Int, PointerData> = mutableMapOf()
+        var isEnabled: Boolean = true
+        private var pointerMap: PointerMap<GesturePointer> = PointerMap { GesturePointer() }
+        private var thresholdSpeed: Double = numericValue(context, VelocityThreshold.NORMAL)
         private var thresholdWidth: Double = numericValue(context, DistanceThreshold.NORMAL)
         private var unitWidth: Double = thresholdWidth / 4.0
+        private val velocityTracker: VelocityTracker = VelocityTracker.obtain()
 
         var distanceThreshold: DistanceThreshold = DistanceThreshold.NORMAL
             set(value) {
@@ -75,6 +83,10 @@ abstract class SwipeGesture {
                 unitWidth = thresholdWidth / 4.0
             }
         var velocityThreshold: VelocityThreshold = VelocityThreshold.NORMAL
+            set(value) {
+                field = value
+                thresholdSpeed = numericValue(context, value)
+            }
 
         /**
          * Method which evaluates if a given [event] is a gesture.
@@ -84,98 +96,92 @@ abstract class SwipeGesture {
          *  trigger, regardless of the distance from the previous event. Defaults to false.
          * @return True if the given [event] is a gesture, false otherwise.
          */
-        fun onTouchEvent(event: MotionEvent, alwaysTriggerOnMove: Boolean = false): Boolean {
-            try {
-                when (event.actionMasked) {
-                    MotionEvent.ACTION_DOWN,
-                    MotionEvent.ACTION_POINTER_DOWN -> {
-                        if (event.actionMasked == MotionEvent.ACTION_DOWN) {
-                            resetState()
-                        }
-                        val pointerIndex = event.actionIndex
-                        val pointerId = event.getPointerId(pointerIndex)
-                        pointerDataMap[pointerId] = PointerData().apply {
-                            firstX = event.getX(pointerIndex)
-                            firstY = event.getY(pointerIndex)
-                            lastX = firstX
-                            lastY = firstY
-                        }
-                    }
-                    MotionEvent.ACTION_MOVE -> {
-                        for (pointerIndex in 0 until event.pointerCount) {
-                            val pointerId = event.getPointerId(pointerIndex)
-                            pointerDataMap[pointerId]?.apply {
-                                val absDiffX = event.getX(pointerIndex) - firstX
-                                val absDiffY = event.getY(pointerIndex) - firstY
-                                val relDiffX = event.getX(pointerIndex) - lastX
-                                val relDiffY = event.getY(pointerIndex) - lastY
-                                return if (alwaysTriggerOnMove || abs(relDiffX) > (thresholdWidth / 2.0) || abs(relDiffY) > (thresholdWidth / 2.0)) {
-                                    lastX = event.getX(pointerIndex)
-                                    lastY = event.getY(pointerIndex)
-                                    val direction = detectDirection(relDiffX.toDouble(), relDiffY.toDouble())
-                                    val newAbsUnitCountX = (absDiffX / unitWidth).toInt()
-                                    val newAbsUnitCountY = (absDiffY / unitWidth).toInt()
-                                    val relUnitCountX = newAbsUnitCountX - absUnitCountX
-                                    val relUnitCountY = newAbsUnitCountY - absUnitCountY
-                                    absUnitCountX = newAbsUnitCountX
-                                    absUnitCountY = newAbsUnitCountY
-                                    listener.onSwipe(Event(
-                                        direction = direction,
-                                        type = Type.TOUCH_MOVE,
-                                        pointerId,
-                                        absUnitCountX,
-                                        absUnitCountY,
-                                        relUnitCountX,
-                                        relUnitCountY
-                                    ))
-                                } else {
-                                    false
-                                }
-                            }
-                        }
-                    }
-                    MotionEvent.ACTION_UP,
-                    MotionEvent.ACTION_POINTER_UP -> {
-                        val pointerIndex = event.actionIndex
-                        val pointerId = event.getPointerId(pointerIndex)
-                        pointerDataMap.remove(pointerId)?.apply {
-                            val absDiffX = event.getX(pointerIndex) - firstX
-                            val absDiffY = event.getY(pointerIndex) - firstY
-                            /*val velocityThresholdNV = numericValue(velocityThreshold)
-                            val velocity =
-                                ((convertPixelsToDp(
-                                    sqrt(diffX.pow(2) + diffY.pow(2)),
-                                    context
-                                ) / event.downTime) * 10.0f.pow(8)).toInt()*/
-                            // return if ((abs(diffX) > distanceThresholdNV || abs(diffY) > distanceThresholdNV) && velocity >= velocityThresholdNV) {
-                            return if ((abs(absDiffX) > thresholdWidth || abs(absDiffY) > thresholdWidth)) {
-                                val direction = detectDirection(absDiffX.toDouble(), absDiffY.toDouble())
-                                absUnitCountX = (absDiffX / unitWidth).toInt()
-                                absUnitCountY = (absDiffY / unitWidth).toInt()
-                                listener.onSwipe(Event(
-                                    direction = direction,
-                                    type = Type.TOUCH_UP,
-                                    pointerId,
-                                    absUnitCountX,
-                                    absUnitCountY,
-                                    absUnitCountX,
-                                    absUnitCountY
-                                ))
-                            } else {
-                                false
-                            }
-                        }
-                        return false
-                    }
-                    MotionEvent.ACTION_CANCEL -> {
-                        resetState()
-                    }
-                    else -> return false
-                }
-                return false
-            } catch (e: Exception) {
-                return false
+        fun onTouchEvent(event: MotionEvent) {
+            if (!isEnabled) return
+            if (event.actionMasked == MotionEvent.ACTION_DOWN) {
+                resetState()
+                velocityTracker.clear()
             }
+            velocityTracker.addMovement(event)
+        }
+
+        fun onTouchDown(event: MotionEvent, pointer: Pointer) {
+            if (!isEnabled) return
+            pointerMap.add(pointer.id, pointer.index)?.let { gesturePointer ->
+                gesturePointer.firstX = event.getX(pointer.index)
+                gesturePointer.firstY = event.getY(pointer.index)
+                gesturePointer.lastX = gesturePointer.firstX
+                gesturePointer.lastY = gesturePointer.firstY
+            }
+        }
+
+        fun onTouchMove(event: MotionEvent, pointer: Pointer, alwaysTriggerOnMove: Boolean): Boolean {
+            if (!isEnabled) return false
+            pointerMap.findById(pointer.id)?.let { gesturePointer ->
+                gesturePointer.index = pointer.index
+                val absDiffX = event.getX(pointer.index) - gesturePointer.firstX
+                val absDiffY = event.getY(pointer.index) - gesturePointer.firstY
+                val relDiffX = event.getX(pointer.index) - gesturePointer.lastX
+                val relDiffY = event.getY(pointer.index) - gesturePointer.lastY
+                return if (alwaysTriggerOnMove || abs(relDiffX) > (thresholdWidth / 2.0) || abs(relDiffY) > (thresholdWidth / 2.0)) {
+                    gesturePointer.lastX = event.getX(pointer.index)
+                    gesturePointer.lastY = event.getY(pointer.index)
+                    val direction = detectDirection(relDiffX.toDouble(), relDiffY.toDouble())
+                    val newAbsUnitCountX = (absDiffX / unitWidth).toInt()
+                    val newAbsUnitCountY = (absDiffY / unitWidth).toInt()
+                    val relUnitCountX = newAbsUnitCountX - gesturePointer.absUnitCountX
+                    val relUnitCountY = newAbsUnitCountY - gesturePointer.absUnitCountY
+                    gesturePointer.absUnitCountX = newAbsUnitCountX
+                    gesturePointer.absUnitCountY = newAbsUnitCountY
+                    listener.onSwipe(Event(
+                        direction = direction,
+                        type = Type.TOUCH_MOVE,
+                        pointer.id,
+                        gesturePointer.absUnitCountX,
+                        gesturePointer.absUnitCountY,
+                        relUnitCountX,
+                        relUnitCountY
+                    ))
+                } else {
+                    false
+                }
+            }
+            return false
+        }
+
+        fun onTouchUp(event: MotionEvent, pointer: Pointer): Boolean {
+            if (!isEnabled) return false
+            pointerMap.findById(pointer.id)?.let { gesturePointer ->
+                val absDiffX = event.getX(pointer.index) - gesturePointer.firstX
+                val absDiffY = event.getY(pointer.index) - gesturePointer.firstY
+                velocityTracker.computeCurrentVelocity(1000)
+                val velocityX = ViewUtils.px2dp(velocityTracker.getXVelocity(pointer.id))
+                val velocityY = ViewUtils.px2dp(velocityTracker.getYVelocity(pointer.id))
+                flogDebug(LogTopic.GESTURES) { "Velocity: $velocityX $velocityY dp/s" }
+                pointerMap.removeById(pointer.id)
+                return if ((abs(absDiffX) > thresholdWidth || abs(absDiffY) > thresholdWidth) && (abs(velocityX) > thresholdSpeed || abs(velocityY) > thresholdSpeed)) {
+                    val direction = detectDirection(absDiffX.toDouble(), absDiffY.toDouble())
+                    gesturePointer.absUnitCountX = (absDiffX / unitWidth).toInt()
+                    gesturePointer.absUnitCountY = (absDiffY / unitWidth).toInt()
+                    listener.onSwipe(Event(
+                        direction = direction,
+                        type = Type.TOUCH_UP,
+                        pointer.id,
+                        gesturePointer.absUnitCountX,
+                        gesturePointer.absUnitCountY,
+                        gesturePointer.absUnitCountX,
+                        gesturePointer.absUnitCountY
+                    ))
+                } else {
+                    false
+                }
+            }
+            return false
+        }
+
+        fun onTouchCancel(event: MotionEvent, pointer: Pointer) {
+            if (!isEnabled) return
+            pointerMap.removeById(pointer.id)
         }
 
         /**
@@ -188,16 +194,7 @@ abstract class SwipeGesture {
          *    +y
          */
         private fun angle(diffX: Double, diffY: Double): Double {
-            val tmpAngle = abs(360 * atan(diffY / diffX) / (2 * PI))
-            return if (diffX < 0 && diffY >= 0) {
-                180.0f - tmpAngle
-            } else if (diffX < 0 && diffY < 0) {
-                180.0f + tmpAngle
-            } else if (diffX >= 0 && diffY < 0) {
-                360.0f - tmpAngle
-            } else {
-                tmpAngle
-            }
+            return (Math.toDegrees(atan2(diffY, diffX)) + 360) % 360
         }
 
         /**
@@ -221,16 +218,26 @@ abstract class SwipeGesture {
          * Resets the state.
          */
         private fun resetState() {
-            pointerDataMap.clear()
+            pointerMap.clear()
         }
 
-        class PointerData {
+        class GesturePointer : Pointer() {
             var firstX: Float = 0.0f
             var firstY: Float = 0.0f
             var lastX: Float = 0.0f
             var lastY: Float = 0.0f
             var absUnitCountX: Int = 0
             var absUnitCountY: Int = 0
+
+            override fun reset() {
+                super.reset()
+                firstX = 0.0f
+                firstY = 0.0f
+                lastX = 0.0f
+                lastY = 0.0f
+                absUnitCountX = 0
+                absUnitCountY = 0
+            }
         }
     }
 

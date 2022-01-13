@@ -332,7 +332,12 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
         showOverlay(overLayout1, getString(R.string.boost_keyboard_n), getString(R.string.keyboard_message));
         break;
       case R.id.ll_enable_keyboard:
-        startActivity(new Intent(getActivity(), BoostKeyboardActivity.class));
+//        startActivity(new Intent(getActivity(), BoostKeyboardActivity.class));
+        try {
+          startActivity(new Intent(getActivity(), Class.forName("dev.patrickgold.florisboard.setup.SetupActivity")));
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
         break;
     }
   }

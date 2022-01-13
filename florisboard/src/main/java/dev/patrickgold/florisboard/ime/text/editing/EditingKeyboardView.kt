@@ -21,6 +21,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
@@ -55,6 +56,9 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener,
         cutKey = findViewById(R.id.clipboard_cut)
         copyKey = findViewById(R.id.clipboard_copy)
         pasteKey = findViewById(R.id.clipboard_paste)
+
+        val clipboardManager = FlorisClipboardManager.getInstance()
+        pasteKey?.isEnabled = clipboardManager.canBePasted(clipboardManager.primaryClip)
     }
 
     override fun onDetachedFromWindow() {
@@ -80,7 +84,8 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener,
             else -> View.GONE
         }
         copyKey?.isEnabled = isSelectionActive
-        pasteKey?.isEnabled = florisboard?.clipboardManager?.hasPrimaryClip() ?: false
+        val clipboardManager = FlorisClipboardManager.getInstance()
+        pasteKey?.isEnabled = clipboardManager.canBePasted(clipboardManager.primaryClip)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -93,11 +98,11 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener,
             }
             MeasureSpec.AT_MOST -> {
                 // Can't be bigger than...
-                (florisboard?.inputView?.desiredTextKeyboardViewHeight ?: 0.0f).coerceAtMost(heightSize)
+                (florisboard?.uiBinding?.inputView?.desiredTextKeyboardViewHeight ?: 0.0f).coerceAtMost(heightSize)
             }
             else -> {
                 // Be whatever you want
-                florisboard?.inputView?.desiredTextKeyboardViewHeight ?: 0.0f
+                florisboard?.uiBinding?.inputView?.desiredTextKeyboardViewHeight ?: 0.0f
             }
         }
 

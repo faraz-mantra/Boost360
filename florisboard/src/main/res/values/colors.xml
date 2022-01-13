@@ -1,41 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#0068E0</color><!-- Green 500 -->
-  <color name="colorPrimaryDark">#0860C6</color><!-- Green 700 -->
-  <color name="colorAccent">#0068E0</color><!-- Orange 500 -->
-  <color name="colorAccentDark">#0860C6</color><!-- Orange 700 -->
+    <color name="colorPrimary">#4CAF50</color><!-- Green 500 -->
+    <color name="colorPrimaryDark">#388E3C</color><!-- Green 700 -->
+    <color name="colorAccent">#FF9800</color><!-- Orange 500 -->
+    <color name="colorAccentDark">#F57C00</color><!-- Orange 700 -->
 
-  <color name="colorSuccess">@color/colorPrimary</color><!-- Green 500 -->
-  <color name="textColorSuccess">#FFFFFF</color><!-- White -->
-  <color name="colorWarning">#FFFF00</color><!-- Yellow A200 -->
-  <color name="textColorWarning">#000000</color><!-- Black -->
-  <color name="colorError">#B00020</color><!-- Red 1000? -->
-  <color name="textColorError">#FFFFFF</color><!-- White -->
+    <color name="colorSuccess">@color/colorPrimary</color><!-- Green 500 -->
+    <color name="textColorSuccess">#FFFFFF</color><!-- White -->
+    <color name="colorWarning">#FFFF00</color><!-- Yellow A200 -->
+    <color name="textColorWarning">#000000</color><!-- Black -->
+    <color name="colorError">#B00020</color><!-- Red 1000? -->
+    <color name="textColorError">#FFFFFF</color><!-- White -->
 
-  <color name="ic_launcher_background">#78909C</color>
+    <color name="ic_app_icon_background">#424242</color>
+    <color name="ic_app_icon_release_background">@color/ic_app_icon_background</color>
+    <color name="ic_app_icon_beta_background">@color/ic_app_icon_background</color>
+    <color name="ic_app_icon_debug_background">@color/ic_app_icon_background</color>
 
-  <color name="cardViewBackgroundColor">#FFFFFF</color><!-- White -->
-  <color name="navigationBarColor">#000000</color><!-- Black -->
-  <color name="toolbarForegroundColor">#000000</color><!-- Black -->
-  <color name="windowBackground">#FAFAFA</color><!-- Gray 50 -->
-
-  <color name="secondaryTextColor">#7f7f7f</color>
-  <color name="secondaryLightTextColor">#bbbbbb</color>
-  <color name="primaryTextColor">#4a4a4a</color>
-
-  <color name="dark_gray">#141414</color>
-  <color name="gray_40">#66212121</color>
-  <color name="gray_10">#1A212121</color>
-  <color name="blue_light_e5f1fc">#e5f1fc</color>
-  <color name="accent_blue">#0068E0</color>
-  <color name="blue_accent_10">#1A0068E0</color>
-  <color name="black_4a4a4a">#4a4a4a</color>
-  <color name="black_4a4a4a_50">#804A4A4A</color>
-  <color name="light_green">#27AE60</color>
-  <color name="lightgray">#c8d1d9</color>
-  <color name="whitesmoke">#f5f5f5</color>
-
-  <color name="silver_light_new">#c9d1d8</color>
-  <color name="silver_dark_new">#b5bdc4</color>
-
+    <color name="cardViewBackgroundColor">#FFFFFF</color><!-- White -->
+    <color name="navigationBarColor">#000000</color><!-- Black -->
+    <color name="toolbarForegroundColor">#000000</color><!-- Black -->
+    <color name="windowBackground">#FAFAFA</color><!-- Gray 50 -->
 </resources>

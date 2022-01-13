@@ -18,7 +18,15 @@ package dev.patrickgold.florisboard.ime.theme
 
 import android.content.Context
 import android.graphics.Color
+import androidx.annotation.ColorInt
 import dev.patrickgold.florisboard.R
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 /**
  * Sealed class which allows for a field to have dynamic types, dependent on the configuration.
@@ -26,22 +34,29 @@ import dev.patrickgold.florisboard.R
  * while sealing this process within one class. Allows for easy addition of new theme types in the
  * future.
  */
+@Serializable(with = ThemeValueSerializer::class)
 sealed class ThemeValue {
     /**
      * This holds a reference to another [ThemeValue] by specifying a group and attribute name.
      */
     data class Reference(val group: String, val attr: String) : ThemeValue() {
         override fun toString(): String {
-            return super.toString()
+            return "@$group/$attr"
         }
     }
 
     /**
      * This holds a solid color as a color int.
      */
-    data class SolidColor(val color: Int) : ThemeValue() {
+    data class SolidColor(@ColorInt val color: Int) : ThemeValue() {
+        companion object {
+            val TRANSPARENT = SolidColor(Color.TRANSPARENT)
+            val BLACK = SolidColor(Color.BLACK)
+            val WHITE = SolidColor(Color.WHITE)
+        }
+
         override fun toString(): String {
-            return super.toString()
+            return "#" + String.format("%08X", color)
         }
 
         fun complimentaryTextColor(isAlt: Boolean = false): SolidColor {
@@ -71,7 +86,7 @@ sealed class ThemeValue {
      */
     data class LinearGradient(val dummy: Int) : ThemeValue() {
         override fun toString(): String {
-            return super.toString()
+            return "--undefined--"
         }
     }
 
@@ -80,7 +95,7 @@ sealed class ThemeValue {
      */
     data class RadialGradient(val dummy: Int) : ThemeValue() {
         override fun toString(): String {
-            return super.toString()
+            return "--undefined--"
         }
     }
 
@@ -89,7 +104,7 @@ sealed class ThemeValue {
      */
     data class OnOff(val state: Boolean) : ThemeValue() {
         override fun toString(): String {
-            return super.toString()
+            return state.toString()
         }
     }
 
@@ -99,7 +114,7 @@ sealed class ThemeValue {
      */
     data class Other(val rawValue: String) : ThemeValue() {
         override fun toString(): String {
-            return super.toString()
+            return rawValue
         }
     }
 
@@ -173,32 +188,6 @@ sealed class ThemeValue {
     }
 
     /**
-     * Converts this theme value to a string representation.
-     */
-    override fun toString(): String {
-        return when (this) {
-            is Reference -> {
-                "@$group/$attr"
-            }
-            is SolidColor -> {
-                "#" + String.format("%08X", color)
-            }
-            is LinearGradient -> {
-                "--undefined--"
-            }
-            is RadialGradient -> {
-                "--undefined--"
-            }
-            is OnOff -> {
-                state.toString()
-            }
-            is Other -> {
-                rawValue
-            }
-        }
-    }
-
-    /**
      * Converts this theme value to a string representation which can be shown to the user.
      */
     fun toSummaryString(context: Context): String {
@@ -206,5 +195,17 @@ sealed class ThemeValue {
             context.resources.getString(it)
         }
         return "$themeTypeStr | $this"
+    }
+}
+
+class ThemeValueSerializer : KSerializer<ThemeValue> {
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ThemeValue", PrimitiveKind.STRING)
+
+    override fun serialize(encoder: Encoder, value: ThemeValue) {
+        encoder.encodeString(value.toString())
+    }
+
+    override fun deserialize(decoder: Decoder): ThemeValue {
+        return ThemeValue.fromString(decoder.decodeString())
     }
 }

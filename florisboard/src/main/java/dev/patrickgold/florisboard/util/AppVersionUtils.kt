@@ -17,7 +17,7 @@
 package dev.patrickgold.florisboard.util
 
 import android.content.Context
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Preferences
 
 object AppVersionUtils {
     fun getRawVersionName(context: Context): String {
@@ -28,7 +28,7 @@ object AppVersionUtils {
         }
     }
 
-    fun shouldShowChangelog(context: Context, prefs: PrefHelper): Boolean {
+    fun shouldShowChangelog(context: Context, prefs: Preferences): Boolean {
         val installVersion =
             VersionName.fromString(prefs.internal.versionOnInstall) ?: VersionName.DEFAULT
         val lastChangelogVersion =
@@ -39,14 +39,14 @@ object AppVersionUtils {
         return lastChangelogVersion < currentVersion && installVersion != currentVersion
     }
 
-    fun updateVersionOnInstallAndLastUse(context: Context, prefs: PrefHelper) {
+    fun updateVersionOnInstallAndLastUse(context: Context, prefs: Preferences) {
         if (prefs.internal.versionOnInstall == VersionName.DEFAULT_RAW) {
             prefs.internal.versionOnInstall = getRawVersionName(context)
         }
         prefs.internal.versionLastUse = getRawVersionName(context)
     }
 
-    fun updateVersionLastChangelog(context: Context, prefs: PrefHelper) {
+    fun updateVersionLastChangelog(context: Context, prefs: Preferences) {
         prefs.internal.versionLastChangelog = getRawVersionName(context)
     }
 }
@@ -68,12 +68,12 @@ data class VersionName(
                 if (list.size == 3) {
                     return VersionName(list[0], list[1], list[2])
                 }
-            } else if (raw.matches("""[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+""".toRegex())) {
+            } else if (raw.matches("""[0-9]+[.][0-9]+[.][0-9]+[-][0-9]+""".toRegex())) {
                 val list = raw.split(".").map { it.toInt() }
                 if (list.size == 4) {
                     return VersionName(list[0], list[1], list[2], null, list[3])
                 }
-            } else if (raw.matches("""[0-9]+[.][0-9]+[.][0-9]+[.][a-zA-Z]+""".toRegex())) {
+            } else if (raw.matches("""[0-9]+[.][0-9]+[.][0-9]+[-][a-zA-Z]+""".toRegex())) {
                 val list = raw.split(".")
                 if (list.size == 4) {
                     return VersionName(
@@ -81,7 +81,7 @@ data class VersionName(
                         list[3], null
                     )
                 }
-            } else if (raw.matches("""[0-9]+[.][0-9]+[.][0-9]+[.][a-zA-Z]+[0-9]+""".toRegex())) {
+            } else if (raw.matches("""[0-9]+[.][0-9]+[.][0-9]+[-][a-zA-Z]+[0-9]+""".toRegex())) {
                 val list = raw.split(".")
                 if (list.size == 4) {
                     val extraName = list[3].split("""[0-9]+""".toRegex())[0]

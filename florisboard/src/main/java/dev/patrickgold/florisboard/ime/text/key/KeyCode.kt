@@ -65,9 +65,10 @@ object KeyCode {
     const val CLIPBOARD_PASTE_POPUP =       -133
     const val CLIPBOARD_SELECT =            -134
     const val CLIPBOARD_SELECT_ALL =        -135
+    const val CLEAR_CLIPBOARD_HISTORY =     -136
 
-    const val UNDO =                        -136
-    const val REDO =                        -137
+    const val UNDO =                        -137
+    const val REDO =                        -138
 
     const val PHONE_PAUSE =                   44
     const val PHONE_WAIT =                    59
@@ -89,8 +90,28 @@ object KeyCode {
     const val TOGGLE_ONE_HANDED_MODE_RIGHT =-216
     const val URI_COMPONENT_TLD =           -255
 
+    const val CURRENCY_SLOT_1 =             -801
+    const val CURRENCY_SLOT_2 =             -802
+    const val CURRENCY_SLOT_3 =             -803
+    const val CURRENCY_SLOT_4 =             -804
+    const val CURRENCY_SLOT_5 =             -805
+    const val CURRENCY_SLOT_6 =             -806
+
     const val INTERNAL_BATCH_EDIT =         -901
+    const val MULTIPLE_CODE_POINTS =        -902
 
     const val KESHIDA =                     1600
     const val HALF_SPACE =                  8204
+
+    const val CJK_SPACE =                  12288
+
+    const val CHAR_WIDTH_SWITCHER =        -9701
+    const val CHAR_WIDTH_FULL =            -9702
+    const val CHAR_WIDTH_HALF =            -9703
+
+    const val KANA_SMALL =                 12307
+    const val KANA_SWITCHER =              -9710
+    const val KANA_HIRA =                  -9711
+    const val KANA_KATA =                  -9712
+    const val KANA_HALF_KATA =             -9713
 }
