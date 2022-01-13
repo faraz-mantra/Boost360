@@ -65,7 +65,6 @@ class SettingsMainActivity : AppCompatActivity(),
             else -> AppCompatDelegate.MODE_NIGHT_UNSPECIFIED
         }
         AppCompatDelegate.setDefaultNightMode(mode)
-
         super.onCreate(savedInstanceState)
         binding = SettingsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)

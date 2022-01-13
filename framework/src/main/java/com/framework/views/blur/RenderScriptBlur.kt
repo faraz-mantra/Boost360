@@ -2,19 +2,21 @@ package com.framework.views.blur
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.os.Build
 import android.renderscript.Allocation
 import android.renderscript.Element
 import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicBlur
-import androidx.annotation.NonNull
+import androidx.annotation.RequiresApi
 
 
 /**
  * Blur using RenderScript, processed on GPU.
+ * Requires API 17+
  */
-class RenderScriptBlur constructor(context: Context?) : BlurAlgorithm {
+class RenderScriptBlur @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1) constructor(context: Context?) : BlurAlgorithm {
   private val renderScript: RenderScript = RenderScript.create(context)
-  private val blurScript: ScriptIntrinsicBlur
+  private val blurScript: ScriptIntrinsicBlur = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript))
   private var outAllocation: Allocation? = null
   private var lastBitmapWidth = -1
   private var lastBitmapHeight = -1
@@ -27,6 +29,7 @@ class RenderScriptBlur constructor(context: Context?) : BlurAlgorithm {
    * @param blurRadius blur radius (1..25)
    * @return blurred bitmap
    */
+  @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
   override fun blur(bitmap: Bitmap?, blurRadius: Float): Bitmap? {
     //Allocation will use the same backing array of pixels as bitmap if created with USAGE_SHARED flag
     val inAllocation = Allocation.createFromBitmap(renderScript, bitmap)
@@ -59,14 +62,7 @@ class RenderScriptBlur constructor(context: Context?) : BlurAlgorithm {
     return true
   }
 
-  @get:NonNull
   override val supportedBitmapConfig: Bitmap.Config
     get() = Bitmap.Config.ARGB_8888
 
-  /**
-   * @param context Context to create the [RenderScript]
-   */
-  init {
-    blurScript = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript))
-  }
 }

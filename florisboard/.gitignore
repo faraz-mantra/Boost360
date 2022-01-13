@@ -1,11 +1,16 @@
-# Java class files
-*.class
 *.iml
-
-
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
 /build
-/library/build
-/mobihelp_sdk_android_v1.3.1/build
-/partone/release/output-metadata.json
-.cxx
+/captures
+.externalNativeBuild
 /.cxx
+.cxx
+local.properties

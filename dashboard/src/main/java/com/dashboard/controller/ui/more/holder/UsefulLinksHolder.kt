@@ -11,7 +11,6 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.framework.extensions.invisible
 import com.framework.extensions.visible
 
-
 class UsefulLinksHolder(binding: RecyclerItemUsefulLinksBinding) : AppBaseRecyclerViewHolder<RecyclerItemUsefulLinksBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
@@ -26,12 +25,12 @@ class UsefulLinksHolder(binding: RecyclerItemUsefulLinksBinding) : AppBaseRecycl
         binding.ctvNeedsAction.setTextColor(Color.parseColor(data.actionBtn?.textColor))
         binding.ctvNeedsAction.backgroundTintList = ColorStateList.valueOf((Color.parseColor(data.actionBtn?.color)))
       }
-    }else {
+    } else {
       binding.ctvNeedsAction.invisible()
     }
-      val iconType = data?.icon?.let { UsefulLinksItem.IconType.fromName(it) }
-      iconType?.let { binding.rivIcon.setImageResource(iconType.icon) }
-      binding.root.setOnClickListener { listener?.onItemClick(position, item, RecyclerViewActionType.USEFUL_LINKS_CLICK.ordinal) }
+    val iconType = data?.icon?.let { UsefulLinksItem.IconType.fromName(it) }
+    iconType?.let { binding.rivIcon.setImageResource(iconType.icon) }
+    binding.root.setOnClickListener { listener?.onItemClick(position, item, RecyclerViewActionType.USEFUL_LINKS_CLICK.ordinal) }
 
-    }
+  }
 }

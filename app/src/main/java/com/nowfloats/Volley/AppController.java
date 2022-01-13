@@ -1,7 +1,6 @@
 package com.nowfloats.Volley;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -10,7 +9,6 @@ import android.provider.Settings;
 import android.util.Log;
 
 import androidx.multidex.MultiDex;
-import androidx.multidex.MultiDexApplication;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,8 +20,9 @@ import com.boost.presignup.locale.LocaleManager;
 import com.dashboard.AppDashboardApplication;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.framework.analytics.UserExperiorController;
 import com.festive.poster.FestivePosterApplication;
+import com.framework.BaseApplication;
+import com.framework.analytics.UserExperiorController;
 import com.framework.utils.AppsFlyerUtils;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
@@ -33,7 +32,6 @@ import com.invitereferrals.invitereferrals.InviteReferralsApplication;
 import com.nowfloats.education.koindi.KoinBaseApplication;
 import com.nowfloats.util.Constants;
 import com.onboarding.nowfloats.BaseBoardingApplication;
-import com.onboarding.nowfloats.constant.PreferenceConstant;
 import com.thinksity.R;
 import com.webengage.sdk.android.WebEngageActivityLifeCycleCallbacks;
 import com.webengage.sdk.android.WebEngageConfig;
@@ -44,7 +42,7 @@ import java.lang.reflect.Method;
 import dev.patrickgold.florisboard.FlorisApplication;
 
 
-public class AppController extends MultiDexApplication/* implements IAviaryClientCredentials*/ {
+public class AppController extends BaseApplication/* implements IAviaryClientCredentials*/ {
 
   public static final String TAG = AppController.class.getSimpleName();
   private static AppController mInstance;

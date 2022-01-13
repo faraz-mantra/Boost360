@@ -13,6 +13,7 @@
   <dimen name="size_0">0dp</dimen>
   <dimen name="size_0_5">0.5dp</dimen>
   <dimen name="size_1">1dp</dimen>
+  <dimen name="size_2_5">2.5dp</dimen>
   <dimen name="size_2">2dp</dimen>
   <dimen name="size_3">3dp</dimen>
   <dimen name="size_4">4dp</dimen>
@@ -95,6 +96,7 @@
   <dimen name="size_132">132dp</dimen>
   <dimen name="size_134">134dp</dimen>
   <dimen name="size_136">136dp</dimen>
+  <dimen name="size_138">138dp</dimen>
   <dimen name="size_140">140dp</dimen>
   <dimen name="size_144">144dp</dimen>
   <dimen name="size_146">146dp</dimen>
