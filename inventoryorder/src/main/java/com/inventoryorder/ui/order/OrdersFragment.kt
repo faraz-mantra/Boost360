@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.utils.InAppReviewUtils
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.getData
 import com.framework.views.zero.FragmentZeroCase
@@ -827,4 +828,11 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   }
 
+  override fun onStop() {
+    if (totalOrders>1){
+      InAppReviewUtils.showInAppReview(requireActivity(),InAppReviewUtils.Events.in_app_review_out_of_customer_orders)
+    }
+    super.onStop()
+
+  }
 }
