@@ -1,47 +1,47 @@
-package com.boost.marketplace.Adapters
-
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.marketplace.R
-import com.bumptech.glide.Glide
 
-class HelpVideosViewPagerAdapter(imageList: List<String>) :
-  RecyclerView.Adapter<HelpVideosViewPagerAdapter.ViewHolder>() {
+class HelpVideosViewPagerAdapter(private var ctx: Context) : RecyclerView.Adapter<HelpVideosViewPagerAdapter.ViewHolder>() {
 
-  private lateinit var context: Context
-  private var list = ArrayList<String>()
+  private val images = intArrayOf(
+    R.drawable.website,
+    R.drawable.website,
+    R.drawable.website,
+    R.drawable.website,)
 
-  init {
-    list = imageList as ArrayList<String>
-  }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-    val item = View.inflate(parent.context, R.layout.image_preview_item, null)
+    val view: View = LayoutInflater.from(ctx).inflate(R.layout.image_preview_item, parent, false)
     val lp = ViewGroup.LayoutParams(
-      ViewGroup.LayoutParams.MATCH_PARENT,
-      ViewGroup.LayoutParams.MATCH_PARENT
+      ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
     )
-    item.layoutParams = lp
-    context = item.context
-
-    return ViewHolder(item)
+    view.layoutParams = lp
+     ctx= view.context
+    return ViewHolder(view)
   }
 
-  override fun getItemCount(): Int {
-    return list.size
-  }
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-    Glide.with(context).load(list.get(position)).into(holder.image)
+    holder.images.setImageResource(images[position])
   }
+
+
+  override fun getItemCount(): Int {
+    return images.size
+  }
+
 
   class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val image = itemView.findViewById<ImageView>(R.id.preview_image)
+    var images: ImageView
 
+    init {
+      images = itemView.findViewById(R.id.preview_image)
+    }
   }
-
 }

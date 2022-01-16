@@ -39,7 +39,8 @@ import com.boost.marketplace.ui.browse.BrowseFeaturesActivity
 import com.boost.marketplace.ui.coupons.OfferCouponsActivity
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.boost.marketplace.ui.marketplace_Offers.MarketPlaceOffersActivity
-import com.boost.marketplace.ui.videos.HelpVideosPopUpFragement
+import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
+import com.boost.marketplace.ui.videos.VideosPopUpBottomSheet
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.framework.analytics.SentryController
 import com.framework.pref.Key_Preferences
@@ -155,6 +156,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
         //emptyCouponTable everytime for new coupon code
         viewModel.emptyCouponTable()
+        viewModel.GetHelp()
 //        setSpannableStrings()
         loadData()
         initMvvm()
@@ -611,8 +613,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 return true
             }
             R.id.help_section -> {
-                val videoshelp = HelpVideosPopUpFragement()
-                videoshelp.show(supportFragmentManager,"HELP_VIDEOS")
+                val videoshelp = HelpVideosBottomSheet()
+                val args = Bundle()
+                videoshelp.arguments= args
+                videoshelp.show(this.supportFragmentManager, HelpVideosBottomSheet::class.java.name)
                 return true
             }
             else -> super.onOptionsItemSelected(item)
@@ -2186,7 +2190,18 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             videoItem.title ?: NO_EVENT_VALUE
         )
         Log.i("onPlayYouTubeVideo", videoItem.youtube_link ?: "")
-        val link: List<String> = videoItem.youtube_link!!.split('/')
+
+        val link = videoItem.youtube_link!!
+
+        val dialogCard = VideosPopUpBottomSheet()
+        val args = Bundle()
+        args.putString("fpid",fpid)
+        args.putString("expCode",experienceCode)
+        args.putString("fptag",fpTag)
+        args.putString("title",videoItem.title)
+        args.putString("link", videoItem.youtube_link)
+        dialogCard.arguments = args
+        dialogCard.show(this.supportFragmentManager, VideosPopUpBottomSheet::class.java.name)
 //        videoPlayerWebView.getSettings().setJavaScriptEnabled(true)
 ////    videoPlayerWebView.getSettings().setPluginState(WebSettings.PluginState.ON)
 //        videoPlayerWebView.setWebViewClient(WebViewClient())
@@ -2365,7 +2380,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     }
 
     private fun initializeVideosRecycler() {
-        val gridLayoutManager = GridLayoutManager(applicationContext, 1)
+        val gridLayoutManager = LinearLayoutManager(applicationContext)
         gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
         videos_recycler.apply {
             layoutManager = gridLayoutManager

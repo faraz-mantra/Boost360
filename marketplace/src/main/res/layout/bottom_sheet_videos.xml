@@ -12,13 +12,12 @@
   <androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bottoms_sheet_top20dp_white"
     android:orientation="vertical">
 
     <RelativeLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:background="#4A4A4A"
+      android:layout_height="60dp"
+        android:background="@drawable/bg_bottom_sheet_tutorial_title"
       android:orientation="horizontal">
 
       <androidx.appcompat.widget.AppCompatImageView
@@ -70,11 +69,30 @@
         android:textColor="@color/white" />
     </RelativeLayout>
 
-<!--    <com.google.android.exoplayer2.ui.PlayerView-->
-<!--      android:id="@+id/video_view"-->
-<!--      android:layout_width="match_parent"-->
-<!--      android:layout_height="250dp"-->
-<!--      android:layout_margin="10dp"/>-->
+    <com.framework.views.customViews.CustomCardView
+        android:id="@+id/customCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_10"
+        app:cardCornerRadius="@dimen/size_8"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/playerView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_200"
+        app:buffered_color="@color/gray_light_3"
+        app:played_color="@color/red_E39595"
+        app:player_layout_id="@layout/exo_player_ui"
+        app:resize_mode="fill"
+        app:show_buffering="always"
+        app:use_artwork="true" />
+
+    </com.framework.views.customViews.CustomCardView>
 
 <!--    <com.google.android.youtube.player.YouTubePlayerView-->
 <!--        android:layout_width="match_parent"-->
@@ -88,38 +106,38 @@
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="250dp"-->
 <!--        android:layout_margin="10dp" />-->
-    <LinearLayout
-        android:id="@+id/video_addons_player_layout"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_margin="15dp"
-        android:background="@color/common_text_color"
-        android:orientation="vertical"
-        app:layout_constraintDimensionRatio="2:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/video_addons_player_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="250dp"-->
+<!--        android:layout_margin="15dp"-->
+<!--        android:background="@color/common_text_color"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintDimensionRatio="2:1"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent">-->
 
-      <ProgressBar
-          android:id="@+id/progress_bar"
-          style="?android:attr/progressBarStyleHorizontal"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/size_3"
-          android:indeterminate="true"
-          android:scaleY="4"
-          android:theme="@style/ActiveTheme"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/web_toolbar" />
+<!--      <ProgressBar-->
+<!--          android:id="@+id/progress_bar"-->
+<!--          style="?android:attr/progressBarStyleHorizontal"-->
+<!--          android:layout_width="match_parent"-->
+<!--          android:layout_height="@dimen/size_3"-->
+<!--          android:indeterminate="true"-->
+<!--          android:scaleY="4"-->
+<!--          android:theme="@style/ActiveTheme"-->
+<!--          app:layout_constraintEnd_toEndOf="parent"-->
+<!--          app:layout_constraintStart_toStartOf="parent"-->
+<!--          app:layout_constraintTop_toBottomOf="@id/web_toolbar" />-->
 
-      <WebView
-          android:id="@+id/webview"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_centerInParent="true"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent" />
-    </LinearLayout>
+<!--      <WebView-->
+<!--          android:id="@+id/webview"-->
+<!--          android:layout_width="match_parent"-->
+<!--          android:layout_height="match_parent"-->
+<!--          android:layout_centerInParent="true"-->
+<!--          app:layout_constraintBottom_toBottomOf="parent"-->
+<!--          app:layout_constraintEnd_toEndOf="parent"-->
+<!--          app:layout_constraintStart_toStartOf="parent" />-->
+<!--    </LinearLayout>-->
 
 
     <androidx.appcompat.widget.AppCompatTextView

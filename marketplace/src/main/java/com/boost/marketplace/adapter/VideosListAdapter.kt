@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.boost.dbcenterapi.upgradeDB.model.*
+import com.boost.dbcenterapi.upgradeDB.model.YoutubeVideoModel
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.HomeListener
 import com.bumptech.glide.Glide
@@ -46,11 +46,13 @@ class VideosListAdapter(videoList: List<YoutubeVideoModel>, listen: HomeListener
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-    if (list.get(position).youtube_link != null && list.get(position).youtube_link!!.isNotEmpty()) {
-      val link: List<String> = list.get(position).youtube_link!!.split('/')
+    if (list.get(position).youtube_link != null && list.get(position).youtube_link!!.isNotEmpty())
+    {
+//      val link: List<String> = list.get(position).youtube_link!!
       Glide.with(context)
-        .load("http://img.youtube.com/vi/" + link.get(link.size - 1) + "/default.jpg")
+        .load(list.get(position).youtube_link!!)
         .into(holder.image)
+
     }
     holder.title.setText(list.get(position).title)
     holder.videoType.setText(list.get(position).desc)
