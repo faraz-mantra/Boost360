@@ -21,8 +21,6 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.exoFullScreen.MediaPlayer
 import com.framework.exoFullScreen.preparePlayer
 import com.framework.exoFullScreen.setSource
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.bottom_sheet_videos.*
 
 
@@ -54,16 +52,16 @@ class VideosPopUpBottomSheet :
         dialog.behavior.isDraggable = true
         viewModel?.setApplicationLifecycle(Application(), this)
         viewModel = ViewModelProviders.of(this).get(MarketPlaceHomeViewModel::class.java)
-        viewModel?.GetHelp()
+    //    viewModel?.GetHelp()
 
         getBundle()
         initView()
         initMvvm()
 
-        singleVideoDetails = Gson().fromJson<YoutubeVideoModel>(
-            requireArguments().getString("singleVideoDetails"),
-            object : TypeToken<YoutubeVideoModel>() {}.type
-        )
+//        singleVideoDetails = Gson().fromJson<YoutubeVideoModel>(
+//            requireArguments().getString("singleVideoDetails"),
+//            object : TypeToken<YoutubeVideoModel>() {}.type
+//        )
 
 
 //    webview?.settings?.javaScriptEnabled = true
