@@ -55,6 +55,7 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Hisor
         initRecyclerView()
         binding?.shimmerViewHistory?.startShimmer()
         binding?.addonsBack?.setOnClickListener {
+            super.onBackPressed()
 
         }
 

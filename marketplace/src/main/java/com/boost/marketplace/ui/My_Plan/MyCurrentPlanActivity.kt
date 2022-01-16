@@ -134,9 +134,9 @@ class MyCurrentPlanActivity :
 //            (activity as UpgradeActivity).addFragment(HistoryFragment.newInstance(), HISTORY_FRAGMENT)
 //        }
 //
-//        addons_back.setOnClickListener {
-//            (activity as UpgradeActivity).popFragmentFromBackStack()
-//        }
+        addons_back.setOnClickListener {
+            super.onBackPressed()
+        }
 
 //        paid_menu_layout.setOnClickListener {
 //            if (add_remove_layout.visibility == View.VISIBLE) {

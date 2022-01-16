@@ -1,16 +1,17 @@
 package com.boost.marketplace.Adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.Result
 import com.boost.marketplace.R
-import com.boost.marketplace.interfaces.HistoryFragmentListener
+import com.boost.marketplace.ui.Invoice.InvoiceActivity
 import java.lang.Long
-import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -77,9 +78,10 @@ class HistoryOrdersChildAdapter(itemList: List<Result>?,) :
 //        holder.amount.setText(
 //            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(list.get(position).paidAmount)
 //        )
-//        holder.itemView.setOnClickListener {
-//            listener.viewHistoryItem(list.get(position))
-//        }
+        holder.button.setOnClickListener {
+            val intent = Intent(context, InvoiceActivity::class.java)
+            context.startActivity(intent)
+        }
     }
 
 
@@ -97,6 +99,7 @@ class HistoryOrdersChildAdapter(itemList: List<Result>?,) :
         var itemLists = itemView.findViewById<TextView>(R.id.title)!!
      //   var itemCount = itemView.findViewById<TextView>(R.id.item_count)!!
         var itemDate = itemView.findViewById<TextView>(R.id.item_orderId)!!
+        var button=itemView.findViewById<Button>(R.id.btn_invoice)
 
         var context: Context = itemView.context
 
