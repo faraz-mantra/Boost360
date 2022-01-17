@@ -1,10 +1,10 @@
 package com.boost.marketplace.ui.videos
 
-import android.app.Application
 import android.content.DialogInterface
+import android.net.Uri
 import android.util.Log
-import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
@@ -19,8 +19,7 @@ import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.home.MarketPlaceHomeViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.exoFullScreen.MediaPlayer
-import com.framework.exoFullScreen.preparePlayer
-import com.framework.exoFullScreen.setSource
+import com.google.android.exoplayer2.MediaItem
 import kotlinx.android.synthetic.main.bottom_sheet_videos.*
 
 
@@ -28,11 +27,8 @@ class VideosPopUpBottomSheet :
     BaseBottomSheetDialog<BottomSheetVideosBinding, MarketPlaceHomeViewModel>(), HomeListener {
 
     lateinit var link: String
-    private var playbackPosition: Long = 0
     private var videoItem: String? = null
-    private var viewClose: View? = null
     lateinit var videosListAdapter: VideosListAdapter
-    lateinit var singleVideoDetails: YoutubeVideoModel
 
 
     override fun getLayout(): Int {
@@ -43,81 +39,17 @@ class VideosPopUpBottomSheet :
         return MarketPlaceHomeViewModel::class.java
     }
 
-    companion object {
-        fun newInstance() = VideosPopUpBottomSheet()
-    }
-
-
     override fun onCreateView() {
         dialog.behavior.isDraggable = true
-        viewModel?.setApplicationLifecycle(Application(), this)
-        viewModel = ViewModelProviders.of(this).get(MarketPlaceHomeViewModel::class.java)
-    //    viewModel?.GetHelp()
-
+        viewModel = ViewModelProviders.of(baseActivity).get(MarketPlaceHomeViewModel::class.java)
         getBundle()
         initView()
         initMvvm()
-
-//        singleVideoDetails = Gson().fromJson<YoutubeVideoModel>(
-//            requireArguments().getString("singleVideoDetails"),
-//            object : TypeToken<YoutubeVideoModel>() {}.type
-//        )
-
-
-//    webview?.settings?.javaScriptEnabled = true
-//    webview?.settings?.loadWithOverviewMode = true
-//    webview?.settings?.useWideViewPort = true
-//    webview?.settings?.allowFileAccess = true
-//    webview?.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
-//    webview?.webChromeClient = WebChromeClient()
-//    val webSettings = webview?.settings
-//    webSettings?.javaScriptCanOpenWindowsAutomatically = true
-//    webSettings?.setSupportMultipleWindows(true)
-//    webSettings?.cacheMode = WebSettings.LOAD_DEFAULT
-//    webSettings?.domStorageEnabled = true
-
-
-//    if (link != null) {
-//      webview.settings.javaScriptEnabled = true
-//      webview.webViewClient = object : WebViewClient() {
-//        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-//         binding?.progressBar?.visible()
-//
-//          return false
-//        }
-//
-//        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-//          super.onPageStarted(view, url, favicon)
-//          binding?.progressBar?.visible()
-//
-//        }
-//
-//        override fun onPageFinished(view: WebView?, url: String?) {
-//          super.onPageFinished(view, url)
-//          binding?.progressBar?.gone()
-//        }
-//
-//        override fun onReceivedError(
-//          view: WebView?,
-//          request: WebResourceRequest?,
-//          error: WebResourceError?
-//        ) {
-//          binding?.progressBar?.gone()
-//          super.onReceivedError(view, request, error)
-//        }
-//      }
-//      webview.loadUrl(link!!)
-//   //   val links: List<String> = link!!.split('/')
-//   //   webview.loadUrl("http://www.youtube.com/embed/" + links.get(links.size - 1) + "?autoplay=1&vq=small")
-//    } else {
-//      Toast.makeText(requireContext(), "Link is Empty!!", Toast.LENGTH_LONG).show()
-////      (activity as UpgradeActivity).popFragmentFromBackStack()
-//    }
     }
 
     private fun initView() {
         videosListAdapter = VideosListAdapter(ArrayList(), this)
-        // viewModel?.GetHelp()
+         viewModel?.GetHelp()
         initializeVideosRecycler()
     }
 
@@ -154,16 +86,16 @@ class VideosPopUpBottomSheet :
         this.videoItem = requireArguments().getString("title") ?: ""
         link = requireArguments().getString("link") ?: ""
         binding?.ctvVideoTitle?.text = videoItem
-
-
+        binding?.mainTxt?.text=videoItem
     }
 
     private fun initializePlayer() {
-
         MediaPlayer.initialize(baseActivity)
-        viewClose = MediaPlayer.exoPlayer?.preparePlayer(playerView, baseActivity, false)
-        MediaPlayer.exoPlayer?.setSource(playbackPosition, baseActivity, link)
-        MediaPlayer.startPlayer()
+        val player=MediaPlayer.exoPlayer
+        binding?.playerView?.player = player
+        player?.setMediaItem(MediaItem.fromUri(Uri.parse(link)))
+        player?.prepare()
+        player?.play()
     }
 
     override fun onPause() {
@@ -225,7 +157,13 @@ class VideosPopUpBottomSheet :
     }
 
     override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
-        TODO("Not yet implemented")
+        Toast.makeText(context,"Loading",Toast.LENGTH_LONG).show()
+        link= videoItem.youtube_link.toString()
+        MediaPlayer.releasePlayer()
+        initializePlayer()
+        binding?.ctvVideoTitle?.text = videoItem.title
+        binding?.mainTxt?.text= videoItem.desc
+
     }
 
     override fun onPackageAddToCart(item: Bundles?, image: ImageView) {

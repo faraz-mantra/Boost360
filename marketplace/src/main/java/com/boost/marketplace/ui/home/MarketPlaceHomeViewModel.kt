@@ -995,9 +995,27 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                                 }
                             },
                             {
-
+                                Log.e("GetAllVideos", "error" + it.message)
+                                updatesLoader.postValue(false)
                             })
                 )
-            }
+            } else {
+            CompositeDisposable().add(
+                AppDatabase.getInstance(application)!!
+                    .youtubeVideoDao()
+                    .getYoutubeVideoItems()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSuccess {
+                        allVideoDetails.postValue(it)
+                        updatesLoader.postValue(false)
+                    }
+                    .doOnError {
+                        updatesError.postValue(it.message)
+                        updatesLoader.postValue(false)
+                    }
+                    .subscribe()
+            )
+        }
     }
 }
