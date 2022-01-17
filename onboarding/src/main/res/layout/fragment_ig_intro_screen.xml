@@ -71,7 +71,7 @@
                 app:progressMode="false"
                 app:selectedDotColor="@color/colorPrimary" />
 
-            <Button
+            <com.framework.views.customViews.CustomMaterialButton
                 android:id="@+id/btn_next"
                 android:text="@string/get_started"
                 style="@style/PrimaryButtonNormal"

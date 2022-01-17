@@ -119,7 +119,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
 
-            <com.framework.views.customViews.CustomButton
+            <com.framework.views.customViews.CustomMaterialButton
                 android:id="@+id/btn_next"
                 android:layout_width="0dp"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"

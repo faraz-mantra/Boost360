@@ -23,6 +23,7 @@
         <activity
             android:name=".ui.AppFragmentContainerActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSupportVideo"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.updateChannel.DigitalChannelActivity"
