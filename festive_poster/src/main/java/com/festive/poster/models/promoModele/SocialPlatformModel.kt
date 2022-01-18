@@ -37,7 +37,7 @@ class SocialPlatformModel(
             )
             SocialPreviewChannel.FACEBOOK -> ResourcesCompat.getDrawable(
                 context.resources,
-                R.drawable.ic_fb_promo_channel,
+                R.drawable.ic_promo_flag_orange,
                 context.theme
             )
             SocialPreviewChannel.GMB -> ResourcesCompat.getDrawable(

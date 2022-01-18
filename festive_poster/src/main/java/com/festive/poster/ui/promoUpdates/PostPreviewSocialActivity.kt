@@ -563,7 +563,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     private fun saveUpdatePost() {
         WebEngageController.trackEvent(POST_AN_UPDATE, EVENT_LABEL_NULL, session?.fpTag)
         var socialShare = ""
-           if (uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.FACEBOOK }?.isChecked == true) socialShare += "FACEBOOK."
+           if (uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.FACEBOOK }?.isChecked == true) socialShare += "FACEBOOK_PAGE."
 /*
            if (fbPageStatusEnable.value == true) socialShare += "FACEBOOK_PAGE."
 */
