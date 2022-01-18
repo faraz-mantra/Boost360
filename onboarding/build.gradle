@@ -41,6 +41,7 @@ android {
 dependencies {
     api project(path: ':resources')
     api project(path: ':facebook')
+    api project(path: ':instagram')
     api project(path: ':twitter')
     api project(path: ':google')
     implementation 'androidx.appcompat:appcompat:1.3.1'

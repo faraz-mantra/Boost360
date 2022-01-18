@@ -49,20 +49,7 @@ object FacebookGraphManager {
     request.executeAsync()
   }
 
-  fun requestIGAccount(pageId:String,accessToken: AccessToken?) {
-    val request = GraphRequest.newGraphPathRequest(
-      accessToken,
-      pageId
-    ) { graphResponse ->
 
-      graphResponse.rawResponse
-
-    }
-    val parameters = Bundle()
-    parameters.putString("fields", "instagram_business_account")
-    request.parameters = parameters
-    request.executeAsync()
-  }
 
 
   fun requestUserPublicDetails(
