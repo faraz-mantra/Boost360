@@ -444,13 +444,13 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
                             }
                             channelType = SocialPreviewChannel.GMB
-
                         }
+
                     }
 
                 }
 
-                if (shouldAddToChannelList(it1)){
+                if (shouldAddToChannelList(it1)&&channelType!=null){
                     uiChBoxChannelList?.add(SocialPlatformModel(title,subTitle,isEnabled,isConnected,isConnected,channelType!!).apply {
                         generateImageResource(this@PostPreviewSocialActivity)
                     })
@@ -620,7 +620,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             val response = it as? MerchantSummaryResponse
             val subscriber = response?.Entity?.firstOrNull()?.get("NoOfSubscribers")
             val subTitle = if (subscriber==0){
-                getString(R.string.no_recipients)
+                getString(R.string.no_recipients,0)
 
             }else{
                 getString(R.string.placeholder_recipients,subscriber)
