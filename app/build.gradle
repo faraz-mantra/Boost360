@@ -166,6 +166,7 @@ dependencies {
     //presignup library new flow
     api project(path: ':dashboard')
 
+
     //upgrade library
     implementation project(path: ':upgrades')
 
@@ -254,4 +255,6 @@ dependencies {
     implementation "org.koin:koin-androidx-scope:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     implementation "org.koin:koin-androidx-fragment:$koin_version"
+    implementation 'androidx.room:room-runtime:2.3.0'
+    annotationProcessor 'androidx.room:room-compiler:2.3.0'
 }

@@ -122,7 +122,9 @@
   <color name="black_333333">#333333</color>
   <color name="black_747474">#747474</color>
   <color name="black_4a4a4a_50">#804A4A4A</color>
+  <color name="black_4a4a4a_40">#664A4A4A</color>
   <color name="black_4a4a4a_30">#4D4A4A4A</color>
+  <color name="black_4a4a4a_20">#334A4A4A</color>
   <color name="black_4f4f4f">#4f4f4f</color>
   <color name="grey_dark_1">#787878</color>
   <color name="bg_grey_light">#E3E3E3</color>
@@ -162,6 +164,17 @@
 
   <color name="grey_bg">#F8F8F8</color>
   <color name="black_1e1e1e">#1E1E1E</color>
+  <color name="white_F5F8FD">#F5F8FD</color>
+  <color name="black_09121F">#09121F</color>
+  <color name="grey_09121F">#ECEFF1</color>
+  <color name="grey_828282">#828282</color>
+  <color name="white_F5F7FA">#F5F7FA</color>
+  <color name="grey_535966">#535966</color>
+  <color name="grey_DADADA">#DADADA</color>
+  <color name="grey_f0f0f0">#f0f0f0</color>
+  <color name="color4C9EEB">#4C9EEB</color>
+  <color name="color395996">#395996</color>
+  <color name="color868686">#868686</color>
   <color name="color88888">#888888</color>
 
 </resources>

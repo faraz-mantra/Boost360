@@ -8,6 +8,7 @@ import android.os.IBinder
 import android.util.Log
 import com.appservice.model.accountDetails.saveBanKDetail
 import com.appservice.model.kycData.saveBusinessKycDetail
+import com.boost.dbcenterapi.utils.DataLoader
 import com.boost.presignin.model.other.AccountDetailsResponse
 import com.boost.presignin.model.other.PaymentKycDataResponse
 import com.boost.presignin.rest.repository.WebActionBoostKitRepository
@@ -57,6 +58,9 @@ class APIService : Service() {
         hitSelfBrandedKycAPI()
         checkUserAccountDetails()
         getAndSaveKAdminFeatureSupportVideos()
+
+        //Migrate Upgrade DB
+        DataLoader.loadMarketPlaceData(application,userSessionManager?.fP_AppExperienceCode,userSessionManager?.fpTag)
     }
 
     private fun checkUserAccountDetails() {

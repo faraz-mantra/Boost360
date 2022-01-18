@@ -10,6 +10,7 @@ import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.graphics.*
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -55,8 +56,9 @@ import kotlin.collections.ArrayList
 import android.content.pm.PackageManager
 
 import android.content.pm.PackageInfo
-
-
+import androidx.annotation.RequiresApi
+import com.framework.R
+import java.util.regex.Pattern.UNICODE_CHARACTER_CLASS
 
 
 inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
@@ -276,6 +278,12 @@ fun Bitmap.saveAsImageToAppFolder(destPath:String): File? {
 
 }
 
+fun Bitmap.saveAsTempFile(): File? {
+ return saveAsImageToAppFolder(
+    BaseApplication.instance.externalCacheDir?.toString()+File.separator+"tempimage.png")
+
+}
+
 
 
 suspend fun Bitmap.saveImageToStorage(
@@ -422,3 +430,42 @@ fun spanClick(fullText:String,function: () -> (Unit),vararg colorTextList:String
   }
   return spannable
 }
+
+
+@RequiresApi(Build.VERSION_CODES.Q)
+fun Drawable.setColorFilterApiQ(color: Int, blendMode:BlendMode){
+    colorFilter = BlendModeColorFilter(color, blendMode)
+}
+
+fun showToast(text: String?,duration:Int =Toast.LENGTH_LONG){
+  if (text==null){
+    return
+  }
+  Toast.makeText(BaseApplication.instance, text, duration).show()
+}
+
+fun highlightHashTag(text: String?,@ColorRes colorId:Int): SpannableString {
+
+  val spannable = SpannableString(text?:"")
+
+  if (text.isNullOrEmpty().not()){
+    var last_index = 0
+    text?.trim()?.split(Regex("\\s+"))?.forEach {
+      Log.i(TAG, "addHashTagFunction: $it")
+      if (it.isNotEmpty() && it[0] == '#'){
+        val boldSpan = StyleSpan(Typeface
+          .BOLD)
+        val foregroundSpan = ForegroundColorSpan(ContextCompat.getColor(BaseApplication.instance, colorId))
+        spannable.setSpan(foregroundSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannable.setSpan(boldSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+      }
+
+      last_index+=it.length-1
+
+    }
+  }
+
+  return spannable
+}
+

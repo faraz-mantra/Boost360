@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.festive.poster.ui.promoUpdates.PromoUpdatesActivity">
+
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/layout_social_conn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/social_conn_bg"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:weightSum="1"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/iv_left_arrow"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@drawable/ic_left_arrow_grey" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_social_conn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="0.96"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/list_item_social_conn" />
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/iv_right_arrow"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:rotation="180"
+                android:src="@drawable/ic_left_arrow_grey" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:background="#ECEFF4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_social_conn">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/top_round_corner"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.festive.poster.ui.promoUpdates.customviews.ScalableTabLayout
+                    android:id="@+id/tab_layout"
+                    style="@style/TabTextStyle"
+                    app:tabInlineLabel="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:tabMinWidth="0dp"
+                    app:tabMode="scrollable"
+                    app:tabTextAppearance="@style/TabTextStyle">
+
+                </com.festive.poster.ui.promoUpdates.customviews.ScalableTabLayout>
+
+                <View
+                    android:background="#F2F8FA"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"/>
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

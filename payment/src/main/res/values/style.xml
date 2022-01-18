@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <!-- Base application theme. -->
+  <style name="AppTheme.Pre.Payment" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorPrimary">@color/colorAccent</item>
+    <item name="colorPrimaryDark">#ffb900</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:windowAnimationStyle">@null</item>
+  </style>
+
+  <style name="BoostPaymentScreenStyle" parent="AppTheme.Pre.Payment">
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+  </style>
+
+  <style name="FullScreenDialogStyle" parent="Theme.AppCompat.Dialog">
+    <item name="windowActionBar">false</item>
+    <item name="android:windowNoTitle">true</item>
+
+    <!-- This is important! Don't forget to set window background -->
+    <item name="android:windowBackground">@color/fullscreen_color</item>
+
+  </style>
+
+  <style name="SaveCardCheckBox" parent="Theme.AppCompat.NoActionBar">
+    <item name="colorControlNormal">#747474</item>   <!-- normal border color change as you wish -->
+    <item name="colorControlActivated">#6DCB34</item> <!-- activated color change as you wish -->
+    <item name="android:textColor">#FF3F3C</item> <!-- checkbox text color -->
+  </style>
+
+  <style name="SelectCardPayment" parent="Theme.AppCompat.NoActionBar">
+    <item name="colorControlNormal">#747474</item>   <!-- normal border color change as you wish -->
+    <item name="colorControlActivated">#4a90e2</item> <!-- activated color change as you wish -->
+    <item name="android:textColor">#FF3F3C</item> <!-- checkbox text color -->
+  </style>
+
+
+  <style name="ActiveTheme" parent="Base.Theme.AppCompat">
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="colorControlNormal">@color/warm_grey</item>
+    <item name="colorControlActivated">@color/colorAccent</item>
+  </style>
+
+</resources>

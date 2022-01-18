@@ -2,13 +2,28 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.festive.poster">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <application
-        android:name=".FestivePosterApplication"
-        >
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application android:name=".FestivePosterApplication">
         <activity
+            android:name=".ui.festivePoster.FestivePosterContainerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/PosterTheme"
-            android:name=".ui.FestivePosterContainerActivity"/>
+            android:theme="@style/TemplateTheme" />
+        <activity
+            android:name=".ui.promoUpdates.PromoUpdatesActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/TemplateTheme" />
+        <activity
+            android:name=".ui.promoUpdates.edit_post.EditPostActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/TemplateTheme"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".ui.promoUpdates.PostPreviewSocialActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/TemplateTheme"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
     </application>
+
 </manifest>

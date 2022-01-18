@@ -25,10 +25,10 @@ open class PosterModel(
     @SerializedName("variants")
     val variants: List<PosterVariantModel>,
     var greeting_message:String?,
-    var shareLayout:Boolean=false
+    var layout_id:Int
 ): AppBaseRecyclerViewItem {
     override fun getViewType(): Int {
-        return if (shareLayout) RecyclerViewItemType.POSTER_SHARE.getLayout() else RecyclerViewItemType.POSTER.getLayout()
+        return layout_id
     }
 
     fun clone(): PosterModel? {
@@ -38,5 +38,9 @@ open class PosterModel(
 
     var isPurchased:Boolean=false
     get() = details.isPurchased
+
+    fun url(): String? {
+        return variants.firstOrNull()?.svgUrl
+    }
 
 }

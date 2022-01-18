@@ -33,7 +33,8 @@ class QuickActionItem(
     SERVICES_OFFERS(R.drawable.ic_add_seasional_offer_d),
     ADD_NEARBY_ATTRACTION(R.drawable.ic_add_nearby_attraction_d), ADD_PRODUCT(R.drawable.ic_add_product_d),
     ADD_SERVICE(R.drawable.ic_add_service_d), LIST_DRUG_MEDICINE(R.drawable.ic_add_product_d),
-    LIST_PRODUCT(R.drawable.ic_add_product_d), ADD_STAFF_PROFILE(R.drawable.ic_add_doctor_staff_member_d);
+    LIST_PRODUCT(R.drawable.ic_add_product_d), ADD_STAFF_PROFILE(R.drawable.ic_add_doctor_staff_member_d),
+    POST_PROMO_UPDATE_TEXT_TAG(R.drawable.ic_post_premium_update_text_tag);
 
     companion object {
       fun from(name: String): QuickActionType? = values().firstOrNull { it.name == name }

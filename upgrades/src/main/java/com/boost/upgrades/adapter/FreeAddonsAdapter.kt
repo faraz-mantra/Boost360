@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.data.model.FeaturesModel
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.upgrades.interfaces.MyAddonsListener
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.utils.Constants

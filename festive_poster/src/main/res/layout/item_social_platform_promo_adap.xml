@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/layout_suggest_domain_select"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_62"
+        android:background="@color/white"
+        app:cardCornerRadius="@dimen/size_10"
+        app:cardElevation="0.25dp"
+        app:cardMaxElevation="0.5dp"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/iv_social_icon"
+                android:layout_width="@dimen/size_42"
+                android:layout_height="@dimen/size_42"
+                android:layout_marginStart="@dimen/size_12"
+                android:src="@drawable/ic_promo_flag_orange"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_social_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_11"
+                android:fontFamily="@font/semi_bold"
+                android:textSize="@dimen/text_11"
+                android:textColor="@color/black_4a4a4a"
+                tools:text="Jerin Dany"
+                app:layout_constraintStart_toEndOf="@+id/iv_social_icon"
+                app:layout_constraintTop_toTopOf="@+id/iv_social_icon" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_social_subtitle_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_4"
+                android:fontFamily="@font/regular_medium"
+                tools:text="http//facebook.com/MyShop"
+                android:textColor="@color/grey_535966"
+                android:textSize="@dimen/text_11"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_social_icon"
+                app:layout_constraintStart_toStartOf="@+id/tv_social_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_social_title"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkbox_social_selected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/size_20"
+                android:buttonTint="@color/checkbox_color_selector"
+                android:checked="true"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="@dimen/size_0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toStartOf="@+id/iv_social_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/iv_lock"
+                android:layout_width="@dimen/size_20"
+                android:layout_height="@dimen/size_20"
+                android:src="@drawable/ic_lock_grey_promo"
+                app:layout_constraintBottom_toBottomOf="@+id/checkbox_social_selected"
+                app:layout_constraintStart_toStartOf="@+id/checkbox_social_selected"
+                app:layout_constraintEnd_toEndOf="@+id/checkbox_social_selected"
+                app:layout_constraintTop_toTopOf="@+id/checkbox_social_selected" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

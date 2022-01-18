@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#efefef"
+  android:clickable="true"
+  android:focusable="true">
+
+  <androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/actionBarSize"
+    android:background="@color/white"
+    android:contentInsetStart="0dp"
+    android:contentInsetEnd="0dp"
+    android:elevation="@dimen/cardview_default_elevation"
+    app:contentInsetEnd="0dp"
+    app:contentInsetStart="0dp"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <LinearLayout
+        android:id="@+id/back_button"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/ic_back_arrow_black" />
+      </LinearLayout>
+
+      <TextView
+        android:id="@+id/paymentBanner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Order #234543234"
+        android:textAllCaps="true"
+        android:textColor="@color/common_text_color"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/payment_toolbar_dummy_view"
+        app:layout_constraintStart_toEndOf="@id/back_button"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <View
+        android:id="@+id/payment_toolbar_dummy_view"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+  </androidx.appcompat.widget.Toolbar>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+    <LinearLayout
+      android:id="@+id/payment_status_image"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:padding="@dimen/_10sdp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_30sdp"
+        android:src="@drawable/done_status" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toTopOf="@id/order_id_details_layout"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/payment_status_image">
+
+      <ImageView
+        android:id="@+id/success_image"
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_130sdp"
+        android:layout_margin="@dimen/_8sdp"
+        android:src="@drawable/order_confirmation" />
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_3sdp"
+        android:fontFamily="@font/open_sans_semibold"
+        android:text="Order Successfully Placed"
+        android:textColor="@color/common_text_color"
+        android:textSize="@dimen/_15sdp" />
+
+      <TextView
+        android:id="@+id/external_link_payment_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_3sdp"
+        android:fontFamily="@font/open_sans_semibold"
+        android:gravity="center"
+        android:text="Payment Status Pending \n Go to Email to Complete Payment "
+        android:textColor="@color/app_primary_color"
+        android:textSize="@dimen/_10sdp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+      <TextView
+        android:id="@+id/order_details_feature_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:text="--"
+        android:textColor="#747474" />
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/order_id_details_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/_10sdp"
+      android:gravity="center"
+      app:layout_constraintBottom_toTopOf="@id/check_activation_status"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent">
+
+      <TextView
+        android:id="@+id/order_id_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:text="-- Order Date, Order ID, transaction Id, "
+        android:textColor="#747474"
+        android:textSize="@dimen/_8sdp" />
+    </LinearLayout>
+
+    <TextView
+      android:id="@+id/check_activation_status"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/_10sdp"
+      android:background="@drawable/orange_button_click_effect"
+      android:elevation="@dimen/_2sdp"
+      android:fontFamily="@font/open_sans_semibold"
+      android:gravity="center"
+      android:paddingStart="@dimen/_30sdp"
+      android:paddingTop="@dimen/_10sdp"
+      android:paddingEnd="@dimen/_30sdp"
+      android:paddingBottom="@dimen/_10sdp"
+      android:text="Check Activation status"
+      android:textAllCaps="true"
+      android:textColor="@color/white"
+      app:layout_constraintBottom_toTopOf="@id/order_needs_help"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+      android:id="@+id/order_needs_help"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/_10sdp"
+      android:background="@drawable/order_grey_button_click_effect"
+      android:elevation="@dimen/_2sdp"
+      android:fontFamily="@font/open_sans_semibold"
+      android:gravity="center"
+      android:padding="@dimen/_10sdp"
+      android:text="Need help?"
+      android:textAllCaps="true"
+      android:textColor="#9b9b9b"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

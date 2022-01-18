@@ -15,11 +15,11 @@ import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.data.api_model.customerId.customerInfo.AddressDetails
-import com.boost.upgrades.data.api_model.customerId.customerInfo.BusinessDetails
-import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
-import com.boost.upgrades.data.api_model.customerId.customerInfo.TaxDetails
-import com.boost.upgrades.data.api_model.customerId.get.Result
+import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.AddressDetails
+import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.BusinessDetails
+import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
+import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.TaxDetails
+import com.boost.dbcenterapi.data.api_model.customerId.get.Result
 import com.boost.upgrades.ui.home.HomeFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Utils.isValidGSTIN

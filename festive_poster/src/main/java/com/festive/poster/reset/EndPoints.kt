@@ -23,5 +23,14 @@ object EndPoints {
 
     const val UPLOAD_USER_PROFILE_IMAGE="/user/v9/floatingpoint/createUserProfileImage"
 
+    const val PUT_BIZ_IMAGE = "discover/v1/FloatingPoint/createBizImage"
+
+    const val GET_BIZ_WEB_UPDATE_BY_ID = "discover/v1/bizFloatForWeb/{id}"
+    const val PUT_BIZ_MESSAGE = "discover/v1/FloatingPoint/createBizMessage"
+    const val GET_MERCHANT_SUMMARY = "/Support/v1/dashboard/GetMerchantSummary"
+
+    const val USER_ALL_DETAILS = "/discover/v2/floatingPoint/nf-web/{fpTag}"
+
+
 
 }

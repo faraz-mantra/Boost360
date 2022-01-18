@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.interfaces.HomeListener

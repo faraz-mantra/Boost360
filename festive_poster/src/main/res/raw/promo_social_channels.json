@@ -1,0 +1,24 @@
+{
+  "channels": [
+    {
+      "type": "G_SEARCH"
+    },
+    {
+      "type": "G_BUSINESS"
+    },
+    {
+      "type": "FB_PAGE"
+    },
+    {
+      "type": "FB_SHOP"
+    },
+
+    {
+      "type": "T_FEED"
+
+    },
+    {
+      "type": "NEWS_LETTER"
+    }
+  ]
+}

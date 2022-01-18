@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TemplateTheme" parent="BaseTheme"/>
+    <style name="TabTextStyle" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="tabSelectedTextColor">@color/colorPrimary</item>
+        <item name="tabTextColor">@color/textGrey</item>
+        <item name="fontFamily">@font/regular</item>
+    </style>
+
+    <style name="TextSizeSS">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextSizeS">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextSizeM">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextSizeL">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="TextSizeXL">
+        <item name="android:textSize">48sp</item>
+    </style>
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <style name="RegularSS" parent="TextSizeSS">
+        <item name="fontFamily">@font/regular</item>
+    </style>
+
+    <style name="RegularS" parent="TextSizeS">
+        <item name="fontFamily">@font/regular</item>
+    </style>
+
+    <style name="RegularM" parent="TextSizeM">
+        <item name="fontFamily">@font/regular</item>
+    </style>
+
+    <style name="RegularL" parent="TextSizeL">
+        <item name="fontFamily">@font/regular</item>
+    </style>
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <style name="MediumSS" parent="TextSizeSS">
+        <item name="fontFamily">@font/regular_medium</item>
+    </style>
+
+    <style name="MediumS" parent="TextSizeS">
+        <item name="fontFamily">@font/regular_medium</item>
+    </style>
+
+    <style name="MediumM" parent="TextSizeM">
+        <item name="fontFamily">@font/regular_medium</item>
+    </style>
+
+    <style name="MediumL" parent="TextSizeL">
+        <item name="fontFamily">@font/regular_medium</item>
+    </style>
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <style name="SemiBoldSS" parent="TextSizeSS">
+        <item name="fontFamily">@font/semi_bold</item>
+    </style>
+
+    <style name="SemiBoldS" parent="TextSizeS">
+        <item name="fontFamily">@font/semi_bold</item>
+    </style>
+
+    <style name="SemiBoldM" parent="TextSizeM">
+        <item name="fontFamily">@font/semi_bold</item>
+    </style>
+
+    <style name="SemiBoldL" parent="TextSizeL">
+        <item name="fontFamily">@font/semi_bold</item>
+    </style>
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <style name="BoldSS" parent="TextSizeSS">
+        <item name="fontFamily">@font/bold</item>
+    </style>
+
+    <style name="BoldS" parent="TextSizeS">
+        <item name="fontFamily">@font/bold</item>
+    </style>
+
+    <style name="BoldM" parent="TextSizeM">
+        <item name="fontFamily">@font/bold</item>
+    </style>
+
+    <style name="BoldL" parent="TextSizeL">
+        <item name="fontFamily">@font/bold</item>
+    </style>
+
+    <style name="BoldXL" parent="TextSizeXL">
+        <item name="fontFamily">@font/bold</item>
+    </style>
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <style name="WhiteRegularSS" parent="RegularSS">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WhiteRegularS" parent="RegularS">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WhiteRegularM" parent="RegularM">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WhiteRegularL" parent="RegularL">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <style name="WhiteMediumSS" parent="MediumSS">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WhiteMediumS" parent="MediumS">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WhiteMediumM" parent="MediumM">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WhiteMediumL" parent="MediumL">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <style name="WhiteSemiBoldSS" parent="SemiBoldSS">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WhiteSemiBoldS" parent="SemiBoldS">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WhiteSemiBoldM" parent="SemiBoldM">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WhiteSemiBoldL" parent="SemiBoldL">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <style name="WhiteBoldSS" parent="BoldSS">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WhiteBoldS" parent="BoldS">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WhiteBoldM" parent="BoldM">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WhiteBoldL" parent="BoldL">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WhiteBoldXL" parent="BoldXL">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <style name="GreyRegularSS" parent="RegularSS">
+        <item name="android:textColor">@color/textGrey</item>
+    </style>
+
+    <style name="GreyRegularS" parent="RegularS">
+        <item name="android:textColor">@color/textGrey</item>
+    </style>
+
+    <style name="GreyRegularM" parent="RegularM">
+        <item name="android:textColor">@color/textGrey</item>
+    </style>
+
+    <style name="GreyRegularL" parent="RegularL">
+        <item name="android:textColor">@color/textGrey</item>
+    </style>
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <style name="GreyMediumSS" parent="MediumSS">
+        <item name="android:textColor">@color/textGrey</item>
+    </style>
+
+    <style name="GreyMediumS" parent="MediumS">
+        <item name="android:textColor">@color/textGrey</item>
+    </style>
+
+    <style name="GreyMediumM" parent="MediumM">
+        <item name="android:textColor">@color/textGrey</item>
+    </style>
+
+    <style name="GreyMediumL" parent="MediumL">
+        <item name="android:textColor">@color/textGrey</item>
+    </style>
+
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <style name="BlackRegularSS" parent="RegularSS">
+        <item name="android:textColor">@color/textBlack</item>
+    </style>
+
+    <style name="BlackRegularS" parent="RegularS">
+        <item name="android:textColor">@color/textBlack</item>
+    </style>
+
+    <style name="BlackRegularM" parent="RegularM">
+        <item name="android:textColor">@color/textBlack</item>
+    </style>
+
+    <style name="BlackRegularL" parent="RegularL">
+        <item name="android:textColor">@color/textBlack</item>
+    </style>
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <style name="BlackMediumSS" parent="MediumSS">
+        <item name="android:textColor">@color/textBlack</item>
+    </style>
+
+    <style name="BlackMediumS" parent="MediumS">
+        <item name="android:textColor">@color/textBlack</item>
+    </style>
+
+    <style name="BlackMediumM" parent="MediumM">
+        <item name="android:textColor">@color/textBlack</item>
+    </style>
+
+    <style name="BlackMediumL" parent="MediumL">
+        <item name="android:textColor">@color/textBlack</item>
+    </style>
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <style name="BlackSemiBoldSS" parent="SemiBoldSS">
+        <item name="android:textColor">@color/textBlack</item>
+    </style>
+
+    <style name="BlackSemiBoldS" parent="SemiBoldS">
+        <item name="android:textColor">@color/textBlack</item>
+    </style>
+
+    <style name="BlackSemiBoldM" parent="SemiBoldM">
+        <item name="android:textColor">@color/textBlack</item>
+    </style>
+
+    <style name="BlackSemiBoldL" parent="SemiBoldL">
+        <item name="android:textColor">@color/textBlack</item>
+    </style>
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <style name="BlackBoldSS" parent="BoldSS">
+        <item name="android:textColor">@color/textBlack</item>
+    </style>
+
+    <style name="BlackBoldS" parent="BoldS">
+        <item name="android:textColor">@color/textBlack</item>
+    </style>
+
+    <style name="BlackBoldM" parent="BoldM">
+        <item name="android:textColor">@color/textBlack</item>
+    </style>
+
+    <style name="BlackBoldL" parent="BoldL">
+        <item name="android:textColor">@color/textBlack</item>
+    </style>
+
+    <style name="BlackBoldXL" parent="BoldXL">
+        <item name="android:textColor">@color/textBlack</item>
+    </style>
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
+
+</resources>

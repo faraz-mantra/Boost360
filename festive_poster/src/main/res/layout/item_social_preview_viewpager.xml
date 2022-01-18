@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/grey_DADADA"
+        android:gravity="center_horizontal">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/layout_suggest_domain_select"
+            android:layout_width="@dimen/size_198"
+            android:layout_height="@dimen/size_284"
+            app:cardBackgroundColor="@color/grey_DADADA"
+            app:cardCornerRadius="@dimen/size_8"
+            app:cardElevation="@dimen/size_4"
+            android:layout_marginTop="@dimen/size_13"
+            android:layout_marginHorizontal="@dimen/size_8"
+            android:layout_marginBottom="@dimen/size_38"
+            app:cardMaxElevation="@dimen/size_1"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/iv_preview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/post_preview_promo_2" />
+
+        </androidx.cardview.widget.CardView>
+
+        <FrameLayout
+            android:id="@+id/frame_circle_grey"
+            android:layout_width="@dimen/size_48"
+            android:layout_height="@dimen/size_48"
+            android:background="@drawable/grey_bachground_circle_solid_oval"
+            android:elevation="@dimen/size_6"
+            app:layout_constraintBottom_toBottomOf="@+id/layout_suggest_domain_select"
+            app:layout_constraintEnd_toEndOf="@+id/layout_suggest_domain_select"
+            app:layout_constraintStart_toStartOf="@+id/layout_suggest_domain_select"
+            app:layout_constraintTop_toBottomOf="@+id/layout_suggest_domain_select" />
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/iv_social_icon"
+            android:layout_width="@dimen/size_42"
+            android:layout_height="@dimen/size_42"
+            android:elevation="@dimen/size_8"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_instagram_promo_grey_boundary"
+            app:layout_constraintStart_toStartOf="@+id/frame_circle_grey"
+            app:layout_constraintEnd_toEndOf="@+id/frame_circle_grey"
+            app:layout_constraintTop_toTopOf="@+id/frame_circle_grey"
+            app:layout_constraintBottom_toBottomOf="@+id/frame_circle_grey"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

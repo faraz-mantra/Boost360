@@ -2,6 +2,7 @@ package com.boost.upgrades.ui.packages
 
 import android.animation.Animator
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -12,33 +13,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
+import com.boost.cart.CartActivity
 
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.CompareItemAdapter
 import com.boost.upgrades.adapter.PackageAdaptor
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
-import com.boost.upgrades.data.model.CartModel
-import com.boost.upgrades.data.model.FeaturesModel
-import com.boost.upgrades.ui.cart.CartFragment
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.upgrades.utils.CircleAnimationUtil
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.framework.webengageconstant.*
-import com.framework.webengageconstant.ADDONS_MARKETPLACE_FEATURE_DETAILS_LOADED
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.package_fragment.*
 import kotlinx.android.synthetic.main.package_fragment_layout.*
 import kotlinx.android.synthetic.main.package_fragment_layout.badge121
 import kotlinx.android.synthetic.main.package_fragment_layout.offer_price
@@ -120,10 +115,36 @@ class PackageFragmentNew : BaseFragment("MarketPlacePackageFragmentNew") {
         }
 
         package_cart_icon.setOnClickListener {
-            (activity as UpgradeActivity).addFragment(
-                    CartFragment.newInstance(),
-                    Constants.CART_FRAGMENT
+            val intent = Intent(
+                requireContext(),
+                CartActivity::class.java
             )
+            intent.putExtra("fpid", (activity as UpgradeActivity).fpid)
+            intent.putExtra("expCode", (activity as UpgradeActivity).experienceCode)
+            intent.putExtra("isDeepLink", (activity as UpgradeActivity).isDeepLink)
+            intent.putExtra("deepLinkViewType", (activity as UpgradeActivity).deepLinkViewType)
+            intent.putExtra("deepLinkDay", (activity as UpgradeActivity).deepLinkDay)
+            intent.putExtra("isOpenCardFragment", (activity as UpgradeActivity).isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                (activity as UpgradeActivity).accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                (activity as UpgradeActivity).userPurchsedWidgets
+            )
+            if ((activity as UpgradeActivity).email != null) {
+                intent.putExtra("email", (activity as UpgradeActivity).email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if ((activity as UpgradeActivity).mobileNo != null) {
+                intent.putExtra("mobileNo", (activity as UpgradeActivity).mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", (activity as UpgradeActivity).profileUrl)
+            startActivity(intent)
         }
 
         package_submit.setOnClickListener {

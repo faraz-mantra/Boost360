@@ -8,6 +8,7 @@ import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import com.framework.R
 import com.framework.extensions.getDensity
+import com.google.android.material.card.MaterialCardView
 
 open class CustomCardView : CardView {
 

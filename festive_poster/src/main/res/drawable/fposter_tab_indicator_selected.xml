@@ -3,7 +3,8 @@
   <item
     android:left="3dp"
     android:right="3dp">
-    <shape>
+    <shape
+        android:useLevel="false">
       <size
         android:width="16dp"
         android:height="2dp" />

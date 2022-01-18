@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/size_250"
+        android:layout_height="@dimen/size_300">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView"
+            android:layout_width="match_parent"
+            android:layout_height="270dp"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="@dimen/size_20"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp">
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/customTextView9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/posted_15_mins_ago"
+                    android:textSize="@dimen/size_5"
+                    app:fontFamily="@font/regular_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_svg" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textSize="6sp"
+                    app:fontFamily="@font/regular_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/customTextView9"
+                    tools:text="50 to 60 percent off the entire site and store for Black Friday. Above that, you have free shipiing on all orders, plus an extra 20.
+
+#bigbilliondays #smile #2020 " />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/iv_svg"
+                    android:scaleType="fitXY"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintHeight_percent="0.65"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/customImageView6"
+            android:layout_width="wrap_content"
+            android:elevation="@dimen/size_4"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_website_preview"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

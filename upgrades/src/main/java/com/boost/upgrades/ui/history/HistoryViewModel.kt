@@ -3,8 +3,8 @@ package com.boost.upgrades.ui.history
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.boost.upgrades.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
-import com.boost.upgrades.data.remote.ApiInterface
+import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
+import com.boost.dbcenterapi.data.remote.ApiInterface
 import com.boost.upgrades.utils.Utils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

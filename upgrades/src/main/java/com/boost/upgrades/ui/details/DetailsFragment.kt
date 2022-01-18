@@ -4,6 +4,7 @@ package com.boost.upgrades.ui.details
 import android.animation.Animator
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -21,23 +22,20 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
+import com.boost.cart.CartActivity
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.ReviewViewPagerAdapter
 import com.boost.upgrades.adapter.SecondaryImagesAdapter
 import com.boost.upgrades.adapter.ZoomOutPageTransformer
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.LearnMoreLink
-import com.boost.upgrades.data.api_model.GetAllWidgets.Review
-import com.boost.upgrades.data.model.CartModel
-import com.boost.upgrades.data.model.FeaturesModel
-import com.boost.upgrades.data.remote.ApiInterface
-import com.boost.upgrades.database.LocalStorage
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.LearnMoreLink
+import com.boost.dbcenterapi.data.api_model.GetAllWidgets.Review
+import com.boost.dbcenterapi.upgradeDB.model.*
+import com.boost.dbcenterapi.data.remote.ApiInterface
 import com.boost.upgrades.interfaces.DetailsFragmentListener
-import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.popup.ImagePreviewPopUpFragement
 import com.boost.upgrades.ui.webview.WebViewFragment
 import com.boost.upgrades.utils.*
-import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.IMAGE_PREVIEW_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.WEB_VIEW_FRAGMENT
 import com.bumptech.glide.Glide
@@ -64,7 +62,7 @@ class DetailsFragment : BaseFragment("MarketPlaceDetailsFragment"), DetailsFragm
 
   lateinit var retrofit: Retrofit
   lateinit var ApiService: ApiInterface
-  lateinit var localStorage: LocalStorage
+//  lateinit var localStorage: LocalStorage
   var singleWidgetKey: String? = null
   var badgeNumber = 0
   var addonDetails: FeaturesModel? = null
@@ -101,7 +99,7 @@ class DetailsFragment : BaseFragment("MarketPlaceDetailsFragment"), DetailsFragm
     progressDialog = ProgressDialog(requireContext())
     secondaryImagesAdapter = SecondaryImagesAdapter(ArrayList(), this)
     reviewAdaptor = ReviewViewPagerAdapter(ArrayList())
-    localStorage = LocalStorage.getInstance(requireContext())!!
+//    localStorage = LocalStorage.getInstance(requireContext())!!
     singleWidgetKey = requireArguments().getString("itemId")
     prefs = SharedPrefs(activity as UpgradeActivity)
 
@@ -203,10 +201,36 @@ class DetailsFragment : BaseFragment("MarketPlaceDetailsFragment"), DetailsFragm
     }
 
     imageViewCart121.setOnClickListener {
-      (activity as UpgradeActivity).addFragment(
-        CartFragment.newInstance(),
-        CART_FRAGMENT
+      val intent = Intent(
+        requireContext(),
+        CartActivity::class.java
       )
+      intent.putExtra("fpid", (activity as UpgradeActivity).fpid)
+      intent.putExtra("expCode", (activity as UpgradeActivity).experienceCode)
+      intent.putExtra("isDeepLink", (activity as UpgradeActivity).isDeepLink)
+      intent.putExtra("deepLinkViewType", (activity as UpgradeActivity).deepLinkViewType)
+      intent.putExtra("deepLinkDay", (activity as UpgradeActivity).deepLinkDay)
+      intent.putExtra("isOpenCardFragment", (activity as UpgradeActivity).isOpenCardFragment)
+      intent.putExtra(
+        "accountType",
+        (activity as UpgradeActivity).accountType
+      )
+      intent.putStringArrayListExtra(
+        "userPurchsedWidgets",
+        (activity as UpgradeActivity).userPurchsedWidgets
+      )
+      if ((activity as UpgradeActivity).email != null) {
+        intent.putExtra("email", (activity as UpgradeActivity).email)
+      } else {
+        intent.putExtra("email", "ria@nowfloats.com")
+      }
+      if ((activity as UpgradeActivity).mobileNo != null) {
+        intent.putExtra("mobileNo", (activity as UpgradeActivity).mobileNo)
+      } else {
+        intent.putExtra("mobileNo", "9160004303")
+      }
+      intent.putExtra("profileUrl", (activity as UpgradeActivity).profileUrl)
+      startActivity(intent)
     }
 
     artical_layout.setOnClickListener {

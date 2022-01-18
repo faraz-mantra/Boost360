@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/cardView"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_margin="@dimen/_5sdp"
+  android:background="@drawable/all_side_curve_bg"
+  android:clickable="true"
+  android:elevation="@dimen/_2sdp"
+  android:focusable="true">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_15sdp">
+
+    <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:orientation="vertical">
+
+      <TextView
+        android:id="@+id/item_orderId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/open_sans_semibold"
+        android:maxLines="1"
+        android:text="Order id #####"
+        android:textColor="#0068e0"
+        android:textSize="@dimen/_10sdp" />
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+          android:id="@+id/item_lists"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:ellipsize="end"
+          android:fontFamily="@font/open_sans_semibold"
+          android:maxLines="1"
+          android:text="Missed Call IVR, Domain, SSL..."
+          android:textColor="@color/common_text_color"
+          android:textSize="@dimen/_12sdp" />
+
+        <TextView
+          android:id="@+id/item_count"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans_semibold"
+          android:text="+1 more"
+          android:textColor="@color/common_text_color"
+          android:textSize="@dimen/_12sdp" />
+
+      </LinearLayout>
+
+      <TextView
+        android:id="@+id/item_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="24-Dec-2019  (20:30)"
+        android:textSize="@dimen/_10sdp" />
+    </LinearLayout>
+
+    <TextView
+      android:id="@+id/history_item_amount"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:paddingStart="@dimen/_10sdp"
+      android:paddingEnd="@dimen/_10sdp"
+      android:textColor="#0068e0"
+      android:textSize="@dimen/_12sdp"
+      tools:text="₹2000" />
+  </LinearLayout>
+</LinearLayout>
+

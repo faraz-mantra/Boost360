@@ -25,20 +25,15 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.*
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.*
-import com.boost.upgrades.data.model.CartModel
-import com.boost.upgrades.data.model.FeaturesModel
-import com.boost.upgrades.data.model.WidgetModel
-import com.boost.upgrades.data.model.YoutubeVideoModel
-import com.boost.upgrades.data.remote.ApiInterface
-import com.boost.upgrades.database.LocalStorage
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
+import com.boost.dbcenterapi.upgradeDB.model.*
+import com.boost.dbcenterapi.data.remote.ApiInterface
 import com.boost.upgrades.interfaces.CompareBackListener
 import com.boost.upgrades.interfaces.HomeListener
-import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.compare.ComparePackageFragment
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
@@ -48,7 +43,6 @@ import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.ui.packages.PackageFragmentNew
 import com.boost.upgrades.ui.webview.WebViewFragment
 import com.boost.upgrades.utils.*
-import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.COMPARE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MARKET_OFFER_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
@@ -75,6 +69,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 import android.widget.TextView
+import com.boost.cart.CartActivity
 import com.framework.analytics.SentryController
 
 
@@ -86,7 +81,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
 
     lateinit var retrofit: Retrofit
     lateinit var ApiService: ApiInterface
-    lateinit var localStorage: LocalStorage
+//    lateinit var localStorage: LocalStorage
 
     lateinit var addonsCategoryAdapter: AddonsCategoryAdapter
     lateinit var upgradeAdapter: UpgradeAdapter
@@ -99,7 +94,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
     lateinit var packageViewPagerAdapter: PackageViewPagerAdapter
     lateinit var featureDealsAdapter: FeatureDealsAdapter
 
-    var cart_list: List<WidgetModel>? = null
+//    var cart_list: List<WidgetModel>? = null
     var badgeNumber = 0
     var fpRefferalCode: String = ""
     var feedBackLink: String? = null
@@ -145,8 +140,8 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
         //request retrofit instance
         ApiService = getRetrofit().create(ApiInterface::class.java)
         progressDialog = ProgressDialog(requireContext())
-        localStorage = LocalStorage.getInstance(requireContext())!!
-        cart_list = localStorage.getCartItems()
+//        localStorage = LocalStorage.getInstance(requireContext())!!
+//        cart_list = localStorage.getCartItems()
         prefs = SharedPrefs(activity as UpgradeActivity)
         session = UserSessionManager(requireActivity())
         session?.let { deepLinkUtil = DeepLinkUtil(requireActivity() as AppCompatActivity, it) }
@@ -180,7 +175,36 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
         }
 
         imageViewCart1.setOnClickListener {
-            (activity as UpgradeActivity).addFragment(CartFragment.newInstance(), CART_FRAGMENT)
+            val intent = Intent(
+                requireContext(),
+                CartActivity::class.java
+            )
+            intent.putExtra("fpid", (activity as UpgradeActivity).fpid)
+            intent.putExtra("expCode", (activity as UpgradeActivity).experienceCode)
+            intent.putExtra("isDeepLink", (activity as UpgradeActivity).isDeepLink)
+            intent.putExtra("deepLinkViewType", (activity as UpgradeActivity).deepLinkViewType)
+            intent.putExtra("deepLinkDay", (activity as UpgradeActivity).deepLinkDay)
+            intent.putExtra("isOpenCardFragment", (activity as UpgradeActivity).isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                (activity as UpgradeActivity).accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                (activity as UpgradeActivity).userPurchsedWidgets
+            )
+            if ((activity as UpgradeActivity).email != null) {
+                intent.putExtra("email", (activity as UpgradeActivity).email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if ((activity as UpgradeActivity).mobileNo != null) {
+                intent.putExtra("mobileNo", (activity as UpgradeActivity).mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", (activity as UpgradeActivity).profileUrl)
+            startActivity(intent)
         }
 
         initializeVideosRecycler()
@@ -457,7 +481,36 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
         }
         mp_review_cart_tv.setOnClickListener {
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED,EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED,NO_EVENT_VALUE)
-            (activity as UpgradeActivity).addFragment(CartFragment.newInstance(), CART_FRAGMENT)
+            val intent = Intent(
+                requireContext(),
+                CartActivity::class.java
+            )
+            intent.putExtra("fpid", (activity as UpgradeActivity).fpid)
+            intent.putExtra("expCode", (activity as UpgradeActivity).experienceCode)
+            intent.putExtra("isDeepLink", (activity as UpgradeActivity).isDeepLink)
+            intent.putExtra("deepLinkViewType", (activity as UpgradeActivity).deepLinkViewType)
+            intent.putExtra("deepLinkDay", (activity as UpgradeActivity).deepLinkDay)
+            intent.putExtra("isOpenCardFragment", (activity as UpgradeActivity).isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                (activity as UpgradeActivity).accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                (activity as UpgradeActivity).userPurchsedWidgets
+            )
+            if ((activity as UpgradeActivity).email != null) {
+                intent.putExtra("email", (activity as UpgradeActivity).email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if ((activity as UpgradeActivity).mobileNo != null) {
+                intent.putExtra("mobileNo", (activity as UpgradeActivity).mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", (activity as UpgradeActivity).profileUrl)
+            startActivity(intent)
         }
 
     }
@@ -1224,10 +1277,10 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             Log.e("getFeedBackLink", it.toString())
             feedBackLink = it
         })
-
-        viewModel.getBundleExxists().observe(this,androidx.lifecycle.Observer{
-            Log.d("getBundleExxists", it.toString())
-        })
+//
+//        viewModel.getBundleExxists().observe(this,androidx.lifecycle.Observer{
+//            Log.d("getBundleExxists", it.toString())
+//        })
     }
 
     fun updateRecycler(list: List<FeaturesModel>) {

@@ -285,4 +285,6 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
     }
   }
 
+
+
 }

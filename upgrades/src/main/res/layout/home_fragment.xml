@@ -71,12 +71,12 @@
 
 
             <com.nex3z.notificationbadge.NotificationBadge
-              android:id="@+id/badge"
-              android:layout_width="28dp"
-              android:layout_height="28dp"
-              android:layout_alignParentTop="true"
-              android:layout_alignParentEnd="true"
-              app:nbMaxTextLength="2" />
+                android:id="@+id/badge"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                app:nbMaxTextLength="2" />
           </RelativeLayout>
 
           <TextView

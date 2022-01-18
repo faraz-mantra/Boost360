@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -38,7 +39,9 @@ android {
 
 dependencies {
     api project(path: ':presignin')
+    api project(path: ':dbcenterapi')
     api project(path: ':festive_poster')
     api project(path: ':instagram')
+
 
 }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/riv_close_bottomSheet"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/size_15"
+            android:src="@drawable/ic_help_bsheet_close" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_round_rect_gradient_draft"
+            android:orientation="vertical"
+            android:padding="@dimen/size_24">
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/deleting_draft"
+                android:textColor="@color/black_4a4a4a"
+                app:fontFamily="@font/bold"
+                app:textType="HEADING_5" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_subheading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/closing_this_page_will_not_save_the_changes_you_ve_made"
+                android:textColor="@color/grey_828282"
+                app:fontFamily="@font/regular"
+               android:textSize="@dimen/text_12" />
+
+            <com.framework.views.customViews.CustomMaterialButton
+                android:id="@+id/btn_yes_delete"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="@dimen/size_10"
+                android:backgroundTint="@color/red_E39595"
+                android:fontFamily="@font/semi_bold"
+                android:text="@string/yes_delete"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_16"
+                app:cornerRadius="@dimen/size_15"
+                app:iconTint="@color/white"
+                app:icon="@drawable/ic_action_delete"
+                app:iconGravity="textStart" />
+
+            <com.framework.views.customViews.CustomMaterialButton
+                android:id="@+id/btn_no_stay_here"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="@dimen/size_10"
+                android:background="@drawable/bg_btn_rounded_white"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/semi_bold"
+                android:text="@string/no_stay_here"
+                android:textAllCaps="false"
+                android:textColor="@color/color_888888"
+                android:textSize="@dimen/text_16"
+                app:cornerRadius="@dimen/size_15"
+                app:icon="@drawable/ic_close_grey_rounded"
+                app:iconTint="@color/color_888888"
+                app:iconGravity="textStart" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

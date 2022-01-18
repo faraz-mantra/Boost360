@@ -22,7 +22,8 @@ import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
-import com.festive.poster.ui.FestivePosterContainerActivity
+import com.festive.poster.ui.festivePoster.FestivePosterContainerActivity
+import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
 import com.framework.analytics.SentryController
 import com.framework.pref.*
 import com.framework.webengageconstant.*
@@ -236,6 +237,7 @@ fun AppCompatActivity.initiateAddonMarketplace(
     if (isLoadingShow) delayProgressShow()
     WebEngageController.trackEvent(ADDON_MARKETPLACE_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val intent = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
+//    val intent = Intent(this, Class.forName("com.boost.dbcenterapi.CartActivity"))
     intent.putExtra("expCode", session.fP_AppExperienceCode)
     intent.putExtra("fpName", session.fPName)
     intent.putExtra("fpid", session.fPID)
@@ -1026,6 +1028,18 @@ fun Context.startHelpSupportVideoActivity(supportType:String){
     i.putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name, supportType)
     this.startActivity(i)
   } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startPromotionUpdates() {
+  try {
+    WebEngageController.trackEvent(Post_Promotional_Update_Click)
+    val posterIntent = Intent(this,PromoUpdatesActivity::class.java)
+
+    startActivity(posterIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
 }
