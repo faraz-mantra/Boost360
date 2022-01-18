@@ -90,7 +90,7 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
             val response = it as? UpgradeGetDataResponse
             response?.let {
                     feature_promo= response.Data.firstOrNull()?.features?.find { feature ->
-                        feature.feature_code == Constants.PROMO_WIDGET_KEY
+                        feature.feature_code == Constants.PROMO_FEATURE_CODE
                     }
 
                 if (feature_promo!=null){
@@ -147,7 +147,7 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
             val discountedPrice = price.minus(discountPrice)
 
             val cartItem = CartModel(it._kid,it.boost_widget_key,it.feature_code,it.name,
-                it.description_title,null,discountedPrice,price,discountPrice.toInt(),
+                it.description_title,null,1.0,10.0,discountPrice.toInt(),
                 1,minPurchaseMonth,"features")
 
             Completable.fromAction {
@@ -194,7 +194,7 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
     }
 
     private fun gotoMarketPlace() {
-        MarketPlaceUtils.initiateAddonMarketplace(session!!,true,"",Constants.PROMO_WIDGET_KEY,true,requireContext())
+        MarketPlaceUtils.initiateAddonMarketplace(session!!,true,"",Constants.PROMO_FEATURE_CODE,true,requireContext())
     }
 
 }

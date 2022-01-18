@@ -110,7 +110,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
 
     private fun getTemplateViewConfig() {
         showProgress()
-        viewModel?.getTemplateConfig(Constants.PROMO_WIDGET_KEY,session?.fPID, session?.fpTag)
+        viewModel?.getTemplateConfig(Constants.PROMO_FEATURE_CODE,session?.fPID, session?.fpTag)
             ?.observeOnce(viewLifecycleOwner, {
                 val response = it as? GetTemplateViewConfigResponse
                 response?.let {
