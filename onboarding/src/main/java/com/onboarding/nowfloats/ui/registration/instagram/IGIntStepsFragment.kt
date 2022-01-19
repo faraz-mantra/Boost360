@@ -29,6 +29,7 @@ import com.nowfloats.facebook.models.BaseFacebookGraphResponse
 import com.nowfloats.facebook.models.userPages.FacebookGraphUserPagesDataModel
 import com.nowfloats.facebook.models.userPages.FacebookGraphUserPagesResponse
 import com.nowfloats.instagram.graph.IGGraphManager
+import com.nowfloats.instagram.graph.IGUserResponse
 import com.nowfloats.instagram.models.IGFBPageLinkedResponse
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
@@ -39,7 +40,8 @@ import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRe
 import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
 
 class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCreateViewModel>(),
-    FacebookLoginHelper,FacebookGraphManager.GraphRequestUserAccountCallback,IGGraphManager.GraphRequestIGAccountCallback {
+    FacebookLoginHelper,FacebookGraphManager.GraphRequestUserAccountCallback,
+    IGGraphManager.GraphRequestIGAccountCallback,IGGraphManager.GraphRequestIGUserCallback {
 
 
     private var accessToken: AccessToken?=null
@@ -223,8 +225,10 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
 
     }
 
-    fun updateChannelAccessToken(igId:String){
+    fun updateChannelAccessToken(igId:String,userName:String){
+
         val channelAccessToken = ChannelAccessToken(ChannelAccessToken.AccessTokenType.instagram.name
+            ,userAccountName= userName
         ,userAccessTokenKey = page?.access_token,userAccountId = igId)
 
         viewModel?.updateChannelAccessToken(
@@ -247,11 +251,17 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
 
     override fun onCompleted(response: IGFBPageLinkedResponse?) {
         val igId = response?.instagram_business_account?.id
-        updateChannelAccessToken("17841445344353954")
+        IGGraphManager.requestIGUserDetails("17841445344353954",
+        accessToken,this)
         if (igId!=null){
-            updateChannelAccessToken(igId)
+          //  updateChannelAccessToken(igId)
         }else{
         }
+    }
+
+    override fun onCompleted(response: IGUserResponse?) {
+        updateChannelAccessToken("17841445344353954",response?.username!!)
+
     }
 
 }

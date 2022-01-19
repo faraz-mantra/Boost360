@@ -446,6 +446,104 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                             channelType = SocialPreviewChannel.GMB
                         }
 
+                        it1.getAccessTokenType() == ChannelsType.AccountType.googlemybusiness.name -> {
+                            val gmb = channelsAccessToken.googlemybusiness
+                            if (channelsAccessToken.googlemybusiness?.status?.equals(
+                                    CHANNEL_STATUS_SUCCESS,
+                                    true
+                                ) == true
+                            ) {
+                                data = ChannelAccessToken(
+                                    type = ChannelsType.AccountType.googlemybusiness.name,
+                                    token_expiry = null,
+                                    invalid = null,
+                                    token_response = ChannelTokenResponse(),
+                                    refresh_token = null,
+                                    userAccountName = gmb?.account?.accountName,
+                                    userAccountId = gmb?.account?.accountId,
+                                    LocationId = gmb?.account?.locationId,
+                                    LocationName = gmb?.account?.locationName,
+                                    userAccessTokenKey = null,
+                                    verified_location = null
+                                )
+                                title =gmb?.account?.accountName
+                                subTitle = gmb?.account?.accountId
+                                isConnected = true
+                                requestFloatsNew.channelAccessTokens?.add(data)
+                                it1.isSelected = true
+                                it1.channelAccessToken = data
+                                connectedChannels.add(ChannelsType.AccountType.googlemybusiness.name)
+
+                                layout_id = RecyclerViewItemType.GMB_PREVIEW.getLayout()
+
+
+                            }
+                            channelType = SocialPreviewChannel.GMB
+                        }
+
+                        it1.getAccessTokenType() == ChannelsType.AccountType.googlemybusiness.name -> {
+                            val gmb = channelsAccessToken.googlemybusiness
+                            if (channelsAccessToken.googlemybusiness?.status?.equals(
+                                    CHANNEL_STATUS_SUCCESS,
+                                    true
+                                ) == true
+                            ) {
+                                data = ChannelAccessToken(
+                                    type = ChannelsType.AccountType.googlemybusiness.name,
+                                    token_expiry = null,
+                                    invalid = null,
+                                    token_response = ChannelTokenResponse(),
+                                    refresh_token = null,
+                                    userAccountName = gmb?.account?.accountName,
+                                    userAccountId = gmb?.account?.accountId,
+                                    LocationId = gmb?.account?.locationId,
+                                    LocationName = gmb?.account?.locationName,
+                                    userAccessTokenKey = null,
+                                    verified_location = null
+                                )
+                                title =gmb?.account?.accountName
+                                subTitle = gmb?.account?.accountId
+                                isConnected = true
+                                requestFloatsNew.channelAccessTokens?.add(data)
+                                it1.isSelected = true
+                                it1.channelAccessToken = data
+                                connectedChannels.add(ChannelsType.AccountType.googlemybusiness.name)
+
+                                layout_id = RecyclerViewItemType.GMB_PREVIEW.getLayout()
+
+
+                            }
+                            channelType = SocialPreviewChannel.GMB
+                        }
+
+                        it1.getAccessTokenType() == ChannelsType.AccountType.instagram.name -> {
+                            val ig = channelsAccessToken.instagram
+                            if (channelsAccessToken.instagram?.status?.equals(
+                                    CHANNEL_STATUS_SUCCESS,
+                                    true
+                                ) == true
+                            ) {
+                                data = ChannelAccessToken(
+                                    type = ChannelsType.AccountType.instagram.name,
+                                    userAccessTokenKey = null,
+                                    userAccountId = ig?.account?.accountId,
+                                    userAccountName = ig?.account?.accountName
+                                )
+                                title =ig?.account?.accountName
+                                subTitle = ig?.account?.accountId
+                                isConnected = true
+                                requestFloatsNew.channelAccessTokens?.add(data)
+                                it1.isSelected = true
+                                it1.channelAccessToken = data
+                                connectedChannels?.add(ChannelsType.AccountType.instagram.name)
+
+                                layout_id = RecyclerViewItemType.INSTAGRAM_PREVIEW.getLayout()
+
+
+                            }
+                            channelType = SocialPreviewChannel.INSTAGRAM
+                        }
+
                     }
 
                 }

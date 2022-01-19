@@ -60,9 +60,9 @@ class SocialPlatformModel(
                 R.drawable.ic_promo_twitter,
                 context.theme
             )
-            SocialPreviewChannel.GMB -> ResourcesCompat.getDrawable(
+            SocialPreviewChannel.INSTAGRAM -> ResourcesCompat.getDrawable(
                 context.resources,
-                R.drawable.ic_gmb_promo_channel,
+                R.drawable.ic_promo_instagram,
                 context.theme
             )
             else -> null

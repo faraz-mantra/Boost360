@@ -15,6 +15,11 @@ object IGGraphManager {
         )
     }
 
+    interface GraphRequestIGUserCallback {
+        fun onCompleted(
+            response:IGUserResponse?
+        )
+    }
     fun requestIGAccount(pageId:String, accessToken: AccessToken?, callback: GraphRequestIGAccountCallback) {
         val request = GraphRequest.newGraphPathRequest(
             accessToken,
@@ -25,6 +30,22 @@ object IGGraphManager {
         }
         val parameters = Bundle()
         parameters.putString("fields", "instagram_business_account")
+        request.parameters = parameters
+        request.executeAsync()
+    }
+
+
+    fun requestIGUserDetails(igId:String, accessToken: AccessToken?, callback: GraphRequestIGUserCallback) {
+        val request = GraphRequest.newGraphPathRequest(
+            accessToken,
+            igId
+        ) { graphResponse ->
+
+            callback.onCompleted(convertStringToObj<IGUserResponse>(graphResponse.rawResponse))
+
+        }
+        val parameters = Bundle()
+        parameters.putString("fields", "username")
         request.parameters = parameters
         request.executeAsync()
     }

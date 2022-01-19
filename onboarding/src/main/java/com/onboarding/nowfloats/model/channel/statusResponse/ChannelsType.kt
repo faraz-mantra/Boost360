@@ -16,9 +16,11 @@ data class ChannelsType(
   var googlemybusiness: Googlemybusiness? = null,
   @SerializedName("twitter")
   var twitter: Twitter? = null,
+  @SerializedName("instagram")
+  var instagram:Facebookpage?=null
 ) : Serializable {
 
   enum class AccountType {
-    facebookusertimeline, facebookpage, facebookshop, twitter, googlemybusiness, WAB;
+    facebookusertimeline, facebookpage, facebookshop, twitter, googlemybusiness, WAB,instagram;
   }
 }
