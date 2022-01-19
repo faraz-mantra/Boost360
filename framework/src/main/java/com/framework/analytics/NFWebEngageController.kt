@@ -73,12 +73,7 @@ object NFWebEngageController {
     }
   }
 
-  fun trackEventLoad(
-    event_name: String,
-    event_label: String,
-    event_value: HashMap<String, Any>,
-    value: String
-  ) {
+  fun trackEventLoad(event_name: String, event_label: String, event_value: HashMap<String, Any>, value: String) {
     if (event_value.size > 0) {
       event_value["event_name"] = event_name
       event_value["event_label"] = event_label
@@ -91,10 +86,7 @@ object NFWebEngageController {
 
       //AppsFlyerEvent...
       try {
-        AppsFlyerLib.getInstance().logEvent(
-          weAnalytics.activity.get()?.applicationContext,
-          event_name, event_value.toMap()
-        )
+        AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, event_value.toMap())
       } catch (e: Exception) {
         e.printStackTrace()
       }
@@ -122,11 +114,11 @@ object NFWebEngageController {
       val params = HashMap<String, Any>()
 
       if (!mobile.isNullOrEmpty()) {
-        weUser.setPhoneNumber(mobile)
-
+        val plusMobile=getNumberPlus91(mobile)
+        weUser.setPhoneNumber(plusMobile)
         //Firebase Analytics User Property.
-        FirebaseAnalyticsUtilsHelper.setUserProperty("mobile", mobile)
-        params["mobile"] = mobile
+        FirebaseAnalyticsUtilsHelper.setUserProperty("mobile", plusMobile)
+        params["mobile"] = plusMobile
       }
       if (!name.isNullOrEmpty()) {
         weUser.setFirstName(name)
@@ -151,7 +143,7 @@ object NFWebEngageController {
 
   fun initiateUserLogin(userId: String?) {
     if (userId != null && !userId.isNullOrEmpty()) {
-      Log.d(TAG, "Initiating User login" + userId)
+      Log.d(TAG, "Initiating User login$userId")
       weUser.login(userId)
 
       //Firebase Analytics User Session Event.
@@ -192,12 +184,10 @@ object NFWebEngageController {
     }
   }
 
-  fun setFPTag(fpTag: String) {
+  fun setFPTag(fpTag: String?) {
     try {
-      if (fpTag == null) {
-        return;
-      }
-      Log.d(TAG, "Setting FP Tag" + fpTag)
+      if (fpTag == null) return;
+      Log.d(TAG, "Setting FP Tag$fpTag")
       weUser.setAttribute("fpTag", fpTag)
       UserExperiorController.setFpTag(fpTag)
 
@@ -223,5 +213,13 @@ object NFWebEngageController {
 
     //End AppsFlyer Analytics User Session Event.
     AppsFlyerLib.getInstance().setCustomerUserId(null)
+  }
+
+  fun getNumberPlus91(number:String): String {
+    return when {
+      number.contains("+91-") -> number.replace("+91-", "+91")
+      !number.contains("+91") -> "+91$number"
+      else -> number
+    }
   }
 }
