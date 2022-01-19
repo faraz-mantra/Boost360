@@ -59,21 +59,22 @@
                     android:text="In-clininc appointments"
                     android:textStyle="normal"
                     android:textColor="@color/common_text_color"
-                    android:textSize="@dimen/_16sdp"
+                    android:textSize="@dimen/_14sdp"
                     android:textFontWeight="700"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/addons_price"
+                    android:id="@+id/addons_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
                     android:textStyle="normal"
+                    android:maxLines="1"
                     android:text="In-clinic appointments for patients"
                     android:textFontWeight="700"
                     android:textColor="@color/common_text_color"
-                    android:textSize="@dimen/_12sdp"
+                    android:textSize="@dimen/_11sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </LinearLayout>
@@ -223,7 +224,7 @@
 
 
             <Button
-                android:id="@+id/btn_understood"
+                android:id="@+id/btn_Use_this_feature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
@@ -239,7 +240,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/cslayout" />
 
             <Button
-                android:id="@+id/btn_contact_support"
+                android:id="@+id/btn_feature_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -256,7 +257,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.228"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_understood" />
+                app:layout_constraintTop_toBottomOf="@+id/btn_Use_this_feature" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

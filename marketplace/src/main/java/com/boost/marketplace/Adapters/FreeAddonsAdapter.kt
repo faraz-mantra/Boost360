@@ -59,6 +59,30 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
         holder.detailsView.visibility = View.GONE
       }
 
+      holder.detailsView.setOnClickListener {
+        val item: FeaturesModel = FeaturesModel(
+          list.get(position).feature_id,
+          list.get(position).boost_widget_key,
+          list.get(position).name,
+          list.get(position).feature_code,
+          list.get(position).description!!,
+          list.get(position).description_title,
+          list.get(position).createdon,
+          list.get(position).updatedon,
+          list.get(position).websiteid,
+          list.get(position).isarchived,
+          list.get(position).is_premium,
+          list.get(position).target_business_usecase,
+          list.get(position).feature_importance,
+          list.get(position).discount_percent,
+          list.get(position).price,
+          list.get(position).time_to_activation,
+          list.get(position).primary_image)
+
+        //   arrayListOf()
+        myAddonsListener.onFreeAddonsClicked(item)
+      }
+
     }
    // Glide.with(context).load(cryptocurrencyItem.primary_image).into()
 
@@ -71,9 +95,9 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
 //    }
   }
 
-  override fun onClick(v: View?) {
-    myAddonsListener.onFreeAddonsClicked(v)
-  }
+//  override fun onClick(v: View?) {
+//    myAddonsListener.onFreeAddonsClicked(v)
+//  }
 
   fun addupdates(upgradeModel: List<FeaturesModel>) {
     val initPosition = list.size
@@ -97,5 +121,9 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
       Glide.with(context).load(updateModel.primary_image).into(image)
 
     }
+  }
+
+  override fun onClick(v: View?) {
+    TODO("Not yet implemented")
   }
 }

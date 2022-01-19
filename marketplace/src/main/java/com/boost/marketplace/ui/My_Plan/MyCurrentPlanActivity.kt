@@ -3,6 +3,7 @@ package com.boost.marketplace.ui.My_Plan
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.transition.AutoTransition
@@ -11,7 +12,6 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.boost.cart.interfaces.MyAddonsListener
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.Adapters.FreeAddonsAdapter
 import com.boost.marketplace.Adapters.PaidAddonsAdapter
@@ -23,6 +23,7 @@ import com.boost.marketplace.ui.History_Orders.HistoryOrdersActivity
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_my_current_plan.*
 
 //import kotlinx.android.synthetic.main.activity_my_current_plan.*
@@ -31,7 +32,7 @@ import kotlinx.android.synthetic.main.activity_my_current_plan.*
 
 class MyCurrentPlanActivity :
     AppBaseActivity<ActivityMyCurrentPlanBinding, MyCurrentPlanViewModel>(),
-    CompareBackListener, MyAddonsListener, com.boost.marketplace.interfaces.MyAddonsListener {
+    CompareBackListener, com.boost.marketplace.interfaces.MyAddonsListener {
 
 
     lateinit var freeAddonsAdapter: FreeAddonsAdapter
@@ -486,21 +487,20 @@ class MyCurrentPlanActivity :
 
     }
 
-    override fun onFreeAddonsClicked(v: View?) {
-//        if (add_remove_layout.visibility == View.VISIBLE) {
-//            add_remove_layout.visibility = View.GONE
-//        } else {
-//            val itemPosition = recycler_freeaddons.getChildAdapterPosition(v!!)
-//
-//        }
+    override fun onFreeAddonsClicked(item: FeaturesModel) {
         val dialogCard = MyPlanBottomSheet()
-        //  dialogCard.setData(getLocalSession(it), shareChannelText)
+        val args = Bundle()
+        args.putString("bundleData", Gson().toJson(item))
+        dialogCard.arguments = args
         dialogCard.show(this@MyCurrentPlanActivity.supportFragmentManager, MyPlanBottomSheet::class.java.name)
     }
 
-    override fun onPaidAddonsClicked(v: View?) {
+    override fun onPaidAddonsClicked(item: FeaturesModel) {
 
         val dialogCard = MyPlanBottomSheet()
+        val args = Bundle()
+        args.putString("bundleData", Gson().toJson(item))
+        dialogCard.arguments = args
         dialogCard.show(this@MyCurrentPlanActivity.supportFragmentManager, MyPlanBottomSheet::class.java.name)
     }
 
