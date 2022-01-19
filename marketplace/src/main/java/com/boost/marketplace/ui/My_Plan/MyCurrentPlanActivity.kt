@@ -2,6 +2,7 @@ package com.boost.marketplace.ui.My_Plan
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
+import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.transition.AutoTransition
@@ -22,6 +23,7 @@ import com.boost.marketplace.adapter.UpgradeAdapter
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityMyCurrentPlanBinding
 import com.boost.marketplace.interfaces.CompareBackListener
+import com.boost.marketplace.ui.History_Orders.HistoryOrdersActivity
 import com.boost.marketplace.ui.home.MarketPlaceActivity
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
@@ -276,6 +278,17 @@ class MyCurrentPlanActivity :
             }
 
         })
+
+        history.setOnClickListener {
+            val intent = Intent(this, HistoryOrdersActivity::class.java)
+            intent.putStringArrayListExtra("userPurchsedWidgets", intent.extras?.getStringArrayList("userPurchsedWidgets"))
+            intent.putExtra("fpid", intent.getStringExtra("fpid") ?: "")
+            startActivity(intent)
+        }
+
+        help.setOnClickListener {
+            //add help screen
+        }
 
         binding?.arrowBtn?.setOnClickListener {
             cardViewVisibilty()

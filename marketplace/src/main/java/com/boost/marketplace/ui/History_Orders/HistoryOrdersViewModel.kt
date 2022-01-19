@@ -11,7 +11,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.json.JSONObject
 
-class HisoryOrdersViewModel: BaseViewModel() {
+class HistoryOrdersViewModel: BaseViewModel() {
     private var purchaseResult: MutableLiveData<GetPurchaseOrderResponse> = MutableLiveData()
     private var _upiPayment: MutableLiveData<JSONObject> = MutableLiveData()
     private var _cardData: MutableLiveData<JSONObject> = MutableLiveData()
