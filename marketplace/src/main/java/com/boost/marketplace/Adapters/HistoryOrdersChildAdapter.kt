@@ -40,29 +40,30 @@ class HistoryOrdersChildAdapter(itemList: List<Result>?,) :
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
 
-        val itemLists = StringBuilder()
+      //  val itemLists = StringBuilder()
 //        if (list.get(position).orderId != null) {
 //            holder.orderId.setText("Order id #" + list.get(position).orderId!!.replace("order_", ""))
 //        }
-        if (list.get(position).purchasedPackageDetails.WidgetPacks.size > 1) {
-            for (item in 0 until list.get(position).purchasedPackageDetails.WidgetPacks.size) {
-                itemLists.append(list.get(position).purchasedPackageDetails.WidgetPacks.get(item).Name)
-                if (item != list.get(position).purchasedPackageDetails.WidgetPacks.size - 1) {
-                    itemLists.append(", ")
-                }
-            }
-//            holder.itemCount.setText("+" + (list.size - 1) + " more")
-//            holder.itemCount.visibility = View.VISIBLE
-//        } else {
-//            itemLists.append(list.get(position).purchasedPackageDetails.WidgetPacks.get(0).Name)
-//            holder.itemCount.visibility = View.GONE
-        }
-          holder.itemLists.setText(itemLists)
+//        if (list.get(position).purchasedPackageDetails.WidgetPacks.size > 1) {
+//            for (item in 0 until list.get(position).purchasedPackageDetails.WidgetPacks.size) {
+//                itemLists.append(list.get(position).purchasedPackageDetails.WidgetPacks.get(item).Name)
+//                if (item != list.get(position).purchasedPackageDetails.WidgetPacks.size - 1) {
+//                    itemLists.append(", ")
+//                }
+//            }
+////            holder.itemCount.setText("+" + (list.size - 1) + " more")
+////            holder.itemCount.visibility = View.VISIBLE
+////        } else {
+////            itemLists.append(list.get(position).purchasedPackageDetails.WidgetPacks.get(0).Name)
+////            holder.itemCount.visibility = View.GONE
+//        }
+          holder.itemLists.text=list.get(position).NameOfWidget
 
         val dataString = list.get(position).CreatedOn
         val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
-        val dateFormat = SimpleDateFormat("dd-MMM-yyyy (HH:mm)")
+        val dateFormat = SimpleDateFormat("(HH:mm)")
         holder.itemDate.setText(dateFormat.format(date))
+        holder.validity.text= list.get(position).totalMonthsValidity.toString()
         /*val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         val output = SimpleDateFormat("dd-MMM-yyyy (hh:mm a)")
 
@@ -100,6 +101,7 @@ class HistoryOrdersChildAdapter(itemList: List<Result>?,) :
      //   var itemCount = itemView.findViewById<TextView>(R.id.item_count)!!
         var itemDate = itemView.findViewById<TextView>(R.id.item_orderId)!!
         var button=itemView.findViewById<Button>(R.id.btn_invoice)
+        var validity=itemView.findViewById<TextView>(R.id.validity)
 
         var context: Context = itemView.context
 

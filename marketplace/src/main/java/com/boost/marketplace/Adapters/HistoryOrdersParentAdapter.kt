@@ -5,15 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.Result
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.HistoryFragmentListener
-import com.boost.marketplace.ui.History_Orders.HistoryOrdersActivity
 import java.lang.Long
-import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -63,7 +60,7 @@ class HistoryOrdersParentAdapter (itemList: List<Result>?, val listener: History
 
         val dataString = list.get(position).CreatedOn
         val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
-        val dateFormat = SimpleDateFormat("dd-MMM-yyyy (HH:mm)")
+        val dateFormat = SimpleDateFormat("dd-MMM-yyyy ")
         holder.itemDate.setText(dateFormat.format(date))
         /*val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         val output = SimpleDateFormat("dd-MMM-yyyy (hh:mm a)")
