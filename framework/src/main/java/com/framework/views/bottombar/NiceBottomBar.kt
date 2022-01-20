@@ -123,7 +123,7 @@ class NiceBottomBar : View {
 
     // Update default attribute values
     itemIconSize = if (itemTextVisible.not()) d2p(24f) else itemIconSize
-    itemIconMargin =if (itemTextVisible.not()) d2p(0f) else itemIconMargin
+    itemIconMargin = if (itemTextVisible.not()) d2p(0f) else itemIconMargin
 
     paintIndicator.color = barIndicatorColor
     paintText.color = itemTextColor
@@ -287,6 +287,10 @@ class NiceBottomBar : View {
       animateIndicator(pos)
       setItemColors()
     }
+  }
+
+  fun setClickPosition(clickPosition: ArrayList<Int>) {
+    this.clickPosition = clickPosition
   }
 
   private fun animateIndicator(pos: Int) {

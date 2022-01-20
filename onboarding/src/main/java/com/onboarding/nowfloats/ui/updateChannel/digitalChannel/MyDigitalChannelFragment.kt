@@ -22,6 +22,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.firebaseUtils.firestore.FirestoreManager
+import com.framework.pref.APPLICATION_JIO_ID
 import com.framework.pref.clientId
 import com.framework.webengageconstant.MY_DIGITAL_CHANNEL
 import com.framework.webengageconstant.MY_DIGITAL_CHANNEL_LOAD
@@ -115,7 +116,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     progress = ProgressChannelDialog.newInstance()
     updateRequestGetChannelData()
     binding?.syncBtn?.setOnClickListener { syncChannels() }
-    if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)){
+    if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)){
       binding?.disconnectedBg?.setBackgroundColor(getColor(R.color.colorAccent))
       binding?.connectedBg?.setBackgroundColor(getColor(R.color.colorAccent))
       baseActivity.getToolbar()?.setBackgroundColor(getColor(R.color.colorAccent))
@@ -381,7 +382,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   }
 
   private fun changeView(isConnect: Boolean) {
-    if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)){
+    if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)){
       (baseActivity as? DigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorPrimary else R.color.colorAccent)
       (baseActivity as? ContainerDigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorPrimary else R.color.colorAccent)
     }else{

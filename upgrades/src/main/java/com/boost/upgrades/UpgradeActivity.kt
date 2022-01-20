@@ -43,10 +43,7 @@ import com.boost.upgrades.utils.WebEngageController
 import com.framework.webengageconstant.*
 import com.boost.upgrades.utils.NetworkConnectivitySpeed.checkNetworkType
 import com.framework.analytics.SentryController
-import com.framework.pref.TokenResult
-import com.framework.pref.UserSessionManager
-import com.framework.pref.clientId
-import com.framework.pref.getAccessTokenAuth
+import com.framework.pref.*
 import com.framework.utils.BuildConfigUtil
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
@@ -95,7 +92,7 @@ class UpgradeActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_upgrade)
-    if (packageName.equals("com.jio.online", ignoreCase = true)) {
+    if (packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)) {
       Toast.makeText(this, "Coming soon...", Toast.LENGTH_LONG).show()
       this.finish()
     } else {

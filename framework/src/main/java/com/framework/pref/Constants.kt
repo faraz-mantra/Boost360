@@ -4,6 +4,8 @@ import android.util.DisplayMetrics
 import com.framework.BuildConfig
 import java.util.*
 
+var APPLICATION_JIO_ID = "com.jio.online"
+
 val REFERRAL_CAMPAIGN_CODE = 26277
 
 var PREF_NAME = "nowfloatsPrefs"

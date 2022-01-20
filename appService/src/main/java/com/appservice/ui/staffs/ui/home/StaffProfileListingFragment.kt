@@ -38,6 +38,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.firebaseUtils.firestore.FirestoreManager
+import com.framework.pref.APPLICATION_JIO_ID
 import com.framework.pref.Key_Preferences
 import com.framework.pref.clientId
 import com.framework.views.zero.old.AppFragmentZeroCase
@@ -306,7 +307,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     searchAutoComplete?.setTextColor(getColor(R.color.white))
     searchView?.queryHint = getString(R.string.search_staff)
     searchView?.setOnQueryTextListener(this)
-    if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
+    if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)) {
       menu.findItem(R.id.menu_help).isVisible = false
     }
 
@@ -451,7 +452,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   override fun secondaryButtonClicked() {
-    if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
+    if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)) {
       showShortToast(getString(R.string.coming_soon))
       return
     }

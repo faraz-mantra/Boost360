@@ -21,7 +21,6 @@ import androidx.navigation.fragment.NavHostFragment
 import com.anachat.chatsdk.AnaCore
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
-import com.dashboard.AppDashboardApplication
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.RecyclerViewActionType
@@ -132,7 +131,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     graph.addArgument("data", NavArgument.Builder().setDefaultValue("data").build())
     mNavController.graph = graph
     navControllerListener()
-    binding?.navView?.setOnItemSelectedListener(this)
+    bottomNavInitializer()
     toolbarPropertySet(0)
 //    setDrawerHome()
 //    val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
@@ -148,6 +147,12 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     initRemoteConfigData(this)
     reloadCapLimitData()
     checkForUpdate()
+  }
+
+  private fun bottomNavInitializer() {
+    if (this.packageName.equals(APPLICATION_JIO_ID, true))
+      binding?.viewBottomBar?.navView?.setClickPosition(ArrayList())
+    binding?.viewBottomBar?.navView?.setOnItemSelectedListener(this)
   }
 
   private fun checkForUpdate() {
@@ -282,10 +287,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun checkIsHomeDeepLink(): Boolean {
     val value = fromUrl(mDeepLinkUrl)
     return if (value != null) {
-      if (binding?.navView?.getActiveItem() != value.position) {
+      if (binding?.viewBottomBar?.navView?.getActiveItem() != value.position) {
         Timer().schedule(50) {
-          binding?.navView?.post {
-            binding?.navView?.setActiveItem(value.position)
+          binding?.viewBottomBar?.navView?.post {
+            binding?.viewBottomBar?.navView?.setActiveItem(value.position)
             onItemSelect(value.position)
           }
         }
@@ -390,6 +395,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       1 -> checkWelcomeShowScreen(pos)
       2 -> checkWelcomeShowScreen(pos)
       3 -> checkWelcomeShowScreen(pos)
+      4 -> checkWelcomeShowScreen(pos)
       else -> {
         mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
         toolbarPropertySet(0)
@@ -420,13 +426,19 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         }
         disableBadgeNotification(BadgesModel.BadgesType.ENQUIRYBADGE.name)
       }
-//      3 -> {
-//        val dataAddOns = welcomeData?.get(2)
-//        if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let { showWelcomeDialog(it) }
-//        else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
-//        disableBadgeNotification(BadgesModel.BadgesType.MARKETPLACEBADGE.name)
-//      }
       3 -> {
+        if (this.packageName.equals(APPLICATION_JIO_ID, true)) {
+          mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
+          toolbarPropertySet(pos)
+          disableBadgeNotification(BadgesModel.BadgesType.MENUBADGE.name)
+        } else {
+          val dataAddOns = welcomeData?.get(2)
+          if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let { showWelcomeDialog(it) }
+          else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
+          disableBadgeNotification(BadgesModel.BadgesType.MARKETPLACEBADGE.name)
+        }
+      }
+      4 -> {
         mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
         toolbarPropertySet(pos)
         disableBadgeNotification(BadgesModel.BadgesType.MENUBADGE.name)
@@ -460,9 +472,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     when (pos) {
       1 -> showToolbar(getString(R.string.website))
       2 -> showToolbar(getString(R.string.enquiry))
-      3 -> showToolbar(getString(R.string.more))
+      3 -> if (this.packageName.equals(APPLICATION_JIO_ID, true)) showToolbar(getString(R.string.more))
+      4 -> showToolbar(getString(R.string.more))
       else -> {
-        if (packageName.equals("com.jio.online", ignoreCase = true).not()) {
+        if (packageName.equals(APPLICATION_JIO_ID, ignoreCase = true).not()) {
           changeTheme(R.color.colorPrimary, R.color.colorPrimary)
         }
         getToolbar()?.apply { visibility = View.GONE }
@@ -483,16 +496,16 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onItemClick(pos: Int) {
     super.onItemClick(pos)
     when (pos) {
-//      3 -> checkWelcomeShowScreen(pos)
-      3 -> {
-        binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
-        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
+      3 -> if (this.packageName.equals(APPLICATION_JIO_ID, true).not()) checkWelcomeShowScreen(pos)
+      4 -> {
+//        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
+//        binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
       }
     }
   }
 
   private fun getNavOptions(): NavOptions {
-    val activeItem = binding?.navView?.getActiveItem() ?: 0
+    val activeItem = binding?.viewBottomBar?.navView?.getActiveItem() ?: 0
     return if (activePreviousItem > activeItem) {
       activePreviousItem = activeItem
       NavOptions.Builder().setExitAnim(R.anim.slide_out_right)
@@ -508,7 +521,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   private fun openDashboard(isSet: Boolean = true) {
     mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
-    if (isSet) binding?.navView?.setActiveItem(0)
+    if (isSet) binding?.viewBottomBar?.navView?.setActiveItem(0)
     toolbarPropertySet(0)
     WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
   }
@@ -635,17 +648,13 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun initialiseZendeskSupportSdk() {
     try {
       Zendesk.INSTANCE.init(
-        this, "https://boost360.zendesk.com",
-        "684341b544a77a2a73f91bd3bb2bc77141d4fc427decda49",
-        "mobile_sdk_client_6c56562cfec5c64c7857"
+        this, com.dashboard.BuildConfig.ZENDESK_URL,
+        com.dashboard.BuildConfig.ZENDESK_APPLICATION_ID, com.dashboard.BuildConfig.ZENDESK_OAUTH_CLIENT_ID
       )
-      val identity = AnonymousIdentity.Builder()
-        .withNameIdentifier(session?.fpTag)
-        .withEmailIdentifier(session?.fPEmail)
-        .build()
+      val identity = AnonymousIdentity.Builder().withNameIdentifier(session?.fpTag).withEmailIdentifier(session?.fPEmail).build()
       Zendesk.INSTANCE.setIdentity(identity)
       Support.INSTANCE.init(Zendesk.INSTANCE)
-      ZopimChat.init("MJwgUJn9SKy2m9ooxsQgJSeTSR5hU3A5")
+      ZopimChat.init(com.dashboard.BuildConfig.ZOPIM_ACCOUNT_KEY)
     } catch (e: Exception) {
       SentryController.captureException(e)
     }
@@ -676,7 +685,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun setBadgesData(dataBadges: ArrayList<BadgesModel>?) {
-    binding?.navView?.post {
+    binding?.viewBottomBar?.navView?.post {
       if (dataBadges.isNullOrEmpty().not())
         dataBadges!!.forEach {
           when (it.badgesType) {
@@ -685,29 +694,29 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 //              else binding?.navView?.removeBadge(0)
 //            }
             BadgesModel.BadgesType.WEBSITEBADGE.name -> {
-              if (it.getMessageN() > 0 && it.getIsEnable()) binding?.navView?.setBadge(1, it.getMessageText())
-              else binding?.navView?.removeBadge(1)
+              if (it.getMessageN() > 0 && it.getIsEnable()) binding?.viewBottomBar?.navView?.setBadge(1, it.getMessageText())
+              else binding?.viewBottomBar?.navView?.removeBadge(1)
             }
             BadgesModel.BadgesType.ENQUIRYBADGE.name -> {
-              if (it.getMessageN() > 0 && it.getIsEnable()) binding?.navView?.setBadge(2, it.getMessageText())
-              else binding?.navView?.removeBadge(2)
+              if (it.getMessageN() > 0 && it.getIsEnable()) binding?.viewBottomBar?.navView?.setBadge(2, it.getMessageText())
+              else binding?.viewBottomBar?.navView?.removeBadge(2)
             }
             BadgesModel.BadgesType.MARKETPLACEBADGE.name -> {
-              if (it.getMessageN() > 0 && it.getIsEnable()) binding?.navView?.setBadge(3, it.getMessageText())
-              else binding?.navView?.removeBadge(3)
+              if (it.getMessageN() > 0 && it.getIsEnable()) binding?.viewBottomBar?.navView?.setBadge(3, it.getMessageText())
+              else binding?.viewBottomBar?.navView?.removeBadge(3)
             }
             BadgesModel.BadgesType.MENUBADGE.name -> {
-              if (it.getMessageN() > 0 && it.getIsEnable()) binding?.navView?.setBadge(4, it.getMessageText())
-              else binding?.navView?.removeBadge(4)
+              if (it.getMessageN() > 0 && it.getIsEnable()) binding?.viewBottomBar?.navView?.setBadge(4, it.getMessageText())
+              else binding?.viewBottomBar?.navView?.removeBadge(4)
             }
           }
         }
       else {
 //        binding?.navView?.removeBadge(0)
-        binding?.navView?.removeBadge(1)
-        binding?.navView?.removeBadge(2)
-        binding?.navView?.removeBadge(3)
-        binding?.navView?.removeBadge(4)
+        binding?.viewBottomBar?.navView?.removeBadge(1)
+        binding?.viewBottomBar?.navView?.removeBadge(2)
+        binding?.viewBottomBar?.navView?.removeBadge(3)
+        binding?.viewBottomBar?.navView?.removeBadge(4)
       }
     }
   }

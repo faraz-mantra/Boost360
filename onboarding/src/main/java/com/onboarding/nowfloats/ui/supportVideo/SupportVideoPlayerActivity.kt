@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.pref.APPLICATION_JIO_ID
 import com.framework.utils.DateUtils.milliToMinSecFormat
 import com.framework.utils.DateUtils.millisecondsToMinutesSeconds
 import com.google.android.exoplayer2.ExoPlayer
@@ -56,7 +57,7 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
 
   override fun onCreateView() {
     super.onCreateView()
-    if (packageName.equals("com.jio.online", ignoreCase = true)) {
+    if (packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)) {
       showShortToast(getString(R.string.coming_soon))
       finish()
       return
