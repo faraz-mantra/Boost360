@@ -99,22 +99,9 @@
           android:layout_height="@dimen/size_1"
           android:background="@drawable/up_shadow_d" />
 
-        <com.framework.views.bottombar.NiceBottomBar
-          android:id="@+id/nav_view"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/size_54"
-          android:background="?android:attr/windowBackground"
-          app:activeMenu="@menu/bottom_nav_active_menu"
-          app:clickPosition=""
-          app:indicatorEnabled="false"
-          app:indicatorColor="@color/colorPrimary"
-          app:textColorActive="@color/colorPrimary"
-          app:indicatorInterpolator="anticipateOvershoot"
-          app:itemFontActive="@font/regular"
-          app:itemFontInActive="@font/regular"
-          app:menu="@menu/bottom_nav_menu"
-          app:textVisible="true"
-          tools:background="@color/white" />
+        <include layout="@layout/view_nice_bottom_bar"
+          android:id="@+id/view_bottom_bar"/>
+
       </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

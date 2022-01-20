@@ -39,6 +39,8 @@ import retrofit.converter.GsonConverter;
 
 
 public class Constants {
+    public static final String APPLICATION_JIO_ID = "com.jio.online";
+
     public static final String boostx_script = "<script type=\"text/javascript\" " +
             " data-nf-clientId=\"8DB87D953727422DA36B4977BD12E37A92EEB23119DC4152AAEB6B22BDB578EF\" " +
             " data-nf-fpTag=\"[[FPTAG]]\" " +

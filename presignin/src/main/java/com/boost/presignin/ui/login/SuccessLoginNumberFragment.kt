@@ -14,6 +14,7 @@ import com.boost.presignin.ui.mobileVerification.FP_LIST_FRAGMENT
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.base.FRAGMENT_TYPE
+import com.framework.pref.APPLICATION_JIO_ID
 import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.*
 
@@ -66,7 +67,7 @@ class SuccessLoginNumberFragment : AuthBaseFragment<FragmentSuccessLoginBinding>
     when (v) {
       binding?.goDashboardBt -> {
         WebEngageController.trackEvent(PS_USER_LOGIN_SUCCESS_DASHBOARD_CLICK, CLICK, NO_EVENT_VALUE)
-        if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
+        if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)) {
           authTokenData()?.createAccessTokenAuth()
         }else {
           if (resultLogin?.authTokens?.size == 1) {

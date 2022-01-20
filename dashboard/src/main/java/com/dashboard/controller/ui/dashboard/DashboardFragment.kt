@@ -220,7 +220,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun getPremiumBanner() {
-    if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
+    if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)) {
       setDataMarketBanner(ArrayList())
       setDataRiaAcademy(ArrayList())
     } else {
@@ -322,7 +322,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         }
         setTopBackgroundView(isHighDrScore)
       } else {
-        if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true))
+        if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true))
           (baseActivity as? DashboardActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimary)
         showSimmerDrScore(isLoadingShimmerDr, isLoadingShimmerDr.not())
       }
@@ -330,7 +330,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun setTopBackgroundView(isHigh: Boolean) {
-    if (baseActivity.packageName.equals("com.jio.online", ignoreCase = true)) {
+    if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)) {
       val colorD = if (isHigh) R.color.dashboard_high_score_pink else R.color.white_smoke_1
       (baseActivity as? DashboardActivity)?.changeTheme(colorD, colorD, isHigh.not())
       binding?.viewBgInner?.setTintColor(ContextCompat.getColor(baseActivity, colorD))
@@ -701,10 +701,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun marketPlaceBannerClick(data: DashboardMarketplaceBanner) {
     if (data.ctaWebLink.isNullOrEmpty().not()) {
-      if (data.ctaWebLink!!.contains("com.jio.online.keyboard.home") || data.ctaWebLink!!.contains("jio.bizdigital.com")) {
+      if (data.ctaWebLink!!.contains("${baseActivity.packageName}.keyboard.home") || data.ctaWebLink!!.contains(getString(R.string.deep_base_url)) || data.ctaWebLink!!.contains(getString(R.string.deep_base_onelink_url))) {
         WebEngageController.trackEvent(BOOST_MARKETPLACE_BANNER_CLICK, DEEP_LINK, NO_EVENT_VALUE)
-        val deepHashMap: HashMap<DynamicLinkParams, String> =
-          DynamicLinksManager().getURILinkParams(Uri.parse(data.ctaWebLink))
+        val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(Uri.parse(data.ctaWebLink))
         if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
           val viewType = deepHashMap[DynamicLinkParams.viewType]
           val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
@@ -715,11 +714,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         baseActivity.startWebViewPageLoad(session, data.ctaWebLink?.trim()!!)
       }
     } else {
-      WebEngageController.trackEvent(
-        BOOST_MARKETPLACE_BANNER_CLICK,
-        FEATURE_ITEM_CLICK,
-        NO_EVENT_VALUE
-      )
+      WebEngageController.trackEvent(BOOST_MARKETPLACE_BANNER_CLICK, FEATURE_ITEM_CLICK, NO_EVENT_VALUE)
       if (data.ctaFeatureKey.isNullOrEmpty().not()) {
         session?.let { baseActivity.initiateAddonMarketplace(it, false, "", data.ctaFeatureKey) }
       }
