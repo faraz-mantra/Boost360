@@ -44,9 +44,9 @@ class StartAptSheetDialog : BaseBottomSheetDialog<BottomSheetStartAptBinding, Ba
     if (number.isNullOrEmpty()) binding?.txtPhoneNo?.gone()
     if (staffName.isNullOrEmpty()) binding?.txtStaffName?.gone()
     if (serviceName.isNullOrEmpty()) binding?.txtServices?.gone()
-    binding?.txtCustomerName?.text = fromHtml("Customer Name: <b>${fullName}</b>")
+    binding?.txtCustomerName?.text = fromHtml("Customer name: <b>${fullName}</b>")
     binding?.txtPhoneNo?.text = fromHtml("Phone No: <b>${number}</b>")
-    binding?.txtStaffName?.text = fromHtml("Staff Name: <b>${staffName}</b>")
+    binding?.txtStaffName?.text = fromHtml("Staff name: <b>${staffName}</b>")
     binding?.txtServices?.text = fromHtml("Service: <b>${serviceName}</b>")
   }
 

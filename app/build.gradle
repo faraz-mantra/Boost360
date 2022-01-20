@@ -124,6 +124,12 @@ android {
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
         }
+        jioonline {
+            versionName "1.0.0"
+            applicationId "com.jio.online"
+            dimension "default"
+            buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
+        }
     }
     packagingOptions {
         exclude 'META-INF/NOTICE.txt'

@@ -62,6 +62,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
 
   override fun onCreateView() {
     super.onCreateView()
+
     WebEngageController.trackEvent(WEBSITE_STYLE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(
       binding?.ctfPrimaryFont, binding?.ctfSecondaryFont,

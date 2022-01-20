@@ -26,6 +26,9 @@ android {
         partone {
             dimension "default"
         }
+        jioonline {
+            dimension "default"
+        }
     }
 }
 

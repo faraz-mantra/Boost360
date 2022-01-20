@@ -7,4 +7,5 @@
   <dimen name="size_600">600dp</dimen>
   <dimen name="size_800">800dp</dimen>
   <dimen name="size_1000">1000dp</dimen>
+    <dimen name="size_academy_banners">186dp</dimen>
 </resources>

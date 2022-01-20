@@ -425,7 +425,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
       binding?.next -> if ((binding?.textBtn?.visibility == View.VISIBLE)) {
         if (binding?.textBtn?.text == resources.getString(R.string.digital_channel)) backToDigitalChannelUpdate() else gotoRegistrationComplete()
       }
-      binding?.supportCustomer -> baseActivity.makeCall(getString(R.string.contact_us_number_n))
+      binding?.supportCustomer -> baseActivity.makeCall(getString(R.string.contact_us_number))
       binding?.retry -> apiHitBusiness()
     }
   }

@@ -297,7 +297,7 @@
     <string name="business_hours_timing"><b>Note:</b> Since the clinic business hours are from 9:30am to 7:30 pm, all your sessions will be between same. </string>
     <string name="from">From</string>
     <string name="to">to</string>
-    <string name="edit_">EDIT</string>
+    <string name="edit_">Edit</string>
     <string name="apply_same_on_all_days">Apply same on all days</string>
     <string name="dropdown_options_1_1_2_3_4_5_5"><![CDATA[Dropdown options: <1, 1, 2, 3, 4, 5, 5+]]></string>
     <string name="enter_age">Enter age</string>
@@ -326,7 +326,7 @@
     <string name="this_will_help_you_group_multiple_services_under_this_category">This will help you group multiple services under this category</string>
     <string name="service_category_">Service category*</string>
     <string name="write_the_name_of_your_service">Write the name of your service</string>
-    <string name="service_name_">Service Name*</string>
+    <string name="service_name_">Service name*</string>
     <string name="service_adding_error">Service adding error, please try again.</string>
     <string name="service_timing_adding_error">Service timing adding error, please try again.</string>
     <string name="service_updating_error">Service updating error, please try again.</string>
@@ -376,14 +376,12 @@
     <string name="removing_staff">Removing staff</string>
     <string name="unable_to_delete">Unable to delete</string>
     <string name="loading">Loading</string>
-    <string name="loading_">Loading...</string>
     <string name="toolbar_staff_listing">Staff Listing</string>
     <string name="toolbar_select_services">Select services</string>
     <string name="toolbar_staff_timing">Staff timing</string>
     <string name="toolbar_schedule_break">Scheduled breaks</string>
     <string name="toolbar_schedule_breaks">Scheduled breaks</string>
     <string name="toolbar_staff_details">Staff Details</string>
-    <string name="toolbar_doctor_details">Doctor Details</string>
     <string name="search_staff">Search staff</string>
     <string name="staff_timing_add">Adding staff timing...</string>
     <string name="staff_timings_added">staff timings added</string>
@@ -1082,4 +1080,13 @@
   <string name="pan_name_not_empty">Pan name can\'t empty.</string>
   <string name="pan_name_invalid">Please enter a valid name.</string>
   <string name="invalid_bank_statement_file">Please select valid bank statement file</string>
+
+
+  <string name="toolbar_doctor_details">Doctor Details</string>
+  <string name="loading_">Loading...</string>
+  <string name="_0_12">0.12</string>
+  <string name="_9">9</string>
+  <string name="done_">Done</string>
+  <string name="payment_gateway_not_added_please_add_first">Boost Payment gateway not added, please add first.</string>
+
 </resources>

@@ -20,8 +20,8 @@
   </style>
 
   <style name="DashboardThemeNew" parent="DashboardTheme">
-    <item name="colorPrimary">@color/black_4a4a4a</item>
-    <item name="colorPrimaryDark">@color/black_4a4a4a</item>
+    <item name="colorPrimary">@color/black_4a4a4a_jio</item>
+    <item name="colorPrimaryDark">@color/black_4a4a4a_jio</item>
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 

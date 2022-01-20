@@ -38,6 +38,11 @@ android {
 //            buildConfigField "String", "RAZORPAY_KEY", '"rzp_test_OlLpIGwhA7bATX"'
 //            buildConfigField "String", "RAZORPAY_SECREAT", '"wMa4K0UW4dPXD4ZJrkVg64mX"'
         }
+        jioonline {
+            dimension "default"
+            buildConfigField "String", "RAZORPAY_KEY", '"rzp_live_o8qdD1DZ3PHBn0"'
+            buildConfigField "String", "RAZORPAY_SECREAT", '"Gfq8pQyFbu5BOoY5SeT6UuQk"'
+        }
     }
 
     compileOptions {

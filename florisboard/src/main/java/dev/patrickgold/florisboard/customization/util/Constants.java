@@ -1,5 +1,7 @@
 package dev.patrickgold.florisboard.customization.util;
 
+import com.framework.BuildConfig;
+
 /**
  * Created by Shimona on 01-06-2018.
  */
@@ -9,7 +11,7 @@ public class Constants {
   public final static String BASE_IMAGE_URL = "https://content.withfloats.com";
 
 
-  public final static String clientId = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21";
+  public final static String clientId = BuildConfig.CLIENT_ID;
 
   public final static String HTTP_POST = "POST";
 

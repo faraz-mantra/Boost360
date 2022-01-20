@@ -1,4 +1,5 @@
 package com.appservice.ui.staffs.ui.home
+
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
@@ -36,6 +38,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.firebaseUtils.firestore.FirestoreManager
+import com.framework.pref.APPLICATION_JIO_ID
 import com.framework.pref.Key_Preferences
 import com.framework.pref.clientId
 import com.framework.views.zero.old.AppFragmentZeroCase
@@ -51,7 +54,7 @@ import java.util.*
 class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding, StaffViewModel>(), RecyclerItemClickListener, SearchView.OnQueryTextListener, AppOnZeroCaseClicked {
 
   private val TAG = "StaffProfileListingFrag"
-  private var fragmentZeroCase: AppFragmentZeroCase?=null
+  private var fragmentZeroCase: AppFragmentZeroCase? = null
   private val list: ArrayList<DataItem> = arrayListOf()
   private val finalList: ArrayList<DataItem> = arrayListOf()
   private var adapterStaff: AppBaseRecyclerViewAdapter<DataItem>? = null
@@ -89,8 +92,8 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   override fun onCreateView() {
     super.onCreateView()
     Log.i(TAG, "onCreateView: ")
-    this.fragmentZeroCase = AppRequestZeroCaseBuilder(AppZeroCases.STAFF_LISTING, this, baseActivity,!isLockStaff()).getRequest().build()
-    addFragment(containerID = binding?.childContainer?.id, fragmentZeroCase,false)
+    this.fragmentZeroCase = AppRequestZeroCaseBuilder(AppZeroCases.STAFF_LISTING, this, baseActivity, !isLockStaff()).getRequest().build()
+    addFragment(containerID = binding?.childContainer?.id, fragmentZeroCase, false)
 
     getBundleData()
     if (isLockStaff().not()) {
@@ -99,8 +102,8 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       getListServiceFilterApi()
       layoutManagerN?.let { scrollPagingListener(it) }
       swipeRefreshListener()
-      setOnClickListener( binding?.serviceEmpty?.cbAddService)
-    }else{
+      setOnClickListener(binding?.serviceEmpty?.cbAddService)
+    } else {
       emptyView()
     }
   }
@@ -197,7 +200,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   private fun setStaffDataItems(resultStaff: Result?, isSearchString: Boolean, isFirstLoad: Boolean) {
     val listStaff = resultStaff?.data
-    Log.i(TAG, "setStaffDataItems: "+listStaff?.size)
+    Log.i(TAG, "setStaffDataItems: " + listStaff?.size)
 
     if (isSearchString.not()) {
       if (isFirstLoad) finalList.clear()
@@ -246,12 +249,11 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   private fun setEmptyView(isStaffEmpty: Boolean, isServiceEmpty: Boolean = false) {
-    Log.i(TAG, "setEmptyView: "+isStaffEmpty+" "+isServiceEmpty)
-    if (isStaffEmpty){
+    Log.i(TAG, "setEmptyView: " + isStaffEmpty + " " + isServiceEmpty)
+    if (isStaffEmpty) {
       setHasOptionsMenu(false)
       emptyView()
-    }
-    else {
+    } else {
       setHasOptionsMenu(true)
       nonEmptyView()
     }
@@ -305,6 +307,10 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     searchAutoComplete?.setTextColor(getColor(R.color.white))
     searchView?.queryHint = getString(R.string.search_staff)
     searchView?.setOnQueryTextListener(this)
+    if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)) {
+      menu.findItem(R.id.menu_help).isVisible = false
+    }
+
   }
 
   override fun onPrepareOptionsMenu(menu: Menu) {
@@ -329,10 +335,10 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       R.id.app_bar_search -> {
         true
       }
-     /* R.id.menu_help -> {
-        openHelpBottomSheet()
-        true
-      }*/
+      /* R.id.menu_help -> {
+         openHelpBottomSheet()
+         true
+       }*/
       else -> super.onOptionsItemSelected(item)
     }
   }
@@ -429,6 +435,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       showLongToast("Unable to start upgrade activity.")
     }
   }
+
   fun getFilterRequest(offSet: Int, limit: Int): GetStaffListingRequest {
     return GetStaffListingRequest(FilterBy(offset = offSet, limit = limit), sessionLocal.fpTag, "")
   }
@@ -445,6 +452,10 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   override fun secondaryButtonClicked() {
+    if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)) {
+      showShortToast(getString(R.string.coming_soon))
+      return
+    }
     openHelpBottomSheet()
   }
 
