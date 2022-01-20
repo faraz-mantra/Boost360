@@ -58,6 +58,7 @@ import android.content.pm.PackageManager
 import android.content.pm.PackageInfo
 import androidx.annotation.RequiresApi
 import com.framework.R
+import com.framework.analytics.SentryController
 import java.util.regex.Pattern.UNICODE_CHARACTER_CLASS
 
 
@@ -253,6 +254,8 @@ suspend fun Bitmap.shareAsImage(packageName:String?=null,text: String?=null){
           }
         }
 
+      }else{
+        SentryController.captureException(e)
       }
     }
 
@@ -363,7 +366,7 @@ suspend fun Bitmap.saveImageToStorage(
   } catch (e: IOException) {
     Toast.makeText(BaseApplication.instance, "Failed To Save Image", Toast.LENGTH_SHORT).show()
     NotiUtils.notificationManager?.cancel(noti_id)
-
+    SentryController.captureException(e)
     e.printStackTrace()
   }
 }

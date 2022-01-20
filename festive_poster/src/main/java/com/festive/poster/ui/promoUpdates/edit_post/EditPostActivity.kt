@@ -26,6 +26,7 @@ import com.festive.poster.ui.promoUpdates.bottomSheet.EditTemplateBottomSheet
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterViewModel
+import com.framework.analytics.SentryController
 import com.framework.extensions.gone
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
@@ -33,7 +34,7 @@ import com.framework.utils.*
 import com.framework.webengageconstant.EVENT_LABEL_NULL
 import com.framework.webengageconstant.POST_AN_UPDATE
 import com.google.gson.Gson
-import java.lang.Exception
+
 
 
 class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterViewModel>() {
@@ -66,10 +67,15 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
         initStt()
         sessionLocal = UserSessionManager(this)
 
-        posterModel = convertStringToObj(intent.getStringExtra(IK_POSTER)!!)
-        initUI()
-        setOnClickListener(binding?.btnTapToEdit, binding?.captionLayout?.etInput,
-            binding?.ivCloseEditing, binding?.tvPreviewAndPost,binding?.ivVoiceOver,binding?.ivCloseHashtag)
+        try {
+            posterModel = convertStringToObj(intent.getStringExtra(IK_POSTER)!!)
+            initUI()
+            setOnClickListener(binding?.btnTapToEdit, binding?.captionLayout?.etInput,
+                binding?.ivCloseEditing, binding?.tvPreviewAndPost,binding?.ivVoiceOver,binding?.ivCloseHashtag)
+        }catch (e:Exception){
+            SentryController.captureException(e)
+        }
+
 
     }
 
