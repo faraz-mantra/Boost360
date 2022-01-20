@@ -26,6 +26,13 @@ class UpdatesViewModel : BaseViewModel() {
   fun getBizWebMessage(id: String?, clientId: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getBizWebMessage(id, clientId).toLiveData()
   }
+  fun uploadDraftImage(id: String?, clientId: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getBizWebMessage(id, clientId).toLiveData()
+  }
+
+  fun updateFirebaseState(id: String?, clientId: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getBizWebMessage(id, clientId).toLiveData()
+  }
 
   fun putBizImageUpdate(
     clientId: String?,

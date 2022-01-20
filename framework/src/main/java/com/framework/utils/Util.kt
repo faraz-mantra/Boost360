@@ -543,3 +543,14 @@ fun ImageView.loadFromFile(imgFile:File,cache:Boolean=true){
 
   }
 }
+
+fun String.extractHashTag(): ArrayList<String> {
+  val MY_PATTERN = Pattern.compile("#(\\S+)");
+  val mat = MY_PATTERN.matcher(this);
+  val strs= ArrayList<String>();
+  while (mat.find()) {
+    //System.out.println(mat.group(1));
+    strs.add(mat.group(1));
+  }
+  return strs
+}

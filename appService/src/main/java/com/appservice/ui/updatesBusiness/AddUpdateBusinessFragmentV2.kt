@@ -5,66 +5,37 @@ import android.content.*
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.os.Bundle
-import android.os.Handler
-import android.speech.RecognizerIntent
 import android.text.Editable
 import android.text.Spannable
-import android.text.SpannableString
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.ContextCompat
-import androidx.core.net.toFile
-import androidx.lifecycle.MutableLiveData
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
-import com.appservice.constant.IntentConstant
-import com.appservice.databinding.AddUpdateBusinessFragmentBinding
 import com.appservice.databinding.AddUpdateBusinessFragmentV2Binding
 import com.appservice.model.updateBusiness.BusinessUpdateResponse
-import com.appservice.model.updateBusiness.PostUpdateTaskRequest
 import com.appservice.model.updateBusiness.UpdateFloat
 import com.appservice.recyclerView.PaginationScrollListener
-import com.appservice.ui.catalog.widgets.ClickType
-import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
-import com.appservice.utils.WebEngageController
-import com.appservice.utils.getBitmap
 import com.appservice.viewmodel.UpdatesViewModel
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
-import com.framework.analytics.SentryController
 import com.framework.constants.Constants
 import com.framework.extensions.*
-import com.framework.glide.util.glideLoad
-import com.framework.imagepicker.ImagePicker
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.firebaseUtils.caplimit_feature.PropertiesItem
 import com.framework.firebaseUtils.caplimit_feature.filterFeature
 import com.framework.firebaseUtils.caplimit_feature.getCapData
 import com.framework.pref.*
-import com.framework.pref.Key_Preferences.PREF_KEY_TWITTER_LOGIN
 import com.framework.pref.Key_Preferences.PREF_NAME_TWITTER
 import com.framework.utils.*
-import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
-import com.onboarding.nowfloats.constant.FragmentType
-import com.onboarding.nowfloats.ui.updateChannel.startFragmentChannelActivity
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.util.*
 
@@ -124,6 +95,8 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
         }
 
   }
+
+
 
   private fun isImageValid(imgFile: File): Boolean {
     if (imgFile.extension.equals("JPEG",ignoreCase = true)||
@@ -198,7 +171,8 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
           if (binding!!.etUpdate.text.toString().isNotEmpty()||posterImagePath!=null){
-            UpdateDraftBSheet().show(parentFragmentManager,UpdateDraftBSheet::class.java.name)
+            UpdateDraftBSheet.newInstance(binding
+              .etUpdate.text.toString(),posterImagePath).show(parentFragmentManager,UpdateDraftBSheet::class.java.name)
 
           }
         }
@@ -321,12 +295,13 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
         binding!!.layoutHashtagTip.gone()
       }
       binding!!.tvPreviewAndPost->{
-        startActivity(Intent(requireActivity(), Class.forName(
+/*        startActivity(Intent(requireActivity(), Class.forName(
           "com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity"))
           .putExtra(Constants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
             putString("IK_CAPTION_KEY",binding!!.etUpdate.text.toString())
             putString("IK_POSTER", posterImagePath)
-          }))
+          }))*/
+        Log.i(TAG, "onClick: ${binding!!.etUpdate.text.toString().extractHashTag()}")
       }
     }
   }
