@@ -226,8 +226,11 @@
             android:text="Others also bought:" />
 
           <androidx.viewpager2.widget.ViewPager2
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            tools:listitem="@layout/item_others_also_bought">
 
           </androidx.viewpager2.widget.ViewPager2>
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -284,8 +287,11 @@
           android:background="#4DA3A3A3" />
 
         <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/cart_coupon_code_rv"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          tools:listitem="@layout/item_coupon_code"
+          tools:itemCount="1"
           android:layout_margin="10dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
