@@ -211,7 +211,7 @@
   </style>
 
   <style name="forget_tv_style">
-    <item name="android:textColor">@color/colorAccent</item>
+    <item name="android:textColor">@color/ButtoncolorAccent</item>
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:textSize">@dimen/body_3</item>

@@ -19,7 +19,6 @@ import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_2
 import com.framework.utils.DateUtils.FORMAT_YYYY_MM_DD
 import com.framework.utils.DateUtils.parseDate
-import com.framework.utils.ValidationUtils
 import com.framework.utils.ValidationUtils.isEmailValid
 import com.framework.utils.ValidationUtils.isMobileNumberValid
 import com.framework.utils.ValidationUtils.isValidName
@@ -60,7 +59,6 @@ import com.michalsvec.singlerowcalendar.selection.CalendarSelectionManager
 import com.michalsvec.singlerowcalendar.utils.DateUtils
 import kotlinx.android.synthetic.main.item_unavailable_calendar.view.*
 import java.util.*
-import java.util.regex.Pattern
 
 class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointmentConsultBinding>(), PopupMenu.OnMenuItemClickListener {
 
@@ -386,7 +384,7 @@ class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointme
 
   private fun updateBooking() {
     showProgress()
-    viewModel?.updateExtraPropertyOrder(AppConstant.CLIENT_ID_2, request = updateExtraPropertyRequest)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.updateExtraPropertyOrder(AppConstant.CLIENT_ID_ORDER, request = updateExtraPropertyRequest)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         WebEngageController.trackEvent(if (isVideoConsult) CONSULATION_UPDATED else APPOINTMENT_UPDATED, ADDED, TO_BE_ADDED)
         showLongToast(getString(R.string.apt_resceduled_success))

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <com.framework.views.bottombar.NiceBottomBar
+    android:id="@+id/nav_view"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_54"
+    android:background="?android:attr/windowBackground"
+    app:activeMenu="@menu/bottom_nav_active_menu"
+    app:clickPosition="3"
+    app:indicatorEnabled="false"
+    app:indicatorInterpolator="anticipateOvershoot"
+    app:itemFontActive="@font/regular"
+    app:itemFontInActive="@font/regular"
+    app:menu="@menu/bottom_nav_menu"
+    app:textVisible="true"
+    tools:background="@color/white"/>
+</layout>

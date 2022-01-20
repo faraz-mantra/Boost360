@@ -35,4 +35,9 @@
   <color name="colorB3B3B3">#B3B3B3</color>
   <color name="grey_676767">#676767</color>
 
+  <!--new colors added -->
+  <color name="ButtoncolorAccent">#ffb900</color>
+  <color name="ButtonTextcolorAccent">#ffb900</color>
+  <color name="buttonUnselected">#E2E2E2</color>
+  <color name="IntroIndicatorAccent">#ffb900</color>
 </resources>

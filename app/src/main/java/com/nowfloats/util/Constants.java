@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.location.Address;
 import android.util.DisplayMetrics;
 
+import com.framework.BuildConfig;
 import com.framework.utils.BuildConfigUtil;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.GsonBuilder;
@@ -38,6 +39,8 @@ import retrofit.converter.GsonConverter;
 
 
 public class Constants {
+    public static final String APPLICATION_JIO_ID = "com.jio.online";
+
     public static final String boostx_script = "<script type=\"text/javascript\" " +
             " data-nf-clientId=\"8DB87D953727422DA36B4977BD12E37A92EEB23119DC4152AAEB6B22BDB578EF\" " +
             " data-nf-fpTag=\"[[FPTAG]]\" " +
@@ -204,7 +207,7 @@ public class Constants {
     public static String deviceId = "123456789";
     public static String clientId4 = "731EBAB8596648E79882096E4733E7173B314BECC649423DB67897BF8CC596EC";
     public static String clientId3 = "A816E08AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F51770E46AD86";
-    public static String clientId2 = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21";
+    public static String clientId2 = BuildConfig.CLIENT_ID;
     public static String clientId1 = "39EB5FD120DC4394A10301B108030CB70FA553E91F984C829AB6ADE23B6767B7";
     public static String license_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmtfDikZcbWSvq3f+pEsAL5KQCNy3X96j++Z1PnjvidpJCEe0/S1xdPs4CfT3JkeQl7SNps/9cPu3EuOOFdx76QPpAqlqXHMKMwM9H+ikx5iUWPSilRjwLfJNjbJZT2xpuI6k32VyHhqLyU4rR95nrAPTGrocyyV1jtTFSYt77YZew8YfeePlcB2STLP3Ookho37Ah1QovelfdaG5ZNWz5OPYKnificSPyYjioYkfUmpnUJvN0INYMGFKefhfPtWPx5UCiQp15A6ir4wH0wVL3/QksonIb0JMiXpuXvWuggNb1AqEtdiPuBTleU5GovKL+HToKjwQu8NSuJsb3EacIwIDAQAB";
     public static String teleCountry = "in";

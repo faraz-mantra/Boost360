@@ -3,6 +3,7 @@ package com.dashboard.base
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
@@ -51,6 +52,22 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
     title?.let { progressView?.setTitle(it) }
     cancelable?.let { progressView?.isCancelable = it }
     progressView?.showProgress(supportFragmentManager)
+  }
+
+  fun changeTheme(color: Int, taskBarColor: Int, isLight: Boolean = false) {
+    getToolbar()?.setBackgroundColor(ContextCompat.getColor(this, color))
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      if (isLight) {
+        var flags: Int = window.decorView.systemUiVisibility
+        flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        window.decorView.systemUiVisibility = flags
+      } else {
+        var flags: Int = window.decorView.systemUiVisibility
+        flags = flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+        window.decorView.systemUiVisibility = flags
+      }
+    }
+    window?.statusBarColor = ContextCompat.getColor(this, taskBarColor)
   }
 
   fun changeTheme(color: Int, taskBarColor: Int) {

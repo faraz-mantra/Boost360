@@ -113,7 +113,7 @@
       android:drawableStart="@drawable/ic_add_gstn_yellow"
       android:drawablePadding="@dimen/size_5"
       android:text="@string/add_customer_gstin"
-      android:textColor="@color/orange"
+      android:textColor="@color/colorAccentLight"
       app:fontFamily="@font/bold"
       app:textType="BODY_1" />
 
@@ -140,7 +140,7 @@
           android:id="@+id/tv_remove"
           style="@style/wrap_wrap"
           android:text="@string/remove"
-          android:textColor="@color/orange"
+          android:textColor="@color/colorAccentLight"
           app:fontFamily="@font/bold"
           app:layout_constraintRight_toRightOf="parent"
           app:layout_constraintTop_toTopOf="parent"

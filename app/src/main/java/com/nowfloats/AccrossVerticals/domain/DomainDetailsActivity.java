@@ -203,7 +203,8 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         MaterialDialog.Builder builder = new MaterialDialog.Builder(DomainDetailsActivity.this)
                 //.title(getString(R.string.have_an_existing_domain))
                 .customView(R.layout.dialog_link_domain, false)
-                .positiveColorRes(R.color.primaryColor);
+            .negativeColorRes(R.color.black_4a4a4a)
+            .positiveColorRes(R.color.colorAccentLight);
 
         final MaterialDialog materialDialog = builder.show();
         View maView = materialDialog.getCustomView();
@@ -692,7 +693,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         final EmailInfo info = new EmailInfo();
         MaterialDialog dialog = new MaterialDialog.Builder(this)
                 .customView(R.layout.dialog_email_user_info, false)
-                .positiveColorRes(R.color.primary_color)
+                .positiveColorRes(R.color.colorAccentLight)
                 .negativeColorRes(R.color.light_gray)
                 .positiveText("Add")
                 .negativeText("Cancel")
@@ -1082,7 +1083,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
                 //.title(getString(R.string.book_a_new_domain))
                 .customView(R.layout.dialog_book_a_domain, false)
-                .positiveColorRes(R.color.primaryColor);
+                .positiveColorRes(R.color.colorAccentLight);
 
 
         if (!isFinishing()) {
@@ -1181,8 +1182,8 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 .customView(R.layout.dialog_link_layout, false)
                 .positiveText(postiveBtn)
                 .negativeText(negativeBtn)
-                .positiveColorRes(R.color.primaryColor)
-                .negativeColorRes(R.color.primaryColor)
+                .positiveColorRes(R.color.black_4a4a4a)
+                .negativeColorRes(R.color.colorAccentLight)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
@@ -1438,8 +1439,8 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                     public void onClick(View view) {
                         MaterialDialog dialog = new MaterialDialog.Builder(DomainDetailsActivity.this)
                                 .content("Do you want to delete this email?")
-                                .positiveColorRes(R.color.primaryColor)
-                                .negativeColorRes(R.color.primaryColor)
+                                .positiveColorRes(R.color.black_4a4a4a)
+                                .negativeColorRes(R.color.colorAccentLight)
                                 .positiveText("Cancel")
                                 .negativeText("Delete")
                                 .autoDismiss(true)

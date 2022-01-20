@@ -193,8 +193,6 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
         .setDebugMode(true)
         .build();
     registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this, webEngageConfig));
-
-
   }
 
   public RequestQueue getRequestQueue() {

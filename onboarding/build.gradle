@@ -31,6 +31,9 @@ android {
         partone {
             dimension "default"
         }
+        jioonline {
+            dimension "default"
+        }
     }
 
     compileOptions {
@@ -50,4 +53,9 @@ dependencies {
     api project(path: ':facebook')
     api project(path: ':twitter')
     api project(path: ':google')
+}
+
+repositories {
+//    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    mavenCentral()
 }

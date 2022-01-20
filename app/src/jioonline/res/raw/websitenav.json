@@ -1,0 +1,34 @@
+{
+  "website_customisation": [
+    {
+      "icon": "ic_fonts",
+      "subtitle": "Let the website speak your style. Customise your website look & feel and take it closer to your brand.",
+      "title": "Font & color styles",
+      "actionBtn": {
+        "color": "#0400A6",
+        "text_color": "#FFFFFF",
+        "title": "New"
+      }
+    },
+    {
+      "icon": "ic_diamonds",
+      "subtitle": "Your logo is a visual identity of your business that appears on top of your business website.",
+      "title": "My business logo"
+    },
+    {
+      "icon": "ic_background_images",
+      "subtitle": "These are set of images which stay behind the key content and set the brand-mood of your website.",
+      "title": "Background images"
+    },
+    {
+      "icon": "ic_favicon",
+      "subtitle": "Your customers can see it on the edge of your browser where your website is opened.",
+      "title": "Browser favicon"
+    },
+    {
+      "icon": "ic_featured_image",
+      "subtitle": "It is a key visual to define your business. It appears along with your business description.",
+      "title": "Featured image"
+    }
+  ]
+}

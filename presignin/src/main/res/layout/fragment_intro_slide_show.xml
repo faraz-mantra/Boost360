@@ -40,7 +40,7 @@
         style="@style/started_button"
         android:layout_marginHorizontal="@dimen/size_20"
         android:layout_marginBottom="@dimen/size_25"
-        android:text="@string/get_started"
+        android:text="@string/psn_login_now"
         android:textSize="@dimen/text_16"
         android:fontFamily="@font/semi_bold"
         app:layout_constraintBottom_toBottomOf="parent"
