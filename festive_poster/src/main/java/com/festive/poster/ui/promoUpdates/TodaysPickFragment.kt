@@ -26,7 +26,9 @@ import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.base.BaseActivity
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.utils.toArrayList
@@ -109,7 +111,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
     }
 
     private fun getTemplateViewConfig() {
-        showProgress()
+        startShimmer()
         viewModel?.getTemplateConfig(Constants.PROMO_FEATURE_CODE,session?.fPID, session?.fpTag)
             ?.observeOnce(viewLifecycleOwner, {
                 val response = it as? GetTemplateViewConfigResponse
@@ -119,6 +121,20 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                 }
 
             })
+    }
+
+    private fun startShimmer() {
+        binding!!.shimmerLayout.visible()
+        binding!!.shimmerLayout.startShimmer()
+        binding!!.rvTemplates.gone()
+        binding!!.cardBrowseAllTemplate.gone()
+    }
+
+    private fun stopShimmer() {
+        binding!!.shimmerLayout.gone()
+        binding!!.shimmerLayout.stopShimmer()
+        binding!!.rvTemplates.visible()
+        binding!!.cardBrowseAllTemplate.visible()
     }
 
     private fun prepareTagForApi(tags: List<PosterPackTagModel>): ArrayList<String> {
@@ -154,7 +170,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                     adapter = AppBaseRecyclerViewAdapter(baseActivity, dataList!!, this)
                     binding?.rvTemplates?.adapter = adapter
                     binding?.rvTemplates?.layoutManager = LinearLayoutManager(requireActivity())
-                    hideProgress()
+                    stopShimmer()
                 }
             })
     }

@@ -21,7 +21,9 @@ import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.base.BaseActivity
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.utils.toArrayList
@@ -102,6 +104,7 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
 
 
     private fun getTemplateViewConfig() {
+        startShimmer()
         viewModel?.getTemplateConfig(Constants.PROMO_FEATURE_CODE,session?.fPID, session?.fpTag)
             ?.observeOnce(this, {
                 val response = it as? GetTemplateViewConfigResponse
@@ -111,6 +114,18 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
                 }
 
             })
+    }
+
+    private fun startShimmer() {
+        binding!!.shimmerLayout.visible()
+        binding!!.rvCat.gone()
+        binding!!.shimmerLayout.startShimmer()
+    }
+
+    private fun stopShimmer(){
+        binding!!.shimmerLayout.gone()
+        binding!!.rvCat.visible()
+        binding!!.shimmerLayout.stopShimmer()
     }
 
     private fun prepareTagForApi(tags: List<PosterPackTagModel>): ArrayList<String> {
@@ -151,6 +166,8 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
                     binding?.rvCat?.layoutManager = GridLayoutManager(requireActivity(),2)
                     hideProgress()
                 }
+
+                stopShimmer()
             })
     }
 

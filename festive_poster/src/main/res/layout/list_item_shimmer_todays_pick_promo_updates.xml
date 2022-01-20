@@ -12,7 +12,7 @@
             android:id="@+id/iv_category_icon"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@color/colorPrimary"
+            android:background="@color/shimmerGrey"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,27 +21,31 @@
             android:id="@+id/tv_cat_title"
             style="@style/BlackSemiBoldM"
             android:layout_width="0dp"
+            android:background="@color/shimmerGrey"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_category_icon"
             app:layout_constraintTop_toTopOf="@+id/iv_category_icon"
-            tools:text="Discounts and Offers" />
+             />
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_cat_desc"
             style="@style/BlackRegularS"
             android:layout_width="0dp"
+            android:background="@color/shimmerGrey"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_category_icon"
             app:layout_constraintTop_toBottomOf="@+id/tv_cat_title"
-            tools:text="Post about offers or friday sale upto 50% discount  on selected products" />
+             />
 
 
-        <androidx.viewpager2.widget.ViewPager2
+
+        <include
+            layout="@layout/list_item_shimmer_promo_update"
             android:id="@+id/vp_template"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
