@@ -88,124 +88,143 @@
       android:layout_height="wrap_content"
       android:orientation="vertical">
 
-      <androidx.recyclerview.widget.RecyclerView
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/add_ons_packs_rv"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_margin="5dp"
-          tools:visibility="visible"
           android:visibility="gone"
+          tools:itemCount="1"
           tools:listitem="@layout/item_cart_pack"
-          tools:itemCount="1" />
+          tools:visibility="visible" />
+
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/add_ons_features1_rv"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="5dp"
+          tools:itemCount="1"
+          tools:listitem="@layout/item_feature_one" />
+
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/add_ons_features2_rv"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="5dp"
+          tools:itemCount="1"
+          tools:listitem="@layout/item_feature_two" />
 
 
-          <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/add_ons_features1_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/item_feature_one"
-            tools:itemCount="1"
-            android:layout_margin="5dp"/>
-
-          <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/add_ons_features2_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/item_feature_two"
-            tools:itemCount="1"
-            android:layout_margin="5dp"/>
-
-
-
-          <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/add_ons_features3_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:itemCount="1"
-            tools:listitem="@layout/item_feature_three"
-            android:layout_margin="5dp"/>
-
-      <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@color/white"
-        android:orientation="vertical">
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/add_ons_features3_rv"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="5dp"
+          tools:itemCount="1"
+          tools:listitem="@layout/item_feature_three" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_margin="10dp"
-          android:orientation="horizontal"
-          android:weightSum="2">
+          android:layout_marginTop="5dp"
+          android:background="@color/white"
+          android:orientation="vertical">
 
           <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Choose validity" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="(Valid till 16 May 22)" />
-
-          </androidx.appcompat.widget.LinearLayoutCompat>
-
-          <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="30dp"
-            android:background="@drawable/ic_cart_choose_validity"
-            android:orientation="horizontal">
+            android:layout_margin="10dp"
+            android:layout_marginStart="15dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:orientation="vertical">
+
+              <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choose validity"
+                android:textSize="@dimen/txt_14sp"
+                android:textColor="#4A4A4A"
+                android:fontFamily="@font/semi_bold"/>
+
+              <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#828282"
+                android:textSize="@dimen/txt_12sp"
+                android:text="(Valid till 16 May 22)" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:gravity="end"
+              android:layout_weight="1"
+              android:orientation="horizontal">
+
+              <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_cart_choose_validity"/>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
 
           </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_marginStart="5dp"
-          android:layout_marginEnd="5dp"
-          android:layout_marginBottom="10dp"
-          android:background="@drawable/ic_cart_extra_off_bg"
-          android:gravity="center"
-          android:orientation="horizontal">
-
           <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/ic_cart_extra_off_bg"
             android:gravity="center"
             android:orientation="horizontal">
 
-
-            <androidx.appcompat.widget.AppCompatTextView
-              android:layout_width="match_parent"
+            <androidx.appcompat.widget.LinearLayoutCompat
+              android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="center"
-              android:drawableStart="@drawable/ic_cart_discount"
               android:gravity="center"
-              android:paddingTop="5dp"
-              android:text="Choose 6 months or more to get extra 2% off"
-              android:textColor="#FFB900" />
+              android:orientation="horizontal">
+
+
+              <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableStart="@drawable/ic_cart_discount"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:text="Choose 6 months or more to get extra 2% off"
+                android:textColor="#FFB900" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
 
           </androidx.appcompat.widget.LinearLayoutCompat>
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+
       </androidx.appcompat.widget.LinearLayoutCompat>
 
       <androidx.appcompat.widget.LinearLayoutCompat
@@ -218,7 +237,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_margin="10dp"
+          android:layout_margin="15dp"
           android:orientation="vertical">
 
           <androidx.appcompat.widget.AppCompatTextView
@@ -226,6 +245,9 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_cart_others_also_bought"
             android:drawablePadding="5dp"
+            android:textSize="@dimen/txt_14sp"
+            android:textColor="#4D4D4D"
+            android:fontFamily="@font/semi_bold"
             android:text="Others also bought:" />
 
           <androidx.viewpager2.widget.ViewPager2
@@ -252,7 +274,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_gravity="center"
-          android:layout_margin="10dp"
+          android:layout_margin="15dp"
           android:gravity="center"
           android:orientation="horizontal">
 
@@ -261,6 +283,7 @@
             android:layout_height="wrap_content"
             android:lineSpacingExtra="1sp"
             android:text="DISCOUNT COUPONS"
+            android:fontFamily="@font/semi_bold"
             android:textColor="#4A4A4A"
             android:textSize="@dimen/txt_14sp" />
 
@@ -275,7 +298,9 @@
               android:layout_height="wrap_content"
               android:layout_gravity="end"
               android:gravity="end"
+              android:lineSpacingExtra="1sp"
               android:text="Have a coupon code?"
+              android:fontFamily="@font/semi_bold"
               android:textColor="#FFB900"
               android:textSize="@dimen/txt_12sp" />
 
@@ -293,18 +318,19 @@
           android:id="@+id/cart_coupon_code_rv"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          tools:listitem="@layout/item_coupon_code"
+          android:layout_margin="10dp"
           tools:itemCount="1"
-          android:layout_margin="10dp" />
+          tools:listitem="@layout/item_coupon_code" />
 
         <androidx.appcompat.widget.AppCompatTextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="end"
-          android:layout_margin="10dp"
+          android:layout_marginEnd="15dp"
+          android:layout_marginBottom="15dp"
           android:drawableEnd="@drawable/ic_cart_more_coupons"
           android:gravity="center"
-          android:text="More coupons"
+          android:text="Show more"
           android:textColor="#FFB900"
           android:textSize="@dimen/txt_12sp" />
       </androidx.appcompat.widget.LinearLayoutCompat>
@@ -330,6 +356,7 @@
             android:layout_height="wrap_content"
             android:lineSpacingExtra="1sp"
             android:text="BILLING DETAILS"
+            android:fontFamily="@font/semi_bold"
             android:textColor="#4A4A4A"
             android:textSize="@dimen/txt_14sp" />
 
@@ -374,8 +401,8 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="GSTIN"
-              android:textColor="@color/black"
-              android:textSize="12sp" />
+              android:textColor="#828282"
+              android:textSize="@dimen/txt_12sp" />
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -388,8 +415,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Not Provided"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textColor="#BBBBBB"
+                android:textSize="@dimen/txt_12sp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -406,8 +433,8 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Place of supply (state)*"
-              android:textColor="@color/black"
-              android:textSize="12sp" />
+              android:textColor="#828282"
+              android:textSize="@dimen/txt_12sp" />
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -420,8 +447,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="West Bengal"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textColor="#333333"
+                android:textSize="@dimen/txt_12sp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -438,8 +465,8 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Billing address*"
-              android:textColor="@color/black"
-              android:textSize="12sp" />
+              android:textColor="#828282"
+              android:textSize="@dimen/txt_12sp" />
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -452,8 +479,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lines="2"
+                android:gravity="end"
                 android:text="123, Bhagal Singh Road,\n Kolkata - 123456"
-                android:textColor="@color/black"
+                android:textColor="#333333"
                 android:textSize="12sp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -488,6 +516,7 @@
             android:layout_height="wrap_content"
             android:lineSpacingExtra="1sp"
             android:text="PAYABLE AMOUNT: "
+            android:fontFamily="@font/semi_bold"
             android:textColor="#4A4A4A"
             android:textSize="@dimen/txt_14sp" />
 
@@ -537,15 +566,15 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Cart total"
-              android:textColor="@color/black"
-              android:textSize="12sp" />
+              android:textColor="#333333"
+              android:textSize="@dimen/txt_12sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="(3 items)"
-              android:textColor="@color/black"
-              android:textSize="12sp" />
+              android:textColor="#333333"
+              android:textSize="@dimen/txt_12sp" />
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -558,8 +587,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="₹4,583"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textColor="#333333"
+                android:textSize="@dimen/txt_12sp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -576,8 +605,8 @@
               android:layout_height="wrap_content"
               android:drawableEnd="@drawable/ic_cart_gst_info"
               android:text="(includes 18% GST)"
-              android:textColor="@color/black"
-              android:textSize="12sp" />
+              android:textColor="#828282"
+              android:textSize="@dimen/txt_12sp" />
 
           </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -592,14 +621,14 @@
               android:layout_height="wrap_content"
               android:text="Long validity discount"
               android:textColor="#7ED321"
-              android:textSize="12sp" />
+              android:textSize="@dimen/txt_12sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text=" (2%)"
               android:textColor="#7ED321"
-              android:textSize="12sp" />
+              android:textSize="@dimen/txt_12sp" />
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -613,7 +642,7 @@
                 android:layout_height="wrap_content"
                 android:text="- ₹92"
                 android:textColor="#7ED321"
-                android:textSize="12sp" />
+                android:textSize="@dimen/txt_12sp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -631,7 +660,7 @@
               android:layout_height="wrap_content"
               android:text="‘FESTIVE’ coupon discount"
               android:textColor="#7ED321"
-              android:textSize="12sp" />
+              android:textSize="@dimen/txt_12sp" />
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -645,7 +674,7 @@
                 android:layout_height="wrap_content"
                 android:text="- ₹92"
                 android:textColor="#7ED321"
-                android:textSize="12sp" />
+                android:textSize="@dimen/txt_12sp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -663,8 +692,8 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Feature validity"
-              android:textColor="@color/black"
-              android:textSize="12sp" />
+              android:textColor="#828282"
+              android:textSize="@dimen/txt_12sp" />
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -677,8 +706,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="3 Months"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textColor="#333333"
+                android:fontFamily="@font/semi_bold"
+                android:textSize="@dimen/txt_12sp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -695,8 +725,8 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Validity period"
-              android:textColor="@color/black"
-              android:textSize="12sp" />
+              android:textColor="#828282"
+              android:textSize="@dimen/txt_12sp" />
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -710,8 +740,8 @@
                 android:layout_height="wrap_content"
                 android:lines="2"
                 android:text="17 Nov ‘21 - 16 Feb ‘22"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textColor="#333333"
+                android:textSize="@dimen/txt_12sp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -739,8 +769,9 @@
             android:layout_height="wrap_content"
             android:lineSpacingExtra="1sp"
             android:text="Payable amount"
-            android:textColor="#4A4A4A"
-            android:textSize="@dimen/txt_14sp" />
+            android:fontFamily="@font/open_sans_bold"
+            android:textColor="#323232"
+            android:textSize="@dimen/txt_12sp" />
 
           <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -753,8 +784,9 @@
               android:layout_height="wrap_content"
               android:layout_gravity="end"
               android:gravity="end"
+              android:fontFamily="@font/open_sans_bold"
               android:text="₹4,399"
-              android:textColor="@color/black"
+              android:textColor="#323232"
               android:textSize="@dimen/txt_12sp" />
 
           </androidx.appcompat.widget.LinearLayoutCompat>
@@ -833,8 +865,9 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="₹4,399"
-              android:textColor="@color/black"
-              android:textSize="20sp" />
+              android:fontFamily="@font/open_sans_bold"
+              android:textColor="#333333"
+              android:textSize="@dimen/txt_20sp" />
 
 
             <TextView
@@ -843,8 +876,9 @@
               android:layout_marginBottom="30dp"
               android:drawablePadding="5dp"
               android:text="@string/view_details"
-              android:textColor="@color/black"
-              android:textSize="11sp"
+              android:textColor="#333333"
+              android:fontFamily="@font/open_sans"
+              android:textSize="10sp"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toBottomOf="@id/footer_grand_total" />
           </androidx.appcompat.widget.LinearLayoutCompat>
@@ -860,7 +894,7 @@
             android:gravity="center"
             android:text="Continue"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="@dimen/txt_16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -875,5 +909,12 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+
+
+
   </androidx.core.widget.NestedScrollView>
-</androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+

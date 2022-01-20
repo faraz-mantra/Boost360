@@ -19,14 +19,16 @@
       android:gravity="center"
       android:text="FESTIVE"
       android:textColor="#4A4A4A"
-      android:textSize="16sp"
+      android:textSize="@dimen/txt_14sp"
       android:textStyle="bold" />
 
     <androidx.appcompat.widget.AppCompatTextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
-      android:layout_marginStart="10dp"
+      android:layout_marginStart="13dp"
+      android:textColor="#4A4A4A"
+      android:textSize="@dimen/txt_12sp"
       android:text="Save: ₹98" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -42,6 +44,7 @@
         android:layout_marginEnd="7dp"
         android:layout_marginBottom="7dp"
         android:text="APPLY"
+        android:textSize="@dimen/txt_12sp"
         android:textColor="#7ED321" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -60,8 +63,8 @@
       android:layout_gravity="center"
       android:drawablePadding="5dp"
       android:text="Extra 20% off if you purchase a pack. Cannot be combined with any other offer, expires on 31/12/21."
-      android:textColor="#4A4A4A"
-      android:textSize="12sp" />
+      android:textColor="#828282"
+      android:textSize="@dimen/txt_12sp" />
 
 
   </androidx.appcompat.widget.LinearLayoutCompat>

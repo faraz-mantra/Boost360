@@ -45,7 +45,7 @@
               android:layout_height="wrap_content"
               android:text="www.businessname.com"
               android:textColor="#4A4A4A"
-              android:textSize="14sp"
+              android:textSize="16sp"
               android:textStyle="bold" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -62,8 +62,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="Custom Domain with HTTPS Security"
-                android:textColor="#747474"
-                android:textSize="12sp" />
+                android:textColor="#828282"
+                android:textSize="@dimen/txt_12sp" />
 
               <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/feature_one_amount_layout"
@@ -77,16 +77,17 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginEnd="5dp"
-                  android:text="₹4920/year"
-                  android:textColor="#747474"
-                  android:textSize="12sp" />
+                  android:text="₹497/month"
+                  android:textColor="#333333"
+                  android:textStyle="bold"
+                  android:textSize="@dimen/txt_14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                   android:id="@+id/package_orig_cost"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="@string/pack_price"
-                  android:textColor="#9b9b9b"
+                  android:textColor="#828282"
                   android:textSize="12sp" />
 
               </androidx.appcompat.widget.LinearLayoutCompat>
@@ -100,8 +101,10 @@
               android:layout_marginTop="20dp"
               android:drawableStart="@drawable/ic_cart_pack_business_count_image"
               android:drawablePadding="5dp"
+              android:gravity="center"
               android:text="Used by 10,000+ businesses"
-              android:textColor="#7ED321" />
+              android:textColor="#7ED321"
+              android:textSize="@dimen/txt_12sp" />
 
 
           </androidx.appcompat.widget.LinearLayoutCompat>
