@@ -43,7 +43,7 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
     override fun onCreateView() {
         posterModel = convertStringToObj<PosterModel?>(arguments?.getString(PostPreviewSocialActivity.IK_POSTER))
 
-        setOnClickListener(binding?.ivWhatsapp,binding?.ivInstagram,binding?.ivOther)
+        setOnClickListener(binding?.ivWhatsapp,binding?.ivInstagram,binding?.ivOther,binding?.ivClosePostSuccess)
         SvgUtils.loadImage(posterModel?.variants?.firstOrNull()?.svgUrl,binding?.ivPosterIcon!!,
             posterModel?.keys,posterModel?.isPurchased)
         binding?.ivClosePostSuccess?.setOnClickListener {
@@ -65,6 +65,9 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
             binding?.ivOther->{
                 SvgUtils.shareUncompressedSvg(posterModel?.variants?.firstOrNull()?.svgUrl,
                     posterModel,requireActivity(),"")
+            }
+            binding?.ivClosePostSuccess->{
+                dismiss()
             }
         }
     }
