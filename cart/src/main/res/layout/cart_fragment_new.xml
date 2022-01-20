@@ -88,6 +88,17 @@
       android:layout_height="wrap_content"
       android:orientation="vertical">
 
+      <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/add_ons_packs_rv"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="5dp"
+          tools:visibility="visible"
+          android:visibility="gone"
+          tools:listitem="@layout/item_cart_pack"
+          tools:itemCount="1" />
+
+
           <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/add_ons_features1_rv"
             android:layout_width="match_parent"
@@ -104,15 +115,7 @@
             tools:itemCount="1"
             android:layout_margin="5dp"/>
 
-          <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/add_ons_packs_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            tools:visibility="visible"
-            android:visibility="gone"
-            tools:listitem="@layout/item_cart_pack"
-            tools:itemCount="1" />
+
 
           <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/add_ons_features3_rv"
