@@ -54,30 +54,19 @@ android {
             dimension "default"
             buildConfigField "String", "CLIENT_ID", '"2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"'
             buildConfigField "String", "CLIENT_ID_ORDER", '"A816E08AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F51770E46AD86"'
+            buildConfigField "String", "USER_EXPERIOR_LIVE_KEY", '"0efa1c36-15ec-43ba-93e7-e00ff1355f4b"'
+//            buildConfigField "String", "USER_EXPERIOR_DEV_KEY", '"971021d8-3b0a-45e0-80f1-212150a16791"'
+            buildConfigField "String", "SMARTLOOK_API_KEY", '"2976fda0fc620d3186eca19884bd55ac125b56e4"'
         }
         jioonline {
             dimension "default"
             buildConfigField "String", "CLIENT_ID", '"2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5"'
             buildConfigField "String", "CLIENT_ID_ORDER", '"2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5"'
+            buildConfigField "String", "USER_EXPERIOR_LIVE_KEY", '"0efa1c36-15ec-43ba-93e7-e00ff1355f4b"'
+//            buildConfigField "String", "USER_EXPERIOR_DEV_KEY", '"971021d8-3b0a-45e0-80f1-212150a16791"'
+            buildConfigField "String", "SMARTLOOK_API_KEY", '"2976fda0fc620d3186eca19884bd55ac125b56e4"'
         }
     }
-//    sourceSets {
-//        main {
-//            java {
-//                srcDirs 'src/main/java'
-//            }
-//        }
-//        partone {
-//            java {
-//                srcDirs 'src/partone/java'
-//            }
-//        }
-//        jioonline {
-//            java {
-//                srcDirs 'src/jioonline/java'
-//            }
-//        }
-//    }
 }
 
 dependencies {

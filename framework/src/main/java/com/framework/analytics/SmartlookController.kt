@@ -1,12 +1,12 @@
 package com.framework.analytics
 
+import com.framework.BuildConfig
 import com.smartlook.sdk.smartlook.Smartlook
 
 object SmartlookController {
 
-    val YOUR_API_KEY="2976fda0fc620d3186eca19884bd55ac125b56e4"
-    fun setupAndStartRecording(){
-        Smartlook.setupAndStartRecording(YOUR_API_KEY);
+  fun setupAndStartRecording() {
+    Smartlook.setupAndStartRecording(BuildConfig.SMARTLOOK_API_KEY);
 
-    }
+  }
 }
