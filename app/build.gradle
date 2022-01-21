@@ -70,65 +70,24 @@ android {
             signingConfig signingConfigs.config
         }
     }
-//    signingConfigs {
-//        debug {
-//            storeFile file(System.properties['user.home']+"/.android/custom_debug.keystore")
-//            storePassword ''
-//            keyAlias 'nfmanage'
-//            keyPassword ''
-//        }
-//    }
+
     flavorDimensions "default"
     productFlavors {
-
-//        parttwo {
-//            versionName "4.5.4"
-//            applicationId "com.sibername"
-//            dimension "default"
-//        }
-//        partthree {
-//            versionName "1.0.6"
-//            applicationId "com.kitsune.biz"
-//            dimension "default"
-//        }
-//        partfour {
-//            versionName "1.1.0"
-//            applicationId "com.digitalseoz"
-//            dimension "default"
-//        }
-//        partfive {
-//            versionName "1.0.4"
-//            applicationId "com.capture"
-//            dimension "default"
-//        }
-//        partsix {
-//            versionName "1.0.5"
-//            applicationId "com.trivone.assist"
-//            dimension "default"
-//        }
-//        partseven {
-//            versionName "1.0.5"
-//            applicationId "com.sukere"
-//            dimension "default"
-//        }
-//
-//        nowfloats_us {
-//            versionName "1.0.11"
-//            applicationId "com.redtim"
-//            versionCode 2018070028
-//            dimension "default"
-//        }
         partone {
             versionName "6.0.14"
             applicationId "com.biz2.nowfloats"
             dimension "default"
+            buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
+            resValue "string", "webengage_license_code", '~10a5cad2d'
         }
         jioonline {
             versionName "1.0.0"
             applicationId "com.jio.online"
             dimension "default"
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
+            buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
+            resValue "string", "webengage_license_code", 'aa131c37'
         }
     }
     packagingOptions {
