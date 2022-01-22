@@ -1,10 +1,15 @@
 package com.boost.cart.ui.home
 
 //import com.boost.dbcenterapi.data.api_model.PurchaseOrder.request.*
+//import com.boost.dbcenterapi.database.LocalStorage
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,19 +20,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.ExtendedProperty
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PrimaryImage
-import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.*
-import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
-import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponRequest
-import com.boost.dbcenterapi.data.renewalcart.CreateCartStateRequest
-import com.boost.dbcenterapi.data.renewalcart.RenewalPurchasedRequest
-import com.boost.dbcenterapi.data.renewalcart.RenewalResult
-//import com.boost.dbcenterapi.database.LocalStorage
+import com.boost.cart.CartActivity
+import com.boost.cart.R
+import com.boost.cart.adapter.CartAddonsAdaptor
+import com.boost.cart.adapter.CartPackageAdaptor
+import com.boost.cart.adapter.CartRenewalAdaptor
+import com.boost.cart.base_class.BaseFragment
+import com.boost.cart.interfaces.CartFragmentListener
 import com.boost.cart.ui.autorenew.AutoRenewSubsFragment
 import com.boost.cart.ui.checkoutkyc.CheckoutKycFragment
+import com.boost.cart.ui.compare.ComparePackageFragment
 import com.boost.cart.ui.packages.PackageFragment
 import com.boost.cart.ui.popup.CouponPopUpFragment
 import com.boost.cart.ui.popup.GSTINPopUpFragment
@@ -36,39 +38,60 @@ import com.boost.cart.ui.popup.TANPopUpFragment
 import com.boost.cart.ui.splash.SplashFragment
 import com.boost.cart.utils.*
 import com.boost.cart.utils.Constants.Companion.COUPON_POPUP_FRAGEMENT
-import com.boost.cart.utils.Constants.Companion.GSTIN_POPUP_FRAGEMENT
-import com.boost.cart.utils.Constants.Companion.TAN_POPUP_FRAGEMENT
 import com.boost.cart.utils.DateUtils.parseDate
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.ExtendedProperty
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PrimaryImage
+import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.*
+import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
+import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponRequest
 import com.boost.dbcenterapi.data.model.coupon.CouponServiceModel
+import com.boost.dbcenterapi.data.renewalcart.CreateCartStateRequest
+import com.boost.dbcenterapi.data.renewalcart.RenewalPurchasedRequest
+import com.boost.dbcenterapi.data.renewalcart.RenewalResult
+import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
+import com.boost.dbcenterapi.upgradeDB.model.CartModel
+import com.boost.dbcenterapi.upgradeDB.model.CouponsModel
+import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.payment.PaymentActivity
+import com.framework.analytics.SentryController
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.cart_fragment.*
+import kotlinx.android.synthetic.main.cart_fragment.addons_layout
+import kotlinx.android.synthetic.main.cart_fragment.back_button12
+import kotlinx.android.synthetic.main.cart_fragment.cart_addons_recycler
+import kotlinx.android.synthetic.main.cart_fragment.cart_amount_title
+import kotlinx.android.synthetic.main.cart_fragment.cart_amount_value
+import kotlinx.android.synthetic.main.cart_fragment.cart_apply_coupon
+import kotlinx.android.synthetic.main.cart_fragment.cart_continue_submit
+import kotlinx.android.synthetic.main.cart_fragment.cart_grand_total
+import kotlinx.android.synthetic.main.cart_fragment.cart_main_layout
+import kotlinx.android.synthetic.main.cart_fragment.cart_main_scroller
+import kotlinx.android.synthetic.main.cart_fragment.cart_package_recycler
+import kotlinx.android.synthetic.main.cart_fragment.cart_renewal_recycler
+import kotlinx.android.synthetic.main.cart_fragment.cart_spk_to_expert
+import kotlinx.android.synthetic.main.cart_fragment.cart_view_details
+import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_title
+import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_value
+import kotlinx.android.synthetic.main.cart_fragment.empty_cart
+import kotlinx.android.synthetic.main.cart_fragment.footer_grand_total
+import kotlinx.android.synthetic.main.cart_fragment.gst_layout
+import kotlinx.android.synthetic.main.cart_fragment.months_validity
+import kotlinx.android.synthetic.main.cart_fragment.months_validity_edit_dsc
+import kotlinx.android.synthetic.main.cart_fragment.months_validity_edit_inc
+import kotlinx.android.synthetic.main.cart_fragment.mp_cart_compare_packs
+import kotlinx.android.synthetic.main.cart_fragment.package_layout
+import kotlinx.android.synthetic.main.cart_fragment.renewal_layout
+import kotlinx.android.synthetic.main.cart_fragment.total_months_layout
+import kotlinx.android.synthetic.main.cart_v2_fragment.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-import android.content.Intent
-import android.net.Uri
-import java.lang.NumberFormatException
-import android.text.InputFilter
-import android.text.TextUtils
-import com.boost.cart.CartActivity
-import com.boost.cart.R
-import com.boost.cart.adapter.CartAddonsAdaptor
-import com.boost.cart.adapter.CartPackageAdaptor
-import com.boost.cart.adapter.CartRenewalAdaptor
-import com.boost.cart.base_class.BaseFragment
-import com.boost.cart.interfaces.CartFragmentListener
-import com.boost.cart.ui.compare.ComparePackageFragment
-import com.boost.payment.PaymentActivity
-import com.framework.analytics.SentryController
-import com.boost.dbcenterapi.upgradeDB.model.*
-import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_title
-import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_value
-import kotlinx.android.synthetic.main.cart_fragment.igst_value
-import kotlinx.android.synthetic.main.cart_fragment.package_layout
 
 
 class CartFragment : BaseFragment(), CartFragmentListener {
@@ -153,7 +176,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   private lateinit var viewModel: CartViewModel
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    root = inflater.inflate(R.layout.cart_fragment, container, false)
+    root = inflater.inflate(R.layout.cart_v2_fragment, container, false)
 //    localStorage = LocalStorage.getInstance(requireContext())!!
 
     progressDialog = ProgressDialog(requireContext())
@@ -187,7 +210,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     Constants.COMPARE_BACK_VALUE = 1
     prefs.storeCompareState(1)
 //        showpopup()
-    loadLastUsedPayData()
+    //loadLastUsedPayData()
     initializePackageRecycler()
     initializeAddonsRecycler()
     initializeRenewalRecycler()
@@ -195,38 +218,38 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     initMvvM()
     observeLastPaymentDetails()
     checkRenewalItemDeepLinkClick()
-    gst_layout.visibility = View.GONE
+    gst_layout.visibility = View.VISIBLE
     //show applyed coupon code
     if (prefs.getApplyedCouponDetails() != null) {
       validCouponCode = prefs.getApplyedCouponDetails()
-      discount_coupon_title.text = validCouponCode!!.coupon_key
+ //     discount_coupon_title.text = validCouponCode!!.coupon_key
       cart_apply_coupon.visibility = View.GONE
       discount_coupon_remove.visibility = View.VISIBLE
     } else {
       validCouponCode = null
-      discount_coupon_remove.visibility = View.GONE
+//      discount_coupon_remove.visibility = View.GONE
       cart_apply_coupon.visibility = View.VISIBLE
-      discount_coupon_title.text = "Discount coupon"
+ //     discount_coupon_title.text = "Discount coupon"
     }
 
-    discount_coupon_remove.setOnClickListener {
-      discount_coupon_remove.visibility = View.GONE
-      cart_apply_coupon.visibility = View.VISIBLE
-      discount_coupon_title.text = "Discount coupon"
-      discount_coupon_message.visibility = View.GONE
-      //clear coupon
-      validCouponCode = null
-
-      //remove saved orderdetails and coupondetails from prefs
-      prefs.storeCartOrderInfo(null)
-      prefs.storeApplyedCouponDetails(null)
-
-//            totalCalculation()
-      couponCode = ""
-      couponServiceModel = null
-
-      totalCalculationAfterCoupon()
-    }
+//    discount_coupon_remove.setOnClickListener {
+//      discount_coupon_remove.visibility = View.GONE
+//      cart_apply_coupon.visibility = View.VISIBLE
+//  //    discount_coupon_title.text = "Discount coupon"
+// //     discount_coupon_message.visibility = View.GONE
+//      //clear coupon
+//      validCouponCode = null
+//
+//      //remove saved orderdetails and coupondetails from prefs
+//      prefs.storeCartOrderInfo(null)
+//      prefs.storeApplyedCouponDetails(null)
+//
+////            totalCalculation()
+//      couponCode = ""
+//      couponServiceModel = null
+//
+//      totalCalculationAfterCoupon()
+//    }
 
     cart_continue_submit.setOnClickListener {
 
@@ -387,55 +410,55 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     cart_spk_to_expert.setOnClickListener {
       speakToExpert(prefs.getExpertContact())
     }
-    enter_gst_number.setOnClickListener {
-      gstinPopUpFragment.show(
-        (activity as CartActivity).supportFragmentManager,
-        GSTIN_POPUP_FRAGEMENT
-      )
-    }
+//    enter_gst_number.setOnClickListener {
+//      gstinPopUpFragment.show(
+//        (activity as CartActivity).supportFragmentManager,
+//        GSTIN_POPUP_FRAGEMENT
+//      )
+//    }
 
-    enter_gstin_number.setOnClickListener {
-      gstinPopUpFragment.show(
-        (activity as CartActivity).supportFragmentManager,
-        GSTIN_POPUP_FRAGEMENT
-      )
-    }
+//    enter_gstin_number.setOnClickListener {
+//      gstinPopUpFragment.show(
+//        (activity as CartActivity).supportFragmentManager,
+//        GSTIN_POPUP_FRAGEMENT
+//      )
+//    }
 
-    gstin_remove.setOnClickListener {
-      GSTINNumber = null
-      gstin_title.text = "GSTIN (optional)"
-      entered_gstin_number.visibility = View.GONE
-      gstin_remove.visibility = View.GONE
-      enter_gstin_number.visibility = View.VISIBLE
-    }
+//    gstin_remove.setOnClickListener {
+//      GSTINNumber = null
+//      gstin_title.text = "GSTIN (optional)"
+//      entered_gstin_number.visibility = View.GONE
+//      gstin_remove.visibility = View.GONE
+//      enter_gstin_number.visibility = View.VISIBLE
+//    }
 
-    tan_remove.setOnClickListener {
-      TANNumber = null
-      tan_title.text = "TAN (optional)"
-      entered_tan_number.visibility = View.GONE
-      tan_remove.visibility = View.GONE
-      enter_tan_number.visibility = View.VISIBLE
-    }
+//    tan_remove.setOnClickListener {
+//      TANNumber = null
+//      tan_title.text = "TAN (optional)"
+//      entered_tan_number.visibility = View.GONE
+//      tan_remove.visibility = View.GONE
+//      enter_tan_number.visibility = View.VISIBLE
+//    }
 
-    remove_gstin_number.setOnClickListener {
-      GSTINNumber = null
-      gstin_layout1.visibility = View.VISIBLE
-      gstin_layout2.visibility = View.GONE
-      fill_in_gstin_value.text = ""
-    }
+//    remove_gstin_number.setOnClickListener {
+//      GSTINNumber = null
+//      gstin_layout1.visibility = View.VISIBLE
+//      gstin_layout2.visibility = View.GONE
+//      fill_in_gstin_value.text = ""
+//    }
 
-    enter_tan_number.setOnClickListener {
-      tanPopUpFragment.show(
-        (activity as CartActivity).supportFragmentManager,
-        TAN_POPUP_FRAGEMENT
-      )
-    }
-    entered_tan_number.setOnClickListener {
-      tanPopUpFragment.show(
-        (activity as CartActivity).supportFragmentManager,
-        TAN_POPUP_FRAGEMENT
-      )
-    }
+//    enter_tan_number.setOnClickListener {
+//      tanPopUpFragment.show(
+//        (activity as CartActivity).supportFragmentManager,
+//        TAN_POPUP_FRAGEMENT
+//      )
+//    }
+//    entered_tan_number.setOnClickListener {
+//      tanPopUpFragment.show(
+//        (activity as CartActivity).supportFragmentManager,
+//        TAN_POPUP_FRAGEMENT
+//      )
+//    }
 
 //    all_recommended_addons.setOnClickListener {
 //      (activity as CartActivity).goBackToRecommentedScreen()
@@ -758,7 +781,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           total_months_layout.visibility = View.GONE
           renewal_layout.visibility = View.VISIBLE
           addons_layout.visibility = View.GONE
-          package_layout.visibility = View.GONE
+          package_layout.visibility = View.VISIBLE
           updateRenewal(cartList)
 //                    totalCalculation()
           totalCalculationAfterCoupon()
@@ -1506,7 +1529,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           months_validity.setText(default_validity_months.toString())
           months_validity_edit_inc.visibility = View.VISIBLE
           months_validity_edit_dsc.visibility = View.VISIBLE
-          package_layout.visibility = View.GONE
+          package_layout.visibility = View.VISIBLE
         }
 //                totalCalculation()
         totalCalculationAfterCoupon()
@@ -1675,18 +1698,18 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       }
     })
 
-    viewModel.getTAN().observe(this, Observer {
-      if (it != null) {
-        Log.i("getTAN >> ", it)
-        TANNumber = it
-        enter_tan_number.visibility = View.GONE
-        entered_tan_number.visibility = View.VISIBLE
-        entered_tan_number.text = it
-
-        tan_remove.visibility = View.VISIBLE
-        tan_title.text = "TAN"
-      }
-    })
+//    viewModel.getTAN().observe(this, Observer {
+//      if (it != null) {
+//        Log.i("getTAN >> ", it)
+//        TANNumber = it
+//        enter_tan_number.visibility = View.GONE
+//        entered_tan_number.visibility = View.VISIBLE
+//        entered_tan_number.text = it
+//
+//        tan_remove.visibility = View.VISIBLE
+//        tan_title.text = "TAN"
+//      }
+//    })
 
     //getting all features
     viewModel.updateAllFeaturesResult().observe(this, Observer {
@@ -1708,9 +1731,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         prefs.storeApplyedCouponDetails(it)
 
         validCouponCode = it
-        discount_coupon_title.text = validCouponCode!!.coupon_key
+  //      discount_coupon_title.text = validCouponCode!!.coupon_key
         cart_apply_coupon.visibility = View.GONE
-        discount_coupon_remove.visibility = View.VISIBLE
+ //       discount_coupon_remove.visibility = View.VISIBLE
 //                totalCalculation()
         totalCalculationAfterCoupon()
       } else {
@@ -1735,15 +1758,15 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //                    validCouponCode = it
           couponServiceModel = it
           couponCode = it!!.coupon_key!!
-          discount_coupon_title.text = it!!.coupon_key
+ //         discount_coupon_title.text = it!!.coupon_key
           cart_apply_coupon.visibility = View.GONE
-          discount_coupon_remove.visibility = View.VISIBLE
+     //     discount_coupon_remove.visibility = View.VISIBLE
           if (it.success!!) {
-            discount_coupon_message.visibility = View.VISIBLE
-            discount_coupon_message.text = it.message
+    //        discount_coupon_message.visibility = View.VISIBLE
+     //       discount_coupon_message.text = it.message
           } else {
-            discount_coupon_message.visibility = View.VISIBLE
-            discount_coupon_message.text = it.message
+    //        discount_coupon_message.visibility = View.VISIBLE
+    //        discount_coupon_message.text = it.message
           }
           totalCalculationAfterCoupon()
         } else {
@@ -1839,10 +1862,11 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         val temp = (total * 18) / 100
         taxValue = Math.round(temp * 100) / 100.0
         grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
-        igst_value.text = "+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue)
+//        igst_value.text = "+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue)
 //                order_total_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
         cart_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
         footer_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
+        header_grand_total.text="₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
       }
     }
   }
@@ -1866,7 +1890,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             total += ((item.price / package_validity_months) * default_validity_months)
         }
         cart_amount_title.text = "Cart total (" + cartList.size + " items)"
-        cart_amount_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total)
+        cart_amount_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total+taxValue)
         coupontotal = total
 
         if (couponServiceModel != null)
@@ -1881,10 +1905,11 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         val temp = (total * 18) / 100
         taxValue = Math.round(temp * 100) / 100.0
         grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
-        igst_value.text = "+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue)
+ //       igst_value.text = "+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue)
 //                order_total_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
         cart_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
         footer_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
+        header_grand_total.text="₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
 
         val revenue = Math.round(grandTotal * 100).toInt() / 100
         event_attributes.put("total amount", revenue)

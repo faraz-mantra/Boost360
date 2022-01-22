@@ -8,11 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
 import com.boost.cart.interfaces.CartFragmentListener
-import com.boost.cart.utils.WebEngageController
-import com.boost.dbcenterapi.upgradeDB.model.*
+import com.boost.dbcenterapi.upgradeDB.model.CartModel
+import com.boost.dbcenterapi.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_PACKAGE_CROSSED_DELETED_FROM_CART
@@ -32,10 +33,9 @@ class CartPackageAdaptor(
   init {
     this.bundlesList = list as ArrayList<CartModel>
   }
-
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
     val itemView = LayoutInflater.from(parent.context).inflate(
-      R.layout.cart_single_package, parent, false
+      R.layout.item_cart_pack, parent, false
     )
     context = itemView.context
 
@@ -73,11 +73,30 @@ class CartPackageAdaptor(
     } else {
       holder.orig_cost.visibility = View.GONE
     }
-    if (selectedBundle.discount > 0) {
-      holder.discount.text = selectedBundle.discount.toString() + "%"
-      holder.discount.visibility = View.VISIBLE
-    } else {
-      holder.discount.visibility = View.GONE
+//    if (selectedBundle.discount > 0) {
+//      holder.discount.text = selectedBundle.discount.toString() + "%"
+//      holder.discount.visibility = View.VISIBLE
+//    } else {
+//      holder.discount.visibility = View.GONE
+//    }
+//    holder.removePackage.setOnClickListener {
+//      selectedBundle.item_name?.let { it1 ->
+//        WebEngageController.trackEvent(
+//          ADDONS_MARKETPLACE_PACKAGE_CROSSED_DELETED_FROM_CART,
+//          ADDONS_MARKETPLACE,
+//          it1
+//        )
+//      }
+    listener.deleteCartAddonsItem(bundlesList.get(position).item_id)
+//    }
+//    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+//    if (bundlesList.size - 1 == position) {
+//      holder.view.visibility = View.GONE
+//    }
+
+    //showing package details
+    holder.itemView.setOnClickListener {
+      listener.showBundleDetails(bundlesList.get(position).item_id)
     }
     holder.removePackage.setOnClickListener {
       selectedBundle.item_name?.let { it1 ->
@@ -87,18 +106,68 @@ class CartPackageAdaptor(
           it1
         )
       }
-      listener.deleteCartAddonsItem(bundlesList.get(position).item_id)
     }
-    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
-    if (bundlesList.size - 1 == position) {
-      holder.view.visibility = View.GONE
-    }
+    val layoutManager1 = LinearLayoutManager(context)
+    val sectionLayout = ChildPackAdapter(bundlesList)
+    holder.ChildRecyclerView.setAdapter(sectionLayout)
+    holder.ChildRecyclerView.setLayoutManager(layoutManager1)
 
-    //showing package details
-    holder.itemView.setOnClickListener {
-      listener.showBundleDetails(bundlesList.get(position).item_id)
-    }
+
   }
+//    val listSamp = ArrayList<String>()
+//    val distinct: List<String> = LinkedHashSet(listSamp).toMutableList()
+//    val layoutManager1 = GridLayoutManager(context,3,)
+//
+//    CompositeDisposable().add(
+//      AppDatabase.getInstance(Application())!!
+//        .featuresDao()
+//        .getallFeaturesInList(distinct)
+//        .subscribeOn(Schedulers.io())
+//        .observeOn(AndroidSchedulers.mainThread())
+//        .subscribe(
+//          {
+//            val itemIds = java.util.ArrayList<String?>()
+//            for (item in it) {
+//              itemIds.add(item.feature_code)
+//            }
+//            for(listItems in it){
+//              CompositeDisposable().add(
+//                AppDatabase.getInstance(Application())!!
+//                  .featuresDao()
+//                  .getFeatureListForCompare(itemIds)
+//                  .subscribeOn(Schedulers.io())
+//                  .observeOn(AndroidSchedulers.mainThread())
+//                  .subscribe({
+//                    if (it != null) {
+//
+//                      Log.v("getFeatureListTarget", " "+ itemIds )
+//                      /* val section = MySection(listItems.target_business_usecase, it)
+//                       sectionAdapter1.addSection(section)
+//                       parentViewHolder.ChildRecyclerView
+//                               .setAdapter(sectionAdapter1)
+//                       parentViewHolder.ChildRecyclerView
+//                               .setLayoutManager(layoutManager1)*/
+//
+//                      val sectionLayout = ChildPackAdapter(it)
+//                    holder.ChildRecyclerView.setAdapter(sectionLayout)
+//                      holder.ChildRecyclerView.setLayoutManager(layoutManager1)
+//
+//
+//                    } else {
+//                    }
+//                  }, {
+//                    it.printStackTrace()
+//                  })
+//              )
+//            }
+//          },
+//          {
+//            it.printStackTrace()
+//
+//          }
+//        )
+//    )
+//  }
 
   fun addupdates(upgradeModel: List<CartModel>) {
     val initPosition = bundlesList.size
@@ -111,10 +180,11 @@ class CartPackageAdaptor(
     val name = itemView.findViewById<TextView>(R.id.package_title)
     val price = itemView.findViewById<TextView>(R.id.package_price)
     val orig_cost = itemView.findViewById<TextView>(R.id.package_orig_cost)
-    val discount = itemView.findViewById<TextView>(R.id.package_discount)
+  //  val discount = itemView.findViewById<TextView>(R.id.package_discount)
     val image = itemView.findViewById<ImageView>(R.id.package_profile_image)
     val removePackage = itemView.findViewById<ImageView>(R.id.package_close)
-    var view = itemView.findViewById<View>(R.id.cart_single_package_bottom_view)!!
+    val ChildRecyclerView=itemView.findViewById<RecyclerView>(R.id.child_recyclerview)
+ //   var view = itemView.findViewById<View>(R.id.cart_single_package_bottom_view)!!
   }
 
   fun spannableString(holder: upgradeViewHolder, value: Double, minMonth: Int) {
