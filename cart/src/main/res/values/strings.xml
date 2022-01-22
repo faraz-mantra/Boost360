@@ -6,6 +6,7 @@
     <string name="_10_digit_mobile_number">10 digit mobile number</string>
     <string name="enter_gstin_number">Enter your GSTIN</string>
     <string name="gst_text">Any change made to business name &amp; address info on GST portal takes atleast 15 days to reflect here.</string>
+    <string name="cart_gst_text">Place of supply will be automatically fetched from the GSTIN database.</string>
     <string name="enter_business_name">Enter your Business name</string>
     <string name="enter_business_address">Enter your business address</string>
     <string name="auto_renew_message"><b>Auto Renewal is ON </b></string>
@@ -30,6 +31,7 @@
     <string name="pack_price_two"> <strike> ₹23/staff/month</strike></string>
     <string name="pack_price_three"> <strike> ₹120/month</strike></string>
     <string name="view_details"><u>View details</u></string>
+  <string name="enter_coupon_code">Enter coupon code</string>
 
 
 </resources>
