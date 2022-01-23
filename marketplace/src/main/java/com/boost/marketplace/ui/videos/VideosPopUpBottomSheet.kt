@@ -40,6 +40,7 @@ class VideosPopUpBottomSheet :
     }
 
     override fun onCreateView() {
+        dialog!!.window!!.setBackgroundDrawableResource(com.boost.cart.R.color.fullscreen_color)
         dialog.behavior.isDraggable = true
         viewModel = ViewModelProviders.of(baseActivity).get(MarketPlaceHomeViewModel::class.java)
         getBundle()
