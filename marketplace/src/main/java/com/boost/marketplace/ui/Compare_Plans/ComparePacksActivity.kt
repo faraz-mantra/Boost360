@@ -395,8 +395,8 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
                         }
                         if (list.size > 0) {
                             updatePackageViewPager(listItem)
-//                        packageAdaptor.addupdates(listItem)
-//                        packageAdaptor.notifyDataSetChanged()
+                        packageAdaptor.addupdates(listItem)
+                        packageAdaptor.notifyDataSetChanged()
                         }
                     }
                 }else{

@@ -79,16 +79,16 @@ class CartPackageAdaptor(
 //    } else {
 //      holder.discount.visibility = View.GONE
 //    }
-//    holder.removePackage.setOnClickListener {
-//      selectedBundle.item_name?.let { it1 ->
-//        WebEngageController.trackEvent(
-//          ADDONS_MARKETPLACE_PACKAGE_CROSSED_DELETED_FROM_CART,
-//          ADDONS_MARKETPLACE,
-//          it1
-//        )
-//      }
+    holder.removePackage.setOnClickListener {
+      selectedBundle.item_name?.let { it1 ->
+        WebEngageController.trackEvent(
+          ADDONS_MARKETPLACE_PACKAGE_CROSSED_DELETED_FROM_CART,
+          ADDONS_MARKETPLACE,
+          it1
+        )
+      }
     listener.deleteCartAddonsItem(bundlesList.get(position).item_id)
-//    }
+    }
 //    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 //    if (bundlesList.size - 1 == position) {
 //      holder.view.visibility = View.GONE
@@ -98,15 +98,7 @@ class CartPackageAdaptor(
     holder.itemView.setOnClickListener {
       listener.showBundleDetails(bundlesList.get(position).item_id)
     }
-    holder.removePackage.setOnClickListener {
-      selectedBundle.item_name?.let { it1 ->
-        WebEngageController.trackEvent(
-          ADDONS_MARKETPLACE_PACKAGE_CROSSED_DELETED_FROM_CART,
-          ADDONS_MARKETPLACE,
-          it1
-        )
-      }
-    }
+
     val layoutManager1 = LinearLayoutManager(context)
     val sectionLayout = ChildPackAdapter(bundlesList)
     holder.ChildRecyclerView.setAdapter(sectionLayout)

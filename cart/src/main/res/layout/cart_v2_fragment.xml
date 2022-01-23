@@ -646,23 +646,17 @@
                                 android:text="Choose 6 months or more to get extra 2% off"
                                 android:textColor="#FFB900" />
 
-
                         </androidx.appcompat.widget.LinearLayoutCompat>
-
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-
-
-
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/coupon_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_80sdp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:background="@drawable/rect_top_bg"
@@ -731,6 +725,14 @@
                             android:layout_height="1dp"
                             android:background="#4DA3A3A3" />
 
+                        <include
+                            android:id="@+id/cart_applied_coupon_full_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:visibility="visible"
+                            layout="@layout/cart_applied_coupon_layout" />
+
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/cart_coupon_code_rv"
                             android:layout_width="match_parent"
@@ -748,6 +750,7 @@
                             android:drawableEnd="@drawable/ic_cart_more_coupons"
                             android:gravity="center"
                             android:text="Show more"
+                            android:visibility="gone"
                             android:textColor="#FFB900"
                             android:textSize="@dimen/txt_12sp" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -922,6 +925,16 @@
                         tools:layout_editor_absoluteY="5dp"
                         app:layout_constraintTop_toBottomOf="@+id/cart_billing_details_ll"/>
 
+                    <include
+                        android:id="@+id/cart_billing_details_edit_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/billing_details_layout"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/cart_billing_details_ll"/>
+
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -929,7 +942,7 @@
                         android:orientation="vertical"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/cart_billing_details_ll">
+                        app:layout_constraintTop_toBottomOf="@+id/cart_billing_details_edit_layout">
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
@@ -1426,41 +1439,41 @@
                     android:id="@+id/footer_grand_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
+                    android:fontFamily="@font/open_sans_bold"
                     android:text="₹0"
                     android:textStyle="normal"
                     android:textColor="#333333"
-                    android:textSize="@dimen/_20sdp"
+                    android:textSize="20sp"
                     tools:text="₹4,940" />
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:text="VIEW DETAILS"
                     android:textStyle="normal"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/view_details"
                     android:textColor="#333333"
-                    android:textSize="@dimen/_10sdp"
+                    android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/items_cost" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/cart_continue_submit"
-                android:layout_width="192dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/orange_button_click_effect"
-                android:fontFamily="@font/open_sans"
-                android:textStyle="normal"
-                android:textSize="@dimen/_16sdp"
-                android:paddingStart="@dimen/_30sdp"
-                android:paddingTop="@dimen/_10sdp"
-                android:paddingEnd="@dimen/_30sdp"
-                android:paddingBottom="@dimen/_10sdp"
-                android:text="Continue"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/ic_cart_continue_bg"
                 android:gravity="center"
-                android:textColor="#FFFFFF"
+                android:text="Continue"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_16sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
