@@ -62,12 +62,16 @@ import com.framework.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_WEBSITE
 import com.framework.utils.*
+import com.framework.utils.DateUtils.getAmountYearDate
+import com.framework.utils.DateUtils.getCurrentDate
+import com.framework.utils.DateUtils.parseDate
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.framework.webengageconstant.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
+import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.model.mapDetail.TOTAL_MAP_VISIT
 import com.inventoryorder.model.mapDetail.VisitsModelResponse
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
@@ -452,7 +456,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun apiBusinessSummary() {
-    viewModel?.getSellerSummaryV2_5(clientId_ORDER, session?.fpTag, getRequestSellerSummary(null))?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getSellerSummaryV2_5(AppConstant.CLIENT_ID_2, session?.fpTag, getRequestSellerSummary(null))?.observeOnce(viewLifecycleOwner, {
       val response1 = it as? OrderSummaryResponse
       if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveTotalOrder(TOTAL_SELLER_SUMMARY)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
@@ -483,7 +487,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun apiRoiBusinessReport(filterDate: FilterDateModel, isLoader: Boolean = false) {
     if (isLoader) showProgress()
-    viewModel?.getSellerSummaryV2_5(clientId_ORDER, session?.fpTag, getRequestSellerSummary(filterDate))?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getSellerSummaryV2_5(AppConstant.CLIENT_ID_2, session?.fpTag, getRequestSellerSummary(filterDate))?.observeOnce(viewLifecycleOwner, {
       val response1 = it as? OrderSummaryResponse
       if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveData(SELLER_BUSINESS_REPORT)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
@@ -1125,8 +1129,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 fun UserSessionManager.getRequestMap(startDate: String, endDate: String): Map<String, String> {
   val map = HashMap<String, String>()
   map["batchType"] = VisitsModelResponse.BatchType.yy.name
-  map["startDate"] = startDate
-  map["endDate"] = endDate
+  map["startDate"] = if (startDate.isNotEmpty()) startDate else getCurrentDate().parseDate(DateUtils.FORMAT_YYYY_MM_DD) ?: ""
+  map["endDate"] = if (endDate.isNotEmpty()) endDate else getAmountYearDate(-5).parseDate(DateUtils.FORMAT_YYYY_MM_DD) ?: ""
   map["clientId"] = clientId
   map["scope"] = if (this.iSEnterprise == "true") "Enterprise" else "Store"
   return map
@@ -1138,8 +1142,7 @@ fun UserSessionManager?.checkIsPremiumUnlock(value: String?): Boolean {
 
 fun getLocalSession(session: UserSessionManager): LocalSessionModel {
   var imageUri = session.getFPDetails(GET_FP_DETAILS_LogoUrl)
-  if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) imageUri =
-    BASE_IMAGE_URL + imageUri
+  if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) imageUri = BASE_IMAGE_URL + imageUri
   val city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
   val country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
   val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country"

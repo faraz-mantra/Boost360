@@ -18,8 +18,13 @@ object ValidationUtils {
   }
 
 
+  fun isValidName(name: String): Boolean {
+    val regExp = "^[^<>{}\"/|;:.,~!?@#$%^=&*\\]\\\\()\\[¿§«»ω⊙¤°℃℉€¥£¢¡®©0-9_+]*$"
+    return Pattern.compile(regExp, Pattern.CASE_INSENSITIVE).matcher(name).matches()
+  }
+
   fun isBankAcValid(str: String): Boolean {
-    if (str.length in 19..8){
+    if (str.length in 19..8) {
       return false
     }
     val n = str.length

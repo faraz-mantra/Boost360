@@ -3,13 +3,13 @@ package com.inventoryorder.ui.order.createorder
 import android.view.View
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
+import com.framework.utils.ValidationUtils
 import com.inventoryorder.R
 import com.inventoryorder.databinding.BottomSheetEditCustomerInfoBinding
 import com.inventoryorder.model.orderRequest.ContactDetails
 import com.inventoryorder.model.ordersdetails.OrderItem
 
-class EditCustomerInfoBottomSheetDialog(private val contactDetails: ContactDetails) :
-  BaseBottomSheetDialog<BottomSheetEditCustomerInfoBinding, BaseViewModel>() {
+class EditCustomerInfoBottomSheetDialog(private val contactDetails: ContactDetails) : BaseBottomSheetDialog<BottomSheetEditCustomerInfoBinding, BaseViewModel>() {
 
   private var cancellingEntity: String? = OrderItem.CancellingEntity.BUYER.name
   private var orderItem: OrderItem? = null
@@ -36,34 +36,39 @@ class EditCustomerInfoBottomSheetDialog(private val contactDetails: ContactDetai
 
   override fun onClick(v: View) {
     super.onClick(v)
-    dismiss()
     when (v) {
       binding?.buttonDone -> {
+        val name = binding?.editCustomerName?.text?.toString() ?: ""
+        val email = binding?.editCustomerEmail?.text?.toString() ?: ""
+        val phone = binding?.editCustomerPhone?.text?.toString() ?: ""
 
-        var name = binding?.editCustomerName?.text?.toString()
-        var email = binding?.editCustomerEmail?.text?.toString()
-        var phone = binding?.editCustomerPhone?.text?.toString()
-
-        if (name?.isEmpty() == true) {
+        if (name.isEmpty()) {
           showShortToast(getString(R.string.customer_name_cannot_be_empty))
           return
         }
 
-        if (phone?.isEmpty() == true) {
+        if (!ValidationUtils.isValidName(name)) {
+          showShortToast(getString(R.string.please_enter_valid_customer_name))
+          return
+        }
+
+        if (phone.isEmpty()) {
           showShortToast(getString(R.string.customer_phone_cannot_be_empty))
           return
         }
 
-        if (email.isNullOrEmpty().not() && android.util.Patterns.EMAIL_ADDRESS.matcher(email)
-            .matches().not()
-        ) {
-          showShortToast(getString(R.string.please_enter_valid_email))
+        if (!ValidationUtils.isMobileNumberValid(phone)) {
+          showShortToast(getString(R.string.please_enter_valid_phone))
           return
         }
 
-        var contactDetails =
-          ContactDetails(emailId = email!!, fullName = name!!, primaryContactNumber = phone!!)
+        if (email.isEmpty().not() && !ValidationUtils.isEmailValid(email)) {
+          showShortToast(getString(R.string.please_enter_valid_email))
+          return
+        }
+        val contactDetails = ContactDetails(emailId = email, fullName = name, primaryContactNumber = phone)
         onClicked(contactDetails)
+        dismiss()
       }
     }
   }

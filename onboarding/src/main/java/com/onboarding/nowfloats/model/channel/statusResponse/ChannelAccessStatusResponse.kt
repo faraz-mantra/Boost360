@@ -47,10 +47,7 @@ data class ChannelAccessStatusResponse(
     }
 
     fun saveDataConnectedChannel(connectedChannels: ArrayList<String>?) {
-      PreferencesUtils.instance.saveData(
-        key = CONNECTED_CHANNELS,
-        convertListObjToString(connectedChannels ?: ArrayList()) ?: ""
-      )
+      PreferencesUtils.instance.saveData(CONNECTED_CHANNELS, convertListObjToString(connectedChannels ?: ArrayList()) ?: "")
     }
   }
 }

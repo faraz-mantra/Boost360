@@ -15,11 +15,7 @@ class ProductItemViewHolder(binding: ItemProductBinding) : AppBaseRecyclerViewHo
     super.bind(position, item)
     val data = (item as? ProductItem) ?: return
 
-    if (data.ImageUri.isNullOrEmpty().not()) activity?.glideLoad(
-      binding.itemImage,
-      data.ImageUri!!,
-      R.drawable.placeholder_image_n
-    )
+    if (data.ImageUri.isNullOrEmpty().not()) activity?.glideLoad(binding.itemImage, data.ImageUri?:"", R.drawable.placeholder_image_n)
     else binding.itemImage.setImageResource(R.drawable.placeholder_image_n)
     binding.tvProductName.text = data.Name ?: ""
     binding.tvProductPrice.text = "${data.getCurrencyCodeValue()} ${data.getPayablePrice()}"

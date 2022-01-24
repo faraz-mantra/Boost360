@@ -149,7 +149,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                 .positiveText(getString(R.string.save_data))
                 .negativeText(R.string.later)
                 .negativeColorRes(R.color.black_4a4a4a)
-                .positiveColorRes(R.color.colorAccent_jio)
+                .positiveColorRes(R.color.colorAccentLight)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onNegative(MaterialDialog dialog) {

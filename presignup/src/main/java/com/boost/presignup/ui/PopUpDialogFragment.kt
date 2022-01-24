@@ -73,7 +73,7 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper,
     // Configure Google Sign In
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
 //        .requestIdToken(getString(R.string.default_web_client_id))
-      .requestIdToken(getString(R.string.server_client_id))
+      .requestIdToken(auth.google.BuildConfig.GOOGLE_SERVER_CLIENT_ID)
       .requestEmail()
       .build()
 

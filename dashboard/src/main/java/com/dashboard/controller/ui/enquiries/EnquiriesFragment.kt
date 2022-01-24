@@ -10,7 +10,6 @@ import com.dashboard.model.live.customerItem.BoostCustomerItemResponse
 import com.dashboard.model.live.customerItem.CustomerActionItem
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
-import com.framework.pref.clientId_ORDER
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -18,6 +17,7 @@ import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.observeOnce
 import com.framework.webengageconstant.*
+import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.model.ordersummary.TOTAL_SELLER_ENQUIRIES
 import com.inventoryorder.model.summary.SummaryEntity
@@ -71,7 +71,7 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
   private fun apiSellerSummary(enquiriesFilter: FilterDateModel, isLoader: Boolean = false) {
     if (isLoader) showProgress()
     viewModel?.getSellerSummaryV2_5(
-      clientId_ORDER,
+      AppConstant.CLIENT_ID_2,
       session?.fpTag,
       getRequestSellerSummary(enquiriesFilter)
     )?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {

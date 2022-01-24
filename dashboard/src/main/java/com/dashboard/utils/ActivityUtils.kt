@@ -26,13 +26,16 @@ import com.festive.poster.ui.festivePoster.FestivePosterContainerActivity
 import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
 import com.framework.analytics.SentryController
 import com.framework.pref.*
+import com.framework.utils.DateUtils
 import com.framework.webengageconstant.*
+import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.floatMessage.MessageModel
 import com.inventoryorder.ui.startFragmentOrderActivity
+import com.inventoryorder.utils.getFileName
+import com.inventoryorder.utils.getUrlExtension
 import com.onboarding.nowfloats.constant.FragmentType
-import com.onboarding.nowfloats.constant.SupportVideoType
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentChannelActivity
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
 import java.util.*
@@ -104,8 +107,7 @@ fun AppCompatActivity.startVmnCallCard(session: UserSessionManager?) {
 fun AppCompatActivity.startBusinessEnquiry(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(BUSINESS_ENQUIRY_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val queries =
-      Intent(this, Class.forName("com.nowfloats.Business_Enquiries.BusinessEnquiryActivity"))
+    val queries = Intent(this, Class.forName("com.nowfloats.Business_Enquiries.BusinessEnquiryActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
@@ -117,8 +119,7 @@ fun AppCompatActivity.startBusinessEnquiry(session: UserSessionManager?) {
 fun AppCompatActivity.startSearchQuery(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(SEARCH_QUERIES_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val queries =
-      Intent(this, Class.forName("com.nowfloats.Analytics_Screen.SearchQueriesActivity"))
+    val queries = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.SearchQueriesActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
@@ -130,8 +131,7 @@ fun AppCompatActivity.startSearchQuery(session: UserSessionManager?) {
 fun AppCompatActivity.startRevenueSummary(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(REVENUE_SUMMARY_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val queries =
-      Intent(this, Class.forName("com.nowfloats.Analytics_Screen.RevenueSummaryActivity"))
+    val queries = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.RevenueSummaryActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
@@ -153,8 +153,7 @@ fun AppCompatActivity.startAptOrderSummary(session: UserSessionManager?) {
 fun AppCompatActivity.startBackgroundImageGallery(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(BACKGROUND_IMAGE_GALLERY_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val queries =
-      Intent(this, Class.forName("com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"))
+    val queries = Intent(this, Class.forName("com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
@@ -166,8 +165,7 @@ fun AppCompatActivity.startBackgroundImageGallery(session: UserSessionManager?) 
 fun AppCompatActivity.startFeviconImage(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(FEVICON_IMAGE_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val queries =
-      Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity"))
+    val queries = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
@@ -190,8 +188,7 @@ fun AppCompatActivity.startDomainDetail(session: UserSessionManager?) {
 fun AppCompatActivity.startSiteViewAnalytic(session: UserSessionManager?, type: String, eventName: String = WEBSITE_VISITS_CHART_DURATION_CHANGED) {
   try {
     WebEngageController.trackEvent(eventName, EVENT_LABEL_NULL, TO_BE_ADDED)
-    val intent =
-      Intent(this, Class.forName("com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics"))
+    val intent = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics"))
     intent.putExtra(VISITS_TYPE_STRING, type)
     startActivity(intent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -203,8 +200,7 @@ fun AppCompatActivity.startSiteViewAnalytic(session: UserSessionManager?, type: 
 fun AppCompatActivity.startSubscriber(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(SUBSCRIBERS_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val subscribers =
-      Intent(this, Class.forName("com.nowfloats.Analytics_Screen.SubscribersActivity"))
+    val subscribers = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.SubscribersActivity"))
     startActivity(subscribers)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
@@ -216,8 +212,7 @@ fun AppCompatActivity.startSubscriber(session: UserSessionManager?) {
 fun AppCompatActivity.startAnalytics(session: UserSessionManager?, table_name: Int?) {
   try {
     WebEngageController.trackEvent(ANALYTICS_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val intent =
-      Intent(this, Class.forName("com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity"))
+    val intent = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity"))
     if (table_name != null) intent.putExtra("table_name", table_name)
     startActivity(intent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -226,13 +221,7 @@ fun AppCompatActivity.startAnalytics(session: UserSessionManager?, table_name: I
   }
 }
 
-fun AppCompatActivity.initiateAddonMarketplace(
-  session: UserSessionManager,
-  isOpenCardFragment: Boolean,
-  screenType: String,
-  buyItemKey: String?,
-  isLoadingShow: Boolean = true
-) {
+fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOpenCardFragment: Boolean, screenType: String, buyItemKey: String?, isLoadingShow: Boolean = true) {
   try {
     if (isLoadingShow) delayProgressShow()
     WebEngageController.trackEvent(ADDON_MARKETPLACE_PAGE_CLICK, CLICK, TO_BE_ADDED)
@@ -459,6 +448,19 @@ fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
   }
 }
 
+fun AppCompatActivity.startEcommerceAppointmentSetting(session: UserSessionManager?) {
+  try {
+    val type = if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
+      com.appservice.constant.FragmentType.APPOINTMENT_SETTINGS
+    } else {
+      com.appservice.constant.FragmentType.ECOMMERCE_SETTINGS
+    }
+    startFragmentActivity(type)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
 fun AppCompatActivity.startListStaff(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(LIST_STAFF_DASHBOARD, CLICK, TO_BE_ADDED)
@@ -598,9 +600,9 @@ fun AppCompatActivity.startOrderAptConsultList(session: UserSessionManager?, isO
   }
 }
 
-private fun getSessionOrder(session: UserSessionManager?): Bundle {
+fun getSessionOrder(session: UserSessionManager?): Bundle {
   val data = PreferenceData(
-    clientId_ORDER, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
+    AppConstant.CLIENT_ID_2, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
     session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
     session?.getFPDetails(Key_Preferences.LONGITUDE), session?.fP_AppExperienceCode
   )
@@ -987,11 +989,11 @@ fun AppCompatActivity.startDownloadUri(url: String, isToast: Boolean = false) {
     val downloader = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
     val uri = Uri.parse(url)
     val request = DownloadManager.Request(uri)
-    request.setTitle(uri.path?.getFileName() ?: "boost_file")
-    request.setDescription("boost360 File")
+    request.setTitle(uri.path?.getFileName() ?: getString(R.string.boost_file))
+    request.setDescription(getString(R.string.boost_360_file))
     request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "boost360")
+    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "${getString(R.string.boost_file)}_${DateUtils.getCurrentDate().time}.${url.getUrlExtension()}")
     downloader.enqueue(request)
     if (isToast) Toast.makeText(this, "File downloading.. ", Toast.LENGTH_SHORT).show()
   } catch (e: Exception) {
@@ -1022,7 +1024,7 @@ fun AppCompatActivity.startLogoutActivity(event: String = BOOST_LOGOUT_CLICK) {
   }
 }
 
-fun Context.startHelpSupportVideoActivity(supportType:String){
+fun Context.startHelpSupportVideoActivity(supportType: String) {
   try {
     val i = Intent(this, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
     i.putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name, supportType)

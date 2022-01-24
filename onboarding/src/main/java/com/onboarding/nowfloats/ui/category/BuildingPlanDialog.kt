@@ -3,6 +3,7 @@ package com.onboarding.nowfloats.ui.category
 import android.os.CountDownTimer
 import com.framework.base.BaseDialogFragment
 import com.framework.models.BaseViewModel
+import com.framework.views.blur.setBlur
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.DialogBuildingPlanBinding
 
@@ -23,7 +24,7 @@ class BuildingPlanDialog : BaseDialogFragment<DialogBuildingPlanBinding, BaseVie
   }
 
   override fun onCreateView() {
-    binding?.blurView?.setBlur(4F)
+    binding?.blurView?.setBlur(baseActivity,4F)
     isCancelable = false
     binding?.progressBar?.progress = 0F
     binding?.progressBar?.progressMax = 100F

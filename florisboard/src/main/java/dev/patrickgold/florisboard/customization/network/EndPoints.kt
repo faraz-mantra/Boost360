@@ -22,6 +22,7 @@ object EndPoints {
     //API NOW FLOATS
     const val API_NOW_FLOATS_BASE = "https://api.nowfloats.com/"
     const val GET_STAFF_LISTING = "staff/v1/GetStaffListing"
+    const val GET_SEARCH_LISTING = "/Service/v1/GetSearchListings"
 
     //Merchant Summary
     const val GET_MERCHANT_SUMMARY = "/Support/v1/dashboard/GetMerchantSummary"

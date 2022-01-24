@@ -189,7 +189,8 @@ class UpgradeActivity : AppCompatActivity() {
 
   private fun initRazorPay() {
     try {
-      razorpay = Razorpay(this, RAZORPAY_KEY)
+      val razorPayKey: String = BuildConfig.RAZORPAY_KEY
+      razorpay = Razorpay(this, razorPayKey)
     } catch (e: Exception) {
       SentryController.captureException(e)
       e.printStackTrace()

@@ -4,13 +4,13 @@ import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
-import com.boost.presignup.R
 import com.boost.presignup.datamodel.Apis
 import com.boost.presignup.datamodel.userprofile.*
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
+import com.framework.pref.clientId
 import com.framework.rest.ServiceInterceptor
 import com.framework.webengageconstant.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -61,7 +61,7 @@ class CustomFirebaseAuthHelpers constructor(
 
   init {
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-      .requestIdToken(activity.getString(R.string.server_client_id))
+      .requestIdToken(auth.google.BuildConfig.GOOGLE_SERVER_CLIENT_ID)
       .requestEmail()
       .build()
     retrofit = Retrofit.Builder()
@@ -300,10 +300,7 @@ class CustomFirebaseAuthHelpers constructor(
   }
 
   fun verifyUserProfileAPI(loginKey: String, loginSecret: String, provider: String) {
-    val userInfo = UserProfileVerificationRequest(
-      "", provider,
-      loginKey, loginSecret, "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
-    )
+    val userInfo = UserProfileVerificationRequest("", provider, loginKey, loginSecret, clientId)
 
     ApiService.verifyUserProfileAny(userInfo).enqueue(object : Callback<ResponseBody> {
       override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

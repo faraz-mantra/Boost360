@@ -8,6 +8,8 @@ import com.appservice.ui.aptsetting.widgets.BottomSheetCatalogDisplayName
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentEcomCatalogSettingBinding
+import com.appservice.model.aptsetting.AppointmentStatusResponse
+import com.appservice.model.aptsetting.CatalogSetup
 import com.appservice.ui.aptsetting.widgets.BottomSheetConfirmingChange
 import com.appservice.ui.aptsetting.widgets.BottomSheetSuccessfullyUpdated
 import com.appservice.utils.WebEngageController
@@ -45,7 +47,14 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
     sessionLocal = UserSessionManager(requireActivity())
     WebEngageController.trackEvent(ECOMMERCE_CATLOG_SETUP_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.ctvChangeServices, binding?.ctvProductVerbUrl)
+    val data=arguments?.getSerializable(IntentConstant.OBJECT_DATA.name) as?  AppointmentStatusResponse.TilesModel
+    val catalogSetup = data?.tile as? CatalogSetup
+    setData(catalogSetup)
     getFpDetails()
+  }
+
+  private fun setData(catalogSetup: CatalogSetup?) {
+    binding?.edtTextSlab?.hint = "${(catalogSetup?.defaultGSTSlab?:0).toString()}%"
   }
 
   private fun getFpDetails() {
@@ -56,7 +65,7 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
       hideProgress()
       this.response = it as? UserFpDetailsResponse
       if (it.isSuccess() && response != null) {
-        binding?.ctvProductVerb?.text = response?.productCategoryVerb(baseActivity)?.capitalizeUtil()
+        binding?.ctvProductVerb?.text = response?.productCategory(baseActivity)?.capitalizeUtil()
         binding?.ctvProductVerbUrl?.text = fromHtml("<pre>URL: <span style=\"color: #4a4a4a;\"><u>${sessionLocal.getDomainName()}<b>/${response?.productCategoryVerb(baseActivity)}</b></u></span></pre>")
         sessionLocal.storeFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB, response?.productCategoryVerb)
       }

@@ -4,16 +4,14 @@ import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.GetAllFeatur
 import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponRequest
 import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponResponse
 import io.reactivex.Observable
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface NewApiInterface {
 
   @Headers("Authorization: 591c0972ee786cbf48bd86cf", "Content-Type: application/json")
-  @GET("https://developer.api.boostkit.dev/language/v1/upgrade/get-data?website=5e7a3cf46e0572000109a5b2")
-  fun GetAllFeatures(): Observable<GetAllFeaturesResponse>
+//  @GET("https://developer.api.boostkit.dev/language/v1/upgrade/get-data?website=5e7a3cf46e0572000109a5b2")
+  @GET
+  fun GetAllFeatures(@Url url: String? = kAdminUrl()): Observable<GetAllFeaturesResponse>
 
   @Headers(
     "Authorization: Basic YXBpbW9kaWZpZXI6dkVFQXRudF9yJ0RWZzcofg==",

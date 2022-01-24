@@ -449,7 +449,7 @@
                 android:gravity="end"
                 android:text="@string/change"
                 android:textAllCaps="false"
-                android:textColor="@color/colorAccent_jio"
+                android:textColor="@color/colorAccentLight"
                 android:visibility="invisible"
                 app:textAllCaps="false"
                 app:textType="BODY_1" />

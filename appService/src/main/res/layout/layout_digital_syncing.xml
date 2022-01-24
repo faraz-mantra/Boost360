@@ -10,7 +10,6 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/size_36"
     android:drawablePadding="@dimen/size_4"
-    android:drawableTint="@color/orange"
     android:includeFontPadding="false"
     android:text="Digital channels syncing"
     android:textColor="@color/black_4a4a4a"
