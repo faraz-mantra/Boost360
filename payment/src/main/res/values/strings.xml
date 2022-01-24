@@ -27,4 +27,7 @@
   <string name="read_less">Read Less..</string>
   <string name="setup_mandate_txt">An eMandate allows you to schedule automatic payments for all your feature renewals directly from your bank account.</string>
   <string name="setup_mandate_note">Please not that It may take 2-5 business days for your bank to activate the mandate and you may be charged a one-time setup fee (upto ₹5).</string>
+  <string name="invoice_txt">A copy of the GST Invoice was also sent on your registered email address (brajmadhav@gmail.com) and mobile (+91 8243558406).</string>
+  <string name="contact_support_for_help"><u>Contact support for help</u></string>
+
 </resources>
