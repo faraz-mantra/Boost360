@@ -32,7 +32,6 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import wseemann.media.FFmpegMediaMetadataRetriever
 
 
 class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBinding, SupportVideoViewModel>() {
@@ -367,13 +366,9 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
 
   private fun getVideoDurations() {
     allVideoDuration = LongArray(filteredVideos.size)
-    val mmr = FFmpegMediaMetadataRetriever()
     for (index in 0 until filteredVideos.size) {
-      mmr.setDataSource(filteredVideos[index].videourl?.url)
-      val durationString = mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_DURATION)
-      allVideoDuration[index] = durationString.toLong()
+      allVideoDuration[index] = (filteredVideos[index].videodurationseconds?.toInt()?.times(1000))?.toLong() ?: 0
     }
-    mmr.release()
   }
 
   private fun initStatusProgressBar() {
