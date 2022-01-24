@@ -1,10 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  tools:context=".ui.setupmandate.SetupMandateActivty">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.coupons.OfferCouponsActivity">
+
+    <androidx.appcompat.widget.Toolbar
+      android:id="@+id/setup_mandate_toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?android:attr/actionBarSize"
+      android:background="#4A4A4A"
+      android:contentInsetStart="0dp"
+      android:contentInsetEnd="0dp"
+      android:elevation="@dimen/cardview_default_elevation"
+      app:contentInsetEnd="0dp"
+      app:contentInsetStart="0dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/back_button12"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:foreground="?android:attr/selectableItemBackground"
+          android:gravity="center"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintDimensionRatio="1:1"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
+
+          <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_setup_mandate_back_white" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans_semibold"
+          android:text="Complete Payment"
+          android:textAllCaps="false"
+          android:textColor="@color/white"
+          android:textSize="18sp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toEndOf="@+id/back_button12"
+          app:layout_constraintTop_toTopOf="parent" />
+
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/setup_mandate_ll"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="16dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="25dp"
+      android:orientation="vertical"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/setup_mandate_toolbar">
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans_bold"
+        android:lineSpacingExtra="1sp"
+        android:text="Setup Bank Mandate (eNACH)"
+        android:textColor="#4A4A4A"
+        android:textSize="@dimen/txt_18sp" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/setup_mandate_txt"
+        android:textColor="#2A2A2A"
+        android:lineSpacingExtra="4sp"
+        android:fontFamily="@font/open_sans_semibold"
+        android:textSize="@dimen/txt_12sp"/>
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/ic_setup_mandate_rect">
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Hassle free automatic renewals for your favourite features and packs"
+          android:layout_gravity="center"
+          android:layout_marginTop="24dp"
+          android:layout_marginStart="16dp"
+          android:layout_marginEnd="16dp"
+          android:textSize="@dimen/txt_12sp"
+          android:drawablePadding="12dp"
+          android:lineSpacingExtra="4sp"
+          android:drawableStart="@drawable/ic_setup_mandate_img1"
+          android:textColor="#2A2A2A"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Don’t let expired features hamper your business growth"
+          android:layout_gravity="center"
+          android:layout_marginTop="16dp"
+          android:layout_marginStart="14dp"
+          android:layout_marginEnd="16dp"
+          android:textSize="@dimen/txt_12sp"
+          android:drawablePadding="12dp"
+          android:lineSpacingExtra="4sp"
+          android:drawableStart="@drawable/ic_setup_mandate_img2"
+          android:textColor="#2A2A2A"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Setup easily using your bank account across 100+ banks"
+          android:layout_gravity="center"
+          android:layout_marginTop="16dp"
+          android:layout_marginStart="16dp"
+          android:layout_marginEnd="16dp"
+          android:textSize="@dimen/txt_12sp"
+          android:drawablePadding="12dp"
+          android:lineSpacingExtra="4sp"
+          android:drawableStart="@drawable/ic_setup_mandate_img3"
+          android:textColor="#2A2A2A"/>
+
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/orange_button_click_effect"
+        android:text="Create mandate"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/txt_14sp"
+        android:fontFamily="@font/open_sans_bold"
+        android:gravity="center"/>
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/setup_mandate_note"
+        android:textSize="@dimen/txt_12sp"
+        android:textColor="#828282"
+        android:lineSpacingExtra="0sp"/>
 
 
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
