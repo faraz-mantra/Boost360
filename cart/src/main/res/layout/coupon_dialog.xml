@@ -55,7 +55,7 @@
             android:paddingStart="@dimen/_10sdp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:focusable="true"
-            android:hint="Type coupon code here"
+            android:hint="Enter coupon code"
             android:imeOptions="actionDone"
             android:inputType="textCapCharacters"
             android:layout_marginTop="@dimen/_5sdp"

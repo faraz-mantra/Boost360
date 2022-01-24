@@ -25,6 +25,7 @@ import com.boost.cart.R
 import com.boost.cart.adapter.CartAddonsAdaptor
 import com.boost.cart.adapter.CartPackageAdaptor
 import com.boost.cart.adapter.CartRenewalAdaptor
+import com.boost.cart.adapter.PackageViewPagerAdapter
 import com.boost.cart.base_class.BaseFragment
 import com.boost.cart.interfaces.CartFragmentListener
 import com.boost.cart.ui.autorenew.AutoRenewSubsFragment
@@ -139,6 +140,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   lateinit var cartPackageAdaptor: CartPackageAdaptor
   lateinit var cartAddonsAdaptor: CartAddonsAdaptor
   lateinit var cartRenewalAdaptor: CartRenewalAdaptor
+  lateinit var packageViewPagerAdapter: PackageViewPagerAdapter
 
   val couponPopUpFragment = CouponPopUpFragment()
 
@@ -167,6 +169,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
   private var event_attributes: HashMap<String, Any> = HashMap()
 
+  var upgradeList = arrayListOf<Bundles>()
+
 
 
   companion object {
@@ -184,6 +188,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this)
     cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
     cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
+    packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList())
     prefs = SharedPrefs(activity as CartActivity)
     WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART, PAGE_VIEW, NO_EVENT_VALUE)
 
@@ -208,6 +213,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     super.onActivityCreated(savedInstanceState)
     viewModel = ViewModelProviders.of(requireActivity()).get(CartViewModel::class.java)
     Constants.COMPARE_BACK_VALUE = 1
+//    val list = arrayListOf<Bundles>()
     prefs.storeCompareState(1)
 //        showpopup()
     //loadLastUsedPayData()
@@ -215,6 +221,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     initializeAddonsRecycler()
     initializeRenewalRecycler()
     initializeErrorObserver()
+    initializePackageViewPager()
+   // updatePackageViewPager(list)
     initMvvM()
     observeLastPaymentDetails()
     checkRenewalItemDeepLinkClick()
@@ -702,6 +710,33 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
       }
     })
+
+  }
+
+  fun updatePackageViewPager(list: List<Bundles>) {
+    recomended_viewpager.offscreenPageLimit = 3
+    packageViewPagerAdapter.addupdates(list)
+    packageViewPagerAdapter.notifyDataSetChanged()
+    //show dot indicator only when the (list.size > 2)
+//    if (list.size > 1) {
+//      package_indicator.visibility = View.VISIBLE
+//    } else {
+//      package_indicator.visibility = View.INVISIBLE
+//      package_compare_layout.visibility = View.INVISIBLE
+//    }
+  }
+
+  private fun initializePackageViewPager() {
+    recomended_viewpager.adapter = packageViewPagerAdapter
+   // package_indicator.setViewPager2(package_viewpager)
+
+//        package_viewpager.setPageTransformer(SimplePageTransformer())
+
+//    val itemDecoration = HorizontalMarginItemDecoration(
+//        requireContext(),
+//        R.dimen.viewpager_current_item_horizontal_margin
+//    )
+//    package_viewpager.addItemDecoration(itemDecoration)
 
   }
 
@@ -1719,6 +1754,45 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     //getting all bunles
     viewModel.updateAllBundlesResult().observe(this, Observer {
       if (it.isNullOrEmpty().not()) bundlesList = it
+
+      val list = arrayListOf<Bundles>()
+      for (item in it) {
+        val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+        list.add(Bundles(
+          item.bundle_id,
+          temp,
+          item.min_purchase_months,
+          item.name,
+          item.overall_discount_percent,
+          PrimaryImage(item.primary_image),
+          item.target_business_usecase,
+          Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+          null,
+          item.desc))
+      }
+      if (list.size > 0) {
+
+        for(items in list){
+          Log.v("getkeyWidget"," "+ items.name +" "+items.included_features.size)
+          val itemIds = arrayListOf<String>()
+          for (item in  items!!.included_features) {
+
+            itemIds.add(item.feature_code)
+//                        viewModel.getFeatureValues(item.feature_code)
+          }
+          Log.v("getkeyWidget123"," "+ itemIds.size)
+     //     viewModel.getFeatureValues(itemIds)
+//                    viewModel.loadUpdates(itemIds)
+//                    viewModel.getAssociatedWidgetKeys(items._kid)
+//                    viewModel.getAssociatedWidgetKeys("5f6a2d66663bb00001e2b1d7")
+        }
+//                package_layout.visibility = View.VISIBLE
+        upgradeList = list
+                updatePackageViewPager(list)
+      } else {
+//                package_layout.visibility = View.GONE
+      }
+
     })
 
     //getting valid Coupon Code

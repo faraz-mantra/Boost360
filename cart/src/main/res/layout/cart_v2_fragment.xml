@@ -653,6 +653,48 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/viewpager_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="#FFF0C9"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/total_months_layout"
+                    app:layout_constraintBottom_toTopOf="@+id/coupon_layout">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_cart_others_also_bought"
+                            android:drawablePadding="5dp"
+                            android:fontFamily="@font/semi_bold"
+                            android:text="Others also bought:"
+                            android:textColor="#4D4D4D"
+                            android:textSize="@dimen/txt_14sp" />
+
+                        <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/recomended_viewpager"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clipChildren="false"
+                            android:clipToPadding="false"
+                            tools:listitem="@layout/item_others_also_bought">
+
+                        </androidx.viewpager2.widget.ViewPager2>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/coupon_layout"
                     android:layout_width="match_parent"
@@ -665,7 +707,7 @@
                     android:paddingBottom="@dimen/_8sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/total_months_layout">
+                    app:layout_constraintTop_toBottomOf="@id/viewpager_layout">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/linearLayoutCompat"
