@@ -237,6 +237,7 @@
             android:id="@+id/tv_preview_and_post"
             style="@style/yellow_squared_button"
             android:text="@string/preview_and_post"
+            android:textAllCaps="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
