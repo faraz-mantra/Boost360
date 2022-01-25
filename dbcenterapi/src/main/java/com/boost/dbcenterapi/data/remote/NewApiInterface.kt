@@ -3,6 +3,7 @@ package com.boost.dbcenterapi.data.remote
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
 import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponRequest
 import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponResponse
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.kAdminUrl
 import io.reactivex.Observable
 import retrofit2.http.*
 

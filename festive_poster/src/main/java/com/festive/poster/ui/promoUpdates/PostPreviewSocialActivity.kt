@@ -44,10 +44,7 @@ import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.getDomainName
-import com.framework.utils.convertListObjToString
-import com.framework.utils.convertStringToObj
-import com.framework.utils.saveAsTempFile
-import com.framework.utils.toArrayList
+import com.framework.utils.*
 import com.framework.webengageconstant.EVENT_LABEL_NULL
 import com.framework.webengageconstant.POST_AN_UPDATE
 import com.google.gson.Gson
@@ -596,7 +593,14 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                         if (it1.isSuccess()) {
                             // successResult()
                                 posterProgressSheet?.dismiss()
+                            if (PreferencesUtils.instance.getData(com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE,true)){
+                                InAppReviewUtils.showInAppReview(this@PostPreviewSocialActivity,
+                                    InAppReviewUtils.Events.in_app_review_first_promo_update)
+                                PreferencesUtils.instance.saveData(com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE,
+                                    false)
+                            }
                             PostSuccessBottomSheet.newInstance(posterModel).show(supportFragmentManager, PostSuccessBottomSheet::class.java.name)
+
 
                         } else{
                             posterProgressSheet?.dismiss()

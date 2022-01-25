@@ -8,6 +8,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.boost.dbcenterapi.BuildConfig
 import com.boost.payment.base_class.BaseViewModel
 import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
 import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
@@ -258,21 +259,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
     })
   }
 
-  fun getRazorPayToken(customerId: String) {
-    val razorPayKey: String = BuildConfig.RAZORPAY_KEY
-    val razorPaySecret: String = BuildConfig.RAZORPAY_SECREAT
-    val header = Credentials.basic(razorPayKey, razorPaySecret)
-    compositeDisposable.add(
-      ApiService.getRazorPayTokens(header, customerId)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe({
-          Log.e("getRazorPayTokens", ">> " + it.toString())
-        }, {
-          it.printStackTrace()
-        })
-    )
-  }
+
 
   fun loadPamentUsingExternalLink(auth: String,clientId: String, data: PaymentThroughEmailRequestBody) {
     CompositeDisposable().add(

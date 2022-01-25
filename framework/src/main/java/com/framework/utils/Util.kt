@@ -30,6 +30,7 @@ import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.FontRes
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
@@ -43,6 +44,7 @@ import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
 import com.framework.BaseApplication
 import com.framework.R
+import com.framework.analytics.SentryController
 import com.framework.constants.PackageNames
 import com.framework.views.customViews.CustomTextView
 import com.google.gson.Gson
