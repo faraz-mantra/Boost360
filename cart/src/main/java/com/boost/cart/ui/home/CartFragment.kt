@@ -22,10 +22,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
 import com.boost.cart.R
-import com.boost.cart.adapter.CartAddonsAdaptor
-import com.boost.cart.adapter.CartPackageAdaptor
-import com.boost.cart.adapter.CartRenewalAdaptor
-import com.boost.cart.adapter.PackageViewPagerAdapter
+import com.boost.cart.adapter.*
 import com.boost.cart.base_class.BaseFragment
 import com.boost.cart.interfaces.CartFragmentListener
 import com.boost.cart.ui.autorenew.AutoRenewSubsFragment
@@ -91,8 +88,6 @@ import kotlinx.android.synthetic.main.cart_fragment.total_months_layout
 import kotlinx.android.synthetic.main.cart_v2_fragment.*
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class CartFragment : BaseFragment(), CartFragmentListener {
@@ -142,6 +137,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   lateinit var cartRenewalAdaptor: CartRenewalAdaptor
   lateinit var packageViewPagerAdapter: PackageViewPagerAdapter
 
+  lateinit var upgradeAdapter: UpgradeAdapter
+
   val couponPopUpFragment = CouponPopUpFragment()
 
   val gstinPopUpFragment = GSTINPopUpFragment()
@@ -185,10 +182,11 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     progressDialog = ProgressDialog(requireContext())
 
-    cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this)
+    cartPackageAdaptor = CartPackageAdaptor(ArrayList(),this)
     cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
     cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
     packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList())
+    upgradeAdapter = UpgradeAdapter(ArrayList())
     prefs = SharedPrefs(activity as CartActivity)
     WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART, PAGE_VIEW, NO_EVENT_VALUE)
 
@@ -713,22 +711,44 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
   }
 
-  fun updatePackageViewPager(list: List<Bundles>) {
-    recomended_viewpager.offscreenPageLimit = 3
-    packageViewPagerAdapter.addupdates(list)
-    packageViewPagerAdapter.notifyDataSetChanged()
-    //show dot indicator only when the (list.size > 2)
-//    if (list.size > 1) {
-//      package_indicator.visibility = View.VISIBLE
-//    } else {
-//      package_indicator.visibility = View.INVISIBLE
-//      package_compare_layout.visibility = View.INVISIBLE
+  fun updateRecycler(list: List<FeaturesModel>) {
+//    if (shimmer_view_recomm_addons.isShimmerStarted) {
+//      shimmer_view_recomm_addons.stopShimmer()
+//      shimmer_view_recomm_addons.visibility = View.GONE
 //    }
+    val temp: List<FeaturesModel> = arrayListOf()
+
+    recomended_viewpager.offscreenPageLimit = 3
+    upgradeAdapter.addupdates(list)
+    recomended_viewpager.adapter = upgradeAdapter
+    upgradeAdapter.notifyDataSetChanged()
+   // recycler.isFocusable = false
+//        back_image.isFocusable = true
   }
 
+//  fun updatePackageViewPager(list: List<Bundles>) {
+//    recomended_viewpager.offscreenPageLimit = 3
+//    packageViewPagerAdapter.addupdates(list)
+//    packageViewPagerAdapter.notifyDataSetChanged()
+//    //show dot indicator only when the (list.size > 2)
+////    if (list.size > 1) {
+////      package_indicator.visibility = View.VISIBLE
+////    } else {
+////      package_indicator.visibility = View.INVISIBLE
+////      package_compare_layout.visibility = View.INVISIBLE
+////    }
+//  }
+
   private fun initializePackageViewPager() {
-    recomended_viewpager.adapter = packageViewPagerAdapter
+    recomended_viewpager.adapter = upgradeAdapter
    // package_indicator.setViewPager2(package_viewpager)
+
+    recomended_viewpager?.setPageTransformer(SimplePageTransformer())
+
+    val itemDecoration = com.boost.dbcenterapi.utils.HorizontalMarginItemDecoration(
+      requireContext(),R.dimen.viewpager_current_item_horizontal_margin4
+    )
+    recomended_viewpager!!.addItemDecoration(itemDecoration)
 
 //        package_viewpager.setPageTransformer(SimplePageTransformer())
 
@@ -1749,49 +1769,52 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     //getting all features
     viewModel.updateAllFeaturesResult().observe(this, Observer {
       if (it.isNullOrEmpty().not()) featuresList = it
+
+      val lessList = featuresList!!.subList(0, 20)
+      updateRecycler(lessList)
     })
 
     //getting all bunles
     viewModel.updateAllBundlesResult().observe(this, Observer {
       if (it.isNullOrEmpty().not()) bundlesList = it
 
-      val list = arrayListOf<Bundles>()
-      for (item in it) {
-        val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
-        list.add(Bundles(
-          item.bundle_id,
-          temp,
-          item.min_purchase_months,
-          item.name,
-          item.overall_discount_percent,
-          PrimaryImage(item.primary_image),
-          item.target_business_usecase,
-          Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-          null,
-          item.desc))
-      }
-      if (list.size > 0) {
-
-        for(items in list){
-          Log.v("getkeyWidget"," "+ items.name +" "+items.included_features.size)
-          val itemIds = arrayListOf<String>()
-          for (item in  items!!.included_features) {
-
-            itemIds.add(item.feature_code)
-//                        viewModel.getFeatureValues(item.feature_code)
-          }
-          Log.v("getkeyWidget123"," "+ itemIds.size)
-     //     viewModel.getFeatureValues(itemIds)
-//                    viewModel.loadUpdates(itemIds)
-//                    viewModel.getAssociatedWidgetKeys(items._kid)
-//                    viewModel.getAssociatedWidgetKeys("5f6a2d66663bb00001e2b1d7")
-        }
-//                package_layout.visibility = View.VISIBLE
-        upgradeList = list
-                updatePackageViewPager(list)
-      } else {
-//                package_layout.visibility = View.GONE
-      }
+//      val list = arrayListOf<Bundles>()
+//      for (item in it) {
+//        val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+//        list.add(Bundles(
+//          item.bundle_id,
+//          temp,
+//          item.min_purchase_months,
+//          item.name,
+//          item.overall_discount_percent,
+//          PrimaryImage(item.primary_image),
+//          item.target_business_usecase,
+//          Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+//          null,
+//          item.desc))
+//      }
+//      if (list.size > 0) {
+//
+//        for(items in list){
+//          Log.v("getkeyWidget"," "+ items.name +" "+items.included_features.size)
+//          val itemIds = arrayListOf<String>()
+//          for (item in  items!!.included_features) {
+//
+//            itemIds.add(item.feature_code)
+////                        viewModel.getFeatureValues(item.feature_code)
+//          }
+//          Log.v("getkeyWidget123"," "+ itemIds.size)
+//     //     viewModel.getFeatureValues(itemIds)
+////                    viewModel.loadUpdates(itemIds)
+////                    viewModel.getAssociatedWidgetKeys(items._kid)
+////                    viewModel.getAssociatedWidgetKeys("5f6a2d66663bb00001e2b1d7")
+//        }
+////                package_layout.visibility = View.VISIBLE
+//        upgradeList = list
+//                updatePackageViewPager(list)
+//      } else {
+////                package_layout.visibility = View.GONE
+//      }
 
     })
 

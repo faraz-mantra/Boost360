@@ -668,12 +668,14 @@
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginLeft="@dimen/_25sdp"
                             android:drawableStart="@drawable/ic_cart_others_also_bought"
                             android:drawablePadding="5dp"
                             android:fontFamily="@font/semi_bold"

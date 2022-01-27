@@ -8,18 +8,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
-import com.boost.dbcenterapi.upgradeDB.model.CartModel
+import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.bumptech.glide.Glide
 
 
-class ChildPackAdapter(list: List<CartModel>?,
+class ChildPackAdapter(list: List<FeaturesModel>?,
 ) : RecyclerView.Adapter<ChildPackAdapter.upgradeViewHolder>() {
 
-    private var bundlesList = ArrayList<CartModel>()
+    private var bundlesList = ArrayList<FeaturesModel>()
     private lateinit var context: Context
 
     init {
-        this.bundlesList = list as ArrayList<CartModel>
+        this.bundlesList = list as ArrayList<FeaturesModel>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -38,13 +38,13 @@ class ChildPackAdapter(list: List<CartModel>?,
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
         val selectedBundle = bundlesList.get(position)
 
-        holder.name.setText(bundlesList.get(position).item_name)
+        holder.name.setText(bundlesList.get(position).name)
         // holder.title.setText(upgradeList.get(position).target_business_usecase)
 
         val cryptocurrencyItem = bundlesList[position]
    //     holder.upgradeListItem(holder, cryptocurrencyItem)
 
-        Glide.with(context).load(bundlesList.get(position).link).into(holder.image)
+        Glide.with(context).load(bundlesList.get(position).primary_image).into(holder.image)
 
 //    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 //    if (position == upgradeList.size - 1) {
@@ -74,7 +74,7 @@ class ChildPackAdapter(list: List<CartModel>?,
 //        }
     }
 
-    fun addupdates(upgradeModel: List<CartModel>) {
+    fun addupdates(upgradeModel: List<FeaturesModel>) {
         val initPosition = bundlesList.size
         bundlesList.clear()
         bundlesList.addAll(upgradeModel)
