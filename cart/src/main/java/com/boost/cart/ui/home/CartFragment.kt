@@ -54,6 +54,7 @@ import android.net.Uri
 import java.lang.NumberFormatException
 import android.text.InputFilter
 import android.text.TextUtils
+import androidx.room.util.StringUtil
 import com.boost.cart.CartActivity
 import com.boost.cart.R
 import com.boost.cart.adapter.CartAddonsAdaptor

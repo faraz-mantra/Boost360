@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
@@ -18,7 +17,7 @@ import com.boost.payment.interfaces.AddCardListener
 import com.boost.payment.ui.payment.PaymentViewModel
 import com.boost.payment.utils.Utils
 import com.boost.payment.utils.Utils.hideSoftKeyboard
-import kotlinx.android.synthetic.main.add_card_popup.*
+import kotlinx.android.synthetic.main.add_cards_popup.*
 import org.json.JSONObject
 import java.util.*
 
@@ -57,7 +56,7 @@ class AddCardPopUpFragement : DialogFragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    root = inflater.inflate(R.layout.add_card_popup, container, false)
+    root = inflater.inflate(R.layout.add_cards_popup, container, false)
     val currentYear = Calendar.getInstance().get(Calendar.YEAR)
 
     customerId = arguments!!.getString("customerId")
@@ -78,7 +77,6 @@ class AddCardPopUpFragement : DialogFragment() {
 //
 //        val yearListAdapter: ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item, yearList)
 //        expiry_year_value.adapter = yearListAdapter
-    setMonthYearAdaptor()
 
 //        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
@@ -106,11 +104,11 @@ class AddCardPopUpFragement : DialogFragment() {
         data.put("method", "card")
         data.put("card[name]", name_on_card_value.text.toString())
         data.put("card[number]", cardNumber)
-        data.put("card[expiry_month]", expiry_month_value.selectedItem.toString())
+        data.put("card[expiry_month]", expiry_mm_yyyy_value.text.split("/").get(0).toString())
         data.put(
           "card[expiry_year]",
-          expiry_year_value.selectedItem.toString()
-            .substring(Math.max(expiry_year_value.selectedItem.toString().length - 2, 0))
+          expiry_mm_yyyy_value.text.split("/").get(1).toString()
+            .substring(Math.max(expiry_mm_yyyy_value.text.split("/").get(1).toString().length - 2, 0))
         )
         data.put("card[cvv]", add_card_cvv.text.toString())
         if (save_card_for_fast_payment.isChecked) {
@@ -185,13 +183,13 @@ class AddCardPopUpFragement : DialogFragment() {
               card_type_image.setImageResource(R.drawable.dinerscard)
             }
             "unknown" -> {
-              card_type_image.setImageResource(R.drawable.card_number)
+              card_type_image.setImageResource(R.drawable.card_numbers)
             }
           }
         }
 
         if (s.length <= 7) {
-          card_type_image.setImageResource(R.drawable.card_number)
+          card_type_image.setImageResource(R.drawable.card_numbers)
         }
       }
 
@@ -208,8 +206,7 @@ class AddCardPopUpFragement : DialogFragment() {
   }
 
   fun validateCardDetails(): Boolean {
-    if (name_on_card_value.text.isEmpty() || card_number_value.text.isEmpty() || expiry_month_value.selectedItem.toString()
-        .isEmpty() || expiry_year_value.selectedItem.toString().isEmpty()
+    if (name_on_card_value.text.isEmpty() || card_number_value.text.isEmpty() || expiry_mm_yyyy_value.text.isEmpty()
     ) {
       Toast.makeText(requireContext(), "Fields are empty", Toast.LENGTH_SHORT).show()
       return false
@@ -233,28 +230,11 @@ class AddCardPopUpFragement : DialogFragment() {
     name_on_card_value.text.clear()
     card_number_value.text.clear()
     add_card_cvv.text.clear()
-    setMonthYearAdaptor()
   }
 
   override fun onStop() {
     super.onStop()
     clearData()
-  }
-
-  fun setMonthYearAdaptor() {
-    val monthListAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
-      requireContext(),
-      android.R.layout.simple_spinner_dropdown_item,
-      monthList
-    )
-    expiry_month_value.adapter = monthListAdapter
-
-    val yearListAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
-      requireContext(),
-      android.R.layout.simple_spinner_dropdown_item,
-      yearList
-    )
-    expiry_year_value.adapter = yearListAdapter
   }
 
 

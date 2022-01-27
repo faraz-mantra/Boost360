@@ -64,7 +64,7 @@
         android:layout_width="32dp"
         android:layout_height="21dp"
         android:layout_marginEnd="@dimen/_10sdp"
-        android:src="@drawable/card_number"
+        android:src="@drawable/card_numbers"
         app:layout_constraintBottom_toBottomOf="@id/card_number_value"
         app:layout_constraintEnd_toEndOf="@id/card_number_value"
         app:layout_constraintTop_toTopOf="@id/card_number_value" />
@@ -196,7 +196,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_10sdp"
-        android:src="@drawable/card_cvv"
+        android:src="@drawable/ic_card_cvv"
         app:layout_constraintBottom_toBottomOf="@id/add_card_cvv"
         app:layout_constraintStart_toEndOf="@id/add_card_cvv"
         app:layout_constraintTop_toTopOf="@id/add_card_cvv" />

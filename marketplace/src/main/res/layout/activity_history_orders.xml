@@ -119,6 +119,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
+            android:visibility="gone"
             tools:visibility="gone">
 
 
@@ -160,6 +161,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
+            android:visibility="visible"
             tools:visibility="visible">
 
             <!-- Adding 7 rows of placeholders -->
@@ -203,7 +205,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             tools:itemCount="3"
-            tools:listitem="@layout/item_order_history"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_history_orders"
             tools:visibility="visible">
 
         </androidx.recyclerview.widget.RecyclerView>

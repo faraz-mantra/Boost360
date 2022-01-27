@@ -1,6 +1,12 @@
 package com.boost.dbcenterapi.data.api_model.GetAllFeatures.response
 
+import com.framework.base.BaseResponse
+import com.google.gson.annotations.SerializedName
+import java.io.Serializable
+
 data class GetAllFeaturesResponse(
-  val Data: List<Data>,
-  val Extra: Extra
-)
+  @SerializedName("Data")
+  val `Data`: List<Data>,
+  @SerializedName("Extra")
+  val `Extra`: Extra
+) : BaseResponse(), Serializable

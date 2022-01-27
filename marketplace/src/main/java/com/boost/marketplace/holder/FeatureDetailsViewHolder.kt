@@ -1,7 +1,6 @@
 package com.boost.marketplace.holder
 
 import com.boost.dbcenterapi.recycleritem.AppBaseRecyclerViewHolder
-import com.boost.marketplace.databinding.ActivityPacksBinding
 import com.boost.marketplace.databinding.ItemFeaturesDetailsBinding
 
 class FeatureDetailsViewHolder(binding: ItemFeaturesDetailsBinding) :

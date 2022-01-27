@@ -10,7 +10,7 @@ class SampleStringViewHolder(binding: SecondaryStringItemBinding) : AppBaseRecyc
     super.bind(position, item)
 
     binding.root.setOnClickListener {
-      listener?.onStringItemClick(
+      listener?.onItemClick(
         position,
         item,
         RecyclerViewActionType.SECONDARY_IMAGE_CLICK.ordinal

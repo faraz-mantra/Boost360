@@ -17,5 +17,5 @@ data class TestData(
 
 fun getData(recyclerViewItem: Int): ArrayList<TestData> {
     val test = TestData(recyclerViewItemType = recyclerViewItem)
-    return  arrayListOf(test,test,test,test,test,test,test,test,)
+    return  arrayListOf(test,test,test,test,)
 }

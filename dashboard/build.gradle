@@ -42,6 +42,7 @@ dependencies {
     api project(path: ':dbcenterapi')
     api project(path: ':marketplace')
     api project(path: ':festive_poster')
+    api project(path: ':payment')
 
 
     //room

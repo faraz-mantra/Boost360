@@ -28,7 +28,7 @@
       <androidx.appcompat.widget.Toolbar
           android:id="@+id/toolbar"
           android:layout_width="match_parent"
-          android:layout_height="150dp"
+          android:layout_height="159dp"
           android:background="@drawable/toolbar_background"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
@@ -51,32 +51,32 @@
               app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/cart48" />
+              android:layout_width="20dp"
+              android:layout_height="20dp"
+              android:layout_centerInParent="true"
+              android:background="@drawable/ic_cart" />
 
 
-            <com.nex3z.notificationbadge.NotificationBadge
-                android:id="@+id/badge121"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                app:nbMaxTextLength="2" />
+              <com.nex3z.notificationbadge.NotificationBadge
+                  android:id="@+id/badge121"
+                  android:layout_width="28dp"
+                  android:layout_height="28dp"
+                  android:layout_alignParentTop="true"
+                  android:layout_alignParentEnd="true"
+                  app:nbMaxTextLength="2" />
           </RelativeLayout>
 
 
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginTop="25dp"
+              android:layout_marginTop="22dp"
+              android:layout_marginLeft="@dimen/_5sdp"
               android:fontFamily="@font/open_sans"
-              android:text="Compare and choose pack"
+              android:text="Comparing packs"
               android:textColor="@color/white"
-              android:textSize="@dimen/txt_14sp"
+              android:textSize="@dimen/txt_18sp"
               android:textStyle="bold"
-              app:layout_constraintEnd_toStartOf="@+id/package_cart_icon"
               app:layout_constraintStart_toEndOf="@+id/package_back"
               app:layout_constraintTop_toTopOf="parent" />
 
@@ -125,7 +125,7 @@
               app:layout_constraintBottom_toBottomOf="parent"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="parent"
-              android:visibility="gone"
+              android:visibility="visible"
               tools:visibility="visible">
 
             <!-- Adding 7 rows of placeholders -->
@@ -204,7 +204,7 @@
                   app:layout_constraintEnd_toEndOf="parent"
                   app:layout_constraintStart_toStartOf="parent"
                   app:layout_constraintTop_toBottomOf="@id/package_name"
-                  tools:listitem="@layout/item_packs_list" />
+                  tools:listitem="@layout/item_compare_packs" />
             </LinearLayout>
             <!--app:layout_constraintTop_toBottomOf="@id/package_name"-->
 
@@ -247,7 +247,7 @@
         app:dotsWidthFactor="2.5"
         app:layout_constraintTop_toBottomOf="@+id/ly_content"
         app:progressMode="false"
-        app:selectedDotColor="@color/colorPrimary"
+        app:selectedDotColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

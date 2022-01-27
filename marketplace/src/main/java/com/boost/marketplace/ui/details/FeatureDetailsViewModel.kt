@@ -2,28 +2,37 @@ package com.boost.marketplace.ui.details
 
 import android.app.Application
 import android.util.Log
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.framework.models.BaseViewModel
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class FeatureDetailsViewModel(): BaseViewModel() {
+class FeatureDetailsViewModel: BaseViewModel() {
 
     var updatesResult: MutableLiveData<FeaturesModel> = MutableLiveData()
     var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
+    var allBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
 
     val compositeDisposable = CompositeDisposable()
 
     fun addonsResult(): LiveData<FeaturesModel> {
         return updatesResult
+    }
+
+    fun bundleResult(): LiveData<List<BundlesModel>> {
+        return allBundleResult
     }
 
     fun cartResult(): LiveData<List<CartModel>> {
@@ -37,8 +46,17 @@ class FeatureDetailsViewModel(): BaseViewModel() {
     fun addonsLoader(): LiveData<Boolean> {
         return updatesLoader
     }
+    lateinit var application: Application
+    lateinit var lifecycleOwner: LifecycleOwner
 
-    fun loadAddonsFromDB(application: Application, boostKey: String) {
+    fun setApplicationLifecycle(application: Application,
+                                lifecycleOwner: LifecycleOwner
+    ){
+        this.application = application
+        this.lifecycleOwner = lifecycleOwner
+    }
+
+    fun loadAddonsFromDB(boostKey: String) {
         updatesLoader.postValue(true)
         compositeDisposable.add(
             AppDatabase.getInstance(application)!!
@@ -60,7 +78,29 @@ class FeatureDetailsViewModel(): BaseViewModel() {
         )
     }
 
-    fun addItemToCart1(application: Application, updatesModel: FeaturesModel) {
+    fun getAllPackages() {
+        updatesLoader.postValue(true)
+        CompositeDisposable().add(
+            AppDatabase.getInstance(Application())!!
+                .bundlesDao()
+                .getBundleItems()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess {
+                    Log.e("getAssociatedPackages", it.toString())
+                    allBundleResult.postValue(it)
+                }
+                .doOnError {
+                    updatesError.postValue(it.message)
+                    updatesLoader.postValue(false)
+                }
+                .subscribe()
+        )
+    }
+
+
+
+    fun addItemToCart1(updatesModel: FeaturesModel) {
         updatesLoader.postValue(false)
         val discount = 100 - updatesModel.discount_percent
         val paymentPrice = (discount * updatesModel.price) / 100.0
@@ -97,7 +137,7 @@ class FeatureDetailsViewModel(): BaseViewModel() {
             .subscribe()
     }
 
-    fun addItemToCart(application: Application, updatesModel: FeaturesModel) {
+    fun addItemToCart(updatesModel: FeaturesModel) {
         updatesLoader.postValue(false)
         val discount = 100 - updatesModel.discount_percent
         val paymentPrice = (discount * updatesModel.price) / 100.0
@@ -176,7 +216,7 @@ class FeatureDetailsViewModel(): BaseViewModel() {
 
     }
 
-    fun getCartItems(application: Application) {
+    fun getCartItems() {
         updatesLoader.postValue(false)
         compositeDisposable.add(
             AppDatabase.getInstance(application)!!

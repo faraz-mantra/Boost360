@@ -3,6 +3,17 @@
     package="com.boost.payment">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <queries>
+        <!-- List of apps which you want to support for Intent pay -->
+        <package android:name="com.google.android.apps.nbu.paisa.user" />
+        <package android:name="com.phonepe.app"/>
+        <package android:name="net.one97.paytm"/>
+        <package android:name="in.org.npci.upiapp"/>
+        <!--         Specific intents you query for,         eg: for a custom share UI    -->
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+        </intent>
+    </queries>
     <application>
         <activity
             android:name=".PaymentActivity"
@@ -10,6 +21,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/BoostPaymentScreenStyle"
             android:windowSoftInputMode="adjustResize" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

@@ -9,7 +9,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import com.boost.payment.R
 import com.boost.payment.PaymentActivity
-import com.boost.payment.interfaces.MoreBanksListener
 import com.boost.payment.interfaces.UpiPayListener
 import com.boost.payment.ui.payment.PaymentViewModel
 import com.boost.payment.utils.Utils
@@ -18,7 +17,7 @@ import com.framework.webengageconstant.*
 import com.razorpay.Razorpay
 import com.razorpay.ValidateVpaCallback
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.add_upi_popup.*
+import kotlinx.android.synthetic.main.add_upi_id_popup.*
 import org.json.JSONObject
 
 class UPIPopUpFragement : DialogFragment() {
@@ -50,7 +49,7 @@ class UPIPopUpFragement : DialogFragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    root = inflater.inflate(R.layout.add_upi_popup, container, false)
+    root = inflater.inflate(R.layout.add_upi_id_popup, container, false)
 
     razorpay = (activity as PaymentActivity).getRazorpayObject()
 

@@ -18,8 +18,8 @@ import com.boost.marketplace.R
       PARTNER -> R.layout.item_partner
       MARKETPLACE_OFFERS ->R.layout.item_marketplaceoffers_info
       FEATURES_MODEL ->R.layout.item_myplan_features
-      RESULT -> R.layout.item_order_history
-      PACKS_BUNDLES -> R.layout.item_packs_list
+      RESULT -> R.layout.item_history_orders
+      PACKS_BUNDLES -> R.layout.item_compare_packs
       FEATURE_DETAILS -> R.layout.item_features_details
       TOP_FEATURES ->R.layout.item_packs_list
       SECONDARY_IMAGES -> R.layout.secondary_image_item

@@ -38,7 +38,6 @@ import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.businessdetails_fragment.*
 import kotlinx.android.synthetic.main.businessdetails_fragment.business_address
 import kotlinx.android.synthetic.main.businessdetails_fragment.business_name_value
-import kotlinx.android.synthetic.main.payment_fragment.*
 import java.io.*
 import java.lang.StringBuilder
 import java.util.*

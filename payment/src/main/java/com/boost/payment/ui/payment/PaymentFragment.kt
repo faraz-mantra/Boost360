@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.payment.R
 import com.boost.payment.PaymentActivity
 import com.boost.payment.adapter.CardPaymentAdapter
-import com.boost.payment.adapter.UPIAdapter
 import com.boost.payment.adapter.WalletAdapter
 import com.boost.payment.base_class.BaseFragment
 import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
@@ -50,7 +50,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.payment_fragment.*
+import kotlinx.android.synthetic.main.payments_fragment.*
 import org.json.JSONObject
 import java.text.NumberFormat
 import java.util.*
@@ -66,13 +66,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
   lateinit var razorpay: Razorpay
 
   lateinit var cardPaymentAdapter: CardPaymentAdapter
-  lateinit var upiAdapter: UPIAdapter
   lateinit var walletAdapter: WalletAdapter
 
-  val addCardPopUpFragement = AddCardPopUpFragement()
-  val netBankingPopUpFragement = NetBankingPopUpFragement()
-  val upiPopUpFragement = UPIPopUpFragement()
-  val externalEmailPopUpFragement = ExternalEmailPopUpFragement()
   val razorPayWebView = RazorPayWebView()
 
   var cartCheckoutData = JSONObject()
@@ -99,6 +94,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
   private lateinit var payLinkLayout: ConstraintLayout
   private var isPayViaLink : Boolean = false
   private var lastUsedPaymentMethod : String? = null
+  private var autoRenewState = false
 
   companion object {
     fun newInstance() = PaymentFragment()
@@ -108,7 +104,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    root = inflater.inflate(R.layout.payment_fragment, container, false)
+    root = inflater.inflate(R.layout.payments_fragment, container, false)
     paymentLL = root.findViewById(R.id.payment_mode_ll)
     upiLayout = root.findViewById(R.id.upi_layout)
     netBankingLayout = root.findViewById(R.id.netbanking_layout)
@@ -117,15 +113,15 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     payLinkLayout = root.findViewById(R.id.pay_by_link_section)
 
 
-    totalAmount = requireArguments().getDouble("amount")
+    totalAmount = 567.39//requireArguments().getDouble("amount")
     session = UserSessionManager(requireActivity())
     cartCheckoutData.put("customerId", requireArguments().getString("customerId"))
     cartCheckoutData.put("amount", Math.round(totalAmount * 100).toInt())
-    cartCheckoutData.put("order_id", requireArguments().getString("order_id"))
+    updateAutoRenewState()
     //subscription testing
-//        cartCheckoutData.put("amount", 50000)
-//        cartCheckoutData.put("subscription_id", "sub_Fj7nfvetEC7C0W")
-    cartCheckoutData.put("transaction_id", requireArguments().getString("transaction_id"))
+//    cartCheckoutData.put("amount", 50000)
+//    cartCheckoutData.put("transaction_id", requireArguments().getString("transaction_id"))
+    cartCheckoutData.put("transaction_id", "NF-FY2021-22-65744499")
     cartCheckoutData.put("email", requireArguments().getString("email"))
     cartCheckoutData.put("currency", requireArguments().getString("currency"));
     cartCheckoutData.put("contact", requireArguments().getString("contact"))
@@ -174,8 +170,6 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
     razorpay = (activity as PaymentActivity).getRazorpayObject()
 
-    upiAdapter = UPIAdapter(ArrayList())
-
     netbankingList = ArrayList<SingleNetBankData>()
     netbankingList.add(SingleNetBankData("UTIB", "Axis", razorpay.getBankLogoUrl("UTIB")))
     netbankingList.add(SingleNetBankData("ICIC", "ICICI", razorpay.getBankLogoUrl("ICIC")))
@@ -190,6 +184,19 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     return root
   }
 
+  private fun updateAutoRenewState() {
+    if(autoRenewState) {
+      //for auto renew sent subscription_id
+//      cartCheckoutData.put("subscription_id", requireArguments().getString("subscription_id"))
+      cartCheckoutData.put("subscription_id", "sub_Io6LDbGj1FT515")
+      if(cartCheckoutData.has("order_id")) cartCheckoutData.remove("order_id")
+    }else{
+//      cartCheckoutData.put("order_id", requireArguments().getString("order_id"))
+      cartCheckoutData.put("order_id", "order_Io6NLckFM8ny8Z")
+      if(cartCheckoutData.has("subscription_id")) cartCheckoutData.remove("subscription_id")
+    }
+  }
+
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
 
@@ -202,7 +209,6 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     loadCustomerInfo()
     initMvvm()
 
-    initializeUPIRecycler()
     initializeNetBankingSelector()
     initializeCardRecycler()
     initializeWalletRecycler()
@@ -236,7 +242,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
       }
     }
 
-    add_new_card.setOnClickListener {
+    add_new_cards.setOnClickListener {
       if (paymentProceedFlag) {
         WebEngageController.trackEvent(
           ADDONS_MARKETPLACE_ADD_NEW_CARD_CLICK,
@@ -308,7 +314,46 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
       }
     }
 
-    add_external_email.setOnClickListener {
+    phonePe_layout.setOnClickListener {
+      if(!autoRenewState) {
+        cartCheckoutData.put("method", "upi");  //Method specific fields
+        cartCheckoutData.put("_[flow]", "intent");
+        cartCheckoutData.put("upi_app_package_name", "com.phonepe.app");
+      }
+      payThroughRazorPay()
+    }
+
+    google_pay_layout.setOnClickListener {
+      if(!autoRenewState) {
+        cartCheckoutData.put("method", "upi");  //Method specific fields
+        cartCheckoutData.put("_[flow]", "intent");
+        cartCheckoutData.put("upi_app_package_name", "com.google.android.apps.nbu.paisa.user");
+      }
+      payThroughRazorPay()
+    }
+
+    paytm_layout.setOnClickListener {
+      if(!autoRenewState) {
+        cartCheckoutData.put("method", "upi");  //Method specific fields
+        cartCheckoutData.put("_[flow]", "intent");
+        cartCheckoutData.put("upi_app_package_name", "net.one97.paytm");
+      }
+      payThroughRazorPay()
+    }
+
+    bhim_upi_layout.setOnClickListener {
+      if(!autoRenewState) {
+        cartCheckoutData.put("method", "upi");  //Method specific fields
+        cartCheckoutData.put("_[flow]", "intent");
+        cartCheckoutData.put("upi_app_package_name", "in.org.npci.upiapp");
+      }
+      payThroughRazorPay()
+    }
+
+
+
+//    add_external_email.setOnClickListener {
+    generate_payment_link.setOnClickListener {
       if (paymentProceedFlag) {
         WebEngageController.trackEvent(
           ADDONS_MARKETPLACE_PAYMENT_LINK_CLICK,
@@ -362,6 +407,35 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         (activity as PaymentActivity).supportFragmentManager,
         BUSINESS_DETAILS_FRAGMENT
       )
+    }
+
+    auto_renew_switch.setOnClickListener {
+      if(autoRenewState){
+        auto_renew_switch.setImageResource(R.drawable.ic_switch_off)
+        auto_renew_extra_offers.background = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_discount_auto_renew_bg)
+        auto_renew_extra_offers.text = "Enable auto-renewal to get extra 3% off"
+        auto_renew_extra_offers.setTextColor(resources.getColor(R.color.colorPrimary))
+        auto_renew_extra_offers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_discount,0,0,0)
+        upi_payment_title.text = "UPI"
+        netbanking_title.text = "Net Banking"
+        saved_cards_layout.visibility = View.VISIBLE
+        pay_by_link_section.visibility = View.VISIBLE
+        upi_list_layout.visibility = View.VISIBLE
+        autoRenewState=false
+      }else{
+        auto_renew_switch.setImageResource(R.drawable.ic_switch_on)
+        auto_renew_extra_offers.background = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_offer_auto_renew_bg)
+        auto_renew_extra_offers.text = "Congratulations! You get extra 2% auto renewal discount"
+        auto_renew_extra_offers.setTextColor(resources.getColor(R.color.green))
+        auto_renew_extra_offers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checked,0,0,0)
+        upi_payment_title.text = "UPI Auto Renewal"
+        netbanking_title.text = "Bank Enabled Auto Renewal"
+        saved_cards_layout.visibility = View.GONE
+        pay_by_link_section.visibility = View.GONE
+        upi_list_layout.visibility = View.GONE
+        autoRenewState=true
+      }
+      updateAutoRenewState()
     }
     /*supply_place_button.setOnClickListener{
         stateFragment.show(
@@ -1060,17 +1134,6 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
       }
 
     }
-
-
-  }
-
-  fun initializeUPIRecycler() {
-    val gridLayoutManager = GridLayoutManager(requireContext(), 1)
-    gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
-    upi_recycler.apply {
-      layoutManager = gridLayoutManager
-      upi_recycler.adapter = upiAdapter
-    }
   }
 
   fun initializeWalletRecycler() {
@@ -1157,16 +1220,16 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     val taxValue = Math.round(temp * 100) / 100.0
     igst_value.setText("+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
 
-    order_total_value.setText(
-      "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
-    )
+//    order_total_value.setText(
+//      "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
+//    )
     payment_total_value.setText(
       "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
     )
     items_cost.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
-    paymentBannerAmount.setText(
-      "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
-    )
+//    paymentBannerAmount.setText(
+//      "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
+//    )
   }
 
   private fun loadCustomerInfo() {

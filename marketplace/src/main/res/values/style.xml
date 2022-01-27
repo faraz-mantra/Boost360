@@ -10,9 +10,10 @@
   </style>
 
   <style name="AppTheme.Pre.MarketPlace" parent="Theme.AppCompat.Light">
-    <item name="colorPrimary">#EDEDED</item>
     <item name="colorPrimaryDark">#EDEDED</item>
     <item name="colorAccent">#EDEDED</item>
+    <item name="colorPrimary">@android:color/transparent</item>
+    <item name="windowActionBarOverlay">true</item>
     <item name="android:windowAnimationStyle">@null</item>
   </style>
 

@@ -15,12 +15,26 @@
         android:paddingTop="@dimen/_15sdp"
         android:background="@color/white">
 
+
+        <TextView
+            android:id="@+id/discount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_pack_discount_bg"
+            android:elevation="2dp"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/discount_saving"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/discount"
             app:layout_constraintBottom_toTopOf="@id/desc"
             android:textSize="@dimen/_14ssp"
             android:textFontWeight="600"

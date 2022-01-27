@@ -461,6 +461,12 @@
 -keep class com.boost.upgrades.** {*;}
 -keep class com.boost.upgrades.data.** { <fields>; }
 
+##------Marketplace---------##
+-dontwarn com.boost.marketplace.**
+-keeppackagenames com.boost.marketplace
+-keep class com.boost.marketplace.** {*;}
+-keep class com.boost.marketplace.data.** { <fields>; }
+
 
 ##-----Appsflyer-----###
 -keep class com.appsflyer.** { *; }
