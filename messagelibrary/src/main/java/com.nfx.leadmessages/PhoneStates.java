@@ -9,6 +9,7 @@ import android.content.res.AssetManager;
 import android.os.Build;
 import android.os.PowerManager;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import android.telephony.PhoneStateListener;
@@ -29,7 +30,7 @@ import static android.content.Context.POWER_SERVICE;
 /**
  * Created by Admin on 17-04-2017.
  */
-
+@Deprecated
 public class PhoneStates extends BroadcastReceiver {
 
     //The receiver will be recreated whenever android feels like it.  We need a static variable to remember data between instantiations
@@ -43,7 +44,7 @@ public class PhoneStates extends BroadcastReceiver {
 
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(@NonNull Context context, Intent intent) {
         savedContext = context;
 
         SharedPreferences pref = context.getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE);
