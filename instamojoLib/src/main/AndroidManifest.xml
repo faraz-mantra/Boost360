@@ -7,7 +7,6 @@
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   //required for Juspay to read the OTP from the SMS sent to the device
-  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
 
   <application
