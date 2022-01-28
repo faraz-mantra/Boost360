@@ -1,5 +1,6 @@
 package com.nfx.leadmessages;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +31,7 @@ import static com.nfx.leadmessages.Constants.SMS_REGEX;
  * Created by Admin on 01-02-2017.
  */
 
+@Deprecated
 public class SmsReceiver extends BroadcastReceiver {
     String fpId, mobileId = null;
 
@@ -59,6 +61,7 @@ public class SmsReceiver extends BroadcastReceiver {
         powerManager = (PowerManager) context.getSystemService(POWER_SERVICE);
 
         new Thread(new Runnable() {
+            @SuppressLint("InvalidWakeLockTag")
             @Override
             public void run() {
                 wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakelockTag");
