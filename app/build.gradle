@@ -80,6 +80,9 @@ android {
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
             resValue "string", "webengage_license_code", '~10a5cad2d'
+            resValue "string", "referrals_bid", '31445'
+            resValue "string", "referrals_bid_e", '355BCB8D72414FBD784338ADC28FCA09'
+            buildConfigField "int", "REFERRAL_CAMPAIGN_CODE", '26277'
         }
         jioonline {
             versionName "1.0.0"
@@ -88,6 +91,9 @@ android {
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
             resValue "string", "webengage_license_code", 'aa131c37'
+            resValue "string", "referrals_bid", '31445'
+            resValue "string", "referrals_bid_e", '355BCB8D72414FBD784338ADC28FCA09'
+            buildConfigField "int", "REFERRAL_CAMPAIGN_CODE", '26277'
         }
     }
     packagingOptions {

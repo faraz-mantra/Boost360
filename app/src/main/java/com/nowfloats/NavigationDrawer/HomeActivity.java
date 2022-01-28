@@ -39,7 +39,6 @@ import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.B
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO_REMOVE;
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_PAID;
 import static com.nowfloats.manageinventory.ManageInventoryFragment.getExperienceType;
-import static com.nowfloats.util.Constants.REFERRAL_CAMPAIGN_CODE;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 import android.app.Activity;
@@ -224,8 +223,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
   private static final int DEMO_DAYS_LEFT = 4;
   private static final int LIGHT_HOUSE_DAYS_LEFT = 5;
   private static final int WILD_FIRE_PURCHASE = 2;
-  /*private String[] permission = new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS
-          , Manifest.permission.READ_PHONE_STATE};*/
   private final static int READ_MESSAGES_ID = 221;
   public static TextView headerText;
   public static ImageView plusAddButton;
@@ -276,23 +273,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
   private boolean doubleBackToExitPressedOnce = false;
   private Bus bus;
   private boolean isCalled = false;
-
-
-    /*private void getPermissions() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
-            Intent intent = new Intent(this, ReadMessages.class);
-            startService(intent);
-            // start the service to send data to firebase
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-            requestPermissions(permission, READ_MESSAGES_ID);
-
-
-        }
-    }*/
 
   private static boolean newer_version_available(String local_version_string, String
       online_version_string) {
@@ -1470,57 +1450,11 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
           Intent subscribers = new Intent(HomeActivity.this, SubscribersActivity.class);
           startActivity(subscribers);
         } else if (nextScreen.equals(getString(R.string.referrals_button))) {
-          if (!TextUtils.isEmpty(session.getFPEmail())) {
-            InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
-                session.getUserProfileName(),
-                session.getFPEmail(),
-                session.getUserPrimaryMobile(),
-                REFERRAL_CAMPAIGN_CODE, null, null
-            );
-            inviteReferralLogin();
-          } else if (!TextUtils.isEmpty(session.getUserProfileEmail())) {
-            InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
-                session.getUserProfileName(),
-                session.getUserProfileEmail(),
-                session.getUserPrimaryMobile(),
-                REFERRAL_CAMPAIGN_CODE, null, null
-            );
-            inviteReferralLogin();
-          } else {
-            Toast.makeText(getApplicationContext(), getString(R.string.an_unexpacted_error_occured), Toast.LENGTH_LONG).show();
-          }
-//                    InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
-//                            session.getUserProfileName(),
-//                            session.getUserProfileEmail(),
-//                            session.getUserPrimaryMobile(),
-//                            REFERRAL_CAMPAIGN_CODE, null, null
-//                    );
 
         }
       }
     }, 200);
 
-  }
-
-  private void inviteReferralLogin() {
-    InviteReferralsApi.getInstance(getApplicationContext()).userDetailListener(new UserDetailsCallback() {
-      @Override
-      public void userDetails(JSONObject jsonObject) {
-        Log.d("Referral Details", jsonObject.toString());
-        try {
-          String status = jsonObject.get("Authentication").toString();
-          if (status.toLowerCase().equals("success")) {
-            InviteReferralsApi.getInstance(getApplicationContext()).inline_btn(REFERRAL_CAMPAIGN_CODE);
-          } else {
-            Toast.makeText(getApplicationContext(), getString(R.string.auth_failed_please_try_again_later), Toast.LENGTH_SHORT).show();
-          }
-        } catch (JSONException e) {
-          SentryController.INSTANCE.captureException(e);
-//                                e.printStackTrace();
-          Toast.makeText(getApplicationContext(), getString(R.string.auth_failed_please_try_again_later), Toast.LENGTH_SHORT).show();
-        }
-      }
-    });
   }
 
   private void startBusinessApp() {

@@ -60,8 +60,6 @@ import java.util.List;
 public class ThirdPartyQueriesActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int MAX_RESPONDED = 3;
-    /*private String[] permission = new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS
-            , Manifest.permission.READ_PHONE_STATE};*/
     private final static int READ_MESSAGES_ID = 221;
     CustomToolbar toolbar;
     RecyclerView rvList;
@@ -158,22 +156,6 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-
-   /* private void getPermissions() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
-            Intent intent = new Intent(this, ReadMessages.class);
-            startService(intent);
-            // start the service to send data to firebase
-        }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-            requestPermissions(permission, READ_MESSAGES_ID);
-
-
-        }
-    }*/
 
     private void showRating() {
 

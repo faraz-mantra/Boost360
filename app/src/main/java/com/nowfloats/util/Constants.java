@@ -95,7 +95,6 @@ public class Constants {
     public final static String HTTP_PUT = "PUT";
     public final static String HTTP_POST = "POST";
     public final static String HTTP_DEL = "DELETE";
-    public final static int REFERRAL_CAMPAIGN_CODE = 26277;
     //Retrofit Single Instance
     public static final RestAdapter chatRestAdapter = new RestAdapter.Builder().setEndpoint("http://dbapi.fostergem.com").build();
     public static final RestAdapter chatsendRestAdapter = new RestAdapter.Builder().setEndpoint("http://api.fostergem.com").build();

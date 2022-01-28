@@ -11,11 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.invitereferrals.invitereferrals.InviteReferralsApi;
 import com.nowfloats.Login.UserSessionManager;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
-
-import org.json.JSONException;
-
-import static com.nowfloats.util.Constants.REFERRAL_CAMPAIGN_CODE;
 
 public class ReferralTransActivity extends AppCompatActivity {
 
@@ -46,7 +43,7 @@ public class ReferralTransActivity extends AppCompatActivity {
 
     if (!email.isEmpty()) {
       Log.d("ReferralTransActivity", "Username: " + username + "Email: " + email + "Number: " + number);
-      InviteReferralsApi.getInstance(this).userDetails(username, email, number, REFERRAL_CAMPAIGN_CODE, null, null);
+      InviteReferralsApi.getInstance(this).userDetails(username, email, number, BuildConfig.REFERRAL_CAMPAIGN_CODE, null, null);
       inviteReferralLogin();
     } else {
       Toast.makeText(this, R.string.an_unexpacted_error, Toast.LENGTH_LONG).show();
@@ -60,7 +57,7 @@ public class ReferralTransActivity extends AppCompatActivity {
       try {
         String status = jsonObject.get("Authentication").toString();
         if (status.equalsIgnoreCase("success")) {
-          InviteReferralsApi.getInstance(this).inline_btn(REFERRAL_CAMPAIGN_CODE);
+          InviteReferralsApi.getInstance(this).inline_btn(BuildConfig.REFERRAL_CAMPAIGN_CODE);
         } else {
           Toast.makeText(this, getString(R.string.auth_failed_try_again), Toast.LENGTH_SHORT).show();
         }
