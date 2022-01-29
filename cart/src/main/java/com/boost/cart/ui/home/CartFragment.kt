@@ -15,6 +15,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -44,6 +45,10 @@ import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PrimaryImage
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.*
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponRequest
+import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.AddressDetails
+import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.BusinessDetails
+import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
+import com.boost.dbcenterapi.data.api_model.customerId.get.Result
 import com.boost.dbcenterapi.data.model.coupon.CouponServiceModel
 import com.boost.dbcenterapi.data.renewalcart.CreateCartStateRequest
 import com.boost.dbcenterapi.data.renewalcart.RenewalPurchasedRequest
@@ -53,11 +58,15 @@ import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.CouponsModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.payment.PaymentActivity
+import com.boost.payment.utils.observeOnce
 import com.framework.analytics.SentryController
+import com.framework.pref.Key_Preferences
+import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.billing_details_layout.*
 import kotlinx.android.synthetic.main.cart_fragment.*
 import kotlinx.android.synthetic.main.cart_fragment.addons_layout
 import kotlinx.android.synthetic.main.cart_fragment.back_button12
@@ -65,7 +74,6 @@ import kotlinx.android.synthetic.main.cart_fragment.cart_addons_recycler
 import kotlinx.android.synthetic.main.cart_fragment.cart_amount_title
 import kotlinx.android.synthetic.main.cart_fragment.cart_amount_value
 import kotlinx.android.synthetic.main.cart_fragment.cart_apply_coupon
-import kotlinx.android.synthetic.main.cart_fragment.cart_continue_submit
 import kotlinx.android.synthetic.main.cart_fragment.cart_grand_total
 import kotlinx.android.synthetic.main.cart_fragment.cart_main_layout
 import kotlinx.android.synthetic.main.cart_fragment.cart_main_scroller
@@ -169,12 +177,28 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   var upgradeList = arrayListOf<Bundles>()
 
 
+  private var setStates: String? = null
+  private var setStateTin: String? = null
+  val stateFragment = com.boost.cart.ui.popup.StateListPopFragment()
+
+  private var session: UserSessionManager? = null
+
+  private var gstInfoResult: com.boost.dbcenterapi.data.api_model.gst.Result? = null
+
+  private var isGstApiCalled :Boolean = false
+
+  var paymentProceedFlag = true
+
+
 
   companion object {
     fun newInstance() = CartFragment()
   }
 
   private lateinit var viewModel: CartViewModel
+  var createCustomerInfoRequest: Result? = null
+  var customerInfoState = false
+
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     root = inflater.inflate(R.layout.cart_v2_fragment, container, false)
@@ -214,7 +238,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //    val list = arrayListOf<Bundles>()
     prefs.storeCompareState(1)
 //        showpopup()
-    //loadLastUsedPayData()
+    loadLastUsedPayData()
     initializePackageRecycler()
     initializeAddonsRecycler()
     initializeRenewalRecycler()
@@ -236,7 +260,196 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //      discount_coupon_remove.visibility = View.GONE
       cart_apply_coupon.visibility = View.VISIBLE
  //     discount_coupon_title.text = "Discount coupon"
+
+      session = UserSessionManager(requireActivity())
+      loadCustomerInfo()
+      initMvvm1()
+      viewModel.getCitiesFromAssetJson(requireActivity())
+      viewModel.getStatesFromAssetJson(requireActivity())
+
+////
+//      if(gstcheck1.visibility == View.VISIBLE){
+//        updateVisibility()
+//      }else if(gstcheck.visibility == View.VISIBLE){
+//        reverseVisibility()
+//      }
+
+      business_gstin_number.addTextChangedListener(object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+          if(business_gstin_number.hasFocus()){
+            var enteredText: String = s.toString()
+            if (enteredText.length == 15) {
+              showProgress()
+              callGSTApi(enteredText)
+            }
+          }
+        }
+        override fun afterTextChanged(s: Editable?) {
+        }
+
+      })
+
+
     }
+
+
+    edit.setOnClickListener {
+      cart_billing_details_edit_layout.visibility=View.VISIBLE
+      billing_details.visibility=View.VISIBLE
+      edit.visibility=View.GONE
+
+    }
+    cart_place_of_supply_cl.setOnClickListener {
+      val args = Bundle()
+      args.putString("state", setStates)
+      args.putString("stateTin",setStateTin)
+      stateFragment.arguments = args
+      stateFragment.show(
+        (activity as CartActivity).supportFragmentManager,
+        com.boost.cart.utils.Constants.STATE_LIST_FRAGMENT1
+      )
+    }
+
+
+    gstcheck.setOnClickListener {
+      if (gstcheck.isChecked) {
+        gstll.visibility=View.VISIBLE
+        business_gstin_number.visibility=View.VISIBLE
+        gst_info_tv.visibility=View.VISIBLE
+        cart_business_address.visibility=View.GONE
+        cart_business_address1.visibility=View.VISIBLE
+        cart_place_of_supply_cl.visibility=View.GONE
+        cart_place_of_supply_cl1.visibility= View.VISIBLE
+        prefs.storeGstRegistered(true)
+      }
+      else
+      {
+        gstll.visibility=View.GONE
+        business_gstin_number.visibility=View.GONE
+        gst_info_tv.visibility=View.GONE
+        cart_business_address.visibility=View.VISIBLE
+        cart_business_address1.visibility=View.GONE
+        cart_place_of_supply_cl.visibility=View.VISIBLE
+        cart_place_of_supply_cl1.visibility= View.GONE
+        prefs.storeGstRegistered(false)
+
+      }
+    }
+
+//    if (!prefs.getGstRegistered()) {
+//      gstFlag = false
+//      gstcheck1.visibility = View.GONE
+//      gstcheck.visibility = View.VISIBLE
+//      gst_info_tv.visibility = View.GONE
+//      business_gstin_number.visibility = View.GONE
+//      reverseVisibility()
+//    } else {
+//      gstFlag = true
+//      gstcheck1.visibility = View.VISIBLE
+//      gstcheck.visibility = View.GONE
+//      gst_info_tv.visibility = View.VISIBLE
+//      business_gstin_number.visibility = View.VISIBLE
+//      updateVisibility()
+//    }
+
+
+
+
+
+
+//    gstcheck1.setOnClickListener {
+////      if (gstcheck1.isChecked) {
+//      gstcheck1.visibility=View.GONE
+//      gstcheck.visibility=View.VISIBLE
+//        gstll.visibility=View.GONE
+//        business_gstin_number.visibility=View.GONE
+//        gst_info_tv.visibility=View.GONE
+//       // prefs.storeGstRegistered(true)
+//        reverseVisibility()
+//      }
+//      else
+//      {
+//        gstll.visibility=View.GONE
+//        business_gstin_number.visibility=View.GONE
+//        gst_info_tv.visibility=View.GONE
+//        prefs.storeGstRegistered(false)
+//
+//      }
+   // }
+
+//    gstcheck.setOnClickListener {
+//      if (gstcheck.isChecked==false){
+//        gstcheck.visibility=View.GONE
+//        gstcheck1.visibility=View.VISIBLE
+//        gstll.visibility=View.VISIBLE
+//        business_gstin_number.visibility=View.VISIBLE
+//        gst_info_tv.visibility=View.VISIBLE
+//        // prefs.storeGstRegistered(true)
+//        reverseVisibility()
+//      }
+//      else
+//      {
+//        gstcheck1.visibility=View.GONE
+//        gstcheck.visibility=View.VISIBLE
+//        gstll.visibility=View.GONE
+//        business_gstin_number.visibility=View.GONE
+//        gst_info_tv.visibility=View.GONE
+//        updateVisibility()
+//
+//
+//       }
+//    }
+//
+//    gstcheck1.setOnClickListener {
+//      if (gstcheck1.isChecked==true){
+//        gstcheck.visibility=View.VISIBLE
+//        gstcheck1.visibility=View.GONE
+//        gstll.visibility=View.GONE
+//        business_gstin_number.visibility=View.GONE
+//        gst_info_tv.visibility=View.GONE
+//        // prefs.storeGstRegistered(true)
+//        updateVisibility()
+//      }
+//      else
+//      {
+//        gstcheck1.visibility=View.VISIBLE
+//        gstcheck.visibility=View.GONE
+//        gstll.visibility=View.VISIBLE
+//        business_gstin_number.visibility=View.VISIBLE
+//        gst_info_tv.visibility=View.VISIBLE
+//        reverseVisibility()
+//
+//
+//      }
+//    }
+
+
+
+
+
+
+
+
+
+//    gstcheck.setOnClickListener {
+////      prefs.storeGstRegistered(true)
+////      gstFlag = true
+//      gstcheck.visibility = View.GONE
+//      gstcheck1.visibility = View.VISIBLE
+//      gstll.visibility=View.VISIBLE
+//      business_gstin_number.visibility=View.VISIBLE
+//      gst_info_tv.visibility=View.VISIBLE
+//
+////      gst_info_tv.visibility = View.VISIBLE
+//      updateVisibility()
+//    }
+
+
+
+
 
 //    discount_coupon_remove.setOnClickListener {
 //      discount_coupon_remove.visibility = View.GONE
@@ -257,7 +470,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //      totalCalculationAfterCoupon()
 //    }
 
-    cart_continue_submit.setOnClickListener {
+    cart_continue_submit1.setOnClickListener {
 
 //            if (prefs.getInitialLoadMarketPlace() && proceedCheckoutPopup == false) {
 //
@@ -346,7 +559,162 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       }*/
 
 
+      if(gstcheck.visibility == View.VISIBLE && gstcheck1.visibility == View.GONE){
+        prefs.storeGstRegistered(false)
+      }else{
+        prefs.storeGstRegistered(true)
+      }
+      if(progress_bar.visibility == View.GONE){
+        if (validateAgreement()) {
+          if (!customerInfoState) { //no customer available
+            //create customer payment profile
+            viewModel.createCustomerInfo(
+              (activity as? CartActivity)?.getAccessToken() ?: "",
+              CreateCustomerInfoRequest(
+                AddressDetails(
+                  if (cart_business_city_name.text.isEmpty()) null else cart_business_city_name.text.toString(),
+                  "india",
+                  if (cart_business_address.text?.isEmpty() == true) null else cart_business_address.text.toString(),
+                  null,
+                  if (cart_business_city_name.text.isEmpty()) null else cart_business_city_name.text.toString(),
+                  null
+                ),
+                BusinessDetails(
+                  null,
+                  null,
+                  null
+                ),
+
+                (activity as CartActivity).clientid,
+                "+91",
+                "ANDROID",
+                "",
+                (activity as CartActivity).fpid!!,
+                null,
+                null,
+                com.boost.dbcenterapi.data.api_model.customerId.customerInfo.TaxDetails(
+                  if (business_gstin_number.text?.isEmpty() == true) null else business_gstin_number.text.toString(),
+                  null,
+                  null,
+                  null
+                )
+
+              )
+            )
+          } else {
+            //update customer payment profile
+            if(cart_place_of_supply_cl1.visibility == View.GONE && cart_business_address1.visibility == View.GONE)
+            {
+              viewModel.updateCustomerInfo(
+                (activity as? CartActivity)?.getAccessToken() ?: "",
+                CreateCustomerInfoRequest(
+                  AddressDetails(
+                    if (cart_business_city_name.text.isEmpty()) null else cart_business_city_name.text.toString(),
+                    "india",
+                    if (cart_business_address.text?.isEmpty() == true) null else cart_business_address.text.toString(),
+                    null,
+                    if (cart_business_city_name.text.isEmpty()) null else cart_business_city_name.text.toString(),
+                    null
+                  ),
+                  BusinessDetails(
+                    null,
+                    null,
+                    null
+                  ),
+                  (activity as CartActivity).clientid,
+                  null,
+                  null,
+                  null,
+                  (activity as CartActivity).fpid,
+                  null,
+                  null,
+                  com.boost.dbcenterapi.data.api_model.customerId.customerInfo.TaxDetails(
+                    if (business_gstin_number.text?.isEmpty() == true) null else business_gstin_number.text.toString(),
+                    null,
+                    null,
+                    null
+                  )
+
+                )
+              )
+            }else if(isGstApiCalled){
+              viewModel.updateCustomerInfo(
+                (activity as? CartActivity)?.getAccessToken() ?: "",
+                CreateCustomerInfoRequest(
+                  AddressDetails(
+                    gstInfoResult?.address?.city,
+                    "india",
+                    cart_business_address1.text.toString(),
+                    null,
+                    gstInfoResult?.address?.state,
+                    gstInfoResult?.address?.pincode
+                  ),
+                  BusinessDetails(
+                    null,
+                    null,
+                    null
+                  ),
+                  (activity as CartActivity).clientid,
+                  null,
+                  null,
+                  null,
+                  (activity as CartActivity).fpid,
+                  null,
+                  null,
+                  com.boost.dbcenterapi.data.api_model.customerId.customerInfo.TaxDetails(
+                    if (business_gstin_number.text?.isEmpty() == true) null else business_gstin_number.text.toString(),
+                    null,
+                    null,
+                    null
+                  )
+
+                )
+              )
+            }
+            else{
+              viewModel.updateCustomerInfo(
+                (activity as? CartActivity)?.getAccessToken() ?: "",
+                CreateCustomerInfoRequest(
+                  AddressDetails(
+                    if (cart_business_city_name.text.isEmpty()) null else cart_business_city_name.text.toString(),
+                    "india",
+                    cart_business_address1.text.toString(),
+                    null,
+                    if (cart_business_city_name.text.isEmpty()) null else cart_business_city_name.text.toString(),
+                    null
+                  ),
+                  BusinessDetails(
+                    null,
+                    null,
+                    null
+                  ),
+                  (activity as CartActivity).clientid,
+                  null,
+                  null,
+                  null,
+                  (activity as CartActivity).fpid,
+                  null,
+                  null,
+                  com.boost.dbcenterapi.data.api_model.customerId.customerInfo.TaxDetails(
+                    if (business_gstin_number.text?.isEmpty() == true) null else business_gstin_number.text.toString(),
+                    null,
+                    null,
+                    null
+                  )
+
+                )
+              )
+            }
+
+          }
+        }
+      }else{
+        Toast.makeText(requireActivity(),"Please wait while data is loading",Toast.LENGTH_SHORT).show()
+      }
+
     }
+
+
 
     back_button12.setOnClickListener {
       WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART_BACK, NO_EVENT_LABLE, event_attributes)
@@ -710,6 +1078,292 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     })
 
   }
+
+
+
+
+  private fun callGSTApi(gstNo:String){
+    if(Utils.isValidGSTIN(gstNo)){
+      loadGSTInfo(gstNo)
+      viewModel.getGstApiResult().observe(viewLifecycleOwner,{
+        gstInfoResult = it.result
+        if(gstInfoResult!=null){
+        //  gst_business_name_value.text = gstInfoResult!!.legalName
+          val addressDetails = arrayOf(gstInfoResult!!.address!!.addressLine1, gstInfoResult!!.address!!.addressLine2, gstInfoResult!!.address!!.city, gstInfoResult!!.address!!.pincode, gstInfoResult!!.address!!.district, gstInfoResult!!.address!!.state)
+          val businessAddressDetails = joinNonBlankStringArray(addressDetails,",")
+          //cart_business_address.text = businessAddressDetails
+          cart_business_address1.setText(businessAddressDetails)
+          cart_business_city_name1.text=gstInfoResult!!.address!!.state
+          isGstApiCalled = true
+        } else {
+          Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
+        }
+        hideProgress1()
+      })
+    }else {
+      Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
+      hideProgress1()
+    }
+  }
+
+  private fun joinNonBlankStringArray(s: Array<String?>?, separator: String?): String? {
+    val sb = StringBuilder()
+    if (s != null && s.size > 0) {
+      for (w in s) {
+        if (w != null && !w.trim { it <= ' ' }.isEmpty()) {
+          sb.append(w)
+          sb.append(separator)
+        }
+      }
+    }
+    return sb.substring(0, sb.length - 1) // length() - 1 to cut-down last extra separator
+  }
+
+  private fun showProgress() {
+    progress_bar.visibility = View.VISIBLE
+  }
+
+  private fun hideProgress1() {
+    progress_bar.visibility = View.GONE
+  }
+
+  private fun initMvvm1() {
+    viewModel.getCustomerInfoResult().observeOnce(viewLifecycleOwner, Observer {
+      createCustomerInfoRequest = it.Result
+      if (createCustomerInfoRequest != null) {
+        if (createCustomerInfoRequest!!.BusinessDetails != null) {
+//          business_contact_number.setText(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber)
+//          business_email_address.setText(createCustomerInfoRequest!!.BusinessDetails!!.Email)
+        }
+        if (createCustomerInfoRequest!!.AddressDetails != null) {
+          cart_business_city_name.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
+          business_supply_place_value.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
+          cart_business_supply_place_missing.visibility=View.GONE
+
+          if (createCustomerInfoRequest!!.AddressDetails!!.City != null) {
+            viewModel.getStateFromCityAssetJson(
+              requireActivity(),
+              createCustomerInfoRequest!!.AddressDetails!!.City
+            )
+          }
+          if (createCustomerInfoRequest!!.AddressDetails!!.State != null || !createCustomerInfoRequest!!.AddressDetails!!.State.equals(
+              "string"
+            )
+          ) {
+            cart_business_city_name.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
+            cart_business_city_name1.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
+            setStates = createCustomerInfoRequest!!.AddressDetails!!.State
+          }
+          if (createCustomerInfoRequest!!.AddressDetails.Line1 != null) {
+            cart_business_address.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
+            cart_business_address1.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
+          //  gst_business_address_value.text = createCustomerInfoRequest!!.AddressDetails.Line1.toString()
+          }
+        } else {
+          cart_business_supply_place_missing.visibility=View.VISIBLE
+          business_supply_place_value.visibility = View.GONE
+        }
+        if (createCustomerInfoRequest!!.TaxDetails != null) {
+          business_gstin_number.setText(createCustomerInfoRequest!!.TaxDetails!!.GSTIN)
+        }
+
+        if (createCustomerInfoRequest!!.TaxDetails?.GSTIN != null /*|| createCustomerInfoRequest!!.TaxDetails?.GSTIN.equals("")*/) {
+          cart_business_gstin_value.setText(createCustomerInfoRequest!!.TaxDetails.GSTIN)
+          cart_business_gstin_missing.visibility=View.GONE
+        } else {
+          cart_business_gstin_value.visibility = View.GONE
+          cart_business_gstin_missing.visibility = View.VISIBLE
+        }
+
+
+        if (createCustomerInfoRequest!!.Name != null) {
+         // business_name_value.setText(createCustomerInfoRequest!!.Name)
+        }
+
+        if (createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber != null) {
+        //  business_contact_number.setText(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber)
+        } else {
+//          if (session?.userPrimaryMobile == null || session?.userPrimaryMobile.equals("")) {
+//
+//          } else {
+//            business_contact_number.setText(session?.userPrimaryMobile)
+//          }
+        }
+
+
+//        if (createCustomerInfoRequest!!.BusinessDetails!!.Email != null) {
+//          business_email_address.setText(createCustomerInfoRequest!!.BusinessDetails!!.Email)
+//        } else {
+//          if (session?.fPEmail == null || session?.fPEmail.equals("")) {
+//
+//          } else {
+//            business_email_address.setText(session?.fPEmail)
+//          }
+//        }
+
+
+//        if (createCustomerInfoRequest!!.Name != null) {
+//          business_name_value.setText(createCustomerInfoRequest!!.Name)
+//          gst_business_name_value.text = createCustomerInfoRequest!!.Name
+//        } else {
+//          if (session?.fPName == null || session?.fPName.equals("")) {
+//
+//          } else {
+//            business_name_value.setText(session?.fPName)
+//            gst_business_name_value.text = session?.fPName
+//          }
+//        }
+
+
+        if (createCustomerInfoRequest!!.AddressDetails != null) {
+
+
+          if (createCustomerInfoRequest!!.AddressDetails.Line1 != null) {
+            cart_business_address1.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
+            cart_business_address_value.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
+            cart_business_address_missing.visibility=View.GONE
+          //  business_supply_place_value.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
+           // gst_business_address_value.text = createCustomerInfoRequest!!.AddressDetails.Line1.toString()
+          } else {
+            if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS) == null || session?.getFPDetails(
+                Key_Preferences.GET_FP_DETAILS_ADDRESS
+              ).equals("")
+            ) {
+
+            } else {
+              cart_business_address1.setText(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS))
+              cart_business_address.setText(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS))
+              cart_business_address_value.visibility=View.GONE
+              cart_business_address_missing.visibility=View.VISIBLE
+            //  gst_business_address_value.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)
+            }
+          }
+        }
+
+      }
+    })
+    viewModel.getCustomerInfoStateResult().observeOnce(this, Observer {
+      customerInfoState = it
+      if (!customerInfoState) {
+        if (session?.userPrimaryMobile == null || session?.userPrimaryMobile.equals("")) {
+
+        } else {
+      //    business_contact_number.setText(session?.userPrimaryMobile)
+        }
+
+        //if(session?.getFPDetails(Key_Preferences.PRIMARY_EMAIL) == null || session?.getFPDetails(Key_Preferences.PRIMARY_EMAIL).equals("") ){
+        if (session?.fPEmail == null || session?.fPEmail.equals("")) {
+        } else {
+      //    business_email_address.setText(session?.fPEmail)
+        }
+
+        if (session?.fPName == null || session?.fPName.equals("")) {
+
+        } else {
+        //  business_name_value.setText(session?.fPName)
+        }
+
+        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS) == null || session?.getFPDetails(
+            Key_Preferences.GET_FP_DETAILS_ADDRESS
+          ).equals("")
+        ) {
+
+        } else {
+          cart_business_address.setText(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS))
+        }
+      }
+    })
+
+    viewModel.getUpdatedCustomerBusinessResult().observeOnce(viewLifecycleOwner, Observer {
+      if (it.Result != null) {
+        Toasty.success(requireContext(), "Successfully Updated Profile.", Toast.LENGTH_LONG).show()
+        val event_attributes: HashMap<String, Any> = HashMap()
+        event_attributes.put("", it.Result.CustomerId)
+        com.boost.cart.utils.WebEngageController.trackEvent(
+          ADDONS_MARKETPLACE_BUSINESS_DETAILS_UPDATE_SUCCESS,
+          ADDONS_MARKETPLACE,
+          event_attributes
+        )
+//                (activity as PaymentActivity).prefs.storeInitialLoadMarketPlace(false)
+      } else {
+        Toasty.error(requireContext(), "Something went wrong. Try Later!!", Toast.LENGTH_LONG)
+          .show()
+        com.boost.cart.utils.WebEngageController.trackEvent(
+          ADDONS_MARKETPLACE_BUSINESS_DETAILS_FAILED,
+          ADDONS_MARKETPLACE,
+          NO_EVENT_VALUE
+        )
+        (activity as CartActivity).prefs.storeInitialLoadMarketPlace(true)
+      }
+     // dismiss()
+    })
+    viewModel.getUpdatedResult().observeOnce(viewLifecycleOwner, Observer {
+      if (it.Result != null) {
+        Toasty.success(requireContext(), "Successfully Created Profile.", Toast.LENGTH_LONG).show()
+        val event_attributes: HashMap<String, Any> = HashMap()
+        event_attributes.put("", it.Result.CustomerId)
+        com.boost.cart.utils.WebEngageController.trackEvent(
+          ADDONS_MARKETPLACE_BUSINESS_DETAILS_CREATE_SUCCESS,
+          ADDONS_MARKETPLACE,
+          event_attributes
+        )
+//                (activity as PaymentActivity).prefs.storeInitialLoadMarketPlace(false)
+      } else {
+        Toasty.error(requireContext(), "Something went wrong. Try Later!!", Toast.LENGTH_LONG)
+          .show()
+        com.boost.cart.utils.WebEngageController.trackEvent(
+          ADDONS_MARKETPLACE_BUSINESS_DETAILS_FAILED,
+          ADDONS_MARKETPLACE,
+          NO_EVENT_VALUE
+        )
+//                (activity as PaymentActivity).prefs.storeInitialLoadMarketPlace(true)
+      }
+    //  dismiss()
+    })
+
+
+    viewModel.stateResult().observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+      if (it != null) {
+        val adapter =
+          ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_dropdown_item, it)
+//                business_city_name.setAdapter(adapter)
+      }
+
+    })
+
+//    viewModel.getSelectedStateResult().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+//      if (it != null) {
+//        business_city_name.text = it
+//        setStates = it
+//      }
+//
+//    })
+
+    viewModel.getSelectedStateResult().observe(viewLifecycleOwner,{
+      if(it!= null){
+        cart_business_city_name.text = it
+        setStates = it
+      }
+    })
+    viewModel.getSelectedStateTinResult().observe(viewLifecycleOwner,{
+      if(it!=null){
+        state_tin_value.text = "(" + it + ")"
+        setStateTin = it
+      }
+    })
+
+  }
+
+  private fun loadGSTInfo(gstIn: String) {
+    viewModel.getGstApiInfo(
+      (activity as? CartActivity)?.getAccessToken() ?: "",
+      gstIn,
+      (activity as CartActivity).clientid,
+      progress_bar
+    )
+  }
+
+
 
   fun updateRecycler(list: List<FeaturesModel>) {
 //    if (shimmer_view_recomm_addons.isShimmerStarted) {
@@ -1519,6 +2173,20 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
   @SuppressLint("FragmentLiveDataObserve")
   fun initMvvM() {
+
+//    viewModel.getSelectedStateResult().observe(viewLifecycleOwner,{
+//      if(it!= null){
+//        cart_business_city_name.text = it
+//        setStates = it
+//      }
+//    })
+//    viewModel.getSelectedStateTinResult().observe(viewLifecycleOwner,{
+//      if(it!=null){
+//        state_tin_value.text = "(" + it + ")"
+//        setStateTin = it
+//      }
+//    })
+
 //        viewModel.updateRenewValue("")
     viewModel.cartResult().observe(this, Observer {
       if (it.isNullOrEmpty().not()) {
@@ -1682,15 +2350,15 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       if (it != null) {
         Log.i("getGSTIN >> ", it)
         GSTINNumber = it
-        gstin_layout1.visibility = View.GONE
-        gstin_layout2.visibility = View.VISIBLE
-        fill_in_gstin_value.text = it
+        cart_business_gstin_missing.visibility = View.GONE
+        cart_business_gstin_value.visibility = View.VISIBLE
+        cart_business_gstin_value.text = it
 
-        gstin_remove.visibility = View.VISIBLE
-        gstin_title.text = "GSTIN"
-        entered_gstin_number.visibility = View.VISIBLE
-        enter_gstin_number.visibility = View.GONE
-        entered_gstin_number.text = it
+//        gstin_remove.visibility = View.VISIBLE
+//        gstin_title.text = "GSTIN"
+//        entered_gstin_number.visibility = View.VISIBLE
+//        enter_gstin_number.visibility = View.GONE
+//        entered_gstin_number.text = it
       }
     })
 
@@ -2172,5 +2840,131 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       (activity as CartActivity).fpid!!,
       (activity as CartActivity).clientid
     )
+  }
+
+  private fun validateAgreement(): Boolean {
+    if ( cart_business_city_name.text.isEmpty() || cart_business_address.text?.isEmpty() == true || business_gstin_number.text?.isEmpty() == true
+    ) {
+//      Log.v("business_name_value", " " + business_name_value.text.toString())
+            Toasty.error(requireContext(), "Fields are Empty!!", Toast.LENGTH_LONG).show()
+      if (business_gstin_number.text?.isEmpty() == true && !com.boost.cart.utils.Utils.isValidGSTIN(
+          business_gstin_number.text.toString()
+        ) ) {
+        business_gstin_number.setBackgroundResource(com.boost.cart.R.drawable.et_validity_error)
+        Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
+        return false
+      } else {
+        business_gstin_number.setBackgroundResource(com.boost.cart.R.drawable.rounded_edit_fill_kyc)
+      }
+
+//      if (business_contact_number.text!!.isEmpty()) {
+//        business_contact_number.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
+//        Toasty.error(requireContext(), "Please enter Mobile no.", Toast.LENGTH_LONG).show()
+//        return false
+//      } else {
+//        if (!com.boost.payment.utils.Utils.isValidMobile(business_contact_number.text.toString())) {
+//          business_contact_number.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
+//          Toasty.error(requireContext(), "Entered Mobile Number is not valid!!", Toast.LENGTH_LONG)
+//            .show()
+//          return false
+//        } else {
+////          business_contact_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
+//        }
+//      }
+//
+//      Log.v("business_name_value1", " " + business_contact_number.text.toString())
+//
+//
+//      Log.v("business_name_value2", " " + business_email_address.text.toString())
+//      if (business_email_address.text.isEmpty()) {
+//        business_email_address.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
+//        Toasty.error(requireContext(), "Please enter Email ID", Toast.LENGTH_LONG).show()
+//        return false
+//      } else {
+//        if (!com.boost.payment.utils.Utils.isValidMail(business_email_address.text.toString())) {
+//          business_email_address.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
+//          Toasty.error(requireContext(), "Entered Email ID is not valid!!", Toast.LENGTH_LONG)
+//            .show()
+//          return false
+//        } else {
+//          business_email_address.setBackgroundResource(com.boost.payment.R.drawable.rounded_edit_fill_kyc)
+//        }
+//      }
+
+
+    //  Log.v("business_name_value3", " " + business_name_value.text.toString())
+//      if (business_name_value.text.isEmpty()) {
+//        business_name_value.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
+//        Toasty.error(requireContext(), "Entered Business name is not valid!!", Toast.LENGTH_LONG)
+//          .show()
+//        return false
+//      } else {
+//        business_name_value.setBackgroundResource(com.boost.payment.R.drawable.rounded_edit_fill_kyc)
+//      }
+
+      if (cart_business_address.text?.isEmpty() == true) {
+        cart_business_address.setBackgroundResource(com.boost.cart.R.drawable.et_validity_error)
+        Toasty.error(requireContext(), "Entered Business address is not valid!!", Toast.LENGTH_LONG)
+          .show()
+        return false
+      } else {
+        cart_business_address.setBackgroundResource(com.boost.cart.R.drawable.rounded_edit_fill_kyc)
+      }
+      return false
+    }
+    if (!business_gstin_number.text?.isEmpty()!! && !com.boost.cart.utils.Utils.isValidGSTIN(
+        business_gstin_number.text.toString()
+      ) ) {
+      business_gstin_number.setBackgroundResource(com.boost.cart.R.drawable.et_validity_error)
+      Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
+      return false
+    }
+
+//    if (!com.boost.payment.utils.Utils.isValidMail(business_email_address.text.toString())) {
+//      business_email_address.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
+//      Toasty.error(requireContext(), "Entered Email ID is not valid!!", Toast.LENGTH_LONG).show()
+//      return false
+//    } else {
+//      business_email_address.setBackgroundResource(com.boost.payment.R.drawable.rounded_edit_fill_kyc)
+//    }
+
+//    if (!com.boost.payment.utils.Utils.isValidMobile(business_contact_number.text.toString())) {
+//      business_contact_number.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
+//      Toasty.error(requireContext(), "Entered Mobile Number is not valid!!", Toast.LENGTH_LONG)
+//        .show()
+//      return false
+//    } else {
+////      business_contact_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
+//    }
+
+    /*if (!confirm_checkbox.isChecked) {
+        Toasty.error(requireContext(), "Accept the Agreement!!", Toast.LENGTH_LONG).show()
+        return false
+    }*/
+    return true
+//        return false
+  }
+
+  private fun loadCustomerInfo() {
+    viewModel.getCustomerInfo(
+      (activity as? CartActivity)?.getAccessToken() ?: "",
+      (activity as CartActivity).fpid!!,
+      (activity as CartActivity).clientid
+    )
+  }
+
+  private fun updateVisibility() {
+    cart_business_address.visibility = View.GONE
+    cart_business_city_name.visibility = View.GONE
+    state_tin_value.visibility=View.GONE
+    cart_business_address1.visibility = View.VISIBLE
+    cart_business_city_name1.visibility = View.VISIBLE
+  }
+  private fun reverseVisibility(){
+    cart_business_address.visibility = View.VISIBLE
+    cart_business_city_name.visibility = View.VISIBLE
+    state_tin_value.visibility=View.VISIBLE
+    cart_business_address1.visibility = View.GONE
+    cart_business_city_name1.visibility = View.GONE
   }
 }

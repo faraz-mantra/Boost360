@@ -3,15 +3,18 @@ package com.boost.cart.utils
 import com.boost.cart.ui.autorenew.AutoRenewSubsFragment
 import com.boost.cart.ui.compare.ComparePackageFragment
 import com.boost.cart.ui.confirmation.AutoRenewOrderConfirmationFragment
-import com.boost.cart.ui.home.CartFragment
 import com.boost.cart.ui.details.DetailsFragment
 import com.boost.cart.ui.features.ViewAllFeaturesFragment
 import com.boost.cart.ui.freeaddons.FreeAddonsFragment
 import com.boost.cart.ui.history.HistoryFragment
 import com.boost.cart.ui.historydetails.HistoryDetailsFragment
+import com.boost.cart.ui.home.CartFragment
 import com.boost.cart.ui.myaddons.MyAddonsFragment
 import com.boost.cart.ui.packages.PackageFragment
-import com.boost.cart.ui.popup.*
+import com.boost.cart.ui.popup.CouponPopUpFragment
+import com.boost.cart.ui.popup.GSTINPopUpFragment
+import com.boost.cart.ui.popup.ImagePreviewPopUpFragement
+import com.boost.cart.ui.popup.TANPopUpFragment
 import com.boost.cart.ui.splash.SplashFragment
 import com.boost.cart.ui.webview.WebViewFragment
 
@@ -44,6 +47,7 @@ class Constants {
         var HISTORY_FRAGMENT: String = HistoryFragment::class.java.getName()
         var IMAGE_PREVIEW_POPUP_FRAGMENT: String = ImagePreviewPopUpFragement::class.java.getName()
         var WEB_VIEW_FRAGMENT: String = WebViewFragment::class.java.getName()
+        var STATE_LIST_FRAGMENT1: String = com.boost.cart.ui.popup.StateListPopFragment::class.java.getName()
 
         const val ALERT_YES = 1
         const val ALERT_NO = 2

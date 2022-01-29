@@ -944,6 +944,7 @@
                             android:gravity="end">
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/edit"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="end"
@@ -974,12 +975,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         layout="@layout/billing_details_layout"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/cart_billing_details_ll"/>
 
                     <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/billing_details"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="15dp"
@@ -1001,20 +1003,36 @@
                                 android:textSize="@dimen/txt_12sp" />
 
 
-                            <androidx.appcompat.widget.LinearLayoutCompat
+                            <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="end"
                                 android:gravity="end">
 
                                 <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/cart_business_gstin_value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Not Provided"
                                     android:textColor="#BBBBBB"
-                                    android:textSize="@dimen/txt_12sp" />
+                                    android:textSize="@dimen/txt_12sp"
+                                    android:visibility="visible"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"/>
 
-                            </androidx.appcompat.widget.LinearLayoutCompat>
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/cart_business_gstin_missing"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Not Provided"
+                                    android:textColor="#BBBBBB"
+                                    android:textSize="@dimen/txt_12sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -1033,20 +1051,35 @@
                                 android:textSize="@dimen/txt_12sp" />
 
 
-                            <androidx.appcompat.widget.LinearLayoutCompat
+                            <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="end"
                                 android:gravity="end">
 
                                 <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/business_supply_place_value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="West Bengal"
+                                    android:text="Not Provided"
                                     android:textColor="#333333"
-                                    android:textSize="@dimen/txt_12sp" />
+                                    android:textSize="@dimen/txt_12sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"/>
 
-                            </androidx.appcompat.widget.LinearLayoutCompat>
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/cart_business_supply_place_missing"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Not Provided"
+                                    android:textColor="#333333"
+                                    android:textSize="@dimen/txt_12sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -1065,22 +1098,38 @@
                                 android:textSize="@dimen/txt_12sp" />
 
 
-                            <androidx.appcompat.widget.LinearLayoutCompat
+                            <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="end"
                                 android:gravity="end">
 
                                 <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/cart_business_address_value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="end"
                                     android:lines="2"
-                                    android:text="123, Bhagal Singh Road,\n Kolkata - 123456"
-                                    android:textColor="#333333"
-                                    android:textSize="12sp" />
+                                    android:text="Not provided"                                    android:textColor="#333333"
+                                    android:textSize="12sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"/>
 
-                            </androidx.appcompat.widget.LinearLayoutCompat>
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/cart_business_address_missing"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="end"
+                                    android:lines="2"
+                                    android:text="Not provided"
+                                    android:textColor="#333333"
+                                    android:textSize="12sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -1506,7 +1555,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/cart_continue_submit"
+                android:id="@+id/cart_continue_submit1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

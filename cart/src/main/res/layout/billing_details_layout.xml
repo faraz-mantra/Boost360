@@ -16,14 +16,105 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cart_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
     <CheckBox
+      android:id="@+id/gstcheck"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:buttonTint="#FFB900"
       android:fontFamily="@font/open_sans"
       android:text="Want to claim GST input credit?"
       android:textColor="#747474"
-      android:textSize="@dimen/txt_12sp" />
+      android:textSize="@dimen/txt_12sp"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"/>
+
+      <CheckBox
+          android:id="@+id/gstcheck1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:buttonTint="#FFB900"
+          android:fontFamily="@font/open_sans"
+          android:text="Want to claim GST input credit?"
+          android:textColor="#747474"
+          android:textSize="@dimen/txt_12sp"
+          android:checked="true"
+          android:visibility="gone"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/gstll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/business_gstin"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans_semibold"
+          android:paddingTop="@dimen/_4sdp"
+          android:paddingBottom="@dimen/_5sdp"
+          android:text="GSTIN"
+          android:textColor="#4A4A4A"
+          android:textSize="@dimen/txt_12sp" />
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/gstfl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:visibility="visible">
+
+      <androidx.appcompat.widget.AppCompatEditText
+          android:id="@+id/business_gstin_number"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/edittext_selector"
+          android:focusable="true"
+          android:focusableInTouchMode="true"
+          android:fontFamily="@font/open_sans"
+          android:gravity="bottom"
+          android:hint="15-digit GST Number (22 AAAAA 0000 A1Z5)"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters"
+          android:maxLength="15"
+          android:textAllCaps="true"
+          android:textColor="#4A4A4A"
+          android:textColorHint="#BBBBBB"
+          android:textFontWeight="400"
+          android:textSize="@dimen/txt_14sp"
+          android:visibility="gone"
+          tools:visibility="visible"/>
+
+      <ProgressBar
+          android:id="@+id/progress_bar"
+          style="?android:attr/progressBarStyleSmall"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="end|center_vertical"
+          android:layout_marginEnd="10dp"
+          android:indeterminate="true"
+          android:indeterminateTint="@color/colorAccentLight"
+          android:indeterminateTintMode="src_atop"
+          android:visibility="gone"
+          tools:visibility="visible" />
+    </FrameLayout>
+
+
 
     <androidx.appcompat.widget.AppCompatTextView
       android:id="@+id/cart_state_of_supply"
@@ -43,97 +134,81 @@
       android:background="@drawable/edittext_selector"
       android:orientation="horizontal">
 
-      <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/cart_business_city_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:gravity="bottom"
-        android:imeOptions="actionNext"
-        android:inputType="text"
-        android:textColor="@color/common_bold_text_color"
-        android:textColorHint="@color/globaLightSuperText"
-        android:textSize="@dimen/txt_14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/state_tin_value"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
       <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/state_tin_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cart_business_city_name"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="(37)" />
+          android:id="@+id/cart_business_city_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans"
+          android:gravity="bottom"
+          android:imeOptions="actionNext"
+          android:inputType="text"
+          android:textColor="@color/common_bold_text_color"
+          android:textColorHint="@color/globaLightSuperText"
+          android:textSize="@dimen/txt_14sp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toStartOf="@+id/state_tin_value"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/state_tin_value"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="2dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toEndOf="@+id/cart_business_city_name"
+          app:layout_constraintTop_toTopOf="parent"
+          tools:text="(37)" />
 
       <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_dropdown_business"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+          android:id="@+id/arrow"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:src="@drawable/ic_dropdown_business"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-
-
-      <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/business_gstin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_semibold"
-        android:paddingTop="@dimen/_4sdp"
-        android:paddingBottom="@dimen/_5sdp"
-        android:text="GSTIN"
-        android:textColor="#4A4A4A"
-        android:textSize="@dimen/txt_12sp" />
-
-    </RelativeLayout>
-
-    <FrameLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-
-      <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/business_gstin_number"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cart_place_of_supply_cl1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/edittext_selector"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:fontFamily="@font/open_sans"
-        android:gravity="bottom"
-        android:hint="15-digit GST Number (22 AAAAA 0000 A1Z5)"
-        android:imeOptions="actionNext"
-        android:inputType="textCapCharacters"
-        android:maxLength="15"
-        android:textAllCaps="true"
-        android:textColor="#4A4A4A"
-        android:textColorHint="#BBBBBB"
-        android:textFontWeight="400"
-        android:textSize="@dimen/txt_14sp" />
-
-      <ProgressBar
-        android:id="@+id/progress_bar"
-        style="?android:attr/progressBarStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|center_vertical"
-        android:layout_marginEnd="10dp"
-        android:indeterminate="true"
-        android:indeterminateTint="@color/colorAccentLight"
-        android:indeterminateTintMode="src_atop"
         android:visibility="gone"
-        tools:visibility="visible" />
-    </FrameLayout>
+        android:orientation="horizontal">
+
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/cart_business_city_name1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans"
+          android:gravity="bottom"
+          android:imeOptions="actionNext"
+          android:inputType="text"
+          android:textColor="@color/common_bold_text_color"
+          android:textColorHint="@color/globaLightSuperText"
+          android:textSize="@dimen/txt_14sp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toStartOf="@+id/state_tin_value1"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/state_tin_value1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="2dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toEndOf="@+id/cart_business_city_name1"
+          app:layout_constraintTop_toTopOf="parent"
+          tools:text="(37)" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -147,7 +222,7 @@
       android:text="@string/cart_gst_text"
       android:textColor="#828282"
       android:textSize="@dimen/txt_12sp"
-      android:visibility="visible"
+      android:visibility="gone"
       tools:visibility="visible" />
 
 
@@ -179,7 +254,25 @@
       android:textColor="#4A4A4A"
       android:textColorHint="#BBBBBB"
       android:textSize="@dimen/txt_14sp" />
+
+    <TextView
+        android:id="@+id/cart_business_address1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_selector"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fontFamily="@font/open_sans"
+        android:gravity="center|start"
+        android:hint="Enter complete address"
+        android:imeOptions="actionDone"
+        android:textColor="#4A4A4A"
+        android:visibility="gone"
+        android:textColorHint="#BBBBBB"
+        android:textSize="@dimen/txt_14sp" />
   </androidx.appcompat.widget.LinearLayoutCompat>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
