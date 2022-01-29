@@ -57,6 +57,11 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
     var deepLinkViewType: String = ""
     var deepLinkDay: Int = 7
     var userPurchsedWidgets = ArrayList<String>()
+    private var widgetFeatureCode: String? = null
+    var isOpenHomeFragment: Boolean = false
+    var isOpenAddOnsFragment: Boolean = false
+
+
 
     lateinit var packageAdaptor: ParentCompareItemAdapter
 
@@ -89,6 +94,28 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
     }
     override fun onCreateView() {
         super.onCreateView()
+
+        isDeepLink = intent.getBooleanExtra("isDeepLink", false)
+        deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
+        deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
+
+        experienceCode = intent.getStringExtra("expCode")
+        screenType = intent.getStringExtra("screenType")
+        fpName = intent.getStringExtra("fpName")
+        fpid = intent.getStringExtra("fpid")
+        fpTag = intent.getStringExtra("fpTag")
+        email = intent.getStringExtra("email")
+        mobileNo = intent.getStringExtra("mobileNo")
+        profileUrl = intent.getStringExtra("profileUrl")
+        accountType = intent.getStringExtra("accountType")
+        isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
+        isOpenHomeFragment = intent.getBooleanExtra("isComingFromOrderConfirm",false)
+        isOpenAddOnsFragment = intent.getBooleanExtra("isComingFromOrderConfirmActivation",false)
+        //user buying item directly
+        widgetFeatureCode = intent.getStringExtra("buyItemKey")
+        userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
+
+
 
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -125,7 +152,10 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
         }
 
         package_cart_icon.setOnClickListener {
-            val intent = Intent(this, CartActivity::class.java)
+            val intent = Intent(
+                applicationContext,
+                CartActivity::class.java
+            )
             intent.putExtra("fpid", fpid)
             intent.putExtra("expCode", experienceCode)
             intent.putExtra("isDeepLink", isDeepLink)
@@ -160,10 +190,10 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
     private fun loadData() {
         val pref = this.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
         val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
-//        var code: String = (this).experienceCode!!
-//        if (!code.equals("null", true)) {
-//            viewModel.setCurrentExperienceCode(code, fpTag!!)
-//        }
+        var code: String = (this).experienceCode!!
+        if (!code.equals("null", true)) {
+            viewModel.setCurrentExperienceCode(code, fpTag!!)
+        }
 //        /*    if(bundleData!!.included_features != null) {
 //                val itemIds = arrayListOf<String>()
 //                for (item in bundleData!!.included_features) {
