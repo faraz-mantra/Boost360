@@ -61,11 +61,11 @@ class PreSignUpActivity : AppCompatActivity() {
       val inflater = navHostFragment.navController.navInflater
       val graph = inflater.inflate(R.navigation.main_navigation)
       if (fragmetState!!.equals("dropdown")) {
-        graph.startDestination = R.id.videoPlayerFragment
+        graph.setStartDestination(R.id.videoPlayerFragment)
         navHostFragment.navController.graph = graph
         navHostFragment.navController.navigate(R.id.introFragment)
       } else {
-        graph.startDestination = R.id.videoPlayerFragment
+        graph.setStartDestination(R.id.videoPlayerFragment)
         navHostFragment.navController.graph = graph
       }
 

@@ -56,9 +56,9 @@ class TimePickerDialogPreference : Preference {
         }
     }
 
-    override fun onAttachedToHierarchy(preferenceManager: PreferenceManager?) {
+    override fun onAttachedToHierarchy(preferenceManager: PreferenceManager) {
         super.onAttachedToHierarchy(preferenceManager)
-        summary = getTextForValue(sharedPreferences.getInt(key, defaultValue))
+        summary = getTextForValue(sharedPreferences?.getInt(key, defaultValue)?:0)
     }
 
     /**
@@ -75,11 +75,11 @@ class TimePickerDialogPreference : Preference {
      * Shows the time picker dialog.
      */
     private fun showTimePickerDialog() {
-        val v = sharedPreferences.getInt(key, defaultValue)
+        val v = sharedPreferences?.getInt(key, defaultValue)?:0
         val time = TimeUtil.decode(v)
         val timePickerDialog = TimePickerDialog(context, { _, newHour, newMinute ->
             val newValue = TimeUtil.encode(newHour, newMinute)
-            sharedPreferences.edit().putInt(key, newValue).apply()
+            sharedPreferences?.edit()?.putInt(key, newValue)?.apply()
             summary = getTextForValue(newValue)
         }, time.hour, time.minute, true)
         timePickerDialog.show()
