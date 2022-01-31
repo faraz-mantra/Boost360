@@ -67,6 +67,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.billing_details_layout.*
+import kotlinx.android.synthetic.main.cart_applied_coupon_layout.*
 import kotlinx.android.synthetic.main.cart_fragment.*
 import kotlinx.android.synthetic.main.cart_fragment.addons_layout
 import kotlinx.android.synthetic.main.cart_fragment.back_button12
@@ -254,14 +255,16 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     if (prefs.getApplyedCouponDetails() != null) {
       validCouponCode = prefs.getApplyedCouponDetails()
      // discount_coupon_title.text = validCouponCode!!.coupon_key
-      coupon_discount_title.text=validCouponCode!!.coupon_key
+      cart_coupon_discount_title.text=validCouponCode!!.coupon_key
       cart_apply_coupon.visibility = View.GONE
-      discount_coupon_remove.visibility = View.VISIBLE
+      cart_discount_coupon_remove.visibility = View.VISIBLE
     } else {
       validCouponCode = null
 //      discount_coupon_remove.visibility = View.GONE
       cart_apply_coupon.visibility = View.VISIBLE
       coupon_discount_title.text = "Discount coupon"
+    }
+    cart_applied_coupon_full_layout.visibility=View.GONE
 
       feature_validity.text=(default_validity_months.toString()) + " months"
 
@@ -297,7 +300,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       })
 
 
-    }
+
 
 
     edit.setOnClickListener {
@@ -431,13 +434,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //    }
 
 
-
-
-
-
-
-
-
 //    gstcheck.setOnClickListener {
 ////      prefs.storeGstRegistered(true)
 ////      gstFlag = true
@@ -455,24 +451,25 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
 
 
-//    discount_coupon_remove.setOnClickListener {
-//      discount_coupon_remove.visibility = View.GONE
-//      cart_apply_coupon.visibility = View.VISIBLE
-//  //    discount_coupon_title.text = "Discount coupon"
-// //     discount_coupon_message.visibility = View.GONE
-//      //clear coupon
-//      validCouponCode = null
-//
-//      //remove saved orderdetails and coupondetails from prefs
-//      prefs.storeCartOrderInfo(null)
-//      prefs.storeApplyedCouponDetails(null)
-//
-////            totalCalculation()
-//      couponCode = ""
-//      couponServiceModel = null
-//
-//      totalCalculationAfterCoupon()
-//    }
+    cart_discount_coupon_remove.setOnClickListener {
+      cart_applied_coupon_full_layout.visibility = View.GONE
+      discount_banner.visibility=View.GONE
+      cart_apply_coupon.visibility = View.VISIBLE
+  //    discount_coupon_title.text = "Discount coupon"
+ //     discount_coupon_message.visibility = View.GONE
+      //clear coupon
+      validCouponCode = null
+
+      //remove saved orderdetails and coupondetails from prefs
+      prefs.storeCartOrderInfo(null)
+      prefs.storeApplyedCouponDetails(null)
+
+//            totalCalculation()
+      couponCode = ""
+      couponServiceModel = null
+
+      totalCalculationAfterCoupon()
+    }
 
     cart_continue_submit1.setOnClickListener {
 
@@ -563,12 +560,13 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       }*/
 
 
-      if(gstcheck.visibility == View.VISIBLE && gstcheck1.visibility == View.GONE){
-        prefs.storeGstRegistered(false)
-      }else{
-        prefs.storeGstRegistered(true)
-      }
-      if(progress_bar.visibility == View.GONE){
+//      if(gstcheck.visibility == View.VISIBLE && gstcheck1.visibility == View.GONE){
+//        prefs.storeGstRegistered(true)
+//      }else{
+//        prefs.storeGstRegistered(false)
+//      }
+      if(progress_bar.visibility == View.GONE)
+      {
         if (validateAgreement()) {
           if (!customerInfoState) { //no customer available
             //create customer payment profile
@@ -576,11 +574,11 @@ class CartFragment : BaseFragment(), CartFragmentListener {
               (activity as? CartActivity)?.getAccessToken() ?: "",
               CreateCustomerInfoRequest(
                 AddressDetails(
-                  if (cart_business_city_name.text.isEmpty()) null else cart_business_city_name.text.toString(),
+                  if (cart_business_city_name.text.isEmpty()== true) null else cart_business_city_name.text.toString(),
                   "india",
                   if (cart_business_address.text?.isEmpty() == true) null else cart_business_address.text.toString(),
                   null,
-                  if (cart_business_city_name.text.isEmpty()) null else cart_business_city_name.text.toString(),
+                  if (cart_business_city_name.text.isEmpty()== true) null else cart_business_city_name.text.toString(),
                   null
                 ),
                 BusinessDetails(
@@ -1092,6 +1090,131 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   }
 
 
+  private fun validateAgreement(): Boolean {
+    if ( cart_business_city_name.text.isEmpty() || cart_business_address.text?.isEmpty() == true || business_gstin_number.text?.isEmpty() == true
+    ) {
+//      Log.v("business_name_value", " " + business_name_value.text.toString())
+      Toasty.error(requireContext(), "Fields are Empty!!", Toast.LENGTH_LONG).show()
+      if (business_gstin_number.text?.isEmpty() == true && !com.boost.cart.utils.Utils.isValidGSTIN(
+          business_gstin_number.text.toString()
+        ) ) {
+        business_gstin_number.setBackgroundResource(com.boost.cart.R.drawable.et_validity_error)
+        Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
+        return false
+      } else {
+        business_gstin_number.setBackgroundResource(com.boost.cart.R.drawable.rounded_edit_fill_kyc)
+      }
+
+//      if (business_contact_number.text!!.isEmpty()) {
+//        business_contact_number.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
+//        Toasty.error(requireContext(), "Please enter Mobile no.", Toast.LENGTH_LONG).show()
+//        return false
+//      } else {
+//        if (!com.boost.payment.utils.Utils.isValidMobile(business_contact_number.text.toString())) {
+//          business_contact_number.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
+//          Toasty.error(requireContext(), "Entered Mobile Number is not valid!!", Toast.LENGTH_LONG)
+//            .show()
+//          return false
+//        } else {
+////          business_contact_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
+//        }
+//      }
+//
+//      Log.v("business_name_value1", " " + business_contact_number.text.toString())
+//
+//
+//      Log.v("business_name_value2", " " + business_email_address.text.toString())
+//      if (business_email_address.text.isEmpty()) {
+//        business_email_address.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
+//        Toasty.error(requireContext(), "Please enter Email ID", Toast.LENGTH_LONG).show()
+//        return false
+//      } else {
+//        if (!com.boost.payment.utils.Utils.isValidMail(business_email_address.text.toString())) {
+//          business_email_address.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
+//          Toasty.error(requireContext(), "Entered Email ID is not valid!!", Toast.LENGTH_LONG)
+//            .show()
+//          return false
+//        } else {
+//          business_email_address.setBackgroundResource(com.boost.payment.R.drawable.rounded_edit_fill_kyc)
+//        }
+//      }
+
+
+      //  Log.v("business_name_value3", " " + business_name_value.text.toString())
+//      if (business_name_value.text.isEmpty()) {
+//        business_name_value.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
+//        Toasty.error(requireContext(), "Entered Business name is not valid!!", Toast.LENGTH_LONG)
+//          .show()
+//        return false
+//      } else {
+//        business_name_value.setBackgroundResource(com.boost.payment.R.drawable.rounded_edit_fill_kyc)
+//      }
+
+      if (cart_business_address.text?.isEmpty() == true) {
+        cart_business_address.setBackgroundResource(com.boost.cart.R.drawable.et_validity_error)
+        Toasty.error(requireContext(), "Entered Business address is not valid!!", Toast.LENGTH_LONG)
+          .show()
+        return false
+      } else {
+        cart_business_address.setBackgroundResource(com.boost.cart.R.drawable.rounded_edit_fill_kyc)
+      }
+      return false
+    }
+    if (!business_gstin_number.text?.isEmpty()!! && !com.boost.cart.utils.Utils.isValidGSTIN(
+        business_gstin_number.text.toString()
+      ) ) {
+      business_gstin_number.setBackgroundResource(com.boost.cart.R.drawable.et_validity_error)
+      Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
+      return false
+    }
+
+//    if (!com.boost.payment.utils.Utils.isValidMail(business_email_address.text.toString())) {
+//      business_email_address.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
+//      Toasty.error(requireContext(), "Entered Email ID is not valid!!", Toast.LENGTH_LONG).show()
+//      return false
+//    } else {
+//      business_email_address.setBackgroundResource(com.boost.payment.R.drawable.rounded_edit_fill_kyc)
+//    }
+
+//    if (!com.boost.payment.utils.Utils.isValidMobile(business_contact_number.text.toString())) {
+//      business_contact_number.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
+//      Toasty.error(requireContext(), "Entered Mobile Number is not valid!!", Toast.LENGTH_LONG)
+//        .show()
+//      return false
+//    } else {
+////      business_contact_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
+//    }
+
+    /*if (!confirm_checkbox.isChecked) {
+        Toasty.error(requireContext(), "Accept the Agreement!!", Toast.LENGTH_LONG).show()
+        return false
+    }*/
+    return true
+//        return false
+  }
+
+  private fun loadCustomerInfo() {
+    viewModel.getCustomerInfo(
+      (activity as? CartActivity)?.getAccessToken()?:"",
+      (activity as CartActivity).fpid!!,
+      (activity as CartActivity).clientid
+    )
+  }
+
+  private fun updateVisibility() {
+    cart_business_address.visibility = View.GONE
+    cart_business_city_name.visibility = View.GONE
+    state_tin_value.visibility=View.GONE
+    cart_business_address1.visibility = View.VISIBLE
+    cart_business_city_name1.visibility = View.VISIBLE
+  }
+  private fun reverseVisibility(){
+    cart_business_address.visibility = View.VISIBLE
+    cart_business_city_name.visibility = View.VISIBLE
+    state_tin_value.visibility=View.VISIBLE
+    cart_business_address1.visibility = View.GONE
+    cart_business_city_name1.visibility = View.GONE
+  }
 
 
   private fun callGSTApi(gstNo:String){
@@ -2555,7 +2678,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           if (it.success!!) {
     //        discount_coupon_message.visibility = View.VISIBLE
      //       discount_coupon_message.text = it.message
-              discount_banner.visibility=View.VISIBLE
+            cart_applied_coupon_full_layout.visibility=View.VISIBLE
+            cart_coupon_discount_title.text=  it.coupon_key.toString()
+            save.text=" You save ₹ " + ( it.couponDiscountAmt.toString() )
+            discount_banner.visibility=View.VISIBLE
               discount_banner_text.text= "Hooray! You save ₹ " + ( it.couponDiscountAmt.toString() )  + " with coupon & long validity discount"
           } else {
     //        discount_coupon_message.visibility = View.VISIBLE
@@ -2875,129 +3001,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     )
   }
 
-  private fun validateAgreement(): Boolean {
-    if ( cart_business_city_name.text.isEmpty() || cart_business_address.text?.isEmpty() == true || business_gstin_number.text?.isEmpty() == true
-    ) {
-//      Log.v("business_name_value", " " + business_name_value.text.toString())
-            Toasty.error(requireContext(), "Fields are Empty!!", Toast.LENGTH_LONG).show()
-      if (business_gstin_number.text?.isEmpty() == true && !com.boost.cart.utils.Utils.isValidGSTIN(
-          business_gstin_number.text.toString()
-        ) ) {
-        business_gstin_number.setBackgroundResource(com.boost.cart.R.drawable.et_validity_error)
-        Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
-        return false
-      } else {
-        business_gstin_number.setBackgroundResource(com.boost.cart.R.drawable.rounded_edit_fill_kyc)
-      }
-
-//      if (business_contact_number.text!!.isEmpty()) {
-//        business_contact_number.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
-//        Toasty.error(requireContext(), "Please enter Mobile no.", Toast.LENGTH_LONG).show()
-//        return false
-//      } else {
-//        if (!com.boost.payment.utils.Utils.isValidMobile(business_contact_number.text.toString())) {
-//          business_contact_number.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
-//          Toasty.error(requireContext(), "Entered Mobile Number is not valid!!", Toast.LENGTH_LONG)
-//            .show()
-//          return false
-//        } else {
-////          business_contact_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
-//        }
-//      }
-//
-//      Log.v("business_name_value1", " " + business_contact_number.text.toString())
-//
-//
-//      Log.v("business_name_value2", " " + business_email_address.text.toString())
-//      if (business_email_address.text.isEmpty()) {
-//        business_email_address.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
-//        Toasty.error(requireContext(), "Please enter Email ID", Toast.LENGTH_LONG).show()
-//        return false
-//      } else {
-//        if (!com.boost.payment.utils.Utils.isValidMail(business_email_address.text.toString())) {
-//          business_email_address.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
-//          Toasty.error(requireContext(), "Entered Email ID is not valid!!", Toast.LENGTH_LONG)
-//            .show()
-//          return false
-//        } else {
-//          business_email_address.setBackgroundResource(com.boost.payment.R.drawable.rounded_edit_fill_kyc)
-//        }
-//      }
-
-
-    //  Log.v("business_name_value3", " " + business_name_value.text.toString())
-//      if (business_name_value.text.isEmpty()) {
-//        business_name_value.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
-//        Toasty.error(requireContext(), "Entered Business name is not valid!!", Toast.LENGTH_LONG)
-//          .show()
-//        return false
-//      } else {
-//        business_name_value.setBackgroundResource(com.boost.payment.R.drawable.rounded_edit_fill_kyc)
-//      }
-
-      if (cart_business_address.text?.isEmpty() == true) {
-        cart_business_address.setBackgroundResource(com.boost.cart.R.drawable.et_validity_error)
-        Toasty.error(requireContext(), "Entered Business address is not valid!!", Toast.LENGTH_LONG)
-          .show()
-        return false
-      } else {
-        cart_business_address.setBackgroundResource(com.boost.cart.R.drawable.rounded_edit_fill_kyc)
-      }
-      return false
-    }
-    if (!business_gstin_number.text?.isEmpty()!! && !com.boost.cart.utils.Utils.isValidGSTIN(
-        business_gstin_number.text.toString()
-      ) ) {
-      business_gstin_number.setBackgroundResource(com.boost.cart.R.drawable.et_validity_error)
-      Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
-      return false
-    }
-
-//    if (!com.boost.payment.utils.Utils.isValidMail(business_email_address.text.toString())) {
-//      business_email_address.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
-//      Toasty.error(requireContext(), "Entered Email ID is not valid!!", Toast.LENGTH_LONG).show()
-//      return false
-//    } else {
-//      business_email_address.setBackgroundResource(com.boost.payment.R.drawable.rounded_edit_fill_kyc)
-//    }
-
-//    if (!com.boost.payment.utils.Utils.isValidMobile(business_contact_number.text.toString())) {
-//      business_contact_number.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
-//      Toasty.error(requireContext(), "Entered Mobile Number is not valid!!", Toast.LENGTH_LONG)
-//        .show()
-//      return false
-//    } else {
-////      business_contact_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
-//    }
-
-    /*if (!confirm_checkbox.isChecked) {
-        Toasty.error(requireContext(), "Accept the Agreement!!", Toast.LENGTH_LONG).show()
-        return false
-    }*/
-    return true
-//        return false
-  }
-
-  private fun loadCustomerInfo() {
-    viewModel.getCustomerInfo(
-      (activity as? CartActivity)?.getAccessToken()?:"",
-      (activity as CartActivity).fpid!!,
-      (activity as CartActivity).clientid
-    )
-  }
-
-  private fun updateVisibility() {
-    cart_business_address.visibility = View.GONE
-    cart_business_city_name.visibility = View.GONE
-    state_tin_value.visibility=View.GONE
-    cart_business_address1.visibility = View.VISIBLE
-    cart_business_city_name1.visibility = View.VISIBLE
-  }
-  private fun reverseVisibility(){
-    cart_business_address.visibility = View.VISIBLE
-    cart_business_city_name.visibility = View.VISIBLE
-    state_tin_value.visibility=View.VISIBLE
-    cart_business_address1.visibility = View.GONE
-    cart_business_city_name1.visibility = View.GONE
-  }
 }
+
+
+
+

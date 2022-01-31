@@ -774,7 +774,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             layout="@layout/cart_applied_coupon_layout" />
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -783,6 +783,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             tools:itemCount="1"
+                            android:visibility="gone"
                             tools:listitem="@layout/item_coupon_code" />
 
                         <androidx.appcompat.widget.AppCompatTextView
