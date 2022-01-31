@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/ic_indian_rupee" android:state_focused="true" />
-    <item android:drawable="@drawable/ic_indian_rupee_distracted" android:state_focused="false" />
-</selector>
