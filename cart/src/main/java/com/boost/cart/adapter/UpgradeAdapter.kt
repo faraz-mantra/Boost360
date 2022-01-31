@@ -72,6 +72,7 @@ class UpgradeAdapter(
     private var upgradeDetails = itemView.findViewById<TextView>(R.id.title)!!
     private var upgradePrice = itemView.findViewById<TextView>(R.id.price)!!
     private var image = itemView.findViewById<ImageView>(R.id.imageView2)!!
+    var add_to_cart=itemView.findViewById<TextView>(R.id.add_to_cart)
 
     private var context: Context = itemView.context
 

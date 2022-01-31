@@ -1238,7 +1238,7 @@
                                 android:gravity="end">
 
                                 <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/cart_amount_value"
+                                    android:id="@+id/cart_amount"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="₹4,583"
@@ -1361,6 +1361,7 @@
                                 android:gravity="end">
 
                                 <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/feature_validity"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="3 Months"
@@ -1509,13 +1510,35 @@
             android:layout_gravity="bottom"
             android:background="@drawable/rect_top_bg"
             android:elevation="@dimen/_10sdp"
-            android:paddingStart="@dimen/_20sdp"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_20sdp"
             android:paddingBottom="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/discount_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#7ED321"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/discount_banner_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
+                    android:text="Hooray! You save ₹198 with coupon &amp; long validity discount"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_10sp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <LinearLayout
                 android:id="@+id/cart_view_details"
@@ -1523,9 +1546,10 @@
                 android:layout_height="wrap_content"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:orientation="vertical"
+                android:paddingLeft="@dimen/_10sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/discount_banner">
 
 
                 <TextView
@@ -1569,7 +1593,7 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/discount_banner" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
