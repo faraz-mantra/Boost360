@@ -61,7 +61,6 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
     }
   }
 
-  @ExperimentalStdlibApi
   override fun onCreateView() {
     super.onCreateView()
     setOnClickListener(

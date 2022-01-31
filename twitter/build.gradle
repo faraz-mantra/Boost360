@@ -47,7 +47,6 @@ android {
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
     api project(path: ':framework')
     // Twitter Core
     api "com.twitter.sdk.android:twitter-core:3.1.1"
