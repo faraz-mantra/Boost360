@@ -216,7 +216,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.initiateAddonMarketplace(session, false, "", "")
         } else if (url.contains(deeplink_cart_fragment)) {
           baseActivity.delayProgressShow()
-          baseActivity.initiateAddonMarketplace(session, true, "", "")
+          baseActivity.initiateAddonMarketplace(session, true, "", buyItemKey)
         } else if (url.contains(deeplink_manage_content)) {
           baseActivity.startManageContentActivity(session)
         } else if (url.contains(deeplink_my_bank_account)) {

@@ -467,6 +467,8 @@
 -keep class com.boost.marketplace.** {*;}
 -keep class com.boost.marketplace.data.** { <fields>; }
 
+##------dbcenterapi---------##
+-keep class com.boost.dbcenterapi.data.api_model.** { <fields>; }
 
 ##-----Appsflyer-----###
 -keep class com.appsflyer.** { *; }
