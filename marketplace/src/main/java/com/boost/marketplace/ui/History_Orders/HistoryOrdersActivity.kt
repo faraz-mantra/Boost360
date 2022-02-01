@@ -17,7 +17,6 @@ import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
 
-
 class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, HistoryOrdersViewModel>(),
     HistoryFragmentListener,
     RecyclerItemClickListener {
@@ -55,6 +54,7 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Histo
         initRecyclerView()
         binding?.shimmerViewHistory?.startShimmer()
         binding?.addonsBack?.setOnClickListener {
+            super.onBackPressed()
 
         }
 

@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
 import com.boost.dbcenterapi.data.api_model.GetFloatingPointWebWidgets.response.GetFloatingPointWebWidgetsResponse
+import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.data.rest.repository.MarketplaceNewRepository
 import com.boost.dbcenterapi.data.rest.repository.MarketplaceRepository
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
@@ -49,6 +50,8 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
     var updatesResult: MutableLiveData<List<WidgetModel>> = MutableLiveData()
     var allBackBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
     var bundleExistsBool: MutableLiveData<Boolean> = MutableLiveData()
+    var NewApiService =
+        com.boost.cart.utils.Utils.getRetrofit(true).create(NewApiInterface::class.java)
 
 
     var experienceCode: String = "SVC"
@@ -57,8 +60,10 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
     lateinit var application: Application
     lateinit var lifecycleOwner: LifecycleOwner
 
-    fun setApplicationLifecycle(application: Application,
-                                lifecycleOwner: LifecycleOwner){
+    fun setApplicationLifecycle(
+        application: Application,
+        lifecycleOwner: LifecycleOwner
+    ) {
         this.application = application
         this.lifecycleOwner = lifecycleOwner
     }
@@ -84,6 +89,7 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
     fun getYoutubeVideoDetails(): LiveData<List<YoutubeVideoModel>> {
         return allVideoDetails
     }
+
 
     fun getExpertConnectDetails(): LiveData<ExpertConnect> {
         return expertConnectDetails
@@ -173,7 +179,7 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
         if (Utils.isConnectedToInternet(application)) {
             MarketplaceNewRepository.getAllFeatures().toLiveData()
                 .observeOnce(lifecycleOwner, Observer {
-                    if(it.isSuccess()) {
+                    if (it.isSuccess()) {
                         var response = it as? GetAllFeaturesResponse
                         Log.e("GetAllFeatures", response.toString())
                         var data = arrayListOf<FeaturesModel>()
@@ -255,7 +261,8 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                                                 clientId
                                             ).toLiveData()
                                                 .observe(lifecycleOwner, Observer {
-                                                    val response1 = it as? GetFloatingPointWebWidgetsResponse
+                                                    val response1 =
+                                                        it as? GetFloatingPointWebWidgetsResponse
                                                     CompositeDisposable().add(
                                                         AppDatabase.getInstance(application)!!
                                                             .featuresDao()
@@ -378,40 +385,40 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                                 .subscribe()
                         }
 
-                        //saving videoGallery
-                        if (response.Data[0].video_gallery != null && response.Data[0].video_gallery.size > 0) {
-                            val videoGallery = arrayListOf<YoutubeVideoModel>()
-                            for (singleVideoDetails in response.Data[0].video_gallery) {
-                                videoGallery.add(
-                                    YoutubeVideoModel(
-                                        singleVideoDetails._kid,
-                                        singleVideoDetails.desc,
-                                        singleVideoDetails.duration,
-                                        singleVideoDetails.title,
-                                        singleVideoDetails.youtube_link
-                                    )
-                                )
-                            }
-
-                            Completable.fromAction {
-                                AppDatabase.getInstance(application)!!
-                                    .youtubeVideoDao()
-                                    .insertAllYoutubeVideos(videoGallery)
-                            }
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .doOnComplete {
-                                    Log.i("insertAllYoutubeVideos", "Successfully")
-                                    allVideoDetails.postValue(videoGallery)
-                                    updatesLoader.postValue(false)
-                                }
-                                .doOnError {
-                                    Log.i("insertAllYoutubeVideos", "Successfully")
-                                    updatesError.postValue(it.message)
-                                    updatesLoader.postValue(false)
-                                }
-                                .subscribe()
-                        }
+                     //   saving videoGallery
+//                        if (response.Data[0].video_gallery != null && response.Data[0].video_gallery.size > 0) {
+//                            val videoGallery = arrayListOf<YoutubeVideoModel>()
+//                            for (singleVideoDetails in response.Data[0].video_gallery) {
+//                                videoGallery.add(
+//                                    YoutubeVideoModel(
+//                                        singleVideoDetails._kid,
+//                                        singleVideoDetails.desc,
+//                                        singleVideoDetails.duration,
+//                                        singleVideoDetails.title,
+//                                        singleVideoDetails.youtube_link
+//                                    )
+//                                )
+//                            }
+//
+//                            Completable.fromAction {
+//                                AppDatabase.getInstance(application)!!
+//                                    .youtubeVideoDao()
+//                                    .insertAllYoutubeVideos(videoGallery)
+//                            }
+//                                .subscribeOn(Schedulers.io())
+//                                .observeOn(AndroidSchedulers.mainThread())
+//                                .doOnComplete {
+//                                    Log.i("insertAllYoutubeVideos", "Successfully")
+//                                    allVideoDetails.postValue(videoGallery)
+//                                    updatesLoader.postValue(false)
+//                                }
+//                                .doOnError {
+//                                    Log.i("insertAllYoutubeVideos", "Successfully")
+//                                    updatesError.postValue(it.message)
+//                                    updatesLoader.postValue(false)
+//                                }
+//                                .subscribe()
+//                        }
 
                         //get ExpertConnect Details
                         expertConnectDetails.postValue(response.Data[0].expert_connect)
@@ -609,67 +616,67 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
         if (Utils.isConnectedToInternet(application)) {
             MarketplaceNewRepository.getAllFeatures().toLiveData()
                 .observe(lifecycleOwner, Observer {
-                        Log.e("GetAllFeatures", it.toString())
-                        var it = it as GetAllFeaturesResponse
+                    Log.e("GetAllFeatures", it.toString())
+                    var it = it as GetAllFeaturesResponse
 
-                        //saving bundle info in bundle table
-                        val bundles = arrayListOf<BundlesModel>()
-                        for (item in it.Data[0].bundles) {
-                            if (item.exclusive_for_customers != null && item.exclusive_for_customers!!.size > 0) {
-                                var applicableToCurrentFPTag = false
-                                for (code in item.exclusive_for_customers!!) {
-                                    if (code.equals(_fpTag, true)) {
-                                        applicableToCurrentFPTag = true
-                                        break
-                                    }
+                    //saving bundle info in bundle table
+                    val bundles = arrayListOf<BundlesModel>()
+                    for (item in it.Data[0].bundles) {
+                        if (item.exclusive_for_customers != null && item.exclusive_for_customers!!.size > 0) {
+                            var applicableToCurrentFPTag = false
+                            for (code in item.exclusive_for_customers!!) {
+                                if (code.equals(_fpTag, true)) {
+                                    applicableToCurrentFPTag = true
+                                    break
                                 }
-                                if (!applicableToCurrentFPTag)
-                                    continue
                             }
-                            if (item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) {
-                                var applicableToCurrentExpCode = false
-                                for (code in item.exclusive_to_categories!!) {
-                                    if (code.equals(experienceCode, true)) {
-                                        applicableToCurrentExpCode = true
-                                        break
-                                    }
-                                }
-                                if (!applicableToCurrentExpCode)
-                                    continue
-                            }
-                            bundles.add(
-                                BundlesModel(
-                                    item._kid,
-                                    item.name,
-                                    if (item.min_purchase_months != null && item.min_purchase_months!! > 1) item.min_purchase_months!! else 1,
-                                    item.overall_discount_percent,
-                                    if (item.primary_image != null) item.primary_image!!.url else null,
-                                    Gson().toJson(item.included_features),
-                                    item.target_business_usecase,
-                                    Gson().toJson(item.exclusive_to_categories), item.desc
-                                )
-                            )
+                            if (!applicableToCurrentFPTag)
+                                continue
                         }
-                        Completable.fromAction {
+                        if (item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) {
+                            var applicableToCurrentExpCode = false
+                            for (code in item.exclusive_to_categories!!) {
+                                if (code.equals(experienceCode, true)) {
+                                    applicableToCurrentExpCode = true
+                                    break
+                                }
+                            }
+                            if (!applicableToCurrentExpCode)
+                                continue
+                        }
+                        bundles.add(
+                            BundlesModel(
+                                item._kid,
+                                item.name,
+                                if (item.min_purchase_months != null && item.min_purchase_months!! > 1) item.min_purchase_months!! else 1,
+                                item.overall_discount_percent,
+                                if (item.primary_image != null) item.primary_image!!.url else null,
+                                Gson().toJson(item.included_features),
+                                item.target_business_usecase,
+                                Gson().toJson(item.exclusive_to_categories), item.desc
+                            )
+                        )
+                    }
+                    Completable.fromAction {
 //                                            AppDatabase.getInstance(application)!!
 //                                                    .bundlesDao()
 //                                                    .insertAllBundles(bundles)
-                        }
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doOnComplete {
-                                Log.i("insertAllBundles", "Successfully")
-                                allBackBundleResult.postValue(bundles)
-                                updatesLoader.postValue(false)
-                            }
-                            .doOnError {
-                                updatesError.postValue(it.message)
-                                updatesLoader.postValue(false)
-                            }
-                            .subscribe()
-
-
                     }
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnComplete {
+                            Log.i("insertAllBundles", "Successfully")
+                            allBackBundleResult.postValue(bundles)
+                            updatesLoader.postValue(false)
+                        }
+                        .doOnError {
+                            updatesError.postValue(it.message)
+                            updatesLoader.postValue(false)
+                        }
+                        .subscribe()
+
+
+                }
                 )
         } else {
             CompositeDisposable().add(
@@ -846,7 +853,7 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                                 .subscribe()
                         }
                     }, {
-    //                            Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
+                        //                            Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
                     })
             )
         } catch (e: Exception) {
@@ -943,5 +950,72 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                 Log.i("emptyCouponTable", "Failure")
             }
             .subscribe()
+    }
+
+    fun GetHelp() {
+        if (Utils.isConnectedToInternet(application)) {
+                CompositeDisposable().add(
+                    NewApiService.GetHelp()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                            {
+                                if (it.Data[0].featurevideo != null && it.Data[0].featurevideo.size > 0) {
+                                    val videoGallery = arrayListOf<YoutubeVideoModel>()
+                                    for (singleVideoDetails in it.Data[0].featurevideo) {
+                                        videoGallery.add(
+                                            YoutubeVideoModel(
+                                                singleVideoDetails._kid,
+                                                singleVideoDetails.videodescription,
+                                                singleVideoDetails.videodurationseconds.toString(),
+                                                singleVideoDetails.videotitle,
+                                                singleVideoDetails.videourl.url
+                                            )
+                                        )
+                                    }
+
+                                    Completable.fromAction {
+                                        AppDatabase.getInstance(application)!!
+                                            .youtubeVideoDao()
+                                            .insertAllYoutubeVideos(videoGallery)
+                                    }
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .doOnComplete {
+                                            Log.i("insertAllYoutubeVideos", "Successfully")
+                                            allVideoDetails.postValue(videoGallery)
+                                            updatesLoader.postValue(false)
+                                        }
+                                        .doOnError {
+                                            Log.i("insertAllYoutubeVideos", "failed")
+                                            updatesError.postValue(it.message)
+                                            updatesLoader.postValue(false)
+                                        }
+                                        .subscribe()
+                                }
+                            },
+                            {
+                                Log.e("GetAllVideos", "error" + it.message)
+                                updatesLoader.postValue(false)
+                            })
+                )
+            } else {
+            CompositeDisposable().add(
+                AppDatabase.getInstance(application)!!
+                    .youtubeVideoDao()
+                    .getYoutubeVideoItems()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSuccess {
+                        allVideoDetails.postValue(it)
+                        updatesLoader.postValue(false)
+                    }
+                    .doOnError {
+                        updatesError.postValue(it.message)
+                        updatesLoader.postValue(false)
+                    }
+                    .subscribe()
+            )
+        }
     }
 }

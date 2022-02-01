@@ -1,12 +1,15 @@
 package com.boost.marketplace.Adapters
 
 import android.content.Context
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
@@ -59,6 +62,39 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
     if (list.size - 1 == position) {
       holder.view.visibility = View.GONE
     }
+    holder.mainlayout.setOnClickListener {
+      if (holder.detailsView.visibility==View.GONE) {
+        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
+          holder.detailsView.visibility= View.VISIBLE
+      } else {
+        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
+        holder.detailsView.visibility= View.GONE
+      }
+    }
+    holder.detailsView.setOnClickListener {
+      val item: FeaturesModel = FeaturesModel(
+        list.get(position).feature_id,
+        list.get(position).boost_widget_key,
+        list.get(position).name,
+        list.get(position).feature_code,
+        list.get(position).description!!,
+        list.get(position).description_title,
+        list.get(position).createdon,
+        list.get(position).updatedon,
+        list.get(position).websiteid,
+        list.get(position).isarchived,
+        list.get(position).is_premium,
+        list.get(position).target_business_usecase,
+        list.get(position).feature_importance,
+        list.get(position).discount_percent,
+        list.get(position).price,
+        list.get(position).time_to_activation,
+        list.get(position).primary_image)
+
+     //   arrayListOf()
+      myAddonsListener.onPaidAddonsClicked(item)
+    }
+
   }
 
   fun addupdates(upgradeModel: List<FeaturesModel>) {
@@ -69,9 +105,9 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
   }
 
 
-  override fun onClick(v: View?) {
-    myAddonsListener.onPaidAddonsClicked(v)
-  }
+//  override fun onClick(item: FeaturesModel) {
+//    myAddonsListener.onPaidAddonsClicked(item)
+//  }
 
   class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -79,6 +115,8 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
     private var upgradeTitle = itemView.findViewById<TextView>(R.id.paid_addons_name)!!
     private var activateLayout = itemView.findViewById<LinearLayout>(R.id.paid_addons_activate)!!
     private var image = itemView.findViewById<ImageView>(R.id.single_paidaddon_image)!!
+     var mainlayout=itemView.findViewById<ConstraintLayout>(R.id.main_layout)
+     var detailsView=itemView.findViewById<ConstraintLayout>(R.id.detailsView)
 
     private var context: Context = itemView.context
 
@@ -88,6 +126,10 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
       Glide.with(context).load(updateModel.primary_image).into(image)
 
     }
+  }
+
+  override fun onClick(v: View?) {
+    TODO("Not yet implemented")
   }
 
 }

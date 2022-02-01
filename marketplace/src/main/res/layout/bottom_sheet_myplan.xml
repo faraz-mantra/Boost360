@@ -24,144 +24,243 @@
             android:clickable="true"
             android:src="@drawable/ic_close_circle_gray" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bottoms_sheet_top20dp_white"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/size_10">
+            android:padding="@dimen/_15sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/bottoms_sheet_top20dp_white">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/main_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_10sdp">
+            <ImageView
+                android:id="@+id/addons_icon"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/clinic"
+                android:layout_marginBottom="@dimen/_15sdp"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toEndOf="@id/addons_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/addons_icon"
+                android:gravity="center_vertical"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/addons_icon">
 
-                <ImageView
-                    android:id="@+id/single_paidaddon_arrowIcon"
+                <TextView
+                    android:id="@+id/addons_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_8sdp"
-                    android:src="@drawable/next"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:fontFamily="@font/open_sans"
+                    android:text="In-clininc appointments"
+                    android:textStyle="normal"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="@dimen/_14sdp"
+                    android:textFontWeight="700"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <RelativeLayout
-                    android:id="@+id/imageLayout"
-                    android:layout_width="70dp"
-                    android:layout_height="67dp"
-                    android:layout_marginStart="13dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/single_paidaddon_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/backgroundwhite"
-                        android:padding="8dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/clinic" />
-
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/addons_desc"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="13dp"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/single_paidaddon_arrowIcon"
-                    app:layout_constraintStart_toEndOf="@+id/imageLayout"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:fontFamily="@font/open_sans"
+                    android:textStyle="normal"
+                    android:maxLines="1"
+                    android:text="In-clinic appointments for patients"
+                    android:textFontWeight="700"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="@dimen/_11sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:id="@+id/title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/open_sans_semibold"
-                            android:text="In-clinic appointments"
-                            android:textColor="#2a2a2a"
-                            android:textSize="@dimen/_15sdp" />
-                    </LinearLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/cslayout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:layout_constraintTop_toBottomOf="@id/addons_icon">
 
                     <TextView
-                        android:id="@+id/paid_addons_name"
+                        android:id="@+id/txt_message"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_gravity="start"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:fontFamily="@font/open_sans"
-                        android:lineSpacingExtra="1.3sp"
-                        android:textColor="#2a2a2a"
-                        android:textSize="@dimen/_10sdp"
-                        tools:text="Facebook Ads (upto 75 leads)" />
+                        android:text="satus"
+                        android:textStyle="normal"
+                        android:textSize="@dimen/_12sdp"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black_4a4a4a"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                </LinearLayout>
+                    <View
+                        android:id="@+id/paid_single_dummy_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_3sdp"
+                        android:background="@drawable/view_line"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        app:layout_constraintBottom_toTopOf="@+id/txt_desc"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_message"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/txt_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:fontFamily="@font/open_sans"
+                        android:gravity="start"
+                        android:includeFontPadding="false"
+                        android:text="bought on "
+                        android:textStyle="normal"
+                        android:textColor="@color/black_4a4a4a"
+                        android:textSize="@dimen/_12sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/txt_desc2"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_message" />
+
+                    <View
+                        android:id="@+id/paid_single_dummy_view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_3sdp"
+                        android:background="@drawable/view_line"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        app:layout_constraintBottom_toTopOf="@+id/txt_desc2"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_desc"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
 
-            <TextView
-                android:id="@+id/txt_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginHorizontal="@dimen/size_20"
-                android:layout_marginTop="@dimen/size_4"
-                android:fontFamily="@font/regular"
-                android:text="status"
-                android:textAllCaps="false"
-                android:textColor="@color/black_4a4a4a" />
 
-            <TextView
-                android:id="@+id/txt_desc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/size_20"
-                android:layout_marginTop="@dimen/size_8"
-                android:layout_marginBottom="@dimen/size_16"
-                android:fontFamily="@font/regular"
-                android:gravity="start"
-                android:includeFontPadding="false"
-                android:text="Bought on "
-                android:textColor="@color/black_4a4a4a"
-                android:textSize="12sp" />
+                    <TextView
+                        android:id="@+id/txt_desc2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:fontFamily="@font/open_sans"
+                        android:textStyle="normal"
+                        android:gravity="start"
+                        android:includeFontPadding="false"
+                        android:text="Valid till "
+                        android:textColor="@color/black_4a4a4a"
+                        android:textSize="@dimen/_12sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_desc" />
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:text="Active"
+                        android:textColor="#15c216"
+                        android:textSize="@dimen/_8sdp"
+                        app:layout_constraintBottom_toBottomOf="@+id/txt_message"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/txt_message"
+                        app:layout_constraintVertical_bias="0.428" />
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:src="@drawable/ic_tick_green"
+                        app:layout_constraintBottom_toBottomOf="@+id/txt_message"
+                        app:layout_constraintEnd_toStartOf="@+id/title"
+                        app:layout_constraintTop_toTopOf="@+id/txt_message"
+                        app:layout_constraintVertical_bias="0.6" />
+
+                    <TextView
+                        android:id="@+id/title3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="2 Jan 2022"
+                        android:fontFamily="@font/open_sans"
+                        android:textStyle="normal"
+                        android:textColor="@color/black_4a4a4a"
+                        android:textSize="@dimen/_12sdp"
+                        app:layout_constraintBottom_toBottomOf="@+id/txt_desc"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/txt_desc"
+                        app:layout_constraintVertical_bias="0.428" />
+
+
+                    <TextView
+                        android:id="@+id/title4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="30 Dec 2022"
+                        android:fontFamily="@font/open_sans"
+                        android:textStyle="normal"
+                        android:textColor="@color/black_4a4a4a"
+                        android:textSize="@dimen/_12sdp"
+                        app:layout_constraintBottom_toBottomOf="@+id/txt_desc2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/txt_desc2"
+                        app:layout_constraintVertical_bias="0.428" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <Button
-                android:id="@+id/btn_use_feature"
+                android:id="@+id/btn_Use_this_feature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginHorizontal="@dimen/size_16"
-                android:background="@drawable/mp_home_orange_btn_click_effect"
+                android:background="@drawable/orange_button_click_effect"
                 android:enabled="true"
+                android:textSize="@dimen/_12sdp"
                 android:text="Use this feature"
                 android:textAllCaps="false"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cslayout" />
 
             <Button
                 android:id="@+id/btn_feature_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginHorizontal="@dimen/size_16"
-                android:layout_marginTop="@dimen/size_12"
-                android:layout_marginBottom="@dimen/size_16"
-                android:background="@drawable/mp_home_share_click_effect"
+                android:background="@drawable/bg_rounded_yellow_light"
                 android:enabled="true"
                 android:gravity="center"
+                android:textSize="@dimen/_12sdp"
                 android:text="View feature details"
                 android:textAllCaps="false"
-                android:textColor="@color/colorAccent" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
+                android:textColor="@color/colorAccent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.228"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_Use_this_feature" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

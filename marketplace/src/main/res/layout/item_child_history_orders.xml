@@ -88,8 +88,9 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans"
                             android:text="In-clinic appointments"
+                            android:maxLines="1"
                             android:textColor="#2a2a2a"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_12sdp" />
 
                     </LinearLayout>
 

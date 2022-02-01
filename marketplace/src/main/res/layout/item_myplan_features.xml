@@ -12,18 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:focusable="true"
         android:orientation="vertical">
 
 
-        <View
-            android:id="@+id/paid_single_dummy_view"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_3sdp"
-            android:background="@drawable/view_dot_lines_bg"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,7 +41,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/emails"
-                    android:padding="8dp"
                     android:scaleType="fitCenter" />
 
             </RelativeLayout>
@@ -135,6 +126,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/detailsView"
             android:layout_width="match_parent"
@@ -165,6 +157,14 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:id="@+id/paid_single_dummy_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_3sdp"
+            android:background="@drawable/view_dot_lines_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </LinearLayout>
 </layout>

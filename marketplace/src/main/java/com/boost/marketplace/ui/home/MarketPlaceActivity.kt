@@ -3,33 +3,23 @@ package com.boost.marketplace.ui.home
 import android.animation.Animator
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
-import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.webkit.WebViewClient
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.SimplePageTransformer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
-import com.boost.dbcenterapi.infra.api.models.test.StringData
 import com.boost.dbcenterapi.recycleritem.RecyclerStringItemClickListener
-import com.boost.dbcenterapi.recycleritem.RecyclerStringItemType
-import com.boost.dbcenterapi.recycleritem.RecyclerViewItemType
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
@@ -41,31 +31,31 @@ import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.constant.RecyclerViewActionType
 import com.boost.marketplace.databinding.ActivityMarketplaceBinding
-import com.boost.marketplace.ui.details.FeatureDetailsActivity
-import com.framework.pref.Key_Preferences
-import com.framework.pref.UserSessionManager
-import com.framework.pref.getAccessTokenAuth
-import com.framework.views.dotsindicator.OffsetPageTransformer
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_marketplace.*
 import com.boost.marketplace.interfaces.CompareBackListener
 import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
 import com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity
 import com.boost.marketplace.ui.browse.BrowseFeaturesActivity
 import com.boost.marketplace.ui.coupons.OfferCouponsActivity
+import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.boost.marketplace.ui.marketplace_Offers.MarketPlaceOffersActivity
+import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
+import com.boost.marketplace.ui.videos.VideosPopUpBottomSheet
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.framework.analytics.SentryController
+import com.framework.pref.Key_Preferences
+import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
 import com.framework.webengageconstant.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.util.HashMap
+import kotlinx.android.synthetic.main.activity_marketplace.*
 
 class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPlaceHomeViewModel>(),
     RecyclerStringItemClickListener, CompareBackListener, HomeListener {
@@ -164,6 +154,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
         //emptyCouponTable everytime for new coupon code
         viewModel.emptyCouponTable()
+        viewModel.GetHelp()
 //        setSpannableStrings()
         loadData()
         initMvvm()
@@ -508,7 +499,37 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //            )
             val intent = Intent(this, ComparePacksActivity::class.java)
             intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+
+            intent.putExtra("fpid", fpid)
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("isDeepLink", isDeepLink)
+            intent.putExtra("deepLinkViewType", deepLinkViewType)
+            intent.putExtra("deepLinkDay", deepLinkDay)
+            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                userPurchsedWidgets
+            )
+            if (email != null) {
+                intent.putExtra("email", email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                intent.putExtra("mobileNo", mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", profileUrl)
             startActivity(intent)
+
+
+
+            //  startActivity(intent)
         }
         mp_review_cart_close_iv.setOnClickListener{
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_WAITING_CART_CROSS_CLICKED,EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_CROSS_CLICKED,NO_EVENT_VALUE)
@@ -620,8 +641,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 return true
             }
             R.id.help_section -> {
-                Toast.makeText(applicationContext, "Clicked on Help Section", Toast.LENGTH_LONG)
-                    .show()
+                val videoshelp = HelpVideosBottomSheet()
+                val args = Bundle()
+                videoshelp.arguments= args
+                videoshelp.show(this.supportFragmentManager, HelpVideosBottomSheet::class.java.name)
                 return true
             }
             else -> super.onOptionsItemSelected(item)
@@ -1724,7 +1747,37 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         val intent = Intent(this, ComparePacksActivity::class.java)
         intent.putExtra("bundleData", Gson().toJson(item))
         intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+
+        intent.putExtra("fpid", fpid)
+        intent.putExtra("expCode", experienceCode)
+        intent.putExtra("isDeepLink", isDeepLink)
+        intent.putExtra("deepLinkViewType", deepLinkViewType)
+        intent.putExtra("deepLinkDay", deepLinkDay)
+        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+        intent.putExtra(
+            "accountType",
+            accountType
+        )
+        intent.putStringArrayListExtra(
+            "userPurchsedWidgets",
+            userPurchsedWidgets
+        )
+        if (email != null) {
+            intent.putExtra("email", email)
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com")
+        }
+        if (mobileNo != null) {
+            intent.putExtra("mobileNo", mobileNo)
+        } else {
+            intent.putExtra("mobileNo", "9160004303")
+        }
+        intent.putExtra("profileUrl", profileUrl)
         startActivity(intent)
+
+
+
+        //   startActivity(intent)
     }
 
     override fun onPromoBannerClicked(item: PromoBanners?) {
@@ -2195,7 +2248,18 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             videoItem.title ?: NO_EVENT_VALUE
         )
         Log.i("onPlayYouTubeVideo", videoItem.youtube_link ?: "")
-        val link: List<String> = videoItem.youtube_link!!.split('/')
+
+        val link = videoItem.youtube_link!!
+
+        val dialogCard = VideosPopUpBottomSheet()
+        val args = Bundle()
+        args.putString("fpid",fpid)
+        args.putString("expCode",experienceCode)
+        args.putString("fptag",fpTag)
+        args.putString("title",videoItem.title)
+        args.putString("link", videoItem.youtube_link)
+        dialogCard.arguments = args
+        dialogCard.show(this.supportFragmentManager, VideosPopUpBottomSheet::class.java.name)
 //        videoPlayerWebView.getSettings().setJavaScriptEnabled(true)
 ////    videoPlayerWebView.getSettings().setPluginState(WebSettings.PluginState.ON)
 //        videoPlayerWebView.setWebViewClient(WebViewClient())
@@ -2374,7 +2438,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     }
 
     private fun initializeVideosRecycler() {
-        val gridLayoutManager = GridLayoutManager(applicationContext, 1)
+        val gridLayoutManager = LinearLayoutManager(applicationContext)
         gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
         videos_recycler.apply {
             layoutManager = gridLayoutManager

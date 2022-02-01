@@ -214,7 +214,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/_15sdp">
+                android:padding="@dimen/_5sdp">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
@@ -257,7 +257,7 @@
                                     android:layout_marginStart="18dp"
                                     android:layout_marginTop="10dp"
                                     android:gravity="center_vertical"
-                                    android:text="4 Free features"
+                                    android:text="-- Free features"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/_15ssp"
                                     app:layout_constraintBottom_toTopOf="@id/paid_subtitle"
@@ -300,6 +300,15 @@
                             android:layout_height="wrap_content"
                             android:visibility="visible"
                             app:layout_constraintTop_toBottomOf="@+id/paid_addons_title">
+
+                            <View
+                                android:id="@+id/paid_single_dummy_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_3sdp"
+                                android:background="@drawable/view_line"
+                                app:layout_constraintTop_toTopOf="@+id/expandableView"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent" />
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/recycler"
@@ -359,7 +368,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="18dp"
                                     android:layout_marginTop="10dp"
-                                    android:text="Premium features"
+                                    android:text="--Premium features"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/_15ssp"
                                     app:layout_constraintBottom_toTopOf="@+id/paid_subtitle1"
@@ -399,6 +408,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:layout_constraintTop_toBottomOf="@+id/paid_addons_title1">
+
+                            <View
+                                android:id="@+id/paid_single_dummy_view1"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_3sdp"
+                                android:background="@drawable/view_line"
+                                app:layout_constraintTop_toTopOf="@+id/expandableView1"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent" />
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/premium_recycler"
