@@ -2,6 +2,7 @@ package com.boost.dbcenterapi.data.rest.repository
 
 import com.boost.dbcenterapi.base.rest.AppBaseLocalService
 import com.boost.dbcenterapi.base.rest.AppBaseRepository
+import com.boost.dbcenterapi.data.api_model.couponRequest.CouponRequest
 import com.boost.dbcenterapi.data.rest.TaskCode
 import com.boost.dbcenterapi.data.rest.apiClients.MarketplaceNewApiClient
 import com.boost.dbcenterapi.data.rest.services.MarketplaceNewApiInterface
@@ -18,6 +19,7 @@ object MarketplaceNewRepository : AppBaseRepository<MarketplaceNewApiInterface, 
       TaskCode.GET_ALL_FEATURES
     )
   }
+
 
   override fun getRemoteDataSourceClass(): Class<MarketplaceNewApiInterface> {
     return MarketplaceNewApiInterface::class.java
