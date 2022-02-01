@@ -68,7 +68,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
     baseActivity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     this.session = UserSessionManager(baseActivity)
     setOnListeners()
-    setOnClickListener(binding?.tvVerifyOtp, binding?.tvResendOtpIn, binding?.tvPhoneNumber)
+    setOnClickListener(binding?.tvVerifyOtp, binding?.tvResendOtpIn, binding?.tvPhoneNumber, binding?.tvGetOtpOnCall)
     WebEngageController.trackEvent(PS_VERIFY_OTP_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.tvPhoneNumber?.text = "+91 ${phoneNumber.toString()}"
     Handler().postDelayed({ onCodeSent() }, 500)
@@ -80,10 +80,12 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
     when (v) {
       binding?.tvVerifyOtp -> verify()
       binding?.tvResendOtpIn -> {
+        WebEngageController.trackEvent(PS_LOGIN_OTP_RESENT_CLICK, CLICK, NO_EVENT_VALUE)
         binding?.pinOtpVerify?.setOTP("")
         sendOtp(phoneNumber)
       }
       binding?.tvPhoneNumber -> baseActivity.finish()
+      binding?.tvGetOtpOnCall -> WebEngageController.trackEvent(PS_LOGIN_OTP_ON_CALL_CLICK, CLICK, NO_EVENT_VALUE)
     }
   }
 
@@ -131,6 +133,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.help_new -> {
+        WebEngageController.trackEvent(PS_LOGIN_OTP_NEED_HELP_CLICK, CLICK, NO_EVENT_VALUE)
         NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
         return true
       }
