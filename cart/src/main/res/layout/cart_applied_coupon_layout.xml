@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/cart_applied_coupon_ll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginEnd="15dp"
+      android:src="@drawable/ic_cart_applied_coupon_success_bg" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/cart_coupon_discount_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:background="@drawable/ic_cart_applied_coupon_bg"
+      android:gravity="center"
+      android:text="FESTIVE"
+      android:textColor="#4A4A4A"
+      android:textSize="@dimen/txt_14sp"
+      android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/save"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginStart="13dp"
+      android:text="You save: ₹98"
+      android:textColor="#7ED321"
+      android:textSize="@dimen/txt_12sp" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center|end">
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/cart_discount_coupon_remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="7dp"
+        android:src="@drawable/ic_cart_applied_coupon_close" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="10dp"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:drawablePadding="5dp"
+      android:fontFamily="@font/open_sans_semibold"
+      android:text="Congratulations! Coupon was applied successfully."
+      android:textColor="#FFB900"
+      android:textSize="@dimen/txt_12sp" />
+
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

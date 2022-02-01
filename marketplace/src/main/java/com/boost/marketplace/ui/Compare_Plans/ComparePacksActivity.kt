@@ -184,7 +184,6 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
             startActivity(intent)
         }
         initializePackageViewPager()
-
     }
 
     private fun loadData() {

@@ -3,11 +3,14 @@ package com.boost.cart.ui.home
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.boost.cart.base_class.BaseViewModel
-import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.boost.cart.utils.SingleLiveEvent
+import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponRequest
@@ -15,14 +18,18 @@ import com.boost.dbcenterapi.data.api_model.customerId.create.CreateCustomerIDRe
 import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.dbcenterapi.data.api_model.customerId.get.GetCustomerIDResponse
 import com.boost.dbcenterapi.data.api_model.gst.Error
+import com.boost.dbcenterapi.data.api_model.gst.GSTApiResponse
 import com.boost.dbcenterapi.data.api_model.paymentprofile.GetLastPaymentDetails
-import com.boost.dbcenterapi.upgradeDB.model.*
+import com.boost.dbcenterapi.data.api_model.stateCode.GetStates
+import com.boost.dbcenterapi.data.model.coupon.CouponServiceModel
 import com.boost.dbcenterapi.data.remote.ApiInterface
 import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.data.renewalcart.*
-import com.boost.cart.utils.SingleLiveEvent
-import com.boost.cart.utils.Utils
-import com.boost.dbcenterapi.data.model.coupon.CouponServiceModel
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
+import com.boost.dbcenterapi.upgradeDB.model.CartModel
+import com.boost.dbcenterapi.upgradeDB.model.CouponsModel
+import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.framework.analytics.SentryController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -88,6 +95,18 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
   var _updateCheckoutClose: MutableLiveData<Boolean> = MutableLiveData()
   private var lastPaymentDetailsInfo :MutableLiveData<GetLastPaymentDetails> = MutableLiveData()
+
+  private var statesInfo :MutableLiveData<GetStates> = MutableLiveData()
+
+  var selectedStateResult: MutableLiveData<String> = MutableLiveData()
+  var selectedStateTinResult: MutableLiveData<String> = MutableLiveData()
+
+  var stateValue: String? = null
+  var cityValueResult: MutableLiveData<String> = MutableLiveData()
+
+  private var updateInfo: MutableLiveData<CreateCustomerIDResponse> = MutableLiveData()
+
+  private var gstApiInfo : MutableLiveData<GSTApiResponse> = MutableLiveData()
 
 
 
@@ -212,6 +231,37 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     return lastPaymentDetailsInfo
   }
 
+  fun selectedStateResult(state: String) {
+    selectedStateResult.postValue(state)
+  }
+
+  fun getSelectedStateResult(): LiveData<String> {
+    return selectedStateResult
+  }
+
+  fun selectedStateTinResult(stateTin :String){
+    selectedStateTinResult.postValue(stateTin)
+  }
+  fun getSelectedStateTinResult():LiveData<String>{
+    return selectedStateTinResult
+  }
+  fun getStatesResult(): LiveData<GetStates>{
+    return statesInfo
+  }
+
+  fun getUpdatedCustomerBusinessResult(): LiveData<CreateCustomerIDResponse> {
+    return customerInfo
+  }
+  fun getUpdatedResult(): LiveData<CreateCustomerIDResponse> {
+    return updateInfo
+  }
+  fun stateResult(): LiveData<List<String>> {
+    return stateResult
+  }
+
+  fun getGstApiResult(): LiveData<GSTApiResponse>{
+    return gstApiInfo
+  }
 
   fun writeStringAsFile(fileContents: String?, fileName: String?) {
     val context: Context = getApplication()
@@ -738,6 +788,77 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
       )
     }
   }
+
+  fun getStatesWithCodes(auth: String,clientId: String,progressBar: ProgressBar){
+    if(com.boost.dbcenterapi.utils.Utils.isConnectedToInternet(getApplication())){
+      CompositeDisposable().add(
+        ApiService.getStates(auth,clientId)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(
+            {
+              Log.i("getStates",it.toString())
+              statesInfo.postValue(it)
+              progressBar.visibility = View.GONE
+            },
+            {
+              val temp = (it as HttpException).response()!!.errorBody()!!.string()
+              val errorBody : Error = Gson().fromJson(temp,object : TypeToken<com.boost.dbcenterapi.data.api_model.stateCode.Error>() {}.type)
+              progressBar.visibility = View.GONE
+              Toasty.error(getApplication(), errorBody.toString(), Toast.LENGTH_LONG).show()
+            }
+          )
+      )
+    }
+  }
+
+  fun getStateFromCityAssetJson(context: Context, city: String) {
+    val data: String? = com.boost.dbcenterapi.utils.Utils.getCityFromAssetJsonData(context)
+    try {
+      val json_contact: JSONObject = JSONObject(data)
+      var jsonarray_info: JSONArray = json_contact.getJSONArray("data")
+      var i: Int = 0
+      var size: Int = jsonarray_info.length()
+      for (i in 0..size - 1) {
+        var json_objectdetail: JSONObject = jsonarray_info.getJSONObject(i)
+        Log.v("getStateFromCity", " " + json_objectdetail.getString("name") + " " + city)
+        if (json_objectdetail.getString("name").equals(city)) {
+//                    stateValue = json_objectdetail.getString("state") + "("+json_objectdetail.getString("state_tin") +")"
+          stateValue = json_objectdetail.getString("state")
+        }
+        cityValueResult.postValue(stateValue)
+
+      }
+      cityResult.postValue(cityNames)
+    } catch (ioException: JSONException) {
+      ioException.printStackTrace()
+      SentryController.captureException(ioException)
+    }
+  }
+
+  fun getGstApiInfo(auth: String,gstIn:String,clientId: String,progressBar: ProgressBar){
+    if(com.boost.dbcenterapi.utils.Utils.isConnectedToInternet(getApplication())){
+      CompositeDisposable().add(
+        ApiService.getGSTDetails(auth,gstIn,clientId)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(
+            {
+              Log.i("getGstDetails",it.toString())
+              gstApiInfo.postValue(it)
+            },
+            {
+              val temp = (it as HttpException).response()!!.errorBody()!!.string()
+              val errorBody : Error = Gson().fromJson(temp,object : TypeToken<Error>() {}.type)
+              progressBar.visibility = View.GONE
+              Toasty.error(getApplication(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
+            }
+          )
+      )
+    }
+  }
+
+
 
 
 

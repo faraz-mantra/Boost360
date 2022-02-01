@@ -11,14 +11,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
 import com.boost.cart.interfaces.CartFragmentListener
-import com.boost.cart.utils.WebEngageController
-import com.boost.dbcenterapi.upgradeDB.model.*
+import com.boost.dbcenterapi.upgradeDB.model.CartModel
+import com.boost.dbcenterapi.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_PACKAGE_CROSSED_DELETED_FROM_CART
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class CartPackageAdaptor(
@@ -35,7 +34,7 @@ class CartPackageAdaptor(
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
     val itemView = LayoutInflater.from(parent.context).inflate(
-      R.layout.cart_single_package, parent, false
+      R.layout.item_cart_pack, parent, false
     )
     context = itemView.context
 
@@ -73,12 +72,7 @@ class CartPackageAdaptor(
     } else {
       holder.orig_cost.visibility = View.GONE
     }
-    if (selectedBundle.discount > 0) {
-      holder.discount.text = selectedBundle.discount.toString() + "%"
-      holder.discount.visibility = View.VISIBLE
-    } else {
-      holder.discount.visibility = View.GONE
-    }
+
     holder.removePackage.setOnClickListener {
       selectedBundle.item_name?.let { it1 ->
         WebEngageController.trackEvent(
@@ -89,16 +83,92 @@ class CartPackageAdaptor(
       }
       listener.deleteCartAddonsItem(bundlesList.get(position).item_id)
     }
-    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
-    if (bundlesList.size - 1 == position) {
-      holder.view.visibility = View.GONE
-    }
+//    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+//    if (bundlesList.size - 1 == position) {
+//      holder.view.visibility = View.GONE
+//    }
 
     //showing package details
     holder.itemView.setOnClickListener {
       listener.showBundleDetails(bundlesList.get(position).item_id)
     }
+
+//    val features = arrayListOf<CartModel>()
+//    val bundles = arrayListOf<CartModel>()
+//    for (items in it) {
+//      if (items.item_type.equals("features")) {
+//        features.add(items)
+//      } else if (items.item_type.equals("bundles")) {
+//        bundles.add(items)
+//      }
+//    }
+
+  //  val listSamp = ArrayList<String>()
+//    for( item in parentItem.included_features){
+////            Log.v("onBindViewHolder", " "+ item.feature_code)
+//      listSamp.add(item.feature_code)
+//    }
+//    val listSamp = ArrayList<String>()
+//    val distinct: List<String> = LinkedHashSet(listSamp).toMutableList()
+//    val layoutManager1 = LinearLayoutManager(context)
+//
+//    CompositeDisposable().add(
+//      AppDatabase.getInstance(Application())!!
+//        .cartDao()
+//        .getCartItems()
+//        .subscribeOn(Schedulers.io())
+//        .observeOn(AndroidSchedulers.mainThread())
+//        .subscribe(
+//          {
+//            bundlesList = it as ArrayList<CartModel>
+//            val features = arrayListOf<CartModel>()
+//            val bundles = arrayListOf<CartModel>()
+//
+//            val itemIds = java.util.ArrayList<String?>()
+//
+//            for(listItems in it){
+//              CompositeDisposable().add(
+//                AppDatabase.getInstance(Application())!!
+//                  .featuresDao()
+////                                                        .getFeatureListTargetBusiness(listItems.target_business_usecase,itemIds)
+//                  .getAllFeatures()
+//                  .subscribeOn(Schedulers.io())
+//                  .observeOn(AndroidSchedulers.mainThread())
+//                  .subscribe({
+//
+//                    for (item in it) {
+//                      itemIds.add(item.feature_code)
+//                    }
+//
+//
+//                    if (it != null) {
+//
+//                      Log.v("getFeatureListTarget", " "+ itemIds )
+//
+//                      val sectionLayout = ChildPackAdapter(it)
+//                      holder.ChildRecyclerView
+//                        .setAdapter(sectionLayout)
+//                      holder.ChildRecyclerView
+//                        .setLayoutManager(layoutManager1)
+//
+//
+//                    } else {
+////                                                                Toasty.error(requireContext(), "Bundle Not Available To This Account", Toast.LENGTH_LONG).show()
+//                    }
+//                  }, {
+//                    it.printStackTrace()
+//                  })
+//              )
+//            }
+//          },
+//          {
+//            it.printStackTrace()
+//
+//          }
+//        )
+//    )
   }
+
 
   fun addupdates(upgradeModel: List<CartModel>) {
     val initPosition = bundlesList.size
@@ -111,10 +181,12 @@ class CartPackageAdaptor(
     val name = itemView.findViewById<TextView>(R.id.package_title)
     val price = itemView.findViewById<TextView>(R.id.package_price)
     val orig_cost = itemView.findViewById<TextView>(R.id.package_orig_cost)
-    val discount = itemView.findViewById<TextView>(R.id.package_discount)
+
+    //  val discount = itemView.findViewById<TextView>(R.id.package_discount)
     val image = itemView.findViewById<ImageView>(R.id.package_profile_image)
     val removePackage = itemView.findViewById<ImageView>(R.id.package_close)
-    var view = itemView.findViewById<View>(R.id.cart_single_package_bottom_view)!!
+    val ChildRecyclerView = itemView.findViewById<RecyclerView>(R.id.child_recyclerview)
+    //   var view = itemView.findViewById<View>(R.id.cart_single_package_bottom_view)!!
   }
 
   fun spannableString(holder: upgradeViewHolder, value: Double, minMonth: Int) {

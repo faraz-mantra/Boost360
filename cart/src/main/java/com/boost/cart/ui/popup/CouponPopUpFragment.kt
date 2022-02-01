@@ -51,7 +51,7 @@ class CouponPopUpFragment : DialogFragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    root = inflater.inflate(R.layout.coupon_popup, container, false)
+    root = inflater.inflate(R.layout.coupon_dialog, container, false)
 
     return root
   }

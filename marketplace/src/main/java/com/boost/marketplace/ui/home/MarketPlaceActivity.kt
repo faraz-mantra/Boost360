@@ -526,10 +526,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             }
             intent.putExtra("profileUrl", profileUrl)
             startActivity(intent)
-
-
-
-            //  startActivity(intent)
         }
         mp_review_cart_close_iv.setOnClickListener{
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_WAITING_CART_CROSS_CLICKED,EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_CROSS_CLICKED,NO_EVENT_VALUE)
@@ -1774,10 +1770,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         }
         intent.putExtra("profileUrl", profileUrl)
         startActivity(intent)
-
-
-
-        //   startActivity(intent)
     }
 
     override fun onPromoBannerClicked(item: PromoBanners?) {

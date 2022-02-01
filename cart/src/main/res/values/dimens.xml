@@ -142,5 +142,6 @@
   <dimen name="viewpager_current_item_horizontal_margin1">10dp</dimen>
   <dimen name="viewpager_current_item_horizontal_margin3">15dp</dimen>
   <dimen name="viewpager_current_item_horizontal_margin2">20dp</dimen>
+  <dimen name="viewpager_current_item_horizontal_margin4">25dp</dimen>
 </resources>
 

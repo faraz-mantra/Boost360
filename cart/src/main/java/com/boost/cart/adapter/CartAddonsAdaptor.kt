@@ -11,8 +11,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
 import com.boost.cart.interfaces.CartFragmentListener
-import com.boost.cart.utils.WebEngageController
-import com.boost.dbcenterapi.upgradeDB.model.*
+import com.boost.dbcenterapi.upgradeDB.model.CartModel
+import com.boost.dbcenterapi.upgradeDB.model.WidgetModel
+import com.boost.dbcenterapi.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_ADD_ON_CROSSED_DELETED_FROM_CART
@@ -33,7 +34,7 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
     val itemView = LayoutInflater.from(parent.context).inflate(
-      R.layout.cart_single_addons, parent, false
+      R.layout.item_feature_one, parent, false
     )
     context = itemView.context
 
@@ -58,11 +59,12 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
     } else {
       holder.MRPPrice.visibility = View.GONE
     }
-    if (list.get(position).discount > 0) {
-      holder.discount.text = list.get(position).discount.toString() + "%"
-    } else {
-      holder.discount.visibility = View.GONE
-    }
+    holder.desc.text=list.get(position).description_title
+//    if (list.get(position).discount > 0) {
+//      holder.discount.text = list.get(position).discount.toString() + "%"
+//    } else {
+//      holder.discount.visibility = View.GONE
+//    }
     holder.remove_addons.setOnClickListener {
       list.get(position).item_name?.let { it1 ->
         WebEngageController.trackEvent(
@@ -73,8 +75,8 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
       }
       listener.deleteCartAddonsItem(list.get(position).item_id)
     }
-    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
-    holder.view.visibility = if (list.size - 1 == position) View.GONE else View.VISIBLE
+//    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+//    holder.view.visibility = if (list.size - 1 == position) View.GONE else View.VISIBLE
   }
 
   fun addupdates(cardItems: List<CartModel>) {
@@ -91,8 +93,9 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
     var title = itemView.findViewById<TextView>(R.id.addons_title)!!
     var price = itemView.findViewById<TextView>(R.id.cart_item_price)!!
     var MRPPrice = itemView.findViewById<TextView>(R.id.cart_item_orig_cost)!!
-    var discount = itemView.findViewById<TextView>(R.id.cart_item_discount)!!
-    var view = itemView.findViewById<View>(R.id.cart_single_addons_bottom_view)!!
+    var desc=itemView.findViewById<TextView>(R.id.desc)
+ //   var discount = itemView.findViewById<TextView>(R.id.cart_item_discount)!!
+//    var view = itemView.findViewById<View>(R.id.cart_single_addons_bottom_view)!!
 
 
     fun upgradeListItem(updateModel: WidgetModel) {
