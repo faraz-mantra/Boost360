@@ -32,9 +32,7 @@ import com.framework.extensions.visible
 import com.framework.pref.*
 import com.framework.utils.showKeyBoard
 import com.framework.views.blur.setBlur
-import com.framework.webengageconstant.NO_EVENT_VALUE
-import com.framework.webengageconstant.PS_SIGNUP_SUCCESS
-import com.framework.webengageconstant.SIGNUP_SUCCESS
+import com.framework.webengageconstant.*
 import com.invitereferrals.invitereferrals.InviteReferralsApi
 
 class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Binding, LoginSignUpViewModel>() {
@@ -261,6 +259,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
 
   private fun apiHitCreateMerchantProfile() {
     initRequest()
+    WebEngageController.trackEvent(PS_SIGNUP_LAUNCHING_TRANSITION, PAGE_VIEW, NO_EVENT_VALUE)
     showProgress("We're creating your online ${businessName}...")
     //showProgress("We're creating your online ${categoryFloatsReq?.categoryDataModel?.getCategoryWithoutNewLine()}...")
     if (this.responseCreateProfile == null) {

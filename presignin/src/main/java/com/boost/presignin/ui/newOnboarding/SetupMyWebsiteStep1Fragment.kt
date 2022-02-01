@@ -27,9 +27,8 @@ import com.framework.utils.hideKeyBoard
 import com.framework.utils.onDone
 import com.framework.utils.onRightDrawableClicked
 import com.framework.utils.showKeyBoard
-import com.framework.webengageconstant.NO_EVENT_VALUE
-import com.framework.webengageconstant.PAGE_VIEW
-import com.framework.webengageconstant.PS_BUSINESS_CATEGORY_LOAD
+import com.framework.webengageconstant.*
+import com.framework.webengageconstant.PS_SIGNUP_CATEGORY_SELECTION_SCREEN_LOAD
 
 class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Binding, CategoryVideoModel>(), RecyclerItemClickListener {
 
@@ -73,7 +72,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
 
   override fun onCreateView() {
     super.onCreateView()
-    WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_SELECTION_SCREEN_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListeners()
     initialize()
     loadLocalCategoryData()
@@ -204,11 +203,18 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
       selectedCategory = null
       baseActivity.showKeyBoard(binding?.autocompleteSearchCategory)
     }
+    binding?.tvClickHereStill?.setOnClickListener {
+      WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_CANT_FIND_CLICK, CLICK, NO_EVENT_VALUE)
+    }
+    binding?.layoutDidYouMean?.setOnClickListener {
+      WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_CANT_FIND_CLICK, CLICK, NO_EVENT_VALUE)
+    }
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.CATEGORY_ITEM_CLICKED.ordinal -> {
+        WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_SELECTION_MAIN_LOAD, CLICK, NO_EVENT_VALUE)
         val dataCategory = (item as? CategoryDataModel) ?: return
         if (binding?.includeNoSearchResultFound?.root?.visibility == View.VISIBLE) {
           categoryNoDataList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
@@ -221,6 +227,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
         setSelectedCat(dataCategory)
       }
       RecyclerViewActionType.CATEGORY_SUGGESTION_CLICKED.ordinal -> {
+        WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_SELECTION_LIST_LOAD, CLICK, NO_EVENT_VALUE)
         selectedCategoryLive = (item as? ApiCategoryResponseCategory) ?: return
         baseActivity.hideKeyBoard()
         val dataCategory = categoryList.firstOrNull { it.experience_code == selectedCategoryLive?.fpExperienceCode?.name }
