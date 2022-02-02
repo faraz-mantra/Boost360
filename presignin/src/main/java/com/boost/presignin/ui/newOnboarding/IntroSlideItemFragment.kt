@@ -9,8 +9,11 @@ import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.ItemIntroNewSlidesBinding
+import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.newOnboarding.IntroItemNew
 import com.framework.models.BaseViewModel
+import com.framework.webengageconstant.*
+import com.framework.webengageconstant.PS_LOGIN_OTP_RESENT_CLICK
 
 class IntroSlideItemFragment : AppBaseFragment<ItemIntroNewSlidesBinding, BaseViewModel>() {
 
@@ -68,6 +71,8 @@ class IntroSlideItemFragment : AppBaseFragment<ItemIntroNewSlidesBinding, BaseVi
       }
 
       override fun onAnimationStart(animation: Animator?) {
+        Log.i("jbsjh", position.toString())
+        if (position == 0) WebEngageController.trackEvent(PS_INTRO_SCREEN_START, START_INTRO_ANIMATION, NO_EVENT_VALUE)
       }
 
     })
