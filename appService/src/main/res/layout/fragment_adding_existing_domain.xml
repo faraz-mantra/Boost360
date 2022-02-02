@@ -190,7 +190,7 @@
                         android:gravity="start"
                         android:text="@string/find_your_nameservers"
                         android:textAlignment="gravity"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
                         android:textSize="@dimen/text_24"
                         android:textStyle="bold"
                         app:fontFamily="@font/regular" />

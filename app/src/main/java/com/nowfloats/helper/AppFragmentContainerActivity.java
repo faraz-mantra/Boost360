@@ -14,13 +14,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.framework.utils.ConversionUtils;
 import com.framework.views.customViews.CustomToolbar;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.AboutFragment;
@@ -226,7 +224,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
     getToolbar().setTitle(title);
     getToolbar().setTitleTextColor(ContextCompat.getColor(this, getToolbarTitleColor()));
     float scale = Resources.getSystem().getDisplayMetrics().density;
-    TextView txtView = getToolbar().getTitleTextView();
+    TextView txtView = getToolbar().getToolbarTitleTextView();
     if (txtView != null) txtView.setTextSize(TypedValue.COMPLEX_UNIT_PX, (17F * scale + 0.5f));
   }
 

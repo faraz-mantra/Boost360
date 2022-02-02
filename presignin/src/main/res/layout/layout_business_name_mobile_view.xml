@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white_F5F8FD">
+
+    <com.framework.views.customViews.CustomTextView
+        android:id="@+id/tv_preview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_32"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="start"
+        android:text="@string/preview"
+        android:textAlignment="gravity"
+        android:textColor="@color/black_4a4a4a"
+        android:textSize="@dimen/text_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/iv_mobile_overlay"
+      android:layout_width="292dp"
+      android:layout_height="@dimen/size_280"
+      android:layout_marginTop="@dimen/size_12"
+      android:src="@drawable/rounded_mobile_preview_rectangle"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tv_preview" />
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/iv_green_bar"
+      android:layout_width="0dp"
+      android:layout_height="@dimen/size_65"
+      android:layout_marginTop="8dp"
+      android:src="@drawable/ic_mobile_top_green_bar_preview"
+      app:layout_constraintEnd_toEndOf="@+id/iv_mobile_overlay"
+      app:layout_constraintStart_toStartOf="@+id/iv_mobile_overlay"
+      app:layout_constraintTop_toTopOf="@+id/iv_mobile_overlay" />
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/customImageView8"
+      android:layout_width="@dimen/size_24"
+      android:layout_height="@dimen/size_24"
+      android:layout_marginStart="@dimen/size_19"
+      android:layout_marginTop="@dimen/size_34"
+      android:layout_marginBottom="@dimen/size_19"
+      android:src="@drawable/ic_hamburger_white"
+      app:layout_constraintBottom_toBottomOf="@+id/iv_green_bar"
+      app:layout_constraintStart_toStartOf="@+id/iv_green_bar"
+      app:layout_constraintTop_toTopOf="@+id/iv_green_bar" />
+
+    <com.framework.views.customViews.CustomTextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_2"
+        android:layout_marginEnd="@dimen/size_45"
+        android:ellipsize="end"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:hint="@string/business_name"
+        tools:text="Orange Legacy"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textAlignment="gravity"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="@dimen/text_14"
+        app:layout_constraintBottom_toBottomOf="@+id/customImageView8"
+        app:layout_constraintEnd_toEndOf="@+id/iv_green_bar"
+        app:layout_constraintStart_toEndOf="@+id/customImageView8"
+        app:layout_constraintTop_toTopOf="@+id/customImageView8" />
+
+    <LinearLayout
+      android:id="@+id/linear_business_desc"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginStart="@dimen/size_4"
+      android:layout_marginEnd="@dimen/size_4"
+      android:background="@color/white"
+      android:gravity="center"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="@+id/iv_mobile_overlay"
+      app:layout_constraintStart_toStartOf="@+id/iv_mobile_overlay"
+      app:layout_constraintTop_toBottomOf="@+id/iv_green_bar">
+
+      <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_category_name"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_10"
+          android:ellipsize="end"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="center"
+          android:text="@string/business_name"
+          android:textAlignment="gravity"
+          android:textColor="@color/black_4a4a4a"
+          android:textSize="@dimen/text_17" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/tv_category_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_10"
+        android:layout_marginTop="@dimen/size_15"
+          android:fontFamily="@font/regular"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:text="@string/get_to_know_our_experts"
+        android:textAlignment="gravity"
+        android:textColor="@color/black_4a4a4a"
+        android:textSize="@dimen/text_13" />
+
+    </LinearLayout>
+
+    <com.framework.views.blur.BlurView
+      android:id="@+id/blurView"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      app:layout_constraintBottom_toBottomOf="@+id/linear_business_desc"
+      app:layout_constraintEnd_toEndOf="@+id/linear_business_desc"
+      app:layout_constraintStart_toStartOf="@+id/linear_business_desc"
+      app:layout_constraintTop_toTopOf="@+id/linear_business_desc" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

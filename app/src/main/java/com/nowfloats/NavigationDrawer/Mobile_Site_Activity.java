@@ -23,6 +23,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
@@ -55,20 +56,13 @@ public class Mobile_Site_Activity extends AppCompatActivity {
     }
 
     TextView close = (TextView) findViewById(R.id.close_web);
-    close.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-
-        Uri webpage = Uri.parse(url);
-
-                /*if (!url.startsWith("http://") && !url.startsWith("https://")) {
-                    webpage = Uri.parse("http://" + url);
-                }*/
-
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, webpage);
-        if (browserIntent.resolveActivity(getPackageManager()) != null) {
-          startActivity(browserIntent);
-        }
+    close.setOnClickListener(v -> {
+      try {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+      } catch (Exception e) {
+        Toast.makeText(getBaseContext(), "Browser not available!", Toast.LENGTH_SHORT).show();
       }
     });
 

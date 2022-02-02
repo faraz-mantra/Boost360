@@ -19,7 +19,7 @@ import com.framework.extensions.visible
 import kotlinx.android.synthetic.main.web_view_fragment.*
 
 
-class WebViewFragment : BaseFragment() {
+class WebViewFragment : BaseFragment("MarketPlaceWebViewFragment") {
 
   lateinit var root: View
 

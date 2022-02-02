@@ -731,4 +731,10 @@ class BusinessDetailsFragment : DialogFragment() {
     listener.backListener(true)
 
   }
+
+  override fun onResume() {
+    super.onResume()
+//    UserExperiorController.startScreen("MarketPlaceBusinessDetailsFragment")
+
+  }
 }

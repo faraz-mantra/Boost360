@@ -76,6 +76,7 @@ class ImagePreviewPopUpFragement : DialogFragment() {
 
   override fun onResume() {
     super.onResume()
+    //    UserExperiorController.startScreen("MarketPlaceImagePreviewPopUpFragement")
     preview_pager.postDelayed(Runnable {
       initialLoad = false
       preview_pager.setCurrentItem(currentPos)

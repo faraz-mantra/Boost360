@@ -137,7 +137,7 @@ data class Product(
 
 
   fun getProductPrice(): String {
-   return  "${getCurrencySymbol()}${price?.toDoubleOrNull()?:0}"
+    return "${getCurrencySymbol()}${price?.toDoubleOrNull() ?: 0}"
   }
 
   fun getProductDiscountedPrice(): String {
@@ -148,33 +148,36 @@ data class Product(
     } else ""
   }
 
+  fun getDiscountedPrice(): Double {
+    val priceD = this.price?.toDoubleOrNull() ?: 0.0
+    val discountD = this.discountAmount?.toDoubleOrNull() ?: 0.0
+    return priceD - discountD
+  }
+
   fun getProductDiscountPrice(): String {
-    return if (this.discountAmount == null || this.discountAmount?.isEmpty() == true)
-      ""
+    return if (this.discountAmount == null || this.discountAmount?.isEmpty() == true) ""
     else "${getCurrencySymbol()}$discountAmount"
   }
 
   fun getProductOffPrice(): String {
-    return if (this.discountAmount == null || this.discountAmount?.isEmpty() == true || price.isNullOrEmpty())
-      ""
+    return if (this.discountAmount == null || this.discountAmount?.isEmpty() == true || price.isNullOrEmpty()) ""
     else {
       return try {
-        val offPercent =
-          ((discountAmount?.toDouble())?.div((price?.toDouble()!!)))?.times(100)
+        val offPercent = ((discountAmount?.toDouble())?.div((price?.toDouble()!!)))?.times(100)
         if (offPercent?.toInt() ?: 0 <= 0) {
           ""
-        } else
-          "${offPercent?.roundToInt()}% OFF"
+        } else "${offPercent?.roundToInt()}% OFF"
       } catch (e: Exception) {
         ""
       }
     }
   }
 
-  fun getProductDiscountedPriceOrPrice() :String{
+  fun getProductDiscountedPriceOrPrice(): String {
     val priceDis = getProductDiscountedPrice()
-   return if (priceDis.isNotEmpty()) priceDis else getProductPrice()
+    return if (priceDis.isNotEmpty()) priceDis else getProductPrice()
   }
+
   fun getCurrencySymbol(): String? {
     if (currencyCode == "INR" || currencyCode == "" || currencyCode == null) {
       currencyCode = "₹"
@@ -186,6 +189,4 @@ data class Product(
     this.recyclerViewItem = FeaturesEnum.LOADER.ordinal
     return this
   }
-
-
 }

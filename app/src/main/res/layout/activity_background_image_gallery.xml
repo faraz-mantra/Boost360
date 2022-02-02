@@ -26,7 +26,9 @@
 
       <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/image_list"
-        android:layout_width="match_parent"
+          android:tag="com.userexperior.ueSecureView"
+
+          android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/footer"
         android:layout_below="@+id/label_logo"
@@ -41,7 +43,7 @@
         android:layout_height="50dp"
         android:layout_centerInParent="true"
         android:indeterminate="true"
-        android:indeterminateTint="@color/colorAccent_jio"
+        android:indeterminateTint="@color/colorAccentLight"
         android:visibility="gone" />
 
       <com.framework.views.fabButton.FloatingActionButton

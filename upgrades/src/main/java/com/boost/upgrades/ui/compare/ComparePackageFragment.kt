@@ -49,7 +49,7 @@ import kotlinx.android.synthetic.main.compare_package_fragment.package_viewpager
 import org.json.JSONObject
 
 
-class ComparePackageFragment : BaseFragment(), CompareListener,CompareBackListener {
+class ComparePackageFragment : BaseFragment("MarketPlaceComparePackageFragment"), CompareListener,CompareBackListener {
 
     lateinit var root: View
 

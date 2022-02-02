@@ -217,7 +217,11 @@ data class UserFpDetailsResponse(
 ) : BaseResponse(), Serializable {
 
   fun productCategoryVerb(activity: Activity): String {
-    return Constants.CATALOG_PREFIX+ if (productCategoryVerb.isNullOrEmpty()) getProductType(UserSessionManager(activity).fP_AppExperienceCode) else productCategoryVerb
+    return Constants.CATALOG_PREFIX + if (productCategoryVerb.isNullOrEmpty()) getProductType(UserSessionManager(activity).fP_AppExperienceCode) else productCategoryVerb
+  }
+
+  fun productCategory(activity: Activity): String {
+    return if (productCategoryVerb.isNullOrEmpty()) getProductType(UserSessionManager(activity).fP_AppExperienceCode) else productCategoryVerb
   }
 }
 

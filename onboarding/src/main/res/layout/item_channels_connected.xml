@@ -25,6 +25,7 @@
         android:id="@+id/image"
         android:layout_width="@dimen/size_40"
         android:layout_height="@dimen/size_40"
+
         android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/size_10"
         app:srcCompat="@drawable/ic_google_n"
@@ -47,7 +48,7 @@
           android:includeFontPadding="false"
           android:maxLines="1"
           android:text="@string/google_search"
-          android:textColor="@color/colorAccent_jio"
+          android:textColor="@color/colorAccentLight"
           app:fontFamily="@font/regular"
           app:textType="CAPTION"
           tools:text="Google search" />
@@ -58,7 +59,8 @@
           android:layout_height="wrap_content"
           android:ellipsize="end"
           android:maxLines="1"
-          android:text="@string/https_shantisalonspa_com"
+            android:tag="com.userexperior.ueSecureView"
+            android:text="@string/https_shantisalonspa_com"
           android:textColor="@color/greyish_brown"
           app:fontFamily="@font/semi_bold"
           app:textType="HEADING_6"

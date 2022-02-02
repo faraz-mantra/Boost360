@@ -1,9 +1,11 @@
 package com.appservice.ui.aptsetting.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.appservice.R
 import com.appservice.model.aptsetting.AddBankAccountRequest
 import com.appservice.model.aptsetting.PaymentProfileResponse
@@ -19,6 +21,7 @@ import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.utils.ValidationUtils
 
 class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding, AppointmentSettingsViewModel>() {
 
@@ -34,7 +37,6 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
 
   companion object {
     fun newInstance(): FragmentAddAccountDetails {
-
       return FragmentAddAccountDetails()
     }
   }
@@ -43,7 +45,6 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
     super.onCreateView()
     setOnClickListener(binding?.submitBtn)
     getAccountDetails()
-    sessionLocal = UserSessionManager(requireActivity())
   }
 
   private fun getAccountDetails() {
@@ -105,9 +106,10 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
   private fun onAddingBankAccount(it: BaseResponse) {
     hideProgress()
     if (it.isSuccess()) {
-      val bundle = Bundle()
-      bundle.putBoolean(IntentConstant.IS_EDIT.name, false)
-      startFragmentActivity(FragmentType.APPOINTMENT_PAYMENT_SETTINGS, bundle, true, isResult = false)
+      val intent = Intent()
+      intent.putExtra(IntentConstant.IS_BACK_PRESS.name, true)
+      baseActivity.setResult(AppCompatActivity.RESULT_OK, intent)
+      baseActivity.onBackPressed()
     }
   }
 
@@ -122,6 +124,10 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
       showLongToast(getString(R.string.enter_account_holder_name))
       return false
     }
+    if (!ValidationUtils.isValidName(accountName)) {
+      showShortToast(getString(R.string.bank_account_name_invalid))
+      return false
+    }
     if (accountNumber.isEmpty()) {
       showLongToast(getString(R.string.enter_account_number))
       return false
@@ -132,6 +138,10 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
     }
     if (accountNumber.length > 18) {
       showShortToast(getString(R.string.account_greater_than_nine))
+      return false
+    }
+    if (ValidationUtils.isBankAcValid(accountNumber)) {
+      showShortToast(getString(R.string.invalid_bank_account_number))
       return false
     }
     if (accountNumberConfirm.isEmpty()) {

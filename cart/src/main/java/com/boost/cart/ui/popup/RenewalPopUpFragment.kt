@@ -184,4 +184,10 @@ class RenewalPopUpFragment : DialogFragment() {
     })
   }
 
+  override fun onResume() {
+    super.onResume()
+//    UserExperiorController.startScreen("MarketPlaceRenewalPopUpFragment")
+
+  }
+
 }

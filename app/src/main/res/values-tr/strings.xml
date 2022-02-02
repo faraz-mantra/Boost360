@@ -459,7 +459,6 @@
   <string name="something_went_wrong">bir şeyler yanlış gitti!!</string>
   <string name="enter_correct_user_name">Doğru kullanıcı adı girin.</string>
   <string name="check_your_email">E-postanı kontrol et</string>
-  <string name="enter_valid_username_or_password" tools:ignore="ExtraTranslation">geçerli bir kullanıcı adı / şifre girin</string>
   <string name="forgot_password">Parolanızı mı unuttunuz</string>
   <string name="enter_user_name">Kullanıcı adı girin</string>
   <string name="we_sent_email_with_password">Biz şifre ayrıntıları içeren bir e-posta gönderdik</string>

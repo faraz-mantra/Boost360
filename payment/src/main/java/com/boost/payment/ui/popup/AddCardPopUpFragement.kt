@@ -237,5 +237,10 @@ class AddCardPopUpFragement : DialogFragment() {
     clearData()
   }
 
+  override fun onResume() {
+    super.onResume()
+//    UserExperiorController.startScreen("MarketPlaceAddCardPopUpFragement")
+
+  }
 
 }

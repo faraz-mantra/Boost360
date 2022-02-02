@@ -60,8 +60,7 @@ import static com.framework.webengageconstant.EventNameKt.BUSINESS_LOGO_ADDED;
 import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_BUSINESS_PROFILE;
 import static com.framework.webengageconstant.EventNameKt.UPLOAD_LOGO;
 
-public class Business_Logo_Activity
-        extends AppCompatActivity {
+public class Business_Logo_Activity extends AppCompatActivity {
 
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_GALLERY = 2;
@@ -261,16 +260,17 @@ public class Business_Logo_Activity
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == media_req_id) {
             if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 cameraIntent();
 
             }
 
         } else if (requestCode == gallery_req_id) {
             if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 galleryIntent();
 
             }
@@ -281,7 +281,7 @@ public class Business_Logo_Activity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_business__logo, menu);
+//        getMenuInflater().inflate(R.menu.menu_business__logo, menu);
         return true;
     }
 

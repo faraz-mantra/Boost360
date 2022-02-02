@@ -1,12 +1,10 @@
 package com.onboarding.nowfloats.ui.webview
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Message
 import android.util.Log
-import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.webkit.*
@@ -14,43 +12,41 @@ import androidx.core.content.ContextCompat
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.framework.utils.InAppReviewUtils
 import com.framework.views.customViews.CustomToolbar
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
 import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.databinding.ActivityWebViewNBinding
-import com.onboarding.nowfloats.utils.checkHttp
 import com.onboarding.nowfloats.utils.getWebViewUrl
 
 class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>() {
-
-  private var domainUrl = ""
 
   override fun getLayout(): Int {
     return R.layout.activity_web_view_n
   }
 
-  companion object{
-    val IK_ORDER_ID="order_id"
-    val IK_CLIENT_ID="client_id"
-    val IK_RC=500
+  companion object {
+    val IK_ORDER_ID = "order_id"
+    val IK_CLIENT_ID = "client_id"
+    val IK_RC = 500
   }
+
   override fun getViewModelClass(): Class<BaseViewModel> {
     return BaseViewModel::class.java
   }
 
   override fun onCreateView() {
     super.onCreateView()
-    domainUrl = intent?.extras?.getString(IntentConstant.DOMAIN_URL.name) ?: ""
-    Log.i(TAG, "domainUrl: "+domainUrl)
+    val domainUrl = intent?.extras?.getString(IntentConstant.DOMAIN_URL.name) ?: ""
+    Log.i(TAG, "domainUrl: $domainUrl")
     if (domainUrl.isEmpty()) {
       showShortToast(getString(R.string.invalid_url))
       return
     }
-    loadData(domainUrl)
+    loadData(domainUrl.getWebViewUrl())
   }
 
-  @SuppressLint("SetJavaScriptEnabled")
   private fun loadData(urlData: String) {
     binding?.webview?.settings?.javaScriptEnabled = true
     binding?.webview?.settings?.loadWithOverviewMode = true
@@ -78,7 +74,7 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
     }
     binding?.webview?.webViewClient = object : WebViewClient() {
       override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-        Log.i(TAG, "shouldOverrideUrlLoading: " + url)
+        Log.i(TAG, "shouldOverrideUrlLoading: $url")
         handleOrderSuccess(url)
         binding?.progressBar?.visible()
         return if (
@@ -111,39 +107,30 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
         binding?.progressBar?.gone()
       }
 
-      override fun onReceivedError(
-        view: WebView?,
-        request: WebResourceRequest?,
-        error: WebResourceError?
-      ) {
+      override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
         super.onReceivedError(view, request, error)
         binding?.progressBar?.gone()
       }
     }
-    binding?.webview?.loadUrl(urlData.getWebViewUrl())
+
+    binding?.webview?.loadUrl(urlData)
   }
 
   private fun handleOrderSuccess(url: String) {
-    if (url.contains("boost_order=success")){
-      val orderId =url.substring(url.indexOf("order_id=")+9,url.indexOf("&",url.indexOf("order_id=")))
-      val client_id =url.substring(url.indexOf("client_id=")+10,url.indexOf("&",url.indexOf("client_id=")))
-
+    if (url.contains("boost_order=success")) {
+      val orderId = url.substring(url.indexOf("order_id=") + 9, url.indexOf("&", url.indexOf("order_id=")))
+      val client_id = url.substring(url.indexOf("client_id=") + 10, url.indexOf("&", url.indexOf("client_id=")))
       val intent = Intent()
-      intent.putExtra(IK_ORDER_ID,orderId)
-      intent.putExtra(IK_CLIENT_ID,client_id)
-      setResult(IK_RC,intent)
+      intent.putExtra(IK_ORDER_ID, orderId)
+      intent.putExtra(IK_CLIENT_ID, client_id)
+      setResult(IK_RC, intent)
       finish()
-
     }
   }
 
 
   override fun getToolbarTitleSize(): Float? {
     return resources.getDimension(R.dimen.heading_7)
-  }
-
-  override fun getToolbarSubTitle(): String? {
-    return domainUrl.checkHttp()
   }
 
   override fun getToolbarTitle(): String? {
@@ -159,6 +146,7 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    InAppReviewUtils.showInAppReview(this,InAppReviewUtils.Events.in_app_review_website_preview_cross)
     finish()
     return false
   }

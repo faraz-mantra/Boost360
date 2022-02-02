@@ -15,8 +15,7 @@ import com.inventoryorder.rest.services.InventoryOrderRemoteDataSource
 import io.reactivex.Observable
 import retrofit2.Retrofit
 
-object InventoryOrderRepository :
-  AppBaseRepository<InventoryOrderRemoteDataSource, AppBaseLocalService>() {
+object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSource, AppBaseLocalService>() {
 
   override fun getRemoteDataSourceClass(): Class<InventoryOrderRemoteDataSource> {
     return InventoryOrderRemoteDataSource::class.java

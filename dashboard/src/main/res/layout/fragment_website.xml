@@ -70,7 +70,9 @@
                   <com.framework.views.customViews.CustomImageView
                     android:id="@+id/img_profile_logo"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                      android:tag="com.userexperior.ueSecureView"
+
+                      android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:scaleType="fitCenter"
                     tools:srcCompat="@drawable/ic_add_logo_d" />
@@ -85,7 +87,9 @@
                 android:orientation="vertical">
 
                 <com.framework.views.customViews.CustomTextView
-                  android:id="@+id/txt_business_name"
+                    android:tag="com.userexperior.ueSecureView"
+
+                    android:id="@+id/txt_business_name"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:ellipsize="end"
@@ -98,26 +102,27 @@
                   tools:text="PLASTO INDIA AND POLYMERS" />
 
                 <com.framework.views.customViews.CustomTextView
-                  android:id="@+id/txt_domain_name"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginStart="@dimen/size_2"
-                  android:layout_marginTop="@dimen/size_2"
-                  android:drawableStart="@drawable/ic_website_accent_d"
-                  android:drawablePadding="@dimen/size_4"
-                  android:drawableTint="@color/white"
-                  android:ellipsize="end"
-                  android:gravity="center_vertical"
-                  android:includeFontPadding="false"
-                  android:maxLines="1"
-                  android:textAlignment="gravity"
-                  android:textColor="@color/white"
-                  app:autoSizeMaxTextSize="16sp"
-                  app:autoSizeMinTextSize="8sp"
-                  app:autoSizeStepGranularity="1sp"
-                  app:autoSizeTextType="uniform"
-                  tools:targetApi="m"
-                  tools:text="@string/www_sravansclinic_com" />
+                    android:id="@+id/txt_domain_name"
+                    android:tag="com.userexperior.ueSecureView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_2"
+                    android:layout_marginTop="@dimen/size_2"
+                    android:drawableStart="@drawable/ic_website_accent_d"
+                    android:drawablePadding="@dimen/size_4"
+                    android:drawableTint="@color/white"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/white"
+                    app:autoSizeMaxTextSize="16sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeStepGranularity="1sp"
+                    app:autoSizeTextType="uniform"
+                    tools:targetApi="m"
+                    tools:text="@string/www_sravansclinic_com" />
 
               </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>

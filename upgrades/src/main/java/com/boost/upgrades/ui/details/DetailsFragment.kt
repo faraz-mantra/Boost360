@@ -54,7 +54,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class DetailsFragment : BaseFragment(), DetailsFragmentListener {
+class DetailsFragment : BaseFragment("MarketPlaceDetailsFragment"), DetailsFragmentListener {
 
   lateinit var root: View
   lateinit var viewModel: DetailsViewModel

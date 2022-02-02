@@ -36,24 +36,15 @@ object ChannelRepository : AppBaseRepository<ChannelRemoteDataSource, ChannelLoc
   }
 
   fun getChannelsAccessToken(nowfloatsId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.getChannelsAccessToken(nowfloatsId),
-      Taskcode.GET_CHANNELS_ACCESS_TOKEN
-    )
+    return makeRemoteRequest(remoteDataSource.getChannelsAccessToken(nowfloatsId), Taskcode.GET_CHANNELS_ACCESS_TOKEN)
   }
 
   fun getChannelsStatus(nowfloatsId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.getChannelsStatus(nowfloatsId),
-      Taskcode.GET_CHANNELS_STATUS
-    )
+    return makeRemoteRequest(remoteDataSource.getChannelsStatus(nowfloatsId), Taskcode.GET_CHANNELS_STATUS)
   }
 
   fun getChannelsInsights(nowfloatsId: String?, identifier: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.getChannelsInsights(nowfloatsId, identifier),
-      Taskcode.GET_CHANNELS_INSIGHTS
-    )
+    return makeRemoteRequest(remoteDataSource.getChannelsInsights(nowfloatsId, identifier), Taskcode.GET_CHANNELS_INSIGHTS)
   }
 
   fun nfxProcess(request: NFXProcessRequest?): Observable<BaseResponse> {
@@ -61,31 +52,19 @@ object ChannelRepository : AppBaseRepository<ChannelRemoteDataSource, ChannelLoc
   }
 
   fun postUpdateFacebookPageAccessToken(request: UpdateChannelAccessTokenRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.updateChannelAccessToken(request = request),
-      Taskcode.POST_UPDATE_FACEBOOK_PAGE_TOKEN
-    )
+    return makeRemoteRequest(remoteDataSource.updateChannelAccessToken(request = request), Taskcode.POST_UPDATE_FACEBOOK_PAGE_TOKEN)
   }
 
   fun postUpdateFacebookShopAccessToken(request: UpdateChannelAccessTokenRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.updateChannelAccessToken(request = request),
-      Taskcode.POST_UPDATE_FACEBOOK_SHOP_TOKEN
-    )
+    return makeRemoteRequest(remoteDataSource.updateChannelAccessToken(request = request), Taskcode.POST_UPDATE_FACEBOOK_SHOP_TOKEN)
   }
 
   fun postUpdateTwitterAccessToken(request: UpdateChannelAccessTokenRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.updateChannelAccessToken(request = request),
-      Taskcode.POST_UPDATE_TWITTER_TOKEN
-    )
+    return makeRemoteRequest(remoteDataSource.updateChannelAccessToken(request = request), Taskcode.POST_UPDATE_TWITTER_TOKEN)
   }
 
   fun postUpdateGoogleMyBusinessToken(request: UpdateChannelAccessTokenRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.updateChannelAccessToken(request = request),
-      Taskcode.POST_UPDATE_GOOGLE_MY_BUSINESS_TOKEN
-    )
+    return makeRemoteRequest(remoteDataSource.updateChannelAccessToken(request = request), Taskcode.POST_UPDATE_GOOGLE_MY_BUSINESS_TOKEN)
   }
 
   override fun getApiClient(): Retrofit {

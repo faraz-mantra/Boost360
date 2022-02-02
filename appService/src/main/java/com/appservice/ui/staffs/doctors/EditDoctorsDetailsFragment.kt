@@ -113,7 +113,7 @@ class EditDoctorsDetailsFragment :
     if (isEdit == true) {
       updatePreviousData()
       (requireActivity() as StaffFragmentContainerActivity).getToolbar()
-        ?.getTitleTextView()?.gravity = Gravity.START
+        ?.getToolbarTitleTextView()?.gravity = Gravity.START
     }
     if (staffDetails == null) staffDetails = StaffDetailsResult()
   }

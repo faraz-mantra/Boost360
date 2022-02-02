@@ -32,7 +32,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
   }
 
   protected fun getToolbarTitle(): String? {
-    return appBaseActivity?.getToolbar()?.getTitleTextView()?.text?.toString()
+    return appBaseActivity?.getToolbar()?.getToolbarTitleTextView()?.text?.toString()
   }
 
   protected open fun hideProgress() {

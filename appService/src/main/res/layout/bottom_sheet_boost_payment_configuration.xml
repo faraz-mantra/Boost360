@@ -69,7 +69,7 @@
                     <com.framework.views.customViews.CustomRadioButton
                         android:id="@+id/rb_boostPaymentGateway"
                         android:layout_gravity="start"
-                        android:buttonTint="@color/yellow_ffb900"
+                        android:buttonTint="@color/colorAccent"
                         style="@style/wrap_wrap"
                         android:minWidth="0dp"
                         android:minHeight="0dp"

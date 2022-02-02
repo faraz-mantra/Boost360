@@ -89,7 +89,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     isEdit = (staffDetails != null && staffDetails?.id.isNullOrEmpty().not())
     if (isEdit == true) {
       updatePreviousData()
-      (requireActivity() as StaffFragmentContainerActivity).getToolbar()?.getTitleTextView()?.gravity = Gravity.START
+      (requireActivity() as StaffFragmentContainerActivity).getToolbar()?.getToolbarTitleTextView()?.gravity = Gravity.START
     }
 //    else {
 //      (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor = getColor(R.color.color_primary_dark)

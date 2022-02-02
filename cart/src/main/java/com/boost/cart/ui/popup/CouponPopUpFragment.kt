@@ -169,5 +169,10 @@ class CouponPopUpFragment : DialogFragment() {
     }
     return true
   }
+  override fun onResume() {
+    super.onResume()
+//    UserExperiorController.startScreen("MarketPlaceCouponPopUpFragment")
+
+  }
 
 }

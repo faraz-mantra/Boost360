@@ -16,6 +16,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.firebaseUtils.firestore.FirestoreManager
+import com.framework.utils.InAppReviewUtils
 import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
@@ -318,7 +319,12 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.DELIVERED -> {
-        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
+        val status = arrayListOf(
+          OrderSummaryModel.OrderStatus.FEEDBACK_PENDING.name,
+          OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED.name,
+          OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name
+        )
+        requestFilter = getRequestFilterData(status)
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.CANCELLED -> {
@@ -786,6 +792,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   override fun secondaryButtonClicked() {
     showShortToast(getString(R.string.coming_soon))
+    //TODO add tutorial video flow
   }
 
   override fun ternaryButtonClicked() {
@@ -793,6 +800,13 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   override fun appOnBackPressed() {
 
+  }
+
+  override fun onStop() {
+    if (orderListFinalList.size>1){
+      InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.in_app_review_out_of_customer_orders)
+    }
+    super.onStop()
   }
 
 

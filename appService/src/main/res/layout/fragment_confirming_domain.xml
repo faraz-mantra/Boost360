@@ -41,6 +41,8 @@
                         app:srcCompat="@drawable/ic_globe_www" />
 
                     <com.framework.views.customViews.CustomTextView
+                        android:tag="com.userexperior.ueSecureView"
+
                         android:id="@+id/tv_suggested_domain_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -222,9 +224,9 @@
             app:elevation="@dimen/size_5"
             android:textAllCaps="false"
             android:fontFamily="@font/semi_bold"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorAccentLight"
             app:cornerRadius="@dimen/size_10"
-            app:strokeColor="@color/colorPrimary" />
+            app:strokeColor="@color/colorAccentLight" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

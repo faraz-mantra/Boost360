@@ -44,6 +44,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
+import com.onboarding.nowfloats.constant.SupportVideoType;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivitySubscribersBinding;
 
@@ -313,9 +314,9 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     final CustomEditText email = (CustomEditText) view.findViewById(R.id.edittext);
     new MaterialDialog.Builder(this)
         .customView(view, false)
-        .positiveText("Add")
-        .negativeText("Cancel")
-        .negativeColorRes(R.color.gray_transparent)
+        .positiveText(getString(R.string.add))
+        .negativeText(getString(R.string.cancel))
+        .negativeColorRes(R.color.black_4a4a4a)
         .positiveColorRes(R.color.colorAccentLight)
         .callback(new MaterialDialog.ButtonCallback() {
           @Override
@@ -405,8 +406,13 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
 
   @Override
   public void secondaryButtonClicked() {
-    Toast.makeText(this, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
-
+    //Toast.makeText(this, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
+    try {
+      startActivity(new Intent(this, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
+              .putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name(), SupportVideoType.TOB.getValue()));
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override

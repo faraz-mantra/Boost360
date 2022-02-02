@@ -19,7 +19,7 @@ data class Result(
   val clientId: String,
   val clientProductId: Any,
   val currencyCode: String,
-  val discount: Int,
+  val discount: Double,
   val externalSourceId: Any,
   val fpId: String,
   val invoiceUrl: String,

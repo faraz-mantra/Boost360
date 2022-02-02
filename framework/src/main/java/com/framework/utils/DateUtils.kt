@@ -3,11 +3,17 @@ package com.framework.utils
 import android.text.TextUtils
 import android.text.format.DateUtils
 import android.util.Log
-import com.framework.analytics.SentryController
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 import java.util.*
 import java.util.concurrent.TimeUnit
+
+
+
 
 object DateUtils {
 
@@ -99,6 +105,12 @@ object DateUtils {
     return cal.time
   }
 
+  fun getAmountYearDate(amount: Int): Date {
+    val cal = Calendar.getInstance()
+    cal.add(Calendar.YEAR, amount)
+    return cal.time
+  }
+
   fun Date.getAmountMinDate(amount: Int): Date {
     val cal = Calendar.getInstance()
     cal.time = this
@@ -153,5 +165,15 @@ object DateUtils {
       dateMilliseconds += java.lang.Long.valueOf(date)
     }
     return dateMilliseconds
+  }
+
+  fun millisecondsToMinutesSeconds(milliSeconds: Long): String? {
+    return String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(milliSeconds).mod(TimeUnit.HOURS.toMinutes(1)),
+      TimeUnit.MILLISECONDS.toSeconds(milliSeconds).mod(TimeUnit.MINUTES.toSeconds(1)))
+  }
+
+  fun milliToMinSecFormat(milliSeconds: Long): String? {
+    return String.format("%d min %d sec", TimeUnit.MILLISECONDS.toMinutes(milliSeconds).mod(TimeUnit.HOURS.toMinutes(1)),
+      TimeUnit.MILLISECONDS.toSeconds(milliSeconds).mod(TimeUnit.MINUTES.toSeconds(1)))
   }
 }

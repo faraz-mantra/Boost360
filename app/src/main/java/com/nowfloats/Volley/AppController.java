@@ -9,7 +9,6 @@ import android.provider.Settings;
 import android.util.Log;
 
 import androidx.multidex.MultiDex;
-import androidx.multidex.MultiDexApplication;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,6 +23,8 @@ import com.dashboard.AppDashboardApplication;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.festive.poster.FestivePosterApplication;
+import com.framework.BaseApplication;
+import com.framework.analytics.UserExperiorController;
 import com.framework.utils.AppsFlyerUtils;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
@@ -33,7 +34,7 @@ import com.invitereferrals.invitereferrals.InviteReferralsApplication;
 import com.nowfloats.education.koindi.KoinBaseApplication;
 import com.nowfloats.util.Constants;
 import com.onboarding.nowfloats.BaseBoardingApplication;
-import com.onboarding.nowfloats.constant.PreferenceConstant;
+import com.thinksity.R;
 import com.webengage.sdk.android.WebEngageActivityLifeCycleCallbacks;
 import com.webengage.sdk.android.WebEngageConfig;
 
@@ -42,12 +43,11 @@ import java.lang.reflect.Method;
 
 import dev.patrickgold.florisboard.ime.core.FlorisApplication;
 
-public class AppController extends MultiDexApplication/* implements IAviaryClientCredentials*/ {
+public class AppController extends BaseApplication/* implements IAviaryClientCredentials*/ {
 
   public static final String TAG = AppController.class.getSimpleName();
   private static AppController mInstance;
   private final String APPSFLAYER_DEV_KEY = "8PD2DC7BbVdr7aLnRE8wHY";
-  String webEngageKey = "~10a5cad2d";
   private RequestQueue mRequestQueue;
   private ImageLoader mImageLoader;
   private LocaleManager localeManager;
@@ -135,7 +135,9 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     MarketplaceApplication.instance = this;
     MarketplaceApplication.initModule(this);
     initWebEngage();
-    //Invite Referral
+      UserExperiorController.INSTANCE.startRecording(this);
+
+      //Invite Referral
     InviteReferralsApplication.register(this);
     InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null);
     //Koin
@@ -194,7 +196,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
 
   void initWebEngage() {
     WebEngageConfig webEngageConfig = new WebEngageConfig.Builder()
-        .setWebEngageKey(webEngageKey)
+        .setWebEngageKey(getString(R.string.webengage_license_code))
         .setDebugMode(true)
         .build();
     registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this, webEngageConfig));
