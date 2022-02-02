@@ -22,45 +22,46 @@ import retrofit2.HttpException
 
 class OfferCouponViewModel() : BaseViewModel() {
 
-  lateinit var application: Application
-  lateinit var lifecycleOwner: LifecycleOwner
-  private var couponApiInfo: MutableLiveData<GetCouponResponse> = MutableLiveData()
-  private var apiService = com.boost.dbcenterapi.utils.Utils.getRetrofit().create(NewApiInterface::class.java)
+    lateinit var application: Application
+    lateinit var lifecycleOwner: LifecycleOwner
+    private var couponApiInfo: MutableLiveData<GetCouponResponse> = MutableLiveData()
+    private var apiService = com.boost.dbcenterapi.utils.Utils.getRetrofit().create(NewApiInterface::class.java)
 
 
-  fun setApplicationLifecycle(
-    application: Application,
-    lifecycleOwner: LifecycleOwner
-  ) {
-    this.application = application
-    this.lifecycleOwner = lifecycleOwner
-  }
-
-  fun getCouponApiResult(): LiveData<GetCouponResponse> {
-    return couponApiInfo
-  }
-
-  fun getCouponRedeem(couponRequest: CouponRequest) {
-    if (Utils.isConnectedToInternet(application)) {
-      CompositeDisposable().add(
-        apiService.getOfferCoupons(couponRequest)
-          .subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(
-            {
-              Log.i("getOfferCouponDetails", it.toString())
-              var couponResponse = GetCouponResponse()
-              couponApiInfo.postValue(couponResponse)
-            },
-            {
-              val temp = (it as HttpException).response()!!.errorBody()!!.string()
-              val errorBody: Error = Gson().fromJson(temp, object : TypeToken<Error>() {}.type)
-              Toasty.error(application, "Error in Loading Coupons!!", Toast.LENGTH_LONG).show()
-            }
-          )
-      )
-
+    fun setApplicationLifecycle(
+            application: Application,
+            lifecycleOwner: LifecycleOwner
+    ) {
+        this.application = application
+        this.lifecycleOwner = lifecycleOwner
     }
-  }
+
+    fun getCouponApiResult(): LiveData<GetCouponResponse> {
+        return couponApiInfo
+    }
+
+    fun getCouponRedeem(couponRequest: CouponRequest) {
+        if (Utils.isConnectedToInternet(application)) {
+            System.out.println("request--->" + couponRequest)
+            CompositeDisposable().add(
+                    apiService.getOfferCoupons(couponRequest)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    {
+                                        Log.i("getOfferCouponDetails", it.toString())
+                                        var couponResponse = it
+                                        couponApiInfo.postValue(couponResponse)
+                                    },
+                                    {
+                                        val temp = (it as HttpException).response()!!.errorBody()!!.string()
+                                        val errorBody: Error = Gson().fromJson(temp, object : TypeToken<Error>() {}.type)
+                                        Toasty.error(application, "Error in Loading Coupons!!", Toast.LENGTH_LONG).show()
+                                    }
+                            )
+            )
+
+        }
+    }
 
 }
