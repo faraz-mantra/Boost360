@@ -20,7 +20,6 @@ import kotlin.collections.ArrayList
 class OfferCouponsActivity : AppCompatActivity() {
 
     private lateinit var viewModel: OfferCouponViewModel
-    private var couponResponse: GetCouponResponse? = null
     private var couponData = ArrayList<Data>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +30,6 @@ class OfferCouponsActivity : AppCompatActivity() {
         viewModel.setApplicationLifecycle(application, this)
         loadOfferCoupons()
         initMvvm()
-//    initializeOfferCouponsRv()
     }
 
     private fun loadOfferCoupons() {
@@ -41,8 +39,6 @@ class OfferCouponsActivity : AppCompatActivity() {
         val bulkObject1 = BulkPropertySegment(propertyDataType = "upgrade", propertyName = "upgrade", type = 5)
         var objectKeys = ObjectKeys(true, description = true, discountPercent = true, kid = true, termsandconditions = true, title = true)
         val bulkObject2 = BulkPropertySegment(0, 10, objectKeys, "coupon", "discount_coupons", 1)
-//    bulkPropertySegment.add(Collections.singletonList(bulkObject1) as ArrayList<BulkPropertySegment>)
-//    bulkPropertySegment.add(Collections.singletonList(bulkObject2) as ArrayList<BulkPropertySegment>)
         bulkPropertySegment.add(0, arrayListOf(bulkObject1, bulkObject2))
         viewModel.getCouponRedeem(CouponRequest(bulkPropertySegment, schemaId, websiteId))
     }
@@ -50,38 +46,20 @@ class OfferCouponsActivity : AppCompatActivity() {
     private fun initMvvm() {
         viewModel.getCouponApiResult().observe(this) {
             if (it != null) {
-//        couponResponse = it
 
                 for (i in 0 until it.size) {
 
                     it[i].data?.let { it1 -> couponData.addAll(it1) }
                 }
                 System.out.println("CouponData" + couponData)
-//                for (items in couponData) {
-//                    couponData.add(Data(items.code, items.description, items.discountPercent, items.kid, items.termsandconditions, items.title))
-//                }
+
                 val recyclerview = findViewById<RecyclerView>(R.id.offer_coupons_rv)
                 recyclerview.layoutManager = LinearLayoutManager(this)
 
-//    val data = ArrayList<OfferCoupons>()
-//    for (i in 1..20) {
-//      data.add(OfferCoupons("25PAY", "Get flat INR 25/- cashback using Amazon Pay.", "Use code 25PAY & get flat INR 25/- cashback on transactions above INR 99/-. Learn More"))
-//    }
                 val adapter = OfferCouponsAdapter(couponData)
                 recyclerview.adapter = adapter
             }
         }
     }
 
-//  private fun initializeOfferCouponsRv() {
-//    val recyclerview = findViewById<RecyclerView>(R.id.offer_coupons_rv)
-//    recyclerview.layoutManager = LinearLayoutManager(this)
-//
-////    val data = ArrayList<OfferCoupons>()
-////    for (i in 1..20) {
-////      data.add(OfferCoupons("25PAY", "Get flat INR 25/- cashback using Amazon Pay.", "Use code 25PAY & get flat INR 25/- cashback on transactions above INR 99/-. Learn More"))
-////    }
-//    val adapter = OfferCouponsAdapter(couponData)
-//    recyclerview.adapter = adapter
-//  }
 }
