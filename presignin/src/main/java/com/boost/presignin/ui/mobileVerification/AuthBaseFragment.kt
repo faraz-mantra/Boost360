@@ -2,6 +2,7 @@ package com.boost.presignin.ui.mobileVerification
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.ViewDataBinding
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
@@ -15,6 +16,7 @@ import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.service.APIService
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.analytics.SentryController
+import com.framework.analytics.UserExperiorController
 import com.framework.extensions.observeOnce
 import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
@@ -22,6 +24,8 @@ import com.framework.pref.clientId
 import com.framework.pref.clientIdThinksity
 import com.framework.pref.saveAccessTokenAuth
 import com.framework.webengageconstant.*
+import com.google.firebase.auth.FirebaseAuth
+import com.onboarding.nowfloats.model.googleAuth.FirebaseTokenResponse
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.set
@@ -70,10 +74,28 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
       val result = it as? AccessTokenResponse
       if (it?.isSuccess() == true && result?.result != null) {
         session.saveAccessTokenAuth(result.result!!)
-        this.storeFpDetails()
+        registerFirebaseToken(this)
       } else {
         hideProgress()
         showLongToast(getString(R.string.access_token_create_error))
+      }
+    })
+  }
+
+  private fun registerFirebaseToken(authTokenDataItem: AuthTokenDataItem) {
+    viewModel?.getFirebaseToken()?.observeOnce(viewLifecycleOwner, {
+      val response = it as? FirebaseTokenResponse
+      val token = response?.Result
+      Log.i("registerFirebaseToken", "registerFirebaseToken: $token")
+      FirebaseAuth.getInstance().signInWithCustomToken(token ?: "").addOnCompleteListener(baseActivity) { task ->
+        if (task.isSuccessful) {
+          // Sign in success, update UI with the signed-in user's information
+          Log.d("registerFirebaseToken", "signInWithCustomToken:success")
+        } else {
+          // If sign in fails, display a message to the user.
+          Log.w("registerFirebaseToken", "signInWithCustomToken:failure", task.exception)
+        }
+        authTokenDataItem.storeFpDetails()
       }
     })
   }
@@ -87,6 +109,7 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
       if (it.isSuccess() && response != null) {
         ProcessFPDetails(session).storeFPDetails(response)
         SentryController.setUser(UserSessionManager(baseActivity))
+        UserExperiorController.setUserAttr(UserSessionManager(baseActivity))
         FirestoreManager.initData(session.fpTag ?: "", session.fPID ?: "", clientId)
         startService()
         startDashboard()
@@ -113,6 +136,7 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
       baseActivity.finish()
       hideProgress()
     } catch (e: Exception) {
+      hideProgress()
       SentryController.captureException(e)
       e.printStackTrace()
     }

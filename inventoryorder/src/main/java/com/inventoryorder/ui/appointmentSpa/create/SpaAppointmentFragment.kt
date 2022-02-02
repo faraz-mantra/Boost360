@@ -12,6 +12,9 @@ import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
 import com.framework.utils.DateUtils
+import com.framework.utils.ValidationUtils
+import com.framework.utils.ValidationUtils.isEmailValid
+import com.framework.utils.ValidationUtils.isMobileNumberValid
 import com.framework.utils.fromHtml
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
@@ -92,17 +95,9 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
         dialog.show(parentFragmentManager, dialog.javaClass.name)
       }
       binding?.textAddApptDateTime -> {
-        selectedDateTimeBottomSheetDialog = SelectDateTimeBottomSheetDialog(
-          bookingSlotResponse!!,
-          selectedService!!,
-          dateCounter,
-          this
-        )
+        selectedDateTimeBottomSheetDialog = SelectDateTimeBottomSheetDialog(bookingSlotResponse!!, selectedService!!, dateCounter, this)
         selectedDateTimeBottomSheetDialog?.onClicked = this::onDialogDoneClicked
-        selectedDateTimeBottomSheetDialog?.show(
-          this.parentFragmentManager,
-          SelectDateTimeBottomSheetDialog::class.java.name
-        )
+        selectedDateTimeBottomSheetDialog?.show(this.parentFragmentManager, SelectDateTimeBottomSheetDialog::class.java.name)
       }
 
       binding?.layoutCustomer?.textAddCustomerGstin -> {
@@ -126,17 +121,9 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
           }
         }
 
-        selectedDateTimeBottomSheetDialog = SelectDateTimeBottomSheetDialog(
-          bookingSlotResponse!!,
-          selectedService!!,
-          dateCounter,
-          this
-        )
+        selectedDateTimeBottomSheetDialog = SelectDateTimeBottomSheetDialog(bookingSlotResponse!!, selectedService!!, dateCounter, this)
         selectedDateTimeBottomSheetDialog?.onClicked = this::onDialogDoneClicked
-        selectedDateTimeBottomSheetDialog?.show(
-          this.parentFragmentManager,
-          SelectDateTimeBottomSheetDialog::class.java.name
-        )
+        selectedDateTimeBottomSheetDialog?.show(this.parentFragmentManager, SelectDateTimeBottomSheetDialog::class.java.name)
       }
     }
   }
@@ -154,17 +141,16 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
   }
 
   private fun validateForm() {
-
-    val name = binding?.layoutCustomer?.editCustomerName?.text ?: ""
-    val email = binding?.layoutCustomer?.editCustomerEmail?.text ?: ""
-    val phone = binding?.layoutCustomer?.editCustomerPhone?.text ?: ""
+    val name = binding?.layoutCustomer?.editCustomerName?.text?.toString() ?: ""
+    val email = binding?.layoutCustomer?.editCustomerEmail?.text?.toString() ?: ""
+    val phone = binding?.layoutCustomer?.editCustomerPhone?.text?.toString() ?: ""
     val address = binding?.layoutBillingAddr?.editAddress?.text ?: ""
     val city = binding?.layoutBillingAddr?.editCity?.text ?: ""
     val state = binding?.layoutBillingAddr?.editState?.text ?: ""
     val pinCode = binding?.layoutBillingAddr?.editPin?.text ?: ""
     val gstNo = binding?.layoutCustomer?.editGstin?.text ?: ""
 
-    if (appointmentRequestModel._id == null || appointmentRequestModel?._id?.isEmpty() == true) {
+    if (appointmentRequestModel._id.isNullOrEmpty()) {
       showShortToast(getString(R.string.please_select_staff_and_time_slot))
       return
     }
@@ -174,26 +160,26 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
       return
     }
 
+    if (!ValidationUtils.isValidName(name)) {
+      showShortToast(getString(R.string.please_enter_valid_customer_name))
+      return
+    }
     if (phone.isEmpty()) {
       showShortToast(getString(R.string.customer_phone_cannot_be_empty))
       return
     }
 
-    if (phone.length < 10) {
+    if (isMobileNumberValid(phone).not()) {
       showShortToast(getString(R.string.please_enter_valid_phone))
       return
     }
 
-    if (email.isNullOrEmpty().not() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        .not()
-    ) {
+    if (email.isNullOrEmpty().not() && isEmailValid(email).not()) {
       showShortToast(getString(R.string.please_enter_valid_email))
       return
     }
     if (binding?.layoutCustomer?.lytCustomerGstn?.visibility == View.VISIBLE)
-      if (gstNo.isNullOrEmpty().not() && Pattern.compile(AppConstant.GST_VALIDATION_REGEX)
-          .matcher(gstNo).matches().not()
-      ) {
+      if (gstNo.isNullOrEmpty().not() && Pattern.compile(AppConstant.GST_VALIDATION_REGEX).matcher(gstNo).matches().not()) {
         showShortToast(getString(R.string.enter_valid_gstin_number))
         return
       }
@@ -273,10 +259,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     startFragmentOrderActivity(FragmentType.REVIEW_SPA_DETAILS, bundle, isResult = true)
   }
 
-  private fun onDialogDoneClicked(
-    appointmentRequestModel: AppointmentRequestModel,
-    dateCounter: Int
-  ) {
+  private fun onDialogDoneClicked(appointmentRequestModel: AppointmentRequestModel, dateCounter: Int) {
     binding?.layoutShowSelectedSlot?.visibility = View.VISIBLE
     binding?.groupTiming?.visibility = View.GONE
 
@@ -290,34 +273,24 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
 
   private fun getSearchListing() {
     showProgress(getString(R.string.loading))
-    viewModel?.getSearchListing(preferenceData?.fpTag!!, "", "", 0, 100)
-      ?.observeOnce(viewLifecycleOwner, Observer {
-        hideProgress()
-
-        if (it.error is NoNetworkException) {
-          showLongToast(resources.getString(R.string.internet_connection_not_available))
-          return@Observer
+    viewModel?.getSearchListing(preferenceData?.fpTag!!, "", "", 0, 100)?.observeOnce(viewLifecycleOwner, Observer {
+      hideProgress()
+      if (it.isSuccess()) {
+        val serviceListingResponse = (it as? GetServiceListingResponse)
+        if (serviceListingResponse != null) {
+          serviceList?.addAll(serviceListingResponse.Result?.Data!!)
+          setArrayAdapter()
         }
-
-        if (it.isSuccess()) {
-          val serviceListingResponse = (it as? GetServiceListingResponse)
-          if (serviceListingResponse != null) {
-            serviceList?.addAll(serviceListingResponse.Result?.Data!!)
-            setArrayAdapter()
-          }
-        } else {
-          showLongToast(
-            if (it.message()
-                .isNotEmpty()
-            ) it.message() else getString(R.string.not_able_to_get_services_list)
-          )
-        }
-      })
+      } else {
+        showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.not_able_to_get_services_list))
+      }
+    })
   }
 
 
   private fun setArrayAdapter() {
     binding?.editServiceName?.apply {
+      isCursorVisible = false
       serviceAdapter = CustomArrayAdapter(baseActivity, R.layout.layout_service_item, serviceList!!)
       threshold = 1
       (serviceAdapter as? CustomArrayAdapter)?.initList()
@@ -335,12 +308,15 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
         getBookingSlots(bookingSlotsRequest)
       }
     }
+
+    binding?.editServiceName?.setOnClickListener {
+      binding?.editServiceName?.setText("")
+    }
+
     binding?.editServiceName?.addTextChangedListener(object : TextWatcher {
       override fun afterTextChanged(s: Editable?) {
-        if (s.toString().isBlank() || s.toString().isEmpty()) {
-          binding?.groupTiming?.visibility = View.VISIBLE
-          binding?.layoutShowSelectedSlot?.visibility = View.GONE
-        }
+        binding?.groupTiming?.visibility = View.GONE
+        binding?.layoutShowSelectedSlot?.visibility = View.GONE
       }
 
       override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -354,10 +330,6 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
   private fun getBookingSlots(bookingSlotsRequest: BookingSlotsRequest) {
     viewModel?.getBookingSlots(bookingSlotsRequest)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
-      if (it.error is NoNetworkException) {
-        showLongToast(resources.getString(R.string.internet_connection_not_available))
-        return@Observer
-      }
       if (it.isSuccess()) {
         bookingSlotResponse = (it as? BookingSlotResponse)
         if (bookingSlotResponse?.Result.isNullOrEmpty().not()) {

@@ -3,6 +3,7 @@ package dev.patrickgold.florisboard.customization.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.appservice.model.serviceProduct.service.ServiceSearchListingResponse;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.onboarding.nowfloats.model.digitalCard.DigitalCardData;
@@ -216,6 +217,14 @@ public class SharedPrefUtil {
   public ProductResponse getProductList(){
     if (sBoostPref!=null){
       return new Gson().fromJson(sBoostPref.getString(PrefConstants.INSTANCE.getPREF_PRODUCTS(),null),new TypeToken<ProductResponse>(){}.getType());
+    }else {
+      return null;
+    }
+  }
+
+  public ServiceSearchListingResponse getServiceList(){
+    if (sBoostPref!=null){
+      return new Gson().fromJson(sBoostPref.getString(PrefConstants.INSTANCE.getPREF_SERVICES(),null),new TypeToken<ServiceSearchListingResponse>(){}.getType());
     }else {
       return null;
     }

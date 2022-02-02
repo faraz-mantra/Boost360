@@ -30,10 +30,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
 
   protected val pref: SharedPreferences?
     get() {
-      return baseActivity.getSharedPreferences(
-        PreferenceConstant.NOW_FLOATS_PREFS,
-        Context.MODE_PRIVATE
-      )
+      return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
     }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -118,8 +115,8 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
       intent.putExtra("fpTag", sessionLocal.fpTag)
       intent.putExtra("accountType", sessionLocal.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
       intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(sessionLocal.getStoreWidgets() ?: ArrayList()))
-      intent.putExtra("email", sessionLocal.userProfileEmail ?: "ria@nowfloats.com")
-      intent.putExtra("mobileNo", sessionLocal.userPrimaryMobile ?: "9160004303")
+      intent.putExtra("email", sessionLocal.userProfileEmail ?: getString(R.string.ria_customer_mail))
+      intent.putExtra("mobileNo", sessionLocal.userPrimaryMobile ?: getString(R.string.ria_customer_number))
       intent.putExtra("profileUrl", sessionLocal.fPLogo)
       intent.putExtra("buyItemKey", buyItemKey)
       baseActivity.startActivity(intent)

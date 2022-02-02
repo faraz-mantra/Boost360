@@ -1,6 +1,5 @@
 package com.boost.presignin.ui.registration
 
-import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
@@ -32,6 +31,7 @@ import com.boost.presignin.service.APIService
 import com.boost.presignin.ui.WebPreviewActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.analytics.SentryController
+import com.framework.analytics.UserExperiorController
 import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
@@ -40,8 +40,7 @@ import com.framework.webengageconstant.*
 import java.util.*
 import kotlin.system.exitProcess
 
-private const val TIME_INTERVAL =
-  2000 // # milliseconds, desired time passed between two back presses.
+private const val TIME_INTERVAL = 2000 // # milliseconds, desired time passed between two back presses.
 
 private var mBackPressed: Long = 0
 
@@ -154,20 +153,19 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
   private fun storeFpDetails() {
     val map = HashMap<String, String>()
     map["clientId"] = clientId
-    viewModel?.getFpDetails(authToken?.floatingPointId ?: "", map)
-      ?.observeOnce(viewLifecycleOwner, {
-        val response = it as? UserFpDetailsResponse
-        if (it.isSuccess() && response != null) {
-          ProcessFPDetails(session!!).storeFPDetails(response)
-          SentryController.setUser(UserSessionManager(baseActivity))
-
-          startService()
-          startDashboard()
-        } else {
-          hideProgress()
-          logout()
-        }
-      })
+    viewModel?.getFpDetails(authToken?.floatingPointId ?: "", map)?.observeOnce(viewLifecycleOwner, {
+      val response = it as? UserFpDetailsResponse
+      if (it.isSuccess() && response != null) {
+        ProcessFPDetails(session!!).storeFPDetails(response)
+        SentryController.setUser(UserSessionManager(baseActivity))
+        UserExperiorController.setUserAttr(UserSessionManager(baseActivity))
+        startService()
+        startDashboard()
+      } else {
+        hideProgress()
+        logout()
+      }
+    })
   }
 
   private fun startDashboard() {
@@ -190,27 +188,15 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
     }
   }
 
-  private fun getRequestPurchasedOrder(
-    floatingPointId: String,
-    responsePlan: Plan15DaysResponse?
-  ): ActivatePurchasedOrderRequest {
+  private fun getRequestPurchasedOrder(floatingPointId: String, responsePlan: Plan15DaysResponse?): ActivatePurchasedOrderRequest {
     val widList = ArrayList<PurchasedWidget>()
     floatsRequest?.categoryDataModel?.sections?.forEach {
       it.getWidList().forEach { key ->
         val widget = PurchasedWidget(
-          widgetKey = key,
-          name = it.title,
-          quantity = 1,
-          desc = it.desc,
-          recurringPaymentFrequency = "MONTHLY",
-          isCancellable = true,
-          isRecurringPayment = true,
-          discount = 0.0,
-          price = 0.0,
-          netPrice = 0.0,
-          consumptionConstraint = ConsumptionConstraint("DAYS", 30),
-          images = ArrayList(),
-          expiry = PurchasedExpiry("YEARS", 10)
+          widgetKey = key, name = it.title, quantity = 1, desc = it.desc,
+          recurringPaymentFrequency = "MONTHLY", isCancellable = true, isRecurringPayment = true,
+          discount = 0.0, price = 0.0, netPrice = 0.0, consumptionConstraint = ConsumptionConstraint("DAYS", 30),
+          images = ArrayList(), expiry = PurchasedExpiry("YEARS", 10)
         )
         widList.add(widget)
       }
@@ -225,19 +211,10 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
         } else {
           widList.add(
             PurchasedWidget(
-              widgetKey = key,
-              name = "",
-              quantity = 1,
-              desc = "",
-              recurringPaymentFrequency = "MONTHLY",
-              isCancellable = true,
-              isRecurringPayment = true,
-              discount = 0.0,
-              price = 0.0,
-              netPrice = 0.0,
-              consumptionConstraint = ConsumptionConstraint("DAYS", 15),
-              images = ArrayList(),
-              expiry = PurchasedExpiry("DAYS", 15)
+              widgetKey = key, name = "", quantity = 1, desc = "", recurringPaymentFrequency = "MONTHLY",
+              isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0,
+              netPrice = 0.0, consumptionConstraint = ConsumptionConstraint("DAYS", 15),
+              images = ArrayList(), expiry = PurchasedExpiry("DAYS", 15)
             )
           )
         }
@@ -251,18 +228,9 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
         } else {
           widList.add(
             PurchasedWidget(
-              widgetKey = keyValue.widget,
-              name = "",
-              quantity = 1,
-              desc = "",
-              recurringPaymentFrequency = "MONTHLY",
-              isCancellable = true,
-              isRecurringPayment = true,
-              discount = 0.0,
-              price = 0.0,
-              netPrice = 0.0,
-              consumptionConstraint = ConsumptionConstraint("DAYS", 15),
-              images = ArrayList(),
+              widgetKey = keyValue.widget, name = "", quantity = 1, desc = "", recurringPaymentFrequency = "MONTHLY",
+              isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
+              consumptionConstraint = ConsumptionConstraint("DAYS", 15), images = ArrayList(),
               expiry = PurchasedExpiry("DAYS", keyValue.value)
             )
           )

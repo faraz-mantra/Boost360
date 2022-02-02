@@ -62,7 +62,7 @@ class DashboardViewModel : BaseViewModel() {
   }
 
   fun getCapLimitFeatureDetails(fpId: String?, clientId: String?): LiveData<BaseResponse> {
-    return AzureWebsiteNewRepository.getCapLimitFeatureDetails(fpId,clientId).toLiveData()
+    return AzureWebsiteNewRepository.getCapLimitFeatureDetails(fpId, clientId).toLiveData()
   }
 
   fun getChannelsInsight(nowfloatsId: String?, identifier: String?): LiveData<BaseResponse> {
@@ -462,8 +462,8 @@ class DashboardViewModel : BaseViewModel() {
     return WithFloatTwoRepositoryD.uploadBusinessLogo(clientId, fpId, reqType, reqId, totalChunks, currentChunkNumber, file).toLiveData()
   }
 
-  fun getUpgradePremiumBanner(website_id: String? = "5e7a3cf46e0572000109a5b2"): LiveData<BaseResponse> {
-    return DevBoostKitRepository.getUpgradePremiumBanner(website_id = website_id).toLiveData()
+  fun getUpgradePremiumBanner(): LiveData<BaseResponse> {
+    return DevBoostKitRepository.getUpgradePremiumBanner().toLiveData()
   }
 
   fun getUpgradeDashboardBanner(website_id: String? = "5fd88e1fb456eb000133ad31"): LiveData<BaseResponse> {
@@ -474,11 +474,11 @@ class DashboardViewModel : BaseViewModel() {
     return PluginFloatRepository.getDomainDetailsForFloatingPoint(fpTag, map).toLiveData()
   }
 
-  fun getMerchantSummary(clientId: String?,fpTag: String?): LiveData<BaseResponse> {
-   return WithFloatTwoRepository.getMerchantSummary(clientId,fpTag).toLiveData()
+  fun getMerchantSummary(clientId: String?, fpTag: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getMerchantSummary(clientId, fpTag).toLiveData()
   }
 
-  fun getUserProfileData(loginId:String?): LiveData<BaseResponse> {
+  fun getUserProfileData(loginId: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepositoryD.getUserProfileData(loginId).toLiveData()
   }
 

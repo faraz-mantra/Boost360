@@ -12,6 +12,7 @@ import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
+import com.framework.utils.removeENotationAndRoundTo
 
 class ProductListingViewHolder(binding: RecyclerItemProductListingBinding) : AppBaseRecyclerViewHolder<RecyclerItemProductListingBinding>(binding) {
   
@@ -37,9 +38,9 @@ class ProductListingViewHolder(binding: RecyclerItemProductListingBinding) : App
       }
     }
     if (data.DiscountAmount <= 0.0) binding.labelBasePrice.gone() else binding.labelBasePrice.visible()
-    binding.labelPrice.text = "${data.CurrencyCode ?: "INR"} ${data.Price - data.DiscountAmount}"
+    binding.labelPrice.text = "${data.CurrencyCode ?: "INR"} ${(data.Price - data.DiscountAmount).removeENotationAndRoundTo(1)}"
     binding.labelBasePrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-    binding.labelBasePrice.text = "${data.CurrencyCode ?: "INR"} ${data.Price}"
+    binding.labelBasePrice.text = "${data.CurrencyCode ?: "INR"} ${data.Price.removeENotationAndRoundTo(1)}"
     binding.labelDescription.text = "${data.Description}"
     apply { activity?.glideLoad(binding.cardThumbnail, data.TileImageUri, R.drawable.placeholder_image_n) }
     binding.root.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.PRODUCT_ITEM_CLICK.ordinal) }

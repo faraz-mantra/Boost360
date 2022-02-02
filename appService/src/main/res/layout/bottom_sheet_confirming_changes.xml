@@ -61,7 +61,9 @@
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/ctv_new_page_url"
         style="@style/wrap_wrap"
-        android:layout_marginHorizontal="@dimen/size_20"
+          android:tag="com.userexperior.ueSecureView"
+
+          android:layout_marginHorizontal="@dimen/size_20"
         android:layout_marginTop="@dimen/size_20"
         android:includeFontPadding="false"
         android:text="@string/new_page_url_https_sravansclinics_com_packages"
@@ -83,7 +85,7 @@
         android:textSize="10sp"
         android:text="@string/i_understand_that_url_change_may_have_a_negative_impact_on_the_search"
         android:textColor="@color/black_4a4a4a"
-        app:buttonTint="@color/yellow_ffb900"
+        app:buttonTint="@color/colorAccent"
         tools:ignore="RtlSymmetry,SmallSp" />
 
       <androidx.constraintlayout.widget.ConstraintLayout

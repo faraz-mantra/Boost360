@@ -30,7 +30,9 @@ import com.onboarding.nowfloats.constant.PreferenceConstant
 import com.onboarding.nowfloats.model.channel.statusResponse.CHANNEL_STATUS_SUCCESS
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelsType
+import com.onboarding.nowfloats.model.supportVideo.FeatureSupportVideoResponse
 import com.onboarding.nowfloats.rest.repositories.ChannelRepository
+import com.onboarding.nowfloats.rest.repositories.DeveloperBoostKitDevRepository
 import org.json.JSONException
 import org.json.JSONObject
 import java.text.SimpleDateFormat
@@ -38,38 +40,40 @@ import java.util.*
 
 class APIService : Service() {
 
-    private var mPrefTwitter: SharedPreferences? = null
-    override fun onBind(intent: Intent?): IBinder? {
-        return null
-    }
+  private var mPrefTwitter: SharedPreferences? = null
+  var userId: String? = null
+  var userSessionManager: UserSessionManager? = null
+  var countApiSuccess: Int = 0
 
-    var userId: String? = null
-    var userSessionManager: UserSessionManager? = null
+  override fun onBind(intent: Intent?): IBinder? {
+    return null
+  }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        userSessionManager = UserSessionManager(this.baseContext)
-        mPrefTwitter = this.baseContext.getSharedPreferences(
-            PreferenceConstant.PREF_NAME_TWITTER,
-            Context.MODE_PRIVATE
-        )
-        userId = userSessionManager?.fPID
-        hitAPIs()
-        return START_STICKY
-    }
+  override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    userSessionManager = UserSessionManager(this.baseContext)
+    mPrefTwitter = this.baseContext.getSharedPreferences(
+      PreferenceConstant.PREF_NAME_TWITTER,
+      Context.MODE_PRIVATE
+    )
+    userId = userSessionManager?.fPID
+    hitAPIs()
+    return START_STICKY
+  }
 
-    private fun hitAPIs() {
-        registerRia()
-        nfxGetSocialTokens()
-        hitSelfBrandedKycAPI()
-        checkUserAccountDetails()
-        //Migrate Upgrade DB
-        DataLoader.loadMarketPlaceData(
-            application,
-            userSessionManager?.fP_AppExperienceCode,
-            userSessionManager?.fpTag
-        )
-        checkExpiryAddonsPackages()
-    }
+  private fun hitAPIs() {
+    registerRia()
+    nfxGetSocialTokens()
+    hitSelfBrandedKycAPI()
+    checkUserAccountDetails()
+    getAndSaveKAdminFeatureSupportVideos()
+      //Migrate Upgrade DB
+      DataLoader.loadMarketPlaceData(
+          application,
+          userSessionManager?.fP_AppExperienceCode,
+          userSessionManager?.fpTag
+      )
+      checkExpiryAddonsPackages()
+  }
 
     @SuppressLint("LongLogTag")
     private fun checkExpiryAddonsPackages() {
@@ -106,43 +110,47 @@ class APIService : Service() {
                             "http://boost.nowfloats.com?viewType=CART_FRAGMENT&buyItemKey=${singleitem.featureKey}"
                         )
                     } else if (days.toInt() > 1 && days.toInt() < 0) {
-                        sendNotification(applicationContext,
+                        sendNotification(
+                            applicationContext,
                             "Last Day For Renewal!",
                             "Your add-ons are expiring in the next 24 hours! Renew them now.",
-                            "http://boost.nowfloats.com?viewType=CART_FRAGMENT&buyItemKey=${singleitem.featureKey}")
+                            "http://boost.nowfloats.com?viewType=CART_FRAGMENT&buyItemKey=${singleitem.featureKey}"
+                        )
                     } else if (days.toInt() <= 0) {
-                        sendNotification(applicationContext,
+                        sendNotification(
+                            applicationContext,
                             "Your Add-ons have expired! :(",
                             "But you can still renew them to keep enjoying the features.",
-                            "http://boost.nowfloats.com?viewType=CART_FRAGMENT&buyItemKey=${singleitem.featureKey}")
+                            "http://boost.nowfloats.com?viewType=CART_FRAGMENT&buyItemKey=${singleitem.featureKey}"
+                        )
                     }
                 }
             }
     }
 
-    private fun checkUserAccountDetails() {
-        WithFloatRepository.checkUserAccount(userSessionManager?.fPID, clientId).toLiveData()
-            .observeForever {
-                val data = it as? AccountDetailsResponse
-                if (it.isSuccess()) {
-                    if (data?.result?.bankAccountDetails != null) {
-                        data?.result?.bankAccountDetails?.saveBanKDetail()
-                        userSessionManager?.setAccountSave(true)
-                    } else userSessionManager?.setAccountSave(false)
-                }
-            }
+  private fun checkUserAccountDetails() {
+    WithFloatRepository.checkUserAccount(userSessionManager?.fPID, clientId).toLiveData().observeForever {
+      val data = it as? AccountDetailsResponse
+      if (it.isSuccess()) {
+        if (data?.result?.bankAccountDetails != null) {
+          data.result?.bankAccountDetails?.saveBanKDetail()
+          userSessionManager?.setAccountSave(true)
+        } else userSessionManager?.setAccountSave(false)
+      }
+      checkAllApiComplete()
     }
+  }
 
-    private fun hitSelfBrandedKycAPI() {
-        WebActionBoostKitRepository.getSelfBrandedKyc(query = getQuery()).toLiveData()
-            .observeForever {
-                val paymentKycDataResponse = it as? PaymentKycDataResponse
-                if (it.isSuccess() && paymentKycDataResponse?.data.isNullOrEmpty().not()) {
-                    userSessionManager?.isSelfBrandedKycAdd = true
-                    paymentKycDataResponse?.data?.first()?.saveBusinessKycDetail()
-                }
-            }
+  private fun hitSelfBrandedKycAPI() {
+    WebActionBoostKitRepository.getSelfBrandedKyc(query = getQuery()).toLiveData().observeForever {
+      val paymentKycDataResponse = it as? PaymentKycDataResponse
+      if (it.isSuccess() && paymentKycDataResponse?.data.isNullOrEmpty().not()) {
+        userSessionManager?.isSelfBrandedKycAdd = true
+        paymentKycDataResponse?.data?.first()?.saveBusinessKycDetail()
+      }
+      checkAllApiComplete()
     }
+  }
 
     private fun registerRia() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -227,4 +235,19 @@ class APIService : Service() {
             ""
         }
     }
+
+  private fun getAndSaveKAdminFeatureSupportVideos() {
+    DeveloperBoostKitDevRepository.getSupportVideos().toLiveData().observeForever {
+      val featureVideo = (it as? FeatureSupportVideoResponse)?.data?.firstOrNull()?.featurevideo
+      if (it.isSuccess() && featureVideo.isNullOrEmpty().not()) {
+        FeatureSupportVideoResponse.saveSupportVideoData(featureVideo)
+      }
+      checkAllApiComplete()
+    }
+  }
+
+  private fun checkAllApiComplete() {
+    countApiSuccess++
+    if (countApiSuccess == 5) stopSelf()
+  }
 }

@@ -37,7 +37,7 @@ object NFWebEngageController {
     weAnalytics.screenNavigated(event_name)
     //Firebase Analytics Event...
     FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, event_value?:"")
-
+    UserExperiorController.trackEvent(event_name, HashMap(trackEvent))
     //AppsFlyerEvent...
     try {
       AppsFlyerLib.getInstance()
@@ -51,6 +51,7 @@ object NFWebEngageController {
     if (event_value.size > 0) {
       weAnalytics.track(event_name, event_value)
       weAnalytics.screenNavigated(event_name)
+      UserExperiorController.trackEvent(event_name, event_value)
 
       //Firebase Analytics Event...
       FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, "")
@@ -67,36 +68,33 @@ object NFWebEngageController {
     } else {
       weAnalytics.track(event_name)
       weAnalytics.screenNavigated(event_name)
+      UserExperiorController.trackEvent(event_name)
+
     }
   }
 
-  fun trackEventLoad(
-    event_name: String,
-    event_label: String,
-    event_value: HashMap<String, Any>,
-    value: String
-  ) {
+  fun trackEventLoad(event_name: String, event_label: String, event_value: HashMap<String, Any>, value: String) {
     if (event_value.size > 0) {
       event_value["event_name"] = event_name
       event_value["event_label"] = event_label
       weAnalytics.track(event_name, event_value)
       weAnalytics.screenNavigated(event_name)
+      UserExperiorController.trackEvent(event_name, event_value)
 
       //Firebase Analytics Event...
       FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, "")
 
       //AppsFlyerEvent...
       try {
-        AppsFlyerLib.getInstance().logEvent(
-          weAnalytics.activity.get()?.applicationContext,
-          event_name, event_value.toMap()
-        )
+        AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, event_value.toMap())
       } catch (e: Exception) {
         e.printStackTrace()
       }
     } else {
       weAnalytics.track(event_name)
       weAnalytics.screenNavigated(event_name)
+      UserExperiorController.trackEvent(event_name)
+
     }
   }
 
@@ -116,11 +114,11 @@ object NFWebEngageController {
       val params = HashMap<String, Any>()
 
       if (!mobile.isNullOrEmpty()) {
-        weUser.setPhoneNumber(mobile)
-
+        val plusMobile=getNumberPlus91(mobile)
+        weUser.setPhoneNumber(plusMobile)
         //Firebase Analytics User Property.
-        FirebaseAnalyticsUtilsHelper.setUserProperty("mobile", mobile)
-        params["mobile"] = mobile
+        FirebaseAnalyticsUtilsHelper.setUserProperty("mobile", plusMobile)
+        params["mobile"] = plusMobile
       }
       if (!name.isNullOrEmpty()) {
         weUser.setFirstName(name)
@@ -138,13 +136,14 @@ object NFWebEngageController {
       }
       if (params.isNotEmpty())
         AppsFlyerLib.getInstance().setAdditionalData(params)
+
     }
   }
 
 
   fun initiateUserLogin(userId: String?) {
     if (userId != null && !userId.isNullOrEmpty()) {
-      Log.d(TAG, "Initiating User login" + userId)
+      Log.d(TAG, "Initiating User login$userId")
       weUser.login(userId)
 
       //Firebase Analytics User Session Event.
@@ -156,6 +155,7 @@ object NFWebEngageController {
       }
       AppsFlyerLib.getInstance().setCustomerUserId(userId)
       isUserLoggedIn = true
+
     }
   }
 
@@ -184,13 +184,12 @@ object NFWebEngageController {
     }
   }
 
-  fun setFPTag(fpTag: String) {
+  fun setFPTag(fpTag: String?) {
     try {
-      if (fpTag == null) {
-        return;
-      }
-      Log.d(TAG, "Setting FP Tag" + fpTag)
+      if (fpTag == null) return;
+      Log.d(TAG, "Setting FP Tag$fpTag")
       weUser.setAttribute("fpTag", fpTag)
+      UserExperiorController.setFpTag(fpTag)
 
       //Firebase Analytics User Property.
       FirebaseAnalyticsUtilsHelper.setUserProperty("fpTag", fpTag)
@@ -207,11 +206,20 @@ object NFWebEngageController {
   fun logout() {
     Log.d(TAG, "Loggind user out from analytics")
     weUser.logout()
+    UserExperiorController.logout()
 
     //Reset Firebase Analytics User Session Event.
     FirebaseAnalyticsUtilsHelper.resetIdentifyUser()
 
     //End AppsFlyer Analytics User Session Event.
     AppsFlyerLib.getInstance().setCustomerUserId(null)
+  }
+
+  fun getNumberPlus91(number:String): String {
+    return when {
+      number.contains("+91-") -> number.replace("+91-", "+91")
+      !number.contains("+91") -> "+91$number"
+      else -> number
+    }
   }
 }

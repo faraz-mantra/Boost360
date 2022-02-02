@@ -12,7 +12,7 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import kotlinx.android.synthetic.main.remove_addon_confirmation_fragment.*
 
-class RemoveAddonConfirmationFragment : BaseFragment() {
+class RemoveAddonConfirmationFragment : BaseFragment("MarketPlaceRemoveAddonConfirmationFragment") {
 
   companion object {
     fun newInstance() = RemoveAddonConfirmationFragment()

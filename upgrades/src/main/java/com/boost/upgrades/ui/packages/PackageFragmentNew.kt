@@ -48,7 +48,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-class PackageFragmentNew : BaseFragment() {
+class PackageFragmentNew : BaseFragment("MarketPlacePackageFragmentNew") {
 
     lateinit var root: View
 

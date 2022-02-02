@@ -738,8 +738,8 @@ public class Contact_Info_Activity extends BaseActivity implements View.OnTouchL
                 obj2.put("value", msgtxt4fbpage);
 
                 String webWidgets = null;
-                for (int i = 0; i < Constants.StoreWidgets.size(); i++) {
-                    webWidgets = Constants.StoreWidgets.get(i).toString();
+                for (int i = 0; i < session.getStoreWidgets().size(); i++) {
+                    webWidgets = session.getStoreWidgets().get(i).toString();
                     webWidgets += "#";
                 }
                 webWidgets += "#FBLIKEBOX";
@@ -968,8 +968,8 @@ public class Contact_Info_Activity extends BaseActivity implements View.OnTouchL
                 obj2.put("value", facebookPage.getText().toString().trim());
 
                 String webWidgets = "";
-                for (int j = 0; j < Constants.StoreWidgets.size(); j++) {
-                    webWidgets += Constants.StoreWidgets.get(j).toString() + "#";
+                for (int j = 0; j < session.getStoreWidgets().size(); j++) {
+                    webWidgets += session.getStoreWidgets().get(j).toString() + "#";
 
                 }
                 webWidgets += "FBLIKEBOX";

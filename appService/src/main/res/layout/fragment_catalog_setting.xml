@@ -99,7 +99,9 @@
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/ctv_website_url"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+              android:tag="com.userexperior.ueSecureView"
+
+              android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/size_16"
             android:paddingVertical="@dimen/size_12"
             android:text="@string/url_https_sravansclinics_com_services"

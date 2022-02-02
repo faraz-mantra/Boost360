@@ -31,7 +31,6 @@ import com.boost.upgrades.utils.*
 import com.boost.upgrades.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.HOME_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
-import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils
@@ -189,7 +188,8 @@ class UpgradeActivity : AppCompatActivity() {
 
   private fun initRazorPay() {
     try {
-      razorpay = Razorpay(this, RAZORPAY_KEY)
+      val razorPayKey: String = BuildConfig.RAZORPAY_KEY
+      razorpay = Razorpay(this, razorPayKey)
     } catch (e: Exception) {
       SentryController.captureException(e)
       e.printStackTrace()

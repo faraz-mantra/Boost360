@@ -1380,8 +1380,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                         .setmUserAccessTokenKey(twitterSession.getAuthToken().token)
                         .setmUserAccessTokenSecret(twitterSession.getAuthToken().secret)
                         .setmUserAccountId(String.valueOf(twitterSession.getUserId()))
-                        .setmAppAccessTokenKey(Constants.TWITTER_TOK)
-                        .setmAppAccessTokenSecret(Constants.TWITTER_SEC)
+                        .setmAppAccessTokenKey(com.nowfloats.twitter.BuildConfig.twitter_consumer_key)
+                        .setmAppAccessTokenSecret(com.nowfloats.twitter.BuildConfig.twitter_consumer_secret)
                         .setmCallType(TWITTERTYPE)
                         .setmName(username);
                 requestClient.connectNfx();

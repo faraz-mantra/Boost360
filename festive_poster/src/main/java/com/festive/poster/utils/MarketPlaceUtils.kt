@@ -3,6 +3,7 @@ package com.festive.poster.utils
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
+import com.festive.poster.R
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.ADDON_MARKETPLACE_PAGE_CLICK
@@ -42,12 +43,12 @@ object MarketPlaceUtils {
             if (session.userProfileEmail != null) {
                 intent.putExtra("email", session.userProfileEmail)
             } else {
-                intent.putExtra("email", "ria@nowfloats.com")
+                intent.putExtra("email", context.getString(R.string.ria_customer_mail))
             }
             if (session.userPrimaryMobile != null) {
                 intent.putExtra("mobileNo", session.userPrimaryMobile)
             } else {
-                intent.putExtra("mobileNo", "9160004303")
+                intent.putExtra("mobileNo", context.getString(R.string.ria_customer_mail))
             }
             if (buyItemKey != null && buyItemKey.isNotEmpty()) intent.putExtra("buyItemKey", buyItemKey)
             intent.putExtra("profileUrl", session.fPLogo)

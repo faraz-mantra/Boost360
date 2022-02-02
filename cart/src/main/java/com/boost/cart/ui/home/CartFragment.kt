@@ -463,14 +463,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
  //     discount_coupon_message.visibility = View.GONE
       //clear coupon
       validCouponCode = null
-
       //remove saved orderdetails and coupondetails from prefs
       prefs.storeCartOrderInfo(null)
       prefs.storeApplyedCouponDetails(null)
-
 //            totalCalculation()
-      couponCode = ""
-      couponServiceModel = null
+//      couponCode = ""
+//      couponServiceModel = null
 
       totalCalculationAfterCoupon()
     }
@@ -507,7 +505,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
         }
       }
-
 
 //            }
 
@@ -2402,7 +2399,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           bundles_in_cart = false
           default_validity_months = 1
 //                    months_validity.text = default_validity_months.toString() + " month"
-          months_validity.setText(default_validity_months.toString())
+          if(prefs.getCartValidityMonths().isNullOrEmpty().not()){
+            months_validity.setText(prefs.getCartValidityMonths())
+          }else{
+            months_validity.setText(default_validity_months.toString())
+          }
+//          months_validity.setText(default_validity_months.toString())
           months_validity_edit_inc.visibility = View.VISIBLE
           months_validity_edit_dsc.visibility = View.VISIBLE
           package_layout.visibility = View.GONE
@@ -2671,7 +2673,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           prefs.storeCartOrderInfo(null)
 
           //save coupon Details
-//                    prefs.storeApplyedCouponDetails(it)
+           //         prefs.storeApplyedCouponDetails(it)
 
 //                    validCouponCode = it
           couponServiceModel = it

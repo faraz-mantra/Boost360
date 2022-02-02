@@ -25,7 +25,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
@@ -1072,15 +1071,14 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             try {
 
                 String username = twitterSession.getUserName();
-
                 NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
                         .setmFpId(session.getFPID())
                         .setmType("twitter")
                         .setmUserAccessTokenKey(twitterSession.getAuthToken().token)
                         .setmUserAccessTokenSecret(twitterSession.getAuthToken().secret)
                         .setmUserAccountId(String.valueOf(twitterSession.getUserId()))
-                        .setmAppAccessTokenKey(Constants.TWITTER_TOK)
-                        .setmAppAccessTokenSecret(Constants.TWITTER_SEC)
+                        .setmAppAccessTokenKey(com.nowfloats.twitter.BuildConfig.twitter_consumer_key)
+                        .setmAppAccessTokenSecret(com.nowfloats.twitter.BuildConfig.twitter_consumer_secret)
                         .setmCallType(TWITTERTYPE)
                         .setmName(username);
                 requestClient.connectNfx();

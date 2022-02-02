@@ -237,5 +237,11 @@ class CheckoutKycFragment : DialogFragment() {
     )
   }
 
+  override fun onResume() {
+    super.onResume()
+//    UserExperiorController.startScreen("MarketPlaceCheckoutKycFragment")
+
+  }
+
 
 }

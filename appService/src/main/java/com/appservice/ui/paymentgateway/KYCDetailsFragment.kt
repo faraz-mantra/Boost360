@@ -1,9 +1,7 @@
 package com.appservice.ui.paymentgateway
 
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -43,6 +41,8 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.utils.ValidationUtils
+import com.framework.utils.ValidationUtils.isValidName
 import com.framework.utils.convertListObjToString
 import com.framework.utils.convertStringToList
 import com.framework.webengageconstant.KYC_VERIFICATION
@@ -369,34 +369,30 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     val panName = binding?.edtNameOnPanCard?.text?.toString()
     // if add new
     val accountNumber = binding?.edtBankAccountNumber?.text?.toString()
-    val nameAccount = binding?.edtBankAccountHolderName?.text?.toString()
+    val nameAccount = binding?.edtBankAccountHolderName?.text?.toString() ?: ""
     val ifsc = binding?.edtBankIfscCode?.text?.toString()
     val bankName = binding?.edtBankName?.text?.toString()
     val bankBranch = binding?.edtBankBranch?.text?.toString()
 
     when {
       panCarImage == null && dataKyc?.panCardDocument.isNullOrEmpty() -> {
-        showShortToast("Please select valid pan card file")
+        showShortToast(getString(R.string.valid_pan_card_image))
         return false
       }
       panNumber.isNullOrEmpty() -> {
-        showShortToast("Pan number can't empty.")
+        showShortToast(getString(R.string.pan_number_not_empty))
         return false
       }
       !isPanNumberValid(panNumber) -> {
-        showShortToast("Please enter a valid pan number.")
+        showShortToast(getString(R.string.pan_number_invalid))
         return false
       }
       panName.isNullOrEmpty() -> {
-        showShortToast("Pan name can't empty.")
+        showShortToast(getString(R.string.pan_name_not_empty))
         return false
       }
-      !isNameValid(panName) -> {
-        showShortToast("Please enter a valid name.")
-        return false
-      }
-      bankStatementImage == null && dataKyc?.bankAccountStatement.isNullOrEmpty() -> {
-        showShortToast("Please select valid bank statement file")
+      !isValidName(panName) -> {
+        showShortToast(getString(R.string.pan_name_invalid))
         return false
       }
       binding?.addDifferent?.isChecked == true -> {
@@ -409,8 +405,14 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         } else if (accountNumber.length > 18) {
           showShortToast(getString(R.string.account_greater_than_nine))
           return false
+        } else if (ValidationUtils.isBankAcValid(accountNumber)) {
+          showShortToast(getString(R.string.invalid_bank_account_number))
+          return false
         } else if (nameAccount.isNullOrEmpty()) {
           showShortToast(getString(R.string.bank_account_cannot_empty))
+          return false
+        } else if (!isValidName(nameAccount)) {
+          showShortToast(getString(R.string.bank_account_name_invalid))
           return false
         } else if (ifsc.isNullOrEmpty()) {
           showShortToast(getString(R.string.bank_ifcs_cannot_empty))
@@ -424,7 +426,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         }
       }
       bankStatementImage == null && dataKyc?.bankAccountStatement.isNullOrEmpty() -> {
-        showShortToast("Please select valid bank statement file")
+        showShortToast(getString(R.string.invalid_bank_statement_file))
         return false
       }
     }
@@ -754,9 +756,5 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
 
   private fun isPanNumberValid(panNumber: String): Boolean {
     return Pattern.compile("[A-Z]{5}[0-9]{4}[A-Z]{1}").matcher(panNumber).matches()
-  }
-
-  private fun isNameValid(name: String): Boolean {
-    return Pattern.compile("^([^0-9]*)\$").matcher(name).matches()
   }
 }

@@ -1,6 +1,7 @@
 package com.boost.payment.ui.confirmation
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import io.reactivex.Completable
@@ -22,4 +23,8 @@ class OrderConfirmationViewModel : ViewModel() {
       }
       .subscribe()
   }
+
+//  fun getFpDetails(fpId: String, map: Map<String, String>): LiveData<BaseResponse> {
+//    return WithFloatTwoRepository.getFpDetails(fpId, map).toLiveData()
+//  }
 }

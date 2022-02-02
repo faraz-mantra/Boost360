@@ -14,7 +14,7 @@ buildscript {
         // kotlin support
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31'
         // Add the Crashlytics Gradle plugin
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.0'
     }
 }
 
@@ -56,6 +56,8 @@ ext {
     targetSdkVersion = 30
     buildToolsVersion = "30.0.0"
     koin_version = "2.1.6"
+
+
 }
 
 task clean(type: Delete) {

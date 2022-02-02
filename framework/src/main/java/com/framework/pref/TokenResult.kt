@@ -6,6 +6,7 @@ import com.framework.utils.DateUtils.parseDate
 import com.framework.utils.convertObjToString
 import com.framework.utils.convertStringToObj
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -15,11 +16,12 @@ data class TokenResult(
   @SerializedName("Token")
   var token: String? = null, // expire in 1 days
   var createDate: String = "",
-) {
+) : Serializable {
 
   fun barrierToken(): String {
     return "Bearer $token"
   }
+
   fun isExpiredToken(): Boolean {
     val diffInMilliSec = getCurrentDate().time - (getCreateDate()?.time ?: 0L)
     val diffInDays = TimeUnit.MILLISECONDS.toDays(diffInMilliSec)

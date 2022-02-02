@@ -18,7 +18,7 @@ import com.appservice.ui.staffs.doctors.EditDoctorsDetailsFragment
 
 import com.appservice.staffs.ui.details.StaffDetailsFragment
 
-import com.appservice.staffs.ui.home.StaffProfileListingFragment
+import com.appservice.ui.staffs.ui.home.StaffProfileListingFragment
 import com.appservice.staffs.ui.profile.StaffProfileDetailsFragment
 import com.appservice.ui.catalog.common.WeeklyAppointmentFragment
 import com.appservice.ui.staffs.ui.breaks.ScheduledBreaksFragmnt
@@ -76,10 +76,8 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
   fun changeTheme(color: Int) {
     getToolbar()?.setBackgroundColor(ContextCompat.getColor(this, color))
     window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-      window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-      window?.statusBarColor = ContextCompat.getColor(this, color)
-    }
+    window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+    window?.statusBarColor = ContextCompat.getColor(this, color)
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {

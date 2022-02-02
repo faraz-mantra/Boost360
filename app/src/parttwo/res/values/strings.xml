@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <string name="twitter_consumer_key">5HNCg1Sx1dJMmUt1NuFXMiSST</string>
-  <string name="twitter_consumer_secret">MfMT1qgmmCQ22irEXmUGzHL9aE1bgCo3hlrAekZ1rX5kMKr6WD</string>
+<!--  <string name="twitter_consumer_key">5HNCg1Sx1dJMmUt1NuFXMiSST</string>-->
+<!--  <string name="twitter_consumer_secret">MfMT1qgmmCQ22irEXmUGzHL9aE1bgCo3hlrAekZ1rX5kMKr6WD</string>-->
   <string name="website_domain_name">.sibername.com</string>
   <string name="package_name_aviary">com.sibername.AviaryCdsProvider</string>
   <string name="app_name">Sibername Boost</string>

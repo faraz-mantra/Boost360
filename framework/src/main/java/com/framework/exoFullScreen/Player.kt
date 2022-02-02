@@ -1,15 +1,16 @@
 package com.framework.exoFullScreen
 
 import android.content.Context
+import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.SimpleExoPlayer
 
 object MediaPlayer {
 
-  var exoPlayer: SimpleExoPlayer? = null
+  var exoPlayer: ExoPlayer? = null
 
   fun initialize(context: Context?) {
     if (context != null)
-      exoPlayer = SimpleExoPlayer.Builder(context).build()
+      exoPlayer = ExoPlayer.Builder(context).build();
   }
 
    fun releasePlayer() {

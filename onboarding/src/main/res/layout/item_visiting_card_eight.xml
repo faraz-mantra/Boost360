@@ -93,7 +93,7 @@
 
           <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/size_100"
+            android:layout_height="@dimen/size_90"
             android:layout_gravity="bottom"
             android:layout_marginStart="@dimen/size_14"
             android:background="@drawable/ic_rectangle_top_new"

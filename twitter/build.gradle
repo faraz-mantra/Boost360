@@ -21,13 +21,29 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "default"
+    productFlavors {
+        partone {
+            dimension "default"
+            buildConfigField "String", "twitter_consumer_key", '"4CiUg5gcIbvYre8XjGd8GsElV"'
+            buildConfigField "String", "twitter_consumer_secret", '"4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9"'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
 }
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    // Kotlin
-    api "androidx.core:core-ktx:1.6.0"
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api project(path: ':framework')
     // Twitter Core
     api "com.twitter.sdk.android:twitter-core:3.1.1"
 }

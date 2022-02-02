@@ -17,12 +17,15 @@ import com.boost.presignin.service.APIService
 import com.boost.presignin.ui.intro.IntroActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.analytics.SentryController
+import com.framework.analytics.UserExperiorController
 import com.framework.extensions.observeOnce
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.*
 import com.framework.utils.NetworkUtils
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.onboarding.nowfloats.model.googleAuth.FirebaseTokenResponse
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.set
@@ -70,12 +73,32 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
           deepLinkDay = bundle.getString("deepLinkDay")
         }
         initLottieAnimation()
-        storeFpDetails()
+        registerFirebaseToken()
       }
     } else {
       binding?.preDashboardAnimation?.pauseAnimation()
       snackbarNoInternet()
     }
+  }
+
+  private fun registerFirebaseToken() {
+    viewModel.getFirebaseToken().observeOnce(this, {
+      val response = it as? FirebaseTokenResponse
+      val token = response?.Result
+      Log.i("registerFirebaseToken", "registerFirebaseToken: $token")
+      token?.let { it1 ->
+        FirebaseAuth.getInstance().signInWithCustomToken(it1).addOnCompleteListener(this) { task ->
+          if (task.isSuccessful) {
+            // Sign in success, update UI with the signed-in user's information
+            Log.d("registerFirebaseToken", "signInWithCustomToken:success")
+          } else {
+            // If sign in fails, display a message to the user.
+            Log.w("registerFirebaseToken", "signInWithCustomToken:failure", task.exception)
+          }
+        }
+      }
+      storeFpDetails()
+    })
   }
 
   private fun storeFpDetails() {
@@ -86,8 +109,8 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
       if (it1.isSuccess() && response != null) {
         ProcessFPDetails(session).storeFPDetails(response)
         setFPDetailsToSentry(session)
+        setFPDetailsToUserExperior(session)
         FirestoreManager.initData(session.fpTag ?: "", session.fPID ?: "", clientId)
-        FirebaseRemoteConfigUtil.initRemoteConfigData(this)
         startService()
         if (
           deepLinkViewType != null && deepLinkViewType.equals("CART_FRAGMENT", ignoreCase = true)
@@ -107,6 +130,10 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
 
   private fun setFPDetailsToSentry(session: UserSessionManager) {
     SentryController.setUser(session)
+  }
+
+  private fun setFPDetailsToUserExperior(session: UserSessionManager) {
+    UserExperiorController.setUserAttr(session)
   }
 
   private fun snackBarUnableToGetFp() {
@@ -144,12 +171,12 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
     if (session.userProfileEmail != null) {
       intent.putExtra("email", session.userProfileEmail)
     } else {
-      intent.putExtra("email", "ria@nowfloats.com")
+      intent.putExtra("email", getString(R.string.ria_customer_mail))
     }
     if (session.userPrimaryMobile != null) {
       intent.putExtra("mobileNo", session.userPrimaryMobile)
     } else {
-      intent.putExtra("mobileNo", "9160004303")
+      intent.putExtra("mobileNo", getString(R.string.ria_customer_mail))
     }
     intent.putExtra("profileUrl", session.fPLogo)
     startActivity(intent)

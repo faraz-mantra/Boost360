@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.os.Build;
 import android.os.PowerManager;
 
@@ -18,7 +19,10 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
+import java.util.Properties;
 
 import static android.content.Context.POWER_SERVICE;
 
@@ -82,11 +86,10 @@ public class PhoneStates extends BroadcastReceiver {
     }
 
     private void onCallEnd(final Context context) {
-
         FirebaseOptions options = new FirebaseOptions.Builder()
-                .setApiKey("AIzaSyBowYAh4TLbruwJoqL3QnQaKhBmB83EgEs")
-                .setApplicationId("1:506969475000:android:afe3b748e8b5c95f")
-                .setDatabaseUrl("https://nfxteam-153211.firebaseio.com")
+                .setApiKey(getProperty("FIREBASE_API_KEY",context))
+                .setApplicationId(getProperty("FIREBASE_APPLICATION_ID",context))
+                .setDatabaseUrl(getProperty("FIREBASE_NFX_TEAM_URL",context))
                 .build();
         FirebaseApp secondApp = null;
         try {
@@ -98,6 +101,18 @@ public class PhoneStates extends BroadcastReceiver {
         final DatabaseReference mDatabase = secondDatabase.getReference();
 
         //readCallLog(mDatabase);
+    }
+
+    public static String getProperty(String key, Context context) {
+        try {
+            Properties properties = new Properties();
+            AssetManager assetManager = context.getAssets();
+            InputStream inputStream = assetManager.open("gradle.properties");
+            properties.load(inputStream);
+            return properties.getProperty(key);
+        }catch (IOException e){
+            return "";
+        }
     }
 
     //Deals with actual events

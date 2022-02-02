@@ -114,7 +114,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
   private boolean editCheck = false;
   private int curPos;
   private ImageView deletePage;
-  private int GALLERY_PHOTO = 5;
+  private final int GALLERY_PHOTO = 5;
   private RiaNodeDataModel mRiaNodedata;
   public ArrayList<CustomPageModel> dataModel = new ArrayList();
 
@@ -157,25 +157,25 @@ public class CreateCustomPageActivity extends AppCompatActivity {
 
     mRiaNodedata = getIntent().getParcelableExtra(Constants.RIA_NODE_DATA);
 
-    toolbar = (Toolbar) findViewById(R.id.tool_bar_product_detail);
+    toolbar = findViewById(R.id.tool_bar_product_detail);
     setSupportActionBar(toolbar);
     getSupportActionBar().setDisplayShowHomeEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     activity = CreateCustomPageActivity.this;
 
-    save = (ImageView) toolbar.findViewById(R.id.home_view_delete_card);
-    deletePage = (ImageView) toolbar.findViewById(R.id.delete_page);
+    save = toolbar.findViewById(R.id.home_view_delete_card);
+    deletePage = toolbar.findViewById(R.id.delete_page);
     deletePage.setVisibility(View.GONE);
-    final TextView title = (TextView) toolbar.findViewById(R.id.titleProduct);
+    final TextView title = toolbar.findViewById(R.id.titleProduct);
     title.setVisibility(View.VISIBLE);
     title.setText("New Page");
     save.setImageResource(R.drawable.checkmark_icon);
     session = new UserSessionManager(getApplicationContext(), activity);
     capLimitCheck();
 
-    editor = (HorizontalScrollView) findViewById(R.id.rich_editer);
-    titleTxt = (EditText) findViewById(R.id.titleEdit);
-    richText = (RichEditor) findViewById(R.id.subtextEdit);
+    editor = findViewById(R.id.rich_editer);
+    titleTxt = findViewById(R.id.titleEdit);
+    richText = findViewById(R.id.subtextEdit);
     richText.setPlaceholder(getString(R.string.custom_page_details));
     richText.setFontSize(13);
 
@@ -283,12 +283,9 @@ public class CreateCustomPageActivity extends AppCompatActivity {
               anInterface.createPage(pageModel, new Callback<String>() {
                 @Override
                 public void success(String s, Response response) {
-
                   Log.d("CUSTOM_PAGE_CHECK", "" + s);
-
                   materialProgress.dismiss();
-                  if (s != null && s.toString().trim().length() > 0) {
-                    //Log.d("Create page success", "");
+                  if (response.getStatus() == 200 || response.getStatus() == 201 || response.getStatus() == 202) {
                     MixPanelController.track("CreateCustomPage", null);
                     long time = System.currentTimeMillis();
                     dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
@@ -298,9 +295,8 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                     onCustomPageAddedOrUpdated();
                     onBackPressed();
                   } else {
-                    Methods.showSnackBarNegative(activity, getString(R.string.enter_different_title_try_again));
-                    WebEngageController.trackEvent(POST_ACUSTOMPAGE, ENTER_DIFFERENT_TITLE_AND_TRY_AGAIN, session.getFpTag());
-                    //Log.d("Create page Fail", "");
+                    Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                    WebEngageController.trackEvent(POST_ACUSTOMPAGE, SOMETHING_WENT_WRONG_PLEASE_TRY_AGAIN, session.getFpTag());
                   }
                 }
 
@@ -309,7 +305,6 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                   materialProgress.dismiss();
                   Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
                   WebEngageController.trackEvent(POST_ACUSTOMPAGE, SOMETHING_WENT_WRONG_PLEASE_TRY_AGAIN, session.getFpTag());
-                  //Log.d("Create page Fail", "" + error.getMessage());
                 }
               });
             } else {
@@ -350,7 +345,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
       }
     });
 
-    LinearLayout subtxt_layout = (LinearLayout) findViewById(R.id.subtxt_layout);
+    LinearLayout subtxt_layout = findViewById(R.id.subtxt_layout);
     subtxt_layout.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -607,8 +602,8 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
     LayoutInflater inflater = getLayoutInflater();
     View v = inflater.inflate(R.layout.dialog_url, null);
-    final EditText et_url = (EditText) v.findViewById(R.id.et_url);
-    final EditText et_tag = (EditText) v.findViewById(R.id.et_tag);
+    final EditText et_url = v.findViewById(R.id.et_url);
+    final EditText et_tag = v.findViewById(R.id.et_tag);
     if (url_id == 2) {
       et_tag.setVisibility(View.VISIBLE);
     }
@@ -749,12 +744,12 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
 
     View view = dialog.getCustomView();
-    TextView header = (TextView) view.findViewById(R.id.textview_heading);
+    TextView header = view.findViewById(R.id.textview_heading);
     header.setText(R.string.upload_image);
-    LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
-    LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
-    ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
-    ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+    LinearLayout takeCamera = view.findViewById(R.id.cameraimage);
+    LinearLayout takeGallery = view.findViewById(R.id.galleryimage);
+    ImageView cameraImg = view.findViewById(R.id.pop_up_camera_imag);
+    ImageView galleryImg = view.findViewById(R.id.pop_up_gallery_img);
     cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
     galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
 
@@ -906,16 +901,16 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     intent.putExtra("fpid", session.getFPID());
     intent.putExtra("fpTag", session.getFpTag());
     intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
-    intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
+    intent.putStringArrayListExtra("userPurchsedWidgets", new ArrayList(session.getStoreWidgets()));
     if (session.getUserProfileEmail() != null) {
       intent.putExtra("email", session.getUserProfileEmail());
     } else {
-      intent.putExtra("email", "ria@nowfloats.com");
+      intent.putExtra("email", getString(R.string.ria_customer_mail));
     }
     if (session.getUserPrimaryMobile() != null) {
       intent.putExtra("mobileNo", session.getUserPrimaryMobile());
     } else {
-      intent.putExtra("mobileNo", "9160004303");
+      intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
     }
     intent.putExtra("profileUrl", session.getFPLogo());
     intent.putExtra("buyItemKey", CapLimitFeatureResponseItem.FeatureType.CUSTOMPAGES.name());

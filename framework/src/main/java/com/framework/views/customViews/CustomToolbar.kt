@@ -31,11 +31,11 @@ class CustomToolbar : MaterialToolbar {
 
   }
 
-  fun getTitleTextView(): TextView? {
+  fun getToolbarTitleTextView(): TextView? {
     return this.getChildOrNull(1) as? TextView
   }
 
-  fun getSubTitleTextView(): TextView? {
+  fun getToolbarSubTitleTextView(): TextView? {
     return this.getChildOrNull(2) as? TextView
   }
 

@@ -26,6 +26,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.clientId
+import com.framework.utils.ValidationUtils
 import com.framework.webengageconstant.BANK_ACCOUNT
 import com.framework.webengageconstant.BANK_ACCOUNT_DETAILS_UPDATED
 import com.framework.webengageconstant.BANK_ACCOUNT_SUBMITTED_FOR_VERIFICATION
@@ -267,6 +268,9 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     if (nameAccount.isNullOrEmpty()) {
       showShortToast(getString(R.string.bank_account_cannot_empty))
       return false
+    } else if (!ValidationUtils.isValidName(nameAccount)) {
+      showShortToast(getString(R.string.bank_account_name_invalid))
+      return false
     } else if (accountNumber.isNullOrEmpty()) {
       showShortToast(getString(R.string.bank_number_can_not_empty))
       return false
@@ -281,6 +285,9 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       return false
     } else if ((confirmNumber == accountNumber).not()) {
       showShortToast(getString(R.string.enter_a_valid_account_number))
+      return false
+    }else if (ValidationUtils.isBankAcValid(accountNumber)){
+      showShortToast(getString(R.string.invalid_bank_account_number))
       return false
     } else if (ifsc.isNullOrEmpty()) {
       showShortToast(getString(R.string.bank_ifcs_cannot_empty))

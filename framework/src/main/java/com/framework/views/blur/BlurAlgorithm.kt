@@ -1,7 +1,6 @@
 package com.framework.views.blur
 
 import android.graphics.Bitmap
-import androidx.annotation.NonNull
 
 
 interface BlurAlgorithm {
@@ -34,6 +33,5 @@ interface BlurAlgorithm {
    *
    * @return bitmap config supported by the given blur algorithm.
    */
-  @get:NonNull
-  val supportedBitmapConfig: Bitmap.Config?
+  val supportedBitmapConfig: Bitmap.Config
 }

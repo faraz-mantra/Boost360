@@ -230,7 +230,7 @@ public class BusinessAddressLatLongUpdateAsyncTask extends AsyncTask<Void, Strin
 
                     }
                     LatLng latlong = new LatLng(lat, lng);
-                    String url = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lng + "&zoom=15&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + lat + "," + lng + "&key=" + "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
+                    String url = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lng + "&zoom=15&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + lat + "," + lng + "&key=" + appcontext.getString(R.string.google_map_key);
                     //holderItem.chatImage.setVisibility(View.VISIBLE);
                     try {
                         Picasso.get()

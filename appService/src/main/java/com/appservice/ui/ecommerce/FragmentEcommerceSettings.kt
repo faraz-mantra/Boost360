@@ -1,11 +1,13 @@
 package com.appservice.ui.ecommerce
 
+import android.os.Bundle
 import android.widget.SearchView
 import com.appservice.R
 import com.appservice.model.aptsetting.AppointmentStatusResponse
 import com.appservice.model.aptsetting.IconType
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
+import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentEcommerceSettingsBinding
 import com.appservice.model.catalog.*
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
@@ -17,7 +19,6 @@ import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
-import com.framework.webengageconstant.APPOINTMENT_SETTING_PAGE_LOAD
 import com.framework.webengageconstant.ECOMMERCE_SETTING_PAGE_LOAD
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PAGE_VIEW
@@ -104,16 +105,18 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     val data = item as? AppointmentStatusResponse.TilesModel
-    data?.icon?.let { IconType.fromName(it) }?.let { clickActionButton(it) }
+    data?.let { clickActionButton(it) }
   }
 
   private fun clearSearchFocus() {
     binding?.svSettings?.clearFocus()
   }
 
-  private fun clickActionButton(type: IconType) {
-    when (type) {
-      IconType.catalog_setup_ecommerce -> startFragmentActivity(FragmentType.ECOMMERCE_CATALOG_SETTINGS)
+  private fun clickActionButton(data: AppointmentStatusResponse.TilesModel) {
+    when (IconType.fromName(data.icon)) {
+      IconType.catalog_setup_ecommerce -> startFragmentActivity(FragmentType.ECOMMERCE_CATALOG_SETTINGS,bundle = Bundle().apply {
+        putSerializable(IntentConstant.OBJECT_DATA.name,data)
+      })
       IconType.delivery_setup -> startFragmentActivity(FragmentType.ECOMMERCE_DELIVERY_CONFIG)
       IconType.customer_invoice_setup -> startFragmentActivity(FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE)
       IconType.payment_collection -> startFragmentActivity(FragmentType.ECOMMERCE_PAYMENT_SETTINGS)

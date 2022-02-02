@@ -3,7 +3,6 @@ package com.nowfloats.twitter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-
 import com.nowfloats.util.Constants;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -35,7 +34,7 @@ public class TwitterConnection {
     public TwitterConnection(Context context, TwitterResult twitterResult) {
         TwitterConfig config;
         config = new TwitterConfig.Builder(context)
-                .twitterAuthConfig(new TwitterAuthConfig(Constants.CONSUMER_KEY, Constants.CONSUMER_SECRET))
+                .twitterAuthConfig(new TwitterAuthConfig(com.nowfloats.twitter.BuildConfig.twitter_consumer_key, com.nowfloats.twitter.BuildConfig.twitter_consumer_secret))
                 .debug(!Constants.APK_MODE_RELEASE)
                 .build();
         Twitter.initialize(config);

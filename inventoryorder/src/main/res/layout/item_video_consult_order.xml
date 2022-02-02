@@ -50,7 +50,9 @@
               tools:text="New order" />
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/booking_id"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/booking_id"
               style="@style/wrap_wrap"
               android:paddingStart="@dimen/size_8"
               android:textColor="@color/primary_grey"
@@ -66,7 +68,9 @@
             android:orientation="horizontal">
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/txt_rupees"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/txt_rupees"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_weight="1"
@@ -128,6 +132,7 @@
             android:orientation="vertical">
 
             <include
+
               android:id="@+id/consult_date"
               layout="@layout/text_item" />
 
@@ -188,14 +193,18 @@
             android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/item_desc"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/item_desc"
               style="@style/wrap_wrap"
               android:textColor="@color/black"
               app:textType="BODY_1"
               tools:text="Bridal ceretin Touch-up\nBridal ceretin Touch-up" />
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/item_more"
+                android:tag="com.userexperior.ueSecureView"
+
+                android:id="@+id/item_more"
               style="@style/wrap_wrap"
               android:clickable="true"
               android:focusable="true"

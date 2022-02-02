@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data />
 
-  <com.framework.views.customViews.CustomCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+  <com.framework.views.customViews.CustomCardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/size_12"
@@ -153,8 +153,6 @@
             android:textFontWeight="400"
             app:textType="CAPTION"
             tools:text="INR 0" />
-
-
         </LinearLayout>
 
         <LinearLayout

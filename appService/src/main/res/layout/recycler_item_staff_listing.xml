@@ -30,7 +30,9 @@
         android:layout_height="wrap_content">
 
         <com.framework.views.CircularImageView
-          android:id="@+id/civ_image"
+            android:tag="com.userexperior.ueSecureView"
+
+            android:id="@+id/civ_image"
           android:layout_width="@dimen/size_50"
           android:layout_height="@dimen/size_50"
           app:civ_border_width="@dimen/size_0"
@@ -59,7 +61,9 @@
         android:orientation="vertical">
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_name"
+            android:tag="com.userexperior.ueSecureView"
+
+            android:id="@+id/ctv_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:fontFamily="@font/regular"
@@ -69,7 +73,9 @@
           tools:text="Sukhran Singh" />
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_specialization"
+            android:tag="com.userexperior.ueSecureView"
+
+            android:id="@+id/ctv_specialization"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:fontFamily="@font/regular"
@@ -80,7 +86,9 @@
           tools:text="Anti-aging Expert" />
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_leaves"
+            android:tag="com.userexperior.ueSecureView"
+
+            android:id="@+id/ctv_leaves"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:letterSpacing="0.2"
