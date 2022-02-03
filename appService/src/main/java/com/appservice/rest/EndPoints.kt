@@ -148,5 +148,10 @@ object EndPoints {
   const val AZURE_WEBSITE_NET_URL = "https://withfloats-feature-processor-api.azurewebsites.net/"
   const val GET_FEATURE_DETAILS = "Features/v1/GetFeatureDetils"
   const val GET_FEATURE_DETAILS_2 = "Features/v1/GetFeatureDetails"
+
+  //US CENTRAL
+  const val US_CENTRAL_BASE="https://us-central1-nowfloats-boost.cloudfunctions.net/"
+  const val UPDATE_DRAFT="onpostUpdateDraftApi"
+
 }
 

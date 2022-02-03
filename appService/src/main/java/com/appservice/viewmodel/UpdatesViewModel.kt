@@ -1,8 +1,10 @@
 package com.appservice.viewmodel
 
 import androidx.lifecycle.LiveData
+import com.framework.models.UpdateDraftBody
 import com.appservice.model.updateBusiness.DeleteBizMessageRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
+import com.appservice.rest.repository.UsCentralNowFloatsCloudRepo
 import com.appservice.rest.repository.WithFloatTwoRepository
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
@@ -32,6 +34,12 @@ class UpdatesViewModel : BaseViewModel() {
 
   fun updateFirebaseState(id: String?, clientId: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getBizWebMessage(id, clientId).toLiveData()
+  }
+
+  fun updateDraft(updateDraftBody: UpdateDraftBody): LiveData<BaseResponse> {
+    return UsCentralNowFloatsCloudRepo.updateDraft(
+      updateDraftBody
+    ).toLiveData()
   }
 
   fun putBizImageUpdate(

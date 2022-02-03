@@ -3,16 +3,14 @@ package com.appservice.ui.updatesBusiness
 import android.os.Bundle
 import android.view.View
 import com.appservice.R
+import com.appservice.base.AppBaseBottomSheetFragment
 import com.appservice.databinding.BsheetUpdateDraftBinding
+import com.framework.models.UpdateDraftBody
 import com.appservice.viewmodel.UpdatesViewModel
-import com.framework.base.BaseBottomSheetDialog
-import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
+import com.framework.pref.clientId
 
-class UpdateDraftBSheet:BaseBottomSheetDialog<BsheetUpdateDraftBinding,UpdatesViewModel>() {
+class UpdateDraftBSheet:AppBaseBottomSheetFragment<BsheetUpdateDraftBinding,UpdatesViewModel>() {
 
 
     companion object{
@@ -49,15 +47,16 @@ class UpdateDraftBSheet:BaseBottomSheetDialog<BsheetUpdateDraftBinding,UpdatesVi
             }
 
             binding!!.btnDiscard->{
-                val sessionLocal = UserSessionManager(requireActivity())
-                sessionLocal.storeFPDetails(msgPost, "")
-                sessionLocal.storeFPDetails(imagePost, "")
-                dismiss()
-                requireActivity().finish()
+                val updateDraftBody= UpdateDraftBody(clientId,
+                    "",sessionManager?.fpTag!!,""
+                )
+                updateState(updateDraftBody)
             }
             binding!!.btnSaveDraft->{
-                uploadDraftImage()
-                requireActivity().finish()
+                val updateDraftBody= UpdateDraftBody(clientId,
+                    "sds",sessionManager?.fpTag!!,"https://images.unsplash.com/photo-1643694941418-ab65214f34fd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80"
+                )
+                updateState(updateDraftBody)
             }
         }
     }
@@ -76,10 +75,20 @@ class UpdateDraftBSheet:BaseBottomSheetDialog<BsheetUpdateDraftBinding,UpdatesVi
 
     }
 
-    fun updateState(){
+    fun updateState(updateDraftBody: UpdateDraftBody) {
 //        viewModel?.updateFirebaseState(arguments?.getString(BK_TEXT))?.observe(viewLifecycleOwner,{
 //
 //        })
+
+        showProgress()
+        if (sessionManager?.fpTag!=null){
+
+            viewModel?.updateDraft(updateDraftBody)?.observe(viewLifecycleOwner,{
+                hideProgress()
+                requireActivity().finish()
+            })
+        }
+
     }
 
 

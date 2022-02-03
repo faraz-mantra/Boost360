@@ -13,6 +13,7 @@ import com.framework.base.BaseResponse
 import com.framework.firebaseUtils.firestore.restApi.model.CreateDrRequest
 import com.framework.firebaseUtils.firestore.restApi.model.UpdateDrRequest
 import com.framework.firebaseUtils.firestore.restApi.repository.DrScoreRepository
+import com.framework.models.UpdateDraftBody
 import com.framework.models.toLiveData
 import io.reactivex.Observable
 import com.google.gson.reflect.TypeToken
@@ -27,6 +28,7 @@ object FirestoreManager {
   var clientId: String = ""
   var TAG = "FirestoreManager"
   const val COLLECTION_NAME = "drsMerchants"
+  const val DRAFT_COLLECTION="postUpdateDrafts"
   var listener: (() -> Unit)? = null
 
   fun initData(fpTag: String, fpId: String, clientId: String) {
@@ -74,6 +76,18 @@ object FirestoreManager {
       }
     }
   }
+
+  fun readDraft(listener:((UpdateDraftBody?)->Unit)){
+    db?.collection(DRAFT_COLLECTION)?.document(this.fpTag)?.
+            get()?.addOnCompleteListener {
+              if (it.isSuccessful){
+                listener.invoke(it.result.toObject(UpdateDraftBody::class.java))
+              }else{
+                listener.invoke(null)
+              }
+    }
+  }
+
 
   private fun getDocumentReference(): DocumentReference? {
     try {

@@ -24,12 +24,14 @@ import com.appservice.model.updateBusiness.BusinessUpdateResponse
 import com.appservice.model.updateBusiness.UpdateFloat
 import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.viewmodel.UpdatesViewModel
+import com.bumptech.glide.Glide
 import com.framework.constants.Constants
 import com.framework.extensions.*
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.firebaseUtils.caplimit_feature.PropertiesItem
 import com.framework.firebaseUtils.caplimit_feature.filterFeature
 import com.framework.firebaseUtils.caplimit_feature.getCapData
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.PREF_NAME_TWITTER
 import com.framework.utils.*
@@ -152,8 +154,10 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       binding!!.btnEdit.gone()
       binding!!.btnAddImage.visible()
     }else{
-      binding!!.ivImg.loadFromFile(File(path),false)
       binding!!.ivImg.visible()
+      Glide.with(this).load(
+        path
+      ).into(binding!!.ivImg)
       binding!!.btnEdit.visible()
       binding!!.btnAddImage.gone()
     }
@@ -193,11 +197,14 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       getString(R.string.add_image_optional),
       "Add Image"
     )
-    binding!!.etUpdate.setText(sessionLocal.getFPDetails(msgPost))
-    binding!!.tvCount.text = sessionLocal.getFPDetails(msgPost)?.length.toString()
+    FirestoreManager.readDraft {
+      binding!!.etUpdate.setText(it?.content)
+      binding!!.tvCount.text = it?.content?.length.toString()
 
 
-    loadImage(sessionLocal.getFPDetails(imagePost))
+      loadImage(it?.imageUri)
+    }
+
 
     toggleContinue()
 
