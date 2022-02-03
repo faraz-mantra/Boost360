@@ -14,6 +14,8 @@ import java.io.File
 class UpdateDraftBSheet:AppBaseBottomSheetFragment<BsheetUpdateDraftBinding,UpdatesViewModel>() {
 
 
+    private var text: String?=null
+
     companion object{
         val BK_TEXT="BK_TEXT"
         val BK_IMAGE_PATH="BK_IMAGE_PATH"
@@ -38,6 +40,7 @@ class UpdateDraftBSheet:AppBaseBottomSheetFragment<BsheetUpdateDraftBinding,Upda
 
     override fun onCreateView() {
         setOnClickListener(binding!!.btnSaveDraft,binding!!.btnDiscard,binding!!.rivCloseBottomSheet)
+        text = arguments?.getString(BK_TEXT)
     }
 
     override fun onClick(v: View) {
@@ -55,7 +58,7 @@ class UpdateDraftBSheet:AppBaseBottomSheetFragment<BsheetUpdateDraftBinding,Upda
             }
             binding!!.btnSaveDraft->{
                 val updateDraftBody= UpdateDraftBody(clientId,
-                    "sds",sessionManager?.fpTag!!,"https://images.unsplash.com/photo-1643694941418-ab65214f34fd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80"
+                    text,sessionManager?.fpTag!!,"https://images.unsplash.com/photo-1643694941418-ab65214f34fd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80"
                 )
                 updateState(updateDraftBody)
             }

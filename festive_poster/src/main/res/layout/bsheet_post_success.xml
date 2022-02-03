@@ -41,14 +41,46 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.framework.views.customViews.CustomImageView
+        <com.framework.views.customViews.CustomCardView
+            app:cardBackgroundColor="@color/white"
+            app:cardElevation="8dp"
+            android:id="@+id/card_small_anim"
             android:layout_width="@dimen/size_40"
             android:layout_height="@dimen/size_40"
             android:elevation="@dimen/size_8"
+            app:cardCornerRadius="@dimen/size_20"
             android:src="@drawable/ic_green_tick_promo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <com.airbnb.lottie.LottieAnimationView
+                app:lottie_autoPlay="true"
+                app:lottie_rawRes="@raw/green_success_tick"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </com.framework.views.customViews.CustomCardView>
+
+        <com.framework.views.customViews.CustomCardView
+            app:cardBackgroundColor="@color/white"
+            app:cardElevation="8dp"
+            android:layout_width="@dimen/size_80"
+            app:cardCornerRadius="@dimen/size_40"
+            android:layout_height="@dimen/size_80"
+            android:id="@+id/card_big_anim"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/size_20"
+            android:elevation="@dimen/size_8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <com.airbnb.lottie.LottieAnimationView
+                app:lottie_autoPlay="true"
+                app:lottie_rawRes="@raw/green_success_tick"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </com.framework.views.customViews.CustomCardView>
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/customTextView7"

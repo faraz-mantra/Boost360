@@ -61,6 +61,7 @@ import com.onboarding.nowfloats.model.channel.statusResponse.CHANNEL_STATUS_SUCC
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelsType
 import com.onboarding.nowfloats.rest.response.category.ResponseDataCategory
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
@@ -576,29 +577,29 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             socialShare
         )
 
-        viewModel.putBizMessageUpdate(request).observeOnce(this, {
+        /*viewModel.putBizMessageUpdate(request).observeOnce(this, {
             if (it.isSuccess() && it.stringResponse.isNullOrEmpty().not()) {
 
                 if (isPicMes){
-//                    lifecycleScope.launch {
-//                        val bodyImage = File(posterImgPath).asRequestBody("image/*".toMediaTypeOrNull())
-//                        val s_uuid = UUID.randomUUID().toString().replace("-", "")
-//                        viewModel.putBizImageUpdate(
-//                            clientId, "sequential", s_uuid, 1, 1,
-//                            socialShare, it.stringResponse, sendToSubscribe, bodyImage
-//                        ).observeOnce(this@PostPreviewSocialActivity, { it1 ->
-//                            if (it1.isSuccess()) {
-//                                // successResult()
-//                                posterProgressSheet?.dismiss()
-//                                PostSuccessBottomSheet.newInstance(posterImgPath).show(supportFragmentManager, PostSuccessBottomSheet::class.java.name)
-//
-//                            } else{
-//                                posterProgressSheet?.dismiss()
-//                                showShortToast("Image uploading error, please try again.")
-//                            }
-//
-//                        })
-//                    }
+                    lifecycleScope.launch {
+                        val bodyImage = File(posterImgPath).asRequestBody("image/*".toMediaTypeOrNull())
+                        val s_uuid = UUID.randomUUID().toString().replace("-", "")
+                        viewModel.putBizImageUpdate(
+                            clientId, "sequential", s_uuid, 1, 1,
+                            socialShare, it.stringResponse, sendToSubscribe, bodyImage
+                        ).observeOnce(this@PostPreviewSocialActivity, { it1 ->
+                            if (it1.isSuccess()) {
+                                // successResult()
+                                posterProgressSheet?.dismiss()
+                                PostSuccessBottomSheet.newInstance(posterImgPath).show(supportFragmentManager, PostSuccessBottomSheet::class.java.name)
+
+                            } else{
+                                posterProgressSheet?.dismiss()
+                                showShortToast("Image uploading error, please try again.")
+                            }
+
+                        })
+                    }
 
                 }
 
@@ -608,7 +609,12 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
                 showShortToast("Post updating error, please try again.")
             }
-        })
+        })*/
+
+         */
+
+        PostSuccessBottomSheet.newInstance(posterImgPath,captionIntent).show(supportFragmentManager, PostSuccessBottomSheet::class.java.name)
+
     }
 
     fun fetchSubscriberCount(){

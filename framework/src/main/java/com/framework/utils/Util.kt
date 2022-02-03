@@ -522,11 +522,15 @@ fun spanClick(fullText:String,function: () -> (Unit),vararg colorTextList:String
 }
 
 
-fun File.shareAsImage(context:Context,packageName: String?){
-  val uri = Uri.fromFile(this)
+fun File.shareAsImage(context:Context,packageName: String?,text: String?){
+ val uri= FileProvider.getUriForFile(
+    context,
+    "${context.packageName}.provider", //(use your app signature + ".provider" )
+    this)
   val intent = Intent(Intent.ACTION_SEND)
   intent.type = "image/*"
   intent.putExtra(Intent.EXTRA_STREAM, uri)
+  intent.putExtra(Intent.EXTRA_TEXT,text)
   if (packageName!=null){
     intent.setPackage(packageName)
   }

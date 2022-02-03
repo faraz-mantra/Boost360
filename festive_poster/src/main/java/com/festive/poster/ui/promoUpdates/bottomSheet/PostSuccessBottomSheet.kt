@@ -2,6 +2,7 @@ package com.festive.poster.ui.promoUpdates.bottomSheet
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import com.festive.poster.R
 import com.festive.poster.databinding.BsheetPostSuccessBinding
 import com.festive.poster.models.PosterModel
@@ -19,15 +20,18 @@ import java.io.File
 class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, BaseViewModel>() {
 
 
+    private var caption: String?=null
     private var posterImgPath:String?=null
 
     companion object {
         val IK_POSTER="IK_POSTER"
+        val IK_CAPTION="IK_CAPTION"
 
         @JvmStatic
-        fun newInstance(posterImgPath: String?): PostSuccessBottomSheet {
+        fun newInstance(posterImgPath: String?,caption:String?): PostSuccessBottomSheet {
             val bundle = Bundle().apply {}
-            bundle.putString(PostingProgressBottomSheet.IK_POSTER, posterImgPath)
+            bundle.putString(IK_POSTER, posterImgPath)
+            bundle.putString(IK_CAPTION, caption)
 
             val fragment = PostSuccessBottomSheet()
             fragment.arguments = bundle
@@ -44,7 +48,8 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
     }
 
     override fun onCreateView() {
-        posterImgPath = arguments?.getString(PostPreviewSocialActivity.IK_POSTER)
+        posterImgPath = arguments?.getString(IK_POSTER)
+        caption = arguments?.getString(IK_CAPTION)
 
         setOnClickListener(binding?.ivWhatsapp,binding?.ivInstagram,binding?.ivOther)
 
@@ -52,26 +57,32 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
         binding?.ivClosePostSuccess?.setOnClickListener {
             dismiss()
         }
+        binding!!.cardBigAnim.isVisible = posterImgPath==null
+        binding!!.cardSmallAnim.isVisible = posterImgPath!=null
+
     }
 
     override fun onClick(v: View) {
         super.onClick(v)
-        val imgFile = File(posterImgPath)
+        if (posterImgPath!=null){
+            val imgFile = File(posterImgPath!!)
 
-        when(v){
-            binding?.ivWhatsapp->{
+            when(v){
+                binding?.ivWhatsapp->{
 
-                imgFile.shareAsImage(requireActivity(),PackageNames.WHATSAPP)
+                    imgFile.shareAsImage(requireActivity(),PackageNames.WHATSAPP,caption)
 
-            }
-            binding?.ivInstagram->{
-                imgFile.shareAsImage(requireActivity(),PackageNames.INSTAGRAM)
+                }
+                binding?.ivInstagram->{
+                    imgFile.shareAsImage(requireActivity(),PackageNames.INSTAGRAM,caption)
 
-            }
-            binding?.ivOther->{
-                imgFile.shareAsImage(requireActivity(),null)
+                }
+                binding?.ivOther->{
+                    imgFile.shareAsImage(requireActivity(),null,caption)
 
+                }
             }
         }
+
     }
 }
