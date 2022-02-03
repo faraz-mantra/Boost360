@@ -20,6 +20,7 @@ import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 
@@ -90,6 +91,31 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
     hideProgress()
     showLongToast(string)
   }
+
+  protected fun onCatalogSetupAddedOrUpdated(isAdded: Boolean) {
+    val instance = FirestoreManager
+    instance.getDrScoreData()?.metricdetail?.boolean_catalog_setup = isAdded
+    instance.updateDocument()
+  }
+
+  protected fun onCatalogAppointmentAddedOrUpdated(isAdded: Boolean) {
+    val instance = FirestoreManager
+    instance.getDrScoreData()?.metricdetail?.boolean_general_appointments = isAdded
+    instance.updateDocument()
+  }
+
+  protected fun onBankAccountAddedOrUpdated(isAdded: Boolean) {
+    val instance = FirestoreManager
+    instance.getDrScoreData()?.metricdetail?.boolean_add_bank_account = isAdded
+    instance.updateDocument()
+  }
+
+  protected fun onBusinessVerificationAddedOrUpdated(isAdded: Boolean) {
+    val instance = FirestoreManager
+    instance.getDrScoreData()?.metricdetail?.boolean_business_verification = isAdded
+    instance.updateDocument()
+  }
+
 
   fun showAlertCapLimit(msg: String,buyItemKey: String = "") {
     val builder = AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.CustomAlertDialogTheme))

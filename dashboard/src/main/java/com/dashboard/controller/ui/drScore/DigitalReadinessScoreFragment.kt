@@ -85,7 +85,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         val drScoreData = FirestoreManager.getDrScoreData()
         isHigh = (drScoreData != null && drScoreData.getDrsTotal() >= 85)
-        val drScoreSetupList = drScoreData?.getDrScoreData(response.data)
+        val drScoreSetupList = drScoreData?.getDrScoreData(response.getActionItem(session?.fP_AppExperienceCode))
         if (drScoreSetupList.isNullOrEmpty().not()) {
           drScoreSetupList?.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_CONTENT_SETUP_ITEM_VIEW.getLayout() }
           if (adapterPager == null) {
@@ -250,6 +250,15 @@ fun clickEventUpdateScoreN(type: DrScoreItem.DrScoreItemType?, baseActivity: App
     }
     DrScoreItem.DrScoreItemType.boolean_add_bank_account -> {
       baseActivity.startMyBankAccount(session)
+    }
+    DrScoreItem.DrScoreItemType.boolean_catalog_setup -> {
+      baseActivity.startCatalogSetup(session)
+    }
+    DrScoreItem.DrScoreItemType.boolean_general_appointments -> {
+      baseActivity.startCatalogAppointment(session)
+    }
+    DrScoreItem.DrScoreItemType.boolean_business_verification -> {
+      baseActivity.startBusinessVerification(session)
     }
     DrScoreItem.DrScoreItemType.boolean_image_uploaded_to_gallery -> {
       baseActivity.startAddImageGallery(session, false)
