@@ -14,6 +14,8 @@ import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.FragmentType
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.LayoutSetUpMyWebsiteStep3Binding
+import com.boost.presignin.extensions.removeSymbols
+import com.boost.presignin.extensions.validateLetters
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.BusinessInfoModel
 import com.boost.presignin.model.authToken.saveAuthTokenData
@@ -92,10 +94,13 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     super.onCreateView()
     binding?.includeMobileView?.blurView?.setBlur(baseActivity, 1F)
     session = UserSessionManager(baseActivity)
-    binding?.includeMobileView?.tvCategoryName?.text = categoryModel?.getCategoryWithoutNewLine() ?: ""
+    binding?.includeMobileView?.tvCategoryName?.text =
+      categoryModel?.getCategoryWithoutNewLine() ?: ""
     binding?.includeMobileView?.tvTitle?.text = businessName?.capitalizeUtil()
     setOnClickListeners()
-    binding?.addressInputLayout?.etInput?.setText(businessName?.replace("\\s+".toRegex(), "")?.lowercase())
+    binding?.addressInputLayout?.etInput?.setText(
+      businessName?.replace("\\s+".toRegex(), "")?.lowercase().removeSymbols()
+    )
     apiCheckDomain {
       websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1)
     }
@@ -123,25 +128,37 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
 
   private fun setOnClickListeners() {
     binding?.tvNextStep3?.setOnClickListener {
-      apiCheckDomain {
-        apiHitCreateMerchantProfile()
+      if (binding?.addressInputLayout?.etInput?.text?.trim().toString().validateLetters()) {
+        apiCheckDomain {
+          apiHitCreateMerchantProfile()
+        }
+      } else {
+        showShortToast(getString(R.string.website_name_format_invalid_toast))
       }
     }
 
     binding?.addressInputLayout?.etInput?.afterTextChanged {
-      binding?.tvNextStep3?.isEnabled = it.isEmpty().not()
-      binding?.includeMobileView?.tvWebsiteName?.text = it
+      if (it.validateLetters()) {
+        binding?.tvNextStep3?.isEnabled = it.isEmpty().not()
+        binding?.includeMobileView?.tvWebsiteName?.text = it
+      } else {
+        showShortToast(getString(R.string.website_name_format_invalid_toast))
+      }
     }
 
     binding?.addressInputLayout?.etInput?.setOnEditorActionListener { _, actionId, _ ->
       if (actionId == EditorInfo.IME_ACTION_DONE) {
-        if (binding?.addressInputLayout?.etInput?.text?.trim()?.isEmpty() == false) {
-          binding?.addressInputLayout?.etInput?.isEnabled = false
-          binding?.addressInputLayout?.ivIcon?.visible()
-          apiCheckDomain {
-            websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1)
+        if (binding?.addressInputLayout?.etInput?.text?.trim().toString().validateLetters()) {
+          if (binding?.addressInputLayout?.etInput?.text?.trim()?.isEmpty() == false) {
+            binding?.addressInputLayout?.etInput?.isEnabled = false
+            binding?.addressInputLayout?.ivIcon?.visible()
+            apiCheckDomain {
+              websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1)
+            }
+            //websiteNameFieldUiVisibility()
           }
-          //websiteNameFieldUiVisibility()
+        } else {
+          showShortToast(getString(R.string.website_name_format_invalid_toast))
         }
       }
       false
