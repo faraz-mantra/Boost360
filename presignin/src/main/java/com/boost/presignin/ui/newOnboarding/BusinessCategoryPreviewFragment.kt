@@ -77,8 +77,8 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
     } else {
       binding?.autocompleteSearchCategory?.text = makeSectionOfTextBold(categoryModel?.getCategoryWithoutNewLine() ?: "", categoryModel?.getCategoryWithoutNewLine() ?: "", font = R.font.semi_bold)
     }
-    baseActivity.glideLoad(binding?.desktopPreview?.imgDesktop!!, desktopPreview ?: "", R.drawable.mobile_preview_website)
-    baseActivity.glideLoad(binding?.mobilePreview?.imgMobile!!, mobilePreview ?: "", R.drawable.mobile_preview_website)
+    baseActivity.glideLoad(binding?.desktopPreview?.imgDesktop!!, desktopPreview ?: "", R.drawable.ic_placeholder)
+    baseActivity.glideLoad(binding?.mobilePreview?.imgMobile!!, mobilePreview ?: "", R.drawable.ic_placeholder)
   }
 
   override fun onClick(v: View) {
