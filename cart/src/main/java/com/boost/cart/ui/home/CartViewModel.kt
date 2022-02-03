@@ -13,10 +13,12 @@ import com.boost.cart.utils.SingleLiveEvent
 import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
+import com.boost.dbcenterapi.data.api_model.couponRequest.CouponRequest
 import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponRequest
 import com.boost.dbcenterapi.data.api_model.customerId.create.CreateCustomerIDResponse
 import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.dbcenterapi.data.api_model.customerId.get.GetCustomerIDResponse
+import com.boost.dbcenterapi.data.api_model.getCouponResponse.GetCouponResponse
 import com.boost.dbcenterapi.data.api_model.gst.Error
 import com.boost.dbcenterapi.data.api_model.gst.GSTApiResponse
 import com.boost.dbcenterapi.data.api_model.paymentprofile.GetLastPaymentDetails
@@ -51,6 +53,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
   var allFeatures: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
 
+  private var couponApiInfo: MutableLiveData<GetCouponResponse> = MutableLiveData()
+  private var apiService = com.boost.dbcenterapi.utils.Utils.getRetrofit().create(NewApiInterface::class.java)
   var renewalPurchaseList: MutableLiveData<List<RenewalResult>> = MutableLiveData()
   var allBundles: MutableLiveData<List<BundlesModel>> = MutableLiveData()
   var updatesError: MutableLiveData<String> = MutableLiveData()
@@ -855,6 +859,34 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
             }
           )
       )
+    }
+  }
+
+  fun getCouponApiResult(): LiveData<GetCouponResponse> {
+    return couponApiInfo
+  }
+
+  fun getCouponRedeem(couponRequest: CouponRequest) {
+    if (Utils.isConnectedToInternet(getApplication())) {
+      System.out.println("request--->" + couponRequest)
+      CompositeDisposable().add(
+              apiService.getOfferCoupons(couponRequest)
+                      .subscribeOn(Schedulers.io())
+                      .observeOn(AndroidSchedulers.mainThread())
+                      .subscribe(
+                              {
+                                Log.i("getOfferCouponDetails", it.toString())
+                                var couponResponse = it
+                                couponApiInfo.postValue(couponResponse)
+                              },
+                              {
+                                val temp = (it as HttpException).response()!!.errorBody()!!.string()
+                                val errorBody: Error = Gson().fromJson(temp, object : TypeToken<Error>() {}.type)
+                                Toasty.error(getApplication(), "Error in Loading Coupons!!", Toast.LENGTH_LONG).show()
+                              }
+                      )
+      )
+
     }
   }
 

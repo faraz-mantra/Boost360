@@ -19,6 +19,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.CartActivity
 import com.boost.cart.R
 import com.boost.cart.adapter.*
@@ -75,6 +76,12 @@ import java.lang.NumberFormatException
 import com.boost.cart.adapter.CartAddonsAdaptor
 import com.boost.cart.adapter.CartPackageAdaptor
 import com.boost.cart.adapter.CartRenewalAdaptor
+import com.boost.cart.utils.Constants.Companion.SCHEMA_ID
+import com.boost.cart.utils.Constants.Companion.WEBSITE_ID
+import com.boost.dbcenterapi.data.api_model.couponRequest.BulkPropertySegment
+import com.boost.dbcenterapi.data.api_model.couponRequest.CouponRequest
+import com.boost.dbcenterapi.data.api_model.couponRequest.ObjectKeys
+import com.boost.dbcenterapi.data.api_model.getCouponResponse.Data
 import kotlinx.android.synthetic.main.cart_fragment.addons_layout
 import kotlinx.android.synthetic.main.cart_fragment.back_button12
 import kotlinx.android.synthetic.main.cart_fragment.cart_addons_recycler
@@ -107,6 +114,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   lateinit var root: View
 
 //  lateinit var localStorage: LocalStorage
+
+  private var couponData = ArrayList<Data>()
 
   var customerId: String = ""
 
@@ -249,6 +258,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     initializeRenewalRecycler()
     initializeErrorObserver()
     initializePackageViewPager()
+    loadOfferCoupons()
    //updatePackageViewPager(list)
     initMvvM()
     observeLastPaymentDetails()
@@ -2337,6 +2347,21 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //      }
 //    })
 
+    viewModel.getCouponApiResult().observe(this) {
+      if (it != null) {
+
+        for (i in 0 until it.size) {
+
+          it[i].data?.let { it1 -> couponData.addAll(it1) }
+        }
+        System.out.println("CouponData" + couponData)
+        cart_coupon_code_rv.layoutManager = LinearLayoutManager(requireContext())
+
+        val adapter = CartCouponAdapter(couponData)
+        cart_coupon_code_rv.adapter = adapter
+      }
+    }
+
 //        viewModel.updateRenewValue("")
     viewModel.cartResult().observe(this, Observer {
       if (it.isNullOrEmpty().not()) {
@@ -2998,6 +3023,18 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       SentryController.captureException(e)
     }
   }
+
+
+  private fun loadOfferCoupons() {
+
+    var bulkPropertySegment = ArrayList<ArrayList<BulkPropertySegment>>()
+    val bulkObject1 = BulkPropertySegment(propertyDataType = "upgrade", propertyName = "upgrade", type = 5)
+    var objectKeys = ObjectKeys(true, description = true, discountPercent = true, kid = true, termsandconditions = true, title = true)
+    val bulkObject2 = BulkPropertySegment(0, 10, objectKeys, "coupon", "discount_coupons", 1)
+    bulkPropertySegment.add(0, arrayListOf(bulkObject1, bulkObject2))
+    viewModel.getCouponRedeem(CouponRequest(bulkPropertySegment, SCHEMA_ID, WEBSITE_ID))
+  }
+
 
   private fun loadLastUsedPayData(){
     viewModel.getLastUsedPaymentDetails(

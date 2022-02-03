@@ -1,72 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical">
-
-  <androidx.appcompat.widget.LinearLayoutCompat
-    android:id="@+id/applied_coupon_ll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:orientation="horizontal">
-
-    <androidx.appcompat.widget.AppCompatTextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:background="@drawable/ic_cart_coupon_bg"
-      android:gravity="center"
-      android:text="FESTIVE"
-      android:textColor="#4A4A4A"
-      android:textSize="@dimen/txt_14sp"
-      android:textStyle="bold" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:layout_marginStart="13dp"
-      android:textColor="#4A4A4A"
-      android:textSize="@dimen/txt_12sp"
-      android:text="Save: ₹98" />
+    android:layout_marginBottom="@dimen/pad_15dp"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="end">
-
-      <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
+        android:id="@+id/applied_coupon_ll"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="7dp"
-        android:layout_marginBottom="7dp"
-        android:text="APPLY"
-        android:textSize="@dimen/txt_12sp"
-        android:textColor="#7ED321" />
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/offer_coupn_code_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_cart_coupon_bg"
+            android:gravity="center"
+            android:text="FESTIVE"
+            android:textColor="#4A4A4A"
+            android:textSize="@dimen/txt_14sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/offer_cb_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="13dp"
+            android:text="Save: ₹98"
+            android:textColor="#4A4A4A"
+            android:textSize="@dimen/txt_12sp" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="7dp"
+                android:layout_marginBottom="7dp"
+                android:text="APPLY"
+                android:textColor="#7ED321"
+                android:textSize="@dimen/txt_12sp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-  </androidx.appcompat.widget.LinearLayoutCompat>
-
-  <androidx.appcompat.widget.LinearLayoutCompat
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:orientation="horizontal">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
 
 
-    <androidx.appcompat.widget.AppCompatTextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:drawablePadding="5dp"
-      android:text="Extra 20% off if you purchase a pack. Cannot be combined with any other offer, expires on 31/12/21."
-      android:textColor="#828282"
-      android:textSize="@dimen/txt_12sp" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/offer_learn_more_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawablePadding="5dp"
+            android:text="Extra 20% off if you purchase a pack. Cannot be combined with any other offer, expires on 31/12/21."
+            android:textColor="#828282"
+            android:textSize="@dimen/txt_12sp" />
 
 
-  </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
