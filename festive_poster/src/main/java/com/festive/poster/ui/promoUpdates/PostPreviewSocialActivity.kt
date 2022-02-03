@@ -44,10 +44,7 @@ import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.getDomainName
-import com.framework.utils.convertListObjToString
-import com.framework.utils.convertStringToObj
-import com.framework.utils.saveAsTempFile
-import com.framework.utils.toArrayList
+import com.framework.utils.*
 import com.framework.webengageconstant.EVENT_LABEL_NULL
 import com.framework.webengageconstant.POST_AN_UPDATE
 import com.google.gson.Gson
@@ -438,13 +435,13 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
                             }
                             channelType = SocialPreviewChannel.GMB
-
                         }
+
                     }
 
                 }
 
-                if (shouldAddToChannelList(it1)){
+                if (shouldAddToChannelList(it1)&&channelType!=null){
                     uiChBoxChannelList?.add(SocialPlatformModel(title,subTitle,isEnabled,isConnected,isConnected,channelType!!).apply {
                         generateImageResource(this@PostPreviewSocialActivity)
                     })
@@ -475,7 +472,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     private fun shouldAddToChannelList(channel: ChannelModel): Boolean {
 
-        if (channel.isWhatsAppChannel()||channel.getAccessTokenType()==ChannelsType.AccountType.facebookshop.name){
+        if (channel.isWhatsAppChannel()||channel.getAccessTokenType()==ChannelsType.AccountType.facebookshop.name
+            ){
             return false
         }
         return true
@@ -558,10 +556,12 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     private fun saveUpdatePost() {
         WebEngageController.trackEvent(POST_AN_UPDATE, EVENT_LABEL_NULL, session?.fpTag)
         var socialShare = ""
-           if (uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.FACEBOOK }?.isChecked == true) socialShare += "FACEBOOK."
+           if (uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.FACEBOOK }?.isChecked == true) socialShare += "FACEBOOK_PAGE."
 /*
            if (fbPageStatusEnable.value == true) socialShare += "FACEBOOK_PAGE."
 */
+        if (uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.GMB}?.isChecked == true) socialShare += "GOOGLEMYBUSINESS."
+
         if (uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.TWITTER }?.isChecked == true) socialShare += "TWITTER."
         val merchantId = if (session?.iSEnterprise == "true") null else session?.fPID
         val parentId = if (session?.iSEnterprise == "true") session?.fPParentId else null
@@ -577,7 +577,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             socialShare
         )
 
-        /*viewModel.putBizMessageUpdate(request).observeOnce(this, {
+        viewModel.putBizMessageUpdate(request).observeOnce(this, {
             if (it.isSuccess() && it.stringResponse.isNullOrEmpty().not()) {
 
                 if (isPicMes){
@@ -591,16 +591,21 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                             if (it1.isSuccess()) {
                                 // successResult()
                                 posterProgressSheet?.dismiss()
-                                PostSuccessBottomSheet.newInstance(posterImgPath).show(supportFragmentManager, PostSuccessBottomSheet::class.java.name)
-
-                            } else{
-                                posterProgressSheet?.dismiss()
-                                showShortToast("Image uploading error, please try again.")
+                            if (PreferencesUtils.instance.getData(com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE,true)){
+                                InAppReviewUtils.showInAppReview(this@PostPreviewSocialActivity,
+                                    InAppReviewUtils.Events.in_app_review_first_promo_update)
+                                PreferencesUtils.instance.saveData(com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE,
+                                    false)
                             }
+                            PostSuccessBottomSheet.newInstance(posterModel).show(supportFragmentManager, PostSuccessBottomSheet::class.java.name)
 
-                        })
-                    }
 
+                        } else{
+                            posterProgressSheet?.dismiss()
+                            showShortToast("Image uploading error, please try again.")
+                        }
+
+                    })
                 }
 
                 }
@@ -609,20 +614,18 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
                 showShortToast("Post updating error, please try again.")
             }
-        })*/
-
-         */
+        }
 
         PostSuccessBottomSheet.newInstance(posterImgPath,captionIntent).show(supportFragmentManager, PostSuccessBottomSheet::class.java.name)
 
+    })
     }
-
     fun fetchSubscriberCount(){
         viewModel.getMerchantSummary(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session?.fpTag).observeOnce(this, {
             val response = it as? MerchantSummaryResponse
             val subscriber = response?.Entity?.firstOrNull()?.get("NoOfSubscribers")
             val subTitle = if (subscriber==0){
-                getString(R.string.no_recipients)
+                getString(R.string.no_recipients,0)
 
             }else{
                 getString(R.string.placeholder_recipients,subscriber)

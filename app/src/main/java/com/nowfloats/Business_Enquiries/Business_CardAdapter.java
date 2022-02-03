@@ -207,7 +207,7 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
 
     @Override
     public int getItemCount() {
-        return Constants.StorebizQueries.size();
+         if(Constants.StorebizQueries!=null) return Constants.StorebizQueries.size(); else return 0;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

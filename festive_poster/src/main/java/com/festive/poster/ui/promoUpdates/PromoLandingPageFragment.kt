@@ -25,6 +25,8 @@ import com.framework.utils.setColorFilterApiQ
 import com.framework.views.BlankFragment
 import com.framework.webengageconstant.Post_Promotional_Update_Click
 import com.framework.webengageconstant.Promotional_Update_Browse_All_Click
+import com.framework.webengageconstant.Promotional_Update_Edit_Click
+import com.framework.webengageconstant.Promotional_Update_Home_Loaded
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import io.sentry.Breadcrumb.ui
@@ -54,6 +56,8 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
     override fun onCreateView() {
         super.onCreateView()
         setupView()
+        WebEngageController.trackEvent(Promotional_Update_Home_Loaded)
+
         setupViewPager()
     }
 

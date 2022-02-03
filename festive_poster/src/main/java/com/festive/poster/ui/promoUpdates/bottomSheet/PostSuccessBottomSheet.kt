@@ -51,7 +51,7 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
         posterImgPath = arguments?.getString(IK_POSTER)
         caption = arguments?.getString(IK_CAPTION)
 
-        setOnClickListener(binding?.ivWhatsapp,binding?.ivInstagram,binding?.ivOther)
+        setOnClickListener(binding?.ivWhatsapp,binding?.ivInstagram,binding?.ivOther,binding?.ivClosePostSuccess)
 
         binding!!.ivPosterIcon.loadUsingGlide(posterImgPath,false)
         binding?.ivClosePostSuccess?.setOnClickListener {
@@ -81,6 +81,9 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
                     imgFile.shareAsImage(requireActivity(),null,caption)
 
                 }
+            }
+            binding?.ivClosePostSuccess->{
+                dismiss()
             }
         }
 

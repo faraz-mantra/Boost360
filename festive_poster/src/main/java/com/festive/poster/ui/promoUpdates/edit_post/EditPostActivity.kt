@@ -28,12 +28,15 @@ import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.constants.Constants
+import com.framework.analytics.SentryController
+import com.framework.extensions.gone
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.STTUtils
 import com.framework.utils.convertStringToObj
 import com.framework.utils.highlightHashTag
 import com.framework.utils.saveAsImageToAppFolder
+import com.framework.utils.*
 import com.framework.webengageconstant.EVENT_LABEL_NULL
 import com.framework.webengageconstant.POST_AN_UPDATE
 import com.google.gson.Gson
@@ -42,6 +45,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.lang.Exception
+
 
 
 class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterViewModel>() {
@@ -74,10 +78,15 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
         initStt()
         sessionLocal = UserSessionManager(this)
 
-        posterModel = convertStringToObj(intent.getStringExtra(IK_POSTER)!!)
-        initUI()
-        setOnClickListener(binding?.btnTapToEdit, binding?.captionLayout?.etInput,
-            binding?.ivCloseEditing, binding?.tvPreviewAndPost,binding?.ivVoiceOver)
+        try {
+            posterModel = convertStringToObj(intent.getStringExtra(IK_POSTER)!!)
+            initUI()
+            setOnClickListener(binding?.btnTapToEdit, binding?.captionLayout?.etInput,
+                binding?.ivCloseEditing, binding?.tvPreviewAndPost,binding?.ivVoiceOver,binding?.ivCloseHashtag)
+        }catch (e:Exception){
+            SentryController.captureException(e)
+        }
+
 
     }
 
@@ -86,6 +95,10 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
         binding!!.captionLayout.etInput.isFocusableInTouchMode =false
         binding?.captionLayout?.etInput?.setText(highlightHashTag(posterModel?.details?.Description,R.color.black_4a4a4a))
 
+        binding!!.tvHashtagSubtitle.text = spanColor(
+            getString(R.string.type_in_the_caption_to_create_your_own_hashtags),R.color.color395996,
+            "#"
+        )
     }
 
     fun saveKeyValue(){
@@ -156,6 +169,9 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
     override fun onClick(v: View?) {
         super.onClick(v)
         when (v) {
+            binding?.ivCloseHashtag->{
+                binding?.layoutHashtag?.gone()
+            }
             binding?.btnTapToEdit -> {
                 EditTemplateBottomSheet.newInstance(object :EditTemplateBottomSheet.Callbacks{
                     override fun onDone(header1: String, header2: String) {

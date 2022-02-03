@@ -11,6 +11,7 @@ import com.festive.poster.ui.promoUpdates.edit_post.EditPostActivity
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
 import com.framework.constants.PackageNames
+import com.framework.webengageconstant.Promotional_Update_Edit_Click
 import com.framework.webengageconstant.Promotional_Update_Post_Click
 import com.framework.webengageconstant.Promotional_Update_WhatsApp_Share_Click
 
@@ -42,6 +43,8 @@ class TemplateForVPViewHolder(binding: ListItemTemplateForVpBinding):
         }
         SvgUtils.loadImage(variant?.svgUrl!!, binding.ivSvg, model.keys,model.isPurchased)
         binding.btnEdit.setOnClickListener {
+            WebEngageController.trackEvent(Promotional_Update_Edit_Click)
+
             EditPostActivity.launchActivity(binding.root.context,model)
         }
     }

@@ -15,6 +15,7 @@ import com.festive.poster.utils.MarketPlaceUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
+import com.framework.analytics.SentryController
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.UserProfileDataResult
@@ -309,6 +310,8 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
       dst.close()
       return destination
     } catch (ex: IOException) {
+      SentryController.captureException(ex)
+
       ex.printStackTrace()
     }
     return null

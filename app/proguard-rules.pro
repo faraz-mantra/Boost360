@@ -513,6 +513,9 @@
 -keep class com.boost.upgrades.data.** { <fields>; }
 -keep class com.boost.upgrades.datamodule.** { <fields>; }
 
+##------dbcenterapi---------##
+-keep class com.boost.dbcenterapi.data.api_model.** { <fields>; }
+
 ##-----Appsflyer-----###
 -keep class com.appsflyer.** { *; }
 

@@ -13,6 +13,7 @@ import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
 import com.framework.constants.PackageNames
 import com.framework.webengageconstant.Post_Promotional_Update_Click
+import com.framework.webengageconstant.Promotional_Update_Edit_Click
 import com.framework.webengageconstant.Promotional_Update_Post_Click
 import com.framework.webengageconstant.Promotional_Update_WhatsApp_Share_Click
 
@@ -41,6 +42,8 @@ class TemplateForRVViewHolder(binding: ListItemTemplateForRvBinding):
 
         }
         binding.btnEdit.setOnClickListener {
+            WebEngageController.trackEvent(Promotional_Update_Edit_Click)
+
             EditPostActivity.launchActivity(binding.root.context,model)
         }
     }

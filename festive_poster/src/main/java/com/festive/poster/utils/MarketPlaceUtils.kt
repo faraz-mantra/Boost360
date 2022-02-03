@@ -9,6 +9,7 @@ import com.festive.poster.R
 import com.festive.poster.models.PosterModel
 import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
 import com.framework.BaseApplication
+import com.framework.analytics.SentryController
 import com.framework.constants.Constants.MARKET_PLACE_ORIGIN_ACTIVITY
 import com.framework.constants.Constants.MARKET_PLACE_ORIGIN_NAV_DATA
 import com.framework.pref.Key_Preferences
@@ -63,6 +64,8 @@ object MarketPlaceUtils {
             context.startActivity(intent)
            // overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         } catch (e: Exception) {
+            SentryController.captureException(e)
+
             e.printStackTrace()
         }
     }

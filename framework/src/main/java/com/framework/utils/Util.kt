@@ -1,5 +1,6 @@
 package com.framework.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
@@ -18,16 +19,19 @@ import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.*
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.FontRes
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -39,6 +43,7 @@ import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
 import com.framework.BaseApplication
 import com.framework.R
+import com.framework.analytics.SentryController
 import com.framework.constants.PackageNames
 import com.framework.views.customViews.CustomTextView
 import com.google.gson.Gson
@@ -77,6 +82,33 @@ fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis:
 
 fun Double.roundToFloat(numFractionDigits: Int): Float = "%.${numFractionDigits}f".format(this, Locale.ENGLISH).toFloat()
 
+fun AppCompatEditText.onDone(callback: () -> Unit) {
+  imeOptions = EditorInfo.IME_ACTION_DONE
+  maxLines = 1
+  setOnEditorActionListener { _, actionId, _ ->
+    if (actionId == EditorInfo.IME_ACTION_DONE) {
+      callback.invoke()
+      true
+    }
+    false
+  }
+}
+
+@SuppressLint("ClickableViewAccessibility")
+fun AppCompatEditText.onRightDrawableClicked(onClicked: (view: AppCompatEditText) -> Unit) {
+  this.setOnTouchListener { v, event ->
+    var hasConsumed = false
+    if (v is AppCompatEditText) {
+      if (event.x >= v.width - v.totalPaddingRight) {
+        if (event.action == MotionEvent.ACTION_UP) {
+          onClicked(this)
+        }
+        hasConsumed = true
+      }
+    }
+    hasConsumed
+  }
+}
 fun Activity.hideKeyBoard() {
   val view = this.currentFocus
   if (view != null) {
@@ -248,47 +280,49 @@ fun View.toBitmap(): Bitmap? {
   return returnedBitmap
 }
 
-suspend fun Bitmap.shareAsImage(packageName: String? = null, text: String? = null) {
-  val imagesFolder = File(BaseApplication.instance.getExternalFilesDir(null), "shared_images")
-  var uri: Uri? = null
-  try {
-    imagesFolder.mkdirs()
-    val file = File(imagesFolder, "shareimage${System.currentTimeMillis()}.jpg")
-    val stream = FileOutputStream(file)
-    compress(Bitmap.CompressFormat.JPEG, 100, stream)
-    stream.flush()
-    stream.close()
-    uri = FileProvider.getUriForFile(BaseApplication.instance, "${BaseApplication.instance.packageName}.provider", file)
-    val intent = Intent(Intent.ACTION_SEND)
-    intent.putExtra(Intent.EXTRA_STREAM, uri)
-    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    intent.type = "image/*"
-    packageName?.let {
-      intent.`package` = packageName
-    }
-    text?.let {
-      intent.putExtra(Intent.EXTRA_TEXT, text)
-    }
-    BaseApplication.instance.startActivity(intent)
-  } catch (e: Exception) {
-    Log.d("IOException: ", e.message.toString())
-    if (e is ActivityNotFoundException) {
-      withContext(Dispatchers.Main) {
-        when (packageName) {
-          PackageNames.WHATSAPP -> {
-            Toast.makeText(BaseApplication.instance, "Whatsapp is not installed on your device", Toast.LENGTH_LONG).show()
+suspend fun Bitmap.shareAsImage(packageName:String?=null,text: String?=null){
+    val imagesFolder = File(BaseApplication.instance.getExternalFilesDir(null), "shared_images")
+    var uri: Uri? = null
+    try {
+      imagesFolder.mkdirs()
+      val file = File(imagesFolder, "shareimage${System.currentTimeMillis()}.jpg")
+      val stream = FileOutputStream(file)
+      compress(Bitmap.CompressFormat.JPEG, 100, stream)
+      stream.flush()
+      stream.close()
+      uri = FileProvider.getUriForFile(BaseApplication.instance, "${BaseApplication.instance.packageName}.provider", file)
+      val intent = Intent(Intent.ACTION_SEND)
+      intent.putExtra(Intent.EXTRA_STREAM, uri)
+      intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+      intent.type = "image/*"
+      packageName?.let {
+        intent.`package`= packageName
+      }
+      text?.let {
+        intent.putExtra(Intent.EXTRA_TEXT,text)
+      }
+      BaseApplication.instance.startActivity(intent)
+    } catch (e: Exception) {
+      Log.d("IOException: " , e.message.toString())
+      if (e is ActivityNotFoundException){
+        withContext(Dispatchers.Main){
+          when(packageName){
+            PackageNames.WHATSAPP->{
+              Toast.makeText(BaseApplication.instance,"Whatsapp is not installed on your device",Toast.LENGTH_LONG).show()
 
-          }
-          PackageNames.INSTAGRAM -> {
-            Toast.makeText(BaseApplication.instance, "Instagram is not installed on your device", Toast.LENGTH_LONG).show()
+            }
+            PackageNames.INSTAGRAM->{
+              Toast.makeText(BaseApplication.instance,"Instagram is not installed on your device",Toast.LENGTH_LONG).show()
 
+            }
           }
         }
-      }
 
+      }else{
+        SentryController.captureException(e)
+      }
     }
-  }
 
 }
 
@@ -397,7 +431,7 @@ suspend fun Bitmap.saveImageToStorage(
   } catch (e: IOException) {
     Toast.makeText(BaseApplication.instance, "Failed To Save Image", Toast.LENGTH_SHORT).show()
     NotiUtils.notificationManager?.cancel(noti_id)
-
+    SentryController.captureException(e)
     e.printStackTrace()
   }
 }
@@ -488,7 +522,12 @@ fun highlightHashTag(text: String?,@ColorRes colorId:Int): SpannableString {
   return spannable
 }
 
+
+
+
+
 inline fun <reified T> convertJsonToObj(json: String?) = Gson().fromJson<T>(json, object : TypeToken<T>() {}.type)
+
 
 fun spanBold(fullText:String,vararg boldTextList:String): SpannableString {
   val spannable = SpannableString(fullText)
@@ -523,7 +562,7 @@ fun spanClick(fullText:String,function: () -> (Unit),vararg colorTextList:String
 
 
 fun File.shareAsImage(context:Context,packageName: String?,text: String?){
- val uri= FileProvider.getUriForFile(
+  val uri= FileProvider.getUriForFile(
     context,
     "${context.packageName}.provider", //(use your app signature + ".provider" )
     this)
@@ -538,7 +577,7 @@ fun File.shareAsImage(context:Context,packageName: String?,text: String?){
 }
 
 fun ImageView.loadUsingGlide(imgFile:String?,cache:Boolean=true){
- val builder = Glide.with(this).load(imgFile)
+  val builder = Glide.with(this).load(imgFile)
   if (cache.not()){
     builder.apply(RequestOptions.skipMemoryCacheOf(true))
       .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(this)

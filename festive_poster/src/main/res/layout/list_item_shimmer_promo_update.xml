@@ -39,41 +39,12 @@
                         android:scaleType="fitXY"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@color/colorPrimary" />
+                        android:background="@color/shimmerGrey"
+                        />
 
 
                 </com.framework.views.customViews.CustomCardView>
 
-                <LinearLayout
-                    android:id="@+id/btn_edit"
-                    android:gravity="center"
-                    android:paddingVertical="8dp"
-                    android:paddingHorizontal="12dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/ic_pencil_edit_bg"
-                    android:elevation="4dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="@+id/customCardView6"
-                    app:layout_constraintTop_toTopOf="@+id/customCardView6">
-
-                    <com.framework.views.customViews.CustomImageView
-                        android:layout_width="wrap_content"
-                        android:src="@drawable/ic_pencil_edit"
-                        android:layout_height="wrap_content"/>
-
-
-                    <com.framework.views.customViews.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:text="@string/edit"
-                        android:layout_marginStart="8dp"
-                        android:textAllCaps="true"
-                        style="@style/WhiteSemiBoldS"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
 
                 <com.framework.views.customViews.CustomCardView
                     android:id="@+id/card_love"
@@ -103,8 +74,9 @@
                     android:layout_marginEnd="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:background="@color/shimmerGrey"
                     app:layout_constraintTop_toBottomOf="@+id/card_love"
-                    tools:text="Black friday sale upto 50% discount on our post selected merchandise, only " />
+                     />
 
 
                 <View
@@ -122,79 +94,25 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_template_desc"
                     app:layout_constraintWidth_percent="0.5">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <com.framework.views.customViews.CustomImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/ic_whatsapp_fposter" />
-
-                        <com.framework.views.customViews.CustomTextView
-                            style="@style/BlackMediumS"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="@string/share"
-                            android:textAllCaps="true" />
-                    </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
                     android:id="@+id/btn_post"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
                     android:background="@color/colorPrimary"
-                    android:paddingVertical="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/btn_share"
                     app:layout_constraintTop_toTopOf="@+id/btn_share"
                     app:layout_constraintWidth_percent="0.5">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <com.framework.views.customViews.CustomImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/ic_telegram" />
-
-                        <com.framework.views.customViews.CustomTextView
-                            style="@style/WhiteBoldS"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="@string/post"
-                            android:textAllCaps="true" />
-                    </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.framework.views.customViews.CustomCardView>
 
-        <com.framework.views.customViews.CustomImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:src="@drawable/ic_new"
-            android:elevation="8dp"
-            android:translationX="-6dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
