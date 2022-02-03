@@ -56,7 +56,7 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
         lifecycleScope.launch {
             withContext(Dispatchers.Default){
                 val bitmap = Glide.with(this@UpdateCropImageActivity).asBitmap().load(
-                    File(path)
+                    path
                 ).apply(RequestOptions.skipMemoryCacheOf(true))
                     .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).submit().get()
                 runOnUi {

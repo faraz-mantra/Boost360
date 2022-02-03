@@ -11,7 +11,7 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.constants.PackageNames
 import com.framework.models.BaseViewModel
 import com.framework.utils.convertStringToObj
-import com.framework.utils.loadFromFile
+import com.framework.utils.loadUsingGlide
 import com.framework.utils.shareAsImage
 import com.google.gson.Gson
 import java.io.File
@@ -48,7 +48,7 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
 
         setOnClickListener(binding?.ivWhatsapp,binding?.ivInstagram,binding?.ivOther)
 
-        binding!!.ivPosterIcon.loadFromFile(File(posterImgPath),false)
+        binding!!.ivPosterIcon.loadUsingGlide(posterImgPath,false)
         binding?.ivClosePostSuccess?.setOnClickListener {
             dismiss()
         }

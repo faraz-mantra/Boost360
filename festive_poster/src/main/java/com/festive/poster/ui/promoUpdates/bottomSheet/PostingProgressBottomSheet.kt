@@ -9,7 +9,7 @@ import com.festive.poster.utils.SvgUtils
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.framework.utils.convertStringToObj
-import com.framework.utils.loadFromFile
+import com.framework.utils.loadUsingGlide
 import com.google.gson.Gson
 import java.io.File
 import java.util.*
@@ -44,7 +44,7 @@ class PostingProgressBottomSheet :
     override fun onCreateView() {
         posterImgPath = arguments?.getString(PostPreviewSocialActivity.IK_POSTER)
         if (posterImgPath!=null){
-            binding!!.ivPostIcon.loadFromFile(File(posterImgPath!!),false)
+            binding!!.ivPostIcon.loadUsingGlide(posterImgPath,false)
         }
     }
 }

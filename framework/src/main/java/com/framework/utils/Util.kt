@@ -533,7 +533,7 @@ fun File.shareAsImage(context:Context,packageName: String?){
   context.startActivity(intent)
 }
 
-fun ImageView.loadFromFile(imgFile:File,cache:Boolean=true){
+fun ImageView.loadUsingGlide(imgFile:String?,cache:Boolean=true){
  val builder = Glide.with(this).load(imgFile)
   if (cache.not()){
     builder.apply(RequestOptions.skipMemoryCacheOf(true))

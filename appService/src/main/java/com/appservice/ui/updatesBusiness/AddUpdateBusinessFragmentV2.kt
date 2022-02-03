@@ -25,6 +25,8 @@ import com.appservice.model.updateBusiness.UpdateFloat
 import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.viewmodel.UpdatesViewModel
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.framework.constants.Constants
 import com.framework.extensions.*
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
@@ -157,7 +159,9 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       binding!!.ivImg.visible()
       Glide.with(this).load(
         path
-      ).into(binding!!.ivImg)
+      ).apply(RequestOptions.skipMemoryCacheOf(true))
+        .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+        .into(binding!!.ivImg)
       binding!!.btnEdit.visible()
       binding!!.btnAddImage.gone()
     }
@@ -199,10 +203,12 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     )
     FirestoreManager.readDraft {
       binding!!.etUpdate.setText(it?.content)
-      binding!!.tvCount.text = it?.content?.length.toString()
+      binding!!.tvCount.text = (it?.content?.length?:0).toString()
 
 
       loadImage(it?.imageUri)
+      toggleContinue()
+
     }
 
 
@@ -288,7 +294,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       }
       binding!!.btnEdit->{
         UpdateCropImageActivity.launchActivity(
-          requireActivity().getExternalFilesDir(null)?.path+File.separator+Constants.UPDATE_PIC_FILE_NAME,
+          posterImagePath!!,
           requireActivity(),
           startForCropImageResult
         )
@@ -302,12 +308,12 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
         binding!!.layoutHashtagTip.gone()
       }
       binding!!.tvPreviewAndPost->{
-/*        startActivity(Intent(requireActivity(), Class.forName(
+        startActivity(Intent(requireActivity(), Class.forName(
           "com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity"))
           .putExtra(Constants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
             putString("IK_CAPTION_KEY",binding!!.etUpdate.text.toString())
             putString("IK_POSTER", posterImagePath)
-          }))*/
+          }))
         Log.i(TAG, "onClick: ${binding!!.etUpdate.text.toString().extractHashTag()}")
       }
     }

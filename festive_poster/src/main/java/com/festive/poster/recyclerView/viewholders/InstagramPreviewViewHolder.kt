@@ -10,7 +10,7 @@ import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.utils.SvgUtils
 import com.framework.extensions.gone
 import com.framework.utils.highlightHashTag
-import com.framework.utils.loadFromFile
+import com.framework.utils.loadUsingGlide
 import java.io.File
 
 class InstagramPreviewViewHolder(binding: SocialPreviewInstagramBinding) :
@@ -23,7 +23,7 @@ class InstagramPreviewViewHolder(binding: SocialPreviewInstagramBinding) :
             binding.ivPoster.gone()
         }else{
             binding.materialCardView.minimumHeight=800
-            binding.ivPoster.loadFromFile(File(model.posterImg),false)
+            binding.ivPoster.loadUsingGlide(model.posterImg,false)
         }
         binding.materialCardView.requestLayout()
         binding.tvCaption.text = highlightHashTag(model.desc,R.color.color395996)

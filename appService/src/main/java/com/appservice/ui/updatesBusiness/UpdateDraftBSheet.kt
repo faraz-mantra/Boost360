@@ -9,6 +9,7 @@ import com.framework.models.UpdateDraftBody
 import com.appservice.viewmodel.UpdatesViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import java.io.File
 
 class UpdateDraftBSheet:AppBaseBottomSheetFragment<BsheetUpdateDraftBinding,UpdatesViewModel>() {
 
@@ -62,16 +63,17 @@ class UpdateDraftBSheet:AppBaseBottomSheetFragment<BsheetUpdateDraftBinding,Upda
     }
 
     private fun uploadDraftImage() {
-//        if (arguments?.getString(BK_IMAGE_PATH)!=null){
-//            val imgFile = File(arguments?.getString(BK_IMAGE_PATH)!!)
-//            viewModel?.uploadDraftImage(imgFile.asRequestBody("image/*".toMediaTypeOrNull())).observe(
+        if (arguments?.getString(BK_IMAGE_PATH)!=null){
+            val imgFile = File(arguments?.getString(BK_IMAGE_PATH)!!)
+//            viewModel?.putUploadImage(
+//                imgFile.asRequestBody("image/*".toMediaTypeOrNull())).observe(
 //                viewLifecycleOwner,{
 //                    updateState()
 //                }
 //            )
-//        }else{
+        }else{
 //            updateState()
-//        }
+        }
 
     }
 
