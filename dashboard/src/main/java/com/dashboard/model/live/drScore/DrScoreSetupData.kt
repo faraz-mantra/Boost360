@@ -35,22 +35,10 @@ data class DrScoreSetupData(
   enum class DrScoreType(var id: String, var title: String, var icon: Int) {
     BUSINESS_PROFILE("business_profile", "Business profile", R.drawable.ic_business_profile_dr),
     WEBSITE_CONTENT("website_content", "Website content", R.drawable.ic_edit_content_d),
-    ECOMMERCE_SETTINGS(
-      "enable_ecommerce",
-      "E-commerce settings",
-      R.drawable.ic_e_commerce_setting_dr
-    ),
-    CUSTOMER_INTERACTIONS(
-      "customer_interactions",
-      "Customer interactions",
-      R.drawable.ic_customer_interaction_dr
-    ),
-    MARKETING_ENGAGEMENT(
-      "marketing_enagement",
-      "Marketing & engagement",
-      R.drawable.ic_marketing_engage_dr
-    );
-    //Testing Data
+    ECOMMERCE_SETTINGS("enable_ecommerce", "E-commerce settings", R.drawable.ic_e_commerce_setting_dr),
+    CUSTOMER_INTERACTIONS("customer_interactions", "Customer interactions", R.drawable.ic_customer_interaction_dr),
+    MARKETING_ENGAGEMENT("marketing_enagement", "Marketing & engagement", R.drawable.ic_marketing_engage_dr);
+//    Testing Data
 //    BASIC_PROFILE("basic_profile", "Basic Profile", R.drawable.ic_add_home_d),
 //    ADVANCE_PROFILE("advanced_profile", "Advanced Profile", R.drawable.ic_edit_content_d);
 

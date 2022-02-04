@@ -33,8 +33,7 @@
         android:id="@+id/img_mobile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        tools:srcCompat="@drawable/mobile_preview_website" />
+        android:scaleType="fitXY" />
     </com.framework.views.customViews.CustomCardView>
 
   </androidx.constraintlayout.widget.ConstraintLayout>

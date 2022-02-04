@@ -62,19 +62,19 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
     binding?.editPurchases?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     binding?.editPurchases?.text = getString(R.string.edit_)
     setOnClickListener(binding?.gstinContainer, binding?.invoiceSetupContainer, binding?.viewSampleInvoice)
-    getprofileDetails()
+    getProfileDetails()
   }
 
-  private fun getprofileDetails() {
-    showProgress()
+  private fun getProfileDetails(isShowProgress: Boolean = true) {
+    if (isShowProgress) showProgress()
     hitApi(viewModel?.getPaymentProfileDetails(sessionLocal.fPID, clientId = clientId), (R.string.error_getting_payment_details))
   }
 
   override fun onSuccess(it: BaseResponse) {
     super.onSuccess(it)
+    hideProgress()
     when (it.taskcode) {
       TaskCode.GET_PAYMENT_PROFILE_DETAILS.ordinal -> {
-        hideProgress()
         if (data == null) data = PaymentProfileResponse()
         this.data = it as PaymentProfileResponse
         val gSTIN = data?.result?.taxDetails?.gSTDetails?.gSTIN
@@ -86,15 +86,15 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
         updatePreviousData()
       }
       TaskCode.SETUP_INVOICE.ordinal -> {
-        hideProgress()
+        getProfileDetails(false)
         showShortToast(getString(R.string.gst_details_updated))
       }
       TaskCode.PUT_MERCHANT_SIGNATURE.ordinal -> {
-        hideProgress()
+        getProfileDetails(false)
         showShortToast(getString(R.string.signature_uploaded))
       }
       TaskCode.ADD_MERCHANT_UPI.ordinal -> {
-        hideProgress()
+        getProfileDetails(false)
         showShortToast(getString(R.string.merchant_upi_added))
       }
     }
@@ -109,7 +109,6 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
     if (data?.result?.taxDetails?.gSTDetails?.gSTIN.isNullOrEmpty()) {
       binding?.hintEnterGst?.visible()
       binding?.ctvGstinHeading?.text = getString(R.string.gstin_)
-
     } else {
       binding?.ctvGstinHeading?.text = getString(R.string.gstin_)
       binding?.ctvGstNum?.text = data?.result?.taxDetails?.gSTDetails?.gSTIN
@@ -135,7 +134,7 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
       binding?.ctvCompanyNameHeading?.visible()
       binding?.ctvCompanyName?.text = data?.result?.taxDetails?.gSTDetails?.businessName
     }
-    if (data?.result?.merchantSignature != null) {
+    if (data?.result?.merchantSignature.isNullOrEmpty().not()) {
       binding?.icDoneImg?.visible()
       binding?.signatureHeading?.visible()
       binding?.signature?.visible()
@@ -144,6 +143,8 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
       binding?.signatureHeading?.gone()
       binding?.signature?.gone()
     }
+    val isUpdated = (data?.result?.taxDetails?.gSTDetails?.gSTIN.isNullOrEmpty() && (data?.result?.uPIId.isNullOrEmpty() || data?.result?.uPIId == "null") && data?.result?.merchantSignature.isNullOrEmpty()).not()
+    onBusinessVerificationAddedOrUpdated(isUpdated)
   }
 
   override fun onClick(v: View) {
