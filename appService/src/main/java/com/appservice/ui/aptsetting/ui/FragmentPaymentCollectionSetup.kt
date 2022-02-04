@@ -19,6 +19,7 @@ import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.webengageconstant.*
@@ -108,6 +109,7 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
     val paymentProfileResponse = it as? PaymentProfileResponse
     if (paymentProfileResponse != null) {
       isEdit = paymentProfileResponse.result?.bankAccountDetails != null && (paymentProfileResponse.result?.bankAccountDetails?.isValidAccount() == true)
+      onBankAccountAddedOrUpdated(isEdit)
       if (isEdit) {
         binding?.btnAddAccount?.gone()
         binding?.llBankStatus?.visible()

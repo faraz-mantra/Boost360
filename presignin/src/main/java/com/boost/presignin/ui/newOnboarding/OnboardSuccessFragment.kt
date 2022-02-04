@@ -93,19 +93,19 @@ class OnboardSuccessFragment : AppBaseFragment<FragmentLoaderAnimationBinding, L
 
   private fun setOnClickListeners() {
     binding?.tvPreviewWebsite?.setOnClickListener {
-      WebEngageController.trackEvent(PS_REGISTRATION_PREVIEW_CLICK, CLICK, NO_EVENT_VALUE)
+      WebEngageController.trackEvent(PS_SIGNUP_SUCCESS_PREVIEW_CLICK, CLICK, NO_EVENT_VALUE)
       val bundle = Bundle()
       bundle.putSerializable("request", floatsRequest)
       navigator?.startActivity(WebPreviewActivity::class.java, bundle)
     }
     binding?.tvLaunchDashboard?.setOnClickListener {
+      WebEngageController.trackEvent(PS_SIGNUP_SUCCESS_FINISH_CLICK, CLICK, NO_EVENT_VALUE)
       createAccessTokenAuth()
     }
   }
 
   private fun createAccessTokenAuth() {
     showProgress(getString(R.string.business_setup_process))
-    WebEngageController.trackEvent(PS_REGISTRATION_DASHBOARD_CLICK, CLICK, NO_EVENT_VALUE)
     val request = AccessTokenRequest(
       authToken = authToken?.authenticationToken, clientId = clientId, fpId = authToken?.floatingPointId
     )
