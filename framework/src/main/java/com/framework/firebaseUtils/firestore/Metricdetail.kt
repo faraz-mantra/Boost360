@@ -109,6 +109,27 @@ data class Metricdetail(
       currentValueUpdate = CurrentValueUpdate(key = "boolean_add_bank_account", value = value)
     }
 
+  @SerializedName("boolean_catalog_setup")
+  var boolean_catalog_setup: Boolean? = null
+    set(value) {
+      field = value
+      currentValueUpdate = CurrentValueUpdate(key = "boolean_catalog_setup", value = value)
+    }
+
+  @SerializedName("boolean_general_appointments")
+  var boolean_general_appointments: Boolean? = null
+    set(value) {
+      field = value
+      currentValueUpdate = CurrentValueUpdate(key = "boolean_general_appointments", value = value)
+    }
+
+  @SerializedName("boolean_business_verification")
+  var boolean_business_verification: Boolean? = null
+    set(value) {
+      field = value
+      currentValueUpdate = CurrentValueUpdate(key = "boolean_business_verification", value = value)
+    }
+
   @SerializedName("boolean_image_uploaded_to_gallery")
   var boolean_image_uploaded_to_gallery: Boolean? = null
     set(value) {
