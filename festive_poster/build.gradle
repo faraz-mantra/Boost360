@@ -47,4 +47,6 @@ android {
 dependencies {
     api project(path: ':onboarding')
     api project(path: ':dbcenterapi')
+    implementation "com.github.skydoves:balloon:1.4.1"
+
 }

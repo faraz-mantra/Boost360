@@ -27,6 +27,7 @@
                 android:id="@+id/iv_close_preview"
                 android:layout_width="@dimen/size_15"
                 android:layout_height="@dimen/size_15"
+                android:layout_marginHorizontal="@dimen/size_8"
                 android:src="@drawable/ic_close_black" />
 
             <com.framework.views.customViews.CustomTextView
@@ -66,9 +67,11 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_post_preview"
-                        android:layout_marginBottom="@dimen/size_24"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginHorizontal="@dimen/size_10"
+                        android:layout_marginBottom="@dimen/size_24"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:itemCount="6"
@@ -89,7 +92,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="24dp"
-                        android:fontFamily="@font/regular_medium"
+                        android:fontFamily="@font/bold"
                         android:text="@string/post_on"
                         android:textColor="@color/black_4a4a4a"
                         android:textSize="@dimen/text_16"

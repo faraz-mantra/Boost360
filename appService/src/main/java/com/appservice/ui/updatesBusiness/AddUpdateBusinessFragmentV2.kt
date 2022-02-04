@@ -110,6 +110,11 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   }
 
 
+  override fun onResume() {
+    super.onResume()
+    setStatusBarColor(R.color.white)
+
+  }
 
   private fun isImageValid(imgFile: File): Boolean {
     if (imgFile.extension.equals("JPEG",ignoreCase = true)||
@@ -220,13 +225,17 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
       lifecycleScope.launch {
         withContext(Dispatchers.IO){
-          val imageurl = URL(it?.imageUri)
-          val bitmap = BitmapFactory.decodeStream(imageurl.openConnection().getInputStream())
-          val imgFile =File(requireActivity().getExternalFilesDir(null)?.path+File.separator
-          +Constants.UPDATE_PIC_FILE_NAME)
-          bitmap.saveAsImageToAppFolder(imgFile.path)
+          if (it?.imageUri!=null){
+            val imageurl = URL(it.imageUri)
+            val bitmap = BitmapFactory.decodeStream(imageurl.openConnection().getInputStream())
+            val imgFile =File(requireActivity().getExternalFilesDir(null)?.path+File.separator
+                    +Constants.UPDATE_PIC_FILE_NAME)
+            bitmap.saveAsImageToAppFolder(imgFile.path)
+            runOnUi {
+              loadImage(imgFile.path)
+            }
+          }
           runOnUi {
-            loadImage(imgFile.path)
             toggleContinue()
           }
 

@@ -15,6 +15,7 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.framework.models.BaseViewModel
+import com.framework.utils.setStatusBarColor
 import com.framework.webengageconstant.Post_Promotional_Update_Click
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -44,6 +45,10 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseVi
     }
 
 
+    override fun onResume() {
+        super.onResume()
+        setStatusBarColor(R.color.toolbar_bg)
+    }
     override fun onClick(v: View?) {
         super.onClick(v)
         when(v){

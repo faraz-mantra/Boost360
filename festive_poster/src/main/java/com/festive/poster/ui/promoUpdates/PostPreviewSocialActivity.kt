@@ -124,6 +124,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     override fun onResume() {
         super.onResume()
+        setStatusBarColor(R.color.white)
 
         refreshUserWidgets()
 
@@ -597,7 +598,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                                 PreferencesUtils.instance.saveData(com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE,
                                     false)
                             }
-                            PostSuccessBottomSheet.newInstance(posterModel).show(supportFragmentManager, PostSuccessBottomSheet::class.java.name)
+                            PostSuccessBottomSheet.newInstance(posterImgPath,captionIntent).show(supportFragmentManager, PostSuccessBottomSheet::class.java.name)
 
 
                         } else{

@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="32dp"
-                android:layout_marginHorizontal="16dp">
+                android:layout_marginHorizontal="10dp">
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/customTextView9"

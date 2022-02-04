@@ -1,44 +1,35 @@
 package com.festive.poster.ui.promoUpdates.edit_post
 
-import android.app.Activity
 import android.content.*
 import android.content.Intent
 import android.graphics.Typeface
-import android.text.Editable
 import android.text.Spannable
 import android.text.Spanned
-import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.view.View
 import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.databinding.ActivityEditPostBinding
 import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
-import com.festive.poster.models.PostUpdateTaskRequest
 import com.festive.poster.models.PosterModel
 import com.festive.poster.ui.promoUpdates.bottomSheet.CaptionBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.DeleteDraftBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.EditTemplateBottomSheet
 import com.festive.poster.utils.SvgUtils
-import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.constants.Constants
 import com.framework.analytics.SentryController
 import com.framework.extensions.gone
 import com.framework.pref.UserSessionManager
-import com.framework.pref.clientId
 import com.framework.utils.STTUtils
 import com.framework.utils.convertStringToObj
 import com.framework.utils.highlightHashTag
 import com.framework.utils.saveAsImageToAppFolder
 import com.framework.utils.*
-import com.framework.webengageconstant.EVENT_LABEL_NULL
-import com.framework.webengageconstant.POST_AN_UPDATE
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -99,8 +90,18 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
             getString(R.string.type_in_the_caption_to_create_your_own_hashtags),R.color.color395996,
             "#"
         )
+
     }
 
+    override fun onBackPressed() {
+        DeleteDraftBottomSheet.newInstance(object :DeleteDraftBottomSheet.Callbacks{
+            override fun onDelete() {
+                finish()
+            }
+        }).show(
+            supportFragmentManager,DeleteDraftBottomSheet::class.java.name
+        )
+    }
     fun saveKeyValue(){
 
         viewModel.saveKeyValue(sessionLocal?.fPID,
@@ -112,6 +113,10 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        setStatusBarColor(R.color.white)
+    }
     private fun initStt() {
         sttUtils = STTUtils(object : STTUtils.Callbacks{
             override fun onDone(text: String?) {

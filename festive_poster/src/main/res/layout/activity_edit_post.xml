@@ -51,12 +51,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <com.caverock.androidsvg.SVGImageView
+                    <com.framework.views.customViews.CustomImageView
                         android:id="@+id/iv_template"
                         android:layout_width="match_parent"
-
-                        android:layout_height="@dimen/size_300"
-                        android:scaleType="fitXY"
+                        android:layout_height="wrap_content"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
@@ -68,7 +66,6 @@
                     <com.framework.views.customViews.CustomButton
                         android:visibility="gone"
                         android:id="@+id/btn_tap_to_edit"
-                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_26"
@@ -238,7 +235,6 @@
             android:id="@+id/tv_preview_and_post"
             style="@style/yellow_squared_button"
             android:text="@string/preview_and_post"
-            android:textAllCaps="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

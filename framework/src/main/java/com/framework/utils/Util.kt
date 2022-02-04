@@ -8,6 +8,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -22,8 +24,10 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorRes
@@ -36,11 +40,17 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.ColorUtils
+import androidx.core.view.WindowInsetsControllerCompat
+import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.SimpleColorFilter
 import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.framework.BaseApplication
 import com.framework.R
 import com.framework.analytics.SentryController
@@ -55,17 +65,7 @@ import java.text.NumberFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import kotlin.collections.ArrayList
 
-import android.content.pm.PackageManager
-
-import android.content.pm.PackageInfo
-import android.widget.ImageView
-import androidx.annotation.RequiresApi
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
-import java.util.regex.Pattern.UNICODE_CHARACTER_CLASS
 
 private const val TAG = "Util"
 
@@ -596,4 +596,24 @@ fun String.extractHashTag(): ArrayList<String> {
     strs.add(mat.group(1));
   }
   return strs
+}
+
+fun Activity.setStatusBarColor(@ColorRes colorId: Int){
+  val window = window
+  window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+
+  window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+  window.statusBarColor = ContextCompat.getColor(this,colorId)
+  WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = isColorDark(colorId)
+
+
+}
+
+fun Fragment.setStatusBarColor(@ColorRes colorId: Int){
+  activity?.setStatusBarColor(colorId)
+}
+
+fun isColorDark(color: Int): Boolean {
+  return ColorUtils.calculateLuminance(color) < 0.25;
+
 }

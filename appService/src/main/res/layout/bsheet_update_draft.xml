@@ -45,13 +45,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_marginTop="20dp"
+                android:letterSpacing="0"
                 android:backgroundTint="@color/colorPrimary"
                 android:fontFamily="@font/semi_bold"
                 android:text="@string/no_save_as_draft"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_16"
-                app:cornerRadius="@dimen/size_15"
+                app:cornerRadius="8dp"
                  />
 
             <com.framework.views.customViews.CustomMaterialButton
@@ -62,12 +63,13 @@
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/semi_bold"
                 android:text="@string/yes_discard"
+                android:letterSpacing="0"
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_16"
                 app:strokeWidth="1dp"
                 app:strokeColor="@color/colorPrimary"
-                app:cornerRadius="@dimen/size_15"
+                app:cornerRadius="8dp"
                 app:iconGravity="textStart" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>

@@ -17,6 +17,7 @@ import com.framework.constants.Constants
 import com.framework.models.BaseViewModel
 import com.framework.utils.saveAsImageToAppFolder
 import com.framework.utils.saveAsTempFile
+import com.framework.utils.setStatusBarColor
 import com.onboarding.nowfloats.bottomsheet.util.runOnUi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -52,6 +53,10 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        setStatusBarColor(R.color.black_3333)
+    }
     fun showImageInUi(){
         lifecycleScope.launch {
             withContext(Dispatchers.Default){

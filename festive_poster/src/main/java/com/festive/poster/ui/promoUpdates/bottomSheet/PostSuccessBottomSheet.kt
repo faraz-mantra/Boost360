@@ -64,28 +64,28 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
 
     override fun onClick(v: View) {
         super.onClick(v)
-        if (posterImgPath!=null){
+        if (posterImgPath!=null) {
             val imgFile = File(posterImgPath!!)
 
-            when(v){
-                binding?.ivWhatsapp->{
+            when (v) {
+                binding?.ivWhatsapp -> {
 
-                    imgFile.shareAsImage(requireActivity(),PackageNames.WHATSAPP,caption)
-
-                }
-                binding?.ivInstagram->{
-                    imgFile.shareAsImage(requireActivity(),PackageNames.INSTAGRAM,caption)
+                    imgFile.shareAsImage(requireActivity(), PackageNames.WHATSAPP, caption)
 
                 }
-                binding?.ivOther->{
-                    imgFile.shareAsImage(requireActivity(),null,caption)
+                binding?.ivInstagram -> {
+                    imgFile.shareAsImage(requireActivity(), PackageNames.INSTAGRAM, caption)
 
                 }
-            }
-            binding?.ivClosePostSuccess->{
-                dismiss()
+                binding?.ivOther -> {
+                    imgFile.shareAsImage(requireActivity(), null, caption)
+
+                }
+
+                binding?.ivClosePostSuccess -> {
+                    dismiss()
+                }
             }
         }
-
     }
 }
