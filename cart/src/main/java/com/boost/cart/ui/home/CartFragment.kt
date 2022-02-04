@@ -12,6 +12,8 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -116,6 +118,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //  lateinit var localStorage: LocalStorage
 
   private var couponData = ArrayList<Data>()
+  private var couponDataNo = ArrayList<Data>()
+
 
   var customerId: String = ""
 
@@ -2356,9 +2360,24 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         }
         System.out.println("CouponData" + couponData)
         cart_coupon_code_rv.layoutManager = LinearLayoutManager(requireContext())
-
-        val adapter = CartCouponAdapter(couponData)
+        couponDataNo.add(couponData[0])
+        val adapter = CartCouponAdapter(couponDataNo)
         cart_coupon_code_rv.adapter = adapter
+        tv_Show_more.setOnClickListener {
+            tv_Show_less.visibility = VISIBLE
+            tv_Show_more.visibility = GONE
+            val adapter = CartCouponAdapter(couponData)
+            cart_coupon_code_rv.adapter = adapter
+        }
+        tv_Show_less.setOnClickListener {
+          tv_Show_more.visibility = VISIBLE
+          tv_Show_less.visibility = GONE
+          couponDataNo.clear()
+          couponDataNo.add(couponData[0])
+          val adapter = CartCouponAdapter(couponDataNo)
+          cart_coupon_code_rv.adapter = adapter
+        }
+
       }
     }
 

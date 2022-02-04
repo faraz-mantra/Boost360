@@ -368,8 +368,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:visibility="visible"
                     android:elevation="@dimen/_1sdp"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/card_status_image">
@@ -417,8 +417,8 @@
                     android:id="@+id/addons_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:elevation="@dimen/_1sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
+                    android:elevation="@dimen/_1sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/package_layout">
@@ -554,17 +554,17 @@
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/semi_bold"
                                 android:text="Choose validity"
-                                android:textSize="@dimen/txt_14sp"
                                 android:textColor="#4A4A4A"
-                                android:fontFamily="@font/semi_bold"/>
+                                android:textSize="@dimen/txt_14sp" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="(Valid till 16 May 22)"
                                 android:textColor="#828282"
-                                android:textSize="@dimen/txt_12sp"
-                                android:text="(Valid till 16 May 22)" />
+                                android:textSize="@dimen/txt_12sp" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -573,16 +573,16 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:gravity="center"
                             android:background="@drawable/ic_increment"
+                            android:gravity="center"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/months_validity_edit_dsc"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/_5sdp"
                                 android:drawableStart="@drawable/ic_minus"
+                                android:padding="@dimen/_5sdp"
                                 android:textColor="#F44336"
                                 android:textSize="@dimen/_20sdp" />
 
@@ -590,10 +590,10 @@
                                 android:id="@+id/months_validity"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:background="@color/white"
-                                android:ems="2"
                                 android:layout_marginTop="@dimen/pad_1dp"
                                 android:layout_marginBottom="@dimen/pad_1dp"
+                                android:background="@color/white"
+                                android:ems="2"
                                 android:fontFamily="@font/bold"
                                 android:gravity="center"
                                 android:inputType="number"
@@ -607,8 +607,8 @@
                                 android:id="@+id/months_validity_edit_inc"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/_5sdp"
                                 android:drawableStart="@drawable/ic_plus"
+                                android:padding="@dimen/_5sdp"
                                 android:textColor="#009688"
                                 android:textSize="@dimen/_20sdp" />
 
@@ -620,8 +620,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginRight="@dimen/_5sdp"
                         android:background="@drawable/ic_cart_extra_off_bg"
                         android:gravity="center"
@@ -662,10 +662,10 @@
                     android:layout_marginTop="5dp"
                     android:background="#FFF0C9"
                     android:orientation="vertical"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/coupon_layout"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/total_months_layout"
-                    app:layout_constraintBottom_toTopOf="@+id/coupon_layout">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/total_months_layout">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
@@ -675,9 +675,9 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/_10sdp"
-                            android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginLeft="@dimen/_25sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
                             android:drawableStart="@drawable/ic_cart_others_also_bought"
                             android:drawablePadding="5dp"
                             android:fontFamily="@font/semi_bold"
@@ -737,11 +737,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans"
-                                android:textStyle="normal"
                                 android:lineSpacingExtra="1sp"
                                 android:text="DISCOUNT COUPONS"
                                 android:textColor="#4A4A4A"
-                                android:textSize="@dimen/txt_14sp" />
+                                android:textSize="@dimen/txt_14sp"
+                                android:textStyle="normal" />
 
                             <androidx.appcompat.widget.LinearLayoutCompat
                                 android:layout_width="match_parent"
@@ -773,22 +773,23 @@
 
                         <include
                             android:id="@+id/cart_applied_coupon_full_layout"
+                            layout="@layout/cart_applied_coupon_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:visibility="gone"
-                            layout="@layout/cart_applied_coupon_layout" />
+                            android:visibility="gone" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/cart_coupon_code_rv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            tools:itemCount="1"
                             android:visibility="visible"
+                            tools:itemCount="1"
                             tools:listitem="@layout/item_coupon_code" />
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_Show_more"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
@@ -796,10 +797,25 @@
                             android:layout_marginBottom="15dp"
                             android:drawableEnd="@drawable/ic_cart_more_coupons"
                             android:gravity="center"
+                            android:drawablePadding="@dimen/pad_5dp"
                             android:text="Show more"
-                            android:visibility="gone"
                             android:textColor="#FFB900"
-                            android:textSize="@dimen/txt_12sp" />
+                            android:textSize="@dimen/txt_12sp"
+                            android:visibility="visible" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_Show_less"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:drawableEnd="@drawable/ic_top_arrow"
+                            android:gravity="center"
+                            android:drawablePadding="@dimen/pad_5dp"
+                            android:text="Show less"
+                            android:textColor="#FFB900"
+                            android:textSize="@dimen/txt_12sp"
+                            android:visibility="gone" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -818,96 +834,96 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/coupon_layout">
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/gst_title"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="@dimen/_5sdp"-->
-<!--                        android:fontFamily="@font/open_sans_semibold"-->
-<!--                        android:paddingStart="@dimen/_5sdp"-->
-<!--                        android:paddingTop="@dimen/_3sdp"-->
-<!--                        android:paddingEnd="@dimen/_5sdp"-->
-<!--                        android:paddingBottom="@dimen/_5sdp"-->
-<!--                        android:text="GSTIN(optional)"-->
-<!--                        android:textColor="@color/common_text_color"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="parent" />-->
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/gst_title"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginStart="@dimen/_5sdp"-->
+                    <!--                        android:fontFamily="@font/open_sans_semibold"-->
+                    <!--                        android:paddingStart="@dimen/_5sdp"-->
+                    <!--                        android:paddingTop="@dimen/_3sdp"-->
+                    <!--                        android:paddingEnd="@dimen/_5sdp"-->
+                    <!--                        android:paddingBottom="@dimen/_5sdp"-->
+                    <!--                        android:text="GSTIN(optional)"-->
+                    <!--                        android:textColor="@color/common_text_color"-->
+                    <!--                        app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                        app:layout_constraintTop_toTopOf="parent" />-->
 
-<!--                    <View-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="@dimen/_1sdp"-->
-<!--                        android:background="@color/material_grey_400"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toBottomOf="@id/gst_title" />-->
+                    <!--                    <View-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="@dimen/_1sdp"-->
+                    <!--                        android:background="@color/material_grey_400"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--                        app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@id/gst_title" />-->
 
-<!--                    <LinearLayout-->
-<!--                        android:id="@+id/gstin_layout1"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="@dimen/_5sdp"-->
-<!--                        android:layout_marginTop="@dimen/_5sdp"-->
-<!--                        android:layout_marginEnd="@dimen/_5sdp"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toBottomOf="@id/gst_title">-->
+                    <!--                    <LinearLayout-->
+                    <!--                        android:id="@+id/gstin_layout1"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginStart="@dimen/_5sdp"-->
+                    <!--                        android:layout_marginTop="@dimen/_5sdp"-->
+                    <!--                        android:layout_marginEnd="@dimen/_5sdp"-->
+                    <!--                        android:gravity="center_vertical"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--                        app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@id/gst_title">-->
 
-<!--                        <TextView-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:fontFamily="@font/open_sans_semibold"-->
-<!--                            android:paddingStart="@dimen/_5sdp"-->
-<!--                            android:text="Fill in GSTIN"-->
-<!--                            android:textColor="@color/common_text_color" />-->
+                    <!--                        <TextView-->
+                    <!--                            android:layout_width="0dp"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:layout_weight="1"-->
+                    <!--                            android:fontFamily="@font/open_sans_semibold"-->
+                    <!--                            android:paddingStart="@dimen/_5sdp"-->
+                    <!--                            android:text="Fill in GSTIN"-->
+                    <!--                            android:textColor="@color/common_text_color" />-->
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/enter_gst_number"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:padding="@dimen/_5sdp"-->
-<!--                            android:text="Enter number"-->
-<!--                            android:textColor="#0068e0" />-->
+                    <!--                        <TextView-->
+                    <!--                            android:id="@+id/enter_gst_number"-->
+                    <!--                            android:layout_width="wrap_content"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:padding="@dimen/_5sdp"-->
+                    <!--                            android:text="Enter number"-->
+                    <!--                            android:textColor="#0068e0" />-->
 
-<!--                    </LinearLayout>-->
+                    <!--                    </LinearLayout>-->
 
-<!--                    <LinearLayout-->
-<!--                        android:id="@+id/gstin_layout2"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="@dimen/_5sdp"-->
-<!--                        android:layout_marginTop="@dimen/_5sdp"-->
-<!--                        android:layout_marginEnd="@dimen/_5sdp"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:visibility="gone"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toBottomOf="@id/gstin_layout1"-->
-<!--                        tools:visibility="visible">-->
+                    <!--                    <LinearLayout-->
+                    <!--                        android:id="@+id/gstin_layout2"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginStart="@dimen/_5sdp"-->
+                    <!--                        android:layout_marginTop="@dimen/_5sdp"-->
+                    <!--                        android:layout_marginEnd="@dimen/_5sdp"-->
+                    <!--                        android:gravity="center_vertical"-->
+                    <!--                        android:visibility="gone"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--                        app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@id/gstin_layout1"-->
+                    <!--                        tools:visibility="visible">-->
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/fill_in_gstin_value"-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:fontFamily="@font/open_sans_semibold"-->
-<!--                            android:paddingStart="@dimen/_10sdp"-->
-<!--                            android:paddingTop="@dimen/_5sdp"-->
-<!--                            android:paddingBottom="@dimen/_5sdp"-->
-<!--                            android:textColor="@color/common_text_color" />-->
+                    <!--                        <TextView-->
+                    <!--                            android:id="@+id/fill_in_gstin_value"-->
+                    <!--                            android:layout_width="0dp"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:layout_weight="1"-->
+                    <!--                            android:fontFamily="@font/open_sans_semibold"-->
+                    <!--                            android:paddingStart="@dimen/_10sdp"-->
+                    <!--                            android:paddingTop="@dimen/_5sdp"-->
+                    <!--                            android:paddingBottom="@dimen/_5sdp"-->
+                    <!--                            android:textColor="@color/common_text_color" />-->
 
-<!--                        <ImageView-->
-<!--                            android:id="@+id/remove_gstin_number"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:padding="@dimen/_10sdp"-->
-<!--                            app:layout_constraintBottom_toBottomOf="@id/cart_single_addons_bottom_view"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent"-->
-<!--                            app:srcCompat="@drawable/ic_close" />-->
+                    <!--                        <ImageView-->
+                    <!--                            android:id="@+id/remove_gstin_number"-->
+                    <!--                            android:layout_width="wrap_content"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:padding="@dimen/_10sdp"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="@id/cart_single_addons_bottom_view"-->
+                    <!--                            app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--                            app:layout_constraintTop_toTopOf="parent"-->
+                    <!--                            app:srcCompat="@drawable/ic_close" />-->
 
-<!--                    </LinearLayout>-->
+                    <!--                    </LinearLayout>-->
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -918,9 +934,9 @@
                         android:gravity="center"
 
                         android:orientation="horizontal"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         tools:layout_editor_absoluteX="12dp">
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -928,31 +944,31 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/_10sdp"
                             android:fontFamily="@font/open_sans"
-                            android:textStyle="normal"
                             android:lineSpacingExtra="1sp"
                             android:text="BILLING DETAILS"
                             android:textColor="#4A4A4A"
                             android:textSize="@dimen/txt_14sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
                             android:layout_marginTop="@dimen/_20sdp"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            android:gravity="end"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:gravity="end">
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/edit"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="end"
-                                android:layout_marginRight="@dimen/_5sdp"
                                 android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_marginRight="@dimen/_5sdp"
                                 android:drawableStart="@drawable/ic_cart_billing_details_edit"
                                 android:gravity="end"
                                 android:text="Edit"
@@ -969,19 +985,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="#4DA3A3A3"
+                        app:layout_constraintTop_toBottomOf="@+id/cart_billing_details_ll"
                         tools:layout_editor_absoluteX="2dp"
-                        tools:layout_editor_absoluteY="5dp"
-                        app:layout_constraintTop_toBottomOf="@+id/cart_billing_details_ll"/>
+                        tools:layout_editor_absoluteY="5dp" />
 
                     <include
                         android:id="@+id/cart_billing_details_edit_layout"
+                        layout="@layout/billing_details_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        layout="@layout/billing_details_layout"
                         android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/cart_billing_details_ll"/>
+                        app:layout_constraintTop_toBottomOf="@+id/cart_billing_details_ll" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/billing_details"
@@ -1021,8 +1037,8 @@
                                     android:textSize="@dimen/txt_12sp"
                                     android:visibility="visible"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"/>
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/cart_business_gstin_missing"
@@ -1032,8 +1048,8 @@
                                     android:textColor="#BBBBBB"
                                     android:textSize="@dimen/txt_12sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"/>
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -1068,8 +1084,8 @@
                                     android:textColor="#333333"
                                     android:textSize="@dimen/txt_12sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"/>
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/cart_business_supply_place_missing"
@@ -1079,8 +1095,8 @@
                                     android:textColor="#333333"
                                     android:textSize="@dimen/txt_12sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"/>
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -1113,11 +1129,12 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="end"
                                     android:lines="2"
-                                    android:text="Not provided"                                    android:textColor="#333333"
+                                    android:text="Not provided"
+                                    android:textColor="#333333"
                                     android:textSize="12sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"/>
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/cart_business_address_missing"
@@ -1129,8 +1146,8 @@
                                     android:textColor="#333333"
                                     android:textSize="12sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"/>
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -1158,8 +1175,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="20dp"
                         android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="20dp"
                         android:layout_marginRight="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_10sdp"
                         android:gravity="center"
@@ -1168,9 +1185,9 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/semi_bold"
                             android:lineSpacingExtra="1sp"
                             android:text="PAYABLE AMOUNT: "
-                            android:fontFamily="@font/semi_bold"
                             android:textColor="#4A4A4A"
                             android:textSize="@dimen/txt_14sp" />
 
@@ -1178,9 +1195,9 @@
                             android:id="@+id/header_grand_total"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/semi_bold"
                             android:lineSpacingExtra="1sp"
                             android:text="₹4,399"
-                            android:fontFamily="@font/semi_bold"
                             android:textColor="#4A4A4A"
                             android:textSize="@dimen/txt_14sp" />
 
@@ -1226,12 +1243,12 @@
                                 android:textColor="#333333"
                                 android:textSize="@dimen/txt_12sp" />
 
-<!--                            <androidx.appcompat.widget.AppCompatTextView-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:text="(3 items)"-->
-<!--                                android:textColor="#333333"-->
-<!--                                android:textSize="@dimen/txt_12sp" />-->
+                            <!--                            <androidx.appcompat.widget.AppCompatTextView-->
+                            <!--                                android:layout_width="wrap_content"-->
+                            <!--                                android:layout_height="wrap_content"-->
+                            <!--                                android:text="(3 items)"-->
+                            <!--                                android:textColor="#333333"-->
+                            <!--                                android:textSize="@dimen/txt_12sp" />-->
 
 
                             <androidx.appcompat.widget.LinearLayoutCompat
@@ -1244,8 +1261,8 @@
                                     android:id="@+id/cart_amount"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="₹4,583"
                                     android:fontFamily="@font/semi_bold"
+                                    android:text="₹4,583"
                                     android:textColor="#333333"
                                     android:textSize="@dimen/txt_12sp" />
 
@@ -1367,9 +1384,9 @@
                                     android:id="@+id/feature_validity"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/semi_bold"
                                     android:text="3 Months"
                                     android:textColor="#333333"
-                                    android:fontFamily="@font/semi_bold"
                                     android:textSize="@dimen/txt_12sp" />
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -1422,8 +1439,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="20dp"
                         android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="20dp"
                         android:layout_marginRight="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_10sdp"
                         android:gravity="center"
@@ -1433,9 +1450,9 @@
                             android:id="@+id/cart_total_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans_bold"
                             android:lineSpacingExtra="1sp"
                             android:text="Payable amount"
-                            android:fontFamily="@font/open_sans_bold"
                             android:textColor="#323232"
                             android:textSize="@dimen/txt_12sp" />
 
@@ -1450,8 +1467,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="end"
-                                android:gravity="end"
                                 android:fontFamily="@font/open_sans_bold"
+                                android:gravity="end"
                                 android:text="₹4,399"
                                 android:textColor="#323232"
                                 android:textSize="@dimen/txt_12sp" />
@@ -1473,9 +1490,9 @@
                     android:background="@drawable/ic_cart_refund"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cart_subscription_details_layout">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -1525,9 +1542,9 @@
                 android:layout_gravity="center"
                 android:background="#7ED321"
                 android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/discount_banner_text"
@@ -1561,22 +1578,22 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_bold"
                     android:text="₹0"
-                    android:textStyle="normal"
                     android:textColor="#333333"
                     android:textSize="20sp"
+                    android:textStyle="normal"
                     tools:text="₹4,940" />
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="normal"
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:drawablePadding="5dp"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/view_details"
                     android:textColor="#333333"
                     android:textSize="10sp"
+                    android:textStyle="normal"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/items_cost" />
             </LinearLayout>
