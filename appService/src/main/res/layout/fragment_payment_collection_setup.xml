@@ -215,7 +215,7 @@
               android:id="@+id/bank_added_status"
               style="@style/Appointment_Text_Subheading"
               android:fontFamily="@font/semi_bold"
-              tools:text="dsadbasjbdja" />
+              tools:text="Verify" />
           </LinearLayout>
 
           <com.framework.views.customViews.CustomImageView
@@ -235,7 +235,7 @@
             android:fontFamily="@font/semi_bold"
             android:paddingHorizontal="@dimen/size_16"
             android:textColor="@color/colorAccent"
-            tools:text="dsajhdasjhdbasjd" />
+            tools:text="647665637867863" />
 
           <FrameLayout
             android:id="@+id/btn_add_account"
