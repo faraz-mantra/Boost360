@@ -32,5 +32,5 @@ interface NewApiInterface {
 
   @Headers("Authorization: 591c0972ee786cbf48bd86cf")
   @POST("https://developer.api.boostkit.dev/language/v1/5e5877a701921c02011ca983/get-bulk-data-by-property/DB96EA35A6E44C0F8FB4A6BAA94DB017C0DFBE6F9944B14AA6C3C48641B3D70")
-  fun getOfferCoupons(@Body couponRequest: CouponRequest):Observable<Response<GetCouponResponse>>
+  fun getOfferCoupons(@Body couponRequest: CouponRequest):Observable<GetCouponResponse>
 }
