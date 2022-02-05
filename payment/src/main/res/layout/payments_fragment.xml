@@ -136,6 +136,7 @@
 
 
                 <TextView
+                    android:id="@+id/auto_renew_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
@@ -244,7 +245,7 @@
                         android:textColor="@color/black" />
 
                     <TextView
-                        android:id="@+id/coupon_discount_title"
+                        android:id="@+id/long_validity_discount_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/gst_discount"
@@ -254,7 +255,7 @@
                         android:textColor="@color/green" />
 
                     <TextView
-                        android:id="@+id/coupon_discount_value"
+                        android:id="@+id/long_validity_discount_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/gst_discount"
@@ -265,20 +266,20 @@
                         android:textColor="@color/green" />
 
                     <TextView
-                        android:id="@+id/igst_title"
+                        android:id="@+id/coupon_discount_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/coupon_discount_title"
+                        android:layout_below="@id/long_validity_discount_title"
                         android:fontFamily="@font/open_sans"
                         android:padding="@dimen/_5sdp"
                         android:text="‘FESTIVE’ coupon discount"
                         android:textColor="@color/green" />
 
                     <TextView
-                        android:id="@+id/igst_value"
+                        android:id="@+id/coupon_discount_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/coupon_discount_value"
+                        android:layout_below="@id/long_validity_discount_value"
                         android:layout_alignParentEnd="true"
                         android:fontFamily="@font/open_sans"
                         android:padding="@dimen/_5sdp"
@@ -289,7 +290,7 @@
                         android:id="@+id/feature_validity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/igst_title"
+                        android:layout_below="@id/coupon_discount_title"
                         android:fontFamily="@font/open_sans"
                         android:padding="@dimen/_5sdp"
                         android:text="Feature validity"
@@ -299,7 +300,7 @@
                         android:id="@+id/validity_months"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/igst_value"
+                        android:layout_below="@id/coupon_discount_value"
                         android:layout_alignParentEnd="true"
                         android:fontFamily="@font/open_sans_semibold"
                         android:padding="@dimen/_5sdp"
@@ -355,7 +356,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_semibold"
                         android:text="Payable amount"
-                        android:textColor="@color/common_text_color"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/_12sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -368,7 +369,7 @@
                         android:fontFamily="@font/open_sans_semibold"
                         android:padding="@dimen/_5sdp"
                         android:text="₹900"
-                        android:textColor="@color/common_text_color"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/_15sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -859,7 +860,6 @@
                         android:id="@+id/upi_list_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_5sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/upi_payment_title">
 
@@ -869,6 +869,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
+                            android:paddingBottom="@dimen/_10sdp"
                             android:orientation="vertical">
 
                             <ImageView
@@ -894,6 +895,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
+                            android:paddingBottom="@dimen/_10sdp"
                             android:orientation="vertical">
 
                             <ImageView
@@ -919,6 +921,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
+                            android:paddingBottom="@dimen/_10sdp"
                             android:orientation="vertical">
 
                             <ImageView
@@ -944,6 +947,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
+                            android:paddingBottom="@dimen/_10sdp"
                             android:orientation="vertical">
 
                             <ImageView
@@ -973,7 +977,6 @@
                         android:background="@color/material_grey_400"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginTop="@dimen/_10sdp"
                         app:layout_constraintTop_toBottomOf="@id/upi_list_layout" />
 
 

@@ -977,6 +977,7 @@
                         android:layout_height="wrap_content"
                         layout="@layout/billing_details_layout"
                         android:visibility="gone"
+                        tools:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/cart_billing_details_ll"/>

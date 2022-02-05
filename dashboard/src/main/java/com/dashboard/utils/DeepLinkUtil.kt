@@ -7,6 +7,7 @@ import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.boost.dbcenterapi.utils.DataLoader
 import com.dashboard.R
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
@@ -220,7 +221,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.initiateAddonMarketplace(session, false, "", "")
         } else if (url.contains(deeplink_cart_fragment)) {
           baseActivity.delayProgressShow()
-          baseActivity.initiateAddonMarketplace(session, true, "", buyItemKey)
+          baseActivity.initiateCart(session, true, "", buyItemKey)
         } else if (url.contains(deeplink_manage_content)) {
           baseActivity.startManageContentActivity(session)
         } else if (url.contains(deeplink_my_bank_account)) {
