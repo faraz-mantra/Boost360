@@ -36,6 +36,7 @@
 
   <!--    requestLegacyExternalStorage="true" using this to access external storage
   in api 29 for ImagePicker library in ManageProductFragment-->
+  <!--    android:usesCleartextTraffic="false"-->
 
   <application
     android:name="com.nowfloats.Volley.AppController"
@@ -48,7 +49,6 @@
     android:networkSecurityConfig="@xml/network_security_config"
     android:requestLegacyExternalStorage="true"
     android:theme="@style/AppTheme"
-    android:usesCleartextTraffic="false"
     tools:ignore="UnusedAttribute"
     tools:replace="android:label,android:name,android:theme,android:appComponentFactory">
 
