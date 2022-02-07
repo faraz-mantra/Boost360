@@ -41,6 +41,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.INSTAGRAM_PREVIEW->InstagramPreviewViewHolder(binding as SocialPreviewInstagramBinding)
       RecyclerViewItemType.GMB_PREVIEW->GMBPreviewViewHolder(binding as SocialPreviewGmbBinding)
       RecyclerViewItemType.WEBSITE_PREVIEW->WebsitePreviewViewHolder(binding as SocialPreviewWebsiteBinding)
+      RecyclerViewItemType.EMAIL_PREVIEW->EmailPreviewViewHolder(binding as SocialPreviewEmailBinding)
 
     }
   }

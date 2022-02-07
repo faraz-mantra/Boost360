@@ -46,6 +46,9 @@ class SocialPreviewModel(
            SocialPreviewChannel.WEBSITE->{
                RecyclerViewItemType.WEBSITE_PREVIEW.getLayout()
            }
+           SocialPreviewChannel.EMAIL->{
+               RecyclerViewItemType.EMAIL_PREVIEW.getLayout()
+           }
            else->{
                RecyclerViewItemType.WEBSITE_PREVIEW.getLayout()
            }

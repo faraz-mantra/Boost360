@@ -1,6 +1,7 @@
 package com.festive.poster.ui.promoUpdates.holders
 
 import android.content.Intent
+import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.ListItemTemplateForVpBinding
 import com.festive.poster.models.PosterModel
 import com.festive.poster.models.promoModele.TemplateModel
@@ -10,6 +11,7 @@ import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
 import com.festive.poster.ui.promoUpdates.edit_post.EditPostActivity
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
+import com.festive.poster.utils.isPromoWidgetActive
 import com.framework.constants.PackageNames
 import com.framework.webengageconstant.Promotional_Update_Edit_Click
 import com.framework.webengageconstant.Promotional_Update_Post_Click
@@ -25,8 +27,9 @@ class TemplateForVPViewHolder(binding: ListItemTemplateForVpBinding):
         binding.btnShare.setOnClickListener {
             WebEngageController.trackEvent(Promotional_Update_WhatsApp_Share_Click)
 
-            SvgUtils.shareUncompressedSvg(variant?.svgUrl,model,
-                binding.root.context, PackageNames.WHATSAPP)
+            listener?.onItemClick(position,item,RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal)
+
+
         }
 
         binding.btnPost.setOnClickListener {

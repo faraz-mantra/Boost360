@@ -69,18 +69,43 @@
                         android:id="@+id/rv_post_preview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginHorizontal="@dimen/size_10"
+                        android:layout_marginStart="@dimen/size_10"
                         android:layout_marginBottom="@dimen/size_24"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:itemCount="6"
                         tools:listitem="@layout/social_preview_fb" />
 
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/shimmer_previews"
+                        android:layout_margin="@dimen/size_16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <include
+                                layout="@layout/social_preview_shimmer"
+                                />
+                            <include
+                                layout="@layout/social_preview_shimmer"
+                                />
+                        </LinearLayout>
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
                 </RelativeLayout>
+
+
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:id="@+id/layout_social_conn"
                     android:background="@color/white_F5F7FA"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/previews"
@@ -115,15 +140,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/tv_preview_title" />
 
-                    <ProgressBar
-                        android:id="@+id/progressBar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="32dp"
-                        android:theme="@style/progressBar"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="parent" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_social_platforms"
                         android:layout_width="0dp"
@@ -143,6 +160,19 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_layout"
+                android:layout_width="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/previews"
+                android:layout_height="wrap_content">
+
+                <include
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    layout="@layout/layout_shimmer_social_channels"
+                    />
+            </com.facebook.shimmer.ShimmerFrameLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
@@ -157,7 +187,7 @@
             android:id="@+id/tv_choose_a_promo_pack"
             style="@style/yellow_squared_button"
             android:layout_gravity="bottom"
-            android:visibility="visible"
+            android:visibility="gone"
             android:text="@string/choose_a_promo_updates_pack"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

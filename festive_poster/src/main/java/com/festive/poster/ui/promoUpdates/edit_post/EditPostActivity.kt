@@ -3,12 +3,16 @@ package com.festive.poster.ui.promoUpdates.edit_post
 import android.content.*
 import android.content.Intent
 import android.graphics.Typeface
+import android.text.Editable
 import android.text.Spannable
 import android.text.Spanned
+import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.festive.poster.R
@@ -34,6 +38,8 @@ import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 import java.io.File
 import java.lang.Exception
 
@@ -82,14 +88,30 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
     }
 
     private fun initUI() {
-        SvgUtils.loadImage(posterModel?.url()!!,binding!!.ivTemplate,posterModel!!.keys,posterModel!!.isPurchased)
-        binding!!.captionLayout.etInput.isFocusableInTouchMode =false
+        lifecycleScope.launch {
+            binding!!.ivTemplate.setImageBitmap(SvgUtils.svgToBitmap(posterModel!!))
+        }
         binding?.captionLayout?.etInput?.setText(highlightHashTag(posterModel?.details?.Description,R.color.black_4a4a4a))
+        binding?.captionLayout?.etInput?.requestFocus()
+        val imm =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(binding?.captionLayout?.etInput, InputMethodManager.SHOW_IMPLICIT)
 
+        addHashTagFunction()
         binding!!.tvHashtagSubtitle.text = spanColor(
             getString(R.string.type_in_the_caption_to_create_your_own_hashtags),R.color.color395996,
             "#"
         )
+        KeyboardVisibilityEvent.setEventListener(
+            this,
+            KeyboardVisibilityEventListener {
+                // Ah... at last. do your thing :)
+                if (it){
+                    binding?.captionLayout?.inputLayout?.strokeColor = ContextCompat.getColor(this,R.color.black_4a4a4a)
+                }else{
+                    binding?.captionLayout?.inputLayout?.strokeColor = ContextCompat.getColor(this,R.color.colorAFAFAF)
+                }
+            })
 
     }
 
@@ -186,7 +208,7 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
             }
             binding?.captionLayout?.etInput -> {
 
-                CaptionBottomSheet.newInstance(binding?.captionLayout?.etInput?.text.toString()
+               /* CaptionBottomSheet.newInstance(binding?.captionLayout?.etInput?.text.toString()
                     ,object :CaptionBottomSheet.Callbacks{
                     override fun onDone(value: String) {
                         getWindow().setSoftInputMode(
@@ -194,7 +216,7 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
                         )
                         binding?.captionLayout?.etInput?.setText(highlightHashTag(value,R.color.black_4a4a4a))
                     }
-                }).show(supportFragmentManager, CaptionBottomSheet::class.java.name)
+                }).show(supportFragmentManager, CaptionBottomSheet::class.java.name)*/
             }
             binding?.ivCloseEditing -> {
                 DeleteDraftBottomSheet.newInstance(object :DeleteDraftBottomSheet.Callbacks{
@@ -242,5 +264,38 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
     private fun changeTheColor(s: String, start: Int, end: Int) {
         mSpannable?.setSpan(ForegroundColorSpan(ContextCompat.getColor(this, R.color.black_4a4a4a)), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         mSpannable?.setSpan(StyleSpan(Typeface.BOLD), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
+
+    private fun addHashTagFunction() {
+
+
+        Log.i(TAG, "addHashTagFunction: "+"hi hello")
+        mSpannable = binding?.captionLayout?.etInput?.text
+
+        binding?.captionLayout?.etInput?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(short_text: CharSequence, start: Int, before: Int, count: Int) {
+
+                val text = binding?.captionLayout?.etInput?.text.toString()
+                var last_index = 0
+                text.trim().split(Regex("\\s+")).forEach {
+                    Log.i(TAG, "addHashTagFunction: $it")
+                    if (it.isNotEmpty() && it[0] == '#'){
+                        val boldSpan = StyleSpan(Typeface
+                            .BOLD)
+                        val foregroundSpan = ForegroundColorSpan(ContextCompat.getColor(this@EditPostActivity, R.color.black))
+                        mSpannable?.setSpan(foregroundSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        mSpannable?.setSpan(boldSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+                    }
+
+                    last_index+=it.length-1
+
+                }
+
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
     }
 }

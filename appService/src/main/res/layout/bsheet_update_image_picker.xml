@@ -83,6 +83,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/layout_other"
                 android:gravity="center"
                 android:layout_marginTop="24dp"

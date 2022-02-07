@@ -181,5 +181,12 @@ dependencies {
     api 'com.google.android.exoplayer:exoplayer-dash:2.15.1'
     api 'com.google.android.exoplayer:exoplayer-ui:2.15.1'
 
+    //rounded imageview
+    api 'com.makeramen:roundedimageview:2.3.0'
+
+    //keyboard show/hide listener
+    api 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC3'
+
+
 
 }

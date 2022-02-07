@@ -1100,8 +1100,9 @@
   <string name="browse_other_images">Browse other images....</string>
     <string name="tap_to_edit">Tap to Edit</string>
     <string name="write_about_your_customer_location_recent_updates_timing_etc">Write about your customer, location, recent updates, timing, etc.</string>
-    <string name="add_image_optional">Add Image (Optional)</string>
+    <string name="add_image_optional">Add image (optional)</string>
     <string name="image_format_is_not_supported_please_use_jpeg_jpg_or_png">Image format is not supported. Please use JPEG, JPG, or PNG</string>
   <string name="image_resolution_is_smaller_than_800_x_800_px">Image resolution is smaller than 800 X 800 px</string>
   <string name="image_file_size_is_bigger_than_2mb">Image file size is bigger than 2MB</string>
+    <string name="describe_what_you_want_to_say_in_the_picture_added_above">Describe what you want to say in the picture added above...</string>
 </resources>

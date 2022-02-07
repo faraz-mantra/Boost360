@@ -1,8 +1,10 @@
 package com.appservice.ui.updatesBusiness
 
+import android.animation.Animator
 import android.app.Activity
-import android.content.*
-import android.graphics.Bitmap
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.os.Bundle
@@ -13,6 +15,7 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -29,29 +32,26 @@ import com.appservice.viewmodel.UpdatesViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.target.Target
 import com.framework.constants.Constants
-import com.framework.extensions.*
+import com.framework.extensions.gone
+import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.firebaseUtils.caplimit_feature.PropertiesItem
 import com.framework.firebaseUtils.caplimit_feature.filterFeature
 import com.framework.firebaseUtils.caplimit_feature.getCapData
 import com.framework.firebaseUtils.firestore.FirestoreManager
-import com.framework.pref.*
 import com.framework.pref.Key_Preferences.PREF_NAME_TWITTER
 import com.framework.utils.*
-import com.framework.webengageconstant.*
 import com.onboarding.nowfloats.bottomsheet.util.runOnUi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.asRequestBody
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent.setEventListener
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 import java.io.File
 import java.net.URL
-import java.util.*
-
 
 
 class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2Binding, UpdatesViewModel>() {
@@ -169,7 +169,11 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       binding!!.ivImg.gone()
       binding!!.btnEdit.gone()
       binding!!.btnAddImage.visible()
+      binding.tvImgReq.visible()
+      binding.etUpdate.hint=getString(R.string.write_about_your_customer_location_recent_updates_timing_etc)
     }else{
+      binding.etUpdate.hint=getString(R.string.describe_what_you_want_to_say_in_the_picture_added_above)
+      binding.tvImgReq.gone()
       binding!!.ivImg.visible()
       Glide.with(this).load(
         path
@@ -204,10 +208,16 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
             UpdateDraftBSheet.newInstance(binding
               .etUpdate.text.toString(),posterImagePath).show(parentFragmentManager,UpdateDraftBSheet::class.java.name)
 
-          }
+          }else{
+            activity?.finish()
+    }
 
   }
   private fun initUI() {
+    binding.etUpdate.requestFocus()
+    val imm =
+      activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.showSoftInput(binding.etUpdate, InputMethodManager.SHOW_IMPLICIT)
     binding!!.tvHashtagTip.text = spanColor(
       getString(R.string.type_in_the_caption_to_create_your_own_hashtags),
       R.color.blue_4889f8,
@@ -216,7 +226,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
     binding!!.btnAddImage.text = spanBold(
       getString(R.string.add_image_optional),
-      "Add Image"
+      "Add image"
     )
     FirestoreManager.readDraft {
       binding!!.etUpdate.setText(highlightHashTag(it?.content,R.color.black_4a4a4a))
@@ -225,8 +235,8 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
       lifecycleScope.launch {
         withContext(Dispatchers.IO){
-          if (it?.imageUri!=null){
-            val imageurl = URL(it.imageUri)
+          if (it?.imageUri.isNullOrEmpty().not()){
+            val imageurl = URL(it!!.imageUri)
             val bitmap = BitmapFactory.decodeStream(imageurl.openConnection().getInputStream())
             val imgFile =File(requireActivity().getExternalFilesDir(null)?.path+File.separator
                     +Constants.UPDATE_PIC_FILE_NAME)
@@ -246,6 +256,16 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
     }
 
+    KeyboardVisibilityEvent.setEventListener(
+      requireActivity(),
+      KeyboardVisibilityEventListener {
+        // Ah... at last. do your thing :)
+        if (it){
+          binding.cardInput.strokeColor = ContextCompat.getColor(requireActivity(),R.color.black_4a4a4a)
+        }else{
+          binding.cardInput.strokeColor = ContextCompat.getColor(requireActivity(),R.color.colorAFAFAF)
+        }
+      })
 
     toggleContinue()
 
@@ -341,7 +361,23 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       }
 
       binding!!.ivHashtagCross->{
-        binding!!.layoutHashtagTip.gone()
+        binding!!.layoutHashtagTip.animate().alpha(0F).setListener(object :Animator.AnimatorListener{
+          override fun onAnimationStart(p0: Animator?) {
+
+          }
+
+          override fun onAnimationEnd(p0: Animator?) {
+            binding!!.layoutHashtagTip.gone()
+
+          }
+
+          override fun onAnimationCancel(p0: Animator?) {
+          }
+
+          override fun onAnimationRepeat(p0: Animator?) {
+          }
+
+        })
       }
       binding!!.tvPreviewAndPost->{
         startActivity(Intent(requireActivity(), Class.forName(

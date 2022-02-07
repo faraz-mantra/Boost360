@@ -33,7 +33,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="@string/promo_updates"
+                android:text="@string/update_studios"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/iv_store"
                 app:layout_constraintStart_toEndOf="@+id/iv_toolbar_back"
@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="18dp"
-                android:src="@drawable/ic_top_right_arrow"
+                android:src="@drawable/ic_laptop_nav"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
                 app:layout_constraintTop_toTopOf="parent" />

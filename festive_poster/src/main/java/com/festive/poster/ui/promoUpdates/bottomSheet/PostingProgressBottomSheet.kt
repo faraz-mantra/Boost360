@@ -22,11 +22,14 @@ class PostingProgressBottomSheet :
     companion object {
 
         val IK_POSTER="IK_POSTER"
+        val IK_SOC_PARAMS="IK_SOC_PARAMS"
 
         @JvmStatic
-        fun newInstance(posterImgPath: String?): PostingProgressBottomSheet {
+        fun newInstance(posterImgPath: String?,socialParams:String): PostingProgressBottomSheet {
             val bundle = Bundle()
             bundle.putString(IK_POSTER,posterImgPath)
+            bundle.putString(IK_SOC_PARAMS,socialParams)
+
             val fragment = PostingProgressBottomSheet()
             fragment.arguments = bundle
             return fragment
@@ -42,7 +45,10 @@ class PostingProgressBottomSheet :
     }
 
     override fun onCreateView() {
-        posterImgPath = arguments?.getString(PostPreviewSocialActivity.IK_POSTER)
+        posterImgPath = arguments?.getString(IK_POSTER)
+        val socParams = arguments?.getString(IK_SOC_PARAMS)
+        binding?.tvSocialParam?.text = socParams
+
         if (posterImgPath!=null){
             binding!!.ivPostIcon.loadUsingGlide(posterImgPath,false)
         }

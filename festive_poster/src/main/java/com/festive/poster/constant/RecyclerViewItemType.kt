@@ -19,6 +19,7 @@ enum class RecyclerViewItemType {
   INSTAGRAM_PREVIEW,
   FB_PREVIEW,
   WEBSITE_PREVIEW,
+  EMAIL_PREVIEW,
   GMB_PREVIEW;
 
 
@@ -41,6 +42,7 @@ enum class RecyclerViewItemType {
       FB_PREVIEW->R.layout.social_preview_fb
       WEBSITE_PREVIEW->R.layout.social_preview_website
       GMB_PREVIEW->R.layout.social_preview_gmb
+      EMAIL_PREVIEW->R.layout.social_preview_email
 
     }
   }

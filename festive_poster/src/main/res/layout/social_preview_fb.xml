@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:minHeight="170dp"
             android:layout_margin="8dp"
-            app:cardCornerRadius="@dimen/size_20"
+            app:cardCornerRadius="@dimen/size_10"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             >
@@ -70,6 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:textSize="6sp"
+                    android:textColor="@color/black_4a4a4a"
                     app:fontFamily="@font/regular_medium"
                     app:layout_constraintTop_toBottomOf="@+id/customCardView"
                     tools:text="50 to 60 percent off the entire site and store for Black Friday. Above that, you have free shipiing on all orders, plus an extra 20.
@@ -160,9 +161,9 @@
 
         <com.framework.views.customViews.CustomImageView
             android:id="@+id/customImageView6"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:elevation="@dimen/size_4"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_50"
             android:src="@drawable/ic_facebook_preview"
             app:layout_constraintBottom_toBottomOf="@+id/materialCardView"
             app:layout_constraintEnd_toEndOf="parent"

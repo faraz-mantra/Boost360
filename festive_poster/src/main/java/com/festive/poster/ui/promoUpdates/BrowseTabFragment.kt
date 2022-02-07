@@ -106,14 +106,14 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
     private fun getTemplateViewConfig() {
         startShimmer()
         viewModel?.getTemplateConfig(Constants.PROMO_FEATURE_CODE,session?.fPID, session?.fpTag)
-            ?.observeOnce(this, {
+            ?.observeOnce(this) {
                 val response = it as? GetTemplateViewConfigResponse
                 response?.let {
                     val tagArray = prepareTagForApi(response.Result.allTemplates.tags)
                     fetchTemplates(tagArray, response)
                 }
 
-            })
+            }
     }
 
     private fun startShimmer() {
@@ -138,37 +138,47 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
 
     private fun fetchTemplates(tagArray: ArrayList<String>, response: GetTemplateViewConfigResponse) {
         viewModel?.getTemplates(session?.fPID, session?.fpTag, tagArray)
-            ?.observeOnce(viewLifecycleOwner, {
+            ?.observeOnce(viewLifecycleOwner) {
                 dataList = ArrayList()
                 val templates_response = it as? GetTemplatesResponse
                 templates_response?.let {
                     response.Result.allTemplates.tags.forEach { pack_tag ->
                         val templateList = ArrayList<PosterModel>()
                         templates_response.Result.templates.forEach { template ->
-                            var posterTag = template.tags.find { posterTag -> posterTag == pack_tag.tag }
-                            if ( posterTag != null && template.active) {
+                            var posterTag =
+                                template.tags.find { posterTag -> posterTag == pack_tag.tag }
+                            if (posterTag != null && template.active) {
                                 template.greeting_message = pack_tag.description
-                                template.layout_id = RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP.getLayout()
+                                template.layout_id =
+                                    RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP.getLayout()
                                 templateList.add(template.clone()!!)
                             }
                         }
-                        dataList?.add(PosterPackModel(pack_tag,
-                            templateList.toArrayList(),
-                            isPurchased = pack_tag.isPurchased,
-                            list_layout = RecyclerViewItemType.BROWSE_TAB_TEMPLATE_CAT.getLayout()))
+                        dataList?.add(
+                            PosterPackModel(
+                                pack_tag,
+                                templateList.toArrayList(),
+                                isPurchased = pack_tag.isPurchased,
+                                list_layout = RecyclerViewItemType.BROWSE_TAB_TEMPLATE_CAT.getLayout()
+                            )
+                        )
 
                     }
                     sharedViewModel?.browseAllPosterPackList = dataList
                     // getPriceOfPosterPacks()
                     // rearrangeList()
-                    val adapter =AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList,this)
+                    val adapter = AppBaseRecyclerViewAdapter(
+                        requireActivity() as BaseActivity<*, *>,
+                        dataList,
+                        this
+                    )
                     binding?.rvCat?.adapter = adapter
-                    binding?.rvCat?.layoutManager = GridLayoutManager(requireActivity(),2)
+                    binding?.rvCat?.layoutManager = GridLayoutManager(requireActivity(), 2)
                     hideProgress()
                 }
 
                 stopShimmer()
-            })
+            }
     }
 
 

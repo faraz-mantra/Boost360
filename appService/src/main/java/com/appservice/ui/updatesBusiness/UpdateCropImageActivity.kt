@@ -17,17 +17,19 @@ import com.framework.constants.Constants
 import com.framework.models.BaseViewModel
 import com.framework.utils.saveAsImageToAppFolder
 import com.framework.utils.saveAsTempFile
+import com.framework.utils.setClickableRipple
 import com.framework.utils.setStatusBarColor
 import com.onboarding.nowfloats.bottomsheet.util.runOnUi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import kotlin.math.absoluteValue
 
 class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,BaseViewModel>() {
 
+    private var currentRotation =0.0F
     private var path: String?=null
-    private var rotateDegree =0
 
     companion object{
         val IK_IMAGE_PATH="IK_IMAGE_PATH"
@@ -88,8 +90,10 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
                 }).show(supportFragmentManager,UpdateImagePickerBSheet::class.java.name)
             }
             binding!!.layoutRotate->{
-                rotateDegree+=90
-                binding!!.ivCrop.rotateImage(rotateDegree)
+                val fromRotation = if (currentRotation.absoluteValue == 360f) 0f else currentRotation
+                val rotateDegrees = 90f
+                val toRotation = (fromRotation + rotateDegrees) % 450f
+                binding!!.ivCrop.rotateImage(toRotation.toInt())
             }
 
             binding!!.layoutTick->{

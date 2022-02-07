@@ -44,6 +44,7 @@
 
     <string name="app_name">template</string>
     <string name="promo_updates">Promo updates</string>
+    <string name="update_studios">Update studio</string>
     <string name="for_today">For today</string>
     <string name="browse">Browse</string>
     <string name="find">Find</string>
@@ -52,7 +53,7 @@
     <string name="post">Post</string>
     <string name="connect">Connect</string>
     <string name="please_wait">Please Wait</string>
-    <string name="browse_all">Browse All</string>
+    <string name="browse_all">Browse all</string>
     <string name="edit">Edit</string>
     <string name="edit_post">Edit Post</string>
     <string name="caption">Caption</string>
@@ -99,5 +100,6 @@
     <string name="posted_15_mins_ago">Posted 15 mins ago</string>
     <string name="ria_customer_mail">ria@nowfloats.com</string>
     <string name="Create">Create</string>
+    <string name="you_ve_new_email_update_from">You\'ve new email update from</string>
 
 </resources>

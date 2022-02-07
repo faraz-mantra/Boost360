@@ -68,7 +68,7 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseVi
         supportFragmentManager.addOnBackStackChangedListener {
             when(getTopFragment()){
                is PromoLandingPageFragment->{
-                   binding?.tvToolbarTitle?.text = getString(R.string.promo_updates)
+                   binding?.tvToolbarTitle?.text = getString(R.string.update_studios)
                }
                 is BrowseAllFragment->{
                     binding?.tvToolbarTitle?.text = getString(R.string.browse_all)

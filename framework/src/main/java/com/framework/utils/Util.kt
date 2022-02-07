@@ -10,6 +10,7 @@ import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.res.TypedArray
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -30,10 +31,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
-import androidx.annotation.FontRes
-import androidx.annotation.RequiresApi
+import androidx.annotation.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
@@ -616,4 +614,23 @@ fun Fragment.setStatusBarColor(@ColorRes colorId: Int){
 fun isColorDark(color: Int): Boolean {
   return ColorUtils.calculateLuminance(color) < 0.25;
 
+}
+
+fun TypedArray.use(block: TypedArray.() -> Unit) {
+  try {
+    block()
+  } finally {
+    this.recycle()
+  }
+}
+
+fun Context.getStyledAttributes(@StyleableRes attrs: IntArray, block: TypedArray.() -> Unit) =
+  this.obtainStyledAttributes(attrs).use(block)
+
+fun View.setClickableRipple() {
+  val attrs = intArrayOf(R.attr.selectableItemBackground)
+  context.getStyledAttributes(attrs) {
+    val backgroundResource = getResourceId(0, 0)
+    setBackgroundResource(backgroundResource)
+  }
 }

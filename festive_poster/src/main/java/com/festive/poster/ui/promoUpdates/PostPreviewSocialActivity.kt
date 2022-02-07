@@ -10,6 +10,7 @@ import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
 import android.view.View.LAYER_TYPE_HARDWARE
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
@@ -131,18 +132,19 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     }
 
     private fun refreshUserWidgets() {
-        showProgress()
-        viewModel.getUserDetails(session?.fpTag, clientId).observe(this,{
-            if (it.isSuccess()){
-               val detail = it as? CustomerDetails
+        viewModel.getUserDetails(session?.fpTag, clientId).observe(this) {
+            if (it.isSuccess()) {
+                val detail = it as? CustomerDetails
                 detail?.FPWebWidgets?.let { list ->
-                    session?.storeFPDetails(Key_Preferences.STORE_WIDGETS, convertListObjToString(list))
+                    session?.storeFPDetails(
+                        Key_Preferences.STORE_WIDGETS,
+                        convertListObjToString(list)
+                    )
                     isUserPremium(isPromoWidgetActive())
 
                 }
             }
-            hideProgress()
-        })
+        }
     }
 
     private fun initUI() {
@@ -157,7 +159,38 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         }
 
         binding?.tvPostUpdate?.setOnClickListener {
-            posterProgressSheet =  PostingProgressBottomSheet.newInstance(posterImgPath)
+            var socialShare = ""
+            val checkedItems = uiChBoxChannelList?.filter { it.isChecked==true }
+            checkedItems?.forEachIndexed { index, socialPlatformModel ->
+
+                when(socialPlatformModel.channelType){
+                    SocialPreviewChannel.WEBSITE->{
+                        socialShare += "Website"
+                    }
+                    SocialPreviewChannel.EMAIL->{
+                        socialShare += "Email"
+                    }
+                    SocialPreviewChannel.FACEBOOK->{
+                        socialShare += "Facebook"
+                    }
+                    SocialPreviewChannel.GMB->{
+                        socialShare += "GMB"
+                    }
+                    SocialPreviewChannel.TWITTER->{
+                        socialShare += "Twitter"
+                    }
+
+                }
+                if (index==checkedItems.size-1){
+                    socialShare+="."
+                }else if (index==checkedItems.size-2){
+                    socialShare+=" & "
+                }
+                else{
+                    socialShare+=", "
+                }
+            }
+            posterProgressSheet =  PostingProgressBottomSheet.newInstance(posterImgPath,socialShare)
             saveUpdatePost()
             posterProgressSheet?.show(supportFragmentManager, PostingProgressBottomSheet::class.java.name)
         }
@@ -181,7 +214,6 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             enableGrayScale(binding?.tvPreviewTitle, binding?.tvSelected, binding?.rvSocialPlatforms)
         }else{
             binding?.tvChooseAPromoPack?.gone()
-            binding?.tvPostUpdate?.visible()
         }
     }
 
@@ -236,6 +268,14 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
         binding?.tvSelected?.text = getString(R.string.placeholder_selected,getCheckedChannelCount())
         binding?.tvPostUpdate?.text = getString(R.string.post_on_placeholder_platform,getCheckedChannelCount())
+        binding?.tvPostUpdate?.visible()
+        binding?.shimmerLayout?.gone()
+        binding?.shimmerPreviews?.gone()
+        binding?.shimmerLayout?.stopShimmer()
+        binding?.shimmerPreviews?.stopShimmer()
+
+        binding?.layoutSocialConn?.visible()
+        binding?.rvPostPreview?.visible()
 
     }
 
@@ -243,16 +283,23 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
        return uiChBoxChannelList?.filter { it.isChecked==true }?.size?:0
     }
     private fun getChannelsFromJson() {
-        binding?.progressBar?.visible()
-            NavigatorManager.clearRequest()
+        binding?.shimmerLayout?.visible()
+        binding?.shimmerPreviews?.visible()
+        binding?.shimmerPreviews?.startShimmer()
+        binding?.shimmerLayout?.startShimmer()
+        binding?.layoutSocialConn?.gone()
+        binding?.rvPostPreview?.gone()
+
+        NavigatorManager.clearRequest()
             val experienceCode = session?.fP_AppExperienceCode
             if (experienceCode.isNullOrEmpty().not()) {
                 val floatingPoint = session?.fPID
                 val fpTag = session?.fpTag
              //   showProgress(getString(com.onboarding.nowfloats.R.string.refreshing_your_channels), false)
-                viewModel.getCategories(this).observeOnce(this, {
+                viewModel.getCategories(this).observeOnce(this) {
                     if (it?.error != null) errorMessage(
-                        it.error?.localizedMessage ?: resources.getString(com.onboarding.nowfloats.R.string.error_getting_category_data)
+                        it.error?.localizedMessage
+                            ?: resources.getString(com.onboarding.nowfloats.R.string.error_getting_category_data)
                     )
                     else {
                         val categoryList = (it as? ResponseDataCategory)?.data
@@ -263,7 +310,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
                         } else errorMessage(resources.getString(com.onboarding.nowfloats.R.string.error_getting_category_data))
                     }
-                })
+                }
             } else showShortToast(resources.getString(com.onboarding.nowfloats.R.string.invalid_experience_code))
 
     }
@@ -273,7 +320,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         floatingPoint: String?,
         fpTag: String?
     ) {
-        viewModel.getChannelsAccessTokenStatus(floatingPoint).observeOnce(this, { it1 ->
+        viewModel.getChannelsAccessTokenStatus(floatingPoint).observeOnce(this) { it1 ->
             when {
                 it1.error is NoNetworkException -> errorMessage(resources.getString(com.onboarding.nowfloats.R.string.internet_connection_not_available))
                 it1.isSuccess() -> {
@@ -288,7 +335,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                 )
                 else -> errorMessage(it1.message())
             }
-        })
+        }
     }
 
     private fun setDataRequestChannels(
@@ -459,7 +506,6 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                 fetchSubscriberCount()
             }
 
-            setupPreviewList()
 
      //   getWhatsAppData(requestFloatsNew, channelsAccessToken)
     }
@@ -469,6 +515,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         binding?.rvPostPreview?.apply {
             adapter  = AppBaseRecyclerViewAdapter(this@PostPreviewSocialActivity, filteredList!!, this@PostPreviewSocialActivity)
         }
+
     }
 
     private fun shouldAddToChannelList(channel: ChannelModel): Boolean {
@@ -578,68 +625,85 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             socialShare
         )
 
-        viewModel.putBizMessageUpdate(request).observeOnce(this, {
+        viewModel.putBizMessageUpdate(request).observeOnce(this) {
             if (it.isSuccess() && it.stringResponse.isNullOrEmpty().not()) {
 
-                if (isPicMes){
+                if (isPicMes) {
                     lifecycleScope.launch {
-                        val bodyImage = File(posterImgPath).asRequestBody("image/*".toMediaTypeOrNull())
+                        val bodyImage =
+                            File(posterImgPath).asRequestBody("image/*".toMediaTypeOrNull())
                         val s_uuid = UUID.randomUUID().toString().replace("-", "")
                         viewModel.putBizImageUpdate(
                             clientId, "sequential", s_uuid, 1, 1,
                             socialShare, it.stringResponse, sendToSubscribe, bodyImage
-                        ).observeOnce(this@PostPreviewSocialActivity, { it1 ->
+                        ).observeOnce(this@PostPreviewSocialActivity) { it1 ->
                             if (it1.isSuccess()) {
                                 // successResult()
                                 posterProgressSheet?.dismiss()
-                            if (PreferencesUtils.instance.getData(com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE,true)){
-                                InAppReviewUtils.showInAppReview(this@PostPreviewSocialActivity,
-                                    InAppReviewUtils.Events.in_app_review_first_promo_update)
-                                PreferencesUtils.instance.saveData(com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE,
-                                    false)
+                                if (PreferencesUtils.instance.getData(
+                                        com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE,
+                                        true
+                                    )
+                                ) {
+                                    InAppReviewUtils.showInAppReview(
+                                        this@PostPreviewSocialActivity,
+                                        InAppReviewUtils.Events.in_app_review_first_promo_update
+                                    )
+                                    PreferencesUtils.instance.saveData(
+                                        com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE,
+                                        false
+                                    )
+                                }
+                                PostSuccessBottomSheet.newInstance(posterImgPath, captionIntent)
+                                    .show(
+                                        supportFragmentManager,
+                                        PostSuccessBottomSheet::class.java.name
+                                    )
+
+
+                            } else {
+                                posterProgressSheet?.dismiss()
+                                showShortToast("Image uploading error, please try again.")
                             }
-                            PostSuccessBottomSheet.newInstance(posterImgPath,captionIntent).show(supportFragmentManager, PostSuccessBottomSheet::class.java.name)
 
-
-                        } else{
-                            posterProgressSheet?.dismiss()
-                            showShortToast("Image uploading error, please try again.")
                         }
+                    }
 
-                    })
+                } else {
+                    posterProgressSheet?.dismiss()
+
+                    showShortToast("Post updating error, please try again.")
                 }
-
-                }
-             else {
-                posterProgressSheet?.dismiss()
-
-                showShortToast("Post updating error, please try again.")
             }
+
+
+
         }
-
-        PostSuccessBottomSheet.newInstance(posterImgPath,captionIntent).show(supportFragmentManager, PostSuccessBottomSheet::class.java.name)
-
-    })
     }
     fun fetchSubscriberCount(){
-        viewModel.getMerchantSummary(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session?.fpTag).observeOnce(this, {
+        viewModel.getMerchantSummary(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session?.fpTag).observeOnce(this) {
             val response = it as? MerchantSummaryResponse
             val subscriber = response?.Entity?.firstOrNull()?.get("NoOfSubscribers")
-            val subTitle = if (subscriber==0){
-                getString(R.string.no_recipients,0)
+            val subTitle = if (subscriber == 0) {
+                getString(R.string.no_recipients, 0)
 
-            }else{
-                getString(R.string.placeholder_recipients,subscriber)
+            } else {
+                getString(R.string.placeholder_recipients, subscriber)
             }
-            uiChBoxChannelList?.add(SocialPlatformModel(getString(R.string.email_sub),subTitle,true,
-                true,true,SocialPreviewChannel.EMAIL).apply {
-                icon =getDrawable(R.drawable.ic_promo_emailers)
+            uiChBoxChannelList?.add(SocialPlatformModel(
+                getString(R.string.email_sub), subTitle, true,
+                true, true, SocialPreviewChannel.EMAIL
+            ).apply {
+                icon = ContextCompat.getDrawable(this@PostPreviewSocialActivity,R.drawable.ic_promo_emailers)
             })
 
-            binding?.progressBar?.gone()
 
+
+            uiPreviewChannelList?.add(SocialPreviewModel(posterImgPath,session?.fPName,captionIntent,true,SocialPreviewChannel.EMAIL))
             setChannelAdapter()
+            setupPreviewList()
 
-        })
+
+        }
     }
 }

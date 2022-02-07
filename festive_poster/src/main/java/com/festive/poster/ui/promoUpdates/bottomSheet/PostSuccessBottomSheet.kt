@@ -1,5 +1,7 @@
 package com.festive.poster.ui.promoUpdates.bottomSheet
 
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
@@ -7,6 +9,7 @@ import com.festive.poster.R
 import com.festive.poster.databinding.BsheetPostSuccessBinding
 import com.festive.poster.models.PosterModel
 import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
+import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
 import com.festive.poster.utils.SvgUtils
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.constants.PackageNames
@@ -87,5 +90,12 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
                 }
             }
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        val intent = Intent(requireActivity(), PromoUpdatesActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
+        super.onDismiss(dialog)
     }
 }

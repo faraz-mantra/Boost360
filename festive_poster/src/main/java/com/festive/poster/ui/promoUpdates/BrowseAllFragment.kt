@@ -8,26 +8,32 @@ import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.FragmentBrowseAllBinding
-import com.festive.poster.models.PosterDetailsModel
-import com.festive.poster.models.PosterModel
-import com.festive.poster.models.PosterPackModel
-import com.festive.poster.models.PosterPackTagModel
+import com.festive.poster.models.*
 import com.festive.poster.models.promoModele.TemplateModel
 import com.festive.poster.models.promoModele.TodaysPickModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
+import com.festive.poster.utils.isPromoWidgetActive
+import com.festive.poster.viewmodels.PostUpdatesViewModel
 import com.framework.base.BaseActivity
+import com.framework.constants.PackageNames
 import com.framework.models.BaseViewModel
+import com.framework.pref.Key_Preferences
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
+import com.framework.utils.convertListObjToString
 import com.framework.utils.convertStringToList
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.Promotional_Update_Browse_All_Loaded
 import com.framework.webengageconstant.Promotional_Update_Category_Click
 import com.google.gson.Gson
 
-class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel>(),RecyclerItemClickListener {
+class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesViewModel>(),RecyclerItemClickListener {
 
+    private var session: UserSessionManager?=null
     private var selectedPos: Int=0
     private var posterRvAdapter: AppBaseRecyclerViewAdapter<PosterModel>?=null
     private var categoryAdapter: AppBaseRecyclerViewAdapter<PosterPackModel>?=null
@@ -37,8 +43,8 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel
         return R.layout.fragment_browse_all
     }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
+    override fun getViewModelClass(): Class<PostUpdatesViewModel> {
+        return PostUpdatesViewModel::class.java
     }
     companion object {
 
@@ -64,6 +70,29 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel
         categoryList = convertStringToList<PosterPackModel>(arguments?.getString(
             BK_POSTER_PACK_LIST)!!)?.toArrayList()
        setDataOnUi()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        session = UserSessionManager(requireActivity())
+
+        refreshUserWidgets()
+
+    }
+
+    private fun refreshUserWidgets() {
+        viewModel?.getUserDetails(session?.fpTag, clientId)?.observe(this) {
+            if (it.isSuccess()) {
+                val detail = it as? CustomerDetails
+                detail?.FPWebWidgets?.let { list ->
+                    session?.storeFPDetails(
+                        Key_Preferences.STORE_WIDGETS,
+                        convertListObjToString(list)
+                    )
+
+                }
+            }
+        }
     }
 
     private fun setDataOnUi() {
@@ -185,6 +214,14 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel
                 categoryAdapter?.notifyDataSetChanged()
                 selectedPos = position
                 switchToSelectedItem()
+            }
+            RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal->{
+                if (isPromoWidgetActive()){
+                    item as PosterModel
+                    val variant = item.variants.firstOrNull()
+                    SvgUtils.shareUncompressedSvg(variant?.svgUrl,item,
+                        binding.root.context, PackageNames.WHATSAPP)
+                }
             }
         }
     }

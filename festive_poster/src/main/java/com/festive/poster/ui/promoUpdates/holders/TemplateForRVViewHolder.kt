@@ -1,6 +1,7 @@
 package com.festive.poster.ui.promoUpdates.holders
 
 import android.content.Intent
+import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.ListItemTemplateForRvBinding
 import com.festive.poster.databinding.ListItemTemplateForVpBinding
 import com.festive.poster.models.PosterModel
@@ -28,9 +29,7 @@ class TemplateForRVViewHolder(binding: ListItemTemplateForRvBinding):
         SvgUtils.loadImage(model.variants.firstOrNull()?.svgUrl!!, binding.ivSvg, model.keys,model.isPurchased)
         binding.btnShare.setOnClickListener {
             WebEngageController.trackEvent(Promotional_Update_WhatsApp_Share_Click)
-
-            SvgUtils.shareUncompressedSvg(variant?.svgUrl,model,
-                binding.root.context, PackageNames.WHATSAPP)
+            listener?.onItemClick(position,item, RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal)
         }
 
         binding.tvTemplateDesc.text =model.greeting_message
