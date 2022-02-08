@@ -224,6 +224,23 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     progressDialog = ProgressDialog(requireContext())
 
+    var selectedBundle: Bundles? = null
+    for (item in bundlesList) {
+        val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+        selectedBundle = Bundles(
+                item.bundle_id,
+                temp,
+                item.min_purchase_months,
+                item.name,
+                item.overall_discount_percent,
+                PrimaryImage(item.primary_image),
+                item.target_business_usecase,
+                Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                null,
+                item.desc
+        )
+        break
+    }
     cartPackageAdaptor = CartPackageAdaptor(ArrayList(),this)
     cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
     cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
