@@ -37,7 +37,9 @@ class TemplateForRVViewHolder(binding: ListItemTemplateForRvBinding):
         binding.btnPost.setOnClickListener {
             WebEngageController.trackEvent(Promotional_Update_Post_Click)
            // activity?.let { it1 -> PostPreviewSocialActivity.launchActivity(it1,null,model) }
-            EditPostActivity.launchActivity(binding.root.context,model)
+           // EditPostActivity.launchActivity(binding.root.context,model)
+            listener?.onItemClick(position,item, RecyclerViewActionType.POST_CLICKED.ordinal)
+
 
         }
         binding.btnEdit.setOnClickListener {
@@ -45,5 +47,7 @@ class TemplateForRVViewHolder(binding: ListItemTemplateForRvBinding):
 
             EditPostActivity.launchActivity(binding.root.context,model)
         }
+        super.bind(position, item)
+
     }
 }

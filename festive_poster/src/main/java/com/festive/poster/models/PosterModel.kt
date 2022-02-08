@@ -43,4 +43,6 @@ open class PosterModel(
         return variants.firstOrNull()?.svgUrl
     }
 
+
+
 }

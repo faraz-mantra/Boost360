@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
@@ -35,10 +36,15 @@ import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.convertListObjToString
+import com.framework.utils.saveAsImageToAppFolder
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.Promotional_Update_Browse_All_Click
 import com.framework.webengageconstant.Promotional_Update_View_More_Click
 import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
 
 class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePosterViewModel>(),RecyclerItemClickListener {
 
@@ -233,13 +239,43 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
 
+
+    }
+
+    override fun onChildClick(
+        childPosition: Int,
+        parentPosition: Int,
+        childItem: BaseRecyclerViewItem?,
+        parentItem: BaseRecyclerViewItem?,
+        actionType: Int
+    ) {
         when(actionType){
             RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal->{
                 if (isPromoWidgetActive()){
-                    item as PosterModel
-                    val variant = item.variants.firstOrNull()
-                    SvgUtils.shareUncompressedSvg(variant?.svgUrl,item,
+                    childItem as PosterModel
+                    val variant = childItem.variants.firstOrNull()
+                    SvgUtils.shareUncompressedSvg(variant?.svgUrl,childItem,
                         binding.root.context, PackageNames.WHATSAPP)
+                }
+            }
+            RecyclerViewActionType.POST_CLICKED.ordinal-> {
+                Log.i(TAG, "onItemClick: ")
+                lifecycleScope.launch {
+                    withContext(Dispatchers.Default) {
+                        val file = SvgUtils.svgToBitmap(childItem as PosterModel)
+                            ?.saveAsImageToAppFolder(
+                                activity?.getExternalFilesDir(null)?.path +
+                                        File.separator + com.framework.constants.Constants.UPDATE_PIC_FILE_NAME
+                            )
+                        if (file?.exists() == true) {
+                            PostPreviewSocialActivity.launchActivity(
+                                requireActivity(),
+                                childItem.greeting_message,
+                                file.path
+                            )
+                        }
+
+                    }
                 }
             }
         }

@@ -7,35 +7,40 @@ import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
-import androidx.databinding.ViewDataBinding
 import androidx.viewpager2.widget.ViewPager2
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
+import com.festive.poster.constant.PreferenceConstant
 import com.festive.poster.databinding.FragmentPromoLandingPageBinding
 import com.festive.poster.models.PosterPackModel
 import com.festive.poster.models.promoModele.SocialConnModel
-import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
-import com.festive.poster.ui.promoUpdates.bottomSheet.SubscribePlanBottomSheet
 import com.festive.poster.utils.WebEngageController
-import com.framework.base.BaseActivity
-import com.framework.base.BaseFragment
 import com.framework.base.setFragmentType
 import com.framework.models.BaseViewModel
-import com.framework.utils.setColorFilterApiQ
+import com.framework.utils.*
 import com.framework.views.BlankFragment
-import com.framework.webengageconstant.Post_Promotional_Update_Click
+import com.framework.views.customViews.CustomImageView
+import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.Promotional_Update_Browse_All_Click
-import com.framework.webengageconstant.Promotional_Update_Edit_Click
 import com.framework.webengageconstant.Promotional_Update_Home_Loaded
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import io.sentry.Breadcrumb.ui
+import com.skydoves.balloon.ArrowOrientation
+import com.skydoves.balloon.Balloon
+import com.skydoves.balloon.BalloonAnimation
+import com.skydoves.balloon.BalloonSizeSpec
+import kotlin.math.abs
 
 class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding, BaseViewModel>(),TodaysPickFragment.Callbacks {
 
     val browseTabFragment =BrowseTabFragment.newInstance()
     var currentPage:Int=0
 
+    enum class ToolTipType{
+        FOR_TODAY,
+        CREATE
+    }
     override fun getLayout(): Int {
         return R.layout.fragment_promo_landing_page
     }
@@ -63,6 +68,17 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
 
     private fun setupView() {
 
+        binding.appbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            if (abs(verticalOffset) - appBarLayout.totalScrollRange ==0) {
+                //  Collapsed
+                binding.tabLayout.background = ContextCompat.getDrawable(requireActivity(),
+                    R.drawable.white_rect_background)
+            } else {
+                binding.tabLayout.background = ContextCompat.getDrawable(requireActivity(),
+                    R.drawable.top_round_corner)
+                //Expanded
+            }
+        })
         val soicalConnList = arrayListOf(
             SocialConnModel(
             content = "1000+ people are on twitter"
@@ -71,7 +87,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
         )
         )
 
-        val socialconnadapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,soicalConnList)
+       /* val socialconnadapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,soicalConnList)
         binding?.vpSocialConn?.adapter = socialconnadapter
         binding?.ivLeftArrow?.setOnClickListener {
             binding?.vpSocialConn?.postDelayed(Runnable {
@@ -84,7 +100,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
                 binding?.vpSocialConn?.currentItem = binding?.vpSocialConn?.currentItem?:0 + 1;
 
             }, 100)
-        }
+        }*/
 
     }
 
@@ -170,6 +186,57 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
                 else -> ""
             }
         }.attach()
+
+        if (true/*PreferencesUtils.instance.getData(PreferenceConstant.FIRST_LAUNCH_PROMO,true)*/){
+            setupTabBaloons(ToolTipType.FOR_TODAY)
+            PreferencesUtils.instance.saveData(PreferenceConstant.FIRST_LAUNCH_PROMO,false)
+        }
+
+    }
+
+    private fun setupTabBaloons(type:ToolTipType) {
+        val balloon = Balloon.Builder(requireActivity())
+            .setLayout(R.layout.ballon_promo_tabs)
+            .setArrowSize(10)
+            .setArrowColor(ContextCompat.getColor(requireActivity(), R.color.black_4a4a4a))
+            .setArrowOrientation(ArrowOrientation.TOP)
+            .setWidth(BalloonSizeSpec.WRAP)
+            .setHeight(BalloonSizeSpec.WRAP)
+            .setCornerRadius(8F)
+            .setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.black))
+            .setBalloonAnimation(BalloonAnimation.CIRCULAR)
+            .setLifecycleOwner(viewLifecycleOwner)
+            .build()
+        val text = balloon.getContentView().findViewById<CustomTextView>(R.id.tv_msg)
+        val close = balloon.getContentView().findViewById<CustomImageView>(R.id.iv_close)
+
+        when(type){
+            ToolTipType.FOR_TODAY->{
+                text.text = spanBoldNdColor(getString(R.string.explore_the_premium_update_specially_designed_for_you),
+                    R.color.colorPrimary,"Explore the premium update")
+                binding.tabLayout.getTabAt(0)!!.view.postDelayed(Runnable {
+                    balloon.showAlignBottom(binding.tabLayout.getTabAt(0)!!.view)
+                },500)
+                balloon.setOnBalloonDismissListener {
+                    setupTabBaloons(ToolTipType.CREATE)
+                }
+                close.setOnClickListener {
+                    balloon.dismiss()
+                    setupTabBaloons(ToolTipType.CREATE)
+                }
+            }
+            ToolTipType.CREATE->{
+                text.text = spanBoldNdColor(getString(R.string.for_regular_free_updates_click_on_create_and_keep_posting_like_always),
+                    R.color.green_78AF00,"For regular FREE updates,")
+                binding.tabLayout.getTabAt(2)!!.view.postDelayed(Runnable {
+                    balloon.showAlignBottom(binding.tabLayout.getTabAt(2)!!.view)
+                },500)
+
+                close.setOnClickListener {
+                    balloon.dismiss()
+                }
+            }
+        }
 
 
     }

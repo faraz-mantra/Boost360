@@ -545,6 +545,17 @@ fun spanColor(fullText:String,@ColorRes color: Int,vararg colorTextList:String):
   return spannable
 }
 
+fun spanBoldNdColor(fullText:String,@ColorRes color: Int,text:String): SpannableString {
+  val spannable = SpannableString(fullText)
+    spannable.setSpan(StyleSpan(Typeface.BOLD),fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+    spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(
+      BaseApplication.instance,color
+    )),fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+  return spannable
+}
+
 fun spanClick(fullText:String,function: () -> (Unit),vararg colorTextList:String): SpannableString {
   val spannable = SpannableString(fullText)
   colorTextList.forEach { text->
@@ -611,8 +622,12 @@ fun Fragment.setStatusBarColor(@ColorRes colorId: Int){
   activity?.setStatusBarColor(colorId)
 }
 
-fun isColorDark(color: Int): Boolean {
-  return ColorUtils.calculateLuminance(color) < 0.25;
+fun isColorDark(@ColorRes colorRes: Int): Boolean {
+  val color = ContextCompat.getColor(BaseApplication.instance,colorRes)
+  val whiteContrast = ColorUtils.calculateContrast(Color.WHITE, color)
+  val blackContrast = ColorUtils.calculateContrast(Color.BLACK, color)
+
+  return if (whiteContrast > blackContrast) false else true
 
 }
 

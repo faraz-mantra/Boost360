@@ -7,6 +7,7 @@ import com.festive.poster.models.PosterModel
 import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
 import com.festive.poster.utils.SvgUtils
 import com.framework.base.BaseBottomSheetDialog
+import com.framework.extensions.gone
 import com.framework.models.BaseViewModel
 import com.framework.utils.convertStringToObj
 import com.framework.utils.loadUsingGlide
@@ -51,6 +52,8 @@ class PostingProgressBottomSheet :
 
         if (posterImgPath!=null){
             binding!!.ivPostIcon.loadUsingGlide(posterImgPath,false)
+        }else{
+            binding!!.ivPostIcon.gone()
         }
     }
 }

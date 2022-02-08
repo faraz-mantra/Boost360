@@ -34,4 +34,16 @@ open class PosterPackModel(
     val isContain = oldTags.contains(tagsModel?.tag ?: "")
     return isPurchased || isContain
   }
+
+  companion object {
+  /*  fun getDummyData():List<PosterPackModel>{
+
+      val dummyPosters = arrayListOf(
+        PosterModel(true,"",PosterDetailsModel("",true,1.0,"",true),"a")
+      )
+      val dummy = arrayListOf(
+
+      )
+    }*/
+  }
 }

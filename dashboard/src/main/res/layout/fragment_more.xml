@@ -269,7 +269,7 @@
               android:id="@+id/customImageView5"
               android:layout_width="@dimen/size_30"
               android:layout_height="@dimen/size_30"
-              android:src="@drawable/ic_crown"
+              android:src="@drawable/ic_crown_tooltip"
               app:layout_constraintBottom_toBottomOf="parent"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toTopOf="parent"

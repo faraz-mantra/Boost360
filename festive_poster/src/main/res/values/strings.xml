@@ -101,5 +101,7 @@
     <string name="ria_customer_mail">ria@nowfloats.com</string>
     <string name="Create">Create</string>
     <string name="you_ve_new_email_update_from">You\'ve new email update from</string>
+    <string name="explore_the_premium_update_specially_designed_for_you">Explore the premium update specially designed for you.</string>
+    <string name="for_regular_free_updates_click_on_create_and_keep_posting_like_always">For regular FREE updates, click on ‘Create’ and keep posting like always.</string>
 
 </resources>

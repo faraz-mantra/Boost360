@@ -41,7 +41,8 @@ class TemplateForVPViewHolder(binding: ListItemTemplateForVpBinding):
         binding.btnPost.setOnClickListener {
             WebEngageController.trackEvent(Promotional_Update_Post_Click)
           //  activity?.let { it1 -> PostPreviewSocialActivity.launchActivity(it1,null,model) }
-            EditPostActivity.launchActivity(binding.root.context,model)
+          //  EditPostActivity.launchActivity(binding.root.context,model)
+            listener?.onItemClick(position,item, RecyclerViewActionType.POST_CLICKED.ordinal)
 
         }
         SvgUtils.loadImage(variant?.svgUrl!!, binding.ivSvg, model.keys,model.isPurchased)
@@ -50,5 +51,7 @@ class TemplateForVPViewHolder(binding: ListItemTemplateForVpBinding):
 
             EditPostActivity.launchActivity(binding.root.context,model)
         }
+        super.bind(position, item)
+
     }
 }
