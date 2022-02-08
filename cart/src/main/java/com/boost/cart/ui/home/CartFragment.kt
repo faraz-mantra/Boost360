@@ -33,6 +33,7 @@ import com.boost.cart.ui.popup.GSTINPopUpFragment
 import com.boost.cart.ui.popup.RenewalPopUpFragment
 import com.boost.cart.ui.popup.TANPopUpFragment
 import com.boost.cart.ui.splash.SplashFragment
+import com.boost.cart.ui.webview.WebViewFragment
 import com.boost.cart.utils.*
 import com.boost.cart.utils.Constants.Companion.COUPON_POPUP_FRAGEMENT
 import com.boost.cart.utils.DateUtils.parseDate
@@ -67,7 +68,6 @@ import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.billing_details_layout.*
 import kotlinx.android.synthetic.main.cart_applied_coupon_layout.*
 import kotlinx.android.synthetic.main.cart_fragment.*
-import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -100,9 +100,11 @@ import kotlinx.android.synthetic.main.cart_fragment.package_layout
 import kotlinx.android.synthetic.main.cart_fragment.renewal_layout
 import kotlinx.android.synthetic.main.cart_fragment.total_months_layout
 import kotlinx.android.synthetic.main.cart_v2_fragment.*
+import java.text.NumberFormat
+import java.util.*
 
 
-class CartFragment : BaseFragment(), CartFragmentListener {
+class CartFragment : BaseFragment(), CartFragmentListener{
 
   lateinit var root: View
 
@@ -162,6 +164,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
   val splashFragment = SplashFragment()
 
+  val WebViewFragment=WebViewFragment()
+
   //    var couponDiwaliRedundant : MutableList<String?> = java.util.ArrayList()
   var couponDiwaliRedundant: HashMap<String?, String?> = HashMap<String?, String?>()
 
@@ -193,6 +197,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   private var isGstApiCalled :Boolean = false
 
   var paymentProceedFlag = true
+
+  var link: String? = null
 
 
 
@@ -1087,6 +1093,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
       }
     })
+
+    refund_policy.setOnClickListener {
+      (activity as CartActivity).addFragment(WebViewFragment, Constants.WEB_VIEW_FRAGMENT)
+    }
 
   }
 

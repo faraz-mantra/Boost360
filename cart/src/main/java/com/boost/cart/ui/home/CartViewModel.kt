@@ -858,6 +858,43 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     }
   }
 
+  fun addItemToCart1(updatesModel: FeaturesModel) {
+    updatesLoader.postValue(false)
+    val discount = 100 - updatesModel.discount_percent
+    val paymentPrice = (discount * updatesModel.price) / 100.0
+    val cartItem = CartModel(
+      updatesModel.feature_id,
+      updatesModel.boost_widget_key,
+      updatesModel.feature_code,
+      updatesModel.name,
+      updatesModel.description,
+      updatesModel.primary_image,
+      paymentPrice,
+      updatesModel.price.toDouble(),
+      updatesModel.discount_percent,
+      1,
+      1,
+      "features",
+      updatesModel.extended_properties
+    )
+
+
+    Completable.fromAction {
+      AppDatabase.getInstance(getApplication())!!.cartDao()
+        .insertToCart(cartItem)
+    }
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .doOnComplete {
+        updatesLoader.postValue(false)
+      }
+      .doOnError {
+        updatesError.postValue(it.message)
+        updatesLoader.postValue(false)
+      }
+      .subscribe()
+  }
+
 
 
 

@@ -11,8 +11,8 @@ import android.webkit.*
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
-import com.boost.cart.R
 import com.boost.cart.CartActivity
+import com.boost.cart.R
 import com.boost.cart.base_class.BaseFragment
 import com.framework.extensions.gone
 import com.framework.extensions.visible
@@ -36,7 +36,8 @@ class WebViewFragment : BaseFragment() {
     savedInstanceState: Bundle?
   ): View? {
     root = inflater.inflate(R.layout.web_view_fragment, container, false)
-    link = requireArguments().getString("link") ?: ""
+   // link = requireArguments().getString("link") ?: ""
+    link="https://www.getboost360.com/"
     Log.i(TAG, "onCreateView: "+link)
     return root
   }

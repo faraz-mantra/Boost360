@@ -11,9 +11,11 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.Adapters.CompareItemAdapter
 import com.boost.marketplace.Adapters.ParentCompareItemAdapter
 import com.boost.marketplace.R
+import com.boost.marketplace.interfaces.AddonsListener
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
@@ -27,7 +29,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.LinkedHashSet
 
-class PackagePopUpFragement : DialogFragment() {
+class PackagePopUpFragement : DialogFragment(),AddonsListener {
 
   lateinit var root: View
   lateinit var singleBundle: Bundles
@@ -122,7 +124,7 @@ class PackagePopUpFragement : DialogFragment() {
                        parentViewHolder.ChildRecyclerView
                                .setLayoutManager(layoutManager1)*/
 
-                      val sectionLayout = CompareItemAdapter(it)
+                      val sectionLayout = CompareItemAdapter(it,this)
                       child_recyclerview.setAdapter(sectionLayout)
                       child_recyclerview.setLayoutManager(layoutManager1)
 
@@ -259,6 +261,10 @@ class PackagePopUpFragement : DialogFragment() {
         }
         )
     )
+  }
+
+  override fun onAddonsClicked(item: FeaturesModel) {
+    TODO("Not yet implemented")
   }
 
 }

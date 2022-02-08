@@ -1,29 +1,24 @@
 package com.boost.marketplace.adapter
 
 import android.content.Context
-import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.boost.dbcenterapi.upgradeDB.model.*
+import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
-import com.boost.marketplace.interfaces.HomeListener
-import com.boost.marketplace.ui.details.FeatureDetailsActivity
+import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.ui.home.MarketPlaceActivity
 import com.bumptech.glide.Glide
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class UpgradeAdapter(
   cryptoCurrencies: List<FeaturesModel>?,
-  val activity: MarketPlaceActivity
+  val activity: MarketPlaceActivity,val addonsListener: AddonsListener
 ) : RecyclerView.Adapter<UpgradeAdapter.upgradeViewHolder>() {
 
   private var upgradeList = ArrayList<FeaturesModel>()
@@ -57,9 +52,10 @@ class UpgradeAdapter(
 //      details.arguments = args
 //      activity.addFragment(details, Constants.DETAILS_FRAGMENT)
 
-            val intent = Intent(this.context, FeatureDetailsActivity::class.java)
-            intent.putExtra("itemId", upgradeList.get(position).feature_code)
-            startActivity(this.context, intent, null)
+//            val intent = Intent(this.context, FeatureDetailsActivity::class.java)
+//            intent.putExtra("itemId", upgradeList.get(position).feature_code)
+//            startActivity(this.context, intent, null)
+      addonsListener.onAddonsClicked(upgradeList.get(position))
     }
   }
 

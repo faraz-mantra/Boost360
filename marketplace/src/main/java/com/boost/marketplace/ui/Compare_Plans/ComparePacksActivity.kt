@@ -28,7 +28,9 @@ import com.boost.marketplace.Adapters.ParentCompareItemAdapter
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityComparePacksBinding
+import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.interfaces.CompareListener
+import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.framework.analytics.SentryController
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
@@ -40,7 +42,7 @@ import kotlinx.android.synthetic.main.activity_compare_packs.*
 import org.json.JSONObject
 
 class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, ComparePacksViewModel>(),
-    CompareListener,
+    CompareListener,AddonsListener,
     RecyclerItemClickListener {
 
     var experienceCode: String? = null
@@ -119,7 +121,7 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
 
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        packageAdaptor = ParentCompareItemAdapter(ArrayList(),this)
+        packageAdaptor = ParentCompareItemAdapter(ArrayList(),this,this)
         binding?.shimmerViewCompare?.startShimmer()
         WebEngageController.trackEvent(ADDONS_MARKETPLACE_COMPARE_PACKAGE_LOADED, PAGE_VIEW, NO_EVENT_VALUE)
         prefs = SharedPrefs(this)
@@ -647,6 +649,40 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
 
 
+    }
+
+    override fun onAddonsClicked(item: FeaturesModel) {
+        val intent = Intent(this, FeatureDetailsActivity::class.java)
+
+        intent.putExtra("fpid", fpid)
+        intent.putExtra("expCode", experienceCode)
+        intent.putExtra("isDeepLink", isDeepLink)
+        intent.putExtra("deepLinkViewType", deepLinkViewType)
+        intent.putExtra("deepLinkDay", deepLinkDay)
+        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+        intent.putExtra(
+            "accountType",
+            accountType
+        )
+        intent.putStringArrayListExtra(
+            "userPurchsedWidgets",
+            userPurchsedWidgets
+        )
+        if (email != null) {
+            intent.putExtra("email", email)
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com")
+        }
+        if (mobileNo != null) {
+            intent.putExtra("mobileNo", mobileNo)
+        } else {
+            intent.putExtra("mobileNo", "9160004303")
+        }
+        intent.putExtra("profileUrl", profileUrl)
+        intent.putExtra("itemId", item.feature_code)
+        intent.putExtra("itemId", item.boost_widget_key)
+
+        startActivity(intent)
     }
 
 }
