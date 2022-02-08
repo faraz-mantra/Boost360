@@ -1,7 +1,6 @@
 package com.boost.marketplace.Adapters
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +9,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
-import com.boost.marketplace.ui.details.FeatureDetailsActivity
+import com.boost.marketplace.interfaces.AddonsListener
 import com.bumptech.glide.Glide
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
-class CompareItemAdapter(cryptoCurrencies: List<FeaturesModel>?) :
+class CompareItemAdapter(cryptoCurrencies: List<FeaturesModel>?,val addonsListener: AddonsListener) :
     RecyclerView.Adapter<CompareItemAdapter.upgradeViewHolder>() {
 
     private var upgradeList = ArrayList<FeaturesModel>()
@@ -72,9 +70,10 @@ class CompareItemAdapter(cryptoCurrencies: List<FeaturesModel>?) :
 //      details.arguments = args
 
             //  activity.addFragment(details, Constants.DETAILS_FRAGMENT)
-            val intent = Intent(context, FeatureDetailsActivity::class.java)
-            intent.putExtra("itemId", upgradeList.get(position).boost_widget_key)
-            context.startActivity(intent)
+//            val intent = Intent(context, FeatureDetailsActivity::class.java)
+//            intent.putExtra("itemId", upgradeList.get(position).boost_widget_key)
+//            context.startActivity(intent)
+            addonsListener.onAddonsClicked(upgradeList.get(position))
         }
     }
 

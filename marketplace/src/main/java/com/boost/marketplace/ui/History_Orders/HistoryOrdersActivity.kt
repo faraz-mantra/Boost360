@@ -29,7 +29,7 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Histo
         fun newInstance() = HistoryOrdersActivity()
     }
 
-   // private lateinit var viewModel: HisoryOrdersViewModel
+    // private lateinit var viewModel: HisoryOrdersViewModel
 
 
     override fun getLayout(): Int {
@@ -60,17 +60,17 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Histo
 
     }
 
-        private fun loadData() {
-            try {
-                viewModel.loadPurchasedItems(
-                    (this).getAccessToken() ?:"",
-                    intent.getStringExtra("fpid")?:"" ,
-                    (this).clientid
-                )
-            } catch (e: Exception) {
-                SentryController.captureException(e)
-            }
+    private fun loadData() {
+        try {
+            viewModel.loadPurchasedItems(
+                (this).getAccessToken() ?:"",
+                intent.getStringExtra("fpid")?:"" ,
+                clientid
+            )
+        } catch (e: Exception) {
+            SentryController.captureException(e)
         }
+    }
     fun getAccessToken(): String {
         return UserSessionManager(this).getAccessTokenAuth()?.barrierToken() ?: ""
     }
