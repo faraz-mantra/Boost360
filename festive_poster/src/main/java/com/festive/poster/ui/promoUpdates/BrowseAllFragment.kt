@@ -16,6 +16,8 @@ import com.festive.poster.models.promoModele.TodaysPickModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.festive.poster.ui.promoUpdates.bottomSheet.SubscribePlanBottomSheet
+import com.festive.poster.utils.MarketPlaceUtils
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.utils.isPromoWidgetActive
@@ -128,7 +130,7 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
         binding?.tvCatTitle?.text = selectedItem?.tagsModel?.name
         binding?.tvCatSize?.text = selectedItem?.posterList?.size.toString()
         posterRvAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,
-            categoryList?.get(selectedPos)?.posterList!!)
+            categoryList?.get(selectedPos)?.posterList!!,this)
         binding?.rvPosters?.adapter = posterRvAdapter
         binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
     }
@@ -205,7 +207,7 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
             )
         )
 
-        posterRvAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList)
+        posterRvAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList,this)
         binding?.rvPosters?.adapter = posterRvAdapter
         binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
 
@@ -223,7 +225,41 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
                 selectedPos = position
                 switchToSelectedItem()
             }
+            RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal->{
+                if (isPromoWidgetActive()){
+                    item as PosterModel
+                    val variant = item.variants.firstOrNull()
+                    SvgUtils.shareUncompressedSvg(variant?.svgUrl,item,
+                        binding.root.context, PackageNames.WHATSAPP)
+                }else{
+                    SubscribePlanBottomSheet.newInstance(object :SubscribePlanBottomSheet.Callbacks{
+                        override fun onBuyClick() {
+                            MarketPlaceUtils.launchCartActivity(requireActivity(),
+                                PromoUpdatesActivity::class.java.name,null,null)
 
+                        }
+                    }).show(parentFragmentManager, SubscribePlanBottomSheet::class.java.name)
+                }
+            }
+            RecyclerViewActionType.POST_CLICKED.ordinal-> {
+                lifecycleScope.launch {
+                    withContext(Dispatchers.Default) {
+                        val file = SvgUtils.svgToBitmap(item as PosterModel)
+                            ?.saveAsImageToAppFolder(
+                                activity?.getExternalFilesDir(null)?.path +
+                                        File.separator + com.framework.constants.Constants.UPDATE_PIC_FILE_NAME
+                            )
+                        if (file?.exists() == true) {
+                            PostPreviewSocialActivity.launchActivity(
+                                requireActivity(),
+                                item.greeting_message,
+                                file.path
+                            )
+                        }
+
+                    }
+                }
+            }
 
         }
     }
@@ -236,33 +272,7 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
         actionType: Int
     ) {
         when(actionType){
-            RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal->{
-                if (isPromoWidgetActive()){
-                    childItem as PosterModel
-                    val variant = childItem.variants.firstOrNull()
-                    SvgUtils.shareUncompressedSvg(variant?.svgUrl,childItem,
-                        binding.root.context, PackageNames.WHATSAPP)
-                }
-            }
-            RecyclerViewActionType.POST_CLICKED.ordinal-> {
-                lifecycleScope.launch {
-                    withContext(Dispatchers.Default) {
-                        val file = SvgUtils.svgToBitmap(childItem as PosterModel)
-                            ?.saveAsImageToAppFolder(
-                                activity?.getExternalFilesDir(null)?.path +
-                                        File.separator + com.framework.constants.Constants.UPDATE_PIC_FILE_NAME
-                            )
-                        if (file?.exists() == true) {
-                            PostPreviewSocialActivity.launchActivity(
-                                requireActivity(),
-                                childItem.greeting_message,
-                                file.path
-                            )
-                        }
 
-                    }
-                }
-            }
         }
     }
 }

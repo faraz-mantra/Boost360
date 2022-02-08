@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:gravity="top"
-                android:background="#ECEFF4"
+                android:background="@color/colorECEFF4"
                 app:layout_collapseMode="pin"
                  />
             <com.festive.poster.ui.promoUpdates.customviews.ScalableTabLayout

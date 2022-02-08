@@ -16,6 +16,7 @@ import com.festive.poster.models.PosterPackModel
 import com.festive.poster.models.promoModele.SocialConnModel
 import com.festive.poster.utils.WebEngageController
 import com.framework.base.setFragmentType
+import com.framework.extensions.gone
 import com.framework.models.BaseViewModel
 import com.framework.utils.*
 import com.framework.views.BlankFragment
@@ -187,7 +188,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
             }
         }.attach()
 
-        if (true/*PreferencesUtils.instance.getData(PreferenceConstant.FIRST_LAUNCH_PROMO,true)*/){
+        if (PreferencesUtils.instance.getData(PreferenceConstant.FIRST_LAUNCH_PROMO,true)){
             setupTabBaloons(ToolTipType.FOR_TODAY)
             PreferencesUtils.instance.saveData(PreferenceConstant.FIRST_LAUNCH_PROMO,false)
         }
@@ -209,6 +210,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
             .build()
         val text = balloon.getContentView().findViewById<CustomTextView>(R.id.tv_msg)
         val close = balloon.getContentView().findViewById<CustomImageView>(R.id.iv_close)
+        val icon = balloon.getContentView().findViewById<CustomImageView>(R.id.iv_icon)
 
         when(type){
             ToolTipType.FOR_TODAY->{
@@ -226,6 +228,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
                 }
             }
             ToolTipType.CREATE->{
+                icon.gone()
                 text.text = spanBoldNdColor(getString(R.string.for_regular_free_updates_click_on_create_and_keep_posting_like_always),
                     R.color.green_78AF00,"For regular FREE updates,")
                 binding.tabLayout.getTabAt(2)!!.view.postDelayed(Runnable {

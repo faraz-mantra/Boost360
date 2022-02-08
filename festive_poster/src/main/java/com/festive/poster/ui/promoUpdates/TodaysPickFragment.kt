@@ -21,6 +21,8 @@ import com.festive.poster.models.response.UpgradeGetDataResponse
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.festive.poster.ui.promoUpdates.bottomSheet.SubscribePlanBottomSheet
+import com.festive.poster.utils.MarketPlaceUtils
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.utils.isPromoWidgetActive
@@ -195,16 +197,24 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                                 templateList.add(template.clone()!!)
                             }
                         }
-                        dataList?.add(
-                            PosterPackModel(
-                                pack_tag,
-                                templateList.toArrayList(),
-                                isPurchased = pack_tag.isPurchased,
-                                list_layout = RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()
+                        if (templateList.isNotEmpty()){
+                            dataList?.add(
+                                PosterPackModel(
+                                    pack_tag,
+                                    templateList.toArrayList(),
+                                    isPurchased = pack_tag.isPurchased,
+                                    list_layout = RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()
+                                )
                             )
-                        )
+                        }
+
 
                     }
+                    dataList?.add(dataList!![0])
+                    dataList?.add(dataList!![0])
+                    dataList?.add(dataList!![0])
+                    dataList?.add(dataList!![0])
+
                     // getPriceOfPosterPacks()
                     callbacks?.onDataLoaded(dataList!!)
                     // rearrangeList()
@@ -256,6 +266,14 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                     val variant = childItem.variants.firstOrNull()
                     SvgUtils.shareUncompressedSvg(variant?.svgUrl,childItem,
                         binding.root.context, PackageNames.WHATSAPP)
+                }else{
+                    SubscribePlanBottomSheet.newInstance(object : SubscribePlanBottomSheet.Callbacks{
+                        override fun onBuyClick() {
+                            MarketPlaceUtils.launchCartActivity(requireActivity(),
+                                PromoUpdatesActivity::class.java.name,null,null)
+
+                        }
+                    }).show(parentFragmentManager, SubscribePlanBottomSheet::class.java.name)
                 }
             }
             RecyclerViewActionType.POST_CLICKED.ordinal-> {

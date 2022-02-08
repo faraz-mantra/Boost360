@@ -10,6 +10,31 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginHorizontal="@dimen/size_24"
+                android:layout_marginTop="@dimen/size_24"
+                android:background="@drawable/bg_rounded_e2e2e2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_search_white_fposter"
+                    android:layout_height="wrap_content"/>
+                <com.framework.views.customViews.CustomEditText
+                    android:layout_width="match_parent"
+                    android:layout_margin="4dp"
+                    android:textSize="14sp"
+                    android:hint="@string/type_what_you_re_looking_for"
+                    android:padding="@dimen/size_8"
+                    android:background="@color/white"
+                    android:fontFamily="@font/regular"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/shimmer_layout"
                 android:layout_margin="@dimen/size_24"
@@ -54,7 +79,8 @@
                 </GridLayout>
             </com.facebook.shimmer.ShimmerFrameLayout>
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_margin="@dimen/size_24"
+                android:layout_marginHorizontal="@dimen/size_12"
+                android:layout_marginVertical="@dimen/size_24"
                 android:id="@+id/rv_cat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
