@@ -16,6 +16,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.appservice.rest.repository.AzureWebsiteNewRepository
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.SimplePageTransformer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
@@ -43,8 +44,11 @@ import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
 import com.boost.marketplace.ui.videos.VideosPopUpBottomSheet
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.framework.analytics.SentryController
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.models.toLiveData
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.framework.pref.getAccessTokenAuth
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
@@ -56,6 +60,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_marketplace.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPlaceHomeViewModel>(),
     RecyclerStringItemClickListener, CompareBackListener, HomeListener {
@@ -736,6 +744,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //         ref_txt.text = "Get special discounts for you and your friends after successful signup."*/
 //    }
 
+    @SuppressLint("LongLogTag")
     fun loadData() {
         val pref = getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
         val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
@@ -755,6 +764,38 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
+
+        //check if there is a active addons
+        AzureWebsiteNewRepository.getFeatureDetails(this.fpid!!, clientId).toLiveData()
+            .observeForever {
+                var paidUser = false
+                if (it.isSuccess() || it != null) {
+                    val data = it.arrayResponse as? Array<CapLimitFeatureResponseItem>
+                    Log.e("checkExpiryAddonsPackages >>", Gson().toJson(data))
+                    for (singleitem in data!!) {
+                        val date1: Date =
+                            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(singleitem.expiryDate!!)
+
+                        val diff: Long = date1.getTime() - Date().getTime()
+                        val seconds = diff / 1000
+                        val minutes = seconds / 60
+                        val hours = minutes / 60
+                        val days = hours / 24
+
+                        if(days>0){
+                            paidUser = true
+                            break
+                        }
+                    }
+                }
+                if(paidUser){
+                    bottom_box.visibility = View.VISIBLE
+                    footer.visibility = View.VISIBLE
+                }else{
+                    bottom_box.visibility = View.GONE
+                    footer.visibility = View.GONE
+                }
+            }
     }
 
     @SuppressLint("FragmentLiveDataObserve")
