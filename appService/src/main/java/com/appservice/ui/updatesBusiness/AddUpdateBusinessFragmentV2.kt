@@ -229,6 +229,9 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       "Add image"
     )
     FirestoreManager.readDraft {
+      if (activity==null||isAdded.not()){
+        return@readDraft
+      }
       binding!!.etUpdate.setText(highlightHashTag(it?.content,R.color.black_4a4a4a))
       addHashTagFunction()
       binding!!.tvCount.text = (it?.content?.length?:0).toString()

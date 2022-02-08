@@ -1,14 +1,16 @@
 package com.framework.models
 
+import com.google.firebase.firestore.IgnoreExtraProperties
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class UpdateDraftBody(
     @SerializedName("clientId")
-    val clientId: String?=null,
+    var clientId: String?=null,
     @SerializedName("content")
-    val content: String?=null,
+    var content: String?=null,
     @SerializedName("fpTag")
-    val fpTag: String?=null,
+    var fpTag: String?=null,
     @SerializedName("imageUri")
-    val imageUri: String?=null
-)
+    var imageUri: String?=null
+):Serializable

@@ -79,13 +79,14 @@ object FirestoreManager {
 
   fun readDraft(listener:((UpdateDraftBody?)->Unit)){
     db?.collection(DRAFT_COLLECTION)?.document(this.fpTag)?.
-            get()?.addOnCompleteListener {
-              if (it.isSuccessful){
-                listener.invoke(it.result.toObject(UpdateDraftBody::class.java))
+    addSnapshotListener(MetadataChanges.EXCLUDE) { value, error ->
+              if (error == null) {
+                listener.invoke(value?.data?.toDataClass<UpdateDraftBody>())
               }else{
                 listener.invoke(null)
               }
-    }
+            }
+
   }
 
 
