@@ -1106,18 +1106,18 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
 
   private fun validateAgreement(): Boolean {
-    if ( cart_business_city_name.text.isEmpty() || cart_business_address.text?.isEmpty() == true || business_gstin_number.text?.isEmpty() == true
-    ) {
+    if ( cart_business_city_name.text.toString().isEmpty()
+      || cart_business_address.text.toString().isEmpty()
+      || business_gstin_number.text.toString().isEmpty() ) {
 //      Log.v("business_name_value", " " + business_name_value.text.toString())
       Toasty.error(requireContext(), "Fields are Empty!!", Toast.LENGTH_LONG).show()
-      if (business_gstin_number.text?.isEmpty() == true && !com.boost.cart.utils.Utils.isValidGSTIN(
-          business_gstin_number.text.toString()
-        ) ) {
-        business_gstin_number.setBackgroundResource(com.boost.cart.R.drawable.et_validity_error)
+      if (business_gstin_number.text.toString().isEmpty()
+        && !Utils.isValidGSTIN(business_gstin_number.text.toString()) ) {
+        business_gstin_number.setBackgroundResource(R.drawable.et_validity_error)
         Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
         return false
       } else {
-        business_gstin_number.setBackgroundResource(com.boost.cart.R.drawable.rounded_edit_fill_kyc)
+        business_gstin_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
       }
 
 //      if (business_contact_number.text!!.isEmpty()) {
@@ -1165,7 +1165,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //        business_name_value.setBackgroundResource(com.boost.payment.R.drawable.rounded_edit_fill_kyc)
 //      }
 
-      if (cart_business_address.text?.isEmpty() == true) {
+      if (cart_business_address.text.toString().isEmpty()) {
         cart_business_address.setBackgroundResource(com.boost.cart.R.drawable.et_validity_error)
         Toasty.error(requireContext(), "Entered Business address is not valid!!", Toast.LENGTH_LONG)
           .show()
@@ -1175,7 +1175,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       }
       return false
     }
-    if (!business_gstin_number.text?.isEmpty()!! && !com.boost.cart.utils.Utils.isValidGSTIN(
+    if (!business_gstin_number.text.toString().isEmpty() && !com.boost.cart.utils.Utils.isValidGSTIN(
         business_gstin_number.text.toString()
       ) ) {
       business_gstin_number.setBackgroundResource(com.boost.cart.R.drawable.et_validity_error)
@@ -2639,6 +2639,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
       val lessList = featuresList!!.subList(0, 20)
       updateRecycler(lessList)
+
     })
 
     //getting all bunles

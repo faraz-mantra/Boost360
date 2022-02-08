@@ -38,7 +38,7 @@
                     android:fontFamily="@font/open_sans_semibold"
                     android:text="@string/browse_features"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_18sdp"
+                    android:textSize="@dimen/_14sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/browse_features_back"
                     app:layout_constraintTop_toTopOf="parent" />

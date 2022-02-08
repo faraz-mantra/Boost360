@@ -3,6 +3,7 @@ package com.dashboard.controller
 import android.content.Intent
 import android.content.IntentSender
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -277,7 +278,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
         if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType, buyItemKey, false)
       } else {
-        if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", "", false)
+        val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(Uri.parse(mDeepLinkUrl?:""))
+          val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
+        if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", buyItemKey?:"", false)
       }
       AppsFlyerUtils.sAttributionData = mapOf()
     }

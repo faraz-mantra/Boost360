@@ -76,7 +76,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:layout_margin="@dimen/_6sdp"
+                                android:layout_marginStart="@dimen/_6sdp"
+                                android:layout_marginTop="@dimen/_6sdp"
+                                android:layout_marginEnd="@dimen/_6sdp"
+                                android:layout_marginBottom="@dimen/_6sdp"
                                 android:background="@drawable/circular_menu_cart" />
 
 
@@ -1020,6 +1023,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         android:layout_marginBottom="8dp">
 
                         <RelativeLayout
@@ -1074,6 +1079,8 @@
                         android:id="@+id/footer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         android:layout_below="@+id/bottom_box">
 
 

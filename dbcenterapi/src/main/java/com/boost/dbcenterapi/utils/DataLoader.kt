@@ -2,15 +2,22 @@ package com.boost.dbcenterapi.utils
 
 import android.app.Application
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.promoMarketOfferFilter
 import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.*
+import com.bumptech.glide.Glide
 import com.google.gson.Gson
+import es.dmoral.toasty.Toasty
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 object DataLoader {
 
@@ -319,5 +326,89 @@ object DataLoader {
                     )
             )
         }
+    }
+
+    fun addItemtoCart(application: Application, itemsId: String){
+        CompositeDisposable().add(
+            AppDatabase.getInstance(application)!!
+                .featuresDao()
+                .getFeaturesItemByFeatureCode(itemsId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                            val discount = 100 - it.discount_percent
+                            val paymentPrice = (discount * it.price) / 100.0
+                            val cartItem = CartModel(
+                                it.feature_id,
+                                it.boost_widget_key,
+                                it.feature_code,
+                                it.name,
+                                it.description,
+                                it.primary_image,
+                                paymentPrice,
+                                it.price.toDouble(),
+                                it.discount_percent,
+                                1,
+                                1,
+                                "features",
+                                it.extended_properties
+                            )
+
+                        CompositeDisposable().add(
+                            AppDatabase.getInstance(application)!!
+                                .cartDao()
+                                .checkCartFeatureTableKeyExist()
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe({
+                                    if (it == 1) {
+                                        Completable.fromAction {
+                                            AppDatabase.getInstance(application)!!.cartDao().emptyCart()
+                                        }
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .doOnError {
+                                                //in case of error
+                                            }
+                                            .doOnComplete {
+                                                Completable.fromAction {
+                                                    AppDatabase.getInstance(application)!!.cartDao()
+                                                        .insertToCart(cartItem)
+                                                }
+                                                    .subscribeOn(Schedulers.io())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .doOnComplete {
+                                                        Log.d("addItemtoCart", "Success")
+                                                    }
+                                                    .doOnError {
+                                                        Log.e("addItemtoCart", "Error", it)
+                                                    }.subscribe()
+                                            }
+                                            .subscribe()
+                                    }else{
+                                        Completable.fromAction {
+                                            AppDatabase.getInstance(application)!!.cartDao()
+                                                .insertToCart(cartItem)
+                                        }
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .doOnComplete {
+                                                Log.d("addItemtoCart", "Success")
+                                            }
+                                            .doOnError {
+                                                Log.e("addItemtoCart", "Error", it)
+                                            }.subscribe()
+                                    }
+                                }, {
+                            Toasty.error(application.applicationContext, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
+                                })
+                        )
+                    },
+                    {
+                        it.printStackTrace()
+                    }
+                )
+        )
     }
 }
