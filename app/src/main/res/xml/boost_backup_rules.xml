@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <full-backup-content>
+  <exclude domain="sharedpref" path="appsflyer-data"/>
   <exclude domain="sharedpref" path="webengage_prefs.txt.xml" />
   <exclude domain="sharedpref" path="webengage_volatile_prefs.txt.xml" />
   <exclude domain="database" path="event_data.db" />
