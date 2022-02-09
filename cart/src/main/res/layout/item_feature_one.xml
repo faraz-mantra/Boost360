@@ -47,12 +47,12 @@
                 android:id="@+id/addons_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:fontFamily="@font/open_sans"
+                android:maxLines="1"
                 android:text="www.businessname.com"
                 android:textColor="#4A4A4A"
                 android:textSize="16sp"
-                android:maxLines="1"
-                android:ellipsize="end"
                 android:textStyle="normal" />
 
             <androidx.appcompat.widget.LinearLayoutCompat

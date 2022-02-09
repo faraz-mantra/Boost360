@@ -1,6 +1,8 @@
 package com.boost.dbcenterapi.data.remote
 
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
+import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsRequest
+import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsResponse
 import com.boost.dbcenterapi.data.api_model.couponRequest.CouponRequest
 import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponRequest
 import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponResponse
@@ -33,4 +35,7 @@ interface NewApiInterface {
   @Headers("Authorization: 591c0972ee786cbf48bd86cf")
   @POST("https://developer.api.boostkit.dev/language/v1/5e5877a701921c02011ca983/get-bulk-data-by-property/DB96EA35A6E44C0F8FB4A6BAA94DB017C0DFBE6F9944B14AA6C3C48641B3D70")
   fun getOfferCoupons(@Body couponRequest: CouponRequest):Observable<GetCouponResponse>
+
+  @POST("https://riarecommendationatmarketplacecheckout.azurewebsites.net/getRecommendationAtCheckout")
+  fun getRecommendedAddons(@Body recommendedAddonsRequest: RecommendedAddonsRequest):Observable<RecommendedAddonsResponse>
 }

@@ -51,6 +51,8 @@ class Constants {
 
         val SCHEMA_ID = "5e5877a701921c02011ca983"
         val WEBSITE_ID = "5e7a3cf46e0572000109a5b2"
+        val FPID = "554b38df4ec0a40eec17d544"
+        val CAT = "SVC"
 
         const val ALERT_YES = 1
         const val ALERT_NO = 2

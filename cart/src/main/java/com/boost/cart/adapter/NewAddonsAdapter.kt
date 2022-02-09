@@ -18,19 +18,15 @@ import com.bumptech.glide.Glide
 import kotlin.collections.ArrayList
 
 class NewAddonsAdapter(
-        val activity: CartActivity,
-        cryptoCurrencies: List<FeaturesModel>?,
-        bundleData: Bundles
+        cryptoCurrencies: List<FeaturesModel>?
 ) : RecyclerView.Adapter<NewAddonsAdapter.upgradeViewHolder>() {
 
     private var upgradeList = ArrayList<FeaturesModel>()
-    var bundleData: Bundles
     var minMonth = 1
     private lateinit var context: Context
 
     init {
         this.upgradeList = cryptoCurrencies as ArrayList<FeaturesModel>
-        this.bundleData = bundleData
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -74,7 +70,7 @@ class NewAddonsAdapter(
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image = itemView.findViewById<ImageView>(R.id.imageView2)!!
-        val name = itemView.findViewById<TextView>(R.id.details)!!
+        val name = itemView.findViewById<TextView>(R.id.title)!!
 
     }
 

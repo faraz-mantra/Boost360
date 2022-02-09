@@ -13,6 +13,8 @@ import com.boost.cart.utils.SingleLiveEvent
 import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
+import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsRequest
+import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsResponse
 import com.boost.dbcenterapi.data.api_model.couponRequest.CouponRequest
 import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponRequest
 import com.boost.dbcenterapi.data.api_model.customerId.create.CreateCustomerIDResponse
@@ -54,6 +56,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     var allFeatures: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
 
     private var couponApiInfo: MutableLiveData<GetCouponResponse> = MutableLiveData()
+    private var recommendedAddonsInfo: MutableLiveData<RecommendedAddonsResponse> = MutableLiveData()
+
     private var apiService = com.boost.dbcenterapi.utils.Utils.getRetrofit().create(NewApiInterface::class.java)
     var renewalPurchaseList: MutableLiveData<List<RenewalResult>> = MutableLiveData()
     var allBundles: MutableLiveData<List<BundlesModel>> = MutableLiveData()
@@ -871,6 +875,11 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         return couponApiInfo
     }
 
+
+    fun getRecommendedAddonResult(): LiveData<RecommendedAddonsResponse> {
+        return recommendedAddonsInfo
+    }
+
     fun getCouponRedeem(couponRequest: CouponRequest) {
         if (Utils.isConnectedToInternet(getApplication())) {
             System.out.println("request--->" + couponRequest)
@@ -894,4 +903,28 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
         }
     }
+
+    fun getRecommendedAddons(recommendedAddonsRequest: RecommendedAddonsRequest) {
+        if (Utils.isConnectedToInternet(getApplication())) {
+            System.out.println("request--->" + recommendedAddonsRequest)
+            CompositeDisposable().add(
+                    apiService.getRecommendedAddons(recommendedAddonsRequest)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    {
+                                        Log.i("getRecommendedAddons", it.toString())
+                                        recommendedAddonsInfo.postValue(it)
+                                    },
+                                    {
+                                        val temp = (it as HttpException).response()!!.errorBody()!!.string()
+                                        val errorBody: Error = Gson().fromJson(temp, object : TypeToken<Error>() {}.type)
+                                        Toasty.error(getApplication(), "Error in Loading Coupons!!", Toast.LENGTH_LONG).show()
+                                    }
+                            )
+            )
+
+        }
+    }
+
 }
