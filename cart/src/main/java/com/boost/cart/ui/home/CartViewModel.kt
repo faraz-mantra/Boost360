@@ -750,7 +750,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun getCouponRedeem(redeemCouponRequest: RedeemCouponRequest, coupon_key: String) {
-        Log.v("InitiatePurchaseAuto", " " + redeemCouponRequest + " " + coupon_key)
+        Log.v("InitiatePurchaseAuto", "----> " + redeemCouponRequest + "-----> " + coupon_key)
         if (Utils.isConnectedToInternet(getApplication())) {
 //            updatesLoader.postValue(true)
 //            APIRequestStatus = "Order registration in progress..."
