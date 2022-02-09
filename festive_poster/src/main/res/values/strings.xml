@@ -97,5 +97,6 @@
     <string name="type_in_the_caption_to_create_your_own_hashtags">Type ‘#’ in the caption to create your own hashtags</string>
     <string name="post_on">Post on</string>
     <string name="posted_15_mins_ago">Posted 15 mins ago</string>
+    <string name="my_website">My Website</string>
 
 </resources>

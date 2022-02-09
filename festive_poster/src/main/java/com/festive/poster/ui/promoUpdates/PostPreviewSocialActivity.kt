@@ -336,7 +336,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                     channelType = null
                     isConnected=false
                 }
-                title = it1.getName()
+                title = getString(R.string.my_website)
                 var data: ChannelAccessToken? = null
                 if (channelsAccessToken!=null){
                     when {
@@ -529,8 +529,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                                     userAccountId = ig?.account?.accountId,
                                     userAccountName = ig?.account?.accountName
                                 )
-                                title =ig?.account?.accountName
-                                subTitle = ig?.account?.accountId
+                                title = getString(R.string.instagram)
+                                subTitle = ig?.account?.accountName
                                 isConnected = true
                                 requestFloatsNew.channelAccessTokens?.add(data)
                                 it1.isSelected = true

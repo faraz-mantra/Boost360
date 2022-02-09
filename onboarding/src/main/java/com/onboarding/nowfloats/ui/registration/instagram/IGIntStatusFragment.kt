@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.View
+import androidx.activity.addCallback
+import androidx.fragment.app.FragmentManager
 import com.framework.base.BaseActivity
 import com.framework.extensions.gone
 import com.framework.extensions.visible
@@ -14,8 +16,14 @@ import com.framework.utils.spanColor
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
 import com.onboarding.nowfloats.databinding.FragmentIgIntStatusBinding
+import com.onboarding.nowfloats.model.channel.haveFacebookShop
+import com.onboarding.nowfloats.model.channel.haveInstagram
+import com.onboarding.nowfloats.model.channel.haveTwitterChannels
+import com.onboarding.nowfloats.model.channel.haveWhatsAppChannels
+import com.onboarding.nowfloats.model.channel.request.isLinked
+import com.onboarding.nowfloats.ui.registration.BaseRegistrationFragment
 
-class IGIntStatusFragment: AppBaseFragment<FragmentIgIntStatusBinding, BaseViewModel>() {
+class IGIntStatusFragment: BaseRegistrationFragment<FragmentIgIntStatusBinding>() {
 
 
     private val TAG = "IGIntStatusFragment"
@@ -41,15 +49,16 @@ class IGIntStatusFragment: AppBaseFragment<FragmentIgIntStatusBinding, BaseViewM
         return R.layout.fragment_ig_int_status
     }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
-    }
+
 
     override fun onCreateView() {
         super.onCreateView()
         status = arguments?.getString(BK_STATUS)
         setupUi()
         setOnClickListener(binding?.btnNext)
+        baseActivity.onBackPressedDispatcher.addCallback {
+            requireActivity().finish()
+        }
     }
 
     private fun setupUi() {
@@ -95,5 +104,19 @@ class IGIntStatusFragment: AppBaseFragment<FragmentIgIntStatusBinding, BaseViewM
 
             }
         }
+    }
+
+    private fun gotoNextScreen(isSkip: Boolean = false) {
+        /* requestFloatsModel?.channelAccessTokens?.add(
+            channelAccessToken
+        )
+
+        when {
+            channels.haveInstagram() -> gotoInstagram()
+            channels.haveFacebookShop() -> gotoFacebookShop()
+            channels.haveTwitterChannels() -> gotoTwitterDetails()
+            channels.haveWhatsAppChannels() -> gotoWhatsAppCallDetails()
+            else -> gotoBusinessApiCallDetails()
+        }*/
     }
 }

@@ -280,6 +280,7 @@
 -keepclassmembers class com.facebook.Session {*;}
 -keepattributes Signature
 -keep class com.facebook.model.** { *; }
+-keep class com.facebook.model.** { *; }
 
 -keep class com.google.android.gms.R$styleable
 -keepclassmembers class com.google.android.gms.R$styleable {*;}

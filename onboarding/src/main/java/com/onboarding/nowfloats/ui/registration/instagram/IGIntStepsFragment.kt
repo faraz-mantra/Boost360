@@ -1,22 +1,17 @@
 package com.onboarding.nowfloats.ui.registration.instagram
 
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.StyleSpan
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.FragmentManager
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.framework.BaseApplication
-import com.framework.base.BaseActivity
-import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.PreferencesUtils
@@ -34,7 +29,6 @@ import com.nowfloats.instagram.models.IGFBPageLinkedResponse
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
 import com.onboarding.nowfloats.databinding.FragmentIgIntStepsBinding
-import com.onboarding.nowfloats.model.channel.ChannelType
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRequest
 import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
@@ -44,6 +38,7 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
     IGGraphManager.GraphRequestIGAccountCallback,IGGraphManager.GraphRequestIGUserCallback {
 
 
+    private var igId: String?=null
     private var accessToken: AccessToken?=null
     private var page: FacebookGraphUserPagesDataModel?=null
     private val TAG = "IGIntStepsFragment"
@@ -220,7 +215,7 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
     ) {
         val response = facebookGraphResponse as? FacebookGraphUserPagesResponse
         val pages = response?.data ?: return
-        page = pages.firstOrNull() ?: return
+        page = pages.get(1) ?: return
         page?.id?.let { IGGraphManager.requestIGAccount(it,accessToken,this) }
 
     }
@@ -236,22 +231,28 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
                 channelAccessToken,
                 clientId,
                 session?.fPID!!
-            ))?.observe(viewLifecycleOwner,{
-                if (it.isSuccess()){
-                    addFragmentReplace(R.id.container,IGIntStatusFragment.newInstance(
+            ))?.observe(viewLifecycleOwner) {
+            if (it.isSuccess()) {
+
+                addFragmentReplace(
+                    R.id.container, IGIntStatusFragment.newInstance(
                         IGIntStatusFragment.Status.SUCCESS
-                    ),true)
-                }else{
-                    addFragmentReplace(R.id.container,IGIntStatusFragment.newInstance(
+                    ), true
+                )
+
+            } else {
+                addFragmentReplace(
+                    R.id.container, IGIntStatusFragment.newInstance(
                         IGIntStatusFragment.Status.FAILURE
-                    ),true)
-                }
-        })
+                    ), true
+                )
+            }
+        }
     }
 
     override fun onCompleted(response: IGFBPageLinkedResponse?) {
-        val igId = response?.instagram_business_account?.id
-        IGGraphManager.requestIGUserDetails("17841445344353954",
+        igId = response?.instagram_business_account?.id
+        IGGraphManager.requestIGUserDetails(igId!!,
         accessToken,this)
         if (igId!=null){
           //  updateChannelAccessToken(igId)
@@ -260,7 +261,7 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
     }
 
     override fun onCompleted(response: IGUserResponse?) {
-        updateChannelAccessToken("17841445344353954",response?.username!!)
+        updateChannelAccessToken(igId!!,response?.username!!)
 
     }
 
