@@ -42,6 +42,7 @@
   <application
     android:name="com.nowfloats.Volley.AppController"
     android:allowBackup="true"
+    android:fullBackupContent="@xml/boost_backup_rules"
     android:appComponentFactory="androidx.core.app.CoreComponentFactory"
     android:hardwareAccelerated="true"
     android:icon="@drawable/app_launcher"
@@ -123,7 +124,7 @@
 
     <meta-data
       android:name="com.webengage.sdk.android.environment"
-      android:value="us" />
+      android:value="in" />
 
     <activity
       android:name="com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"
