@@ -286,11 +286,14 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             // discount_coupon_title.text = validCouponCode!!.coupon_key
             cart_coupon_discount_title.text = validCouponCode!!.coupon_key
             cart_apply_coupon.visibility = View.GONE
+            cart_coupon_code_rv.visibility = View.GONE
             cart_discount_coupon_remove.visibility = View.VISIBLE
         } else {
             validCouponCode = null
 //      discount_coupon_remove.visibility = View.GONE
             cart_apply_coupon.visibility = View.VISIBLE
+            cart_coupon_code_rv.visibility = View.VISIBLE
+
             coupon_discount_title.text = "Discount coupon"
         }
         cart_applied_coupon_full_layout.visibility = View.GONE
@@ -474,6 +477,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         cart_discount_coupon_remove.setOnClickListener {
             cart_applied_coupon_full_layout.visibility = View.GONE
+            cart_coupon_code_rv.visibility = View.VISIBLE
+            tv_Show_more.visibility = View.VISIBLE
             discount_banner.visibility = View.GONE
             cart_apply_coupon.visibility = View.VISIBLE
             //    discount_coupon_title.text = "Discount coupon"
@@ -2740,6 +2745,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                         //        discount_coupon_message.visibility = View.VISIBLE
                         //       discount_coupon_message.text = it.message
                         cart_applied_coupon_full_layout.visibility = View.VISIBLE
+                        cart_coupon_code_rv.visibility = View.GONE
+                        tv_Show_more.visibility = View.GONE
                         cart_coupon_discount_title.text = it.coupon_key.toString()
                         save.text = " You save ₹ " + (it.couponDiscountAmt.toString())
                         discount_banner.visibility = View.VISIBLE
@@ -2748,6 +2755,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                         //        discount_coupon_message.visibility = View.VISIBLE
                         //        discount_coupon_message.text = it.message
                         discount_banner.visibility = View.GONE
+                        cart_coupon_code_rv.visibility = View.VISIBLE
+                        tv_Show_more.visibility = View.VISIBLE
+
                         discount_banner_text.text = it.message
                     }
                     totalCalculationAfterCoupon()
