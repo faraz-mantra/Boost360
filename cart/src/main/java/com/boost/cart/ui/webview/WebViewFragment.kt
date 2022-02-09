@@ -37,7 +37,7 @@ class WebViewFragment : BaseFragment() {
   ): View? {
     root = inflater.inflate(R.layout.web_view_fragment, container, false)
    // link = requireArguments().getString("link") ?: ""
-    link="https://www.getboost360.com/"
+    link="https://www.getboost360.com/refund-policy/"
     Log.i(TAG, "onCreateView: "+link)
     return root
   }

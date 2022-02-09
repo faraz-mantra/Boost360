@@ -6,9 +6,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
+import com.boost.cart.interfaces.ApplyCouponListener
 import com.boost.dbcenterapi.data.api_model.getCouponResponse.Data
 
-class CartCouponAdapter(private val mList: List<Data>) : RecyclerView.Adapter<CartCouponAdapter.ViewHolder>() {
+class CartCouponAdapter(private val mList: List<Data>,private val applyCouponListener: ApplyCouponListener)
+    : RecyclerView.Adapter<CartCouponAdapter.ViewHolder>() {
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartCouponAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_coupon_code, parent, false)
@@ -25,6 +29,10 @@ class CartCouponAdapter(private val mList: List<Data>) : RecyclerView.Adapter<Ca
         var percent = mList[position].title?.split(" ")
         var savePercent = percent?.get(1)
         holder.learnMoretextView.text ="Extra "+savePercent+" off if you purchase a pack. Cannot be combined with any other offer, expires on "+expiredDate
+        holder.apply_coupon.setOnClickListener {
+            applyCouponListener.applycoupon(mList.get(position))
+        }
+
 
     }
 
@@ -36,6 +44,7 @@ class CartCouponAdapter(private val mList: List<Data>) : RecyclerView.Adapter<Ca
         val couponCodetextView: TextView = itemView.findViewById(R.id.offer_coupn_code_tv)
         val cashBacktextView: TextView = itemView.findViewById(R.id.offer_cb_tv)
         val learnMoretextView: TextView = itemView.findViewById(R.id.offer_learn_more_tv)
+        val apply_coupon:TextView=itemView.findViewById(R.id.apply_coupon)
 
     }
 }

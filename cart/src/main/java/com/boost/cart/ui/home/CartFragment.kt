@@ -21,11 +21,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.CartActivity
 import com.boost.cart.R
 import com.boost.cart.adapter.*
 import com.boost.cart.base_class.BaseFragment
+import com.boost.cart.interfaces.ApplyCouponListener
 import com.boost.cart.interfaces.CartFragmentListener
 import com.boost.cart.ui.autorenew.AutoRenewSubsFragment
 import com.boost.cart.ui.checkoutkyc.CheckoutKycFragment
@@ -38,7 +38,11 @@ import com.boost.cart.ui.popup.TANPopUpFragment
 import com.boost.cart.ui.splash.SplashFragment
 import com.boost.cart.ui.webview.WebViewFragment
 import com.boost.cart.utils.*
+import com.boost.cart.utils.Constants.Companion.CAT
 import com.boost.cart.utils.Constants.Companion.COUPON_POPUP_FRAGEMENT
+import com.boost.cart.utils.Constants.Companion.FPID
+import com.boost.cart.utils.Constants.Companion.SCHEMA_ID
+import com.boost.cart.utils.Constants.Companion.WEBSITE_ID
 import com.boost.cart.utils.DateUtils.parseDate
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.ExtendedProperty
@@ -46,11 +50,16 @@ import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeat
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PrimaryImage
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.*
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
+import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsRequest
+import com.boost.dbcenterapi.data.api_model.couponRequest.BulkPropertySegment
+import com.boost.dbcenterapi.data.api_model.couponRequest.CouponRequest
+import com.boost.dbcenterapi.data.api_model.couponRequest.ObjectKeys
 import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponRequest
 import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.AddressDetails
 import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.BusinessDetails
 import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.dbcenterapi.data.api_model.customerId.get.Result
+import com.boost.dbcenterapi.data.api_model.getCouponResponse.Data
 import com.boost.dbcenterapi.data.model.coupon.CouponServiceModel
 import com.boost.dbcenterapi.data.renewalcart.CreateCartStateRequest
 import com.boost.dbcenterapi.data.renewalcart.RenewalPurchasedRequest
@@ -71,22 +80,6 @@ import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.billing_details_layout.*
 import kotlinx.android.synthetic.main.cart_applied_coupon_layout.*
 import kotlinx.android.synthetic.main.cart_fragment.*
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-import java.lang.NumberFormatException
-import com.boost.cart.adapter.CartAddonsAdaptor
-import com.boost.cart.adapter.CartPackageAdaptor
-import com.boost.cart.adapter.CartRenewalAdaptor
-import com.boost.cart.utils.Constants.Companion.CAT
-import com.boost.cart.utils.Constants.Companion.FPID
-import com.boost.cart.utils.Constants.Companion.SCHEMA_ID
-import com.boost.cart.utils.Constants.Companion.WEBSITE_ID
-import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsRequest
-import com.boost.dbcenterapi.data.api_model.couponRequest.BulkPropertySegment
-import com.boost.dbcenterapi.data.api_model.couponRequest.CouponRequest
-import com.boost.dbcenterapi.data.api_model.couponRequest.ObjectKeys
-import com.boost.dbcenterapi.data.api_model.getCouponResponse.Data
 import kotlinx.android.synthetic.main.cart_fragment.addons_layout
 import kotlinx.android.synthetic.main.cart_fragment.back_button12
 import kotlinx.android.synthetic.main.cart_fragment.cart_addons_recycler
@@ -116,7 +109,7 @@ import java.text.NumberFormat
 import java.util.*
 
 
-class CartFragment : BaseFragment(), CartFragmentListener {
+class CartFragment : BaseFragment(), CartFragmentListener,ApplyCouponListener {
 
     lateinit var root: View
 
@@ -295,7 +288,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         }
         cart_applied_coupon_full_layout.visibility = View.GONE
 
-        feature_validity.text = (default_validity_months.toString()) + " months"
+        feature_validity.text ="1 Months"
 
         session = UserSessionManager(requireActivity())
         loadCustomerInfo()
@@ -887,7 +880,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 prefs.storeCartValidityMonths(default_validity_months.toString())
                 totalValidityDays = 30 * default_validity_months
                 prefs.storeMonthsValidity(totalValidityDays)
-                feature_validity.text = (totalValidityDays.toString()) + " Days"
+                feature_validity.text=((totalValidityDays/30).toString()) + " Months"
                 prefs.storeCartOrderInfo(null)
 //                totalCalculation()
                 totalCalculationAfterCoupon()
@@ -931,7 +924,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 prefs.storeCartValidityMonths(default_validity_months.toString())
                 totalValidityDays = 30 * default_validity_months
                 prefs.storeMonthsValidity(totalValidityDays)
-                feature_validity.text = (totalValidityDays.toString()) + " Days"
+                feature_validity.text=((totalValidityDays/30).toString()) + " Months"
                 prefs.storeCartOrderInfo(null)
 //                totalCalculation()
                 totalCalculationAfterCoupon()
@@ -976,7 +969,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     totalValidityDays = 30 * default_validity_months
                     prefs.storeMonthsValidity(totalValidityDays)
                     prefs.storeCartOrderInfo(null)
-                    feature_validity.text = (totalValidityDays.toString()) + " Days"
+                    feature_validity.text=((totalValidityDays/30).toString()) + " Months"
 //                    totalCalculation()
                     totalCalculationAfterCoupon()
                     if (couponCode.isNotEmpty())
@@ -986,14 +979,14 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 if (default_validity_months > 1) {
                     months_validity.setText(default_validity_months.toString())
                     prefs.storeCartValidityMonths(default_validity_months.toString())
-                    feature_validity.text = (totalValidityDays.toString()) + " Days"
+                    feature_validity.text=((totalValidityDays/30).toString()) + " Months"
 
                 }
 //                    months_validity.text = default_validity_months.toString() + " months"
                 else {
                     months_validity.setText(default_validity_months.toString())
                     prefs.storeCartValidityMonths(default_validity_months.toString())
-                    feature_validity.text = (totalValidityDays.toString()) + " Days"
+                    feature_validity.text=((totalValidityDays/30).toString()) + " Months"
                 }
 //                    months_validity.text = default_validity_months.toString() + " month"
             } else if (bundles_in_cart) {
@@ -1025,7 +1018,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     totalValidityDays = 30 * default_validity_months
                     prefs.storeMonthsValidity(totalValidityDays)
                     prefs.storeCartOrderInfo(null)
-                    feature_validity.text = (totalValidityDays.toString()) + " Days"
+                    feature_validity.text=((totalValidityDays/30).toString()) + " Months"
 //                    totalCalculation()
                     totalCalculationAfterCoupon()
                     if (couponCode.isNotEmpty())
@@ -1035,13 +1028,13 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 if (default_validity_months > 1) {
                     months_validity.setText(default_validity_months.toString())
                     prefs.storeCartValidityMonths(default_validity_months.toString())
-                    feature_validity.text = (totalValidityDays.toString()) + " Days"
+                    feature_validity.text=((totalValidityDays/30).toString()) + " Months"
                 }
 //                months_validity.text = default_validity_months.toString() + " months"
                 else {
                     months_validity.setText(default_validity_months.toString())
                     prefs.storeCartValidityMonths(default_validity_months.toString())
-                    feature_validity.text = (totalValidityDays.toString()) + " Days"
+                    feature_validity.text=((totalValidityDays/30).toString()) + " Months"
                 }
 //                months_validity.text = default_validity_months.toString() + " month"
             }
@@ -2369,12 +2362,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 System.out.println("CouponData" + couponData)
                 cart_coupon_code_rv.layoutManager = LinearLayoutManager(requireContext())
                 couponDataNo.add(couponData[0])
-                val adapter = CartCouponAdapter(couponDataNo)
+                val adapter = CartCouponAdapter(couponDataNo,this)
                 cart_coupon_code_rv.adapter = adapter
                 tv_Show_more.setOnClickListener {
                     tv_Show_less.visibility = VISIBLE
                     tv_Show_more.visibility = GONE
-                    val adapter = CartCouponAdapter(couponData)
+                    val adapter = CartCouponAdapter(couponData,this)
                     cart_coupon_code_rv.adapter = adapter
                 }
                 tv_Show_less.setOnClickListener {
@@ -2382,7 +2375,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     tv_Show_less.visibility = GONE
                     couponDataNo.clear()
                     couponDataNo.add(couponData[0])
-                    val adapter = CartCouponAdapter(couponDataNo)
+                    val adapter = CartCouponAdapter(couponDataNo,this)
                     cart_coupon_code_rv.adapter = adapter
                 }
 
@@ -3109,6 +3102,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 (activity as CartActivity).fpid!!,
                 (activity as CartActivity).clientid
         )
+    }
+
+    override fun applycoupon(mList: Data) {
+        viewModel.getCouponRedeem(RedeemCouponRequest( total, couponCode, (activity as CartActivity).fpid!!), couponCode)
+
+        discount_banner.visibility = View.VISIBLE
     }
 
 }
