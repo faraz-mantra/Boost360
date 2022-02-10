@@ -282,6 +282,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             cart_coupon_discount_title.text = validCouponCode!!.coupon_key
             cart_apply_coupon.visibility = View.GONE
             cart_coupon_code_rv.visibility = View.GONE
+            tv_Show_less.visibility = View.GONE
+            tv_Show_more.visibility = GONE
             cart_discount_coupon_remove.visibility = View.VISIBLE
         } else {
             validCouponCode = null
@@ -289,6 +291,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             cart_apply_coupon.visibility = View.VISIBLE
             cart_coupon_code_rv.visibility = View.VISIBLE
 
+            if(tv_Show_less.visibility== VISIBLE){
+                tv_Show_more.visibility = GONE
+            }else{
+                tv_Show_more.visibility = VISIBLE
+
+            }
             coupon_discount_title.text = "Discount coupon"
         }
         cart_applied_coupon_full_layout.visibility = View.GONE
@@ -473,7 +481,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         cart_discount_coupon_remove.setOnClickListener {
             cart_applied_coupon_full_layout.visibility = View.GONE
             cart_coupon_code_rv.visibility = View.VISIBLE
-            tv_Show_more.visibility = View.VISIBLE
+            if(tv_Show_less.visibility == VISIBLE){
+                tv_Show_more.visibility = View.GONE
+
+            }else{
+                tv_Show_more.visibility = View.VISIBLE
+
+            }
             discount_banner.visibility = View.GONE
             cart_apply_coupon.visibility = View.VISIBLE
             //    discount_coupon_title.text = "Discount coupon"
@@ -484,8 +498,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             prefs.storeCartOrderInfo(null)
             prefs.storeApplyedCouponDetails(null)
 //            totalCalculation()
-//      couponCode = ""
-//      couponServiceModel = null
+            couponCode = ""
+            couponServiceModel = null
 
             totalCalculationAfterCoupon()
         }
@@ -2369,12 +2383,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 System.out.println("CouponData" + couponData)
                 cart_coupon_code_rv.layoutManager = LinearLayoutManager(requireContext())
                 couponDataNo.add(couponData[0])
-                val adapter = CartCouponAdapter(couponDataNo, this)
+                val adapter = CartCouponAdapter(couponDataNo, total,this)
                 cart_coupon_code_rv.adapter = adapter
                 tv_Show_more.setOnClickListener {
                     tv_Show_less.visibility = VISIBLE
                     tv_Show_more.visibility = GONE
-                    val adapter = CartCouponAdapter(couponData, this)
+                    val adapter = CartCouponAdapter(couponData,total, this)
                     cart_coupon_code_rv.adapter = adapter
                 }
                 tv_Show_less.setOnClickListener {
@@ -2382,7 +2396,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     tv_Show_less.visibility = GONE
                     couponDataNo.clear()
                     couponDataNo.add(couponData[0])
-                    val adapter = CartCouponAdapter(couponDataNo, this)
+                    val adapter = CartCouponAdapter(couponDataNo, total,this)
                     cart_coupon_code_rv.adapter = adapter
                 }
 
@@ -2742,6 +2756,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         cart_applied_coupon_full_layout.visibility = View.VISIBLE
                         cart_coupon_code_rv.visibility = View.GONE
                         tv_Show_more.visibility = View.GONE
+                        tv_Show_less.visibility = GONE
                         cart_coupon_discount_title.text = it.coupon_key.toString()
                         save.text = " You save ₹ " + (it.couponDiscountAmt.toString())
                         discount_banner.visibility = View.VISIBLE
@@ -2751,7 +2766,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         //        discount_coupon_message.text = it.message
                         discount_banner.visibility = View.GONE
                         cart_coupon_code_rv.visibility = View.VISIBLE
-                        tv_Show_more.visibility = View.VISIBLE
+                        if(tv_Show_less.visibility == VISIBLE){
+                            tv_Show_more.visibility = View.GONE
+
+                        }else{
+                            tv_Show_more.visibility = View.VISIBLE
+
+                        }
 
                         discount_banner_text.text = it.message
                     }

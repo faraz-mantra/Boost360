@@ -9,7 +9,7 @@ import com.boost.cart.R
 import com.boost.cart.interfaces.ApplyCouponListener
 import com.boost.dbcenterapi.data.api_model.getCouponResponse.Data
 
-class CartCouponAdapter(private val mList: List<Data>,private val applyCouponListener: ApplyCouponListener)
+class CartCouponAdapter(private val mList: List<Data>,private val total:Double,private val applyCouponListener: ApplyCouponListener)
     : RecyclerView.Adapter<CartCouponAdapter.ViewHolder>() {
 
 
@@ -23,7 +23,8 @@ class CartCouponAdapter(private val mList: List<Data>,private val applyCouponLis
     override fun onBindViewHolder(holder: CartCouponAdapter.ViewHolder, position: Int) {
         val offerCoupons = mList[position]
         holder.couponCodetextView.text =offerCoupons.code
-        holder.cashBacktextView.text ="Save: ₹"+offerCoupons.discountPercent.toString()
+        val amount = (total.toInt()*(offerCoupons.discountPercent!!.toFloat() /100.0f))
+        holder.cashBacktextView.text ="Save: ₹"+amount
         var date = mList[position].termsandconditions?.split("till ")
         var expiredDate = date?.get(1)
         var percent = mList[position].title?.split(" ")
