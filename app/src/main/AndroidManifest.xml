@@ -124,7 +124,7 @@
 
     <meta-data
       android:name="com.webengage.sdk.android.environment"
-      android:value="in" />
+      android:value="us" />
 
     <activity
       android:name="com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"
