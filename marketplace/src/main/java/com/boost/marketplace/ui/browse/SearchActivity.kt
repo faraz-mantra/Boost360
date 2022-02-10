@@ -1,7 +1,6 @@
 package com.boost.marketplace.ui.browse
 
 import android.app.ProgressDialog
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,7 +9,6 @@ import android.view.View
 import android.widget.ImageView
 import androidx.lifecycle.Observer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
-import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.upgradeDB.model.YoutubeVideoModel
 import com.boost.dbcenterapi.utils.WebEngageController
@@ -19,17 +17,16 @@ import com.boost.marketplace.R
 import com.boost.marketplace.adapter.PackageRecyclerAdapter
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivitySearchBinding
+import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.interfaces.HomeListener
-import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.FEATURE_PACKS_CLICKED
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_search.*
-import java.util.ArrayList
 
-class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>(), HomeListener {
+class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>(), HomeListener,AddonsListener {
 
     lateinit var featureAdaptor: CompareItemAdapter
     lateinit var packageAdaptor: PackageRecyclerAdapter
@@ -50,7 +47,7 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
 
     override fun onCreateView() {
         super.onCreateView()
-        featureAdaptor = CompareItemAdapter(allFeatures)
+        featureAdaptor = CompareItemAdapter(allFeatures,this)
         progressDialog = ProgressDialog(this)
         packageAdaptor = PackageRecyclerAdapter(allBundles, this, this)
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
@@ -139,19 +136,19 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
         }
         for(singleBundle in allBundles){
             var addedState = false
-                for(singleFeatureBundle in singleBundle.included_features){
-                    for(singleFeature in allFeatures){
-                        if((singleFeatureBundle.feature_code.equals(singleFeature.boost_widget_key) && singleFeature.name?.lowercase()?.indexOf(searchValue.lowercase()) != -1 ) ||(singleBundle.name?.lowercase()?.indexOf(searchValue.lowercase())!=-1)){
-                            searchBundles.add(singleBundle)
-                            addedState = true
-                            break
-                        }
-                    }
-                    //skip bundle loop if already added
-                    if(addedState){
+            for(singleFeatureBundle in singleBundle.included_features){
+                for(singleFeature in allFeatures){
+                    if((singleFeatureBundle.feature_code.equals(singleFeature.boost_widget_key) && singleFeature.name?.lowercase()?.indexOf(searchValue.lowercase()) != -1 ) ||(singleBundle.name?.lowercase()?.indexOf(searchValue.lowercase())!=-1)){
+                        searchBundles.add(singleBundle)
+                        addedState = true
                         break
                     }
                 }
+                //skip bundle loop if already added
+                if(addedState){
+                    break
+                }
+            }
         }
         updateRecyclerViewItems(searchFeatures, searchBundles)
     }
@@ -239,5 +236,9 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
 
     override fun onPackageAddToCart(item: Bundles?, image: ImageView) {
         //not in use
+    }
+
+    override fun onAddonsClicked(item: FeaturesModel) {
+        TODO("Not yet implemented")
     }
 }

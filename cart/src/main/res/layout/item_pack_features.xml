@@ -16,6 +16,8 @@
       android:id="@+id/title"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+      android:maxLines="1"
+      android:ellipsize="end"
     android:text="Custom Domain With HTTPS Security"
     android:gravity="center"
       android:fontFamily="@font/open_sans"

@@ -6,19 +6,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
-import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
-import com.boost.marketplace.interfaces.HomeListener
+import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.ui.browse.BrowseFeaturesActivity
-import com.boost.marketplace.ui.home.MarketPlaceActivity
-import com.framework.analytics.SentryController
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class BrowseParentFeaturesAdapter(
     var upgradeList: ArrayList<String>,
-    val activity: BrowseFeaturesActivity
+    val activity: BrowseFeaturesActivity,
+    val addonsListener: AddonsListener
 ) : RecyclerView.Adapter<BrowseParentFeaturesAdapter.ViewHolder>() {
 
 
@@ -68,7 +66,7 @@ class BrowseParentFeaturesAdapter(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    val adapter = BrowseChildFeaturesAdapter(it)
+                    val adapter = BrowseChildFeaturesAdapter(it,addonsListener)
                     holder.recyclerview.adapter = adapter
                     adapter.notifyDataSetChanged()
                 }, {

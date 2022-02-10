@@ -8,10 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
 import com.boost.cart.interfaces.CartFragmentListener
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
+import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
@@ -21,15 +24,20 @@ import java.util.*
 
 
 class CartPackageAdaptor(
-  list: List<CartModel>?,
-  val listener: CartFragmentListener
+        list: List<CartModel>?,
+        val listener: CartFragmentListener,
+        cryptoCurrencies: List<FeaturesModel>?,
 ) : RecyclerView.Adapter<CartPackageAdaptor.upgradeViewHolder>() {
 
   private var bundlesList = ArrayList<CartModel>()
   private lateinit var context: Context
+  private var upgradeList = ArrayList<FeaturesModel>()
+  var minMonth = 1
+
 
   init {
     this.bundlesList = list as ArrayList<CartModel>
+    this.upgradeList = cryptoCurrencies as ArrayList<FeaturesModel>
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -72,26 +80,31 @@ class CartPackageAdaptor(
     } else {
       holder.orig_cost.visibility = View.GONE
     }
-
+    holder.addon_amount.text = "Includes "+upgradeList.size+" addons"
     holder.removePackage.setOnClickListener {
       selectedBundle.item_name?.let { it1 ->
         WebEngageController.trackEvent(
-          ADDONS_MARKETPLACE_PACKAGE_CROSSED_DELETED_FROM_CART,
-          ADDONS_MARKETPLACE,
-          it1
+                ADDONS_MARKETPLACE_PACKAGE_CROSSED_DELETED_FROM_CART,
+                ADDONS_MARKETPLACE,
+                it1
         )
       }
       listener.deleteCartAddonsItem(bundlesList.get(position).item_id)
     }
+    val linearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+    holder.adapter = NewAddonsAdapter(upgradeList)
+    holder.ChildRecyclerView.adapter = holder.adapter
+    holder.ChildRecyclerView.layoutManager = linearLayoutManager
+
 //    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 //    if (bundlesList.size - 1 == position) {
 //      holder.view.visibility = View.GONE
 //    }
 
     //showing package details
-    holder.itemView.setOnClickListener {
-      listener.showBundleDetails(bundlesList.get(position).item_id)
-    }
+//    holder.itemView.setOnClickListener {
+//      listener.showBundleDetails(bundlesList.get(position).item_id)
+//    }
 
 //    val features = arrayListOf<CartModel>()
 //    val bundles = arrayListOf<CartModel>()
@@ -177,6 +190,13 @@ class CartPackageAdaptor(
     notifyItemRangeInserted(initPosition, bundlesList.size)
   }
 
+  fun addupdate(upgradeModel: List<FeaturesModel>) {
+    val initPosition = upgradeList.size
+    upgradeList.clear()
+    upgradeList.addAll(upgradeModel)
+    notifyItemRangeInserted(initPosition, upgradeList.size)
+  }
+
   class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val name = itemView.findViewById<TextView>(R.id.package_title)
     val price = itemView.findViewById<TextView>(R.id.package_price)
@@ -186,6 +206,8 @@ class CartPackageAdaptor(
     val image = itemView.findViewById<ImageView>(R.id.package_profile_image)
     val removePackage = itemView.findViewById<ImageView>(R.id.package_close)
     val ChildRecyclerView = itemView.findViewById<RecyclerView>(R.id.child_recyclerview)
+    val addon_amount = itemView.findViewById<TextView>(R.id.tv_Addons)
+    var adapter:NewAddonsAdapter? = null
     //   var view = itemView.findViewById<View>(R.id.cart_single_package_bottom_view)!!
   }
 

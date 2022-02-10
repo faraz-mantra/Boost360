@@ -40,9 +40,9 @@ class MyCurrentPlanActivity :
 
     //  lateinit var myAddonsViewModelFactory: MyAddonsViewModelFactory
 
-   var fpid: String? = null
+    var fpid: String? = null
 
-//    var totalActiveWidgetCount = 0
+    //    var totalActiveWidgetCount = 0
     var totalActiveFreeWidgetCount = 0
     var totalActivePremiumWidgetCount = 0
 
@@ -283,12 +283,12 @@ class MyCurrentPlanActivity :
 
         })
 
-        history.setOnClickListener {
-            val intent = Intent(this, HistoryOrdersActivity::class.java)
-            intent.putStringArrayListExtra("userPurchsedWidgets", intent.extras?.getStringArrayList("userPurchsedWidgets"))
-            intent.putExtra("fpid", intent.getStringExtra("fpid") ?: "")
-            startActivity(intent)
-        }
+//        history.setOnClickListener {
+//            val intent = Intent(this, HistoryOrdersActivity::class.java)
+//            intent.putStringArrayListExtra("userPurchsedWidgets", intent.extras?.getStringArrayList("userPurchsedWidgets"))
+//            intent.putExtra("fpid", intent.getStringExtra("fpid") ?: "")
+//            startActivity(intent)
+//        }
 
         help.setOnClickListener {
             //add help screen

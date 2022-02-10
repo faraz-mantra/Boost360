@@ -32,6 +32,7 @@ import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.constant.RecyclerViewActionType
 import com.boost.marketplace.databinding.ActivityMarketplaceBinding
+import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.interfaces.CompareBackListener
 import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
@@ -66,7 +67,7 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPlaceHomeViewModel>(),
-    RecyclerStringItemClickListener, CompareBackListener, HomeListener {
+    RecyclerStringItemClickListener, CompareBackListener, HomeListener,AddonsListener {
 
     lateinit var packageViewPagerAdapter: PackageViewPagerAdapter
     lateinit var featureDealsAdapter: FeatureDealsAdapter
@@ -156,7 +157,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         featureDealsAdapter = FeatureDealsAdapter(ArrayList(), ArrayList(), this, this)
         partnerViewPagerAdapter = PartnerViewPagerAdapter(ArrayList(), this, this)
         bannerViewPagerAdapter = BannerViewPagerAdapter(ArrayList(), this, this)
-        upgradeAdapter = UpgradeAdapter(ArrayList(), this)
+        upgradeAdapter = UpgradeAdapter(ArrayList(), this,this)
         addonsCategoryAdapter = AddonsCategoryAdapter(this, ArrayList(), this)
         videosListAdapter = VideosListAdapter(ArrayList(), this)
 
@@ -370,6 +371,33 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //            )
             val intent = Intent(this, BrowseFeaturesActivity::class.java)
             intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+            intent.putExtra("fpid", fpid)
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("isDeepLink", isDeepLink)
+            intent.putExtra("deepLinkViewType", deepLinkViewType)
+            intent.putExtra("deepLinkDay", deepLinkDay)
+            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                userPurchsedWidgets
+            )
+            if (email != null) {
+                intent.putExtra("email", email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                intent.putExtra("mobileNo", mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", profileUrl)
+            // intent.putExtra("itemId", it.feature_code)
+
             startActivity(intent)
 
         }
@@ -1753,6 +1781,45 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         startActivity(intent)
     }
 
+    override fun onAddonsClicked(item: FeaturesModel) {
+        val intent = Intent(this, FeatureDetailsActivity::class.java)
+
+        intent.putExtra("fpid", fpid)
+        intent.putExtra("expCode", experienceCode)
+        intent.putExtra("isDeepLink", isDeepLink)
+        intent.putExtra("deepLinkViewType", deepLinkViewType)
+        intent.putExtra("deepLinkDay", deepLinkDay)
+        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+        intent.putExtra(
+            "accountType",
+            accountType
+        )
+        intent.putStringArrayListExtra(
+            "userPurchsedWidgets",
+            userPurchsedWidgets
+        )
+        if (email != null) {
+            intent.putExtra("email", email)
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com")
+        }
+        if (mobileNo != null) {
+            intent.putExtra("mobileNo", mobileNo)
+        } else {
+            intent.putExtra("mobileNo", "9160004303")
+        }
+        intent.putExtra("profileUrl", profileUrl)
+        intent.putExtra("itemId", item.feature_code)
+
+//                                                            startActivity(intent)
+
+
+//                intent.putExtra("itemId", it.feature_code)
+//                startActivity(intent)
+        // intent.putExtra("itemId", item!!.cta_feature_key)
+        startActivity(intent)
+    }
+
     override fun onPackageClicked(item: Bundles?) {
 
 //        WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, CLICK, item?.name
@@ -1837,6 +1904,38 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                details.arguments = args
 //                addFragment(details, Constants.DETAILS_FRAGMENT)
                 val intent = Intent(this, FeatureDetailsActivity::class.java)
+
+                intent.putExtra("fpid", fpid)
+                intent.putExtra("expCode", experienceCode)
+                intent.putExtra("isDeepLink", isDeepLink)
+                intent.putExtra("deepLinkViewType", deepLinkViewType)
+                intent.putExtra("deepLinkDay", deepLinkDay)
+                intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+                intent.putExtra(
+                    "accountType",
+                    accountType
+                )
+                intent.putStringArrayListExtra(
+                    "userPurchsedWidgets",
+                    userPurchsedWidgets
+                )
+                if (email != null) {
+                    intent.putExtra("email", email)
+                } else {
+                    intent.putExtra("email", "ria@nowfloats.com")
+                }
+                if (mobileNo != null) {
+                    intent.putExtra("mobileNo", mobileNo)
+                } else {
+                    intent.putExtra("mobileNo", "9160004303")
+                }
+                intent.putExtra("profileUrl", profileUrl)
+
+//                                                            startActivity(intent)
+
+
+//                intent.putExtra("itemId", it.feature_code)
+//                startActivity(intent)
                 intent.putExtra("itemId", item!!.cta_feature_key)
                 startActivity(intent)
 
@@ -2271,6 +2370,29 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         val intent = Intent(this, BrowseFeaturesActivity::class.java)
         intent.putExtra("categoryType", categoryType)
         intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+        intent.putExtra("fpid", fpid)
+        intent.putExtra("expCode", experienceCode)
+        intent.putExtra("isDeepLink", isDeepLink)
+        intent.putExtra("deepLinkViewType", deepLinkViewType)
+        intent.putExtra("deepLinkDay", deepLinkDay)
+        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+        intent.putExtra(
+            "accountType",
+            accountType
+        )
+        if (email != null) {
+            intent.putExtra("email", email)
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com")
+        }
+        if (mobileNo != null) {
+            intent.putExtra("mobileNo", mobileNo)
+        } else {
+            intent.putExtra("mobileNo", "9160004303")
+        }
+        intent.putExtra("profileUrl", profileUrl)
+        // intent.putExtra("itemId", it.feature_code)
+
         startActivity(intent)
     }
 
@@ -2818,6 +2940,36 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                                                            Constants.DETAILS_FRAGMENT
 //                                                        )
                                                         val intent = Intent(this, FeatureDetailsActivity::class.java)
+
+                                                        intent.putExtra("fpid", fpid)
+                                                        intent.putExtra("expCode", experienceCode)
+                                                        intent.putExtra("isDeepLink", isDeepLink)
+                                                        intent.putExtra("deepLinkViewType", deepLinkViewType)
+                                                        intent.putExtra("deepLinkDay", deepLinkDay)
+                                                        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+                                                        intent.putExtra(
+                                                            "accountType",
+                                                            accountType
+                                                        )
+                                                        intent.putStringArrayListExtra(
+                                                            "userPurchsedWidgets",
+                                                            userPurchsedWidgets
+                                                        )
+                                                        if (email != null) {
+                                                            intent.putExtra("email", email)
+                                                        } else {
+                                                            intent.putExtra("email", "ria@nowfloats.com")
+                                                        }
+                                                        if (mobileNo != null) {
+                                                            intent.putExtra("mobileNo", mobileNo)
+                                                        } else {
+                                                            intent.putExtra("mobileNo", "9160004303")
+                                                        }
+                                                        intent.putExtra("profileUrl", profileUrl)
+
+//                                                            startActivity(intent)
+
+
                                                         intent.putExtra("itemId", it.feature_code)
                                                         startActivity(intent)
 

@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.boost.cart.utils.Constants.Companion.SCHEMA_ID
+import com.boost.cart.utils.Constants.Companion.WEBSITE_ID
 import com.boost.dbcenterapi.data.api_model.couponRequest.BulkPropertySegment
 import com.boost.dbcenterapi.data.api_model.couponRequest.CouponRequest
 import com.boost.dbcenterapi.data.api_model.couponRequest.ObjectKeys
@@ -33,14 +35,12 @@ class OfferCouponsActivity : AppCompatActivity() {
     }
 
     private fun loadOfferCoupons() {
-        val schemaId = "5e5877a701921c02011ca983"
-        val websiteId = "5e7a3cf46e0572000109a5b2"
         var bulkPropertySegment = ArrayList<ArrayList<BulkPropertySegment>>()
         val bulkObject1 = BulkPropertySegment(propertyDataType = "upgrade", propertyName = "upgrade", type = 5)
         var objectKeys = ObjectKeys(true, description = true, discountPercent = true, kid = true, termsandconditions = true, title = true)
         val bulkObject2 = BulkPropertySegment(0, 10, objectKeys, "coupon", "discount_coupons", 1)
         bulkPropertySegment.add(0, arrayListOf(bulkObject1, bulkObject2))
-        viewModel.getCouponRedeem(CouponRequest(bulkPropertySegment, schemaId, websiteId))
+        viewModel.getCouponRedeem(CouponRequest(bulkPropertySegment, SCHEMA_ID, WEBSITE_ID))
     }
 
     private fun initMvvm() {
