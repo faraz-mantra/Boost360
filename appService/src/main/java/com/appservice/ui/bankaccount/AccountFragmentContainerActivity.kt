@@ -69,7 +69,8 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.BANK_ACCOUNT_DETAILS, FragmentType.ADD_BANK_ACCOUNT_START -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
+      FragmentType.BANK_ACCOUNT_DETAILS, FragmentType.ADD_BANK_ACCOUNT_START ->
+        ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
       else -> super.getNavigationIcon()
     }
   }

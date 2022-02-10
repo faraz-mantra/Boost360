@@ -639,6 +639,9 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         if (it?.channels?.facebookshop?.status == CHANNEL_STATUS_SUCCESS) {
           connectedChannels.add(ChannelsType.AccountType.facebookshop.name)
         }
+        if (it?.channels?.instagram?.status == CHANNEL_STATUS_SUCCESS) {
+          connectedChannels.add(ChannelsType.AccountType.instagram.name)
+        }
       }
       viewModel.getWhatsAppBusiness(request = session?.fpTag, auth = WA_KEY)
       viewModel.channelWhatsAppData.observeForever { it1 ->

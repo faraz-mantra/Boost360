@@ -81,10 +81,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/customTextView2"
                 app:layout_constraintVertical_bias="0" >
 
-                <com.google.android.exoplayer2.ui.PlayerView
+                <com.framework.views.customViews.CustomCardView
                     android:layout_width="match_parent"
-                    android:layout_margin="@dimen/size_6"
-                    android:layout_height="match_parent"/>
+                    android:layout_margin="@dimen/size_4"
+                    app:cardCornerRadius="@dimen/size_10"
+                    android:layout_height="match_parent">
+
+                    <com.google.android.exoplayer2.ui.PlayerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                </com.framework.views.customViews.CustomCardView>
 
             </androidx.cardview.widget.CardView>
 
@@ -105,7 +112,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <com.framework.views.customViews.CustomButton
+            <com.framework.views.customViews.CustomMaterialButton
                 android:id="@+id/btn_back"
                 android:layout_width="@dimen/size_50"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -113,6 +120,8 @@
                 android:layout_marginStart="24dp"
                 app:strokeColor="@color/colorPrimary"
                 android:layout_marginBottom="24dp"
+                app:iconTint="@color/colorPrimary"
+                app:strokeWidth="1dp"
                 app:icon="@drawable/ic_arrow_left"
                 app:cornerRadius="@dimen/size_10"
                 app:layout_constraintBottom_toBottomOf="parent"

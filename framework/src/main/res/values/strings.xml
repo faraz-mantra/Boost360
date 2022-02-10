@@ -127,4 +127,6 @@
     <string name="no_call_tracked_yet">No call tracked yet!</string>
   <string name="speech_prompt">Say something</string>
   <string name="speech_not_supported">Speech to text not supported</string>
+  <string name="expert_contact_number">+91 63669 37299</string>
+
 </resources>

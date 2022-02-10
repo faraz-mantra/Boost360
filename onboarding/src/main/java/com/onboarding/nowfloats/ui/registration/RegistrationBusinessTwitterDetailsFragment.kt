@@ -66,9 +66,9 @@ class RegistrationBusinessTwitterDetailsFragment :
             channelAccessToken.profilePicture
           )
         }?.andThen(binding?.linkTwitter?.fadeIn(500L))
-        ?.andThen(binding?.skip?.fadeIn(100L))?.subscribe()
+        ?.subscribe()
     }
-    setOnClickListener(binding?.skip, binding?.linkTwitter)
+    setOnClickListener(binding?.linkTwitter)
     setSelectedTwitterChannels(channels)
     setSavedData()
   }
@@ -107,7 +107,6 @@ class RegistrationBusinessTwitterDetailsFragment :
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.skip -> gotoNextScreen(true)
       binding?.linkTwitter -> {
         if (channelAccessToken.isLinked()) {
           gotoNextScreen()
@@ -154,14 +153,13 @@ class RegistrationBusinessTwitterDetailsFragment :
       )
     }
     val binding = binding?.twitterSuccess ?: return
-    this.binding?.skip?.gone()
     binding.maimView.visible()
     binding.maimView.alpha = 1F
     binding.disconnect.setOnClickListener { disconnectTwitter(binding) }
     this.binding?.title?.text = resources.getString(R.string.twitter_connected)
     this.binding?.subTitle?.text =
       resources.getString(R.string.twitter_allows_digital_business_boost)
-    this.binding?.linkTwitter?.text = resources.getString(R.string.save_continue)
+    this.binding?.linkTwitter?.text = resources.getString(R.string.view_updated_channels)
     binding.profileTitle.text = name
     selectedChannel?.let { channels ->
       if (channels.isNotEmpty()) {
@@ -175,7 +173,6 @@ class RegistrationBusinessTwitterDetailsFragment :
   }
 
   private fun disconnectTwitter(twitterSuccess: SuccessSocialLayoutBinding) {
-    binding?.skip?.visible()
     twitterSuccess.maimView.gone()
     this.binding?.title?.text = resources.getString(R.string.do_you_already_have_a_twitter_profile)
     binding?.subTitle?.text = resources.getString(R.string.twitter_account_business_Skip)

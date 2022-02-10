@@ -64,10 +64,10 @@ class RegistrationBusinessGoogleBusinessFragment :
             channelAccessToken.userAccountName,
             channelAccessToken.profilePicture
           )
-        }?.andThen(binding?.linkGoogle?.fadeIn(500L))
-        ?.andThen(binding?.skip?.fadeIn(100L))?.subscribe()
+        }?.andThen(binding?.linkGoogle?.fadeIn(500L))?.subscribe()
+
     }
-    setOnClickListener(binding?.skip, binding?.linkGoogle)
+    setOnClickListener( binding?.linkGoogle)
     setSetSelectedGoogleChannels(channels)
     setSavedData()
   }
@@ -107,14 +107,7 @@ class RegistrationBusinessGoogleBusinessFragment :
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.skip -> {
-        WebEngageController.trackEvent(
-          GOOGLE_MY_BUSINESS_CLICK_TO_SKIP,
-          GOOGLE_MY_BUSINESS,
-          NO_EVENT_VALUE
-        )
-        gotoNextScreen(true)
-      }
+
       binding?.linkGoogle -> {
         if (channelAccessToken.isLinkedGoogleBusiness()) {
           gotoNextScreen()
@@ -148,14 +141,13 @@ class RegistrationBusinessGoogleBusinessFragment :
 
   override fun setProfileDetails(name: String?, profilePicture: String?) {
     val binding = binding?.googlePageSuccess ?: return
-    this.binding?.skip?.gone()
     binding.maimView.visible()
     binding.maimView.alpha = 1F
     binding.disconnect.setOnClickListener { disconnectGooglePage() }
     this.binding?.title?.text = resources.getString(R.string.google_page_connected)
     this.binding?.subTitle?.text =
       resources.getString(R.string.google_allows_digital_business_boost)
-    this.binding?.linkGoogle?.text = resources.getString(R.string.save_continue)
+    this.binding?.linkGoogle?.text = resources.getString(R.string.view_updated_channels)
     binding.profileTitle.text = name
     binding.channelType.setImageResource(R.drawable.ic_google_business_n)
     if (profilePicture?.isNotBlank() == true) {
@@ -170,7 +162,6 @@ class RegistrationBusinessGoogleBusinessFragment :
       NO_EVENT_VALUE
     )
     logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
-    binding?.skip?.visible()
     binding?.googlePageSuccess?.maimView?.gone()
     this.binding?.title?.text =
       resources.getString(R.string.does_your_business_already_have_a_google_page)

@@ -25,7 +25,7 @@ class ChannelsDisconnectViewHolder constructor(binding: ItemChannelsDisconnectBi
   override fun onClick(v: View?) {
     super.onClick(v)
     when (v) {
-      binding.card -> listener?.onItemClick(
+      binding.root -> listener?.onItemClick(
         adapterPosition,
         model,
         RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal
@@ -40,7 +40,7 @@ class ChannelsDisconnectViewHolder constructor(binding: ItemChannelsDisconnectBi
 
   @SuppressLint("SetTextI18n")
   private fun setViews(model: ChannelModel) {
-    setClickListeners(binding.card, binding.whysync)
+    setClickListeners(binding.root, binding.whysync)
     binding.title.text = if (model.isGoogleBusinessChannel()) activity?.resources?.getString(R.string.google_maps) else model.getName()
     binding.whysync.text = "Why sync on ${model.getName1()}"
     binding.whysync.underlineText(0, binding.whysync.text.length - 1)
@@ -49,7 +49,7 @@ class ChannelsDisconnectViewHolder constructor(binding: ItemChannelsDisconnectBi
 
   private fun setSelection(model: ChannelModel) {
     binding.image.setImageDrawable(model.getDrawable(activity))
-    if (model.isSelected == false) {
+    /*if (model.isSelected == false) {
       getColor(R.color.greyish_brown_light)?.let { binding.title.setTextColor(it) }
       binding.image.makeGreyscale()
       binding.check.setImageResource(R.drawable.ic_unselected_blue)
@@ -66,6 +66,6 @@ class ChannelsDisconnectViewHolder constructor(binding: ItemChannelsDisconnectBi
           RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal
         )
       }, 1000)
-    }
+    }*/
   }
 }

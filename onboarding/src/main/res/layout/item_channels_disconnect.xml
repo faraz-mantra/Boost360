@@ -76,7 +76,7 @@
         android:layout_height="@dimen/size_20"
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="@dimen/size_10"
-        app:srcCompat="@drawable/ic_unselected_blue" />
+        app:srcCompat="@drawable/ic_arrow_right" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -82,7 +82,7 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/size_32"
       android:layout_marginEnd="@dimen/size_32"
-      android:layout_marginBottom="@dimen/size_12"
+      android:layout_marginBottom="@dimen/size_24"
       android:orientation="vertical"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
@@ -101,18 +101,6 @@
         app:textType="HEADING_6"
         tools:alpha="1" />
 
-      <com.framework.views.customViews.CustomButton
-        android:id="@+id/skip"
-        style="@style/ButtonStyle.Rounded.Outlined"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="@dimen/size_10"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
-        android:alpha="0"
-        android:gravity="center"
-        android:text="@string/skip"
-        app:textType="HEADING_6"
-        tools:alpha="1" />
     </LinearLayout>
 
   </androidx.constraintlayout.widget.ConstraintLayout>

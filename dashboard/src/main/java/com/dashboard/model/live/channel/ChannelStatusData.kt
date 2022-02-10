@@ -40,6 +40,7 @@ class ChannelStatusData(
       ChannelsType.AccountType.facebookshop.name -> R.drawable.ic_facebook_shop_n
       ChannelsType.AccountType.twitter.name -> R.drawable.ic_twitter_n
       ChannelsType.AccountType.googlemybusiness.name -> R.drawable.ic_google_business_n
+      ChannelsType.AccountType.instagram.name -> R.drawable.ic_instagram_white_circle
       else -> null
     }
   }
@@ -50,6 +51,8 @@ class ChannelStatusData(
       ChannelsType.AccountType.facebookshop.name -> R.string.fb_shop_sync_not_activated_yet
       ChannelsType.AccountType.twitter.name -> R.string.fb_twitter_sync_not_activated_yet
       ChannelsType.AccountType.googlemybusiness.name -> R.string.fb_gmb_sync_not_activated_yet
+      ChannelsType.AccountType.instagram.name -> R.string.ig_sync_not_activated_yet
+
       else -> null
     }
   }
@@ -60,6 +63,7 @@ class ChannelStatusData(
       ChannelsType.AccountType.facebookshop.name -> R.string.total_fp_shop_followers
       ChannelsType.AccountType.twitter.name -> R.string.total_twitter_followers
       ChannelsType.AccountType.googlemybusiness.name -> R.string.total_gmb_followers
+      ChannelsType.AccountType.instagram.name -> R.string.total_ig_page_followers
       else -> null
     }
   }
@@ -70,6 +74,7 @@ class ChannelStatusData(
       ChannelsType.AccountType.facebookshop.name -> R.color.dusky_blue_10
       ChannelsType.AccountType.twitter.name -> R.color.azure_10
       ChannelsType.AccountType.googlemybusiness.name -> R.color.blue_light_10
+      ChannelsType.AccountType.instagram.name -> R.color.dusky_blue_10
       else -> R.color.dusky_blue_10
     }
   }
@@ -123,6 +128,14 @@ fun ChannelsType?.getChannelStatusList(): ArrayList<ChannelStatusData> {
         isConnected = isConnectedGmb
       )
     )
+    val isConnectedInstagram =
+      this.instagram?.status?.equals(CHANNEL_STATUS_SUCCESS, true) ?: false
+    list.add(
+      ChannelStatusData(
+        accountType = ChannelsType.AccountType.instagram.name,
+        isConnected = isConnectedInstagram
+      )
+    )
   } else {
     list.add(
       ChannelStatusData(
@@ -139,6 +152,12 @@ fun ChannelsType?.getChannelStatusList(): ArrayList<ChannelStatusData> {
     list.add(
       ChannelStatusData(
         accountType = ChannelsType.AccountType.googlemybusiness.name,
+        isConnected = false
+      )
+    )
+    list.add(
+      ChannelStatusData(
+        accountType = ChannelsType.AccountType.instagram.name,
         isConnected = false
       )
     )

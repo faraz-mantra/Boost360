@@ -167,11 +167,11 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
           RegistrationBusinessFacebookPageFragment.newInstance()
         registrationBusinessFacebookPageFragment
       }
-      FragmentType.REGISTRATION_BUSINESS_INSTAGRAM -> {
+/*      FragmentType.REGISTRATION_BUSINESS_INSTAGRAM -> {
         registrationBusinessInstagramFragment =
           RegistrationBusinessInstagramFragment()
         registrationBusinessInstagramFragment
-      }
+      }*/
       FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP -> {
         registrationBusinessFacebookShopFragment =
           RegistrationBusinessFacebookShopFragment.newInstance()
@@ -221,7 +221,7 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
         super.onBackPressed()
       }
       FragmentType.REGISTRATION_BUSINESS_INSTAGRAM -> {
-        registrationBusinessInstagramFragment?.updateInfo()
+       // registrationBusinessInstagramFragment?.updateInfo()
         NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_INSTAGRAM)
         super.onBackPressed()
       }

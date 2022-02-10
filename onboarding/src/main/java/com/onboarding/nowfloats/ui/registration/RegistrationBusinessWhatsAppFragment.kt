@@ -47,12 +47,11 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
         ?.andThen(
           binding?.whatsappEntransactional?.fadeIn(100)
             ?.mergeWith(binding?.confirmBtn?.fadeIn(400L, confirmButtonAlpha))
-        )
-        ?.andThen(binding?.skip?.fadeIn(50L))?.doOnComplete {
+        )?.doOnComplete {
           baseActivity.showKeyBoard(binding?.number)
         }?.subscribe()
     }
-    setOnClickListener(binding?.confirmBtn, binding?.skip)
+    setOnClickListener(binding?.confirmBtn)
 
     binding?.number?.afterTextChanged { checkValidNumber(it) }
   }
@@ -77,12 +76,10 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
     if (isNumberValid) {
       binding?.number?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_valid)
       binding?.confirmBtn?.alpha = alpha
-      binding?.skip?.text = resources.getString(R.string.skip)
       whatsAppData.active_whatsapp_number = binding?.number?.text?.toString()
     } else {
       binding?.number?.drawableEnd = null
       binding?.confirmBtn?.alpha = 0.3f
-      binding?.skip?.text = resources.getString(R.string.i_don_t_have_one_will_do_later)
     }
   }
 
@@ -105,10 +102,6 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
         if (ValidationUtils.isMobileNumberValid(binding?.number?.text?.toString()?:"")){
           gotoBusinessApiCallDetails()
         }else showShortToast(getString(R.string.phone_number_invalid))
-      }
-      binding?.skip -> {
-        updateInfo()
-        gotoBusinessApiCallDetails()
       }
     }
   }

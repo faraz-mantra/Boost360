@@ -38,6 +38,7 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
     IGGraphManager.GraphRequestIGAccountCallback,IGGraphManager.GraphRequestIGUserCallback {
 
 
+    private var igName: String?=null
     private var igId: String?=null
     private var accessToken: AccessToken?=null
     private var page: FacebookGraphUserPagesDataModel?=null
@@ -236,13 +237,14 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
 
                 addFragmentReplace(
                     R.id.container, IGIntStatusFragment.newInstance(
+                        igName,
                         IGIntStatusFragment.Status.SUCCESS
                     ), true
                 )
 
             } else {
                 addFragmentReplace(
-                    R.id.container, IGIntStatusFragment.newInstance(
+                    R.id.container, IGIntStatusFragment.newInstance(null,
                         IGIntStatusFragment.Status.FAILURE
                     ), true
                 )
@@ -252,16 +254,21 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
 
     override fun onCompleted(response: IGFBPageLinkedResponse?) {
         igId = response?.instagram_business_account?.id
-        IGGraphManager.requestIGUserDetails(igId!!,
-        accessToken,this)
+
         if (igId!=null){
           //  updateChannelAccessToken(igId)
+            IGGraphManager.requestIGUserDetails(igId!!,
+                accessToken,this)
         }else{
         }
     }
 
     override fun onCompleted(response: IGUserResponse?) {
-        updateChannelAccessToken(igId!!,response?.username!!)
+        igName = response?.username
+        if (response?.username!=null){
+            updateChannelAccessToken(igId!!,response.username)
+
+        }
 
     }
 

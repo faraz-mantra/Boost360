@@ -1,11 +1,14 @@
 package com.onboarding.nowfloats.ui.registration.instagram
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.View
 import androidx.activity.addCallback
 import androidx.fragment.app.FragmentManager
+import com.framework.analytics.SentryController
 import com.framework.base.BaseActivity
 import com.framework.extensions.gone
 import com.framework.extensions.visible
@@ -26,6 +29,7 @@ import com.onboarding.nowfloats.ui.registration.BaseRegistrationFragment
 class IGIntStatusFragment: BaseRegistrationFragment<FragmentIgIntStatusBinding>() {
 
 
+    private var igName: String?=null
     private val TAG = "IGIntStatusFragment"
     enum class Status{
         SUCCESS,
@@ -34,10 +38,13 @@ class IGIntStatusFragment: BaseRegistrationFragment<FragmentIgIntStatusBinding>(
     private var status:String?=null
     companion object{
         val BK_STATUS="BK_STATUS"
-        fun newInstance(status: Status):IGIntStatusFragment{
+        val BK_IG_NAME="BK_IG_NAME"
+
+        fun newInstance(igName:String?,status: Status):IGIntStatusFragment{
             val fragment = IGIntStatusFragment()
             val bundle = Bundle().apply {
                 putString(BK_STATUS,status.name)
+                putString(BK_IG_NAME,igName)
             }
             fragment.arguments = bundle
             return fragment
@@ -53,6 +60,8 @@ class IGIntStatusFragment: BaseRegistrationFragment<FragmentIgIntStatusBinding>(
 
     override fun onCreateView() {
         super.onCreateView()
+        igName = arguments?.getString(BK_IG_NAME)
+
         status = arguments?.getString(BK_STATUS)
         setupUi()
         setOnClickListener(binding?.btnNext)
@@ -68,7 +77,10 @@ class IGIntStatusFragment: BaseRegistrationFragment<FragmentIgIntStatusBinding>(
                 binding!!.ivStatus.setImageResource(R.drawable.ic_ig_int_success)
                 binding!!.layoutHelp.gone()
                 binding!!.layoutFeatures.visible()
-                binding!!.tvDesc.text = getString(R.string.congratulations_boost_360_is_successfully_connected_to_your_instagram_account_placeholder)
+                binding!!.tvDesc.text = spanBold(
+                    getString(
+                        R.string.congratulations_boost_360_is_successfully_connected_to_your_instagram_account_placeholder
+                    ),"@"+igName)
                 binding!!.btnNext.text = getString(R.string.view_instagram_dashboard)
             }
             Status.FAILURE.name->{
@@ -86,6 +98,14 @@ class IGIntStatusFragment: BaseRegistrationFragment<FragmentIgIntStatusBinding>(
                 binding!!.tvHelp.text = spanClick(getString(R.string.need_help_contact_support_for_assistance),
                     {
                         Log.i(TAG, "setupUi: ")
+                        try {
+                            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + getString(R.string.expert_contact_number)))
+                            startActivity(intent)
+                        }catch (e:Exception){
+                            SentryController.captureException(e)
+
+                            e.printStackTrace()
+                        }
 
                     },
                     "Contact support")

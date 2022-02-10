@@ -23,7 +23,12 @@
         <activity
             android:name=".ui.AppFragmentContainerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeSupportVideo"
+            android:theme="@style/AppThemeChannel"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.registration.instagram.RegistrationBusinessInstagramFragment"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeChannel"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.updateChannel.DigitalChannelActivity"

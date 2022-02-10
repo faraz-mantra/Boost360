@@ -17,7 +17,7 @@ data class ChannelsType(
   @SerializedName("twitter")
   var twitter: Twitter? = null,
   @SerializedName("instagram")
-  var instagram:Facebookpage?=null
+  var instagram:InstagramChannel?=null
 ) : Serializable {
 
   enum class AccountType {

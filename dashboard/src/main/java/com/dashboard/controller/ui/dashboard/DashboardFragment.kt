@@ -1060,6 +1060,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         if (response?.channels?.facebookshop?.status == CHANNEL_STATUS_SUCCESS) {
           connectedChannels.add(ChannelsType.AccountType.facebookshop.name)
         }
+        if (response?.channels?.instagram?.status == CHANNEL_STATUS_SUCCESS) {
+          connectedChannels.add(ChannelsType.AccountType.instagram.name)
+        }
       }
       getWhatsAppData(urlString, isBusinessCardShare, isEnquiriesShare, shareType)
     })
