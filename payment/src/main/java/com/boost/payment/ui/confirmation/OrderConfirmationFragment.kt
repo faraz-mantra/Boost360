@@ -18,6 +18,7 @@ import com.boost.payment.utils.WebEngageController
 import com.framework.analytics.SentryController
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.framework.utils.InAppReviewUtils
 import com.framework.webengageconstant.*
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.order_confirmation_fragment.*
@@ -81,6 +82,12 @@ class OrderConfirmationFragment : BaseFragment() {
     prefs.storeCartOrderInfo(null)
     prefs.storeApplyedCouponDetails(null)
     UserSessionManager(requireActivity()).storeIntDetails(Key_Preferences.KEY_FP_CART_COUNT,0)
+
+    //firsttimepurchase logic for app review
+    if(prefs.getFirstTimePurchase()){
+      InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.in_app_review_first_purchase)
+      prefs.storeFirstTimePurchase(false)
+    }
 
 
     try {

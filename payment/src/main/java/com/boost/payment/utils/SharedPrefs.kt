@@ -14,6 +14,7 @@ import com.google.gson.reflect.TypeToken
 class SharedPrefs(activity: Activity) {
 
   private val INITIAL_LOAD = "Initial_Load_App"
+  private val FIRST_TIME_PURCHASE = "First_time_purchase"
 
   private val po_id = "Last_Purchase_Order_Created"
   private val po_status = "Last_Purchase_Order_Status"
@@ -58,6 +59,14 @@ class SharedPrefs(activity: Activity) {
 
   fun getInitialLoadMarketPlace(): Boolean {
     return pref!!.getBoolean(INITIAL_LOAD, true)
+  }
+
+  fun storeFirstTimePurchase(state: Boolean) {
+    editor!!.putBoolean(FIRST_TIME_PURCHASE, state).apply()
+  }
+
+  fun getFirstTimePurchase(): Boolean {
+    return pref!!.getBoolean(FIRST_TIME_PURCHASE, true)
   }
 
   fun storeLatestPurchaseOrderTotalPrice(price: Float) {
