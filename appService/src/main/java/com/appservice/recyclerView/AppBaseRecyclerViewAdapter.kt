@@ -45,6 +45,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       DOMAIN_STEPS -> DomainStepsViewHolder(binding as ListItemStepsDomainBinding)
       DOMAIN_NAME_SUGGESTIONS -> DomainSuggestionsViewHolder(binding as ItemDomainSuggestionsBinding)
       SIMILAR_DOMAIN_SUGGESTIONS -> SimilarDomainSuggestionViewHolder(binding as ItemSimilarDomainSuggestionsBinding)
+      GST_SLAB_SETTING -> GstSlabViewHolder(binding as ItemGstSlabBinding)
     }
   }
 
