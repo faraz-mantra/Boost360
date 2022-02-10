@@ -8,6 +8,7 @@ import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.LayoutSetUpMyWebsiteStep2Binding
+import com.boost.presignin.extensions.validateLetters
 import com.boost.presignin.model.category.CategoryDataModel
 import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
@@ -69,18 +70,25 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
 
   private fun setOnClickListeners() {
     binding?.tvNextStep2?.setOnClickListener {
-      addFragment(
-        R.id.inner_container, SetupMyWebsiteStep3Fragment.newInstance(
-          Bundle().apply {
-            putString(IntentConstant.DESKTOP_PREVIEW.name, desktopPreview)
-            putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
-            putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
-            putString(IntentConstant.CATEGORY_SUGG_UI.name, categoryLiveName)
-            putSerializable(IntentConstant.CATEGORY_DATA.name, categoryModel)
-            putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent?:false)
-            putString(IntentConstant.EXTRA_BUSINESS_NAME.name, binding?.businessNameInputLayout?.etInput?.text.toString())
-          }), true
-      )
+      if (binding?.businessNameInputLayout?.etInput?.text.toString().validateLetters()) {
+        addFragment(
+          R.id.inner_container, SetupMyWebsiteStep3Fragment.newInstance(
+            Bundle().apply {
+              putString(IntentConstant.DESKTOP_PREVIEW.name, desktopPreview)
+              putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
+              putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+              putString(IntentConstant.CATEGORY_SUGG_UI.name, categoryLiveName)
+              putSerializable(IntentConstant.CATEGORY_DATA.name, categoryModel)
+              putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent ?: false)
+              putString(
+                IntentConstant.EXTRA_BUSINESS_NAME.name,
+                binding?.businessNameInputLayout?.etInput?.text.toString()
+              )
+            }), true
+        )
+      } else {
+        showShortToast(getString(R.string.business_name_format_invalid_toast))
+      }
     }
 
     binding?.businessNameInputLayout?.etInput?.afterTextChanged {

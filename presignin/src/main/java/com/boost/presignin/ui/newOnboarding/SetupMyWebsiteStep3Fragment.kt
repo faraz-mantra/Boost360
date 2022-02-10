@@ -99,7 +99,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     binding?.includeMobileView?.tvTitle?.text = businessName?.capitalizeUtil()
     setOnClickListeners()
     binding?.addressInputLayout?.etInput?.setText(
-      businessName?.replace("\\s+".toRegex(), "")?.lowercase().removeSymbols()
+      businessName?.replace("\\s+".toRegex(), "")?.lowercase()
     )
     apiCheckDomain {
       websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1)
@@ -138,12 +138,8 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     }
 
     binding?.addressInputLayout?.etInput?.afterTextChanged {
-      if (it.validateLetters()) {
         binding?.tvNextStep3?.isEnabled = it.isEmpty().not()
         binding?.includeMobileView?.tvWebsiteName?.text = it
-      } else {
-        showShortToast(getString(R.string.website_name_format_invalid_toast))
-      }
     }
 
     binding?.addressInputLayout?.etInput?.setOnEditorActionListener { _, actionId, _ ->
