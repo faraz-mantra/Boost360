@@ -128,14 +128,13 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
   }
 
   // Transactions
-  open fun addFragmentReplace(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean,showAnim:Boolean=false) {
+  open fun addFragmentReplace(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean, showAnim: Boolean = false) {
     if (activity?.supportFragmentManager?.isDestroyed == true) return
     if (containerID == null || fragment == null) return
 
     val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
-    if (showAnim){
-      fragmentTransaction?.
-      setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+    if (showAnim) {
+      fragmentTransaction?.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
     }
 
 
@@ -145,14 +144,13 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
     fragmentTransaction?.replace(containerID, fragment, fragment.javaClass.name)?.commit()
   }
 
-  open fun addFragment(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean,showAnim:Boolean=false) {
+  open fun addFragment(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean, showAnim: Boolean = false) {
     if (activity?.supportFragmentManager?.isDestroyed == true) return
     if (containerID == null || fragment == null) return
 
     val fragmentTransaction = baseActivity.supportFragmentManager.beginTransaction()
-    if (showAnim){
-      fragmentTransaction?.
-      setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+    if (showAnim) {
+      fragmentTransaction?.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
     }
     if (addToBackStack) {
       fragmentTransaction.addToBackStack(fragment.javaClass.name)
@@ -188,7 +186,7 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
   }
 
   protected fun getColor(@ColorRes color: Int): Int {
-    return ResourcesCompat.getColor(resources, color, context?.theme)
+    return ContextCompat.getColor(baseActivity, color)
   }
 
   protected fun getFont(@FontRes font: Int): Typeface? {

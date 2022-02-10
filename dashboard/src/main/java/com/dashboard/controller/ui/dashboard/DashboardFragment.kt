@@ -265,7 +265,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       val response = it as? DrScoreUiDataResponse
       val drScoreData = getDrScoreData()
       val isHighDrScore = drScoreData != null && (drScoreData.getDrsTotal() >= 85)
-      val drScoreSetupList = response?.data?.let { it1 -> drScoreData?.getDrScoreData(it1) }
+      val drScoreSetupList = response?.getActionItem(session?.fP_AppExperienceCode)?.let { it1 -> drScoreData?.getDrScoreData(it1) }
       if (response?.isSuccess() == true && drScoreSetupList.isNullOrEmpty().not()) {
         showSimmerDrScore(isSimmer = false, isRetry = false)
         if (isHighDrScore.not()) {
