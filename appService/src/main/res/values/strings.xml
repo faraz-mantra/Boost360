@@ -1082,4 +1082,5 @@
   <string name="pan_name_not_empty">Pan name can\'t empty.</string>
   <string name="pan_name_invalid">Please enter a valid name.</string>
   <string name="invalid_bank_statement_file">Please select valid bank statement file</string>
+  <string name="select_tax_rate">Select tax rate</string>
 </resources>
