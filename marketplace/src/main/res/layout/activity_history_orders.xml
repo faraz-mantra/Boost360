@@ -119,8 +119,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
-            android:visibility="gone"
-            tools:visibility="gone">
+            android:visibility="visible"
+            tools:visibility="visible">
 
 
             <ImageView
@@ -161,8 +161,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
-            android:visibility="visible"
-            tools:visibility="visible">
+            android:visibility="gone"
+            tools:visibility="gone">
 
             <!-- Adding 7 rows of placeholders -->
             <LinearLayout

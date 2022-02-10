@@ -7,8 +7,6 @@ import android.widget.Toast
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityInvoiceBinding
-import com.boost.marketplace.databinding.ActivityMyCurrentPlanBinding
-import com.boost.marketplace.ui.My_Plan.MyCurrentPlanViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import kotlinx.android.synthetic.main.activity_website_view.*
@@ -40,7 +38,8 @@ class InvoiceActivity : AppBaseActivity<ActivityInvoiceBinding, InvoiceViewModel
         webSettings?.cacheMode = WebSettings.LOAD_DEFAULT
         webSettings?.domStorageEnabled = true
 
-        link ="https://www.getboost360.com/"
+        link = intent.getStringExtra("link") ?: ""
+      //  link ="https://www.getboost360.com/"
 
         if (link != null) {
             webview.settings.javaScriptEnabled = true

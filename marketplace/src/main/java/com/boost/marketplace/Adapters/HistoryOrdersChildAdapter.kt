@@ -14,7 +14,7 @@ import com.boost.marketplace.ui.Invoice.InvoiceActivity
 import java.lang.Long
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
+import kotlin.Int
 
 class HistoryOrdersChildAdapter(itemList: List<Result>?,) :
     RecyclerView.Adapter<HistoryOrdersChildAdapter.upgradeViewHolder>() {
@@ -81,6 +81,7 @@ class HistoryOrdersChildAdapter(itemList: List<Result>?,) :
 //        )
         holder.button.setOnClickListener {
             val intent = Intent(context, InvoiceActivity::class.java)
+            intent.putExtra("link", list!!.get(position).invoiceUrl)
             context.startActivity(intent)
         }
     }
