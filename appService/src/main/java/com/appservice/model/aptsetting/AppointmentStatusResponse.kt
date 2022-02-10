@@ -155,6 +155,10 @@ data class CatalogSetup(
   @field:SerializedName("IsPending")
   var isPending: Boolean? = null
 ) : Serializable {
+
+  fun getGstSlabInt():Int{
+    return defaultGSTSlab?.toInt()?:0
+  }
   fun getTitle(activity: Activity?): Spanned? {
     val s = UserSessionManager(activity ?: AppServiceApplication.instance)
     return fromHtml("Display text: <b>${if (productCategoryVerb.isNullOrEmpty()) getProductType(s.fP_AppExperienceCode) else "${productCategoryVerb?.capitalizeUtil()}"}</b>")
