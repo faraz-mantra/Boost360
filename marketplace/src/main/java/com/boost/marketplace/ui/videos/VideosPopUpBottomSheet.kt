@@ -171,4 +171,10 @@ class VideosPopUpBottomSheet :
         TODO("Not yet implemented")
     }
 
+    override fun dismiss() {
+        super.dismiss()
+        super.onDestroy()
+        MediaPlayer.stopPlayer()
+
+    }
 }
