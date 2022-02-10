@@ -17,25 +17,26 @@ import retrofit2.http.POST
 
 interface NewApiInterface {
 
-  @Headers("Authorization: 591c0972ee786cbf48bd86cf", "Content-Type: application/json")
-  @GET("https://developer.api.boostkit.dev/language/v1/upgrade/get-data?website=5e7a3cf46e0572000109a5b2")
-  fun GetAllFeatures(): Observable<GetAllFeaturesResponse>
+    @Headers("Authorization: 591c0972ee786cbf48bd86cf", "Content-Type: application/json")
+    @GET("https://developer.api.boostkit.dev/language/v1/upgrade/get-data?website=5e7a3cf46e0572000109a5b2")
+    fun GetAllFeatures(): Observable<GetAllFeaturesResponse>
 
-  @Headers("Authorization: 597ee93f5d64370820a6127c", "Content-Type: application/json")
-  @GET("https://developer.api.boostkit.dev/language/v1/featurevideos/get-data?website=61278bf6f2e78f0001811865")
-  fun GetHelp(): Observable<HelpModule>
+    @Headers("Authorization: 597ee93f5d64370820a6127c", "Content-Type: application/json")
+    @GET("https://developer.api.boostkit.dev/language/v1/featurevideos/get-data?website=61278bf6f2e78f0001811865")
+    fun GetHelp(): Observable<HelpModule>
 
-  @Headers(
-    "Authorization: Basic YXBpbW9kaWZpZXI6dkVFQXRudF9yJ0RWZzcofg==",
-    "Content-Type: application/json"
-  )
-  @POST("https://si-withfloats-coupons-api-appservice.azurewebsites.net/v1/coupons/redeem")
-  fun redeemCoupon(@Body redeemCouponRequest: RedeemCouponRequest): Observable<RedeemCouponResponse>
+    @Headers(
+            "Authorization: Basic YXBpbW9kaWZpZXI6dkVFQXRudF9yJ0RWZzcofg==",
+            "Content-Type: application/json"
+    )
+    @POST("https://si-withfloats-coupons-api-appservice.azurewebsites.net/v1/coupons/redeem")
+    fun redeemCoupon(@Body redeemCouponRequest: RedeemCouponRequest): Observable<RedeemCouponResponse>
 
-  @Headers("Authorization: 591c0972ee786cbf48bd86cf")
-  @POST("https://developer.api.boostkit.dev/language/v1/5e5877a701921c02011ca983/get-bulk-data-by-property/DB96EA35A6E44C0F8FB4A6BAA94DB017C0DFBE6F9944B14AA6C3C48641B3D70")
-  fun getOfferCoupons(@Body couponRequest: CouponRequest):Observable<GetCouponResponse>
+    @Headers("Authorization: 591c0972ee786cbf48bd86cf")
+    @POST("https://developer.api.boostkit.dev/language/v1/5e5877a701921c02011ca983/get-bulk-data-by-property/DB96EA35A6E44C0F8FB4A6BAA94DB017C0DFBE6F9944B14AA6C3C48641B3D70")
+    fun getOfferCoupons(@Body couponRequest: CouponRequest): Observable<GetCouponResponse>
 
-  @POST("https://riarecommendationatmarketplacecheckout.azurewebsites.net/getRecommendationAtCheckout")
-  fun getRecommendedAddons(@Body recommendedAddonsRequest: RecommendedAddonsRequest):Observable<RecommendedAddonsResponse>
+    @Headers("Content-Type: application/json")
+    @POST("https://riarecommendationatmarketplacecheckout.azurewebsites.net/getRecommendationAtCheckout")
+    fun getRecommendedAddons(@Body recommendedAddonsRequest: RecommendedAddonsRequest): Observable<RecommendedAddonsResponse>
 }
