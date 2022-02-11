@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import com.nowfloats.Login.UserSessionManager
 import com.nowfloats.education.batches.BatchesActivity
 import com.nowfloats.education.batches.model.Data
 import com.nowfloats.education.helper.BaseFragment
@@ -32,6 +33,7 @@ class BatchesDetailsFragment(private val batchesData: Data?) : BaseFragment(), C
   private lateinit var binding: BatchesDetailsBinding
   private var addUpdateBatch = false
   private var batchTiming: String = ""
+  private lateinit var session: UserSessionManager
 
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +45,7 @@ class BatchesDetailsFragment(private val batchesData: Data?) : BaseFragment(), C
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    session = UserSessionManager(requireContext(), requireActivity())
 
     when {
       batchesData != null -> {
@@ -78,7 +81,7 @@ class BatchesDetailsFragment(private val batchesData: Data?) : BaseFragment(), C
           }
           else -> {
             showLoader("Adding batch")
-            viewModel.addUpcomingBatch(binding.batchedData as Data)
+            viewModel.addUpcomingBatch(session.fpTag, binding.batchedData as Data)
           }
         }
       }

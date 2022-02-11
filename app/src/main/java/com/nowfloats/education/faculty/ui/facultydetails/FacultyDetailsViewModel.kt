@@ -63,7 +63,7 @@ class FacultyDetailsViewModel(
 
   fun getFilePath() = this.filePath
 
-  fun addOurFaculty(facultyData: Data, imageUrl: String) {
+  fun addOurFaculty(fpTag: String, facultyData: Data, imageUrl: String) {
     val profileImage = Profileimage(
       url = imageUrl,
       description = facultyData.name
@@ -75,7 +75,7 @@ class FacultyDetailsViewModel(
       profileimage = profileImage
     )
     val addFacultyModel = AddFacultyModel(
-      WebsiteId = WEBSITE_ID_EDUCATION,
+      WebsiteId = fpTag,
       ActionData = actionData
     )
 
