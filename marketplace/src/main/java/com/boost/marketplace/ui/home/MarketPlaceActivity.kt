@@ -56,6 +56,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
+import com.nex3z.notificationbadge.NotificationBadge
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -78,6 +79,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     lateinit var videosListAdapter: VideosListAdapter
 
     //    private var deepLinkUtil: DeepLinkUtil? = null
+    lateinit var badge: NotificationBadge
     var badgeNumber = 0
     var fpRefferalCode: String = ""
     var feedBackLink: String? = null
@@ -180,38 +182,38 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             finish()
         }
 
-        imageViewCart1.setOnClickListener {
-            val intent = Intent(
-                applicationContext,
-                CartActivity::class.java
-            )
-            intent.putExtra("fpid", fpid)
-            intent.putExtra("expCode", experienceCode)
-            intent.putExtra("isDeepLink", isDeepLink)
-            intent.putExtra("deepLinkViewType", deepLinkViewType)
-            intent.putExtra("deepLinkDay", deepLinkDay)
-            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-            intent.putExtra(
-                "accountType",
-                accountType
-            )
-            intent.putStringArrayListExtra(
-                "userPurchsedWidgets",
-                userPurchsedWidgets
-            )
-            if (email != null) {
-                intent.putExtra("email", email)
-            } else {
-                intent.putExtra("email", "ria@nowfloats.com")
-            }
-            if (mobileNo != null) {
-                intent.putExtra("mobileNo", mobileNo)
-            } else {
-                intent.putExtra("mobileNo", "9160004303")
-            }
-            intent.putExtra("profileUrl", profileUrl)
-            startActivity(intent)
-        }
+//        imageViewCart1.setOnClickListener {
+//            val intent = Intent(
+//                applicationContext,
+//                CartActivity::class.java
+//            )
+//            intent.putExtra("fpid", fpid)
+//            intent.putExtra("expCode", experienceCode)
+//            intent.putExtra("isDeepLink", isDeepLink)
+//            intent.putExtra("deepLinkViewType", deepLinkViewType)
+//            intent.putExtra("deepLinkDay", deepLinkDay)
+//            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+//            intent.putExtra(
+//                "accountType",
+//                accountType
+//            )
+//            intent.putStringArrayListExtra(
+//                "userPurchsedWidgets",
+//                userPurchsedWidgets
+//            )
+//            if (email != null) {
+//                intent.putExtra("email", email)
+//            } else {
+//                intent.putExtra("email", "ria@nowfloats.com")
+//            }
+//            if (mobileNo != null) {
+//                intent.putExtra("mobileNo", mobileNo)
+//            } else {
+//                intent.putExtra("mobileNo", "9160004303")
+//            }
+//            intent.putExtra("profileUrl", profileUrl)
+//            startActivity(intent)
+//        }
 
         initializeVideosRecycler()
         initializePartnerViewPager()
@@ -563,10 +565,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             intent.putExtra("profileUrl", profileUrl)
             startActivity(intent)
         }
-        mp_review_cart_close_iv.setOnClickListener{
-            WebEngageController.trackEvent(ADDONS_MARKETPLACE_WAITING_CART_CROSS_CLICKED,EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_CROSS_CLICKED,NO_EVENT_VALUE)
-            mp_view_cart_rl.visibility = View.GONE
-        }
+//        mp_review_cart_close_iv.setOnClickListener{
+//            WebEngageController.trackEvent(ADDONS_MARKETPLACE_WAITING_CART_CROSS_CLICKED,EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_CROSS_CLICKED,NO_EVENT_VALUE)
+//            mp_view_cart_rl.visibility = View.GONE
+//        }
         mp_review_cart_tv.setOnClickListener {
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED,EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED,NO_EVENT_VALUE)
             val intent = Intent(
@@ -613,6 +615,13 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.home_menu, menu)
+        val menuItem = menu!!.findItem(R.id.action_add)
+
+        val actionView = menuItem.actionView
+        badge = actionView.findViewById<View>(R.id.badge) as NotificationBadge
+
+
+        actionView.setOnClickListener { onOptionsItemSelected(menuItem) }
         return true
     }
 
@@ -965,7 +974,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             )
             if (it != null && it.size > 0) {
 //                packageInCartStatus = false
-                mp_view_cart_rl.visibility = View.VISIBLE
+//                mp_view_cart_rl.visibility = View.VISIBLE
                 badge.visibility = View.VISIBLE
                 badgeNumber = it.size
                 badge.setText(badgeNumber.toString())
@@ -1007,104 +1016,104 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                     }
                 }
 
-                var cartItems = " "
-                if (itemsArrayList != null && itemsArrayList!!.size > 0) {
-                    for (items in itemsArrayList!!) {
-                        cartItems += items + ", "
-                    }
-                    cartItems = cartItems.substring(0, cartItems.length - 2)
-                    var cartUpdatedItems = ""
-                    if (mp_items_name_tv.paint.measureText(cartItems) > 2 * (mp_items_name_tv.measuredWidth)) {
-                        val index = itemsArrayList!!.size - 1
-                        itemsArrayList!!.removeAt(index)
-                        for (updatedItems in itemsArrayList!!) {
-                            cartUpdatedItems += updatedItems + ", "
-                        }
-                        cartUpdatedItems =
-                            cartUpdatedItems.substring(0, cartUpdatedItems.length - 2)
-                        val displayString =
-                            cartUpdatedItems + " + " + (it.size - itemsArrayList!!.size) + " more"
-                        var cartUpdatedItems1 = ""
-                        if (mp_items_name_tv.paint.measureText(displayString) > 2 * (mp_items_name_tv.measuredWidth)) {
-                            val index1 = itemsArrayList!!.size - 1
-                            itemsArrayList!!.removeAt(index1)
-                            for (updatedItems1 in itemsArrayList!!) {
-                                cartUpdatedItems1 += updatedItems1 + ", "
-                            }
-                            cartUpdatedItems1 =
-                                cartUpdatedItems1.substring(0, cartUpdatedItems1.length - 2)
-                            val displayString1 =
-                                cartUpdatedItems1 + " + " + (it.size - itemsArrayList!!.size) + " more"
-                            var cartLatestItems = ""
-                            if (mp_items_name_tv.paint.measureText(displayString1) > 2 * (mp_items_name_tv.measuredWidth)) {
-                                val latestIndex = itemsArrayList!!.size - 1
-                                itemsArrayList!!.removeAt(latestIndex)
-                                for (latestItems in itemsArrayList!!) {
-                                    cartLatestItems += latestItems + ", "
-                                }
-                                cartLatestItems =
-                                    cartLatestItems.substring(0, cartLatestItems.length - 2)
-                                val displayString2 =
-                                    cartLatestItems + " + " + (it.size - itemsArrayList!!.size) + " more"
-                                if (itemTypeArrayList!!.contains("features") && itemTypeArrayList!!.contains(
-                                        "bundles"
-                                    ).not()
-                                ) {
-                                    if (itemsArrayList!!.size == 1) {
-                                        val singleFeature = displayString2.replace(",", "")
-                                        mp_items_name_tv.text = singleFeature.replace(" ", "\u00A0")
-                                    } else {
-                                        mp_items_name_tv.text =
-                                            displayString2.replace(" ", "\u00A0")
-                                    }
-
-                                }
-                            } else {
-                                if (itemTypeArrayList!!.contains("features") && itemTypeArrayList!!.contains(
-                                        "bundles"
-                                    ).not()
-                                ) {
-                                    if (itemsArrayList!!.size == 1) {
-                                        val singleFeature1 = displayString1.replace(",", "")
-                                        mp_items_name_tv.text =
-                                            singleFeature1.replace(" ", "\u00A0")
-
-                                    } else {
-                                        mp_items_name_tv.text =
-                                            displayString1.replace(" ", "\u00A0")
-                                    }
-                                }
-                            }
-                        } else {
-                            if (itemTypeArrayList!!.contains("features") && itemTypeArrayList!!.contains(
-                                    "bundles"
-                                ).not()
-                            ) {
-                                if (itemsArrayList!!.size == 1) {
-                                    val singleFeature2 = displayString.replace(",", "")
-                                    mp_items_name_tv.text = singleFeature2.replace(" ", "\u00A0")
-
-                                } else {
-                                    mp_items_name_tv.text = displayString.replace(" ", "\u00A0")
-                                }
-                            }
-                        }
-                    } else {
-                        if (itemTypeArrayList!!.contains("features") && itemTypeArrayList!!.contains(
-                                "bundles"
-                            ).not()
-                        ) {
-                            if (itemsArrayList!!.size == 1) {
-                                val singleFeature3 = cartItems.replace(",", "")
-                                mp_items_name_tv.text = singleFeature3.replace(" ", "\u00A0")
-
-                            } else {
-                                mp_items_name_tv.text = cartItems.replace(" ", "\u00A0")
-                            }
-                        }
-                    }
-
-                }
+//                var cartItems = " "
+//                if (itemsArrayList != null && itemsArrayList!!.size > 0) {
+//                    for (items in itemsArrayList!!) {
+//                        cartItems += items + ", "
+//                    }
+//                    cartItems = cartItems.substring(0, cartItems.length - 2)
+//                    var cartUpdatedItems = ""
+//                    if (mp_items_name_tv.paint.measureText(cartItems) > 2 * (mp_items_name_tv.measuredWidth)) {
+//                        val index = itemsArrayList!!.size - 1
+//                        itemsArrayList!!.removeAt(index)
+//                        for (updatedItems in itemsArrayList!!) {
+//                            cartUpdatedItems += updatedItems + ", "
+//                        }
+//                        cartUpdatedItems =
+//                            cartUpdatedItems.substring(0, cartUpdatedItems.length - 2)
+//                        val displayString =
+//                            cartUpdatedItems + " + " + (it.size - itemsArrayList!!.size) + " more"
+//                        var cartUpdatedItems1 = ""
+//                        if (mp_items_name_tv.paint.measureText(displayString) > 2 * (mp_items_name_tv.measuredWidth)) {
+//                            val index1 = itemsArrayList!!.size - 1
+//                            itemsArrayList!!.removeAt(index1)
+//                            for (updatedItems1 in itemsArrayList!!) {
+//                                cartUpdatedItems1 += updatedItems1 + ", "
+//                            }
+//                            cartUpdatedItems1 =
+//                                cartUpdatedItems1.substring(0, cartUpdatedItems1.length - 2)
+//                            val displayString1 =
+//                                cartUpdatedItems1 + " + " + (it.size - itemsArrayList!!.size) + " more"
+//                            var cartLatestItems = ""
+//                            if (mp_items_name_tv.paint.measureText(displayString1) > 2 * (mp_items_name_tv.measuredWidth)) {
+//                                val latestIndex = itemsArrayList!!.size - 1
+//                                itemsArrayList!!.removeAt(latestIndex)
+//                                for (latestItems in itemsArrayList!!) {
+//                                    cartLatestItems += latestItems + ", "
+//                                }
+//                                cartLatestItems =
+//                                    cartLatestItems.substring(0, cartLatestItems.length - 2)
+//                                val displayString2 =
+//                                    cartLatestItems + " + " + (it.size - itemsArrayList!!.size) + " more"
+//                                if (itemTypeArrayList!!.contains("features") && itemTypeArrayList!!.contains(
+//                                        "bundles"
+//                                    ).not()
+//                                ) {
+//                                    if (itemsArrayList!!.size == 1) {
+//                                        val singleFeature = displayString2.replace(",", "")
+//                                        mp_items_name_tv.text = singleFeature.replace(" ", "\u00A0")
+//                                    } else {
+//                                        mp_items_name_tv.text =
+//                                            displayString2.replace(" ", "\u00A0")
+//                                    }
+//
+//                                }
+//                            } else {
+//                                if (itemTypeArrayList!!.contains("features") && itemTypeArrayList!!.contains(
+//                                        "bundles"
+//                                    ).not()
+//                                ) {
+//                                    if (itemsArrayList!!.size == 1) {
+//                                        val singleFeature1 = displayString1.replace(",", "")
+//                                        mp_items_name_tv.text =
+//                                            singleFeature1.replace(" ", "\u00A0")
+//
+//                                    } else {
+//                                        mp_items_name_tv.text =
+//                                            displayString1.replace(" ", "\u00A0")
+//                                    }
+//                                }
+//                            }
+//                        } else {
+//                            if (itemTypeArrayList!!.contains("features") && itemTypeArrayList!!.contains(
+//                                    "bundles"
+//                                ).not()
+//                            ) {
+//                                if (itemsArrayList!!.size == 1) {
+//                                    val singleFeature2 = displayString.replace(",", "")
+//                                    mp_items_name_tv.text = singleFeature2.replace(" ", "\u00A0")
+//
+//                                } else {
+//                                    mp_items_name_tv.text = displayString.replace(" ", "\u00A0")
+//                                }
+//                            }
+//                        }
+//                    } else {
+//                        if (itemTypeArrayList!!.contains("features") && itemTypeArrayList!!.contains(
+//                                "bundles"
+//                            ).not()
+//                        ) {
+//                            if (itemsArrayList!!.size == 1) {
+//                                val singleFeature3 = cartItems.replace(",", "")
+//                                mp_items_name_tv.text = singleFeature3.replace(" ", "\u00A0")
+//
+//                            } else {
+//                                mp_items_name_tv.text = cartItems.replace(" ", "\u00A0")
+//                            }
+//                        }
+//                    }
+//
+//                }
                 val itemDesc = prefs.getStoreAddedPackageDesc()
                 packsArrayList?.clear()
                 it.forEach { it ->
@@ -1154,7 +1163,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             } else {
                 badgeNumber = 0
                 badge.visibility = View.GONE
-                mp_view_cart_rl.visibility = View.GONE
+//                mp_view_cart_rl.visibility = View.GONE
             }
             //refresh FeatureDeals adaptor when cart is updated
             if (viewModel.allFeatureDealsResult.value != null) {
@@ -1213,7 +1222,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             )
             if (it != null && it.size > 0) {
 //                packageInCartStatus = false
-                mp_view_cart_rl.visibility = View.VISIBLE
+//                mp_view_cart_rl.visibility = View.VISIBLE
                 badge.visibility = View.VISIBLE
                 badgeNumber = it.size
                 badge.setText(badgeNumber.toString())
@@ -1400,7 +1409,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             } else {
                 badgeNumber = 0
                 badge.visibility = View.GONE
-                mp_view_cart_rl.visibility = View.GONE
+//                mp_view_cart_rl.visibility = View.GONE
             }
             //refresh FeatureDeals adaptor when cart is updated
             if (viewModel.allFeatureDealsResult.value != null) {
@@ -1648,6 +1657,11 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         upgradeAdapter.notifyDataSetChanged()
         recycler.isFocusable = false
 //        back_image.isFocusable = true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getCartItems()
     }
 
     fun updateAddonCategoryRecycler(list: List<FeaturesModel>) {
@@ -2441,7 +2455,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
                             if (it == 0) {
-                                makeFlyAnimation(imageView)
+//                                makeFlyAnimation(imageView)
                                 try {
                                     callBundleCart(item,imageView)
                                 } catch (e: Exception) {
@@ -2629,22 +2643,22 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         feature_deals_viewpager.addItemDecoration(itemDecoration)
     }
 
-    private fun makeFlyAnimation(targetView: ImageView) {
-
-        CircleAnimationUtil().attachActivity(this).setTargetView(targetView).setMoveDuration(600)
-            .setDestView(imageViewCart1).setAnimationListener(object : Animator.AnimatorListener {
-                override fun onAnimationStart(animation: Animator) {}
-                override fun onAnimationEnd(animation: Animator) {
-                    viewModel.getCartItems()
-
-                }
-
-
-                override fun onAnimationCancel(animation: Animator) {}
-                override fun onAnimationRepeat(animation: Animator) {}
-            }).startAnimation()
-
-    }
+//    private fun makeFlyAnimation(targetView: ImageView) {
+//
+//        CircleAnimationUtil().attachActivity(this).setTargetView(targetView).setMoveDuration(600)
+//            .setDestView(imageViewCart1).setAnimationListener(object : Animator.AnimatorListener {
+//                override fun onAnimationStart(animation: Animator) {}
+//                override fun onAnimationEnd(animation: Animator) {
+//                    viewModel.getCartItems()
+//
+//                }
+//
+//
+//                override fun onAnimationCancel(animation: Animator) {}
+//                override fun onAnimationRepeat(animation: Animator) {}
+//            }).startAnimation()
+//
+//    }
 
     fun callBundleCart(item: Bundles, imageView: ImageView){
         val itemIds = arrayListOf<String>()

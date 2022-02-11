@@ -58,7 +58,6 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     private var couponApiInfo: MutableLiveData<GetCouponResponse> = MutableLiveData()
     private var recommendedAddonsInfo: MutableLiveData<RecommendedAddonsResponse> = MutableLiveData()
 
-    private var apiService = com.boost.dbcenterapi.utils.Utils.getRetrofit().create(NewApiInterface::class.java)
     var renewalPurchaseList: MutableLiveData<List<RenewalResult>> = MutableLiveData()
     var allBundles: MutableLiveData<List<BundlesModel>> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
@@ -861,7 +860,6 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                     },
                                     {
                                         val temp = (it as HttpException).response()!!.errorBody()!!.string()
-                                        val errorBody: Error = Gson().fromJson(temp, object : TypeToken<Error>() {}.type)
                                         progressBar.visibility = View.GONE
                                         Toasty.error(getApplication(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
                                     }
@@ -882,9 +880,9 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
     fun getCouponRedeem(couponRequest: CouponRequest) {
         if (Utils.isConnectedToInternet(getApplication())) {
-            System.out.println("request--->" + couponRequest)
+            Log.e("request--->", couponRequest.toString())
             CompositeDisposable().add(
-                    apiService.getOfferCoupons(couponRequest)
+                NewApiService.getOfferCoupons(couponRequest)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
@@ -894,9 +892,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                         couponApiInfo.postValue(couponResponse)
                                     },
                                     {
-                                        val temp = (it as HttpException).response()!!.errorBody()!!.string()
-                                        val errorBody: Error = Gson().fromJson(temp, object : TypeToken<Error>() {}.type)
-                                        Toasty.error(getApplication(), "Error in Loading Coupons!!", Toast.LENGTH_LONG).show()
+                                        Toasty.error(getApplication(), "Error ->" +it.message, Toast.LENGTH_LONG).show()
                                     }
                             )
             )
@@ -906,9 +902,9 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
     fun getRecommendedAddons(recommendedAddonsRequest: RecommendedAddonsRequest) {
         if (Utils.isConnectedToInternet(getApplication())) {
-            System.out.println("request--->" + recommendedAddonsRequest)
+            Log.e("request--->", recommendedAddonsRequest.toString())
             CompositeDisposable().add(
-                    apiService.getRecommendedAddons(recommendedAddonsRequest)
+                NewApiService.getRecommendedAddons(recommendedAddonsRequest)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
@@ -917,9 +913,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                         recommendedAddonsInfo.postValue(it)
                                     },
                                     {
-                                        val temp = (it as HttpException).response()!!.errorBody()!!.string()
-                                        val errorBody: Error = Gson().fromJson(temp, object : TypeToken<Error>() {}.type)
-                                        Toasty.error(getApplication(), "Error in Loading Coupons!!", Toast.LENGTH_LONG).show()
+                                        Toasty.error(getApplication(), "Error ->" +it.message, Toast.LENGTH_LONG).show()
                                     }
                             )
             )

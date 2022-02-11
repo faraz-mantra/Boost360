@@ -127,6 +127,7 @@
 
 
           <androidx.appcompat.widget.AppCompatTextView
+              android:id="@+id/used_by"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginStart="55dp"
@@ -134,6 +135,7 @@
               android:drawableStart="@drawable/ic_cart_pack_business_count_image"
               android:drawablePadding="5dp"
               android:gravity="center"
+              android:visibility="gone"
               android:text="Used by 10,000+ businesses"
               android:textColor="#7ED321"
               android:textSize="@dimen/txt_12sp" />

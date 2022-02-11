@@ -569,27 +569,26 @@
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
                         <androidx.appcompat.widget.LinearLayoutCompat
-                            android:layout_width="@dimen/_12sdp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
                             android:background="@drawable/ic_increment"
-                            android:gravity="center"
                             android:orientation="horizontal">
 
-                            <TextView
+                            <ImageView
                                 android:id="@+id/months_validity_edit_dsc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:drawableStart="@drawable/ic_minus"
-                                android:padding="@dimen/_5sdp"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:src="@drawable/ic_minus"
+                                android:padding="@dimen/_12sdp"
                                 android:textColor="#F44336"
                                 android:textSize="@dimen/_20sdp" />
 
                             <EditText
                                 android:id="@+id/months_validity"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
+                                android:layout_weight="1"
                                 android:layout_marginTop="@dimen/pad_1dp"
                                 android:layout_marginBottom="@dimen/pad_1dp"
                                 android:background="@color/white"
@@ -603,12 +602,13 @@
                                 android:textCursorDrawable="@null"
                                 android:textSize="@dimen/_13sdp" />
 
-                            <TextView
+                            <ImageView
                                 android:id="@+id/months_validity_edit_inc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:drawableStart="@drawable/ic_plus"
-                                android:padding="@dimen/_5sdp"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:src="@drawable/ic_plus"
+                                android:padding="@dimen/_12sdp"
                                 android:textColor="#009688"
                                 android:textSize="@dimen/_20sdp" />
 
@@ -662,6 +662,8 @@
                     android:layout_marginTop="5dp"
                     android:background="#FFF0C9"
                     android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     app:layout_constraintBottom_toTopOf="@+id/coupon_layout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -673,11 +675,11 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_25sdp"
-                            android:layout_marginTop="@dimen/_15sdp"
-                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:paddingStart="@dimen/_25sdp"
+                            android:paddingTop="@dimen/_15sdp"
+                            android:paddingBottom="@dimen/_10sdp"
                             android:drawableStart="@drawable/ic_cart_others_also_bought"
                             android:drawablePadding="5dp"
                             android:fontFamily="@font/semi_bold"
@@ -691,9 +693,9 @@
                             android:layout_height="wrap_content"
                             android:clipChildren="false"
                             android:clipToPadding="false"
-                            tools:listitem="@layout/item_others_also_bought">
+                            android:orientation="horizontal"
+                            tools:listitem="@layout/item_others_also_bought"/>
 
-                        </androidx.viewpager2.widget.ViewPager2>
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>

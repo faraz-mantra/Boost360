@@ -62,68 +62,68 @@
                                 android:background="@drawable/circular_menu_back" />
                         </LinearLayout>
 
-                        <RelativeLayout
-                            android:id="@+id/imageViewCart1"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintDimensionRatio="1:1"
-                            app:layout_constraintEnd_toStartOf="@id/menu_option"
-                            app:layout_constraintTop_toTopOf="parent">
+<!--                        <RelativeLayout-->
+<!--                            android:id="@+id/imageViewCart1"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:foreground="?android:attr/selectableItemBackground"-->
+<!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                            app:layout_constraintDimensionRatio="1:1"-->
+<!--                            app:layout_constraintEnd_toStartOf="@id/menu_option"-->
+<!--                            app:layout_constraintTop_toTopOf="parent">-->
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:layout_marginStart="@dimen/_6sdp"
-                                android:layout_marginTop="@dimen/_6sdp"
-                                android:layout_marginEnd="@dimen/_6sdp"
-                                android:layout_marginBottom="@dimen/_6sdp"
-                                android:background="@drawable/circular_menu_cart" />
+<!--                            <ImageView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_centerInParent="true"-->
+<!--                                android:layout_marginStart="@dimen/_6sdp"-->
+<!--                                android:layout_marginTop="@dimen/_6sdp"-->
+<!--                                android:layout_marginEnd="@dimen/_6sdp"-->
+<!--                                android:layout_marginBottom="@dimen/_6sdp"-->
+<!--                                android:background="@drawable/circular_menu_cart" />-->
 
 
-                            <com.nex3z.notificationbadge.NotificationBadge
-                                android:id="@+id/badge"
-                                android:layout_width="28dp"
-                                android:layout_height="28dp"
-                                android:layout_alignParentTop="true"
-                                android:layout_alignParentEnd="true"
-                                app:nbMaxTextLength="2" />
-                        </RelativeLayout>
+<!--                            <com.nex3z.notificationbadge.NotificationBadge-->
+<!--                                android:id="@+id/badge"-->
+<!--                                android:layout_width="28dp"-->
+<!--                                android:layout_height="28dp"-->
+<!--                                android:layout_alignParentTop="true"-->
+<!--                                android:layout_alignParentEnd="true"-->
+<!--                                app:nbMaxTextLength="2" />-->
+<!--                        </RelativeLayout>-->
 
-                        <!--                        <TextView-->
-                        <!--                            android:layout_width="0dp"-->
-                        <!--                            android:layout_height="wrap_content"-->
-                        <!--                            android:fontFamily="@font/lato"-->
-                        <!--                            android:text="Add-ons Store"-->
-                        <!--                            android:textAllCaps="false"-->
-                        <!--                            android:textColor="@color/white"-->
-                        <!--                            android:textFontWeight="700"-->
-                        <!--                            android:textSize="@dimen/txt_15sp"-->
-                        <!--                            android:textStyle="bold"-->
-                        <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-                        <!--                            app:layout_constraintEnd_toStartOf="@+id/imageViewCart1"-->
-                        <!--                            app:layout_constraintStart_toEndOf="@+id/imageView21"-->
-                        <!--                            app:layout_constraintTop_toTopOf="parent" />-->
+<!--                        &lt;!&ndash;                        <TextView&ndash;&gt;-->
+<!--                        &lt;!&ndash;                            android:layout_width="0dp"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                            android:fontFamily="@font/lato"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                            android:text="Add-ons Store"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                            android:textAllCaps="false"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                            android:textColor="@color/white"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                            android:textFontWeight="700"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                            android:textSize="@dimen/txt_15sp"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                            android:textStyle="bold"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                            app:layout_constraintBottom_toBottomOf="parent"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                            app:layout_constraintEnd_toStartOf="@+id/imageViewCart1"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                            app:layout_constraintStart_toEndOf="@+id/imageView21"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                            app:layout_constraintTop_toTopOf="parent" />&ndash;&gt;-->
 
-                        <LinearLayout
-                            android:id="@+id/menu_option"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            android:gravity="center"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintDimensionRatio="1:1"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
+<!--                        <LinearLayout-->
+<!--                            android:id="@+id/menu_option"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:foreground="?android:attr/selectableItemBackground"-->
+<!--                            android:gravity="center"-->
+<!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                            app:layout_constraintDimensionRatio="1:1"-->
+<!--                            app:layout_constraintEnd_toEndOf="parent"-->
+<!--                            app:layout_constraintTop_toTopOf="parent">-->
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="@dimen/_6sdp"
-                                android:background="@drawable/circular_menu_option" />
-                        </LinearLayout>
+<!--                            <ImageView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_margin="@dimen/_6sdp"-->
+<!--                                android:background="@drawable/circular_menu_option" />-->
+<!--                        </LinearLayout>-->
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -317,7 +317,8 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="15dp"
                             android:orientation="vertical"
-                            android:visibility="gone">
+                            android:visibility="gone"
+                            tools:visibility="gone">
 
                             <androidx.cardview.widget.CardView
                                 android:layout_width="match_parent"

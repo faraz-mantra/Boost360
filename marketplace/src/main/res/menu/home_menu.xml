@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
-  <item
-    android:id="@+id/action_add"
-    android:icon="@drawable/circular_menu_cart"
-    app:showAsAction="ifRoom"
-    android:title="@string/cart">
-  </item>
-  <item
-    android:id="@+id/overflowMenu"
-    android:icon="@drawable/circular_menu_option"
-    android:title="@string/home_more_menu"
-    app:showAsAction="always">
-    <menu>
-      <item
-        android:id="@+id/plan_history"
-        android:icon="@drawable/ic_clock_counter_clockwise"
-        android:title="@string/my_plan_history"
-        />
-      <item
-        android:id="@+id/offer_coupons"
-        android:icon="@drawable/ic_circle_wavy"
-        android:title="@string/view_offer_coupons"
-        />
-      <item
-        android:id="@+id/help_section"
-        android:icon="@drawable/ic_help_white"
-        android:title="@string/need_help"/>
-    </menu>
-  </item>
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_add"
+        android:icon="@drawable/circular_menu_cart"
+        android:title="@string/cart"
+        app:actionLayout="@layout/custom_action_item_layout"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/overflowMenu"
+        android:icon="@drawable/circular_menu_option"
+        android:title="@string/home_more_menu"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/plan_history"
+                android:icon="@drawable/ic_clock_counter_clockwise"
+                android:title="@string/my_plan_history" />
+            <item
+                android:id="@+id/offer_coupons"
+                android:icon="@drawable/ic_circle_wavy"
+                android:title="@string/view_offer_coupons" />
+            <item
+                android:id="@+id/help_section"
+                android:icon="@drawable/ic_help_white"
+                android:title="@string/need_help" />
+        </menu>
+    </item>
 
 </menu>

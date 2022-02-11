@@ -38,9 +38,7 @@ import com.boost.cart.ui.popup.TANPopUpFragment
 import com.boost.cart.ui.splash.SplashFragment
 import com.boost.cart.ui.webview.WebViewFragment
 import com.boost.cart.utils.*
-import com.boost.cart.utils.Constants.Companion.CAT
 import com.boost.cart.utils.Constants.Companion.COUPON_POPUP_FRAGEMENT
-import com.boost.cart.utils.Constants.Companion.FPID
 import com.boost.cart.utils.Constants.Companion.SCHEMA_ID
 import com.boost.cart.utils.Constants.Companion.WEBSITE_ID
 import com.boost.cart.utils.DateUtils.parseDate
@@ -79,34 +77,10 @@ import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.billing_details_layout.*
 import kotlinx.android.synthetic.main.cart_applied_coupon_layout.*
-import kotlinx.android.synthetic.main.cart_fragment.*
-import kotlinx.android.synthetic.main.cart_fragment.addons_layout
-import kotlinx.android.synthetic.main.cart_fragment.back_button12
-import kotlinx.android.synthetic.main.cart_fragment.cart_addons_recycler
-import kotlinx.android.synthetic.main.cart_fragment.cart_amount_title
-import kotlinx.android.synthetic.main.cart_fragment.cart_apply_coupon
-import kotlinx.android.synthetic.main.cart_fragment.cart_grand_total
-import kotlinx.android.synthetic.main.cart_fragment.cart_main_layout
-import kotlinx.android.synthetic.main.cart_fragment.cart_main_scroller
-import kotlinx.android.synthetic.main.cart_fragment.cart_package_recycler
-import kotlinx.android.synthetic.main.cart_fragment.cart_renewal_recycler
-import kotlinx.android.synthetic.main.cart_fragment.cart_spk_to_expert
-import kotlinx.android.synthetic.main.cart_fragment.cart_view_details
-import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_title
-import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_value
-import kotlinx.android.synthetic.main.cart_fragment.empty_cart
-import kotlinx.android.synthetic.main.cart_fragment.footer_grand_total
-import kotlinx.android.synthetic.main.cart_fragment.gst_layout
-import kotlinx.android.synthetic.main.cart_fragment.months_validity
-import kotlinx.android.synthetic.main.cart_fragment.months_validity_edit_dsc
-import kotlinx.android.synthetic.main.cart_fragment.months_validity_edit_inc
-import kotlinx.android.synthetic.main.cart_fragment.mp_cart_compare_packs
-import kotlinx.android.synthetic.main.cart_fragment.package_layout
-import kotlinx.android.synthetic.main.cart_fragment.renewal_layout
-import kotlinx.android.synthetic.main.cart_fragment.total_months_layout
 import kotlinx.android.synthetic.main.cart_v2_fragment.*
 import java.text.NumberFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
@@ -175,6 +149,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
     val WebViewFragment = WebViewFragment()
 
+    val recommendedAddonsWidgetKey: ArrayList<String> = arrayListOf()
+
     //    var couponDiwaliRedundant : MutableList<String?> = java.util.ArrayList()
     var couponDiwaliRedundant: HashMap<String?, String?> = HashMap<String?, String?>()
 
@@ -228,7 +204,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         progressDialog = ProgressDialog(requireContext())
 
 
-        cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, ArrayList())
+        cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, ArrayList(), requireActivity().application)
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
         cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
         packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList())
@@ -261,7 +237,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //    val list = arrayListOf<Bundles>()
         prefs.storeCompareState(1)
 //        showpopup()
-//        loadRecommendedAddons()
         loadLastUsedPayData()
         initializePackageRecycler()
         initializeAddonsRecycler()
@@ -1545,6 +1520,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         upgradeAdapter.addupdates(list)
         recomended_viewpager.adapter = upgradeAdapter
         upgradeAdapter.notifyDataSetChanged()
+        viewpager_layout.visibility = View.VISIBLE
         // recycler.isFocusable = false
 //        back_image.isFocusable = true
     }
@@ -2308,9 +2284,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
     }
 
     fun loadData() {
-        viewModel.getCartItems()
         viewModel.getAllFeatures()
         viewModel.getAllBundles()
+        viewModel.getCartItems()
         //load customerID
 //        viewModel.requestCustomerId(CreateCustomerInfoRequest(
 //                AddressDetails(
@@ -2406,6 +2382,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                             couponDiwaliRedundant.put(items.feature_code, items.item_name)
                         }
                         features.add(items)
+                        if(!recommendedAddonsWidgetKey.contains(items.boost_widget_key!!)) {
+                            recommendedAddonsWidgetKey.add(items.boost_widget_key!!)
+                        }
                     } else if (items.item_type.equals("bundles")) {
                         bundles.add(items)
                     }
@@ -2427,6 +2406,17 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         }
 //                        if (bundle.min_purchase_months < default_validity_months)
 //                            default_validity_months = default_validity_months
+                        for(singleBundle in bundlesList){
+                            if(singleBundle.bundle_id.equals(bundle.item_id)){
+                                val temp = Gson().fromJson<List<IncludedFeature>>(singleBundle.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                                for(singleFeatures in temp){
+                                    if(!recommendedAddonsWidgetKey.contains(singleFeatures.feature_code)) {
+                                        recommendedAddonsWidgetKey.add(singleFeatures.feature_code)
+                                    }
+                                }
+                                break
+                            }
+                        }
                     }
                     if (default_validity_months > 0) {
                         if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
@@ -2477,6 +2467,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 }
                 event_attributes.put("cart ids", Utils.filterBraces(cartFullItems.toString()))
                 Log.v("events", event_attributes.toString())
+                viewModel.getRecommendedAddons(RecommendedAddonsRequest(recommendedAddonsWidgetKey, (activity as CartActivity).fpid, (activity as CartActivity).experienceCode))
 //                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", event_attributes)
                 WebEngageController.trackEvent(event_name = EVENT_NAME_ADDONS_MARKETPLACE_FULL_CART_LOADED, EVENT_LABEL_ADDONS_MARKETPLACE_FULL_CART_LOADED, event_attributes)
 
@@ -2644,9 +2635,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         //getting all features
         viewModel.updateAllFeaturesResult().observe(this, Observer {
             if (it != null && it.isNotEmpty()) {
+                featuresList = it
                 updatePackageFeature(it)
                 val lessList = it!!.subList(0, 20)
-//                updateRecycler(lessList)
             }
 
 
@@ -2872,7 +2863,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         total += item.price
                 }
                 cart_amount_title.text = "Cart total (" + cartList.size + " items)"
-                cart_amount_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total)
+                cart_amount.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total)
                 couponDiscountAmount = total * couponDisount / 100
                 coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
                 total -= couponDiscountAmount
@@ -3097,14 +3088,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         val bulkObject2 = BulkPropertySegment(0, 10, objectKeys, "coupon", "discount_coupons", 1)
         bulkPropertySegment.add(0, arrayListOf(bulkObject1, bulkObject2))
         viewModel.getCouponRedeem(CouponRequest(bulkPropertySegment, SCHEMA_ID, WEBSITE_ID))
-    }
-
-    private fun loadRecommendedAddons() {
-        var widgetList: MutableList<String> = ArrayList()
-        widgetList.add("FEATUREDIMAGE")
-        widgetList.add("DOMAINPURCHASE")
-        widgetList.add("LATESTUPDATES")
-        viewModel.getRecommendedAddons(RecommendedAddonsRequest(widgetList, FPID, CAT))
     }
 
 

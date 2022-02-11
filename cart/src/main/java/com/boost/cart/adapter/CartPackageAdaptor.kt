@@ -1,5 +1,6 @@
 package com.boost.cart.adapter
 
+import android.app.Application
 import android.content.Context
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
@@ -13,12 +14,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
 import com.boost.cart.interfaces.CartFragmentListener
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_PACKAGE_CROSSED_DELETED_FROM_CART
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import java.text.NumberFormat
 import java.util.*
 
@@ -27,6 +35,7 @@ class CartPackageAdaptor(
         list: List<CartModel>?,
         val listener: CartFragmentListener,
         cryptoCurrencies: List<FeaturesModel>?,
+        val application: Application
 ) : RecyclerView.Adapter<CartPackageAdaptor.upgradeViewHolder>() {
 
   private var bundlesList = ArrayList<CartModel>()
@@ -80,7 +89,6 @@ class CartPackageAdaptor(
     } else {
       holder.orig_cost.visibility = View.GONE
     }
-    holder.addon_amount.text = "Includes "+upgradeList.size+" addons"
     holder.removePackage.setOnClickListener {
       selectedBundle.item_name?.let { it1 ->
         WebEngageController.trackEvent(
@@ -91,10 +99,7 @@ class CartPackageAdaptor(
       }
       listener.deleteCartAddonsItem(bundlesList.get(position).item_id)
     }
-    val linearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-    holder.adapter = NewAddonsAdapter(upgradeList)
-    holder.ChildRecyclerView.adapter = holder.adapter
-    holder.ChildRecyclerView.layoutManager = linearLayoutManager
+    updateFeatures(bundlesList.get(position).item_id, holder)
 
 //    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 //    if (bundlesList.size - 1 == position) {
@@ -201,6 +206,7 @@ class CartPackageAdaptor(
     val name = itemView.findViewById<TextView>(R.id.package_title)
     val price = itemView.findViewById<TextView>(R.id.package_price)
     val orig_cost = itemView.findViewById<TextView>(R.id.package_orig_cost)
+//    val used_by = itemView.findViewById<TextView>(R.id.used_by)
 
     //  val discount = itemView.findViewById<TextView>(R.id.package_discount)
     val image = itemView.findViewById<ImageView>(R.id.package_profile_image)
@@ -229,5 +235,34 @@ class CartPackageAdaptor(
       0
     )
     holder.orig_cost.text = origCost
+  }
+
+  fun updateFeatures(bundleId: String, holder: upgradeViewHolder) {
+    CompositeDisposable().add(
+      AppDatabase.getInstance(application)!!
+        .bundlesDao()
+        .getBundleItemById(bundleId)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe({
+          val temp = Gson().fromJson<List<IncludedFeature>>(it.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+          var tempFeatures = ArrayList<FeaturesModel>()
+          for(singleFeaturesCode in temp){
+            for(singleFeature in upgradeList) {
+              if (singleFeature.boost_widget_key.contains(singleFeaturesCode.feature_code)) {
+                tempFeatures.add(singleFeature)
+              }
+            }
+          }
+          holder.addon_amount.text = "Includes "+tempFeatures.size+" addons"
+          val linearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+          holder.adapter = NewAddonsAdapter(tempFeatures)
+          holder.ChildRecyclerView.adapter = holder.adapter
+          holder.ChildRecyclerView.layoutManager = linearLayoutManager
+//          holder.used_by.setText("Used by "+it.+"+ businesses")
+        }, {
+//                            updatesError.postValue(it.message)
+        })
+    )
   }
 }
