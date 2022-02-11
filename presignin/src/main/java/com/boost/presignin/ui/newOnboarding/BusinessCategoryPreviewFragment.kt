@@ -6,12 +6,15 @@ import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.LayoutBusinessCategoryPreviewBinding
+import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.category.CategoryDataModel
 import com.boost.presignin.viewmodel.CategoryVideoModel
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.utils.makeSectionOfTextBold
+import com.framework.webengageconstant.*
+import com.framework.webengageconstant.PS_LOGIN_OTP_RESENT_CLICK
 
 class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPreviewBinding, CategoryVideoModel>() {
 
@@ -74,14 +77,15 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
     } else {
       binding?.autocompleteSearchCategory?.text = makeSectionOfTextBold(categoryModel?.getCategoryWithoutNewLine() ?: "", categoryModel?.getCategoryWithoutNewLine() ?: "", font = R.font.semi_bold)
     }
-    baseActivity.glideLoad(binding?.desktopPreview?.imgDesktop!!, desktopPreview ?: "", R.drawable.mobile_preview_website)
-    baseActivity.glideLoad(binding?.mobilePreview?.imgMobile!!, mobilePreview ?: "", R.drawable.mobile_preview_website)
+    baseActivity.glideLoad(binding?.desktopPreview?.imgDesktop!!, desktopPreview ?: "", R.drawable.ic_placeholder)
+    baseActivity.glideLoad(binding?.mobilePreview?.imgMobile!!, mobilePreview ?: "", R.drawable.ic_placeholder)
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
       binding?.tvNextStep -> {
+        WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
         addFragment(R.id.inner_container, SetupMyWebsiteStep2Fragment.newInstance(Bundle().apply {
           putString(IntentConstant.DESKTOP_PREVIEW.name, desktopPreview)
           putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
@@ -92,9 +96,11 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
         }), true)
       }
       binding?.layoutMobile -> {
+        WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_PREVIEW_MOBILE_CLICK, CLICK, NO_EVENT_VALUE)
         setUpButtonSelectedUI()
       }
       binding?.layoutDesktop -> {
+        WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_PREVIEW_DESKTOP_CLICK, CLICK, NO_EVENT_VALUE)
         setUpButtonSelectedUI(false)
       }
       binding?.autocompleteSearchCategory -> {

@@ -41,7 +41,6 @@ import com.onboarding.nowfloats.ui.updateChannel.startFragmentChannelActivity
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
 import java.util.*
 
-
 const val VISITS_TYPE_STRING = "visits_type_string"
 
 const val RIA_NODE_DATA = "riaNodeDatas"
@@ -543,6 +542,36 @@ fun AppCompatActivity.startEcommerceAppointmentSetting(session: UserSessionManag
       com.appservice.constant.FragmentType.APPOINTMENT_SETTINGS
     } else {
       com.appservice.constant.FragmentType.ECOMMERCE_SETTINGS
+    }
+    startFragmentActivity(type)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startCatalogSetup(session: UserSessionManager?) {
+  try {
+    val type = if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
+      com.appservice.constant.FragmentType.APPOINTMENT_CATALOG_SETTINGS
+    } else {
+      com.appservice.constant.FragmentType.ECOMMERCE_CATALOG_SETTINGS
+    }
+    startFragmentActivity(type)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startCatalogAppointment(session: UserSessionManager?) {
+  Toast.makeText(this, "Coming soon.. ", Toast.LENGTH_SHORT).show()
+}
+
+fun AppCompatActivity.startBusinessVerification(session: UserSessionManager?) {
+  try {
+    val type = if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
+      com.appservice.constant.FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE
+    } else {
+      com.appservice.constant.FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE
     }
     startFragmentActivity(type)
   } catch (e: ClassNotFoundException) {
