@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextUtils
@@ -2300,7 +2301,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
     fun loadData() {
         viewModel.getAllFeatures()
         viewModel.getAllBundles()
-        viewModel.getCartItems()
+        Handler().postDelayed({
+            viewModel.getCartItems()
+        }, 2000)
         //load customerID
 //        viewModel.requestCustomerId(CreateCustomerInfoRequest(
 //                AddressDetails(
