@@ -41,6 +41,7 @@ import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.models.UpdateDraftBody
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
@@ -621,44 +622,25 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             isPicMes,
             merchantId,
             parentId,
-            sendToSubscribe,
+            false,
             socialShare
         )
 
-        viewModel.putBizMessageUpdate(request).observeOnce(this) {
+
+        viewModel.putBizMessageUpdateV2(request).observeOnce(this) {
             if (it.isSuccess() && it.stringResponse.isNullOrEmpty().not()) {
 
                 if (isPicMes) {
                     lifecycleScope.launch {
-                        val bodyImage =
-                            File(posterImgPath).asRequestBody("image/*".toMediaTypeOrNull())
+                        val bodyBase64 =
+                            File(posterImgPath).toBase64()
                         val s_uuid = UUID.randomUUID().toString().replace("-", "")
-                        viewModel.putBizImageUpdate(
-                            clientId, "sequential", s_uuid, 1, 1,
-                            socialShare, it.stringResponse, sendToSubscribe, bodyImage
+                        viewModel.putBizImageUpdateV2(
+                            "update",it.stringResponse,bodyBase64
                         ).observeOnce(this@PostPreviewSocialActivity) { it1 ->
                             if (it1.isSuccess()) {
                                 // successResult()
-                                posterProgressSheet?.dismiss()
-                                if (PreferencesUtils.instance.getData(
-                                        com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE,
-                                        true
-                                    )
-                                ) {
-                                    InAppReviewUtils.showInAppReview(
-                                        this@PostPreviewSocialActivity,
-                                        InAppReviewUtils.Events.in_app_review_first_promo_update
-                                    )
-                                    PreferencesUtils.instance.saveData(
-                                        com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE,
-                                        false
-                                    )
-                                }
-                                PostSuccessBottomSheet.newInstance(posterImgPath, captionIntent)
-                                    .show(
-                                        supportFragmentManager,
-                                        PostSuccessBottomSheet::class.java.name
-                                    )
+                                showSuccessSheet()
 
 
                             } else {
@@ -670,15 +652,37 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                     }
 
                 } else {
-                    posterProgressSheet?.dismiss()
-
-                    showShortToast("Post updating error, please try again.")
+                    showSuccessSheet()
                 }
             }
 
 
 
         }
+    }
+
+    fun showSuccessSheet(){
+        viewModel.updateDraft(UpdateDraftBody(clientId,"",session?.fpTag,""))
+        posterProgressSheet?.dismiss()
+        if (PreferencesUtils.instance.getData(
+                com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE,
+                true
+            )
+        ) {
+            InAppReviewUtils.showInAppReview(
+                this@PostPreviewSocialActivity,
+                InAppReviewUtils.Events.in_app_review_first_promo_update
+            )
+            PreferencesUtils.instance.saveData(
+                com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE,
+                false
+            )
+        }
+        PostSuccessBottomSheet.newInstance(posterImgPath, captionIntent)
+            .show(
+                supportFragmentManager,
+                PostSuccessBottomSheet::class.java.name
+            )
     }
     fun fetchSubscriberCount(){
         viewModel.getMerchantSummary(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session?.fpTag).observeOnce(this) {

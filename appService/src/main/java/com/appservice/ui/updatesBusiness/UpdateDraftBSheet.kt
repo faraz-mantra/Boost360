@@ -1,6 +1,7 @@
 package com.appservice.ui.updatesBusiness
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.appservice.R
 import com.appservice.base.AppBaseBottomSheetFragment
@@ -9,10 +10,12 @@ import com.framework.models.UpdateDraftBody
 import com.appservice.viewmodel.UpdatesViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.utils.toBase64
 import java.io.File
 
 class UpdateDraftBSheet:AppBaseBottomSheetFragment<BsheetUpdateDraftBinding,UpdatesViewModel>() {
 
+    private val TAG = "UpdateDraftBSheet"
 
     private var text: String?=null
 
@@ -51,41 +54,47 @@ class UpdateDraftBSheet:AppBaseBottomSheetFragment<BsheetUpdateDraftBinding,Upda
             }
 
             binding!!.btnDiscard->{
-                val updateDraftBody= UpdateDraftBody(clientId,
-                    "",sessionManager?.fpTag!!,""
-                )
-                updateState(updateDraftBody)
+                text =""
+                showProgress()
+                updateState("")
             }
             binding!!.btnSaveDraft->{
-                val updateDraftBody= UpdateDraftBody(clientId,
-                    text,sessionManager?.fpTag!!,"https://images.unsplash.com/photo-1643694941418-ab65214f34fd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80"
-                )
-                updateState(updateDraftBody)
+
+
+                uploadDraftImage()
             }
         }
     }
 
     private fun uploadDraftImage() {
+        showProgress()
         if (arguments?.getString(BK_IMAGE_PATH)!=null){
             val imgFile = File(arguments?.getString(BK_IMAGE_PATH)!!)
-//            viewModel?.putUploadImage(
-//                imgFile.asRequestBody("image/*".toMediaTypeOrNull())).observe(
-//                viewLifecycleOwner,{
-//                    updateState()
-//                }
-//            )
+            viewModel?.putBizImageUpdateV2("draft",null,imgFile.toBase64())?.observe(viewLifecycleOwner
+            ) {
+                if (it.isSuccess()){
+                    Log.i(TAG, "uploadDraftImage: "+it.stringResponse)
+                    updateState(it.stringResponse)
+                }else{
+                    hideProgress()
+                }
+            }
         }else{
-//            updateState()
+            updateState("")
         }
 
     }
 
-    fun updateState(updateDraftBody: UpdateDraftBody) {
+    fun updateState(imageUrl: String?) {
 //        viewModel?.updateFirebaseState(arguments?.getString(BK_TEXT))?.observe(viewLifecycleOwner,{
 //
 //        })
 
-        showProgress()
+             val updateDraftBody= UpdateDraftBody(clientId,
+                   text,sessionManager?.fpTag!!,
+                 imageUrl
+               )
+
         if (sessionManager?.fpTag!=null){
 
             viewModel?.updateDraft(updateDraftBody)?.observe(viewLifecycleOwner,{

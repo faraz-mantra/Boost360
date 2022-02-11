@@ -11,6 +11,8 @@ import com.appservice.rest.repository.WithFloatTwoRepository
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
+import com.framework.pref.clientId
+import com.google.gson.JsonObject
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import io.reactivex.Observable
 import okhttp3.RequestBody
@@ -23,6 +25,10 @@ class UpdatesViewModel : BaseViewModel() {
 
   fun putBizMessageUpdate(request: PostUpdateTaskRequest?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.putBizMessageUpdate(request).toLiveData()
+  }
+
+  fun putBizMessageUpdateV2(request: PostUpdateTaskRequest?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.putBizMessageUpdateV2(request).toLiveData()
   }
 
   fun deleteBizMessageUpdate(request: DeleteBizMessageRequest?): LiveData<BaseResponse> {
@@ -65,5 +71,16 @@ class UpdatesViewModel : BaseViewModel() {
       clientId, requestType, requestId, totalChunks,
       currentChunkNumber, socialParmeters, bizMessageId, sendToSubscribers, requestBody
     ).toLiveData()
+  }
+
+  fun putBizImageUpdateV2(
+    type: String?,
+    bizMessageId: String?,
+    imageBase64: String?,
+  ): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.putBizImageUpdateV2(
+        type,bizMessageId,imageBase64
+      ).toLiveData()
+
   }
 }

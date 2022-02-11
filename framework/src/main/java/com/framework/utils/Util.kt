@@ -21,6 +21,8 @@ import android.provider.MediaStore
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.*
+import android.util.Base64.DEFAULT
+import android.util.Base64.encodeToString
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -648,4 +650,14 @@ fun View.setClickableRipple() {
     val backgroundResource = getResourceId(0, 0)
     setBackgroundResource(backgroundResource)
   }
+}
+
+fun File.toBase64(): String? {
+  val result: String?
+  inputStream().use { inputStream ->
+    val sourceBytes = inputStream.readBytes()
+    result = android.util.Base64.encodeToString(sourceBytes, android.util.Base64.DEFAULT)
+  }
+
+  return result
 }

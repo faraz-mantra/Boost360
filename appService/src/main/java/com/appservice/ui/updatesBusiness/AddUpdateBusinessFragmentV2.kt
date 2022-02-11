@@ -43,6 +43,7 @@ import com.framework.firebaseUtils.caplimit_feature.getCapData
 import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.Key_Preferences.PREF_NAME_TWITTER
 import com.framework.utils.*
+import com.google.firebase.firestore.ListenerRegistration
 import com.onboarding.nowfloats.bottomsheet.util.runOnUi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -57,6 +58,7 @@ import java.net.URL
 class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2Binding, UpdatesViewModel>() {
 
 
+  private var lisReg: ListenerRegistration?=null
   private var mSpannable: Spannable?=null
   private var sttUtils: STTUtils?=null
   private val TAG = "AddUpdateBusinessFragme"
@@ -213,6 +215,11 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     }
 
   }
+
+  override fun onPause() {
+    super.onPause()
+    lisReg?.remove()
+  }
   private fun initUI() {
     binding.etUpdate.requestFocus()
     val imm =
@@ -228,50 +235,54 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       getString(R.string.add_image_optional),
       "Add image"
     )
-    FirestoreManager.readDraft {
-      if (activity==null||isAdded.not()){
-        return@readDraft
-      }
-      binding!!.etUpdate.setText(highlightHashTag(it?.content,R.color.black_4a4a4a))
-      addHashTagFunction()
-      binding!!.tvCount.text = (it?.content?.length?:0).toString()
+    lisReg = FirestoreManager.readDraft {
+      if (activity != null && isAdded) {
 
-      lifecycleScope.launch {
-        withContext(Dispatchers.IO){
-          if (it?.imageUri.isNullOrEmpty().not()){
-            val imageurl = URL(it!!.imageUri)
-            val bitmap = BitmapFactory.decodeStream(imageurl.openConnection().getInputStream())
-            val imgFile =File(requireActivity().getExternalFilesDir(null)?.path+File.separator
-                    +Constants.UPDATE_PIC_FILE_NAME)
-            bitmap.saveAsImageToAppFolder(imgFile.path)
-            runOnUi {
-              loadImage(imgFile.path)
+        binding!!.etUpdate.setText(highlightHashTag(it?.content, R.color.black_4a4a4a))
+        addHashTagFunction()
+        binding!!.tvCount.text = (it?.content?.length ?: 0).toString()
+
+        lifecycleScope.launch {
+          withContext(Dispatchers.IO) {
+            if (it?.imageUri.isNullOrEmpty().not()) {
+              val imageurl = URL(it!!.imageUri)
+              val bitmap = BitmapFactory.decodeStream(imageurl.openConnection().getInputStream())
+              val imgFile = File(
+                requireActivity().getExternalFilesDir(null)?.path + File.separator
+                        + Constants.UPDATE_PIC_FILE_NAME
+              )
+              bitmap.saveAsImageToAppFolder(imgFile.path)
+              runOnUi {
+                loadImage(imgFile.path)
+              }
             }
-          }
-          runOnUi {
-            toggleContinue()
+            runOnUi {
+              toggleContinue()
+            }
+
           }
 
         }
 
+
       }
 
+      KeyboardVisibilityEvent.setEventListener(
+        requireActivity(),
+        KeyboardVisibilityEventListener {
+          // Ah... at last. do your thing :)
+          if (it) {
+            binding.cardInput.strokeColor =
+              ContextCompat.getColor(requireActivity(), R.color.black_4a4a4a)
+          } else {
+            binding.cardInput.strokeColor =
+              ContextCompat.getColor(requireActivity(), R.color.colorAFAFAF)
+          }
+        })
+
+      toggleContinue()
 
     }
-
-    KeyboardVisibilityEvent.setEventListener(
-      requireActivity(),
-      KeyboardVisibilityEventListener {
-        // Ah... at last. do your thing :)
-        if (it){
-          binding.cardInput.strokeColor = ContextCompat.getColor(requireActivity(),R.color.black_4a4a4a)
-        }else{
-          binding.cardInput.strokeColor = ContextCompat.getColor(requireActivity(),R.color.colorAFAFAF)
-        }
-      })
-
-    toggleContinue()
-
   }
 
   fun toggleContinue(){

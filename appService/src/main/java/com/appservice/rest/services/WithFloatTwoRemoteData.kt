@@ -11,6 +11,7 @@ import com.appservice.model.updateBusiness.BusinessUpdateResponse
 import com.appservice.model.updateBusiness.DeleteBizMessageRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
 import com.appservice.rest.EndPoints
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -92,6 +93,9 @@ interface WithFloatTwoRemoteData {
   @PUT(EndPoints.PUT_BIZ_MESSAGE)
   fun putBizMessageUpdate(@Body request: PostUpdateTaskRequest?): Observable<Response<Any>>
 
+  @PUT(EndPoints.PUT_BIZ_MESSAGE_V2)
+  fun putBizMessageUpdateV2(@Body request: PostUpdateTaskRequest?): Observable<Response<Any>>
+
   @GET(EndPoints.GET_CATALOG_STATUS)
   fun getCatalogStatus(
     @Path("fpid") fpid: String,
@@ -121,6 +125,10 @@ interface WithFloatTwoRemoteData {
     @Body requestBody: RequestBody?,
   ): Observable<Response<String>>
 
+  @POST(EndPoints.PUT_BIZ_IMAGE_V2)
+  fun putBizImageUpdateV2(
+    @Body body:JsonObject
+    ): Observable<Response<String>>
 //  fun getDeliveryDetails(): Observable<Response<ResponseBody>>
 
   //TODO APPOINTMENT

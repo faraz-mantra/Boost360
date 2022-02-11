@@ -4,6 +4,7 @@ import com.festive.poster.models.CustomerDetails
 import com.festive.poster.models.MerchantSummaryResponse
 import com.festive.poster.models.PostUpdateTaskRequest
 import com.festive.poster.reset.EndPoints
+import com.google.gson.JsonObject
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.http.*
@@ -25,6 +26,9 @@ interface WithFloatTwoRemoteData {
   @PUT(EndPoints.PUT_BIZ_MESSAGE)
   fun putBizMessageUpdate(@Body request: PostUpdateTaskRequest?): Observable<Response<Any>>
 
+  @PUT(EndPoints.PUT_BIZ_MESSAGE_V2)
+  fun putBizMessageUpdateV2(@Body request: PostUpdateTaskRequest?): Observable<Response<Any>>
+
   @Headers("Accept: application/json", "Content-Type: application/octet-stream")
   @PUT(EndPoints.PUT_BIZ_IMAGE)
   fun putBizImageUpdate(
@@ -41,6 +45,10 @@ interface WithFloatTwoRemoteData {
 
 //  fun getDeliveryDetails(): Observable<Response<ResponseBody>>
 
+  @POST(EndPoints.PUT_BIZ_IMAGE_V2)
+  fun putBizImageUpdateV2(
+    @Body body: JsonObject
+  ): Observable<Response<String>>
 
   @GET(EndPoints.GET_MERCHANT_SUMMARY)
   fun getMerchantSummary(
