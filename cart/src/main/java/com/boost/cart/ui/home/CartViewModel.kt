@@ -760,9 +760,18 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                             .subscribe(
                                     {
                                         Log.v("getCouponRedeem>>", it.toString())
-                                        val couponServiceModel =
-                                                CouponServiceModel(coupon_key, it.discountAmount, it.success, it.message)
-                                        redeemCouponResult.postValue(couponServiceModel)
+
+                                        if (it.success) {
+                                            val couponServiceModel =
+                                                    CouponServiceModel(coupon_key, it.discountAmount, it.success, it.message)
+                                            redeemCouponResult.postValue(couponServiceModel)
+                                        } else {
+                                            Toasty.error(
+                                                    getApplication(),
+                                                    "Error occurred while applying coupon - " + it.message,
+                                                    Toast.LENGTH_LONG
+                                            ).show()
+                                        }
 
 //                                        updatesLoader.postValue(false)
                                     },
