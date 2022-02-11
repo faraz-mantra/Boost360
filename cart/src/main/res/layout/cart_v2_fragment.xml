@@ -1161,7 +1161,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@id/cart_subscription_details_layout"
+                    android:id="@+id/cart_subscription_details_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_6sdp"

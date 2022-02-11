@@ -7,8 +7,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-import com.boost.upgrades.utils.Utils
+import com.boost.dbcenterapi.utils.Utils
+import com.boost.payment.base_class.BaseFragment
 import com.nowfloats.Restaurants.BookATable.ui.BookATableFragment.BookATableFragment
 
 import com.thinksity.R

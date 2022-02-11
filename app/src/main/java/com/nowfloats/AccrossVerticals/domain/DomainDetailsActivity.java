@@ -11,7 +11,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
-import com.boost.upgrades.UpgradeActivity;
+import com.boost.marketplace.ui.home.MarketPlaceActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -1271,7 +1271,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         progressDialog.setMessage(status);
         progressDialog.setCancelable(false);
         progressDialog.show();
-        Intent intent = new Intent(this, UpgradeActivity.class);
+        Intent intent = new Intent(this, MarketPlaceActivity.class);
         intent.putExtra("expCode", session.getFP_AppExperienceCode());
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID());

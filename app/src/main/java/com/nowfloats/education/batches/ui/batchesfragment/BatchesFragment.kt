@@ -15,7 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.boost.upgrades.utils.Utils
+import com.boost.dbcenterapi.utils.Utils
 import com.framework.base.BaseFragment
 import com.framework.extensions.gone
 import com.framework.extensions.visible

@@ -18,11 +18,11 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.appservice.model.accountDetails.AccountDetailsResponse;
 import com.appservice.model.kycData.PaymentKycDataResponse;
+import com.boost.marketplace.ui.home.MarketPlaceActivity;
 import com.boost.presignin.model.accessToken.AccessTokenRequest;
 import com.boost.presignin.model.authToken.AccessTokenResponse;
 import com.boost.presignin.ui.intro.IntroActivity;
 import com.boost.presignup.utils.PresignupManager;
-import com.boost.upgrades.UpgradeActivity;
 import com.framework.pref.TokenResult;
 import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
 import com.nowfloats.Login.Fetch_Home_Data;
@@ -330,7 +330,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     }
 
     private void initiateAddonMarketplace() {
-        Intent intent = new Intent(SplashScreen_Activity.this, UpgradeActivity.class);
+        Intent intent = new Intent(SplashScreen_Activity.this, MarketPlaceActivity.class);
         intent.putExtra("expCode", session.getFP_AppExperienceCode());
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID().trim());

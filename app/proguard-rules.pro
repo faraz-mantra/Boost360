@@ -510,8 +510,8 @@
 #-dontwarn com.boost.upgrades.**
 #-keeppackagenames com.boost.upgrades
 #-keep class com.boost.upgrades.** {*;}
--keep class com.boost.upgrades.data.** { <fields>; }
--keep class com.boost.upgrades.datamodule.** { <fields>; }
+#-keep class com.boost.upgrades.data.** { <fields>; }
+#-keep class com.boost.upgrades.datamodule.** { <fields>; }
 
 ##------Marketplace---------##
 -dontwarn com.boost.marketplace.**

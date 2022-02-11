@@ -1,0 +1,170 @@
+[
+  {
+    "id": "1",
+    "title": "Marketing",
+    "name": "Facebook Ads (upto 75 leads)",
+    "price": 400,
+    "image": "https://i.imgur.com/xP4sB8n.jpg",
+    "MRPPrice": 700,
+    "discount": 10,
+    "RecurringPaymentFrequency": "MONTHLY",
+    "featureDetails": {
+      "backgroundImage": "https://www.nerdwallet.com/assets/blog/wp-content/uploads/2017/10/GettyImages-947995974.jpg",
+      "noOfbusinessUsed": 262,
+      "learnMore": {
+        "title": "Learn why running a facebook ad campaign is always a good idea",
+        "link": "https://www.google.com/"
+      },
+      "subTitle": "The luxury of traveling with yacht charter companies.",
+      "subDesc": "75 leads (Rs.266.67 effective lead cost) from the campaigns run by us. Lead ads are the best way to run lead generation campaigns on Facebook. Lead ads let people show their interest in a product or service by filling out a form in the ad with their details and allowing a business to follow up with them. Facebook lead ads is the expression of interest of user where they give consent to the advertiser to contact them for the particular product and service, it should not be taken as the sale of product or service, ultimate responsibility of selling and pitching the product & service is with Advertiser only.",
+      "subImages": [
+        "",
+        ""
+      ],
+      "review": [
+        {
+          "name": "Keshava Reddy",
+          "businessType": "Sparkle Salon & Spa, Indore",
+          "profileImage": "",
+          "rating": 2,
+          "title": "“Works like a charm”",
+          "desc": "I’m not really sure how old I was when I got the gift for Christmas, but I remember thinking it was a pretty impressive piece of electronic hardware. It was really cool looking (technologically speaking), and I was awfully proud to own it."
+        },
+        {
+          "name": "Keshava Reddy",
+          "businessType": "Sparkle Salon & Spa, Indore",
+          "profileImage": "",
+          "rating": 4,
+          "title": "“Works like a charm”",
+          "desc": "I’m not really sure how old I was when I got the gift for Christmas, but I remember thinking it was a pretty impressive piece of electronic hardware. It was really cool looking (technologically speaking), and I was awfully proud to own it."
+        }
+      ]
+    }
+  },
+  {
+    "id": "2",
+    "title": "Security",
+    "name": "Domain, SSL &amp; DNS manager",
+    "price": 333,
+    "image": "https://i.imgur.com/ehbOzO3.png",
+    "MRPPrice": 700,
+    "discount": 20,
+    "RecurringPaymentFrequency": "MONTHLY",
+    "featureDetails": {
+      "backgroundImage": "https://www.nerdwallet.com/assets/blog/wp-content/uploads/2017/10/GettyImages-947995974.jpg",
+      "noOfbusinessUsed": 262,
+      "learnMore": {
+        "title": "Learn why running a facebook ad campaign is always a good idea",
+        "link": "https://www.google.com/"
+      },
+      "subTitle": "The luxury of traveling with yacht charter companies.",
+      "subDesc": "75 leads (Rs.266.67 effective lead cost) from the campaigns run by us. Lead ads are the best way to run lead generation campaigns on Facebook. Lead ads let people show their interest in a product or service by filling out a form in the ad with their details and allowing a business to follow up with them. Facebook leads is the expression of interest of user where they give consent to the advertiser to contact them for the particular product and service, it should not be taken as the sale of product or service, ultimate responsibility of selling and pitching the product & service is with Advertiser only.",
+      "subImages": [
+        "",
+        ""
+      ],
+      "review": [
+        {
+          "name": "Keshava Reddy",
+          "businessType": "Sparkle Salon & Spa, Indore",
+          "profileImage": "",
+          "rating": 1,
+          "title": "“Works like a charm”",
+          "desc": "I’m not really sure how old I was when I got the gift for Christmas, but I remember thinking it was a pretty impressive piece of electronic hardware. It was really cool looking (technologically speaking), and I was awfully proud to own it."
+        },
+        {
+          "name": "Keshava Reddy",
+          "businessType": "Sparkle Salon & Spa, Indore",
+          "profileImage": "",
+          "rating": 3,
+          "title": "“Works like a charm”",
+          "desc": "I’m not really sure how old I was when I got the gift for Christmas, but I remember thinking it was a pretty impressive piece of electronic hardware. It was really cool looking (technologically speaking), and I was awfully proud to own it."
+        }
+      ]
+    }
+  },
+  {
+    "id": "3",
+    "title": "Technology",
+    "name": "SAM Chatbot",
+    "price": 160,
+    "image": "https://i.imgur.com/IQNyboy.png",
+    "MRPPrice": 700,
+    "discount": 30,
+    "RecurringPaymentFrequency": "MONTHLY",
+    "featureDetails": {
+      "backgroundImage": "https://www.nerdwallet.com/assets/blog/wp-content/uploads/2017/10/GettyImages-947995974.jpg",
+      "noOfbusinessUsed": 262,
+      "learnMore": {
+        "title": "Learn why running a facebook ad campaign is always a good idea",
+        "link": "https://www.google.com/"
+      },
+      "subTitle": "The luxury of traveling with yacht charter companies.",
+      "subDesc": "75 leads (Rs.266.67 effective lead cost) from the campaigns run by us. Lead ads are the best way to run lead generation campaigns on Facebook. Lead ads let people show their interest in a product or service by filling out a form in the ad with their details and allowing a business to follow up with them. Facebook leads is the expression of interest of user where they give consent to the advertiser to contact them for the particular product and service, it should not be taken as the sale of product or service, ultimate responsibility of selling and pitching the product & service is with Advertiser only.",
+      "subImages": [
+        "",
+        ""
+      ],
+      "review": [
+        {
+          "name": "Keshava Reddy",
+          "businessType": "Sparkle Salon & Spa, Indore",
+          "profileImage": "",
+          "rating": 5,
+          "title": "“Works like a charm”",
+          "desc": "I’m not really sure how old I was when I got the gift for Christmas, but I remember thinking it was a pretty impressive piece of electronic hardware. It was really cool looking (technologically speaking), and I was awfully proud to own it."
+        },
+        {
+          "name": "Keshava Reddy",
+          "businessType": "Sparkle Salon & Spa, Indore",
+          "profileImage": "",
+          "rating": 5,
+          "title": "“Works like a charm”",
+          "desc": "I’m not really sure how old I was when I got the gift for Christmas, but I remember thinking it was a pretty impressive piece of electronic hardware. It was really cool looking (technologically speaking), and I was awfully proud to own it."
+        }
+      ]
+    }
+  },
+  {
+    "id": "4",
+    "title": "Services",
+    "name": "Dictate Starter",
+    "price": 320,
+    "image": "https://i.imgur.com/fNh7rpr.png",
+    "MRPPrice": 700,
+    "discount": 40,
+    "RecurringPaymentFrequency": "MONTHLY",
+    "featureDetails": {
+      "backgroundImage": "https://www.nerdwallet.com/assets/blog/wp-content/uploads/2017/10/GettyImages-947995974.jpg",
+      "noOfbusinessUsed": 262,
+      "learnMore": {
+        "title": "Learn why running a facebook ad campaign is always a good idea",
+        "link": "https://www.google.com/"
+      },
+      "subTitle": "The luxury of traveling with yacht charter companies.",
+      "subDesc": "75 leads (Rs.266.67 effective lead cost) from the campaigns run by us. Lead ads are the best way to run lead generation campaigns on Facebook. Lead ads let people show their interest in a product or service by filling out a form in the ad with their details and allowing a business to follow up with them. Facebook leads is the expression of interest of user where they give consent to the advertiser to contact them for the particular product and service, it should not be taken as the sale of product or service, ultimate responsibility of selling and pitching the product & service is with Advertiser only.",
+      "subImages": [
+        "",
+        ""
+      ],
+      "review": [
+        {
+          "name": "Keshava Reddy",
+          "businessType": "Sparkle Salon & Spa, Indore",
+          "profileImage": "",
+          "rating": 1,
+          "title": "“Works like a charm”",
+          "desc": "I’m not really sure how old I was when I got the gift for Christmas, but I remember thinking it was a pretty impressive piece of electronic hardware. It was really cool looking (technologically speaking), and I was awfully proud to own it."
+        },
+        {
+          "name": "Keshava Reddy",
+          "businessType": "Sparkle Salon & Spa, Indore",
+          "profileImage": "",
+          "rating": 2,
+          "title": "“Works like a charm”",
+          "desc": "I’m not really sure how old I was when I got the gift for Christmas, but I remember thinking it was a pretty impressive piece of electronic hardware. It was really cool looking (technologically speaking), and I was awfully proud to own it."
+        }
+      ]
+    }
+  }
+]

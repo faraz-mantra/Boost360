@@ -14,7 +14,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import com.boost.upgrades.utils.Utils
+import com.boost.dbcenterapi.utils.Utils
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.nowfloats.education.faculty.FacultyActivity

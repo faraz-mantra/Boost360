@@ -167,7 +167,7 @@ dependencies {
     api project(path: ':dashboard')
 
     //upgrade library
-    implementation project(path: ':upgrades')
+//    implementation project(path: ':upgrades')
 
     implementation('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
         transitive = true

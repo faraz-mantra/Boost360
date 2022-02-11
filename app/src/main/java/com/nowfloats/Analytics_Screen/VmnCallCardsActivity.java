@@ -22,7 +22,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.boost.upgrades.UpgradeActivity;
+import com.boost.marketplace.ui.home.MarketPlaceActivity;
 import com.dashboard.utils.PremiumCode;
 import com.framework.utils.InAppReviewUtils;
 import com.framework.views.customViews.CustomToolbar;
@@ -75,7 +75,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
   ProgressDialog vmnProgressBar;
   ImageView seeMoreLessImage;
   ConstraintLayout parentLayout, helpWebPhoneLayout, primaryLayout;
-  View backgroundLayout;
+//  View backgroundLayout;
   boolean seeMoreLessStatus = false;
   int totalCallCount = 0;
   int totalPotentialCallCount = 0;
@@ -129,7 +129,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
     websiteHelperInfo = findViewById(R.id.help_website_info);
     phoneHelperInfo = findViewById(R.id.help_phone_info);
     parentLayout = findViewById(R.id.parent_layout);
-    backgroundLayout = findViewById(R.id.background_layout);
+//    backgroundLayout = findViewById(R.id.background_layout);
     potentialCallsText = findViewById(R.id.total_number_of_calls);
     webCallCount = findViewById(R.id.web_call_count);
     phoneCallCount = findViewById(R.id.phone_call_count);
@@ -571,7 +571,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
     progressDialog.setMessage(status);
     progressDialog.setCancelable(false);
     progressDialog.show();
-    Intent intent = new Intent(this, UpgradeActivity.class);
+    Intent intent = new Intent(this, MarketPlaceActivity.class);
     intent.putExtra("expCode", session.getFP_AppExperienceCode());
     intent.putExtra("fpName", session.getFPName());
     intent.putExtra("fpid", session.getFPID());
