@@ -19,6 +19,7 @@ import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.home.MarketPlaceHomeViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.exoFullScreen.MediaPlayer
+import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import kotlinx.android.synthetic.main.bottom_sheet_videos.*
 
@@ -29,7 +30,7 @@ class VideosPopUpBottomSheet :
     lateinit var link: String
     private var videoItem: String? = null
     lateinit var videosListAdapter: VideosListAdapter
-
+    lateinit var player: ExoPlayer
 
     override fun getLayout(): Int {
         return R.layout.bottom_sheet_videos
@@ -50,7 +51,7 @@ class VideosPopUpBottomSheet :
 
     private fun initView() {
         videosListAdapter = VideosListAdapter(ArrayList(), this)
-         viewModel?.GetHelp()
+        viewModel?.GetHelp()
         initializeVideosRecycler()
     }
 
@@ -87,12 +88,12 @@ class VideosPopUpBottomSheet :
         this.videoItem = requireArguments().getString("title") ?: ""
         link = requireArguments().getString("link") ?: ""
         binding?.ctvVideoTitle?.text = videoItem
-        binding?.mainTxt?.text=videoItem
+        binding?.mainTxt?.text = videoItem
     }
 
     private fun initializePlayer() {
         MediaPlayer.initialize(baseActivity)
-        val player=MediaPlayer.exoPlayer
+        player = MediaPlayer.exoPlayer!!
         binding?.playerView?.player = player
         player?.setMediaItem(MediaItem.fromUri(Uri.parse(link)))
         player?.prepare()
@@ -101,7 +102,14 @@ class VideosPopUpBottomSheet :
 
     override fun onPause() {
         super.onPause()
-        MediaPlayer.pausePlayer()
+//        MediaPlayer.pausePlayer()
+        player.pause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (::player.isInitialized && !player.isPlaying)
+            player.play()
     }
 
     override fun onStart() {
@@ -111,22 +119,30 @@ class VideosPopUpBottomSheet :
 
     override fun onStop() {
         super.onStop()
-        MediaPlayer.stopPlayer()
+//        MediaPlayer.stopPlayer()
+        player.stop()
+        player.release()
     }
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        MediaPlayer.stopPlayer()
+//        MediaPlayer.stopPlayer()
+        player.stop()
+        player.release()
     }
 
     override fun onDetach() {
         super.onDetach()
-        MediaPlayer.stopPlayer()
+//        MediaPlayer.stopPlayer()
+        player.stop()
+        player.release()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        MediaPlayer.stopPlayer()
+//        MediaPlayer.stopPlayer()
+        player.stop()
+        player.release()
     }
 
     override fun onPackageClicked(item: Bundles?) {
@@ -158,12 +174,12 @@ class VideosPopUpBottomSheet :
     }
 
     override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
-        Toast.makeText(context,"Loading",Toast.LENGTH_LONG).show()
-        link= videoItem.youtube_link.toString()
+        Toast.makeText(context, "Loading", Toast.LENGTH_LONG).show()
+        link = videoItem.youtube_link.toString()
         MediaPlayer.releasePlayer()
         initializePlayer()
         binding?.ctvVideoTitle?.text = videoItem.title
-        binding?.mainTxt?.text= videoItem.desc
+        binding?.mainTxt?.text = videoItem.desc
 
     }
 
@@ -173,8 +189,9 @@ class VideosPopUpBottomSheet :
 
     override fun dismiss() {
         super.dismiss()
-        super.onDestroy()
-        MediaPlayer.stopPlayer()
+//        MediaPlayer.stopPlayer()
+        player.stop()
+        player.release()
 
     }
 }

@@ -1,6 +1,7 @@
 package com.boost.marketplace.adapter
 
 import android.content.Context
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.boost.dbcenterapi.upgradeDB.model.YoutubeVideoModel
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.HomeListener
 import com.bumptech.glide.Glide
+import com.framework.utils.setNoDoubleClickListener
 import java.util.*
 
 class VideosListAdapter(videoList: List<YoutubeVideoModel>, listen: HomeListener) :
@@ -57,9 +59,9 @@ class VideosListAdapter(videoList: List<YoutubeVideoModel>, listen: HomeListener
     holder.title.setText(list.get(position).title)
     holder.videoType.setText(list.get(position).desc)
 
-    holder.itemView.setOnClickListener {
+    holder.itemView.setNoDoubleClickListener ({
       listener.onPlayYouTubeVideo(list.get(position))
-    }
+    }, 3000)
 
   }
 
