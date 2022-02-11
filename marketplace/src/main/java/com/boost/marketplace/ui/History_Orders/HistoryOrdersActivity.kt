@@ -2,7 +2,6 @@ package com.boost.marketplace.ui.History_Orders
 
 import android.view.View
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.Result
@@ -47,12 +46,12 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Histo
 
 
         historyAdapter = HistoryOrdersParentAdapter(ArrayList(), this)
-        viewModel = ViewModelProviders.of(this).get(HistoryOrdersViewModel::class.java)
-
-        loadData()
-        initMVVM()
-        initRecyclerView()
-        binding?.shimmerViewHistory?.startShimmer()
+//        viewModel = ViewModelProviders.of(this).get(HistoryOrdersViewModel::class.java)
+//
+//        loadData()
+//        initMVVM()
+//        initRecyclerView()
+//        binding?.shimmerViewHistory?.startShimmer()
         binding?.addonsBack?.setOnClickListener {
             super.onBackPressed()
 
