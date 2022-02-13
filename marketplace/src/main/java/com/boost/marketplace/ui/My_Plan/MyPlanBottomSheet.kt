@@ -37,6 +37,7 @@ class MyPlanBottomSheet: BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseVie
         )
     }
 
+
     override fun onClick(v: View) {
         super.onClick(v)
         when (v) {
