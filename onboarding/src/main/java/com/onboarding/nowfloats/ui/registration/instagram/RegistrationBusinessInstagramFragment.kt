@@ -27,6 +27,18 @@ class RegistrationBusinessInstagramFragment:
         observeBackStack()
 
         addFragmentReplace(binding?.container?.id,IGIntroScreenFragment.newInstance(),true)
+        binding?.ivCross?.setOnClickListener {
+            val topFragment = getTopFragment()
+
+            if (topFragment is IGIntStatusFragment){
+                topFragment as IGIntStatusFragment
+                if (topFragment.status==IGIntStatusFragment.Status.SUCCESS.name){
+                    finish()
+                }else{
+                    onBackPressed()
+                }
+            }
+        }
     }
 
     private fun observeBackStack() {

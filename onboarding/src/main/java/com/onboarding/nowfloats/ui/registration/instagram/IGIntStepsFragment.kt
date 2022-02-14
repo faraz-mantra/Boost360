@@ -204,22 +204,32 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
 
     override fun onFacebookLoginCancel() {
         Log.i(TAG, "onFacebookLoginCancel: ")
+        openFailedState()
     }
 
     override fun onFacebookLoginError(error: FacebookException?) {
         Log.e(TAG, "onFacebookLoginError: ${error?.localizedMessage}")
+        openFailedState()
     }
 
     override fun onCompleted(
         type: FacebookGraphRequestType,
         facebookGraphResponse: BaseFacebookGraphResponse?
     ) {
+        showProgress()
         val response = facebookGraphResponse as? FacebookGraphUserPagesResponse
         val pages = response?.data ?: return
-        page = pages.get(1) ?: return
-        page?.id?.let { IGGraphManager.requestIGAccount(it,accessToken,this) }
+        if (pages.isEmpty().not()){
+            page = pages.get(1) ?: return
+            page?.id?.let { IGGraphManager.requestIGAccount(it,accessToken,this) }
+        }else{
+            openFailedState()
+
+        }
+
 
     }
+
 
     fun updateChannelAccessToken(igId:String,userName:String){
 
@@ -235,6 +245,7 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
             ))?.observe(viewLifecycleOwner) {
             if (it.isSuccess()) {
 
+                hideProgress()
                 addFragmentReplace(
                     R.id.container, IGIntStatusFragment.newInstance(
                         igName,
@@ -243,11 +254,7 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
                 )
 
             } else {
-                addFragmentReplace(
-                    R.id.container, IGIntStatusFragment.newInstance(null,
-                        IGIntStatusFragment.Status.FAILURE
-                    ), true
-                )
+                openFailedState()
             }
         }
     }
@@ -260,6 +267,7 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
             IGGraphManager.requestIGUserDetails(igId!!,
                 accessToken,this)
         }else{
+            openFailedState()
         }
     }
 
@@ -267,9 +275,20 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
         igName = response?.username
         if (response?.username!=null){
             updateChannelAccessToken(igId!!,response.username)
-
+        }else{
+            openFailedState()
         }
 
     }
+
+    private fun openFailedState() {
+        hideProgress()
+        addFragmentReplace(
+            R.id.container, IGIntStatusFragment.newInstance(null,
+                IGIntStatusFragment.Status.FAILURE
+            ), true
+        )
+    }
+
 
 }

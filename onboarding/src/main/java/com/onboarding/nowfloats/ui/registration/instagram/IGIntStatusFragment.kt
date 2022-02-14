@@ -35,7 +35,7 @@ class IGIntStatusFragment: BaseRegistrationFragment<FragmentIgIntStatusBinding>(
         SUCCESS,
         FAILURE
     }
-    private var status:String?=null
+    var status:String?=null
     companion object{
         val BK_STATUS="BK_STATUS"
         val BK_IG_NAME="BK_IG_NAME"
@@ -80,7 +80,7 @@ class IGIntStatusFragment: BaseRegistrationFragment<FragmentIgIntStatusBinding>(
                 binding!!.tvDesc.text = spanBold(
                     getString(
                         R.string.congratulations_boost_360_is_successfully_connected_to_your_instagram_account_placeholder
-                    ),"@"+igName)
+                    ,"@"+igName),"@"+igName)
                 binding!!.btnNext.text = getString(R.string.view_instagram_dashboard)
             }
             Status.FAILURE.name->{
@@ -121,6 +121,14 @@ class IGIntStatusFragment: BaseRegistrationFragment<FragmentIgIntStatusBinding>(
         when(v){
             binding!!.btnNext->{
 
+                when(status){
+                    Status.SUCCESS.name-> {
+                        requireActivity().finish()
+                    }
+                    Status.FAILURE.name-> {
+                        requireActivity().onBackPressed()
+                    }
+                }
 
             }
         }

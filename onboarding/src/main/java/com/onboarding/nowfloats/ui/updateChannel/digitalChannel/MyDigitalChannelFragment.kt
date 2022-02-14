@@ -112,10 +112,14 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     super.onCreateView()
     WebEngageController.trackEvent(MY_DIGITAL_CHANNEL_LOAD, MY_DIGITAL_CHANNEL, NO_EVENT_VALUE)
     progress = ProgressChannelDialog.newInstance()
-    updateRequestGetChannelData()
     binding?.syncBtn?.setOnClickListener { syncChannels() }
   }
 
+  override fun onResume() {
+    super.onResume()
+    updateRequestGetChannelData()
+
+  }
   private fun updateRequestGetChannelData() {
     val bundle = arguments
     val isUpdate = bundle?.getBoolean(PreferenceConstant.IS_UPDATE)

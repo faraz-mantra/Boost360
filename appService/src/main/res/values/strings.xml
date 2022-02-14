@@ -813,6 +813,8 @@
     <string name="html_tags_exception">Sorry, you can\'t enter HTML tags</string>
     <string name="twitter_disabled">Twitter disabled</string>
     <string name="twitter_enabled">Twitter enabled</string>
+  <string name="ig_disabled">Instagram disabled</string>
+  <string name="ig_enabled">Instagram enabled</string>
     <string name="facebook_page_disabled">Facebook page disabled</string>
     <string name="facebook_page_enabled">Facebook page enabled</string>
     <string name="fb_disabled">Facebook disabled</string>
