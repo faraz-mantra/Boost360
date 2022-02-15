@@ -20,7 +20,8 @@ enum class RecyclerViewItemType {
   FB_PREVIEW,
   WEBSITE_PREVIEW,
   EMAIL_PREVIEW,
-  GMB_PREVIEW;
+  GMB_PREVIEW,
+  VIEW_MORE_POSTER;
 
 
   @LayoutRes
@@ -43,6 +44,7 @@ enum class RecyclerViewItemType {
       WEBSITE_PREVIEW->R.layout.social_preview_website
       GMB_PREVIEW->R.layout.social_preview_gmb
       EMAIL_PREVIEW->R.layout.social_preview_email
+      VIEW_MORE_POSTER->R.layout.layout_view_more_template
 
     }
   }

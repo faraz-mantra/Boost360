@@ -198,7 +198,7 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
       templateIds.add(sharedViewModel?.selectedPoster?.id!!)
     }else{
       sharedViewModel?.selectedPosterPack?.posterList?.forEach {
-        templateIds.add(it.id)
+        templateIds.add(it.id!!)
       }
     }
 

@@ -23,7 +23,7 @@ class TemplateForVPViewHolder(binding: ListItemTemplateForVpBinding):
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as PosterModel
-        val variant = model.variants.firstOrNull()
+        val variant = model.variants?.firstOrNull()
         binding.btnShare.setOnClickListener {
             WebEngageController.trackEvent(Promotional_Update_WhatsApp_Share_Click)
 

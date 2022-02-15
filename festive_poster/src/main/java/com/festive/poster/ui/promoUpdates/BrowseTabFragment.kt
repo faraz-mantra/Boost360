@@ -146,8 +146,8 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
                         val templateList = ArrayList<PosterModel>()
                         templates_response.Result.templates.forEach { template ->
                             var posterTag =
-                                template.tags.find { posterTag -> posterTag == pack_tag.tag }
-                            if (posterTag != null && template.active) {
+                                template.tags?.find { posterTag -> posterTag == pack_tag.tag }
+                            if (posterTag != null && template.active == true) {
                                 template.greeting_message = pack_tag.description
                                 template.layout_id =
                                     RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP.getLayout()

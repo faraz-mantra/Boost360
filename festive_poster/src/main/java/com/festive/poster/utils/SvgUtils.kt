@@ -221,7 +221,7 @@ object SvgUtils {
             if (svgString != null && !svgString.isEmpty()) {
                 svgString = SvgRenderCacheUtil.instance.replace(
                     svgString,
-                    model.keys,
+                    model.keys!!,
                     BaseApplication.instance,
                     model.isPurchased
                 )

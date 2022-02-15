@@ -24,9 +24,9 @@ class TemplateForRVViewHolder(binding: ListItemTemplateForRvBinding):
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as PosterModel
-        val variant = model.variants.firstOrNull()
+        val variant = model.variants?.firstOrNull()
 
-        SvgUtils.loadImage(model.variants.firstOrNull()?.svgUrl!!, binding.ivSvg, model.keys,model.isPurchased)
+        SvgUtils.loadImage(model.variants?.firstOrNull()?.svgUrl!!, binding.ivSvg, model.keys,model.isPurchased)
         binding.btnShare.setOnClickListener {
             WebEngageController.trackEvent(Promotional_Update_WhatsApp_Share_Click)
             listener?.onItemClick(position,item, RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal)

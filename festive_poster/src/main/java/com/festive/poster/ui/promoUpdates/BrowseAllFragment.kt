@@ -228,7 +228,7 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
             RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal->{
                 if (isPromoWidgetActive()){
                     item as PosterModel
-                    val variant = item.variants.firstOrNull()
+                    val variant = item.variants?.firstOrNull()
                     SvgUtils.shareUncompressedSvg(variant?.svgUrl,item,
                         binding.root.context, PackageNames.WHATSAPP)
                 }else{

@@ -189,14 +189,15 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                         val templateList = ArrayList<PosterModel>()
                         templates_response.Result.templates.forEach { template ->
                             var posterTag =
-                                template.tags.find { posterTag -> posterTag == pack_tag.tag }
-                            if (posterTag != null && template.active) {
+                                template.tags?.find { posterTag -> posterTag == pack_tag.tag }
+                            if (posterTag != null && template?.active == true) {
                                 template.greeting_message = pack_tag.description
                                 template.layout_id =
                                     RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP.getLayout()
                                 templateList.add(template.clone()!!)
                             }
                         }
+                        templateList.add(PosterModel(layout_id = RecyclerViewItemType.VIEW_MORE_POSTER.getLayout()))
                         if (templateList.isNotEmpty()){
                             dataList?.add(
                                 PosterPackModel(
@@ -210,6 +211,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
 
 
                     }
+
                     dataList?.add(dataList!![0])
                     dataList?.add(dataList!![0])
                     dataList?.add(dataList!![0])
@@ -263,7 +265,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
             RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal->{
                 if (isPromoWidgetActive()){
                     childItem as PosterModel
-                    val variant = childItem.variants.firstOrNull()
+                    val variant = childItem.variants?.firstOrNull()
                     SvgUtils.shareUncompressedSvg(variant?.svgUrl,childItem,
                         binding.root.context, PackageNames.WHATSAPP)
                 }else{
