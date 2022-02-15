@@ -223,7 +223,7 @@ dependencies {
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     //wenengage analytics
-    implementation 'com.webengage:android-sdk:3.+'
+    implementation 'com.webengage:android-sdk:3.19.1'
 
     implementation project(':florisboard')
     implementation project(':imagepicker')
