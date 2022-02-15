@@ -98,6 +98,10 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
     }
   }
 
+  /**
+   * Strict Note: For Development purposes only (To Bypass Login > OTP Flow for testing)
+   * @param enteredPhone : Enter any matching 10 digit indian number to test
+   * */
   private fun moveToWelcomeScreen(enteredPhone: String?) {
     startFragmentFromNewOnBoardingActivity(
       activity = baseActivity, type = FragmentType.WELCOME_FRAGMENT,

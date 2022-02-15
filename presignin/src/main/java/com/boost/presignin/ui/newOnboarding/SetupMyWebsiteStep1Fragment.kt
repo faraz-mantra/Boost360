@@ -203,7 +203,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     )
     binding?.includeNoSearchResultFound?.rvCategories?.adapter = noCatListAdapter
 
-    //didYouMeanAlgorithm(str)
+    didYouMeanAlgorithm(str)
   }
 
   private fun didYouMeanAlgorithm(str: Editable?) {
@@ -212,7 +212,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
       var newFilterList: List<ApiCategoryResponseCategory>?
 
       var didYouMeanFilterList = arrayListOf<ApiCategoryResponseCategory>()
-      while (didYouMeanFilterList.isNullOrEmpty()) {
+      while (didYouMeanFilterList.isNullOrEmpty() && queryString?.length?:0 >= 3) {
         queryString = SpannableStringBuilder(queryString.toString().dropLast(1))
         newFilterList = categoryListLive?.filter {
           it.getNameLower().startsWith(queryString.toString().lowercase())
@@ -221,7 +221,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
       }
 
       binding?.layoutDidYouMean?.visible()
-      binding?.tvDidYouMean?.text = "${getString(R.string.did_you_mean) + " "}"
+      binding?.tvDidYouMean?.text = "${getString(R.string.did_you_mean) + " " + didYouMeanFilterList[0].name}"
     }
   }
 
