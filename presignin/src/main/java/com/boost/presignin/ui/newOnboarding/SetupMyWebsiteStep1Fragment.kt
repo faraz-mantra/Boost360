@@ -184,11 +184,9 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
   }
 
   private fun setAdapterSearch(filteredList: ArrayList<ApiCategoryResponseCategory>) {
-    AppBaseRecyclerViewAdapter(
-      baseActivity,
-      filteredList,
-      this
-    ).apply { binding?.rvCatSuggestion?.adapter = this }
+    AppBaseRecyclerViewAdapter(baseActivity, filteredList, this).apply {
+      binding?.rvCatSuggestion?.adapter = this
+    }
   }
 
   private fun handleSuggestionNoResult(str: Editable?) {
@@ -196,11 +194,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     binding?.includeNoSearchResultFound?.root?.visible()
     val list = ArrayList<CategoryDataModel>()
     list.addAll(categoryNoDataList)
-    noCatListAdapter = AppBaseRecyclerViewAdapter(
-      baseActivity,
-      ArrayList(list.map { it.textChangeRTLAndSVC = true;it }),
-      this
-    )
+    noCatListAdapter = AppBaseRecyclerViewAdapter(baseActivity, ArrayList(list.map { it.textChangeRTLAndSVC = true;it }), this)
     binding?.includeNoSearchResultFound?.rvCategories?.adapter = noCatListAdapter
 
     didYouMeanAlgorithm(str)

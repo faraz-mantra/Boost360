@@ -71,8 +71,7 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
   private fun setOnClickListeners() {
     binding?.tvNextStep2?.setOnClickListener {
       if (binding?.businessNameInputLayout?.etInput?.text.toString().validateLetters()) {
-        addFragment(
-          R.id.inner_container, SetupMyWebsiteStep3Fragment.newInstance(
+        addFragment(R.id.inner_container, SetupMyWebsiteStep3Fragment.newInstance(
             Bundle().apply {
               putString(IntentConstant.DESKTOP_PREVIEW.name, desktopPreview)
               putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
@@ -80,10 +79,7 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
               putString(IntentConstant.CATEGORY_SUGG_UI.name, categoryLiveName)
               putSerializable(IntentConstant.CATEGORY_DATA.name, categoryModel)
               putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent ?: false)
-              putString(
-                IntentConstant.EXTRA_BUSINESS_NAME.name,
-                binding?.businessNameInputLayout?.etInput?.text.toString()
-              )
+              putString(IntentConstant.EXTRA_BUSINESS_NAME.name, binding?.businessNameInputLayout?.etInput?.text.toString())
             }), true
         )
       } else {
