@@ -11,6 +11,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
+import com.framework.pref.UserSessionManager
 import com.framework.utils.NetworkUtils
 import com.framework.webengageconstant.*
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -23,10 +24,7 @@ import com.onboarding.nowfloats.extensions.capitalizeWords
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
 import com.onboarding.nowfloats.model.channel.*
-import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
-import com.onboarding.nowfloats.model.channel.request.clear
-import com.onboarding.nowfloats.model.channel.request.getType
-import com.onboarding.nowfloats.model.channel.request.isLinkedGoogleBusiness
+import com.onboarding.nowfloats.model.channel.request.*
 import com.onboarding.nowfloats.model.googleAuth.GoogleAuthResponse
 import com.onboarding.nowfloats.model.googleAuth.GoogleAuthTokenRequest
 import com.onboarding.nowfloats.model.googleAuth.location.LocationNew
@@ -126,7 +124,7 @@ class RegistrationBusinessGoogleBusinessFragment :
   }
 
   private fun gotoNextScreen(isSkip: Boolean = false) {
-    if (channelAccessToken.isLinkedGoogleBusiness() && isSkip.not()) requestFloatsModel?.channelAccessTokens?.add(
+    /*f (channelAccessToken.isLinkedGoogleBusiness() && isSkip.not()) requestFloatsModel?.channelAccessTokens?.add(
       channelAccessToken
     )
     when {
@@ -136,6 +134,18 @@ class RegistrationBusinessGoogleBusinessFragment :
       channels.haveTwitterChannels() -> gotoTwitterDetails()
       channels.haveWhatsAppChannels() -> gotoWhatsAppCallDetails()
       else -> gotoBusinessApiCallDetails()
+    }*/
+    showProgress()
+    val userSession = UserSessionManager(requireActivity())
+    viewModel?.updateChannelAccessToken(
+      UpdateChannelAccessTokenRequest(
+      channelAccessToken,clientId!!,userSession.fPID!!
+    )
+    )?.observe(viewLifecycleOwner) {
+      hideProgress()
+      if (it.isSuccess()){
+        requireActivity().finish()
+      }
     }
   }
 

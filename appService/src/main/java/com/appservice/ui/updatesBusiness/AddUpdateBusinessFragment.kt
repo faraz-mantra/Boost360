@@ -210,22 +210,19 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
 
 
   private fun initializeSocial() {
-    if (sessionLocal.facebookName.isNullOrEmpty()
-        .not() && (sessionLocal.getIntDetails("fbStatus") == 1 || sessionLocal.getIntDetails("fbStatus") == 3)
-    ) {
+    if (sessionLocal.isFBUserActive)
+     {
       fbStatusEnabled.postValue(true)
     }
-    if (sessionLocal.facebookPage.isNullOrEmpty()
-        .not() && sessionLocal.getIntDetails("fbPageStatus") == 1
-    ) {
+    if (sessionLocal.isFBPageActive) {
       fbPageStatusEnable.postValue(true)
 
     }
-    if (mSharedPreferences?.getBoolean(PREF_KEY_TWITTER_LOGIN, false) == true) {
+    if (sessionLocal.isTwitterActive) {
       twitterSharingEnabled.postValue(true)
 
     }
-    if (mSharedPreferences?.getBoolean(PREF_KEY_TWITTER_LOGIN, false) == true) {
+    if (sessionLocal.isIGActive) {
       igSharingEnabled.postValue(true)
     }
   }
@@ -267,31 +264,27 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
 
       binding?.btnGoogleVoice -> promptSpeechInput()
       binding?.btnFpStatus -> {
-        if (sessionLocal.facebookName.isNullOrEmpty()
-            .not() && (sessionLocal.getIntDetails("fbStatus") == 1 || sessionLocal.getIntDetails("fbStatus") == 3)
-        ) {
+        if (sessionLocal.isFBUserActive) {
           fbStatusEnabled.postValue(fbStatusEnabled.value?.not())
 
         } else baseActivity.startDigitalChannel(sessionLocal)
       }
       binding?.btnFpPageStatus -> {
-        if (sessionLocal.facebookPage.isNullOrEmpty()
-            .not() && sessionLocal.getIntDetails("fbPageStatus") == 1
-        ) {
+        if (sessionLocal.isFBPageActive) {
           fbPageStatusEnable.postValue(fbPageStatusEnable.value?.not())
 
 
         } else baseActivity.startDigitalChannel(sessionLocal)
       }
       binding?.btnTwitter -> {
-        if (mSharedPreferences?.getBoolean(PREF_KEY_TWITTER_LOGIN, false) == true) {
+        if (sessionLocal.isTwitterActive) {
           twitterSharingEnabled.postValue(twitterSharingEnabled.value?.not())
 
 
         } else baseActivity.startDigitalChannel(sessionLocal)
       }
       binding?.btnInstagram -> {
-        if (mSharedPreferences?.getBoolean(PREF_KEY_TWITTER_LOGIN, false) == true) {
+        if (sessionLocal.isIGActive) {
           igSharingEnabled.postValue(igSharingEnabled.value?.not())
 
 

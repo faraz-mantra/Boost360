@@ -10,6 +10,7 @@ import com.facebook.login.LoginResult
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
+import com.framework.pref.UserSessionManager
 import com.framework.utils.NetworkUtils
 import com.framework.utils.PreferencesUtils
 import com.framework.webengageconstant.DIGITAL_CHANNELS
@@ -30,10 +31,7 @@ import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.haveTwitterChannels
 import com.onboarding.nowfloats.model.channel.haveWhatsAppChannels
 import com.onboarding.nowfloats.model.channel.isFacebookShop
-import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
-import com.onboarding.nowfloats.model.channel.request.clear
-import com.onboarding.nowfloats.model.channel.request.getType
-import com.onboarding.nowfloats.model.channel.request.isLinked
+import com.onboarding.nowfloats.model.channel.request.*
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.ui.InternetErrorDialog
 import com.onboarding.nowfloats.utils.WebEngageController
@@ -138,13 +136,25 @@ class RegistrationBusinessFacebookShopFragment :
   }
 
   private fun gotoNextScreen(isSkip: Boolean = false) {
-    if (channelAccessToken.isLinked() && isSkip.not()) requestFloatsModel?.channelAccessTokens?.add(
+    /*if (channelAccessToken.isLinked() && isSkip.not()) requestFloatsModel?.channelAccessTokens?.add(
       channelAccessToken
     )
     when {
       channels.haveTwitterChannels() -> gotoTwitterDetails()
       channels.haveWhatsAppChannels() -> gotoWhatsAppCallDetails()
       else -> gotoBusinessApiCallDetails()
+    }*/
+    showProgress()
+    val userSession = UserSessionManager(requireActivity())
+    viewModel?.updateChannelAccessToken(
+      UpdateChannelAccessTokenRequest(
+      channelAccessToken,clientId!!,userSession.fPID!!
+    )
+    )?.observe(viewLifecycleOwner) {
+      hideProgress()
+      if (it.isSuccess()){
+        requireActivity().finish()
+      }
     }
   }
 

@@ -79,6 +79,12 @@ class UserSessionManager(var activity: Context) {
   private val KEY_BUSINESS_HOURS = "BusinessHoursMainKey"
   private val KEY_FP_SHARE_ENABLE = "fbShareEnabled"
   private val KEY_FP_PAGE_SHARE_ENABLE = "fbPageShareEnabled"
+  private val KEY_IS_FB_PAGE_ACTIVE="KEY_IS_FB_PAGE_ACTIVE"
+  private val KEY_IS_FB_USER_ACTIVE="KEY_IS_FB_USER_ACTIVE"
+  private val KEY_IS_TWITTER_ACTIVE="KEY_IS_TWITTER_ACTIVE"
+  private val KEY_IS_IG_ACTIVE="KEY_IS_IG_ACTIVE"
+
+
 
 
   fun Context.getPreferenceTwitter(): SharedPreferences {
@@ -312,6 +318,22 @@ class UserSessionManager(var activity: Context) {
 
   val isAutoPostEnabled: String?
     get() = pref.getString(KEY_IS_AUTO_POST_ENABLED, "false")
+
+  var isFBPageActive: Boolean
+    get() = pref.getBoolean(KEY_IS_FB_PAGE_ACTIVE,false)
+    set(value) = pref.edit().putBoolean(KEY_IS_FB_PAGE_ACTIVE,value).apply()
+
+  var isFBUserActive: Boolean
+    get() = pref.getBoolean(KEY_IS_FB_USER_ACTIVE,false)
+    set(value) = pref.edit().putBoolean(KEY_IS_FB_USER_ACTIVE,value).apply()
+
+  var isTwitterActive: Boolean
+    get() = pref.getBoolean(KEY_IS_TWITTER_ACTIVE,false)
+    set(value) = pref.edit().putBoolean(KEY_IS_TWITTER_ACTIVE,value).apply()
+
+  var isIGActive: Boolean
+    get() = pref.getBoolean(KEY_IS_IG_ACTIVE,false)
+    set(value) = pref.edit().putBoolean(KEY_IS_IG_ACTIVE,value).apply()
 
   fun storePageAccessToken(pageAccessToken: String?) {
     editor.putString(KEY_PAGE_ACCESS_TOKEN, pageAccessToken)
