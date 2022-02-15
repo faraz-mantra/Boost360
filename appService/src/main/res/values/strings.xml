@@ -920,6 +920,7 @@
     <string name="_4_products_under_this_category">4 products under this category</string>
     <string name="search">Search</string>
     <string name="catalog">Catalog</string>
+    <string name="money_for_all_your_online_order">Select how you want to collect money for all your online\norders.</string>
     <string name="select_how_you_want_to_recieve_money_for_all_your_online_appointments">Select how you want to receive money for all your online appointments.</string>
     <string name="i_understood">I understood</string>
     <string name="search_in_the_appointment_settings">Search in appointment settings</string>
@@ -1083,4 +1084,5 @@
   <string name="pan_name_invalid">Please enter a valid name.</string>
   <string name="invalid_bank_statement_file">Please select valid bank statement file</string>
   <string name="select_tax_rate">Select tax rate</string>
+  <string name="accept_cash_payments">Accept cash payments</string>
 </resources>
