@@ -95,4 +95,8 @@
     <string name="like">Like</string>
     <string name="comment">Comment</string>
 
+    <string name="empty_string" />
+    <string name="posted_updates">Posted updates</string>
+    <string name="update_details">Update details</string>
+
 </resources>

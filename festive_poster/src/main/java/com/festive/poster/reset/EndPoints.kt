@@ -31,6 +31,7 @@ object EndPoints {
 
     const val USER_ALL_DETAILS = "/discover/v2/floatingPoint/nf-web/{fpTag}"
 
+    const val GET_PAST_UPDATES_LIST = "discover/v1/floatingPoint/bizFloats"
 
 
 }

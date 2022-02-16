@@ -5,10 +5,7 @@ import android.view.ViewGroup
 import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.*
 import com.festive.poster.recyclerView.viewholders.*
-import com.festive.poster.ui.promoUpdates.holders.SoicalConnViewHolder
-import com.festive.poster.ui.promoUpdates.holders.TemplateForRVViewHolder
-import com.festive.poster.ui.promoUpdates.holders.TemplateForVPViewHolder
-import com.festive.poster.ui.promoUpdates.holders.TodaysPickTemplateListViewHolder
+import com.festive.poster.ui.promoUpdates.holders.*
 import com.framework.base.BaseActivity
 import java.util.*
 import kotlin.collections.ArrayList
@@ -42,6 +39,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.GMB_PREVIEW->GMBPreviewViewHolder(binding as SocialPreviewGmbBinding)
       RecyclerViewItemType.WEBSITE_PREVIEW->WebsitePreviewViewHolder(binding as SocialPreviewWebsiteBinding)
 
+      RecyclerViewItemType.PAST_UPDATE_ITEM->PastUpdateViewHolder(binding as ListItemPastUpdateBinding)
     }
   }
 

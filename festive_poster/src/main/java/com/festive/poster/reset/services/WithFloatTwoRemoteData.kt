@@ -4,6 +4,7 @@ import com.festive.poster.models.CustomerDetails
 import com.festive.poster.models.MerchantSummaryResponse
 import com.festive.poster.models.PostUpdateTaskRequest
 import com.festive.poster.reset.EndPoints
+import com.framework.base.BaseResponse
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.http.*
@@ -44,7 +45,8 @@ interface WithFloatTwoRemoteData {
 
   @GET(EndPoints.GET_MERCHANT_SUMMARY)
   fun getMerchantSummary(
-    @Query("clientId") clientId: String?,
-    @Query("fpTag") fpTag: String?
-  ): Observable<Response<MerchantSummaryResponse>>
+    @Query("clientId") clientId: String?, @Query("fpTag") fpTag: String?): Observable<Response<MerchantSummaryResponse>>
+
+  @GET(EndPoints.GET_PAST_UPDATES_LIST)
+  fun getPastUpdatesList(@Query("clientId") clientId: String?, @Query("fpId") fpId: String?):Observable<Response<BaseResponse>>
 }

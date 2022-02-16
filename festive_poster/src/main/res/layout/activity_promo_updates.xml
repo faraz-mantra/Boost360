@@ -35,7 +35,7 @@
                 android:layout_marginStart="16dp"
                 android:text="@string/promo_updates"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/iv_store"
+                app:layout_constraintEnd_toStartOf="@+id/ivPastPromoUpdates"
                 app:layout_constraintStart_toEndOf="@+id/iv_toolbar_back"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -74,11 +74,11 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.framework.views.customViews.CustomImageView
-                android:id="@+id/iv_store"
+                android:id="@+id/ivPastPromoUpdates"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:src="@drawable/ic_top_right_arrow"
+                android:src="@drawable/ic_laptop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
                 app:layout_constraintTop_toTopOf="parent" />

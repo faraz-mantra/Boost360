@@ -57,4 +57,8 @@ class PostUpdatesViewModel : BaseViewModel() {
   fun getMerchantSummary(clientId: String?,fpTag: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getMerchantSummary(clientId,fpTag).toLiveData()
   }
+
+  fun getPastUpdatesList(fpId: String?, clientId: String): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getPastUpdatesList(fpId = fpId, clientId = clientId).toLiveData()
+  }
 }

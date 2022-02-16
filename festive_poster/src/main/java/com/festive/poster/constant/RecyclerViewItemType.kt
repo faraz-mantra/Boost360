@@ -19,7 +19,8 @@ enum class RecyclerViewItemType {
   INSTAGRAM_PREVIEW,
   FB_PREVIEW,
   WEBSITE_PREVIEW,
-  GMB_PREVIEW;
+  GMB_PREVIEW,
+  PAST_UPDATE_ITEM;
 
 
   @LayoutRes
@@ -41,6 +42,7 @@ enum class RecyclerViewItemType {
       FB_PREVIEW->R.layout.social_preview_fb
       WEBSITE_PREVIEW->R.layout.social_preview_website
       GMB_PREVIEW->R.layout.social_preview_gmb
+      PAST_UPDATE_ITEM->R.layout.list_item_past_update
 
     }
   }

@@ -31,19 +31,13 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
 
 
   fun putBizMessageUpdate(request: PostUpdateTaskRequest?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.putBizMessageUpdate(request),
-      TaskCode.PUT_BIZ_MESSAGE_UPDATE
-    )
+    return makeRemoteRequest(remoteDataSource.putBizMessageUpdate(request), TaskCode.PUT_BIZ_MESSAGE_UPDATE)
   }
 
   fun getUserDetails(fpTag: String?, clientId: String): Observable<BaseResponse> {
     val queries: MutableMap<String, String> = HashMap()
     queries["clientId"] = clientId
-    return makeRemoteRequest(
-      remoteDataSource.getUserDetails(fpTag,queries),
-      TaskCode.GET_CUSTOMER_DETAILS
-    )
+    return makeRemoteRequest(remoteDataSource.getUserDetails(fpTag,queries), TaskCode.GET_CUSTOMER_DETAILS)
   }
 
 
@@ -52,22 +46,14 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   }
 
   fun putBizImageUpdate(
-    clientId: String?,
-    requestType: String?,
-    requestId: String?,
-    totalChunks: Int?,
-    currentChunkNumber: Int?,
-    socialParmeters: String?,
-    bizMessageId: String?,
-    sendToSubscribers: Boolean?,
-    requestBody: okhttp3.RequestBody?,
-  ): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.putBizImageUpdate(
-        clientId, requestType, requestId, totalChunks, currentChunkNumber,
-        socialParmeters, bizMessageId, sendToSubscribers, requestBody
-      ), TaskCode.PUT_IMAGE_BIZ_UPDATE
-    )
+    clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?,
+    currentChunkNumber: Int?, socialParmeters: String?, bizMessageId: String?, sendToSubscribers: Boolean?,
+    requestBody: okhttp3.RequestBody?, ): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.putBizImageUpdate(clientId, requestType, requestId, totalChunks, currentChunkNumber, socialParmeters, bizMessageId, sendToSubscribers, requestBody), TaskCode.PUT_IMAGE_BIZ_UPDATE)
+  }
+
+  fun getPastUpdatesList(clientId: String?, fpId:String?):Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getPastUpdatesList(clientId = clientId, fpId = fpId), TaskCode.GET_PAST_UPDATES_LIST)
   }
 
 
