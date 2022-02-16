@@ -224,4 +224,6 @@
   <string name="sorry_boost_security_check_desc">Sorry, your device isn\'t passing Boost security checks. This may be because your device is rooted or is running an uncertified or custom OS build.</string>
 
   <string name="website_name_format_invalid_toast">Website name should contain only alphabets &amp; digits only. No special characters and symbols allowed!</string>
+  <string name="business_name_format_invalid_toast">Business name should contain only alphabets &amp; digits only. No special characters and symbols allowed!</string>
+  <string name="did_you_mean">Did you mean:</string>
 </resources>

@@ -3,7 +3,6 @@ package com.dashboard.controller.ui.more
 import android.content.ActivityNotFoundException
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.view.*
 import android.widget.PopupWindow
@@ -39,7 +38,6 @@ import com.framework.pref.Key_Preferences
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_IMAGE_URI
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
 import com.framework.pref.UserSessionManager
-import com.framework.utils.InAppReviewUtils
 import com.framework.webengageconstant.*
 
 class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(), RecyclerItemClickListener {
@@ -142,10 +140,22 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       val data = it0 as? MoreSettingsResponse
       if (data != null) {
         usefulLinks = data.usefulLinks
+        isPaidUser()
         setHelpfulResources()
         binding?.rvAbout?.adapter = AppBaseRecyclerViewAdapter(baseActivity, data.aboutAppSection ?: arrayListOf(), this)
       } else showShortToast(getString(R.string.error_loading_more_page))
     })
+  }
+
+  private fun isPaidUser() {
+    if (session?.getStoreWidgets().isNullOrEmpty()) {
+      val index = usefulLinks?.indexOfFirst {
+        it.icon == UsefulLinksItem.IconType.refer_and_earn.name
+      }
+      if (index != null) {
+        usefulLinks?.removeAt(index)
+      }
+    }
   }
 
   private fun setHelpfulResources() {
@@ -276,7 +286,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
   }
 
   private fun rateGooglePlayStore() {
-    /*val uri = Uri.parse("market://details?id=" + baseActivity.applicationContext?.packageName)
+    val uri = Uri.parse("market://details?id=" + baseActivity.applicationContext?.packageName)
     val goToMarket = Intent(Intent.ACTION_VIEW, uri)
     goToMarket.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     try {
@@ -285,8 +295,8 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     } catch (e: ActivityNotFoundException) {
       val url = resources.getString(R.string.settings_rate_us_link)
       baseActivity.startMobileSite(session, url, ABOUT_BOOST_PLAY_STORE_RATING)
-    }*/
-    InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.in_app_review_rate_us_on_store)
+    }
+    //InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.in_app_review_rate_us_on_store)
 
   }
 

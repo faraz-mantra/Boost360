@@ -41,6 +41,7 @@
   <application
     android:name="com.nowfloats.Volley.AppController"
     android:allowBackup="true"
+    android:fullBackupContent="@xml/boost_backup_rules"
     android:appComponentFactory="androidx.core.app.CoreComponentFactory"
     android:hardwareAccelerated="true"
     android:icon="@drawable/app_launcher"
@@ -50,7 +51,7 @@
     android:requestLegacyExternalStorage="true"
     android:theme="@style/AppTheme"
     tools:ignore="UnusedAttribute"
-    tools:replace="android:label,android:name,android:theme,android:appComponentFactory">
+    tools:replace="android:label,android:name,android:theme,android:appComponentFactory,android:fullBackupContent">
 
     <meta-data
       android:name="invitereferrals_bid"

@@ -154,11 +154,13 @@ dependencies {
     api 'com.invitereferrals.invitereferrals:invitereferrals:v29-1.0.7'
 
     //webengage analytics
-    api 'com.webengage:android-sdk:3.+'
+    api 'com.webengage:android-sdk:3.19.1'
 
     // sms receiver apis
-    api 'com.google.android.gms:play-services-auth:19.2.0'
-    api 'com.google.android.gms:play-services-auth-api-phone:17.5.1'
+    api 'com.google.android.gms:play-services-auth:20.1.0'
+    api 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
+
+//    api 'com.google.android.gms:play-services-ads:20.5.0'
 
     //sentry for crash reporting
     api 'io.sentry:sentry-android:5.2.0'

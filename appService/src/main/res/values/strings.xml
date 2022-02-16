@@ -1089,4 +1089,5 @@
   <string name="done_">Done</string>
   <string name="payment_gateway_not_added_please_add_first">Boost Payment gateway not added, please add first.</string>
 
+  <string name="select_tax_rate">Select tax rate</string>
 </resources>
