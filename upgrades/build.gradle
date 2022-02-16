@@ -24,7 +24,6 @@ android {
 
     buildTypes {
         release {
-            debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -132,7 +131,7 @@ dependencies {
     implementation files('libs/razorpay-android-3.8.8.aar')
 //
     //wenengage analytics
-    implementation 'com.webengage:android-sdk:3.18.9'
+    implementation 'com.webengage:android-sdk:3.19.1'
 
     implementation 'com.google.firebase:firebase-analytics-ktx:18.0.1'
 

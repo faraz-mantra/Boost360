@@ -474,6 +474,7 @@ const val OWNER_INFO_ADD = "Owner info add click"
 const val APPOINTMENT_SETTING_PAGE_LOAD = "Appointment setting page load"
 const val APPOINTMENT_CATLOG_SETUP_PAGE_LOAD = "Appointment catalog setup page load"
 const val CATLOG_SETUP_CHANGE_SERVICE = "Catalog setup service change click"
+const val CATLOG_SETUP_CHANGE_GST = "Catalog setup GST slab click"
 const val CUSTOMER_INVOICE_SETUP_LOAD = "Customer invoice setup page load"
 const val BUSINESS_GSTIN_CLICK = "Customer invoice business GSTIN click"
 const val TAX_INVOICE_CUSTOMER = "Tax invoice customer purchases click"
@@ -570,3 +571,17 @@ const val
 const val
 const val
 const val*/
+
+const val PS_LOGIN_OTP_NEED_HELP_CLICK = "Ps_Login_OTP_NeedHelp_click"
+const val PS_LOGIN_OTP_ON_CALL_CLICK = "Ps_Login_OTP_on_Call_click"
+const val PS_LOGIN_OTP_RESENT_CLICK = "Ps_Login_OTP_Resent_click"
+const val PS_SIGNUP_CATEGORY_PREVIEW_DESKTOP_CLICK = "Ps_Signup_category_Preview_Desktop_Click"
+const val PS_SIGNUP_CATEGORY_PREVIEW_MOBILE_CLICK = "Ps_Signup_category_Preview_Mobile_Click"
+const val PS_SIGNUP_CATEGORY_SELECTION_SCREEN_LOAD = "Ps_Signup_Category_selection_screen_load"
+const val PS_SIGNUP_CATEGORY_SELECTION_MAIN_LOAD = "Ps_Signup_Category_selection_main_click"
+const val PS_SIGNUP_CATEGORY_SELECTION_LIST_LOAD = "Ps_Signup_Category_selection_list_click"
+const val PS_SIGNUP_CATEGORY_DID_YOU_MEAN_CLICK = "Ps_Singup_category_did_you_mean_click"
+const val PS_SIGNUP_CATEGORY_CANT_FIND_CLICK = "Ps_Signup_category_cant_find_click"
+const val PS_SIGNUP_LAUNCHING_TRANSITION = "Ps_Signup_launching_transition"
+const val PS_SIGNUP_SUCCESS_PREVIEW_CLICK = "PS_SIGNUP_SUCCESS_PREVIEW_CLICK"
+const val PS_SIGNUP_SUCCESS_FINISH_CLICK = "PS_SIGNUP_SUCCESS_FINISH_CLICK"

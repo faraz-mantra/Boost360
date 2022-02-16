@@ -102,6 +102,11 @@ interface WithFloatTwoRemoteData {
     @Query("clientId") clientId: String?,
   ): Observable<Response<AppointmentStatusResponse>>
 
+  @POST(EndPoints.UPDATE_GST_SLAB)
+  fun updateGstSlab(
+    @Body request: GstSlabRequest,
+  ): Observable<Response<ResponseBody>>
+
   @GET(EndPoints.GET_BIZ_WEB_UPDATE_BY_ID)
   fun getBizWebMessage(
     @Path("id") id: String?,

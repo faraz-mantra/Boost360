@@ -7,11 +7,8 @@ import java.io.Serializable
 import java.util.*
 
 data class PaymentProfileResponse(
-
-
   @field:SerializedName("StatusCode")
   var statusCode: Int? = null,
-
   @field:SerializedName("Result")
   var result: PaymentResult? = null,
 ) : BaseResponse(), Serializable

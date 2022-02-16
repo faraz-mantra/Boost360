@@ -63,7 +63,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     //wenengage analytics
-    implementation 'com.webengage:android-sdk:3.18.9'
+    implementation 'com.webengage:android-sdk:3.19.1'
 
     //sdp
     implementation 'com.intuit.sdp:sdp-android:1.0.6'

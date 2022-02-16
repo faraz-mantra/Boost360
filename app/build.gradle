@@ -48,7 +48,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020119
+        versionCode 2020020120
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -64,7 +64,6 @@ android {
             }
         }
         release {
-            debuggable true
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -120,7 +119,7 @@ android {
 //            dimension "default"
 //        }
         partone {
-            versionName "6.0.14"
+            versionName "6.0.15"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
@@ -225,7 +224,7 @@ dependencies {
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
     //wenengage analytics
-    implementation 'com.webengage:android-sdk:3.18.9'
+    implementation 'com.webengage:android-sdk:3.19.1'
 
     implementation project(':florisboard')
     implementation project(':imagepicker')

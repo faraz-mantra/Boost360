@@ -218,4 +218,8 @@
   <string name="privacy_policy" translatable="false">Privacy Policy</string>
   <string name="_940558450">XXX-XXX-XXXX</string>
   <string name="here_is_a_quick_preview_of_how_your_website_will_look_on_various_devices">Here is a quick preview of how your website will\nlook on various devices</string>
+
+  <string name="website_name_format_invalid_toast">Website name should contain only alphabets &amp; digits only. No special characters and symbols allowed!</string>
+  <string name="business_name_format_invalid_toast">Business name should contain only alphabets &amp; digits only. No special characters and symbols allowed!</string>
+  <string name="did_you_mean">Did you mean:</string>
 </resources>
