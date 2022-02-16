@@ -92,6 +92,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
 
   override fun onCreateView() {
     super.onCreateView()
+    WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_PAGE_LOAD_NEW_UPPERCASE, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.includeMobileView?.blurView?.setBlur(baseActivity, 1F)
     session = UserSessionManager(baseActivity)
     binding?.includeMobileView?.tvCategoryName?.text = categoryModel?.getCategoryWithoutNewLine() ?: ""
@@ -125,6 +126,9 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
   private fun setOnClickListeners() {
     binding?.tvNextStep3?.setOnClickListener {
       if (binding?.addressInputLayout?.etInput?.text?.trim().toString().validateLetters()) {
+        if (binding?.tvNextStep3?.text == getString(R.string.launch_my_website)){
+          WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK_NEW_UPPERCASE, CLICK, NO_EVENT_VALUE)
+        }
         apiCheckDomain {
           apiHitCreateMerchantProfile()
         }
