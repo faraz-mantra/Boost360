@@ -471,6 +471,19 @@ fun AppCompatActivity.startCatalogSetup(session: UserSessionManager?) {
   }
 }
 
+fun AppCompatActivity.startPaymentCatalogSetup(session: UserSessionManager?) {
+  try {
+    val type = if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
+      com.appservice.constant.FragmentType.APPOINTMENT_PAYMENT_SETTINGS
+    } else {
+      com.appservice.constant.FragmentType.ECOMMERCE_PAYMENT_SETTINGS
+    }
+    startFragmentActivity(type)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
 fun AppCompatActivity.startCatalogAppointment(session: UserSessionManager?) {
   Toast.makeText(this, "Coming soon.. ", Toast.LENGTH_SHORT).show()
 }
