@@ -18,6 +18,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.festive.poster.models.PosterModel
 import com.festive.poster.utils.SvgUtils.getSvgAsAString
 import com.framework.BaseApplication
+import com.framework.analytics.SentryController
 import com.framework.constants.Constants
 import com.framework.constants.PackageNames
 import com.framework.glide.customsvgloader.*
@@ -90,6 +91,8 @@ object SvgUtils {
                 return result
             }
         }catch (e:Exception){
+            SentryController.captureException(e)
+
             Log.e(TAG, "getSvgAsAString: $e")
         }
 
@@ -116,6 +119,8 @@ object SvgUtils {
             }
 
         }catch (e:Exception){
+            SentryController.captureException(e)
+
             Log.e(TAG, "getInputStream: $e")
         }
         return null
@@ -216,16 +221,16 @@ object SvgUtils {
             if (svgString != null && !svgString.isEmpty()) {
                 svgString = SvgRenderCacheUtil.instance.replace(
                     svgString,
-                    model.keys,
+                    model.keys!!,
                     BaseApplication.instance,
                     model.isPurchased
                 )
                 val svg = SVG.getFromString(svgString)
-                svg.renderDPI =
+               /* svg.renderDPI =
                     BaseApplication.instance.resources?.displayMetrics?.densityDpi?.toFloat()
                         ?: 480.0f
                 svg.documentWidth = svg.documentWidth * 4
-                svg.documentHeight = svg.documentHeight * 4
+                svg.documentHeight = svg.documentHeight * 4*/
                 val b = Bitmap.createBitmap(
                     svg.documentWidth.toInt(),
                     svg.documentHeight.toInt(), Bitmap.Config.ARGB_8888

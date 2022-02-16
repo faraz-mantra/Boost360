@@ -9,6 +9,7 @@ import com.festive.poster.R
 import com.festive.poster.models.PosterModel
 import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
 import com.framework.BaseApplication
+import com.framework.analytics.SentryController
 import com.framework.constants.Constants.MARKET_PLACE_ORIGIN_ACTIVITY
 import com.framework.constants.Constants.MARKET_PLACE_ORIGIN_NAV_DATA
 import com.framework.pref.Key_Preferences
@@ -63,11 +64,13 @@ object MarketPlaceUtils {
             context.startActivity(intent)
            // overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         } catch (e: Exception) {
+            SentryController.captureException(e)
+
             e.printStackTrace()
         }
     }
 
-    fun launchCartActivity(activity:Activity,originActivityName:String,posterModel: PosterModel,caption:String?){
+    fun launchCartActivity(activity:Activity,originActivityName:String,posterImgPath:String?,caption:String?){
         val session = UserSessionManager(BaseApplication.instance)
         val intent = Intent(
             activity,
@@ -78,7 +81,7 @@ object MarketPlaceUtils {
         intent.putExtra("isDeepLink", false)
         intent.putExtra(MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
             putString(MARKET_PLACE_ORIGIN_ACTIVITY,originActivityName)
-            putString(PostPreviewSocialActivity.IK_POSTER,Gson().toJson(posterModel))
+            putString(PostPreviewSocialActivity.IK_POSTER,posterImgPath)
             putString(PostPreviewSocialActivity.IK_CAPTION_KEY,caption)
         })
         intent.putStringArrayListExtra(

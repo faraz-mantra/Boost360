@@ -28,6 +28,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW-> TodaysPickTemplateListViewHolder(binding as ListItemTodaysPickTemplateBinding)
       RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP-> TemplateForVPViewHolder(binding as ListItemTemplateForVpBinding)
       RecyclerViewItemType.TEMPLATE_VIEW_FOR_RV-> TemplateForRVViewHolder(binding as ListItemTemplateForRvBinding)
+      RecyclerViewItemType.VIEW_MORE_POSTER-> ViewMoreViewHolder(binding as LayoutViewMoreTemplateBinding)
 
       RecyclerViewItemType.SOCIAL_CONN-> SoicalConnViewHolder(binding as ListItemSocialConnBinding)
       RecyclerViewItemType.BROWSE_TAB_TEMPLATE_CAT->BrowseTabPosterCatViewHolder(binding as ListItemBrowseTabTemplateCatBinding)
@@ -38,6 +39,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.INSTAGRAM_PREVIEW->InstagramPreviewViewHolder(binding as SocialPreviewInstagramBinding)
       RecyclerViewItemType.GMB_PREVIEW->GMBPreviewViewHolder(binding as SocialPreviewGmbBinding)
       RecyclerViewItemType.WEBSITE_PREVIEW->WebsitePreviewViewHolder(binding as SocialPreviewWebsiteBinding)
+      RecyclerViewItemType.EMAIL_PREVIEW->EmailPreviewViewHolder(binding as SocialPreviewEmailBinding)
 
       RecyclerViewItemType.PAST_UPDATE_ITEM->PastUpdateViewHolder(binding as ListItemPastUpdateBinding)
     }

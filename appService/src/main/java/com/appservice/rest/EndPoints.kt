@@ -62,7 +62,9 @@ object EndPoints {
   const val GET_NOTIFICATION = "Discover/v1/floatingpoint/notificationscount"
   const val GET_LATEST_UPDATES = "Discover/v1/floatingPoint/bizFloats"
   const val PUT_BIZ_MESSAGE = "discover/v1/FloatingPoint/createBizMessage"
+  const val PUT_BIZ_MESSAGE_V2 = "discover/v2/FloatingPoint/createBizMessage"
   const val PUT_BIZ_IMAGE = "discover/v1/FloatingPoint/createBizImage"
+  const val PUT_BIZ_IMAGE_V2 = "discover/v2/FloatingPoint/createBizImage"
   const val GET_BIZ_WEB_UPDATE_BY_ID = "discover/v1/bizFloatForWeb/{id}"
   const val DELETE_BIZ_MESSAGE_UPDATE = "discover/v1/floatingpoint/archiveMessage"
   const val GET_PRODUCT_LIST = "Product/v1/GetListings"
@@ -148,5 +150,10 @@ object EndPoints {
   const val AZURE_WEBSITE_NET_URL = "https://withfloats-feature-processor-api.azurewebsites.net/"
   const val GET_FEATURE_DETAILS = "Features/v1/GetFeatureDetils"
   const val GET_FEATURE_DETAILS_2 = "Features/v1/GetFeatureDetails"
+
+  //US CENTRAL
+  const val US_CENTRAL_BASE="https://us-central1-nowfloats-boost.cloudfunctions.net/"
+  const val UPDATE_DRAFT="onpostUpdateDraftApi"
+
 }
 

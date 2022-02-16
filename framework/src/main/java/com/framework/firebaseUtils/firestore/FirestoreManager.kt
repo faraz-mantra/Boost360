@@ -1,5 +1,6 @@
 package com.framework.firebaseUtils.firestore
 
+import android.app.Activity
 import android.text.TextUtils
 import android.util.Log
 import com.framework.analytics.SentryController
@@ -13,7 +14,9 @@ import com.framework.base.BaseResponse
 import com.framework.firebaseUtils.firestore.restApi.model.CreateDrRequest
 import com.framework.firebaseUtils.firestore.restApi.model.UpdateDrRequest
 import com.framework.firebaseUtils.firestore.restApi.repository.DrScoreRepository
+import com.framework.models.UpdateDraftBody
 import com.framework.models.toLiveData
+import com.google.firebase.firestore.ListenerRegistration
 import io.reactivex.Observable
 import com.google.gson.reflect.TypeToken
 
@@ -27,6 +30,7 @@ object FirestoreManager {
   var clientId: String = ""
   var TAG = "FirestoreManager"
   const val COLLECTION_NAME = "drsMerchants"
+  const val DRAFT_COLLECTION="postUpdateDrafts"
   var listener: (() -> Unit)? = null
 
   fun initData(fpTag: String, fpId: String, clientId: String) {
@@ -74,6 +78,19 @@ object FirestoreManager {
       }
     }
   }
+
+  fun readDraft(listener:((UpdateDraftBody?)->Unit)): ListenerRegistration? {
+    return db?.collection(DRAFT_COLLECTION)?.document(this.fpTag)?.
+    addSnapshotListener { value, error ->
+              if (error == null) {
+                listener.invoke(value?.data?.toDataClass<UpdateDraftBody>())
+              }else{
+                listener.invoke(null)
+              }
+            }
+
+  }
+
 
   private fun getDocumentReference(): DocumentReference? {
     try {

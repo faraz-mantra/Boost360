@@ -11,6 +11,7 @@ import com.appservice.R
 import com.appservice.databinding.BsheetUpdateDraftBinding
 import com.appservice.databinding.BsheetUpdateImagePickerBinding
 import com.framework.base.BaseBottomSheetDialog
+import com.framework.constants.Constants
 import com.framework.models.BaseViewModel
 import com.framework.utils.FileUtils
 
@@ -21,7 +22,6 @@ class UpdateImagePickerBSheet:BaseBottomSheetDialog<BsheetUpdateImagePickerBindi
     private var startForCameraImageResult: ActivityResultLauncher<Intent>?=null
 
     companion object{
-        val fileName = "update_temp.jpg"
         fun newInstance(callbacks: Callbacks): UpdateImagePickerBSheet {
             val fragment = UpdateImagePickerBSheet()
             fragment.callbacks = callbacks
@@ -81,7 +81,7 @@ class UpdateImagePickerBSheet:BaseBottomSheetDialog<BsheetUpdateImagePickerBindi
                     val fileUri = data?.data!!
 
                     val file = FileUtils.saveFile(fileUri,requireActivity().getExternalFilesDir(null)?.path,
-                        fileName)
+                        Constants.UPDATE_PIC_FILE_NAME)
 
                     if (file?.exists() == true){
                         callbacks?.onImagePicked(file.path)
@@ -102,7 +102,7 @@ class UpdateImagePickerBSheet:BaseBottomSheetDialog<BsheetUpdateImagePickerBindi
                     val fileUri = data?.data!!
 
                     val file = FileUtils.saveFile(fileUri,requireActivity().getExternalFilesDir(null)?.path,
-                        fileName)
+                        Constants.UPDATE_PIC_FILE_NAME)
 
                     if (file?.exists() == true){
                         callbacks?.onImagePicked(file.path)

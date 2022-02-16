@@ -35,7 +35,7 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
   protected lateinit var baseActivity: BaseActivity<*, *>
   protected lateinit var root: View
   protected var viewModel: ViewModel? = null
-  protected var binding: Binding? = null
+  protected lateinit var binding: Binding
   protected var navigator: Navigator? = null
   protected var compositeDisposable = CompositeDisposable()
   private var progressDialog: ProgressDialog? = null

@@ -1,6 +1,5 @@
 package com.festive.poster.ui.promoUpdates.edit_post
 
-import android.app.Activity
 import android.content.*
 import android.content.Intent
 import android.graphics.Typeface
@@ -10,31 +9,40 @@ import android.text.Spanned
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.databinding.ActivityEditPostBinding
 import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
-import com.festive.poster.models.PostUpdateTaskRequest
 import com.festive.poster.models.PosterModel
 import com.festive.poster.ui.promoUpdates.bottomSheet.CaptionBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.DeleteDraftBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.EditTemplateBottomSheet
 import com.festive.poster.utils.SvgUtils
-import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterViewModel
+import com.framework.constants.Constants
+import com.framework.analytics.SentryController
+import com.framework.extensions.gone
 import com.framework.pref.UserSessionManager
-import com.framework.pref.clientId
 import com.framework.utils.STTUtils
 import com.framework.utils.convertStringToObj
 import com.framework.utils.highlightHashTag
-import com.framework.webengageconstant.EVENT_LABEL_NULL
-import com.framework.webengageconstant.POST_AN_UPDATE
+import com.framework.utils.saveAsImageToAppFolder
+import com.framework.utils.*
 import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
+import java.io.File
 import java.lang.Exception
+
 
 
 class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterViewModel>() {
@@ -67,20 +75,55 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
         initStt()
         sessionLocal = UserSessionManager(this)
 
-        posterModel = convertStringToObj(intent.getStringExtra(IK_POSTER)!!)
-        initUI()
-        setOnClickListener(binding?.btnTapToEdit, binding?.captionLayout?.etInput,
-            binding?.ivCloseEditing, binding?.tvPreviewAndPost,binding?.ivVoiceOver)
+        try {
+            posterModel = convertStringToObj(intent.getStringExtra(IK_POSTER)!!)
+            initUI()
+            setOnClickListener(binding?.btnTapToEdit, binding?.captionLayout?.etInput,
+                binding?.ivCloseEditing, binding?.tvPreviewAndPost,binding?.ivVoiceOver,binding?.ivCloseHashtag)
+        }catch (e:Exception){
+            SentryController.captureException(e)
+        }
+
 
     }
 
     private fun initUI() {
-        SvgUtils.loadImage(posterModel?.url()!!,binding!!.ivTemplate,posterModel!!.keys,posterModel!!.isPurchased)
-        binding!!.captionLayout.etInput.isFocusableInTouchMode =false
+        lifecycleScope.launch {
+            binding!!.ivTemplate.setImageBitmap(SvgUtils.svgToBitmap(posterModel!!))
+        }
         binding?.captionLayout?.etInput?.setText(highlightHashTag(posterModel?.details?.Description,R.color.black_4a4a4a))
+        binding?.captionLayout?.etInput?.requestFocus()
+        val imm =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(binding?.captionLayout?.etInput, InputMethodManager.SHOW_IMPLICIT)
+
+        addHashTagFunction()
+        binding!!.tvHashtagSubtitle.text = spanColor(
+            getString(R.string.type_in_the_caption_to_create_your_own_hashtags),R.color.color395996,
+            "#"
+        )
+        KeyboardVisibilityEvent.setEventListener(
+            this,
+            KeyboardVisibilityEventListener {
+                // Ah... at last. do your thing :)
+                if (it){
+                    binding?.captionLayout?.inputLayout?.strokeColor = ContextCompat.getColor(this,R.color.black_4a4a4a)
+                }else{
+                    binding?.captionLayout?.inputLayout?.strokeColor = ContextCompat.getColor(this,R.color.colorAFAFAF)
+                }
+            })
 
     }
 
+    override fun onBackPressed() {
+        DeleteDraftBottomSheet.newInstance(object :DeleteDraftBottomSheet.Callbacks{
+            override fun onDelete() {
+                finish()
+            }
+        }).show(
+            supportFragmentManager,DeleteDraftBottomSheet::class.java.name
+        )
+    }
     fun saveKeyValue(){
 
         viewModel.saveKeyValue(sessionLocal?.fPID,
@@ -92,6 +135,10 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        setStatusBarColor(R.color.white)
+    }
     private fun initStt() {
         sttUtils = STTUtils(object : STTUtils.Callbacks{
             override fun onDone(text: String?) {
@@ -149,6 +196,9 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
     override fun onClick(v: View?) {
         super.onClick(v)
         when (v) {
+            binding?.ivCloseHashtag->{
+                binding?.layoutHashtag?.gone()
+            }
             binding?.btnTapToEdit -> {
                 EditTemplateBottomSheet.newInstance(object :EditTemplateBottomSheet.Callbacks{
                     override fun onDone(header1: String, header2: String) {
@@ -158,7 +208,7 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
             }
             binding?.captionLayout?.etInput -> {
 
-                CaptionBottomSheet.newInstance(binding?.captionLayout?.etInput?.text.toString()
+               /* CaptionBottomSheet.newInstance(binding?.captionLayout?.etInput?.text.toString()
                     ,object :CaptionBottomSheet.Callbacks{
                     override fun onDone(value: String) {
                         getWindow().setSoftInputMode(
@@ -166,7 +216,7 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
                         )
                         binding?.captionLayout?.etInput?.setText(highlightHashTag(value,R.color.black_4a4a4a))
                     }
-                }).show(supportFragmentManager, CaptionBottomSheet::class.java.name)
+                }).show(supportFragmentManager, CaptionBottomSheet::class.java.name)*/
             }
             binding?.ivCloseEditing -> {
                 DeleteDraftBottomSheet.newInstance(object :DeleteDraftBottomSheet.Callbacks{
@@ -178,9 +228,20 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
             binding?.tvPreviewAndPost -> {
                // saveUpdatePost()
                 posterModel?.let {
-                    PostPreviewSocialActivity.launchActivity(this,binding?.captionLayout?.etInput?.text.toString(),
-                        it
-                    )
+                    lifecycleScope.launch {
+                        withContext(Dispatchers.Default){
+                           val file =  SvgUtils.svgToBitmap(it)
+                                ?.saveAsImageToAppFolder(getExternalFilesDir(null)?.path+File.separator+Constants.UPDATE_PIC_FILE_NAME)
+                            if (file?.exists() == true){
+                                PostPreviewSocialActivity.launchActivity(this@EditPostActivity,binding?.captionLayout?.etInput?.text.toString(),
+                                    file.path
+                                    )
+                            }
+
+                        }
+
+                    }
+
                 }
             }
             binding?.ivVoiceOver->{
@@ -203,5 +264,38 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
     private fun changeTheColor(s: String, start: Int, end: Int) {
         mSpannable?.setSpan(ForegroundColorSpan(ContextCompat.getColor(this, R.color.black_4a4a4a)), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         mSpannable?.setSpan(StyleSpan(Typeface.BOLD), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
+
+    private fun addHashTagFunction() {
+
+
+        Log.i(TAG, "addHashTagFunction: "+"hi hello")
+        mSpannable = binding?.captionLayout?.etInput?.text
+
+        binding?.captionLayout?.etInput?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(short_text: CharSequence, start: Int, before: Int, count: Int) {
+
+                val text = binding?.captionLayout?.etInput?.text.toString()
+                var last_index = 0
+                text.trim().split(Regex("\\s+")).forEach {
+                    Log.i(TAG, "addHashTagFunction: $it")
+                    if (it.isNotEmpty() && it[0] == '#'){
+                        val boldSpan = StyleSpan(Typeface
+                            .BOLD)
+                        val foregroundSpan = ForegroundColorSpan(ContextCompat.getColor(this@EditPostActivity, R.color.black))
+                        mSpannable?.setSpan(foregroundSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        mSpannable?.setSpan(boldSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+                    }
+
+                    last_index+=it.length-1
+
+                }
+
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
     }
 }

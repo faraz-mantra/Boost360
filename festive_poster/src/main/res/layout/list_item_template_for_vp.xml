@@ -24,7 +24,7 @@
                 <com.framework.views.customViews.CustomCardView
                     android:id="@+id/customCardView6"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="230dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
@@ -134,7 +134,7 @@
                         <com.framework.views.customViews.CustomImageView
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:src="@drawable/ic_whatsapp" />
+                            android:src="@drawable/ic_whatsapp_fposter" />
 
                         <com.framework.views.customViews.CustomTextView
                             style="@style/BlackMediumS"

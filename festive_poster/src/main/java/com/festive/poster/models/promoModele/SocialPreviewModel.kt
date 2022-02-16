@@ -9,10 +9,9 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
 
 class SocialPreviewModel(
-    val posterModel: PosterModel,
+    val posterImg: String?,
     val title:String?,
     val desc:String?,
-    val layout_id:Int,
     var shouldShow:Boolean,
     var channelType:SocialPreviewChannel
 ) : Serializable, AppBaseRecyclerViewItem {
@@ -31,6 +30,30 @@ class SocialPreviewModel(
 
 
     override fun getViewType(): Int {
-        return layout_id
+       return when(channelType){
+            SocialPreviewChannel.INSTAGRAM->{
+                RecyclerViewItemType.INSTAGRAM_PREVIEW.getLayout()
+            }
+           SocialPreviewChannel.TWITTER->{
+               RecyclerViewItemType.VIEWPAGER_TWITTER_PREVIEW.getLayout()
+           }
+           SocialPreviewChannel.GMB->{
+               RecyclerViewItemType.GMB_PREVIEW.getLayout()
+           }
+           SocialPreviewChannel.FACEBOOK->{
+               RecyclerViewItemType.FB_PREVIEW.getLayout()
+           }
+           SocialPreviewChannel.WEBSITE->{
+               RecyclerViewItemType.WEBSITE_PREVIEW.getLayout()
+           }
+           SocialPreviewChannel.EMAIL->{
+               RecyclerViewItemType.EMAIL_PREVIEW.getLayout()
+           }
+           else->{
+               RecyclerViewItemType.WEBSITE_PREVIEW.getLayout()
+           }
+
+        }
+
     }
 }

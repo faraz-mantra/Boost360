@@ -11,20 +11,25 @@ import com.appservice.databinding.BsheetUpdateDraftBinding
 import com.appservice.databinding.UpdateCropImageActivityBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.framework.base.BaseBottomSheetDialog
+import com.framework.constants.Constants
 import com.framework.models.BaseViewModel
 import com.framework.utils.saveAsImageToAppFolder
 import com.framework.utils.saveAsTempFile
+import com.framework.utils.setClickableRipple
+import com.framework.utils.setStatusBarColor
 import com.onboarding.nowfloats.bottomsheet.util.runOnUi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import kotlin.math.absoluteValue
 
 class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,BaseViewModel>() {
 
+    private var currentRotation =0.0F
     private var path: String?=null
-    private var rotateDegree =0
 
     companion object{
         val IK_IMAGE_PATH="IK_IMAGE_PATH"
@@ -43,19 +48,24 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
     }
 
     override fun onCreateView() {
-        setOnClickListener(binding!!.layoutChangeImage,binding!!.layoutTick,binding!!.layoutRotate)
+        setOnClickListener(binding!!.layoutChangeImage,binding!!.layoutTick,binding!!.layoutRotate,binding!!.ivDelete)
 
         path = intent.getStringExtra(IK_IMAGE_PATH)
         showImageInUi()
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        setStatusBarColor(R.color.black_3333)
+    }
     fun showImageInUi(){
         lifecycleScope.launch {
             withContext(Dispatchers.Default){
                 val bitmap = Glide.with(this@UpdateCropImageActivity).asBitmap().load(
-                    File(path)
-                ).diskCacheStrategy(DiskCacheStrategy.NONE).submit().get()
+                    path
+                ).apply(RequestOptions.skipMemoryCacheOf(true))
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).submit().get()
                 runOnUi {
                     binding!!.ivCrop.setImageBitmap(bitmap)
 
@@ -80,13 +90,23 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
                 }).show(supportFragmentManager,UpdateImagePickerBSheet::class.java.name)
             }
             binding!!.layoutRotate->{
-                rotateDegree+=90
-                binding!!.ivCrop.rotateImage(rotateDegree)
+                val fromRotation = if (currentRotation.absoluteValue == 360f) 0f else currentRotation
+                val rotateDegrees = 90f
+                val toRotation = (fromRotation + rotateDegrees) % 450f
+                binding!!.ivCrop.rotateImage(toRotation.toInt())
             }
 
             binding!!.layoutTick->{
                 binding!!.ivCrop.croppedImage.saveAsImageToAppFolder(getExternalFilesDir(null)?.path+File.separator
-                +UpdateImagePickerBSheet.fileName)
+                + Constants.UPDATE_PIC_FILE_NAME)
+                setResult(Activity.RESULT_OK)
+
+                finish()
+            }
+            binding!!.ivDelete->{
+                File(getExternalFilesDir(null)?.path+File.separator
+                        + Constants.UPDATE_PIC_FILE_NAME).delete()
+                setResult(Activity.RESULT_OK)
                 finish()
             }
 

@@ -12,6 +12,8 @@ import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.WithFloatsApiTwoClient
 import com.appservice.rest.services.WithFloatTwoRemoteData
 import com.framework.base.BaseResponse
+import com.framework.pref.clientId
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.Retrofit
@@ -125,6 +127,13 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     )
   }
 
+  fun putBizMessageUpdateV2(request: PostUpdateTaskRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.putBizMessageUpdateV2(request),
+      TaskCode.PUT_BIZ_MESSAGE_UPDATEV2
+    )
+  }
+
   fun getBizWebMessage(id: String?, clientId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.getBizWebMessage(id, clientId),
@@ -155,6 +164,23 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
         clientId, requestType, requestId, totalChunks, currentChunkNumber,
         socialParmeters, bizMessageId, sendToSubscribers, requestBody
       ), TaskCode.PUT_IMAGE_BIZ_UPDATE
+    )
+  }
+
+  fun putBizImageUpdateV2(
+    type: String?,
+    bizMessageId: String?,
+    imageBase64: String?,
+  ): Observable<BaseResponse> {
+    val jsonObject = JsonObject()
+    jsonObject.addProperty("type",type)
+    jsonObject.addProperty("clientId", clientId)
+    jsonObject.addProperty("bizMessageId", bizMessageId)
+    jsonObject.addProperty("imageBody",imageBase64)
+    return makeRemoteRequest(
+      remoteDataSource.putBizImageUpdateV2(
+        jsonObject
+      ), TaskCode.PUT_IMAGE_BIZ_UPDATE_V2
     )
   }
 

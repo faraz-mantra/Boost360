@@ -27,7 +27,7 @@
         android:layout_marginStart="@dimen/size_8"
         android:layout_marginEnd="0dp"
         android:background="@color/white_F5F8FD"
-        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
         android:ellipsize="start"
         android:fontFamily="@font/semi_bold"
         android:gravity="center_vertical"

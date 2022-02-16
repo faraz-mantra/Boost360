@@ -6,30 +6,38 @@
 
     <RelativeLayout
         android:id="@+id/root_layout"
-        android:background="@drawable/ic_poster_pack_selected"
         android:layout_width="@dimen/size_70"
         android:layout_height="@dimen/size_70">
 
         <com.google.android.material.card.MaterialCardView
-            app:cardCornerRadius="@dimen/size_15"
-            android:layout_margin="3dp"
+            app:cardCornerRadius="12dp"
+            android:id="@+id/border_card"
+            app:strokeWidth="1dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:cardBackgroundColor="@color/colorPrimary"
             >
 
-            <RelativeLayout
+            <com.google.android.material.card.MaterialCardView
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardCornerRadius="@dimen/size_12"
+                android:layout_margin="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_dummy_browse_cat_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
                 <LinearLayout
-                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:layout_centerInParent="true"
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
                     <View
+                        android:layout_gravity="center"
                         android:background="@color/white"
                         android:layout_width="@dimen/size_10"
                         android:layout_height="1dp"/>
@@ -49,7 +57,7 @@
                         android:layout_height="wrap_content"/>
 
                 </LinearLayout>
-            </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
         </com.google.android.material.card.MaterialCardView>
 
     </RelativeLayout>

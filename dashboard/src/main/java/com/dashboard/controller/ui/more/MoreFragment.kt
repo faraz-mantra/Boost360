@@ -39,6 +39,7 @@ import com.framework.pref.Key_Preferences
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_IMAGE_URI
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
 import com.framework.pref.UserSessionManager
+import com.framework.utils.InAppReviewUtils
 import com.framework.webengageconstant.*
 
 class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(), RecyclerItemClickListener {
@@ -275,7 +276,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
   }
 
   private fun rateGooglePlayStore() {
-    val uri = Uri.parse("market://details?id=" + baseActivity.applicationContext?.packageName)
+    /*val uri = Uri.parse("market://details?id=" + baseActivity.applicationContext?.packageName)
     val goToMarket = Intent(Intent.ACTION_VIEW, uri)
     goToMarket.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     try {
@@ -284,7 +285,9 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     } catch (e: ActivityNotFoundException) {
       val url = resources.getString(R.string.settings_rate_us_link)
       baseActivity.startMobileSite(session, url, ABOUT_BOOST_PLAY_STORE_RATING)
-    }
+    }*/
+    InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.in_app_review_rate_us_on_store)
+
   }
 
   private fun businessGoogleForm() {

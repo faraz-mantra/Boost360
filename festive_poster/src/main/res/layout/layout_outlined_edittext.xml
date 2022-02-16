@@ -9,20 +9,22 @@
         android:layout_height="match_parent">
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/input_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:cardElevation="-4dp"
             android:layout_marginTop="@dimen/size_8"
-            android:background="@drawable/bg_grey_stroke_et"
+            app:strokeColor="@color/colorAFAFAF"
+            app:strokeWidth="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.framework.views.customViews.CustomEditText
                 android:id="@+id/et_input"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:gravity="start"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:layout_marginHorizontal="@dimen/size_16"
                 android:layout_marginTop="@dimen/size_16"
                 android:layout_marginBottom="@dimen/size_56"
@@ -40,7 +42,7 @@
                 app:layout_constraintVertical_bias="0.0"
                 tools:text="Celebrate Black Friday with Smiley Dental Clinic! Choose from a range of braces starting from just 399 INR only.\n\n #dentalcare  #book  #appointments" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
 
 
         <com.framework.views.customViews.CustomTextView

@@ -256,6 +256,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             createCartStateRenewal(renewalItems)
           } else createPurchaseOrder(null)
         } else {
+          Log.e("total >>", total.toString())
+          Log.e("cartList >>", ::cartList.isInitialized.toString())
+          Log.e("featuresList >>", ::featuresList.isInitialized.toString())
           Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
         }
       }
@@ -1620,7 +1623,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     })
 
     viewModel.getRenewValue().observe(this, Observer {
-      if (it != null) {
+//      if (it != null) {
+      if (!it.isNullOrEmpty()) {
         Log.i("getRenewValue >> ", it)
         if (it.equals("REMIND_ME")) {
 //                if(it.equals("REMIND_ME")  && proceedRenewPopup!!){
@@ -1693,6 +1697,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     //getting all features
     viewModel.updateAllFeaturesResult().observe(this, Observer {
+      Log.e("updateAllFeaturesResult", Gson().toJson(it).toString())
       if (it.isNullOrEmpty().not()) featuresList = it
     })
 

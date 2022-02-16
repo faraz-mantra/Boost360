@@ -64,5 +64,9 @@ enum class FragmentType {
   ACTIVE_DOMAIN_FRAGMENT,
   CONFIRMING_DOMAIN_FRAGMENT,
   ACTIVE_NEW_DOMAIN_FRAGMENT,
-  SEARCH_DOMAIN_FRAGMENT
+  SEARCH_DOMAIN_FRAGMENT;
+  companion object{
+    fun fromValue(name: String): FragmentType? = values().firstOrNull { it.name.equals(name, ignoreCase = true) }
+  }
 }
+

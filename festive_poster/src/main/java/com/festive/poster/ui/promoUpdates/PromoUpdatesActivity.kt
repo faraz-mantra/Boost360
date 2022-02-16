@@ -11,6 +11,7 @@ import com.festive.poster.ui.promoUpdates.pastUpdates.startFragmentPastUpdatesCo
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.framework.models.BaseViewModel
+import com.framework.utils.setStatusBarColor
 import com.framework.webengageconstant.Post_Promotional_Update_Click
 
 class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseViewModel>() {
@@ -38,6 +39,10 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseVi
     }
 
 
+    override fun onResume() {
+        super.onResume()
+        setStatusBarColor(R.color.toolbar_bg)
+    }
     override fun onClick(v: View?) {
         super.onClick(v)
         when (v) {
@@ -60,7 +65,7 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseVi
         supportFragmentManager.addOnBackStackChangedListener {
             when(getTopFragment()){
                is PromoLandingPageFragment->{
-                   binding?.tvToolbarTitle?.text = getString(R.string.promo_updates)
+                   binding?.tvToolbarTitle?.text = getString(R.string.update_studios)
                }
                 is BrowseAllFragment->{
                     binding?.tvToolbarTitle?.text = getString(R.string.browse_all)

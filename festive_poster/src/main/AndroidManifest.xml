@@ -18,7 +18,7 @@
             android:name=".ui.promoUpdates.edit_post.EditPostActivity"
             android:screenOrientation="portrait"
             android:theme="@style/TemplateTheme"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.promoUpdates.PostPreviewSocialActivity"
             android:screenOrientation="portrait"

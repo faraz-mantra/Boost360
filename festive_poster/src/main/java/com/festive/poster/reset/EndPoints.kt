@@ -24,12 +24,18 @@ object EndPoints {
     const val UPLOAD_USER_PROFILE_IMAGE="/user/v9/floatingpoint/createUserProfileImage"
 
     const val PUT_BIZ_IMAGE = "discover/v1/FloatingPoint/createBizImage"
+    const val PUT_BIZ_IMAGE_V2 = "discover/v2/FloatingPoint/createBizImage"
 
     const val GET_BIZ_WEB_UPDATE_BY_ID = "discover/v1/bizFloatForWeb/{id}"
     const val PUT_BIZ_MESSAGE = "discover/v1/FloatingPoint/createBizMessage"
+    const val PUT_BIZ_MESSAGE_V2 = "discover/v2/FloatingPoint/createBizMessage"
     const val GET_MERCHANT_SUMMARY = "/Support/v1/dashboard/GetMerchantSummary"
 
     const val USER_ALL_DETAILS = "/discover/v2/floatingPoint/nf-web/{fpTag}"
+
+    //US CENTRAL
+    const val US_CENTRAL_BASE="https://us-central1-nowfloats-boost.cloudfunctions.net/"
+    const val UPDATE_DRAFT="onpostUpdateDraftApi"
 
     const val GET_PAST_UPDATES_LIST = "discover/v1/floatingPoint/bizFloats"
 

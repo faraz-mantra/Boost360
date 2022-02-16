@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <com.google.android.material.card.MaterialCardView
+    <com.framework.views.customViews.CustomCardView
         app:cardCornerRadius="@dimen/size_15"
         android:layout_marginHorizontal="@dimen/size_12"
         android:layout_marginVertical="@dimen/size_8"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="@dimen/size_150"
         android:layout_height="@dimen/size_150"
-        app:cardBackgroundColor="@color/colorPrimary"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_dummy_browse_cat_icon" />
             <LinearLayout
                 android:gravity="center"
                 android:layout_centerInParent="true"
@@ -31,10 +35,11 @@
                     android:layout_marginVertical="@dimen/size_12"
                     android:letterSpacing="0.4"
                     android:id="@+id/tv_title"
+
                     android:gravity="center"
                     android:layout_margin="@dimen/size_10"
                     android:textColor="@color/white"
-                    android:fontFamily="@font/regular_medium"
+                    android:fontFamily="@font/bold"
                     android:textAllCaps="true"
                     android:layout_height="wrap_content"/>
                 <com.framework.views.customViews.CustomTextView
@@ -46,5 +51,5 @@
                     android:layout_height="wrap_content"/>
             </LinearLayout>
         </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </com.framework.views.customViews.CustomCardView>
 </layout>

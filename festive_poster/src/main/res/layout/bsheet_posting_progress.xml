@@ -15,12 +15,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.framework.views.customViews.CustomImageView
+            <com.framework.views.roundedimageview.RoundedImageView
                 android:id="@+id/iv_post_icon"
                 android:layout_marginTop="@dimen/size_26"
                 android:layout_marginStart="@dimen/size_26"
                 android:layout_width="@dimen/size_72"
                 android:layout_height="@dimen/size_56"
+                app:riv_corner_radius="3dp"
                 android:src="@drawable/ic_promo_progress_post_mock"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -40,14 +41,15 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.framework.views.customViews.CustomTextView
-                android:id="@+id/customTextView5"
+                android:id="@+id/tvSocialParam"
+                android:minHeight="@dimen/size_35"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
                 android:layout_marginTop="@dimen/size_4"
                 android:gravity="start"
                 android:layout_marginEnd="@dimen/size_34"
-                android:text="@string/website_subscribers_facebook_instagram_gmb_twitter"
+                tools:text="@string/website_subscribers_facebook_instagram_gmb_twitter"
                 android:textColor="@color/grey_828282"
                 android:textSize="@dimen/text_13"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -58,17 +60,17 @@
                 android:id="@+id/linearProgressIndicator"
                 android:layout_width="0dp"
                 android:layout_height="14dp"
-                android:indeterminate="true"
-                app:trackCornerRadius="@dimen/size_10"
-                app:trackThickness="@dimen/size_8"
-                app:trackColor="@color/grey_f0f0f0"
-                android:layout_marginTop="@dimen/size_14"
                 android:layout_marginHorizontal="@dimen/size_52"
+                android:indeterminate="true"
+                android:layout_marginTop="@dimen/size_16"
                 app:indeterminateAnimationType="disjoint"
                 app:indicatorColor="@color/colorPrimary"
-                app:layout_constraintTop_toBottomOf="@+id/iv_post_icon"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@+id/tvSocialParam"
+                app:trackColor="@color/grey_f0f0f0"
+                app:trackCornerRadius="@dimen/size_10"
+                app:trackThickness="@dimen/size_8" />
 
             <com.framework.views.customViews.CustomTextView
                 android:layout_width="wrap_content"

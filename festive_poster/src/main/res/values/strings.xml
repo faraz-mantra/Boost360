@@ -44,6 +44,7 @@
 
     <string name="app_name">template</string>
     <string name="promo_updates">Promo updates</string>
+    <string name="update_studios">Update studio</string>
     <string name="for_today">For today</string>
     <string name="browse">Browse</string>
     <string name="find">Find</string>
@@ -52,11 +53,11 @@
     <string name="post">Post</string>
     <string name="connect">Connect</string>
     <string name="please_wait">Please Wait</string>
-    <string name="browse_all">Browse All</string>
+    <string name="browse_all">Browse all</string>
     <string name="edit">Edit</string>
     <string name="edit_post">Edit Post</string>
     <string name="caption">Caption</string>
-    <string name="preview_and_post">Preview And Post</string>
+    <string name="preview_and_post">Preview and post</string>
     <string name="edit_template_text">Edit Template Text</string>
     <string name="header_1">Header 1</string>
     <string name="header_2">Header 2</string>
@@ -94,6 +95,15 @@
     <string name="buy">BUY</string>
     <string name="like">Like</string>
     <string name="comment">Comment</string>
+    <string name="type_in_the_caption_to_create_your_own_hashtags">Type ‘#’ in the caption to create your own hashtags</string>
+    <string name="post_on">Post on</string>
+    <string name="posted_15_mins_ago">Posted 15 mins ago</string>
+    <string name="ria_customer_mail">ria@nowfloats.com</string>
+    <string name="Create">Create</string>
+    <string name="you_ve_new_email_update_from">You\'ve new email update from</string>
+    <string name="explore_the_premium_update_specially_designed_for_you">Explore the premium update specially designed for you.</string>
+    <string name="for_regular_free_updates_click_on_create_and_keep_posting_like_always">For regular FREE updates, click on ‘Create’ and keep posting like always.</string>
+    <string name="type_what_you_re_looking_for">Type what you’re looking for...</string>
 
     <string name="empty_string" />
     <string name="posted_updates">Posted updates</string>

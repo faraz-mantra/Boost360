@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,49 +22,95 @@
 
         <com.framework.views.customViews.CustomImageView
             android:id="@+id/iv_close_post_success"
-            android:layout_width="@dimen/size_22"
-            android:layout_height="@dimen/size_22"
+            android:layout_width="@dimen/size_18"
+            android:layout_height="@dimen/size_18"
             android:layout_marginTop="@dimen/size_16"
-            android:layout_marginEnd="@dimen/size_16"
+            android:layout_marginEnd="24dp"
             android:src="@drawable/ic_close_light_grey_d8d8d8"
             app:layout_constraintEnd_toEndOf="@+id/off_white_view"
             app:layout_constraintTop_toTopOf="@+id/off_white_view" />
 
-        <com.framework.views.customViews.CustomImageView
-            android:id="@+id/iv_poster_icon"
+        <com.framework.views.customViews.CustomCardView
+            android:id="@+id/iv_poster_card"
             android:layout_width="@dimen/size_100"
             android:layout_height="@dimen/size_78"
             android:layout_marginTop="@dimen/size_20"
             android:elevation="@dimen/size_4"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_promo_post_success_mock"
+            app:cardCornerRadius="3dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
 
-        <com.framework.views.customViews.CustomImageView
+
+            <com.framework.views.roundedimageview.RoundedImageView
+                app:riv_corner_radius="3dp"
+                android:id="@+id/iv_poster_icon"
+                android:layout_margin="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                tools:src="@drawable/ic_promo_post_success_mock"
+                 />
+        </com.framework.views.customViews.CustomCardView>
+
+
+
+        <com.framework.views.customViews.CustomCardView
+            app:cardBackgroundColor="@color/white"
+            app:cardElevation="8dp"
+            android:id="@+id/card_small_anim"
             android:layout_width="@dimen/size_40"
             android:layout_height="@dimen/size_40"
             android:elevation="@dimen/size_8"
+            app:cardCornerRadius="@dimen/size_20"
             android:src="@drawable/ic_green_tick_promo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lt_small_tick"
+                app:lottie_autoPlay="true"
+                app:lottie_rawRes="@raw/green_success_tick"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </com.framework.views.customViews.CustomCardView>
+
+        <com.framework.views.customViews.CustomCardView
+            app:cardBackgroundColor="@color/white"
+            app:cardElevation="8dp"
+            android:layout_width="@dimen/size_80"
+            app:cardCornerRadius="@dimen/size_40"
+            android:layout_height="@dimen/size_80"
+            android:id="@+id/card_big_anim"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/size_20"
+            android:elevation="@dimen/size_8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <com.airbnb.lottie.LottieAnimationView
+                app:lottie_autoPlay="true"
+                android:id="@+id/lt_big_tick"
+                app:lottie_rawRes="@raw/green_success_tick"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </com.framework.views.customViews.CustomCardView>
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/customTextView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_13"
             android:fontFamily="@font/regular"
             android:text="@string/update_posted_successfully"
             android:textColor="@color/black_4a4a4a"
             android:textSize="@dimen/text_14"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/off_white_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_poster_icon"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_poster_card"
+            app:layout_constraintVertical_bias="0.5" />
 
         <View
             android:id="@+id/white_view"

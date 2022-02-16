@@ -6,10 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.festive.poster.models.PosterPackModel
 import com.festive.poster.models.PosterPackTagModel
 import com.festive.poster.models.response.GetTemplatesResponse
-import com.festive.poster.reset.repo.DevBoostRepository
-import com.festive.poster.reset.repo.FeatureProcessorRepository
-import com.festive.poster.reset.repo.NowFloatsRepository
-import com.festive.poster.reset.repo.WithFloatsRepository
+import com.festive.poster.reset.repo.*
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
@@ -39,6 +36,9 @@ class FestivePosterViewModel: BaseViewModel() {
         return FeatureProcessorRepository.getFeatureDetails(fpId,clientId).toLiveData()
     }
 
+    fun getUserDetails(fpTag: String?, clientId: String): LiveData<BaseResponse> {
+        return WithFloatTwoRepository.getUserDetails(fpTag,clientId).toLiveData()
+    }
     fun getUpgradeData(): LiveData<BaseResponse> {
         return DevBoostRepository.getUpgradeData().toLiveData()
     }

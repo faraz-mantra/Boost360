@@ -3,6 +3,7 @@ package com.framework.glide.customsvgloader
 import android.content.Context
 import android.util.Log
 import androidx.collection.LruCache
+import com.framework.analytics.SentryController
 import java.io.File
 
 class SvgRenderCacheUtil private constructor() {
@@ -26,6 +27,7 @@ class SvgRenderCacheUtil private constructor() {
         try {
             SvgRenderCacheUtil.instance.lru.put(key, svgString)
         } catch (e: Exception) {
+            SentryController.captureException(e)
             Log.e(TAG, "saveToCache: $e", )
         }
 

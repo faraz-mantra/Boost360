@@ -82,7 +82,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
     scrollPagingListener()
     listUpdateApi(offSet = offSet)
     binding?.btnAdd?.setOnClickListener {
-      startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, isResult = true)
+      startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2, isResult = true)
     }
     this.zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.LATEST_NEWS_UPADATES, this, baseActivity).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
@@ -264,7 +264,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
   }
 
   override fun primaryButtonClicked() {
-    startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, isResult = true)
+    startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2, isResult = true)
 
   }
 

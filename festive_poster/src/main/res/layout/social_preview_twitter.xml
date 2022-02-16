@@ -5,22 +5,25 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/size_250"
-        android:layout_height="@dimen/size_300">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
             android:layout_width="match_parent"
-            android:layout_height="270dp"
+            android:layout_height="wrap_content"
+            android:minHeight="170dp"
             android:layout_margin="8dp"
-            app:cardCornerRadius="@dimen/size_20"
+            app:cardCornerRadius="@dimen/size_10"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginHorizontal="16dp">
 
                 <com.framework.views.customViews.CustomCardView
                     android:id="@+id/customCardView"
@@ -109,6 +112,8 @@
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tv_caption"
+                    android:textColor="@color/black_4a4a4a"
+
                     android:layout_width="match_parent"
                     android:textSize="6sp"
                     android:layout_height="wrap_content"
@@ -122,9 +127,8 @@
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/iv_svg"
                     android:scaleType="fitXY"
-
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="142dp"
                     android:layout_marginTop="16dp"
                     app:layout_constraintHeight_percent="0.4"
                     app:layout_constraintTop_toBottomOf="@+id/tv_caption" />
@@ -213,13 +217,14 @@
 
         <com.framework.views.customViews.CustomImageView
             android:id="@+id/customImageView6"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:elevation="@dimen/size_4"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_50"
             android:src="@drawable/ic_twitter_social_preview"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/materialCardView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

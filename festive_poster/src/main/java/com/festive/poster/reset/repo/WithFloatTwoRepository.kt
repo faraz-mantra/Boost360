@@ -8,6 +8,8 @@ import com.festive.poster.reset.TaskCode
 import com.festive.poster.reset.apiClients.WithFloatsTwoApiClient
 import com.festive.poster.reset.services.WithFloatTwoRemoteData
 import com.framework.base.BaseResponse
+import com.framework.pref.clientId
+import com.google.gson.JsonObject
 import com.squareup.okhttp.RequestBody
 import io.reactivex.Observable
 import retrofit2.Response
@@ -34,6 +36,28 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.putBizMessageUpdate(request), TaskCode.PUT_BIZ_MESSAGE_UPDATE)
   }
 
+  fun putBizImageUpdateV2(
+    type: String?,
+    bizMessageId: String?,
+    imageBase64: String?,
+  ): Observable<BaseResponse> {
+    val jsonObject = JsonObject()
+    jsonObject.addProperty("type",type)
+    jsonObject.addProperty("clientId", clientId)
+    jsonObject.addProperty("bizMessageId", bizMessageId)
+    jsonObject.addProperty("imageBody",imageBase64)
+    return makeRemoteRequest(
+      remoteDataSource.putBizImageUpdateV2(
+        jsonObject
+      ), TaskCode.PUT_IMAGE_BIZ_UPDATE_V2
+    )
+  }
+  fun putBizMessageUpdateV2(request: PostUpdateTaskRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.putBizMessageUpdateV2(request),
+      TaskCode.PUT_BIZ_MESSAGE_UPDATEV2
+    )
+  }
   fun getUserDetails(fpTag: String?, clientId: String): Observable<BaseResponse> {
     val queries: MutableMap<String, String> = HashMap()
     queries["clientId"] = clientId

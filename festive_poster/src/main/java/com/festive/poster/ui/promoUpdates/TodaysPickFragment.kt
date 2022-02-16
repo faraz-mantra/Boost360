@@ -4,16 +4,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.Constants
+import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.FragmentTodaysPickBinding
-import com.festive.poster.models.PosterDetailsModel
-import com.festive.poster.models.PosterModel
-import com.festive.poster.models.PosterPackModel
-import com.festive.poster.models.PosterPackTagModel
+import com.festive.poster.models.*
 import com.festive.poster.models.promoModele.TemplateModel
 import com.festive.poster.models.promoModele.TodaysPickModel
 import com.festive.poster.models.response.GetTemplateViewConfigResponse
@@ -22,17 +21,32 @@ import com.festive.poster.models.response.UpgradeGetDataResponse
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.festive.poster.ui.promoUpdates.bottomSheet.SubscribePlanBottomSheet
+import com.festive.poster.utils.MarketPlaceUtils
+import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
+import com.festive.poster.utils.isPromoWidgetActive
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.base.BaseActivity
+import com.framework.constants.PackageNames
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
+import com.framework.utils.convertListObjToString
+import com.framework.utils.saveAsImageToAppFolder
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.Promotional_Update_Browse_All_Click
 import com.framework.webengageconstant.Promotional_Update_View_More_Click
 import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
 
 class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePosterViewModel>(),RecyclerItemClickListener {
 
@@ -65,14 +79,36 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
     }
 
     override fun onCreateView() {
+        session = UserSessionManager(requireActivity())
         sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
 
-        session = UserSessionManager(requireActivity())
 
         getTemplateViewConfig()
         setOnClickListener(binding?.cardBrowseAllTemplate)
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        refreshUserWidgets()
+
+    }
+
+    private fun refreshUserWidgets() {
+        viewModel?.getUserDetails(session?.fpTag, clientId)?.observe(this) {
+            if (it.isSuccess()) {
+                val detail = it as? CustomerDetails
+                detail?.FPWebWidgets?.let { list ->
+                    session?.storeFPDetails(
+                        Key_Preferences.STORE_WIDGETS,
+                        convertListObjToString(list)
+                    )
+
+                }
+            }
+        }
     }
 
     override fun onClick(v: View) {
@@ -109,16 +145,30 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
     }
 
     private fun getTemplateViewConfig() {
-        showProgress()
-        viewModel?.getTemplateConfig(Constants.PROMO_WIDGET_KEY,session?.fPID, session?.fpTag)
-            ?.observeOnce(viewLifecycleOwner, {
+        startShimmer()
+        viewModel?.getTemplateConfig(Constants.PROMO_FEATURE_CODE,session?.fPID, session?.fpTag)
+            ?.observeOnce(viewLifecycleOwner) {
                 val response = it as? GetTemplateViewConfigResponse
                 response?.let {
                     val tagArray = prepareTagForApi(response.Result.todayPick.tags)
                     fetchTemplates(tagArray, response)
                 }
 
-            })
+            }
+    }
+
+    private fun startShimmer() {
+        binding!!.shimmerLayout.visible()
+        binding!!.shimmerLayout.startShimmer()
+        binding!!.rvTemplates.gone()
+        binding!!.cardBrowseAllTemplate.gone()
+    }
+
+    private fun stopShimmer() {
+        binding!!.shimmerLayout.gone()
+        binding!!.shimmerLayout.stopShimmer()
+        binding!!.rvTemplates.visible()
+        binding!!.cardBrowseAllTemplate.visible()
     }
 
     private fun prepareTagForApi(tags: List<PosterPackTagModel>): ArrayList<String> {
@@ -131,32 +181,51 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
 
     private fun fetchTemplates(tagArray: ArrayList<String>, response: GetTemplateViewConfigResponse) {
         viewModel?.getTemplates(session?.fPID, session?.fpTag, tagArray)
-            ?.observeOnce(viewLifecycleOwner, {
+            ?.observeOnce(viewLifecycleOwner) {
                 dataList = ArrayList()
                 val templates_response = it as? GetTemplatesResponse
                 templates_response?.let {
                     response.Result.todayPick.tags.forEach { pack_tag ->
                         val templateList = ArrayList<PosterModel>()
                         templates_response.Result.templates.forEach { template ->
-                            var posterTag = template.tags.find { posterTag -> posterTag == pack_tag.tag }
-                            if ( posterTag != null && template.active) {
+                            var posterTag =
+                                template.tags?.find { posterTag -> posterTag == pack_tag.tag }
+                            if (posterTag != null && template?.active == true) {
                                 template.greeting_message = pack_tag.description
-                                template.layout_id = RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP.getLayout()
+                                template.layout_id =
+                                    RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP.getLayout()
                                 templateList.add(template.clone()!!)
                             }
                         }
-                        dataList?.add(PosterPackModel(pack_tag, templateList.toArrayList(),isPurchased = pack_tag.isPurchased,list_layout = RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()))
+                        templateList.add(PosterModel(layout_id = RecyclerViewItemType.VIEW_MORE_POSTER.getLayout()))
+                        if (templateList.isNotEmpty()){
+                            dataList?.add(
+                                PosterPackModel(
+                                    pack_tag,
+                                    templateList.toArrayList(),
+                                    isPurchased = pack_tag.isPurchased,
+                                    list_layout = RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()
+                                )
+                            )
+                        }
+
 
                     }
-                   // getPriceOfPosterPacks()
+
+                    dataList?.add(dataList!![0])
+                    dataList?.add(dataList!![0])
+                    dataList?.add(dataList!![0])
+                    dataList?.add(dataList!![0])
+
+                    // getPriceOfPosterPacks()
                     callbacks?.onDataLoaded(dataList!!)
                     // rearrangeList()
                     adapter = AppBaseRecyclerViewAdapter(baseActivity, dataList!!, this)
                     binding?.rvTemplates?.adapter = adapter
                     binding?.rvTemplates?.layoutManager = LinearLayoutManager(requireActivity())
-                    hideProgress()
+                    stopShimmer()
                 }
-            })
+            }
     }
 
    /* private fun getPriceOfPosterPacks() {
@@ -182,5 +251,53 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
 
+
+    }
+
+    override fun onChildClick(
+        childPosition: Int,
+        parentPosition: Int,
+        childItem: BaseRecyclerViewItem?,
+        parentItem: BaseRecyclerViewItem?,
+        actionType: Int
+    ) {
+        when(actionType){
+            RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal->{
+                if (isPromoWidgetActive()){
+                    childItem as PosterModel
+                    val variant = childItem.variants?.firstOrNull()
+                    SvgUtils.shareUncompressedSvg(variant?.svgUrl,childItem,
+                        binding.root.context, PackageNames.WHATSAPP)
+                }else{
+                    SubscribePlanBottomSheet.newInstance(object : SubscribePlanBottomSheet.Callbacks{
+                        override fun onBuyClick() {
+                            MarketPlaceUtils.launchCartActivity(requireActivity(),
+                                PromoUpdatesActivity::class.java.name,null,null)
+
+                        }
+                    }).show(parentFragmentManager, SubscribePlanBottomSheet::class.java.name)
+                }
+            }
+            RecyclerViewActionType.POST_CLICKED.ordinal-> {
+                Log.i(TAG, "onItemClick: ")
+                lifecycleScope.launch {
+                    withContext(Dispatchers.Default) {
+                        val file = SvgUtils.svgToBitmap(childItem as PosterModel)
+                            ?.saveAsImageToAppFolder(
+                                activity?.getExternalFilesDir(null)?.path +
+                                        File.separator + com.framework.constants.Constants.UPDATE_PIC_FILE_NAME
+                            )
+                        if (file?.exists() == true) {
+                            PostPreviewSocialActivity.launchActivity(
+                                requireActivity(),
+                                childItem.greeting_message,
+                                file.path
+                            )
+                        }
+
+                    }
+                }
+            }
+        }
     }
 }
