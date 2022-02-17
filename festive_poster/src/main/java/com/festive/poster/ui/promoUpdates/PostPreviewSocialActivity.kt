@@ -36,6 +36,9 @@ import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.utils.isPromoWidgetActive
 import com.festive.poster.viewmodels.PostUpdatesViewModel
+import com.framework.constants.Constants.IK_CAPTION_KEY
+import com.framework.constants.Constants.IK_POSTER
+import com.framework.constants.Constants.IK_TAGS
 import com.framework.constants.Constants.MARKET_PLACE_ORIGIN_NAV_DATA
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
@@ -79,16 +82,23 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     private val posterImgPath by lazy {
         intent?.getBundleExtra(MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IK_POSTER)
     }
+    private val tags:ArrayList<String> by lazy {
+        convertJsonToObj(
+            intent?.getBundleExtra(MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IK_TAGS)
+        )
+    }
 
     companion object{
-        val IK_CAPTION_KEY="IK_CAPTION_KEY"
-        val IK_POSTER="IK_POSTER"
 
-        fun launchActivity(activity:Activity,caption:String?,posterImgPath:String){
+
+        fun launchActivity(activity:Activity,caption:String?,
+                           posterImgPath:String,tags:List<String>?){
             activity.startActivity(Intent(activity,PostPreviewSocialActivity::class.java)
                 .putExtra(MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
                     putString(IK_CAPTION_KEY,caption)
-                    putString(EditPostActivity.IK_POSTER, posterImgPath)
+                    putString(IK_POSTER, posterImgPath)
+                    putString(IK_TAGS, Gson().toJson(tags))
+
                 })
 
 
@@ -153,7 +163,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             SubscribePlanBottomSheet.newInstance(object :SubscribePlanBottomSheet.Callbacks{
                 override fun onBuyClick() {
                     MarketPlaceUtils.launchCartActivity(this@PostPreviewSocialActivity,
-                        PostPreviewSocialActivity::class.java.name,posterImgPath,captionIntent)
+                        PostPreviewSocialActivity::class.java.name,posterImgPath,captionIntent,tags)
 
                 }
             }).show(supportFragmentManager, SubscribePlanBottomSheet::class.java.name)
@@ -623,7 +633,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             merchantId,
             parentId,
             false,
-            socialShare
+            socialShare,
+            tags=tags
         )
 
 

@@ -397,8 +397,8 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
         startActivity(Intent(requireActivity(), Class.forName(
           "com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity"))
           .putExtra(Constants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
-            putString("IK_CAPTION_KEY",binding!!.etUpdate.text.toString())
-            putString("IK_POSTER", posterImagePath)
+            putString(Constants.IK_CAPTION_KEY,binding!!.etUpdate.text.toString())
+            putString(Constants.IK_POSTER, posterImagePath)
           }))
         Log.i(TAG, "onClick: ${binding!!.etUpdate.text.toString().extractHashTag()}")
       }

@@ -10,6 +10,9 @@ import com.festive.poster.models.PosterModel
 import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
 import com.framework.BaseApplication
 import com.framework.analytics.SentryController
+import com.framework.constants.Constants.IK_CAPTION_KEY
+import com.framework.constants.Constants.IK_POSTER
+import com.framework.constants.Constants.IK_TAGS
 import com.framework.constants.Constants.MARKET_PLACE_ORIGIN_ACTIVITY
 import com.framework.constants.Constants.MARKET_PLACE_ORIGIN_NAV_DATA
 import com.framework.pref.Key_Preferences
@@ -70,7 +73,8 @@ object MarketPlaceUtils {
         }
     }
 
-    fun launchCartActivity(activity:Activity,originActivityName:String,posterImgPath:String?,caption:String?){
+    fun launchCartActivity(activity:Activity,originActivityName:String,
+                           posterImgPath:String?,caption:String?,tags:List<String>?){
         val session = UserSessionManager(BaseApplication.instance)
         val intent = Intent(
             activity,
@@ -81,8 +85,9 @@ object MarketPlaceUtils {
         intent.putExtra("isDeepLink", false)
         intent.putExtra(MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
             putString(MARKET_PLACE_ORIGIN_ACTIVITY,originActivityName)
-            putString(PostPreviewSocialActivity.IK_POSTER,posterImgPath)
-            putString(PostPreviewSocialActivity.IK_CAPTION_KEY,caption)
+            putString(IK_POSTER,posterImgPath)
+            putString(IK_CAPTION_KEY,caption)
+            putString(IK_TAGS,Gson().toJson(tags))
         })
         intent.putStringArrayListExtra(
             "userPurchsedWidgets",

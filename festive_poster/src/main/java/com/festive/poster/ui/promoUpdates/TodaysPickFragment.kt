@@ -263,16 +263,17 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
     ) {
         when(actionType){
             RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal->{
+                childItem as PosterModel
+                val variant = childItem.variants?.firstOrNull()
                 if (isPromoWidgetActive()){
-                    childItem as PosterModel
-                    val variant = childItem.variants?.firstOrNull()
+
                     SvgUtils.shareUncompressedSvg(variant?.svgUrl,childItem,
                         binding.root.context, PackageNames.WHATSAPP)
                 }else{
                     SubscribePlanBottomSheet.newInstance(object : SubscribePlanBottomSheet.Callbacks{
                         override fun onBuyClick() {
                             MarketPlaceUtils.launchCartActivity(requireActivity(),
-                                PromoUpdatesActivity::class.java.name,null,null)
+                                PromoUpdatesActivity::class.java.name,null,null,childItem.tags)
 
                         }
                     }).show(parentFragmentManager, SubscribePlanBottomSheet::class.java.name)
@@ -291,7 +292,8 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                             PostPreviewSocialActivity.launchActivity(
                                 requireActivity(),
                                 childItem.greeting_message,
-                                file.path
+                                file.path,
+                                childItem.tags
                             )
                         }
 

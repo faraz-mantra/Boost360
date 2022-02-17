@@ -226,16 +226,17 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
                 switchToSelectedItem()
             }
             RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal->{
+                item as PosterModel
+                val variant = item.variants?.firstOrNull()
                 if (isPromoWidgetActive()){
-                    item as PosterModel
-                    val variant = item.variants?.firstOrNull()
+
                     SvgUtils.shareUncompressedSvg(variant?.svgUrl,item,
                         binding.root.context, PackageNames.WHATSAPP)
                 }else{
                     SubscribePlanBottomSheet.newInstance(object :SubscribePlanBottomSheet.Callbacks{
                         override fun onBuyClick() {
                             MarketPlaceUtils.launchCartActivity(requireActivity(),
-                                PromoUpdatesActivity::class.java.name,null,null)
+                                PromoUpdatesActivity::class.java.name,null,null,item.tags)
 
                         }
                     }).show(parentFragmentManager, SubscribePlanBottomSheet::class.java.name)
@@ -253,7 +254,8 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
                             PostPreviewSocialActivity.launchActivity(
                                 requireActivity(),
                                 item.greeting_message,
-                                file.path
+                                file.path,
+                                item.tags
                             )
                         }
 

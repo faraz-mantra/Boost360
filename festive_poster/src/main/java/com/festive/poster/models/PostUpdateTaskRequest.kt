@@ -10,5 +10,7 @@ data class PostUpdateTaskRequest(
   var merchantId: String? = null,
   var parentId: String? = null,
   var sendToSubscribers: Boolean? = null,
-  var socialParameters: String? = null
+  var socialParameters: String? = null,
+  var type:String?=null,
+  var tags:ArrayList<String>?=null
 ) : BaseRequest(), Serializable
