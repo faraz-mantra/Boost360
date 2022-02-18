@@ -6,7 +6,7 @@ import com.appservice.AppServiceApplication
 import com.appservice.R
 import com.appservice.constant.RecyclerViewItemType
 import com.appservice.recyclerView.AppBaseRecyclerViewItem
-import com.appservice.ui.aptsetting.ui.getProductType
+import com.appservice.base.getProductType
 import com.appservice.utils.capitalizeUtil
 import com.framework.base.BaseResponse
 import com.framework.pref.UserSessionManager
@@ -40,6 +40,7 @@ enum class IconType(var icon: Int) {
   customer_invoice_setup(R.drawable.ic_customer_invoice),
   payment_collection(R.drawable.ic_payment_collection),
   delivery_setup(R.drawable.ic_delivery_ecomm_setup),
+  consultation_settings(R.drawable.ic_consulation_setting_appt),
   catalog_setup(R.drawable.ic_business_services_pro),
   catalog_setup_ecommerce(R.drawable.ic_ecom_catalog_setup);
 
@@ -72,13 +73,14 @@ data class ResultS(
   var paymentCollectionSetup: PaymentCollectionSetup? = null
 ) : Serializable {
 
-  fun getAppointmentTilesArray(): ArrayList<AppointmentStatusResponse.TilesModel> {
-    return arrayListOf(
-      AppointmentStatusResponse.TilesModel("catalog_setup", "Service categories, Catalog display text,applicable tax slabs", "Catalog setup", this.catalogSetup),
-      AppointmentStatusResponse.TilesModel("payment_collection", "Preferred payment gateway", "Payment collection setup", this.paymentCollectionSetup),
-      AppointmentStatusResponse.TilesModel("customer_invoice_setup", "GST declaration, Bank UPI for offline appointments,signature", "Customer invoice setup", this.customerInvoicesSetup)
-//      AppointmentStatusResponse.TilesModel("policies", "Refund, cancellation, privacy policies for your customers", "Policies for customers", this.policiesSetup)
-    )
+  fun getAppointmentTilesArray(isDoctor: Boolean): ArrayList<AppointmentStatusResponse.TilesModel> {
+    return ArrayList<AppointmentStatusResponse.TilesModel>().apply {
+      add(AppointmentStatusResponse.TilesModel("catalog_setup", "Service categories, Catalog display text,applicable tax slabs", "Catalog setup", catalogSetup))
+      if (isDoctor) add(AppointmentStatusResponse.TilesModel("consultation_settings", "General appointment: Enabled", "Consultation settings", consultationSetup))
+      add(AppointmentStatusResponse.TilesModel("payment_collection", "Preferred payment gateway", "Payment collection setup", paymentCollectionSetup))
+      add(AppointmentStatusResponse.TilesModel("customer_invoice_setup", "GST declaration, Bank UPI for offline appointments,signature", "Customer invoice setup", customerInvoicesSetup))
+      //add(AppointmentStatusResponse.TilesModel("policies", "Refund, cancellation, privacy policies for your customers", "Policies for customers", policiesSetup))    }
+    }
   }
 
   fun getEcommerceTilesArray(): ArrayList<AppointmentStatusResponse.TilesModel> {
@@ -87,7 +89,7 @@ data class ResultS(
       AppointmentStatusResponse.TilesModel("payment_collection", "Preferred payment gateway", "Payment collection setup", this.paymentCollectionSetup),
       AppointmentStatusResponse.TilesModel("customer_invoice_setup", "GST declaration, Bank UPI for offline appointments,signature", "Customer invoice setup", this.customerInvoicesSetup),
       AppointmentStatusResponse.TilesModel("delivery_setup", "GST declaration, Bank UPI for offline appointments,signature", "Delivery setup", this.deliverySetup)
-//      AppointmentStatusResponse.TilesModel("policies", "Refund, cancellation, privacy policies for your customers", "Policies for customers", this.policiesSetup)
+      //AppointmentStatusResponse.TilesModel("policies", "Refund, cancellation, privacy policies for your customers", "Policies for customers", this.policiesSetup)
     )
   }
 }
@@ -156,9 +158,10 @@ data class CatalogSetup(
   var isPending: Boolean? = null
 ) : Serializable {
 
-  fun getGstSlabInt():Int{
-    return defaultGSTSlab?.toInt()?:0
+  fun getGstSlabInt(): Int {
+    return defaultGSTSlab?.toInt() ?: 0
   }
+
   fun getTitle(activity: Activity?): Spanned? {
     val s = UserSessionManager(activity ?: AppServiceApplication.instance)
     return fromHtml("Display text: <b>${if (productCategoryVerb.isNullOrEmpty()) getProductType(s.fP_AppExperienceCode) else "${productCategoryVerb?.capitalizeUtil()}"}</b>")

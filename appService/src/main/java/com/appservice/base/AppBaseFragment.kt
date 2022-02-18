@@ -169,3 +169,10 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
   }
 }
 
+fun getProductType(category_code: String?): String {
+  return when (category_code) {
+    "SVC", "DOC", "HOS", "SPA", "SAL" -> "Services"
+    else -> "Products"
+  }
+}
+
