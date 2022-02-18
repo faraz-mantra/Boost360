@@ -39,8 +39,8 @@ class BatchesViewModel(private val service: IEducationService) : BaseViewModel()
 
   private var _deleteBatchResponse = MutableLiveData<String>()
 
-  fun getUpcomingBatches() {
-    val value = "{WebsiteId:'" + WEBSITE_ID_EDUCATION + "'}";
+  fun getUpcomingBatches(fpTag: String) {
+    val value = "{WebsiteId:'" + fpTag + "'}";
     compositeDisposable.add(service.getUpcomingBatches(AUTH_CODE, value, LIMIT, SKIP)
       .processRequest(
         {
