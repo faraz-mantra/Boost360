@@ -71,6 +71,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE,
       FragmentType.ECOMMERCE_CATALOG_SETTINGS,
       FragmentType.ECOMMERCE_ADD_ACCOUNT_DETAILS,
+      FragmentType.CONSULTATION_APT_SETTINGS
       -> R.style.EcommerceSettings
       else -> super.customTheme()
     }
@@ -97,7 +98,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE,
       FragmentType.ECOMMERCE_CATALOG_SETTINGS,
       FragmentType.ECOMMERCE_ADD_ACCOUNT_DETAILS,
-      -> ContextCompat.getColor(this, R.color.orange)
+      FragmentType.CONSULTATION_APT_SETTINGS,
+      -> ContextCompat.getColor(this, R.color.colorAccent)
       else -> super.getToolbarBackgroundColor()
     }
   }
@@ -123,7 +125,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_POLICIES,
       FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE,
       FragmentType.ECOMMERCE_CATALOG_SETTINGS,
-      FragmentType.ECOMMERCE_ADD_ACCOUNT_DETAILS,
+      FragmentType.ECOMMERCE_CATALOG_SETTINGS,
+      FragmentType.CONSULTATION_APT_SETTINGS,
       -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
       else -> super.getNavigationIcon()
     }
@@ -157,6 +160,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.FRAGMENT_PRODUCT_HOME -> getString(R.string.catalog)
       FragmentType.FRAGMENT_PRODUCT_CATEGORY -> getString(R.string.catalog)
       FragmentType.ECOMMERCE_DELIVERY_CONFIG -> getString(R.string.delivery_setup)
+      FragmentType.CONSULTATION_APT_SETTINGS -> getString(R.string.consultation_settings)
       else -> super.getToolbarTitle()
     }
   }
@@ -200,9 +204,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       }
       FragmentType.ECOMMERCE_DELIVERY_CONFIG -> {
         FragmentEcommerceDeliveryConfig.newInstance()
-
       }
-
       FragmentType.SERVICE_DETAIL_VIEW -> {
         ServiceDetailFragment.newInstance()
       }
@@ -235,6 +237,9 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       }
       FragmentType.APPOINTMENT_PAYMENT_SETTINGS -> {
         FragmentPaymentCollectionSetup.newInstance()
+      }
+      FragmentType.CONSULTATION_APT_SETTINGS -> {
+        FragmentConsultationAptSettings.newInstance()
       }
       FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES -> {
         FragmentCustomerPolicies.newInstance()

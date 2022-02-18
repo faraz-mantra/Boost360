@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_smoke">
+
+    <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:fillViewport="true"
+      app:layout_constraintBottom_toTopOf="@+id/btn_confirm"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        style="@style/match_wrap"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_16"
+          android:layout_marginTop="@dimen/size_16"
+          android:background="@drawable/bg_rect_grey_rounded">
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/radio_card"
+            style="@style/match_wrap"
+            android:background="@drawable/bg_rect_white_rounded_4"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+              style="@style/match_wrap"
+              android:orientation="horizontal">
+
+              <com.framework.views.customViews.CustomTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/size_14"
+                android:singleLine="true"
+                android:text="General appointments"
+                android:textColor="@color/black_4a4a4a"
+                app:fontFamily="@font/semi_bold"
+                app:textType="BODY_1" />
+
+              <com.appservice.views.toggle.widget.LabeledSwitch
+                android:id="@+id/toggle_home"
+                style="@style/Appointment_Toggle"
+                android:layout_width="@dimen/size_78"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/size_10"
+                app:on="true"
+                app:textOff="Disabled"
+                app:textOn="Enabled" />
+            </LinearLayout>
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingHorizontal="@dimen/size_14"
+              android:paddingBottom="@dimen/size_14"
+              android:text="This lets your site visitors book appointments on your website without having to select any service. This is mostly useful in cases where the customers doesn’t know which service I should book the appointment for?"
+              android:textColor="@color/gray_828282"
+              app:textType="CAPTION" />
+
+          </androidx.appcompat.widget.LinearLayoutCompat>
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/view_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_1"
+            android:orientation="vertical"
+            android:padding="@dimen/size_14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radio_card">
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Fee (inclusive of taxes)"
+              android:textColor="@color/black_4a4a4a"
+              app:fontFamily="@font/semi_bold"
+              app:textType="CAPTION" />
+
+            <com.framework.views.customViews.CustomTextField
+              android:id="@+id/etd_flat_charges"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_10"
+              android:background="@drawable/bg_rect_edit_txt"
+              android:drawableStart="@drawable/ic_indian_rupee"
+              android:drawablePadding="@dimen/size_15"
+              android:hint="@string/_50"
+              android:inputType="number"
+              android:padding="@dimen/size_10"
+              android:singleLine="true"
+              android:textColor="@color/warm_grey_10"
+              android:textColorHint="@color/primary_grey" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_10"
+              android:text="Note: If you want to enable FREE appointments, enter appointment fee as ₹0 (Zero)."
+              android:textColor="@color/gray_828282"
+              app:textType="CAPTION" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_20"
+              android:text="Appointment slot duration"
+              android:textColor="@color/black_4a4a4a"
+              app:fontFamily="@font/semi_bold"
+              app:textType="CAPTION" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+              style="@style/match_wrap"
+              android:layout_marginTop="@dimen/size_10"
+              android:background="@drawable/bg_rect_edit_txt">
+
+              <com.framework.views.customViews.CustomTextField
+                android:id="@+id/etd_slot_duration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/_50"
+                android:inputType="number"
+                android:padding="@dimen/size_10"
+                android:singleLine="true"
+                android:textColor="@color/warm_grey_10"
+                android:textColorHint="@color/primary_grey"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/btn_minutes"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+              <com.framework.views.customViews.CustomTextView
+                android:id="@+id/btn_minutes"
+                android:layout_width="@dimen/size_80"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/size_0"
+                android:background="@drawable/shape_dark_grey_btn"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="Minutes"
+                android:textColor="@color/black_333333"
+                app:fontFamily="@font/semi_bold"
+                app:layout_constraintBottom_toBottomOf="@id/etd_slot_duration"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/etd_slot_duration"
+                app:textAllCaps="false"
+                app:textType="BODY_1" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_10"
+              android:text="Note: This will be slot duration shown to a customer when he is trying to book a general appointment on your website."
+              android:textColor="@color/gray_828282"
+              app:textType="CAPTION" />
+
+          </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_16"
+          android:layout_marginTop="@dimen/size_16"
+          android:text="Please note: General appointment takes business hours as base to create slots for while booking appointment."
+          android:textColor="@color/gray_828282"
+          app:textType="CAPTION" />
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/btn_confirm"
+      style="@style/Appointment.ButtonStyle"
+      android:layout_width="match_parent"
+      android:layout_marginHorizontal="@dimen/size_16"
+      android:layout_marginBottom="@dimen/size_20"
+      android:text="@string/save_details"
+      android:visibility="visible"
+      app:layout_constraintBottom_toBottomOf="parent" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

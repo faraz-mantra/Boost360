@@ -941,6 +941,7 @@
     <string name="this_will_be_used_as_default_tax_rate_for_any_product_in_your_catalog_in_case_you_ve_not_entered_any_specific_tax_for_that_product">This will be used as default tax rate for any product in your catalog in case you’ve not entered any specific tax% for that product.</string>
     <string name="search_in_order_settings">Search in order settings</string>
     <string name="delivery_setup">Delivery Setup</string>
+    <string name="consultation_settings">Consultation Settings</string>
     <string name="default_delivery_charges_warehouse_addresses">Default delivery charges, Warehouse \naddresses</string>
     <string name="warehouse_address">Warehouse address*</string>
     <string name="contact_number">Contact number*</string>
