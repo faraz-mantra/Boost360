@@ -25,7 +25,7 @@ object Constants {
   const val WEBSITE_ID_EDUCATION = "EDUCATION"
   const val LIMIT = 1000
   const val SKIP = 0
-  const val DATE_FORMAT = "MM-dd-YYYY"
+  const val DATE_FORMAT = "MM-dd-yyyy"
   const val TIME_FORMAT = "hh:mm aa"
   private const val DATE_FORMAT_SERVER = "yyyy-MM-dd'T'HH:mm:ss'Z'"
 
