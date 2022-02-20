@@ -10,6 +10,7 @@ import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.dbcenterapi.data.remote.ApiInterface
 import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.cart.utils.Utils
+import com.boost.dbcenterapi.utils.DataLoader
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.reactivex.Completable
@@ -287,6 +288,8 @@ class ComparePackageViewModel(application: Application) : BaseViewModel(applicat
       .observeOn(AndroidSchedulers.mainThread())
       .doOnComplete {
         updatesLoader.postValue(false)
+        //add cartitem to firebase
+        DataLoader.updateCartItemsToFirestore(Application())
       }
       .doOnError {
         updatesError.postValue(it.message)

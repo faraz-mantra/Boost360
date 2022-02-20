@@ -1,22 +1,20 @@
 package com.boost.dbcenterapi.utils
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.promoMarketOfferFilter
 import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.*
-import com.bumptech.glide.Glide
+import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
 import com.google.gson.Gson
 import es.dmoral.toasty.Toasty
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.text.NumberFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 object DataLoader {
@@ -44,7 +42,8 @@ object DataLoader {
                                         continue
                                 }
 
-                                val primaryImage = if (item.primary_image == null) null else item.primary_image!!.url
+                                val primaryImage =
+                                    if (item.primary_image == null) null else item.primary_image!!.url
                                 val secondaryImages = ArrayList<String>()
                                 if (item.secondary_images != null) {
                                     for (sec_images in item.secondary_images!!) {
@@ -73,11 +72,17 @@ object DataLoader {
                                         item.time_to_activation,
                                         primaryImage,
                                         if (item.feature_banner == null) null else item.feature_banner.url,
-                                        if (secondaryImages.size == 0) null else Gson().toJson(secondaryImages),
+                                        if (secondaryImages.size == 0) null else Gson().toJson(
+                                            secondaryImages
+                                        ),
                                         Gson().toJson(item.learn_more_link),
                                         if (item.total_installs == null) "--" else item.total_installs,
-                                        if (item.extended_properties != null && item.extended_properties!!.size > 0) Gson().toJson(item.extended_properties) else null,
-                                        if (item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) Gson().toJson(item.exclusive_to_categories) else null
+                                        if (item.extended_properties != null && item.extended_properties!!.size > 0) Gson().toJson(
+                                            item.extended_properties
+                                        ) else null,
+                                        if (item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) Gson().toJson(
+                                            item.exclusive_to_categories
+                                        ) else null
                                     )
                                 )
                             }
@@ -123,15 +128,15 @@ object DataLoader {
                                 }
                                 bundles.add(
                                     BundlesModel(
-                                    item._kid,
-                                    item.name,
-                                    if (item.min_purchase_months != null && item.min_purchase_months!! > 1) item.min_purchase_months!! else 1,
-                                    item.overall_discount_percent,
-                                    if (item.primary_image != null) item.primary_image!!.url else null,
-                                    Gson().toJson(item.included_features),
-                                    item.target_business_usecase,
-                                    Gson().toJson(item.exclusive_to_categories),item.desc
-                                )
+                                        item._kid,
+                                        item.name,
+                                        if (item.min_purchase_months != null && item.min_purchase_months!! > 1) item.min_purchase_months!! else 1,
+                                        item.overall_discount_percent,
+                                        if (item.primary_image != null) item.primary_image!!.url else null,
+                                        Gson().toJson(item.included_features),
+                                        item.target_business_usecase,
+                                        Gson().toJson(item.exclusive_to_categories), item.desc
+                                    )
                                 )
                             }
                             Completable.fromAction {
@@ -155,9 +160,9 @@ object DataLoader {
                                 for (singleCoupon in it.Data[0].discount_coupons) {
                                     coupons.add(
                                         CouponsModel(
-                                        singleCoupon.code,
-                                        singleCoupon.discount_percent
-                                    )
+                                            singleCoupon.code,
+                                            singleCoupon.discount_percent
+                                        )
                                     )
                                 }
                                 Completable.fromAction {
@@ -182,12 +187,12 @@ object DataLoader {
                                 for (singleVideoDetails in it.Data[0].video_gallery) {
                                     videoGallery.add(
                                         YoutubeVideoModel(
-                                        singleVideoDetails._kid,
-                                        singleVideoDetails.desc,
-                                        singleVideoDetails.duration,
-                                        singleVideoDetails.title,
-                                        singleVideoDetails.youtube_link
-                                    )
+                                            singleVideoDetails._kid,
+                                            singleVideoDetails.desc,
+                                            singleVideoDetails.duration,
+                                            singleVideoDetails.title,
+                                            singleVideoDetails.youtube_link
+                                        )
                                     )
                                 }
 
@@ -220,22 +225,24 @@ object DataLoader {
                                     for (item in marketplaceOffersFilter) {
                                         marketOfferData.add(
                                             MarketOfferModel(
-                                            item.coupon_code,
-                                            item.extra_information,
-                                            item.createdon,
-                                            item.updatedon,
-                                            item._kid,
-                                            item.websiteid,
-                                            item.isarchived,
-                                            item.expiry_date,
-                                            item.title,
-                                            if (item.exclusive_to_categories != null && item.exclusive_to_categories.size > 0) Gson().toJson(item.exclusive_to_categories) else null,
-                                            if (item.image != null) item.image!!.url else null,
-                                            if (item.cta_offer_identifier != null) item.cta_offer_identifier else null,
-                                        )
+                                                item.coupon_code,
+                                                item.extra_information,
+                                                item.createdon,
+                                                item.updatedon,
+                                                item._kid,
+                                                item.websiteid,
+                                                item.isarchived,
+                                                item.expiry_date,
+                                                item.title,
+                                                if (item.exclusive_to_categories != null && item.exclusive_to_categories.size > 0) Gson().toJson(
+                                                    item.exclusive_to_categories
+                                                ) else null,
+                                                if (item.image != null) item.image!!.url else null,
+                                                if (item.cta_offer_identifier != null) item.cta_offer_identifier else null,
+                                            )
                                         )
                                     }
-                                    if(marketOfferData.size == 0){
+                                    if (marketOfferData.size == 0) {
                                         Completable.fromAction {
                                             AppDatabase.getInstance(application)!!
                                                 .marketOffersDao()
@@ -266,11 +273,14 @@ object DataLoader {
                                             it.isarchived,
                                             it.expiry_date,
                                             it.title,
-                                            if (it.exclusive_to_categories != null ) Gson().toJson(it.exclusive_to_categories) else null,
+                                            if (it.exclusive_to_categories != null) Gson().toJson(it.exclusive_to_categories) else null,
                                             if (it.image != null) it.image else null,
                                             if (it.cta_offer_identifier != null) it.cta_offer_identifier else null,
                                         )
-                                        Log.d("itemFeature"," "+ itemFeature + " "+itemFeature.coupon_code)
+                                        Log.d(
+                                            "itemFeature",
+                                            " " + itemFeature + " " + itemFeature.coupon_code
+                                        )
                                         CompositeDisposable().add(
                                             AppDatabase.getInstance(application)!!
                                                 .marketOffersDao()
@@ -287,14 +297,20 @@ object DataLoader {
                                                             .subscribeOn(Schedulers.io())
                                                             .observeOn(AndroidSchedulers.mainThread())
                                                             .doOnComplete {
-                                                                Log.d("insertMarketOffers", "Successfully")
+                                                                Log.d(
+                                                                    "insertMarketOffers",
+                                                                    "Successfully"
+                                                                )
 
                                                             }
                                                             .doOnError {
-                                                                Log.d("insertMarketOffers", "Failed")
+                                                                Log.d(
+                                                                    "insertMarketOffers",
+                                                                    "Failed"
+                                                                )
                                                             }
                                                             .subscribe()
-                                                    }else{
+                                                    } else {
                                                         Completable.fromAction {
                                                             AppDatabase.getInstance(application)!!
                                                                 .marketOffersDao()
@@ -303,11 +319,17 @@ object DataLoader {
                                                             .subscribeOn(Schedulers.io())
                                                             .observeOn(AndroidSchedulers.mainThread())
                                                             .doOnComplete {
-                                                                Log.d("updateMarketOffers", "Successfully")
+                                                                Log.d(
+                                                                    "updateMarketOffers",
+                                                                    "Successfully"
+                                                                )
 
                                                             }
                                                             .doOnError {
-                                                                Log.d("updateMarketOffers", "Failed")
+                                                                Log.d(
+                                                                    "updateMarketOffers",
+                                                                    "Failed"
+                                                                )
                                                             }
                                                             .subscribe()
                                                     }
@@ -328,7 +350,7 @@ object DataLoader {
         }
     }
 
-    fun addItemtoCart(application: Application, itemsId: String){
+    fun addItemtoCart(application: Application, itemsId: String) {
         CompositeDisposable().add(
             AppDatabase.getInstance(application)!!
                 .featuresDao()
@@ -337,23 +359,23 @@ object DataLoader {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                            val discount = 100 - it.discount_percent
-                            val paymentPrice = (discount * it.price) / 100.0
-                            val cartItem = CartModel(
-                                it.feature_id,
-                                it.boost_widget_key,
-                                it.feature_code,
-                                it.name,
-                                it.description,
-                                it.primary_image,
-                                paymentPrice,
-                                it.price.toDouble(),
-                                it.discount_percent,
-                                1,
-                                1,
-                                "features",
-                                it.extended_properties
-                            )
+                        val discount = 100 - it.discount_percent
+                        val paymentPrice = (discount * it.price) / 100.0
+                        val cartItem = CartModel(
+                            it.feature_id,
+                            it.boost_widget_key,
+                            it.feature_code,
+                            it.name,
+                            it.description,
+                            it.primary_image,
+                            paymentPrice,
+                            it.price.toDouble(),
+                            it.discount_percent,
+                            1,
+                            1,
+                            "features",
+                            it.extended_properties
+                        )
 
                         CompositeDisposable().add(
                             AppDatabase.getInstance(application)!!
@@ -364,7 +386,8 @@ object DataLoader {
                                 .subscribe({
                                     if (it == 1) {
                                         Completable.fromAction {
-                                            AppDatabase.getInstance(application)!!.cartDao().emptyCart()
+                                            AppDatabase.getInstance(application)!!.cartDao()
+                                                .emptyCart()
                                         }
                                             .subscribeOn(Schedulers.io())
                                             .observeOn(AndroidSchedulers.mainThread())
@@ -386,7 +409,7 @@ object DataLoader {
                                                     }.subscribe()
                                             }
                                             .subscribe()
-                                    }else{
+                                    } else {
                                         Completable.fromAction {
                                             AppDatabase.getInstance(application)!!.cartDao()
                                                 .insertToCart(cartItem)
@@ -401,7 +424,11 @@ object DataLoader {
                                             }.subscribe()
                                     }
                                 }, {
-                            Toasty.error(application.applicationContext, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
+                                    Toasty.error(
+                                        application.applicationContext,
+                                        "Something went wrong. Try Later..",
+                                        Toast.LENGTH_LONG
+                                    ).show()
                                 })
                         )
                     },
@@ -409,6 +436,82 @@ object DataLoader {
                         it.printStackTrace()
                     }
                 )
+        )
+    }
+
+    fun addAllItemstoFirebaseCart(application: Application, itemsId: List<String>) {
+        CompositeDisposable().add(
+            AppDatabase.getInstance(application)!!
+                .featuresDao()
+                .getallFeaturesInList(itemsId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        val cartItemList = ArrayList<CartModel>()
+                        for (singleItem in it) {
+                            val discount = 100 - singleItem.discount_percent
+                            val paymentPrice = (discount * singleItem.price) / 100.0
+                            val cartItem = CartModel(
+                                singleItem.feature_id,
+                                singleItem.boost_widget_key,
+                                singleItem.feature_code,
+                                singleItem.name,
+                                singleItem.description,
+                                singleItem.primary_image,
+                                paymentPrice,
+                                singleItem.price.toDouble(),
+                                singleItem.discount_percent,
+                                1,
+                                1,
+                                "features",
+                                singleItem.extended_properties
+                            )
+                            cartItemList.add(cartItem)
+                        }
+                        Completable.fromAction {
+                            AppDatabase.getInstance(application)!!.cartDao()
+                                .insertAllUPdates(cartItemList)
+                        }
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .doOnComplete {
+                                Log.d("addAllItemstoCart", "Success")
+                                updateCartItemsToFirestore(application)
+                            }
+                            .doOnError {
+                                it.printStackTrace()
+                            }
+                            .subscribe()
+                    }, {
+                        it.printStackTrace()
+                    })
+        )
+    }
+
+
+    @SuppressLint("LongLogTag")
+    fun updateCartItemsToFirestore(application: Application) {
+        CompositeDisposable().add(
+            AppDatabase.getInstance(application)!!
+                .cartDao()
+                .getCartItems()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess {
+                    Log.d("updateCartItemsToFirestore", "Success")
+                    val map: MutableMap<String, Any> = HashMap<String, Any>()
+                    for (i in it) {
+                        map[i.item_id] = i
+                    }
+                    if (map.size > 0) {
+                        CartFirestoreManager.updateDocument(map as HashMap<String, Any>)
+                    }
+                }
+                .doOnError {
+                    Log.e("updateCartItemsToFirestore", "Error", it)
+                }
+                .subscribe()
         )
     }
 }

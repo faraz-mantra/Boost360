@@ -22,6 +22,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.anachat.chatsdk.AnaCore
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.boost.dbcenterapi.utils.DataLoader
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.RecyclerViewActionType
@@ -52,6 +53,9 @@ import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.getBa
 import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.initDataBadges
 import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.readDrScoreDocument
 import com.framework.firebaseUtils.firestore.badges.BadgesModel
+import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
+import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager.getCartData
+import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager.initDataCart
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.pref.*
@@ -143,6 +147,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     intentDataCheckAndDeepLink(intent)
     session?.initializeWebEngageLogin()
     initialize()
+    session?.let { initDataCart(it.fpTag ?: "", it.fPID ?: "", clientId) }
     session?.let { initDataBadges(it.fpTag ?: "", it.fPID ?: "", clientId) }
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
     initRemoteConfigData(this)
@@ -671,6 +676,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onStop()
     BadgesFirestoreManager.listenerBadges = null
     removeInstallStateUpdateListener()
+    CartFirestoreManager.listener = null
   }
 
   override fun onStart() {
@@ -678,6 +684,17 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     BadgesFirestoreManager.listenerBadges = {
       dataBadges = getBadgesData()
       setBadgesData(dataBadges)
+    }
+      //get firestore cart items and update in local
+    CartFirestoreManager.listener = {
+      val cartData = getCartData()
+      if(cartData!=null) {
+        val list = ArrayList<String>()
+        for (singleItem in cartData.entries) {
+            list.add(singleItem.key)
+        }
+        DataLoader.addAllItemstoFirebaseCart(application, list)
+      }
     }
   }
 

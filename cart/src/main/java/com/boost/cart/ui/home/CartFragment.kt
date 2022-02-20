@@ -70,6 +70,7 @@ import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.payment.PaymentActivity
 import com.boost.payment.utils.observeOnce
 import com.framework.analytics.SentryController
+import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
@@ -319,7 +320,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             cart_billing_details_edit_layout.visibility = View.VISIBLE
             billing_details.visibility = View.VISIBLE
             edit.visibility = View.GONE
-
+            billing_details.visibility = View.GONE
+            prefs.storeCartOrderInfo(null)
         }
         cart_place_of_supply_cl.setOnClickListener {
             val args = Bundle()
@@ -507,7 +509,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
                     if (renewalItems.isNullOrEmpty().not()) {
                         createCartStateRenewal(renewalItems)
-                    } else createPurchaseOrder(null)
+                    } else {
+                        if (validateAgreement()) {
+                            createPurchaseOrder(null)
+                        }
+                    }
                 } else {
                     Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
                 }
@@ -1104,14 +1110,19 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 || cart_business_address.text.toString().isEmpty()
                 || business_gstin_number.text.toString().isEmpty()) {
 //      Log.v("business_name_value", " " + business_name_value.text.toString())
-            Toasty.error(requireContext(), "Fields are Empty!!", Toast.LENGTH_LONG).show()
-            if (business_gstin_number.text.toString().isEmpty()
-                    && !Utils.isValidGSTIN(business_gstin_number.text.toString())) {
+//            Toasty.error(requireContext(), "Fields are Empty!!", Toast.LENGTH_LONG).show()
+            if ( gstcheck.isChecked && !Utils.isValidGSTIN(business_gstin_number.text.toString())) {
                 business_gstin_number.setBackgroundResource(R.drawable.et_validity_error)
+                cart_main_scroller.post {
+                    cart_main_scroller.scrollTo(
+                        0,
+                        gst_layout.getBottom()
+                    )
+                }
                 Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
                 return false
             } else {
-                business_gstin_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
+                    business_gstin_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
             }
 
 //      if (business_contact_number.text!!.isEmpty()) {
@@ -1158,17 +1169,30 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //      } else {
 //        business_name_value.setBackgroundResource(com.boost.payment.R.drawable.rounded_edit_fill_kyc)
 //      }
-
-            if (cart_business_address.text.toString().isEmpty()) {
-                cart_business_address.setBackgroundResource(com.boost.cart.R.drawable.et_validity_error)
-                Toasty.error(requireContext(), "Entered Business address is not valid!!", Toast.LENGTH_LONG)
+            if(!gstcheck.isChecked) {
+                if (cart_business_address.text.toString().isEmpty()) {
+                    cart_business_address.setBackgroundResource(com.boost.cart.R.drawable.et_validity_error)
+                    cart_main_scroller.post {
+                        cart_main_scroller.scrollTo(
+                            0,
+                            gst_layout.getBottom()
+                        )
+                    }
+                    Toasty.error(
+                        requireContext(),
+                        "Entered Business address is not valid!!",
+                        Toast.LENGTH_LONG
+                    )
                         .show()
-                return false
-            } else {
-                cart_business_address.setBackgroundResource(com.boost.cart.R.drawable.rounded_edit_fill_kyc)
+                    return false
+                } else {
+                    cart_business_address.setBackgroundResource(com.boost.cart.R.drawable.rounded_edit_fill_kyc)
+                }
             }
-            return false
+
+            return !gstcheck.isChecked && cart_business_address.text.toString().isNotEmpty()
         }
+
         if (!business_gstin_number.text.toString().isEmpty() && !com.boost.cart.utils.Utils.isValidGSTIN(
                         business_gstin_number.text.toString()
                 )) {
@@ -1176,7 +1200,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
             return false
         }
-
 //    if (!com.boost.payment.utils.Utils.isValidMail(business_email_address.text.toString())) {
 //      business_email_address.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
 //      Toasty.error(requireContext(), "Entered Email ID is not valid!!", Toast.LENGTH_LONG).show()
@@ -2961,6 +2984,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         //remove saved orderdetails from prefs
         prefs.storeCartOrderInfo(null)
         prefs.storeCartValidityMonths(null)
+        //remove item from firebase
+        CartFirestoreManager.removeDocument(itemID)
     }
 
     override fun showBundleDetails(itemID: String) {

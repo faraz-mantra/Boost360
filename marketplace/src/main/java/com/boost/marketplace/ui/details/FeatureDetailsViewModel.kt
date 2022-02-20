@@ -9,6 +9,7 @@ import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.dbcenterapi.utils.DataLoader
 import com.framework.models.BaseViewModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -129,6 +130,8 @@ class FeatureDetailsViewModel: BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .doOnComplete {
                 updatesLoader.postValue(false)
+                //add cartitem to firebase
+                DataLoader.updateCartItemsToFirestore(application)
             }
             .doOnError {
                 updatesError.postValue(it.message)
