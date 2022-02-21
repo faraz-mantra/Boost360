@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#F8F8F8">
+
+    <com.framework.views.customViews.CustomCardView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:elevation="@dimen/size_10"
+        app:cardElevation="2dp">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/iv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_creating"
+                    android:layout_marginStart="@dimen/size_18"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+
+            <TextView
+                android:id="@+id/cam_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_10"
+                android:layout_marginStart="@dimen/size_18"
+                android:text="Campaign 11296582155"
+                android:textSize="@dimen/size_14"
+                android:textStyle="bold"
+                android:textColor="#4A4A4A"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_status" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/visits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_20"
+                android:layout_marginStart="@dimen/size_5"
+                android:layout_marginEnd="@dimen/size_30"
+                android:textSize="@dimen/size_30"
+                android:text=" 3 "
+                android:textColor="#FFB900"
+                app:layout_constraintTop_toBottomOf="@+id/iv_status"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/visits_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_5"
+                android:layout_marginEnd="@dimen/size_30"
+                android:textSize="@dimen/size_15"
+                android:text=" Visits "
+                android:textColor="#FFB900"
+                app:layout_constraintTop_toBottomOf="@+id/visits"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_25"
+                android:layout_marginLeft="@dimen/size_18"
+                android:textSize="@dimen/size_12"
+                android:text="Created on: "
+                android:textColor="#BBBBBB"
+                app:layout_constraintTop_toBottomOf="@+id/cam_id"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/time1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_25"
+                android:layout_marginStart="@dimen/size_5"
+                android:textSize="@dimen/size_12"
+                android:text="10mins ago "
+                android:textColor="@color/black_4a4a4a"
+                app:layout_constraintTop_toBottomOf="@+id/cam_id"
+                app:layout_constraintStart_toEndOf="@+id/time" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/budget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_15"
+                android:layout_marginLeft="@dimen/size_18"
+                android:textSize="@dimen/size_12"
+                android:text="Total Budget : "
+                android:textColor="#BBBBBB"
+                app:layout_constraintTop_toBottomOf="@+id/time"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/budget1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_15"
+                android:layout_marginStart="@dimen/size_5"
+                android:textSize="@dimen/size_12"
+                android:text="₹3,456 for 4 days "
+                android:textColor="@color/black_4a4a4a"
+                app:layout_constraintTop_toBottomOf="@+id/time1"
+                app:layout_constraintStart_toEndOf="@+id/budget" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/size_15"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/budget"
+                tools:itemCount="5"
+                tools:listitem="@layout/list_item_features" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.framework.views.customViews.CustomCardView>
+
+</layout>
+

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_1"
+            app:layout_constraintBottom_toTopOf="@+id/riv_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true" />
+
+
+        <com.framework.views.roundedimageview.RoundedImageView
+            android:id="@+id/riv_icon"
+            android:layout_width="@dimen/size_100"
+            android:layout_height="@dimen/size_94"
+            android:src="@drawable/goole_add_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/create_title"
+            app:layout_constraintTop_toBottomOf="@+id/animation_view"/>
+
+        <TextView
+            android:id="@+id/create_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_30"
+            android:layout_marginEnd="@dimen/size_30"
+            android:gravity="center"
+            android:text="Campaign created &amp; submitted to Google for review."
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="26sp"
+            app:layout_constraintBottom_toTopOf="@+id/desc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/riv_icon"
+            app:textType="CAPTION" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10"
+            android:gravity="center"
+            android:textSize="@dimen/size_16"
+            android:text="Google usually takes 12-24 hours to review and take action on your submitted campaign."
+            app:layout_constraintTop_toBottomOf="@+id/create_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_dashboard"/>
+
+
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/btn_dashboard"
+            android:background="@drawable/share_helper_click_effect"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="@dimen/size_16"
+            android:layout_marginStart="@dimen/size_15"
+            android:layout_marginEnd="@dimen/size_15"
+            android:enabled="true"
+            android:gravity="center"
+            android:textSize="@dimen/size_16"
+            android:textAllCaps="false"
+            android:text="Go to campaign dashboard"
+            android:textColor="#FFB900"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/desc"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

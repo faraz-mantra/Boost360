@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F8F8F8">
+
+        <View
+            android:id="@+id/main_view"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_380"
+            android:visibility="visible"
+            android:background="@color/greyish_brown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/relativeLayout2"
+            tools:visibility="visible" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:id="@+id/border_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_300"
+                android:layout_marginStart="@dimen/size_15"
+                android:layout_marginTop="@dimen/size_13"
+                android:layout_marginEnd="@dimen/size_16"
+                android:layout_marginBottom="@dimen/size_13"
+                android:background="@drawable/ic_card_border1"
+                android:visibility="visible"
+                tools:visibility="visible" />
+
+            <com.framework.views.customViews.CustomCardView
+                android:id="@+id/maim_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_280"
+                android:layout_marginStart="@dimen/size_22"
+                android:layout_marginEnd="@dimen/size_22"
+                android:layout_marginTop="@dimen/size_22"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="@dimen/size_10"
+                app:cardElevation="0dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/white">
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/company_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/size_18"
+                            android:layout_marginTop="@dimen/size_15"
+                            android:ellipsize="end"
+                            android:text="Company Name Here"
+                            android:includeFontPadding="false"
+                            android:textColor="#2F80ED"
+                            app:fontFamily="@font/patua_one_regular"
+                            app:textType="HEADING_6"
+                            tools:text="Company Name Here"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/dummy_view1"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <View
+                            android:id="@+id/dummy_view1"
+                            android:layout_width="1dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="@dimen/size_15"
+                            android:layout_marginLeft="@dimen/size_10"
+                            android:background="#2F80ED"
+                            app:layout_constraintStart_toEndOf="@+id/company_name"
+                            app:layout_constraintEnd_toStartOf="@+id/secondary_name"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/secondary_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/size_10"
+                            android:layout_marginTop="@dimen/size_15"
+                            android:layout_marginEnd="@dimen/size_18"
+                            android:ellipsize="end"
+                            android:includeFontPadding="false"
+                            android:maxLines="2"
+                            android:textColor="#2F80ED"
+                            app:fontFamily="@font/patua_one_regular"
+                            app:textType="HEADING_6"
+                            tools:text="Secondary Text Here"
+                            android:text="Secondary Text Here"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/dummy_view1"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/website"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/size_5"
+                            android:layout_marginStart="@dimen/size_18"
+                            android:text="Ad"
+                            android:gravity="center"
+                            android:background="@drawable/ic_ad_bg"
+                            android:textColor="#27AE60"
+                            app:layout_constraintTop_toBottomOf="@+id/company_name"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/website_domain"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/size_5"
+                            android:layout_marginStart="@dimen/size_8"
+                            android:text="www.companywebsite.com"
+                            android:gravity="center"
+                            android:textColor="#27AE60"
+                            app:layout_constraintTop_toBottomOf="@+id/company_name"
+                            app:layout_constraintStart_toEndOf="@+id/website"/>
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/website_desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/size_5"
+                            android:layout_marginStart="@dimen/size_18"
+                            android:layout_marginEnd="@dimen/size_5"
+                            android:text="After the successful payment,your campaign will get created and submitted to Google for review. Post approval it will start showing up to relavent audiances based on your selected date, time and cities. Ad would automatically stop after the allocated budget is utilised."
+                            app:layout_constraintTop_toBottomOf="@+id/website"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/website_link1"
+                            android:layout_width="92dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/size_15"
+                            android:layout_marginStart="@dimen/size_18"
+                            android:text="Link to webpage1"
+                            android:textColor="#2F80ED"
+                            app:layout_constraintTop_toBottomOf="@+id/website_desc"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/website_link2"
+                            android:layout_width="92dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/size_15"
+                            android:layout_marginStart="@dimen/size_18"
+                            android:text="Link to webpage2"
+                            android:textColor="#2F80ED"
+                            app:layout_constraintTop_toBottomOf="@+id/website_desc"
+                            app:layout_constraintStart_toEndOf="@+id/website_link1"/>
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/website_link3"
+                            android:layout_width="92dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/size_15"
+                            android:layout_marginStart="@dimen/size_18"
+                            android:text="Link to webpage3"
+                            android:textColor="#2F80ED"
+                            app:layout_constraintTop_toBottomOf="@+id/website_desc"
+                            app:layout_constraintStart_toEndOf="@+id/website_link2"/>
+
+                        <View
+                            android:id="@+id/dummy_view2"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="@dimen/size_10"
+                            android:layout_marginBottom="4dp"
+                            android:background="@color/grey_dark_3"
+                            app:layout_constraintTop_toBottomOf="@+id/website_link1"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                        <com.framework.views.roundedimageview.RoundedImageView
+                            android:id="@+id/call_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/size_25"
+                            android:layout_marginStart="@dimen/size_18"
+                            android:layout_marginTop="@dimen/size_5"
+                            android:layout_marginBottom="@dimen/size_5"
+                            android:src="@drawable/ic_call_business"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/dummy_view2"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </FrameLayout>
+
+            </com.framework.views.customViews.CustomCardView>
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/dummy_view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/size_5"
+            android:layout_marginBottom="4dp"
+            android:background="@color/grey_dark_3"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/Customise_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10"
+            android:layout_marginBottom="@dimen/size_10"
+            android:text="Customise Add"
+            android:textSize="@dimen/size_16"
+            android:textStyle="normal"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dummy_view"
+            app:layout_constraintBottom_toBottomOf="@+id/main_view"/>
+
+        <TextView
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_18"
+            android:layout_marginStart="@dimen/size_18"
+            android:text="Ad Keywords"
+            android:textSize="@dimen/size_14"
+            android:textStyle="bold"
+            android:textColor="#4A4A4A"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_view" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/desc1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_5"
+            android:layout_marginLeft="@dimen/size_18"
+            android:layout_marginRight="@dimen/size_18"
+            android:maxLines="2"
+            android:text="Keywords help you target the customers searching similar products. at least 5-6 relevant keywords are recommended."
+            android:textColor="@color/black_4a4a4a"
+            app:textType="CAPTION"
+            app:layout_constraintTop_toBottomOf="@+id/add"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.framework.views.customViews.CustomTextField
+            android:id="@+id/tv_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10"
+            android:layout_marginLeft="@dimen/size_17"
+            android:layout_marginRight="@dimen/size_17"
+            android:background="@drawable/bg_rect_edit_txt"
+            android:gravity="top|start"
+            android:hint="Keywords help you target the customers searching similar products at least 5-6 relevant keywords are recommended."
+            android:inputType="textMultiLine"
+            android:padding="@dimen/size_12"
+            android:textColor="@color/warm_grey_10"
+            android:textColorHint="@color/primary_grey"
+            tools:ignore="UnusedAttribute"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/desc1"/>
+
+
+        <TextView
+            android:id="@+id/other_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_18"
+            android:layout_marginStart="@dimen/size_18"
+            android:text="Other info"
+            android:textSize="@dimen/size_14"
+            android:textStyle="bold"
+            android:textColor="#4A4A4A"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_desc"
+            app:layout_constraintBottom_toTopOf="@+id/cv1"/>
+
+
+        <com.framework.views.customViews.CustomCardView
+            android:id="@+id/cv1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:elevation="@dimen/size_2"
+            android:focusable="true"
+            app:cardCornerRadius="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_5"
+            android:layout_marginLeft="@dimen/size_17"
+            android:layout_marginRight="@dimen/size_17"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/other_info">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/size_8">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cs1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.framework.views.roundedimageview.RoundedImageView
+                        android:id="@+id/riv_icon"
+                        android:layout_width="@dimen/size_25"
+                        android:layout_height="@dimen/size_25"
+                        android:layout_marginTop="@dimen/size_8"
+                        android:layout_marginStart="@dimen/size_13"
+                        android:src="@drawable/ic_budget"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_heading"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_5"
+                        android:layout_marginTop="@dimen/size_8"
+                        android:ellipsize="end"
+                        android:textStyle="normal"
+                        android:fontFamily="@font/semi_bold"
+                        android:maxLines="1"
+                        android:textColor="@color/black_4a4a4a"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/riv_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0"
+                        android:text="Total campaign budget" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_subheading"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_2"
+                        android:layout_marginStart="@dimen/size_5"
+                        android:ellipsize="end"
+                        android:textStyle="normal"
+                        android:fontFamily="@font/regular"
+                        android:maxLines="2"
+                        android:textColor="@color/warm_grey"
+                        android:textSize="12sp"
+                        android:text="₹3,200."
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toEndOf="@+id/riv_icon"
+                        app:layout_constraintTop_toBottomOf="@+id/ctv_heading"
+                        app:layout_constraintVertical_bias="0" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cs2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cs1">
+
+                    <com.framework.views.roundedimageview.RoundedImageView
+                        android:id="@+id/riv_icon1"
+                        android:layout_width="@dimen/size_25"
+                        android:layout_height="@dimen/size_25"
+                        android:layout_marginStart="@dimen/size_13"
+                        android:layout_marginTop="@dimen/size_20"
+                        android:src="@drawable/ic_mappinline"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_heading1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_5"
+                        android:layout_marginTop="@dimen/size_20"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/semi_bold"
+                        android:maxLines="1"
+                        android:text="Cities selected "
+                        android:textColor="@color/black_4a4a4a"
+                        android:textSize="12sp"
+                        android:textStyle="normal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/riv_icon1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_subheading1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_5"
+                        android:layout_marginTop="@dimen/size_2"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/regular"
+                        android:maxLines="2"
+                        android:text="Aligarh, Jaisalmer, Delhi, Mumbai"
+                        android:textColor="@color/warm_grey"
+                        android:textSize="12sp"
+                        android:textStyle="normal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toEndOf="@+id/riv_icon1"
+                        app:layout_constraintTop_toBottomOf="@+id/ctv_heading1"
+                        app:layout_constraintVertical_bias="0" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cs3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cs2">
+
+                    <com.framework.views.roundedimageview.RoundedImageView
+                        android:id="@+id/riv_icon3"
+                        android:layout_width="@dimen/size_25"
+                        android:layout_height="@dimen/size_25"
+                        android:layout_marginStart="@dimen/size_13"
+                        android:layout_marginTop="@dimen/size_20"
+                        android:src="@drawable/ic_clock1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_heading3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_5"
+                        android:layout_marginTop="@dimen/size_20"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/semi_bold"
+                        android:maxLines="1"
+                        android:text="Schedule "
+                        android:textColor="@color/black_4a4a4a"
+                        android:textSize="12sp"
+                        android:textStyle="normal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/riv_icon3"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_subheading3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_5"
+                        android:layout_marginTop="@dimen/size_2"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/regular"
+                        android:maxLines="2"
+                        android:text="All days except Sundays and Mondays between 06:00 AM - 12:00 PM"
+                        android:textColor="@color/warm_grey"
+                        android:textSize="12sp"
+                        android:textStyle="normal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toEndOf="@+id/riv_icon3"
+                        app:layout_constraintTop_toBottomOf="@+id/ctv_heading3"
+                        app:layout_constraintVertical_bias="0" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cs4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cs3">
+
+                    <com.framework.views.roundedimageview.RoundedImageView
+                        android:id="@+id/riv_icon4"
+                        android:layout_width="@dimen/size_25"
+                        android:layout_height="@dimen/size_25"
+                        android:layout_marginStart="@dimen/size_13"
+                        android:layout_marginTop="@dimen/size_20"
+                        android:src="@drawable/ic_calendarcheck"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_heading4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_5"
+                        android:layout_marginTop="@dimen/size_20"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/semi_bold"
+                        android:maxLines="1"
+                        android:text="Duration"
+                        android:textColor="@color/black_4a4a4a"
+                        android:textSize="12sp"
+                        android:textStyle="normal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/riv_icon4"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_subheading4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_5"
+                        android:layout_marginTop="@dimen/size_2"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/regular"
+                        android:maxLines="2"
+                        android:text="10 days"
+                        android:textColor="@color/warm_grey"
+                        android:textSize="12sp"
+                        android:textStyle="normal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toEndOf="@+id/riv_icon4"
+                        app:layout_constraintTop_toBottomOf="@+id/ctv_heading4"
+                        app:layout_constraintVertical_bias="0" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.framework.views.customViews.CustomCardView>
+
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/desc2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_5"
+            android:layout_marginLeft="@dimen/size_18"
+            android:layout_marginRight="@dimen/size_18"
+            android:textSize="12sp"
+            android:visibility="visible"
+            android:text="After the successful payment, your campaign will get created and submitted to Google for review. Post approval it will start showing up to relavent audiances based on your selected date, time and cities. Ad would automatically stop after the allocated budget is utilised."
+            android:textColor="@color/black_4a4a4a"
+            app:layout_constraintTop_toBottomOf="@+id/cv1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/price_head"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="@dimen/size_5"
+            android:layout_marginLeft="@dimen/size_18"
+            android:layout_marginRight="@dimen/size_18"
+            android:gravity="center"
+            android:textSize="@dimen/size_20"
+            android:text="Amount to be paid : "
+            android:textColor="@color/black_4a4a4a"
+            app:textType="CAPTION"
+            app:layout_constraintTop_toBottomOf="@+id/desc2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/price"/>
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="@dimen/size_5"
+            android:layout_marginLeft="@dimen/size_18"
+            android:layout_marginRight="@dimen/size_18"
+            android:gravity="center"
+            android:textSize="@dimen/size_20"
+            android:text="₹595 (inclusive of all taxes) "
+            android:textColor="@color/black_4a4a4a"
+            app:textType="CAPTION"
+            app:layout_constraintTop_toBottomOf="@+id/price_head"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/confirm_button"/>
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/confirm_button"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:fontFamily="@font/semi_bold"
+                android:layout_marginTop="@dimen/size_15"
+                android:layout_marginLeft="@dimen/size_18"
+                android:layout_marginRight="@dimen/size_18"
+                android:layout_marginBottom="@dimen/size_25"
+                android:background="@drawable/orange_button_click_effect"
+                android:text="Confirm and continue to pay"
+                android:gravity="center"
+                android:textColor="@color/white"
+                app:textAllCaps="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/price"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>
