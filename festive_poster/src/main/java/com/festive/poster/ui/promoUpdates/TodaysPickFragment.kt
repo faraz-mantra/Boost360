@@ -197,12 +197,13 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                                 templateList.add(template.clone()!!)
                             }
                         }
-                        templateList.add(PosterModel(layout_id = RecyclerViewItemType.VIEW_MORE_POSTER.getLayout()))
+                        val filterdList = templateList.take(5).toArrayList()
+                        filterdList.add(PosterModel(layout_id = RecyclerViewItemType.VIEW_MORE_POSTER.getLayout()))
                         if (templateList.isNotEmpty()){
                             dataList?.add(
                                 PosterPackModel(
                                     pack_tag,
-                                    templateList.toArrayList(),
+                                    filterdList,
                                     isPurchased = pack_tag.isPurchased,
                                     list_layout = RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()
                                 )
@@ -212,10 +213,6 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
 
                     }
 
-                    dataList?.add(dataList!![0])
-                    dataList?.add(dataList!![0])
-                    dataList?.add(dataList!![0])
-                    dataList?.add(dataList!![0])
 
                     // getPriceOfPosterPacks()
                     callbacks?.onDataLoaded(dataList!!)
@@ -278,6 +275,14 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                         }
                     }).show(parentFragmentManager, SubscribePlanBottomSheet::class.java.name)
                 }
+            }
+            RecyclerViewActionType.POSTER_VIEW_MORE_CLICKED.ordinal->{
+                parentItem as PosterPackModel
+
+                addFragment(R.id.container,
+                    BrowseAllFragment.newInstance(dataList!!,parentPosition),
+                    true,true)
+
             }
             RecyclerViewActionType.POST_CLICKED.ordinal-> {
                 Log.i(TAG, "onItemClick: ")
