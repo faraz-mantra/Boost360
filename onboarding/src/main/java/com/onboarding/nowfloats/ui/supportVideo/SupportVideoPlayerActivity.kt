@@ -323,30 +323,20 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
     binding?.seekBarPaused?.progress = 0
   }
 
-//  public override fun onStart() {
-//    super.onStart()
-//    if (Build.VERSION.SDK_INT >= 24) {
-//      initializePlayer()
-//    }
-//  }
-//
-//  public override fun onResume() {
-//    super.onResume()
-//    if ((Build.VERSION.SDK_INT < 24 || exoPlayer == null)) {
-//      initializePlayer()
-//    }
-//  }
-
   public override fun onPause() {
-    if (Build.VERSION.SDK_INT < 24) releasePlayer()
+    pauseExoPlayer(false)
     super.onPause()
   }
 
 
   public override fun onStop() {
-    elapsedTimeUpdatesJob?.cancel()
-    if (Build.VERSION.SDK_INT >= 24) releasePlayer()
+    pauseExoPlayer(false)
     super.onStop()
+  }
+
+  override fun onDestroy() {
+    releasePlayer()
+    super.onDestroy()
   }
 
   private fun releasePlayer() {
