@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity;
 import com.nowfloats.BusinessProfile.UI.UI.FeaturedImageActivity;
+import com.nowfloats.Image_Gallery.BackgroundGalleryImageActivity;
 import com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Store.Model.OnItemClickCallback;
@@ -87,7 +88,7 @@ public class ImageMenuActivity extends AppCompatActivity {
 
                     case "Background images":
 
-                        intent = new Intent(ImageMenuActivity.this, BackgroundImageGalleryActivity.class);
+                        intent = new Intent(ImageMenuActivity.this, BackgroundGalleryImageActivity.class);
                         break;
 
                     case "Favicon":

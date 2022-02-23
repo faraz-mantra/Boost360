@@ -1,5 +1,6 @@
 package com.nowfloats.Image_Gallery;
 
+import static com.framework.base.FragmentContainerActivityKt.FRAGMENT_TYPE;
 import static com.framework.webengageconstant.EventLabelKt.ADDED;
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_DELETE_BACKGROUND_IMAGE;
 import static com.framework.webengageconstant.EventLabelKt.UPDATED_BUINSESS_LOGO;
@@ -37,9 +38,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dashboard.constant.FragmentType;
+import com.dashboard.controller.DashboardFragmentContainerActivity;
 import com.framework.analytics.SentryController;
 import com.nguyenhoanglam.imagepicker.model.Config;
 import com.nguyenhoanglam.imagepicker.model.Image;

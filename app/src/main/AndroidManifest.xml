@@ -55,6 +55,7 @@
         tools:replace="android:label,android:name,android:theme,android:appComponentFactory">
         <activity
             android:name="com.nowfloats.Image_Gallery.EditImageBackgroundActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:exported="false" />
 
         <meta-data
@@ -324,7 +325,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"
+            android:name="com.nowfloats.Image_Gallery.BackgroundGalleryImageActivity"
             android:label="@string/title_activity_background_image_gallery"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"

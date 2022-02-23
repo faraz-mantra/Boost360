@@ -135,6 +135,7 @@ import com.nowfloats.CustomPage.CustomPageDeleteInterface;
 import com.nowfloats.CustomPage.CustomPageFragment;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
+import com.nowfloats.Image_Gallery.BackgroundGalleryImageActivity;
 import com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Login.API_Login;
@@ -660,7 +661,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         startActivity(q);
         HomeActivity.this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
       } else if (url.contains(getResources().getString(R.string.deeplink_background_images))) {
-        Intent i = new Intent(this, BackgroundImageGalleryActivity.class);
+        Intent i = new Intent(this, BackgroundGalleryImageActivity.class);
         startActivity(i);
       } else if (url.contains(getResources().getString(R.string.deeplink_favicon))) {
         Intent i = new Intent(this, FaviconImageActivity.class);

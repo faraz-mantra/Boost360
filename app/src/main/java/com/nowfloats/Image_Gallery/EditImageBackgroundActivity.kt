@@ -6,6 +6,7 @@ import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
@@ -19,7 +20,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.dashboard.controller.ui.profile.CropProfileImageFragment
 import com.framework.analytics.SentryController
+import com.framework.imagepicker.Utility
 import com.nowfloats.BusinessProfile.UI.API.Upload_Logo
 import com.nowfloats.Login.UserSessionManager
 import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog
@@ -40,39 +43,12 @@ class EditImageBackgroundActivity : AppCompatActivity() {
     private val media_req_id = 1
     private val GALLERY_PHOTO = 2
     private val CAMERA_PHOTO = 1
-    private var cropImageView: ImageView? = null
+    private var cropImageView: CropImageView? = null
     private val recommendedHeight = 700;
     private val recommendedWdith = 1600;
+    private var imagePath: String? = null
+    private var bitmap: Bitmap? = null
 
-
-    // Saves the state upon rotating the screen/restarting the activity
-    override fun onSaveInstanceState(bundle: Bundle) {
-        super.onSaveInstanceState(bundle)
-        bundle.putInt(ASPECT_RATIO_X, mAspectRatioX)
-        bundle.putInt(ASPECT_RATIO_Y, mAspectRatioY)
-    }
-
-    // Restores the state upon rotating the screen/restarting the activity
-    override fun onRestoreInstanceState(bundle: Bundle) {
-        super.onRestoreInstanceState(bundle)
-        mAspectRatioX = bundle.getInt(ASPECT_RATIO_X)
-        mAspectRatioY = bundle.getInt(ASPECT_RATIO_Y)
-    }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        var width: Int = cropImageView!!.width
-        var height: Int = cropImageView!!.height
-
-        System.out.println("Width----->"+width)
-        System.out.println("Height----->"+height)
-
-        if(width < recommendedWdith || height <recommendedHeight){
-            Toast.makeText(this, "Height or Width is less than the recommended size",Toast.LENGTH_LONG).show()
-        }
-
-
-
-    }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,16 +57,29 @@ class EditImageBackgroundActivity : AppCompatActivity() {
         MixPanelController.track("EditPhoto", null)
         // Initialize components of the app
         this.cropImageView =
-                findViewById<View>(R.id.CropImageView) as ImageView
+                findViewById<View>(R.id.crop_img) as CropImageView
         if (intent.hasExtra("image")) {
 
+            imagePath = intent.getStringExtra("image")
+            bitmap = BitmapFactory.decodeFile(imagePath)
+            var width: Int = bitmap!!.width
+            var height: Int = bitmap!!.height
+
+            System.out.println("Width----->"+width)
+            System.out.println("Height----->"+height)
+
+            if(width < recommendedWdith || height <recommendedHeight){
+                Toast.makeText(this, "Height or Width is less than the recommended size",Toast.LENGTH_LONG).show()
+            }
+
+            cropImageView!!.setImageBitmap(Utility.rotateImageIfRequired(bitmap!!, imagePath))
             try {
-                cropImageView!!.setImageBitmap(
-                        Util.getBitmap(
-                                intent.getStringExtra("image"),
-                                this
-                        )
-                )
+//                cropImageView!!.setImageBitmap(
+//                        Util.getBitmap(
+//                                intent.getStringExtra("image"),
+//                                this
+//                        )
+//                )
 //                cropImageView!!.setFixedAspectRatio(
 //                        intent.getBooleanExtra(
 //                                "isFixedAspectRatio",
@@ -105,68 +94,68 @@ class EditImageBackgroundActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
-        //Sets the choose image button
-        val chooseImage = findViewById<View>(R.id.button_recapture) as Button
-        chooseImage.setOnClickListener {
-            val imagePickerBottomSheetDialog =
-                    ImagePickerBottomSheetDialog({
-                        if (it.name == ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name) {
-                            cameraIntent()
-                        } else if (it.name == ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name) {
-                            galleryIntent()
-                        }
-
-                    }, false)
-            imagePickerBottomSheetDialog.show(
-                    supportFragmentManager,
-                    ImagePickerBottomSheetDialog::class.java.name
-            )
-        }
-        //Sets the rotate button
-        val rotateButton = findViewById<View>(R.id.Button_rotate) as Button
-//        rotateButton.setOnClickListener { cropImageView!!.rotateImage(ROTATE_NINETY_DEGREES) }
-
-        // Sets initial aspect ratio to 10/10, for demonstration purposes
-//        cropImageView!!.setAspectRatio(DEFAULT_ASPECT_RATIO_VALUES, DEFAULT_ASPECT_RATIO_VALUES)
-        val cropButton = findViewById<View>(R.id.Button_crop) as Button
-        cropButton.setOnClickListener {
-            try {
-//                croppedImage = cropImageView!!.croppedImage
-//                if (croppedImage != null) {
-//                    croppedImage?.let {
-//                        val rect = Rect(0, 0, it.width, it.height)
-//                        cropImageView!!.setImageBitmap(it)
-//                        cropImageView!!.cropRect = rect
-//                    }
+//        //Sets the choose image button
+//        val chooseImage = findViewById<View>(R.id.button_recapture) as Button
+//        chooseImage.setOnClickListener {
+//            val imagePickerBottomSheetDialog =
+//                    ImagePickerBottomSheetDialog({
+//                        if (it.name == ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name) {
+//                            cameraIntent()
+//                        } else if (it.name == ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name) {
+//                            galleryIntent()
+//                        }
+//
+//                    }, false)
+//            imagePickerBottomSheetDialog.show(
+//                    supportFragmentManager,
+//                    ImagePickerBottomSheetDialog::class.java.name
+//            )
+//        }
+//        //Sets the rotate button
+//        val rotateButton = findViewById<View>(R.id.Button_rotate) as Button
+////        rotateButton.setOnClickListener { cropImageView!!.rotateImage(ROTATE_NINETY_DEGREES) }
+//
+//        // Sets initial aspect ratio to 10/10, for demonstration purposes
+////        cropImageView!!.setAspectRatio(DEFAULT_ASPECT_RATIO_VALUES, DEFAULT_ASPECT_RATIO_VALUES)
+//        val cropButton = findViewById<View>(R.id.Button_crop) as Button
+//        cropButton.setOnClickListener {
+//            try {
+////                croppedImage = cropImageView!!.croppedImage
+////                if (croppedImage != null) {
+////                    croppedImage?.let {
+////                        val rect = Rect(0, 0, it.width, it.height)
+////                        cropImageView!!.setImageBitmap(it)
+////                        cropImageView!!.cropRect = rect
+////                    }
+////                }
+//            } catch (e: Exception) {
+//                SentryController.captureException(e)
+//                System.gc()
+//                e.printStackTrace()
+//            }
+//        }
+//        val save = findViewById<View>(R.id.Button_save) as Button
+//        save.setOnClickListener {
+//            try {
+////                croppedImage = cropImageView!!.croppedImage
+//                 if (croppedImage != null) {
+//                    val `in` = Intent()
+//                    val path = Util.saveCameraBitmap(
+//                            croppedImage,
+//                            this,
+//                            "Edit" + System.currentTimeMillis()
+//                    )
+//                    //Log.v("ggg","edit path "+path);
+//                    `in`.putExtra("edit_image", path)
+//                    setResult(RESULT_OK, `in`)
+//                    finish()
 //                }
-            } catch (e: Exception) {
-                SentryController.captureException(e)
-                System.gc()
-                e.printStackTrace()
-            }
-        }
-        val save = findViewById<View>(R.id.Button_save) as Button
-        save.setOnClickListener {
-            try {
-//                croppedImage = cropImageView!!.croppedImage
-                 if (croppedImage != null) {
-                    val `in` = Intent()
-                    val path = Util.saveCameraBitmap(
-                            croppedImage,
-                            this,
-                            "Edit" + System.currentTimeMillis()
-                    )
-                    //Log.v("ggg","edit path "+path);
-                    `in`.putExtra("edit_image", path)
-                    setResult(RESULT_OK, `in`)
-                    finish()
-                }
-            } catch (e: Exception) {
-                SentryController.captureException(e)
-                System.gc()
-                e.printStackTrace()
-            }
-        }
+//            } catch (e: Exception) {
+//                SentryController.captureException(e)
+//                System.gc()
+//                e.printStackTrace()
+//            }
+//        }
     }
 
     var imageUri: Uri? = null
