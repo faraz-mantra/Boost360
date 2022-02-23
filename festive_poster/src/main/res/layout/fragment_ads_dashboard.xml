@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#F8F8F8">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:elevation="@dimen/size_4"
+            android:paddingHorizontal="@dimen/size_16"
+            android:paddingVertical="@dimen/size_16"
+            android:background="@color/greyish_brown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_fposter_back_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/iv_back"
+                android:ellipsize="end"
+                android:fontFamily="@font/bold"
+                android:maxLines="1"
+                android:text="Search Ads Dashboard"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_18"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+                app:layout_constraintStart_toEndOf="@+id/iv_back"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/iv_download"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/size_16"
+                    android:src="@drawable/ic_bell" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/iv_help"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_ques" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F8F8F8"
+            app:layout_constraintEnd_toEndOf="@+id/descr"
+            app:layout_constraintStart_toEndOf="@+id/descr">
+
+
+            <View
+                android:id="@+id/main_view"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_380"
+                android:background="@color/greyish_brown"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/iv_logo"
+                android:layout_width="@dimen/size_70"
+                android:layout_height="@dimen/size_70"
+                android:src="@drawable/ad_logo"
+                android:layout_marginTop="@dimen/size_26"
+                android:layout_marginBottom="@dimen/size_16"
+                android:layout_marginStart="@dimen/size_25"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/rc"/>
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/visit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginBottom="@dimen/size_16"
+                android:layout_marginStart="@dimen/size_15"
+                android:textSize="@dimen/size_60"
+                android:text=" 10 "
+                android:textColor="@color/white_green_light"
+                app:layout_constraintBottom_toTopOf="@+id/rc"
+                app:layout_constraintStart_toEndOf="@+id/iv_logo"/>
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/txt"
+                android:layout_width="177dp"
+                android:layout_height="wrap_content"
+
+                android:maxLines="2"
+                android:text="Google search ad campaigns "
+                android:textColor="@color/white_green_light"
+                android:textSize="@dimen/size_20"
+                app:layout_constraintBottom_toBottomOf="@+id/visit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/visit"
+                app:layout_constraintTop_toTopOf="@+id/visit" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/size_16"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@+id/rc1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:itemCount="3"
+                tools:listitem="@layout/list_dashboard" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rc1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="@dimen/size_16"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@+id/descr"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:listitem="@layout/list_dashboard" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/descr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_25"
+                android:layout_marginTop="@dimen/size_25"
+                android:layout_marginBottom="@dimen/size_25"
+                android:text="*All numbers on this page are last updated on 24 Jul, 12:34 pm IST. "
+                android:textColor="#BBBBBB"
+                android:textSize="@dimen/size_10"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/cam_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10"
+            android:layout_marginStart="@dimen/size_18"
+            android:text="My search ads"
+            android:textSize="@dimen/size_16"
+            android:textStyle="bold"
+            android:textColor="#4A4A4A"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/quant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_5"
+            android:layout_marginLeft="@dimen/size_18"
+            android:textSize="@dimen/size_12"
+            android:text="Showing 1-5 of all 26 campaigns "
+            android:textColor="#747474"
+            app:layout_constraintTop_toBottomOf="@+id/cam_id"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/sorting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_sorting"
+            android:layout_marginTop="@dimen/size_18"
+            android:layout_marginEnd="@dimen/size_15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F8F8F8"
+            tools:listitem="@layout/list_item_campaign"
+            tools:itemCount="5" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="@dimen/size_15"
+            app:corner_radius="RADIUS_0"
+            app:cardElevation="1dp">
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Load more campaigns"
+                android:layout_gravity="center"
+                android:textColor="#FFB900"
+                android:textSize="@dimen/size_14" />
+
+        </androidx.cardview.widget.CardView>
+
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/btn_dashboard"
+            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+            android:layout_width="@dimen/size_320"
+            android:layout_height="@dimen/size_40"
+            android:layout_marginTop="@dimen/size_26"
+            android:layout_marginBottom="@dimen/size_16"
+            android:layout_gravity="center"
+            android:text="Create new ad campaign"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>
+
+

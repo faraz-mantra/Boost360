@@ -16,6 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_10"
             android:layout_marginBottom="@dimen/size_10"
+            android:paddingLeft="@dimen/size_16"
+            android:paddingRight="@dimen/size_16"
             android:orientation="horizontal"
             android:weightSum="4"
             app:layout_constraintTop_toTopOf="parent"
@@ -36,7 +38,7 @@
                     android:layout_height="@dimen/size_50"
                     android:layout_marginTop="@dimen/size_8"
                     android:layout_marginStart="@dimen/size_13"
-                    android:src="@drawable/ic_enquire"
+                    android:src="@drawable/ic_emai"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,7 +85,8 @@
                     android:layout_width="@dimen/size_50"
                     android:layout_height="@dimen/size_50"
                     android:layout_marginTop="@dimen/size_8"
-                    android:src="@drawable/ic_calls"
+                    android:layout_marginStart="@dimen/size_8"
+                    android:src="@drawable/ic_web"
                     app:layout_constraintStart_toEndOf="@+id/ctv_subheading"
                     app:layout_constraintTop_toTopOf="parent" />
 

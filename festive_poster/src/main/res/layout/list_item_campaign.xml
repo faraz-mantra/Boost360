@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="#F8F8F8">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.framework.views.customViews.CustomCardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:elevation="@dimen/size_10"
+        android:layout_marginTop="@dimen/size_15"
+        app:corner_radius="RADIUS_0"
         app:cardElevation="2dp">
 
 
@@ -128,7 +128,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </com.framework.views.customViews.CustomCardView>
+    </androidx.cardview.widget.CardView>
 
 </layout>
 
