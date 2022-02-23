@@ -1749,7 +1749,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     } catch (ex: Exception) {
                         SentryController.captureException(ex)
                         ex.printStackTrace()
-                        SentryController.captureException(ex)
                     }
                 }
                 val widget = Widget(
@@ -1796,7 +1795,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     } catch (ex: Exception) {
                         SentryController.captureException(ex)
                         ex.printStackTrace()
-                        SentryController.captureException(ex)
                     }
                 }
 
@@ -2104,7 +2102,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     } catch (ex: Exception) {
                         SentryController.captureException(ex)
                         ex.printStackTrace()
-                        SentryController.captureException(ex)
                     }
                 }
 
@@ -3114,7 +3111,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         } catch (e: Exception) {
             SentryController.captureException(e)
             e.printStackTrace()
-            SentryController.captureException(e)
         }
     }
 
@@ -3125,7 +3121,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         } catch (e: Exception) {
             SentryController.captureException(e)
             e.printStackTrace()
-            SentryController.captureException(e)
         }
     }
 

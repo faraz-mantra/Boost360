@@ -48,7 +48,6 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
   override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
     Glide.with(context).load(list.get(position).link).placeholder(R.drawable.boost_360_insignia)
       .into(holder.image)
-    holder.title.text = list.get(position).item_name
     val price = list.get(position).price * list.get(position).min_purchase_months
     val MRPPrice = list.get(position).MRPPrice * list.get(position).min_purchase_months
     holder.price.text =
@@ -59,7 +58,15 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
     } else {
       holder.MRPPrice.visibility = View.GONE
     }
-    holder.desc.text=list.get(position).description_title
+    if(list.get(position).boost_widget_key!!.contains("DOMAINPURCHASE")
+      || list.get(position).boost_widget_key!!.contains("EMAILACCOUNTS")
+      || list.get(position).boost_widget_key!!.contains("CALLTRACKER")){
+      holder.desc.visibility = View.GONE
+    }else {
+      holder.desc.visibility = View.VISIBLE
+      holder.desc.text = list.get(position).description_title
+    }
+    holder.title.text = list.get(position).item_name
 //    if (list.get(position).discount > 0) {
 //      holder.discount.text = list.get(position).discount.toString() + "%"
 //    } else {

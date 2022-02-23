@@ -23,6 +23,7 @@ import com.boost.marketplace.databinding.ActivityMarketplaceoffersBinding
 import com.boost.marketplace.ui.History_Orders.HistoryOrdersActivity
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
+import com.framework.analytics.SentryController.captureException
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_OFFERS_LOADED
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PAGE_VIEW
@@ -228,6 +229,7 @@ class MarketPlaceOffersActivity :
             d = input.parse(textDate)
         } catch (e: ParseException) {
             e.printStackTrace()
+            captureException(e)
         }
         return output.format(d)
     }
@@ -244,6 +246,7 @@ class MarketPlaceOffersActivity :
             d = input.parse(textDate)
         } catch (e: ParseException) {
             e.printStackTrace()
+            captureException(e)
         }
         return output.format(d)
     }

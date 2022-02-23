@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.fragment.app.FragmentManager
 import com.boost.marketplace.R
 import com.boost.marketplace.databinding.MarketplaceProgressDialogBinding
+import com.framework.analytics.SentryController
+import com.framework.analytics.SentryController.captureException
 import com.framework.base.BaseDialogFragment
 import com.framework.models.BaseViewModel
 import com.framework.utils.ConversionUtils
@@ -48,6 +50,7 @@ class ProgressDialog : BaseDialogFragment<MarketplaceProgressDialogBinding, Base
       if (this.isVisible.not()) show(manager, ProgressDialog::class.java.simpleName)
     } catch (e: Exception) {
       Log.e(ProgressDialog::class.java.name, e.localizedMessage ?: "")
+      captureException(e)
     }
   }
 
@@ -56,6 +59,7 @@ class ProgressDialog : BaseDialogFragment<MarketplaceProgressDialogBinding, Base
       if (isRemoving.not()) dismiss()
     } catch (e: Exception) {
       Log.e(ProgressDialog::class.java.name, e.localizedMessage ?: "")
+      captureException(e)
     }
   }
 
