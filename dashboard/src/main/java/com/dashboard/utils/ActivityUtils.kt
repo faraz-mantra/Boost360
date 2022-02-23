@@ -151,7 +151,7 @@ fun AppCompatActivity.startAptOrderSummary(session: UserSessionManager?) {
 fun AppCompatActivity.startBackgroundImageGallery(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(BACKGROUND_IMAGE_GALLERY_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val queries = Intent(this, Class.forName("com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"))
+    val queries = Intent(this, Class.forName("com.nowfloats.Image_Gallery.BackgroundGalleryImageActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {

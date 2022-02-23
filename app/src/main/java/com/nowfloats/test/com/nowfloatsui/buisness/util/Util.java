@@ -788,9 +788,12 @@ public class Util {
     }
 
     public static Bitmap getBitmap(String path, Activity app) {
-        return getBitmap(path, app, 720);
+        return getBitmap(path, app, 1600);
     }
 
+    public static Bitmap getBitmapNew(String path, Activity app) {
+        return getBitmap(path, app, 1600);
+    }
     public static float rotationForImage(Context context, Uri uri) {
         if (uri.getScheme().equals("content")) {
             String[] projection = {MediaStore.Images.ImageColumns.ORIENTATION};
