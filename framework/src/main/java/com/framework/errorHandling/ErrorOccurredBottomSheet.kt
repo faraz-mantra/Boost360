@@ -20,17 +20,17 @@ class ErrorOccurredBottomSheet(val errorCode: String?, val errorMessage: String?
   }
 
   override fun onCreateView() {
-    binding?.tvErrorMessage?.text = errorMessage
+    //binding?.tvErrorMessage?.text = errorMessage
     var imageLogoUri = sessionManager?.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl)
     if (imageLogoUri.isNullOrEmpty().not() && imageLogoUri!!.contains("http").not()) {
       imageLogoUri = BASE_IMAGE_URL + imageLogoUri
     }
 
-    binding?.ivBusinessImage?.let {
+   /* binding?.ivBusinessImage?.let {
       if (imageLogoUri.isNullOrEmpty().not()) {
         baseActivity.glideLoad(mImageView = it, url = imageLogoUri?:"", placeholder = R.drawable.gradient_white, isLoadBitmap = true)
       } else it.setImageResource(R.drawable.placeholder_error)
-    }
+    }*/
     setOnClickListener(binding?.btnReportAnError, binding?.btnTryAgain, binding?.ivClose)
   }
 

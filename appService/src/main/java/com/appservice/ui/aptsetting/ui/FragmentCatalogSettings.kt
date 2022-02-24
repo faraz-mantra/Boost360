@@ -14,6 +14,7 @@ import com.appservice.utils.WebEngageController
 import com.appservice.utils.capitalizeUtil
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.extensions.observeOnce
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
@@ -60,6 +61,7 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
         binding?.ctvService?.text = response?.productCategory(baseActivity)?.capitalizeUtil()
         binding?.ctvWebsiteUrl?.text = fromHtml("<pre>URL: <span style=\"color: #4a4a4a;\"><u>${sessionLocal.getDomainName()}<b>/${response?.productCategoryVerb(baseActivity)}</b></u></span></pre>")
         sessionLocal.storeFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB, response?.productCategoryVerb)
+        onCatalogSetupAddedOrUpdated(response?.productCategoryVerb.isNullOrEmpty().not())
       }
     })
   }
@@ -101,4 +103,5 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
       show(this@FragmentCatalogSettings.parentFragmentManager, BottomSheetCatalogDisplayName::class.java.name)
     }
   }
+
 }

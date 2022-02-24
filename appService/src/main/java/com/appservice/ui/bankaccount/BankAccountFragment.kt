@@ -145,12 +145,6 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     }
   }
 
-  private fun onBankAccountAddedOrUpdated(isAdded: Boolean) {
-    val instance = FirestoreManager
-    instance.getDrScoreData()?.metricdetail?.boolean_add_bank_account = isAdded
-    instance.updateDocument()
-  }
-
   private fun setEditTextAll(bankAccountDetails: BankAccountDetails?) {
     binding?.edtAccountName?.setText(bankAccountDetails?.accountName ?: "")
     binding?.edtAccountNumber?.setText(bankAccountDetails?.accountNumber ?: "")
