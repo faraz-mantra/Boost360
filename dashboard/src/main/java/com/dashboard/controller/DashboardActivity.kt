@@ -571,7 +571,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
       binding?.drawerView?.backgroundImage -> openImagePicker(true)
-      binding?.viewCartCount -> session?.let { this.initiateAddonMarketplace(it, true, "", "") }
+      binding?.viewCartCount -> session?.let { this.initiateCart(it, true, "", "") }
     }
   }
 

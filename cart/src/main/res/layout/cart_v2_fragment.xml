@@ -367,7 +367,7 @@
                     android:id="@+id/package_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginTop="4dp"
                     android:elevation="@dimen/_1sdp"
                     android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -417,7 +417,7 @@
                     android:id="@+id/addons_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginBottom="4dp"
                     android:elevation="@dimen/_1sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -563,6 +563,7 @@
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
                                 android:text="(Valid till 16 May 22)"
                                 android:textColor="#828282"
                                 android:textSize="@dimen/txt_12sp" />
@@ -585,19 +586,18 @@
                                 android:textColor="#F44336"
                                 android:textSize="@dimen/_20sdp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/months_validity"
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:layout_marginTop="@dimen/pad_1dp"
-                                android:layout_marginBottom="@dimen/pad_1dp"
+                                android:paddingStart="14dp"
+                                android:paddingEnd="14dp"
+                                android:paddingTop="6dp"
+                                android:paddingBottom="6dp"
                                 android:background="@color/white"
-                                android:ems="2"
                                 android:fontFamily="@font/bold"
                                 android:gravity="center"
-                                android:inputType="number"
-                                android:maxLength="2"
                                 android:text="0 months"
                                 android:textColor="@color/orange"
                                 android:textCursorDrawable="@null"
@@ -622,7 +622,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginTop="4dp"
                         android:layout_marginRight="@dimen/_5sdp"
                         android:background="@drawable/ic_cart_extra_off_bg"
                         android:gravity="center"
@@ -643,6 +643,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
+                                android:drawablePadding="4dp"
                                 android:drawableStart="@drawable/ic_cart_discount"
                                 android:gravity="center"
                                 android:paddingTop="5dp"
@@ -1283,10 +1284,12 @@
                             android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/gst_info"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawableEnd="@drawable/ic_cart_gst_info"
                                 android:text="(includes 18% GST)"
+                                android:paddingTop="5dp"
                                 android:textColor="#828282"
                                 android:textSize="@dimen/txt_12sp" />
 

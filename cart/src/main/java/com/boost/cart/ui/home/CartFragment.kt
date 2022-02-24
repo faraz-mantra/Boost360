@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
@@ -11,13 +12,14 @@ import android.text.InputFilter
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.PopupWindow
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -73,6 +75,7 @@ import com.framework.analytics.SentryController
 import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -83,6 +86,9 @@ import kotlinx.android.synthetic.main.cart_v2_fragment.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
+
+
+
 
 
 class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
@@ -205,6 +211,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
         progressDialog = ProgressDialog(requireContext())
 
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            val window: Window = netscape.javascript.JSObject.getWindow()
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+//            window.setStatusBarColor(Color.BLUE)
+//        }
+
 
         cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, ArrayList(), requireActivity().application)
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
@@ -292,6 +304,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //      }else if(gstcheck.visibility == View.VISIBLE){
 //        reverseVisibility()
 //      }
+
+        gst_info.setOnClickListener {
+            showPopupWindow(it)
+        }
 
         business_gstin_number.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -879,7 +895,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //                        default_validity_months = default_validity_months+ 3
                 }
 //                months_validity.text = default_validity_months.toString() + " months"
-                months_validity.setText(default_validity_months.toString())
+                months_validity.setText(default_validity_months.toString()+ " months")
                 prefs.storeCartValidityMonths(default_validity_months.toString())
                 totalValidityDays = 30 * default_validity_months
                 prefs.storeMonthsValidity(totalValidityDays)
@@ -3146,6 +3162,22 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
     override fun applycoupon(mList: Data) {
         mList.code?.let { viewModel.getCouponRedeem(mList.code?.let { RedeemCouponRequest(total, it, (activity as CartActivity).fpid!!) }!!, it) }
 
+    }
+
+    private fun showPopupWindow(anchor: View) {
+        val view: View =
+            LayoutInflater.from(requireContext()).inflate(R.layout.popup_window_text, null)
+        val popupWindow = PopupWindow(
+            view,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        val txtSub: TextView = popupWindow.contentView.findViewById(R.id.popup_gst_value)
+        txtSub.setText("Testing")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) popupWindow.elevation =
+            5.0f
+        popupWindow.showAsDropDown(anchor, 110, -110)
     }
 
 }
