@@ -2,7 +2,8 @@
 <layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#F8F8F8">
+    android:background="@color/white_f8f8f8">
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -31,12 +32,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="@dimen/size_16"
                 android:layout_toEndOf="@+id/iv_back"
                 android:ellipsize="end"
                 android:fontFamily="@font/bold"
                 android:maxLines="1"
-                android:text="Search Ads Dashboard"
+                android:text="@string/search_ads_dashboard"
                 android:textColor="@color/white"
                 android:textSize="@dimen/size_18"
                 app:layout_constraintBottom_toBottomOf="parent"

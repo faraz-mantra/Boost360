@@ -8,15 +8,8 @@
   <androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/shape_fposter_white_top_rounded_rect"
     android:orientation="vertical">
-
-<!--    <com.framework.views.customViews.CustomImageView-->
-<!--      android:id="@+id/riv_close_bottomSheet"-->
-<!--      android:layout_width="@dimen/size_40"-->
-<!--      android:layout_height="@dimen/size_40"-->
-<!--      android:layout_gravity="center_horizontal"-->
-<!--      android:layout_marginBottom="@dimen/size_15"-->
-<!--      android:src="@drawable/ic_cross_grey_circle" />-->
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:layout_width="match_parent"
@@ -34,7 +27,9 @@
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/customTextView7"
           style="@style/BusinessProfile_Text_Title"
-          android:text="Company_name"
+          android:text="@string/company_name"
+          android:textSize="@dimen/size_10"
+          android:textColor="@color/black_747474"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,9 +37,10 @@
           android:id="@+id/ctv_business_name_count"
           style="@style/BusinessProfile_Text_Title"
           android:layout_gravity="end"
+          android:text="8"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintTop_toTopOf="parent"
-          tools:text="40/100" />
+          tools:text="8" />
       </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -52,7 +48,7 @@
         android:id="@+id/cet_company_name"
         style="@style/BusinessProfileTextField"
         android:drawableEnd="@null"
-        android:background="@drawable/bg_rect_edit_txt_gray"
+        android:background="@drawable/bg_edit_txt"
         android:gravity="top|left"
         android:inputType="textMultiLine|textCapWords"
         android:lines="3"
@@ -62,6 +58,7 @@
         android:scrollbars="vertical"
         android:singleLine="true"
         android:textSize="14sp"
+          android:textColor="@color/black_4f4f4f"
         tools:ignore="UnusedAttribute" />
 
       <androidx.constraintlayout.widget.ConstraintLayout
@@ -73,7 +70,9 @@
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/customTextView8"
             style="@style/BusinessProfile_Text_Title"
-            android:text="Secondary_text"
+            android:text="@string/secondary_text"
+            android:textSize="@dimen/size_10"
+            android:textColor="@color/black_747474"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,19 +80,21 @@
             android:id="@+id/ctv_secondary_name_count"
             style="@style/BusinessProfile_Text_Title"
             android:layout_gravity="end"
+            android:text="8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="40/100" />
+            tools:text="10" />
       </androidx.constraintlayout.widget.ConstraintLayout>
 
       <com.framework.views.customViews.CustomEditText
           android:id="@+id/cet_secondary_name"
           style="@style/BusinessProfileTextField"
           android:drawableEnd="@null"
-          android:background="@drawable/bg_rect_edit_txt_gray"
+          android:background="@drawable/bg_edit_txt"
           android:gravity="top|left"
           android:inputType="textMultiLine|textCapWords"
           android:lines="3"
+          android:textColor="@color/black_4f4f4f"
           android:maxLength="40"
           android:minLines="1"
           android:padding="@dimen/size_10"
@@ -112,10 +113,11 @@
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/customTextView"
             style="@style/BusinessProfile_Text_Title"
-            android:text="business_description_"
+            android:text="@string/business_description"
+            android:textSize="@dimen/size_12"
+            android:textColor="@color/black_4a4a4a"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
       </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -125,9 +127,10 @@
           style="@style/BusinessProfileTextField"
           android:drawableEnd="@null"
           android:gravity="top|left"
-          android:background="@drawable/bg_rect_edit_txt_gray"
+          android:background="@drawable/bg_edit_txt"
           android:inputType="textMultiLine|textCapWords"
           android:lines="10"
+          android:textColor="@color/bg_dark_grey"
           android:minLines="6"
           android:scrollbars="vertical"
           android:textSize="14sp" />
@@ -138,7 +141,7 @@
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/size_16"
         android:enabled="true"
-        android:text="Save"
+        android:text="@string/save"
         android:textColor="@color/white" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 

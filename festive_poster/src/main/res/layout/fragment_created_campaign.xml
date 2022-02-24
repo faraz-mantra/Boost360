@@ -40,7 +40,7 @@
             android:layout_marginStart="@dimen/size_30"
             android:layout_marginEnd="@dimen/size_30"
             android:gravity="center"
-            android:text="Campaign created &amp; submitted to Google for review."
+            android:text="@string/campaign_created_amp_submitted_to_google_for_review"
             android:textColor="@color/black_4a4a4a"
             android:textSize="26sp"
             app:layout_constraintBottom_toTopOf="@+id/desc"
@@ -57,12 +57,11 @@
             android:layout_marginTop="@dimen/size_10"
             android:gravity="center"
             android:textSize="@dimen/size_16"
-            android:text="Google usually takes 12-24 hours to review and take action on your submitted campaign."
+            android:text="@string/google_usually_takes_12_24_hours_to_review_and_take_action_on_your_submitted_campaign"
             app:layout_constraintTop_toBottomOf="@+id/create_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/btn_dashboard"/>
-
 
 
         <com.framework.views.customViews.CustomButton
@@ -77,7 +76,7 @@
             android:gravity="center"
             android:textSize="@dimen/size_16"
             android:textAllCaps="false"
-            android:text="Go to campaign dashboard"
+            android:text="@string/go_to_campaign_dashboard"
             android:textColor="#FFB900"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

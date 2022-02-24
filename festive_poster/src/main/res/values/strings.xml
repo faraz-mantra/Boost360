@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="festival_poster">Festival Posters</string>
     <string name="tap_to_edit">Tap to Edit</string>
     <string name="purchased_posters">Purchased Posters</string>
@@ -41,4 +41,45 @@
     <string name="done">Done</string>
     <string name="purchased">Purchased</string>
     <string name="your_picture">Your picture</string>
+    <string name="company_name_here">Company Name Here</string>
+    <string name="secondary_text_here">Secondary Text Here</string>
+    <string name="ad">Ad</string>
+    <string name="www_companywebsite_com">www.companywebsite.com</string>
+    <string name="after_the_successful_payment_your_campaign_will_get_created_and_submitted_to_google_for_review_post_approval_it_will_start_showing_up_to_relavent_audiances_based_on_your_selected_date_time_and_cities_ad_would_automatically_stop_after_the_allocated_budget_is_utilised">After the successful payment,your campaign will get created and submitted to Google for review. Post approval it will start showing up to relavent audiances based on your selected date, time and cities. Ad would automatically stop after the allocated budget is utilised.</string>
+    <string name="link_to_webpage1">Link to webpage1</string>
+    <string name="link_to_webpage2">Link to webpage2</string>
+    <string name="link_to_webpage3">Link to webpage3</string>
+    <string name="customise_add">Customise Add</string>
+    <string name="ad_keywords">Ad Keywords</string>
+    <string name="keywords_help_you_target_the_customers_searching_similar_products_at_least_5_6_relevant_keywords_are_recommended">Keywords help you target the customers searching similar products. at least 5-6 relevant keywords are recommended.</string>
+    <string name="other_info">Other info</string>
+    <string name="total_campaign_budget">Total campaign budget</string>
+    <string name="cities_selected">Cities selected</string>
+    <string name="schedule">Schedule</string>
+    <string name="duration">Duration</string>
+    <string name="after_the_successful_payment_your_campaign_will_get_created_and_submitted_to_google_for_review_post_approval_it_will_start_showing_up_to_relavent_audiances_based_on_your_selected_date_time_and_cities_ad_would_automatically_stop_after_the_alocated_budget_is_utilised">After the successful payment, your campaign will get created and submitted to Google for review. Post approval it will start showing up to relavent audiances based on your selected date, time and cities. Ad would automatically stop after the allocated budget is utilised.</string>
+    <string name="amount_to_be_paid">Amount to be paid :</string>
+    <string name="confirm_and_continue_to_pay">Confirm and continue to pay</string>
+    <string name="search_ads_dashboard">Search Ads Dashboard</string>
+    <string name="created_on">Created on:</string>
+    <string name="total_budget">Total Budget :</string>
+    <string name="visits">Visits</string>
+    <string name="google_search_ad_campaigns">Google search ad campaigns</string>
+    <string name="all_numbers_on_this_page_are_last_updated_on_24_jul_12_34_pm_ist">*All numbers on this page are last updated on 24 Jul, 12:34 pm IST.</string>
+    <string name="my_search_ads">My search ads</string>
+    <string name="load_more_campaigns">Load more campaigns</string>
+    <string name="create_new_ad_campaign">Create new ad campaign</string>
+    <string name="submitting_to_google_for_review">Submitting to Google for review...</string>
+    <string name="this_may_take_upto_5_minutes_feel_free_to_check_the_campaign_dashboard_while_we_notify_you_about_the_campaign_status">This may take upto 5 minutes. Feel free to check the campaign dashboard while we notify you about the campaign status.</string>
+    <string name="enquiries">Enquiries</string>
+    <string name="calls">Calls</string>
+    <string name="creating_campaign">Creating campaign...</string>
+    <string name="this_may_take_upto_5_minutes_feel_free_to_check_the_campaign_dashboard_while_we_notify_you_about_the_campaign_status" tools:ignore="DuplicateDefinition">This may take upto 5 minutes. Feel free to check the campaign dashboard while we notify you about the campaign status.</string>
+    <string name="campaign_created_amp_submitted_to_google_for_review"><![CDATA[Campaign created & submitted to Google for review.]]></string>
+    <string name="google_usually_takes_12_24_hours_to_review_and_take_action_on_your_submitted_campaign">Google usually takes 12-24 hours to review and take action on your submitted campaign.</string>
+    <string name="go_to_campaign_dashboard">Go to campaign dashboard</string>
+    <string name="company_name">Company_name</string>
+    <string name="secondary_text">Secondary_text</string>
+    <string name="business_description">business_description_</string>
+    <string name="save">Save</string>
 </resources>

@@ -5,15 +5,15 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="@dimen/size_230"
         android:layout_marginTop="@dimen/size_15"
         app:corner_radius="RADIUS_0"
-        app:cardElevation="2dp">
+        app:cardElevation="@dimen/size_2">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
 
                 <com.framework.views.customViews.CustomImageView
@@ -32,10 +32,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_10"
                 android:layout_marginStart="@dimen/size_18"
-                android:text="Campaign 11296582155"
+                android:text="campaign 11296582155"
                 android:textSize="@dimen/size_14"
                 android:textStyle="bold"
-                android:textColor="#4A4A4A"
+                android:textColor="@color/bg_dark_grey"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_status" />
 
@@ -47,7 +47,7 @@
                 android:layout_marginStart="@dimen/size_5"
                 android:layout_marginEnd="@dimen/size_30"
                 android:textSize="@dimen/size_30"
-                android:text=" 3 "
+                android:text="3"
                 android:textColor="#FFB900"
                 app:layout_constraintTop_toBottomOf="@+id/iv_status"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -59,7 +59,7 @@
                 android:layout_marginStart="@dimen/size_5"
                 android:layout_marginEnd="@dimen/size_30"
                 android:textSize="@dimen/size_15"
-                android:text=" Visits "
+                android:text="@string/visits"
                 android:textColor="#FFB900"
                 app:layout_constraintTop_toBottomOf="@+id/visits"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -71,8 +71,8 @@
                 android:layout_marginTop="@dimen/size_25"
                 android:layout_marginLeft="@dimen/size_18"
                 android:textSize="@dimen/size_12"
-                android:text="Created on: "
-                android:textColor="#BBBBBB"
+                android:text="@string/created_on"
+                android:textColor="@color/pinkish_grey"
                 app:layout_constraintTop_toBottomOf="@+id/cam_id"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -83,7 +83,7 @@
                 android:layout_marginTop="@dimen/size_25"
                 android:layout_marginStart="@dimen/size_5"
                 android:textSize="@dimen/size_12"
-                android:text="10mins ago "
+                android:text="10mins_ago"
                 android:textColor="@color/black_4a4a4a"
                 app:layout_constraintTop_toBottomOf="@+id/cam_id"
                 app:layout_constraintStart_toEndOf="@+id/time" />
@@ -95,8 +95,8 @@
                 android:layout_marginTop="@dimen/size_15"
                 android:layout_marginLeft="@dimen/size_18"
                 android:textSize="@dimen/size_12"
-                android:text="Total Budget : "
-                android:textColor="#BBBBBB"
+                android:text="@string/total_budget"
+                android:textColor="@color/pinkish_grey"
                 app:layout_constraintTop_toBottomOf="@+id/time"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -107,7 +107,7 @@
                 android:layout_marginTop="@dimen/size_15"
                 android:layout_marginStart="@dimen/size_5"
                 android:textSize="@dimen/size_12"
-                android:text="₹3,456 for 4 days "
+                android:text="3456 for 4 days"
                 android:textColor="@color/black_4a4a4a"
                 app:layout_constraintTop_toBottomOf="@+id/time1"
                 app:layout_constraintStart_toEndOf="@+id/budget" />
