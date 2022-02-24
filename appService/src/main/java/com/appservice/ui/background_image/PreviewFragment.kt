@@ -2,16 +2,16 @@ package com.appservice.ui.background_image
 
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
-import com.appservice.databinding.FragmentBackgroundImageBinding
-import com.appservice.databinding.FragmentCropZoomBinding
+import com.appservice.databinding.FragmentPreviewBinding
 import com.framework.models.BaseViewModel
 
-class CropZoomImageFragment : AppBaseFragment<FragmentCropZoomBinding,BaseViewModel>() {
+class PreviewFragment : AppBaseFragment<FragmentPreviewBinding,BaseViewModel>() {
     override fun getLayout(): Int {
-        return R.layout.fragment_crop_zoom
+        return R.layout.fragment_preview
     }
 
     override fun getViewModelClass(): Class<BaseViewModel> {
         return BaseViewModel::class.java
+
     }
 }
