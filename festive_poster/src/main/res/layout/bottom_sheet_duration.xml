@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data></data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_fposter_white_top_rounded_rect"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cs1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.framework.views.roundedimageview.RoundedImageView
+                android:id="@+id/riv_icon"
+                android:layout_width="@dimen/size_25"
+                android:layout_height="@dimen/size_25"
+                android:layout_marginTop="@dimen/size_8"
+                android:layout_marginStart="@dimen/size_25"
+                android:src="@drawable/ic_duration"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_20"
+                android:layout_marginTop="@dimen/size_10"
+                android:fontFamily="@font/bold"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/size_14"
+                app:layout_constraintStart_toEndOf="@+id/riv_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/select_duration" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_5"
+                android:layout_marginTop="@dimen/size_10"
+                android:layout_marginEnd="@dimen/size_30"
+                android:textSize="@dimen/size_12"
+                android:text="@string/reset"
+                android:textColor="#FFB900"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <View
+                android:id="@+id/dummy_view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/size_20"
+                android:background="@color/grey_dark_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/riv_icon" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ys"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_15"
+                android:layout_marginStart="@dimen/size_26"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/size_13"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dummy_view"
+                android:text="@string/yesterday" />
+
+            <View
+                android:id="@+id/dummy_view1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/size_20"
+                android:background="@color/grey_dark_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ys" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ys1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_15"
+                android:layout_marginStart="@dimen/size_26"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/size_13"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dummy_view1"
+                android:text="@string/last_5_days" />
+
+            <View
+                android:id="@+id/dummy_view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/size_20"
+                android:background="@color/grey_dark_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ys1" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ys2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_15"
+                android:layout_marginStart="@dimen/size_26"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/size_13"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dummy_view2"
+                android:text="@string/_10_days" />
+
+            <View
+                android:id="@+id/dummy_view3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/size_20"
+                android:background="@color/grey_dark_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ys2" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ys3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_15"
+                android:layout_marginStart="@dimen/size_26"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/size_13"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dummy_view3"
+                android:text="@string/last_30_days" />
+
+            <View
+                android:id="@+id/dummy_view4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/size_20"
+                android:background="@color/grey_dark_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ys3" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ys4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_15"
+                android:layout_marginStart="@dimen/size_26"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/size_13"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dummy_view4"
+                android:text="@string/last_60_days" />
+
+            <View
+                android:id="@+id/dummy_view5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/size_20"
+                android:background="@color/grey_dark_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ys4" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ys5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_15"
+                android:layout_marginStart="@dimen/size_26"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/size_13"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dummy_view5"
+                android:text="@string/_90_days" />
+
+            <View
+                android:id="@+id/dummy_view6"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/size_20"
+                android:background="@color/grey_dark_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ys5" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ys6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_15"
+                android:layout_marginStart="@dimen/size_26"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/size_13"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dummy_view6"
+                android:text="@string/select_date_range" />
+
+            <View
+                android:id="@+id/dummy_view7"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/size_20"
+                android:background="@color/grey_dark_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ys6" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>
