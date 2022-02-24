@@ -17,34 +17,28 @@ import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentEditDoctorInfoBinding
 import com.appservice.model.staffModel.*
-import com.appservice.ui.staffs.doctors.bottomsheet.AppointmentBookingBottomSheet
-import com.appservice.ui.staffs.ui.StaffFragmentContainerActivity
-import com.appservice.ui.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.catalog.common.AppointmentModel
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.appservice.ui.staffs.doctors.bottomsheet.AppointmentBookingBottomSheet
 import com.appservice.ui.staffs.ui.Constants
-import com.appservice.viewmodel.StaffViewModel
+import com.appservice.ui.staffs.ui.startStaffFragmentActivity
 import com.appservice.utils.WebEngageController
+import com.appservice.viewmodel.StaffViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
-import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.utils.size
 import com.framework.utils.sizeInKb
-import com.framework.webengageconstant.ADDED
-import com.framework.webengageconstant.NO_EVENT_VALUE
-import com.framework.webengageconstant.STAFF_PROFILE_CREATE
-import com.framework.webengageconstant.STAFF_PROFILE_UPDATED
-import kotlinx.android.synthetic.main.item_preview_image.*
+import com.framework.webengageconstant.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 
-class EditDoctorsDetailsFragment :
-  AppBaseFragment<FragmentEditDoctorInfoBinding, StaffViewModel>() {
+class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding, StaffViewModel>() {
   private var isTimingUpdated: Boolean? = null
   private var isProfileImageUpdated: Boolean? = null
   private var profileImageIsChange: Boolean? = null
@@ -93,33 +87,26 @@ class EditDoctorsDetailsFragment :
   override fun onCreateView() {
     super.onCreateView()
     setOnClickListener(
-      binding?.rlConsultationHour,
-      binding?.rlServiceProvided,
-      binding?.btnOtherInfo,
-      binding?.btnUploadSignature,
-      binding?.imageAddBtn,
-      binding?.changeImage,
-      binding?.ctfBookingWindow,
-      binding?.btnSave
-
+      binding?.rlConsultationHour, binding?.rlServiceProvided, binding?.btnOtherInfo,
+      binding?.btnUploadSignature, binding?.imageAddBtn, binding?.changeImage,
+      binding?.ctfBookingWindow, binding?.btnSave
     )
     getBundleData()
   }
 
   private fun getBundleData() {
-    sessionLocal= UserSessionManager(requireActivity())
+    sessionLocal = UserSessionManager(requireActivity())
     staffDetails = arguments?.getSerializable(IntentConstant.STAFF_DATA.name) as? StaffDetailsResult
     isEdit = (staffDetails != null && staffDetails?.id.isNullOrEmpty().not())
     if (isEdit == true) {
       updatePreviousData()
-      (requireActivity() as StaffFragmentContainerActivity).getToolbar()
-        ?.getToolbarTitleTextView()?.gravity = Gravity.START
+      baseActivity.getToolbar()?.getToolbarTitleTextView()?.gravity = Gravity.START
     }
     if (staffDetails == null) staffDetails = StaffDetailsResult()
   }
 
   private fun updatePreviousData() {
-    val speciality = staffDetails?.speciality?:""
+    val speciality = staffDetails?.speciality ?: ""
     setImage(listOf(staffDetails?.tileImageUrl.toString()))
     setSignatureView(listOf(staffDetails?.signature.toString()))
     binding?.ctfStaffName?.setText(staffDetails?.name)
@@ -134,7 +121,7 @@ class EditDoctorsDetailsFragment :
       binding?.ctvTiming?.text = textStaffDays
     } else binding?.ctvTiming?.gone()
 
-    if (speciality?.isNullOrEmpty() == false) binding?.ctfStaffSpeciality?.setText(speciality)
+    if (speciality?.isEmpty() == false) binding?.ctfStaffSpeciality?.setText(speciality)
     binding?.btnSave?.text = getString(R.string.update)
     if (resultCode != AppCompatActivity.RESULT_OK) setServicesList()
   }
@@ -237,18 +224,17 @@ class EditDoctorsDetailsFragment :
       staffUpdateImageRequest.imageType = IMAGETYPE.SIGNATURE.ordinal
     }
     staffUpdateImageRequest.staffId = staffDetails?.id
-    if (imagetype==IMAGETYPE.PROFILE) showProgress(getString(R.string.uploading_image)) else showProgress(getString(R.string.upload_signature))
-    viewModel?.updateStaffImage(staffUpdateImageRequest)
-      ?.observeOnce(viewLifecycleOwner, {
+    if (imagetype == IMAGETYPE.PROFILE) showProgress(getString(R.string.uploading_image)) else showProgress(getString(R.string.upload_signature))
+    viewModel?.updateStaffImage(staffUpdateImageRequest)?.observeOnce(viewLifecycleOwner) {
         hideProgress()
         if (it.isSuccess().not()) {
           showShortToast(it.errorMessage() ?: getString(R.string.something_went_wrong))
-        } else if (isEdit==false&&imagetype==IMAGETYPE.SIGNATURE&&it.isSuccess()){
+        } else if (isEdit == false && imagetype == IMAGETYPE.SIGNATURE && it.isSuccess()) {
           updateStaffImage(IMAGETYPE.PROFILE)
-        }else {
+        } else {
           finishAndGoBack()
         }
-      })
+      }
   }
 
   private fun updateStaffProfile() {
@@ -266,7 +252,7 @@ class EditDoctorsDetailsFragment :
     viewModel?.updateStaffProfile(request)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.isSuccess()) {
         updateStaffTimings()
-        WebEngageController.trackEvent(STAFF_PROFILE_UPDATED, ADDED, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(if (isDoctor) DOCTOR_PROFILE_UPDATED else STAFF_PROFILE_UPDATED, ADDED, NO_EVENT_VALUE)
       } else showShortToast(it?.errorMessage() ?: getString(R.string.something_went_wrong))
     })
 
@@ -342,16 +328,16 @@ class EditDoctorsDetailsFragment :
 
   private fun createStaffProfile() {
     showProgress()
-    viewModel?.createStaffProfile(staffProfile)?.observe(viewLifecycleOwner, { t ->
+    viewModel?.createStaffProfile(staffProfile)?.observe(viewLifecycleOwner) { t ->
       if (t.isSuccess()) {
         addStaffTimings((t as StaffCreateProfileResponse).result)
         staffDetails?.id = t.result
         showShortToast(getString(R.string.profile_created))
         onStaffAddedOrUpdated()
-        WebEngageController.trackEvent(STAFF_PROFILE_CREATE, ADDED, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(if (isDoctor) DOCTOR_PROFILE_CREATE else STAFF_PROFILE_CREATE, ADDED, NO_EVENT_VALUE)
       } else showShortToast(getString(R.string.something_went_wrong))
       hideProgress()
-    })
+    }
   }
 
   private fun onStaffAddedOrUpdated() {
@@ -507,12 +493,12 @@ class EditDoctorsDetailsFragment :
   private fun setImage(mPaths: List<String>) {
     this.profileimageUri = Uri.parse(mPaths[0])
     staffProfileFile = File(mPaths[0])
-    if (profileimageUri?.path!="null"||profileimageUri?.path!=null||profileimageUri!=null){
+    if (profileimageUri?.path != "null" || profileimageUri?.path != null || profileimageUri != null) {
       binding?.imageAddBtn?.gone()
       binding?.staffImageView?.visible()
       binding?.changeImage?.visible()
       binding?.staffImageView?.let { activity?.glideLoad(it, profileimageUri.toString(), R.drawable.placeholder_image_n) }
-    }else{
+    } else {
       binding?.imageAddBtn?.visible()
       binding?.staffImageView?.gone()
       binding?.changeImage?.gone()
@@ -522,7 +508,7 @@ class EditDoctorsDetailsFragment :
 
   private fun setSignature(mPaths: List<String>) {
     setSignatureView(mPaths)
-    if (signatureUri?.path!="null"&&signatureUri?.path!=null&&signatureUri!=null) {
+    if (signatureUri?.path != "null" && signatureUri?.path != null && signatureUri != null) {
       val imageExtension: String? =
         signatureUri?.toString()?.substring(signatureUri.toString().lastIndexOf("."))
       val imageToByteArray: ByteArray = imageToByteArray(signatureUri)
@@ -543,11 +529,11 @@ class EditDoctorsDetailsFragment :
   private fun setSignatureView(mPaths: List<String>) {
     this.signatureUri = Uri.parse(mPaths[0])
     staffSignatureFile = File(mPaths[0])
-    if(signatureUri!=null){
+    if (signatureUri != null) {
       binding?.layoutItemPreview?.root?.visible()
       binding?.btnUploadSignature?.gone()
       binding?.layoutItemPreview?.image?.let { activity?.glideLoad(it, signatureUri.toString(), R.drawable.placeholder_image_n) }
-    }else{
+    } else {
       binding?.layoutItemPreview?.root?.gone()
       binding?.btnUploadSignature?.visible()
     }
@@ -557,9 +543,9 @@ class EditDoctorsDetailsFragment :
       binding?.btnUploadSignature?.visible()
       binding?.layoutItemPreview?.image?.setImageBitmap(null)
     }
-    if (staffSignatureFile!=null&&staffSignatureFile?.size?.equals(0.0)==false)
-    binding?.layoutItemPreview?.ctvSize?.text = "${staffSignatureFile?.sizeInKb} Kb"
-    else binding?.layoutItemPreview?.ctvSize?.text = this.signatureUri.toString().subSequence(signatureUri?.toString()?.lastIndexOf("/")!!+1,signatureUri?.toString()?.length!!)
+    if (staffSignatureFile != null && staffSignatureFile?.size?.equals(0.0) == false)
+      binding?.layoutItemPreview?.ctvSize?.text = "${staffSignatureFile?.sizeInKb} Kb"
+    else binding?.layoutItemPreview?.ctvSize?.text = this.signatureUri.toString().subSequence(signatureUri?.toString()?.lastIndexOf("/")!! + 1, signatureUri?.toString()?.length!!)
     binding?.layoutItemPreview?.cbChange?.setOnClickListener {
       binding?.layoutItemPreview?.root?.gone()
       isSignatureSelection = true
