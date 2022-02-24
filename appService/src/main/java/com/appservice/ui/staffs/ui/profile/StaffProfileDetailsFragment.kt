@@ -1,4 +1,4 @@
-package com.appservice.staffs.ui.profile
+package com.appservice.ui.staffs.ui.profile
 
 import android.content.Intent
 import android.graphics.*
@@ -56,29 +56,30 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
   override fun onCreateView() {
     super.onCreateView()
     sessionLocal = UserSessionManager(requireActivity())
-    WebEngageController.trackEvent(STAFF_PROFILE_DETAIL, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(if (isDoctor) DOCTOR_PROFILE_DETAIL else STAFF_PROFILE_DETAIL, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.civMenu, binding?.ctvEdit, binding?.ctvEditLeaves, binding?.ctvEditServices, binding?.ctvEditTiming)
     getStaffDetail()
   }
 
   private fun updateStaffProfile() {
     val request = StaffProfileUpdateRequest(
-        isAvailable = staffDetails?.isAvailable, serviceIds = staffDetails?.serviceIds, gender = staffDetails?.gender,
-        floatingPointTag = sessionLocal.fpTag, name = staffDetails?.name, description = staffDetails?.description,
-        experience = staffDetails?.experience?.toIntOrNull(), staffId = staffDetails?.id, age = staffDetails?.age,
-        specialisations = staffDetails?.specialisations)
-    viewModel?.updateStaffProfile(request)?.observeOnce(viewLifecycleOwner, {
+      isAvailable = staffDetails?.isAvailable, serviceIds = staffDetails?.serviceIds, gender = staffDetails?.gender,
+      floatingPointTag = sessionLocal.fpTag, name = staffDetails?.name, description = staffDetails?.description,
+      experience = staffDetails?.experience?.toIntOrNull(), staffId = staffDetails?.id, age = staffDetails?.age,
+      specialisations = staffDetails?.specialisations
+    )
+    viewModel?.updateStaffProfile(request)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         isUpdate = true
         getStaffDetail()
       } else showShortToast(it.errorMessage() ?: getString(R.string.something_went_wrong))
-    })
+    }
   }
 
   private fun getStaffDetail() {
     showProgress()
     val get = arguments?.get(IntentConstant.STAFF_DATA.name) as? DataItem
-    viewModel?.getStaffDetails(get?.id)?.observeOnce(viewLifecycleOwner, { res ->
+    viewModel?.getStaffDetails(get?.id)?.observeOnce(viewLifecycleOwner) { res ->
       if (res.isSuccess()) {
         this.staffDetails = (res as StaffDetailsResponse).result
         binding?.ctvStaffName?.text = staffDetails?.name
@@ -87,16 +88,16 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
         binding?.ctvAboutHeading?.text = "About ${staffDetails?.name}"
         binding?.ctvAboutStaff?.text = staffDetails?.description
         binding?.civStaffProfileImg?.let { activity?.glideLoad(it, staffDetails?.image ?: "", R.drawable.placeholder_image) }
-        binding?.ctvSpecialization?.text = staffDetails?.specialisations?.firstOrNull()?.value?:""
+        binding?.ctvSpecialization?.text = staffDetails?.specialisations?.firstOrNull()?.value ?: ""
         if (staffDetails?.isAvailable == false) showInactiveProfile()
         fetchServices()
         setTimings()
-        if (isDoctorProfile(sessionLocal?.fP_AppExperienceCode)){
+        if (isDoctorProfile(sessionLocal?.fP_AppExperienceCode)) {
           setDoctorsData()
         }
       } else showShortToast(res.errorMessage() ?: getString(R.string.something_went_wrong))
       hideProgress()
-    })
+    }
 
   }
 
@@ -115,7 +116,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
     binding?.ctvMobNo?.text = staffDetails?.contactNumber
     binding?.ctvMembership?.text = staffDetails?.memberships
     binding?.ctvRegistration?.text = staffDetails?.registration
-    binding?.ctvAppointmentType?.text =AppointmentType.typeMap[staffDetails?.appointmentType]
+    binding?.ctvAppointmentType?.text = AppointmentType.typeMap[staffDetails?.appointmentType]
     binding?.civDoctorsSignature?.let { activity?.glideLoad(it, staffDetails?.signature.toString(), R.drawable.placeholder_image_n) }
 
   }
@@ -219,7 +220,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
   private fun fetchServices() {
     var servicesProvided: ArrayList<DataItemService>? = null
     val request = ServiceListRequest(filterBy = FilterBy("ALL", 0, 0), category = "", floatingPointTag = sessionLocal.fpTag)
-    viewModel?.getServiceListing(request)?.observeOnce(viewLifecycleOwner, { res ->
+    viewModel?.getServiceListing(request)?.observeOnce(viewLifecycleOwner) { res ->
       if (res?.isSuccess() == true) {
         val data = (res as? ServiceListResponse)?.result?.data
         if (staffDetails?.serviceIds.isNullOrEmpty().not()) {
@@ -229,7 +230,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
         setServices(servicesProvided?.map { it.name ?: "" })
       } else showShortToast(res?.errorMessage() ?: getString(R.string.something_went_wrong))
       setViewBackgrounds()
-    })
+    }
   }
 
   private fun setServices(map: List<String>?) {
@@ -277,13 +278,13 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
 
   private fun updateStaffTimings() {
     val request = StaffTimingAddUpdateRequest(staffId = staffDetails?.id, workTimings = staffDetails?.timings)
-    viewModel?.updateStaffTiming(request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.updateStaffTiming(request)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         isUpdate = true
         showShortToast(getString(R.string.staff_timings_updated))
         getStaffDetail()
       } else showShortToast(getString(R.string.staff_timings_unable_to_update))
-    })
+    }
   }
 
   private fun showPopupWindow(anchor: View) {
@@ -329,7 +330,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
     val removeStaffConfirmationBottomSheet = RemoveStaffConfirmationBottomSheet()
     removeStaffConfirmationBottomSheet.onClicked = { removeStaffProfile() }
     val bundle = Bundle()
-    bundle.putBoolean(IntentConstant.STAFF_DATA.name,isDoctorProfile(sessionLocal.fP_AppExperienceCode))
+    bundle.putBoolean(IntentConstant.STAFF_DATA.name, isDoctorProfile(sessionLocal.fP_AppExperienceCode))
     removeStaffConfirmationBottomSheet.arguments = bundle
     removeStaffConfirmationBottomSheet.show(this@StaffProfileDetailsFragment.parentFragmentManager, RemoveStaffConfirmationBottomSheet::class.java.name)
   }
@@ -337,13 +338,13 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
 
   private fun removeStaffProfile() {
     showProgress()
-    viewModel?.deleteStaffProfile(StaffDeleteImageProfileRequest(staffDetails?.id, sessionLocal.fpTag))?.observe(viewLifecycleOwner, { res ->
+    viewModel?.deleteStaffProfile(StaffDeleteImageProfileRequest(staffDetails?.id, sessionLocal.fpTag))?.observe(viewLifecycleOwner) { res ->
       if (res.isSuccess()) {
         isUpdate = true
         onBackPresDetail()
       } else showShortToast(res?.errorMessage() ?: getString(R.string.unable_to_delete))
       hideProgress()
-    })
+    }
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

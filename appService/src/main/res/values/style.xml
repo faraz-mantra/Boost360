@@ -17,6 +17,7 @@
     <item name="colorPrimary">@color/black_4a4a4a</item>
     <item name="colorPrimaryDark">@color/black_4a4a4a</item>
   </style>
+
   <style name="CatalogTheme" parent="BaseTheme">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -58,8 +59,10 @@
     <item name="android:layout_height">match_parent</item>
     <item name="android:layout_width">match_parent</item>
     <item name="android:fontFamily">@font/regular</item>
+    <item name="background">@android:color/transparent</item>
+    <item name="android:paddingHorizontal" tools:ignore="NewApi">@dimen/size_10</item>
     <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
-    <item name="android:buttonTint">@color/yellow_ffb900</item>
+    <item name="android:button">@drawable/check_selector_domain_booking</item>
     <item name="android:gravity">center_vertical</item>
     <item name="android:layout_marginTop">@dimen/size_15</item>
     <item name="android:layout_marginBottom">@dimen/size_15</item>
@@ -884,8 +887,8 @@
   </style>
 
   <style name="RadioWindow" parent="RadioService">
-    <item name="android:layout_marginTop">@dimen/size_4</item>
-    <item name="android:layout_marginBottom">@dimen/size_4</item>
+    <item name="android:layout_marginTop">@dimen/size_6</item>
+    <item name="android:layout_marginBottom">@dimen/size_6</item>
   </style>
 
   <style name="ProductSpinnerStyle" parent="@style/ThemeOverlay.AppCompat.Light">

@@ -378,9 +378,8 @@
     <string name="loading">Loading</string>
     <string name="loading_">Loading...</string>
     <string name="toolbar_staff_listing">Staff Listing</string>
-    <string name="toolbar_select_services">Select services</string>
+    <string name="toolbar_select_services">Select Services</string>
     <string name="toolbar_staff_timing">Staff timing</string>
-    <string name="toolbar_schedule_break">Scheduled breaks</string>
     <string name="toolbar_schedule_breaks">Scheduled breaks</string>
     <string name="toolbar_staff_details">Staff Details</string>
     <string name="toolbar_doctor_details">Doctor Details</string>
@@ -677,6 +676,7 @@
     <string name="education_years_of_experience_mobile_number_etc">Education, years of experience, mobile number, etc.</string>
     <string name="save_details">Save details</string>
     <string name="consultation_hours">Consultation hours</string>
+    <string name="consultation_hours_">Consultation Hours</string>
     <string name="select_doctor_s_consultation_hours">Select doctor’s consultation hours</string>
     <string name="select_services">Select services</string>
     <string name="select_services_that_the_doctor_provide">Select services that the doctor provide</string>
@@ -716,7 +716,7 @@
     <string name="please_choose_booking_window_duration">please choose booking window duration</string>
     <string name="please_select_one_service_provided_by_doctor">please select atlease one service provided by this doctor</string>
     <string name="additional_info">Additional Info</string>
-    <string name="add_doctor_e_profile">Add doctor e-profile</string>
+    <string name="add_doctor_e_profile">Add Doctor E-Profile</string>
     <string name="consultation_type">Consultation type</string>
     <string name="select_consultation_type">Select consultation type.</string>
     <string name="no_doctor_listed_yet">No doctor listed yet</string>
@@ -1083,4 +1083,5 @@
   <string name="pan_name_invalid">Please enter a valid name.</string>
   <string name="invalid_bank_statement_file">Please select valid bank statement file</string>
   <string name="select_tax_rate">Select tax rate</string>
+  <string name="doctor_list">Doctor List</string>
 </resources>

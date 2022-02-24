@@ -266,7 +266,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 
   private fun createStaffProfile() {
     showProgress()
-    viewModel?.createStaffProfile(staffProfile)?.observe(viewLifecycleOwner, { t ->
+    viewModel?.createStaffProfile(staffProfile)?.observe(viewLifecycleOwner) { t ->
       if (t.isSuccess()) {
         addStaffTimings((t as StaffCreateProfileResponse).result)
         showShortToast(getString(R.string.profile_created))
@@ -274,7 +274,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         WebEngageController.trackEvent(STAFF_PROFILE_CREATE, ADDED, NO_EVENT_VALUE)
       } else showShortToast(getString(R.string.something_went_wrong))
       hideProgress()
-    })
+    }
   }
 
   private fun onStaffAddedOrUpdated() {

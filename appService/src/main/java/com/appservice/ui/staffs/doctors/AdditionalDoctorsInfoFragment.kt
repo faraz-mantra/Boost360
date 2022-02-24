@@ -15,8 +15,8 @@ import com.appservice.ui.staffs.doctors.bottomsheet.AppointmentTypeBottomSheet
 import com.appservice.viewmodel.StaffViewModel
 import com.framework.utils.ValidationUtils
 
-class AdditionalDoctorsInfoFragment :
-  AppBaseFragment<FragmentAdditionalDoctorInfoBinding, StaffViewModel>() {
+class AdditionalDoctorsInfoFragment : AppBaseFragment<FragmentAdditionalDoctorInfoBinding, StaffViewModel>() {
+
   private var isEdit: Boolean? = false
   private var staffDetailsResult: StaffDetailsResult? = null
 
@@ -39,8 +39,7 @@ class AdditionalDoctorsInfoFragment :
     setOnClickListener(binding?.confirmBtn, binding?.ctfConsultationType)
     this.staffDetailsResult = arguments?.getSerializable(IntentConstant.STAFF_DATA.name) as? StaffDetailsResult
     isEdit = (staffDetailsResult != null)
-    if (isEdit == true)
-      setView(staffDetailsResult)
+    if (isEdit == true) setView(staffDetailsResult)
     else staffDetailsResult = StaffDetailsResult()
   }
 
