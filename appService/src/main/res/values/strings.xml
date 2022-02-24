@@ -1082,4 +1082,5 @@
   <string name="pan_name_not_empty">Pan name can\'t empty.</string>
   <string name="pan_name_invalid">Please enter a valid name.</string>
   <string name="invalid_bank_statement_file">Please select valid bank statement file</string>
+  <string name="image_should_be_in_jpeg_or_png_format_with_minimum_size_of_1600x700_pixels">Image should be in Jpeg or png format with minimum size of 1600x700 pixels.</string>
 </resources>

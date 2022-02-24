@@ -15,7 +15,6 @@ import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity;
 import com.nowfloats.BusinessProfile.UI.UI.FeaturedImageActivity;
 import com.nowfloats.Image_Gallery.BackgroundGalleryImageActivity;
-import com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;

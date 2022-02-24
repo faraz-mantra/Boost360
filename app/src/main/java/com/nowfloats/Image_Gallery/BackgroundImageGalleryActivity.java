@@ -76,7 +76,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-
+@Deprecated
 public class BackgroundImageGalleryActivity extends AppCompatActivity implements UploadFaviconImage.OnImageUpload {
 
     private final int gallery_req_id = 0;
