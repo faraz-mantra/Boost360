@@ -151,5 +151,7 @@
   <string name="please_wait_creating_a_ticket">Please wait. Creating a support Ticket…</string>
   <string name="something_went_wrong_please_tell_what_happened">Something happened. Please tell us what went wrong!</string>
   <string name="_280">280</string>
+    <string name="something_went_wrong_framework">Something went wrong</string>
+  <string name="you_can_try_again_or_report_an_error_by_clicking_on_the_buttons_below">You can try again or report an error by clicking on the buttons below.</string>
 
 </resources>

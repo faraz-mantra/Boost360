@@ -37,3 +37,10 @@ fun String?.isWebsiteValid(): Boolean {
   if (this == null) return false
   return this.trim().isNotEmpty()
 }
+
+fun String?.removeSymbols(): String {
+  if (this.toString().isEmpty() || this.toString().isBlank()) {
+    return ""
+  }
+  return this.toString().replace("[^a-zA-Z0-9]".toRegex(), "")
+}

@@ -21,6 +21,7 @@ import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 
@@ -133,8 +134,9 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
     } else {
       showSuccessVerificationStatus()
     }
-
+    onBankAccountAddedOrUpdated(paymentProfileResponse.result?.bankAccountDetails != null)
   }
+
 
   private fun onAddingBankAccount(it: BaseResponse) {
     hideProgress()

@@ -19,6 +19,7 @@ import com.appservice.rest.TaskCode
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.ValidationUtils
@@ -106,6 +107,7 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
   private fun onAddingBankAccount(it: BaseResponse) {
     hideProgress()
     if (it.isSuccess()) {
+      onBankAccountAddedOrUpdated(true)
       val intent = Intent()
       intent.putExtra(IntentConstant.IS_BACK_PRESS.name, true)
       baseActivity.setResult(AppCompatActivity.RESULT_OK, intent)

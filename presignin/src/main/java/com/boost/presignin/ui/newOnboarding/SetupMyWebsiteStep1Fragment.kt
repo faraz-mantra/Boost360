@@ -3,7 +3,6 @@ package com.boost.presignin.ui.newOnboarding
 import android.os.Bundle
 import android.text.Editable
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.addTextChangedListener
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
@@ -25,10 +24,11 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.hideKeyBoard
+import com.framework.utils.onDone
+import com.framework.utils.onRightDrawableClicked
 import com.framework.utils.showKeyBoard
-import com.framework.webengageconstant.NO_EVENT_VALUE
-import com.framework.webengageconstant.PAGE_VIEW
-import com.framework.webengageconstant.PS_BUSINESS_CATEGORY_LOAD
+import com.framework.webengageconstant.*
+import com.framework.webengageconstant.PS_SIGNUP_CATEGORY_SELECTION_SCREEN_LOAD
 
 class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Binding, CategoryVideoModel>(), RecyclerItemClickListener {
 
@@ -72,7 +72,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
 
   override fun onCreateView() {
     super.onCreateView()
-    WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_SELECTION_SCREEN_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListeners()
     initialize()
     loadLocalCategoryData()
@@ -97,36 +97,50 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
 
   private fun initialize() {
     observeCategorySearch()
-    requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
-      override fun handleOnBackPressed() {
-        /* if (binding?.layoutEtSugestion?.visibility == View.VISIBLE) {
-           backPressedFromSearch()
-         }*/
+    if (getCategoryLiveData().isNullOrEmpty()) baseActivity.startServiceCategory()
+    childFragmentManager.addOnBackStackChangedListener {
         CategoryDataModel.clearSelection()
         baseActivity.finishAfterTransition()
-      }
-    })
-    binding?.autocompleteSearchCategory?.setOnFocusChangeListener { _, hasFocus ->
-      if (binding?.includeCatSuggSelected?.root?.visibility != View.VISIBLE) {
-        if (hasFocus.not() && binding?.autocompleteSearchCategory?.text?.toString().isNullOrEmpty()) {
-          binding?.layoutEtSugestion?.gone()
-          binding?.linearFeaturedCategories?.visible()
-          binding?.tvTitle?.visible()
-          binding?.tvSubtitle?.visible()
-        } else {
-          binding?.layoutEtSugestion?.visible()
-          binding?.linearFeaturedCategories?.gone()
-          binding?.tvTitle?.gone()
-          binding?.tvSubtitle?.gone()
-          searchCategoryLiveItem(binding?.autocompleteSearchCategory?.text)
-        }
-      }
     }
-    if (getCategoryLiveData().isNullOrEmpty()) baseActivity.startServiceCategory()
+
+    binding?.autocompleteSearchCategory?.onDone { binding?.autocompleteSearchCategory?.clearFocus() }
+    binding?.autocompleteSearchCategory?.setOnFocusChangeListener { _, hasFocus ->
+      if (binding?.includeCatSuggSelected?.root?.visibility != View.VISIBLE) uiChangeSearchCategory(hasFocus)
+    }
+    binding?.autocompleteSearchCategory?.onRightDrawableClicked {
+      baseActivity.hideKeyBoard()
+      it.setText("")
+      it.clearFocus()
+      uiChangeSearchCategory(false)
+    }
+  }
+
+  private fun uiChangeSearchCategory(hasFocus: Boolean) {
+    if ((hasFocus.not()) && binding?.autocompleteSearchCategory?.text?.toString().isNullOrEmpty()) {
+      binding?.layoutEtSugestion?.gone()
+      binding?.linearFeaturedCategories?.visible()
+      binding?.tvTitle?.visible()
+      binding?.tvSubtitle?.visible()
+    } else {
+      binding?.layoutEtSugestion?.visible()
+      binding?.linearFeaturedCategories?.gone()
+      binding?.tvTitle?.gone()
+      binding?.tvSubtitle?.gone()
+      searchCategoryLiveItem(binding?.autocompleteSearchCategory?.text)
+    }
   }
 
   private fun observeCategorySearch() {
-    binding?.autocompleteSearchCategory?.addTextChangedListener { str -> searchCategoryLiveItem(str) }
+    binding?.autocompleteSearchCategory?.addTextChangedListener { str ->
+      searchCategoryLiveItem(str)
+      binding?.autocompleteSearchCategory?.post {
+        if (str?.isNotEmpty() == true) {
+          binding?.autocompleteSearchCategory?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_onboarding, 0, R.drawable.ic_close_black_rounded, 0)
+        } else {
+          binding?.autocompleteSearchCategory?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_onboarding, 0, 0, 0)
+        }
+      }
+    }
   }
 
   private fun searchCategoryLiveItem(str: Editable?) {
@@ -134,10 +148,11 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
       binding?.layoutEtSugestion?.visible()
       binding?.linearFeaturedCategories?.gone()
       categoryListLive?.filter {
-        it.getNameLower().startsWith(str.toString().lowercase())
-            || it.getNameLower().contains(str.toString().lowercase())
+        it.getNameLower().startsWith(str.toString().lowercase()) || it.getNameLower().contains(str.toString().lowercase())
       }?.take(40).apply { setSearchAdapterListItem(str) }
-    } else (categoryListLive ?: arrayListOf()).take(40).apply { setSearchAdapterListItem(str) }
+    } else {
+      (categoryListLive ?: arrayListOf()).take(40).apply { setSearchAdapterListItem(str) }
+    }
   }
 
   private fun List<ApiCategoryResponseCategory>?.setSearchAdapterListItem(str: Editable?) {
@@ -188,11 +203,18 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
       selectedCategory = null
       baseActivity.showKeyBoard(binding?.autocompleteSearchCategory)
     }
+    binding?.tvClickHereStill?.setOnClickListener {
+      WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_CANT_FIND_CLICK, CLICK, NO_EVENT_VALUE)
+    }
+    binding?.layoutDidYouMean?.setOnClickListener {
+      WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_CANT_FIND_CLICK, CLICK, NO_EVENT_VALUE)
+    }
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.CATEGORY_ITEM_CLICKED.ordinal -> {
+        WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_SELECTION_MAIN_LOAD, CLICK, NO_EVENT_VALUE)
         val dataCategory = (item as? CategoryDataModel) ?: return
         if (binding?.includeNoSearchResultFound?.root?.visibility == View.VISIBLE) {
           categoryNoDataList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
@@ -205,6 +227,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
         setSelectedCat(dataCategory)
       }
       RecyclerViewActionType.CATEGORY_SUGGESTION_CLICKED.ordinal -> {
+        WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_SELECTION_LIST_LOAD, CLICK, NO_EVENT_VALUE)
         selectedCategoryLive = (item as? ApiCategoryResponseCategory) ?: return
         baseActivity.hideKeyBoard()
         val dataCategory = categoryList.firstOrNull { it.experience_code == selectedCategoryLive?.fpExperienceCode?.name }
@@ -216,16 +239,6 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     }
   }
 
-  private fun backPressedFromSearch() {
-    binding?.tvTitle?.visible()
-    binding?.tvSubtitle?.visible()
-    binding?.includeCatSuggSelected?.root?.gone()
-    binding?.linearFeaturedCategories?.visible()
-    binding?.autocompleteSearchCategory?.visible()
-    binding?.includeNoSearchResultFound?.root?.gone()
-    binding?.layoutEtSugestion?.gone()
-  }
-
   private fun showCatSuggestionSelected(category: CategoryDataModel) {
     binding?.tvTitle?.visible()
     binding?.tvSubtitle?.visible()
@@ -235,7 +248,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     binding?.includeNoSearchResultFound?.root?.gone()
     binding?.layoutEtSugestion?.gone()
     binding?.includeCatSuggSelected?.tvCatSelected?.text = selectedCategoryLive?.name
-    binding?.includeCatSuggSelected?.tvSubcat?.text = "in ${category?.getCategoryWithoutNewLine()}"
+    binding?.includeCatSuggSelected?.tvSubcat?.text = "in ${category.getCategoryWithoutNewLine()}"
     setAdapterCategory(category)
   }
 
