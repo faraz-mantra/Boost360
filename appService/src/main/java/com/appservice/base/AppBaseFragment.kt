@@ -162,16 +162,15 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
     }
   }
 
-
   fun getStaffType(category_code: String?): String {
     return when (category_code) {
       "DOC", "HOS" -> "DOCTORS"
       else -> "STAFF"
     }
   }
+}
 
-  fun isDoctorProfile(category_code: String?): Boolean {
-    return (category_code.equals("DOC", true) || category_code.equals("HOS", true))
-  }
+fun isDoctorProfile(category_code: String?): Boolean {
+  return (category_code.equals("DOC", true) || category_code.equals("HOS", true))
 }
 

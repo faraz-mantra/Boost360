@@ -35,6 +35,7 @@ import com.framework.pref.UserSessionManager
 import com.framework.utils.size
 import com.framework.utils.sizeInKb
 import com.framework.webengageconstant.*
+import kotlinx.android.synthetic.main.fragment_staff_details.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -43,13 +44,11 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
   private var isProfileImageUpdated: Boolean? = null
   private var profileImageIsChange: Boolean? = null
   private var resultCode: Int = 1
-  private var isAvailable: Boolean? = true
   private lateinit var yearOfExperience: String
   private lateinit var staffDescription: String
-  private var staffAge: Int? = null
+  private lateinit var businessLicense: String
   private lateinit var staffName: String
   private lateinit var specializationList: ArrayList<SpecialisationsItem>
-  private var serviceListId: ArrayList<String>? = null
   private lateinit var speciality: String
   private var staffImage: StaffImage? = null
   private var staffSignature: StaffImage? = null
@@ -59,10 +58,9 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
   private var isEdit: Boolean? = null
   private var staffProfileFile: File? = null
   private var staffSignatureFile: File? = null
-  private var staffProfile: StaffCreateProfileRequest? = StaffCreateProfileRequest()
   private var servicesList: ArrayList<DataItemService>? = null
   private var staffDetails: StaffDetailsResult? = null
-  private var appointmentBookingWindow: String? = null
+
   override fun getLayout(): Int {
     return R.layout.fragment_edit_doctor_info
   }
@@ -111,17 +109,17 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
     setSignatureView(listOf(staffDetails?.signature.toString()))
     binding?.ctfStaffName?.setText(staffDetails?.name)
     binding?.ctfStaffDesc?.setText(staffDetails?.description)
+    binding?.tvBusinessLicense?.setText(staffDetails?.businessLicence)
     binding?.ctfStaffSpeciality?.setText(staffDetails?.speciality)
-    binding?.ctfBookingWindow?.setText(staffDetails?.bookingWindow.toString())
+    binding?.ctfBookingWindow?.setText("${staffDetails?.getBookingWindowN()}")
     showHideServicesText()
-    // setTimings()
     if (staffDetails?.timings.isNullOrEmpty().not()) {
       val textStaffDays = AppointmentModel().getStringStaffActive(staffDetails?.timings)
       binding?.ctvTiming?.visibility = if (textStaffDays.isEmpty()) View.GONE else View.VISIBLE
       binding?.ctvTiming?.text = textStaffDays
     } else binding?.ctvTiming?.gone()
 
-    if (speciality?.isEmpty() == false) binding?.ctfStaffSpeciality?.setText(speciality)
+    if (speciality.isNotEmpty()) binding?.ctfStaffSpeciality?.setText(speciality)
     binding?.btnSave?.text = getString(R.string.update)
     if (resultCode != AppCompatActivity.RESULT_OK) setServicesList()
   }
@@ -158,30 +156,19 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
   private fun openBookingWindowBottomSheet() {
     val appointmentBookingBottomSheet = AppointmentBookingBottomSheet()
     appointmentBookingBottomSheet.onClicked = {
-      this.appointmentBookingWindow = it
       binding?.ctfBookingWindow?.setText(it)
-      staffDetails?.bookingWindow = it
+      staffDetails?.bookingWindow = it?.replace("days", "")?.trim()?.toIntOrNull() ?: 0
     }
     val bundle = Bundle()
     bundle.putSerializable(IntentConstant.STAFF_DATA.name, staffDetails)
     appointmentBookingBottomSheet.arguments = bundle
-    appointmentBookingBottomSheet.show(
-      parentFragmentManager,
-      AppointmentBookingBottomSheet::class.java.name
-    )
+    appointmentBookingBottomSheet.show(parentFragmentManager, AppointmentBookingBottomSheet::class.java.name)
   }
 
   private fun startAdditionalInfoFragment() {
     val bundle = Bundle()
     bundle.putSerializable(IntentConstant.STAFF_DATA.name, staffDetails)
-    startStaffFragmentActivity(
-      baseActivity,
-      FragmentType.DOCTOR_ADDITIONAL_INFO,
-      bundle,
-      clearTop = false,
-      isResult = true,
-      requestCode = Constants.STAFF_ADDITIONAL_DATA
-    )
+    startStaffFragmentActivity(FragmentType.DOCTOR_ADDITIONAL_INFO, bundle, isResult = true)
   }
 
   private fun selectServicesFragment() {
@@ -226,30 +213,19 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
     staffUpdateImageRequest.staffId = staffDetails?.id
     if (imagetype == IMAGETYPE.PROFILE) showProgress(getString(R.string.uploading_image)) else showProgress(getString(R.string.upload_signature))
     viewModel?.updateStaffImage(staffUpdateImageRequest)?.observeOnce(viewLifecycleOwner) {
-        hideProgress()
-        if (it.isSuccess().not()) {
-          showShortToast(it.errorMessage() ?: getString(R.string.something_went_wrong))
-        } else if (isEdit == false && imagetype == IMAGETYPE.SIGNATURE && it.isSuccess()) {
-          updateStaffImage(IMAGETYPE.PROFILE)
-        } else {
-          finishAndGoBack()
-        }
+      hideProgress()
+      if (it.isSuccess().not()) {
+        showShortToast(it.errorMessage() ?: getString(R.string.something_went_wrong))
+      } else if (isEdit == false && imagetype == IMAGETYPE.SIGNATURE && it.isSuccess()) {
+        updateStaffImage(IMAGETYPE.PROFILE)
+      } else {
+        finishAndGoBack()
       }
+    }
   }
 
   private fun updateStaffProfile() {
-    val request = StaffProfileUpdateRequest(
-      isAvailable = isAvailable,
-      serviceIds = staffDetails?.serviceIds,
-      floatingPointTag = sessionLocal.fpTag,
-      name = staffName,
-      description = staffDescription,
-      experience = yearOfExperience.toIntOrNull(),
-      staffId = staffDetails?.id,
-      age = staffAge,
-      specialisations = specializationList
-    )
-    viewModel?.updateStaffProfile(request)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.updateStaffProfile(requestUpdate())?.observeOnce(viewLifecycleOwner, Observer {
       if (it.isSuccess()) {
         updateStaffTimings()
         WebEngageController.trackEvent(if (isDoctor) DOCTOR_PROFILE_UPDATED else STAFF_PROFILE_UPDATED, ADDED, NO_EVENT_VALUE)
@@ -258,17 +234,40 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
 
   }
 
+  private fun requestUpdate(): StaffProfileUpdateRequest {
+    val staffProfile = StaffProfileUpdateRequest()
+    staffProfile.description = staffDescription
+    staffProfile.floatingPointTag = sessionLocal.fpTag
+    staffProfile.name = staffName
+    staffProfile.speciality = this.speciality
+    staffProfile.serviceIds = staffDetails?.serviceIds
+    staffProfile.businessLicence = businessLicense
+    staffProfile.specialisations = specializationList
+    staffProfile.isAvailable = true
+    staffProfile.age = staffDetails?.age
+    staffProfile.gender = staffDetails?.gender
+    staffProfile.experience = yearOfExperience.toIntOrNull()
+    staffProfile.staffId = staffDetails?.id
+    staffProfile.education = staffDetails?.education
+    staffProfile.contactNumber = staffDetails?.contactNumber
+    staffProfile.memberships = staffDetails?.memberships
+    staffProfile.registration = staffDetails?.registration
+    staffProfile.appointmentType = staffDetails?.appointmentType
+    staffProfile.bookingWindow = staffDetails?.bookingWindow
+    return staffProfile
+  }
+
   private fun isValid(): Boolean {
     this.speciality = binding?.ctfStaffSpeciality?.text.toString()
-    this.serviceListId = ArrayList()
     this.specializationList = ArrayList()
     this.yearOfExperience = staffDetails?.experience.toString()
     this.staffName = binding?.ctfStaffName?.text.toString()
     this.staffDescription = binding?.ctfStaffDesc?.text.toString()
-    val businessLicense = binding?.tvBusinessLicense?.text.toString()
-    this.appointmentBookingWindow = binding?.ctfBookingWindow?.text.toString()
-    servicesList?.forEach { items -> if (items.id.isNullOrEmpty().not()) serviceListId?.add(items.id!!) }
-    if (serviceListId.isNullOrEmpty().not()) staffDetails?.serviceIds = serviceListId
+    this.businessLicense = binding?.tvBusinessLicense?.text.toString()
+    if (servicesList.isNullOrEmpty().not()) {
+      staffDetails?.serviceIds = ArrayList()
+      servicesList?.forEach { items -> if (items.id.isNullOrEmpty().not()) staffDetails?.serviceIds?.add(items.id!!) }
+    }
     if (profileimageUri.toString() == "null" || profileimageUri == null || profileimageUri.toString().isEmpty() || profileimageUri.toString().isBlank()) {
       showLongToast(getString(R.string.please_choose_doctor_profile))
       return false
@@ -288,39 +287,22 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
     ) {
       showLongToast(getString(R.string.please_choose_signature))
       return false
-    } else if (appointmentBookingWindow.isNullOrEmpty() || appointmentBookingWindow?.isBlank() == true) {
+    } else if (staffDetails?.bookingWindow == null || staffDetails?.bookingWindow == 0) {
       showLongToast(getString(R.string.please_choose_booking_window_duration))
       return false
     } else if (staffDetails?.serviceIds.isNullOrEmpty()) {
       showLongToast(getString(R.string.please_select_one_service_provided_by_doctor))
       return false
     }
-    if (isProfileImageUpdated == true) {
-      profileImageUpdated()
-    }
-
-    if (isEdit == null || isEdit == false) {
-      staffProfile?.description = staffDescription
-      staffProfile?.floatingPointTag = sessionLocal.fpTag
-      staffProfile?.name = staffName
-      staffProfile?.serviceIds = serviceListId
-      staffProfile?.image = staffImage
-      staffProfile?.specialisations = specializationList
-    }
+    if (isProfileImageUpdated == true) profileImageUpdated()
     return true
   }
 
   private fun profileImageUpdated() {
-    val imageExtension: String? =
-      profileimageUri?.toString()?.substring(profileimageUri.toString().lastIndexOf("."))
+    val imageExtension: String? = profileimageUri?.toString()?.substring(profileimageUri.toString().lastIndexOf("."))
     val imageToByteArray: ByteArray = imageToByteArray(profileimageUri)
     this.staffImage = StaffImage(
-      image = "data:image/png;base64,${
-        Base64.encodeToString(
-          imageToByteArray,
-          Base64.DEFAULT
-        )
-      }",
+      image = "data:image/png;base64,${Base64.encodeToString(imageToByteArray, Base64.DEFAULT)}",
       fileName = "$staffName$imageExtension",
       imageFileType = imageExtension?.removePrefix(".")
     )
@@ -328,7 +310,7 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
 
   private fun createStaffProfile() {
     showProgress()
-    viewModel?.createStaffProfile(staffProfile)?.observe(viewLifecycleOwner) { t ->
+    viewModel?.createStaffProfile(requestCreateModel())?.observe(viewLifecycleOwner) { t ->
       if (t.isSuccess()) {
         addStaffTimings((t as StaffCreateProfileResponse).result)
         staffDetails?.id = t.result
@@ -338,6 +320,29 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
       } else showShortToast(getString(R.string.something_went_wrong))
       hideProgress()
     }
+  }
+
+  private fun requestCreateModel(): StaffCreateProfileRequest {
+    val staffProfile = StaffCreateProfileRequest()
+    staffProfile.description = staffDescription
+    staffProfile.floatingPointTag = sessionLocal.fpTag
+    staffProfile.name = staffName
+    staffProfile.speciality = this.speciality
+    staffProfile.serviceIds = staffDetails?.serviceIds
+    staffProfile.image = staffImage
+    staffProfile.businessLicence = businessLicense
+    staffProfile.specialisations = specializationList
+    staffProfile.isAvailable = true
+    staffProfile.age = staffDetails?.age
+    staffProfile.gender = staffDetails?.gender
+    staffProfile.experience = yearOfExperience.toIntOrNull()
+    staffProfile.education = staffDetails?.education
+    staffProfile.contactNumber = staffDetails?.contactNumber
+    staffProfile.memberships = staffDetails?.memberships
+    staffProfile.registration = staffDetails?.registration
+    staffProfile.appointmentType = staffDetails?.appointmentType
+    staffProfile.bookingWindow = staffDetails?.bookingWindow
+    return staffProfile
   }
 
   private fun onStaffAddedOrUpdated() {
@@ -353,10 +358,7 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
       return
     }
     showProgress(getString(R.string.updating_doctor_timing))
-    val request = StaffTimingAddUpdateRequest(
-      staffId = staffDetails?.id,
-      workTimings = this.staffDetails?.timings
-    )
+    val request = StaffTimingAddUpdateRequest(staffId = staffDetails?.id, workTimings = this.staffDetails?.timings)
     viewModel?.updateStaffTiming(request)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
       if (it?.isSuccess() == true) {
@@ -384,18 +386,13 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
   private fun addStaffTimings(staffId: String?) {
     if (staffDetails?.timings == null) staffDetails?.timings = AppointmentModel.getDefaultTimings()
     showProgress(getString(R.string.staff_timing_add))
-    viewModel?.addStaffTiming(
-      StaffTimingAddUpdateRequest(
-        staffId = staffDetails?.id ?: staffId,
-        staffDetails?.timings
-      )
-    )?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = staffDetails?.id ?: staffId, staffDetails?.timings))?.observeOnce(viewLifecycleOwner) {
       hideProgress()
       if (it.isSuccess()) {
         Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))
         updateStaffImage(IMAGETYPE.SIGNATURE)
       } else showShortToast(it.errorMessage() ?: getString(R.string.something_went_wrong))
-    })
+    }
   }
 
   private fun openImagePicker() {
@@ -436,19 +433,13 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
       }
       requestCode == Constants.REQUEST_CODE_SERVICES_PROVIDED && resultCode == AppCompatActivity.RESULT_OK -> {
         this.resultCode = resultCode
-        this.serviceListId = arrayListOf()
-        this.servicesList =
-          data?.extras?.get(IntentConstant.STAFF_SERVICES.name) as? ArrayList<DataItemService>
-        serviceListId = ArrayList();
-        servicesList?.forEach { dataItem ->
-          if (dataItem.id.isNullOrEmpty().not()) serviceListId?.add(dataItem.id!!)
+        this.servicesList = data?.extras?.get(IntentConstant.STAFF_SERVICES.name) as? ArrayList<DataItemService>
+        if (servicesList.isNullOrEmpty().not()) {
+          staffDetails?.serviceIds = arrayListOf()
+          servicesList?.forEach { dataItem -> if (dataItem.id.isNullOrEmpty().not()) staffDetails?.serviceIds?.add(dataItem.id!!) }
+
         }
-        staffDetails?.serviceIds = serviceListId
-        binding?.ctvServices?.text = (servicesList?.map { it.name })?.joinToString(
-          ", ",
-          limit = 5,
-          truncated = "+${servicesList?.size?.minus(5)} more"
-        )
+        binding?.ctvServices?.text = (servicesList?.map { it.name })?.joinToString(", ", limit = 5, truncated = "+${servicesList?.size?.minus(5)} more")
         showHideServicesText()
       }
       requestCode == Constants.REQUEST_CODE_STAFF_TIMING && resultCode == AppCompatActivity.RESULT_OK -> {
@@ -462,31 +453,24 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
         isTimingUpdated = true
       }
       //staff additional details
-      requestCode == Constants.STAFF_ADDITIONAL_DATA && resultCode == AppCompatActivity.RESULT_OK -> {
+      requestCode == 101 && resultCode == AppCompatActivity.RESULT_OK -> {
         this.staffDetails = data?.extras?.get(IntentConstant.STAFF_DATA.name) as? StaffDetailsResult
       }
     }
-
   }
 
   private fun setServicesList() {
     if (isEdit == true) {
-      viewModel?.getServiceListing(ServiceListRequest(floatingPointTag = sessionLocal.fpTag))
-        ?.observeOnce(viewLifecycleOwner, Observer {
-          if (it?.isSuccess() == true) {
-            val data = (it as ServiceListResponse).result?.data
-            if (staffDetails?.serviceIds.isNullOrEmpty().not()) {
-              val servicesProvided = data?.filter { item ->
-                staffDetails?.serviceIds?.contains(
-                  item?.id ?: ""
-                ) == true
-              } as? ArrayList<DataItemService>
-              binding?.ctvServices?.text = servicesProvided?.map { it1 -> it1.name }
-                ?.joinToString(" ,", limit = 5, truncated = "+5 more")
-              showHideServicesText()
-            }
+      viewModel?.getServiceListing(ServiceListRequest(floatingPointTag = sessionLocal.fpTag))?.observeOnce(viewLifecycleOwner) {
+        if (it?.isSuccess() == true) {
+          val data = (it as ServiceListResponse).result?.data
+          if (staffDetails?.serviceIds.isNullOrEmpty().not()) {
+            val servicesProvided = data?.filter { item -> staffDetails?.serviceIds?.contains(item?.id ?: "") == true } as? ArrayList<DataItemService>
+            binding?.ctvServices?.text = servicesProvided?.map { it1 -> it1.name }?.joinToString(" ,", limit = 5, truncated = "+5 more")
+            showHideServicesText()
           }
-        })
+        }
+      }
     }
   }
 
@@ -503,22 +487,15 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
       binding?.staffImageView?.gone()
       binding?.changeImage?.gone()
     }
-
   }
 
   private fun setSignature(mPaths: List<String>) {
     setSignatureView(mPaths)
     if (signatureUri?.path != "null" && signatureUri?.path != null && signatureUri != null) {
-      val imageExtension: String? =
-        signatureUri?.toString()?.substring(signatureUri.toString().lastIndexOf("."))
+      val imageExtension: String? = signatureUri?.toString()?.substring(signatureUri.toString().lastIndexOf("."))
       val imageToByteArray: ByteArray = imageToByteArray(signatureUri)
       this.staffSignature = StaffImage(
-        image = "data:image/png;base64,${
-          Base64.encodeToString(
-            imageToByteArray,
-            Base64.DEFAULT
-          )
-        }",
+        image = "data:image/png;base64,${Base64.encodeToString(imageToByteArray, Base64.DEFAULT)}",
         fileName = "${System.currentTimeMillis()}$imageExtension",
         imageFileType = imageExtension?.removePrefix(".")
       )
@@ -552,5 +529,4 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
       openImagePicker()
     }
   }
-
 }

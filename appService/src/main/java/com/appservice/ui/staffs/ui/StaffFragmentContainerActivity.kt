@@ -16,7 +16,7 @@ import com.appservice.constant.FragmentType
 import com.appservice.ui.staffs.doctors.AdditionalDoctorsInfoFragment
 import com.appservice.ui.staffs.doctors.EditDoctorsDetailsFragment
 
-import com.appservice.staffs.ui.details.StaffDetailsFragment
+import com.appservice.ui.staffs.ui.details.StaffDetailsFragment
 
 import com.appservice.ui.staffs.ui.home.StaffProfileListingFragment
 import com.appservice.ui.staffs.ui.profile.StaffProfileDetailsFragment

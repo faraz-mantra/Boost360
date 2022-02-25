@@ -1,4 +1,4 @@
-package com.appservice.staffs.ui.details
+package com.appservice.ui.staffs.ui.details
 
 import android.content.Context
 import android.content.Intent
@@ -122,8 +122,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
   }
 
   private fun setExperience() {
-    binding?.edtExperience?.setText("${staffDetails?.experience}".plus(if (staffDetails?.experience?.toIntOrNull() ?: 0 < 2) " Year" else " Years"))
-
+    binding?.edtExperience?.setText(staffDetails?.getExperienceN())
   }
 
   private fun showHideServicesText() {
@@ -137,7 +136,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     val experienceSheet = ExperienceBottomSheet()
     experienceSheet.onClicked = {
       yearOfExperience = it.toString()
-      staffDetails?.experience = it.toString()
+      staffDetails?.experience = it
       staffProfile?.experience = it
       setExperience()
     }
@@ -190,8 +189,10 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 
   private fun updateStaffProfile() {
     val staffGender = binding?.spinnerGender?.selectedItem.toString()
-    val request = StaffProfileUpdateRequest(isAvailable, staffDetails?.serviceIds, staffGender, sessionLocal.fpTag,
-        name = staffName, staffDescription, experience = yearOfExperience.toInt(), staffDetails?.id, staffAge, specializationList)
+    val request = StaffProfileUpdateRequest(
+      isAvailable, staffDetails?.serviceIds, staffGender, sessionLocal.fpTag,
+      name = staffName, staffDescription, experience = yearOfExperience.toInt(), staffDetails?.id, staffAge, specializationList
+    )
     viewModel?.updateStaffProfile(request)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.isSuccess()) {
         updateStaffTimings()
@@ -280,7 +281,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
   private fun onStaffAddedOrUpdated() {
     val instance = FirestoreManager
     if (instance.getDrScoreData()?.metricdetail == null) return
-    instance.getDrScoreData()?.metricdetail?.boolean_create_staff =true
+    instance.getDrScoreData()?.metricdetail?.boolean_create_staff = true
     instance.updateDocument()
   }
 
@@ -337,10 +338,10 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
   private fun openImagePicker(it: ClickType) {
     val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
     ImagePicker.Builder(baseActivity)
-        .mode(type)
-        .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
-        .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
-        .enableDebuggingMode(true).build()
+      .mode(type)
+      .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
+      .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
+      .enableDebuggingMode(true).build()
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -406,7 +407,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 }
 
 class HintAdapter<T>(context: Context, resource: Int, objects: Array<T>) :
-    ArrayAdapter<T>(context, resource, objects) {
+  ArrayAdapter<T>(context, resource, objects) {
   override fun getCount(): Int {
     val count = super.getCount()
     // The last item will be the hint.
