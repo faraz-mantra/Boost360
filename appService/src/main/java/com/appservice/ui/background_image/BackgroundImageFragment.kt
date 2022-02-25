@@ -1,6 +1,8 @@
 package com.appservice.ui.background_image
 
+import android.app.ProgressDialog
 import android.content.Intent
+import android.net.Uri
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
+import com.appservice.constant.Constants
 import com.appservice.databinding.FragmentActiveDomainBinding
 import com.appservice.databinding.FragmentBackgroundImageBinding
 import com.framework.analytics.SentryController
@@ -17,6 +20,9 @@ import com.squareup.picasso.Picasso
 import java.util.ArrayList
 
 class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding,BaseViewModel>() {
+    private var primaryUri: Uri? = null
+    private var dialog: ProgressDialog? = null
+    private var apiDataLoaded = false
     override fun getLayout(): Int {
         return R.layout.fragment_background_image
     }
