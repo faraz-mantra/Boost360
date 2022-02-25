@@ -294,7 +294,7 @@
     <string name="add_change_warehouse"><u>Add/Change warehouse</u></string>
     <string name="service_delivery_configuration">Service delivery configuration*</string>
     <string name="u_add_session_u"><u>Add session</u></string>
-    <string name="business_hours_timing"><b>Note:</b> Since the clinic business hours are from 9:30am to 7:30 pm, all your sessions will be between same. </string>
+    <string name="business_hours_timing"><b>Note:</b> Since the clinic business hours are from 9:30 am to 7:30 pm, all your sessions will be between same. </string>
     <string name="from">From</string>
     <string name="to">to</string>
     <string name="edit_">EDIT</string>
@@ -378,9 +378,8 @@
     <string name="loading">Loading</string>
     <string name="loading_">Loading...</string>
     <string name="toolbar_staff_listing">Staff Listing</string>
-    <string name="toolbar_select_services">Select services</string>
+    <string name="toolbar_select_services">Select Services</string>
     <string name="toolbar_staff_timing">Staff timing</string>
-    <string name="toolbar_schedule_break">Scheduled breaks</string>
     <string name="toolbar_schedule_breaks">Scheduled breaks</string>
     <string name="toolbar_staff_details">Staff Details</string>
     <string name="toolbar_doctor_details">Doctor Details</string>
@@ -447,16 +446,25 @@
     <string name="service_selected">service selected</string>
     <string name="services_selected">services selected</string>
     <string name="service">Service</string>
-    <string name="activate_staff_profile">Activate Staff profile</string>
+    <string name="activate_staff_profile">Activate staff profile</string>
+    <string name="activate_doctor_profile">Activate doctor profile</string>
     <string name="this_staff_is_marked_inactive">This staff is marked inactive.</string>
+    <string name="this_doctor_is_marked_inactive">This doctor is marked inactive.</string>
     <string name="mark_as_inactive">Mark as inactive</string>
-    <string name="marking_as_inactive_will_hide">Marking as inactive will hide this profile on the website and will unassign him/her from all present booking which were booked against his availability calendar. Please check with customer inform and realign the appointments accordingly if required.</string>
+    <string name="marking_as_inactive_will_hide">Marking as inactive will hide this profile on the website and will unassign him/her from all present booking which were booked against his availability calendar. Please check with customer inform and realign the bookings accordingly if required.</string>
+    <string name="marking_as_inactive_will_hide_doctor">Marking as inactive will hide this profile on the website and will unassign him/her from all present appointment which were booked against his availability calendar. Please check with customer inform and realign the appointments accordingly if required.</string>
     <string name="do_you_want_to_permanently_delete_this_staff_member">Do you want to permanently delete this staff member?</string>
+    <string name="delete_this_doctor">Delete doctor?</string>
     <string name="removing_the_staff_will_remove">Removing the staff will remove all the present booking assigned to the staff. All his bookings needs to be handled separately.</string>
+    <string name="removing_the_doctor_will_remove">Removing the doctor will remove all the present appointments assigned to the doctor. All his appointments needs to be handled separately.</string>
     <string name="delete_staff">Delete staff</string>
+    <string name="delete_doctor_text">Delete doctor</string>
     <string name="do_you_want_to_temporarily_mark_this_st">Do you want to temporarily mark this staff as inactive?</string>
+    <string name="do_you_want_to_temporarily_mark_this_doctor">Do you want to temporarily mark this doctor as inactive?</string>
     <string name="select_what_services_that_the_staff_will_provide">Select what services that the staff will provide.</string>
-    <string name="while_booking_a_staff_for_a_service_speciality_customer_will_know_which_all_staff_provide_service_they_are_looking_for">While booking a staff for a service/speciality, customer will know which all staff provide service they are looking for.</string>
+    <string name="select_what_services_that_the_doctor_will_provide">Select what services that the doctor will provide.</string>
+    <string name="staff_service_customer_know_provide_service_looking_for">While booking a staff for a service/speciality, customer will know which all staff provide service they are looking for.</string>
+    <string name="doctor_service_customer_know_provide_service_looking_for">While appointment a doctor for a service/speciality, patient will know which all doctor provide service they are looking for.</string>
     <string name="please_enter_valid_age">please enter valid age.</string>
     <string name="endtime_cannot_be_before_starttime">Shift end time cannot be before shift start time</string>
     <string name="starttime_on_one_slot_cannot_be_before_endtime_of_other_slot">Start time on one slot cannot be less than end time of previous slot</string>
@@ -677,6 +685,7 @@
     <string name="education_years_of_experience_mobile_number_etc">Education, years of experience, mobile number, etc.</string>
     <string name="save_details">Save details</string>
     <string name="consultation_hours">Consultation hours</string>
+    <string name="consultation_hours_">Consultation Hours</string>
     <string name="select_doctor_s_consultation_hours">Select doctor’s consultation hours</string>
     <string name="select_services">Select services</string>
     <string name="select_services_that_the_doctor_provide">Select services that the doctor provide</string>
@@ -716,7 +725,7 @@
     <string name="please_choose_booking_window_duration">please choose booking window duration</string>
     <string name="please_select_one_service_provided_by_doctor">please select atlease one service provided by this doctor</string>
     <string name="additional_info">Additional Info</string>
-    <string name="add_doctor_e_profile">Add doctor e-profile</string>
+    <string name="add_doctor_e_profile">Add Doctor E-Profile</string>
     <string name="consultation_type">Consultation type</string>
     <string name="select_consultation_type">Select consultation type.</string>
     <string name="no_doctor_listed_yet">No doctor listed yet</string>
@@ -728,7 +737,7 @@
     <string name="appointment_type">Appointment Type</string>
     <string name="appointment_hours">Appointment hours</string>
     <string name="business_mob_number">Mobile number</string>
-    <string name="remove_doctor">remove doctor</string>
+    <string name="remove_doctor">Remove doctor</string>
     <string name="remove_the_doctor_will_remove_all_the_present">Removing the doctor will remove all the present appointments assigned to the doctor. All his appointments needs to be handled separately.</string>
     <string name="delete_doctor">Delete doctor?</string>
     <string name="btn_delete_text">Delete doctor</string>
@@ -1082,4 +1091,6 @@
   <string name="pan_name_not_empty">Pan name can\'t empty.</string>
   <string name="pan_name_invalid">Please enter a valid name.</string>
   <string name="invalid_bank_statement_file">Please select valid bank statement file</string>
+  <string name="select_tax_rate">Select tax rate</string>
+  <string name="doctor_list">Doctor List</string>
 </resources>
