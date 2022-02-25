@@ -467,3 +467,34 @@ fun getAppVersionName(): String? {
 }
 
 inline fun <reified T> convertJsonToObj(json: String?) = Gson().fromJson<T>(json, object : TypeToken<T>() {}.type)
+
+fun Bitmap.zoom(percent:Float): Bitmap? {
+
+      val scaleFactor = percent // Set this to the zoom factor
+      val widthOffset = (scaleFactor / 2 * width).toInt()
+      val heightOffset = (scaleFactor / 2 * height).toInt()
+      val numWidthPixels: Int = width - 2 * widthOffset
+      val numHeightPixels: Int = height - 2 * heightOffset
+  return if (widthOffset > 0 && heightOffset > 0 && numHeightPixels > 0 && numWidthPixels > 0) {
+      val rescaledBitmap = Bitmap.createBitmap(
+        this, widthOffset, heightOffset, numWidthPixels, numHeightPixels, null, true
+      )
+    rescaledBitmap
+  }else{
+    this
+  }
+}
+
+fun gcd(num1:Int,num2:Int): Int {
+  var gcd = 1
+
+  var i = 1
+  while (i <= num1 && i <= num2) {
+    // Checks if i is factor of both integers
+    if (num1 % i == 0 && num2 % i == 0)
+      gcd = i
+    ++i
+  }
+
+  return gcd
+}

@@ -1083,4 +1083,7 @@
   <string name="pan_name_invalid">Please enter a valid name.</string>
   <string name="invalid_bank_statement_file">Please select valid bank statement file</string>
   <string name="image_should_be_in_jpeg_or_png_format_with_minimum_size_of_1600x700_pixels">Image should be in Jpeg or png format with minimum size of 1600x700 pixels.</string>
+  <string name="pull_the_slider_above_to_zoom_in_out_the_image">\u2022 Pull the slider above to zoom in/out the image\n\u2022 Use one finger to crop the right area as background image for your website.</string>
+  <string name="please_make_sure_the_image_should_be_in_jpeg_or_png_format_with_minimum_size_of_1600x700_pixels">Please make sure the Image should be in Jpeg or png format with minimum size of 1600x700 pixels.</string>
+  <string name="change_image">Change image</string>
 </resources>
