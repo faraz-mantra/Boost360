@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -12,23 +13,29 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
 
             <com.theartofdev.edmodo.cropper.CropImageView
                 android:id="@+id/crop_img"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:layout_marginTop="8dp"
-                app:cropScaleType="fitCenter" />
+                android:layout_height="320dp"
+                app:cropAspectRatioX="16"
+                android:background="@color/black_66"
+                app:cropAspectRatioY="7"
+                app:cropScaleType="center" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/layout_seek"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/size_16"
                 android:layout_marginTop="@dimen/size_32"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <com.framework.views.customViews.CustomImageView
@@ -36,7 +43,7 @@
                     android:layout_height="@dimen/size_15"
                     android:src="@drawable/ic_img" />
 
-                <com.google.android.material.slider.Slider
+                <SeekBar
                     android:id="@+id/slider"
                     android:layout_width="@dimen/size_300"
                     android:layout_height="wrap_content"
@@ -53,27 +60,74 @@
                     android:src="@drawable/ic_img" />
 
             </LinearLayout>
-            <TextView
-                android:layout_width="350dp"
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Pull the slider above to zoom in/out the image\nUse one finger to crop the right area as background image for your website."
-                />
+                android:id="@+id/tv_slider_sugg"
+                android:visibility="gone"
+                android:layout_marginVertical="@dimen/size_16"
+                android:layout_marginHorizontal="@dimen/size_32"
+                android:fontFamily="@font/regular"
+                android:text="@string/pull_the_slider_above_to_zoom_in_out_the_image"
+                android:textSize="12sp" />
 
 
         </LinearLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout_image_mis_config"
+            android:visibility="gone"
+            android:layout_marginVertical="@dimen/size_16"
+            android:layout_marginHorizontal="@dimen/size_32"
+            app:layout_constraintBottom_toTopOf="@+id/btn_done">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/customImageView6"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_info_circle"
+                app:layout_constraintBottom_toTopOf="@+id/customTextView10"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/red_EB5757" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_img_desc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_6dp"
+                android:fontFamily="@font/regular"
+                android:text="Smaller image selected"
+                android:textSize="@dimen/size_12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/customImageView6"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/customTextView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/please_make_sure_the_image_should_be_in_jpeg_or_png_format_with_minimum_size_of_1600x700_pixels"
+                android:textSize="12sp"
+                android:fontFamily="@font/regular"
+                app:layout_constraintTop_toBottomOf="@+id/tv_img_desc" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <com.framework.views.customViews.CustomMaterialButton
             android:id="@+id/btn_done"
-            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+            style="@style/PrimaryButtonNonGra"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_46"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="24dp"
             android:enabled="true"
             android:includeFontPadding="false"
-            android:text="@string/done"
+            android:text="@string/crop_picture"
+            android:letterSpacing="0"
             android:textColor="@color/white"
             app:backgroundTint="@color/colorAccentLight"
             app:iconGravity="textStart"
