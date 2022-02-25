@@ -3,7 +3,6 @@ package com.appservice.ui.staffs.ui
 import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.WindowManager
@@ -12,14 +11,15 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.appservice.R
 import com.appservice.base.AppBaseActivity
+import com.appservice.base.isStaffType
 import com.appservice.constant.FragmentType
 import com.appservice.ui.staffs.doctors.AdditionalDoctorsInfoFragment
 import com.appservice.ui.staffs.doctors.EditDoctorsDetailsFragment
 
-import com.appservice.staffs.ui.details.StaffDetailsFragment
+import com.appservice.ui.staffs.ui.details.StaffDetailsFragment
 
 import com.appservice.ui.staffs.ui.home.StaffProfileListingFragment
-import com.appservice.staffs.ui.profile.StaffProfileDetailsFragment
+import com.appservice.ui.staffs.ui.profile.StaffProfileDetailsFragment
 import com.appservice.ui.catalog.common.WeeklyAppointmentFragment
 import com.appservice.ui.staffs.ui.breaks.ScheduledBreaksFragmnt
 import com.appservice.ui.staffs.ui.home.StaffAddFragment
@@ -36,7 +36,10 @@ import com.framework.views.customViews.CustomToolbar
 
 class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
-  private var staffType: String? = null
+  private val isStaffType: Boolean
+    get() {
+      return isStaffType(session.fP_AppExperienceCode)
+    }
   private var fragmentType: FragmentType? = null
   private var staffProfileDetailsFragment: StaffProfileDetailsFragment? = null
 
@@ -57,11 +60,8 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
   override fun onCreateView() {
     super.onCreateView()
-    val userSessionManager = UserSessionManager(this)
-    getBundle(userSessionManager)
+    getBundle(session)
     setFragment()
-    this.staffType = getStaffType(userSessionManager.fP_AppExperienceCode)
-
   }
 
 
@@ -142,17 +142,17 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
   override fun getToolbarTitle(): String? {
     return when (fragmentType) {
-      FragmentType.STAFF_ADD_FRAGMENT -> if (staffType != "DOCTORS") resources.getString(R.string.staff_listing) else "Doctor List"
-      FragmentType.STAFF_HOME_FRAGMENT -> if (staffType != "DOCTORS") resources.getString(R.string.toolbar_staff_listing) else "Doctor List"
-      FragmentType.STAFF_DETAILS_FRAGMENT -> if (staffType != "DOCTORS") getString(R.string.toolbar_staff_details) else resources.getString(R.string.toolbar_doctor_details)
+      FragmentType.STAFF_ADD_FRAGMENT -> if (isStaffType) resources.getString(R.string.staff_listing) else getString(R.string.doctor_list)
+      FragmentType.STAFF_HOME_FRAGMENT -> if (isStaffType) resources.getString(R.string.toolbar_staff_listing) else getString(R.string.doctor_list)
+      FragmentType.STAFF_DETAILS_FRAGMENT -> if (isStaffType) getString(R.string.toolbar_staff_details) else resources.getString(R.string.toolbar_doctor_details)
       FragmentType.STAFF_SELECT_SERVICES_FRAGMENT -> getString(R.string.toolbar_select_services)
-      FragmentType.STAFF_TIMING_FRAGMENT -> if (staffType != "DOCTORS") getString(R.string.toolbar_staff_timing) else "Consultation hours"
-      FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT -> getString(R.string.toolbar_schedule_break)
+      FragmentType.STAFF_TIMING_FRAGMENT -> if (isStaffType) getString(R.string.toolbar_staff_timing) else getString(R.string.consultation_hours_)
+      FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT -> getString(R.string.toolbar_schedule_breaks)
       FragmentType.STAFF_SERVICES_CONFIRM_FRAGMENT -> getString(R.string.toolbar_schedule_breaks)
-      FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> if (staffType != "DOCTORS") resources.getString(R.string.toolbar_staff_listing) else "Doctor List"
-      FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> if (staffType != "DOCTORS") getString(R.string.toolbar_staff_details) else resources.getString(R.string.toolbar_doctor_details)
-      FragmentType.DOCTOR_ADDITIONAL_INFO -> if (staffType != "DOCTORS") getString(R.string.toolbar_staff_details) else getString(R.string.additional_info)
-      FragmentType.DOCTOR_ADD_EDIT_FRAGMENT -> if (staffType != "DOCTORS") getString(R.string.toolbar_staff_details) else getString(R.string.add_doctor_e_profile)
+      FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> if (isStaffType) resources.getString(R.string.toolbar_staff_listing) else getString(R.string.doctor_list)
+      FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> if (isStaffType) getString(R.string.toolbar_staff_details) else resources.getString(R.string.toolbar_doctor_details)
+      FragmentType.DOCTOR_ADDITIONAL_INFO -> if (isStaffType) getString(R.string.toolbar_staff_details) else getString(R.string.additional_info)
+      FragmentType.DOCTOR_ADD_EDIT_FRAGMENT -> if (isStaffType) getString(R.string.toolbar_staff_details) else getString(R.string.add_doctor_e_profile)
       else -> super.getToolbarTitle()
     }
   }

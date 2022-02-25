@@ -99,11 +99,11 @@
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/ctv_website_url"
             android:layout_width="match_parent"
-              android:tag="com.userexperior.ueSecureView"
+            android:layout_height="wrap_content"
 
-              android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/size_16"
             android:paddingVertical="@dimen/size_12"
+            android:tag="com.userexperior.ueSecureView"
             android:text="@string/url_https_sravansclinics_com_services"
             app:layout_constraintTop_toBottomOf="parent"
             app:textType="CAPTION" />
@@ -131,41 +131,37 @@
         <com.framework.views.customViews.CustomTextView
           style="@style/AppointmentSetting_Text_Heading"
           android:layout_marginTop="@dimen/size_30"
-          android:text="@string/default_tax_rate_for_services"
-          android:visibility="gone" />
+          android:text="@string/default_tax_rate_for_services" />
 
         <com.framework.views.customViews.CustomTextField
           style="@style/Appointment_Text_Field"
           android:background="@drawable/bg_rect_white_rounded_4"
           android:drawableEnd="@drawable/ic_down_arrow_gray"
           android:focusable="false"
-          android:hint="18%"
+          android:hint="0%"
+          android:clickable="true"
+          android:id="@+id/edt_text_slab"
           android:padding="@dimen/_14dp"
-          android:singleLine="true"
-          android:visibility="gone" />
+          android:singleLine="true" />
 
         <com.framework.views.customViews.CustomTextView
           style="@style/Appointment_Text_Catalog_Heading"
           android:layout_marginTop="@dimen/size_10"
           android:text="@string/what_are_text_rates"
-          android:textColor="@color/warm_grey"
-          android:visibility="gone" />
+          android:textColor="@color/warm_grey" />
 
         <com.framework.views.customViews.CustomTextView
           style="@style/AppointmentCatalogSettingText2"
-          android:text="@string/tax_slabs_are_a_rate_at_which_any_service_is_taxable_determined_by_gst_council_of_india_this_is_used_to_"
-          android:visibility="gone" />
+          android:text="@string/tax_slabs_are_a_rate_at_which_any_service_is_taxable_determined_by_gst_council_of_india_this_is_used_to_" />
 
         <com.framework.views.customViews.CustomTextView
           style="@style/Appointment_Text_Catalog_Heading"
           android:text="@string/how_does_default_rate_work"
-          android:textColor="@color/warm_grey"
-          android:visibility="gone" />
+          android:textColor="@color/warm_grey" />
 
         <com.framework.views.customViews.CustomTextView
           style="@style/AppointmentCatalogSettingText2"
-          android:text="@string/this_will_be_used_as_defau"
-          android:visibility="gone" />
+          android:text="@string/this_will_be_used_as_defau" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.core.widget.NestedScrollView>

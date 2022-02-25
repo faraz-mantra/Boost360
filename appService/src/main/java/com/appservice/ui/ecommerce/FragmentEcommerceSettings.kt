@@ -114,7 +114,7 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
 
   private fun clickActionButton(data: AppointmentStatusResponse.TilesModel) {
     when (IconType.fromName(data.icon)) {
-      IconType.catalog_setup_ecommerce -> startFragmentActivity(FragmentType.ECOMMERCE_CATALOG_SETTINGS,bundle = Bundle().apply { putSerializable(IntentConstant.OBJECT_DATA.name,data) })
+      IconType.catalog_setup_ecommerce -> startFragmentActivity(FragmentType.ECOMMERCE_CATALOG_SETTINGS, bundle = Bundle().apply { putSerializable(IntentConstant.OBJECT_DATA.name, data) })
       IconType.delivery_setup -> startFragmentActivity(FragmentType.ECOMMERCE_DELIVERY_CONFIG)
       IconType.customer_invoice_setup -> startFragmentActivity(FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE)
       IconType.payment_collection -> startFragmentActivity(FragmentType.ECOMMERCE_PAYMENT_SETTINGS)

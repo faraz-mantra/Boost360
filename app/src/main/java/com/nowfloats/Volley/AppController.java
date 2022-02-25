@@ -190,11 +190,9 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
   void initWebEngage() {
     WebEngageConfig webEngageConfig = new WebEngageConfig.Builder()
         .setWebEngageKey(getString(R.string.webengage_license_code))
-        .setDebugMode(true)
+        .setDebugMode(false)
         .build();
     registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this, webEngageConfig));
-
-
   }
 
   public RequestQueue getRequestQueue() {

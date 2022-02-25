@@ -1,9 +1,11 @@
 package com.appservice.ui.aptsetting.ui
 
+import android.os.Bundle
 import android.widget.SearchView
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
+import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentAppointmentSettingsBinding
 import com.appservice.model.aptsetting.AppointmentStatusResponse
 import com.appservice.model.aptsetting.IconType
@@ -103,7 +105,7 @@ class FragmentAppointmentSettings : AppBaseFragment<FragmentAppointmentSettingsB
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     val data = item as? AppointmentStatusResponse.TilesModel
-    data?.icon?.let { IconType.fromName(it) }?.let { clickActionButton(it) }
+    data?.let { clickActionButton(it) }
   }
 
   private fun clearSearchFocus() {
@@ -111,9 +113,9 @@ class FragmentAppointmentSettings : AppBaseFragment<FragmentAppointmentSettingsB
   }
 
 
-  private fun clickActionButton(type: IconType) {
-    when (type) {
-      IconType.catalog_setup -> startFragmentActivity(FragmentType.APPOINTMENT_CATALOG_SETTINGS)
+  private fun clickActionButton(data: AppointmentStatusResponse.TilesModel) {
+    when (IconType.fromName(data.icon)) {
+      IconType.catalog_setup -> startFragmentActivity(FragmentType.APPOINTMENT_CATALOG_SETTINGS, bundle = Bundle().apply { putSerializable(IntentConstant.OBJECT_DATA.name, data) })
       IconType.customer_invoice_setup -> startFragmentActivity(FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE)
       IconType.payment_collection -> startFragmentActivity(FragmentType.APPOINTMENT_PAYMENT_SETTINGS)
       IconType.policies -> startFragmentActivity(FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES)
