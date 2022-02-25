@@ -306,8 +306,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //        reverseVisibility()
 //      }
 
-        refund_policy.underlineText(refund_policy.text.length - 12, refund_policy.text.length)
-        view_details.underlineText(0, view_details.text.length)
+        refund_policy.underlineText(refund_policy.text.length - 12, refund_policy.text.length - 1)
+        view_details.underlineText(0, view_details.text.length - 1)
 
         gst_info.setOnClickListener {
             showPopupWindow(it)
