@@ -72,6 +72,7 @@ import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.payment.PaymentActivity
 import com.boost.payment.utils.observeOnce
 import com.framework.analytics.SentryController
+import com.framework.extensions.underlineText
 import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
@@ -211,11 +212,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
         progressDialog = ProgressDialog(requireContext())
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            val window: Window = netscape.javascript.JSObject.getWindow()
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-//            window.setStatusBarColor(Color.BLUE)
-//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window = requireActivity().window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.setStatusBarColor(getResources().getColor(R.color.common_text_color))
+        }
 
 
         cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, ArrayList(), requireActivity().application)
@@ -304,6 +305,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //      }else if(gstcheck.visibility == View.VISIBLE){
 //        reverseVisibility()
 //      }
+
+        refund_policy.underlineText(refund_policy.text.length - 12, refund_policy.text.length)
+        view_details.underlineText(0, view_details.text.length)
 
         gst_info.setOnClickListener {
             showPopupWindow(it)

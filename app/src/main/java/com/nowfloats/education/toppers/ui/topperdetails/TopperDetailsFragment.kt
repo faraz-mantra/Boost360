@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer
 import com.boost.dbcenterapi.utils.Utils
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.nowfloats.Login.UserSessionManager
 import com.nowfloats.education.helper.BaseFragment
 import com.nowfloats.education.helper.Constants.CAMERA_REQUEST_CODE
 import com.nowfloats.education.helper.Constants.GALLERY_REQUEST_CODE
@@ -48,6 +49,7 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
   private var addUpdateTopper = false
   private lateinit var permissionsHelper: PermissionsHelper
   private var photoURI: Uri? = null
+  private lateinit var session: UserSessionManager
 
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +61,7 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-
+    session = UserSessionManager(requireContext(), requireActivity())
     setHeader(view)
 
     when {
@@ -217,7 +219,7 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
           )
         } else {
           showLoader("Adding Topper")
-          viewModel.addOurTopper(binding.toppersData as Data, profileImageUrl, testimonialImageUrl)
+          viewModel.addOurTopper(session.fpTag, binding.toppersData as Data, profileImageUrl, testimonialImageUrl)
         }
       })
     }

@@ -52,7 +52,7 @@
             },
             {
               "businessType": "doctor_profile",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
               "title": "Doctor\ne-profile"
@@ -428,7 +428,7 @@
             },
             {
               "businessType": "doctor_profile",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
               "title": "Doctor\ne-profile"

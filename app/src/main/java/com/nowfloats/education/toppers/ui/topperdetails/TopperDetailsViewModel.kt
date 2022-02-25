@@ -74,7 +74,7 @@ class TopperDetailsViewModel(
 
   fun getTestimonialImagePath() = this.testimonialImagePath
 
-  fun addOurTopper(topperData: Data, profileImageUrl: String?, testimonialImageUrl: String?) {
+  fun addOurTopper(fpTag: String, topperData: Data, profileImageUrl: String?, testimonialImageUrl: String?) {
     val profileImage = Profileimage(
       url = profileImageUrl ?: topperData.profileimage.url,
       description = topperData.name
@@ -97,7 +97,7 @@ class TopperDetailsViewModel(
 
     val addTopperModel = AddTopperModel(
       ActionData = actionData,
-      WebsiteId = WEBSITE_ID_EDUCATION
+      WebsiteId = fpTag
     )
 
     compositeDisposable.add(service.addOurTopper(AUTH_CODE, addTopperModel)

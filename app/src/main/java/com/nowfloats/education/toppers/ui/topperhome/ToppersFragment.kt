@@ -45,7 +45,7 @@ class ToppersFragment : BaseFragment<ToppersFragmentBinding, BaseViewModel>(), I
   private val toppersAdapter: TopperAdapter by lazy { TopperAdapter(this) }
   private lateinit var toppersActivity: ToppersActivity
   private lateinit var zeroCaseFragment: AppFragmentZeroCase
-  private var session:UserSessionManager?=null
+  private lateinit var session:UserSessionManager
 
 
 
@@ -60,7 +60,7 @@ class ToppersFragment : BaseFragment<ToppersFragmentBinding, BaseViewModel>(), I
 
     if (Utils.isNetworkConnected(requireContext())) {
       showLoader(getString(R.string.loading_our_topper))
-      myViewModel.getOurToppers()
+      myViewModel.getOurToppers(session.fpTag)
     } else {
       showLongToast(resources.getString(R.string.noInternet))
     }
@@ -90,7 +90,7 @@ class ToppersFragment : BaseFragment<ToppersFragmentBinding, BaseViewModel>(), I
             Toast.makeText(requireContext(), getString(R.string.topper_deleted_successfully), Toast.LENGTH_SHORT).show()
             showLoader(getString(R.string.loading_topper))
             setDeleteTopperLiveDataValue("")
-            myViewModel.getOurToppers()
+            myViewModel.getOurToppers(session.fpTag)
           }
         }
         hideLoader()
