@@ -1,7 +1,5 @@
 package com.appservice.model.staffModel
 
-import com.appservice.model.staffModel.SpecialisationsItem
-import com.appservice.model.staffModel.StaffImage
 import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
@@ -49,11 +47,11 @@ data class StaffCreateProfileRequest(
   var speciality: String? = null,
 
   @field:SerializedName("BookingWindow")
-  var bookingWindow: String? = null,
+  var bookingWindow: Int? = null,
 
 
   @field:SerializedName("AppointmentType")
-  var appointmentType: String? = null,
+  var appointmentType: Int? = null,
 
 
   @field:SerializedName("Education")

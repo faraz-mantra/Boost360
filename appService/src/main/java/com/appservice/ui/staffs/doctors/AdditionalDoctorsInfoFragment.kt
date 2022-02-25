@@ -45,7 +45,7 @@ class AdditionalDoctorsInfoFragment : AppBaseFragment<FragmentAdditionalDoctorIn
 
   private fun setView(staffDetailsResult: StaffDetailsResult?) {
     binding?.ctfEducation?.setText(staffDetailsResult?.education ?: "")
-    binding?.ctfExperiencer?.setText(staffDetailsResult?.experience ?: "")
+    binding?.ctfExperiencer?.setText(staffDetailsResult?.experience?.toString() ?: "")
     binding?.ctfMembership?.setText(staffDetailsResult?.memberships ?: "")
     binding?.ctfMobileNumber?.setText(staffDetailsResult?.contactNumber ?: "")
     binding?.ctfRegistration?.setText(staffDetailsResult?.registration ?: "")
@@ -57,7 +57,7 @@ class AdditionalDoctorsInfoFragment : AppBaseFragment<FragmentAdditionalDoctorIn
     super.onClick(v)
     when (v) {
       binding?.confirmBtn -> {
-        updateReqeust()
+        updateRequest()
       }
       binding?.ctfConsultationType -> {
         openConsultationTypeBottomSheet()
@@ -74,7 +74,7 @@ class AdditionalDoctorsInfoFragment : AppBaseFragment<FragmentAdditionalDoctorIn
     appointmentTypeBottomSheet.show(parentFragmentManager, AppointmentTypeBottomSheet::javaClass.name)
   }
 
-  private fun updateReqeust() {
+  private fun updateRequest() {
     val education = binding?.ctfEducation?.text.toString()
     val experience = binding?.ctfExperiencer?.text.toString()
     val membership = binding?.ctfMembership?.text.toString()
@@ -88,7 +88,7 @@ class AdditionalDoctorsInfoFragment : AppBaseFragment<FragmentAdditionalDoctorIn
       }
     }
     staffDetailsResult?.education = education
-    staffDetailsResult?.experience = experience
+    staffDetailsResult?.experience = experience.toIntOrNull() ?: 0
     staffDetailsResult?.memberships = membership
     staffDetailsResult?.registration = registration
     val intent = Intent()

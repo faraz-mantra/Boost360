@@ -49,10 +49,10 @@
             tools:ignore="UnusedAttribute">
 
             <com.framework.views.customViews.CustomImageView
-                android:tag="com.userexperior.ueSecureView"
+              android:layout_width="wrap_content"
 
-                android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:tag="com.userexperior.ueSecureView"
               app:srcCompat="@drawable/ic_add_image" />
 
             <com.framework.views.customViews.CustomTextView
@@ -281,9 +281,7 @@
           app:textType="BODY_3" />
 
         <com.framework.views.customViews.CustomTextField
-            android:tag="com.userexperior.ueSecureView"
-
-            android:id="@+id/ctf_booking_window"
+          android:id="@+id/ctf_booking_window"
           style="@style/match_wrap"
           android:layout_marginTop="@dimen/size_5"
           android:background="@drawable/bg_rect_edit_txt"
@@ -294,6 +292,7 @@
           android:inputType="textCapWords"
           android:padding="@dimen/size_12"
           android:singleLine="true"
+          android:tag="com.userexperior.ueSecureView"
           android:textColor="@color/warm_grey_10"
           android:textColorHint="@color/primary_grey"
           tools:ignore="UnusedAttribute" />

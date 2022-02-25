@@ -1,6 +1,7 @@
 package com.appservice.ui.staffs.doctors.bottomsheet
 
 import android.view.View
+import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.view.children
 import com.appservice.R
 import com.appservice.constant.IntentConstant
@@ -9,7 +10,6 @@ import com.appservice.model.staffModel.StaffDetailsResult
 import com.appservice.viewmodel.StaffViewModel
 
 import com.framework.base.BaseBottomSheetDialog
-import com.framework.views.customViews.CustomRadioButton
 
 class AppointmentBookingBottomSheet : BaseBottomSheetDialog<BottomSheetAppointmentBookingBinding, StaffViewModel>() {
 
@@ -27,7 +27,7 @@ class AppointmentBookingBottomSheet : BaseBottomSheetDialog<BottomSheetAppointme
   override fun onCreateView() {
     setOnClickListener(binding?.btnCancel, binding?.btnSaveChanges)
     this.data = arguments?.getSerializable(IntentConstant.STAFF_DATA.name) as? StaffDetailsResult
-    val radioButton = binding?.rgBookingWindow?.children?.filter { (it as? CustomRadioButton)?.text == data?.bookingWindow }?.firstOrNull() as? CustomRadioButton
+    val radioButton = binding?.rgBookingWindow?.children?.filter { (it as? AppCompatRadioButton)?.text == data?.bookingWindow?.toString() ?: "" }?.firstOrNull() as? AppCompatRadioButton
     radioButton?.isChecked = true
   }
 
@@ -38,9 +38,9 @@ class AppointmentBookingBottomSheet : BaseBottomSheetDialog<BottomSheetAppointme
         dismiss()
       }
       binding?.btnSaveChanges -> {
-        val radio = (binding?.rgBookingWindow?.findViewById<CustomRadioButton>(binding?.rgBookingWindow?.checkedRadioButtonId!!))
+        val radio = (binding?.rgBookingWindow?.findViewById<AppCompatRadioButton>(binding?.rgBookingWindow?.checkedRadioButtonId!!))
         if (radio != null)
-          onClicked(radio?.text.toString() ?: "")
+          onClicked(radio.text.toString())
         dismiss()
       }
     }
