@@ -17,6 +17,7 @@
     <item name="colorPrimary">@color/black_4a4a4a</item>
     <item name="colorPrimaryDark">@color/black_4a4a4a</item>
   </style>
+
   <style name="CatalogTheme" parent="BaseTheme">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -54,8 +55,10 @@
     <item name="android:layout_height">match_parent</item>
     <item name="android:layout_width">match_parent</item>
     <item name="android:fontFamily">@font/regular</item>
+    <item name="background">@android:color/transparent</item>
+    <item name="android:paddingHorizontal" tools:ignore="NewApi">@dimen/size_10</item>
     <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
-    <item name="android:buttonTint">@color/yellow_ffb900</item>
+    <item name="android:button">@drawable/check_selector_domain_booking</item>
     <item name="android:gravity">center_vertical</item>
     <item name="android:layout_marginTop">@dimen/size_15</item>
     <item name="android:layout_marginBottom">@dimen/size_15</item>
@@ -617,7 +620,7 @@
   <style name="TextStaffProfileHeadings">
     <item name="android:layout_width">wrap_content</item>
     <item name="android:textFontWeight" tools:ignore="NewApi">600</item>
-    <item name="android:textColor">@color/black</item>
+    <item name="android:textColor">@color/black_4a4a4a</item>
     <item name="android:textStyle">bold</item>
     <item name="fontFamily">@font/regular</item>
     <item name="android:textSize">14sp</item>
@@ -626,9 +629,8 @@
   </style>
 
   <style name="StaffProfileTextContent" parent="TextStaffProfileHeadings">
-    <item name="android:textColor">@color/gray_4e4e4e</item>
+    <item name="android:textColor">@color/black_747474</item>
     <item name="android:textStyle">normal</item>
-    <!--    <item name="android:textFontWeight">0</item>-->
     <item name="android:textAlignment">viewStart</item>
   </style>
 

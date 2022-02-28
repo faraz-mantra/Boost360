@@ -176,6 +176,7 @@
   <color name="white_F7F7F4">#F7F7F4</color>
   <color name="grey_4C4C4C">#4C4C4C</color>
   <color name="light_grey_0068E01A">#0068E01A</color>
+  <color name="color_747474">#747474</color>
 
   <color name="black_4a4a4a_jio">@color/black_4a4a4a</color>
   <color name="primary_4a4a4a_jio">@color/black_4a4a4a</color>

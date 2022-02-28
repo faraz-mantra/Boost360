@@ -8,7 +8,8 @@
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:visibility="gone">
 
     <com.framework.views.customViews.CustomImageView
       android:id="@+id/customImageView2"
@@ -30,7 +31,7 @@
       android:fontFamily="@font/regular"
       android:text="@string/add_services_to_your_catalog"
       android:textColor="@color/black_4a4a4a"
-      app:fontFamily="@font/regular"
+      app:fontFamily="@font/semi_bold"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
@@ -39,19 +40,19 @@
       app:textType="HEADING_7" />
 
     <com.framework.views.customViews.CustomTextView
-        android:id="@+id/ctv_add_service_subheading"
-        style="@style/match_wrap"
-        android:layout_marginHorizontal="@dimen/size_30"
-        android:gravity="center"
-        android:stateListAnimator="@null"
-        android:textAlignment="center"
-        android:textColor="@color/black_4a4a4a"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customTextView"
-        app:layout_constraintVertical_bias="0.039"
-        tools:text="@string/you_don_t_have_any_service_added_to_your_digital_catalog_as_of_yet_watch_video" />
+      android:id="@+id/ctv_add_service_subheading"
+      style="@style/match_wrap"
+      android:layout_marginHorizontal="@dimen/size_30"
+      android:gravity="center"
+      android:stateListAnimator="@null"
+      android:text="@string/you_don_t_have_any_service_added_to_your_digital_catalog_as_of_yet_watch_video"
+      android:textAlignment="center"
+      android:textColor="@color/gray_828282"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/customTextView"
+      app:layout_constraintVertical_bias="0.039" />
 
     <com.framework.views.customViews.CustomButton
       android:id="@+id/cb_add_service"
