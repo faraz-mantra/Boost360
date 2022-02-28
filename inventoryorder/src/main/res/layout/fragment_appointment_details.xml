@@ -28,7 +28,6 @@
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_amount"
-
             style="@style/wrap_match"
             android:layout_weight="1"
             android:ellipsize="end"
@@ -169,102 +168,52 @@
             app:riv_border_color="@color/pinkish_grey"
             app:riv_border_width="1.5dp"
             app:riv_corner_radius="@dimen/size_3"
-            app:srcCompat="@drawable/placeholder_image" />
+            app:srcCompat="@drawable/placeholder_image_n" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_service_name"
+            style="@style/TextSemiBoldStyle"
             android:layout_width="0dp"
-            android:layout_height="15dp"
             android:layout_marginStart="@dimen/size_10"
-            android:layout_marginEnd="@dimen/size_2"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:fontFamily="@font/semi_bold"
-            android:gravity="center_vertical"
-            android:includeFontPadding="false"
-            android:maxLines="1"
-            android:singleLine="true"
             android:tag="com.userexperior.ueSecureView"
-            android:textAlignment="gravity"
-            android:textColor="@color/black_4a4a4a"
-            android:textSize="14sp"
-            app:autoSizeMaxTextSize="12sp"
-            app:autoSizeMinTextSize="8sp"
-            app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="none"
             app:layout_constraintEnd_toStartOf="@id/text_appointment_amount"
             app:layout_constraintStart_toEndOf="@id/image_service_provider"
             app:layout_constraintTop_toTopOf="@id/image_service_provider"
-            tools:text="Simple Massage" />
+            tools:text="@string/tools_text_simple_massage" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_appointment_amount"
-            style="@style/wrap_match"
-            android:layout_marginStart="@dimen/size_10"
+            style="@style/TextSemiBoldStyle"
             android:layout_marginEnd="@dimen/size_5"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:fontFamily="@font/semi_bold"
-            android:gravity="end|center_vertical"
-            android:maxLines="1"
             android:tag="com.userexperior.ueSecureView"
-            android:textAlignment="gravity"
-            android:textColor="@color/black_4a4a4a"
-            app:autoSizeMaxTextSize="14sp"
-            app:autoSizeMinTextSize="8sp"
-            app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="none"
             app:layout_constraintBottom_toBottomOf="@id/text_service_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/text_service_name"
-            tools:text="₹2,000.00" />
+            tools:text="@string/tools_text_rs_20000" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_date"
-            style="@style/wrap_match"
+            style="@style/TextRegularStyle"
             android:layout_marginStart="@dimen/size_10"
             android:layout_marginTop="@dimen/size_2"
             android:layout_marginEnd="@dimen/size_2"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:fontFamily="@font/regular"
-            android:gravity="center_vertical"
-            android:maxLines="1"
             android:tag="com.userexperior.ueSecureView"
-            android:textAlignment="gravity"
             android:textColor="@color/grey_text_color"
-            android:textSize="12sp"
-            app:autoSizeMaxTextSize="12sp"
-            app:autoSizeMinTextSize="8sp"
-            app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="none"
             app:layout_constraintStart_toEndOf="@id/image_service_provider"
             app:layout_constraintTop_toBottomOf="@id/text_service_name"
-            tools:text="11:00 AM on Mon, 12 Jan 2020" />
+            tools:text="@string/tools_text_11_00_am_on_mon_12_jan_2020" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_staff"
-
-            style="@style/wrap_match"
+            style="@style/TextRegularStyle"
             android:layout_marginStart="@dimen/size_10"
             android:layout_marginTop="@dimen/size_2"
             android:layout_marginEnd="@dimen/size_2"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:fontFamily="@font/regular"
-            android:gravity="center_vertical"
-            android:maxLines="1"
             android:tag="com.userexperior.ueSecureView"
-            android:textAlignment="gravity"
-            android:textColor="#4E4F4E"
-            android:textSize="12sp"
-            app:autoSizeMaxTextSize="12sp"
-            app:autoSizeMinTextSize="8sp"
-            app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="none"
+            android:textColor="@color/grey_text_color"
             app:layout_constraintStart_toEndOf="@id/image_service_provider"
             app:layout_constraintTop_toBottomOf="@id/text_date"
-            tools:text="Staff: Sushil Singh" />
+            tools:text="@string/tools_text_staff_sushil_singh" />
 
 
           <LinearLayout
@@ -592,8 +541,8 @@
             style="@style/wrap_match"
             android:layout_marginTop="@dimen/size_10"
             android:drawableStart="@drawable/ic_email"
-            android:drawableTint="@color/colorAccentLight"
             android:ellipsize="end"
+            android:drawableTint="@color/colorAccentLight"
             android:fontFamily="@font/semi_bold"
             android:gravity="end|center_vertical"
             android:maxLines="1"
@@ -617,10 +566,10 @@
             android:layout_weight="0"
             android:drawableStart="@drawable/ic_phone"
             android:drawablePadding="@dimen/size_6"
-            android:drawableTint="@color/colorAccentLight"
             android:fontFamily="@font/semi_bold"
             android:gravity="start|center_vertical"
             android:maxLines="1"
+            android:drawableTint="@color/colorAccentLight"
             android:text="@string/call_customer"
             android:textAlignment="gravity"
             android:textColor="@color/colorAccentLight"

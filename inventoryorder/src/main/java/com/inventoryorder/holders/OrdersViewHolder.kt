@@ -67,21 +67,14 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
         takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() }
           ?: "INR"
       val formatAmount =
-        "${DecimalFormat("##,##,##0.00").format(BigDecimal(bill.AmountPayableByBuyer!!))}"
+        "${DecimalFormat("##,##,##0.00").format(BigDecimal(bill.GrossAmount!!))}"
       val ss = SpannableString("$formatAmount")
       ss.setSpan(RelativeSizeSpan(0.5f), "$formatAmount".indexOf("."), "$formatAmount".length, 0)
       binding.txtRupeesSymble.text = currency
       binding.txtRupees.text = ss
     }
 
-    binding.txtOrderDate.text = "${activity?.resources?.getString(R.string.at)} ${
-      parseDate(
-        order.UpdatedOn,
-        FORMAT_SERVER_DATE,
-        FORMAT_SERVER_TO_LOCAL,
-        timeZone = TimeZone.getTimeZone("IST")
-      )
-    }"
+    binding.txtOrderDate.text = "${activity?.resources?.getString(R.string.at)} ${parseDate(order.UpdatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL, timeZone = TimeZone.getTimeZone("IST"))}"
 
     binding.delivery.value.text = order.deliveryType()
     val sizeItem = order.Items?.size ?: 0
