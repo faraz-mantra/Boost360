@@ -66,7 +66,6 @@
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvOrderAmount"
                 style="@style/wrap_wrap"
-
                 android:gravity="center"
                 android:tag="com.userexperior.ueSecureView"
                 android:textAlignment="center"
@@ -356,7 +355,6 @@
               android:id="@+id/tvCustomerDetail"
               style="@style/match_wrap"
               android:layout_marginTop="@dimen/size_6"
-
               android:includeFontPadding="false"
               android:lineSpacingExtra="4dp"
               android:tag="com.userexperior.ueSecureView"
@@ -407,7 +405,6 @@
             <include
               android:id="@+id/user_address"
               style="@style/match_wrap"
-
               layout="@layout/layout_shipping_billing_address"
               android:layout_marginTop="@dimen/size_20"
               android:tag="com.userexperior.ueSecureView"
@@ -457,7 +454,6 @@
 
             <com.framework.views.viewgroups.BaseRecyclerView
               android:id="@+id/recyclerViewOrderDetails"
-
               style="@style/match_wrap"
               android:overScrollMode="never"
               android:tag="com.userexperior.ueSecureView"
@@ -491,7 +487,6 @@
               android:textColor="@color/warm_grey_10"
               app:fontFamily="@font/regular"
               app:textType="CAPTION"
-
               tools:text="Shipping Cost: ₹0" />
 
             <com.framework.views.customViews.CustomTextView
@@ -501,7 +496,6 @@
               android:tag="com.userexperior.ueSecureView"
               android:textColor="@color/black_4a4a4a"
               app:textType="HEADING_6"
-
               tools:text="Total amount: ₹976" />
           </androidx.appcompat.widget.LinearLayoutCompat>
 

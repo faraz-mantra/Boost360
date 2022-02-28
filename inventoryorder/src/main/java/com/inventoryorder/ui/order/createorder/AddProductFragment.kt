@@ -122,12 +122,11 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
 
   private fun getItemList(fpTag: String?, clientId: String?) {
     showProgress(context?.getString(R.string.loading))
-    viewModel?.getProductItems(fpTag, clientId, 0)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getProductItems(fpTag, clientId, 0)?.observeOnce(viewLifecycleOwner) {
       hideProgress()
       if (it.isSuccess()) {
         val resp = (it.arrayResponse as? Array<ProductItem>)
-        finalProductList =
-          if (resp.isNullOrEmpty().not()) resp!!.toCollection(ArrayList()) else ArrayList()
+        finalProductList = if (resp.isNullOrEmpty().not()) resp!!.toCollection(ArrayList()) else ArrayList()
         if (finalProductList.isNotEmpty()) {
           productList.clear()
           productList.addAll(finalProductList)
@@ -139,7 +138,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
           binding?.productRecycler?.visibility = View.GONE
         }
       } else showShortToast(it.message)
-    })
+    }
   }
 
   fun getBundleData(): Bundle {
@@ -155,7 +154,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         adapter = itemsAdapter
         itemsAdapter?.runLayoutAnimation(this)
       }
-    } else itemsAdapter?.notify(productList)
+    } else itemsAdapter?.notifyDataSetChanged()
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {

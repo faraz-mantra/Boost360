@@ -8,8 +8,7 @@ import com.inventoryorder.model.AppointmentScheduleModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 
-class AppointmentScheduleViewHolder(binding: ItemAppointmentScheduleBinding) :
-  AppBaseRecyclerViewHolder<ItemAppointmentScheduleBinding>(binding) {
+class AppointmentScheduleViewHolder(binding: ItemAppointmentScheduleBinding) : AppBaseRecyclerViewHolder<ItemAppointmentScheduleBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
