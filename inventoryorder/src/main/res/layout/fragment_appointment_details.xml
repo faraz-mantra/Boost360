@@ -27,9 +27,7 @@
           android:padding="@dimen/size_10">
 
           <com.framework.views.customViews.CustomTextView
-              android:tag="com.userexperior.ueSecureView"
-
-              android:id="@+id/text_amount"
+            android:id="@+id/text_amount"
             style="@style/wrap_match"
             android:layout_weight="1"
             android:ellipsize="end"
@@ -37,6 +35,7 @@
             android:gravity="center_vertical"
             android:maxLines="1"
             android:paddingStart="@dimen/size_4"
+            android:tag="com.userexperior.ueSecureView"
             android:textAlignment="gravity"
             android:textColor="@color/black_4a4a4a"
             android:textSize="24sp"
@@ -65,9 +64,8 @@
             app:layout_constraintTop_toBottomOf="@+id/text_amount" />
 
           <com.framework.views.customViews.CustomTextView
-              android:tag="com.userexperior.ueSecureView"
+            android:id="@+id/ctv_appointment_id"
 
-              android:id="@+id/ctv_appointment_id"
             style="@style/wrap_match"
             android:layout_marginStart="@dimen/size_1"
             android:layout_marginEnd="@dimen/size_2"
@@ -76,6 +74,7 @@
             android:fontFamily="@font/semi_bold"
             android:gravity="center_vertical"
             android:maxLines="1"
+            android:tag="com.userexperior.ueSecureView"
             android:textAlignment="gravity"
             android:textColor="@color/black_4a4a4a"
             android:textSize="@dimen/size_14"
@@ -157,9 +156,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
           <com.framework.views.roundedimageview.RoundedImageView
-              android:tag="com.userexperior.ueSecureView"
-
-              android:id="@+id/image_service_provider"
+            android:id="@+id/image_service_provider"
             android:layout_width="@dimen/size_60"
             android:layout_height="@dimen/size_60"
             android:layout_marginStart="@dimen/size_3"
@@ -170,105 +167,52 @@
             app:riv_border_color="@color/pinkish_grey"
             app:riv_border_width="1.5dp"
             app:riv_corner_radius="@dimen/size_3"
-            app:srcCompat="@drawable/placeholder_image" />
+            app:srcCompat="@drawable/placeholder_image_n" />
 
           <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_service_name"
-
-              android:layout_width="246dp"
-              android:layout_height="15dp"
-              android:layout_marginStart="@dimen/size_10"
-              android:layout_marginEnd="@dimen/size_2"
-              android:layout_weight="1"
-              android:ellipsize="end"
-              android:fontFamily="@font/semi_bold"
-              android:gravity="center_vertical"
-              android:includeFontPadding="false"
-              android:maxLines="1"
-              android:singleLine="true"
-              android:tag="com.userexperior.ueSecureView"
-              android:textAlignment="gravity"
-              android:textColor="@color/black_4a4a4a"
-              android:textSize="14sp"
-              app:autoSizeMaxTextSize="12sp"
-              app:autoSizeMinTextSize="8sp"
-              app:autoSizeStepGranularity="1sp"
-              app:autoSizeTextType="none"
-              app:layout_constraintEnd_toStartOf="@id/text_appointment_amount"
-              app:layout_constraintStart_toEndOf="@id/image_service_provider"
-              app:layout_constraintTop_toTopOf="@id/image_service_provider"
-              tools:text="Simple Massage" />
-
-          <com.framework.views.customViews.CustomTextView
-              android:tag="com.userexperior.ueSecureView"
-
-              android:id="@+id/text_appointment_amount"
-            style="@style/wrap_match"
+            android:id="@+id/text_service_name"
+            style="@style/TextSemiBoldStyle"
+            android:layout_width="0dp"
             android:layout_marginStart="@dimen/size_10"
+            android:tag="com.userexperior.ueSecureView"
+            app:layout_constraintEnd_toStartOf="@id/text_appointment_amount"
+            app:layout_constraintStart_toEndOf="@id/image_service_provider"
+            app:layout_constraintTop_toTopOf="@id/image_service_provider"
+            tools:text="@string/tools_text_simple_massage" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/text_appointment_amount"
+            style="@style/TextSemiBoldStyle"
             android:layout_marginEnd="@dimen/size_5"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:fontFamily="@font/semi_bold"
-            android:gravity="end|center_vertical"
-            android:maxLines="1"
-            android:textAlignment="gravity"
-            android:textColor="@color/black_4a4a4a"
-            app:autoSizeMaxTextSize="14sp"
-            app:autoSizeMinTextSize="8sp"
-            app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="none"
+            android:tag="com.userexperior.ueSecureView"
             app:layout_constraintBottom_toBottomOf="@id/text_service_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/text_service_name"
-            tools:text="₹2,000.00" />
+            tools:text="@string/tools_text_rs_20000" />
 
           <com.framework.views.customViews.CustomTextView
-              android:tag="com.userexperior.ueSecureView"
-
-              android:id="@+id/text_date"
-            style="@style/wrap_match"
+            android:id="@+id/text_date"
+            style="@style/TextRegularStyle"
             android:layout_marginStart="@dimen/size_10"
             android:layout_marginTop="@dimen/size_2"
             android:layout_marginEnd="@dimen/size_2"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:fontFamily="@font/regular"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:textAlignment="gravity"
+            android:tag="com.userexperior.ueSecureView"
             android:textColor="@color/grey_text_color"
-            android:textSize="12sp"
-            app:autoSizeMaxTextSize="12sp"
-            app:autoSizeMinTextSize="8sp"
-            app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="none"
             app:layout_constraintStart_toEndOf="@id/image_service_provider"
             app:layout_constraintTop_toBottomOf="@id/text_service_name"
-            tools:text="11:00 AM on Mon, 12 Jan 2020" />
+            tools:text="@string/tools_text_11_00_am_on_mon_12_jan_2020" />
 
           <com.framework.views.customViews.CustomTextView
-              android:tag="com.userexperior.ueSecureView"
-
-              android:id="@+id/text_staff"
-            style="@style/wrap_match"
+            android:id="@+id/text_staff"
+            style="@style/TextRegularStyle"
             android:layout_marginStart="@dimen/size_10"
             android:layout_marginTop="@dimen/size_2"
             android:layout_marginEnd="@dimen/size_2"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:fontFamily="@font/regular"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:textAlignment="gravity"
-            android:textColor="#4E4F4E"
-            android:textSize="12sp"
-            app:autoSizeMaxTextSize="12sp"
-            app:autoSizeMinTextSize="8sp"
-            app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="none"
+            android:tag="com.userexperior.ueSecureView"
+            android:textColor="@color/grey_text_color"
             app:layout_constraintStart_toEndOf="@id/image_service_provider"
             app:layout_constraintTop_toBottomOf="@id/text_date"
-            tools:text="Staff: Sushil Singh" />
+            tools:text="@string/tools_text_staff_sushil_singh" />
 
 
           <LinearLayout
@@ -303,9 +247,8 @@
               app:layout_constraintTop_toBottomOf="@id/text_date" />
 
             <com.framework.views.customViews.CustomTextView
-                android:tag="com.userexperior.ueSecureView"
+              android:id="@+id/text_service_location_dropdown"
 
-                android:id="@+id/text_service_location_dropdown"
               style="@style/wrap_match"
               android:layout_marginStart="@dimen/size_10"
               android:layout_marginTop="@dimen/size_4"
@@ -315,6 +258,7 @@
               android:fontFamily="@font/semi_bold"
               android:gravity="end|center_vertical"
               android:maxLines="1"
+              android:tag="com.userexperior.ueSecureView"
               android:textAlignment="gravity"
               android:textColor="@color/orange"
               android:textSize="14sp"
@@ -359,9 +303,8 @@
               app:layout_constraintTop_toBottomOf="@id/text_date" />
 
             <com.framework.views.customViews.CustomTextView
-                android:tag="com.userexperior.ueSecureView"
+              android:id="@+id/text_payment_type_dropdown"
 
-                android:id="@+id/text_payment_type_dropdown"
               style="@style/wrap_match"
               android:layout_marginStart="@dimen/size_10"
               android:layout_marginTop="@dimen/size_4"
@@ -371,6 +314,7 @@
               android:fontFamily="@font/semi_bold"
               android:gravity="end|center_vertical"
               android:maxLines="1"
+              android:tag="com.userexperior.ueSecureView"
               android:textAlignment="gravity"
               android:textColor="@color/orange"
               android:textSize="14sp"
@@ -415,9 +359,8 @@
               app:layout_constraintTop_toBottomOf="@id/text_date" />
 
             <com.framework.views.customViews.CustomTextView
-                android:tag="com.userexperior.ueSecureView"
+              android:id="@+id/text_payment_status_dropdown"
 
-                android:id="@+id/text_payment_status_dropdown"
               style="@style/wrap_match"
               android:layout_marginStart="@dimen/size_10"
               android:layout_marginTop="@dimen/size_4"
@@ -427,6 +370,7 @@
               android:fontFamily="@font/semi_bold"
               android:gravity="end|center_vertical"
               android:maxLines="1"
+              android:tag="com.userexperior.ueSecureView"
               android:textAlignment="gravity"
               android:textColor="@color/orange"
               android:textSize="14sp"
@@ -525,9 +469,8 @@
             app:layout_constraintTop_toTopOf="@id/image_person" />
 
           <com.framework.views.customViews.CustomTextView
-              android:tag="com.userexperior.ueSecureView"
+            android:id="@+id/text_customer_name"
 
-              android:id="@+id/text_customer_name"
             style="@style/wrap_match"
             android:layout_marginStart="@dimen/size_1"
             android:layout_marginTop="@dimen/size_16"
@@ -536,6 +479,7 @@
             android:fontFamily="@font/semi_bold"
             android:gravity="center_vertical"
             android:maxLines="1"
+            android:tag="com.userexperior.ueSecureView"
             android:textAlignment="gravity"
             android:textColor="@color/black_4a4a4a"
             android:textSize="14sp"
@@ -548,9 +492,8 @@
             tools:text="Mr, Sanghmitra Sharma" />
 
           <com.framework.views.customViews.CustomTextView
-              android:tag="com.userexperior.ueSecureView"
+            android:id="@+id/text_customer_phone"
 
-              android:id="@+id/text_customer_phone"
             style="@style/wrap_match"
             android:layout_marginTop="@dimen/size_5"
             android:layout_weight="1"
@@ -558,6 +501,7 @@
             android:fontFamily="@font/semi_bold"
             android:gravity="center_vertical"
             android:maxLines="1"
+            android:tag="com.userexperior.ueSecureView"
             android:textAlignment="gravity"
             android:textColor="@color/grey_dark_2"
             android:textSize="14sp"
@@ -570,9 +514,8 @@
             tools:text="+91 88888 8888" />
 
           <com.framework.views.customViews.CustomTextView
-              android:tag="com.userexperior.ueSecureView"
+            android:id="@+id/text_customer_email"
 
-              android:id="@+id/text_customer_email"
             style="@style/wrap_match"
             android:layout_marginTop="@dimen/size_5"
             android:layout_weight="1"
@@ -580,6 +523,7 @@
             android:fontFamily="@font/semi_bold"
             android:gravity="center_vertical"
             android:maxLines="1"
+            android:tag="com.userexperior.ueSecureView"
             android:textAlignment="gravity"
             android:textColor="@color/grey_dark_2"
             android:textSize="14sp"
@@ -594,17 +538,17 @@
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_email"
             style="@style/wrap_match"
+            android:layout_marginTop="@dimen/size_10"
             android:drawableStart="@drawable/ic_email"
             android:ellipsize="end"
             android:fontFamily="@font/semi_bold"
             android:gravity="end|center_vertical"
             android:maxLines="1"
-            android:layout_marginTop="@dimen/size_10"
+            android:paddingEnd="@dimen/size_20"
             android:text="@string/send_email"
             android:textAlignment="gravity"
             android:textColor="@color/colorAccentLight"
             android:textSize="14sp"
-            android:paddingEnd="@dimen/size_20"
             app:autoSizeMaxTextSize="12sp"
             app:autoSizeMinTextSize="8sp"
             app:autoSizeStepGranularity="1sp"
@@ -616,13 +560,13 @@
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_phone"
             style="@style/wrap_match"
+            android:layout_marginTop="@dimen/size_10"
             android:layout_weight="0"
             android:drawableStart="@drawable/ic_phone"
             android:drawablePadding="@dimen/size_6"
             android:fontFamily="@font/semi_bold"
             android:gravity="start|center_vertical"
             android:maxLines="1"
-            android:layout_marginTop="@dimen/size_10"
             android:text="@string/call_customer"
             android:textAlignment="gravity"
             android:textColor="@color/colorAccentLight"
@@ -688,9 +632,8 @@
               app:autoSizeTextType="uniform" />
 
             <com.framework.views.customViews.CustomTextView
-                android:tag="com.userexperior.ueSecureView"
+              android:id="@+id/text_addr_value"
 
-                android:id="@+id/text_addr_value"
               style="@style/wrap_match"
               android:layout_marginStart="@dimen/size_1"
               android:layout_marginTop="@dimen/size_6"
@@ -698,6 +641,7 @@
               android:fontFamily="@font/regular"
               android:gravity="center_vertical"
               android:paddingStart="@dimen/size_10"
+              android:tag="com.userexperior.ueSecureView"
               android:textAlignment="gravity"
               android:textColor="@color/grey_dark_2"
               android:textSize="14sp"

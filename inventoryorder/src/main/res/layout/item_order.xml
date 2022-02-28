@@ -71,15 +71,15 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/txt_order_date"
-                android:tag="com.userexperior.ueSecureView"
+              style="@style/match_match"
 
-                style="@style/match_match"
               android:layout_marginStart="@dimen/size_1"
               android:layout_marginEnd="@dimen/size_2"
               android:layout_weight="1"
               android:ellipsize="end"
               android:gravity="center_vertical"
               android:maxLines="1"
+              android:tag="com.userexperior.ueSecureView"
               android:textAlignment="gravity"
               android:textColor="@color/black_4a4a4a"
               app:autoSizeMaxTextSize="12sp"
@@ -90,12 +90,12 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/order_id"
-                android:tag="com.userexperior.ueSecureView"
+              style="@style/wrap_match"
 
-                style="@style/wrap_match"
               android:ellipsize="end"
               android:gravity="center_vertical"
               android:maxLines="1"
+              android:tag="com.userexperior.ueSecureView"
               android:textAlignment="gravity"
               android:textColor="@color/black_4a4a4a"
               app:autoSizeMaxTextSize="14sp"
@@ -125,12 +125,11 @@
               tools:text="₹" />
 
             <com.framework.views.customViews.CustomTextView
-                android:tag="com.userexperior.ueSecureView"
-
-                android:id="@+id/txt_rupees"
+              android:id="@+id/txt_rupees"
               style="@style/wrap_wrap"
               android:gravity="top"
               android:includeFontPadding="false"
+              android:tag="com.userexperior.ueSecureView"
               android:textAlignment="gravity"
               android:textColor="@color/black_4a4a4a"
               android:textSize="24sp"
@@ -163,22 +162,22 @@
             android:orientation="vertical">
 
             <include
-                android:id="@+id/payment"
+              android:id="@+id/payment"
               layout="@layout/icon_text_item" />
 
             <include
-                android:id="@+id/delivery"
+              android:id="@+id/delivery"
               style="@style/wrap_wrap"
               layout="@layout/icon_text_item"
               android:layout_marginTop="@dimen/size_8" />
 
             <com.framework.views.customViews.CustomTextView
-                android:tag="com.userexperior.ueSecureView"
+              android:id="@+id/item_desc"
 
-                android:id="@+id/item_desc"
               style="@style/wrap_wrap"
               android:layout_marginStart="@dimen/size_2"
               android:layout_marginTop="@dimen/size_10"
+              android:tag="com.userexperior.ueSecureView"
               android:textColor="@color/black"
               app:textType="BODY_1"
               tools:text="1 x  Lorem ipsum dolor sit amet\n2 x  Lorem ipsum dolor sit amet  amet\n1 x  Lorem ipsum dolor sit amet dolor sit amet " />
