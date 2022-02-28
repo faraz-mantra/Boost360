@@ -68,6 +68,7 @@ import android.text.InputFilter
 import android.text.TextUtils
 import com.boost.upgrades.data.api_model.paymentprofile.LastPaymentMethodDetails
 import com.boost.upgrades.ui.compare.ComparePackageFragment
+import com.boost.upgrades.utils.Constants.Companion.CHECKOUT_KYC_FRAGMENT
 import com.framework.analytics.SentryController
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_title
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_value
@@ -232,13 +233,15 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
 
     cart_continue_submit.setOnClickListener {
 
-//            if (prefs.getInitialLoadMarketPlace() && proceedCheckoutPopup == false) {
-//
-//                checkoutKycFragment.show(
-//                        (activity as UpgradeActivity).supportFragmentManager,
-//                        CHECKOUT_KYC_FRAGMENT
-//                )
-//            }else{
+            if (prefs.getInitialLoadMarketPlace() && proceedCheckoutPopup == false) {
+
+                checkoutKycFragment.show(
+                        (activity as UpgradeActivity).supportFragmentManager,
+                        CHECKOUT_KYC_FRAGMENT
+                )
+              return@setOnClickListener
+            }
+//            else{
       /*       renewPopUpFragment.show(
              (activity as UpgradeActivity).supportFragmentManager,
              RENEW_POPUP_FRAGEMENT

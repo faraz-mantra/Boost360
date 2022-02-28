@@ -15,8 +15,8 @@ import com.appservice.ui.staffs.doctors.bottomsheet.AppointmentTypeBottomSheet
 import com.appservice.viewmodel.StaffViewModel
 import com.framework.utils.ValidationUtils
 
-class AdditionalDoctorsInfoFragment :
-  AppBaseFragment<FragmentAdditionalDoctorInfoBinding, StaffViewModel>() {
+class AdditionalDoctorsInfoFragment : AppBaseFragment<FragmentAdditionalDoctorInfoBinding, StaffViewModel>() {
+
   private var isEdit: Boolean? = false
   private var staffDetailsResult: StaffDetailsResult? = null
 
@@ -39,14 +39,13 @@ class AdditionalDoctorsInfoFragment :
     setOnClickListener(binding?.confirmBtn, binding?.ctfConsultationType)
     this.staffDetailsResult = arguments?.getSerializable(IntentConstant.STAFF_DATA.name) as? StaffDetailsResult
     isEdit = (staffDetailsResult != null)
-    if (isEdit == true)
-      setView(staffDetailsResult)
+    if (isEdit == true) setView(staffDetailsResult)
     else staffDetailsResult = StaffDetailsResult()
   }
 
   private fun setView(staffDetailsResult: StaffDetailsResult?) {
     binding?.ctfEducation?.setText(staffDetailsResult?.education ?: "")
-    binding?.ctfExperiencer?.setText(staffDetailsResult?.experience ?: "")
+    binding?.ctfExperiencer?.setText(staffDetailsResult?.experience?.toString() ?: "")
     binding?.ctfMembership?.setText(staffDetailsResult?.memberships ?: "")
     binding?.ctfMobileNumber?.setText(staffDetailsResult?.contactNumber ?: "")
     binding?.ctfRegistration?.setText(staffDetailsResult?.registration ?: "")
@@ -58,7 +57,7 @@ class AdditionalDoctorsInfoFragment :
     super.onClick(v)
     when (v) {
       binding?.confirmBtn -> {
-        updateReqeust()
+        updateRequest()
       }
       binding?.ctfConsultationType -> {
         openConsultationTypeBottomSheet()
@@ -75,7 +74,7 @@ class AdditionalDoctorsInfoFragment :
     appointmentTypeBottomSheet.show(parentFragmentManager, AppointmentTypeBottomSheet::javaClass.name)
   }
 
-  private fun updateReqeust() {
+  private fun updateRequest() {
     val education = binding?.ctfEducation?.text.toString()
     val experience = binding?.ctfExperiencer?.text.toString()
     val membership = binding?.ctfMembership?.text.toString()
@@ -89,7 +88,7 @@ class AdditionalDoctorsInfoFragment :
       }
     }
     staffDetailsResult?.education = education
-    staffDetailsResult?.experience = experience
+    staffDetailsResult?.experience = experience.toIntOrNull() ?: 0
     staffDetailsResult?.memberships = membership
     staffDetailsResult?.registration = registration
     val intent = Intent()
