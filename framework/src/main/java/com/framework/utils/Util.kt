@@ -3,10 +3,10 @@ package com.framework.utils
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.PendingIntent
-import android.content.ActivityNotFoundException
-import android.content.ContentValues
+import android.content.*
+import android.content.ClipboardManager
+import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Context.INPUT_METHOD_SERVICE
-import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.graphics.*
@@ -53,7 +53,7 @@ import java.text.NumberFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import kotlin.collections.ArrayList
+
 
 private const val TAG = "Util"
 
@@ -497,4 +497,19 @@ fun gcd(num1:Int,num2:Int): Int {
   }
 
   return gcd
+}
+
+fun spanBold(fullText:String,vararg boldTextList:String): SpannableString {
+  val spannable = SpannableString(fullText)
+  boldTextList.forEach { boldText->
+    spannable.setSpan(StyleSpan(Typeface.BOLD),fullText.indexOf(boldText),fullText.indexOf(boldText)+boldText.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+  }
+  return spannable
+}
+
+fun copyToClipBoard(text: String){
+  val clipboard = BaseApplication.instance.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+  val clip: ClipData = ClipData.newPlainText("boost-label", text)
+  clipboard.setPrimaryClip(clip)
+  Toast.makeText(BaseApplication.instance, BaseApplication.instance.getString(R.string.copied_to_clipboard), Toast.LENGTH_SHORT).show()
 }
