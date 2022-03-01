@@ -3,22 +3,27 @@ package com.appservice.ui.background_image
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.text.SpannableString
+import android.view.View
 import android.widget.SeekBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
+import com.appservice.base.startWebViewPageLoad
 import com.appservice.databinding.FragmentCropZoomBinding
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.framework.utils.gcd
+import com.framework.utils.spanBold
 import com.framework.utils.zoom
-import kotlin.math.abs
 
 class CropZoomImageFragment : AppBaseFragment<FragmentCropZoomBinding,BaseViewModel>() {
 
     private var imagePath: String? = null
     private var bitmap: Bitmap? = null
+    private var validationStat = false
     companion object {
         @JvmStatic
         fun newInstance(bundle: Bundle? = null): CropZoomImageFragment {
@@ -44,10 +49,11 @@ class CropZoomImageFragment : AppBaseFragment<FragmentCropZoomBinding,BaseViewMo
         binding?.cropImg?.setImageBitmap(Utility.rotateImageIfRequired(bitmap!!, imagePath))*/
         val options = BitmapFactory.Options()
         options.inScaled = false
-        bitmap= BitmapFactory.decodeResource(resources,R.drawable.imgtest16to7,options)
+        bitmap= BitmapFactory.decodeResource(resources,R.drawable.imgtest16to7)
         binding?.cropImg?.setImageBitmap(bitmap)
         checkImageDim()
         viewListeners()
+        setOnClickListener(binding?.btnDone)
     }
 
     private fun checkImageDim() {
@@ -55,19 +61,26 @@ class CropZoomImageFragment : AppBaseFragment<FragmentCropZoomBinding,BaseViewMo
             if (checkAspectRatio()){
                 imageSuccessView()
             }else{
-               imageErrorView()
+               imageErrorView(SpannableString(
+                   spanBold(getString(R.string.aspect_ration_not_matched),getString(R.string.aspect_ration_not_matched))
+               ))
 
             }
         }else{
-            imageErrorView()
+            val spanBold = spanBold(getString(R.string.smaller_img_detected)+" ("+
+                    bitmap?.width.toString()+"x"+
+                    bitmap?.height.toString()+").",getString(R.string.smaller_img_detected))
+            imageErrorView(
+            spanBold)
         }
     }
 
-    private fun imageErrorView() {
+    private fun imageErrorView(errorText: SpannableString) {
+        validationStat =false
         binding?.layoutImageMisConfig?.visible()
         binding?.tvSliderSugg?.gone()
-        binding?.tvImgDesc?.text = bitmap?.width.toString()+" x "+
-                bitmap?.height.toString()
+
+        binding?.tvImgDesc?.text = errorText
         binding?.btnDone?.setBackgroundColor(
             ContextCompat.getColor(requireActivity(),
                 R.color.red_E39595))
@@ -78,6 +91,7 @@ class CropZoomImageFragment : AppBaseFragment<FragmentCropZoomBinding,BaseViewMo
     }
 
     private fun imageSuccessView() {
+        validationStat=true
         binding?.layoutImageMisConfig?.gone()
         binding?.tvSliderSugg?.visible()
         binding?.layoutSeek?.visible()
@@ -108,10 +122,23 @@ class CropZoomImageFragment : AppBaseFragment<FragmentCropZoomBinding,BaseViewMo
     }
 
     fun checkAspectRatio(): Boolean {
-
+        val options = BitmapFactory.Options()
+        options.inScaled = false
+        //val bitmap = BitmapFactory.decodeFile(imagePath,options)
+        val bitmap= BitmapFactory.decodeResource(resources,R.drawable.imgtest16to7)
         val gcd = gcd(bitmap!!.width,bitmap!!.height)
        return (bitmap!!.width.div(gcd)==16&&bitmap!!.height.div(gcd)==7)
 
 
+    }
+
+    override fun onClick(v: View) {
+        super.onClick(v)
+        when(v){
+            binding?.btnDone->{
+                BGimgUploadSuccessfulSheet().show(parentFragmentManager,
+                BGimgUploadSuccessfulSheet::class.java.name)
+            }
+        }
     }
 }
