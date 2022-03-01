@@ -70,11 +70,10 @@
     <string name="load_more_campaigns">Load more campaigns</string>
     <string name="create_new_ad_campaign">Create new ad campaign</string>
     <string name="submitting_to_google_for_review">Submitting to Google for review...</string>
-    <string name="this_may_take_upto_5_minutes_feel_free_to_check_the_campaign_dashboard_while_we_notify_you_about_the_campaign_status">This may take upto 5 minutes. Feel free to check the campaign dashboard while we notify you about the campaign status.</string>
     <string name="enquiries">Enquiries</string>
     <string name="calls">Calls</string>
     <string name="creating_campaign">Creating campaign...</string>
-    <string name="this_may_take_upto_5_minutes_feel_free_to_check_the_campaign_dashboard_while_we_notify_you_about_the_campaign_status" tools:ignore="DuplicateDefinition">This may take upto 5 minutes. Feel free to check the campaign dashboard while we notify you about the campaign status.</string>
+    <string name="this_may_take_upto_5_minutes_feel_free_to_check_the_campaign_dashboard_while_we_notify_you_about_the_campaign_status"></string>
     <string name="campaign_created_amp_submitted_to_google_for_review"><![CDATA[Campaign created & submitted to Google for review.]]></string>
     <string name="google_usually_takes_12_24_hours_to_review_and_take_action_on_your_submitted_campaign">Google usually takes 12-24 hours to review and take action on your submitted campaign.</string>
     <string name="go_to_campaign_dashboard">Go to campaign dashboard</string>
