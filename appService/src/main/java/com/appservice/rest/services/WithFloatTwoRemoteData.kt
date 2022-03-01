@@ -1,6 +1,7 @@
 package com.appservice.rest.services
 
 import com.appservice.model.MerchantSummaryResponse
+import com.appservice.model.VmnCallModel
 import com.appservice.model.aptsetting.*
 import com.appservice.model.product.ProductItemsResponseItem
 import com.appservice.model.serviceProduct.CatalogProduct
@@ -11,6 +12,7 @@ import com.appservice.model.updateBusiness.BusinessUpdateResponse
 import com.appservice.model.updateBusiness.DeleteBizMessageRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
 import com.appservice.rest.EndPoints
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -175,5 +177,12 @@ interface WithFloatTwoRemoteData {
     @Query("clientId") clientId: String?,
     @Query("fpTag") fpTag: String?
   ): Observable<Response<MerchantSummaryResponse>>
+
+
+  @GET("/Wildfire/v1/calls/tracker")
+  fun trackerCalls(
+    @QueryMap data: Map<*, *>?):Observable<Response<ArrayList<VmnCallModel?>?>>
+
+
 
 }

@@ -9,14 +9,11 @@
       android:orientation="vertical">
 
 
-    <com.framework.views.customViews.CustomToolbar
-        android:layout_width="match_parent"
+    <include
         android:id="@+id/toolbar"
-        android:layout_height="?attr/actionBarSize"
-        app:navigationIcon="@drawable/ic_back_arrow_new"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:titleTextAppearance="@style/Toolbar.TitleText"
-        android:background="?attr/colorPrimary"
+        layout="@layout/toolbar_boost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
