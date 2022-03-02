@@ -206,4 +206,8 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   fun updateProductCategoryVerb(request: ProductCategoryVerbRequest): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.updateProductCategoryVerb(request), TaskCode.UPDATE_PRODUCT_CATEGORY_VERB)
   }
+
+  fun getImages(fpId: String, clientId: String): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getBackgroundImages(fpId, clientId), TaskCode.GET_BACKGROUND_IMAGES)
+  }
 }

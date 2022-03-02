@@ -1086,4 +1086,5 @@
     <string name="smaller_image_selected_331x159px">Smaller image selected (331x159px).</string>
     <string name="change_image">Change image</string>
     <string name="upload_picture">Upload picture</string>
+    <string name="background_image_title">Custom Background Images</string>
 </resources>

@@ -6,7 +6,7 @@ import com.appservice.databinding.FragmentBackgroundImageBinding
 import com.appservice.databinding.FragmentCropZoomBinding
 import com.framework.models.BaseViewModel
 
-class CropZoomImageFragment : AppBaseFragment<FragmentCropZoomBinding,BaseViewModel>() {
+class CropZoomImageFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewModel>() {
     override fun getLayout(): Int {
         return R.layout.fragment_crop_zoom
     }
