@@ -11,11 +11,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
-<<<<<<< HEAD
 import androidx.fragment.app.Fragment
-=======
 import androidx.core.content.ContextCompat
->>>>>>> 2453da4f0781704feda685c04ff58c20bc888883
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.bumptech.glide.Glide

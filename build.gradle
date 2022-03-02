@@ -34,12 +34,6 @@ allprojects {
         maven {
             url "https://sdk.smartlook.com/android/release"
         }
-<<<<<<< HEAD
-//        maven {
-//            url "https://dl.bintray.com/notifyvisitors/invitereferrals"
-//        }
-=======
->>>>>>> 2453da4f0781704feda685c04ff58c20bc888883
     }
 }
 subprojects {

@@ -521,53 +521,44 @@ fun AppCompatActivity.startListStaff(session: UserSessionManager?) {
 }
 
 fun AppCompatActivity.startListDoctors(session: UserSessionManager?) {
-<<<<<<< HEAD
-    try {
-        startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = getBundleData(session))
-    } catch (e: ClassNotFoundException) {
-        e.printStackTrace()
-    }
-=======
   try {
     WebEngageController.trackEvent(LIST_DOCTOR_PROFILE_DASHBOARD, CLICK, TO_BE_ADDED)
     startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = getBundleData(session))
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
->>>>>>> 2453da4f0781704feda685c04ff58c20bc888883
 }
 
 fun AppCompatActivity.startAddStaff(session: UserSessionManager?) {
-    try {
-        WebEngageController.trackEvent(ADD_STAFF_DASHBOARD, CLICK, TO_BE_ADDED)
-        startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = getBundleData(session, true))
-    } catch (e: ClassNotFoundException) {
-        e.printStackTrace()
-    }
+  try {
+    WebEngageController.trackEvent(ADD_STAFF_DASHBOARD, CLICK, TO_BE_ADDED)
+    startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = getBundleData(session, true))
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
 }
 
 fun getBundleData(session: UserSessionManager?, isAddNew: Boolean = false): Bundle {
-    val bundle = Bundle()
-    bundle.putBoolean(com.appservice.constant.IntentConstant.NON_PHYSICAL_EXP_CODE.name, session?.isNonPhysicalProductExperienceCode
-            ?: false)
-    bundle.putString(com.appservice.constant.IntentConstant.CURRENCY_TYPE.name, "INR")
-    bundle.putString(com.appservice.constant.IntentConstant.FP_ID.name, session?.fPID)
-    bundle.putString(com.appservice.constant.IntentConstant.FP_TAG.name, session?.fpTag)
-    bundle.putString(com.appservice.constant.IntentConstant.USER_PROFILE_ID.name, session?.userProfileId)
-    bundle.putString(com.appservice.constant.IntentConstant.CLIENT_ID.name, clientId)
-    bundle.putBoolean(com.appservice.constant.IntentConstant.IS_ADD_NEW.name, isAddNew)
-    bundle.putString(com.appservice.constant.IntentConstant.EXTERNAL_SOURCE_ID.name, session?.getFPDetails(Key_Preferences.EXTERNAL_SOURCE_ID))
-    bundle.putString(com.appservice.constant.IntentConstant.APPLICATION_ID.name, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID))
-    return bundle
+  val bundle = Bundle()
+  bundle.putBoolean(com.appservice.constant.IntentConstant.NON_PHYSICAL_EXP_CODE.name, session?.isNonPhysicalProductExperienceCode ?: false)
+  bundle.putString(com.appservice.constant.IntentConstant.CURRENCY_TYPE.name, "INR")
+  bundle.putString(com.appservice.constant.IntentConstant.FP_ID.name, session?.fPID)
+  bundle.putString(com.appservice.constant.IntentConstant.FP_TAG.name, session?.fpTag)
+  bundle.putString(com.appservice.constant.IntentConstant.USER_PROFILE_ID.name, session?.userProfileId)
+  bundle.putString(com.appservice.constant.IntentConstant.CLIENT_ID.name, clientId)
+  bundle.putBoolean(com.appservice.constant.IntentConstant.IS_ADD_NEW.name, isAddNew)
+  bundle.putString(com.appservice.constant.IntentConstant.EXTERNAL_SOURCE_ID.name, session?.getFPDetails(Key_Preferences.EXTERNAL_SOURCE_ID))
+  bundle.putString(com.appservice.constant.IntentConstant.APPLICATION_ID.name, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID))
+  return bundle
 }
 
-//fun Fragment.startFragmentActivity(type: com.appservice.constant.FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
-//  val intent = Intent(activity, CatalogServiceContainerActivity::class.java)
-//  intent.putExtras(bundle)
-//  intent.setFragmentType(type)
-//  if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//  if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
-//}
+fun Fragment.startFragmentActivity(type: com.appservice.constant.FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+  val intent = Intent(activity, CatalogServiceContainerActivity::class.java)
+  intent.putExtras(bundle)
+  intent.setFragmentType(type)
+  if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+  if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
+}
 
 fun AppCompatActivity.startBookTable(session: UserSessionManager?) {
     try {
@@ -661,16 +652,6 @@ fun AppCompatActivity.startOrderAptConsultList(session: UserSessionManager?, isO
 }
 
 fun getSessionOrder(session: UserSessionManager?): Bundle {
-<<<<<<< HEAD
-    val data = PreferenceData(
-            AppConstant.CLIENT_ID_2, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
-            session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
-            session?.getFPDetails(Key_Preferences.LONGITUDE), session?.fP_AppExperienceCode
-    )
-    val bundle = Bundle()
-    bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
-    return bundle
-=======
   val data = PreferenceData(
     AppConstant.CLIENT_ID_ORDER, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
     session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
@@ -679,7 +660,6 @@ fun getSessionOrder(session: UserSessionManager?): Bundle {
   val bundle = Bundle()
   bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
   return bundle
->>>>>>> 2453da4f0781704feda685c04ff58c20bc888883
 }
 
 fun AppCompatActivity.startBusinessLogo(session: UserSessionManager?) {
