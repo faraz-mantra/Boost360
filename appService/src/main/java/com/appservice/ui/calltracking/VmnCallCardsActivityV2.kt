@@ -8,24 +8,20 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appservice.R
 import com.appservice.base.AppBaseActivity
-import com.appservice.databinding.ActivityVmnCallCardsBinding
+import com.appservice.databinding.ActivityVmnCallCardsV2Binding
 import com.appservice.model.VmnCallModel
 import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.VmnCallsViewModel
-import com.framework.models.BaseViewModel
+import com.framework.constants.PremiumCode
+import com.framework.constants.SupportVideoType
 import com.framework.pref.Key_Preferences
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_CATEGORY
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
-import com.framework.utils.InAppReviewUtils
 import com.framework.utils.toArrayList
 import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
@@ -34,7 +30,6 @@ import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.BUSINESS_CALLS
 import com.framework.webengageconstant.EVENT_LABEL_BUSINESS_CALLS
 import com.google.android.material.tabs.TabLayout
-import com.google.gson.JsonObject
 import com.onboarding.nowfloats.constant.IntentConstant
 import java.util.ArrayList
 import java.util.HashMap
@@ -42,7 +37,7 @@ import java.util.HashMap
 /**
  * Created by Admin on 27-04-2017.
  */
-class VmnCallCardsActivity : AppBaseActivity<ActivityVmnCallCardsBinding, VmnCallsViewModel>(),
+class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, VmnCallsViewModel>(),
     AppOnZeroCaseClicked {
     var sessionManager: UserSessionManager? = null
     var seeMoreLessStatus = false
@@ -52,7 +47,7 @@ class VmnCallCardsActivity : AppBaseActivity<ActivityVmnCallCardsBinding, VmnCal
     var allowCallPlayFlag // This flag allows only one audio to play at a time. True means an audio can be played.
             = false
     var headerList: ArrayList<VmnCallModel> = ArrayList<VmnCallModel>()
-    var vmnCallAdapter: VmnCall_Adapter? = null
+   // var vmnCallAdapter: VmnCall_Adapter? = null
     var mRecyclerView: RecyclerView? = null
     var selectedViewType = "ALL"
     private var offset = 0
@@ -67,7 +62,7 @@ class VmnCallCardsActivity : AppBaseActivity<ActivityVmnCallCardsBinding, VmnCal
             this,
             isPremium
         ).getRequest().build()
-        addFragmentReplace(binding?.childContainer?.getId(), appFragmentZeroCase)
+        addFragment(binding?.childContainer?.getId(), appFragmentZeroCase,false)
        // MixPanelController.track(MixPanelController.VMN_CALL_TRACKER, null)
         setSupportActionBar(binding?.toolbar)
         if (supportActionBar != null) {
@@ -91,8 +86,8 @@ class VmnCallCardsActivity : AppBaseActivity<ActivityVmnCallCardsBinding, VmnCal
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         mRecyclerView!!.layoutManager = linearLayoutManager
         mRecyclerView!!.setHasFixedSize(true)
-        vmnCallAdapter = VmnCall_Adapter(this, headerList)
-        mRecyclerView!!.adapter = vmnCallAdapter
+       // vmnCallAdapter = VmnCall_Adapter(this, headerList)
+      //  mRecyclerView!!.adapter = vmnCallAdapter
         mRecyclerView!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val totalItemCount = linearLayoutManager.itemCount
@@ -105,21 +100,14 @@ class VmnCallCardsActivity : AppBaseActivity<ActivityVmnCallCardsBinding, VmnCal
         setOnClickListener(binding?.seeMoreLess,binding?.websiteHelper,
         binding?.phoneHelper,binding?.parentLayout,binding?.cardViewViewCalllog)
 
-
-        //show or hide if feature is available to user
-       /* mainLayout = findViewById<View>(R.id.main_layout) as LinearLayout
-        primaryLayout = findViewById<ConstraintLayout>(R.id.primary_layout)
-        secondLayout = findViewById(R.id.second_layout)
-        firstLayout = findViewById(R.id.first_layout)
-        secondaryLayout = findViewById<View>(R.id.secondary_layout) as LinearLayout*/
         websiteCallCount()
         if (isPremium) {
             nonEmptyView()
-            calls
+            calls()
         } else {
             emptyView()
         }
-        vmnCallAdapter.setAllowAudioPlay(object : AllowAudioPlay() {
+        /*vmnCallAdapter.setAllowAudioPlay(object : AllowAudioPlay() {
             fun allowAudioPlay(): Boolean {
                 return allowCallPlayFlag
             }
@@ -127,17 +115,17 @@ class VmnCallCardsActivity : AppBaseActivity<ActivityVmnCallCardsBinding, VmnCal
             fun toggleAllowAudioPlayFlag(setValue: Boolean) {
                 allowCallPlayFlag = setValue
             }
-        })
+        })*/
     }
 
     private val isPremium: Boolean
         get() {
             val keys = session?.getStoreWidgets()
-            return if (keys != null && keys.contains(PremiumCode.CALLTRACKER.getValue())) true else false
+            return keys != null && keys.contains(PremiumCode.CALLTRACKER.value)
         }
 
     private fun showTrackedCalls() {
-        binding.tableLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        binding?.tableLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 if (tab.position == 0) {
                     if (selectedViewType != "ALL") {
@@ -220,7 +208,7 @@ class VmnCallCardsActivity : AppBaseActivity<ActivityVmnCallCardsBinding, VmnCal
             }
         }
         Log.i(TAG, "updateRecyclerData: header list size " + getSelectedTypeList(headerList).size)
-        vmnCallAdapter.updateList(getSelectedTypeList(headerList))
+        //vmnCallAdapter.updateList(getSelectedTypeList(headerList))
     }
 
     private fun getSelectedTypeList(list: ArrayList<VmnCallModel>): ArrayList<VmnCallModel> {
@@ -253,13 +241,13 @@ class VmnCallCardsActivity : AppBaseActivity<ActivityVmnCallCardsBinding, VmnCal
 
     private fun showEmptyScreen() {
         if (totalCallCount == 0) {
-            binding?.emptyLayout?.visibility = View.VISIBLE
-            val imageView = binding?.emptyLayout?.image_item
-            val mMainText = binding?.emptyLayout?.main_text
-            val mDescriptionText = binding?.emptyLayout?.description_text
-            imageView.setImageResource(R.drawable.icon_no_calls)
-            mMainText.text = "You have no call records yet."
-            mDescriptionText.text =
+            binding?.emptyLayout?.root?.visibility = View.VISIBLE
+            val imageView = binding?.emptyLayout?.imageItem
+            val mMainText = binding?.emptyLayout?.mainText
+            val mDescriptionText = binding?.emptyLayout?.descriptionText
+            imageView?.setImageResource(R.drawable.icon_no_calls)
+            mMainText?.text = "You have no call records yet."
+            mDescriptionText?.text =
                 "Your customers haven't contacted\nyou on your call tracking number yet."
         } else {
             findViewById<View>(R.id.calls_details_layout).visibility = View.VISIBLE
@@ -394,26 +382,26 @@ class VmnCallCardsActivity : AppBaseActivity<ActivityVmnCallCardsBinding, VmnCal
         super.onClick(v)
         when (v) {
             binding?.cardViewViewCalllog -> {
-                val i = Intent(this@VmnCallCardsActivity, ShowVmnCallActivity::class.java)
+              /*  val i = Intent(this@VmnCallCardsActivity, ShowVmnCallActivity::class.java)
 
                 if (totalCallCount == 0) {
-                    Methods.showSnackBarNegative(
+                    showSnackBarNegative(
                         this@VmnCallCardsActivity,
                         "You do not have call logs."
                     )
                     return
                 }
                 startActivity(i)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)*/
             }
             binding?.seeMoreLess->{
                 if (!seeMoreLessStatus) {
                     seeMoreLessStatus = true
-                    binding?.seeMoreLessImage?.setImageResource(R.drawable.up_arrow)
+                    binding?.seeMoreLessImage?.setImageResource(R.drawable.vmn_up_arrow)
                     binding?.helpWebPhoneLayout?.setVisibility(View.VISIBLE)
                 } else {
                     seeMoreLessStatus = false
-                    binding?.seeMoreLessImage?.setImageResource(R.drawable.down_arrow)
+                    binding?.seeMoreLessImage?.setImageResource(R.drawable.vmn_down_arrow)
                     binding?.helpWebPhoneLayout?.setVisibility(View.GONE)
 
                     //hide info
@@ -440,8 +428,8 @@ class VmnCallCardsActivity : AppBaseActivity<ActivityVmnCallCardsBinding, VmnCal
             binding?.parentLayout->{
                 if (seeMoreLessStatus) {
                     seeMoreLessStatus = false
-                    binding?.seeMoreLessImage?.setImageResource(R.drawable.down_arrow)
-                    binding?.helpWebPhoneLayout.setVisibility(View.GONE)
+                    binding?.seeMoreLessImage?.setImageResource(R.drawable.vmn_down_arrow)
+                    binding?.helpWebPhoneLayout?.setVisibility(View.GONE)
 
                     //hide info
                     binding?.helpWebsiteInfo?.setVisibility(View.GONE)
@@ -458,7 +446,7 @@ class VmnCallCardsActivity : AppBaseActivity<ActivityVmnCallCardsBinding, VmnCal
         progressDialog.setMessage(status)
         progressDialog.setCancelable(false)
         progressDialog.show()
-        val intent = Intent(this, UpgradeActivity::class.java)
+        val intent = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
         intent.putExtra("expCode", session?.fP_AppExperienceCode)
         intent.putExtra("fpName", session?.fPName)
         intent.putExtra("fpid", session?.fPID)
@@ -466,14 +454,13 @@ class VmnCallCardsActivity : AppBaseActivity<ActivityVmnCallCardsBinding, VmnCal
         intent.putExtra("accountType", session?.getFPDetails(GET_FP_DETAILS_CATEGORY))
         intent.putStringArrayListExtra(
             "userPurchsedWidgets",
-            ArrayList<String>(session?.getStoreWidgets())
-        )
-        if (session?.userPrimaryMobile != null) {
+            session.getStoreWidgets()?.toArrayList())
+        if (session.userPrimaryMobile != null) {
             intent.putExtra("email", session.userPrimaryMobile)
         } else {
             intent.putExtra("email", getString(R.string.ria_customer_mail))
         }
-        if (session?.userPrimaryMobile != null) {
+        if (session.userPrimaryMobile != null) {
             intent.putExtra("mobileNo", session?.userPrimaryMobile)
         } else {
             intent.putExtra("mobileNo", getString(R.string.ria_customer_number))
@@ -516,12 +503,12 @@ class VmnCallCardsActivity : AppBaseActivity<ActivityVmnCallCardsBinding, VmnCal
     override fun appOnBackPressed() {}
     override fun onStop() {
         super.onStop()
-        if (vmnCallAdapter.getItemCount() > 1) {
+        /*if (vmnCallAdapter.getItemCount() > 1) {
             InAppReviewUtils.showInAppReview(
                 this,
                 InAppReviewUtils.Events.in_app_review_out_of_customer_calls
             )
-        }
+        }*/
     }
 
     companion object {
@@ -529,7 +516,7 @@ class VmnCallCardsActivity : AppBaseActivity<ActivityVmnCallCardsBinding, VmnCal
     }
 
     override fun getLayout(): Int {
-        return R.layout.activity_vmn_call_cards
+        return R.layout.activity_vmn_call_cards_v2
     }
 
     override fun getViewModelClass(): Class<VmnCallsViewModel> {

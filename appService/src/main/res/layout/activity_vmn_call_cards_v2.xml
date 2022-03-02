@@ -9,11 +9,13 @@
       android:orientation="vertical">
 
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar_boost"
+    <com.framework.views.customViews.CustomToolbar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/ic_back_arrow_new"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
+        android:background="?attr/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +38,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="5dp"
         android:background="@drawable/all_side_small_curve_bg"
-        android:elevation="@dimen/_3sdp"
+        android:elevation="3dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,7 +100,7 @@
 
           <TextView
               android:layout_centerVertical="true"
-              android:layout_marginStart="@dimen/_16sdp"
+              android:layout_marginStart="16dp"
               android:fontFamily="@font/semi_bold"
               android:textSize="@dimen/size_16"
               android:id="@+id/total_number_of_calls"
@@ -118,19 +120,19 @@
               android:id="@+id/see_more_less_image"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:src="@drawable/down_arrow" />
+              android:src="@drawable/vmn_down_arrow" />
         </RelativeLayout>
 
         <View
-            android:background="@color/grey"
+            android:background="@color/grey_bg"
             android:layout_width="match_parent"
             android:layout_height="0.4dp"/>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/help_web_phone_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:visibility="gone"
             android:paddingVertical="8dp"
             tools:visibility="visible">
@@ -159,11 +161,11 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="@dimen/size_40"
                 app:srcCompat="@drawable/ic_phone_call" />
 
             <LinearLayout
-                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/size_16"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -174,7 +176,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="@string/zero"
-                  android:textSize="@dimen/_20sdp" />
+                  android:textSize="20sp" />
 
               <TextView
                   android:text="@string/mobile"
@@ -198,11 +200,11 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="@dimen/size_40"
                 app:srcCompat="@drawable/ic_computer_status" />
 
             <LinearLayout
-                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/size_16"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -214,7 +216,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="@string/zero"
-                  android:textSize="@dimen/_20sdp" />
+                  android:textSize="@dimen/size_20" />
 
               <TextView
                   android:text="@string/desktop"
@@ -233,10 +235,10 @@
 
     <LinearLayout
         android:id="@+id/help_website_info"
-        android:layout_width="@dimen/_150sdp"
+        android:layout_width="@dimen/size_150"
         android:layout_height="wrap_content"
         android:layout_below="@id/main_info_layout"
-        android:elevation="@dimen/_5sdp"
+        android:elevation="@dimen/size_5"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="@id/main_info_layout"
         app:layout_constraintTop_toBottomOf="@id/main_info_layout">
@@ -244,19 +246,19 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_margin="@dimen/_2sdp"
+          android:layout_margin="2dp"
           android:background="@drawable/all_side_curve_bg"
-          android:elevation="@dimen/_5sdp"
+          android:elevation="5dp"
           android:gravity="center"
-          android:padding="@dimen/_10sdp"
+          android:padding="@dimen/size_10"
           android:text="The total number of clicks on your contact number displayed on website" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/help_phone_info"
-        android:layout_width="@dimen/_150sdp"
+        android:layout_width="@dimen/size_150"
         android:layout_height="wrap_content"
-        android:elevation="@dimen/_5sdp"
+        android:elevation="5dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@id/main_info_layout"
         app:layout_constraintTop_toBottomOf="@id/main_info_layout">
@@ -264,11 +266,11 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_margin="@dimen/_2sdp"
+          android:layout_margin="2dp"
           android:background="@drawable/all_side_curve_bg"
-          android:elevation="@dimen/_5sdp"
+          android:elevation="5dp"
           android:gravity="center"
-          android:padding="@dimen/_10sdp"
+          android:padding="@dimen/size_10"
           android:text="The total number of clicks on your contact number displayed on website" />
     </LinearLayout>
 
@@ -286,7 +288,7 @@
 
       <include
           android:id="@+id/empty_layout"
-          layout="@layout/empty_screen_layout"
+          layout="@layout/vmn_empty_screen_layout"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:visibility="gone" />
@@ -312,7 +314,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="0"
-              android:textColor="@color/primaryColor"
+              android:textColor="@color/colorPrimary"
               android:textSize="18sp" />
 
           <TextView
@@ -325,7 +327,7 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/divider" />
+            android:background="@color/zui_divider_color" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -339,7 +341,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="0"
-              android:textColor="@color/primaryColor"
+              android:textColor="@color/colorPrimary"
               android:textSize="18sp" />
 
           <TextView
@@ -353,7 +355,7 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/divider" />
+            android:background="@color/zui_divider_color" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -367,7 +369,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="0"
-              android:textColor="@color/primaryColor"
+              android:textColor="@color/colorPrimary"
               android:textSize="18sp" />
 
           <TextView
@@ -405,7 +407,7 @@
           <ImageView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:src="@drawable/next" />
+              android:src="@drawable/vmn_next" />
         </LinearLayout>
 
       </androidx.cardview.widget.CardView>
@@ -439,8 +441,8 @@
           android:id="@+id/first_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_16sdp"
-          android:layout_marginEnd="@dimen/_16sdp"
+          android:layout_marginStart="@dimen/size_16"
+          android:layout_marginEnd="@dimen/size_16"
           android:gravity="center_vertical"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent">
@@ -449,7 +451,7 @@
             android:tag="com.userexperior.ueSecureView"
             android:id="@+id/tv_tracked_call"
             android:fontFamily="@font/semi_bold"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/size_12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tracked_calls" />

@@ -8,39 +8,39 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.appservice.R
-import com.appservice.databinding.ItemPreviewImageBinding
+import com.appservice.databinding.SingleItemVmnCallItemV2Binding
+import com.appservice.model.VmnCallModel
 import com.appservice.recyclerView.AppBaseRecyclerViewHolder
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import java.util.*
 
-class VmnCallViewHolder(binding: ItemPreviewImageBinding) : AppBaseRecyclerViewHolder<ItemPreviewImageBinding>(binding) {
+class VmnCallViewHolder(binding: SingleItemVmnCallItemV2Binding) : AppBaseRecyclerViewHolder<SingleItemVmnCallItemV2Binding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
+    val totaltime = getTimeFromMilliSeconds(model.getCallDuration())
+    val model =item as VmnCallModel
 
-    holder.totaltime = getTimeFromMilliSeconds(mList.get(position).getCallDuration())
-    holder.mediaData = mList.get(position)
+    binding.seekBar.setProgress(model.getAudioPosition())
 
-    holder.seekBar.setProgress(mList.get(position).getAudioPosition())
-
-    if (mList.get(position).getAudioPosition() == 0 && mList.get(position)
-        .getAudioLength() == 0 && !mList.get(position).isAudioPlayState()
+    if (model.getAudioPosition() == 0 && model
+        .getAudioLength() == 0 && !model.isAudioPlayState()
     ) {
       holder.seekBar.setProgress(0)
       holder.audioStartTime.setText("0:00")
       holder.audioEndTime.setText(" / 0:00")
 
-      /*            if(mList.get(position).getCallRecordingUri() != null && !mList.get(position).getCallRecordingUri().equals("None")){
-             */
-      /* Uri uri = Uri.parse(mList.get(position).getCallRecordingUri());
+                  if(model.getCallRecordingUri() != null && !model.getCallRecordingUri().equals("None")){
+
+       Uri uri = Uri.parse(model.getCallRecordingUri());
                 MediaMetadataRetriever mmr = new MediaMetadataRetriever();
                 String durationStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-                int millSecond = Integer.parseInt(durationStr);*/
-      /*
+                int millSecond = Integer.parseInt(durationStr);
+
                 MediaPlayer mediaPlayer = new MediaPlayer();
                 try {
-                    Log.v("getAudioLength2", " "+ mList.get(position).getCallRecordingUri());
-                    mediaPlayer.setDataSource(mList.get(position).getCallRecordingUri());
+                    Log.v("getAudioLength2", " "+ model.getCallRecordingUri());
+                    mediaPlayer.setDataSource(model.getCallRecordingUri());
 //                    mediaPlayer.prepare();
                     mediaPlayer.prepareAsync();
                     Log.v("getAudioLength3", " "+ getTimeFromMilliSeconds(mediaPlayer.getDuration()));
@@ -49,19 +49,19 @@ class VmnCallViewHolder(binding: ItemPreviewImageBinding) : AppBaseRecyclerViewH
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }*/holder.currentDuration = 0
+            }holder.currentDuration = 0
       holder.playPauseButton.setImageResource(R.drawable.ic_audio_play)
     } else {
-      holder.seekBar.setProgress(mList.get(position).getAudioPosition())
-      holder.seekBar.setMax(mList.get(position).getAudioLength())
-      holder.audioStartTime.setText(getTimeFromMilliSeconds(mList.get(position).getAudioPosition()))
+      holder.seekBar.setProgress(model.getAudioPosition())
+      holder.seekBar.setMax(model.getAudioLength())
+      holder.audioStartTime.setText(getTimeFromMilliSeconds(model.getAudioPosition()))
       holder.audioEndTime.setText(
         " / " + getTimeFromMilliSeconds(
-          mList.get(position).getAudioLength()
+          model.getAudioLength()
         )
       )
-      holder.currentDuration = mList.get(position).getAudioPosition()
-      if (mList.get(position).isAudioPlayState()) {
+      holder.currentDuration = model.getAudioPosition()
+      if (model.isAudioPlayState()) {
         holder.playPauseButton.setImageResource(R.drawable.ic_pause_gray)
       } else {
         holder.playPauseButton.setImageResource(R.drawable.ic_audio_play)
@@ -69,7 +69,7 @@ class VmnCallViewHolder(binding: ItemPreviewImageBinding) : AppBaseRecyclerViewH
     }
 
 
-    val childModel: com.nowfloats.Analytics_Screen.model.VmnCallModel = mList.get(position)
+    val childModel: com.nowfloats.Analytics_Screen.model.VmnCallModel = model
     holder.date.setText(getDate(com.nowfloats.util.Methods.getDateFormat(childModel.getCallDateTime())))
     holder.time.setText(getDate(com.nowfloats.util.Methods.getTimeFormat(childModel.getCallDateTime())))
     holder.divider.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
@@ -90,7 +90,7 @@ class VmnCallViewHolder(binding: ItemPreviewImageBinding) : AppBaseRecyclerViewH
             mAllowAudioPlay.toggleAllowAudioPlayFlag(false) // Block other audios from playing.
             holder.playPauseButton.setImageResource(R.drawable.ic_pause_gray)
             currentPlay = holder.getAdapterPosition()
-            if (!TextUtils.isEmpty(mList.get(position).getCallRecordingUri())) {
+            if (!TextUtils.isEmpty(model.getCallRecordingUri())) {
               for (i in mList.indices) {
                 mList.get(i).setAudioPlayState(i == position)
               }
@@ -101,7 +101,7 @@ class VmnCallViewHolder(binding: ItemPreviewImageBinding) : AppBaseRecyclerViewH
                 try {
                   if (mList.size > position) {
                     val callModel: com.nowfloats.Analytics_Screen.model.VmnCallModel =
-                      mList.get(position)
+                      model
                     if (callModel != null) {
                       holder.mediaPlayer.setDataSource(callModel.getCallRecordingUri())
                       holder.mediaPlayer.prepareAsync() // might take long! (for buffering, etc)
@@ -134,11 +134,11 @@ class VmnCallViewHolder(binding: ItemPreviewImageBinding) : AppBaseRecyclerViewH
         }
       })
     }
-    holder.number.setText(mList.get(position).getCallerNumber())
+    holder.number.setText(model.getCallerNumber())
     holder.mainLayout.setOnClickListener(View.OnClickListener {
       com.nowfloats.util.Methods.makeCall(
         mContext,
-        mList.get(position).getCallerNumber()
+        model.getCallerNumber()
       )
     })
 
@@ -153,7 +153,7 @@ class VmnCallViewHolder(binding: ItemPreviewImageBinding) : AppBaseRecyclerViewH
       holder.audioStartTime.setText("0:00")
       holder.audioEndTime.setText(" / 0:00")
       holder.currentDuration = 0
-      mList.get(position).setAudioPlayState(false)
+      model.setAudioPlayState(false)
       mAllowAudioPlay.toggleAllowAudioPlayFlag(true) // Allow other audios to play.
     })
 
@@ -164,10 +164,10 @@ class VmnCallViewHolder(binding: ItemPreviewImageBinding) : AppBaseRecyclerViewH
       holder.handler.postDelayed(holder.updateSeekBar, 1000)
 
       //set audio length
-      mList.get(position).setAudioLength(mp.duration)
+      model.setAudioLength(mp.duration)
 
       //set audio play state
-      mList.get(position).setAudioPlayState(true)
+      model.setAudioPlayState(true)
     })
 
     holder.updateSeekBar = Runnable {
