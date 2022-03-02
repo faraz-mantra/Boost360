@@ -38,6 +38,7 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
   }
 
   open fun showProgress(title: String? = "Please wait...", cancelable: Boolean? = false) {
+    hideProgress()
     title?.let { progressView?.setTitle(it) }
     cancelable?.let { progressView?.isCancelable = it }
     progressView?.showProgress(supportFragmentManager)

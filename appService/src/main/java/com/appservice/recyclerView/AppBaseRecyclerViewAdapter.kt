@@ -46,6 +46,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       DOMAIN_NAME_SUGGESTIONS -> DomainSuggestionsViewHolder(binding as ItemDomainSuggestionsBinding)
       SIMILAR_DOMAIN_SUGGESTIONS -> SimilarDomainSuggestionViewHolder(binding as ItemSimilarDomainSuggestionsBinding)
       GST_SLAB_SETTING -> GstSlabViewHolder(binding as ItemGstSlabBinding)
+      VMN_CALL->VmnCallViewHolder(binding as SingleItemVmnCallItemV2Binding)
     }
   }
 

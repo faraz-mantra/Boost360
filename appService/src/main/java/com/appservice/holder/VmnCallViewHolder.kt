@@ -1,89 +1,65 @@
 package com.appservice.holder
 
-import android.media.MediaPlayer
-import android.media.MediaPlayer.OnCompletionListener
-import android.media.MediaPlayer.OnPreparedListener
-import android.text.TextUtils
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.appservice.R
 import com.appservice.databinding.SingleItemVmnCallItemV2Binding
 import com.appservice.model.VmnCallModel
 import com.appservice.recyclerView.AppBaseRecyclerViewHolder
 import com.appservice.recyclerView.BaseRecyclerViewItem
+import com.framework.utils.DateUtils.getDate
 import java.util.*
 
 class VmnCallViewHolder(binding: SingleItemVmnCallItemV2Binding) : AppBaseRecyclerViewHolder<SingleItemVmnCallItemV2Binding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
-    val totaltime = getTimeFromMilliSeconds(model.getCallDuration())
     val model =item as VmnCallModel
+    val totaltime = getTimeFromMilliSeconds(model.callDuration?:0)
 
-    binding.seekBar.setProgress(model.getAudioPosition())
+    binding.seekBar.setProgress(model.audioPosition)
 
-    if (model.getAudioPosition() == 0 && model
-        .getAudioLength() == 0 && !model.isAudioPlayState()
+    if (model.audioPosition == 0 && model
+        .audioPosition == 0 && !model.isAudioPlayState
     ) {
-      holder.seekBar.setProgress(0)
-      holder.audioStartTime.setText("0:00")
-      holder.audioEndTime.setText(" / 0:00")
+      binding.seekBar.setProgress(0)
+      binding.tvRecTime.setText("0:00")
+      binding.tvEndTime.setText(" / 0:00")
 
-                  if(model.getCallRecordingUri() != null && !model.getCallRecordingUri().equals("None")){
-
-       Uri uri = Uri.parse(model.getCallRecordingUri());
-                MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-                String durationStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-                int millSecond = Integer.parseInt(durationStr);
-
-                MediaPlayer mediaPlayer = new MediaPlayer();
-                try {
-                    Log.v("getAudioLength2", " "+ model.getCallRecordingUri());
-                    mediaPlayer.setDataSource(model.getCallRecordingUri());
-//                    mediaPlayer.prepare();
-                    mediaPlayer.prepareAsync();
-                    Log.v("getAudioLength3", " "+ getTimeFromMilliSeconds(mediaPlayer.getDuration()));
-                    holder.audioEndTime.setText(" / "+ getTimeFromMilliSeconds(mediaPlayer.getDuration()));
-//                    Log.v("getAudioLength3", " "+ mediaPlayer.getDuration());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }holder.currentDuration = 0
-      holder.playPauseButton.setImageResource(R.drawable.ic_audio_play)
+      val currentDuration = 0
+      binding.tvPlay.setImageResource(R.drawable.ic_audio_play)
     } else {
-      holder.seekBar.setProgress(model.getAudioPosition())
-      holder.seekBar.setMax(model.getAudioLength())
-      holder.audioStartTime.setText(getTimeFromMilliSeconds(model.getAudioPosition()))
-      holder.audioEndTime.setText(
+      binding.seekBar.setProgress(model.audioPosition)
+      binding.seekBar.setMax(model.audioLength)
+      binding.tvRecTime.setText(getTimeFromMilliSeconds(model.audioPosition))
+      binding.tvEndTime.setText(
         " / " + getTimeFromMilliSeconds(
-          model.getAudioLength()
+          model.audioLength
         )
       )
-      holder.currentDuration = model.getAudioPosition()
-      if (model.isAudioPlayState()) {
-        holder.playPauseButton.setImageResource(R.drawable.ic_pause_gray)
+      val currentDuration = model.audioPosition
+      if (model.isAudioPlayState) {
+        binding.tvPlay.setImageResource(R.drawable.ic_pause_gray)
       } else {
-        holder.playPauseButton.setImageResource(R.drawable.ic_audio_play)
+        binding.tvPlay.setImageResource(R.drawable.ic_audio_play)
       }
     }
 
 
-    val childModel: com.nowfloats.Analytics_Screen.model.VmnCallModel = model
-    holder.date.setText(getDate(com.nowfloats.util.Methods.getDateFormat(childModel.getCallDateTime())))
-    holder.time.setText(getDate(com.nowfloats.util.Methods.getTimeFormat(childModel.getCallDateTime())))
-    holder.divider.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
-    if (childModel.getCallStatus().equals("MISSED", ignoreCase = true)) {
-      holder.callType.setText("Missed Call")
+/*    binding.tvDate.setText(getDate(model.callDateTime))
+    binding.tvTime.setText(getDate(model.callDateTime))*/
+    binding.divider.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+    if (model.callStatus.equals("MISSED", ignoreCase = true)) {
+      binding.tvCallType.setText("Missed Call")
 
       //hide player and line
-      holder.playerLayout.setVisibility(View.GONE)
-      holder.divider.setVisibility(View.GONE)
+      binding.playerLayout.setVisibility(View.GONE)
+      binding.divider.setVisibility(View.GONE)
     } else {
-      holder.playerLayout.setVisibility(View.VISIBLE)
-      holder.divider.setVisibility(View.VISIBLE)
-      holder.callType.setText("Connected call")
-      holder.playPauseButton.setOnClickListener(View.OnClickListener { v: View? ->
+      binding.playerLayout.setVisibility(View.VISIBLE)
+      binding.divider.setVisibility(View.VISIBLE)
+      binding.tvCallType.setText("Connected call")
+/*
+      binding.tvPlay.setOnClickListener(View.OnClickListener { v: View? ->
         if (!holder.mediaPlayer.isPlaying()) {
           // This block is triggered if media is not playing.
           if (mAllowAudioPlay.allowAudioPlay()) {
@@ -133,59 +109,27 @@ class VmnCallViewHolder(binding: SingleItemVmnCallItemV2Binding) : AppBaseRecycl
           mAllowAudioPlay.toggleAllowAudioPlayFlag(true) // Allow other audios to play.
         }
       })
+*/
     }
-    holder.number.setText(model.getCallerNumber())
-    holder.mainLayout.setOnClickListener(View.OnClickListener {
-      com.nowfloats.util.Methods.makeCall(
+    binding.tvNumber.setText(model.callerNumber)
+    binding.llayoutNumber.setOnClickListener(View.OnClickListener {
+      /*com.nowfloats.util.Methods.makeCall(
         mContext,
         model.getCallerNumber()
-      )
+      )*/
     })
 
     //player listeners
 
-    //player listeners
-    holder.mediaPlayer.setOnCompletionListener(OnCompletionListener {
-      holder.handler.removeCallbacks(holder.updateSeekBar)
-      holder.mediaPlayer.reset()
-      holder.playPauseButton.setImageResource(R.drawable.ic_audio_play)
-      holder.seekBar.setProgress(0)
-      holder.audioStartTime.setText("0:00")
-      holder.audioEndTime.setText(" / 0:00")
-      holder.currentDuration = 0
-      model.setAudioPlayState(false)
-      mAllowAudioPlay.toggleAllowAudioPlayFlag(true) // Allow other audios to play.
-    })
 
-    holder.mediaPlayer.setOnPreparedListener(OnPreparedListener { mp: MediaPlayer ->
-      holder.audioEndTime.setText(" / " + getTimeFromMilliSeconds(mp.duration))
-      holder.seekBar.setMax(mp.duration)
-      holder.start()
-      holder.handler.postDelayed(holder.updateSeekBar, 1000)
-
-      //set audio length
-      model.setAudioLength(mp.duration)
-
-      //set audio play state
-      model.setAudioPlayState(true)
-    })
-
-    holder.updateSeekBar = Runnable {
-      if (holder.mediaPlayer == null) {
-        return@Runnable
-      }
-      holder.currentDuration = holder.mediaPlayer.getCurrentPosition()
-      //int seekBarPos = seekBarPos(duration);
-      val time: String = getTimeFromMilliSeconds(holder.currentDuration)
-      Log.v("ggg", holder.currentDuration.toString() + " " + time)
-      holder.seekBar.setProgress(holder.currentDuration)
-      holder.audioStartTime.setText(time)
-      if (holder.currentDuration == holder.mediaPlayer.getDuration() || !holder.isPlaying()) {
-        return@Runnable
-      }
-      holder.handler.postDelayed(holder.updateSeekBar, 1000)
-    }
   }
+
+  private fun getTimeFromMilliSeconds(pos: Int): String? {
+    val seconds = pos / 1000 % 60
+    val minutes = pos / (1000 * 60) % 60
+    return String.format(Locale.ENGLISH, "%d:%02d", minutes, seconds)
+  }
+
 
 
 }
