@@ -39,9 +39,6 @@ object DashboardLocalDataSource : AppBaseLocalService() {
     return fromJsonRes(context, R.raw.boost_website_item_new, WebsiteDataResponse::class.java)
   }
 
-  fun getNavDashboardData(context: Context): Observable<BaseResponse> {
-    return fromJsonRes(context, R.raw.nav_dashboard_data, DrawerHomeDataResponse::class.java)
-  }
   fun getMoreSettings(context: Context): Observable<BaseResponse> {
     return fromJsonRes(context, R.raw.more_settings, MoreSettingsResponse::class.java)
   }

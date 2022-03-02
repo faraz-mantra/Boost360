@@ -9,31 +9,21 @@ import android.os.Looper
 import android.os.StrictMode
 import android.util.Log
 import android.view.View
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavArgument
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.anachat.chatsdk.AnaCore
-import com.appservice.ui.catalog.widgets.ClickType
-import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
-import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.dashboard.DashboardFragment
 import com.dashboard.controller.ui.dialog.WelcomeHomeDialog
 import com.dashboard.databinding.ActivityDashboardBinding
 import com.dashboard.model.DisableBadgeNotificationRequest
-import com.dashboard.model.live.drawerData.DrawerHomeData
-import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
 import com.dashboard.model.live.welcomeData.*
-import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
-import com.dashboard.recyclerView.BaseRecyclerViewItem
-import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.utils.DashboardTabs.Companion.fromUrl
 import com.dashboard.viewmodel.DashboardViewModel
@@ -51,14 +41,15 @@ import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.getBa
 import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.initDataBadges
 import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.readDrScoreDocument
 import com.framework.firebaseUtils.firestore.badges.BadgesModel
-import com.framework.glide.util.glideLoad
-import com.framework.imagepicker.ImagePicker
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.KEY_FP_CART_COUNT
-import com.framework.utils.*
+import com.framework.utils.AppsFlyerUtils
+import com.framework.utils.ConversionUtils
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
-import com.framework.webengageconstant.*
+import com.framework.webengageconstant.DASHBOARD_HOME_PAGE
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.PAGE_VIEW
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateInfo
@@ -83,10 +74,9 @@ import zendesk.core.Zendesk
 import zendesk.support.Support
 import java.io.File
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.concurrent.schedule
 
-class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
+class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener {
 
   private val MY_REQUEST_CODE = 120
   private var doubleBackToExitPressedOnce = false
@@ -95,8 +85,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private var deepLinkUtil: DeepLinkUtil? = null
   private lateinit var mNavController: NavController
   private var session: UserSessionManager? = null
-  private var adapterDrawer: AppBaseRecyclerViewAdapter<DrawerHomeData>? = null
-  private var isSecondaryImage = false
   private lateinit var appUpdateManager: AppUpdateManager
   private lateinit var appUpdateInfoTask: Task<AppUpdateInfo>
   var isLoadShimmer = true
@@ -133,11 +121,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     navControllerListener()
     bottomNavInitializer()
     toolbarPropertySet(0)
-//    setDrawerHome()
-//    val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
-//    binding?.drawerView?.txtVersion?.text = "Version $versionName"
-//    binding?.drawerView?.imgBusinessLogo, binding?.drawerView?.backgroundImage, binding?.drawerView?.txtDomainName
-    setOnClickListener(binding?.drawerView?.btnSiteMeter, binding?.viewCartCount)
+    setOnClickListener(binding?.viewCartCount)
     getWelcomeData()
     intentDataCheckAndDeepLink(intent)
     session?.initializeWebEngageLogin()
@@ -188,10 +172,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun popupSnackBarForCompleteUpdate() {
-    Snackbar.make(
-      findViewById<View>(android.R.id.content).rootView,
-      getString(R.string.download_complete), Snackbar.LENGTH_INDEFINITE
-    ).setAction(getString(R.string.install)) {
+    Snackbar.make(findViewById<View>(android.R.id.content).rootView, getString(R.string.download_complete), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.install)) {
       if (this::appUpdateManager.isInitialized) appUpdateManager.completeUpdate()
     }.setActionTextColor(ContextCompat.getColor(this, R.color.green_light)).show()
   }
@@ -201,12 +182,12 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun reloadCapLimitData() {
-    viewModel.getCapLimitFeatureDetails(session?.fPID ?: "", clientId).observeOnce(this, {
+    viewModel.getCapLimitFeatureDetails(session?.fPID ?: "", clientId).observeOnce(this) {
       if (it.isSuccess()) {
         val capLimitList = it.arrayResponse as? Array<CapLimitFeatureResponseItem>
         capLimitList?.toCollection(ArrayList())?.saveCapData()
       }
-    })
+    }
   }
 
   private fun UserSessionManager.initializeWebEngageLogin() {
@@ -316,33 +297,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     return ConversionUtils.dp2px(22f).toFloat()
   }
 
-  fun setPercentageData(score: Int) {
-    val isHigh = (score >= 85)
-    binding?.drawerView?.txtPercentage?.text = "$score% "
-    val percentage = ((100 - score).toDouble() / 100).roundToFloat(2)
-    (binding?.drawerView?.progressBar?.layoutParams as? ConstraintLayout.LayoutParams)?.matchConstraintPercentWidth = percentage
-    binding?.drawerView?.progressBar?.requestLayout()
-  }
-
   private fun setUserData() {
     val cartCount = session?.getIntDetails(KEY_FP_CART_COUNT) ?: 0
     if ((getFragment(DashboardFragment::class.java) != null) && cartCount > 0) binding?.viewCartCount?.visible() else binding?.viewCartCount?.gone()
     binding?.cartCountTxt?.text = "$cartCount ${if (cartCount > 1) "items" else "item"} waiting in cart"
-//    binding?.drawerView?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
-//    binding?.drawerView?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(false)}</u>")
-//    setPercentageData(FirestoreManager.getDrScoreData()?.getDrsTotal() ?: 0)
-    var imageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
-    if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) {
-      imageUri = BASE_IMAGE_URL + imageUri
-    }
-//    binding?.drawerView?.imgBusinessLogo?.let { glideLoad(it, imageUri ?: "", R.drawable.business_edit_profile_icon_d) }
-    var bgImageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)
-    if (bgImageUri.isNullOrEmpty().not() && bgImageUri!!.contains("http").not()) {
-      bgImageUri = BASE_IMAGE_URL + bgImageUri
-    }
-    binding?.drawerView?.bgImage?.let {
-      glideLoad(it, bgImageUri ?: "", R.drawable.general_services_background_img_d)
-    }
   }
 
   private fun cartDataLoad(pos: Int) {
@@ -350,35 +308,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     if (pos == 0 && cartCount > 0) {
       binding?.viewCartCount?.visible()
     } else binding?.viewCartCount?.gone()
-  }
-
-  private fun setDrawerHome() {
-    viewModel.getNavDashboardData(this).observeOnce(this, {
-      val response = it as? DrawerHomeDataResponse
-      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-        binding?.drawerView?.rvLeftDrawer?.apply {
-          adapterDrawer = AppBaseRecyclerViewAdapter(this@DashboardActivity, checkLockData(response.data!!), this@DashboardActivity)
-          adapter = adapterDrawer
-        }
-      } else showShortToast(this.getString(R.string.navigation_data_error))
-    })
-  }
-
-  private fun checkLockData(data: ArrayList<DrawerHomeData>): ArrayList<DrawerHomeData> {
-    data.forEach { it1 ->
-      when (it1.navType) {
-        DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING.name -> {
-          it1.title = getDefaultTrasactionsTaxonomyFromServiceCode(session?.fP_AppExperienceCode)
-        }
-        DrawerHomeData.NavType.NAV_CALLS.name -> {
-          it1.isLockShow = (session?.getStoreWidgets()?.firstOrNull { it == PremiumCode.CALLTRACKER.value } == null)
-        }
-        DrawerHomeData.NavType.NAV_BOOST_KEYBOARD.name -> {
-          it1.isLockShow = (session?.getStoreWidgets()?.firstOrNull { it == PremiumCode.BOOSTKEYBOARD.value } == null)
-        }
-      }
-    }
-    return data
   }
 
   private fun navControllerListener() {
@@ -497,10 +426,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onItemClick(pos)
     when (pos) {
       3 -> if (this.packageName.equals(APPLICATION_JIO_ID, true).not()) checkWelcomeShowScreen(pos)
-      4 -> {
-//        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
-//        binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
-      }
     }
   }
 
@@ -534,18 +459,15 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         RESULT_CANCELED -> showShortToast("App update cancelled")
         ActivityResult.RESULT_IN_APP_UPDATE_FAILED -> showShortToast("App update failed")
       }
-    }
-    if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK && isSecondaryImage) {
-      val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
-      if (mPaths.isNullOrEmpty().not()) uploadSecondaryImage(mPaths[0])
-    } else childFragments?.forEach { fragment ->
-      fragment.onActivityResult(requestCode, resultCode, data)
+    } else {
+      childFragments?.forEach { fragment ->
+        fragment.onActivityResult(requestCode, resultCode, data)
+      }
     }
   }
 
   override fun onBackPressed() {
     when {
-      (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) -> binding?.drawerLayout?.closeDrawers()
       (mNavController.currentDestination?.id == R.id.navigation_dashboard) -> {
         if (!doubleBackToExitPressedOnce) {
           this.doubleBackToExitPressedOnce = true
@@ -560,83 +482,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onClick(v: View?) {
     super.onClick(v)
     when (v) {
-      binding?.drawerView?.btnSiteMeter -> {
-        startReadinessScoreView(session, 0)
-        if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
-      }
-      binding?.drawerView?.imgBusinessLogo -> {
-        this.startFeatureLogo(session)
-        if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
-      }
-      binding?.drawerView?.txtDomainName -> {
-        this.startWebViewPageLoad(session, session!!.getDomainName(false))
-        if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
-      }
-      binding?.drawerView?.backgroundImage -> openImagePicker(true)
       binding?.viewCartCount -> session?.let { this.initiateAddonMarketplace(it, true, "", "") }
     }
-  }
-
-  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-    when (actionType) {
-      RecyclerViewActionType.NAV_CLICK_ITEM_CLICK.ordinal -> {
-        val data = item as? DrawerHomeData ?: return
-        DrawerHomeData.NavType.from(data.navType)?.let { navClickEvent(it) }
-      }
-    }
-  }
-
-  private fun navClickEvent(type: DrawerHomeData.NavType) {
-    when (type) {
-      DrawerHomeData.NavType.NAV_HOME -> if ((getFragment(DashboardFragment::class.java) == null)) openDashboard()
-      DrawerHomeData.NavType.NAV_DIGITAL_CHANNEL -> session?.let { this.startDigitalChannel(it) }
-      DrawerHomeData.NavType.NAV_MANAGE_CONTENT -> session?.let { this.startManageContentActivity(it) }
-      DrawerHomeData.NavType.NAV_CALLS -> this.startVmnCallCard(session)
-      DrawerHomeData.NavType.NAV_ENQUIRY -> this.startBusinessEnquiry(session)
-      DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING -> session?.let { this.startManageInventoryActivity(it) }
-      DrawerHomeData.NavType.NAV_NEWS_LETTER_SUB -> this.startSubscriber(session)
-      DrawerHomeData.NavType.NAV_BOOST_KEYBOARD -> session?.let { this.startKeyboardActivity(it) }
-      DrawerHomeData.NavType.NAV_ADD_ONS_MARKET -> session?.let { this.initiateAddonMarketplace(it, false, "", "") }
-      DrawerHomeData.NavType.NAV_SETTING -> session?.let { this.startSettingActivity(it) }
-      DrawerHomeData.NavType.NAV_HELP_SUPPORT -> session?.let { this.startHelpAndSupportActivity(it) }
-      DrawerHomeData.NavType.NAV_ABOUT_BOOST -> session?.let { this.startAboutBoostActivity(it) }
-      DrawerHomeData.NavType.NAV_REFER_FRIEND -> this.startReferralView(session)
-    }
-    if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
-  }
-
-
-  private fun openImagePicker(isSecondaryImage: Boolean) {
-    this.isSecondaryImage = isSecondaryImage
-    val filterSheet = ImagePickerBottomSheet()
-    filterSheet.isHidePdf(true)
-    filterSheet.onClicked = { clickPickerType(it) }
-    filterSheet.show(supportFragmentManager, ImagePickerBottomSheet::class.java.name)
-  }
-
-  private fun clickPickerType(it: ClickType) {
-    val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
-    ImagePicker.Builder(this)
-      .mode(type)
-      .compressLevel(ImagePicker.ComperesLevel.MEDIUM).directory(ImagePicker.Directory.DEFAULT)
-      .extension(ImagePicker.Extension.PNG).allowMultipleImages(true)
-      .scale(800, 800)
-      .enableDebuggingMode(true).build()
-  }
-
-  private fun uploadSecondaryImage(path: String) {
-    val imageFile = File(path)
-    isSecondaryImage = false
-    showProgress()
-    viewModel.putUploadSecondaryImage(getRequestImageDate(imageFile)).observeOnce(this, {
-      if (it.isSuccess()) {
-        if (it.stringResponse.isNullOrEmpty().not()) {
-          session?.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, it.stringResponse)
-          binding?.drawerView?.bgImage?.let { it1 -> glideLoad(it1, it.stringResponse ?: "", R.drawable.general_services_background_img_d) }
-        }
-      } else showLongToast(it.message())
-      hideProgress()
-    })
   }
 
   private fun getRequestImageDate(businessImage: File): UploadFileBusinessRequest {
@@ -661,13 +508,13 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun getWelcomeData() {
-    viewModel.getWelcomeDashboardData(this).observeOnce(this, {
+    viewModel.getWelcomeDashboardData(this).observeOnce(this) {
       val response = it as? WelcomeDashboardResponse
       val data = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }?.actionItem
       if (response?.isSuccess() == true && data.isNullOrEmpty().not()) {
         data?.saveWelcomeList()
       }
-    })
+    }
   }
 
   override fun onStop() {
@@ -729,10 +576,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun disableBadgeNotification(flagId: String) {
     if (isBadgeCountAvailable(flagId)) {
       val request = DisableBadgeNotificationRequest(session?.fpTag, "BADGE", flagId)
-      viewModel.disableBadgeNotification(request).observeOnce(this, {
+      viewModel.disableBadgeNotification(request).observeOnce(this) {
         Log.i("DisableBadge", "Response: $it")
         readDrScoreDocument()
-      })
+      }
     }
   }
 }

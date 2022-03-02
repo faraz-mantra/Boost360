@@ -70,16 +70,8 @@ class DashboardViewModel : BaseViewModel() {
     return ApiTwoWithFloatRepository.getBizFloatMessage(request).toLiveData()
   }
 
-//  fun fpOnboardingUpdate(request: OnBoardingUpdateModel?): LiveData<BaseResponse> {
-//    return KitWebActionRepository.fpOnboardingUpdate(request).toLiveData()
-//  }
-
   fun getNotificationCount(clientId: String?, fpId: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getNotificationCount(clientId, fpId).toLiveData()
-  }
-
-  fun getNavDashboardData(context: Context): LiveData<BaseResponse> {
-    return WithFloatRepository.getNavDashboardData(context).toLiveData()
   }
 
   fun getSearchAnalytics(fpTag: String?, startDate: String?, endDate: String?): LiveData<BaseResponse> {
