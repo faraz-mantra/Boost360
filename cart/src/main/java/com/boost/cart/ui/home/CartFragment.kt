@@ -19,7 +19,6 @@ import android.widget.ArrayAdapter
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -76,7 +75,6 @@ import com.framework.extensions.underlineText
 import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
-import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -86,7 +84,6 @@ import kotlinx.android.synthetic.main.cart_applied_coupon_layout.*
 import kotlinx.android.synthetic.main.cart_v2_fragment.*
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 
@@ -363,7 +360,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 cart_business_address.visibility = View.GONE
                 cart_business_address1.visibility = View.VISIBLE
                 cart_place_of_supply_cl.visibility = View.GONE
-                cart_place_of_supply_cl1.visibility = View.VISIBLE
+                cart_place_of_supply_cl1.visibility = View.GONE
                 prefs.storeGstRegistered(true)
             } else {
                 gstll.visibility = View.GONE
@@ -1281,6 +1278,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     val businessAddressDetails = joinNonBlankStringArray(addressDetails, ",")
                     //cart_business_address.text = businessAddressDetails
                     cart_business_address1.setText(businessAddressDetails)
+                    cart_place_of_supply_cl1.visibility = View.VISIBLE
+                    gst_info_tv.visibility=View.GONE
                     cart_business_city_name1.text = gstInfoResult!!.address!!.state
                     isGstApiCalled = true
                 } else {

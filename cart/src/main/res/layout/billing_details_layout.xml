@@ -219,6 +219,7 @@
             android:layout_marginTop="12dp"
             android:drawableStart="@drawable/ic_cart_gst_refresh"
             android:drawablePadding="5dp"
+            android:fontFamily="@font/open_sans"
             android:text="@string/cart_gst_text"
             android:textColor="#828282"
             android:textSize="@dimen/txt_12sp"
