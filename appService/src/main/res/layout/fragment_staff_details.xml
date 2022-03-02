@@ -32,13 +32,13 @@
           android:layout_height="wrap_content">
 
           <com.framework.views.roundedimageview.RoundedImageView
-              android:tag="com.userexperior.ueSecureView"
+            android:id="@+id/civ_staff_img"
 
-              android:id="@+id/civ_staff_img"
             android:layout_width="@dimen/size_146"
             android:layout_height="@dimen/size_146"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_staff_img_blue"
+            android:tag="com.userexperior.ueSecureView"
             app:riv_border_color="@color/blue_4A90E2"
             app:riv_border_width="1.5dp"
             app:riv_corner_radius="@dimen/size_4"
@@ -112,14 +112,14 @@
                 android:text="@string/select_gender" />
 
               <androidx.appcompat.widget.AppCompatSpinner
-                  android:tag="com.userexperior.ueSecureView"
+                android:id="@+id/spinner_gender"
 
-                  android:id="@+id/spinner_gender"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_44"
                 android:layout_marginTop="@dimen/_6dp"
                 android:background="@drawable/spinner_catalog"
-                android:paddingHorizontal="@dimen/size_8" />
+                android:paddingHorizontal="@dimen/size_8"
+                android:tag="com.userexperior.ueSecureView" />
             </LinearLayout>
 
             <LinearLayout
@@ -164,9 +164,8 @@
               android:text="@string/specialization" />
 
             <com.framework.views.customViews.CustomTextField
-                android:tag="com.userexperior.ueSecureView"
+              android:id="@+id/etv_specialization"
 
-                android:id="@+id/etv_specialization"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_6"
@@ -175,6 +174,7 @@
               android:inputType="textCapWords"
               android:padding="@dimen/size_12"
               android:singleLine="true"
+              android:tag="com.userexperior.ueSecureView"
               android:textColor="@color/warm_grey_10"
               android:textColorHint="@color/primary_grey"
               tools:ignore="UnusedAttribute" />
@@ -214,9 +214,7 @@
               android:text="@string/years_of_experience" />
 
             <com.framework.views.customViews.CustomTextField
-                android:tag="com.userexperior.ueSecureView"
-
-                android:id="@+id/edt_experience"
+              android:id="@+id/edt_experience"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_5"
@@ -228,6 +226,7 @@
               android:hint="@string/dropdown_options_1_1_2_3_4_5_5"
               android:padding="@dimen/size_12"
               android:singleLine="true"
+              android:tag="com.userexperior.ueSecureView"
               android:textColor="@color/warm_grey_10"
               android:textColorHint="@color/primary_grey"
               tools:ignore="UnusedAttribute" />
@@ -250,26 +249,26 @@
 
             <com.framework.views.customViews.CustomTextView
 
-                android:id="@+id/ctv_services_subheading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/ctv_service_provided_heading"
-                android:layout_gravity="center_vertical"
-                android:fontFamily="@font/regular"
-                android:text="@string/map_the_employee_to_one_or_multiple_services"
-                android:textFontWeight="600"
-                android:textSize="10sp" />
+              android:id="@+id/ctv_services_subheading"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/ctv_service_provided_heading"
+              android:layout_gravity="center_vertical"
+              android:fontFamily="@font/regular"
+              android:text="@string/map_the_employee_to_one_or_multiple_services"
+              android:textFontWeight="600"
+              android:textSize="10sp" />
 
             <com.framework.views.customViews.CustomTextView
-                android:tag="com.userexperior.ueSecureView"
+              android:id="@+id/ctv_services"
 
-                android:id="@+id/ctv_services"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_below="@id/ctv_services_subheading"
               android:layout_gravity="center_vertical"
               android:layout_marginTop="@dimen/size_8"
               android:fontFamily="@font/regular"
+              android:tag="com.userexperior.ueSecureView"
               android:textColor="@color/blue_4A90E2"
               android:textFontWeight="600"
               android:textSize="10sp"
@@ -319,13 +318,13 @@
                 android:textSize="12sp" />
 
               <com.appservice.views.toggle.widget.LabeledSwitch
-                  android:tag="com.userexperior.ueSecureView"
+                android:id="@+id/toggle_is_available"
 
-                  android:id="@+id/toggle_is_available"
                 android:layout_width="@dimen/size_54"
                 android:layout_height="@dimen/size_24"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginEnd="@dimen/size_8"
+                android:tag="com.userexperior.ueSecureView"
                 app:colorBorder="@android:color/transparent"
                 app:colorOff="@color/light_lemon"
                 app:colorOn="@color/light_green_1"
@@ -354,27 +353,27 @@
               tools:ignore="RelativeOverlap" />
 
             <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ctv_timing_subheading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_heading"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="@dimen/size_5"
-                android:fontFamily="@font/regular"
-                android:text="@string/staff_will_available_for_clients"
-                android:textFontWeight="600"
-                android:textSize="10sp" />
+              android:id="@+id/ctv_timing_subheading"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/tv_heading"
+              android:layout_gravity="center_vertical"
+              android:layout_marginTop="@dimen/size_5"
+              android:fontFamily="@font/regular"
+              android:text="@string/staff_will_available_for_clients"
+              android:textFontWeight="600"
+              android:textSize="10sp" />
 
             <com.framework.views.customViews.CustomTextView
-                android:tag="com.userexperior.ueSecureView"
+              android:id="@+id/ctv_timing"
 
-                android:id="@+id/ctv_timing"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_below="@id/ctv_timing_subheading"
               android:layout_gravity="center_vertical"
               android:layout_marginTop="@dimen/size_8"
               android:fontFamily="@font/regular"
+              android:tag="com.userexperior.ueSecureView"
               android:textColor="@color/blue_4A90E2"
               android:textFontWeight="600"
               android:textSize="10sp"

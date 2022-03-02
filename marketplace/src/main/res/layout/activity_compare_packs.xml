@@ -126,7 +126,7 @@
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="parent"
               android:visibility="visible"
-              tools:visibility="visible">
+              tools:visibility="gone">
 
             <!-- Adding 7 rows of placeholders -->
             <LinearLayout
@@ -165,7 +165,6 @@
               android:clickable="true"
               android:focusable="true"
               android:visibility="visible"
-
               tools:visibility="visible">
 
             <TextView

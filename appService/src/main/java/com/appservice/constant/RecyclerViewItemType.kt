@@ -26,7 +26,8 @@ enum class RecyclerViewItemType {
   CATALOG_SETTING_TILES,
   DOMAIN_STEPS,
   DOMAIN_NAME_SUGGESTIONS,
-  SIMILAR_DOMAIN_SUGGESTIONS;
+  SIMILAR_DOMAIN_SUGGESTIONS,
+  GST_SLAB_SETTING;
 
 
   @LayoutRes
@@ -55,6 +56,7 @@ enum class RecyclerViewItemType {
       DOMAIN_STEPS -> R.layout.list_item_steps_domain
       DOMAIN_NAME_SUGGESTIONS -> R.layout.item_domain_suggestions
       SIMILAR_DOMAIN_SUGGESTIONS -> R.layout.item_similar_domain_suggestions
+      GST_SLAB_SETTING -> R.layout.item_gst_slab
     }
   }
 }

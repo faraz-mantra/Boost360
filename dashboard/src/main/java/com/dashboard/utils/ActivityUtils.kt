@@ -562,6 +562,19 @@ fun AppCompatActivity.startCatalogSetup(session: UserSessionManager?) {
   }
 }
 
+fun AppCompatActivity.startPaymentCatalogSetup(session: UserSessionManager?) {
+  try {
+    val type = if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
+      com.appservice.constant.FragmentType.APPOINTMENT_PAYMENT_SETTINGS
+    } else {
+      com.appservice.constant.FragmentType.ECOMMERCE_PAYMENT_SETTINGS
+    }
+    startFragmentActivity(type)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
 fun AppCompatActivity.startCatalogAppointment(session: UserSessionManager?) {
   Toast.makeText(this, "Coming soon.. ", Toast.LENGTH_SHORT).show()
 }
@@ -592,14 +605,12 @@ fun AppCompatActivity.startListStaff(session: UserSessionManager?) {
 }
 
 fun AppCompatActivity.startListDoctors(session: UserSessionManager?) {
-    try {
-        startStaffFragmentActivity(
-            com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT,
-            bundle = getBundleData(session)
-        )
-    } catch (e: ClassNotFoundException) {
-        e.printStackTrace()
-    }
+  try {
+    WebEngageController.trackEvent(LIST_DOCTOR_PROFILE_DASHBOARD, CLICK, TO_BE_ADDED)
+    startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = getBundleData(session))
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
 }
 
 fun AppCompatActivity.startAddStaff(session: UserSessionManager?) {

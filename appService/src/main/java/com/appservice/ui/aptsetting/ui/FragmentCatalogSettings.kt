@@ -8,7 +8,11 @@ import com.appservice.ui.aptsetting.widgets.BottomSheetCatalogDisplayName
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentCatalogSettingBinding
+import com.appservice.model.aptsetting.AppointmentStatusResponse
+import com.appservice.model.aptsetting.CatalogSetup
+import com.appservice.model.aptsetting.GstSlabRequest
 import com.appservice.ui.aptsetting.widgets.BottomSheetConfirmingChange
+import com.appservice.ui.aptsetting.widgets.BottomSheetGstSlab
 import com.appservice.ui.aptsetting.widgets.BottomSheetSuccessfullyUpdated
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.capitalizeUtil
@@ -27,6 +31,8 @@ import java.util.*
 class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, AppointmentSettingsViewModel>() {
 
   private var response: UserFpDetailsResponse? = null
+  private var catalogSetup: CatalogSetup? = null
+  private var gstSlab: Int = 0
 
   override fun getLayout(): Int {
     return R.layout.fragment_catalog_setting
@@ -46,8 +52,26 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
     super.onCreateView()
     sessionLocal = UserSessionManager(baseActivity)
     WebEngageController.trackEvent(APPOINTMENT_CATLOG_SETUP_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    setOnClickListener(binding?.ctvChangeServices, binding?.ctvWebsiteUrl)
+    setOnClickListener(binding?.ctvChangeServices, binding?.ctvWebsiteUrl, binding?.edtTextSlab)
+    val data = arguments?.getSerializable(IntentConstant.OBJECT_DATA.name) as? AppointmentStatusResponse.TilesModel
+    catalogSetup = data?.tile as? CatalogSetup
+    if (catalogSetup != null) setData(catalogSetup) else catalogApiGetGstData()
     getFpDetails()
+  }
+
+  private fun catalogApiGetGstData() {
+    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, {
+      val dataItem = it as? AppointmentStatusResponse
+      if (dataItem?.isSuccess() == true && dataItem.result != null) {
+        catalogSetup = dataItem.result?.catalogSetup
+        setData(catalogSetup)
+      }
+    })
+  }
+
+  private fun setData(catalogSetup: CatalogSetup?) {
+    gstSlab = catalogSetup?.getGstSlabInt() ?: 0
+    binding?.edtTextSlab?.setText("${(catalogSetup?.getGstSlabInt() ?: 0)}%")
   }
 
   private fun getFpDetails() {
@@ -73,7 +97,27 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
         WebEngageController.trackEvent(CATLOG_SETUP_CHANGE_SERVICE, CLICK, NO_EVENT_VALUE)
         showCatalogDisplayName()
       }
+      binding?.edtTextSlab -> {
+        WebEngageController.trackEvent(CATLOG_SETUP_CHANGE_GST, CLICK, NO_EVENT_VALUE)
+        BottomSheetGstSlab().apply {
+          arguments = Bundle().apply { putInt(IntentConstant.GST_DATA.name, gstSlab) }
+          onClicked = { gstSlab ->
+            this@FragmentCatalogSettings.gstSlab = gstSlab
+            updateGstData()
+          }
+          show(this@FragmentCatalogSettings.parentFragmentManager, BottomSheetGstSlab::class.java.name)
+        }
+      }
     }
+  }
+
+  private fun updateGstData() {
+    showProgress()
+    viewModel?.updateGstSlab(GstSlabRequest(clientId, sessionLocal.fPID, gstSlab))?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) binding?.edtTextSlab?.setText("$gstSlab%")
+      else showShortToast(it.messageN())
+      hideProgress()
+    })
   }
 
   private fun showCatalogDisplayName() {

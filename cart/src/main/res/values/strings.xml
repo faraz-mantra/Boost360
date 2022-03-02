@@ -30,7 +30,7 @@
     <string name="pack_price_one"> <strike> ₹481/month </strike></string>
     <string name="pack_price_two"> <strike> ₹23/staff/month</strike></string>
     <string name="pack_price_three"> <strike> ₹120/month</strike></string>
-    <string name="view_details"><u>View details</u></string>
+    <string name="view_details">View details</string>
   <string name="enter_coupon_code">Enter coupon code</string>
 
 

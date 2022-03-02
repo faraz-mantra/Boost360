@@ -14,7 +14,7 @@
     android:layout_marginTop="@dimen/_2sdp"
     android:layout_marginBottom="@dimen/_2sdp"
     app:cardCornerRadius="10dp"
-    app:cardElevation="1dp">
+    app:cardElevation="0dp">
 
     <RelativeLayout
       android:layout_width="match_parent"
@@ -28,7 +28,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="16dp"
             android:orientation="horizontal">
 
           <androidx.appcompat.widget.AppCompatImageView
@@ -52,6 +52,7 @@
                 android:maxLines="1"
                 android:text="www.businessname.com"
                 android:textColor="#4A4A4A"
+                android:textFontWeight="600"
                 android:textSize="16sp"
                 android:textStyle="normal" />
 
@@ -71,13 +72,14 @@
                   android:maxLines="1"
                   android:text="Custom Domain with HTTPS Security"
                   android:textColor="#828282"
-                  android:textSize="@dimen/txt_12sp" />
+                  android:textFontWeight="400"
+                  android:textSize="12sp" />
 
               <androidx.appcompat.widget.LinearLayoutCompat
                   android:id="@+id/feature_one_amount_layout"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_marginTop="20dp"
+                  android:layout_marginTop="24dp"
                   android:gravity="center_vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -109,7 +111,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="24dp"
                 android:drawableStart="@drawable/ic_cart_pack_business_count_image"
                 android:drawablePadding="5dp"
                 android:gravity="center"
@@ -135,6 +137,13 @@
           android:layout_marginTop="15dp"
           android:layout_marginEnd="15dp"
           android:src="@drawable/ic_cart_pack_cross" />
+
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/ic_card_bg2"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentBottom="true"/>
 
 
     </RelativeLayout>

@@ -18,7 +18,9 @@ import com.boost.cart.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.cart.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.cart.utils.SharedPrefs
 import com.framework.analytics.SentryController
+import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
 import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.framework.pref.getAccessTokenAuth
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
@@ -80,6 +82,9 @@ class CartActivity : AppCompatActivity() {
 
         cartFragment = CartFragment.newInstance()
         cartFragment?.let { addFragment(it, CART_FRAGMENT) }
+        UserSessionManager(this).let {
+            CartFirestoreManager.initDataCart(it.fpTag ?: "", it.fPID ?: "", clientId)
+        }
 
     }
 

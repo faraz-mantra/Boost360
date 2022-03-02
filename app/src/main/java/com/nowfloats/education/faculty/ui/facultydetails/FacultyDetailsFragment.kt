@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer
 import com.boost.dbcenterapi.utils.Utils
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.nowfloats.Login.UserSessionManager
 import com.nowfloats.education.faculty.FacultyActivity
 import com.nowfloats.education.faculty.model.Data
 import com.nowfloats.education.helper.BaseFragment
@@ -45,6 +46,8 @@ class FacultyDetailsFragment(private val facultyData: Data?) : BaseFragment(),
   private var addUpdateFaculty = false
   private lateinit var permissionHelper: PermissionsHelper
   private var photoURI: Uri? = null
+  private lateinit var session: UserSessionManager
+
 
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +59,7 @@ class FacultyDetailsFragment(private val facultyData: Data?) : BaseFragment(),
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-
+    session = UserSessionManager(requireContext(), requireActivity())
     setHeader(view)
 
     when {
@@ -172,7 +175,7 @@ class FacultyDetailsFragment(private val facultyData: Data?) : BaseFragment(),
           }
           else -> {
             showLoader(getString(R.string.adding_faculty))
-            viewModel.addOurFaculty(binding.facultyData as Data, it[0].url)
+            viewModel.addOurFaculty(session.fpTag, binding.facultyData as Data, it[0].url)
           }
         }
       })

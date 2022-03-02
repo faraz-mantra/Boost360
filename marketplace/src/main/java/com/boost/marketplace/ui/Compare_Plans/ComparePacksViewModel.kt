@@ -11,6 +11,7 @@ import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.dbcenterapi.utils.DataLoader
 import com.boost.dbcenterapi.utils.Utils
 import com.facebook.FacebookSdk.getApplicationContext
 import com.framework.models.BaseViewModel
@@ -291,6 +292,8 @@ class ComparePacksViewModel: BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .doOnComplete {
                 updatesLoader.postValue(false)
+                //add cartitem to firebase
+                DataLoader.updateCartItemsToFirestore(Application())
             }
             .doOnError {
                 updatesError.postValue(it.message)

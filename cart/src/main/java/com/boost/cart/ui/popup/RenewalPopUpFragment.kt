@@ -147,7 +147,6 @@ class RenewalPopUpFragment : DialogFragment() {
     } catch (e: ParseException) {
       SentryController.captureException(e)
       e.printStackTrace()
-      SentryController.captureException(e)
     }
 //        todayDate.add(Calendar.DATE, 365) // number of days to add, can also use Calendar.DAY_OF_MONTH in place of Calendar.DATE
     todayDate.add(

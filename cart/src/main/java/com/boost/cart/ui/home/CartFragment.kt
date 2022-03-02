@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
@@ -11,13 +12,14 @@ import android.text.InputFilter
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.PopupWindow
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -70,8 +72,11 @@ import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.payment.PaymentActivity
 import com.boost.payment.utils.observeOnce
 import com.framework.analytics.SentryController
+import com.framework.extensions.underlineText
+import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -82,6 +87,9 @@ import kotlinx.android.synthetic.main.cart_v2_fragment.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
+
+
+
 
 
 class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
@@ -204,6 +212,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
         progressDialog = ProgressDialog(requireContext())
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window = requireActivity().window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.setStatusBarColor(getResources().getColor(R.color.common_text_color))
+        }
+
 
         cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, ArrayList(), requireActivity().application)
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
@@ -292,6 +306,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //        reverseVisibility()
 //      }
 
+        refund_policy.underlineText(refund_policy.text.length - 12, refund_policy.text.length - 1)
+        view_details.underlineText(0, view_details.text.length - 1)
+
+        gst_info.setOnClickListener {
+            showPopupWindow(it)
+        }
+
         business_gstin_number.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -319,7 +340,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             cart_billing_details_edit_layout.visibility = View.VISIBLE
             billing_details.visibility = View.VISIBLE
             edit.visibility = View.GONE
-
+            billing_details.visibility = View.GONE
+            prefs.storeCartOrderInfo(null)
         }
         cart_place_of_supply_cl.setOnClickListener {
             val args = Bundle()
@@ -507,7 +529,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
                     if (renewalItems.isNullOrEmpty().not()) {
                         createCartStateRenewal(renewalItems)
-                    } else createPurchaseOrder(null)
+                    } else {
+                        if (validateAgreement()) {
+                            createPurchaseOrder(null)
+                        }
+                    }
                 } else {
                     Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
                 }
@@ -873,7 +899,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //                        default_validity_months = default_validity_months+ 3
                 }
 //                months_validity.text = default_validity_months.toString() + " months"
-                months_validity.setText(default_validity_months.toString())
+                months_validity.setText(default_validity_months.toString()+ " months")
                 prefs.storeCartValidityMonths(default_validity_months.toString())
                 totalValidityDays = 30 * default_validity_months
                 prefs.storeMonthsValidity(totalValidityDays)
@@ -1104,14 +1130,19 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 || cart_business_address.text.toString().isEmpty()
                 || business_gstin_number.text.toString().isEmpty()) {
 //      Log.v("business_name_value", " " + business_name_value.text.toString())
-            Toasty.error(requireContext(), "Fields are Empty!!", Toast.LENGTH_LONG).show()
-            if (business_gstin_number.text.toString().isEmpty()
-                    && !Utils.isValidGSTIN(business_gstin_number.text.toString())) {
+//            Toasty.error(requireContext(), "Fields are Empty!!", Toast.LENGTH_LONG).show()
+            if ( gstcheck.isChecked && !Utils.isValidGSTIN(business_gstin_number.text.toString())) {
                 business_gstin_number.setBackgroundResource(R.drawable.et_validity_error)
+                cart_main_scroller.post {
+                    cart_main_scroller.scrollTo(
+                        0,
+                        gst_layout.getBottom()
+                    )
+                }
                 Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
                 return false
             } else {
-                business_gstin_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
+                    business_gstin_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
             }
 
 //      if (business_contact_number.text!!.isEmpty()) {
@@ -1158,17 +1189,30 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //      } else {
 //        business_name_value.setBackgroundResource(com.boost.payment.R.drawable.rounded_edit_fill_kyc)
 //      }
-
-            if (cart_business_address.text.toString().isEmpty()) {
-                cart_business_address.setBackgroundResource(com.boost.cart.R.drawable.et_validity_error)
-                Toasty.error(requireContext(), "Entered Business address is not valid!!", Toast.LENGTH_LONG)
+            if(!gstcheck.isChecked) {
+                if (cart_business_address.text.toString().isEmpty()) {
+                    cart_business_address.setBackgroundResource(com.boost.cart.R.drawable.et_validity_error)
+                    cart_main_scroller.post {
+                        cart_main_scroller.scrollTo(
+                            0,
+                            gst_layout.getBottom()
+                        )
+                    }
+                    Toasty.error(
+                        requireContext(),
+                        "Entered Business address is not valid!!",
+                        Toast.LENGTH_LONG
+                    )
                         .show()
-                return false
-            } else {
-                cart_business_address.setBackgroundResource(com.boost.cart.R.drawable.rounded_edit_fill_kyc)
+                    return false
+                } else {
+                    cart_business_address.setBackgroundResource(com.boost.cart.R.drawable.rounded_edit_fill_kyc)
+                }
             }
-            return false
+
+            return !gstcheck.isChecked && cart_business_address.text.toString().isNotEmpty()
         }
+
         if (!business_gstin_number.text.toString().isEmpty() && !com.boost.cart.utils.Utils.isValidGSTIN(
                         business_gstin_number.text.toString()
                 )) {
@@ -1176,7 +1220,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
             return false
         }
-
 //    if (!com.boost.payment.utils.Utils.isValidMail(business_email_address.text.toString())) {
 //      business_email_address.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
 //      Toasty.error(requireContext(), "Entered Email ID is not valid!!", Toast.LENGTH_LONG).show()
@@ -1726,7 +1769,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     } catch (ex: Exception) {
                         SentryController.captureException(ex)
                         ex.printStackTrace()
-                        SentryController.captureException(ex)
                     }
                 }
                 val widget = Widget(
@@ -1773,7 +1815,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     } catch (ex: Exception) {
                         SentryController.captureException(ex)
                         ex.printStackTrace()
-                        SentryController.captureException(ex)
                     }
                 }
 
@@ -2081,7 +2122,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     } catch (ex: Exception) {
                         SentryController.captureException(ex)
                         ex.printStackTrace()
-                        SentryController.captureException(ex)
                     }
                 }
 
@@ -2961,6 +3001,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         //remove saved orderdetails from prefs
         prefs.storeCartOrderInfo(null)
         prefs.storeCartValidityMonths(null)
+        //remove item from firebase
+        CartFirestoreManager.removeDocument(itemID)
     }
 
     override fun showBundleDetails(itemID: String) {
@@ -3089,7 +3131,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         } catch (e: Exception) {
             SentryController.captureException(e)
             e.printStackTrace()
-            SentryController.captureException(e)
         }
     }
 
@@ -3100,7 +3141,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         } catch (e: Exception) {
             SentryController.captureException(e)
             e.printStackTrace()
-            SentryController.captureException(e)
         }
     }
 
@@ -3126,6 +3166,22 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
     override fun applycoupon(mList: Data) {
         mList.code?.let { viewModel.getCouponRedeem(mList.code?.let { RedeemCouponRequest(total, it, (activity as CartActivity).fpid!!) }!!, it) }
 
+    }
+
+    private fun showPopupWindow(anchor: View) {
+        val view: View =
+            LayoutInflater.from(requireContext()).inflate(R.layout.popup_window_text, null)
+        val popupWindow = PopupWindow(
+            view,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        val txtSub: TextView = popupWindow.contentView.findViewById(R.id.popup_gst_value)
+        txtSub.setText("Testing")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) popupWindow.elevation =
+            5.0f
+        popupWindow.showAsDropDown(anchor, 110, -110)
     }
 
 }

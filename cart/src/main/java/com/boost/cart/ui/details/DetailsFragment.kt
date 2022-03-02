@@ -295,7 +295,6 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     } catch (e: Exception) {
       SentryController.captureException(e)
       e.printStackTrace()
-      SentryController.captureException(e)
     }
   }
 

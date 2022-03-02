@@ -111,7 +111,7 @@ class FacultyManagementFragment : BaseFragment(), ItemClickEventListener, AppOnZ
 
     if (Utils.isNetworkConnected(requireContext())) {
       showLoader("Loading Faculty Management")
-      viewModel.getOurFaculty()
+      viewModel.getOurFaculty(userSessionManager.fpTag)
     } else {
       showToast("No Internet!")
     }
@@ -143,7 +143,7 @@ class FacultyManagementFragment : BaseFragment(), ItemClickEventListener, AppOnZ
             Toast.makeText(requireContext(), getString(R.string.faculty_deleted_successfully), Toast.LENGTH_SHORT).show()
             showLoader("Loading Faculty")
             setDeleteFacultyLiveDataValue("")
-            viewModel.getOurFaculty()
+            viewModel.getOurFaculty(userSessionManager.fpTag)
           }
         }
       })
