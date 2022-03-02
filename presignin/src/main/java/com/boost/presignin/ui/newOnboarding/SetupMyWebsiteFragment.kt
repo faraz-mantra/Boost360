@@ -11,12 +11,16 @@ import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentSetupMyWebsiteBinding
+import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
 import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.userprofile.BusinessProfileResponse
 import com.boost.presignin.ui.newOnboarding.bottomSheet.NeedHelpBottomSheet
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.pref.UserSessionManager
+import com.framework.webengageconstant.CLICK
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.PS_LOGIN_OTP_NEED_HELP_CLICK
 
 class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, LoginSignUpViewModel>() {
 
@@ -107,6 +111,7 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.help_new -> {
+        WebEngageController.trackEvent(PS_LOGIN_OTP_NEED_HELP_CLICK, CLICK, NO_EVENT_VALUE)
         NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
         return true
       }

@@ -46,7 +46,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginHorizontal="@dimen/size_16"
-      android:text="@string/while_booking_a_staff_for_a_service_speciality_customer_will_know_which_all_staff_provide_service_they_are_looking_for"
+      android:text="@string/staff_service_customer_know_provide_service_looking_for"
       app:layout_constraintTop_toBottomOf="@+id/ctv_heading" />
 
     <com.framework.views.viewgroups.BaseRecyclerView
