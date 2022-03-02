@@ -11,7 +11,6 @@ import com.appservice.model.updateBusiness.BusinessUpdateResponse
 import com.appservice.model.updateBusiness.DeleteBizMessageRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
 import com.appservice.rest.EndPoints
-import com.appservice.rest.EndPoints.BACKGROUND_IMAGE
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -20,7 +19,6 @@ import retrofit2.http.*
 
 interface WithFloatTwoRemoteData {
 
-<<<<<<< HEAD
     @POST(EndPoints.CREATE_SERVICE)
     fun createService(@Body request: CatalogProduct?): Observable<Response<String>>
 
@@ -67,7 +65,6 @@ interface WithFloatTwoRemoteData {
     @POST(EndPoints.POST_PRODUCT_CATEGORY_VERB)
     fun updateProductCategoryVerb(@Body request: ProductCategoryVerbRequest?): Observable<Response<ResponseBody>>
 
-
     @PUT(EndPoints.UPDATE_PRODUCT)
     fun updateProduct(@Body request: ProductUpdate?): Observable<Response<ResponseBody>>
 
@@ -86,14 +83,14 @@ interface WithFloatTwoRemoteData {
             @Body requestBody: RequestBody?,
     ): Observable<Response<String>>
 
-    @GET(BACKGROUND_IMAGE)
-    fun getBackgroundImages(@Query("fpId") fpId: String?, @Query("clientId") clientId: String?): Observable<Response<Array<String>>>
-
     @GET(EndPoints.GET_FP_DETAILS)
     fun getFpDetails(
             @Path("fpid") fpid: String,
             @QueryMap map: Map<String, String>,
     ): Observable<Response<UserFpDetailsResponse>>
+
+    @GET(EndPoints.BACKGROUND_IMAGE)
+    fun getBackgroundImages(@Query("fpId") fpId: String?, @Query("clientId") clientId: String?): Observable<Response<Array<String>>>
 
     @PUT(EndPoints.PUT_BIZ_MESSAGE)
     fun putBizMessageUpdate(@Body request: PostUpdateTaskRequest?): Observable<Response<Any>>
@@ -103,6 +100,11 @@ interface WithFloatTwoRemoteData {
             @Path("fpid") fpid: String,
             @Query("clientId") clientId: String?,
     ): Observable<Response<AppointmentStatusResponse>>
+
+    @POST(EndPoints.UPDATE_GST_SLAB)
+    fun updateGstSlab(
+            @Body request: GstSlabRequest,
+    ): Observable<Response<ResponseBody>>
 
     @GET(EndPoints.GET_BIZ_WEB_UPDATE_BY_ID)
     fun getBizWebMessage(
@@ -126,114 +128,6 @@ interface WithFloatTwoRemoteData {
             @Query("sendToSubscribers") sendToSubscribers: Boolean?,
             @Body requestBody: RequestBody?,
     ): Observable<Response<String>>
-=======
-  @POST(EndPoints.CREATE_SERVICE)
-  fun createService(@Body request: CatalogProduct?): Observable<Response<String>>
-
-  @PUT(EndPoints.UPDATE_SERVICE)
-  fun updateService(@Body request: ProductUpdate?): Observable<Response<ResponseBody>>
-
-  @HTTP(method = "DELETE", path = EndPoints.DELETE_SERVICE, hasBody = true)
-  fun deleteService(@Body request: DeleteProductRequest?): Observable<Response<String>>
-
-  @GET(EndPoints.GET_TAGS)
-  fun getTags(@Query("clientId") clientId: String?, @Query("fpId") fpId: String?): Observable<Response<List<String>>>
-
-  @Headers("Accept: application/json", "Content-Type: application/octet-stream")
-  @PUT(EndPoints.ADD_IMAGE)
-  fun addUpdateImageProductService(
-    @Query("clientId") clientId: String?,
-    @Query("requestType") requestType: String?,
-    @Query("requestId") requestId: String?,
-    @Query("totalChunks") totalChunks: Int?,
-    @Query("currentChunkNumber") currentChunkNumber: Int?,
-    @Query("productId") productId: String?,
-    @Body requestBody: RequestBody?,
-  ): Observable<Response<String>>
-
-  @GET(EndPoints.GET_PRODUCT_LISTING)
-  fun getProductListing(@Query("fpTag") fpTag: String?, @Query("clientId") clientId: String?, @Query("skipBy") skipBy: Int?): Observable<Response<List<CatalogProduct>>>
-
-  @GET(EndPoints.GET_PRODUCT_LISTING_COUNT)
-  fun getProductListingCount(@Query("fpTag") fpTag: String?, @Query("clientId") clientId: String?, @Query("skipBy") skipBy: Int?, @Query("identifierType") identifierType: String? = "SINGLE"): Observable<Response<CatalogProductCountResponse>>
-
-  @GET(EndPoints.GET_NOTIFICATION)
-  fun getNotificationCount(
-    @Query("clientId") clientId: String?,
-    @Query("fpId") fpId: String?,
-    @Query("isRead") isRead: Boolean = false
-  ): Observable<Response<Any>>
-
-  @GET(EndPoints.GET_LATEST_UPDATES)
-  fun getMessageUpdates(@QueryMap map: Map<String?, String?>?): Observable<Response<BusinessUpdateResponse>>
-
-  @POST(EndPoints.CREATE_PRODUCT)
-  fun createProduct(@Body request: CatalogProduct?): Observable<Response<String>>
-
-  @POST(EndPoints.POST_PRODUCT_CATEGORY_VERB)
-  fun updateProductCategoryVerb(@Body request: ProductCategoryVerbRequest?): Observable<Response<ResponseBody>>
-
-  @PUT(EndPoints.UPDATE_PRODUCT)
-  fun updateProduct(@Body request: ProductUpdate?): Observable<Response<ResponseBody>>
-
-  @HTTP(method = "DELETE", path = EndPoints.DELETE_PRODUCT, hasBody = true)
-  fun deleteProduct(@Body request: DeleteProductRequest?): Observable<Response<String>>
-
-  @Headers("Accept: application/json", "Content-Type: application/octet-stream")
-  @PUT(EndPoints.ADD_IMAGE)
-  fun addUpdateImageProduct(
-    @Query("clientId") clientId: String?,
-    @Query("requestType") requestType: String?,
-    @Query("requestId") requestId: String?,
-    @Query("totalChunks") totalChunks: Int?,
-    @Query("currentChunkNumber") currentChunkNumber: Int?,
-    @Query("productId") productId: String?,
-    @Body requestBody: RequestBody?,
-  ): Observable<Response<String>>
-
-  @GET(EndPoints.GET_FP_DETAILS)
-  fun getFpDetails(
-    @Path("fpid") fpid: String,
-    @QueryMap map: Map<String, String>,
-  ): Observable<Response<UserFpDetailsResponse>>
-
-  @PUT(EndPoints.PUT_BIZ_MESSAGE)
-  fun putBizMessageUpdate(@Body request: PostUpdateTaskRequest?): Observable<Response<Any>>
-
-  @GET(EndPoints.GET_CATALOG_STATUS)
-  fun getCatalogStatus(
-    @Path("fpid") fpid: String,
-    @Query("clientId") clientId: String?,
-  ): Observable<Response<AppointmentStatusResponse>>
-
-  @POST(EndPoints.UPDATE_GST_SLAB)
-  fun updateGstSlab(
-    @Body request: GstSlabRequest,
-  ): Observable<Response<ResponseBody>>
-
-  @GET(EndPoints.GET_BIZ_WEB_UPDATE_BY_ID)
-  fun getBizWebMessage(
-    @Path("id") id: String?,
-    @Query("clientId") clientId: String?
-  ): Observable<Response<ResponseBody>>
-
-  @HTTP(method = "DELETE", path = EndPoints.DELETE_BIZ_MESSAGE_UPDATE, hasBody = true)
-  fun deleteBizMessageUpdate(@Body request: DeleteBizMessageRequest?): Observable<Response<ResponseBody>>
-
-  @Headers("Accept: application/json", "Content-Type: application/octet-stream")
-  @PUT(EndPoints.PUT_BIZ_IMAGE)
-  fun putBizImageUpdate(
-    @Query("clientId") clientId: String?,
-    @Query("requestType") requestType: String?,
-    @Query("requestId") requestId: String?,
-    @Query("totalChunks") totalChunks: Int?,
-    @Query("currentChunkNumber") currentChunkNumber: Int?,
-    @Query("socialParmeters") socialParmeters: String?,
-    @Query("bizMessageId") bizMessageId: String?,
-    @Query("sendToSubscribers") sendToSubscribers: Boolean?,
-    @Body requestBody: RequestBody?,
-  ): Observable<Response<String>>
->>>>>>> 2453da4f0781704feda685c04ff58c20bc888883
 
 //  fun getDeliveryDetails(): Observable<Response<ResponseBody>>
 

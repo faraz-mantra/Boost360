@@ -27,11 +27,8 @@ enum class RecyclerViewItemType {
   DOMAIN_STEPS,
   DOMAIN_NAME_SUGGESTIONS,
   SIMILAR_DOMAIN_SUGGESTIONS,
-<<<<<<< HEAD
-  BACKGROUND_IMAGE_RV;
-=======
+  BACKGROUND_IMAGE_RV,
   GST_SLAB_SETTING;
->>>>>>> 2453da4f0781704feda685c04ff58c20bc888883
 
 
   @LayoutRes
@@ -60,11 +57,8 @@ enum class RecyclerViewItemType {
       DOMAIN_STEPS -> R.layout.list_item_steps_domain
       DOMAIN_NAME_SUGGESTIONS -> R.layout.item_domain_suggestions
       SIMILAR_DOMAIN_SUGGESTIONS -> R.layout.item_similar_domain_suggestions
-<<<<<<< HEAD
       BACKGROUND_IMAGE_RV -> R.layout.recyclerview_background_images
-=======
       GST_SLAB_SETTING -> R.layout.item_gst_slab
->>>>>>> 2453da4f0781704feda685c04ff58c20bc888883
     }
   }
 }

@@ -46,12 +46,8 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       DOMAIN_STEPS -> DomainStepsViewHolder(binding as ListItemStepsDomainBinding)
       DOMAIN_NAME_SUGGESTIONS -> DomainSuggestionsViewHolder(binding as ItemDomainSuggestionsBinding)
       SIMILAR_DOMAIN_SUGGESTIONS -> SimilarDomainSuggestionViewHolder(binding as ItemSimilarDomainSuggestionsBinding)
-<<<<<<< HEAD
       BACKGROUND_IMAGE_RV -> BackgroundImageHolder(binding = binding as RecyclerviewBackgroundImagesBinding)
-
-=======
       GST_SLAB_SETTING -> GstSlabViewHolder(binding as ItemGstSlabBinding)
->>>>>>> 2453da4f0781704feda685c04ff58c20bc888883
     }
   }
 
