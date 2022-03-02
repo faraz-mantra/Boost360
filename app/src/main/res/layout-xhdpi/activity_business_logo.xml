@@ -73,6 +73,7 @@
           </androidx.cardview.widget.CardView>
 
           <Button
+<<<<<<< HEAD
               android:id="@+id/addLogoButton"
               style="?android:attr/borderlessButtonStyle"
               fontPath="Roboto-Medium.ttf"
@@ -89,6 +90,21 @@
               android:textAllCaps="false"
               android:textColor="@color/primaryColor"
               card_view:ignore="MissingPrefix" />
+=======
+            android:id="@+id/addLogoButton"
+            style="?android:attr/borderlessButtonStyle"
+            fontPath="Roboto-Medium.ttf"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:layout_below="@+id/card_view"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/round_border_button"
+            android:text="@string/change"
+            android:textAllCaps="false"
+            android:textColor="@color/back_button_color"
+            card_view:ignore="MissingPrefix" />
+>>>>>>> 2453da4f0781704feda685c04ff58c20bc888883
 
         </RelativeLayout>
 

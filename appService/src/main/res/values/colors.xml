@@ -12,7 +12,6 @@
   <color name="yellow_f5b200">#F5B200</color>
   <color name="gray_4e4e4e">#4E4E4E</color>
   <color name="gray_adadad">#ADADAD</color>
-  <color name="gray_828282">#828282</color>
   <color name="green_6bc95c">#6BC95C</color>
   <color name="green_6FCF97">#6FCF97</color>
   <color name="error_red">#E39595</color>
@@ -25,7 +24,11 @@
   <color name="red_apt">#EB5757</color>
   <color name="red_F40000">#F40000</color>
   <color name="green_dark">#27AE60</color>
+<<<<<<< HEAD
   <color name="grey">#a9a9a9</color>
   <color name="smaller_background_red">#EB5757</color>
 
+=======
+  <color name="ButtoncolorAccent">@color/colorAccent</color>
+>>>>>>> 2453da4f0781704feda685c04ff58c20bc888883
 </resources>

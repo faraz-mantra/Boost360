@@ -57,6 +57,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   override fun onCreateView() {
     super.onCreateView()
     Log.i(TAG, "onCreateView: ")
+    baseActivity.window.statusBarColor = getColor(R.color.website_toolbar_color)
     session = UserSessionManager(baseActivity)
     setOnClickListener(
       binding?.txtDomainName, binding?.btnProfileLogo, binding?.editProfile,

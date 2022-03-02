@@ -189,11 +189,7 @@ public class API_Business_enquiries {
     public void getMessagesMethod(@Path("ParentId") String ParentId, @QueryMap Map<String, String> map,
                                   Callback<Business_Enquiry_Enterprise_Model> callback);
 
-    //https://api.withfloats.com/Discover/v1/floatingPoint/usermessages/5406bd254ec0a40d409f2b2b?
-    // clientId=2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21
 
-
-    //        @FormUrlEncoded
     @Headers({"Content-Type: application/json"})
     @POST("/Discover/v1/floatingPoint/usermessages/{fpId}")
     public void postMessagesMethod(@Body JSONObject empty, @QueryMap HashMap<String, String> map, @Path("fpId") String fpId, Callback<ArrayList<Business_Enquiry_Model>> callback);

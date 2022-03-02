@@ -42,5 +42,6 @@ enum class IntentConstant {
   CATALOG_CUSTOM_NAME,
   STAFF_TIMINGS,
   DOMAIN_NAME,
-  IS_BACK_PRESS;
+  IS_BACK_PRESS,
+  GST_DATA;
 }

@@ -28,6 +28,19 @@ android {
         partone {
             dimension "default"
         }
+        jioonline {
+            dimension "default"
+        }
+    }
+
+    flavorDimensions "default"
+    productFlavors {
+        partone {
+            dimension "default"
+        }
+        jioonline {
+            dimension "default"
+        }
     }
 
     compileOptions {

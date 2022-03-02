@@ -10,8 +10,8 @@ import com.appservice.databinding.BottomSheeetPlanningBreakBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
-class BottomSheetFragment :
-  BaseBottomSheetDialog<BottomSheeetPlanningBreakBinding, BaseViewModel>() {
+class BottomSheetFragment : BaseBottomSheetDialog<BottomSheeetPlanningBreakBinding, BaseViewModel>() {
+
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="match_parent"
@@ -21,27 +22,30 @@
         android:src="@drawable/ic_info_transparent" />
 
       <com.framework.views.customViews.CustomTextView
+        android:id="@+id/txt_status"
         style="@style/StaffProfileTextContent"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/size_8"
         android:fontFamily="@font/semi_bold"
+        app:textType="HEADING_6"
         android:text="@string/this_staff_is_marked_inactive"
         android:textColor="@color/white" />
 
       <com.framework.views.customViews.CustomButton
         android:id="@+id/btn_activate_staff"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/size_32"
+        android:layout_height="@dimen/size_40"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/size_8"
         android:layout_marginBottom="@dimen/size_30"
         android:background="@drawable/pop_window_background"
+        android:fontFamily="@font/semi_bold"
         android:paddingHorizontal="@dimen/size_18"
         android:stateListAnimator="@null"
         android:text="@string/activate_staff_profile"
         android:textAllCaps="false"
         android:textColor="@color/black_4a4a4a"
-        android:textSize="12sp" />
+        app:textType="HEADING_6" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
   </androidx.appcompat.widget.LinearLayoutCompat>

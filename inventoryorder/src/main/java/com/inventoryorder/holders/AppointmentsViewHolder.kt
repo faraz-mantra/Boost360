@@ -55,7 +55,7 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
 
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
-      val formatAmount = "${DecimalFormat("##,##,##0.00").format(BigDecimal(bill.AmountPayableByBuyer!!))}"
+      val formatAmount = "${DecimalFormat("##,##,##0.00").format(BigDecimal(bill.GrossAmount?:0.0))}"
       val ss = SpannableString("$formatAmount")
       ss.setSpan(RelativeSizeSpan(0.5f), "$formatAmount".indexOf("."), "$formatAmount".length, 0)
       binding.txtRupees.text = ss
@@ -75,8 +75,7 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
     binding.customer.value.text = order.BuyerDetails?.ContactDetails?.FullName?.capitalizeUtil()
 
     if (!order.firstItemForAptConsult()?.Product?.ImageUri.isNullOrEmpty()) {
-      Picasso.get().load(order.firstItemForAptConsult()?.Product?.ImageUri)
-        .into(binding.imageServiceProvider)
+      Picasso.get().load(order.firstItemForAptConsult()?.Product?.ImageUri).into(binding.imageServiceProvider)
     } else {
       binding.imageServiceProvider.visibility = View.GONE
     }

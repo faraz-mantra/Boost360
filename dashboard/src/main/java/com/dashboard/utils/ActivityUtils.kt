@@ -481,6 +481,19 @@ fun AppCompatActivity.startCatalogSetup(session: UserSessionManager?) {
     }
 }
 
+fun AppCompatActivity.startPaymentCatalogSetup(session: UserSessionManager?) {
+  try {
+    val type = if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
+      com.appservice.constant.FragmentType.APPOINTMENT_PAYMENT_SETTINGS
+    } else {
+      com.appservice.constant.FragmentType.ECOMMERCE_PAYMENT_SETTINGS
+    }
+    startFragmentActivity(type)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
 fun AppCompatActivity.startCatalogAppointment(session: UserSessionManager?) {
     Toast.makeText(this, "Coming soon.. ", Toast.LENGTH_SHORT).show()
 }
@@ -508,11 +521,20 @@ fun AppCompatActivity.startListStaff(session: UserSessionManager?) {
 }
 
 fun AppCompatActivity.startListDoctors(session: UserSessionManager?) {
+<<<<<<< HEAD
     try {
         startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = getBundleData(session))
     } catch (e: ClassNotFoundException) {
         e.printStackTrace()
     }
+=======
+  try {
+    WebEngageController.trackEvent(LIST_DOCTOR_PROFILE_DASHBOARD, CLICK, TO_BE_ADDED)
+    startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = getBundleData(session))
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+>>>>>>> 2453da4f0781704feda685c04ff58c20bc888883
 }
 
 fun AppCompatActivity.startAddStaff(session: UserSessionManager?) {
@@ -639,6 +661,7 @@ fun AppCompatActivity.startOrderAptConsultList(session: UserSessionManager?, isO
 }
 
 fun getSessionOrder(session: UserSessionManager?): Bundle {
+<<<<<<< HEAD
     val data = PreferenceData(
             AppConstant.CLIENT_ID_2, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
             session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
@@ -647,6 +670,16 @@ fun getSessionOrder(session: UserSessionManager?): Bundle {
     val bundle = Bundle()
     bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
     return bundle
+=======
+  val data = PreferenceData(
+    AppConstant.CLIENT_ID_ORDER, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
+    session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
+    session?.getFPDetails(Key_Preferences.LONGITUDE), session?.fP_AppExperienceCode
+  )
+  val bundle = Bundle()
+  bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
+  return bundle
+>>>>>>> 2453da4f0781704feda685c04ff58c20bc888883
 }
 
 fun AppCompatActivity.startBusinessLogo(session: UserSessionManager?) {

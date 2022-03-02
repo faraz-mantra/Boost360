@@ -85,9 +85,9 @@ class DialogSeekBarPreference : Preference {
         }
     }
 
-    override fun onAttachedToHierarchy(preferenceManager: PreferenceManager?) {
+    override fun onAttachedToHierarchy(preferenceManager: PreferenceManager) {
         super.onAttachedToHierarchy(preferenceManager)
-        summary = getTextForValue(sharedPreferences.getInt(key, defaultValue))
+        summary = getTextForValue(sharedPreferences?.getInt(key, defaultValue)?:0)
     }
 
     /**
@@ -111,10 +111,9 @@ class DialogSeekBarPreference : Preference {
      * Shows the seek bar dialog.
      */
     private fun showSeekBarDialog() {
-        val inflater =
-            context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val dialogView = SeekBarDialogBinding.inflate(inflater)
-        val initValue = sharedPreferences.getInt(key, defaultValue)
+        val initValue = sharedPreferences?.getInt(key, defaultValue)?:0
         dialogView.seekBar.max = actualValueToSeekBarProgress(max)
         dialogView.seekBar.progress = actualValueToSeekBarProgress(initValue)
         dialogView.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -131,13 +130,13 @@ class DialogSeekBarPreference : Preference {
             setView(dialogView.root)
             setPositiveButton(android.R.string.ok) { _, _ ->
                 val actualValue = seekBarProgressToActualValue(dialogView.seekBar.progress)
-                sharedPreferences.edit().putInt(key, actualValue).apply()
+                sharedPreferences?.edit()?.putInt(key, actualValue)?.apply()
             }
             setNeutralButton(R.string.settings__default) { _, _ ->
-                sharedPreferences.edit().putInt(key, defaultValue).apply()
+                sharedPreferences?.edit()?.putInt(key, defaultValue)?.apply()
             }
             setNegativeButton(android.R.string.cancel, null)
-            setOnDismissListener { summary = getTextForValue(sharedPreferences.getInt(key, defaultValue)) }
+            setOnDismissListener { summary = getTextForValue(sharedPreferences?.getInt(key, defaultValue)?:0) }
             create()
             show()
         }

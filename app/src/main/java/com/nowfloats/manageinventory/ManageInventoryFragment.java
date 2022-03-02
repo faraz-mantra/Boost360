@@ -32,7 +32,6 @@ import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Utils;
-import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import java.io.IOException;
@@ -182,7 +181,7 @@ public class ManageInventoryFragment extends Fragment {
         String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
         if (rootAlisasURI != null && !rootAlisasURI.isEmpty()) url = rootAlisasURI;
         else url = normalURI;
-        PreferenceData data = new PreferenceData(AppConstant.CLIENT_ID_2, session.getUserProfileId(),
+        PreferenceData data = new PreferenceData(AppConstant.CLIENT_ID_ORDER, session.getUserProfileId(),
                 Constants.WA_KEY, session.getFpTag(), session.getUserPrimaryMobile(), url, session.getFPEmail(),
                 session.getFPDetails(Key_Preferences.LATITUDE), session.getFPDetails(Key_Preferences.LONGITUDE),
                 session.getFP_AppExperienceCode());

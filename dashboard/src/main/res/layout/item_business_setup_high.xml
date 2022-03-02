@@ -130,7 +130,7 @@
           android:paddingBottom="@dimen/size_2"
           android:text="@string/improve"
           android:textAllCaps="false"
-          android:textColor="@color/colorAccent"
+          android:textColor="@color/colorAccentLight"
           app:fontFamily="@font/semi_bold"
           app:textType="CAPTION" />
       </androidx.appcompat.widget.LinearLayoutCompat>

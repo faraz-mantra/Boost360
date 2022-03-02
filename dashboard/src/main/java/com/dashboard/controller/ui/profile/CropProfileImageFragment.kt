@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.SeekBar
 import androidx.lifecycle.lifecycleScope
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
@@ -64,9 +65,18 @@ class CropProfileImageFragment : AppBaseFragment<FragmentCropProfileImageBinding
 
 
   private fun viewListeners() {
-    binding?.slider?.addOnChangeListener { slider, value, fromUser ->
-      zoom(value)
-    }
+    binding?.slider?.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
+      override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
+        zoom(p1.toFloat()/100)
+      }
+
+      override fun onStartTrackingTouch(p0: SeekBar?) {
+      }
+
+      override fun onStopTrackingTouch(p0: SeekBar?) {
+      }
+
+    })
   }
 
   override fun onClick(v: View) {

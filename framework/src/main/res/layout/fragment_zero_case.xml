@@ -37,7 +37,7 @@
           android:layout_height="wrap_content"
           android:layout_marginHorizontal="40dp"
           android:layout_marginTop="16dp"
-          android:fontFamily="sans-serif"
+          android:fontFamily="@font/semi_bold"
           android:gravity="center"
           android:textColor="@color/black_4a4a4a"
           android:textSize="20sp"
@@ -49,10 +49,8 @@
           android:layout_height="wrap_content"
           android:layout_marginHorizontal="16dp"
           android:layout_marginTop="16dp"
-          android:fontFamily="sans-serif"
           android:gravity="center"
-          android:textColor="@color/black_4a4a4a"
-          android:textSize="14sp"
+          android:textColor="@color/gray_828282"
           tools:text="This is a premium feature." />
 
         <androidx.appcompat.widget.LinearLayoutCompat

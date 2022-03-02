@@ -57,7 +57,7 @@ class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) : AppBaseRec
       val currency = takeIf {
         bill.getCurrencyCodeValue().isNullOrEmpty().not()
       }?.let { bill.getCurrencyCodeValue()?.trim() } ?: "INR"
-      val formatAmount = "${DecimalFormat("##,##,##0.00").format(BigDecimal(bill.AmountPayableByBuyer!!))}"
+      val formatAmount = "${DecimalFormat("##,##,##0.00").format(BigDecimal(bill.GrossAmount!!))}"
       val ss = SpannableString("$formatAmount")
       ss.setSpan(RelativeSizeSpan(0.5f), "$formatAmount".indexOf("."), "$formatAmount".length, 0)
       binding.txtRupees.text = ss
