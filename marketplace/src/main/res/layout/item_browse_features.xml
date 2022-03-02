@@ -55,7 +55,7 @@
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
             tools:itemCount="4"
-            tools:listitem="@layout/item_packs_list" />
+            tools:listitem="@layout/item_pack_list1" />
 
     </RelativeLayout>
 </layout>

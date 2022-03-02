@@ -3177,7 +3177,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             true
         )
         val txtSub: TextView = popupWindow.contentView.findViewById(R.id.popup_gst_value)
-        txtSub.setText("Testing")
+        val txtSub1 :TextView=popupWindow.contentView.findViewById(R.id.popup_gst_value1)
+        txtSub.setText("Pre-tax price " + " ₹"  +  NumberFormat.getNumberInstance(Locale.ENGLISH).format(total))
+        txtSub1.setText("18% IGST " + " ₹"  +  NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) popupWindow.elevation =
             5.0f
         popupWindow.showAsDropDown(anchor, 110, -110)
