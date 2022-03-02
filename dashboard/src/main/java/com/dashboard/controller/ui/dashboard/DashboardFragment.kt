@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.bumptech.glide.Glide
@@ -146,7 +147,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onCreateView() {
     if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(true)
     session = UserSessionManager(baseActivity)
-    session?.let { deepLinkUtil = DeepLinkUtil(baseActivity, it) }
+    session?.let { deepLinkUtil = DeepLinkUtil(baseActivity, it, Fragment()) }
     setOnClickListener(
       binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport, binding?.retryDrScore,
       binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.viewEmptyEnquiries?.btnWhatsappEnquiries,

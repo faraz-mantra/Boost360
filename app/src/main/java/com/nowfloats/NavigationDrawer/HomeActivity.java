@@ -92,6 +92,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anachat.chatsdk.AnaChatBuilder;
 import com.anachat.chatsdk.internal.database.PreferencesManager;
+import com.appservice.ui.background_image.BackgroundImageContainerActivityKt;
 import com.appservice.ui.bankaccount.BankAccountFragment;
 import com.boost.presignin.ui.intro.IntroActivity;
 import com.boost.presignup.utils.DynamicLinkParams;
@@ -135,7 +136,6 @@ import com.nowfloats.CustomPage.CustomPageDeleteInterface;
 import com.nowfloats.CustomPage.CustomPageFragment;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
-import com.nowfloats.Image_Gallery.BackgroundGalleryImageActivity;
 import com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Login.API_Login;
@@ -661,7 +661,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         startActivity(q);
         HomeActivity.this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
       } else if (url.contains(getResources().getString(R.string.deeplink_background_images))) {
-        Intent i = new Intent(this, BackgroundGalleryImageActivity.class);
+        Intent i = new Intent(this, BackgroundImageContainerActivityKt.class);
         startActivity(i);
       } else if (url.contains(getResources().getString(R.string.deeplink_favicon))) {
         Intent i = new Intent(this, FaviconImageActivity.class);

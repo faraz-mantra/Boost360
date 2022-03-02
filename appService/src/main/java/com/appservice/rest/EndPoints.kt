@@ -54,6 +54,7 @@ object EndPoints {
 
   //TODO NFX API 2 WITH FLOAT
   const val WITH_FLOATS_TWO_BASE = "https://api2.withfloats.com/"
+  const val BACKGROUND_IMAGE = "discover/v1/floatingpoint/getBackgroundImages"
   const val CREATE_SERVICE = "Product/v1/Create"
   const val UPDATE_SERVICE = "Product/v1/Update"
   const val DELETE_SERVICE = "Product/v1/Delete"
@@ -148,5 +149,8 @@ object EndPoints {
   const val AZURE_WEBSITE_NET_URL = "https://withfloats-feature-processor-api.azurewebsites.net/"
   const val GET_FEATURE_DETAILS = "Features/v1/GetFeatureDetils"
   const val GET_FEATURE_DETAILS_2 = "Features/v1/GetFeatureDetails"
+
+
+
 }
 

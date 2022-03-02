@@ -1871,7 +1871,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Business logo</item>
         <item>Featured image</item>
         <item>Image gallery</item>
-        <item>Background images</item>
+        <item>&#160;Custom background images</item>
         <item>Favicon</item>
     </string-array>
     <string name="title_activity_background_image_gallery">BackgroundImageGalleryActivity</string>

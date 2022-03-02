@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.appservice.constant.FragmentType;
+import com.appservice.ui.background_image.BackgroundImageContainerActivityKt;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity;
 import com.nowfloats.BusinessProfile.UI.UI.FeaturedImageActivity;
-import com.nowfloats.Image_Gallery.BackgroundGalleryImageActivity;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
@@ -85,9 +86,8 @@ public class ImageMenuActivity extends AppCompatActivity {
                         intent = new Intent(ImageMenuActivity.this, ImageGalleryActivity.class);
                         break;
 
-                    case "Background images":
-
-                        intent = new Intent(ImageMenuActivity.this, BackgroundGalleryImageActivity.class);
+                    case "Custom background images":
+                        intent = new Intent(ImageMenuActivity.this, BackgroundImageContainerActivityKt.class);
                         break;
 
                     case "Favicon":
