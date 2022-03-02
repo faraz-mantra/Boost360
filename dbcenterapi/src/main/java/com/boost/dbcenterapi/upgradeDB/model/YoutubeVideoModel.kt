@@ -25,7 +25,10 @@ data class YoutubeVideoModel(
   var title: String? = null,
 
   @ColumnInfo(name = "youtube_link")
-  var youtube_link: String? = null
+  var youtube_link: String? = null,
+
+  @ColumnInfo(name = "youtube_image")
+  var youtube_image: String? = null
 
 ):Serializable,AppBaseRecyclerViewItem {
 

@@ -4,8 +4,11 @@ import android.animation.Animator
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -127,6 +130,13 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
         prefs = SharedPrefs(this)
 
         viewModel = ViewModelProviders.of(this).get(ComparePacksViewModel::class.java)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
+        }
+
 //        initializeBannerViewPager()
         loadData()
         initMvvm()

@@ -969,7 +969,8 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                                                 singleVideoDetails.videodescription,
                                                 singleVideoDetails.videodurationseconds.toString(),
                                                 singleVideoDetails.videotitle,
-                                                singleVideoDetails.videourl.url
+                                                singleVideoDetails.videourl.url,
+                                                singleVideoDetails.thumbnailimage.url
                                             )
                                         )
                                     }

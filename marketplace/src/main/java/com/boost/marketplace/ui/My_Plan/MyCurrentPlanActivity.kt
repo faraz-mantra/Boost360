@@ -3,6 +3,7 @@ package com.boost.marketplace.ui.My_Plan
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,6 +11,8 @@ import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
@@ -20,6 +23,7 @@ import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityMyCurrentPlanBinding
 import com.boost.marketplace.interfaces.CompareBackListener
 import com.boost.marketplace.ui.History_Orders.HistoryOrdersActivity
+import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
@@ -87,6 +91,12 @@ class MyCurrentPlanActivity :
 
         freeAddonsAdapter = FreeAddonsAdapter(this, ArrayList(), this)
         paidAddonsAdapter = PaidAddonsAdapter(this, ArrayList(), this)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
+        }
 
         loadData()
         initMVVM()
@@ -291,7 +301,8 @@ class MyCurrentPlanActivity :
 //        }
 
         help.setOnClickListener {
-            //add help screen
+            val videoshelp = HelpVideosBottomSheet()
+            videoshelp.show(this.supportFragmentManager, HelpVideosBottomSheet::class.java.name)
         }
 
         binding?.arrowBtn?.setOnClickListener {

@@ -1,7 +1,10 @@
 package com.boost.marketplace.ui.coupons
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +19,8 @@ import com.boost.dbcenterapi.data.api_model.getCouponResponse.GetCouponResponseI
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.OfferCouponsAdapter
 import com.boost.marketplace.data.OfferCoupons
+import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
+import kotlinx.android.synthetic.main.activity_offer_coupons.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -30,6 +35,22 @@ class OfferCouponsActivity : AppCompatActivity() {
         supportActionBar?.hide()
         viewModel = ViewModelProvider(this).get(OfferCouponViewModel::class.java)
         viewModel.setApplicationLifecycle(application, this)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.setStatusBarColor(getResources().getColor(R.color.common_text_color))
+        }
+
+        back_button12.setOnClickListener {
+            finish()
+        }
+
+        help.setOnClickListener {
+            val videoshelp = HelpVideosBottomSheet()
+            videoshelp.show(this.supportFragmentManager, HelpVideosBottomSheet::class.java.name)
+        }
+
         loadOfferCoupons()
         initMvvm()
     }

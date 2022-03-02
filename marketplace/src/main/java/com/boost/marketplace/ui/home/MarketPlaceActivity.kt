@@ -125,7 +125,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         super.onCreateView()
         isDeepLink = intent.getBooleanExtra("isDeepLink", false)
         deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
-        deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
+        deepLinkDay = intent.getIntExtra("deepLinkDay", 7)
 
         experienceCode = intent.getStringExtra("expCode")
         screenType = intent.getStringExtra("screenType")
@@ -602,6 +602,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             }
             intent.putExtra("profileUrl", profileUrl)
             startActivity(intent)
+        }
+
+        view_referal_btn.setOnClickListener {
+
         }
 
     }

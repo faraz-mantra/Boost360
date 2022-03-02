@@ -5,11 +5,10 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -205,6 +204,12 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 //        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
 
         viewModel = ViewModelProviders.of(requireActivity()).get(PaymentViewModel::class.java)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window = requireActivity().window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
+        }
 
         loadData()
         loadCustomerInfo()
