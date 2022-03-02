@@ -1,5 +1,8 @@
 package com.appservice.model
 
+import com.appservice.R
+import com.appservice.constant.RecyclerViewItemType
+import com.appservice.recyclerView.AppBaseRecyclerViewItem
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
@@ -59,9 +62,9 @@ data class VmnCallModel (
     var audioPosition: Int = 0,
     var audioLength: Int = 0,
     var isAudioPlayState: Boolean = false,
-): BaseResponse(),BaseRecyclerViewItem{
+): BaseResponse(),AppBaseRecyclerViewItem{
     override fun getViewType(): Int {
-        TODO("Not yet implemented")
+        return RecyclerViewItemType.VMN_CALL.getLayout()
     }
 
 }

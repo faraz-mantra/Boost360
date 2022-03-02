@@ -92,6 +92,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.anachat.chatsdk.AnaChatBuilder;
 import com.anachat.chatsdk.internal.database.PreferencesManager;
 import com.appservice.ui.bankaccount.BankAccountFragment;
+import com.appservice.ui.calltracking.VmnCallCardsActivityV2;
 import com.boost.presignin.ui.intro.IntroActivity;
 import com.boost.presignup.utils.DynamicLinkParams;
 import com.boost.presignup.utils.FirebaseDynamicLinksManager;
@@ -617,7 +618,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         DigitalChannelUtil.startDigitalChannel(HomeActivity.this, session);
       } else if (url.contains(getResources().getString(R.string.deeplink_call_tracker_add_on))) {
 //                WebEngageController.trackEvent("NAV - CALLS", "CALLS", null);
-        Intent i = new Intent(HomeActivity.this, VmnCallCardsActivity.class);
+        Intent i = new Intent(HomeActivity.this, VmnCallCardsActivityV2.class);
         startActivity(i);
       } else if (url.contains(getResources().getString(R.string.deeplink_service_catalogue))) {
         Intent serviceCatalogue = new Intent(HomeActivity.this, ProductCatalogActivity.class);
@@ -1419,7 +1420,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
           startActivity(queries);
         } else if (nextScreen.equals(getString(R.string.manage_customer_calls))) {
           WebEngageController.trackEvent(NAV_CALLS, CALLS, NULL);
-          Intent i = new Intent(HomeActivity.this, VmnCallCardsActivity.class);
+          Intent i = new Intent(HomeActivity.this, VmnCallCardsActivityV2.class);
           startActivity(i);
           overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         } else if (nextScreen.equals(getString(R.string.upgrades))) {

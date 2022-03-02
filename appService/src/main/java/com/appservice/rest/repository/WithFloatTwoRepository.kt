@@ -41,7 +41,7 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   }
 
   fun trackerCalls(
-    @QueryMap data: Map<*, *>?):Observable<BaseResponse>{
+    @QueryMap data: Map<String, String?>?):Observable<BaseResponse>{
     return makeRemoteRequest(remoteDataSource.trackerCalls(data), TaskCode.GET_MERCHANT_SUMMARY)
   }
 

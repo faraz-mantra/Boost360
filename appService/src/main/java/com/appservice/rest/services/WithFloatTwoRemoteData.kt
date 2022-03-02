@@ -181,7 +181,7 @@ interface WithFloatTwoRemoteData {
 
   @GET("/Wildfire/v1/calls/tracker")
   fun trackerCalls(
-    @QueryMap data: Map<*, *>?):Observable<Response<ArrayList<VmnCallModel?>?>>
+    @QueryMap data: Map<String, String?>?):Observable<Response<ArrayList<VmnCallModel?>?>>
 
 
 

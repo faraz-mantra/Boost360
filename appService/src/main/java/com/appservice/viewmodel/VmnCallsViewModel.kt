@@ -16,7 +16,7 @@ import retrofit2.http.QueryMap
 class VmnCallsViewModel: BaseViewModel() {
 
     fun trackerCalls(
-        @QueryMap data: Map<*, *>?): LiveData<BaseResponse> {
+        @QueryMap data: Map<String,String?>?): LiveData<BaseResponse> {
         return WithFloatTwoRepository.trackerCalls(
                 data
             ).toLiveData()

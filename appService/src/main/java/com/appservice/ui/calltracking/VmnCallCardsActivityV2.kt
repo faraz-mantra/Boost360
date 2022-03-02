@@ -14,6 +14,7 @@ import com.appservice.R
 import com.appservice.base.AppBaseActivity
 import com.appservice.databinding.ActivityVmnCallCardsV2Binding
 import com.appservice.model.VmnCallModel
+import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.VmnCallsViewModel
 import com.framework.constants.PremiumCode
@@ -22,6 +23,8 @@ import com.framework.pref.Key_Preferences
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_CATEGORY
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.utils.InAppReviewUtils
+import com.framework.utils.showSnackBarNegative
 import com.framework.utils.toArrayList
 import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
@@ -30,6 +33,7 @@ import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.BUSINESS_CALLS
 import com.framework.webengageconstant.EVENT_LABEL_BUSINESS_CALLS
 import com.google.android.material.tabs.TabLayout
+import com.google.gson.JsonObject
 import com.onboarding.nowfloats.constant.IntentConstant
 import java.util.ArrayList
 import java.util.HashMap
@@ -39,7 +43,6 @@ import java.util.HashMap
  */
 class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, VmnCallsViewModel>(),
     AppOnZeroCaseClicked {
-    var sessionManager: UserSessionManager? = null
     var seeMoreLessStatus = false
     var totalCallCount = 0
     var totalPotentialCallCount = 0
@@ -47,15 +50,13 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
     var allowCallPlayFlag // This flag allows only one audio to play at a time. True means an audio can be played.
             = false
     var headerList: ArrayList<VmnCallModel> = ArrayList<VmnCallModel>()
-   // var vmnCallAdapter: VmnCall_Adapter? = null
-    var mRecyclerView: RecyclerView? = null
+    var vmnCallAdapter: AppBaseRecyclerViewAdapter<VmnCallModel>? = null
     var selectedViewType = "ALL"
     private var offset = 0
     private var appFragmentZeroCase: AppFragmentZeroCase? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        session = UserSessionManager(applicationContext)
         appFragmentZeroCase = AppRequestZeroCaseBuilder(
             AppZeroCases.BUSINESS_CALLS,
             this,
@@ -73,7 +74,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
         WebEngageController.trackEvent(BUSINESS_CALLS, EVENT_LABEL_BUSINESS_CALLS, null)
 
         binding?.tvTrackedCall?.setText(
-            getString(R.string.tracked_calls) + " " + sessionManager?.getFPDetails(
+            getString(R.string.tracked_calls) + " " + session?.getFPDetails(
                 Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER
             )
         )
@@ -82,13 +83,12 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
 
         //tracking calls
         showTrackedCalls()
-        mRecyclerView = findViewById<View>(R.id.call_recycler) as RecyclerView
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        mRecyclerView!!.layoutManager = linearLayoutManager
-        mRecyclerView!!.setHasFixedSize(true)
-       // vmnCallAdapter = VmnCall_Adapter(this, headerList)
-      //  mRecyclerView!!.adapter = vmnCallAdapter
-        mRecyclerView!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding?.callRecycler?.layoutManager = linearLayoutManager
+        binding?.callRecycler?.setHasFixedSize(true)
+        vmnCallAdapter = AppBaseRecyclerViewAdapter(this, headerList)
+        binding?.callRecycler?.adapter = vmnCallAdapter
+        binding?.callRecycler?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val totalItemCount = linearLayoutManager.itemCount
                 val lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition()
@@ -155,16 +155,16 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
             stopApiCall = true
             showProgress()
             val startOffset = offset.toString()
-            val hashMap: MutableMap<String, String?> = HashMap()
+            val hashMap = HashMap<String,String?>()
             hashMap["clientId"] = clientId
-            hashMap["fpid"] = if (sessionManager?.iSEnterprise.equals("true")) sessionManager?.fPParentId else sessionManager?.fPID
+            hashMap["fpid"] = if (session?.iSEnterprise.equals("true")) session?.fPParentId else session?.fPID
 
             hashMap["offset"] = startOffset
             hashMap["limit"] = 100.toString()
-            hashMap["identifierType"] = if (sessionManager?.iSEnterprise?.equals("true") == true) "MULTI" else "SINGLE"
+            hashMap["identifierType"] = if (session?.iSEnterprise?.equals("true") == true) "MULTI" else "SINGLE"
             viewModel.trackerCalls(hashMap).observe(this) {
                     Log.i(TAG, "getCalls success: ")
-                val vmnCallModels = (it.arrayResponse as? Array<VmnCallModel>)?.toList()?.toArrayList()
+                val vmnCallModels = (it.anyResponse as? ArrayList<VmnCallModel>)
                     hideProgress()
                     if (vmnCallModels == null ||it.isSuccess().not()) {
                         Toast.makeText(
@@ -204,11 +204,11 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
             for (i in 0 until listSize) {
                 val model: VmnCallModel = newItems[i]
                 headerList.add(model)
-                //                vmnCallAdapter.notifyItemInserted(sizeOfList + i);
+                vmnCallAdapter?.notifyItemInserted(sizeOfList + i);
             }
         }
         Log.i(TAG, "updateRecyclerData: header list size " + getSelectedTypeList(headerList).size)
-        //vmnCallAdapter.updateList(getSelectedTypeList(headerList))
+        vmnCallAdapter?.updateList(getSelectedTypeList(headerList))
     }
 
     private fun getSelectedTypeList(list: ArrayList<VmnCallModel>): ArrayList<VmnCallModel> {
@@ -317,21 +317,21 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
                 "WEB",).observe(this){
 
                 hideProgress()
-               /* val jsonObject = it as? JsonObject
-                if (jsonObject == null || response.getStatus() !== 200) {
+                val jsonObject = it.anyResponse as JsonObject
+                if (it.isSuccess().not()) {
                     showEmptyScreen()
-                    Methods.showSnackBarNegative(
-                        this@VmnCallCardsActivity,
+                    showSnackBarNegative(
+                        this,
                         getString(R.string.something_went_wrong)
                     )
                 } else {
                     val callCount: String = jsonObject.get("POTENTIAL_CALLS").getAsString()
                     binding?.webCallCount!!.text = callCount
                     totalPotentialCallCount += callCount.toInt()
-                    binding?.totalNumberOfCalls.text =
+                    binding?.totalNumberOfCalls?.text =
                         "View potential calls ($totalPotentialCallCount)"
                     getPhoneCallCount()
-                }*/
+                }
             }
 
         }
@@ -345,21 +345,23 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
             session.fpTag,
             "POTENTIAL_CALLS",
             "MOBILE").observe(this){
-           /*hideProgress()
-           if (jsonObject == null || it.isSuccess().not()) {
+           hideProgress()
+           if (it.isSuccess().not()) {
                showEmptyScreen()
-               Methods.showSnackBarNegative(
-                   this@VmnCallCardsActivity,
+               showSnackBarNegative(
+                   this,
                    getString(R.string.something_went_wrong)
                )
            } else {
+               val jsonObject = it.anyResponse as JsonObject
+
                val callCount: String = jsonObject.get("POTENTIAL_CALLS").getAsString()
                //                    webCallCount.setText(callCount);
                binding?.phoneCallCount?.text = callCount
                totalPotentialCallCount += callCount.toInt()
                binding?.totalNumberOfCalls!!.text =
                    "View potential calls ($totalPotentialCallCount)"
-           }*/
+           }
 
         }
 
@@ -441,11 +443,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
 
 
     private fun initiateBuyFromMarketplace() {
-        val progressDialog = ProgressDialog(this)
-        val status = "Loading. Please wait..."
-        progressDialog.setMessage(status)
-        progressDialog.setCancelable(false)
-        progressDialog.show()
+        showProgress()
         val intent = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
         intent.putExtra("expCode", session?.fP_AppExperienceCode)
         intent.putExtra("fpName", session?.fPName)
@@ -468,7 +466,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
         intent.putExtra("profileUrl", session?.fPLogo)
         intent.putExtra("buyItemKey", "CALLTRACKER")
         startActivity(intent)
-        Handler().postDelayed({ progressDialog.dismiss() }, 1000)
+        Handler().postDelayed({hideProgress() }, 1000)
     }
 
     private fun nonEmptyView() {
@@ -503,12 +501,12 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
     override fun appOnBackPressed() {}
     override fun onStop() {
         super.onStop()
-        /*if (vmnCallAdapter.getItemCount() > 1) {
+        if (vmnCallAdapter?.getItemCount()?:0 > 1) {
             InAppReviewUtils.showInAppReview(
                 this,
                 InAppReviewUtils.Events.in_app_review_out_of_customer_calls
             )
-        }*/
+        }
     }
 
     companion object {

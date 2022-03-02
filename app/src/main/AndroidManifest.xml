@@ -588,6 +588,10 @@
       android:name="com.nowfloats.Analytics_Screen.VmnCallCardsActivity"
       android:launchMode="singleTask"
       android:screenOrientation="portrait" />
+    <activity
+        android:name="com.appservice.ui.calltracking.VmnCallCardsActivityV2"
+        android:launchMode="singleTask"
+        android:screenOrientation="portrait" />
 
     <provider
       android:name="com.nowfloats.sync.ContentProvider.BoostContentProvider"
