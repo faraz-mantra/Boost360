@@ -33,12 +33,14 @@
             android:layout_height="@dimen/size_260">
 
             <com.framework.views.customViews.CustomImageView
+              android:id="@+id/view_bg_inner"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:scaleType="centerCrop"
               app:srcCompat="@drawable/ic_bg_dash" />
 
             <com.framework.views.customViews.CustomImageView
+              android:id="@+id/view_bg_outer"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:scaleType="centerCrop"
@@ -140,10 +142,11 @@
                   </androidx.appcompat.widget.LinearLayoutCompat>
 
                   <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_improve_score"
                     android:layout_width="@dimen/size_82"
                     android:layout_height="@dimen/size_26"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/ic_round_green_strock"
+                    android:background="@drawable/ic_round_green_stroke"
                     android:drawableEnd="@drawable/ic_arrow_right_7_white_d"
                     android:drawablePadding="-6dp"
                     android:gravity="center"
@@ -548,7 +551,7 @@
                     android:maxLines="1"
                     android:tag="com.userexperior.ueSecureView"
                     android:textAlignment="gravity"
-                    android:textColor="@color/greyish_brown"
+                    android:textColor="@color/dashboard_business_url"
                     app:autoSizeMaxTextSize="16sp"
                     app:autoSizeMinTextSize="8sp"
                     app:autoSizeStepGranularity="1sp"
@@ -606,6 +609,7 @@
               android:orientation="horizontal">
 
               <com.framework.views.customViews.CustomTextView
+                android:id="@+id/txt_visiting_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/semi_bold"
@@ -1026,7 +1030,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginTop="@dimen/size_3"
-                  android:textColor="@color/dark_grey"
+                  android:textColor="@color/colorLightGrey_jio"
                   app:textType="CAPTION"
                   tools:text="Version 1.6.17" />
 

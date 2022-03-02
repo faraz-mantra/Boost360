@@ -3,9 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
-def kotlin_version = "1.4.10"
-def lifecycle_version = "2.2.0"
-
 android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
@@ -32,6 +29,9 @@ android {
         partone {
             dimension "default"
         }
+        jioonline {
+            dimension "default"
+        }
     }
 
     dataBinding.enabled = true
@@ -44,6 +44,26 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
+    flavorDimensions "default"
+    productFlavors {
+        partone {
+            dimension "default"
+            buildConfigField "String", "CLIENT_ID", '"2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"'
+            buildConfigField "String", "CLIENT_ID_ORDER", '"A816E08AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F51770E46AD86"'
+            buildConfigField "String", "USER_EXPERIOR_LIVE_KEY", '"0efa1c36-15ec-43ba-93e7-e00ff1355f4b"'
+//            buildConfigField "String", "USER_EXPERIOR_DEV_KEY", '"971021d8-3b0a-45e0-80f1-212150a16791"'
+            buildConfigField "String", "SMARTLOOK_API_KEY", '"2976fda0fc620d3186eca19884bd55ac125b56e4"'
+        }
+        jioonline {
+            dimension "default"
+            buildConfigField "String", "CLIENT_ID", '"2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5"'
+            buildConfigField "String", "CLIENT_ID_ORDER", '"2D5C6BB4F46457422DA36B4977BD12E37A92EEB13BB4423A548387BA54DCEBD5"'
+            buildConfigField "String", "USER_EXPERIOR_LIVE_KEY", '"0efa1c36-15ec-43ba-93e7-e00ff1355f4b"'
+//            buildConfigField "String", "USER_EXPERIOR_DEV_KEY", '"971021d8-3b0a-45e0-80f1-212150a16791"'
+            buildConfigField "String", "SMARTLOOK_API_KEY", '"2976fda0fc620d3186eca19884bd55ac125b56e4"'
+        }
+    }
 }
 
 dependencies {
@@ -51,7 +71,7 @@ dependencies {
 
     // Kotlin
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    api "androidx.core:core-ktx:1.6.0"
+    api "androidx.core:core-ktx:1.7.0"
     api "androidx.legacy:legacy-support-v4:1.0.0"
 
     // Rx-Kotlin
@@ -66,15 +86,15 @@ dependencies {
     api "com.jakewharton.rxbinding3:rxbinding-appcompat:3.1.0"
 
     // Material Support
-    api 'androidx.appcompat:appcompat:1.3.1'
-    api 'com.google.android.material:material:1.4.0'
+    api 'androidx.appcompat:appcompat:1.4.1'
+    api 'com.google.android.material:material:1.5.0'
     api "androidx.recyclerview:recyclerview:1.2.1"
-    api 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-    api 'androidx.navigation:navigation-ui-ktx:2.3.5'
+    api 'androidx.navigation:navigation-fragment-ktx:2.4.0'
+    api 'androidx.navigation:navigation-ui-ktx:2.4.0'
     api 'androidx.dynamicanimation:dynamicanimation:1.0.0'
 
     // Additional Components
-    api "androidx.constraintlayout:constraintlayout:2.1.1"
+    api "androidx.constraintlayout:constraintlayout:2.1.3"
     api "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     // facebook shimmer
@@ -134,14 +154,13 @@ dependencies {
     api 'com.invitereferrals.invitereferrals:invitereferrals:v29-1.0.7'
 
     //webengage analytics
-    api 'com.webengage:android-sdk:3.+'
-
-    //exoplayer
-    api 'com.google.android.exoplayer:exoplayer:2.16.0'
+    api 'com.webengage:android-sdk:3.19.1'
 
     // sms receiver apis
-    api 'com.google.android.gms:play-services-auth:19.2.0'
-    api 'com.google.android.gms:play-services-auth-api-phone:17.5.1'
+    api 'com.google.android.gms:play-services-auth:20.1.0'
+    api 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
+
+//    api 'com.google.android.gms:play-services-ads:20.5.0'
 
     //sentry for crash reporting
     api 'io.sentry:sentry-android:5.2.0'
@@ -152,20 +171,15 @@ dependencies {
     //userexperior for tracking
     implementation 'com.userexperior:userexperior-android:7.0.2'
 
-     //svg image view
+    //svg image view
     api 'com.caverock:androidsvg-aar:1.4'
 
     //image picker
     api 'com.github.dhaval2404:imagepicker:2.1'
 
-    api 'com.google.android.play:core:1.10.2'
+    api 'com.google.android.play:core:1.10.3'
     api 'com.google.android.play:core-ktx:1.8.1'
 
     //ExoPlayer
-    api 'com.google.android.exoplayer:exoplayer-core:2.15.1'
-    api 'com.google.android.exoplayer:exoplayer-dash:2.15.1'
-    api 'com.google.android.exoplayer:exoplayer-ui:2.15.1'
-
-    
-
+    api 'com.google.android.exoplayer:exoplayer:2.16.0'
 }

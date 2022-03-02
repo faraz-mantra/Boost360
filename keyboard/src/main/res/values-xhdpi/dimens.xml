@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <dimen name="adapter_item_product_flipped_padding">16dp</dimen>
-  <dimen name="adapter_item_product_flipped_text_size">12sp</dimen>
-  <dimen name="adapter_item_product_keyboard_text_size">14sp</dimen>
-</resources>

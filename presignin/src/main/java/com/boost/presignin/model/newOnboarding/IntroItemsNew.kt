@@ -33,7 +33,6 @@ class IntroItemNew(
         lottieRawResource = R.raw.new_lottie_marketing_2,
         isLottieRepeat = false,
         slideBackgroundColor = R.color.white_F5F8FD,
-        count = 1
       ),
       IntroItemNew(
         title = c.getString(R.string.new_into_3_title),

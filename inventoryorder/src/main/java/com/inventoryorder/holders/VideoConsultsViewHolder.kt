@@ -57,7 +57,7 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRe
     binding.bookingId.text = "# ${order.ReferenceNumber}"
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
-      binding.txtRupees.text = "$currency ${bill.AmountPayableByBuyer}"
+      binding.txtRupees.text = "$currency ${bill.GrossAmount}"
     }
     binding.createDate.value.text = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL, timeZone = TimeZone.getTimeZone("IST"))
     binding.payment.value.text = order.PaymentDetails?.payment()?.trim()

@@ -6,7 +6,7 @@
         {
           "id": "boolean_add_business_name",
           "title": "Add business name",
-          "desc": "  "
+          "desc": "This is how your customers identify you and is the first thing they see on your website."
         },
         {
           "id": "boolean_add_business_description",
@@ -16,7 +16,7 @@
         {
           "id": "boolean_add_clinic_logo",
           "title": "Add business logo",
-          "desc": "  "
+          "desc": "This will help customers easily identify your business online and is good for branding."
         },
         {
           "id": "boolean_add_featured_image_video",
@@ -46,7 +46,7 @@
         {
           "id": "boolean_social_channel_connected",
           "title": "Connect social media channels",
-          "desc": "  "
+          "desc": "This will help you find new customers and increase your reach.Add Business Contact Details."
         },
         {
           "id": "number_services_added",
@@ -60,22 +60,22 @@
         },
         {
           "id": "boolean_add_bank_account",
-          "title": "Add bank account",
-          "desc": "All your online payments will be sent to this account."
+          "title": "Payment collection setup",
+          "desc": "Select payment preferences to enable appointment and consultation."
         },
         {
           "id": "boolean_catalog_setup",
-          "title": "Catalog setup",
+          "title": "Update catalogue setup",
           "desc": "Specify your catalogue name and add tax slab."
         },
         {
           "id": "boolean_general_appointments",
-          "title": "General appointments",
+          "title": "Add general consultation",
           "desc": "Add consultation charges & duration to improve booking experience."
         },
         {
           "id": "boolean_business_verification",
-          "title": "Business Verification",
+          "title": "Verify your business",
           "desc": "Complete GST/Business PAN verification to start selling online. "
         },
         {
@@ -121,7 +121,7 @@
         {
           "id": "boolean_add_business_name",
           "title": "Add business name",
-          "desc": "  "
+          "desc": "This is how your customers identify you and is the first thing they see on your website."
         },
         {
           "id": "boolean_add_business_description",
@@ -131,7 +131,7 @@
         {
           "id": "boolean_add_clinic_logo",
           "title": "Add business logo",
-          "desc": "  "
+          "desc": "This will help customers easily identify your business online and is good for branding."
         },
         {
           "id": "boolean_add_featured_image_video",
@@ -161,7 +161,7 @@
         {
           "id": "boolean_social_channel_connected",
           "title": "Connect social media channels",
-          "desc": "  "
+          "desc": "This will help you find new customers and increase your reach.Add Business Contact Details."
         },
         {
           "id": "number_services_added",
@@ -175,22 +175,22 @@
         },
         {
           "id": "boolean_add_bank_account",
-          "title": "Add bank account",
-          "desc": "All your online payments will be sent to this account."
+          "title": "Payment collection setup",
+          "desc": "Select payment preferences to enable bookings and orders."
         },
         {
           "id": "boolean_catalog_setup",
-          "title": "Catalog setup",
+          "title": "Update catalogue setup",
           "desc": "Specify your catalogue name and add tax slab."
         },
-        {
-          "id": "boolean_general_appointments",
-          "title": "General appointments",
-          "desc": "Add consultation charges & duration to improve booking experience."
-        },
+//        {
+//          "id": "boolean_general_appointments",
+//          "title": "General appointments",
+//          "desc": "Add consultation charges & duration to improve booking experience."
+//        },
         {
           "id": "boolean_business_verification",
-          "title": "Business Verification",
+          "title": "Verify your business",
           "desc": "Complete GST/Business PAN verification to start selling online. "
         },
         {
@@ -213,11 +213,11 @@
           "title": "Create a sample In-clinic appointment",
           "desc": "Explore how to manage your patient appointments."
         },
-        {
-          "id": "boolean_create_sample_video_consultation",
-          "title": "Create a sample video consultation",
-          "desc": "Now offer tele-medicine interactions to all your patients."
-        },
+//        {
+//          "id": "boolean_create_sample_video_consultation",
+//          "title": "Create a sample video consultation",
+//          "desc": "Now offer tele-medicine interactions to all your patients."
+//        },
         {
           "id": "boolean_respond_to_customer_enquiries",
           "title": "Respond to customer enquiries",
