@@ -39,6 +39,7 @@ import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.capitalizeUtil
 import com.appservice.viewmodel.ServiceViewModel
+import com.framework.constants.SupportVideoType
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -55,7 +56,6 @@ import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.*
 import com.google.android.material.snackbar.Snackbar
-import com.onboarding.nowfloats.constant.SupportVideoType
 import com.squareup.picasso.Target
 import kotlinx.android.synthetic.main.fragment_add_account_start.view.*
 import kotlinx.android.synthetic.main.fragment_service_detail.*

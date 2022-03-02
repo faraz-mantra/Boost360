@@ -9,7 +9,10 @@ import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.ColorFilter
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -44,6 +47,7 @@ import com.framework.BaseApplication
 import com.framework.R
 import com.framework.constants.PackageNames
 import com.framework.views.customViews.CustomTextView
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
@@ -53,7 +57,6 @@ import java.text.NumberFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import kotlin.collections.ArrayList
 
 private const val TAG = "Util"
 
@@ -467,3 +470,13 @@ fun getAppVersionName(): String? {
 }
 
 inline fun <reified T> convertJsonToObj(json: String?) = Gson().fromJson<T>(json, object : TypeToken<T>() {}.type)
+
+fun showSnackBarNegative(context: Activity, msg: String?) {
+  val snackBar = Snackbar.make(
+    context.findViewById(android.R.id.content),
+    msg!!, Snackbar.LENGTH_INDEFINITE
+  )
+  snackBar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color))
+  snackBar.duration = 4000
+  snackBar.show()
+}

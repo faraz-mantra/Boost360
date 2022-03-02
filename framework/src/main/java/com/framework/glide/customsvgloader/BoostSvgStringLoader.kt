@@ -13,7 +13,6 @@ import com.caverock.androidsvg.PreserveAspectRatio
 import com.caverock.androidsvg.RenderOptions
 import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SVGParseException
-import com.framework.constants.Constants
 import com.framework.glide.customsvgloader.SvgRenderCacheUtil.Companion.instance
 import java.lang.ref.WeakReference
 

@@ -1,5 +1,6 @@
 package com.appservice.model
 
+import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
 import com.google.gson.annotations.Expose
@@ -43,9 +44,6 @@ data class VmnCallModel (
     @SerializedName("fpId")
     @Expose
     var fpId: String? = null,
-    @SerializedName("viewType")
-    @Expose
-    var viewType: Int = 0,
 
     @SerializedName("fpTag")
     @Expose
@@ -61,4 +59,9 @@ data class VmnCallModel (
     var audioPosition: Int = 0,
     var audioLength: Int = 0,
     var isAudioPlayState: Boolean = false,
-): BaseResponse()
+): BaseResponse(),BaseRecyclerViewItem{
+    override fun getViewType(): Int {
+        TODO("Not yet implemented")
+    }
+
+}

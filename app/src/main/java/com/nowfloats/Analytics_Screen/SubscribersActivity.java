@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.framework.constants.SupportVideoType;
 import com.framework.views.customViews.CustomEditText;
 import com.framework.views.fabButton.FloatingActionButton;
 import com.framework.views.zero.old.AppFragmentZeroCase;
@@ -44,7 +45,6 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
-import com.onboarding.nowfloats.constant.SupportVideoType;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivitySubscribersBinding;
 

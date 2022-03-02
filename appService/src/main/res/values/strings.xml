@@ -1090,8 +1090,20 @@
   <string name="pan_name_invalid">Please enter a valid name.</string>
   <string name="invalid_bank_statement_file">Please select valid bank statement file</string>
   <string name="tracked_calls">Tracked calls on</string>
-
-
+  <string name="view_potential_calls_0">Potential calls (0)</string>
+  <string name="zero">0</string>
+  <string name="mobile">Mobile</string>
+  <string name="desktop">Desktop</string>
+  <string name="all">All</string>
+  <string name="missed">Missed</string>
+  <string name="connected">Connected</string>
+  <string name="updates_not_found">Updates not found!</string>
+  <string name="outgoing">Outgoing</string>
+  <string name="_01_17_am" translatable="false">01:17 am</string>
+  <string name="_24_jan_2020" translatable="false">24 jan 2020</string>
+  <string name="_9695787711" translatable="false">9695787711</string>
+  <string name="_0_00_" translatable="false">0:00</string>
+  <string name="_0_00_back_slash" translatable="false">/ 0:00</string>
   <string name="toolbar_doctor_details">Doctor Details</string>
   <string name="loading_">Loading...</string>
   <string name="_0_12">0.12</string>
