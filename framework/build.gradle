@@ -129,6 +129,10 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     api 'com.google.firebase:firebase-firestore-ktx:23.0.4'
 
+    //Google Tag Manager
+    implementation 'com.google.android.gms:play-services-analytics-impl:18.0.1'
+    api 'com.google.android.gms:play-services-tagmanager:18.0.1'
+
     // Referral Library: invitereferrals
     api 'com.android.installreferrer:installreferrer:2.2'
     api 'com.invitereferrals.invitereferrals:invitereferrals:v29-1.0.7'

@@ -22,6 +22,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.festive.poster.FestivePosterApplication;
 import com.framework.BaseApplication;
+import com.framework.analytics.InstallReferrerController;
 import com.framework.analytics.UserExperiorController;
 import com.framework.utils.AppsFlyerUtils;
 import com.google.firebase.FirebaseApp;
@@ -128,7 +129,10 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
     FestivePosterApplication.instance = this;
     FestivePosterApplication.initModule(this);
     initWebEngage();
-      UserExperiorController.INSTANCE.startRecording(this);
+    UserExperiorController.INSTANCE.startRecording(this);
+
+    //Install Referrer
+    InstallReferrerController.INSTANCE.checkInstallReferer(this);
 
       //Invite Referral
     InviteReferralsApplication.register(this);
