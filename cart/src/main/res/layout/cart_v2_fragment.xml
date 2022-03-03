@@ -591,17 +591,14 @@
                                 android:id="@+id/months_validity"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1"
                                 android:paddingStart="14dp"
                                 android:paddingEnd="14dp"
                                 android:paddingTop="6dp"
                                 android:paddingBottom="6dp"
                                 android:background="@color/white"
-                                android:fontFamily="@font/bold"
-                                android:gravity="center"
+                                android:fontFamily="@font/open_sans_bold"
                                 android:text="0 months"
                                 android:textColor="@color/orange"
-                                android:textCursorDrawable="@null"
                                 android:textSize="@dimen/_13sdp" />
 
                             <ImageView

@@ -962,7 +962,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
 //            default_validity_months++
 //            months_validity.text = default_validity_months.toString() + " months"
-                months_validity.setText(default_validity_months.toString())
+                months_validity.setText(default_validity_months.toString()+ " months")
                 prefs.storeCartValidityMonths(default_validity_months.toString())
                 totalValidityDays = 30 * default_validity_months
                 prefs.storeMonthsValidity(totalValidityDays)
@@ -1019,18 +1019,14 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //                    Toasty.warning(requireContext(), "Validity reduced by 1 month.", Toast.LENGTH_SHORT, true).show()
                 }
                 if (default_validity_months > 1) {
-                    months_validity.setText(default_validity_months.toString())
+                    months_validity.setText(default_validity_months.toString()+ " months")
                     prefs.storeCartValidityMonths(default_validity_months.toString())
                     feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
-
-                }
-//                    months_validity.text = default_validity_months.toString() + " months"
-                else {
-                    months_validity.setText(default_validity_months.toString())
+                } else {
+                    months_validity.setText(default_validity_months.toString()+ " month")
                     prefs.storeCartValidityMonths(default_validity_months.toString())
                     feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
                 }
-//                    months_validity.text = default_validity_months.toString() + " month"
             } else if (bundles_in_cart) {
                 if (default_validity_months > package_validity_months) {
                     if (default_validity_months > 12) {
@@ -1068,17 +1064,14 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //                Toasty.warning(requireContext(), "Validity reduced by 3 month(s).", Toast.LENGTH_SHORT, true).show()
                 }
                 if (default_validity_months > 1) {
-                    months_validity.setText(default_validity_months.toString())
+                    months_validity.setText(default_validity_months.toString()+ " months")
+                    prefs.storeCartValidityMonths(default_validity_months.toString())
+                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
+                } else {
+                    months_validity.setText(default_validity_months.toString()+ " month")
                     prefs.storeCartValidityMonths(default_validity_months.toString())
                     feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
                 }
-//                months_validity.text = default_validity_months.toString() + " months"
-                else {
-                    months_validity.setText(default_validity_months.toString())
-                    prefs.storeCartValidityMonths(default_validity_months.toString())
-                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
-                }
-//                months_validity.text = default_validity_months.toString() + " month"
             }
         }
         Log.v("package_validity_months", " " + package_validity_months)
@@ -2498,17 +2491,17 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     }
                     if (default_validity_months > 0) {
                         if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
-                            months_validity.setText(prefs.getCartValidityMonths())
+                            months_validity.setText(prefs.getCartValidityMonths()+ " months")
                         } else {
-                            months_validity.setText(default_validity_months.toString())
+                            months_validity.setText(default_validity_months.toString()+ " months")
                         }
                     }
 //                        months_validity.text = default_validity_months.toString() + " months"
                     else {
                         if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
-                            months_validity.setText(prefs.getCartValidityMonths())
+                            months_validity.setText(prefs.getCartValidityMonths()+ " month")
                         } else {
-                            months_validity.setText(default_validity_months.toString())
+                            months_validity.setText(default_validity_months.toString()+ " month")
                         }
                     }
 //                        months_validity.text = default_validity_months.toString() + " month"
@@ -2519,10 +2512,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     bundles_in_cart = false
                     default_validity_months = 1
 //                    months_validity.text = default_validity_months.toString() + " month"
+
                     if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
-                        months_validity.setText(prefs.getCartValidityMonths())
+                        Log.e("getCartValidityMonths",prefs.getCartValidityMonths()!!)
+                        months_validity.setText(prefs.getCartValidityMonths()!!+ " month")
                     } else {
-                        months_validity.setText(default_validity_months.toString())
+                        Log.e("default_validity_months",default_validity_months.toString())
+                        months_validity.setText(default_validity_months.toString()+ " month")
                     }
 //          months_validity.setText(default_validity_months.toString())
                     months_validity_edit_inc.visibility = View.VISIBLE
@@ -3211,7 +3207,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         txtSub1.setText( " ₹"  +  NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) popupWindow.elevation =
             5.0f
-        popupWindow.showAsDropDown(anchor, 250, -250)
+        popupWindow.showAsDropDown(anchor, (anchor.width-40), -166)
     }
 
 }

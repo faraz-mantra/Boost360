@@ -30,7 +30,7 @@ class MinMaxFilter : InputFilter {
     dend: Int
   ): CharSequence? {
     try {
-      val input = (dest.toString() + source.toString()).toInt()
+      val input = (dest.toString() + source.toString().split(" ").get(0)).toInt()
       if (isInRange(mIntMin, mIntMax, input)) return null
     } catch (e: NumberFormatException) {
       SentryController.captureException(e)
