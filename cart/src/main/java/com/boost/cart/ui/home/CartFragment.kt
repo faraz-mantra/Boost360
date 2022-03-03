@@ -11,6 +11,8 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.util.Log
 import android.view.*
 import android.view.View.GONE
@@ -331,6 +333,24 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
 
 
+        cart_payment_details_ll.setOnClickListener {
+          //  bill_details.visibility=View.GONE
+            if (bill_details.visibility == View.GONE) {
+                TransitionManager.beginDelayedTransition(cart_payment_details_ll, AutoTransition())
+                bill_details.visibility = View.VISIBLE
+                arrow1?.animate()?.rotation(0f)?.start()
+                cart_main_scroller.post {
+                    cart_main_scroller.fullScroll(View.FOCUS_DOWN)
+                }
+            } else {
+                TransitionManager.beginDelayedTransition(cart_payment_details_ll, AutoTransition())
+                bill_details?.visibility = View.GONE
+                arrow1?.animate()?.rotation(180f)?.start()
+                cart_main_scroller.post {
+                    cart_main_scroller.fullScroll(View.FOCUS_DOWN)
+                }
+            }
+        }
 
 
         edit.setOnClickListener {
