@@ -1612,38 +1612,10 @@ public class Contact_Info_Activity extends BaseActivity implements View.OnTouchL
     @Override
     protected void onStart() {
         super.onStart();
-        //LocalBroadcastManager.getInstance(this).registerReceiver(mSmsReceiver, new IntentFilter(Constants.SMS_OTP_RECEIVER));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        //LocalBroadcastManager.getInstance(this).unregisterReceiver(mSmsReceiver);
     }
-
- /*   private BroadcastReceiver mSmsReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent == null) {
-                return;
-            }
-            String otp = intent.getStringExtra("OTP_CODE");
-            otp = otp.replaceAll("[^0-9]", "");
-            if (otpEditText != null) {
-                otpEditText.setText(otp);
-            }
-            stopProgressDialog();
-        }
-    };*/
-
-   /* private void startProgressDialog() {
-        if (progressDialog != null)
-            progressDialog.show();
-    }
-
-    private void stopProgressDialog() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
-    }*/
 }

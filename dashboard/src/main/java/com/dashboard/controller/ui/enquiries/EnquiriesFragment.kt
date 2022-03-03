@@ -71,7 +71,7 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
   private fun apiSellerSummary(enquiriesFilter: FilterDateModel, isLoader: Boolean = false) {
     if (isLoader) showProgress()
     viewModel?.getSellerSummaryV2_5(
-      AppConstant.CLIENT_ID_2,
+      AppConstant.CLIENT_ID_ORDER,
       session?.fpTag,
       getRequestSellerSummary(enquiriesFilter)
     )?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {

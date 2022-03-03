@@ -388,7 +388,7 @@
               android:layout_gravity="center"
               android:gravity="center"
               android:text="@string/add_secondary_images"
-              android:textColor="@color/colorAccent"
+              android:textColor="@color/ButtoncolorAccent"
               app:drawableLeftCompat="@drawable/ic_small_add_images"
               app:fontFamily="@font/semi_bold"
               app:layout_constraintBottom_toBottomOf="parent"
@@ -518,7 +518,7 @@
               android:clickable="true"
               android:gravity="center"
               android:text="@string/add"
-              android:textColor="@color/colorAccent"
+              android:textColor="@color/ButtoncolorAccent"
               app:fontFamily="@font/semi_bold"
               app:layout_constraintBottom_toBottomOf="@id/edt_product_tag"
               app:layout_constraintRight_toRightOf="parent"
@@ -640,7 +640,7 @@
             android:minWidth="@dimen/size_100"
             android:padding="@dimen/size_10"
             android:text="@string/add_specification"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/ButtoncolorAccent"
             app:fontFamily="@font/semi_bold"
             app:layout_constraintBottom_toBottomOf="@id/edt_product_tag"
             app:layout_constraintRight_toRightOf="@id/edt_product_tag"
@@ -1043,7 +1043,7 @@
             android:stateListAnimator="@null"
             android:text="@string/done"
             android:textAllCaps="false"
-            android:textColor="#FFB900"
+            android:textColor="@color/ButtoncolorAccent"
             app:textType="HEADING_6" />
         </androidx.appcompat.widget.LinearLayoutCompat>
       </androidx.appcompat.widget.LinearLayoutCompat>

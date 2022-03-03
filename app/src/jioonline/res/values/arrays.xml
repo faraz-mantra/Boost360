@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="account_settings">
+        <!--<item>@drawable/ic_seller_profile</item>-->
+        <!--        <item>@drawable/ic_account_info</item>-->
+        <item>@drawable/ic_business_profile</item>
+        <item>@drawable/ic_baseline_payment</item>
+        <item>@drawable/ic_baseline_verified</item>
+        <item>@drawable/ic_baseline_payment</item>
+        <item>@drawable/ic_nav_settings</item>
+<!--        <item>@drawable/ic_your_plan</item>-->
+        <item>@drawable/ic_domain_email</item>
+        <item>@drawable/ic_change_password</item>
+        <item>@drawable/ic_logout</item>
+    </array>
+    <array name="about_sidepanel">
+        <item>@drawable/ic_about_nf</item>
+        <item>@drawable/ic_faqs</item>
+        <item>@drawable/ic_like_facebook</item>
+        <item>@drawable/ic_follow_twitter</item>
+        <item>@drawable/ic_rate_on_playstore</item>
+        <item>@drawable/ic_terms_of_use</item>
+        <item>@drawable/ic_privacy_policy</item>
+    </array>
+    <!--
+    <array name="manage_content_sidepanel">
+        <item>@drawable/ic_manage_business</item>
+        <item>@drawable/ic_about</item>
+        <item>@drawable/ic_image_gallery</item>
+        <item>@drawable/ic_custom_page_add</item>
+        <item>@drawable/ic_custom_page_add</item>
+    </array>
+    -->
+
+    <array name="manage_content_sidepanel">
+        <item>@drawable/ic_product_gallery</item>
+        <item>@drawable/ic_updates</item>
+        <item>@drawable/ic_image_gallery</item>
+        <item>@drawable/ic_business_profile</item>
+        <item>@drawable/ic_testimonial_new</item>
+        <item>@drawable/ic_custom_page</item>
+    </array>
+    <array name="manage_content_sidepanel_hot">
+        <item>@drawable/ic_product_gallery</item>
+        <item>@drawable/ic_updates</item>
+        <item>@drawable/ic_image_gallery</item>
+        <item>@drawable/ic_business_profile</item>
+        <item>@drawable/ic_testimonial_new</item>
+        <item>@drawable/ic_custom_page</item>
+        <item>@drawable/ic_place_nearby</item>
+        <item>@drawable/trip_advisor</item>
+        <item>@drawable/ic_seasonal_offers</item>
+    </array>
+    <array name="manage_content_sidepanel_mfg">
+        <item>@drawable/ic_product_gallery</item>
+        <item>@drawable/ic_updates</item>
+        <item>@drawable/ic_image_gallery</item>
+        <item>@drawable/ic_business_profile</item>
+        <item>@drawable/ic_testimonial_new</item>
+        <item>@drawable/ic_custom_page</item>
+        <item>@drawable/ic_project_teams</item>
+        <item>@drawable/ic_digital_brochures</item>
+    </array>
+
+    <array name="manage_content_side_panel_edu">
+        <item>@drawable/ic_product_gallery</item>
+        <item>@drawable/ic_updates</item>
+        <item>@drawable/ic_image_gallery</item>
+        <item>@drawable/ic_business_profile</item>
+        <item>@drawable/ic_testimonial_new</item>
+        <item>@drawable/ic_custom_page</item>
+        <item>@drawable/top_rankers</item>
+        <item>@drawable/batches</item>
+        <item>@drawable/faculty</item>
+    </array>
+
+    <string-array name="manage_content_tab_items_edu">
+        <item>[Catalogue]</item>
+        <item>Latest Updates</item>
+        <item>All Images</item>
+        <item>Business Profile</item>
+        <item>Testimonials</item>
+        <item>Custom Pages</item>
+        <item>Toppers of Institute</item>
+        <item>Upcoming Batches</item>
+        <item>Faculty Management</item>
+    </string-array>
+
+    <array name="order_analytics_img">
+        <item>@drawable/ic_order_summary_new</item>
+        <item>@drawable/ic_revenue_summary_new</item>
+    </array>
+
+    <array name="image_list_icons">
+        <item>@drawable/ic_business_logo</item>
+        <item>@drawable/ic_featured_image</item>
+        <item>@drawable/ic_all_images</item>
+        <item>@drawable/ic_background_images</item>
+        <item>@drawable/ic_favicon</item>
+    </array>
+</resources>

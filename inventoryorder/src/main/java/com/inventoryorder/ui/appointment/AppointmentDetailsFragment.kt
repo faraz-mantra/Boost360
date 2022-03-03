@@ -149,7 +149,8 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
       }
     }
 
-    val product = order?.firstItemForAptConsult()?.product()
+    val item = order?.firstItemForAptConsult()
+    val product = item?.product()
     val extraAptDetail = product?.extraItemProductConsultation()
     binding?.ctvAppointmentId?.text = "#${order?.ReferenceNumber}"
     binding?.textDateTime?.text = parseDate(order?.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_3, timeZone = TimeZone.getTimeZone("IST"))
@@ -162,7 +163,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     binding?.textDate?.text = appointmentDate
 
     binding?.textStaff?.text = if (!extraAptDetail?.doctorName.isNullOrBlank()) "${extraAptDetail?.doctorName}" else ""
-    binding?.textAppointmentAmount?.text = "${product?.getCurrencyCodeValue()} ${product?.price()}"
+    binding?.textAppointmentAmount?.text = "${product?.getCurrencyCodeValue()} ${item?.SalePrice?:0.0}"
 
     if (product?.ImageUri.isNullOrEmpty().not()) {
       Picasso.get().load(product?.ImageUri).into(binding?.imageServiceProvider)
@@ -404,10 +405,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
           showProgress()
           sendPaymentLinkApt(getString(R.string.payment_request_send))
         }
-        sheetRequestPayment.show(
-          this.parentFragmentManager,
-          RequestPaymentAptSheetDialog::class.java.name
-        )
+        sheetRequestPayment.show(this.parentFragmentManager, RequestPaymentAptSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT -> {
         this.orderItem = orderItem
@@ -420,10 +418,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
         val markPaymentDoneSheet = MarkPaymentDoneAptSheetDialog()
         markPaymentDoneSheet.setData(orderItem)
         markPaymentDoneSheet.onClicked = { markReceivedPaymentRequest(it) }
-        markPaymentDoneSheet.show(
-          this.parentFragmentManager,
-          MarkPaymentDoneAptSheetDialog::class.java.name
-        )
+        markPaymentDoneSheet.show(this.parentFragmentManager, MarkPaymentDoneAptSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.MARK_AS_SERVED -> {
         val sheetServed = ServedAptSheetDialog()
@@ -441,19 +436,13 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
         val sheetFeedbackApt = SendFeedbackAptSheetDialog()
         sheetFeedbackApt.setData(orderItem)
         sheetFeedbackApt.onClicked = { sendFeedbackRequestApt(it) }
-        sheetFeedbackApt.show(
-          this.parentFragmentManager,
-          SendFeedbackAptSheetDialog::class.java.name
-        )
+        sheetFeedbackApt.show(this.parentFragmentManager, SendFeedbackAptSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.SEND_RE_BOOKING -> {
         val sheetReBookingApt = SendReBookingAptSheetDialog()
         sheetReBookingApt.setData(orderItem)
         sheetReBookingApt.onClicked = { sendReBookingRequestApt() }
-        sheetReBookingApt.show(
-          this.parentFragmentManager,
-          SendReBookingAptSheetDialog::class.java.name
-        )
+        sheetReBookingApt.show(this.parentFragmentManager, SendReBookingAptSheetDialog::class.java.name)
       }
       else -> {
       }
@@ -462,25 +451,22 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
 
   private fun startApt(markAsShippedRequest: MarkAsShippedRequest) {
     showProgress()
-    viewModel?.markAsShipped(clientId, markAsShippedRequest)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.markAsShipped(clientId, markAsShippedRequest)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         orderItem?._id?.let { it1 ->
-          apiGetOrderDetails(
-            it1,
-            resources.getString(R.string.apt_start_success)
-          )
+          apiGetOrderDetails(it1, resources.getString(R.string.apt_start_success))
         }
       } else {
         showLongToast(it.message())
         hideProgress()
       }
-    })
+    }
   }
 
   private fun sendReBookingRequestApt() {
     showProgress()
     viewModel?.sendReBookingReminder(clientId, this.orderItem?._id)
-      ?.observeOnce(viewLifecycleOwner, {
+      ?.observeOnce(viewLifecycleOwner) {
         if (it.isSuccess()) {
           orderItem?._id?.let { it1 ->
             apiGetOrderDetails(
@@ -492,12 +478,12 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
           showLongToast(it.message())
           hideProgress()
         }
-      })
+      }
   }
 
   private fun sendFeedbackRequestApt(request: FeedbackRequest) {
     showProgress()
-    viewModel?.sendOrderFeedbackRequest(clientId, request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.sendOrderFeedbackRequest(clientId, request)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         orderItem?._id?.let { it1 ->
           apiGetOrderDetails(
@@ -509,12 +495,12 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
         showLongToast(it.message())
         hideProgress()
       }
-    })
+    }
   }
 
   private fun serveCustomer(message: String) {
     showProgress()
-    viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         if (message.isNotEmpty()) {
           updateReason(
@@ -532,7 +518,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
         showLongToast(it.message())
         hideProgress()
       }
-    })
+    }
   }
 
   private fun apiCancelApt(cancellingEntity: String, reasonText: String) {
@@ -571,10 +557,9 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
       orderId = this.orderItem?._id,
       extraPropertiesOrder = extraPropertiesOrder
     )
-    viewModel?.updateExtraPropertyOrder(clientId, requestCancel = propertyRequest)
-      ?.observeOnce(viewLifecycleOwner, {
+    viewModel?.updateExtraPropertyOrder(clientId, requestCancel = propertyRequest)?.observeOnce(viewLifecycleOwner) {
         orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, message) }
-      })
+      }
   }
 
   private fun apiConfirmApt(isSendPaymentLink: Boolean) {
@@ -598,25 +583,22 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
 
   private fun markReceivedPaymentRequest(request: PaymentReceivedRequest) {
     showProgress()
-    viewModel?.markPaymentReceivedMerchant(clientId, request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.markPaymentReceivedMerchant(clientId, request)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         orderItem?._id?.let { it1 ->
-          apiGetOrderDetails(
-            it1,
-            getString(R.string.payment_confirmed)
-          )
+          apiGetOrderDetails(it1, getString(R.string.payment_confirmed))
         }
       } else {
         showLongToast(it.message())
         hideProgress()
       }
-    })
+    }
   }
 
   private fun sendPaymentLinkApt(message: String) {
-    viewModel?.sendPaymentReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.sendPaymentReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner) {
       orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, message) }
-    })
+    }
   }
 
   /*  private fun checkStatusOrder(order: OrderItem) {

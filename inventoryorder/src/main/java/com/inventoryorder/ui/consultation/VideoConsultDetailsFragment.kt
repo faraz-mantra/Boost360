@@ -61,18 +61,14 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     super.onCreateView()
     arguments?.getString(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
     setOnClickListener(
-      binding?.btnPaymentReminder,
-      binding?.tvReSchedule,
-      binding?.btnCopyLink,
-      binding?.btnOpenConsult,
-      binding?.tvCustomerContactNumber,
-      binding?.tvCustomerEmail
+      binding?.btnPaymentReminder, binding?.tvReSchedule, binding?.btnCopyLink,
+      binding?.btnOpenConsult, binding?.tvCustomerContactNumber, binding?.tvCustomerEmail
     )
   }
 
   private fun apiGetOrderDetails(orderId: String) {
     showProgress()
-    viewModel?.getOrderDetails(clientId, orderId)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getOrderDetails(clientId, orderId)?.observeOnce(viewLifecycleOwner) {
       hideProgress()
       if (it.isSuccess()) {
         binding?.mainView?.visible()
@@ -87,7 +83,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
           setDetails(orderItem!!)
         } else errorUi(getString(R.string.consultation_data_not_available))
       } else errorUi(it.message())
-    })
+    }
   }
 
   private fun startCountDown(order: OrderItem) {
@@ -186,7 +182,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     binding?.tvPaymentMode?.text = order.PaymentDetails?.methodValue()
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "₹"
-      binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
+      binding?.tvOrderAmount?.text = "$currency ${bill.GrossAmount}"
     }
     val scheduleDate = order.firstItemForAptConsult()?.scheduledStartDate()
     val dateApt = parseDate(scheduleDate, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2)
@@ -219,14 +215,14 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     } else binding?.tvCustomerEmail?.isGone = true
 
     // shipping details
-    var shippingCost = 0.0
-    var salePrice = 0.0
-    var currency = "INR"
-    order.Items?.forEachIndexed { index, item ->
-      shippingCost += item.Product?.ShippingCost ?: 0.0
-      salePrice += item.product().price() - item.product().discountAmount()
-      if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
-    }
+    val shippingCost = order.BillingDetails?.SellerDeliveryCharges ?: 0.0
+    val salePrice = order.BillingDetails?.GrossAmount ?: 0.0
+    val currency = takeIf { order.BillingDetails?.CurrencyCode.isNullOrEmpty().not() }?.let { order.BillingDetails?.CurrencyCode?.trim() } ?: "INR"
+//    order.Items?.forEachIndexed { index, item ->
+//      shippingCost += item.Product?.ShippingCost ?: 0.0
+//      salePrice += item.product().price() - item.product().discountAmount()
+//      if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
+//    }
     binding?.tvTotalOrderAmount?.text = "Total amount: $currency $salePrice"
 
   }
@@ -303,14 +299,14 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
 
   private fun apiCancelOrder() {
     showProgress()
-    viewModel?.cancelOrder(clientId, orderItem?._id, OrderItem.CancellingEntity.SELLER.name)?.observeOnce(viewLifecycleOwner, { cancelRes ->
+    viewModel?.cancelOrder(clientId, orderItem?._id, OrderItem.CancellingEntity.SELLER.name)?.observeOnce(viewLifecycleOwner) { cancelRes ->
       hideProgress()
       if (cancelRes.isSuccess()) {
         val data = cancelRes as? OrderConfirmStatus
         data?.let { d -> showLongToast(getString(R.string.the_video_consultation_has_been_cancelled)) }
         refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CANCELLED)
       } else showLongToast(cancelRes.message())
-    })
+    }
   }
 
 
