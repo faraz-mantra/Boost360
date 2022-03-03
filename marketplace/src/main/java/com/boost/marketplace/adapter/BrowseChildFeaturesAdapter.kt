@@ -23,7 +23,7 @@ class BrowseChildFeaturesAdapter(list:List<FeaturesModel>,val addonsListener: Ad
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-    val item = View.inflate(parent.context, R.layout.item_packs_list, null)
+    val item = View.inflate(parent.context, R.layout.item_pack_list1, null)
     val lp = ViewGroup.LayoutParams(
       parent.width / 2,
       (parent.width / 1.4).toInt()

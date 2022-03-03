@@ -11,6 +11,8 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.util.Log
 import android.view.*
 import android.view.View.GONE
@@ -19,7 +21,6 @@ import android.widget.ArrayAdapter
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -76,7 +77,6 @@ import com.framework.extensions.underlineText
 import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
-import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -86,7 +86,6 @@ import kotlinx.android.synthetic.main.cart_applied_coupon_layout.*
 import kotlinx.android.synthetic.main.cart_v2_fragment.*
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 
@@ -334,6 +333,24 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
 
 
+        cart_payment_details_ll.setOnClickListener {
+          //  bill_details.visibility=View.GONE
+            if (bill_details.visibility == View.GONE) {
+                TransitionManager.beginDelayedTransition(cart_payment_details_ll, AutoTransition())
+                bill_details.visibility = View.VISIBLE
+                arrow1?.animate()?.rotation(0f)?.start()
+                cart_main_scroller.post {
+                    cart_main_scroller.fullScroll(View.FOCUS_DOWN)
+                }
+            } else {
+                TransitionManager.beginDelayedTransition(cart_payment_details_ll, AutoTransition())
+                bill_details?.visibility = View.GONE
+                arrow1?.animate()?.rotation(180f)?.start()
+                cart_main_scroller.post {
+                    cart_main_scroller.fullScroll(View.FOCUS_DOWN)
+                }
+            }
+        }
 
 
         edit.setOnClickListener {
@@ -362,8 +379,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 gst_info_tv.visibility = View.VISIBLE
                 cart_business_address.visibility = View.GONE
                 cart_business_address1.visibility = View.VISIBLE
+                cart_state_of_supply.visibility=View.GONE
                 cart_place_of_supply_cl.visibility = View.GONE
-                cart_place_of_supply_cl1.visibility = View.VISIBLE
+                cart_place_of_supply_cl1.visibility = View.GONE
                 prefs.storeGstRegistered(true)
             } else {
                 gstll.visibility = View.GONE
@@ -371,6 +389,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 gst_info_tv.visibility = View.GONE
                 cart_business_address.visibility = View.VISIBLE
                 cart_business_address1.visibility = View.GONE
+                cart_state_of_supply.visibility=View.VISIBLE
                 cart_place_of_supply_cl.visibility = View.VISIBLE
                 cart_place_of_supply_cl1.visibility = View.GONE
                 prefs.storeGstRegistered(false)
@@ -1281,6 +1300,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     val businessAddressDetails = joinNonBlankStringArray(addressDetails, ",")
                     //cart_business_address.text = businessAddressDetails
                     cart_business_address1.setText(businessAddressDetails)
+                    cart_place_of_supply_cl1.visibility = View.VISIBLE
+                    gst_info_tv.visibility=View.GONE
                     cart_business_city_name1.text = gstInfoResult!!.address!!.state
                     isGstApiCalled = true
                 } else {
@@ -2949,12 +2970,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             overalltotal = 0.0
             couponDiscountAmount = 0.0
             var couponDisount = 0
-            if (validCouponCode != null) {
-                couponDisount = validCouponCode!!.discount_percent
-                coupon_discount_title.text = "Discount(" + couponDisount.toString() + "%)"
-            } else {
-                coupon_discount_title.text = "Discount"
-            }
+//            if (validCouponCode != null) {
+//                couponDisount = validCouponCode!!.discount_percent
+//                coupon_discount_title.text = "Discount(" + couponDisount.toString() + "%)"
+//            } else {
+//                coupon_discount_title.text = "Discount"
+//            }
             if (cartList != null && cartList.size > 0) {
                 for (item in cartList) {
                     if (!bundles_in_cart && item.item_type.equals("features"))
@@ -2974,7 +2995,14 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //                couponDiscountAmount = total * couponDisount / 100
 //                couponDiscountAmount = couponServiceModel!!.couponDiscountAmt!!
                 coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
-                // coupon_discount_title.text=couponServiceModel?.coupon_key + " coupon discount"
+
+//                if (validCouponCode != null) {
+                    coupon_discount_title.text =
+                        "'" + couponServiceModel?.coupon_key + "'" + " coupon discount"
+//                }else {
+//                coupon_discount_title.text = "Discount Coupon"
+//            }
+
                 overalltotal -= couponDiscountAmount
                 Log.v("cart_amount_value", " " + total)
                 val temp = (total * 18) / 100
@@ -3177,11 +3205,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             WindowManager.LayoutParams.WRAP_CONTENT,
             true
         )
-        val txtSub: TextView = popupWindow.contentView.findViewById(R.id.popup_gst_value)
-        txtSub.setText("Testing")
+        val txtSub: TextView = popupWindow.contentView.findViewById(R.id.price1)
+        val txtSub1 :TextView=popupWindow.contentView.findViewById(R.id.price2)
+        txtSub.setText( " ₹"  +  NumberFormat.getNumberInstance(Locale.ENGLISH).format(total))
+        txtSub1.setText( " ₹"  +  NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) popupWindow.elevation =
             5.0f
-        popupWindow.showAsDropDown(anchor, 110, -110)
+        popupWindow.showAsDropDown(anchor, 250, -250)
     }
 
 }
