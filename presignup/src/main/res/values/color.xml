@@ -22,5 +22,7 @@
   <color name="com_facebook_button_background_color_focused_disabled">#3C5A99</color>
   <color name="com_facebook_button_background_color_focused">#3C5A99</color>
   <color name="com_facebook_button_border_color_focused">#3C5A99</color>
+    <color name="pre_sign_up_title">#F5A640</color>
+
 
 </resources>

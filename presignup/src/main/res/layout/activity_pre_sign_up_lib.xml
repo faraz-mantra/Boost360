@@ -98,6 +98,7 @@
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:visibility="gone"
           android:gravity="center">
 
           <androidx.appcompat.widget.AppCompatTextView
@@ -197,6 +198,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
+        android:visibility="gone"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -243,7 +245,7 @@
       app:layout_constraintBottom_toTopOf="@+id/login_button"
       app:layout_constraintEnd_toEndOf="@id/endGuideline"
       app:layout_constraintStart_toStartOf="@id/startGuideline"
-      tools:visibility="visible" />
+      tools:visibility="gone" />
 
     <androidx.appcompat.widget.AppCompatTextView
       android:id="@+id/login_button"

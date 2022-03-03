@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import androidx.databinding.ViewDataBinding
+import com.framework.BuildConfig
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.views.DotProgressBar
 import com.onboarding.nowfloats.R
@@ -51,12 +52,9 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> :
     get() {
       return pref?.getString(PreferenceConstant.USER_PROFILE_ID, "")
     }
-  protected val clientId: String?
+  protected val clientId: String
     get() {
-      return pref?.getString(
-        PreferenceConstant.CLIENT_ID,
-        "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
-      )
+     return BuildConfig.CLIENT_ID
     }
 
   protected var requestFloatsModel: RequestFloatsModel? = null

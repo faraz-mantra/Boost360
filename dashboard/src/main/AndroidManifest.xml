@@ -8,7 +8,9 @@
   <application
     android:requestLegacyExternalStorage="true"
     tools:ignore="UnusedAttribute">
-    <meta-data android:name="io.sentry.dsn" android:value="@string/sentry_url" />
+    <meta-data
+      android:name="io.sentry.dsn"
+      android:value="@string/sentry_url" />
 
     <activity
       android:name=".controller.DashboardActivity"
@@ -32,12 +34,12 @@
           android:scheme="http" />
 
         <data
-          android:host="boost.nowfloats.com"
+          android:host="@string/deep_base_url"
           android:pathPrefix="/"
           android:scheme="http" />
 
         <data
-          android:host="nowfloat.onelink.me"
+          android:host="@string/deep_base_onelink_url"
           android:pathPrefix="/FX0L"
           android:scheme="https" />
       </intent-filter>
@@ -50,12 +52,12 @@
     <activity
       android:name=".controller.DashboardFragmentContainerActivity"
       android:screenOrientation="portrait"
-      android:windowSoftInputMode="adjustPan"
-      android:theme="@style/DashboardTheme" />
+      android:theme="@style/DashboardTheme"
+      android:windowSoftInputMode="adjustPan" />
     <activity
-        android:name=".controller.ui.ownerinfo.OwnersInfoContainerActivity"
-        android:screenOrientation="portrait"
-        android:theme="@style/DashboardTheme"
-        android:windowSoftInputMode="adjustPan" />
+      android:name=".controller.ui.ownerinfo.OwnersInfoContainerActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/DashboardTheme"
+      android:windowSoftInputMode="adjustPan" />
   </application>
 </manifest>

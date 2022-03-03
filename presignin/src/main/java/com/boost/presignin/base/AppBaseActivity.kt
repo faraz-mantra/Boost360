@@ -1,5 +1,6 @@
 package com.boost.presignin.base
 
+import android.app.Activity
 import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.Typeface
@@ -13,6 +14,7 @@ import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -21,8 +23,7 @@ import com.boost.presignin.R
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 
-abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> :
-  BaseActivity<Binding, ViewModel>() {
+abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseActivity<Binding, ViewModel>() {
 
   private var progressView: ProgressDialog? = null
 

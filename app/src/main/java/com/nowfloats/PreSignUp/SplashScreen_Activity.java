@@ -154,8 +154,8 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     @Subscribe
     public void nfxCallback(NfxGetTokensResponse response) {
         if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
-            SharedPreferences smsPref = getSharedPreferences(com.nfx.leadmessages.Constants.SHARED_PREF, Context.MODE_PRIVATE);
-            smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID, session.getFPID()).apply();
+//            SharedPreferences smsPref = getSharedPreferences(com.nfx.leadmessages.Constants.SHARED_PREF, Context.MODE_PRIVATE);
+//            smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID, session.getFPID()).apply();
         }
     }
 
