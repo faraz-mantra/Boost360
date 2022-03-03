@@ -350,5 +350,9 @@
     <color name="light_blue">#0068e0</color>
     <color name="warm_grey">#747474</color>
     <color name="green">#7ED321</color>
+    <color name="payment_title_color">#333333</color>
+    <color name="payment_green">#828282</color>
+    <color name="body_grey">#828282</color>
+    <color name="payment_light_gray">#747474</color>
 
 </resources>

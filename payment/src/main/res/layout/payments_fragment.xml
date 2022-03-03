@@ -89,7 +89,7 @@
                 android:id="@+id/auto_renew_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="8dp"
                 android:background="@color/white"
                 android:padding="@dimen/_10sdp"
                 app:layout_constraintTop_toTopOf="parent">
@@ -98,8 +98,14 @@
                     android:id="@+id/auto_renew_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp"
+                    android:paddingTop="5dp"
+                    android:layout_marginBottom="@dimen/pad_15dp"
+                    android:paddingBottom="5dp"
+                    android:fontFamily="@font/open_sans"
+                    android:textSize="@dimen/txt_12sp"
+                    android:textFontWeight="600"
+                    app:layout_constraintBottom_toTopOf="@id/auto_renew_extra_offers"
+                    android:textColor="@color/common_text_color"
                     android:text="Automatically renew every 3 months?"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -108,9 +114,9 @@
                     android:id="@+id/auto_renew_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp"
+                    android:layout_marginEnd="5dp"
+                    android:paddingTop="@dimen/pad_5dp"
+                    android:paddingBottom="@dimen/pad_5dp"
                     android:src="@drawable/ic_switch_off"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -119,17 +125,19 @@
                     android:id="@+id/auto_renew_extra_offers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="5dp"
                     android:background="@drawable/ic_discount_auto_renew_bg"
                     android:drawableStart="@drawable/ic_discount"
-                    android:drawablePadding="@dimen/_5sdp"
+                    android:drawablePadding="@dimen/pad_5dp"
+                    android:fontFamily="@font/open_sans"
+                    android:textFontWeight="600"
                     android:gravity="center_vertical"
-                    android:paddingStart="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingEnd="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp"
+                    android:paddingStart="5dp"
+                    android:paddingTop="11dp"
+                    android:paddingEnd="5dp"
+                    android:paddingBottom="6dp"
                     android:text="Enable auto-renewal to get extra 3% off"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/auto_renew_title" />
@@ -139,7 +147,11 @@
                     android:id="@+id/auto_renew_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="@dimen/_6dp"
+                    android:fontFamily="@font/open_sans"
+                    android:textFontWeight="700"
+                    android:textSize="@dimen/txt_12sp"
                     android:drawableStart="@drawable/ic_calendar_auto_renew"
                     android:drawablePadding="@dimen/_5sdp"
                     android:text="You are paying ₹4,387 only for 3 months. Your subscription will end on 16 Feb ‘22."
@@ -152,12 +164,12 @@
                 android:id="@+id/payment_subscription_details_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:background="@color/white"
                 android:elevation="@dimen/_2sdp"
                 android:paddingTop="@dimen/_4sdp"
-                android:paddingBottom="@dimen/_4sdp"
+                android:paddingBottom="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/auto_renew_layout">
@@ -169,19 +181,21 @@
                     android:layout_marginStart="@dimen/_5sdp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:paddingStart="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_3sdp"
+                    android:paddingTop="16dp"
                     android:paddingEnd="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp"
+                    android:paddingBottom="12dp"
+                    android:textFontWeight="600"
                     android:text="PAYABLE AMOUNT: ₹4,399"
                     android:textAllCaps="true"
+                    android:textSize="@dimen/txt_14sp"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:padding="@dimen/_6sdp"
+                    android:layout_height="30dp"
+                    android:padding="8dp"
                     android:src="@drawable/ic_top_arrow_black"
                     app:layout_constraintBottom_toTopOf="@id/divider"
                     app:layout_constraintDimensionRatio="1:1"
@@ -192,7 +206,7 @@
                     android:id="@+id/divider"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_1sdp"
-                    android:background="@color/material_grey_400"
+                    android:background="#80A3A3A3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/payment_subscription_details_title" />
@@ -203,8 +217,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_15sdp"
-                    android:paddingBottom="@dimen/_15sdp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/payment_subscription_details_title">
@@ -213,13 +227,14 @@
                         android:id="@+id/payment_amount_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans_semibold"
+                        android:fontFamily="@font/open_sans"
                         android:paddingStart="@dimen/_5sdp"
-                        android:paddingTop="@dimen/_5sdp"
                         android:paddingEnd="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_1sdp"
                         android:text="Cart total (3 items)"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/payment_title_color"
+                        android:textFontWeight="600"
+                        android:textSize="@dimen/txt_12sp" />
 
                     <TextView
                         android:id="@+id/gst_discount"
@@ -231,8 +246,9 @@
                         android:fontFamily="@font/open_sans"
                         android:paddingStart="@dimen/_5sdp"
                         android:text="(includes 18% GST)"
-                        android:textColor="#828282"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textFontWeight="400"
+                        android:textColor="@color/payment_green"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/payment_amount_value"
@@ -240,9 +256,11 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:padding="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/pad_5dp"
                         android:text="₹900"
-                        android:textColor="@color/black" />
+                        android:textFontWeight="600"
+                        android:textSize="@dimen/txt_12sp"
+                        android:textColor="@color/payment_title_color" />
 
                     <TextView
                         android:id="@+id/long_validity_discount_title"
@@ -250,9 +268,11 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/gst_discount"
                         android:fontFamily="@font/open_sans"
-                        android:padding="@dimen/_5sdp"
+                        android:padding="8dp"
+                        android:textFontWeight="400"
                         android:text="Long validity discount (2%)"
-                        android:textColor="@color/green" />
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/txt_12sp" />
 
                     <TextView
                         android:id="@+id/long_validity_discount_value"
@@ -261,9 +281,11 @@
                         android:layout_below="@id/gst_discount"
                         android:layout_alignParentEnd="true"
                         android:fontFamily="@font/open_sans"
-                        android:padding="@dimen/_5sdp"
+                        android:padding="@dimen/pad_8dp"
                         android:text="0"
-                        android:textColor="@color/green" />
+                        android:textColor="@color/green"
+                        android:textFontWeight="600"
+                        android:textSize="@dimen/txt_12sp" />
 
                     <TextView
                         android:id="@+id/coupon_discount_title"
@@ -271,9 +293,13 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/long_validity_discount_title"
                         android:fontFamily="@font/open_sans"
-                        android:padding="@dimen/_5sdp"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_5sdp"
+                        android:paddingBottom="8dp"
                         android:text="‘FESTIVE’ coupon discount"
-                        android:textColor="@color/green" />
+                        android:textColor="@color/green"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/txt_12sp" />
 
                     <TextView
                         android:id="@+id/coupon_discount_value"
@@ -282,9 +308,13 @@
                         android:layout_below="@id/long_validity_discount_value"
                         android:layout_alignParentEnd="true"
                         android:fontFamily="@font/open_sans"
-                        android:padding="@dimen/_5sdp"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_5sdp"
+                        android:paddingBottom="8dp"
                         android:text="₹36"
-                        android:textColor="@color/green" />
+                        android:textColor="@color/green"
+                        android:textFontWeight="600"
+                        android:textSize="@dimen/txt_12sp" />
 
                     <TextView
                         android:id="@+id/feature_validity"
@@ -292,9 +322,13 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/coupon_discount_title"
                         android:fontFamily="@font/open_sans"
-                        android:padding="@dimen/_5sdp"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_5sdp"
+                        android:paddingBottom="8dp"
                         android:text="Feature validity"
-                        android:textColor="@color/common_text_color" />
+                        android:textColor="@color/body_grey"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/txt_12sp" />
 
                     <TextView
                         android:id="@+id/validity_months"
@@ -302,10 +336,14 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/coupon_discount_value"
                         android:layout_alignParentEnd="true"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:padding="@dimen/_5sdp"
+                        android:fontFamily="@font/open_sans"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_5sdp"
+                        android:paddingBottom="8dp"
+                        android:textFontWeight="600"
+                        android:textSize="@dimen/txt_12sp"
                         android:text="3 Months"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/payment_title_color" />
 
 
                     <TextView
@@ -314,9 +352,12 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/feature_validity"
                         android:fontFamily="@font/open_sans"
-                        android:padding="@dimen/_5sdp"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_5sdp"
                         android:text="Validity period"
-                        android:textColor="@color/common_text_color" />
+                        android:textColor="@color/body_grey"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/txt_12sp" />
 
                     <TextView
                         android:id="@+id/validity_period_value"
@@ -325,16 +366,19 @@
                         android:layout_below="@id/validity_months"
                         android:layout_alignParentEnd="true"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:padding="@dimen/_5sdp"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_5sdp"
+                        android:textSize="@dimen/txt_12sp"
+                        android:textFontWeight="600"
                         android:text="17 Nov ‘21 - 16 Feb ‘22"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/payment_title_color" />
 
                 </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1sdp"
-                    android:background="@color/material_grey_400"
+                    android:background="#80A3A3A3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/payment_subscription_full_amount_layout" />
@@ -343,7 +387,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="12dp"
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_5sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -354,10 +398,11 @@
                         android:id="@+id/payment_total_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans_semibold"
+                        android:fontFamily="@font/open_sans_bold"
                         android:text="Payable amount"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_12sdp"
+                        android:textColor="#323232"
+                        android:textSize="@dimen/txt_12sp"
+                        android:textFontWeight="700"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -366,11 +411,11 @@
                         android:id="@+id/payment_total_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:padding="@dimen/_5sdp"
+                        android:fontFamily="@font/open_sans_bold"
                         android:text="₹900"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_15sdp"
+                        android:textColor="#323232"
+                        android:textSize="@dimen/txt_12sp"
+                        android:textFontWeight="700"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -812,11 +857,8 @@
                     android:id="@+id/upi_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@color/white"
                     android:elevation="@dimen/_2sdp"
-                    android:paddingTop="@dimen/_4sdp"
-                    android:paddingBottom="@dimen/_4sdp"
                     tools:visibility="visible">
 
                     <TextView
@@ -824,11 +866,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
-                        android:fontFamily="@font/open_sans_semibold"
+                        android:fontFamily="@font/open_sans"
                         android:paddingStart="@dimen/_5sdp"
-                        android:paddingTop="@dimen/_3sdp"
+                        android:paddingTop="12dp"
                         android:paddingEnd="@dimen/_5sdp"
-                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingBottom="12dp"
                         android:text="UPI"
                         android:textAllCaps="true"
                         android:textColor="@color/common_text_color"
@@ -837,9 +879,9 @@
 
 
                     <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:padding="@dimen/_6sdp"
+                        android:layout_width="@dimen/pad_30dp"
+                        android:layout_height="@dimen/pad_30dp"
+                        android:padding="8dp"
                         android:src="@drawable/ic_top_arrow_black"
                         app:layout_constraintBottom_toTopOf="@id/upi_view_dummy"
                         app:layout_constraintDimensionRatio="1:1"
@@ -851,7 +893,7 @@
                         android:id="@+id/upi_view_dummy"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/material_grey_400"
+                        android:background="#E6E6E6"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/upi_payment_title" />
@@ -885,8 +927,9 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans"
                                 android:text="PhonePe"
-                                android:textColor="@color/common_bold_text_color"
-                                android:textSize="@dimen/_9sdp" />
+                                android:textFontWeight="400"
+                                android:textColor="@color/payment_light_gray"
+                                android:textSize="10sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -911,8 +954,9 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans"
                                 android:text="Google Pay"
-                                android:textColor="@color/common_bold_text_color"
-                                android:textSize="@dimen/_9sdp" />
+                                android:textFontWeight="400"
+                                android:textColor="@color/payment_light_gray"
+                                android:textSize="10sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -937,8 +981,9 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans"
                                 android:text="Paytm"
-                                android:textColor="@color/common_bold_text_color"
-                                android:textSize="@dimen/_9sdp" />
+                                android:textFontWeight="400"
+                                android:textColor="@color/payment_light_gray"
+                                android:textSize="10sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -963,8 +1008,9 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans"
                                 android:text="BHIM UPI"
-                                android:textColor="@color/common_bold_text_color"
-                                android:textSize="@dimen/_9sdp" />
+                                android:textFontWeight="400"
+                                android:textColor="@color/payment_light_gray"
+                                android:textSize="10sp" />
                         </LinearLayout>
 
 
@@ -974,7 +1020,9 @@
                         android:id="@+id/upi_view_dummy2"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/material_grey_400"
+                        android:background="#E6E6E6"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/upi_list_layout" />
@@ -1045,14 +1093,16 @@
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/ic_plus_orange"
                             android:drawablePadding="@dimen/_10sdp"
-                            android:fontFamily="@font/open_sans_semibold"
+                            android:fontFamily="@font/open_sans"
                             android:foreground="?android:attr/selectableItemBackground"
                             android:paddingStart="@dimen/_30sdp"
-                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingTop="16dp"
+                            android:textFontWeight="400"
+                            android:textSize="@dimen/txt_14sp"
                             android:paddingEnd="@dimen/_30sdp"
-                            android:paddingBottom="@dimen/_5sdp"
+                            android:paddingBottom="16dp"
                             android:text="Add new UPI id"
-                            android:textColor="@color/colorPrimary" />
+                            android:textColor="#FFB900" />
                     </LinearLayout>
 
 
@@ -1062,31 +1112,32 @@
                     android:id="@+id/saved_cards_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="8dp"
                     android:background="@color/white"
                     android:elevation="@dimen/_2sdp"
-                    android:paddingTop="@dimen/_4sdp"
-                    android:paddingBottom="@dimen/_4sdp">
+                   >
 
                     <TextView
                         android:id="@+id/payment_payment_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
-                        android:fontFamily="@font/open_sans_semibold"
+                        android:fontFamily="@font/open_sans"
                         android:paddingStart="@dimen/_5sdp"
-                        android:paddingTop="@dimen/_3sdp"
+                        android:paddingTop="12dp"
                         android:paddingEnd="@dimen/_5sdp"
-                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingBottom="12dp"
                         android:text="Debit Cards &amp; Credit Cards"
                         android:textAllCaps="true"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/txt_14sp"
                         android:textColor="@color/common_text_color"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
+                        android:layout_width="30dp"
+                        android:layout_height="@dimen/pad_30dp"
                         android:padding="@dimen/_6sdp"
                         android:src="@drawable/ic_top_arrow_black"
                         app:layout_constraintBottom_toTopOf="@id/divider_2"
@@ -1097,8 +1148,8 @@
                     <View
                         android:id="@+id/divider_2"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:background="@color/material_grey_400"
+                        android:layout_height="1dp"
+                        android:background="#E6E6E6"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/payment_payment_title" />
@@ -1137,15 +1188,17 @@
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/ic_plus_orange"
                             android:drawablePadding="@dimen/_10sdp"
-                            android:fontFamily="@font/open_sans_semibold"
+                            android:fontFamily="@font/open_sans"
                             android:foreground="?android:attr/selectableItemBackground"
                             android:gravity="center_vertical"
                             android:paddingStart="@dimen/_30sdp"
-                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingTop="16dp"
                             android:paddingEnd="@dimen/_30sdp"
-                            android:paddingBottom="@dimen/_5sdp"
+                            android:paddingBottom="16dp"
                             android:text="Add a debit or credit card"
                             android:textColor="@color/colorPrimary"
+                            android:textFontWeight="400"
+                            android:textSize="14sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/card_view_dummy2" />
@@ -1158,11 +1211,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/upi_layout"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="8dp"
                     android:background="@color/white"
                     android:elevation="@dimen/_2sdp"
-                    android:paddingTop="@dimen/_4sdp"
-                    android:paddingBottom="@dimen/_4sdp"
                     tools:visibility="visible">
 
                     <TextView
@@ -1170,12 +1221,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
-                        android:fontFamily="@font/open_sans_semibold"
+                        android:fontFamily="@font/open_sans"
                         android:paddingStart="@dimen/_5sdp"
-                        android:paddingTop="@dimen/_3sdp"
+                        android:paddingTop="12dp"
                         android:paddingEnd="@dimen/_5sdp"
-                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingBottom="12dp"
                         android:text="Net Banking"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/txt_14sp"
                         android:textAllCaps="true"
                         android:textColor="@color/common_text_color"
                         app:layout_constraintStart_toStartOf="parent"
@@ -1183,8 +1236,8 @@
 
 
                     <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
+                        android:layout_width="@dimen/pad_30dp"
+                        android:layout_height="@dimen/pad_30dp"
                         android:padding="@dimen/_6sdp"
                         android:src="@drawable/ic_top_arrow_black"
                         app:layout_constraintBottom_toTopOf="@id/payment_view_dummy"
@@ -1196,7 +1249,7 @@
                         android:id="@+id/payment_view_dummy"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/material_grey_400"
+                        android:background="#E6E6E6"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/netbanking_title" />
@@ -1205,7 +1258,7 @@
                         android:id="@+id/netbanking_top_banks_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginTop="23dp"
                         android:layout_marginBottom="@dimen/_5sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -1232,8 +1285,9 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans"
                                 android:text="Axis Bank"
-                                android:textColor="@color/common_bold_text_color"
-                                android:textSize="@dimen/_9sdp" />
+                                android:textFontWeight="400"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/txt_12sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -1257,8 +1311,9 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans"
                                 android:text="ICICI"
-                                android:textColor="@color/common_bold_text_color"
-                                android:textSize="@dimen/_9sdp" />
+                                android:textFontWeight="400"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/txt_12sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -1282,8 +1337,9 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans"
                                 android:text="HDFC"
-                                android:textColor="@color/common_bold_text_color"
-                                android:textSize="@dimen/_9sdp" />
+                                android:textFontWeight="400"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/txt_12sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -1307,8 +1363,9 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans"
                                 android:text="City Union"
-                                android:textColor="@color/common_bold_text_color"
-                                android:textSize="@dimen/_9sdp" />
+                                android:textFontWeight="400"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/txt_12sp"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -1332,8 +1389,9 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans"
                                 android:text="SBI"
-                                android:textColor="@color/common_bold_text_color"
-                                android:textSize="@dimen/_9sdp" />
+                                android:textFontWeight="400"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/txt_12sp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -1346,6 +1404,7 @@
                         android:background="@color/material_grey_400"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        android:visibility="gone"
                         app:layout_constraintTop_toBottomOf="@id/netbanking_top_banks_layout" />
 
                     <LinearLayout
@@ -1355,9 +1414,9 @@
                         android:foreground="?android:attr/selectableItemBackground"
                         android:gravity="end"
                         android:paddingStart="@dimen/_10sdp"
-                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingTop="16dp"
                         android:paddingEnd="@dimen/_10sdp"
-                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingBottom="16dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/payment_view_dummy2">
@@ -1370,6 +1429,8 @@
                             android:fontFamily="@font/open_sans_semibold"
                             android:gravity="center_vertical"
                             android:text="More banks"
+                            android:textFontWeight="400"
+                            android:textSize="@dimen/txt_12sp"
                             android:textColor="@color/common_text_color" />
 
                     </LinearLayout>
@@ -1428,11 +1489,9 @@
                     android:id="@+id/pay_by_link_section"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="8dp"
                     android:background="@color/white"
                     android:elevation="@dimen/_2sdp"
-                    android:paddingTop="@dimen/_4sdp"
                     android:paddingBottom="@dimen/_4sdp"
                     tools:visibility="visible">
 
@@ -1441,20 +1500,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
-                        android:fontFamily="@font/open_sans_semibold"
+                        android:fontFamily="@font/open_sans"
                         android:paddingStart="@dimen/_5sdp"
-                        android:paddingTop="@dimen/_3sdp"
+                        android:paddingTop="12dp"
                         android:paddingEnd="@dimen/_5sdp"
-                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingBottom="12dp"
                         android:text="Pay via payment link"
                         android:textAllCaps="true"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/txt_14sp"
                         android:textColor="@color/common_text_color"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
+                        android:layout_width="30dp"
+                        android:layout_height="@dimen/pad_30dp"
                         android:padding="@dimen/_6sdp"
                         android:src="@drawable/ic_top_arrow_black"
                         app:layout_constraintBottom_toTopOf="@id/pay_by_link_view1"
@@ -1466,7 +1527,7 @@
                         android:id="@+id/pay_by_link_view1"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/material_grey_400"
+                        android:background="#75E6E6E6"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/pay_by_link_title" />
@@ -1525,10 +1586,13 @@
                             android:drawableStart="@drawable/ic_plus_orange"
                             android:drawablePadding="@dimen/_5sdp"
                             android:gravity="center"
+                            android:fontFamily="@font/open_sans"
                             android:paddingStart="@dimen/_30sdp"
-                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingTop="16dp"
                             android:paddingEnd="@dimen/_30sdp"
-                            android:paddingBottom="@dimen/_10sdp"
+                            android:paddingBottom="16dp"
+                            android:textSize="@dimen/txt_14sp"
+                            android:textFontWeight="400"
                             android:text="Click to generate a payment link"
                             android:textColor="@color/colorPrimary" />
 
@@ -1538,6 +1602,8 @@
                         android:id="@+id/final_payment_links"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/generate_payment_link">
@@ -1546,12 +1612,16 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.6"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
                             android:drawableStart="@drawable/ic_links"
                             android:drawablePadding="@dimen/_5sdp"
-                            android:padding="@dimen/_10sdp"
                             android:text="rzp.io/1234567890asdfasdfasdfasdfasdf"
                             android:maxLines="1"
+                            android:textFontWeight="400"
+                            android:textSize="@dimen/txt_14sp"
                             android:singleLine="true"
+                            android:fontFamily="@font/open_sans"
                             android:textColor="@color/colorPrimary" />
 
 
@@ -1561,9 +1631,12 @@
                             android:layout_weight="1"
                             android:drawableStart="@drawable/ic_copy_link"
                             android:drawablePadding="@dimen/_5sdp"
-                            android:padding="@dimen/_10sdp"
                             android:text="Copy link"
-                            android:textColor="@color/common_text_color" />
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textSize="12sp"
+                            android:textFontWeight="400"
+                            android:textColor="#747474" />
 
 
                         <TextView
@@ -1572,9 +1645,13 @@
                             android:layout_weight="1"
                             android:drawableStart="@drawable/ic_share_link"
                             android:drawablePadding="@dimen/_5sdp"
-                            android:padding="@dimen/_10sdp"
+                            android:fontFamily="@font/open_sans"
                             android:text="Share link"
-                            android:textColor="@color/common_text_color" />
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textSize="12sp"
+                            android:textFontWeight="400"
+                            android:textColor="#747474" />
 
                     </LinearLayout>
 
