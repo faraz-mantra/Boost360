@@ -208,7 +208,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window: Window = requireActivity().window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
+            window.setStatusBarColor(getResources().getColor(R.color.common_text_color))
         }
 
         loadData()
