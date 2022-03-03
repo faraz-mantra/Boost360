@@ -451,11 +451,12 @@ inline fun <reified T> read(): T {
   }
 }
 
-fun Activity.makeCall(number: String) {
+fun makeCall(number: String?) {
   val callIntent = Intent(Intent.ACTION_DIAL)
   callIntent.addCategory(Intent.CATEGORY_DEFAULT)
   callIntent.data = Uri.parse("tel:$number")
-  this.startActivity(Intent.createChooser(callIntent, "Call by:"))
+  callIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+  BaseApplication.instance.startActivity(callIntent)
 }
 
 fun getAppVersionName(): String? {
