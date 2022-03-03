@@ -379,6 +379,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 gst_info_tv.visibility = View.VISIBLE
                 cart_business_address.visibility = View.GONE
                 cart_business_address1.visibility = View.VISIBLE
+                cart_state_of_supply.visibility=View.GONE
                 cart_place_of_supply_cl.visibility = View.GONE
                 cart_place_of_supply_cl1.visibility = View.GONE
                 prefs.storeGstRegistered(true)
@@ -388,6 +389,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 gst_info_tv.visibility = View.GONE
                 cart_business_address.visibility = View.VISIBLE
                 cart_business_address1.visibility = View.GONE
+                cart_state_of_supply.visibility=View.VISIBLE
                 cart_place_of_supply_cl.visibility = View.VISIBLE
                 cart_place_of_supply_cl1.visibility = View.GONE
                 prefs.storeGstRegistered(false)
