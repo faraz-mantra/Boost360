@@ -2968,12 +2968,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             overalltotal = 0.0
             couponDiscountAmount = 0.0
             var couponDisount = 0
-            if (validCouponCode != null) {
-                couponDisount = validCouponCode!!.discount_percent
-                coupon_discount_title.text = "Discount(" + couponDisount.toString() + "%)"
-            } else {
-                coupon_discount_title.text = "Discount"
-            }
+//            if (validCouponCode != null) {
+//                couponDisount = validCouponCode!!.discount_percent
+//                coupon_discount_title.text = "Discount(" + couponDisount.toString() + "%)"
+//            } else {
+//                coupon_discount_title.text = "Discount"
+//            }
             if (cartList != null && cartList.size > 0) {
                 for (item in cartList) {
                     if (!bundles_in_cart && item.item_type.equals("features"))
@@ -2993,7 +2993,14 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //                couponDiscountAmount = total * couponDisount / 100
 //                couponDiscountAmount = couponServiceModel!!.couponDiscountAmt!!
                 coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
-                // coupon_discount_title.text=couponServiceModel?.coupon_key + " coupon discount"
+
+//                if (validCouponCode != null) {
+                    coupon_discount_title.text =
+                        "'" + couponServiceModel?.coupon_key + "'" + " coupon discount"
+//                }else {
+//                coupon_discount_title.text = "Discount Coupon"
+//            }
+
                 overalltotal -= couponDiscountAmount
                 Log.v("cart_amount_value", " " + total)
                 val temp = (total * 18) / 100
