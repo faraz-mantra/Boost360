@@ -191,6 +191,7 @@ object DataLoader {
                                             singleVideoDetails.desc,
                                             singleVideoDetails.duration,
                                             singleVideoDetails.title,
+                                            singleVideoDetails.youtube_link,
                                             singleVideoDetails.youtube_link
                                         )
                                     )

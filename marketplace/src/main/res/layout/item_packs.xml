@@ -30,21 +30,20 @@
 
                 <ImageView
                     android:id="@+id/package_primary_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginEnd="18dp"
                     android:src="@drawable/ic_package_image" />
 
                 <ImageView
                     android:id="@+id/package_primary_image_copy"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_margin="18dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginEnd="18dp"
                     android:src="@drawable/rectangle_copy_18"
                     android:visibility="gone"
                     tools:visibility="visible" />
@@ -121,6 +120,7 @@
                     android:layout_marginTop="10dp">
 
                     <ImageView
+                        android:id="@+id/image1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -128,6 +128,7 @@
                         android:src="@drawable/package_feature_images" />
 
                     <ImageView
+                        android:id="@+id/image2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -135,6 +136,7 @@
                         android:src="@drawable/package_feature_images" />
 
                     <ImageView
+                        android:id="@+id/image3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"

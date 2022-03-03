@@ -28,7 +28,7 @@
 
 
                 <ImageView
-                    android:id="@+id/arrow"
+                    android:id="@+id/back_arrow"
                     android:layout_width="50dp"
                     android:layout_height="55dp"
                     android:padding="@dimen/_6sdp"
@@ -43,10 +43,10 @@
                     android:gravity="center"
                     android:layout_marginStart="6dp"
                     android:fontFamily="@font/open_sans_semibold"
-                    android:text="Search features"
+                    android:text="Search Features"
                     android:textColor="@color/white"
                     android:textSize="18dp"
-                    app:layout_constraintStart_toEndOf="@+id/arrow"
+                    app:layout_constraintStart_toEndOf="@+id/back_arrow"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.382" />
 
@@ -139,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:text="Pack(s) having add-on named ‘cus’"
+                android:text="Pack(s) having add-on"
                 android:textColor="@color/common_text_color"
                 android:textSize="15sp"
                 android:fontFamily="@font/open_sans"

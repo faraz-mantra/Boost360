@@ -12,6 +12,9 @@ import com.boost.dbcenterapi.upgradeDB.model.YoutubeVideoModel
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.HomeListener
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.signature.ObjectKey
 import com.framework.utils.setNoDoubleClickListener
 import java.util.*
 
@@ -52,7 +55,7 @@ class VideosListAdapter(videoList: List<YoutubeVideoModel>, listen: HomeListener
     {
 //      val link: List<String> = list.get(position).youtube_link!!
       Glide.with(context)
-        .load(list.get(position).youtube_link!!)
+        .load(list.get(position).youtube_image!!)
         .into(holder.image)
 
     }

@@ -170,7 +170,7 @@
                             android:paddingTop="@dimen/_5sdp"
                             android:paddingEnd="@dimen/_15sdp"
                             android:paddingBottom="@dimen/_5sdp"
-                            android:text="Add to cart"
+                            android:text="Add To Cart"
                             android:textAllCaps="false"
                             android:textColor="@color/white"
                             android:textFontWeight="800"

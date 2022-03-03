@@ -180,7 +180,7 @@
       android:gravity="center"
       android:paddingTop="@dimen/_10sdp"
       android:paddingBottom="@dimen/_10sdp"
-      android:text="Add to cart"
+      android:text="Add To Cart"
       android:textAllCaps="true"
       android:textColor="@color/white"
       app:layout_constraintBottom_toBottomOf="parent"

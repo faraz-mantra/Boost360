@@ -3,8 +3,12 @@ package com.boost.marketplace.ui.browse
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
+import android.os.Build
+import android.view.Window
+import android.view.WindowManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.boost.cart.CartActivity
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.Utils
@@ -62,7 +66,7 @@ class BrowseFeaturesActivity :
 
         isDeepLink = intent.getBooleanExtra("isDeepLink", false)
         deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
-        deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
+        deepLinkDay = intent.getIntExtra("deepLinkDay", 7)
         experienceCode = intent.getStringExtra("expCode")
         fpid = intent.getStringExtra("fpid")
         email = intent.getStringExtra("email")
@@ -84,6 +88,13 @@ class BrowseFeaturesActivity :
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
+        }
+
         initMvvm()
         initializeAddonCategoryRecycler()
         binding?.browseSearch?.setOnClickListener {
@@ -93,6 +104,38 @@ class BrowseFeaturesActivity :
         }
         binding?.browseFeaturesBack?.setOnClickListener {
             finish()
+        }
+        binding?.browseCart?.setOnClickListener {
+            val intent = Intent(
+                applicationContext,
+                CartActivity::class.java
+            )
+            intent.putExtra("fpid", fpid)
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("isDeepLink", isDeepLink)
+            intent.putExtra("deepLinkViewType", deepLinkViewType)
+            intent.putExtra("deepLinkDay", deepLinkDay)
+            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                userPurchsedWidgets
+            )
+            if (email != null) {
+                intent.putExtra("email", email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                intent.putExtra("mobileNo", mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", profileUrl)
+            startActivity(intent)
         }
     }
 
@@ -136,7 +179,9 @@ class BrowseFeaturesActivity :
                     singleFeaturesModel.target_business_usecase
                 )
             ) {
-                addonsCategoryTypes.add(singleFeaturesModel.target_business_usecase!!)
+                if(categoryType.isEmpty() || categoryType.equals(singleFeaturesModel.target_business_usecase)) {
+                    addonsCategoryTypes.add(singleFeaturesModel.target_business_usecase!!)
+                }
             }
         }
 

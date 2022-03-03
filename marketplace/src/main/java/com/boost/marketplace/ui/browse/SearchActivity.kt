@@ -1,11 +1,17 @@
 package com.boost.marketplace.ui.browse
 
 import android.app.ProgressDialog
+import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
+import android.text.SpannableString
 import android.text.TextWatcher
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.ImageView
 import androidx.lifecycle.Observer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
@@ -57,9 +63,19 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
     }
 
     private fun initView() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
+        }
+
         viewModel.setApplicationLifecycle(application, this)
         viewModel.loadAllPackagesFromDB()
         viewModel.loadAddonsFromDB()
+
+        back_arrow.setOnClickListener {
+            finish()
+        }
 
         clear_text.setOnClickListener {
             search_value.setText("")
@@ -71,8 +87,12 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if(p0!=null && p0?.length>3){
+                    package_title.text = SpannableString("Pack(s) having add-on named `"+p0.toString()+"`")
+                        .setSpan(StyleSpan(Typeface.BOLD), 0, 7, 0).toString()
                     updateAllItemBySearchValue(p0.toString())
                 } else{
+                    package_title.text = SpannableString("Pack(s) having add-on")
+                        .setSpan(StyleSpan(Typeface.BOLD), 0, 7, 0).toString()
                     updateRecyclerViewItems(allFeatures,allBundles)
                 }
             }

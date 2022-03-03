@@ -204,7 +204,7 @@ class FeatureDealsAdapter(
                           R.drawable.feature_deals_click_effect
                         )
                         holder.submit.setTextColor(activity.resources.getColor(R.color.app_text_yellow))
-                        holder.submit.setText("Add to cart")
+                        holder.submit.setText("Add To Cart")
                       } else {
                         holder.submit.background = ContextCompat.getDrawable(
                           activity.applicationContext,

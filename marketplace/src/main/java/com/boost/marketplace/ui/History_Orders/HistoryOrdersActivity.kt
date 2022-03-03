@@ -1,7 +1,12 @@
 package com.boost.marketplace.ui.History_Orders
 
+import android.os.Build
+import android.os.Bundle
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.Result
@@ -12,6 +17,7 @@ import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityHistoryOrdersBinding
 import com.boost.marketplace.interfaces.HistoryFragmentListener
+import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
@@ -46,15 +52,25 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Histo
 
 
         historyAdapter = HistoryOrdersParentAdapter(ArrayList(), this)
-//        viewModel = ViewModelProviders.of(this).get(HistoryOrdersViewModel::class.java)
-//
-//        loadData()
-//        initMVVM()
-//        initRecyclerView()
-//        binding?.shimmerViewHistory?.startShimmer()
-        binding?.addonsBack?.setOnClickListener {
-            super.onBackPressed()
+        viewModel = ViewModelProviders.of(this).get(HistoryOrdersViewModel::class.java)
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
+        }
+
+        loadData()
+        initMVVM()
+        initRecyclerView()
+        binding?.shimmerViewHistory?.startShimmer()
+        binding?.addonsBack?.setOnClickListener {
+            finish()
+        }
+
+        binding?.help?.setOnClickListener {
+            val videoshelp = HelpVideosBottomSheet()
+            videoshelp.show(this.supportFragmentManager, HelpVideosBottomSheet::class.java.name)
         }
 
     }
@@ -120,10 +136,9 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Histo
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        TODO("Not yet implemented")
+
     }
 
     override fun viewHistoryItem(item: Result) {
-        TODO("Not yet implemented")
     }
 }

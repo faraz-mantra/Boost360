@@ -61,7 +61,7 @@ class HistoryOrdersChildAdapter(itemList: List<Result>?,) :
 
         val dataString = list.get(position).CreatedOn
         val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
-        val dateFormat = SimpleDateFormat("(HH:mm)")
+        val dateFormat = SimpleDateFormat("'Time' hh:mm a")
         holder.itemDate.setText(dateFormat.format(date))
         holder.validity.text= list.get(position).totalMonthsValidity.toString()
         /*val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")

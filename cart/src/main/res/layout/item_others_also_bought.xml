@@ -101,7 +101,7 @@
             android:background="@drawable/ic_cart_add_bg"
             android:gravity="center"
             android:padding="5dp"
-            android:text="Add to cart"
+            android:text="Add To Cart"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
