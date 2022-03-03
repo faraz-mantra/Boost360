@@ -26,7 +26,7 @@ data class VmnCallModel (
 
     @SerializedName("callDuration")
     @Expose
-    var callDuration: Int? = null,
+    var callDuration: Long? = null,
 
     @SerializedName("callRecordingUri")
     @Expose
@@ -59,8 +59,9 @@ data class VmnCallModel (
     @SerializedName("virtualNumber")
     @Expose
     var virtualNumber: String? = null,
-    var audioPosition: Int = 0,
-    var audioLength: Int = 0,
+
+    var audioPosition: Long = 0L,
+    var audioLength: Long = 0L,
     var isAudioPlayState: Boolean = false,
 ): BaseResponse(),AppBaseRecyclerViewItem{
     override fun getViewType(): Int {

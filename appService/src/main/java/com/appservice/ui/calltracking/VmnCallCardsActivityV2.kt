@@ -44,11 +44,8 @@ import java.util.HashMap
 class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, VmnCallsViewModel>(),
     AppOnZeroCaseClicked {
     var seeMoreLessStatus = false
-    var totalCallCount = 0
     var totalPotentialCallCount = 0
     var stopApiCall = false
-    var allowCallPlayFlag // This flag allows only one audio to play at a time. True means an audio can be played.
-            = false
     var headerList: ArrayList<VmnCallModel> = ArrayList<VmnCallModel>()
     var vmnCallAdapter: AppBaseRecyclerViewAdapter<VmnCallModel>? = null
     var selectedViewType = "ALL"
@@ -79,7 +76,6 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
             )
         )
 
-        allowCallPlayFlag = true
 
         //tracking calls
         showTrackedCalls()
@@ -107,15 +103,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
         } else {
             emptyView()
         }
-        /*vmnCallAdapter.setAllowAudioPlay(object : AllowAudioPlay() {
-            fun allowAudioPlay(): Boolean {
-                return allowCallPlayFlag
-            }
 
-            fun toggleAllowAudioPlayFlag(setValue: Boolean) {
-                allowCallPlayFlag = setValue
-            }
-        })*/
     }
 
     private val isPremium: Boolean
@@ -208,7 +196,8 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
             }
         }
         Log.i(TAG, "updateRecyclerData: header list size " + getSelectedTypeList(headerList).size)
-        vmnCallAdapter?.updateList(getSelectedTypeList(headerList))
+        vmnCallAdapter = AppBaseRecyclerViewAdapter(this,getSelectedTypeList(headerList))
+        binding?.callRecycler?.adapter =vmnCallAdapter
     }
 
     private fun getSelectedTypeList(list: ArrayList<VmnCallModel>): ArrayList<VmnCallModel> {
@@ -240,77 +229,13 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
     }
 
     private fun showEmptyScreen() {
-        if (totalCallCount == 0) {
-            binding?.emptyLayout?.root?.visibility = View.VISIBLE
-            val imageView = binding?.emptyLayout?.imageItem
-            val mMainText = binding?.emptyLayout?.mainText
-            val mDescriptionText = binding?.emptyLayout?.descriptionText
-            imageView?.setImageResource(R.drawable.icon_no_calls)
-            mMainText?.text = "You have no call records yet."
-            mDescriptionText?.text =
-                "Your customers haven't contacted\nyou on your call tracking number yet."
-        } else {
-            findViewById<View>(R.id.calls_details_layout).visibility = View.VISIBLE
-            binding?.cardViewViewCalllog?.setVisibility(View.VISIBLE)
-            binding?.cardViewViewCalllog?.setOnClickListener(this)
-        }
+
     }
 
-    //oldcode
 
-    //        CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
-    //    private void setVmnTotalCallCount() {
-    //        showProgress();
-    //        CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
-    //        String type = sessionManager.getISEnterprise().equals("true") ? "MULTI" : "SINGLE";
-    //
-    //        trackerApis.getVmnSummary(Constants.clientId, sessionManager.getFPID(), type, new Callback<JsonObject>() {
-    //            @Override
-    //            public void success(JsonObject jsonObject, Response response) {
-    //                hideProgress();
-    //
-    //                if (jsonObject == null || response.getStatus() != 200) {
-    //                    Methods.showSnackBarNegative(VmnCallCardsActivity.this, getString(R.string.something_went_wrong));
-    //
-    //                } else {
-    //                    if (jsonObject.has("TotalCalls")) {
-    //                        String vmnTotalCalls = jsonObject.get("TotalCalls").getAsString();
-    //                        // oldcode
-    ////                        totalCount.setText(vmnTotalCalls != null && !"null".equalsIgnoreCase(vmnTotalCalls) ? vmnTotalCalls : "0");
-    //                        if(vmnTotalCalls != null && !"null".equalsIgnoreCase(vmnTotalCalls)){
-    //                            totalCallCount = Integer.parseInt(vmnTotalCalls);
-    //                            allCountText.setText(vmnTotalCalls);
-    //                            potentialCallsText.setText("View potential calls ("+totalCallCount+")");
-    //                        }else{
-    //                            allCountText.setText("0");
-    //                        }
-    //                    }
-    //                    if (jsonObject.has("MissedCalls")) {
-    //                        String vmnMissedCalls = jsonObject.get("MissedCalls").getAsString();
-    //                        missedCountText.setText(vmnMissedCalls != null && !"null".equalsIgnoreCase(vmnMissedCalls) ? vmnMissedCalls : "0");
-    //                    }
-    //                    if (jsonObject.has("ReceivedCalls")) {
-    //                        String vmnReceivedCalls = jsonObject.get("ReceivedCalls").getAsString();
-    //                        receivedCountText.setText(vmnReceivedCalls != null && !"null".equalsIgnoreCase(vmnReceivedCalls) ? vmnReceivedCalls : "0");
-    //                    }
-    //                    getWebsiteCallCount();
-//                }
-//                showEmptyScreen();
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError error) {
-//                hideProgress();
-//                showEmptyScreen();
-//                Methods.showSnackBarNegative(VmnCallCardsActivity.this, getString(R.string.something_went_wrong));
-//            }
-//        });
-//    }
     fun websiteCallCount() {
             showProgress()
 
-            //oldcode
-//        CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
             viewModel.getCallCountByType(
                 session.fpTag,
                 "POTENTIAL_CALLS",
@@ -339,8 +264,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
     private fun getPhoneCallCount() {
         showProgress()
 
-        //old code
-//        CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
+
        viewModel.getCallCountByType(
             session.fpTag,
             "POTENTIAL_CALLS",
@@ -356,7 +280,6 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
                val jsonObject = it.anyResponse as JsonObject
 
                val callCount: String = jsonObject.get("POTENTIAL_CALLS").getAsString()
-               //                    webCallCount.setText(callCount);
                binding?.phoneCallCount?.text = callCount
                totalPotentialCallCount += callCount.toInt()
                binding?.totalNumberOfCalls!!.text =
@@ -384,17 +307,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
         super.onClick(v)
         when (v) {
             binding?.cardViewViewCalllog -> {
-              /*  val i = Intent(this@VmnCallCardsActivity, ShowVmnCallActivity::class.java)
 
-                if (totalCallCount == 0) {
-                    showSnackBarNegative(
-                        this@VmnCallCardsActivity,
-                        "You do not have call logs."
-                    )
-                    return
-                }
-                startActivity(i)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)*/
             }
             binding?.seeMoreLess->{
                 if (!seeMoreLessStatus) {

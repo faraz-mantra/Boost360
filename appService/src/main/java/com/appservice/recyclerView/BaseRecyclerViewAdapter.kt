@@ -19,6 +19,8 @@ abstract class BaseRecyclerViewAdapter<T : BaseRecyclerViewItem>(
   override fun onBindViewHolder(viewHolder: BaseRecyclerViewHolder<*>, position: Int) {
     viewHolder.activity = activity
     viewHolder.listener = itemClickListener
+    viewHolder.list = list
+    viewHolder.adapter =this
     viewHolder.bind(position, list[position])
   }
 
