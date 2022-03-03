@@ -3196,13 +3196,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             WindowManager.LayoutParams.WRAP_CONTENT,
             true
         )
-        val txtSub: TextView = popupWindow.contentView.findViewById(R.id.popup_gst_value)
-        val txtSub1 :TextView=popupWindow.contentView.findViewById(R.id.popup_gst_value1)
-        txtSub.setText("Pre-tax price " + " ₹"  +  NumberFormat.getNumberInstance(Locale.ENGLISH).format(total))
-        txtSub1.setText("18% IGST " + " ₹"  +  NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
+        val txtSub: TextView = popupWindow.contentView.findViewById(R.id.price1)
+        val txtSub1 :TextView=popupWindow.contentView.findViewById(R.id.price2)
+        txtSub.setText( " ₹"  +  NumberFormat.getNumberInstance(Locale.ENGLISH).format(total))
+        txtSub1.setText( " ₹"  +  NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) popupWindow.elevation =
             5.0f
-        popupWindow.showAsDropDown(anchor, 110, -110)
+        popupWindow.showAsDropDown(anchor, 250, -250)
     }
 
 }
