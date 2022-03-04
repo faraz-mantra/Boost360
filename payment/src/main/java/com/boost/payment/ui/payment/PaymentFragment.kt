@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -61,7 +62,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
-    MoreBanksListener, UpiPayListener, EmailPopupListener, AddCardListener {
+        MoreBanksListener, UpiPayListener, EmailPopupListener, AddCardListener {
 
     lateinit var root: View
     private lateinit var viewModel: PaymentViewModel
@@ -90,6 +91,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     lateinit var prefs: SharedPrefs
     private var gstResult: com.boost.dbcenterapi.data.api_model.gst.Result? = null
     private lateinit var paymentLL: LinearLayout
+    private lateinit var auto_renew_title:TextView
     private lateinit var upiLayout: ConstraintLayout
     private lateinit var netBankingLayout: ConstraintLayout
     private lateinit var walletLayout: ConstraintLayout
@@ -98,14 +100,16 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     private var isPayViaLink: Boolean = false
     private var lastUsedPaymentMethod: String? = null
     private var autoRenewState = false
+    var months:Int = 0
+
 
     companion object {
         fun newInstance() = PaymentFragment()
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.payments_fragment, container, false)
         paymentLL = root.findViewById(R.id.payment_mode_ll)
@@ -114,9 +118,12 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         walletLayout = root.findViewById(R.id.wallet_layout)
         savedCardsLayout = root.findViewById(R.id.saved_cards_layout)
         payLinkLayout = root.findViewById(R.id.pay_by_link_section)
+        auto_renew_title =  root.findViewById(R.id.auto_renew_title)
+
 
 
         totalAmount = requireArguments().getDouble("amount")
+        months = requireArguments().getInt("monthValue")
         session = UserSessionManager(requireActivity())
         cartCheckoutData.put("customerId", requireArguments().getString("customerId"))
         cartCheckoutData.put("amount", Math.round(totalAmount * 100).toInt())
@@ -221,9 +228,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         updateSubscriptionDetails()
 
         WebEngageController.trackEvent(
-            EVENT_NAME_ADDONS_MARKETPLACE_PAYMENT_LOAD,
-            PAGE_VIEW,
-            ADDONS_MARKETPLACE_PAYMENT_SCREEN
+                EVENT_NAME_ADDONS_MARKETPLACE_PAYMENT_LOAD,
+                PAGE_VIEW,
+                ADDONS_MARKETPLACE_PAYMENT_SCREEN
         )
 
         var firebaseAnalytics = Firebase.analytics
@@ -235,9 +242,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
         back_button.setOnClickListener {
             WebEngageController.trackEvent(
-                ADDONS_MARKETPLACE_CLICKED_BACK_BUTTON_PAYMENTSCREEN,
-                ADDONS_MARKETPLACE,
-                NO_EVENT_VALUE
+                    ADDONS_MARKETPLACE_CLICKED_BACK_BUTTON_PAYMENTSCREEN,
+                    ADDONS_MARKETPLACE,
+                    NO_EVENT_VALUE
             )
             (activity as PaymentActivity).popFragmentFromBackStack()
         }
@@ -251,9 +258,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         add_new_cards.setOnClickListener {
             if (paymentProceedFlag) {
                 WebEngageController.trackEvent(
-                    ADDONS_MARKETPLACE_ADD_NEW_CARD_CLICK,
-                    ADDONS_MARKETPLACE_ADD_NEW_CARD,
-                    NO_EVENT_VALUE
+                        ADDONS_MARKETPLACE_ADD_NEW_CARD_CLICK,
+                        ADDONS_MARKETPLACE_ADD_NEW_CARD,
+                        NO_EVENT_VALUE
                 )
                 val args = Bundle()
                 args.putString("customerId", cartCheckoutData.getString("customerId"))
@@ -263,8 +270,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 val addCardFragement = AddCardPopUpFragement.newInstance(this)
                 addCardFragement.arguments = args
                 addCardFragement.show(
-                    (activity as PaymentActivity).supportFragmentManager,
-                    ADD_CARD_POPUP_FRAGMENT
+                        (activity as PaymentActivity).supportFragmentManager,
+                        ADD_CARD_POPUP_FRAGMENT
                 )
                 payment_submit.visibility = View.VISIBLE
             } else {
@@ -277,9 +284,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         show_more_bank.setOnClickListener {
             if (paymentProceedFlag) {
                 WebEngageController.trackEvent(
-                    ADDONS_MARKETPLACE_SHOW_MORE_BANK_CLICK,
-                    ADDONS_MARKETPLACE_SHOW_MORE_BANK,
-                    NO_EVENT_VALUE
+                        ADDONS_MARKETPLACE_SHOW_MORE_BANK_CLICK,
+                        ADDONS_MARKETPLACE_SHOW_MORE_BANK,
+                        NO_EVENT_VALUE
                 )
                 /*netBankingPopUpFragement.show(
                         (activity as PaymentActivity).supportFragmentManager,
@@ -287,8 +294,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 )*/
                 val netBankingFragement = NetBankingPopUpFragement.newInstance(this)
                 netBankingFragement.show(
-                    (activity as PaymentActivity).supportFragmentManager,
-                    NETBANKING_POPUP_FRAGMENT
+                        (activity as PaymentActivity).supportFragmentManager,
+                        NETBANKING_POPUP_FRAGMENT
                 )
                 payment_submit.visibility = View.VISIBLE
             } else {
@@ -300,9 +307,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         add_upi_layout.setOnClickListener {
             if (paymentProceedFlag) {
                 WebEngageController.trackEvent(
-                    ADDONS_MARKETPLACE_UPI_CLICK,
-                    ADDONS_MARKETPLACE_UPI,
-                    NO_EVENT_VALUE
+                        ADDONS_MARKETPLACE_UPI_CLICK,
+                        ADDONS_MARKETPLACE_UPI,
+                        NO_EVENT_VALUE
                 )
                 /* upiPopUpFragement.show(
                      (activity as PaymentActivity).supportFragmentManager,
@@ -310,8 +317,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                  )*/
                 val upiFragment = UPIPopUpFragement.newInstance(this)
                 upiFragment.show(
-                    (activity as PaymentActivity).supportFragmentManager,
-                    UPI_POPUP_FRAGMENT
+                        (activity as PaymentActivity).supportFragmentManager,
+                        UPI_POPUP_FRAGMENT
                 )
                 payment_submit.visibility = View.VISIBLE
             } else {
@@ -339,8 +346,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                     cartCheckoutData.put("method", "upi");  //Method specific fields
                     cartCheckoutData.put("_[flow]", "intent");
                     cartCheckoutData.put(
-                        "upi_app_package_name",
-                        "com.google.android.apps.nbu.paisa.user"
+                            "upi_app_package_name",
+                            "com.google.android.apps.nbu.paisa.user"
                     );
                 }
                 payThroughRazorPay()
@@ -380,9 +387,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         generate_payment_link.setOnClickListener {
             if (paymentProceedFlag) {
                 WebEngageController.trackEvent(
-                    ADDONS_MARKETPLACE_PAYMENT_LINK_CLICK,
-                    ADDONS_MARKETPLACE_PAYMENT_LINK,
-                    NO_EVENT_VALUE
+                        ADDONS_MARKETPLACE_PAYMENT_LINK_CLICK,
+                        ADDONS_MARKETPLACE_PAYMENT_LINK,
+                        NO_EVENT_VALUE
                 )
                 /*externalEmailPopUpFragement.show(
                     (activity as PaymentActivity).supportFragmentManager,
@@ -390,8 +397,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 )*/
                 val emailPopUpFragement = ExternalEmailPopUpFragement.newInstance(this)
                 emailPopUpFragement.show(
-                    (activity as PaymentActivity).supportFragmentManager,
-                    EXTERNAL_EMAIL_POPUP_FRAGMENT
+                        (activity as PaymentActivity).supportFragmentManager,
+                        EXTERNAL_EMAIL_POPUP_FRAGMENT
                 )
                 payment_submit.visibility = View.VISIBLE
             } else {
@@ -416,8 +423,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             )*/
             val businessFragment = BusinessDetailsFragment.newInstance(this)
             businessFragment.show(
-                (activity as PaymentActivity).supportFragmentManager,
-                BUSINESS_DETAILS_FRAGMENT
+                    (activity as PaymentActivity).supportFragmentManager,
+                    BUSINESS_DETAILS_FRAGMENT
             )
         }
 
@@ -428,25 +435,41 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
              )*/
             val businessFragment = BusinessDetailsFragment.newInstance(this)
             businessFragment.show(
-                (activity as PaymentActivity).supportFragmentManager,
-                BUSINESS_DETAILS_FRAGMENT
+                    (activity as PaymentActivity).supportFragmentManager,
+                    BUSINESS_DETAILS_FRAGMENT
             )
         }
+
 
         auto_renew_switch.setOnClickListener {
             if (autoRenewState) {
                 auto_renew_switch.setImageResource(R.drawable.ic_switch_off)
                 auto_renew_extra_offers.background = ContextCompat.getDrawable(
-                    requireActivity(),
-                    R.drawable.ic_discount_auto_renew_bg
+                        requireActivity(),
+                        R.drawable.ic_discount_auto_renew_bg
                 )
                 auto_renew_extra_offers.text = "Enable auto-renewal to get extra 3% off"
                 auto_renew_extra_offers.setTextColor(resources.getColor(R.color.colorPrimary))
                 auto_renew_extra_offers.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_discount,
-                    0,
-                    0,
-                    0
+                        R.drawable.ic_discount,
+                        0,
+                        0,
+                        0
+                )
+                val oneMonthFromNow = Calendar.getInstance()
+                oneMonthFromNow.add(Calendar.MONTH, 1) // Added one month
+                val nowFormat = SimpleDateFormat("dd MMM yy")
+                nowFormat.setTimeZone(Calendar.getInstance().getTimeZone())
+                val oneMonthFormat = SimpleDateFormat("dd MMM yy")
+                oneMonthFormat.setTimeZone(oneMonthFromNow.getTimeZone())
+
+
+                auto_renew_description.setText(
+                        "You are paying ₹" + totalAmount + " only for " +
+                                if (prefs.getValidityMonths()!!.toInt() > 1) prefs.getValidityMonths() + " Months"
+                                else prefs.getValidityMonths() + " Month"
+                                        + ". Your subscription will end on " +
+                                        nowFormat.format(oneMonthFromNow.time)
                 )
                 upi_payment_title.text = "UPI"
                 netbanking_title.text = "Net Banking"
@@ -458,15 +481,30 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             } else {
                 auto_renew_switch.setImageResource(R.drawable.ic_switch_on)
                 auto_renew_extra_offers.background =
-                    ContextCompat.getDrawable(requireActivity(), R.drawable.ic_offer_auto_renew_bg)
+                        ContextCompat.getDrawable(requireActivity(), R.drawable.ic_offer_auto_renew_bg)
                 auto_renew_extra_offers.text =
-                    "Congratulations! You get extra 2% auto renewal discount"
+                        "Congratulations! You get extra 2% auto renewal discount"
+                val oneMonthFromNow = Calendar.getInstance()
+                oneMonthFromNow.add(Calendar.MONTH, 1) // Added one month
+                val nowFormat = SimpleDateFormat("dd MMM yy")
+                nowFormat.setTimeZone(Calendar.getInstance().getTimeZone())
+                val oneMonthFormat = SimpleDateFormat("dd MMM yy")
+                oneMonthFormat.setTimeZone(oneMonthFromNow.getTimeZone())
+
+
+                auto_renew_description.setText(
+                        "Your account will be automatically charged ₹" + totalAmount + " every " +
+                                if (prefs.getValidityMonths()!!.toInt() > 1) prefs.getValidityMonths() + " Months"
+                                else prefs.getValidityMonths() + " Month"
+                                        + ". Your next billing date is " +
+                                        nowFormat.format(oneMonthFromNow.time)
+                )
                 auto_renew_extra_offers.setTextColor(resources.getColor(R.color.green))
                 auto_renew_extra_offers.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_checked,
-                    0,
-                    0,
-                    0
+                        R.drawable.ic_checked,
+                        0,
+                        0,
+                        0
                 )
                 upi_payment_title.text = "UPI Auto Renewal"
                 netbanking_title.text = "Bank Enabled Auto Renewal"
@@ -490,9 +528,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             business_gstin_missing.text = "No"
         }
         WebEngageController.trackEvent(
-            ADDONS_MARKETPLACE_PAYMENT_SCREEN_LOADED,
-            PAYMENT_SCREEN,
-            NO_EVENT_VALUE
+                ADDONS_MARKETPLACE_PAYMENT_SCREEN_LOADED,
+                PAYMENT_SCREEN,
+                NO_EVENT_VALUE
         )
     }
 
@@ -507,10 +545,10 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
         } catch (e: ActivityNotFoundException) {
             startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
-                )
+                    Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+                    )
             )
         }
         return false
@@ -524,6 +562,15 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
     @SuppressLint("FragmentLiveDataObserve")
     fun initMvvm() {
+
+        if(months > 1){
+            auto_renew_title.text = "Automatically renew every " +months.toString()+ "months?"
+
+        }else{
+            auto_renew_title.text = "Automatically renew every " +months.toString()+"month?"
+
+        }
+
         viewModel.cardData().observe(this, Observer {
             Log.i("cardObserver >>>>>", it.toString())
             paymentData = it
@@ -561,15 +608,15 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 args.putBoolean("payViaLink", isPayViaLink)
                 orderConfirmationFragment.arguments = args
                 (activity as PaymentActivity).replaceFragment(
-                    orderConfirmationFragment,
-                    Constants.ORDER_CONFIRMATION_FRAGMENT
+                        orderConfirmationFragment,
+                        Constants.ORDER_CONFIRMATION_FRAGMENT
                 )
             } else {
                 Toasty.error(
-                    requireContext(),
-                    "Unable To Send Link To Email. Try Later...",
-                    Toast.LENGTH_SHORT,
-                    true
+                        requireContext(),
+                        "Unable To Send Link To Email. Try Later...",
+                        Toast.LENGTH_SHORT,
+                        true
                 ).show();
             }
         })
@@ -669,14 +716,14 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                     business_address_value.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
                 } else {
                     if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS) == null ||
-                        session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS).equals("")
+                            session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS).equals("")
                     ) {
                         business_address_value.visibility = View.INVISIBLE
                         business_address_missing.visibility = View.VISIBLE
                     } else {
                         business_address_value.visibility = View.VISIBLE
                         business_address_value.text =
-                            session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)
+                                session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)
                         if (createCustomerInfoRequest!!.AddressDetails!!.Line1 == null) {
                             paymentProceedFlag = false
                         }
@@ -690,22 +737,22 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
                 Log.v("createCustomerInfoG", " " + createCustomerInfoRequest!!.TaxDetails?.GSTIN)
                 Log.v(
-                    "createCustomerInfoA",
-                    " " + createCustomerInfoRequest!!.AddressDetails?.Line1
+                        "createCustomerInfoA",
+                        " " + createCustomerInfoRequest!!.AddressDetails?.Line1
                 )
                 Log.v("createCustomerInfoN", " " + createCustomerInfoRequest!!.Name)
                 Log.v(
-                    "createCustomerInfoS",
-                    " " + createCustomerInfoRequest!!.AddressDetails!!.State
+                        "createCustomerInfoS",
+                        " " + createCustomerInfoRequest!!.AddressDetails!!.State
                 )
                 Log.v(
-                    "createCustomerInfoS",
-                    " " + createCustomerInfoRequest!!.AddressDetails!!.State
+                        "createCustomerInfoS",
+                        " " + createCustomerInfoRequest!!.AddressDetails!!.State
                 )
                 Log.v("createCustomerInfoE", " " + session?.fPEmail)
                 Log.v(
-                    "createCustomerInfoE",
-                    " " + session?.getFPDetails(Key_Preferences.PRIMARY_EMAIL)
+                        "createCustomerInfoE",
+                        " " + session?.getFPDetails(Key_Preferences.PRIMARY_EMAIL)
                 )
                 /* if (createCustomerInfoRequest!!.Name != null ) {
                      business_name_value.setText(createCustomerInfoRequest!!.Name)
@@ -786,8 +833,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
 
                 if (createCustomerInfoRequest!!.AddressDetails!!.State == null || createCustomerInfoRequest!!.AddressDetails!!.State.equals(
-                        "string"
-                    )
+                                "string"
+                        )
                 ) {
                     business_supply_place_missing.visibility = View.VISIBLE
                     business_supply_place_value.visibility = View.INVISIBLE
@@ -800,7 +847,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 }
 
                 if (createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber != null &&
-                    createCustomerInfoRequest!!.BusinessDetails!!.Email != null  /*&&*/
+                        createCustomerInfoRequest!!.BusinessDetails!!.Email != null  /*&&*/
                 /*createCustomerInfoRequest!!.Name!!.length > 0*/  /*&&*/
 //                    createCustomerInfoRequest!!.TaxDetails.GSTIN != null  &&
                 /*createCustomerInfoRequest!!.AddressDetails.Line1.toString() != null*/ /* &&
@@ -810,9 +857,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                     business_button_separator.visibility = View.GONE
                     edit_business_details.visibility = View.VISIBLE
                     if (createCustomerInfoRequest!!.Name == null || createCustomerInfoRequest!!.AddressDetails.State == null ||
-                        createCustomerInfoRequest!!.AddressDetails.Line1 == null || createCustomerInfoRequest!!.AddressDetails!!.State.equals(
-                            "string"
-                        )
+                            createCustomerInfoRequest!!.AddressDetails.Line1 == null || createCustomerInfoRequest!!.AddressDetails!!.State.equals(
+                                    "string"
+                            )
                     ) {
                         paymentProceedFlag = false
                         edit_business_details.visibility = View.GONE
@@ -866,8 +913,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                         business_address_missing.visibility = View.VISIBLE
                     }
                     if (createCustomerInfoRequest!!.AddressDetails.State == null || createCustomerInfoRequest!!.AddressDetails!!.State.equals(
-                            "string"
-                        )
+                                    "string"
+                            )
                     ) {
                         paymentProceedFlag = false
                         business_supply_place.setTextColor(resources.getColor(R.color.global_red))
@@ -920,8 +967,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 }
 
                 if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS) == null || session?.getFPDetails(
-                        Key_Preferences.GET_FP_DETAILS_ADDRESS
-                    ).equals("")
+                                Key_Preferences.GET_FP_DETAILS_ADDRESS
+                        ).equals("")
                 ) {
                     business_address_missing.visibility = View.VISIBLE
                     business_address_value.visibility = View.INVISIBLE
@@ -929,7 +976,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 } else {
                     business_address_value.visibility = View.VISIBLE
                     business_address_value.text =
-                        session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)
+                            session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)
                 }
 
 //                business_gstin.setTextColor(resources.getColor(R.color.global_red))
@@ -976,33 +1023,33 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         viewModel.getUpdatedCustomerResult().observeOnce(viewLifecycleOwner, Observer {
             if (it.Result != null) {
                 Toasty.success(requireContext(), "Successfully Updated Profile.", Toast.LENGTH_LONG)
-                    .show()
+                        .show()
                 loadCustomerInfo()
 //                (activity as PaymentActivity).prefs.storeInitialLoadMarketPlace(false)
             } else {
                 Toasty.error(
-                    requireContext(),
-                    "Something went wrong. Try Later!!",
-                    Toast.LENGTH_LONG
+                        requireContext(),
+                        "Something went wrong. Try Later!!",
+                        Toast.LENGTH_LONG
                 )
-                    .show()
+                        .show()
 //                (activity as PaymentActivity).prefs.storeInitialLoadMarketPlace(true)
             }
         })
         viewModel.cityResult().observeOnce(this, androidx.lifecycle.Observer {
             if (it != null) {
                 val adapter =
-                    ArrayAdapter(
-                        requireActivity(),
-                        android.R.layout.simple_spinner_dropdown_item,
-                        it
-                    )
+                        ArrayAdapter(
+                                requireActivity(),
+                                android.R.layout.simple_spinner_dropdown_item,
+                                it
+                        )
                 val adapter1 =
-                    ArrayAdapter(
-                        requireActivity(),
-                        android.R.layout.simple_spinner_dropdown_item,
-                        it
-                    )
+                        ArrayAdapter(
+                                requireActivity(),
+                                android.R.layout.simple_spinner_dropdown_item,
+                                it
+                        )
 //                business_city_name.setAdapter(adapter)
             }
 
@@ -1011,7 +1058,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         viewModel.getUpdatedResult().observeOnce(viewLifecycleOwner, Observer {
             if (it.Result != null) {
                 Toasty.success(requireContext(), "Successfully Created Profile.", Toast.LENGTH_LONG)
-                    .show()
+                        .show()
 //                supply_place_button.visibility = View.GONE
                 all_business_button.visibility = View.GONE
                 business_supply_place_missing.visibility = View.GONE
@@ -1022,11 +1069,11 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 //                (activity as PaymentActivity).prefs.storeInitialLoadMarketPlace(false)
             } else {
                 Toasty.error(
-                    requireContext(),
-                    "Something went wrong. Try Later!!",
-                    Toast.LENGTH_LONG
+                        requireContext(),
+                        "Something went wrong. Try Later!!",
+                        Toast.LENGTH_LONG
                 )
-                    .show()
+                        .show()
 //                (activity as PaymentActivity).prefs.storeInitialLoadMarketPlace(true)
             }
         })
@@ -1056,12 +1103,12 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
         try {
             val paymentLink =
-                "https://www.getboost360.com/subscriptions/" + cartCheckoutData.get("transaction_id") + "/pay-now"
+                    "https://www.getboost360.com/subscriptions/" + cartCheckoutData.get("transaction_id") + "/pay-now"
             val emailBody =
-                "You can securely pay for your Boost360 subscription (Order #" + cartCheckoutData.get(
-                    "transaction_id"
-                ) + ") using the link below." +
-                        "<br/>The subscription will be activated against the account of " + (activity as PaymentActivity).fpName + ".<br/><br/>Payment Link: " + paymentLink
+                    "You can securely pay for your Boost360 subscription (Order #" + cartCheckoutData.get(
+                            "transaction_id"
+                    ) + ") using the link below." +
+                            "<br/>The subscription will be activated against the account of " + (activity as PaymentActivity).fpName + ".<br/><br/>Payment Link: " + paymentLink
 
             var prefs = SharedPrefs(activity as PaymentActivity)
             val emailArrayList = ArrayList<String>()
@@ -1077,16 +1124,16 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                             0
                     ))*/
             viewModel.loadPaymentLinkPriority(
-                (activity as? PaymentActivity)?.getAccessToken() ?: "",
-                (activity as PaymentActivity).clientid,
-                PaymentPriorityEmailRequestBody(
+                    (activity as? PaymentActivity)?.getAccessToken() ?: "",
                     (activity as PaymentActivity).clientid,
-                    emailBody,
-                    "\uD83D\uDD50 Payment link for your Boost360 Subscription [Order #" + cartCheckoutData.get(
-                        "transaction_id"
-                    ) + "]",
-                    emailArrayList,
-                )
+                    PaymentPriorityEmailRequestBody(
+                            (activity as PaymentActivity).clientid,
+                            emailBody,
+                            "\uD83D\uDD50 Payment link for your Boost360 Subscription [Order #" + cartCheckoutData.get(
+                                    "transaction_id"
+                            ) + "]",
+                            emailArrayList,
+                    )
             )
         } catch (e: Exception) {
             SentryController.captureException(e)
@@ -1111,8 +1158,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
             //RazorPay web
             razorPayWebView.show(
-                (activity as PaymentActivity).supportFragmentManager,
-                RAZORPAY_WEBVIEW_POPUP_FRAGMENT
+                    (activity as PaymentActivity).supportFragmentManager,
+                    RAZORPAY_WEBVIEW_POPUP_FRAGMENT
             )
 
             paymentData = JSONObject()
@@ -1142,8 +1189,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             //RazorPay web
 
             razorPayWebViewBank.show(
-                (activity as PaymentActivity).supportFragmentManager,
-                RAZORPAY_WEBVIEW_POPUP_FRAGMENT
+                    (activity as PaymentActivity).supportFragmentManager,
+                    RAZORPAY_WEBVIEW_POPUP_FRAGMENT
             )
 
             paymentData = JSONObject()
@@ -1245,9 +1292,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         paymentData = item
 
         WebEngageController.trackEvent(
-            ADDONS_MARKETPLACE_NET_BANKING_SELECTED,
-            bankCode,
-            NO_EVENT_VALUE
+                ADDONS_MARKETPLACE_NET_BANKING_SELECTED,
+                bankCode,
+                NO_EVENT_VALUE
         )
         payThroughRazorPay()
     }
@@ -1271,7 +1318,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     private fun loadWallet(data: JSONObject) {
         val paymentMethods = data.get("wallet") as JSONObject
         val retMap: Map<String, Boolean> = Gson().fromJson(
-            paymentMethods.toString(), object : TypeToken<HashMap<String, Boolean>>() {}.type
+                paymentMethods.toString(), object : TypeToken<HashMap<String, Boolean>>() {}.type
         )
         val list = ArrayList<String>()
         retMap.map {
@@ -1298,7 +1345,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         val couponDiscountPercentage = prefs.getCouponDiscountPercentage()
         long_validity_discount_title.setText("Long validity discount (" + couponDiscountPercentage.toString() + "%)")
         long_validity_discount_value.setText(
-            "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(0)
+                "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(0)
         )
 
         //coupon discount amount
@@ -1306,7 +1353,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         if (couponDiscountAmount.toInt() > 0) {
             coupon_discount_title.setText("‘FESTIVE’ coupon discount")
             coupon_discount_value.setText(
-                "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
+                    "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
             )
             coupon_discount_title.visibility = View.VISIBLE
             coupon_discount_value.visibility = View.VISIBLE
@@ -1316,25 +1363,25 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         }
 
         payment_amount_value.setText(
-            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                .format(totalAmount + couponDiscountAmount)
+                "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                        .format(totalAmount + couponDiscountAmount)
         )
 
 
         validity_months.setText(
-            if (prefs.getValidityMonths()!!.toInt() > 1)
-                prefs.getValidityMonths() + " Months"
-            else
-                prefs.getValidityMonths() + " Month"
+                if (prefs.getValidityMonths()!!.toInt() > 1)
+                    prefs.getValidityMonths() + " Months"
+                else
+                    prefs.getValidityMonths() + " Month"
         )
 
         auto_renew_title.setText(
-            "Automatically renew every " +
-                    if (prefs.getValidityMonths()!!.toInt() > 1)
-                        prefs.getValidityMonths() + " Months"
-                    else
-                        prefs.getValidityMonths() + " Month"
-                                + "?"
+                "Automatically renew every " +
+                        if (prefs.getValidityMonths()!!.toInt() > 1)
+                            prefs.getValidityMonths() + " Months"
+                        else
+                            prefs.getValidityMonths() + " Month"
+                                    + "?"
         )
 
         val oneMonthFromNow = Calendar.getInstance()
@@ -1366,10 +1413,10 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 //      "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
 //    )
         payment_subscription_details_title.setText(
-            "PAYABLE AMOUNT: ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
+                "PAYABLE AMOUNT: ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
         )
         payment_total_value.setText(
-            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
+                "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
         )
         items_cost.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
 //    paymentBannerAmount.setText(
@@ -1379,9 +1426,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
     private fun loadCustomerInfo() {
         viewModel.getCustomerInfo(
-            (activity as? PaymentActivity)?.getAccessToken() ?: "",
-            (activity as PaymentActivity).fpid!!,
-            (activity as PaymentActivity).clientid
+                (activity as? PaymentActivity)?.getAccessToken() ?: "",
+                (activity as PaymentActivity).fpid!!,
+                (activity as PaymentActivity).clientid
         )
     }
 

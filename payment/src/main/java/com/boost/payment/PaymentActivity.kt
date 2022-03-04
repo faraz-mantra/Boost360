@@ -32,6 +32,7 @@ class PaymentActivity : AppCompatActivity() {
     var email: String = ""
     var contact: String = ""
     var amount: Double = 0.0
+    var months:Int = -1
 
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
 
@@ -46,6 +47,7 @@ class PaymentActivity : AppCompatActivity() {
         email = intent.getStringExtra("email")!!
         contact = intent.getStringExtra("contact")!!
         amount = intent.getDoubleExtra("amount",0.0)
+        months = intent.getIntExtra("months",0)
 
         prefs = SharedPrefs(this)
 
@@ -77,6 +79,7 @@ class PaymentActivity : AppCompatActivity() {
         args.putString("email", email)
         args.putString("currency", "INR")
         args.putString("contact", contact)
+        args.putInt("monthValue",months)
         paymentFragment.arguments = args
         addFragment(
             paymentFragment,

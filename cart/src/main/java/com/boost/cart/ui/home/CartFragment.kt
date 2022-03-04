@@ -292,7 +292,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         }
         cart_applied_coupon_full_layout.visibility = View.GONE
 
-        feature_validity.text = "1 Months"
+        feature_validity.text = "1 Month"
 
         session = UserSessionManager(requireActivity())
         loadCustomerInfo()
@@ -919,12 +919,21 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     }
 //                        default_validity_months = default_validity_months+ 3
                 }
+                if(default_validity_months >1){
+                    months_validity.setText(default_validity_months.toString() + " months")
+                    prefs.storeCartValidityMonths(default_validity_months.toString())
+                    totalValidityDays = 30 * default_validity_months
+                    prefs.storeMonthsValidity(totalValidityDays)
+                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
+                }else{
+                    months_validity.setText(default_validity_months.toString() + " month")
+                    prefs.storeCartValidityMonths(default_validity_months.toString())
+                    totalValidityDays = 30 * default_validity_months
+                    prefs.storeMonthsValidity(totalValidityDays)
+                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Month"
+                }
 //                months_validity.text = default_validity_months.toString() + " months"
-                months_validity.setText(default_validity_months.toString() + " months")
-                prefs.storeCartValidityMonths(default_validity_months.toString())
-                totalValidityDays = 30 * default_validity_months
-                prefs.storeMonthsValidity(totalValidityDays)
-                feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
+
                 prefs.storeCartOrderInfo(null)
 //                totalCalculation()
                 totalCalculationAfterCoupon()
@@ -962,13 +971,21 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //          default_validity_months = default_validity_months+ 3
                 }
 
-//            default_validity_months++
-//            months_validity.text = default_validity_months.toString() + " months"
-                months_validity.setText(default_validity_months.toString() + " months")
-                prefs.storeCartValidityMonths(default_validity_months.toString())
-                totalValidityDays = 30 * default_validity_months
-                prefs.storeMonthsValidity(totalValidityDays)
-                feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
+//            default_validity_months
+                if(default_validity_months > 1){
+                    months_validity.setText(default_validity_months.toString() + " months")
+                    prefs.storeCartValidityMonths(default_validity_months.toString())
+                    totalValidityDays = 30 * default_validity_months
+                    prefs.storeMonthsValidity(totalValidityDays)
+                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
+                }else{
+                    months_validity.setText(default_validity_months.toString() + " month")
+                    prefs.storeCartValidityMonths(default_validity_months.toString())
+                    totalValidityDays = 30 * default_validity_months
+                    prefs.storeMonthsValidity(totalValidityDays)
+                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Month"
+                }
+
                 prefs.storeCartOrderInfo(null)
 //                totalCalculation()
                 totalCalculationAfterCoupon()
@@ -1027,7 +1044,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 } else {
                     months_validity.setText(default_validity_months.toString() + " month")
                     prefs.storeCartValidityMonths(default_validity_months.toString())
-                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
+                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Month"
                 }
             } else if (bundles_in_cart) {
                 if (default_validity_months > package_validity_months) {
@@ -1072,7 +1089,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 } else {
                     months_validity.setText(default_validity_months.toString() + " month")
                     prefs.storeCartValidityMonths(default_validity_months.toString())
-                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
+                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Month"
                 }
             }
         }
@@ -2493,17 +2510,24 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     }
                     if (default_validity_months > 0) {
                         if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
-                            months_validity.setText(prefs.getCartValidityMonths() + " months")
+                            months_validity.setText(prefs.getCartValidityMonths().toString() + " months")
+                            feature_validity.text = prefs.getCartValidityMonths().toString() + " Months"
                         } else {
                             months_validity.setText(default_validity_months.toString() + " months")
+                            feature_validity.text = default_validity_months.toString() + " Months"
+
                         }
                     }
 //                        months_validity.text = default_validity_months.toString() + " months"
                     else {
                         if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
                             months_validity.setText(prefs.getCartValidityMonths() + " month")
+                            feature_validity.text = prefs.getCartValidityMonths().toString() + " Month"
+
                         } else {
                             months_validity.setText(default_validity_months.toString() + " month")
+                            feature_validity.text = default_validity_months.toString() + " Month"
+
                         }
                     }
 //                        months_validity.text = default_validity_months.toString() + " month"
@@ -2517,10 +2541,14 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
                     if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
                         Log.e("getCartValidityMonths", prefs.getCartValidityMonths()!!)
-                        months_validity.setText(prefs.getCartValidityMonths()!! + " month")
+                        months_validity.setText(prefs.getCartValidityMonths() + " month")
+                        feature_validity.text = prefs.getCartValidityMonths().toString() + " Month"
+
                     } else {
                         Log.e("default_validity_months", default_validity_months.toString())
                         months_validity.setText(default_validity_months.toString() + " month")
+                        feature_validity.text = default_validity_months.toString() + " Month"
+
                     }
 //          months_validity.setText(default_validity_months.toString())
                     months_validity_edit_inc.visibility = View.VISIBLE
@@ -3136,6 +3164,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 requireContext(),
                 PaymentActivity::class.java
         )
+        intent.putExtra("months",default_validity_months)
         intent.putExtra("fpid", (activity as CartActivity).fpid)
         intent.putExtra("fpName", (activity as CartActivity).fpName)
         intent.putExtra("customerId", customerId)
