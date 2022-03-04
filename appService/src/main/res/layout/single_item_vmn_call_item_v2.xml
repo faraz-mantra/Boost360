@@ -35,7 +35,7 @@
             android:text="@string/outgoing"
             android:textColor="#BBBBBB" />
 
-        <TextView
+        <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
           android:layout_margin="@dimen/size_10"
           android:orientation="vertical">
 
-        <TextView
+        <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
             android:textColor="#979797"
             android:textSize="12sp" />
 
-        <TextView
+        <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-      <ImageView
+      <com.framework.views.customViews.CustomImageView
           android:id="@+id/tv_play"
           android:layout_width="@dimen/size_40"
           android:layout_height="@dimen/size_40"
@@ -108,14 +108,14 @@
           android:progressBackgroundTint="#979797"
           android:progressTint="#9ABFFF" />
 
-      <TextView
+      <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_rec_time"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="@string/_0_00_"
           android:textColor="#979797" />
 
-      <TextView
+      <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_end_time"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"

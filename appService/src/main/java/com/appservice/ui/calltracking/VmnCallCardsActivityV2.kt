@@ -15,14 +15,19 @@ import com.appservice.base.AppBaseActivity
 import com.appservice.databinding.ActivityVmnCallCardsV2Binding
 import com.appservice.model.VmnCallModel
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
+import com.appservice.recyclerView.BaseRecyclerViewItem
+import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.VmnCallsViewModel
+import com.framework.adapters.RecyclerViewItemClickListener
 import com.framework.constants.PremiumCode
 import com.framework.constants.SupportVideoType
 import com.framework.pref.Key_Preferences
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_CATEGORY
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.utils.ExoPlayerUtils
+import com.framework.utils.ExoPlayerUtils.play
 import com.framework.utils.InAppReviewUtils
 import com.framework.utils.showSnackBarNegative
 import com.framework.utils.toArrayList
@@ -32,9 +37,12 @@ import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.BUSINESS_CALLS
 import com.framework.webengageconstant.EVENT_LABEL_BUSINESS_CALLS
+import com.google.android.exoplayer2.Player
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.JsonObject
 import com.onboarding.nowfloats.constant.IntentConstant
+import com.onboarding.nowfloats.constant.RecyclerViewActionType
+import io.grpc.internal.SharedResourceHolder.release
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -42,6 +50,7 @@ import java.util.HashMap
  * Created by Admin on 27-04-2017.
  */
 class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, VmnCallsViewModel>(),
+    RecyclerItemClickListener,
     AppOnZeroCaseClicked {
     var seeMoreLessStatus = false
     var totalPotentialCallCount = 0
@@ -54,17 +63,19 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ExoPlayerUtils.newInstance() //required for call playback on list
+        mangePlayerOnList()
         appFragmentZeroCase = AppRequestZeroCaseBuilder(
             AppZeroCases.BUSINESS_CALLS,
             this,
             this,
             isPremium
         ).getRequest().build()
-        addFragment(binding?.childContainer?.getId(), appFragmentZeroCase,false)
-       // MixPanelController.track(MixPanelController.VMN_CALL_TRACKER, null)
+        addFragment(binding?.childContainer?.getId(), appFragmentZeroCase, false)
+        // MixPanelController.track(MixPanelController.VMN_CALL_TRACKER, null)
         setSupportActionBar(binding?.toolbar)
         if (supportActionBar != null) {
-            title = "Business Calls"
+            title = getString(R.string.business_calls)
             supportActionBar!!.setDisplayShowHomeEnabled(false)
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         }
@@ -93,8 +104,10 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
                 }
             }
         })
-        setOnClickListener(binding?.seeMoreLess,binding?.websiteHelper,
-        binding?.phoneHelper,binding?.parentLayout,binding?.cardViewViewCalllog)
+        setOnClickListener(
+            binding?.seeMoreLess, binding?.websiteHelper,
+            binding?.phoneHelper, binding?.parentLayout, binding?.cardViewViewCalllog
+        )
 
         websiteCallCount()
         if (isPremium) {
@@ -104,6 +117,42 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
             emptyView()
         }
 
+    }
+
+    private fun mangePlayerOnList() {
+
+        ExoPlayerUtils.onProgressChanged { progress ->
+            val model = getCurrentPlayerModel()
+            model?.audioPosition = ExoPlayerUtils.player.currentPosition
+            model?.audioLength = ExoPlayerUtils.player.duration
+            vmnCallAdapter?.notifyItemChanged(currentPlayerIndex(), Unit)
+        }
+
+
+        ExoPlayerUtils.isPlayingChanged = { isPlaying ->
+            val model = getCurrentPlayerModel()
+            model?.isAudioPlayState = isPlaying
+            val playbackState = ExoPlayerUtils.player.playbackState
+            when {
+                playbackState == Player.STATE_ENDED -> {
+                    model?.audioPosition = 0L
+                }
+            }
+            vmnCallAdapter?.notifyItemChanged(currentPlayerIndex(), Unit)
+        }
+
+    }
+
+    fun currentPlayerIndex(): Int {
+        return ExoPlayerUtils.player.currentMediaItem?.mediaId?.toInt() ?: 0
+    }
+
+    fun getCurrentPlayerModel(): VmnCallModel? {
+        val index = ExoPlayerUtils.player.currentMediaItem?.mediaId?.toInt()
+        if (index != null && vmnCallAdapter?.list?.size ?: 0 > index) {
+            return (vmnCallAdapter?.list?.get(index) as VmnCallModel)
+        } else
+            return null
     }
 
     private val isPremium: Boolean
@@ -139,53 +188,50 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
     }
 
     fun calls() {
-            Log.i(TAG, "getCalls: function called")
-            stopApiCall = true
-            showProgress()
-            val startOffset = offset.toString()
-            val hashMap = HashMap<String,String?>()
-            hashMap["clientId"] = clientId
-            hashMap["fpid"] = if (session?.iSEnterprise.equals("true")) session?.fPParentId else session?.fPID
+        Log.i(TAG, "getCalls: function called")
+        stopApiCall = true
+        showProgress()
+        val startOffset = offset.toString()
+        val hashMap = HashMap<String, String?>()
+        hashMap["clientId"] = clientId
+        hashMap["fpid"] =
+            if (session?.iSEnterprise.equals("true")) session?.fPParentId else session?.fPID
 
-            hashMap["offset"] = startOffset
-            hashMap["limit"] = 100.toString()
-            hashMap["identifierType"] = if (session?.iSEnterprise?.equals("true") == true) "MULTI" else "SINGLE"
-            viewModel.trackerCalls(hashMap).observe(this) {
-                    Log.i(TAG, "getCalls success: ")
-                val vmnCallModels = (it.anyResponse as? ArrayList<VmnCallModel>)
-                    hideProgress()
-                    if (vmnCallModels == null ||it.isSuccess().not()) {
-                        Toast.makeText(
-                            applicationContext,
-                            getString(R.string.something_went_wrong),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        return@observe
-                    }else{
-                        hideProgress()
-                        stopApiCall = false
-                        Toast.makeText(
-                            applicationContext,
-                            getString(R.string.something_went_wrong),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    val size = vmnCallModels.size
-                    Log.v("getCalls", " $size")
-                    stopApiCall = size < 100
-                    updateRecyclerData(vmnCallModels)
-                    if (size != 0) {
-                        offset += 100
-                    }
-                    if (size < 1) {
-                        emptyView()
-                    } else {
-                        nonEmptyView()
-                    }
+        hashMap["offset"] = startOffset
+        hashMap["limit"] = 100.toString()
+        hashMap["identifierType"] =
+            if (session?.iSEnterprise?.equals("true") == true) "MULTI" else "SINGLE"
+        viewModel.trackerCalls(hashMap).observe(this) {
+            Log.i(TAG, "getCalls success: ")
+            val vmnCallModels = (it.anyResponse as? ArrayList<VmnCallModel>)
+            hideProgress()
+            if (vmnCallModels == null || it.isSuccess().not()) {
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.something_went_wrong),
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@observe
+            } else {
+                stopApiCall = false
+                val size = vmnCallModels.size
+                Log.v("getCalls", " $size")
+                stopApiCall = size < 100
+                updateRecyclerData(vmnCallModels)
+                if (size != 0) {
+                    offset += 100
                 }
+                if (size < 1) {
+                    emptyView()
+                } else {
+                    nonEmptyView()
+                }
+            }
         }
+    }
 
     private fun updateRecyclerData(newItems: ArrayList<VmnCallModel>?) {
+        ExoPlayerUtils.player.stop()
         if (newItems != null) {
             val sizeOfList = headerList.size
             val listSize = newItems.size
@@ -196,8 +242,8 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
             }
         }
         Log.i(TAG, "updateRecyclerData: header list size " + getSelectedTypeList(headerList).size)
-        vmnCallAdapter = AppBaseRecyclerViewAdapter(this,getSelectedTypeList(headerList))
-        binding?.callRecycler?.adapter =vmnCallAdapter
+        vmnCallAdapter = AppBaseRecyclerViewAdapter(this, getSelectedTypeList(headerList), this)
+        binding?.callRecycler?.adapter = vmnCallAdapter
     }
 
     private fun getSelectedTypeList(list: ArrayList<VmnCallModel>): ArrayList<VmnCallModel> {
@@ -234,57 +280,59 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
 
 
     fun websiteCallCount() {
-            showProgress()
+        showProgress()
 
-            viewModel.getCallCountByType(
-                session.fpTag,
-                "POTENTIAL_CALLS",
-                "WEB",).observe(this){
+        viewModel.getCallCountByType(
+            session.fpTag,
+            "POTENTIAL_CALLS",
+            "WEB",
+        ).observe(this) {
 
-                hideProgress()
-                val jsonObject = it.anyResponse as JsonObject
-                if (it.isSuccess().not()) {
-                    showEmptyScreen()
-                    showSnackBarNegative(
-                        this,
-                        getString(R.string.something_went_wrong)
-                    )
-                } else {
-                    val callCount: String = jsonObject.get("POTENTIAL_CALLS").getAsString()
-                    binding?.webCallCount!!.text = callCount
-                    totalPotentialCallCount += callCount.toInt()
-                    binding?.totalNumberOfCalls?.text =
-                        "View potential calls ($totalPotentialCallCount)"
-                    getPhoneCallCount()
-                }
+            hideProgress()
+            val jsonObject = it.anyResponse as JsonObject
+            if (it.isSuccess().not()) {
+                showEmptyScreen()
+                showSnackBarNegative(
+                    this,
+                    getString(R.string.something_went_wrong)
+                )
+            } else {
+                val callCount: String = jsonObject.get("POTENTIAL_CALLS").getAsString()
+                binding?.webCallCount!!.text = callCount
+                totalPotentialCallCount += callCount.toInt()
+                binding?.totalNumberOfCalls?.text =
+                    "View potential calls ($totalPotentialCallCount)"
+                getPhoneCallCount()
             }
-
         }
+
+    }
 
     private fun getPhoneCallCount() {
         showProgress()
 
 
-       viewModel.getCallCountByType(
+        viewModel.getCallCountByType(
             session.fpTag,
             "POTENTIAL_CALLS",
-            "MOBILE").observe(this){
-           hideProgress()
-           if (it.isSuccess().not()) {
-               showEmptyScreen()
-               showSnackBarNegative(
-                   this,
-                   getString(R.string.something_went_wrong)
-               )
-           } else {
-               val jsonObject = it.anyResponse as JsonObject
+            "MOBILE"
+        ).observe(this) {
+            hideProgress()
+            if (it.isSuccess().not()) {
+                showEmptyScreen()
+                showSnackBarNegative(
+                    this,
+                    getString(R.string.something_went_wrong)
+                )
+            } else {
+                val jsonObject = it.anyResponse as JsonObject
 
-               val callCount: String = jsonObject.get("POTENTIAL_CALLS").getAsString()
-               binding?.phoneCallCount?.text = callCount
-               totalPotentialCallCount += callCount.toInt()
-               binding?.totalNumberOfCalls!!.text =
-                   "View potential calls ($totalPotentialCallCount)"
-           }
+                val callCount: String = jsonObject.get("POTENTIAL_CALLS").getAsString()
+                binding?.phoneCallCount?.text = callCount
+                totalPotentialCallCount += callCount.toInt()
+                binding?.totalNumberOfCalls!!.text =
+                    "View potential calls ($totalPotentialCallCount)"
+            }
 
         }
 
@@ -309,7 +357,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
             binding?.cardViewViewCalllog -> {
 
             }
-            binding?.seeMoreLess->{
+            binding?.seeMoreLess -> {
                 if (!seeMoreLessStatus) {
                     seeMoreLessStatus = true
                     binding?.seeMoreLessImage?.setImageResource(R.drawable.vmn_up_arrow)
@@ -324,7 +372,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
                     binding?.helpPhoneInfo?.setVisibility(View.GONE)
                 }
             }
-            binding?.websiteHelper->{
+            binding?.websiteHelper -> {
                 binding?.helpPhoneInfo?.setVisibility(View.GONE)
                 if (binding?.helpWebsiteInfo?.getVisibility() == View.VISIBLE) {
                     binding?.helpWebsiteInfo?.setVisibility(View.GONE)
@@ -332,7 +380,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
                     binding?.helpWebsiteInfo?.setVisibility(View.VISIBLE)
                 }
             }
-            binding?.phoneHelper->{
+            binding?.phoneHelper -> {
                 binding?.helpWebsiteInfo?.setVisibility(View.GONE)
                 if (binding?.helpPhoneInfo?.getVisibility() == View.VISIBLE) {
                     binding?.helpPhoneInfo?.setVisibility(View.GONE)
@@ -340,7 +388,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
                     binding?.helpPhoneInfo?.setVisibility(View.VISIBLE)
                 }
             }
-            binding?.parentLayout->{
+            binding?.parentLayout -> {
                 if (seeMoreLessStatus) {
                     seeMoreLessStatus = false
                     binding?.seeMoreLessImage?.setImageResource(R.drawable.vmn_down_arrow)
@@ -365,7 +413,8 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
         intent.putExtra("accountType", session?.getFPDetails(GET_FP_DETAILS_CATEGORY))
         intent.putStringArrayListExtra(
             "userPurchsedWidgets",
-            session.getStoreWidgets()?.toArrayList())
+            session.getStoreWidgets()?.toArrayList()
+        )
         if (session.userPrimaryMobile != null) {
             intent.putExtra("email", session.userPrimaryMobile)
         } else {
@@ -379,7 +428,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
         intent.putExtra("profileUrl", session?.fPLogo)
         intent.putExtra("buyItemKey", "CALLTRACKER")
         startActivity(intent)
-        Handler().postDelayed({hideProgress() }, 1000)
+        Handler().postDelayed({ hideProgress() }, 1000)
     }
 
     private fun nonEmptyView() {
@@ -414,7 +463,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
     override fun appOnBackPressed() {}
     override fun onStop() {
         super.onStop()
-        if (vmnCallAdapter?.getItemCount()?:0 > 1) {
+        if (vmnCallAdapter?.getItemCount() ?: 0 > 1) {
             InAppReviewUtils.showInAppReview(
                 this,
                 InAppReviewUtils.Events.in_app_review_out_of_customer_calls
@@ -432,5 +481,33 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
 
     override fun getViewModelClass(): Class<VmnCallsViewModel> {
         return VmnCallsViewModel::class.java
+    }
+
+
+    override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+        when (actionType) {
+            com.appservice.constant.RecyclerViewActionType.VMN_PLAY_CLICKED.ordinal -> {
+                if ((ExoPlayerUtils.player.isLoading || ExoPlayerUtils.player.isPlaying) && position != ExoPlayerUtils.player.currentMediaItem?.mediaId?.toInt()) {
+                    showLongToast(getString(R.string.you_can_only_play_one_audio_clip))
+                } else {
+                    if (ExoPlayerUtils.player.isPlaying) {
+                        ExoPlayerUtils.player.pause()
+                    } else {
+                        val listItem = vmnCallAdapter?.list?.get(position) as VmnCallModel
+
+                        if (position != ExoPlayerUtils.player.currentMediaItem?.mediaId?.toInt() || getCurrentPlayerModel()?.audioPosition == 0L) {
+                            listItem.callRecordingUri?.let { it1 -> play(it1, position) }
+                        } else {
+                            ExoPlayerUtils.player.play()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ExoPlayerUtils.release()
     }
 }

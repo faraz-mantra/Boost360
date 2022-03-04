@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <com.framework.views.customViews.CustomImageView
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-          <TextView
+          <com.framework.views.customViews.CustomTextView
               android:layout_centerVertical="true"
               android:layout_marginStart="16dp"
               android:fontFamily="@font/semi_bold"
@@ -108,14 +108,14 @@
               android:layout_height="wrap_content"
               android:text="@string/view_potential_calls_0" />
 
-          <ImageView
-              android:layout_marginStart="8dp"
-              android:layout_centerVertical="true"
-              android:layout_toRightOf="@id/total_number_of_calls"
+          <com.framework.views.customViews.CustomImageView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_marginStart="8dp"
+              android:layout_toRightOf="@id/total_number_of_calls"
               android:src="@drawable/ic_question_mark" />
-          <ImageView
+          <com.framework.views.customViews.CustomImageView
               android:layout_alignParentRight="true"
               android:id="@+id/see_more_less_image"
               android:layout_width="wrap_content"
@@ -159,7 +159,7 @@
               app:layout_constraintTop_toTopOf="parent"
               >
 
-            <ImageView
+            <com.framework.views.customViews.CustomImageView
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/size_40"
                 app:srcCompat="@drawable/ic_phone_call" />
@@ -170,7 +170,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-              <TextView
+              <com.framework.views.customViews.CustomTextView
                   android:tag="com.userexperior.ueSecureView"
                   android:id="@+id/phone_call_count"
                   android:layout_width="wrap_content"
@@ -178,7 +178,7 @@
                   android:text="@string/zero"
                   android:textSize="20sp" />
 
-              <TextView
+              <com.framework.views.customViews.CustomTextView
                   android:text="@string/mobile"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"/>
@@ -198,7 +198,7 @@
               app:layout_constraintStart_toEndOf="@id/middle_guideline"
               app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
+            <com.framework.views.customViews.CustomImageView
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/size_40"
                 app:srcCompat="@drawable/ic_computer_status" />
@@ -209,7 +209,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-              <TextView
+              <com.framework.views.customViews.CustomTextView
                   android:tag="com.userexperior.ueSecureView"
 
                   android:id="@+id/web_call_count"
@@ -218,7 +218,7 @@
                   android:text="@string/zero"
                   android:textSize="@dimen/size_20" />
 
-              <TextView
+              <com.framework.views.customViews.CustomTextView
                   android:text="@string/desktop"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"/>
@@ -243,7 +243,7 @@
         app:layout_constraintStart_toStartOf="@id/main_info_layout"
         app:layout_constraintTop_toBottomOf="@id/main_info_layout">
 
-      <TextView
+      <com.framework.views.customViews.CustomTextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_margin="2dp"
@@ -263,7 +263,7 @@
         app:layout_constraintEnd_toEndOf="@id/main_info_layout"
         app:layout_constraintTop_toBottomOf="@id/main_info_layout">
 
-      <TextView
+      <com.framework.views.customViews.CustomTextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_margin="2dp"
@@ -309,7 +309,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
-          <TextView
+          <com.framework.views.customViews.CustomTextView
               android:id="@+id/total_count"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -317,7 +317,7 @@
               android:textColor="@color/colorPrimary"
               android:textSize="18sp" />
 
-          <TextView
+          <com.framework.views.customViews.CustomTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Total Calls"
@@ -336,7 +336,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
-          <TextView
+          <com.framework.views.customViews.CustomTextView
               android:id="@+id/received_count"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -344,7 +344,7 @@
               android:textColor="@color/colorPrimary"
               android:textSize="18sp" />
 
-          <TextView
+          <com.framework.views.customViews.CustomTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Received Calls"
@@ -364,7 +364,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
-          <TextView
+          <com.framework.views.customViews.CustomTextView
               android:id="@+id/missed_count"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -372,7 +372,7 @@
               android:textColor="@color/colorPrimary"
               android:textSize="18sp" />
 
-          <TextView
+          <com.framework.views.customViews.CustomTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Missed Calls"
@@ -398,13 +398,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-          <TextView
+          <com.framework.views.customViews.CustomTextView
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:text="View call logs" />
 
-          <ImageView
+          <com.framework.views.customViews.CustomImageView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:src="@drawable/vmn_next" />
@@ -447,17 +447,17 @@
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <com.framework.views.customViews.CustomTextView
             android:tag="com.userexperior.ueSecureView"
             android:id="@+id/tv_tracked_call"
             android:fontFamily="@font/semi_bold"
-            android:textSize="@dimen/size_12"
+            android:textSize="@dimen/size_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tracked_calls" />
 
 
-        <ImageView
+        <com.framework.views.customViews.CustomImageView
             android:layout_marginStart="8dp"
             android:src="@drawable/ic_question_mark"
             android:layout_width="wrap_content"
