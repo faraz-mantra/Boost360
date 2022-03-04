@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.SeekBar
 import androidx.core.view.isVisible
 import com.appservice.R
+import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.SingleItemVmnCallItemV2Binding
 import com.appservice.model.VmnCallModel
 import com.appservice.recyclerView.AppBaseRecyclerViewHolder
@@ -26,70 +27,16 @@ import java.util.*
 class VmnCallViewHolder(binding: SingleItemVmnCallItemV2Binding) : AppBaseRecyclerViewHolder<SingleItemVmnCallItemV2Binding>(binding) {
 
 
-  private var audioProgressHandler= Handler(Looper.getMainLooper())
-  private var audioProgressRunnable: Runnable?=null
-
-  fun startTracking() {
-
-    audioProgressRunnable = Runnable {
-      val model = getCurrentPlayerModel()
-      model?.audioPosition = player.currentPosition
-      model?.audioLength = player.duration
-      adapter?.notifyItemChanged(currentPlayerIndex(),Unit)
-      audioProgressHandler.postDelayed(audioProgressRunnable!!, 1000)
-
-    }
-    audioProgressHandler.postDelayed(audioProgressRunnable!!, 100)
-
-  }
-
-  fun currentPlayerIndex(): Int {
-   return player.currentMediaItem?.mediaId?.toInt()?:0
-  }
-  fun getCurrentPlayerModel(): VmnCallModel? {
-    val index = player.currentMediaItem?.mediaId?.toInt()
-    if (index!=null) {
-      return (list?.get(index) as VmnCallModel)
-    }else
-      return null
-  }
-
-
-  fun stopTracking(){
-    audioProgressRunnable?.let { audioProgressHandler.removeCallbacks(it) }
-  }
-
   init {
-
-      ExoPlayerUtils.addListener {isPlaying->
-        val model = getCurrentPlayerModel()
-        model?.isAudioPlayState = isPlaying
-        if (isPlaying){
-          startTracking()
-        }else{
-          stopTracking()
-        }
-        val playbackState = player.playbackState
-        when {
-          playbackState == Player.STATE_ENDED ->{
-            model?.audioPosition=0L
-          }
-        }
-        adapter?.notifyItemChanged(currentPlayerIndex(),Unit)
-      }
-
     binding.seekBar.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
       override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
         if (p2){
-          val model = getCurrentPlayerModel()
-
-          if (model?.audioLength?:0>p1){
+          if (player.currentPosition< player.duration){
             player.seekTo(p1.toLong())
           }
 
         }
       }
-
       override fun onStartTrackingTouch(p0: SeekBar?) {
       }
 
@@ -99,61 +46,31 @@ class VmnCallViewHolder(binding: SingleItemVmnCallItemV2Binding) : AppBaseRecycl
     })
 
     binding.tvPlay.setOnClickListener {
-
-      if ((player.isLoading|| player.isPlaying)&&layoutPosition!= player.currentMediaItem?.mediaId?.toInt()){
-        showLongToast("You can only play one audio clip at a time.")
-      }else{
-        if (player.isPlaying){
-          player.pause()
-        }else{
-          val listItem = list?.get(layoutPosition) as VmnCallModel
-
-          if (layoutPosition!= player.currentMediaItem?.mediaId?.toInt()||getCurrentPlayerModel()?.audioPosition==0L){
-            listItem.callRecordingUri?.let { it1 -> play(it1,layoutPosition) }
-          }else{
-            player.play()
-          }
-        }
-      }
-
-
+      listener?.onItemClick(layoutPosition, list?.get(layoutPosition),RecyclerViewActionType.VMN_PLAY_CLICKED.ordinal)
     }
   }
 
-  fun play(url:String,position: Int){
-    val mediaItem = MediaItem.Builder().setMediaId(position.toString()).setUri(url)
-      .build()
-    player.setMediaItem(mediaItem)
-    player.prepare()
-    adapter?.notifyItemChanged(position,Unit)
 
-    player.play()
-
-  }
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val model =item as VmnCallModel
 
-    binding.seekBar.setProgress(model.audioPosition.toInt())
+    binding.seekBar.progress = model.audioPosition.toInt()
 
     if (model.audioPosition == 0L && model
         .audioPosition == 0L && !model.isAudioPlayState
     ) {
-      binding.seekBar.setProgress(0)
-      binding.tvRecTime.setText("0:00")
-      binding.tvEndTime.setText(" / 0:00")
+      binding.seekBar.progress = 0
+      binding.tvRecTime.text = "0:00"
+      binding.tvEndTime.text = " / 0:00"
 
       binding.tvPlay.setImageResource(R.drawable.ic_audio_play)
     } else {
-      binding.seekBar.setProgress(model.audioPosition.toInt())
-      binding.seekBar.setMax(model.audioLength.toInt())
-      binding.tvRecTime.setText(getTimeFromMilliSeconds(model.audioPosition))
-      binding.tvEndTime.setText(
-        " / " + getTimeFromMilliSeconds(
-          model.audioLength
-        )
-      )
+      binding.seekBar.progress = model.audioPosition.toInt()
+      binding.seekBar.max = model.audioLength.toInt()
+      binding.tvRecTime.text = getTimeFromMilliSeconds(model.audioPosition)
+      binding.tvEndTime.text = " / " + getTimeFromMilliSeconds(model.audioLength)
       if (model.isAudioPlayState) {
         binding.tvPlay.setImageResource(R.drawable.ic_pause_gray)
       } else {
@@ -162,31 +79,27 @@ class VmnCallViewHolder(binding: SingleItemVmnCallItemV2Binding) : AppBaseRecycl
     }
 
 
-    val longDate = model.callDateTime?.
-    replace("/Date(", "")?.
-    replace(")/", "")?.toLong()?:0
-    val date =
-      getDate(longDate
-        ,"dd-MM-yyyy")
-    val time =
-      getDate(longDate
-        ,"hh:mm:ss a")
+    val longDate = model.callDateTime?.replace("/Date(", "")?.replace(")/", "")?.toLong()?:0
+    val date = getDate(longDate,"dd-MM-yyyy")
+    val time = getDate(longDate,"hh:mm:ss a")
     binding.tvDate.text = date
     binding.tvTime.text = time
+
+
     binding.divider.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
     if (model.callStatus.equals("MISSED", ignoreCase = true)) {
-      binding.tvCallType.setText("Missed Call")
+      binding.tvCallType.text = BaseApplication.instance.getString(R.string.missed_call)
 
       //hide player and line
-      binding.playerLayout.setVisibility(View.GONE)
-      binding.divider.setVisibility(View.GONE)
+      binding.playerLayout.visibility = View.GONE
+      binding.divider.visibility = View.GONE
     } else {
-      binding.playerLayout.setVisibility(View.VISIBLE)
-      binding.divider.setVisibility(View.VISIBLE)
-      binding.tvCallType.setText("Connected call")
+      binding.playerLayout.visibility = View.VISIBLE
+      binding.divider.visibility = View.VISIBLE
+      binding.tvCallType.text = BaseApplication.instance.getString(R.string.connected_call)
 
     }
-    binding.tvNumber.setText(model.callerNumber)
+    binding.tvNumber.text = model.callerNumber
     binding.llayoutNumber.setOnClickListener(View.OnClickListener {
 
       makeCall(model.callerNumber)

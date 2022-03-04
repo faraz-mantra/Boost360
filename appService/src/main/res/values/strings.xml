@@ -1113,4 +1113,8 @@
 
   <string name="select_tax_rate">Select tax rate</string>
   <string name="doctor_list">Doctor List</string>
+    <string name="missed_call">Missed Call</string>
+    <string name="connected_call">Connected call</string>
+  <string name="you_can_only_play_one_audio_clip">You can only play one audio clip at a time.</string>
+    <string name="business_calls">Business Calls</string>
 </resources>
