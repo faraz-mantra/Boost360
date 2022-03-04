@@ -591,17 +591,14 @@
                                 android:id="@+id/months_validity"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1"
                                 android:paddingStart="14dp"
                                 android:paddingEnd="14dp"
                                 android:paddingTop="6dp"
                                 android:paddingBottom="6dp"
                                 android:background="@color/white"
-                                android:fontFamily="@font/bold"
-                                android:gravity="center"
-                                android:text="0 months"
+                                android:fontFamily="@font/open_sans_bold"
+                                tools:text="0 months"
                                 android:textColor="@color/orange"
-                                android:textCursorDrawable="@null"
                                 android:textSize="@dimen/_13sdp" />
 
                             <ImageView
@@ -937,7 +934,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-
                         android:orientation="horizontal"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -947,13 +943,20 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/_10sdp"
                             android:fontFamily="@font/open_sans"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:paddingBottom="@dimen/_10sdp"
                             android:lineSpacingExtra="1sp"
                             android:text="BILLING DETAILS"
+                            android:textFontWeight="600"
                             android:textColor="#4A4A4A"
                             android:textSize="@dimen/txt_14sp"
                             android:textStyle="normal"
+                            app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
 
@@ -961,8 +964,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
-                            android:layout_marginTop="@dimen/_20sdp"
+                            android:layout_marginEnd="10dp"
                             android:gravity="end"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
@@ -972,7 +976,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="end"
-                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingTop="@dimen/_5sdp"
                                 android:paddingEnd="@dimen/_5sdp"
                                 android:paddingStart="@dimen/_5sdp"
                                 android:paddingBottom="@dimen/_5sdp"
@@ -988,13 +992,14 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <View
-                        android:id="@+id/view2"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="#4DA3A3A3"
-                        app:layout_constraintTop_toBottomOf="@+id/cart_billing_details_ll"
-                        tools:layout_editor_absoluteX="2dp"
-                        tools:layout_editor_absoluteY="5dp" />
+                        android:layout_marginTop="@dimen/_5sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/cart_billing_details_edit_layout"
+                        app:layout_constraintTop_toBottomOf="@+id/cart_billing_details_ll"/>
 
                     <include
                         android:id="@+id/cart_billing_details_edit_layout"
@@ -1214,6 +1219,7 @@
                             android:gravity="end">
 
                             <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/arrow1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -1225,19 +1231,34 @@
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/bill_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
                     <View
+                        android:id="@+id/vw1"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#4DA3A3A3" />
+                        android:background="#4DA3A3A3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/amnt_details"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
                         android:layout_marginEnd="15dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="15dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/vw1">
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
@@ -1304,7 +1325,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="gone"
+                            tools:visibility="gone">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
@@ -1453,20 +1476,29 @@
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                     <View
+                        android:id="@+id/vw2"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#4DA3A3A3" />
+                        android:background="#4DA3A3A3"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/amnt_details"/>
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="14dp"
                         android:layout_marginRight="@dimen/_10sdp"
                         android:layout_marginBottom="16dp"
                         android:gravity="center"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/vw2"
+                        app:layout_constraintBottom_toBottomOf="parent">
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/cart_total_title"
@@ -1501,6 +1533,8 @@
 
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 </androidx.appcompat.widget.LinearLayoutCompat>

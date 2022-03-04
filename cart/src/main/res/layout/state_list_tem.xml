@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
         android:lineSpacingExtra="1.3sp"
-        android:textColor="#2a2a2a"
+        android:textColor="#4a4a4a"
         android:textSize="@dimen/_12sdp"
         tools:text="Andhra Pradesh" />
 

@@ -12,6 +12,8 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.util.Log
 import android.view.*
 import android.view.View.GONE
@@ -80,8 +82,6 @@ import com.framework.extensions.underlineText
 import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
-import com.framework.views.customViews.CustomImageView
-import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -91,10 +91,6 @@ import kotlinx.android.synthetic.main.cart_applied_coupon_layout.*
 import kotlinx.android.synthetic.main.cart_v2_fragment.*
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
-
-
-
 
 
 class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
@@ -286,9 +282,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             cart_apply_coupon.visibility = View.VISIBLE
             cart_coupon_code_rv.visibility = View.VISIBLE
 
-            if(tv_Show_less.visibility== VISIBLE){
+            if (tv_Show_less.visibility == VISIBLE) {
                 tv_Show_more.visibility = GONE
-            }else{
+            } else {
                 tv_Show_more.visibility = VISIBLE
 
             }
@@ -339,6 +335,24 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
 
 
+        cart_payment_details_ll.setOnClickListener {
+            //  bill_details.visibility=View.GONE
+            if (bill_details.visibility == View.GONE) {
+                TransitionManager.beginDelayedTransition(cart_payment_details_ll, AutoTransition())
+                bill_details.visibility = View.VISIBLE
+                arrow1?.animate()?.rotation(0f)?.start()
+                cart_main_scroller.post {
+                    cart_main_scroller.fullScroll(View.FOCUS_DOWN)
+                }
+            } else {
+                TransitionManager.beginDelayedTransition(cart_payment_details_ll, AutoTransition())
+                bill_details?.visibility = View.GONE
+                arrow1?.animate()?.rotation(180f)?.start()
+                cart_main_scroller.post {
+                    cart_main_scroller.fullScroll(View.FOCUS_DOWN)
+                }
+            }
+        }
 
 
         edit.setOnClickListener {
@@ -367,8 +381,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 gst_info_tv.visibility = View.VISIBLE
                 cart_business_address.visibility = View.GONE
                 cart_business_address1.visibility = View.VISIBLE
+                cart_state_of_supply.visibility = View.GONE
                 cart_place_of_supply_cl.visibility = View.GONE
-                cart_place_of_supply_cl1.visibility = View.VISIBLE
+                cart_place_of_supply_cl1.visibility = View.GONE
                 prefs.storeGstRegistered(true)
             } else {
                 gstll.visibility = View.GONE
@@ -376,6 +391,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 gst_info_tv.visibility = View.GONE
                 cart_business_address.visibility = View.VISIBLE
                 cart_business_address1.visibility = View.GONE
+                cart_state_of_supply.visibility = View.VISIBLE
                 cart_place_of_supply_cl.visibility = View.VISIBLE
                 cart_place_of_supply_cl1.visibility = View.GONE
                 prefs.storeGstRegistered(false)
@@ -484,10 +500,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         cart_discount_coupon_remove.setOnClickListener {
             cart_applied_coupon_full_layout.visibility = View.GONE
             cart_coupon_code_rv.visibility = View.VISIBLE
-            if(tv_Show_less.visibility == VISIBLE){
+            if (tv_Show_less.visibility == VISIBLE) {
                 tv_Show_more.visibility = View.GONE
 
-            }else{
+            } else {
                 tv_Show_more.visibility = View.VISIBLE
 
             }
@@ -523,7 +539,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             if (TextUtils.isEmpty(months_validity.text.toString())) {
                 months_validity.setBackgroundResource(R.drawable.et_validity_error)
                 Toasty.error(requireContext(), "Validity is empty", Toast.LENGTH_SHORT).show()
-            } else if (bundles_in_cart && months_validity.text.toString().toInt() < package_validity_months) {
+            } else if (bundles_in_cart && months_validity.text.toString().split(" ").get(0).toInt() < package_validity_months) {
                 months_validity.setBackgroundResource(R.drawable.et_validity_error)
                 Toasty.error(requireContext(), "Validity is not valid", Toast.LENGTH_SHORT).show()
             } else {
@@ -904,7 +920,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //                        default_validity_months = default_validity_months+ 3
                 }
 //                months_validity.text = default_validity_months.toString() + " months"
-                months_validity.setText(default_validity_months.toString()+ " months")
+                months_validity.setText(default_validity_months.toString() + " months")
                 prefs.storeCartValidityMonths(default_validity_months.toString())
                 totalValidityDays = 30 * default_validity_months
                 prefs.storeMonthsValidity(totalValidityDays)
@@ -948,7 +964,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
 //            default_validity_months++
 //            months_validity.text = default_validity_months.toString() + " months"
-                months_validity.setText(default_validity_months.toString())
+                months_validity.setText(default_validity_months.toString() + " months")
                 prefs.storeCartValidityMonths(default_validity_months.toString())
                 totalValidityDays = 30 * default_validity_months
                 prefs.storeMonthsValidity(totalValidityDays)
@@ -1005,18 +1021,14 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //                    Toasty.warning(requireContext(), "Validity reduced by 1 month.", Toast.LENGTH_SHORT, true).show()
                 }
                 if (default_validity_months > 1) {
-                    months_validity.setText(default_validity_months.toString())
+                    months_validity.setText(default_validity_months.toString() + " months")
                     prefs.storeCartValidityMonths(default_validity_months.toString())
                     feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
-
-                }
-//                    months_validity.text = default_validity_months.toString() + " months"
-                else {
-                    months_validity.setText(default_validity_months.toString())
+                } else {
+                    months_validity.setText(default_validity_months.toString() + " month")
                     prefs.storeCartValidityMonths(default_validity_months.toString())
                     feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
                 }
-//                    months_validity.text = default_validity_months.toString() + " month"
             } else if (bundles_in_cart) {
                 if (default_validity_months > package_validity_months) {
                     if (default_validity_months > 12) {
@@ -1054,17 +1066,14 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //                Toasty.warning(requireContext(), "Validity reduced by 3 month(s).", Toast.LENGTH_SHORT, true).show()
                 }
                 if (default_validity_months > 1) {
-                    months_validity.setText(default_validity_months.toString())
+                    months_validity.setText(default_validity_months.toString() + " months")
+                    prefs.storeCartValidityMonths(default_validity_months.toString())
+                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
+                } else {
+                    months_validity.setText(default_validity_months.toString() + " month")
                     prefs.storeCartValidityMonths(default_validity_months.toString())
                     feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
                 }
-//                months_validity.text = default_validity_months.toString() + " months"
-                else {
-                    months_validity.setText(default_validity_months.toString())
-                    prefs.storeCartValidityMonths(default_validity_months.toString())
-                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
-                }
-//                months_validity.text = default_validity_months.toString() + " month"
             }
         }
         Log.v("package_validity_months", " " + package_validity_months)
@@ -1136,18 +1145,18 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 || business_gstin_number.text.toString().isEmpty()) {
 //      Log.v("business_name_value", " " + business_name_value.text.toString())
 //            Toasty.error(requireContext(), "Fields are Empty!!", Toast.LENGTH_LONG).show()
-            if ( gstcheck.isChecked && !Utils.isValidGSTIN(business_gstin_number.text.toString())) {
+            if (gstcheck.isChecked && !Utils.isValidGSTIN(business_gstin_number.text.toString())) {
                 business_gstin_number.setBackgroundResource(R.drawable.et_validity_error)
                 cart_main_scroller.post {
                     cart_main_scroller.scrollTo(
-                        0,
-                        gst_layout.getBottom()
+                            0,
+                            gst_layout.getBottom()
                     )
                 }
                 Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
                 return false
             } else {
-                    business_gstin_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
+                business_gstin_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
             }
 
 //      if (business_contact_number.text!!.isEmpty()) {
@@ -1194,21 +1203,21 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //      } else {
 //        business_name_value.setBackgroundResource(com.boost.payment.R.drawable.rounded_edit_fill_kyc)
 //      }
-            if(!gstcheck.isChecked) {
+            if (!gstcheck.isChecked) {
                 if (cart_business_address.text.toString().isEmpty()) {
                     cart_business_address.setBackgroundResource(com.boost.cart.R.drawable.et_validity_error)
                     cart_main_scroller.post {
                         cart_main_scroller.scrollTo(
-                            0,
-                            gst_layout.getBottom()
+                                0,
+                                gst_layout.getBottom()
                         )
                     }
                     Toasty.error(
-                        requireContext(),
-                        "Entered Business address is not valid!!",
-                        Toast.LENGTH_LONG
+                            requireContext(),
+                            "Entered Business address is not valid!!",
+                            Toast.LENGTH_LONG
                     )
-                        .show()
+                            .show()
                     return false
                 } else {
                     cart_business_address.setBackgroundResource(com.boost.cart.R.drawable.rounded_edit_fill_kyc)
@@ -1286,6 +1295,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     val businessAddressDetails = joinNonBlankStringArray(addressDetails, ",")
                     //cart_business_address.text = businessAddressDetails
                     cart_business_address1.setText(businessAddressDetails)
+                    cart_place_of_supply_cl1.visibility = View.VISIBLE
+                    gst_info_tv.visibility = View.GONE
                     cart_business_city_name1.text = gstInfoResult!!.address!!.state
                     isGstApiCalled = true
                 } else {
@@ -2407,12 +2418,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 System.out.println("CouponData" + couponData)
                 cart_coupon_code_rv.layoutManager = LinearLayoutManager(requireContext())
                 couponDataNo.add(couponData[0])
-                val adapter = CartCouponAdapter(couponDataNo, total,this)
+                val adapter = CartCouponAdapter(couponDataNo, total, this)
                 cart_coupon_code_rv.adapter = adapter
                 tv_Show_more.setOnClickListener {
                     tv_Show_less.visibility = VISIBLE
                     tv_Show_more.visibility = GONE
-                    val adapter = CartCouponAdapter(couponData,total, this)
+                    val adapter = CartCouponAdapter(couponData, total, this)
                     cart_coupon_code_rv.adapter = adapter
                 }
                 tv_Show_less.setOnClickListener {
@@ -2420,7 +2431,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     tv_Show_less.visibility = GONE
                     couponDataNo.clear()
                     couponDataNo.add(couponData[0])
-                    val adapter = CartCouponAdapter(couponDataNo, total,this)
+                    val adapter = CartCouponAdapter(couponDataNo, total, this)
                     cart_coupon_code_rv.adapter = adapter
                 }
 
@@ -2444,7 +2455,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                             couponDiwaliRedundant.put(items.feature_code, items.item_name)
                         }
                         features.add(items)
-                        if(!recommendedAddonsWidgetKey.contains(items.boost_widget_key!!)) {
+                        if (!recommendedAddonsWidgetKey.contains(items.boost_widget_key!!)) {
                             recommendedAddonsWidgetKey.add(items.boost_widget_key!!)
                         }
                     } else if (items.item_type.equals("bundles")) {
@@ -2468,11 +2479,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         }
 //                        if (bundle.min_purchase_months < default_validity_months)
 //                            default_validity_months = default_validity_months
-                        for(singleBundle in bundlesList){
-                            if(singleBundle.bundle_id.equals(bundle.item_id)){
+                        for (singleBundle in bundlesList) {
+                            if (singleBundle.bundle_id.equals(bundle.item_id)) {
                                 val temp = Gson().fromJson<List<IncludedFeature>>(singleBundle.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
-                                for(singleFeatures in temp){
-                                    if(!recommendedAddonsWidgetKey.contains(singleFeatures.feature_code)) {
+                                for (singleFeatures in temp) {
+                                    if (!recommendedAddonsWidgetKey.contains(singleFeatures.feature_code)) {
                                         recommendedAddonsWidgetKey.add(singleFeatures.feature_code)
                                     }
                                 }
@@ -2482,17 +2493,17 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     }
                     if (default_validity_months > 0) {
                         if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
-                            months_validity.setText(prefs.getCartValidityMonths())
+                            months_validity.setText(prefs.getCartValidityMonths() + " months")
                         } else {
-                            months_validity.setText(default_validity_months.toString())
+                            months_validity.setText(default_validity_months.toString() + " months")
                         }
                     }
 //                        months_validity.text = default_validity_months.toString() + " months"
                     else {
                         if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
-                            months_validity.setText(prefs.getCartValidityMonths())
+                            months_validity.setText(prefs.getCartValidityMonths() + " month")
                         } else {
-                            months_validity.setText(default_validity_months.toString())
+                            months_validity.setText(default_validity_months.toString() + " month")
                         }
                     }
 //                        months_validity.text = default_validity_months.toString() + " month"
@@ -2503,10 +2514,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     bundles_in_cart = false
                     default_validity_months = 1
 //                    months_validity.text = default_validity_months.toString() + " month"
+
                     if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
-                        months_validity.setText(prefs.getCartValidityMonths())
+                        Log.e("getCartValidityMonths", prefs.getCartValidityMonths()!!)
+                        months_validity.setText(prefs.getCartValidityMonths()!! + " month")
                     } else {
-                        months_validity.setText(default_validity_months.toString())
+                        Log.e("default_validity_months", default_validity_months.toString())
+                        months_validity.setText(default_validity_months.toString() + " month")
                     }
 //          months_validity.setText(default_validity_months.toString())
                     months_validity_edit_inc.visibility = View.VISIBLE
@@ -2804,8 +2818,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         val tv_coupon_saved = dialog.findViewById(R.id.tv_badge_text) as AppCompatTextView
                         val tv_coupon_name = dialog.findViewById(R.id.tv_error_message) as AppCompatTextView
 
-                        tv_coupon_saved.text = "₹"+ it.couponDiscountAmt.toString() +" Saved!"
-                        tv_coupon_name.text =  it.coupon_key.toString()+ " coupon code applied."
+                        tv_coupon_saved.text = "₹" + it.couponDiscountAmt.toString() + " Saved!"
+                        tv_coupon_name.text = it.coupon_key.toString() + " coupon code applied."
                         val closeBtn = dialog.findViewById(R.id.close_dialog) as AppCompatImageView
                         val iv_coupon_saved = dialog.findViewById(R.id.iv_badge_bg) as AppCompatImageView
 
@@ -2823,10 +2837,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         //        discount_coupon_message.text = it.message
                         discount_banner.visibility = View.GONE
                         cart_coupon_code_rv.visibility = View.VISIBLE
-                        if(tv_Show_less.visibility == VISIBLE){
+                        if (tv_Show_less.visibility == VISIBLE) {
                             tv_Show_more.visibility = View.GONE
 
-                        }else{
+                        } else {
                             tv_Show_more.visibility = View.VISIBLE
 
                         }
@@ -2972,12 +2986,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             overalltotal = 0.0
             couponDiscountAmount = 0.0
             var couponDisount = 0
-            if (validCouponCode != null) {
-                couponDisount = validCouponCode!!.discount_percent
-                coupon_discount_title.text = "Discount(" + couponDisount.toString() + "%)"
-            } else {
-                coupon_discount_title.text = "Discount"
-            }
+//            if (validCouponCode != null) {
+//                couponDisount = validCouponCode!!.discount_percent
+//                coupon_discount_title.text = "Discount(" + couponDisount.toString() + "%)"
+//            } else {
+//                coupon_discount_title.text = "Discount"
+//            }
             if (cartList != null && cartList.size > 0) {
                 for (item in cartList) {
                     if (!bundles_in_cart && item.item_type.equals("features"))
@@ -2997,7 +3011,14 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //                couponDiscountAmount = total * couponDisount / 100
 //                couponDiscountAmount = couponServiceModel!!.couponDiscountAmt!!
                 coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
-                // coupon_discount_title.text=couponServiceModel?.coupon_key + " coupon discount"
+
+//                if (validCouponCode != null) {
+                coupon_discount_title.text =
+                        "'" + couponServiceModel?.coupon_key + "'" + " coupon discount"
+//                }else {
+//                coupon_discount_title.text = "Discount Coupon"
+//            }
+
                 overalltotal -= couponDiscountAmount
                 Log.v("cart_amount_value", " " + total)
                 val temp = (total * 18) / 100
@@ -3193,18 +3214,20 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
     private fun showPopupWindow(anchor: View) {
         val view: View =
-            LayoutInflater.from(requireContext()).inflate(R.layout.popup_window_text, null)
+                LayoutInflater.from(requireContext()).inflate(R.layout.popup_window_text, null)
         val popupWindow = PopupWindow(
-            view,
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            true
+                view,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                true
         )
-        val txtSub: TextView = popupWindow.contentView.findViewById(R.id.popup_gst_value)
-        txtSub.setText("Testing")
+        val txtSub: TextView = popupWindow.contentView.findViewById(R.id.price1)
+        val txtSub1: TextView = popupWindow.contentView.findViewById(R.id.price2)
+        txtSub.setText(" ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total))
+        txtSub1.setText(" ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) popupWindow.elevation =
-            5.0f
-        popupWindow.showAsDropDown(anchor, 110, -110)
+                5.0f
+        popupWindow.showAsDropDown(anchor, (anchor.width - 40), -166)
     }
 
 }
