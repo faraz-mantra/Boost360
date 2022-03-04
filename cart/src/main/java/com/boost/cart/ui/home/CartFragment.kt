@@ -1,6 +1,7 @@
 package com.boost.cart.ui.home
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
@@ -19,6 +20,9 @@ import android.widget.ArrayAdapter
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatImageButton
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -76,6 +80,7 @@ import com.framework.extensions.underlineText
 import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.framework.views.customViews.CustomImageView
 import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
@@ -879,7 +884,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //                    default_validity_months++
                 if (default_validity_months == 1) {
                     default_validity_months = default_validity_months + 2
-                } else if (default_validity_months >= 12 && default_validity_months < 60) {
+                } else if (default_validity_months >= 12 && default_validity_months < 36) {
                     if (default_validity_months % 12 == 0) {
                         default_validity_months = default_validity_months + 12
                     } else {
@@ -887,7 +892,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     }
 //        default_validity_months = default_validity_months+ 12
                 } else {
-                    if (default_validity_months < 60) {
+                    if (default_validity_months < 36) {
                         if (default_validity_months % 3 == 0) {
                             default_validity_months = default_validity_months + 3
                         } else if (default_validity_months % 3 == 1) {
@@ -919,7 +924,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 if (default_validity_months == 1) {
                     default_validity_months = default_validity_months + 2
 //    }else if(default_validity_months % 12 == 0 && default_validity_months < 60){
-                } else if (default_validity_months >= 12 && default_validity_months < 60) {
+                } else if (default_validity_months >= 12 && default_validity_months < 36) {
                     if (default_validity_months % 12 == 0) {
                         default_validity_months = default_validity_months + 12
                     } else {
@@ -929,7 +934,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //        default_validity_months = default_validity_months+ 12
                 } else {
 //        if(default_validity_months < 60)
-                    if (default_validity_months < 60 && default_validity_months < 12) {
+                    if (default_validity_months < 36 && default_validity_months < 12) {
                         if (default_validity_months % 3 == 0) {
                             default_validity_months = default_validity_months + 3
                         } else if (default_validity_months % 3 == 1) {
@@ -1063,7 +1068,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             }
         }
         Log.v("package_validity_months", " " + package_validity_months)
-        months_validity.setFilters(arrayOf<InputFilter>(MinMaxFilter(package_validity_months, 60)))
+        months_validity.setFilters(arrayOf<InputFilter>(MinMaxFilter(package_validity_months, 36)))
         months_validity.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
@@ -1077,10 +1082,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 var n = 0
                 try {
                     n = validity.toInt()
-                    if (n <= 60) {
+                    if (n <= 36) {
                         default_validity_months = n
-                    } else if (n > 60) {
-                        default_validity_months = 60
+                    } else if (n > 36) {
+                        default_validity_months = 36
 //                        months_validity.setText(default_validity_months)
                     } else if (n < package_validity_months) {
                         n = package_validity_months
@@ -2791,6 +2796,24 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         cart_coupon_code_rv.visibility = View.GONE
                         tv_Show_more.visibility = View.GONE
                         tv_Show_less.visibility = GONE
+
+                        val dialog = Dialog(requireActivity())
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                        dialog.setCancelable(false)
+                        dialog.setContentView(R.layout.layout_saved_coupon)
+                        val tv_coupon_saved = dialog.findViewById(R.id.tv_badge_text) as AppCompatTextView
+                        val tv_coupon_name = dialog.findViewById(R.id.tv_error_message) as AppCompatTextView
+
+                        tv_coupon_saved.text = "₹"+ it.couponDiscountAmt.toString() +" Saved!"
+                        tv_coupon_name.text =  it.coupon_key.toString()+ " coupon code applied."
+                        val closeBtn = dialog.findViewById(R.id.close_dialog) as AppCompatImageView
+                        val iv_coupon_saved = dialog.findViewById(R.id.iv_badge_bg) as AppCompatImageView
+
+                        closeBtn.setOnClickListener {
+                            dialog.dismiss()
+                        }
+                        dialog.window!!.setBackgroundDrawableResource(R.color.transparent)
+                        dialog.show()
                         cart_coupon_discount_title.text = it.coupon_key.toString()
                         save.text = " You save ₹ " + (it.couponDiscountAmt.toString())
                         discount_banner.visibility = View.VISIBLE
