@@ -89,7 +89,13 @@ import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.billing_details_layout.*
 import kotlinx.android.synthetic.main.cart_applied_coupon_layout.*
 import kotlinx.android.synthetic.main.cart_v2_fragment.*
+import kotlinx.android.synthetic.main.cart_v2_fragment.business_supply_place_value
+import kotlinx.android.synthetic.main.cart_v2_fragment.coupon_discount_title
+import kotlinx.android.synthetic.main.cart_v2_fragment.coupon_discount_value
+import kotlinx.android.synthetic.main.cart_v2_fragment.feature_validity
+import kotlinx.android.synthetic.main.cart_v2_fragment.validity_period_value
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -2536,7 +2542,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     package_layout.visibility = View.VISIBLE
                 } else {
                     bundles_in_cart = false
-                    default_validity_months = 1
+                    default_validity_months = if(prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toInt() else 1
 //                    months_validity.text = default_validity_months.toString() + " month"
 
                     if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
@@ -3062,7 +3068,16 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 event_attributes.put("total amount", revenue)
                 event_attributes.put("cart validity months", default_validity_months)
 
-
+                val oneMonthFromNow = Calendar.getInstance()
+                oneMonthFromNow.add(Calendar.MONTH, default_validity_months)
+                val nowFormat = SimpleDateFormat("dd MMM yy")
+                nowFormat.setTimeZone(Calendar.getInstance().getTimeZone())
+                val oneMonthFormat = SimpleDateFormat("dd MMM yy")
+                oneMonthFormat.setTimeZone(oneMonthFromNow.getTimeZone())
+                validity_period_value.setText(
+                    nowFormat.format(Calendar.getInstance().time) + " - " + nowFormat.format(oneMonthFromNow.time)
+                )
+                choosed_validity_period.setText("(Valid till "+nowFormat.format(oneMonthFromNow.time)+")")
             }
         }
     }

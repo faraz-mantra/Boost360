@@ -562,6 +562,7 @@
                                 android:textSize="@dimen/txt_14sp" />
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/choosed_validity_period"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
@@ -1460,6 +1461,7 @@
                                 android:gravity="end">
 
                                 <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/validity_period_value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="17 Nov ‘21 - 16 Feb ‘22"

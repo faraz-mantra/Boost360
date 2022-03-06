@@ -1405,7 +1405,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         )
 
         val oneMonthFromNow = Calendar.getInstance()
-        oneMonthFromNow.add(Calendar.MONTH, 1) // Added one month
+        oneMonthFromNow.add(Calendar.MONTH, prefs.getValidityMonths()!!.toInt()) // Added one month
         val nowFormat = SimpleDateFormat("dd MMM yy")
         nowFormat.setTimeZone(Calendar.getInstance().getTimeZone())
         val oneMonthFormat = SimpleDateFormat("dd MMM yy")
