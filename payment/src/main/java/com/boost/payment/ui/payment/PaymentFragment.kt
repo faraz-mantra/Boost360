@@ -271,6 +271,11 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
 //                payment_main_layout.fullScroll(View.FOCUS_FORWARD)
                 payment_main_layout.smoothScrollTo(0, 0)
+                val businessFragment = BusinessDetailsFragment.newInstance(this)
+                businessFragment.show(
+                    (activity as PaymentActivity).supportFragmentManager,
+                    BUSINESS_DETAILS_FRAGMENT
+                )
             }
         }
 
@@ -294,6 +299,11 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             } else {
                 payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
                 payment_main_layout.smoothScrollTo(0, 0)
+                val businessFragment = BusinessDetailsFragment.newInstance(this)
+                businessFragment.show(
+                    (activity as PaymentActivity).supportFragmentManager,
+                    BUSINESS_DETAILS_FRAGMENT
+                )
             }
         }
 
@@ -317,6 +327,11 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             } else {
                 payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
                 payment_main_layout.smoothScrollTo(0, 0)
+                val businessFragment = BusinessDetailsFragment.newInstance(this)
+                businessFragment.show(
+                    (activity as PaymentActivity).supportFragmentManager,
+                    BUSINESS_DETAILS_FRAGMENT
+                )
             }
         }
 
@@ -397,6 +412,11 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             } else {
                 payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
                 payment_main_layout.smoothScrollTo(0, 0)
+                val businessFragment = BusinessDetailsFragment.newInstance(this)
+                businessFragment.show(
+                    (activity as PaymentActivity).supportFragmentManager,
+                    BUSINESS_DETAILS_FRAGMENT
+                )
             }
         }
 
