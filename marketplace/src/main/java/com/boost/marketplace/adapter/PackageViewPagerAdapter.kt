@@ -17,6 +17,7 @@ import com.framework.analytics.SentryController
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.lang.StringBuilder
 import java.text.NumberFormat
 import java.util.*
 
@@ -123,13 +124,23 @@ class PackageViewPagerAdapter(
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(
           {
-            holder.tv_inlcuded_add_on.setText("+"+ it.size+ "more")
-            for (singleItem in it) {
-              Glide.with(holder.itemView.context).load(singleItem.primary_image).into(holder.image1)
-              Glide.with(holder.itemView.context).load(singleItem.primary_image).into(holder.image2)
-              Glide.with(holder.itemView.context).load(singleItem.primary_image).into(holder.image3)
-              holder.package_feature_name_tv.setText(singleItem.name)
+            if(it.size>3) {
+              holder.tv_inlcuded_add_on.setText("+" + (it.size - 3) + "more")
+            }else{
+              holder.tv_inlcuded_add_on.visibility = View.GONE
             }
+
+            Glide.with(holder.itemView.context).load(it[0].primary_image).into(holder.image1)
+            Glide.with(holder.itemView.context).load(it[1].primary_image).into(holder.image2)
+            Glide.with(holder.itemView.context).load(it[2].primary_image).into(holder.image3)
+            val list = StringBuilder()
+            for (singleItem in it) {
+              if(it.size>1){
+                list.append(", ")
+              }
+              list.append(singleItem.name)
+            }
+            holder.package_feature_name_tv.setText(list.toString())
             for (singleItem in it) {
               for (item in bundles.included_features) {
                 if (singleItem.feature_code == item.feature_code) {
@@ -141,7 +152,7 @@ class PackageViewPagerAdapter(
               offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent / 100)
               holder.bundleDiscount.visibility = View.VISIBLE
 //                                        holder.bundlePriceLabel.visibility = View.GONE
-              holder.bundleDiscount.setText(bundles.overall_discount_percent.toString() + "%")
+              holder.bundleDiscount.setText(bundles.overall_discount_percent.toString() + "% SAVING")
             } else {
               offeredBundlePrice = originalBundlePrice
               holder.bundleDiscount.visibility = View.GONE
