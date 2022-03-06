@@ -104,9 +104,9 @@
                     android:fontFamily="@font/open_sans"
                     android:textSize="@dimen/txt_12sp"
                     android:textFontWeight="600"
+                    tools:text="fnkjsnfks"
                     app:layout_constraintBottom_toTopOf="@id/auto_renew_extra_offers"
                     android:textColor="@color/common_text_color"
-                    android:text="Automatically renew every 3 months?"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -154,7 +154,6 @@
                     android:textSize="@dimen/txt_12sp"
                     android:drawableStart="@drawable/ic_calendar_auto_renew"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:text="You are paying ₹4,387 only for 3 months. Your subscription will end on 16 Feb ‘22."
                     app:layout_constraintTop_toBottomOf="@id/auto_renew_extra_offers" />
 
 
