@@ -144,6 +144,7 @@
                         android:src="@drawable/package_feature_images" />
 
                     <TextView
+                        android:id="@+id/tv_inlcuded_add_on"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

@@ -1,17 +1,14 @@
 package com.boost.marketplace.adapter
 
-import android.graphics.Color
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.home.MarketPlaceActivity
@@ -67,6 +64,7 @@ class PackageViewPagerAdapter(
     }
     holder.name.setText(list.get(position).name ?: "")
 
+
     try {
       getPackageInfoFromDB(holder, list.get(position))
     } catch (e: Exception) {
@@ -100,6 +98,11 @@ class PackageViewPagerAdapter(
     val primaryImage = itemView.findViewById<ImageView>(R.id.package_primary_image)
     val primaryImageCopy = itemView.findViewById<ImageView>(R.id.package_primary_image_copy)
     val bundleDiscount = itemView.findViewById<TextView>(R.id.bundle_level_discount)
+    val tv_inlcuded_add_on=itemView.findViewById<TextView>(R.id.tv_inlcuded_add_on)
+    val package_feature_name_tv=itemView.findViewById<TextView>(R.id.package_feature_name_tv)
+    val image1=itemView.findViewById<ImageView>(R.id.image1)
+    val image2=itemView.findViewById<ImageView>(R.id.image2)
+    val image3=itemView.findViewById<ImageView>(R.id.image3)
 //        val bundlePriceLabel = itemView.findViewById<TextView>(R.id.bundle_price_label)
   }
 
@@ -120,6 +123,13 @@ class PackageViewPagerAdapter(
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(
           {
+            holder.tv_inlcuded_add_on.setText("+"+ it.size+ "more")
+            for (singleItem in it) {
+              Glide.with(holder.itemView.context).load(singleItem.primary_image).into(holder.image1)
+              Glide.with(holder.itemView.context).load(singleItem.primary_image).into(holder.image2)
+              Glide.with(holder.itemView.context).load(singleItem.primary_image).into(holder.image3)
+              holder.package_feature_name_tv.setText(singleItem.name)
+            }
             for (singleItem in it) {
               for (item in bundles.included_features) {
                 if (singleItem.feature_code == item.feature_code) {
