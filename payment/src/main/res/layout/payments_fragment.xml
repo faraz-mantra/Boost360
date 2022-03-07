@@ -183,6 +183,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/auto_renew_layout">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ll1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
                 <TextView
                     android:id="@+id/payment_subscription_details_title"
                     android:layout_width="wrap_content"
@@ -202,14 +210,27 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
+                    android:id="@+id/arw1"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:padding="8dp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:src="@drawable/ic_top_arrow_black"
-                    app:layout_constraintBottom_toTopOf="@id/divider"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clp1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll1">
 
                 <View
                     android:id="@+id/divider"
@@ -218,7 +239,8 @@
                     android:background="#80A3A3A3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/payment_subscription_details_title" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
 
                 <RelativeLayout
                     android:id="@+id/payment_subscription_full_amount_layout"
@@ -230,7 +252,7 @@
                     android:paddingBottom="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/payment_subscription_details_title">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/payment_amount_title"
@@ -255,8 +277,8 @@
                         android:fontFamily="@font/open_sans"
                         android:paddingStart="@dimen/_5sdp"
                         android:text="(includes 18% GST)"
-                        android:textFontWeight="400"
                         android:textColor="@color/payment_green"
+                        android:textFontWeight="400"
                         android:textSize="12sp" />
 
                     <TextView
@@ -267,9 +289,9 @@
                         android:fontFamily="@font/open_sans_semibold"
                         android:paddingEnd="@dimen/pad_5dp"
                         android:text="₹900"
+                        android:textColor="@color/payment_title_color"
                         android:textFontWeight="600"
-                        android:textSize="@dimen/txt_12sp"
-                        android:textColor="@color/payment_title_color" />
+                        android:textSize="@dimen/txt_12sp" />
 
                     <TextView
                         android:id="@+id/long_validity_discount_title"
@@ -427,6 +449,8 @@
                         android:textFontWeight="700"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -867,8 +891,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
+                    android:layout_marginTop="8dp"
                     android:elevation="@dimen/_2sdp"
                     tools:visibility="visible">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/upi1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/upi_payment_title"
@@ -889,15 +924,26 @@
 
 
                     <ImageView
+                        android:id="@+id/arw2"
                         android:layout_width="@dimen/pad_30dp"
                         android:layout_height="@dimen/pad_30dp"
                         android:padding="8dp"
                         android:src="@drawable/ic_top_arrow_black"
-                        app:layout_constraintBottom_toTopOf="@id/upi_view_dummy"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clp2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/upi1"
+                        app:layout_constraintBottom_toBottomOf="parent">
 
                     <View
                         android:id="@+id/upi_view_dummy"
@@ -906,14 +952,14 @@
                         android:background="#E6E6E6"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/upi_payment_title" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <LinearLayout
                         android:id="@+id/upi_list_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/upi_payment_title">
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <LinearLayout
                             android:id="@+id/phonePe_layout"
@@ -1115,6 +1161,8 @@
                             android:textColor="#FFB900" />
                     </LinearLayout>
 
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -1124,8 +1172,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:background="@color/white"
-                    android:elevation="@dimen/_2sdp"
-                   >
+                    android:elevation="@dimen/_2sdp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/upi2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/payment_payment_title"
@@ -1146,14 +1203,26 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
+                        android:id="@+id/arw3"
                         android:layout_width="30dp"
                         android:layout_height="@dimen/pad_30dp"
                         android:padding="@dimen/_6sdp"
                         android:src="@drawable/ic_top_arrow_black"
-                        app:layout_constraintBottom_toTopOf="@id/divider_2"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clp3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/upi2">
+
 
                     <View
                         android:id="@+id/divider_2"
@@ -1162,7 +1231,7 @@
                         android:background="#E6E6E6"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/payment_payment_title" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/card_recycler"
@@ -1173,7 +1242,7 @@
                         android:nestedScrollingEnabled="false"
                         android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/payment_payment_title" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <View
                         android:id="@+id/card_view_dummy2"
@@ -1214,6 +1283,8 @@
                             app:layout_constraintTop_toBottomOf="@id/card_view_dummy2" />
                     </LinearLayout>
 
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -1225,6 +1296,17 @@
                     android:background="@color/white"
                     android:elevation="@dimen/_2sdp"
                     tools:visibility="visible">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/upi4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
 
                     <TextView
                         android:id="@+id/netbanking_title"
@@ -1246,14 +1328,27 @@
 
 
                     <ImageView
+                        android:id="@+id/arw4"
                         android:layout_width="@dimen/pad_30dp"
                         android:layout_height="@dimen/pad_30dp"
                         android:padding="@dimen/_6sdp"
                         android:src="@drawable/ic_top_arrow_black"
-                        app:layout_constraintBottom_toTopOf="@id/payment_view_dummy"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clp4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/upi4"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+
 
                     <View
                         android:id="@+id/payment_view_dummy"
@@ -1262,7 +1357,7 @@
                         android:background="#E6E6E6"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/netbanking_title" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <LinearLayout
                         android:id="@+id/netbanking_top_banks_layout"
@@ -1445,6 +1540,8 @@
 
                     </LinearLayout>
 
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -1505,6 +1602,16 @@
                     android:paddingBottom="@dimen/_4sdp"
                     tools:visibility="visible">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/upi5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
                     <TextView
                         android:id="@+id/pay_by_link_title"
                         android:layout_width="wrap_content"
@@ -1524,14 +1631,25 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
+                        android:id="@+id/arw5"
                         android:layout_width="30dp"
                         android:layout_height="@dimen/pad_30dp"
                         android:padding="@dimen/_6sdp"
                         android:src="@drawable/ic_top_arrow_black"
-                        app:layout_constraintBottom_toTopOf="@id/pay_by_link_view1"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clp5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/upi5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
 
                     <View
                         android:id="@+id/pay_by_link_view1"
@@ -1540,8 +1658,7 @@
                         android:background="#75E6E6E6"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/pay_by_link_title" />
-
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <View
                         android:id="@+id/pay_by_link_view2"
@@ -1664,6 +1781,8 @@
                             android:textColor="#747474" />
 
                     </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
