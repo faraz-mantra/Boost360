@@ -15,7 +15,8 @@ object ExoPlayerUtils {
     lateinit var player :ExoPlayer
     private var audioProgressHandler= Handler(Looper.getMainLooper())
     private var audioProgressRunnable: Runnable?=null
-    lateinit var isPlayingChanged:(isPlaying:Boolean)->Unit?
+    var isPlayingChanged: ((Boolean) -> Unit?)? =null
+    var playBackStateChanged: ((Int) -> Unit?)? =null
     //please create new instance of exoplayer if you are using it on different screen or use old instance if on same screen
     fun newInstance(){
         val audioAttributes = AudioAttributes.Builder()
@@ -32,6 +33,10 @@ object ExoPlayerUtils {
 
     private fun playerListener() {
         player.addListener(object :Player.Listener{
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                super.onPlaybackStateChanged(playbackState)
+                playBackStateChanged?.invoke(playbackState)
+            }
             override fun onIsPlayingChanged(isPlaying: Boolean) {
                 super.onIsPlayingChanged(isPlaying)
                 if (isPlaying){
@@ -39,7 +44,7 @@ object ExoPlayerUtils {
                 }else{
                     stopTracking()
                 }
-                isPlayingChanged.invoke(isPlaying)
+                isPlayingChanged?.invoke(isPlaying)
 
             }
 
@@ -71,12 +76,13 @@ object ExoPlayerUtils {
     }
 
 
-    fun play(url:String,id: Int){
+    fun play(url:String,id: Int,seek:Long=0){
         val mediaItem = MediaItem.Builder().setMediaId(id.toString()).setUri(url)
             .build()
         player.setMediaItem(mediaItem)
         player.prepare()
         player.play()
+        player.seekTo(seek)
 
     }
 

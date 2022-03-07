@@ -1,10 +1,12 @@
 package com.appservice.holder
 
-import android.os.Handler
-import android.os.Looper
+import android.R.color
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
+import android.graphics.PorterDuff
+import android.os.Build
 import android.view.View
 import android.widget.SeekBar
-import androidx.core.view.isVisible
 import com.appservice.R
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.SingleItemVmnCallItemV2Binding
@@ -13,14 +15,8 @@ import com.appservice.recyclerView.AppBaseRecyclerViewHolder
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.framework.BaseApplication
 import com.framework.utils.DateUtils.getDate
-import com.framework.utils.ExoPlayerUtils
 import com.framework.utils.ExoPlayerUtils.player
 import com.framework.utils.makeCall
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import java.util.*
 
 
@@ -55,7 +51,6 @@ class VmnCallViewHolder(binding: SingleItemVmnCallItemV2Binding) : AppBaseRecycl
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val model =item as VmnCallModel
-
     binding.seekBar.progress = model.audioPosition.toInt()
 
     if (model.audioPosition == 0L && model
@@ -88,19 +83,22 @@ class VmnCallViewHolder(binding: SingleItemVmnCallItemV2Binding) : AppBaseRecycl
 
     binding.divider.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
     if (model.callStatus.equals("MISSED", ignoreCase = true)) {
-      binding.tvCallType.text = BaseApplication.instance.getString(R.string.missed_call)
+      binding.tvCallType.text = BaseApplication.instance.getString(R.string.missed)
 
       //hide player and line
       binding.playerLayout.visibility = View.GONE
       binding.divider.visibility = View.GONE
+      binding.ivCallIcon.setImageResource(R.drawable.ic_call_missed_app_service)
+
     } else {
       binding.playerLayout.visibility = View.VISIBLE
       binding.divider.visibility = View.VISIBLE
-      binding.tvCallType.text = BaseApplication.instance.getString(R.string.connected_call)
+      binding.tvCallType.text = BaseApplication.instance.getString(R.string.connected)
+      binding.ivCallIcon.setImageResource(R.drawable.ic_call_received_app_service)
 
     }
     binding.tvNumber.text = model.callerNumber
-    binding.llayoutNumber.setOnClickListener(View.OnClickListener {
+    binding.ivCall.setOnClickListener(View.OnClickListener {
 
       makeCall(model.callerNumber)
     })

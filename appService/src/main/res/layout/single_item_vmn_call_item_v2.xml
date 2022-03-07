@@ -6,86 +6,126 @@
       android:tag="com.userexperior.ueSecureView"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginStart="30dp"
-      android:layout_marginTop="5dp"
-      android:layout_marginEnd="30dp"
-      android:layout_marginBottom="5dp"
+      android:clipChildren="false"
+      android:layout_marginTop="8dp"
+      android:layout_marginBottom="8dp"
       android:background="@drawable/all_side_small_curve_bg"
       android:elevation="2dp"
       android:orientation="vertical">
 
     <LinearLayout
+        android:orientation="horizontal"
         android:id="@+id/llayout_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical">
 
       <LinearLayout
-          android:layout_width="0dp"
+          android:gravity="center_vertical"
+          android:weightSum="1"
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginStart="10dp"
-          android:layout_weight="1"
-          android:orientation="vertical"
-          android:padding="10dp">
+          android:orientation="horizontal"
+          >
 
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tv_call_type"
+        <LinearLayout
+            android:layout_margin="@dimen/size_12"
+            android:layout_weight="0.8"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+          <LinearLayout
+              android:gravity="center"
+              android:orientation="horizontal"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+            <com.framework.views.customViews.CustomImageView
+                android:layout_width="wrap_content"
+                android:id="@+id/iv_call_icon"
+                android:src="@drawable/ic_call_received_app_service"
+                android:layout_height="wrap_content"/>
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_call_type"
+                android:layout_marginStart="@dimen/size_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/outgoing"
+                android:fontFamily="@font/semi_bold"
+                android:textColor="#BBBBBB" />
+          </LinearLayout>
+
+
+          <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_number"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:text="@string/_9695787711"
+              android:fontFamily="@font/semi_bold"
+              android:textColor="@color/biz_msg_txt_color"
+              android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/outgoing"
-            android:textColor="#BBBBBB" />
+            android:layout_margin="@dimen/size_10"
+            android:orientation="vertical">
 
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tv_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="@string/_9695787711"
-            android:textColor="@color/biz_msg_txt_color"
-            android:textSize="18sp" />
+          <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_date"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/_24_jan_2020"
+              android:textColor="#979797"
+              android:textSize="12sp" />
 
+          <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_time"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/_01_17_am"
+              android:textColor="#979797"
+              android:textSize="12sp" />
+
+          <!--        <TextView-->
+          <!--            android:id="@+id/tv_play"-->
+          <!--            android:layout_width="wrap_content"-->
+          <!--            android:layout_height="wrap_content"-->
+          <!--            android:padding="10dp"-->
+          <!--            android:text="@string/play_with_underline"-->
+          <!--            android:textAllCaps="false"-->
+          <!--            android:textColor="@color/gray" />-->
+        </LinearLayout>
+
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/dotted_line_vertical" />
+
+        <com.framework.views.customViews.CustomImageView
+            android:layout_width="0dp"
+            android:id="@+id/iv_call"
+            android:layout_weight="0.22"
+            android:src="@drawable/ic_call_not_filled"
+            android:layout_height="wrap_content"/>
       </LinearLayout>
 
-      <LinearLayout
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_margin="@dimen/size_10"
-          android:orientation="vertical">
-
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tv_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/_24_jan_2020"
-            android:textColor="#979797"
-            android:textSize="12sp" />
-
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/_01_17_am"
-            android:textColor="#979797"
-            android:textSize="12sp" />
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/tv_play"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:padding="10dp"-->
-        <!--            android:text="@string/play_with_underline"-->
-        <!--            android:textAllCaps="false"-->
-        <!--            android:textColor="@color/gray" />-->
-      </LinearLayout>
     </LinearLayout>
 
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:background="@drawable/dotted_line" />
+        android:background="@drawable/dotted_line_horizontal" />
 
     <LinearLayout
+        android:layout_marginHorizontal="@dimen/size_12"
         android:id="@+id/player_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -97,16 +137,18 @@
           android:layout_width="@dimen/size_40"
           android:layout_height="@dimen/size_40"
           android:padding="@dimen/size_11"
+          app:tint="@color/colorPrimary"
           app:srcCompat="@drawable/ic_audio_play" />
 
       <SeekBar
+          android:thumbTint="@color/colorPrimary"
           android:id="@+id/seekBar"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_weight="1"
           android:indeterminate="false"
           android:progressBackgroundTint="#979797"
-          android:progressTint="#9ABFFF" />
+          android:progressTint="@color/colorPrimary" />
 
       <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_rec_time"
