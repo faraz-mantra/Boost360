@@ -29,6 +29,7 @@ class DemoToDoListCardsModel(
         list.add(DemoToDoListCardsModel(RecyclerViewItemType.MISSED_CALL_3_VIEW))
         list.add(DemoToDoListCardsModel(RecyclerViewItemType.MISSED_CALL_4_VIEW))
         list.add(DemoToDoListCardsModel(RecyclerViewItemType.ORDER_DETAILS_VIEW))
+        list.add(DemoToDoListCardsModel(RecyclerViewItemType.ATTENTION_ORDER_ALERT_VIEW))
 
         return list
     }

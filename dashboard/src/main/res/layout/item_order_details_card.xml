@@ -8,7 +8,6 @@
         app:cardCornerRadius="@dimen/size_20">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:background="@drawable/green_rounded_stroke_rad_20"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -22,12 +21,21 @@
                     android:id="@+id/customImageView13"
                     android:layout_width="@dimen/size_55"
                     android:layout_height="@dimen/size_55"
-                    android:layout_gravity="center"
                     android:layout_marginStart="@dimen/size_16"
+                    android:scaleType="fitXY"
                     android:layout_marginTop="@dimen/size_16"
                     android:src="@drawable/ic_package_green"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="@dimen/size_22"
+                    android:layout_height="@dimen/size_22"
+                    android:src="@drawable/ic_tick_circle_green_solid_filled"
+                    app:layout_constraintBottom_toBottomOf="@+id/customImageView13"
+                    app:layout_constraintEnd_toEndOf="@+id/customImageView13"
+                    app:layout_constraintStart_toEndOf="@+id/customImageView13"
+                    app:layout_constraintTop_toBottomOf="@+id/customImageView13" />
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tv_title_1"
@@ -60,20 +68,19 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_title_1" />
 
                 <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tv_title_3"
-                    android:layout_width="match_parent"
+                    android:id="@+id/customTextView10"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/size_18"
-                    android:layout_marginTop="@dimen/size_11"
                     android:fontFamily="@font/regular"
                     android:gravity="start"
+                    android:includeFontPadding="false"
+                    android:lineSpacingMultiplier="0.8"
+                    android:text="Order no: 346564234324213"
                     android:textAlignment="gravity"
-                    android:text="Customise everything from the font, theme color, your brand logo, favicon, custom background images etc."
-                    android:textColor="@color/color_888888"
+                    android:textColor="@color/black_4a4a4a"
                     android:textSize="@dimen/text_10"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/card_image" />
+                    app:layout_constraintStart_toStartOf="@+id/tv_title_2"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title_2" />
 
                 <com.framework.views.customViews.CustomImageView
                     android:layout_width="@dimen/size_22"
@@ -81,9 +88,125 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/size_10"
                     android:layout_marginEnd="@dimen/size_11"
-                    android:src="@drawable/ic_close_grey"
+                    android:src="@drawable/ic_close_grey_card"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="@dimen/size_16"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:weightSum="4"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/customTextView10">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/size_8"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:orientation="vertical">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:text="Order worth: "
+                            android:textColor="@color/color_888888"
+                            android:textSize="@dimen/text_10" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/bold"
+                            android:text="₹4,568.00"
+                            android:textColor="@color/black_4a4a4a"
+                            android:textSize="@dimen/text_12" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/size_8"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:orientation="vertical">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:text="Item(s): "
+                            android:textColor="@color/color_888888"
+                            android:textSize="@dimen/text_10" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/bold"
+                            android:text="1 (one)"
+                            android:textColor="@color/black_4a4a4a"
+                            android:textSize="@dimen/text_12" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="@dimen/size_8"
+                        android:gravity="start"
+                        android:orientation="vertical">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:text="Payment "
+                            android:textColor="@color/color_888888"
+                            android:textSize="@dimen/text_10" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/bold"
+                            android:text="Done"
+                            android:textColor="@color/black_4a4a4a"
+                            android:textSize="@dimen/text_12" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="@dimen/size_8"
+                        android:gravity="start"
+                        android:orientation="vertical">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:text="Type"
+                            android:textColor="@color/color_888888"
+                            android:textSize="@dimen/text_10" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/bold"
+                            android:text="Delivery"
+                            android:textColor="@color/black_4a4a4a"
+                            android:textSize="@dimen/text_12" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
