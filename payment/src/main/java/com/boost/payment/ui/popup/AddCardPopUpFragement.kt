@@ -93,6 +93,11 @@ class AddCardPopUpFragement : DialogFragment() {
       hideSoftKeyboard(requireActivity())
     }
 
+    back_btn.setOnClickListener {
+      clearData()
+      dialog!!.dismiss()
+    }
+
     add_cart_cancel_submit.setOnClickListener {
       clearData()
       dialog!!.dismiss()
