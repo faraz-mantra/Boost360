@@ -11,6 +11,7 @@ import com.dashboard.controller.ui.more.holder.AboutViewHolder
 import com.dashboard.controller.ui.more.holder.UsefulLinksHolder
 import com.dashboard.databinding.*
 import com.dashboard.holder.*
+import com.dashboard.holder.v2.*
 import com.framework.base.BaseActivity
 import java.util.*
 
@@ -46,9 +47,14 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       WEBSITE_FONT_VIEW -> WebSiteFontViewHolder(binding as RecyclerItemSelectFontBinding)
       RECYCLER_USEFUL_LINKS -> UsefulLinksHolder(binding as RecyclerItemUsefulLinksBinding)
       RECYCLER_ABOUT_APP -> AboutViewHolder(binding as RecyclerItemAboutAppBinding)
-      BOOST_WEBSITE_ITEM_FEATURE_VIEW -> WebsiteItemFeatureViewHolder(binding  as WebsiteItemFeatureBinding)
+      BOOST_WEBSITE_ITEM_FEATURE_VIEW -> WebsiteItemFeatureViewHolder(binding as WebsiteItemFeatureBinding)
       RECYCLER_WEBSITE_NAV -> WebsiteNavHolder(binding = binding as RecyclerItemWebsiteNavBinding)
       CONSULTATION_VIEW -> ConsultationViewHolder(binding as RecyclerItemConsultationBinding)
+      OPTIONAL_TASKS_VIEW -> OptionalTasksViewHolder(binding as ItemOptionalTasksBinding)
+      POST_PURCHASE_1_VIEW -> PostPurchase1ViewHolder(binding as ItemPostPurchase1Binding)
+      POST_PURCHASE_2_VIEW -> PostPurchase2ViewHolder(binding as ItemPostPurchase2Binding)
+      READINESS_SCORE_1_VIEW -> ReadinessScore1ViewHolder(binding as ItemReadinessScore1Binding)
+      READINESS_SCORE_2_VIEW -> ReadinessScore2ViewHolder(binding as ItemReadinessScore2Binding)
     }
   }
 

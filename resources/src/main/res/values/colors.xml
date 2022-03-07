@@ -187,4 +187,8 @@
   <color name="light_grey_boost_jio">#DFDFDF</color>
   <color name="orange_light">#FFF8E5</color>
 
+  <color name="purple_A795EF">#A795EF</color>
+  <color name="red_DE3C3C">#DE3C3C</color>
+  <color name="yellow_FFD600">#FFD600</color>
+
 </resources>

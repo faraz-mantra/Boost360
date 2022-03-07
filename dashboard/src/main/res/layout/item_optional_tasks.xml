@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.framework.views.customViews.CustomCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_158"
+        app:cardCornerRadius="@dimen/size_20">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:background="@drawable/purple_rounded_solid_rad_20"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_122"
+                android:orientation="vertical">
+
+                <!--<com.framework.views.customViews.CustomCardView
+                    android:id="@+id/card_image"
+                    android:layout_width="@dimen/size_78"
+                    android:layout_height="@dimen/size_78"
+                    android:layout_marginStart="@dimen/size_19"
+                    android:layout_marginTop="@dimen/size_20"
+                    app:cardCornerRadius="@dimen/size_39"
+                    app:cardElevation="@dimen/size_2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="@dimen/size_78"
+                        android:layout_height="@dimen/size_78"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_demo_3" />
+
+                </com.framework.views.customViews.CustomCardView>-->
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/card_image"
+                    android:layout_width="@dimen/size_78"
+                    android:layout_height="@dimen/size_78"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/size_19"
+                    android:layout_marginTop="@dimen/size_20"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_demo_3" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_title_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bold"
+                    android:padding="@dimen/size_8"
+                    android:gravity="start"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="16"
+                    android:layout_marginStart="@dimen/size_16"
+                    android:includeFontPadding="false"
+                    android:lineSpacingMultiplier="0.8"
+                    android:text="Make the\nwebsite part of\nyour brand."
+                    android:textAlignment="gravity"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_18"
+                    app:layout_constraintBottom_toBottomOf="@+id/card_image"
+                    app:layout_constraintStart_toEndOf="@+id/card_image"
+                    app:layout_constraintTop_toTopOf="@+id/card_image" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="@dimen/size_22"
+                    android:layout_height="@dimen/size_22"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:layout_marginEnd="@dimen/size_11"
+                    android:src="@drawable/ic_close_white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_36"
+                android:background="@color/white"
+                android:gravity="center">
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/semi_bold"
+                    android:gravity="center"
+                    android:textAllCaps="false"
+                    android:text="Connect your Instagram"
+                    android:textColor="@color/purple_A795EF"
+                    app:textType="BODY_3" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="@dimen/size_14"
+                    android:layout_height="@dimen/size_14"
+                    android:layout_marginStart="@dimen/size_4"
+                    android:src="@drawable/ic_arrow_purple"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.framework.views.customViews.CustomCardView>
+</layout>
