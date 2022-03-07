@@ -15,62 +15,57 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_122"
-                android:background="@color/yellow_FFD600"
+                android:background="#ff0000"
                 android:orientation="vertical">
-
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tv_title_1"
-                    android:layout_width="@dimen/size_72"
-                    android:layout_height="@dimen/size_22"
-                    android:fontFamily="@font/bold"
-                    android:gravity="center"
-                    android:layout_marginTop="@dimen/size_24"
-                    android:layout_marginStart="@dimen/size_24"
-                    android:includeFontPadding="false"
-                    android:text="Reminder"
-                    android:background="@drawable/ic_demo_7"
-                    android:textAlignment="gravity"
-                    android:textColor="@color/red_DE3C3C"
-                    android:textSize="@dimen/text_11"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tv_title_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_12"
                     android:fontFamily="@font/bold"
                     android:gravity="start"
-                    android:layout_marginTop="@dimen/size_4"
                     android:includeFontPadding="false"
+                    android:layout_marginTop="@dimen/size_36"
                     android:lineSpacingMultiplier="0.8"
-                    android:text="Your pack is\nexpiring in 7 days."
+                    android:text="YouTube"
                     android:textAlignment="gravity"
-                    android:textColor="@color/black_4a4a4a"
-                    android:textSize="@dimen/text_20"
-                    app:layout_constraintEnd_toStartOf="@+id/icon_1"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="@+id/tv_title_1"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_title_1" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_28"
+                    app:layout_constraintStart_toEndOf="@+id/iv_feature"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <com.framework.views.customViews.CustomCardView
-                    android:id="@+id/icon_1"
-                    android:layout_width="@dimen/size_78"
-                    android:layout_height="@dimen/size_78"
-                    android:layout_marginEnd="@dimen/size_35"
-                    app:cardCornerRadius="@dimen/size_20"
-                    app:cardElevation="@dimen/size_2"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:gravity="center"
+                    android:text="autoposting is here."
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="@+id/tv_title_2"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title_2"
+                    android:textSize="@dimen/text_18" />
 
-                    <com.framework.views.customViews.CustomImageView
-                        android:layout_width="@dimen/size_66"
-                        android:layout_height="@dimen/size_66"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_demo_5" />
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/iv_feature"
+                    android:layout_width="@dimen/size_68"
+                    android:layout_height="@dimen/size_68"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/size_24"
+                    android:layout_marginTop="@dimen/size_26"
+                    android:src="@drawable/ic_youtube_circle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                </com.framework.views.customViews.CustomCardView>
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="@dimen/size_52"
+                    android:layout_height="@dimen/size_20"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_free_tag"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_feature"
+                    app:layout_constraintEnd_toEndOf="@+id/iv_feature"
+                    app:layout_constraintStart_toStartOf="@+id/iv_feature"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_feature" />
 
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/customImageView11"
@@ -97,15 +92,15 @@
                     android:background="@color/white"
                     android:fontFamily="@font/semi_bold"
                     android:gravity="center"
-                    android:text="Extend validity"
-                    android:textColor="@color/black_4a4a4a"
+                    android:text="Explore feature"
+                    android:textColor="@color/red_CE1312"
                     app:textType="BODY_3" />
 
                 <com.framework.views.customViews.CustomImageView
                     android:layout_width="@dimen/size_14"
                     android:layout_height="@dimen/size_14"
                     android:layout_marginStart="@dimen/size_4"
-                    android:tint="@color/black_4a4a4a"
+                    android:tint="@color/red_CE1312"
                     android:src="@drawable/ic_arrow_purple"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>

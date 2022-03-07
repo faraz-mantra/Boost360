@@ -50,11 +50,24 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       BOOST_WEBSITE_ITEM_FEATURE_VIEW -> WebsiteItemFeatureViewHolder(binding as WebsiteItemFeatureBinding)
       RECYCLER_WEBSITE_NAV -> WebsiteNavHolder(binding = binding as RecyclerItemWebsiteNavBinding)
       CONSULTATION_VIEW -> ConsultationViewHolder(binding as RecyclerItemConsultationBinding)
+
+      //My To Do List Cards View Holders
       OPTIONAL_TASKS_VIEW -> OptionalTasksViewHolder(binding as ItemOptionalTasksBinding)
       POST_PURCHASE_1_VIEW -> PostPurchase1ViewHolder(binding as ItemPostPurchase1Binding)
       POST_PURCHASE_2_VIEW -> PostPurchase2ViewHolder(binding as ItemPostPurchase2Binding)
       READINESS_SCORE_1_VIEW -> ReadinessScore1ViewHolder(binding as ItemReadinessScore1Binding)
       READINESS_SCORE_2_VIEW -> ReadinessScore2ViewHolder(binding as ItemReadinessScore2Binding)
+      RENEWAL_1_VIEW -> Renewal1ViewHolder(binding as ItemRenewal1Binding)
+      RENEWAL_2_VIEW -> Renewal2ViewHolder(binding as ItemRenewal2Binding)
+      RENEWAL_3_VIEW -> Renewal3ViewHolder(binding as ItemRenewal3Binding)
+      NEW_SINGLE_FEATURE_VIEW -> NewSingleFeatureViewHolder(binding as ItemNewSingleFeatureBinding)
+      NEW_MULTIPLE_FEATURE_VIEW -> NewMultipleFeatureViewHolder(binding as ItemNewMultipleFeatureBinding)
+      CONTINUE_WHERE_LEFT_VIEW -> ContinueWhereLeftViewHolder(binding as ItemContinueWhereLeftBinding)
+      MISSED_CALL_1_VIEW -> MissedCall1ViewHolder(binding as ItemMissedCall1Binding)
+      MISSED_CALL_2_VIEW -> MissedCall2ViewHolder(binding as ItemMissedCall2Binding)
+      MISSED_CALL_3_VIEW -> MissedCall3ViewHolder(binding as ItemMissedCall3Binding)
+      MISSED_CALL_4_VIEW -> MissedCall4ViewHolder(binding as ItemMissedCall4Binding)
+      ORDER_DETAILS_VIEW -> OrderDetailsViewHolder(binding as ItemOrderDetailsCardBinding)
     }
   }
 
