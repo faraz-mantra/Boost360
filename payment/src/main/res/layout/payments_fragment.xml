@@ -156,6 +156,16 @@
                     android:drawablePadding="@dimen/_5sdp"
                     app:layout_constraintTop_toBottomOf="@id/auto_renew_extra_offers" />
 
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/lotty_progress"
+                    android:layout_width="100dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:lottie_rawRes="@raw/congratulation_autorenew" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -268,9 +278,9 @@
                         android:layout_below="@id/gst_discount"
                         android:fontFamily="@font/open_sans"
                         android:padding="8dp"
-                        android:textFontWeight="400"
                         android:text="Long validity discount (2%)"
                         android:textColor="@color/green"
+                        android:textFontWeight="400"
                         android:textSize="@dimen/txt_12sp" />
 
                     <TextView
@@ -870,6 +880,7 @@
                         android:paddingTop="12dp"
                         android:paddingEnd="@dimen/_5sdp"
                         android:paddingBottom="12dp"
+                        android:textFontWeight="400"
                         android:text="UPI"
                         android:textAllCaps="true"
                         android:textColor="@color/common_text_color"

@@ -3044,14 +3044,18 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     couponServiceModel = null
 //                couponDiscountAmount = total * couponDisount / 100
 //                couponDiscountAmount = couponServiceModel!!.couponDiscountAmt!!
-                coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
 
-//                if (validCouponCode != null) {
+
+                if (validCouponCode != null) {
+                    coupon_discount_title.visibility = View.VISIBLE
+                    coupon_discount_value.visibility = View.VISIBLE
                 coupon_discount_title.text =
                         "'" + couponServiceModel?.coupon_key + "'" + " coupon discount"
-//                }else {
-//                coupon_discount_title.text = "Discount Coupon"
-//            }
+                    coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
+                }else {
+                coupon_discount_title.visibility = View.GONE
+                    coupon_discount_value.visibility = View.GONE
+            }
 
                 overalltotal -= couponDiscountAmount
                 Log.v("cart_amount_value", " " + total)

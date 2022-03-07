@@ -499,6 +499,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 upi_view_dummy.visibility = View.VISIBLE
                 autoRenewState = false
             } else {
+                lotty_progress.pauseAnimation()
+                lotty_progress.playAnimation()
                 auto_renew_switch.setImageResource(R.drawable.ic_switch_on)
                 auto_renew_extra_offers.background =
                         ContextCompat.getDrawable(requireActivity(), R.drawable.ic_offer_auto_renew_bg)
@@ -1363,10 +1365,17 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
         //coupon discount percentage
         val couponDiscountPercentage = prefs.getCouponDiscountPercentage()
-        long_validity_discount_title.setText("Long validity discount (" + couponDiscountPercentage.toString() + "%)")
-        long_validity_discount_value.setText(
+        if(couponDiscountPercentage>0) {
+            long_validity_discount_title.visibility = View.VISIBLE
+            long_validity_discount_value.visibility = View.VISIBLE
+            long_validity_discount_title.setText("Long validity discount (" + couponDiscountPercentage.toString() + "%)")
+            long_validity_discount_value.setText(
                 "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(0)
-        )
+            )
+        }else{
+            long_validity_discount_title.visibility = View.GONE
+            long_validity_discount_value.visibility = View.GONE
+        }
 
         //coupon discount amount
         val couponDiscountAmount = cartOriginalPrice * couponDiscountPercentage / 100
