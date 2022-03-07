@@ -2487,11 +2487,23 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     }
                     if (default_validity_months > 0) {
                         if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
-                            months_validity.setText(prefs.getCartValidityMonths().toString() + " months")
-                            feature_validity.text = prefs.getCartValidityMonths().toString() + " Months"
+                            if(Integer.parseInt(prefs.getCartValidityMonths()!!) == 1){
+                                months_validity.setText(prefs.getCartValidityMonths().toString() + " month")
+                                feature_validity.text = prefs.getCartValidityMonths().toString() + " Month"
+                            }else{
+                                months_validity.setText(prefs.getCartValidityMonths().toString() + " months")
+                                feature_validity.text = prefs.getCartValidityMonths().toString() + " Months"
+                            }
+
                         } else {
-                            months_validity.setText(default_validity_months.toString() + " months")
-                            feature_validity.text = default_validity_months.toString() + " Months"
+                            if(default_validity_months == 1){
+                                months_validity.setText(default_validity_months.toString() + " month")
+                                feature_validity.text = default_validity_months.toString() + " Month"
+                            }else{
+                                months_validity.setText(default_validity_months.toString() + " months")
+                                feature_validity.text = default_validity_months.toString() + " Months"
+                            }
+
 
                         }
                     }
