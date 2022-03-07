@@ -64,6 +64,9 @@ class UPIPopUpFragement : DialogFragment() {
     upi_popup_outer_layout.setOnClickListener {
       dialog!!.dismiss()
     }
+    cancel_button.setOnClickListener {
+      dialog!!.dismiss()
+    }
     upi_popup_container_layout.setOnClickListener {}
 
     upi_popup_submit.setOnClickListener {
