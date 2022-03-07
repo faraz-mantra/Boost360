@@ -481,3 +481,13 @@ fun showSnackBarNegative(context: Activity, msg: String?) {
   snackBar.duration = 4000
   snackBar.show()
 }
+
+fun spanColor(fullText:String,@ColorRes color: Int,vararg colorTextList:String): SpannableString {
+  val spannable = SpannableString(fullText)
+  colorTextList.forEach { text->
+    spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(
+      BaseApplication.instance,color
+    )),fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+  }
+  return spannable
+}

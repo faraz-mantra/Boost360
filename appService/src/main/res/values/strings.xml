@@ -1096,6 +1096,7 @@
   <string name="desktop">Desktop</string>
   <string name="all">All</string>
   <string name="missed">Missed</string>
+  <string name="received">Received</string>
   <string name="connected">Connected</string>
   <string name="updates_not_found">Updates not found!</string>
   <string name="outgoing">Outgoing</string>

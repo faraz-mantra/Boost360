@@ -1,6 +1,5 @@
 package com.appservice.ui.calltracking
 
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -19,30 +18,26 @@ import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.VmnCallsViewModel
-import com.framework.adapters.RecyclerViewItemClickListener
 import com.framework.constants.PremiumCode
 import com.framework.constants.SupportVideoType
+import com.framework.extensions.gone
+import com.framework.extensions.visible
 import com.framework.pref.Key_Preferences
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_CATEGORY
-import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
-import com.framework.utils.ExoPlayerUtils
+import com.framework.utils.*
 import com.framework.utils.ExoPlayerUtils.play
-import com.framework.utils.InAppReviewUtils
-import com.framework.utils.showSnackBarNegative
-import com.framework.utils.toArrayList
 import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.BUSINESS_CALLS
 import com.framework.webengageconstant.EVENT_LABEL_BUSINESS_CALLS
+import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.Player
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.JsonObject
 import com.onboarding.nowfloats.constant.IntentConstant
-import com.onboarding.nowfloats.constant.RecyclerViewActionType
-import io.grpc.internal.SharedResourceHolder.release
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -60,7 +55,10 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
     var selectedViewType = "ALL"
     private var offset = 0
     private var appFragmentZeroCase: AppFragmentZeroCase? = null
-
+    enum class CallType{
+        CONNECTED,
+        MISSED
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ExoPlayerUtils.newInstance() //required for call playback on list
@@ -81,11 +79,9 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
         }
         WebEngageController.trackEvent(BUSINESS_CALLS, EVENT_LABEL_BUSINESS_CALLS, null)
 
-        binding?.tvTrackedCall?.setText(
-            getString(R.string.tracked_calls) + " " + session?.getFPDetails(
-                Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER
-            )
-        )
+
+        val phone = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER)
+        binding?.tvTrackedCall?.text = spanColor(getString(R.string.tracked_calls) + " " +phone,R.color.colorPrimary,phone?:"")
 
 
         //tracking calls
@@ -106,14 +102,19 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
         })
         setOnClickListener(
             binding?.seeMoreLess, binding?.websiteHelper,
-            binding?.phoneHelper, binding?.parentLayout, binding?.cardViewViewCalllog
+            binding?.phoneHelper, binding?.parentLayout
         )
 
         websiteCallCount()
         if (isPremium) {
             nonEmptyView()
+            binding?.callRecycler?.visible()
+            binding?.secondLayout?.visible()
             calls()
         } else {
+            binding?.callRecycler?.gone()
+            binding?.secondLayout?.gone()
+
             emptyView()
         }
 
@@ -141,6 +142,14 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
             vmnCallAdapter?.notifyItemChanged(currentPlayerIndex(), Unit)
         }
 
+        ExoPlayerUtils.playBackStateChanged={state->
+            if (state == ExoPlayer.STATE_BUFFERING){
+                showProgress()
+            } else {
+                hideProgress()
+            }
+        }
+
     }
 
     fun currentPlayerIndex(): Int {
@@ -158,7 +167,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
     private val isPremium: Boolean
         get() {
             val keys = session?.getStoreWidgets()
-            return keys != null && keys.contains(PremiumCode.CALLTRACKER.value)
+            return keys != null && keys.contains(PremiumCode.CALLTRACKER.value).not()
         }
 
     private fun showTrackedCalls() {
@@ -204,6 +213,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
         viewModel.trackerCalls(hashMap).observe(this) {
             Log.i(TAG, "getCalls success: ")
             val vmnCallModels = (it.anyResponse as? ArrayList<VmnCallModel>)
+            setTabCount(vmnCallModels)
             hideProgress()
             if (vmnCallModels == null || it.isSuccess().not()) {
                 Toast.makeText(
@@ -217,17 +227,41 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
                 val size = vmnCallModels.size
                 Log.v("getCalls", " $size")
                 stopApiCall = size < 100
+                if (size<=0&&offset==0) {
+                    emptyView()
+                    binding?.firstLayout?.gone()
+                    binding?.view2?.gone()
+                    binding?.secondLayout?.gone()
+                    binding?.callRecycler?.gone()
+                    appFragmentZeroCase?.setRootBG(R.color.grey_f9f9f9)
+                } else {
+                    binding?.firstLayout?.visible()
+                    binding?.view2?.visible()
+                    binding?.secondLayout?.visible()
+                    binding?.callRecycler?.visible()
+
+                    nonEmptyView()
+                }
                 updateRecyclerData(vmnCallModels)
+
                 if (size != 0) {
                     offset += 100
                 }
-                if (size < 1) {
-                    emptyView()
-                } else {
-                    nonEmptyView()
-                }
+
             }
         }
+    }
+
+    private fun setTabCount(vmnCallModels: ArrayList<VmnCallModel>?) {
+        binding?.tableLayout?.getTabAt(0)?.text =
+            getString(R.string.all)+" ("+vmnCallModels?.size+")"
+        binding?.tableLayout?.getTabAt(1)?.text =
+            getString(R.string.missed)+" ("+vmnCallModels?.filter{
+                it.callStatus==CallType.MISSED.name }?.size+")"
+        binding?.tableLayout?.getTabAt(2)?.text =
+            getString(R.string.received)+" ("+vmnCallModels?.filter{
+                it.callStatus==CallType.CONNECTED.name }?.size+")"
+
     }
 
     private fun updateRecyclerData(newItems: ArrayList<VmnCallModel>?) {
@@ -252,7 +286,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
             "ALL" -> {
                 selectedItems = list
             }
-            "MISSED" -> {
+            CallType.MISSED.name -> {
                 var i = 0
                 while (i < list.size) {
                     if (list[i].callStatus.equals("MISSED")) {
@@ -261,7 +295,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
                     i++
                 }
             }
-            "CONNECTED" -> {
+            CallType.CONNECTED.name -> {
                 var i = 0
                 while (i < list.size) {
                     if (list[i].callStatus.equals("CONNECTED")) {
@@ -354,17 +388,15 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
     override fun onClick(v: View?) {
         super.onClick(v)
         when (v) {
-            binding?.cardViewViewCalllog -> {
 
-            }
             binding?.seeMoreLess -> {
                 if (!seeMoreLessStatus) {
                     seeMoreLessStatus = true
-                    binding?.seeMoreLessImage?.setImageResource(R.drawable.vmn_up_arrow)
+                    binding?.seeMoreLessImage?.rotation=90F
                     binding?.helpWebPhoneLayout?.setVisibility(View.VISIBLE)
                 } else {
                     seeMoreLessStatus = false
-                    binding?.seeMoreLessImage?.setImageResource(R.drawable.vmn_down_arrow)
+                    binding?.seeMoreLessImage?.rotation=270F
                     binding?.helpWebPhoneLayout?.setVisibility(View.GONE)
 
                     //hide info
@@ -432,12 +464,10 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
     }
 
     private fun nonEmptyView() {
-        binding?.primaryLayout?.setVisibility(View.VISIBLE)
         binding?.childContainer?.setVisibility(View.GONE)
     }
 
     private fun emptyView() {
-        binding?.primaryLayout?.setVisibility(View.GONE)
         binding?.childContainer?.setVisibility(View.VISIBLE)
     }
 
@@ -488,19 +518,20 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
         when (actionType) {
             com.appservice.constant.RecyclerViewActionType.VMN_PLAY_CLICKED.ordinal -> {
                 if ((ExoPlayerUtils.player.isLoading || ExoPlayerUtils.player.isPlaying) && position != ExoPlayerUtils.player.currentMediaItem?.mediaId?.toInt()) {
-                    showLongToast(getString(R.string.you_can_only_play_one_audio_clip))
-                } else {
+                   // showLongToast(getString(R.string.you_can_only_play_one_audio_clip))
+                    ExoPlayerUtils.player.pause()
+                }
                     if (ExoPlayerUtils.player.isPlaying) {
                         ExoPlayerUtils.player.pause()
                     } else {
-                        val listItem = vmnCallAdapter?.list?.get(position) as VmnCallModel
+                        val listItem = item as VmnCallModel
 
                         if (position != ExoPlayerUtils.player.currentMediaItem?.mediaId?.toInt() || getCurrentPlayerModel()?.audioPosition == 0L) {
-                            listItem.callRecordingUri?.let { it1 -> play(it1, position) }
+                            listItem.callRecordingUri?.let { it1 -> play(it1, position,listItem.audioPosition) }
                         } else {
                             ExoPlayerUtils.player.play()
                         }
-                    }
+
                 }
             }
         }
