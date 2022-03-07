@@ -265,11 +265,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         initializeRenewalRecycler()
         initializeErrorObserver()
         initializePackageViewPager()
-        loadOfferCoupons()
-        //updatePackageViewPager(list)
-        initMvvM()
+
         observeLastPaymentDetails()
         checkRenewalItemDeepLinkClick()
+//        loadOfferCoupons()
+        //updatePackageViewPager(list)
+        initMvvM()
         gst_layout.visibility = View.VISIBLE
         discount_banner.visibility = View.GONE
         //show applyed coupon code
@@ -925,13 +926,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     }
 //                        default_validity_months = default_validity_months+ 3
                 }
-                if(default_validity_months >1){
+                if (default_validity_months > 1) {
                     months_validity.setText(default_validity_months.toString() + " months")
                     prefs.storeCartValidityMonths(default_validity_months.toString())
                     totalValidityDays = 30 * default_validity_months
                     prefs.storeMonthsValidity(totalValidityDays)
                     feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
-                }else{
+                } else {
                     months_validity.setText(default_validity_months.toString() + " month")
                     prefs.storeCartValidityMonths(default_validity_months.toString())
                     totalValidityDays = 30 * default_validity_months
@@ -978,13 +979,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 }
 
 //            default_validity_months
-                if(default_validity_months > 1){
+                if (default_validity_months > 1) {
                     months_validity.setText(default_validity_months.toString() + " months")
                     prefs.storeCartValidityMonths(default_validity_months.toString())
                     totalValidityDays = 30 * default_validity_months
                     prefs.storeMonthsValidity(totalValidityDays)
                     feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
-                }else{
+                } else {
                     months_validity.setText(default_validity_months.toString() + " month")
                     prefs.storeCartValidityMonths(default_validity_months.toString())
                     totalValidityDays = 30 * default_validity_months
@@ -2431,36 +2432,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //    })
 
 
-        viewModel.getCouponApiResult().observe(this) {
-            if (it != null) {
-
-                for (i in 0 until it.size) {
-
-                    it[i].data?.let { it1 -> couponData.addAll(it1) }
-                }
-                System.out.println("CouponData" + couponData)
-                cart_coupon_code_rv.layoutManager = LinearLayoutManager(requireContext())
-                couponDataNo.add(couponData[0])
-                val adapter = CartCouponAdapter(couponDataNo, total, this)
-                cart_coupon_code_rv.adapter = adapter
-                tv_Show_more.setOnClickListener {
-                    tv_Show_less.visibility = VISIBLE
-                    tv_Show_more.visibility = GONE
-                    val adapter = CartCouponAdapter(couponData, total, this)
-                    cart_coupon_code_rv.adapter = adapter
-                }
-                tv_Show_less.setOnClickListener {
-                    tv_Show_more.visibility = VISIBLE
-                    tv_Show_less.visibility = GONE
-                    couponDataNo.clear()
-                    couponDataNo.add(couponData[0])
-                    val adapter = CartCouponAdapter(couponDataNo, total, this)
-                    cart_coupon_code_rv.adapter = adapter
-                }
-
-            }
-        }
-
 //        viewModel.updateRenewValue("")
         viewModel.cartResult().observe(this, Observer {
             if (it.isNullOrEmpty().not()) {
@@ -2516,11 +2487,23 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     }
                     if (default_validity_months > 0) {
                         if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
-                            months_validity.setText(prefs.getCartValidityMonths().toString() + " months")
-                            feature_validity.text = prefs.getCartValidityMonths().toString() + " Months"
+                            if(Integer.parseInt(prefs.getCartValidityMonths()!!) == 1){
+                                months_validity.setText(prefs.getCartValidityMonths().toString() + " month")
+                                feature_validity.text = prefs.getCartValidityMonths().toString() + " Month"
+                            }else{
+                                months_validity.setText(prefs.getCartValidityMonths().toString() + " months")
+                                feature_validity.text = prefs.getCartValidityMonths().toString() + " Months"
+                            }
+
                         } else {
-                            months_validity.setText(default_validity_months.toString() + " months")
-                            feature_validity.text = default_validity_months.toString() + " Months"
+                            if(default_validity_months == 1){
+                                months_validity.setText(default_validity_months.toString() + " month")
+                                feature_validity.text = default_validity_months.toString() + " Month"
+                            }else{
+                                months_validity.setText(default_validity_months.toString() + " months")
+                                feature_validity.text = default_validity_months.toString() + " Months"
+                            }
+
 
                         }
                     }
@@ -2542,7 +2525,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     package_layout.visibility = View.VISIBLE
                 } else {
                     bundles_in_cart = false
-                    default_validity_months = if(prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toInt() else 1
+                    default_validity_months = if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toInt() else 1
 //                    months_validity.text = default_validity_months.toString() + " month"
 
                     if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
@@ -2563,6 +2546,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 }
 //                totalCalculation()
                 totalCalculationAfterCoupon()
+                loadOfferCoupons()
+
 //                var event_attributes: HashMap<String, Double> = HashMap()
 
                 event_attributes.put("cart size", it.size.toDouble())
@@ -2915,6 +2900,41 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             }
 
         })
+        viewModel.getCouponApiResult().observe(this) {
+            if (it != null) {
+
+                for (i in 0 until it.size) {
+
+                    it[i].data?.let { it1 -> couponData.addAll(it1) }
+                }
+                System.out.println("CouponData" + couponData)
+                cart_coupon_code_rv.layoutManager = LinearLayoutManager(requireContext())
+                couponDataNo.add(couponData[0])
+                System.out.println("Total" + total)
+
+                val adapter = CartCouponAdapter(couponDataNo, total, this)
+                cart_coupon_code_rv.adapter = adapter
+                tv_Show_more.setOnClickListener {
+                    tv_Show_less.visibility = VISIBLE
+                    tv_Show_more.visibility = GONE
+                    System.out.println("TotalMore" + total)
+
+                    val adapter = CartCouponAdapter(couponData, total, this)
+                    cart_coupon_code_rv.adapter = adapter
+                }
+                tv_Show_less.setOnClickListener {
+                    tv_Show_more.visibility = VISIBLE
+                    tv_Show_less.visibility = GONE
+                    couponDataNo.clear()
+                    couponDataNo.add(couponData[0])
+                    System.out.println("TotalLess" + total)
+
+                    val adapter = CartCouponAdapter(couponDataNo, total, this)
+                    cart_coupon_code_rv.adapter = adapter
+                }
+
+            }
+        }
 
     }
 
@@ -3079,9 +3099,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 val oneMonthFormat = SimpleDateFormat("dd MMM yy")
                 oneMonthFormat.setTimeZone(oneMonthFromNow.getTimeZone())
                 validity_period_value.setText(
-                    nowFormat.format(Calendar.getInstance().time) + " - " + nowFormat.format(oneMonthFromNow.time)
+                        nowFormat.format(Calendar.getInstance().time) + " - " + nowFormat.format(oneMonthFromNow.time)
                 )
-                choosed_validity_period.setText("(Valid till "+nowFormat.format(oneMonthFromNow.time)+")")
+                choosed_validity_period.setText("(Valid till " + nowFormat.format(oneMonthFromNow.time) + ")")
             }
         }
     }
@@ -3183,7 +3203,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 requireContext(),
                 PaymentActivity::class.java
         )
-        intent.putExtra("months",default_validity_months)
+        intent.putExtra("months", default_validity_months)
         intent.putExtra("fpid", (activity as CartActivity).fpid)
         intent.putExtra("fpName", (activity as CartActivity).fpName)
         intent.putExtra("customerId", customerId)
