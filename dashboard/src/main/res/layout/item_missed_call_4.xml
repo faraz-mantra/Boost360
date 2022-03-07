@@ -22,11 +22,11 @@
                     android:layout_width="@dimen/size_37"
                     android:layout_height="@dimen/size_37"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/size_24"
                     android:layout_marginEnd="@dimen/size_33"
                     android:src="@drawable/ic_phone_incoming"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_title_2"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/tv_title_2" />
 
 
                 <com.framework.views.customViews.CustomTextView

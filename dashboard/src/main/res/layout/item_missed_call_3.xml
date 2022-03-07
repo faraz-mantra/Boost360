@@ -38,7 +38,6 @@
                     android:layout_marginStart="@dimen/size_4"
                     android:includeFontPadding="false"
                     android:lineSpacingMultiplier="0.5"
-                    android:layout_marginTop="@dimen/size_4"
                     android:text="6 tracked calls?"
                     android:textAlignment="gravity"
                     android:textColor="@color/green_92C7A1"

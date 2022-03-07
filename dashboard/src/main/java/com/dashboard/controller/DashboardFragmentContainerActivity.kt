@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.FragmentType
-import com.dashboard.controller.ui.DemoToDoListFragment
 import com.dashboard.controller.ui.allAddOns.AllBoostAddonsFragment
 import com.dashboard.controller.ui.business.BusinessProfileFragment
 import com.dashboard.controller.ui.customisationnav.CustomisationNavFragment
@@ -138,8 +137,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   private fun getFragmentInstance(type: FragmentType?): BaseFragment<*, *>? {
     return when (type) {
       FragmentType.DIGITAL_READINESS_SCORE -> DigitalReadinessScoreFragment.newInstance()
-      //FragmentType.ALL_BOOST_ADD_ONS -> AllBoostAddonsFragment.newInstance()
-      FragmentType.ALL_BOOST_ADD_ONS -> DemoToDoListFragment.newInstance()
+      FragmentType.ALL_BOOST_ADD_ONS -> AllBoostAddonsFragment.newInstance()
       FragmentType.FRAGMENT_WEBSITE_THEME -> FragmentWebsiteTheme.newInstance()
       FragmentType.FRAGMENT_BUSINESS_PROFILE -> BusinessProfileFragment.newInstance()
       FragmentType.FRAGMENT_WEBSITE_NAV -> CustomisationNavFragment.newInstance()

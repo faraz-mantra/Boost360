@@ -19,8 +19,8 @@
 
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/customImageView12"
-                    android:layout_width="@dimen/size_37"
-                    android:layout_height="@dimen/size_37"
+                    android:layout_width="@dimen/size_24"
+                    android:layout_height="@dimen/size_24"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/size_18"
                     android:src="@drawable/ic_missed_call"

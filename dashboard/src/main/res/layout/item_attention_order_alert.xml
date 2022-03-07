@@ -47,14 +47,37 @@
                     android:id="@+id/tv_title_2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/regular"
                     android:layout_marginStart="@dimen/size_12"
-                    android:text="@string/orders_need_your_attention"
+                    android:fontFamily="@font/bold"
+                    android:text="5 orders need"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="@dimen/text_28"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/customImageView16"
                     app:layout_constraintStart_toEndOf="@+id/frame_package"
                     app:layout_constraintTop_toTopOf="@+id/frame_package" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_title_4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:text="your attention."
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="@dimen/text_28"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_title_2"
+                    app:layout_constraintStart_toStartOf="@+id/tv_title_2"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title_2" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/customImageView16"
+                    android:layout_width="@dimen/size_22"
+                    android:layout_height="@dimen/size_22"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:layout_marginEnd="@dimen/size_11"
+                    android:src="@drawable/ic_close_grey_card"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

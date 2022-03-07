@@ -18,6 +18,16 @@
                 android:background="@drawable/orange_gradient"
                 android:orientation="vertical">
 
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="@dimen/size_52"
+                    android:layout_height="@dimen/size_20"
+                    android:layout_marginTop="@dimen/size_11"
+                    android:layout_marginStart="@dimen/size_14"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_free_tag"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tv_title_2"
                     android:layout_width="wrap_content"
@@ -41,9 +51,10 @@
                     android:gravity="center"
                     android:text="wherever your business is available."
                     android:textColor="@color/white"
+                    android:textSize="@dimen/text_14"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_title_2"
                     app:layout_constraintStart_toStartOf="@+id/tv_title_2"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_title_2"
-                    android:textSize="@dimen/text_14" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title_2" />
 
                 <com.framework.views.customViews.CustomImageView
                     android:layout_width="@dimen/size_40"
