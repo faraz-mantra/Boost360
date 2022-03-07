@@ -69,6 +69,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       MISSED_CALL_4_VIEW -> MissedCall4ViewHolder(binding as ItemMissedCall4Binding)
       ORDER_DETAILS_VIEW -> OrderDetailsViewHolder(binding as ItemOrderDetailsCardBinding)
       ATTENTION_ORDER_ALERT_VIEW -> AttentionOrderViewHolder(binding as ItemAttentionOrderAlertBinding)
+      SMS_EMAIL_ENQUIRY_VIEW -> SMSEmailEnquiryViewHolder(binding as ItemSmsEmailEnquiryBinding)
     }
   }
 

@@ -46,7 +46,8 @@ enum class RecyclerViewItemType {
   MISSED_CALL_3_VIEW,
   MISSED_CALL_4_VIEW,
   ORDER_DETAILS_VIEW,
-  ATTENTION_ORDER_ALERT_VIEW;
+  ATTENTION_ORDER_ALERT_VIEW,
+  SMS_EMAIL_ENQUIRY_VIEW;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -94,6 +95,7 @@ enum class RecyclerViewItemType {
       MISSED_CALL_4_VIEW -> R.layout.item_missed_call_4
       ORDER_DETAILS_VIEW -> R.layout.item_order_details_card
       ATTENTION_ORDER_ALERT_VIEW -> R.layout.item_attention_order_alert
+      SMS_EMAIL_ENQUIRY_VIEW -> R.layout.item_sms_email_enquiry
     }
   }
 }
