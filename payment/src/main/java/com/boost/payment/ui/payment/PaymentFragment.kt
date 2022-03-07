@@ -7,26 +7,25 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.util.Log
 import android.view.*
-import android.widget.ArrayAdapter
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.boost.payment.R
-import com.boost.payment.PaymentActivity
-import com.boost.payment.adapter.CardPaymentAdapter
-import com.boost.payment.adapter.WalletAdapter
-import com.boost.payment.base_class.BaseFragment
 import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
 import com.boost.dbcenterapi.data.api_model.customerId.get.Result
 import com.boost.dbcenterapi.data.api_model.datamodule.SingleNetBankData
+import com.boost.payment.PaymentActivity
+import com.boost.payment.R
+import com.boost.payment.adapter.CardPaymentAdapter
+import com.boost.payment.adapter.WalletAdapter
+import com.boost.payment.base_class.BaseFragment
 import com.boost.payment.interfaces.*
 import com.boost.payment.ui.checkoutkyc.BusinessDetailsFragment
 import com.boost.payment.ui.confirmation.OrderConfirmationFragment
@@ -59,7 +58,6 @@ import org.json.JSONObject
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         MoreBanksListener, UpiPayListener, EmailPopupListener, AddCardListener {
@@ -552,6 +550,101 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 PAYMENT_SCREEN,
                 NO_EVENT_VALUE
         )
+
+        ll1.setOnClickListener {
+            if (clp1.visibility == View.GONE) {
+                TransitionManager.beginDelayedTransition(ll1, AutoTransition())
+                clp1.visibility = View.VISIBLE
+                arw1?.animate()?.rotation(0f)?.start()
+            } else {
+                TransitionManager.beginDelayedTransition(ll1, AutoTransition())
+                clp1?.visibility = View.GONE
+                arw1?.animate()?.rotation(180f)?.start()
+            }
+        }
+
+        upi1.setOnClickListener {
+
+            if (clp2.visibility == View.GONE) {
+                TransitionManager.beginDelayedTransition(upi1, AutoTransition())
+                clp2.visibility = View.VISIBLE
+                arw2?.animate()?.rotation(0f)?.start()
+            } else {
+                TransitionManager.beginDelayedTransition(upi1, AutoTransition())
+                clp2?.visibility = View.GONE
+                arw2?.animate()?.rotation(180f)?.start()
+            }
+
+        }
+
+        upi2.setOnClickListener {
+
+            if (clp3.visibility == View.GONE) {
+                TransitionManager.beginDelayedTransition(upi2, AutoTransition())
+                clp3.visibility = View.VISIBLE
+                arw3?.animate()?.rotation(0f)?.start()
+            } else {
+                TransitionManager.beginDelayedTransition(upi2, AutoTransition())
+                clp3?.visibility = View.GONE
+                arw3?.animate()?.rotation(180f)?.start()
+            }
+
+        }
+
+        upi4.setOnClickListener {
+
+            if (clp4.visibility == View.GONE) {
+                TransitionManager.beginDelayedTransition(upi4, AutoTransition())
+                clp4.visibility = View.VISIBLE
+                arw4?.animate()?.rotation(0f)?.start()
+            } else {
+                TransitionManager.beginDelayedTransition(upi4, AutoTransition())
+                clp4?.visibility = View.GONE
+                arw4?.animate()?.rotation(180f)?.start()
+            }
+
+        }
+
+        upi5.setOnClickListener {
+
+            if (clp5.visibility == View.GONE) {
+                TransitionManager.beginDelayedTransition(upi5, AutoTransition())
+                clp5.visibility = View.VISIBLE
+                arw5?.animate()?.rotation(0f)?.start()
+            } else {
+                TransitionManager.beginDelayedTransition(upi5, AutoTransition())
+                clp5?.visibility = View.GONE
+                arw5?.animate()?.rotation(180f)?.start()
+                payment_main_layout.post {
+                    payment_main_layout.fullScroll(View.FOCUS_DOWN)
+                }
+            }
+
+        }
+
+        gst_discount.setOnClickListener {
+            showPopupWindow(it)
+        }
+
+
+    }
+
+    private fun showPopupWindow(anchor: View) {
+        val view: View =
+            LayoutInflater.from(requireContext()).inflate(R.layout.popup_window_text, null)
+        val popupWindow = PopupWindow(
+            view,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        val txtSub: TextView = popupWindow.contentView.findViewById(R.id.price1)
+        val txtSub1: TextView = popupWindow.contentView.findViewById(R.id.price2)
+        txtSub.setText(" ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
+       // txtSub1.setText(" ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) popupWindow.elevation =
+            5.0f
+        popupWindow.showAsDropDown(anchor, (anchor.width - 40), -166)
     }
 
     private fun appInstalledOrNot(packageName: String): Boolean {
