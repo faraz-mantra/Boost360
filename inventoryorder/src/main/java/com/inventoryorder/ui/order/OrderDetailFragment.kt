@@ -97,15 +97,14 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     var count = 0
     if (orderItem?.Items.isNullOrEmpty().not()) {
       orderItem?.Items?.forEach {
-        viewModel?.getProductDetails(it.Product?._id)
-          ?.observeOnce(viewLifecycleOwner, Observer { it1 ->
-            count += 1
-            val product = it1 as? ProductResponse
-            if (count == orderItem?.Items?.size) {
-              product?.let { it2 -> productList?.add(it2) }
-              addProductToOrder()
-            } else product?.let { it2 -> productList?.add(it2) }
-          })
+        viewModel?.getProductDetails(it.Product?._id)?.observeOnce(viewLifecycleOwner, Observer { it1 ->
+          count += 1
+          val product = it1 as? ProductResponse
+          if (count == orderItem?.Items?.size) {
+            product?.let { it2 -> productList?.add(it2) }
+            addProductToOrder()
+          } else product?.let { it2 -> productList?.add(it2) }
+        })
       }
     } else addProductToOrder()
   }
@@ -212,8 +211,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
-      binding?.tvOrderAmount?.text = "$currency ${DecimalFormat("##,##,##0").format(bill.AmountPayableByBuyer)}"
-      //binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
+      binding?.tvOrderAmount?.text = "$currency ${DecimalFormat("##,##,##0").format(bill.GrossAmount)}"
     }
     binding?.orderDate?.text = DateUtils.parseDate(
       order.UpdatedOn,
@@ -241,16 +239,16 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
 
     // shipping details
-    var shippingCost = 0.0
-    var salePrice = 0.0
-    var currency = "INR"
-    order.Items?.forEachIndexed { index, item ->
-      shippingCost += item.Product?.ShippingCost ?: 0.0
-      salePrice += item.product().price() - item.product().discountAmount()
-      if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
-    }
+    val shippingCost = order.BillingDetails?.SellerDeliveryCharges ?: 0.0
+    val salePrice = order.BillingDetails?.GrossAmount ?: 0.0
+    val currency = takeIf { order.BillingDetails?.CurrencyCode.isNullOrEmpty().not() }?.let { order.BillingDetails?.CurrencyCode?.trim() } ?: "INR"
+//    order.Items?.forEachIndexed { index, item ->
+//      shippingCost += item.Product?.ShippingCost ?: 0.0
+//      salePrice += item.product().price() - item.product().discountAmount()
+//      if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
+//    }
     binding?.tvShippingCost?.text = "Shipping cost: $currency ${DecimalFormat("##,##,##0").format(shippingCost)}"
-    binding?.tvTotalOrderAmount?.text = "Total amount: $currency ${DecimalFormat("##,##,##0").format(salePrice + shippingCost)}"
+    binding?.tvTotalOrderAmount?.text = "Total amount: $currency ${DecimalFormat("##,##,##0").format(salePrice)}"
 //        binding?.tvShippingCost?.text = "Shipping Cost: $currency $shippingCost"
 //        binding?.tvTotalOrderAmount?.text = "Total amount: $currency ${salePrice + shippingCost}"
 
@@ -362,8 +360,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   private fun openDialer() {
     val intent = Intent(Intent.ACTION_DIAL)
-    intent.data =
-      (Uri.parse("tel:${orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()}"))
+    intent.data = (Uri.parse("tel:${orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()}"))
     startActivity(intent)
   }
 
@@ -377,7 +374,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   private fun shippedOrder(markAsShippedRequest: MarkAsShippedRequest) {
     showProgress()
-    viewModel?.markAsShipped(clientId, markAsShippedRequest)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.markAsShipped(clientId, markAsShippedRequest)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         orderItem?._id?.let { it1 ->
           apiGetOrderDetails(
@@ -389,12 +386,12 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
         showLongToast(it.message())
         hideProgress()
       }
-    })
+    }
   }
 
   private fun deliveredOrder(message: String, feedback: Boolean) {
     showProgress()
-    viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         if (feedback) sendFeedbackRequestOrder(FeedbackRequest(orderItem?._id, message))
         orderItem?._id?.let { it1 ->
@@ -407,13 +404,12 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
         showLongToast(it.message())
         hideProgress()
       }
-    })
+    }
   }
 
   private fun apiCancelOrder(cancellingEntity: String, reasonText: String) {
     showProgress()
-    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)
-      ?.observeOnce(viewLifecycleOwner, {
+    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)?.observeOnce(viewLifecycleOwner) {
         if (it.isSuccess()) {
           val data = it as? OrderConfirmStatus
           if (reasonText.isNotEmpty()) {
@@ -432,7 +428,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
           showLongToast(it.message())
           hideProgress()
         }
-      })
+      }
   }
 
   private fun updateReason(

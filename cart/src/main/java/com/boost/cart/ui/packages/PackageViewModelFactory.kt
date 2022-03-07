@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 
 class PackageViewModelFactory(private val application: Application) :
   ViewModelProvider.Factory {
-  override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+  override fun <T : ViewModel> create(modelClass: Class<T>): T {
     if (modelClass.isAssignableFrom(PackageViewModel::class.java)) {
       return PackageViewModel(application) as T
     }

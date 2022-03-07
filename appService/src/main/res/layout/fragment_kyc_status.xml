@@ -200,6 +200,7 @@
         android:paddingVertical="@dimen/size_12"
         android:text="@string/refresh_status_camel_case"
         android:textAllCaps="false"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

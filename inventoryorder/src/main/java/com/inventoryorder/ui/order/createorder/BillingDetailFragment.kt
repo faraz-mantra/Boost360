@@ -367,7 +367,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
 
   private fun createOrder() {
     showProgress()
-    viewModel?.postAppointment(AppConstant.CLIENT_ID_2, createOrderRequest)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.postAppointment(AppConstant.CLIENT_ID_ORDER, createOrderRequest)?.observeOnce(viewLifecycleOwner, {
         if (it.isSuccess()) {
           hideProgress()
           val orderInitiateResponse = (it as? OrderInitiateResponse)

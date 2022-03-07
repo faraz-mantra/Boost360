@@ -55,7 +55,7 @@ class FacultyActivity : AppCompatActivity() {
     } else {
       val unlockFeatureModel = UnlockFeatureModel(
         buyItemKey = Constants.FACULTY_MANAGEMENT_FEATURE,
-        titleFeatureName = getString(R.string.faculty_management),
+        titleFeatureName = getString(R.string.faculty_management_n),
         featureDescription = getString(R.string.faculty_management_feature_description)
       )
       addFragment(

@@ -1,17 +1,21 @@
 package com.framework.pref
 
 import android.util.DisplayMetrics
+import com.framework.BuildConfig
 import java.util.*
+
+var APPLICATION_JIO_ID = "com.jio.online"
 
 val REFERRAL_CAMPAIGN_CODE = 26277
 
 var PREF_NAME = "nowfloatsPrefs"
 
-val clientId: String get() = clientId2
+//val clientId: String get() = clientId2
+val clientId: String get() = BuildConfig.CLIENT_ID
 
 var clientIdThinksity = "217FF5B9CE214CDDAC4985C853AE7F75AAFA11AF2C4B47CB877BCA26EC217E6D"
 
-var clientId2 = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+var clientId2 = BuildConfig.CLIENT_ID
 
 var clientId4 = "731EBAB8596648E79882096E4733E7173B314BECC649423DB67897BF8CC596EC"
 

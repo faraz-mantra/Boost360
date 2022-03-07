@@ -181,4 +181,10 @@
   <color name="black_4a4a4a_jio">@color/black_4a4a4a</color>
   <color name="primary_4a4a4a_jio">@color/black_4a4a4a</color>
   <color name="gray_white_text_jio">@color/gray_text_hint</color>
+
+  <color name="dashboard_business_url">#4A4A4A</color>
+  <color name="colorLightGrey_jio">#E4E4E4</color>
+  <color name="light_grey_boost_jio">#DFDFDF</color>
+  <color name="orange_light">#FFF8E5</color>
+
 </resources>

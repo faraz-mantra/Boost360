@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <item
+    android:id="@+id/navigation_dashboard"
+    android:icon="@drawable/ic_dashboard_inactive_nav"
+    android:title="@string/dashboard" />
+
+  <item
+    android:id="@+id/navigation_website"
+    android:icon="@drawable/ic_website_inactive_nav"
+    android:title="@string/website" />
+
+  <item
+    android:id="@+id/navigation_enquiries"
+    android:icon="@drawable/ic_enquiry_inactive_nav"
+    android:title="@string/enquiry" />
+
+<!--  <item-->
+<!--    android:id="@+id/navigation_add_ons"-->
+<!--    android:icon="@drawable/ic_add_ons_inactive_nav"-->
+<!--    android:title="@string/boost_add_ons" />-->
+
+  <item
+    android:id="@+id/navigation_more"
+    android:icon="@drawable/ic_more_d"
+    android:title="@string/more" />
+
+</menu>

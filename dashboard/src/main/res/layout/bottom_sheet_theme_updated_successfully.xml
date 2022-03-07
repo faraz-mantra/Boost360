@@ -42,7 +42,7 @@
         android:layout_marginTop="@dimen/size_6"
         android:text="@string/website_updated"
         android:textAllCaps="false"
-        android:textColor="@color/yellow_ffb900"
+        android:textColor="@color/colorAccentLight"
         app:fontFamily="@font/bold"
         app:textType="HEADING_5" />
 

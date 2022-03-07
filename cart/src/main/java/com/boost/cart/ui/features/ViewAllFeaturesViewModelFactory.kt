@@ -7,7 +7,7 @@ import java.lang.IllegalArgumentException
 
 class ViewAllFeaturesViewModelFactory(private val application: Application) :
   ViewModelProvider.Factory {
-  override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+  override fun <T : ViewModel> create(modelClass: Class<T>): T {
     if (modelClass.isAssignableFrom(ViewAllFeaturesViewModel::class.java)) {
       return ViewAllFeaturesViewModel(application) as T
     }

@@ -54,7 +54,7 @@ class ThemeSelectorPreference : Preference, SharedPreferences.OnSharedPreference
         }
     }
 
-    override fun onAttachedToHierarchy(preferenceManager: PreferenceManager?) {
+    override fun onAttachedToHierarchy(preferenceManager: PreferenceManager) {
         super.onAttachedToHierarchy(preferenceManager)
         summary = generateSummaryText()
         prefs.shared.registerOnSharedPreferenceChangeListener(this)
