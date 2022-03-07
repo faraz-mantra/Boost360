@@ -37,6 +37,7 @@ import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.interfaces.CompareBackListener
 import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
+import com.boost.marketplace.ui.History_Orders.HistoryOrdersActivity
 import com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity
 import com.boost.marketplace.ui.browse.BrowseFeaturesActivity
 import com.boost.marketplace.ui.coupons.OfferCouponsActivity
@@ -671,19 +672,16 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 true
             }
             R.id.overflowMenu -> {
-                Toast.makeText(applicationContext, "Clicked on More Button", Toast.LENGTH_LONG)
-                    .show()
                 true
             }
-            R.id.plan_history -> {
-                Toast.makeText(applicationContext, "Clicked on Plan History", Toast.LENGTH_LONG)
-                    .show()
+            R.id.order_history -> {
+                val intent= Intent(this, HistoryOrdersActivity::class.java)
+                intent.putExtra("fpid",fpid)
+                startActivity(intent)
                 return true
             }
             R.id.offer_coupons -> {
                 startSpecificActivity(OfferCouponsActivity::class.java)
-                Toast.makeText(applicationContext, "Clicked on Offer Coupons", Toast.LENGTH_LONG)
-                    .show()
                 return true
             }
             R.id.help_section -> {

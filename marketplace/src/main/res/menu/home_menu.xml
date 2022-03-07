@@ -14,9 +14,9 @@
         app:showAsAction="always">
         <menu>
             <item
-                android:id="@+id/plan_history"
+                android:id="@+id/order_history"
                 android:icon="@drawable/ic_clock_counter_clockwise"
-                android:title="@string/my_plan_history" />
+                android:title="@string/my_order_history" />
             <item
                 android:id="@+id/offer_coupons"
                 android:icon="@drawable/ic_circle_wavy"

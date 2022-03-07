@@ -1,7 +1,6 @@
 package com.boost.marketplace.ui.coupons
 
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
@@ -14,19 +13,16 @@ import com.boost.dbcenterapi.data.api_model.couponRequest.BulkPropertySegment
 import com.boost.dbcenterapi.data.api_model.couponRequest.CouponRequest
 import com.boost.dbcenterapi.data.api_model.couponRequest.ObjectKeys
 import com.boost.dbcenterapi.data.api_model.getCouponResponse.Data
-import com.boost.dbcenterapi.data.api_model.getCouponResponse.GetCouponResponse
-import com.boost.dbcenterapi.data.api_model.getCouponResponse.GetCouponResponseItem
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.OfferCouponsAdapter
-import com.boost.marketplace.data.OfferCoupons
+import com.boost.marketplace.base.AppBaseActivity
+import com.boost.marketplace.databinding.ActivityOfferCouponsBinding
 import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
 import kotlinx.android.synthetic.main.activity_offer_coupons.*
-import java.util.*
 import kotlin.collections.ArrayList
 
-class OfferCouponsActivity : AppCompatActivity() {
+class OfferCouponsActivity : AppBaseActivity<ActivityOfferCouponsBinding, OfferCouponViewModel>() {
 
-    private lateinit var viewModel: OfferCouponViewModel
     private var couponData = ArrayList<Data>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,6 +77,14 @@ class OfferCouponsActivity : AppCompatActivity() {
                 recyclerview.adapter = adapter
             }
         }
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.activity_offer_coupons
+    }
+
+    override fun getViewModelClass(): Class<OfferCouponViewModel> {
+        return OfferCouponViewModel::class.java
     }
 
 }

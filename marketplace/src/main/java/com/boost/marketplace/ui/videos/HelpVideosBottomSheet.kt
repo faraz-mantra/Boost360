@@ -28,9 +28,9 @@ class HelpVideosBottomSheet : BaseBottomSheetDialog<BottomSheetHelpVideosBinding
   var list = ArrayList<String>()
   var currentPos = 0
   var initialLoad = true
-  lateinit var link: String
+  var link: String = ""
   private var playbackPosition: Long = 0
-  private var videoItem: String?=null
+  var videoItem: String = ""
   private var viewClose: View? = null
   private var viewPager2: ViewPager2? = null
 
@@ -55,6 +55,9 @@ class HelpVideosBottomSheet : BaseBottomSheetDialog<BottomSheetHelpVideosBinding
    // initializeViewPager()
 
    // viewPager2 = findViewById(R.id.viewpager)
+    close_btn.setOnClickListener {
+      dismiss()
+    }
 
     val helpVideosViewPagerAdapter = HelpVideosViewPagerAdapter(requireContext())
     preview_video.setAdapter(helpVideosViewPagerAdapter)
@@ -103,8 +106,8 @@ class HelpVideosBottomSheet : BaseBottomSheetDialog<BottomSheetHelpVideosBinding
   }
 
   private fun getBundle() {
-    this.videoItem = requireArguments().getString("title") ?: ""
-    link = requireArguments().getString("link") ?: ""
+    videoItem = if(getArguments() != null && requireArguments().containsKey("title")) requireArguments().getString("title")!! else ""
+    link = if(getArguments() != null && requireArguments().containsKey("link")) requireArguments().getString("link")!! else ""
 //    binding?.ctvVideoTitle?.text = videoItem
   }
 
