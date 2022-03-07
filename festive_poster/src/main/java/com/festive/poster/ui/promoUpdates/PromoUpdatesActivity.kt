@@ -34,7 +34,7 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseVi
         sharedViewModel = ViewModelProvider(this).get(FestivePosterSharedViewModel::class.java)
        // sharedViewModel?.shouldRefresh=true
         observeFragmentStack()
-        setOnClickListener(binding?.ivToolbarBack, binding?.ivPastPromoUpdates)
+        setOnClickListener(binding?.ivToolbarBack, binding?.ivStore)
         addFragmentReplace(binding?.container?.id, PromoLandingPageFragment.newInstance(), true)
     }
 
@@ -49,7 +49,7 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseVi
             binding?.ivToolbarBack -> {
                 onBackPressed()
             }
-            binding?.ivPastPromoUpdates -> {
+            binding?.ivStore -> {
                 startFragmentPastUpdatesContainerActivity(this, type = FragmentType.UPDATES_LISTING_FRAGMENT, bundle = Bundle())
             }
         }
