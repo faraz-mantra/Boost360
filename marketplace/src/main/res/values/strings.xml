@@ -32,4 +32,6 @@
   <string name="added_to_carts">Added to cart</string>
   <string name="how_it_works_text">This feature enables you to display your products on your website. You can easily add detailed information about your products and their prices through the inbuilt product catalogue to enable quick sales.</string>
   <string name="my_order_history">My order history</string>
+  <string name="need_help_custom_domain">Need help?</string>
+  <string name="call_an_expert"><u>&#160;Call an expert</u></string>
 </resources>
