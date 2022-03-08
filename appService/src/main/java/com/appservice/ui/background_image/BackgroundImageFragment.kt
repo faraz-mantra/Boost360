@@ -1,47 +1,32 @@
 package com.appservice.ui.background_image
 
-import android.app.ProgressDialog
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.recyclerview.widget.RecyclerView
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
-import com.appservice.constant.Constants
+import com.appservice.constant.FragmentType
 import com.appservice.constant.RecyclerViewActionType
-import com.appservice.databinding.FragmentActiveDomainBinding
+import com.appservice.constant.RecyclerViewItemType
 import com.appservice.databinding.FragmentBackgroundImageBinding
 import com.appservice.model.ImageData
-import com.appservice.model.aptsetting.UserFpDetailsResponse
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.ui.bankaccount.BankAccountFragment
-import com.appservice.utils.WebEngageController
-import com.appservice.utils.capitalizeUtil
-import com.framework.analytics.SentryController
-import com.framework.base.BaseResponse
+import com.appservice.viewmodel.BackgroundImageViewModel
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
-import com.framework.models.BaseViewModel
-import com.framework.pref.Key_Preferences
+import com.framework.extensions.visible
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
-import com.framework.pref.getDomainName
-import com.framework.utils.fromHtml
-import com.framework.webengageconstant.APPOINTMENT_CATLOG_SETUP_PAGE_LOAD
-import com.framework.webengageconstant.NO_EVENT_VALUE
-import com.framework.webengageconstant.PAGE_VIEW
-import com.squareup.picasso.Picasso
+import com.framework.utils.ImagePickerUtil
+import com.framework.utils.toJson
+import com.google.gson.Gson
 import java.util.ArrayList
-import java.util.HashMap
 
 class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, BackgroundImageViewModel>(), RecyclerItemClickListener {
 
+
+    private var listImages: ArrayList<ImageData>?=null
 
     companion object {
         @JvmStatic
@@ -61,8 +46,9 @@ class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, 
 
     override fun onCreateView() {
         super.onCreateView()
+        ImagePickerUtil.initLauncher(this)
         sessionLocal = UserSessionManager(baseActivity)
-
+        setOnClickListener(binding?.btnDone)
         getBackgroundImages()
     }
 
@@ -73,10 +59,17 @@ class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, 
             hideProgress()
             if (res.isSuccess()) {
                 val response = res.arrayResponse
-                val listImages = ArrayList<ImageData>()
-                response?.forEach { listImages.add(ImageData(it as String)) }
+                listImages = ArrayList<ImageData>()
+                response?.forEach { listImages?.add(ImageData(it as String, RecyclerViewItemType.BACKGROUND_IMAGE_RV.getLayout())) }
+                if (listImages?.isEmpty() == true){
+                    binding?.layoutDefaultImage?.visible()
+                    binding?.dataView?.gone()
+                }else{
+                    binding?.layoutDefaultImage?.gone()
+                    binding?.dataView?.visible()
+                }
                 binding?.imageList?.apply {
-                    val adapterImage = AppBaseRecyclerViewAdapter(baseActivity, listImages, this@BackgroundImageFragment)
+                    val adapterImage = AppBaseRecyclerViewAdapter(baseActivity, listImages!!, this@BackgroundImageFragment)
                     adapter = adapterImage
                 }
 
@@ -88,9 +81,32 @@ class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
         when (actionType) {
             RecyclerViewActionType.ON_CLICK_BACKGROUND_IMAGE.ordinal -> {
+                startBackgroundActivity(FragmentType.BACKGROUND_IMAGE_F_SCREEN_FRAGMENT,
+                Bundle().apply
+                 {
+                     putInt(BGImageFullScreenFragment.BK_IMAGE_POS,position)
+                     putString(BGImageFullScreenFragment.BK_IMAGE_LIST,listImages.toJson())
 
+                 })
             }
         }
 
+    }
+
+    override fun onClick(v: View) {
+        super.onClick(v)
+        when(v){
+            binding?.btnDone->{
+                ImagePickerUtil.openPicker(this,object :ImagePickerUtil.Listener{
+                    override fun onFilePicked(filePath: String) {
+                        startBackgroundActivity(FragmentType.BACKGROUND_IMAGE_CROP_FRAGMENT,
+                        Bundle().apply
+                         {
+                             putString(BGImageCropFragment.BK_IMAGE_PATH,filePath)
+                         })
+                    }
+                })
+            }
+        }
     }
 }

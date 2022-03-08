@@ -4,22 +4,18 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.appservice.R
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
-import com.appservice.ui.background_image.CropZoomImageFragment
+import com.appservice.ui.background_image.BGImageCropFragment
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.models.BaseViewModel
-import com.framework.pref.Key_Preferences
-import com.framework.pref.UserSessionManager
 import com.framework.views.customViews.CustomToolbar
-import java.util.*
 
 open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
@@ -105,7 +101,7 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   private fun getFragmentInstance(type: FragmentType?): BaseFragment<*, *>? {
     return when (type) {
-      FragmentType.UPDATE_BUSINESS_FRAGMENT -> CropZoomImageFragment.newInstance()
+      FragmentType.UPDATE_BUSINESS_FRAGMENT -> BGImageCropFragment.newInstance()
       FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT -> AddUpdateBusinessFragment.newInstance()
       FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> DetailUpdateBusinessFragment.newInstance()
       else -> UpdatesBusinessFragment.newInstance()

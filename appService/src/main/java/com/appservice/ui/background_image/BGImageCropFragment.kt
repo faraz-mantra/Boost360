@@ -6,28 +6,28 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.view.View
 import android.widget.SeekBar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
-import com.appservice.base.startWebViewPageLoad
+import com.appservice.constant.FragmentType
 import com.appservice.databinding.FragmentCropZoomBinding
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.imagepicker.Utility
 import com.framework.models.BaseViewModel
 import com.framework.utils.gcd
 import com.framework.utils.spanBold
 import com.framework.utils.zoom
 
-class CropZoomImageFragment : AppBaseFragment<FragmentCropZoomBinding,BaseViewModel>() {
+class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding,BaseViewModel>() {
 
     private var imagePath: String? = null
     private var bitmap: Bitmap? = null
     private var validationStat = false
     companion object {
         @JvmStatic
-        fun newInstance(bundle: Bundle? = null): CropZoomImageFragment {
-            val fragment = CropZoomImageFragment()
+        fun newInstance(bundle: Bundle? = null): BGImageCropFragment {
+            val fragment = BGImageCropFragment()
             fragment.arguments = bundle
             return fragment
         }
@@ -45,11 +45,11 @@ class CropZoomImageFragment : AppBaseFragment<FragmentCropZoomBinding,BaseViewMo
     override fun onCreateView() {
         super.onCreateView()
         imagePath = arguments?.getString(BK_IMAGE_PATH)
-/*        bitmap = BitmapFactory.decodeFile(imagePath)
-        binding?.cropImg?.setImageBitmap(Utility.rotateImageIfRequired(bitmap!!, imagePath))*/
+        bitmap = BitmapFactory.decodeFile(imagePath)
+        binding?.cropImg?.setImageBitmap(Utility.rotateImageIfRequired(bitmap!!, imagePath))
         val options = BitmapFactory.Options()
         options.inScaled = false
-        bitmap= BitmapFactory.decodeResource(resources,R.drawable.imgtest16to7)
+     /*   bitmap= BitmapFactory.decodeResource(resources,R.drawable.imgtest16to7)*/
         binding?.cropImg?.setImageBitmap(bitmap)
         checkImageDim()
         viewListeners()
@@ -124,8 +124,10 @@ class CropZoomImageFragment : AppBaseFragment<FragmentCropZoomBinding,BaseViewMo
     fun checkAspectRatio(): Boolean {
         val options = BitmapFactory.Options()
         options.inScaled = false
-        //val bitmap = BitmapFactory.decodeFile(imagePath,options)
+        val bitmap = BitmapFactory.decodeFile(imagePath,options)
+/*
         val bitmap= BitmapFactory.decodeResource(resources,R.drawable.imgtest16to7)
+*/
         val gcd = gcd(bitmap!!.width,bitmap!!.height)
        return (bitmap!!.width.div(gcd)==16&&bitmap!!.height.div(gcd)==7)
 
@@ -136,8 +138,13 @@ class CropZoomImageFragment : AppBaseFragment<FragmentCropZoomBinding,BaseViewMo
         super.onClick(v)
         when(v){
             binding?.btnDone->{
-                BGimgUploadSuccessfulSheet().show(parentFragmentManager,
-                BGimgUploadSuccessfulSheet::class.java.name)
+
+                startBackgroundActivity(
+                    FragmentType.BACKGROUND_IMAGE_PREVIEW,
+                    Bundle().apply
+                    {
+                        putString(BGImagePreviewFragment.BK_IMAGE_PATH,imagePath)
+                    })
             }
         }
     }

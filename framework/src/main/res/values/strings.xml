@@ -160,5 +160,5 @@
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="no_email_app_installed">No email app installed</string>
   <string name="req_app_not_installed">Required app not installed</string>
-
+  <string name="something_went_wrong">Something went wrong</string>
 </resources>

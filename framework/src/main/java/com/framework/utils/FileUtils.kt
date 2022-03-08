@@ -88,4 +88,76 @@ object FileUtils {
             }
         }
     }
+
+    fun saveFile(
+        sourceuri: Uri,
+        destinationDir: String?,
+        destFileName: String,
+    ): File? {
+        val context = BaseApplication.instance
+        val destination = destinationDir + File.separator.toString() + destFileName
+
+        var bis: BufferedInputStream? = null
+        var bos: BufferedOutputStream? = null
+        var input: InputStream? = null
+        try {
+            input = if (isVirtualFile(sourceuri)) {
+                getInputStreamForVirtualFile(sourceuri, getMimeType(sourceuri))
+
+            } else {
+                context.contentResolver.openInputStream(sourceuri)
+            }
+            val directorySetupResult: Boolean
+            val destDir = File(destinationDir)
+            directorySetupResult = if (!destDir.exists()) {
+                destDir.mkdirs()
+            } else if (!destDir.isDirectory) {
+                replaceFileWithDir(destinationDir)
+            } else {
+                true
+            }
+            if (!directorySetupResult) {
+            } else {
+                val originalsize: Int = input!!.available()
+                bis = BufferedInputStream(input)
+                bos = BufferedOutputStream(FileOutputStream(destination))
+                val buf = ByteArray(originalsize)
+                bis.read(buf)
+                do {
+                    bos.write(buf)
+                } while (bis.read(buf) !== -1)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            try {
+                if (bos != null) {
+                    bos.flush()
+                    bos.close()
+                }
+            } catch (ignored: Exception) {
+                ignored.printStackTrace()
+            }
+        }
+        return if (!File(destination).exists()){
+            null
+        }else{
+            File(destination)
+        }
+    }
+
+    private fun replaceFileWithDir(path: String?): Boolean {
+        val file = File(path)
+        if (!file.exists()) {
+            if (file.mkdirs()) {
+                return true
+            }
+        } else if (file.delete()) {
+            val folder = File(path)
+            if (folder.mkdirs()) {
+                return true
+            }
+        }
+        return false
+    }
 }

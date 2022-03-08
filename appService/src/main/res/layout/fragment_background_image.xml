@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#E5E5E5">
+    android:background="@color/grey_f8f8f8">
 
     <data>
 
@@ -88,11 +88,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
+            android:id="@+id/data_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginHorizontal="@dimen/size_20"
             android:layout_marginVertical="@dimen/size_10"
+            android:layout_marginBottom="1dp"
             android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/btn_done"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_top">
@@ -101,14 +104,14 @@
                 android:id="@+id/image_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:listitem="@layout/recyclerview_background_images"
-                tools:itemCount="3"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:clipToPadding="false"
                 android:paddingBottom="50dp"
                 android:scrollbars="none"
                 android:tag="com.userexperior.ueSecureView"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:itemCount="3"
+                tools:listitem="@layout/list_item_background_images" />
 
             <ProgressBar
                 android:id="@+id/pb_loading"

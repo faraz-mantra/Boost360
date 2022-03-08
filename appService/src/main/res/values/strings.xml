@@ -1091,11 +1091,10 @@
   <string name="invalid_bank_statement_file">Please select valid bank statement file</string>
   <string name="image_should_be_in_jpeg_or_png_format_with_minimum_size_of_1600x700_pixels">Image should be in Jpeg or png format with minimum size of 1600x700 pixels.</string>
     <string name="smaller_image_selected_331x159px">Smaller image selected (331x159px).</string>
-    <string name="change_image">Change image</string>
     <string name="upload_picture">Upload picture</string>
     <string name="background_image_title">Custom Background Images</string>
-
-
+  <string name="crop_background_image">Crop background image</string>
+  <string name="preview_picture">Preview picture</string>
   <string name="toolbar_doctor_details">Doctor Details</string>
   <string name="loading_">Loading...</string>
   <string name="_0_12">0.12</string>
@@ -1112,5 +1111,6 @@
   <string name="aspect_ration_not_matched">Aspect ration not matched</string>
   <string name="upload_successful">Upload successful!</string>
   <string name="the_image_has_been_saved_in_the_background_image_gallery">The image has been saved in the\n background image gallery.</string>
+    <string name="of">of</string>
 
 </resources>

@@ -11,7 +11,10 @@ import com.appservice.model.updateBusiness.BusinessUpdateResponse
 import com.appservice.model.updateBusiness.DeleteBizMessageRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
 import com.appservice.rest.EndPoints
+import com.framework.pref.clientId
+import com.framework.pref.clientId1
 import io.reactivex.Observable
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -178,5 +181,12 @@ interface WithFloatTwoRemoteData {
             @Query("clientId") clientId: String?,
             @Query("fpTag") fpTag: String?
     ): Observable<Response<MerchantSummaryResponse>>
+
+    @PUT(EndPoints.CREATE_BG_IMAGE)
+    fun createBGImage(
+        @Query("fpId") fpTag: String?,
+        @Query("clientId") cId: String?= clientId,
+        @Body body: RequestBody,
+        ): Observable<Response<ResponseBody>>
 
 }
