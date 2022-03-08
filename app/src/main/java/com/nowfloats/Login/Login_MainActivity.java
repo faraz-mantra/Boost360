@@ -90,8 +90,6 @@ import static com.framework.webengageconstant.EventNameKt.PS_LOGIN_USERNAME_PAGE
 
 @Deprecated
 public class Login_MainActivity extends AppCompatActivity implements API_Login.API_Login_Interface, View.OnClickListener {
-    /*private String[] permission = new String[]{Manifest.permission.READ_SMS,
-            Manifest.permission.RECEIVE_SMS,Manifest.permission.READ_PHONE_STATE};*/
     private final static int READ_MESSAGES_ID = 221;
     public static ProgressDialog progressDialog;
     Bus bus;
@@ -571,41 +569,6 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
         }
         return super.onOptionsItemSelected(item);
     }
-//    private void getPermission(){
-//        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)== PackageManager.PERMISSION_GRANTED
-//                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)== PackageManager.PERMISSION_GRANTED){
-//
-//            // start the service to send data to firebase
-//        }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-//        {
-//            // if user deny the permissions
-//           /* if(shouldShowRequestPermissionRationale(Manifest.permission.READ_SMS)||
-//                    shouldShowRequestPermissionRationale(Manifest.permission.READ_PHONE_STATE)){
-//
-//                Snackbar.make(parent_layout, com.nfx.leadmessages.R.string.required_permission_to_show, Snackbar.LENGTH_INDEFINITE)
-//                        .setAction(com.nfx.leadmessages.R.string.enable, new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                Intent intent = new Intent();
-//                                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-//                                intent.addCategory(Intent.CATEGORY_DEFAULT);
-//                                intent.setData(Uri.parse("package:" + getPackageName()));
-//                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-//                                intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-//                                startActivity(intent);
-//                            }
-//                        })  // action text on the right side of snackbar
-//                        .setActionTextColor(ContextCompat.getColor(this,android.R.color.holo_green_light))
-//                        .show();
-//            }
-//            else{*/
-//            //requestPermissions(permission,READ_MESSAGES_ID);
-//            // }
-//
-//        }
-//
-//    }
 
     // this method called when user react on permissions
     @Override
@@ -762,9 +725,9 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
         }
     }
 
-    private void showBusinessProfileCreationStartScreen(String userProfileId) {
-//    WebEngageController.initiateUserLogin(userProfileId);
-//    WebEngageController.setUserContactInfoProperties(session);
+  private void showBusinessProfileCreationStartScreen(String userProfileId) {
+    WebEngageController.initiateUserLogin(userProfileId);
+    WebEngageController.setUserContactInfoProperties(session);
 
         Intent signupConfirmationPage = new Intent(Login_MainActivity.this, com.boost.presignup.SignUpConfirmation.class);
         signupConfirmationPage.putExtra("profileUrl", "");

@@ -1,5 +1,6 @@
 package com.boost.presignin.ui.intro
 
+import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
@@ -11,18 +12,20 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.viewpager2.widget.ViewPager2
 import com.boost.presignin.R
 import com.boost.presignin.adapter.IntroAdapter
+import com.boost.presignin.base.AppBaseActivity
 import com.boost.presignin.databinding.ActivityIntroBinding
 import com.boost.presignin.dialog.WebViewDialog
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.IntroItem
+import com.boost.presignin.ui.login.LoginActivity
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
-import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
+import com.framework.pref.APPLICATION_JIO_ID
 import com.framework.utils.RootUtil
 import com.framework.utils.makeLinks
 import com.framework.webengageconstant.*
 
-class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
+class IntroActivity : AppBaseActivity<ActivityIntroBinding, BaseViewModel>() {
 
   private lateinit var items: List<IntroItem>
   private var isVideoPlaying = false
@@ -53,11 +56,11 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     binding?.acceptTnc?.makeLinks(
       Pair("terms", View.OnClickListener {
         WebEngageController.trackEvent(BOOST_360_TERMS_CLICK, CLICKED, NO_EVENT_VALUE)
-        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
+        openTNCDialog(resources.getString(R.string.boost_360_tnc_presignup), resources.getString(R.string.boost360_terms_conditions))
       }),
       Pair("conditions", View.OnClickListener {
         WebEngageController.trackEvent(BOOST_360_CONDITIONS_CLICK, CLICKED, NO_EVENT_VALUE)
-        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
+        openTNCDialog(resources.getString(R.string.boost_360_tnc_presignup), resources.getString(R.string.boost360_terms_conditions))
       })
     )
   }
@@ -99,24 +102,16 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
       if (RootUtil.isDeviceRooted.not()) {
 //    navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "8097789896") })
         WebEngageController.trackEvent(PS_INTRO_SCREEN_START, GET_START_CLICKED, NO_EVENT_VALUE)
-        startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
-      } else {
-        dialogRootError()
-      }
+        if (packageName.equals(APPLICATION_JIO_ID, ignoreCase = true).not()) {
+          startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
+        }else{
+          startActivity(Intent(this@IntroActivity, LoginActivity::class.java))
+        }
+      } else this.dialogRootError()
     }
   }
 
 //    val hashes = AppSignatureHashHelper(this).appSignatures
-
-  private fun dialogRootError() {
-    AlertDialog.Builder(ContextThemeWrapper(this, R.style.CustomAlertDialogTheme))
-      .setCancelable(false)
-      .setTitle("Boost 360 can't be used on this device!")
-      .setMessage("Sorry, your device isn't passing JioOnline security checks. This may be because your device is rooted or is running an uncertified or custom OS build.")
-      .setPositiveButton("Close") { dialog: DialogInterface, _: Int ->
-        dialog.dismiss()
-      }.show()
-  }
 
   private fun setNextPage() {
     binding?.introViewpager?.currentItem = binding?.introViewpager?.currentItem ?: 0 + 1
@@ -130,4 +125,14 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
   private fun nextPageTimer() {
     handler.postDelayed(nextRunnable, 3000)
   }
+}
+
+fun Activity.dialogRootError() {
+  AlertDialog.Builder(ContextThemeWrapper(this, R.style.CustomAlertDialogTheme))
+    .setCancelable(false)
+    .setTitle(getString(R.string.boost_divice_title))
+    .setMessage(getString(R.string.sorry_boost_security_check_desc))
+    .setPositiveButton(getString(R.string.close)) { dialog: DialogInterface, _: Int ->
+      dialog.dismiss()
+    }.show()
 }

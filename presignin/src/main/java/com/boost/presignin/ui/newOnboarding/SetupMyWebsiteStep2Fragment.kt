@@ -3,11 +3,13 @@ package com.boost.presignin.ui.newOnboarding
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import com.appservice.utils.WebEngageController
 import com.appservice.utils.capitalizeUtil
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.LayoutSetUpMyWebsiteStep2Binding
+import com.boost.presignin.extensions.validateLetters
 import com.boost.presignin.model.category.CategoryDataModel
 import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
@@ -16,6 +18,7 @@ import com.framework.models.BaseViewModel
 import com.framework.utils.fromHtml
 import com.framework.utils.showKeyBoard
 import com.framework.views.blur.setBlur
+import com.framework.webengageconstant.*
 
 class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Binding, BaseViewModel>() {
 
@@ -62,6 +65,7 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
 
   override fun onCreateView() {
     super.onCreateView()
+    WebEngageController.trackEvent(PS_BUSINESS_PROFILE_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.includeMobileView?.blurView?.setBlur(baseActivity, 1F)
     binding?.includeMobileView?.tvCategoryName?.text = categoryModel?.getCategoryWithoutNewLine() ?: ""
     setOnClickListeners()
@@ -69,18 +73,22 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
 
   private fun setOnClickListeners() {
     binding?.tvNextStep2?.setOnClickListener {
-      addFragment(
-        R.id.inner_container, SetupMyWebsiteStep3Fragment.newInstance(
-          Bundle().apply {
-            putString(IntentConstant.DESKTOP_PREVIEW.name, desktopPreview)
-            putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
-            putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
-            putString(IntentConstant.CATEGORY_SUGG_UI.name, categoryLiveName)
-            putSerializable(IntentConstant.CATEGORY_DATA.name, categoryModel)
-            putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent?:false)
-            putString(IntentConstant.EXTRA_BUSINESS_NAME.name, binding?.businessNameInputLayout?.etInput?.text.toString())
-          }), true
-      )
+      if (binding?.businessNameInputLayout?.etInput?.text.toString().validateLetters()) {
+        WebEngageController.trackEvent(PS_BUSINESS_PROFILE_CLICK_NEW_UPPERCASE, CLICK, NO_EVENT_VALUE)
+        addFragment(R.id.inner_container, SetupMyWebsiteStep3Fragment.newInstance(
+            Bundle().apply {
+              putString(IntentConstant.DESKTOP_PREVIEW.name, desktopPreview)
+              putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
+              putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+              putString(IntentConstant.CATEGORY_SUGG_UI.name, categoryLiveName)
+              putSerializable(IntentConstant.CATEGORY_DATA.name, categoryModel)
+              putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent ?: false)
+              putString(IntentConstant.EXTRA_BUSINESS_NAME.name, binding?.businessNameInputLayout?.etInput?.text.toString())
+            }), true
+        )
+      } else {
+        showShortToast(getString(R.string.business_name_format_invalid_toast))
+      }
     }
 
     binding?.businessNameInputLayout?.etInput?.afterTextChanged {

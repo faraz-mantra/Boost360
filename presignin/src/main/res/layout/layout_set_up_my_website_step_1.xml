@@ -96,7 +96,7 @@
               app:layout_constraintTop_toTopOf="parent" />
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/customTextView10"
+              android:id="@+id/tv_did_you_mean"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_margin="@dimen/size_12"

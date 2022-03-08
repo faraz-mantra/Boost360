@@ -16,10 +16,12 @@
 
 package dev.patrickgold.florisboard.settings
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -43,197 +45,198 @@ private const val SELECTED_ITEM_ID = "SELECTED_ITEM_ID"
 private const val ADVANCED_REQ_CODE = 0x145F
 
 class SettingsMainActivity : AppCompatActivity(),
-    BottomNavigationView.OnNavigationItemSelectedListener,
-    SharedPreferences.OnSharedPreferenceChangeListener {
+  BottomNavigationView.OnNavigationItemSelectedListener,
+  SharedPreferences.OnSharedPreferenceChangeListener {
 
-    lateinit var binding: SettingsActivityBinding
-    private lateinit var prefs: PrefHelper
-    lateinit var subtypeManager: SubtypeManager
+  lateinit var binding: SettingsActivityBinding
+  private lateinit var prefs: PrefHelper
+  lateinit var subtypeManager: SubtypeManager
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    prefs = PrefHelper.getDefaultInstance(this)
+    prefs.initDefaultPreferences()
+    prefs.sync()
+    subtypeManager = SubtypeManager(this, prefs)
+
+    val mode = when (prefs.advanced.settingsTheme) {
+      "light" -> AppCompatDelegate.MODE_NIGHT_NO
+      "dark" -> AppCompatDelegate.MODE_NIGHT_YES
+      "auto" -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+      else -> AppCompatDelegate.MODE_NIGHT_UNSPECIFIED
+    }
+    AppCompatDelegate.setDefaultNightMode(mode)
+
+    super.onCreate(savedInstanceState)
+    binding = SettingsActivityBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+
+    // NOTE: using findViewById() instead of view binding because the binding does not include
+    //       a reference to the included layout...
+    val toolbar = findViewById<Toolbar>(R.id.toolbar)
+    setSupportActionBar(toolbar)
+
+    binding.bottomNavigation.setOnNavigationItemSelectedListener(this)
+    binding.bottomNavigation.selectedItemId =
+      savedInstanceState?.getInt(SELECTED_ITEM_ID) ?: R.id.settings__navigation__home
+
+    AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
+  }
+
+  @SuppressLint("MissingSuperCall")
+  override fun onSaveInstanceState(outState: Bundle) {
+    super.onSaveInstanceState(outState)
+    outState.putInt(SELECTED_ITEM_ID, binding.bottomNavigation.selectedItemId)
+  }
+
+  override fun onNavigationItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.settings__navigation__home -> {
+        supportActionBar?.title = String.format(
+          resources.getString(R.string.settings__home__title),
+          resources.getString(R.string.app_name_k)
+        )
+        loadFragment(HomeFragment())
+        true
+      }
+      R.id.settings__navigation__keyboard -> {
+        supportActionBar?.setTitle(R.string.settings__keyboard__title)
+        loadFragment(KeyboardFragment())
+        true
+      }
+      R.id.settings__navigation__typing -> {
+        supportActionBar?.setTitle(R.string.settings__typing__title)
+        loadFragment(TypingFragment())
+        true
+      }
+      R.id.settings__navigation__theme -> {
+        supportActionBar?.setTitle(R.string.settings__theme__title)
+        loadFragment(ThemeFragment())
+        true
+      }
+      R.id.settings__navigation__gestures -> {
+        supportActionBar?.setTitle(R.string.settings__gestures__title)
+        loadFragment(GesturesFragment())
+        true
+      }
+      else -> false
+    }
+  }
+
+  private fun loadFragment(fragment: Fragment) {
+    supportFragmentManager
+      .beginTransaction()
+      .replace(binding.pageFrame.id, fragment, FRAGMENT_TAG)
+      .commit()
+  }
+
+//  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//    menuInflater.inflate(R.menu.settings_main_menu, menu)
+//    return true
+//  }
+
+  override fun onBackPressed() {
+    if (binding.bottomNavigation.selectedItemId != R.id.settings__navigation__home) {
+      binding.bottomNavigation.selectedItemId = R.id.settings__navigation__home
+    } else {
+      super.onBackPressed()
+    }
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      android.R.id.home -> {
+        onBackPressed()
+        true
+      }
+      R.id.settings__menu_help -> {
+        val browserIntent = Intent(
+          Intent.ACTION_VIEW,
+          Uri.parse(resources.getString(R.string.florisboard__repo_url))
+        )
+        startActivity(browserIntent)
+        true
+      }
+      R.id.settings__menu_advanced -> {
+        startActivityForResult(Intent(this, AdvancedActivity::class.java), ADVANCED_REQ_CODE)
+        true
+      }
+      R.id.settings__menu_about -> {
+        startActivity(Intent(this, AboutActivity::class.java))
+        true
+      }
+      else -> super.onOptionsItemSelected(item)
+    }
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    if (requestCode == ADVANCED_REQ_CODE) {
+      if (resultCode == AdvancedActivity.RESULT_APPLY_THEME) {
+        recreate()
+      }
+    } else {
+      super.onActivityResult(requestCode, resultCode, data)
+    }
+  }
+
+  override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {}
+
+  private fun updateLauncherIconStatus() {
+    // Set LauncherAlias enabled/disabled state just before destroying/pausing this activity
+    if (prefs.advanced.showAppIcon) {
+      PackageManagerUtils.showAppIcon(this)
+    } else {
+      PackageManagerUtils.hideAppIcon(this)
+    }
+  }
+
+  override fun onResume() {
+    prefs.shared.registerOnSharedPreferenceChangeListener(this)
+    super.onResume()
+  }
+
+  override fun onPause() {
+    prefs.shared.unregisterOnSharedPreferenceChangeListener(this)
+    updateLauncherIconStatus()
+    super.onPause()
+  }
+
+  override fun onDestroy() {
+    prefs.shared.unregisterOnSharedPreferenceChangeListener(this)
+    updateLauncherIconStatus()
+    super.onDestroy()
+  }
+
+  abstract class SettingsFragment : Fragment() {
+    protected lateinit var settingsMainActivity: SettingsMainActivity
+    protected lateinit var subtypeManager: SubtypeManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        prefs = PrefHelper.getDefaultInstance(this)
-        prefs.initDefaultPreferences()
-        prefs.sync()
-        subtypeManager = SubtypeManager(this, prefs)
+      super.onCreate(savedInstanceState)
 
-        val mode = when (prefs.advanced.settingsTheme) {
-            "light" -> AppCompatDelegate.MODE_NIGHT_NO
-            "dark" -> AppCompatDelegate.MODE_NIGHT_YES
-            "auto" -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-            else -> AppCompatDelegate.MODE_NIGHT_UNSPECIFIED
-        }
-        AppCompatDelegate.setDefaultNightMode(mode)
+      settingsMainActivity = activity as SettingsMainActivity
+      subtypeManager = settingsMainActivity.subtypeManager
+    }
+  }
 
-        super.onCreate(savedInstanceState)
-        binding = SettingsActivityBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        // NOTE: using findViewById() instead of view binding because the binding does not include
-        //       a reference to the included layout...
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
-        binding.bottomNavigation.setOnNavigationItemSelectedListener(this)
-        binding.bottomNavigation.selectedItemId =
-            savedInstanceState?.getInt(SELECTED_ITEM_ID) ?: R.id.settings__navigation__home
-
-        AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
+  class PrefFragment : PreferenceFragmentCompat() {
+    companion object {
+      fun createFromResource(prefResId: Int): PrefFragment {
+        val args = Bundle()
+        args.putInt(PREF_RES_ID, prefResId)
+        val fragment = PrefFragment()
+        fragment.arguments = args
+        return fragment
+      }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(SELECTED_ITEM_ID, binding.bottomNavigation.selectedItemId)
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+      setPreferencesFromResource(arguments?.getInt(PREF_RES_ID) ?: 0, rootKey)
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.settings__navigation__home -> {
-                supportActionBar?.title = String.format(
-                    resources.getString(R.string.settings__home__title),
-                    resources.getString(R.string.app_name_k)
-                )
-                loadFragment(HomeFragment())
-                true
-            }
-            R.id.settings__navigation__keyboard -> {
-                supportActionBar?.setTitle(R.string.settings__keyboard__title)
-                loadFragment(KeyboardFragment())
-                true
-            }
-            R.id.settings__navigation__typing -> {
-                supportActionBar?.setTitle(R.string.settings__typing__title)
-                loadFragment(TypingFragment())
-                true
-            }
-            R.id.settings__navigation__theme -> {
-                supportActionBar?.setTitle(R.string.settings__theme__title)
-                loadFragment(ThemeFragment())
-                true
-            }
-            R.id.settings__navigation__gestures -> {
-                supportActionBar?.setTitle(R.string.settings__gestures__title)
-                loadFragment(GesturesFragment())
-                true
-            }
-            else -> false
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+      listView.isFocusable = false
+      listView.isNestedScrollingEnabled = false
+      super.onViewCreated(view, savedInstanceState)
     }
-
-    private fun loadFragment(fragment: Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(binding.pageFrame.id, fragment, FRAGMENT_TAG)
-            .commit()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.settings_main_menu, menu)
-        return true
-    }
-
-    override fun onBackPressed() {
-        if (binding.bottomNavigation.selectedItemId != R.id.settings__navigation__home) {
-            binding.bottomNavigation.selectedItemId = R.id.settings__navigation__home
-        } else {
-            super.onBackPressed()
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                true
-            }
-            R.id.settings__menu_help -> {
-                val browserIntent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(resources.getString(R.string.florisboard__repo_url))
-                )
-                startActivity(browserIntent)
-                true
-            }
-            R.id.settings__menu_advanced -> {
-                startActivityForResult(Intent(this, AdvancedActivity::class.java), ADVANCED_REQ_CODE)
-                true
-            }
-            R.id.settings__menu_about -> {
-                startActivity(Intent(this, AboutActivity::class.java))
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == ADVANCED_REQ_CODE) {
-            if (resultCode == AdvancedActivity.RESULT_APPLY_THEME) {
-                recreate()
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
-        }
-    }
-
-    override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {}
-
-    private fun updateLauncherIconStatus() {
-        // Set LauncherAlias enabled/disabled state just before destroying/pausing this activity
-        if (prefs.advanced.showAppIcon) {
-            PackageManagerUtils.showAppIcon(this)
-        } else {
-            PackageManagerUtils.hideAppIcon(this)
-        }
-    }
-
-    override fun onResume() {
-        prefs.shared.registerOnSharedPreferenceChangeListener(this)
-        super.onResume()
-    }
-
-    override fun onPause() {
-        prefs.shared.unregisterOnSharedPreferenceChangeListener(this)
-        updateLauncherIconStatus()
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        prefs.shared.unregisterOnSharedPreferenceChangeListener(this)
-        updateLauncherIconStatus()
-        super.onDestroy()
-    }
-
-    abstract class SettingsFragment : Fragment() {
-        protected lateinit var settingsMainActivity: SettingsMainActivity
-        protected lateinit var subtypeManager: SubtypeManager
-
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-
-            settingsMainActivity = activity as SettingsMainActivity
-            subtypeManager = settingsMainActivity.subtypeManager
-        }
-    }
-
-    class PrefFragment : PreferenceFragmentCompat() {
-        companion object {
-            fun createFromResource(prefResId: Int): PrefFragment {
-                val args = Bundle()
-                args.putInt(PREF_RES_ID, prefResId)
-                val fragment = PrefFragment()
-                fragment.arguments = args
-                return fragment
-            }
-        }
-
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(arguments?.getInt(PREF_RES_ID) ?: 0, rootKey)
-        }
-
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            listView.isFocusable = false
-            listView.isNestedScrollingEnabled = false
-            super.onViewCreated(view, savedInstanceState)
-        }
-    }
+  }
 }

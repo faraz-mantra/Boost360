@@ -193,7 +193,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
     viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess() && it.parseResponse()) {
         onCodeSent()
-      } else showShortToast(getString(R.string.otp_not_sent))
+      } else showShortToast(if (it.message.isNullOrEmpty().not()) it.message else getString(R.string.otp_not_sent))
       hideProgress()
     })
   }

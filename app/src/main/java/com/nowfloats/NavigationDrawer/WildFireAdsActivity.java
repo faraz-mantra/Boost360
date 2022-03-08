@@ -88,7 +88,7 @@ public class WildFireAdsActivity extends AppCompatActivity {
 
         spanTxt.append(getString(R.string.from_a_desktop_to_explore_and_install_related_add_ons));
 
-        //spanTxt.append(" from a desktop to explore and install related add-ons to see inorganic traffic/leads");
+        //spanTxt.append(" from a desktop to explore and install related Add-ons to see inorganic traffic/leads");
         //spanTxt.append(Methods.fromHtml(" or contact us at <a href=\"mailto:" + getString(R.string.settings_feedback_link) + "\"><b>" + getString(R.string.settings_feedback_link) + "</b></a> "));
         //spanTxt.append(Methods.fromHtml(" or call our toll-free number <a href=\"tel:" + getString(R.string.contact_us_number) + "\"><b>" + getString(R.string.contact_us_number) + "</b></a>."));
 

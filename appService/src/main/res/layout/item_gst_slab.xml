@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:id="@+id/main_content">
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+      android:id="@+id/radioGst"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/size_4"
+      android:layout_marginTop="@dimen/size_10"
+      android:background="@android:color/transparent"
+      android:button="@drawable/check_selector_domain_booking"
+      android:checked="true"
+      android:focusable="false"
+      android:clickable="false"
+      android:fontFamily="@font/regular"
+      android:gravity="start"
+      android:includeFontPadding="false"
+      android:paddingHorizontal="@dimen/size_12"
+      tools:text="0%"
+      android:textColor="@color/black_4a4a4a" />
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

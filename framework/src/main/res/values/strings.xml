@@ -63,7 +63,9 @@
   <string name="toolbar_seasonal_offers">Seasonal Offers</string>
   <string name="staff_listing_title">This is a premium feature.</string>
   <string name="staff_listing_desc">Allow your clients to select their preferred staff member and schedule an appointment based on their availability. You can also assign staff members, manage their leaves, and stay organized.</string>
+  <string name="doctor_listing_desc">You don’t have any doctor listed on your site as of yet.</string>
   <string name="tool_bar_staff_listing">Staff Listing</string>
+  <string name="tool_bar_doctor_listing">Doctor Listing</string>
   <string name="product">Products</string>
   <string name="product_footer">In order to add products in bulk, please log into boost.nowfloats.com on a desktop computer.</string>
   <string name="lets_add_product_to">Let\'s add products to your catalogue.</string>
@@ -92,7 +94,9 @@
   <string name="brochures_desc">Allow your students to see your staff and the subjects they teach. This</string>
   <string name="digital_brochures">Digital Brochures</string>
   <string name="no_staff_member_listed_yet">No staff member listed yet!</string>
+  <string name="no_doctor_profile_listed_yet">No doctor listed yet</string>
   <string name="add_a_staff">Add a staff member</string>
+  <string name="add_a_doctor">Add a doctor</string>
   <string name="keyboard_desc">With business keyboard, share deals, offers, product details quickly as you chat with potential customers on WhatsApp, Instagram, Telegram, Facebook Messenger, etc.</string>
   <string name="no_brochure_added">No brochure added yet.</string>
   <string name="allow_your_students_to_see">"Allow your students to see "</string>
@@ -151,7 +155,7 @@
   <string name="please_wait_creating_a_ticket">Please wait. Creating a support Ticket…</string>
   <string name="something_went_wrong_please_tell_what_happened">Something happened. Please tell us what went wrong!</string>
   <string name="_280">280</string>
-    <string name="something_went_wrong_framework">Something went wrong</string>
+  <string name="something_went_wrong_framework">Something went wrong</string>
   <string name="you_can_try_again_or_report_an_error_by_clicking_on_the_buttons_below">You can try again or report an error by clicking on the buttons below.</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="no_email_app_installed">No email app installed</string>

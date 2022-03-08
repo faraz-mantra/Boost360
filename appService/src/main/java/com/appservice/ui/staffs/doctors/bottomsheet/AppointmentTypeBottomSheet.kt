@@ -9,9 +9,8 @@ import com.appservice.viewmodel.StaffViewModel
 
 import com.framework.base.BaseBottomSheetDialog
 
+class AppointmentTypeBottomSheet : BaseBottomSheetDialog<BottomSheetAppointmentTypeBinding, StaffViewModel>() {
 
-class AppointmentTypeBottomSheet :
-  BaseBottomSheetDialog<BottomSheetAppointmentTypeBinding, StaffViewModel>() {
   var onClicked: (appointmentType: Int?) -> Unit = { }
   private var data: StaffDetailsResult? = null
   override fun getLayout(): Int {
@@ -48,7 +47,7 @@ class AppointmentTypeBottomSheet :
       binding?.rbInpersonConsultation?.tag.toString().toIntOrNull() -> {
         binding?.rbInpersonConsultation?.isChecked = true
       }
-      binding?.rbVideoConsultation?.tag .toString().toIntOrNull()-> {
+      binding?.rbVideoConsultation?.tag.toString().toIntOrNull() -> {
         binding?.rbVideoConsultation?.isChecked = true
       }
       binding?.rbInpersonVideoConsultation?.tag.toString().toIntOrNull() -> {
