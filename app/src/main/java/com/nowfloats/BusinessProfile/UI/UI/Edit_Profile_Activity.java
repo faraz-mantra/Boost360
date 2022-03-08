@@ -1019,7 +1019,8 @@ public class Edit_Profile_Activity extends BaseActivity {
                 .content(Html.fromHtml(String.format(getString(R.string.it_is_not_advised_to_change_your_category), type)))
                 .positiveText("Change Category")
                 .negativeText("Cancel")
-                .positiveColorRes(R.color.primaryColor)
+                .negativeColorRes(R.color.black_4a4a4a)
+                .positiveColorRes(R.color.colorAccentLight)
                 .cancelable(false)
                 .callback(new MaterialDialog.ButtonCallback() {
 
@@ -1049,7 +1050,7 @@ public class Edit_Profile_Activity extends BaseActivity {
                 .title(R.string.wrong_business_category)
                 .content(R.string.business_category_change_level)
                 .positiveText("Ok")
-                .positiveColorRes(R.color.primaryColor)
+                .positiveColorRes(R.color.colorAccentLight)
                 .cancelable(false)
                 .callback(new MaterialDialog.ButtonCallback() {
 

@@ -10,6 +10,7 @@ import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.glide.util.glideLoad
 import com.framework.utils.NetworkUtils
 import com.framework.utils.PreferencesUtils
@@ -122,20 +123,10 @@ class RegistrationBusinessFacebookPageFragment :
           gotoNextScreen()
         } else if (!NetworkUtils.isNetworkConnected()) {
           InternetErrorDialog().show(parentFragmentManager, InternetErrorDialog::class.java.name)
-        } else loginWithFacebook(
-          this, listOf(
-            FacebookPermissions.email,
-            FacebookPermissions.public_profile,
-            FacebookPermissions.read_insights,
-            FacebookPermissions.pages_show_list,
-            FacebookPermissions.pages_manage_cta,
-            FacebookPermissions.ads_management,
-            FacebookPermissions.pages_read_engagement,
-            FacebookPermissions.pages_manage_posts,
-            FacebookPermissions.pages_read_user_content,
-            FacebookPermissions.pages_manage_metadata
-          )
-        )
+        } else {
+          val permissions = FacebookPermissions.permissionValues(FirebaseRemoteConfigUtil.permissionListFacebookPage())
+          loginWithFacebook(this, permissions)
+        }
       }
     }
   }

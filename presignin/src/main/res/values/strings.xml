@@ -143,7 +143,7 @@
   <string name="add_number">Add number</string>
   <string name="change_email">Change email</string>
   <string name="add_email">Add email</string>
-  <string name="psn_login_now">Login now</string>
+  <string name="psn_login_now">Get started</string>
   <string name="request_otp">Request OTP</string>
   <string name="get_boost_360_tnc">https://www.getboost360.com/tnc?v=224</string>
   <string name="need_help_title">We\'re here to help.</string>
@@ -218,6 +218,12 @@
   <string name="privacy_policy" translatable="false">Privacy Policy</string>
   <string name="_940558450">XXX-XXX-XXXX</string>
   <string name="here_is_a_quick_preview_of_how_your_website_will_look_on_various_devices">Here is a quick preview of how your website will\nlook on various devices</string>
+  <string name="ensure_that_the_entered_mobile_correct">Ensure that the entered mobile number correct.</string>
+  <string name="intro_video_url">https://cdn.nowfloats.com/manage/assets/Content/videos/MobileIntroVideo.mp4</string>
+  <string name="boost_divice_title">Boost can\'t be used on this device!</string>
+  <string name="sorry_boost_security_check_desc">Sorry, your device isn\'t passing Boost security checks. This may be because your device is rooted or is running an uncertified or custom OS build.</string>
 
   <string name="website_name_format_invalid_toast">Website name should contain only alphabets &amp; digits only. No special characters and symbols allowed!</string>
+  <string name="business_name_format_invalid_toast">Business name should contain only alphabets &amp; digits only. No special characters and symbols allowed!</string>
+  <string name="did_you_mean">Did you mean:</string>
 </resources>

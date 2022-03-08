@@ -786,12 +786,12 @@
         <item>Let\'s get some of your friends to see your site!</item>
     </string-array>
     <string-array name="on_boarding_btnTexts">
-        <item>Learn How Boost360 Works</item>
-        <item>Take Your Site Health To Minimum 80%</item>
-        <item>Add An \"About Us\" Page</item>
-        <item>Add Products</item>
-        <item>What\'s Next</item>
-        <item>Broadcast Your Business On WhatsApp</item>
+        <item>Learn how Boost360 works</item>
+        <item>Take your site health to minimum 80%</item>
+        <item>Add an \"About us\" page</item>
+        <item>Add products</item>
+        <item>What\'s next</item>
+        <item>Broadcast your business on WhatsApp</item>
     </string-array>
     <string-array name="social_array">
         <item>Facebook</item>
@@ -864,6 +864,8 @@
     <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.biz2.nowfloats</string>
     <string name="interest">I\'m interested</string>
     <string name="contact_us_number">18601231233</string>
+    <string name="contact_us_number_n">1860-123-1233</string>
+    <string name="riya_boost_360_app">ria@boost360.app</string>
     <string name="message_soon">Start talking about your business, now!</string>
     <string name="Message_empty">You can post an offer, news or upload your catalog. \nClick on the + button below to start posting.</string>
     <string name="store">Pricing Plans</string>
@@ -1250,7 +1252,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="to_buy_pricing_plans_please_contact" translatable="false">If you are interested in buying a plan, please drop a line at support@aecasiainc.com or call us at +917034427427.</string>
     <string name="values">Values</string>
     <string name="date">date</string>
-    <string name="webengage_license_code" translatable="false">~10a5cad2d</string>
     <string name="choose_your_location">Choose your location</string>
     <string name="drag_to_map_your_location">Drag the map to the location of your Store.</string>
     <string name="confirm_in_capital">Confirm</string>
@@ -1290,8 +1291,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="single_row_card_upgrade_text">Upgrade</string>
     <string name="Setting_terms_of_use">Terms of use</string>
     <!--
-  <string name="business_logo_info_text">JPEG, .PNG and .GIF file formats are supported. For best experience, square images are recommended. Keep the size below 400KB and dimensions should not be more than 400px (width) and 400px (height).</string>
-  -->
+    <string name="business_logo_info_text">JPEG, .PNG and .GIF file formats are supported. For best experience, square images are recommended. Keep the size below 400KB and dimensions should not be more than 400px (width) and 400px (height).</string>
+    -->
     <string name="business_logo_info_text">A logo is an identity of your business that appears on top of your business website.</string>
     <string name="business_logo_instructions_1" translatable="false">Supported format: .jpeg, .png or .gif\nRecommended dimension: Square (400x400 px)\nMax file size: 500 kb</string>
     <string name="business_logo_instructions_2" translatable="false">Keep the background white or transparant (in png). For bigger display, remove all padding from the main object in your logo.</string>
@@ -1452,12 +1453,12 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Sat</item>
     </string-array>
     <!-- <string name="quikr_list">
-       <ul>
-           <li>Coffee</li>
-           <li>Tea</li>
-           <li>Milk</li>
-       </ul>
-   </string>-->
+         <ul>
+             <li>Coffee</li>
+             <li>Tea</li>
+             <li>Milk</li>
+         </ul>
+     </string>-->
     <string-array name="quikr_tip_points">
         <item> Be as detailed as possible in the description of the update. For example, if you are posting an update about a car, mention the brand, model and year. If you are posting an update about an apartment, mention whether it\'s for rent or sale, the area and the number of rooms (1 BHK, 2BHK etc)</item>
         <item>We recommend that you post the update along with a clear image</item>
@@ -1751,6 +1752,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="add_ons">Add-ons</string>
     <string name="subscriptions">Newsletter Subscriptions</string>
     <string name="shared_user_label">NowFloatsBoost</string>
+    <string name="shared_user_key">com.nowfloats.kb.boostapp.sharedkey</string>
     <string name="business_apps">Business Apps</string>
 
     <string-array name="about_tab_items">
@@ -1766,7 +1768,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="facebook_leads">Facebook Lead Ads</string>
     <string name="testimonials">Testimonials</string>
     <!--<string name="keyboard_message">The Boost Keyboard allows you to share your products and updates without leaving a chat.We do not store, send or share any data that is typed on the Boost Keyboard.</string>
-  -->
+    -->
     <string name="keyboard_message">The Boost keyboard is a customised business keyboard that allows you to share your updates and product offerings with the click of a button, without having to leave a chat.
 (We do not store or share any data that you type on the Boost keyboard.)</string>
     <string name="domain_linked">Your domain is successfully Linked to your NowFloats website</string>
@@ -3052,9 +3054,14 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="choose_image">Choose image</string>
     <string name="add_featured_image">Add featured image</string>
     <string name="logo_updated_successfully">Logo uploaded successfully.</string>
+    <string name="make_above_domain_as_my_boost_website_s_web_address_url">Make above domain as my Boost website’s web address/URL.</string>
+    <string name="make_boost_website_as_a_subdomain_of_this_domain_e_g_shop_yourdomain_com">Make Boost website as a subdomain of this domain.(e.g. shop.yourdomain.com)</string>
     <string name="add_logo">Add logo</string>
     <string name="business_timings">Business hours</string>
     <string name="business_timings_n">Business Hours</string>
+    <string name="enter_the_domain_you_own_and_select_an_option_to_let_us_know_how_you_want_you_your_domain_to_be_mapped_to_this_boost_website">Enter the domain you own and select an option to let us know how you want you your domain to be mapped to this Boost website.</string>
+    <string name="ria_customer_mail">ria@nowfloats.com</string>
+    <string name="ria_customer_number">9160004303</string>
     <string name="review_title_testimonial">Review title</string>
     <string name="review_description_testimonial">Review description</string>
     <string name="our_topper_data_empty">Our toppers data empty!</string>

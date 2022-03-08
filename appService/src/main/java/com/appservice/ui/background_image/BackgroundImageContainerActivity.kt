@@ -20,14 +20,13 @@ import com.framework.pref.UserSessionManager
 import com.framework.views.customViews.CustomToolbar
 import java.util.*
 
-open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+open class BackgroundImageContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
     private var type: FragmentType? = null
 
     override fun getLayout(): Int {
         return com.framework.R.layout.activity_fragment_container
     }
-
 
     override fun getViewModelClass(): Class<BaseViewModel> {
         return BaseViewModel::class.java
@@ -82,7 +81,7 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
 
     override fun getToolbarTitle(): String? {
         return when (type) {
-            FragmentType.BACKGROUND_IMAGE_FRAGMENT -> ""
+            FragmentType.BACKGROUND_IMAGE_FRAGMENT -> getString(R.string.background_image_title)
             else -> super.getToolbarTitle()
         }
     }
@@ -101,7 +100,7 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
 
     private fun getFragmentInstance(type: FragmentType?): BaseFragment<*, *>? {
         return when (type) {
-            FragmentType.BACKGROUND_IMAGE_FRAGMENT -> BackgroundImageFragment()
+            FragmentType.BACKGROUND_IMAGE_FRAGMENT -> BackgroundImageFragment.newInstance()
             else -> BackgroundImageFragment()
         }
     }
@@ -115,34 +114,16 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
 
 }
 
-fun Fragment.startUpdateFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
-    val intent = Intent(activity, UpdateBusinessContainerActivity::class.java)
+fun Fragment.startBackgroundActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+    val intent = Intent(activity, BackgroundImageContainerActivity::class.java)
     intent.putExtras(bundle)
-    intent.setFragmentType(type)
+    intent.setFragmentTypeNew(type)
     if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
-fun startUpdateFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean, isResult: Boolean = false) {
-    val intent = Intent(activity, UpdateBusinessContainerActivity::class.java)
-    intent.putExtras(bundle)
-    intent.setFragmentType(type)
-    if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-    if (isResult.not()) activity.startActivity(intent) else activity.startActivityForResult(
-            intent,
-            101
-    )
-}
 
-fun AppCompatActivity.startUpdateFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
-    val intent = Intent(this, UpdateBusinessContainerActivity::class.java)
-    intent.putExtras(bundle)
-    intent.setFragmentType(type)
-    if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-    startActivity(intent)
-}
-
-fun Intent.setFragmentType(type: FragmentType): Intent {
+fun Intent.setFragmentTypeNew(type: FragmentType): Intent {
     return this.putExtra(FRAGMENT_TYPE, type.ordinal)
 }
 

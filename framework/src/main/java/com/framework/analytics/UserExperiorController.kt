@@ -14,11 +14,9 @@ import java.lang.Exception
 object UserExperiorController {
 
     private const val TAG = "UserExperiorController"
-    val DEV_KEY="971021d8-3b0a-45e0-80f1-212150a16791"
-    val LIVE_KEY="0efa1c36-15ec-43ba-93e7-e00ff1355f4b"
 
     fun startRecording(application: Application){
-        UserExperior.startRecording(application, LIVE_KEY);
+        UserExperior.startRecording(application, BuildConfig.USER_EXPERIOR_LIVE_KEY);
     }
 
 

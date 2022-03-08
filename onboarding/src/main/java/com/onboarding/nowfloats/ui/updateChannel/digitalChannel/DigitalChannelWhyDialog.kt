@@ -46,7 +46,7 @@ class DigitalChannelWhyDialog :
     super.onClick(v)
     when (v) {
       binding?.dismiss -> this.dismiss()
-      binding?.clickHelp -> baseActivity.makeCall(getString(R.string.contact_us_number_n))
+      binding?.clickHelp -> baseActivity.makeCall(getString(R.string.contact_us_number))
       binding?.confirm -> this.dismiss()
     }
   }

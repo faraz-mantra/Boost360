@@ -27,6 +27,7 @@ import com.framework.webengageconstant.*
 import android.widget.Toast
 
 import android.view.View.OnFocusChangeListener
+import com.framework.pref.APPLICATION_JIO_ID
 
 class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
@@ -128,13 +129,18 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 //        putInt(FRAGMENT_TYPE, LOGIN_SUCCESS_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
 //      })
 //    } else {
-    if (response.authTokens!!.size == 1) {
+    if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)) {
       this.resultLogin = response
       authTokenData()?.createAccessTokenAuth()
-    } else {
-      navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
-        putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
-      })
+    }else {
+      if (response.authTokens!!.size == 1) {
+        this.resultLogin = response
+        authTokenData()?.createAccessTokenAuth()
+      } else {
+        navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
+          putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
+        })
+      }
     }
 //    }
   }

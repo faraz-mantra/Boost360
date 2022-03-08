@@ -13,10 +13,10 @@
           "premiumCode": ""
         },
         {
-          "title": "Doctor List",
-          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "title": "Our doctors",
+          "desc": "Manage & add doctors listed on your website.",
           "type": "doctor_e_profile_listing",
-          "isFeature": false,
+          "isFeature": true,
           "isLock": false,
           "premiumCode": ""
         },
@@ -79,8 +79,8 @@
           "premiumCode": ""
         },
         {
-          "title": "Doctor List",
-          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "title": "Our doctors",
+          "desc": "Manage & add doctors listed on your website.",
           "type": "doctor_e_profile_listing",
           "isLock": false,
           "isFeature": true,
@@ -195,7 +195,7 @@
       "action_item": [
         {
           "title": "Course catalogue",
-          "countType":  "NoOfProducts",
+          "countType": "NoOfProducts",
           "isFeature": false,
           "desc": "Add and manage courses on your website catalogue. This will make it easier for students to browse and request admission online.",
           "type": "service_product_catalogue",
@@ -280,7 +280,7 @@
       "action_item": [
         {
           "title": "Room catalogue",
-          "countType":  "NoOfProducts",
+          "countType": "NoOfProducts",
           "isFeature": false,
           "desc": "Add your different room types to enable customers to book online.",
           "type": "service_product_catalogue",
@@ -324,7 +324,7 @@
         },
         {
           "title": "Custom page",
-          "countType":  "NoOfCustomPages",
+          "countType": "NoOfCustomPages",
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
@@ -442,7 +442,7 @@
       "action_item": [
         {
           "title": "Food & beverages menu",
-          "countType":  "NoOfProducts",
+          "countType": "NoOfProducts",
           "isFeature": false,
           "desc": "Add and manage items on your digital menu. This will allow customers to browse and order online.",
           "type": "service_product_catalogue",

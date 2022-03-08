@@ -32,7 +32,7 @@
       android:layout_marginTop="10dp"
       android:fontFamily="@font/bold"
       android:text="@string/ready_to_log_in"
-      android:textColor="@color/yellow"
+      android:textColor="@color/login_title"
       android:textSize="30sp" />
 
     <ScrollView
@@ -94,7 +94,7 @@
             android:layout_below="@+id/ll_1"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:background="@color/yellow" />
+            android:background="@color/login_input_underline" />
 
         </RelativeLayout>
 
@@ -160,7 +160,7 @@
             android:layout_below="@+id/ll_2"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:background="@color/yellow" />
+            android:background="@color/login_input_underline" />
         </RelativeLayout>
 
         <Button
@@ -185,7 +185,7 @@
           android:elevation="5dp"
           android:orientation="vertical"
           app:cardBackgroundColor="@color/primaryColor"
-          app:cardCornerRadius="24dp">
+          app:cardCornerRadius="10dp">
 
           <TextView
             android:layout_width="wrap_content"
@@ -288,7 +288,7 @@
           android:layout_marginTop="30dp"
           android:layout_marginBottom="20dp"
           android:backgroundTint="#fff"
-          app:cardCornerRadius="25dp"
+          app:cardCornerRadius="10dp"
           app:cardElevation="2dp"
           app:cardUseCompatPadding="true">
 

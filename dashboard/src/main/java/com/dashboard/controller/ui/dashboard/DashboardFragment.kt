@@ -6,12 +6,13 @@ import android.content.pm.PackageManager
 import android.graphics.*
 import android.net.Uri
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.bumptech.glide.Glide
@@ -67,10 +68,6 @@ import com.framework.utils.DateUtils.getCurrentDate
 import com.framework.utils.DateUtils.parseDate
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.framework.webengageconstant.*
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.google.firebase.remoteconfig.ktx.remoteConfig
-import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.model.mapDetail.TOTAL_MAP_VISIT
 import com.inventoryorder.model.mapDetail.VisitsModelResponse
@@ -146,7 +143,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onCreateView() {
     if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(true)
     session = UserSessionManager(baseActivity)
-    session?.let { deepLinkUtil = DeepLinkUtil(baseActivity, it) }
+    session?.let { deepLinkUtil = DeepLinkUtil(baseActivity, it, Fragment()) }
     setOnClickListener(
       binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport, binding?.retryDrScore,
       binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.viewEmptyEnquiries?.btnWhatsappEnquiries,
@@ -224,24 +221,29 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun getPremiumBanner() {
-    setDataMarketBanner(getMarketPlaceBanners() ?: ArrayList())
-    setDataRiaAcademy(getAcademyBanners() ?: ArrayList())
-    viewModel?.getUpgradeDashboardBanner()?.observeOnce(viewLifecycleOwner, {
-      val response = it as? DashboardPremiumBannerResponse
-      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-        val data = response.data?.get(0)
-        if (data?.academyBanners.isNullOrEmpty().not()) {
-          saveDataAcademy(data?.academyBanners!!)
-          setDataRiaAcademy(data.academyBanners!!)
+    if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)) {
+      setDataMarketBanner(ArrayList())
+      setDataRiaAcademy(ArrayList())
+    } else {
+      setDataMarketBanner(getMarketPlaceBanners() ?: ArrayList())
+      setDataRiaAcademy(getAcademyBanners() ?: ArrayList())
+      viewModel?.getUpgradeDashboardBanner()?.observeOnce(viewLifecycleOwner, {
+        val response = it as? DashboardPremiumBannerResponse
+        if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+          val data = response.data?.get(0)
+          if (data?.academyBanners.isNullOrEmpty().not()) {
+            saveDataAcademy(data?.academyBanners!!)
+            setDataRiaAcademy(data.academyBanners!!)
+          }
+          if (data?.marketplaceBanners.isNullOrEmpty().not()) {
+            val marketBannerFilter =
+              (data?.marketplaceBanners ?: ArrayList()).marketBannerFilter(session)
+            saveDataMarketPlace(marketBannerFilter)
+            setDataMarketBanner(marketBannerFilter)
+          }
         }
-        if (data?.marketplaceBanners.isNullOrEmpty().not()) {
-          val marketBannerFilter =
-            (data?.marketplaceBanners ?: ArrayList()).marketBannerFilter(session)
-          saveDataMarketPlace(marketBannerFilter)
-          setDataMarketBanner(marketBannerFilter)
-        }
-      }
-    })
+      })
+    }
   }
 
   private fun refreshData() {
@@ -319,8 +321,33 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           binding?.lowReadinessScoreView?.gone()
           visibleViewHighLow(true)
         }
-      } else showSimmerDrScore(isLoadingShimmerDr, isLoadingShimmerDr.not())
+        setTopBackgroundView(isHighDrScore)
+      } else {
+        if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true))
+          (baseActivity as? DashboardActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimary)
+        showSimmerDrScore(isLoadingShimmerDr, isLoadingShimmerDr.not())
+      }
     })
+  }
+
+  private fun setTopBackgroundView(isHigh: Boolean) {
+    if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)) {
+      val colorD = if (isHigh) R.color.dashboard_high_score_pink else R.color.white_smoke_1
+      (baseActivity as? DashboardActivity)?.changeTheme(colorD, colorD, isHigh.not())
+      binding?.viewBgInner?.setTintColor(ContextCompat.getColor(baseActivity, colorD))
+      binding?.viewBgOuter?.setImageResource(if (isHigh) R.drawable.ic_fill_bg else R.drawable.ic_fill_bg_primary)
+      binding?.txtBusinessName?.setTextColor(ContextCompat.getColor(baseActivity, if (isHigh) R.color.white else R.color.black_4a4a4a))
+      binding?.txtDomainName?.apply {
+        setTextColor(ContextCompat.getColor(baseActivity, if (isHigh) R.color.white else R.color.black_4a4a4a))
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+          compoundDrawableTintList = ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.black_4a4a4a)
+        }
+      }
+      binding?.ctvImproveScore?.setTextColor(getColor(R.color.colorAccent))
+      binding?.btnVisitingCard?.background = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_btn_round_blue_stroke else R.drawable.ic_btn_round_white_stroke)
+      binding?.txtVisitingCard?.setTextColor(ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.white else R.color.white))
+      binding?.txtNotification?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, if (isHigh) R.color.accent_light_red else R.color.red_light_1)
+    }
   }
 
   private fun visibleViewHighLow(isHigh: Boolean) {
@@ -456,7 +483,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun apiBusinessSummary() {
-    viewModel?.getSellerSummaryV2_5(AppConstant.CLIENT_ID_2, session?.fpTag, getRequestSellerSummary(null))?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getSellerSummaryV2_5(AppConstant.CLIENT_ID_ORDER, session?.fpTag, getRequestSellerSummary(null))?.observeOnce(viewLifecycleOwner, {
       val response1 = it as? OrderSummaryResponse
       if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveTotalOrder(TOTAL_SELLER_SUMMARY)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
@@ -487,7 +514,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun apiRoiBusinessReport(filterDate: FilterDateModel, isLoader: Boolean = false) {
     if (isLoader) showProgress()
-    viewModel?.getSellerSummaryV2_5(AppConstant.CLIENT_ID_2, session?.fpTag, getRequestSellerSummary(filterDate))?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getSellerSummaryV2_5(AppConstant.CLIENT_ID_ORDER, session?.fpTag, getRequestSellerSummary(filterDate))?.observeOnce(viewLifecycleOwner, {
       val response1 = it as? OrderSummaryResponse
       if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveData(SELLER_BUSINESS_REPORT)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
@@ -675,10 +702,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun marketPlaceBannerClick(data: DashboardMarketplaceBanner) {
     if (data.ctaWebLink.isNullOrEmpty().not()) {
-      if (data.ctaWebLink!!.contains("com.biz2.nowfloats.keyboard.home") || data.ctaWebLink!!.contains("boost.nowfloats.com")) {
+      if (data.ctaWebLink!!.contains("${baseActivity.packageName}.keyboard.home") || data.ctaWebLink!!.contains(getString(R.string.deep_base_url)) || data.ctaWebLink!!.contains(getString(R.string.deep_base_onelink_url))) {
         WebEngageController.trackEvent(BOOST_MARKETPLACE_BANNER_CLICK, DEEP_LINK, NO_EVENT_VALUE)
-        val deepHashMap: HashMap<DynamicLinkParams, String> =
-          DynamicLinksManager().getURILinkParams(Uri.parse(data.ctaWebLink))
+        val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(Uri.parse(data.ctaWebLink))
         if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
           val viewType = deepHashMap[DynamicLinkParams.viewType]
           val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
@@ -689,11 +715,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         baseActivity.startWebViewPageLoad(session, data.ctaWebLink?.trim()!!)
       }
     } else {
-      WebEngageController.trackEvent(
-        BOOST_MARKETPLACE_BANNER_CLICK,
-        FEATURE_ITEM_CLICK,
-        NO_EVENT_VALUE
-      )
+      WebEngageController.trackEvent(BOOST_MARKETPLACE_BANNER_CLICK, FEATURE_ITEM_CLICK, NO_EVENT_VALUE)
       if (data.ctaFeatureKey.isNullOrEmpty().not()) {
         session?.let { baseActivity.initiateAddonMarketplace(it, false, "", data.ctaFeatureKey) }
       }

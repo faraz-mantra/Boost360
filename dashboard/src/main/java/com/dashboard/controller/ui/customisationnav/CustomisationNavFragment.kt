@@ -1,6 +1,7 @@
 package com.dashboard.controller.ui.customisationnav
 
 import android.os.Bundle
+import com.appservice.constant.FragmentType
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.RecyclerViewActionType
@@ -67,7 +68,7 @@ class CustomisationNavFragment : AppBaseFragment<FragmentNavCustomisationBinding
     when (type) {
       ic_diamonds -> baseActivity.startBusinessLogo(session)
       ic_fonts -> baseActivity.startWebsiteTheme(session)
-      ic_background_images -> baseActivity.startBackgroundImageGallery(session)
+      ic_background_images -> startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
       ic_favicon -> baseActivity.startFeviconImage(session)
       ic_featured_image -> baseActivity.startFeatureLogo(session)
     }

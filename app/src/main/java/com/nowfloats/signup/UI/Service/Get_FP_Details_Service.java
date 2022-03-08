@@ -52,9 +52,6 @@ import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_ANDROID_G
 import static com.framework.webengageconstant.EventNameKt.ANDROID_FAILED_TO_LOAD_DATA_IN_GET_FP_DETAILS;
 import static com.framework.webengageconstant.EventNameKt.ANDROID_GET_FP_DETAILS_FP_DATA_NULL;
 import static com.framework.webengageconstant.EventNameKt.ANDROID_GET_FP_DETAILS_SERVICE_EXCEPTION;
-import static com.nfx.leadmessages.Constants.CALL_LOG_TIME_INTERVAL;
-import static com.nfx.leadmessages.Constants.SHARED_PREF;
-import static com.nfx.leadmessages.Constants.SMS_REGEX;
 
 /**
  * Created by NowFloatsDev on 25/05/2015.
@@ -200,13 +197,13 @@ public class Get_FP_Details_Service {
                     bus.post(new NfxGetTokensResponse());
                     return;
                 }
-                SharedPreferences pref = activity.getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
-                List<String> regexList = nfxGetTokensResponse.getSmsRegex();
-                if (regexList != null && regexList.size() > 0) {
-                    String s = TextUtils.join(",", regexList);
-                    pref.edit().putString(SMS_REGEX, s).apply();
-                    pref.edit().putString(CALL_LOG_TIME_INTERVAL, nfxGetTokensResponse.getCallLogTimeInterval()).apply();
-                }
+//                SharedPreferences pref = activity.getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
+//                List<String> regexList = nfxGetTokensResponse.getSmsRegex();
+//                if (regexList != null && regexList.size() > 0) {
+//                    String s = TextUtils.join(",", regexList);
+//                    pref.edit().putString(SMS_REGEX, s).apply();
+//                    pref.edit().putString(CALL_LOG_TIME_INTERVAL, nfxGetTokensResponse.getCallLogTimeInterval()).apply();
+//                }
                 /*String message = nfxGetTokensResponse.getMessage();
                 if (message != null && message.equalsIgnoreCase("success")) {*/
                 StoreData(activity, nfxGetTokensResponse.getNFXAccessTokens());

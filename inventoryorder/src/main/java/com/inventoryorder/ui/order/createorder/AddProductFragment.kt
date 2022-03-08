@@ -8,6 +8,7 @@ import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.pref.clientId2
 import com.framework.webengageconstant.CLICKED_ON_ADD_PRODUCT
 import com.framework.webengageconstant.ORDERS
 import com.inventoryorder.R
@@ -15,7 +16,6 @@ import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.FragmentAddProductBinding
-import com.inventoryorder.model.CLIENT_ID_1
 import com.inventoryorder.model.order.ProductItem
 import com.inventoryorder.model.orderRequest.ItemsItem
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
@@ -54,7 +54,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
     super.onCreateView()
     fpTag?.let { WebEngageController.trackEvent(CLICKED_ON_ADD_PRODUCT, ORDERS, it) }
     setOnClickListener(binding?.tvProceed)
-    getItemList(fpTag, CLIENT_ID_1)
+    getItemList(fpTag, clientId2)
     binding?.edtSearch?.afterTextChanged { filterProduct(it) }
   }
 
@@ -122,12 +122,11 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
 
   private fun getItemList(fpTag: String?, clientId: String?) {
     showProgress(context?.getString(R.string.loading))
-    viewModel?.getProductItems(fpTag, clientId, 0)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getProductItems(fpTag, clientId, 0)?.observeOnce(viewLifecycleOwner) {
       hideProgress()
       if (it.isSuccess()) {
         val resp = (it.arrayResponse as? Array<ProductItem>)
-        finalProductList =
-          if (resp.isNullOrEmpty().not()) resp!!.toCollection(ArrayList()) else ArrayList()
+        finalProductList = if (resp.isNullOrEmpty().not()) resp!!.toCollection(ArrayList()) else ArrayList()
         if (finalProductList.isNotEmpty()) {
           productList.clear()
           productList.addAll(finalProductList)
@@ -139,7 +138,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
           binding?.productRecycler?.visibility = View.GONE
         }
       } else showShortToast(it.message)
-    })
+    }
   }
 
   fun getBundleData(): Bundle {
@@ -155,7 +154,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         adapter = itemsAdapter
         itemsAdapter?.runLayoutAnimation(this)
       }
-    } else itemsAdapter?.notify(productList)
+    } else itemsAdapter?.notifyDataSetChanged()
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -229,7 +228,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         totalCartItems = 0
         createOrderRequest = OrderInitiateRequest()
         binding?.layoutTotalPricePanel?.gone()
-        getItemList(fpTag, CLIENT_ID_1)
+        getItemList(fpTag, clientId2)
       }
     }
   }
