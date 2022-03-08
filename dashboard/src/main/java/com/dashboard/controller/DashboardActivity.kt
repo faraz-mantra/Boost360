@@ -441,16 +441,16 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         disableBadgeNotification(BadgesModel.BadgesType.ENQUIRYBADGE.name)
       }
       3 -> {
-        if (this.packageName.equals(APPLICATION_JIO_ID, true)) {
-          mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
-          toolbarPropertySet(pos)
-          disableBadgeNotification(BadgesModel.BadgesType.MENUBADGE.name)
-        } else {
+//        if (this.packageName.equals(APPLICATION_JIO_ID, true)) {
+//          mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
+//          toolbarPropertySet(pos)
+//          disableBadgeNotification(BadgesModel.BadgesType.MENUBADGE.name)
+//        } else {
           val dataAddOns = welcomeData?.get(2)
           if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let { showWelcomeDialog(it) }
           else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
           disableBadgeNotification(BadgesModel.BadgesType.MARKETPLACEBADGE.name)
-        }
+//        }
       }
       4 -> {
         mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
