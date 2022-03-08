@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Gravity
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -52,11 +53,21 @@ open class BackgroundImageContainerActivity : AppBaseActivity<ActivityFragmentCo
         return binding?.appBarLayout?.toolbar
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.help_menu,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+
     override fun getToolbarBackgroundColor(): Int? {
         return when (type) {
             FragmentType.BACKGROUND_IMAGE_FRAGMENT -> ContextCompat.getColor(
                     this,
                     R.color.colorPrimary
+            )
+            FragmentType.BACKGROUND_IMAGE_CROP_FRAGMENT -> ContextCompat.getColor(
+                this,
+                R.color.black_4a4a4a
             )
             else -> super.getToolbarBackgroundColor()
         }
@@ -72,9 +83,23 @@ open class BackgroundImageContainerActivity : AppBaseActivity<ActivityFragmentCo
         }
     }
 
+    override fun isHideToolbar(): Boolean {
+        return when (type) {
+            FragmentType.BACKGROUND_IMAGE_F_SCREEN_FRAGMENT -> true
+            else -> super.isHideToolbar()
+        }
+    }
+
     override fun getNavigationIcon(): Drawable? {
         return when (type) {
             FragmentType.BACKGROUND_IMAGE_FRAGMENT -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
+            FragmentType.BACKGROUND_IMAGE_CROP_FRAGMENT ->
+                ContextCompat.getDrawable(this,
+                    R.drawable.ic_cross_white)
+
+            FragmentType.BACKGROUND_IMAGE_PREVIEW ->
+                ContextCompat.getDrawable(this,
+                    R.drawable.ic_cross_white)
             else -> super.getNavigationIcon()
         }
     }
@@ -82,6 +107,8 @@ open class BackgroundImageContainerActivity : AppBaseActivity<ActivityFragmentCo
     override fun getToolbarTitle(): String? {
         return when (type) {
             FragmentType.BACKGROUND_IMAGE_FRAGMENT -> getString(R.string.background_image_title)
+            FragmentType.BACKGROUND_IMAGE_CROP_FRAGMENT -> getString(R.string.crop_background_image)
+            FragmentType.BACKGROUND_IMAGE_PREVIEW ->getString(R.string.preview_picture)
             else -> super.getToolbarTitle()
         }
     }
@@ -101,6 +128,9 @@ open class BackgroundImageContainerActivity : AppBaseActivity<ActivityFragmentCo
     private fun getFragmentInstance(type: FragmentType?): BaseFragment<*, *>? {
         return when (type) {
             FragmentType.BACKGROUND_IMAGE_FRAGMENT -> BackgroundImageFragment.newInstance()
+            FragmentType.BACKGROUND_IMAGE_CROP_FRAGMENT -> BGImageCropFragment.newInstance()
+            FragmentType.BACKGROUND_IMAGE_PREVIEW -> BGImagePreviewFragment.newInstance()
+            FragmentType.BACKGROUND_IMAGE_F_SCREEN_FRAGMENT -> BGImageFullScreenFragment.newInstance()
             else -> BackgroundImageFragment()
         }
     }

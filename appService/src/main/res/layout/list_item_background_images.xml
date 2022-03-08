@@ -21,13 +21,13 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             app:cardElevation="4dp"
-            app:cardCornerRadius="8dp">
+            app:cardCornerRadius="10dp">
 
             <com.framework.views.customViews.CustomImageView
                 android:id="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 android:src="@drawable/logo_default_image" />
 
         </com.framework.views.customViews.CustomCardView>

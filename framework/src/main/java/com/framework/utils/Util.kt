@@ -32,9 +32,11 @@ import androidx.annotation.FontRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.SimpleColorFilter
@@ -512,4 +514,38 @@ fun copyToClipBoard(text: String){
   val clip: ClipData = ClipData.newPlainText("boost-label", text)
   clipboard.setPrimaryClip(clip)
   Toast.makeText(BaseApplication.instance, BaseApplication.instance.getString(R.string.copied_to_clipboard), Toast.LENGTH_SHORT).show()
+}
+fun Activity.checkPermission(permString:String): Boolean {
+  return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    checkSelfPermission(permString)== PackageManager.PERMISSION_GRANTED
+  } else {
+    true
+  }
+}
+
+fun Fragment.checkPermission(permString:String): Boolean {
+  return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    ActivityCompat.checkSelfPermission(requireContext(),permString)== PackageManager.PERMISSION_GRANTED
+  }else{
+    true
+  }
+}
+
+fun showToast(text:String?,dur:Int=Toast.LENGTH_LONG){
+  if (text != null && text.isNotEmpty())
+    Toast.makeText(BaseApplication.instance, text, dur).show()
+}
+
+suspend fun runOnUi(func:()->Unit){
+  withContext(Dispatchers.Main){
+    func.invoke()
+  }
+}
+
+fun fetchString(id:Int): String {
+  return BaseApplication.instance.getString(id)
+}
+
+fun Any?.toJson():String{
+  return Gson().toJson(this)
 }

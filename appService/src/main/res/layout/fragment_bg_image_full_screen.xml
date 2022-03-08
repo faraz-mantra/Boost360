@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:orientation="vertical">
+
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="15dp"
+      android:orientation="horizontal">
+
+      <ImageView
+        android:id="@+id/galleryCancel"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:onClick="onClose"
+        android:padding="7dp"
+        android:src="@drawable/ic_cross_white" />
+
+      <ImageView
+        android:id="@+id/delete"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="10dp"
+        android:onClick="onDelete"
+        android:padding="6dp"
+        android:src="@drawable/ic_delete" />
+
+    </FrameLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+      android:id="@+id/pager"
+      android:layout_width="fill_parent"
+      android:layout_height="0dp"
+      android:layout_margin="10dp"
+      android:layout_weight="1" />
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom"
+      android:layout_marginBottom="10dp"
+      android:background="#ff000000"
+      android:gravity="bottom"
+      android:orientation="horizontal">
+
+      <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom|center"
+        android:gravity="bottom|center"
+        android:orientation="horizontal"
+        android:paddingStart="25dp"
+        android:paddingRight="25dp">
+
+        <ImageView
+            android:rotation="180"
+          android:id="@+id/previous"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="left"
+          android:onClick="onPreviousClick"
+          android:padding="5dp"
+          android:src="@drawable/ic_arrow_right_white" />
+
+        <TextView
+          android:id="@+id/current"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_marginEnd="35dp"
+          android:text="1"
+          android:textColor="@color/white"
+          android:textSize="20sp"
+          android:visibility="visible" />
+
+        <TextView
+          android:id="@+id/of"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:text="@string/of"
+          android:textColor="@color/white"
+          android:textSize="20sp"
+          android:visibility="visible" />
+
+        <TextView
+          android:id="@+id/maxCount"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_marginStart="35dp"
+          android:text="20"
+          android:textColor="@color/white"
+          android:textSize="20sp"
+          android:visibility="visible" />
+
+        <ImageView
+          android:id="@+id/next"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="end"
+          android:layout_marginStart="10dp"
+          android:onClick="onNextClick"
+          android:padding="5dp"
+          android:src="@drawable/ic_arrow_right_white" />
+
+      </FrameLayout>
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</layout>

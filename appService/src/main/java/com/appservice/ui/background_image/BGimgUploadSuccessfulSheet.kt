@@ -43,7 +43,7 @@ class BGimgUploadSuccessfulSheet : BaseBottomSheetDialog<BsheetBgImgUploadSucces
   override fun onClick(v: View) {
     super.onClick(v)
     val sessionManager = UserSessionManager(requireActivity())
-    val url = sessionManager.getDomainName()+"/Home/ImageGallery#background_image"
+    val url = sessionManager.getDomainName()?:""
     when (v) {
       binding?.civCancel -> {
         dismiss()
