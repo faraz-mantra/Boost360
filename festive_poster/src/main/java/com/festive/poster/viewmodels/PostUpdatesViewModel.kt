@@ -30,9 +30,11 @@ class PostUpdatesViewModel : BaseViewModel() {
     type: String?,
     bizMessageId: String?,
     imageBase64: String?,
+    sendToSubscribers: Boolean?,
+    socialParmeters: String?
   ): LiveData<BaseResponse> {
     return WithFloatTwoRepository.putBizImageUpdateV2(
-      type,bizMessageId,imageBase64
+      type,bizMessageId,imageBase64,sendToSubscribers,socialParmeters
     ).toLiveData()
 
   }

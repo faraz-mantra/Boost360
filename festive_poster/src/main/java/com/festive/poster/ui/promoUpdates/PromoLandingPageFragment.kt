@@ -189,7 +189,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
         }.attach()
 
         if (PreferencesUtils.instance.getData(PreferenceConstant.FIRST_LAUNCH_PROMO,true)){
-            setupTabBaloons(ToolTipType.FOR_TODAY)
+          //  setupTabBaloons(ToolTipType.FOR_TODAY)
             PreferencesUtils.instance.saveData(PreferenceConstant.FIRST_LAUNCH_PROMO,false)
         }
 

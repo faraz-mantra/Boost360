@@ -24,6 +24,7 @@ import com.festive.poster.utils.isPromoWidgetActive
 import com.festive.poster.viewmodels.PostUpdatesViewModel
 import com.framework.base.BaseActivity
 import com.framework.constants.Constants
+import com.framework.constants.IntentConstants
 import com.framework.constants.PackageNames
 import com.framework.models.BaseViewModel
 import com.framework.pref.Key_Preferences
@@ -236,7 +237,7 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
                     SubscribePlanBottomSheet.newInstance(object :SubscribePlanBottomSheet.Callbacks{
                         override fun onBuyClick() {
                             MarketPlaceUtils.launchCartActivity(requireActivity(),
-                                PromoUpdatesActivity::class.java.name,null,null,item.tags)
+                                PromoUpdatesActivity::class.java.name,null,null,item.tags,null)
 
                         }
                     }).show(parentFragmentManager, SubscribePlanBottomSheet::class.java.name)
@@ -255,7 +256,8 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
                                 requireActivity(),
                                 item.greeting_message,
                                 file.path,
-                                item.tags
+                                item.tags,
+                                IntentConstants.UpdateType.UPDATE_PROMO_POST.name
                             )
                         }
 

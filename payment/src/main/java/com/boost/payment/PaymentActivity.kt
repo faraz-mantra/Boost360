@@ -15,6 +15,7 @@ import com.boost.payment.utils.Constants
 import com.boost.payment.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.payment.utils.SharedPrefs
 import com.framework.analytics.SentryController
+import com.framework.constants.IntentConstants
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
@@ -110,15 +111,15 @@ class PaymentActivity : AppCompatActivity() {
 
             try {
                 val originData =
-                    intent.getBundleExtra(com.framework.constants.Constants.MARKET_PLACE_ORIGIN_NAV_DATA)
+                    intent.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)
                 if (originData != null) {
                     val intent = Intent(
                         this,
-                        Class.forName(originData?.getString(com.framework.constants.Constants.MARKET_PLACE_ORIGIN_ACTIVITY))
+                        Class.forName(originData?.getString(IntentConstants.MARKET_PLACE_ORIGIN_ACTIVITY))
                     )
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra(
-                        com.framework.constants.Constants.MARKET_PLACE_ORIGIN_NAV_DATA,
+                        IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA,
                         originData
                     )
                     startActivity(intent)

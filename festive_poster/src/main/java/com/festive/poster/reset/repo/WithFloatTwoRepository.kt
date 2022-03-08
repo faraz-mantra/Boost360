@@ -43,10 +43,14 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     type: String?,
     bizMessageId: String?,
     imageBase64: String?,
+    sendToSubscribers: Boolean?,
+    socialParmeters: String?
   ): Observable<BaseResponse> {
     val jsonObject = JsonObject()
     jsonObject.addProperty("type",type)
     jsonObject.addProperty("clientId", clientId)
+    jsonObject.addProperty("socialParmeters", socialParmeters)
+    jsonObject.addProperty("sendToSubscribers", sendToSubscribers)
     jsonObject.addProperty("bizMessageId", bizMessageId)
     jsonObject.addProperty("imageBody",imageBase64)
     return makeRemoteRequest(

@@ -36,10 +36,7 @@ import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.utils.isPromoWidgetActive
 import com.festive.poster.viewmodels.PostUpdatesViewModel
-import com.framework.constants.Constants.IK_CAPTION_KEY
-import com.framework.constants.Constants.IK_POSTER
-import com.framework.constants.Constants.IK_TAGS
-import com.framework.constants.Constants.MARKET_PLACE_ORIGIN_NAV_DATA
+import com.framework.constants.IntentConstants
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -72,6 +69,7 @@ import kotlin.collections.ArrayList
 
 class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBinding, PostUpdatesViewModel>(), RecyclerItemClickListener {
 
+
     private var chkChannelAdapter: AppBaseRecyclerViewAdapter<SocialPlatformModel>?=null
     private var uiChBoxChannelList: ArrayList<SocialPlatformModel>?=null
     private var uiPreviewChannelList: ArrayList<SocialPreviewModel>?=null
@@ -79,12 +77,15 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     private var connectedChannels: ArrayList<String> = arrayListOf()
     private var session:UserSessionManager?=null
     private var captionIntent :String?=null
+    private val updateType by lazy {
+        intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IntentConstants.IK_UPDATE_TYPE)
+    }
     private val posterImgPath by lazy {
-        intent?.getBundleExtra(MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IK_POSTER)
+        intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IntentConstants.IK_POSTER)
     }
     private val tags:ArrayList<String> by lazy {
         convertJsonToObj(
-            intent?.getBundleExtra(MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IK_TAGS)
+            intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IntentConstants.IK_TAGS)
         )
     }
 
@@ -92,12 +93,13 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
 
         fun launchActivity(activity:Activity,caption:String?,
-                           posterImgPath:String,tags:List<String>?){
+                           posterImgPath:String,tags:List<String>?,updateType:String){
             activity.startActivity(Intent(activity,PostPreviewSocialActivity::class.java)
-                .putExtra(MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
-                    putString(IK_CAPTION_KEY,caption)
-                    putString(IK_POSTER, posterImgPath)
-                    putString(IK_TAGS, Gson().toJson(tags))
+                .putExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
+                    putString(IntentConstants.IK_CAPTION_KEY,caption)
+                    putString(IntentConstants.IK_POSTER, posterImgPath)
+                    putString(IntentConstants.IK_TAGS, Gson().toJson(tags))
+                    putString(IntentConstants.IK_UPDATE_TYPE, updateType)
 
                 })
 
@@ -127,7 +129,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     override fun onCreateView() {
         session = UserSessionManager(this)
-        captionIntent =intent?.getBundleExtra(MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IK_CAPTION_KEY)
+        captionIntent =intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IntentConstants.IK_CAPTION_KEY)
 
 
         initUI()
@@ -163,7 +165,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             SubscribePlanBottomSheet.newInstance(object :SubscribePlanBottomSheet.Callbacks{
                 override fun onBuyClick() {
                     MarketPlaceUtils.launchCartActivity(this@PostPreviewSocialActivity,
-                        PostPreviewSocialActivity::class.java.name,posterImgPath,captionIntent,tags)
+                        PostPreviewSocialActivity::class.java.name,posterImgPath,captionIntent,tags,updateType)
 
                 }
             }).show(supportFragmentManager, SubscribePlanBottomSheet::class.java.name)
@@ -632,8 +634,9 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             isPicMes,
             merchantId,
             parentId,
-            false,
+            sendToSubscribe,
             socialShare,
+            updateType,
             tags=tags
         )
 
@@ -647,7 +650,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                             File(posterImgPath).toBase64()
                         val s_uuid = UUID.randomUUID().toString().replace("-", "")
                         viewModel.putBizImageUpdateV2(
-                            "update",it.stringResponse,bodyBase64
+                            "update",it.stringResponse,bodyBase64,sendToSubscribe,socialShare
                         ).observeOnce(this@PostPreviewSocialActivity) { it1 ->
                             if (it1.isSuccess()) {
                                 // successResult()

@@ -16,8 +16,8 @@ import com.boost.payment.utils.SharedPrefs
 import com.boost.payment.utils.Utils
 import com.boost.payment.utils.WebEngageController
 import com.framework.analytics.SentryController
-import com.framework.constants.Constants.MARKET_PLACE_ORIGIN_ACTIVITY
-import com.framework.constants.Constants.MARKET_PLACE_ORIGIN_NAV_DATA
+import com.framework.constants.IntentConstants.MARKET_PLACE_ORIGIN_ACTIVITY
+import com.framework.constants.IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*

@@ -33,6 +33,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.framework.constants.Constants
+import com.framework.constants.IntentConstants
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -396,9 +397,12 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       binding!!.tvPreviewAndPost->{
         startActivity(Intent(requireActivity(), Class.forName(
           "com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity"))
-          .putExtra(Constants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
-            putString(Constants.IK_CAPTION_KEY,binding!!.etUpdate.text.toString())
-            putString(Constants.IK_POSTER, posterImagePath)
+          .putExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
+            putString(IntentConstants.IK_CAPTION_KEY,binding!!.etUpdate.text.toString())
+            putString(IntentConstants.IK_POSTER, posterImagePath)
+            putString(IntentConstants.IK_UPDATE_TYPE,
+              if (posterImagePath==null) IntentConstants.UpdateType.UPDATE_TEXT.name
+              else IntentConstants.UpdateType.UPDATE_IMAGE_TEXT.name)
           }))
         Log.i(TAG, "onClick: ${binding!!.etUpdate.text.toString().extractHashTag()}")
       }

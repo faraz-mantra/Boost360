@@ -10,11 +10,12 @@ import com.festive.poster.models.PosterModel
 import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
 import com.framework.BaseApplication
 import com.framework.analytics.SentryController
-import com.framework.constants.Constants.IK_CAPTION_KEY
-import com.framework.constants.Constants.IK_POSTER
-import com.framework.constants.Constants.IK_TAGS
-import com.framework.constants.Constants.MARKET_PLACE_ORIGIN_ACTIVITY
-import com.framework.constants.Constants.MARKET_PLACE_ORIGIN_NAV_DATA
+import com.framework.constants.IntentConstants.IK_CAPTION_KEY
+import com.framework.constants.IntentConstants.IK_POSTER
+import com.framework.constants.IntentConstants.IK_TAGS
+import com.framework.constants.IntentConstants.IK_UPDATE_TYPE
+import com.framework.constants.IntentConstants.MARKET_PLACE_ORIGIN_ACTIVITY
+import com.framework.constants.IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.ADDON_MARKETPLACE_PAGE_CLICK
@@ -74,7 +75,7 @@ object MarketPlaceUtils {
     }
 
     fun launchCartActivity(activity:Activity,originActivityName:String,
-                           posterImgPath:String?,caption:String?,tags:List<String>?){
+                           posterImgPath:String?,caption:String?,tags:List<String>?,updateType:String?){
         val session = UserSessionManager(BaseApplication.instance)
         val intent = Intent(
             activity,
@@ -88,6 +89,8 @@ object MarketPlaceUtils {
             putString(IK_POSTER,posterImgPath)
             putString(IK_CAPTION_KEY,caption)
             putString(IK_TAGS,Gson().toJson(tags))
+            putString(IK_UPDATE_TYPE,updateType)
+
         })
         intent.putStringArrayListExtra(
             "userPurchsedWidgets",

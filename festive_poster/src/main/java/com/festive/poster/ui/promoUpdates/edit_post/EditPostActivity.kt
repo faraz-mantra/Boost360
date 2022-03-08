@@ -27,6 +27,7 @@ import com.festive.poster.utils.SvgUtils
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.constants.Constants
 import com.framework.analytics.SentryController
+import com.framework.constants.IntentConstants
 import com.framework.extensions.gone
 import com.framework.pref.UserSessionManager
 import com.framework.utils.STTUtils
@@ -236,7 +237,9 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
                                 PostPreviewSocialActivity.launchActivity(
                                     this@EditPostActivity,binding?.captionLayout?.etInput?.text.toString(),
                                     file.path,
-                                posterModel?.tags)
+                                posterModel?.tags,
+                                    IntentConstants.UpdateType.UPDATE_PROMO_POST.name
+                                )
                             }
 
                         }

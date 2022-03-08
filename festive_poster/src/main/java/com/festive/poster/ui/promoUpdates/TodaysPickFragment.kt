@@ -29,6 +29,7 @@ import com.festive.poster.utils.isPromoWidgetActive
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.base.BaseActivity
+import com.framework.constants.IntentConstants
 import com.framework.constants.PackageNames
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -270,7 +271,8 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                     SubscribePlanBottomSheet.newInstance(object : SubscribePlanBottomSheet.Callbacks{
                         override fun onBuyClick() {
                             MarketPlaceUtils.launchCartActivity(requireActivity(),
-                                PromoUpdatesActivity::class.java.name,null,null,childItem.tags)
+                                PromoUpdatesActivity::class.java.name,null,null,childItem.tags,
+                                null)
 
                         }
                     }).show(parentFragmentManager, SubscribePlanBottomSheet::class.java.name)
@@ -298,7 +300,9 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                                 requireActivity(),
                                 childItem.greeting_message,
                                 file.path,
-                                childItem.tags
+                                childItem.tags,
+                                IntentConstants.UpdateType.UPDATE_PROMO_POST.name
+
                             )
                         }
 
