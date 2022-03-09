@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.motion.widget.MotionLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/fragment_dashboard_v2_scene"
+    tools:showPaths="false">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/top_view"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <include
+        android:id="@+id/profile_view"
+        layout="@layout/item_dashboard_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <androidx.legacy.widget.Space
+        android:id="@+id/marginSpacer1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/size_20"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_view"
+        app:layout_constraintLeft_toLeftOf="@id/profile_view"
+        app:layout_constraintRight_toRightOf="@id/profile_view" />
+
+      <include
+        android:id="@+id/dr_view"
+        layout="@layout/item_dashboard_dr_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/size_2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/marginSpacer1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.legacy.widget.Space
+      android:id="@+id/marginSpacer"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginBottom="@dimen/size_30"
+      app:layout_constraintBottom_toBottomOf="@+id/top_view"
+      app:layout_constraintLeft_toLeftOf="@id/top_view"
+      app:layout_constraintRight_toRightOf="@id/top_view" />
+
+    <androidx.core.widget.NestedScrollView
+      android:id="@+id/nestedScrollView"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/marginSpacer">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="@dimen/size_5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <com.framework.views.customViews.CustomCardView
+          android:id="@+id/top_view2"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_4"
+          app:cardBackgroundColor="@color/white"
+          app:cardCornerRadius="@dimen/size_20"
+          app:cardElevation="@dimen/size_4"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
+
+          <include layout="@layout/item_my_todo_list" />
+        </com.framework.views.customViews.CustomCardView>
+
+        <androidx.legacy.widget.Space
+          android:id="@+id/marginSpacer2"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:layout_marginBottom="@dimen/size_20"
+          app:layout_constraintBottom_toBottomOf="@+id/top_view2"
+          app:layout_constraintLeft_toLeftOf="@id/top_view2"
+          app:layout_constraintRight_toRightOf="@id/top_view2" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          android:elevation="@dimen/size_5"
+          android:orientation="vertical"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintHorizontal_bias="0.0"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toTopOf="@+id/marginSpacer2"
+          app:layout_constraintVertical_bias="0.0">
+
+          <include
+            android:id="@+id/recommended_task"
+            layout="@layout/item_recommended_task_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_16" />
+
+          <include
+            android:id="@+id/manage_business"
+            layout="@layout/item_manage_business_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_22" />
+
+          <include
+            android:id="@+id/marketplace_offer"
+            layout="@layout/item_marketplace_offers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_20" />
+
+          <include
+            android:id="@+id/view_business_report"
+            layout="@layout/item_enquiry_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_20" />
+
+          <include
+            android:id="@+id/social_media"
+            layout="@layout/item_social_media_promotion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_20" />
+
+          <include
+            android:id="@+id/growth_stats"
+            layout="@layout/item_growth_stats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_20" />
+
+          <include
+            android:id="@+id/ria_academy_view"
+            layout="@layout/item_academy_dashboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_20" />
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_80"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.framework.views.customViews.CustomImageView
+              android:layout_width="@dimen/size_132"
+              android:layout_height="@dimen/size_24"
+              app:srcCompat="@drawable/ic_boost_logo_d" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/txt_version"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_3"
+              android:textColor="@color/colorLightGrey_jio"
+              app:textType="CAPTION"
+              tools:text="Version 1.6.17" />
+          </androidx.appcompat.widget.LinearLayoutCompat>
+
+          <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_20"
+            android:background="@drawable/bg_white_grey_gradient"
+            android:rotation="-180" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!--    <include-->
+    <!--      android:id="@+id/progress_simmer"-->
+    <!--      layout="@layout/view_dashboard_simmer"-->
+    <!--      android:layout_width="match_parent"-->
+    <!--      android:layout_height="0dp"-->
+    <!--      app:layout_constraintStart_toStartOf="parent"-->
+    <!--      app:layout_constraintEnd_toEndOf="parent"-->
+    <!--      app:layout_constraintTop_toTopOf="parent"-->
+    <!--      app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--      android:visibility="gone" />-->
+
+  </androidx.constraintlayout.motion.widget.MotionLayout>
+</layout>

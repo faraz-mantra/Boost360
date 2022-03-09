@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/size_20"
+    android:background="@drawable/bg_white_grey_gradient"
+    android:paddingBottom="@dimen/size_40">
+
+    <com.framework.views.customViews.CustomTextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/bold"
+      android:paddingHorizontal="@dimen/size_20"
+      android:text="@string/my_to_do_list"
+      android:textColor="@color/black_4a4a4a"
+      app:textType="BODY_1" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:paddingHorizontal="@dimen/size_20"
+      android:text="@string/most_frequently_used_actions_to_manage"
+      android:textColor="@color/color_888888"
+      app:textType="CAPTION" />
+
+    <androidx.viewpager2.widget.ViewPager2
+      android:id="@+id/pager_my_todo_list"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_160"
+      android:layout_marginStart="@dimen/size_2"
+      android:layout_marginTop="@dimen/size_10"
+      android:clipChildren="false"
+      android:clipToPadding="false" />
+
+    <com.framework.views.dotsindicator.DotsIndicator
+      android:id="@+id/dot_indicator"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerHorizontal="true"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginTop="@dimen/size_10"
+      android:gravity="center"
+      app:dotsColor="@color/light_grey_1"
+      app:dotsCornerRadius="@dimen/_6dp"
+      app:dotsSize="@dimen/size_5"
+      app:dotsSpacing="@dimen/size_2"
+      app:dotsWidthFactor="2.5"
+      app:progressMode="false"
+      app:selectedDotColor="@color/black_4a4a4a" />
+  </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

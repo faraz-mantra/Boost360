@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.framework.views.customViews.CustomTextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_18"
+      android:layout_marginEnd="@dimen/size_18"
+      android:text="@string/ria_academy"
+      android:textColor="@color/black_4a4a4a"
+      app:fontFamily="@font/bold"
+      app:textType="BODY_1" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_18"
+      android:layout_marginTop="@dimen/size_2"
+      android:layout_marginEnd="@dimen/size_18"
+      android:ellipsize="end"
+      android:maxLines="2"
+      android:text="@string/learn_how_boost_360_work"
+      android:textColor="@color/warm_grey"
+      app:textType="CAPTION" />
+
+    <androidx.viewpager2.widget.ViewPager2
+      android:id="@+id/pager_ria_academy"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_100"
+      android:layout_marginTop="@dimen/size_14"
+      android:clipChildren="false"
+      android:clipToPadding="false" />
+
+    <com.framework.views.dotsindicator.DotsIndicator
+      android:id="@+id/dot_indicator_academy"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginTop="@dimen/size_12"
+      android:layout_marginBottom="@dimen/size_8"
+      app:dotsColor="@color/light_grey_1"
+      app:dotsCornerRadius="@dimen/_6dp"
+      app:dotsSize="@dimen/size_5"
+      app:dotsSpacing="@dimen/size_2"
+      app:dotsWidthFactor="2.5"
+      app:progressMode="false"
+      app:selectedDotColor="@color/black_4a4a4a" />
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

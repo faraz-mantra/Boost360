@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <com.framework.views.customViews.CustomCardView
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/size_4"
+    app:cardBackgroundColor="@color/black_4f4f4f"
+    app:cardCornerRadius="@dimen/size_20"
+    app:cardElevation="@dimen/size_4">
+
+    <FrameLayout
+      android:id="@+id/bg_view"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/bg_white_grey_gradient">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/low_readiness_score_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/size_20"
+        android:visibility="gone"
+        android:paddingBottom="@dimen/size_40"
+        tools:background="@color/black_4a4a4a">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/btn_show_digital_score"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_18"
+          android:orientation="horizontal">
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_2"
+            android:orientation="horizontal">
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/txt_readiness_score"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_marginTop="-13dp"
+              android:includeFontPadding="false"
+              android:lineSpacingExtra="0dp"
+              android:textColor="@color/white"
+              app:fontFamily="@font/barlow_regular"
+              app:textType="HEADING_TEXT_2"
+              tools:text="44" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/percent_symbol"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:gravity="top"
+              android:includeFontPadding="false"
+              android:text="%"
+              android:textColor="@color/white"
+              app:fontFamily="@font/semi_bold"
+              app:textType="HEADING_6" />
+          </androidx.appcompat.widget.LinearLayoutCompat>
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_4"
+            android:layout_marginEnd="@dimen/size_4"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/title_txt"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:ellipsize="end"
+              android:fontFamily="@font/bold"
+              android:gravity="center_vertical"
+              android:includeFontPadding="false"
+              android:maxLines="1"
+              android:text="@string/digital_readiness_score"
+              android:textColor="@color/white"
+              app:autoSizeMaxTextSize="16sp"
+              app:autoSizeMinTextSize="12sp"
+              app:autoSizeStepGranularity="1sp"
+              app:autoSizeTextType="uniform" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/desc_txt"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_2"
+              android:ellipsize="end"
+              android:fontFamily="@font/regular"
+              android:maxLines="2"
+              android:text="@string/improve_your_score_to_90"
+              android:textColor="@color/gray_light_1"
+              app:textType="OVERLINE" />
+          </androidx.appcompat.widget.LinearLayoutCompat>
+
+          <com.framework.views.customViews.CustomCardView
+            android:layout_width="@dimen/size_82"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/size_1"
+            app:cardCornerRadius="@dimen/size_10"
+            app:cardElevation="@dimen/size_2">
+
+            <com.framework.views.customViews.CustomCardView
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_margin="@dimen/size_1_5"
+              app:cardCornerRadius="@dimen/size_8"
+              app:cardElevation="0dp">
+
+              <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_26"
+                android:layout_gravity="center_horizontal"
+                android:repeatCount="infinite"
+                android:repeatMode="restart"
+                android:rotation="160"
+                android:scaleX="-2.5"
+                android:scaleY="-9.8"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/button_lotty" />
+
+              <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ctv_improve_score"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:drawableEnd="@drawable/ic_arrow_right_7_white_d"
+                android:drawablePadding="-6dp"
+                android:focusable="true"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingEnd="@dimen/size_6"
+                android:text="@string/improve"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:fontFamily="@font/semi_bold"
+                app:textType="BODY_1"
+                tools:background="@drawable/ic_round_green_stroke"
+                tools:ignore="RtlSymmetry" />
+            </com.framework.views.customViews.CustomCardView>
+          </com.framework.views.customViews.CustomCardView>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <ProgressBar
+          android:id="@+id/progressBar"
+          style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/textView"
+          android:layout_marginHorizontal="@dimen/size_20"
+          android:layout_marginVertical="@dimen/size_6"
+          android:indeterminate="false"
+          android:max="100"
+          android:maxHeight="6dip"
+          android:minHeight="6dip"
+          android:progress="50"
+          android:progressDrawable="@drawable/seekbar_progress_dr_40" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/dr_view_item"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_4"
+          android:orientation="vertical">
+
+          <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pager_business_setup_low"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_160"
+            android:layout_marginStart="@dimen/size_2"
+            android:clipChildren="false"
+            android:clipToPadding="false" />
+
+          <com.framework.views.dotsindicator.DotsIndicator
+            android:id="@+id/dot_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/size_10"
+            android:gravity="center"
+            app:dotsColor="@color/white_30"
+            app:dotsCornerRadius="@dimen/_6dp"
+            app:dotsSize="@dimen/size_5"
+            app:dotsSpacing="@dimen/size_2"
+            app:dotsWidthFactor="2.5"
+            app:progressMode="false"
+            app:selectedDotColor="@color/white" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/high_readiness_score_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/size_20"
+        android:paddingBottom="@dimen/size_40"
+        android:visibility="gone"
+        tools:background="@color/white_light">
+
+        <androidx.viewpager2.widget.ViewPager2
+          android:id="@+id/pager_business_setup_high"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_60"
+          android:clipChildren="false"
+          android:clipToPadding="false" />
+
+        <com.framework.views.dotsindicator.DotsIndicator
+          android:id="@+id/dot_indicator_business_high"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginTop="@dimen/size_12"
+          app:dotsColor="@color/light_grey_1"
+          app:dotsCornerRadius="@dimen/_6dp"
+          app:dotsSize="@dimen/size_5"
+          app:dotsSpacing="@dimen/size_2"
+          app:dotsWidthFactor="2.5"
+          app:progressMode="false"
+          app:selectedDotColor="@color/grey_dark_2" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/retry_dr_score"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:background="@color/white_light">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_100"
+          android:layout_marginTop="@dimen/size_5"
+          android:layout_marginBottom="@dimen/size_26"
+          android:gravity="center"
+          android:id="@+id/retry_view"
+          android:orientation="vertical"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
+
+          <com.framework.views.customViews.CustomImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_dr_score_failed" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_2"
+            android:text="@string/digital_readiness_score_failed_to_load"
+            android:textColor="@color/black_4f4f4f"
+            app:fontFamily="@font/semi_bold"
+            app:textType="BODY_1" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/size_2"
+            android:drawableStart="@drawable/ic_refresh_d"
+            android:drawablePadding="@dimen/size_4"
+            android:text="@string/retry"
+            android:fontFamily="@font/semi_bold"
+            android:textColor="@color/colorAccent"
+            app:textAllCaps="false"
+            app:textType="BODY_1" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+          android:id="@+id/shimmer_load_dr_view"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:background="@android:color/transparent"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:shimmer_auto_start="true"
+          app:shimmer_duration="700" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+
+  </com.framework.views.customViews.CustomCardView>
+</layout>

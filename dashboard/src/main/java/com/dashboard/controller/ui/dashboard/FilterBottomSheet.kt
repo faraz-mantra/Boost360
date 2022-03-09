@@ -76,15 +76,13 @@ class FilterBottomSheet : BaseBottomSheetDialog<BottomSheetFilterDateBinding, Ba
     this.filterDateModel = item as? FilterDateModel ?: return
     onClicked(filterDateModel!!)
     dismiss()
-//    listFilter?.map { it.isSelect = (it.title.equals(this.filterDateModel?.title)) }
-//    if (adapterFilter != null) adapterFilter?.notifyDataSetChanged()
   }
-
 }
 
 const val FILTER_BUSINESS_REPORT = "FILTER_BUSINESS_REPORT"
 const val FILTER_WEBSITE_REPORT = "FILTER_WEBSITE_REPORT"
 const val FILTER_MY_ENQUIRIES = "FILTER_MY_ENQUIRIES"
+const val TILL_DATE = "Till date"
 
 data class FilterDateModel(
   var title: String? = null,
@@ -111,7 +109,7 @@ data class FilterDateModel(
     listFilter.add(FilterDateModel("Last 30 days", last30Days, dateToday))
     listFilter.add(FilterDateModel("Last 90 days", last90Days, dateToday))
     listFilter.add(FilterDateModel("Last 12 months", lastOneYear, dateToday))
-    listFilter.add(FilterDateModel("Till date", "", "", isSelect = true))
+    listFilter.add(FilterDateModel(TILL_DATE, "", "", isSelect = true))
     return listFilter
   }
 

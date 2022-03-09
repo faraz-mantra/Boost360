@@ -94,6 +94,10 @@ fun getProductType(category_code: String?): String {
   }
 }
 
+fun isDoctor(category_code: String?): Boolean {
+  return getAptType(category_code) == "DOC_HOS"
+}
+
 fun getAptType(category_code: String?): String {
   return when (category_code) {
     "SPA", "SAL", "SVC" -> "SPA_SAL_SVC"

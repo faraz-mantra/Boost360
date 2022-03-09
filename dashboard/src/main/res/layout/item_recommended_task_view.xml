@@ -7,30 +7,31 @@
 
   </data>
 
-  <androidx.appcompat.widget.LinearLayoutCompat
+  <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:paddingBottom="@dimen/size_6"
     android:orientation="vertical">
 
     <LinearLayout
+      android:id="@+id/top_view"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/size_16"
       android:layout_marginTop="@dimen/size_4"
       android:layout_marginEnd="@dimen/size_16"
-      android:orientation="vertical">
-
-      <!--      android:drawableEnd="@drawable/ic_summary_alert_d"-->
-      <!--      android:drawablePadding="@dimen/size_8"-->
+      android:orientation="vertical"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
 
       <com.framework.views.customViews.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/quick_action"
         android:textColor="@color/black_4a4a4a"
-        app:fontFamily="@font/semi_bold"
-        app:textType="HEADING_6" />
+        app:fontFamily="@font/bold"
+        app:textType="BODY_1" />
 
       <com.framework.views.customViews.CustomTextView
         android:layout_width="wrap_content"
@@ -48,11 +49,63 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/size_16"
-      android:layout_marginBottom="@dimen/size_22"
       app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/top_view"
       app:spanCount="4"
       tools:itemCount="8"
       tools:listitem="@layout/item_quick_action" />
 
-  </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.legacy.widget.Space
+      android:id="@+id/marginSpacer"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginBottom="@dimen/size_90"
+      app:layout_constraintBottom_toBottomOf="@+id/rv_quick_action"
+      app:layout_constraintLeft_toLeftOf="@id/rv_quick_action"
+      app:layout_constraintRight_toRightOf="@id/rv_quick_action" />
+
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:id="@+id/maim_show_all"
+      android:background="@drawable/ic_shadow_white"
+      android:elevation="@dimen/size_2"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/marginSpacer">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_30"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/btn_show_all"
+        android:layout_gravity="bottom|center"
+        android:background="@drawable/ic_round_accent_stroke"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/size_14">
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/semi_bold"
+          android:id="@+id/btn_title"
+          android:text="@string/show_more"
+          android:textColor="@color/colorAccentLight"
+          app:textType="BODY_1" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="@dimen/size_12"
+          android:layout_height="@dimen/size_12"
+          android:layout_marginStart="@dimen/size_10"
+          android:id="@+id/img_arrow"
+          android:tint="@color/colorAccentLight"
+          app:srcCompat="@drawable/ic_arrow_down_accent_d" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </FrameLayout>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -7,7 +7,7 @@
   <string name="my_enquiry">My Enquiries</string>
   <string name="more">More</string>
   <string name="www_sravansclinic_com"><u>www.plastoindiaandpolymers.com</u></string>
-  <string name="improve_your_score_to_90">Improve your score above <b>85%</b> for better online results.</string>
+  <string name="improve_your_score_to_90">Improve your score <b><b>above 60%</b></b> for better online results.</string>
   <string name="share_on_whatsapp">Share on WhatsApp</string>
   <string name="share_on_more">Share on more…</string>
   <string name="digital_readiness_score">Website readiness score</string>
@@ -16,13 +16,14 @@
   <string name="ria_academy">Boost academy</string>
   <string name="learn_how_boost_360_work">Learn how to make Boost 360 work for you</string>
   <string name="addon_marketplace_explore_tools">Explore tools that can help you run your business better</string>
-  <string name="business_statistics">Business report</string>
+  <string name="patient_enquiries">My patient enquiries</string>
+  <string name="customer_enquiries">My customer enquiries</string>
   <string name="till_date">Till date</string>
   <string name="online_growth_stats">Online growth stats</string>
   <string name="manage_your_business">Engage your customers</string>
   <string name="manage_your_clinic">Connect with patients</string>
   <string name="manage_business_description">Access all activated features in your plan</string>
-  <string name="quick_action">Daily actions</string>
+  <string name="quick_action">Quick actions</string>
   <string name="show_all">Show all</string>
   <string name="improve">Improve</string>
   <string name="all_boost_add_ons">All Boost Add-ons</string>
@@ -98,10 +99,10 @@
   <string name="total_fp_page_followers">Customers who interacted with your Facebook page</string>
   <string name="total_fp_shop_followers">Customers who interacted with your Facebook shop</string>
   <string name="total_gmb_followers">Customers who interacted with your GMB</string>
-  <string name="social_media_promotion">Social media promotion</string>
-  <string name="engaging_business_across_the_social_channels">See how your customers are engaging with your business across the social channels</string>
-  <string name="no_enquiry_yet">No enquiry yet</string>
-  <string name="promote_your_website_with_as_many_people_as_you_can">Promote your website with as many people as you can.</string>
+  <string name="social_media_promotion">My social media stats</string>
+  <string name="engaging_business_across_the_social_channels">See how your customers are engaging with your business across the social channels.</string>
+  <string name="no_enquiry_yet">No patient enquiry yet</string>
+  <string name="promote_your_website_with_as_many_people_as_you_can">Share your website with as many people as you can.</string>
   <string name="share_on_messanger">Share on messenger</string>
   <string name="share_on_instagram">Share on instagram</string>
   <string name="share_on_telegram">Share on telegram</string>
@@ -305,4 +306,12 @@
 
   <string name="deep_base_url">boost.nowfloats.com</string>
   <string name="deep_base_onelink_url">nowfloat.onelink.me</string>
+  <string name="website_engagement">Website engagement</string>
+  <string name="explore_what_all_things_boost_360_allows_you_to_do">Explore what all things Boost 360 allows you to do.</string>
+  <string name="explore_all">Explore all</string>
+  <string name="my_to_do_list">My To-Do list</string>
+  <string name="most_frequently_used_actions_to_manage">Most frequently used actions to manage</string>
+  <string name="show_more">Show more</string>
+  <string name="show_less">Show less</string>
+  <string name="or_share_on">Or share on...</string>
 </resources>
