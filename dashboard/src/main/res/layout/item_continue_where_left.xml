@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.framework.views.customViews.CustomCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_158"
+        app:cardCornerRadius="@dimen/size_20">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_122"
+                android:orientation="vertical">
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/customImageView12"
+                    android:layout_width="@dimen/size_60"
+                    android:layout_height="@dimen/size_60"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/size_28"
+                    android:src="@drawable/ic_e_commerce_settings"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_title_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_26"
+                    android:layout_marginTop="@dimen/size_28"
+                    android:fontFamily="@font/bold"
+                    android:gravity="start"
+                    android:includeFontPadding="false"
+                    android:lineSpacingMultiplier="0.8"
+                    android:text="Almost there..."
+                    android:textAlignment="gravity"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_24"
+                    app:layout_constraintEnd_toStartOf="@+id/customImageView12"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_title_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:layout_marginEnd="@dimen/size_8"
+                    android:layout_marginTop="@dimen/size_4"
+                    android:gravity="start"
+                    android:text="Complete e-commece setup to enable\nsale on your website."
+                    android:textAlignment="gravity"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="@dimen/text_12"
+                    app:layout_constraintEnd_toStartOf="@+id/customImageView12"
+                    app:layout_constraintStart_toStartOf="@+id/tv_title_2"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title_2" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/customImageView11"
+                    android:layout_width="@dimen/size_22"
+                    android:layout_height="@dimen/size_22"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:layout_marginEnd="@dimen/size_11"
+                    android:src="@drawable/ic_close_yellow"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_36"
+                android:background="@color/colorAccent"
+                android:fontFamily="@font/semi_bold"
+                android:gravity="center"
+                android:text="Go to e-commerce setup"
+                android:textColor="@color/white"
+                app:textType="BODY_3" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.framework.views.customViews.CustomCardView>
+</layout>

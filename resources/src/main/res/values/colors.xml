@@ -188,4 +188,15 @@
   <color name="orange_light">#FFF8E5</color>
   <color name="color_888888">#888888</color>
   <color name="color_FF9900">#FF9900</color>
+
+  <color name="purple_A795EF">#A795EF</color>
+  <color name="red_DE3C3C">#DE3C3C</color>
+  <color name="red_CE1312">#CE1312</color>
+  <color name="yellow_FFD600">#FFD600</color>
+  <color name="orange_FF9900">#FF9900</color>
+  <color name="purple_8B97FF">#8B97FF</color>
+  <color name="purple_BB6BD9">#BB6BD9</color>
+  <color name="green_92C7A1">#92C7A1</color>
+  <color name="blue_56CCF2">#56CCF2</color>
+
 </resources>

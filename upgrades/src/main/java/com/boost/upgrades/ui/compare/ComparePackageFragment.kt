@@ -34,6 +34,7 @@ import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.freeaddons.FreeAddonsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.utils.*
+import com.framework.views.VerticalSpaceItemDecoration
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
