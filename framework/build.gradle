@@ -147,6 +147,10 @@ dependencies {
 
     api 'com.auth0.android:jwtdecode:2.0.0'
 
+    //sdp
+    api 'com.intuit.sdp:sdp-android:1.0.6'
+    api 'com.intuit.ssp:ssp-android:1.0.6'
+
     // Declare the dependency for the Cloud Firestore library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     api 'com.google.firebase:firebase-firestore-ktx:23.0.4'

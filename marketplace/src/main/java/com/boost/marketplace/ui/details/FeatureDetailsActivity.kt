@@ -169,7 +169,7 @@ class FeatureDetailsActivity :
                     //clear cartOrderInfo from SharedPref to requestAPI again
                     prefs.storeCartOrderInfo(null)
 
-                    makeFlyAnimation(image1222Copy)
+//                    makeFlyAnimation(image1222Copy)
 
                     viewModel.addItemToCart1(addonDetails!!)
                     val event_attributes: HashMap<String, Any> = HashMap()
@@ -280,27 +280,27 @@ class FeatureDetailsActivity :
             }
         }
 
-        cost_per_month.setOnClickListener {
-            cost_per_month.background =
-                ContextCompat.getDrawable(applicationContext, R.drawable.rounded_stroke_orange_4)
-            cost_per_month_check.setImageResource(R.drawable.ic_checked)
-            cost_per_year.background =
-                ContextCompat.getDrawable(applicationContext, R.drawable.rounded_border_gray)
-            cost_per_year_check.setImageResource(R.drawable.rounded_border_gray)
-            cost_per_year_discount.background =
-                ContextCompat.getDrawable(applicationContext, R.drawable.ic_feature_discount_grey)
-        }
-
-        cost_per_year.setOnClickListener {
-            cost_per_month.background =
-                ContextCompat.getDrawable(applicationContext, R.drawable.rounded_border_gray)
-            cost_per_month_check.setImageResource(R.drawable.rounded_border_gray)
-            cost_per_year.background =
-                ContextCompat.getDrawable(applicationContext, R.drawable.rounded_stroke_orange_4)
-            cost_per_year_check.setImageResource(R.drawable.ic_checked)
-            cost_per_year_discount.background =
-                ContextCompat.getDrawable(applicationContext, R.drawable.ic_feature_discount)
-        }
+//        cost_per_month.setOnClickListener {
+//            cost_per_month.background =
+//                ContextCompat.getDrawable(applicationContext, R.drawable.rounded_stroke_orange_4)
+//            cost_per_month_check.setImageResource(R.drawable.ic_checked)
+//            cost_per_year.background =
+//                ContextCompat.getDrawable(applicationContext, R.drawable.rounded_border_gray)
+//            cost_per_year_check.setImageResource(R.drawable.rounded_border_gray)
+//            cost_per_year_discount.background =
+//                ContextCompat.getDrawable(applicationContext, R.drawable.ic_feature_discount_grey)
+//        }
+//
+//        cost_per_year.setOnClickListener {
+//            cost_per_month.background =
+//                ContextCompat.getDrawable(applicationContext, R.drawable.rounded_border_gray)
+//            cost_per_month_check.setImageResource(R.drawable.rounded_border_gray)
+//            cost_per_year.background =
+//                ContextCompat.getDrawable(applicationContext, R.drawable.rounded_stroke_orange_4)
+//            cost_per_year_check.setImageResource(R.drawable.ic_checked)
+//            cost_per_year_discount.background =
+//                ContextCompat.getDrawable(applicationContext, R.drawable.ic_feature_discount)
+//        }
     }
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -321,8 +321,8 @@ class FeatureDetailsActivity :
                     )
                 Glide.with(this).load(addonDetails!!.primary_image)
                     .into(image1222)
-                Glide.with(this).load(addonDetails!!.primary_image)
-                    .into(image1222Copy)
+//                Glide.with(this).load(addonDetails!!.primary_image)
+//                    .into(image1222Copy)
 
                 Glide.with(this).load(addonDetails!!.primary_image)
                     .fitCenter()
@@ -559,7 +559,7 @@ class FeatureDetailsActivity :
             //if the View is opened from package then hide button, price, discount and Cart icon
             if (intent.extras != null && intent.extras!!.containsKey("packageView")) {
                 imageViewCart121.visibility = View.INVISIBLE
-                unit_container.visibility = View.GONE
+//                unit_container.visibility = View.GONE
 //                orig_cost.visibility = View.GONE
 //                details_discount.visibility = View.GONE
                 add_item_to_cart.background = ContextCompat.getDrawable(
@@ -582,16 +582,16 @@ class FeatureDetailsActivity :
                 add_item_to_cart.setTextColor(Color.WHITE)
                 val discount = 100 - addonDetails!!.discount_percent
                 val paymentPrice = (discount * addonDetails!!.price) / 100
-                cost_per_month.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                    .format(paymentPrice) + "/unit/month"
-                cost_per_year.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                    .format(paymentPrice * 12) + "/unit/year"
-                if(addonDetails!!.discount_percent>0) {
-                    cost_per_year_discount.setText(discount.toString() + "% SAVING")
-                    cost_per_year_discount.visibility = View.VISIBLE
-                }else{
-                    cost_per_year_discount.visibility = View.GONE
-                }
+//                cost_per_month.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+//                    .format(paymentPrice) + "/unit/month"
+//                cost_per_year.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+//                    .format(paymentPrice * 12) + "/unit/year"
+//                if(addonDetails!!.discount_percent>0) {
+//                    cost_per_year_discount.setText(discount.toString() + "% SAVING")
+//                    cost_per_year_discount.visibility = View.VISIBLE
+//                }else{
+//                    cost_per_year_discount.visibility = View.GONE
+//                }
 
 //                //hide or show MRP price
 //                if (paymentPrice != addonDetails!!.price) {

@@ -9,7 +9,7 @@ import com.boost.dbcenterapi.upgradeDB.model.*
 
 import com.boost.dbcenterapi.upgradeDB.dao.*
 
-@Database(entities = [FeaturesModel::class, WidgetModel::class, BundlesModel::class, CartModel::class, CouponsModel::class, YoutubeVideoModel::class, MarketOfferModel::class], version = 17, exportSchema = false)
+@Database(entities = [FeaturesModel::class, WidgetModel::class, BundlesModel::class, CartModel::class, CouponsModel::class, YoutubeVideoModel::class, MarketOfferModel::class], version = 18, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
