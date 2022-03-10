@@ -33,7 +33,7 @@ enum class RecyclerViewItemType {
   OPTIONAL_TASKS_VIEW,
   POST_PURCHASE_1_VIEW,
   POST_PURCHASE_2_VIEW,
-  READINESS_SCORE_1_VIEW,
+  MY_TODO_LIST_ACTION,
   READINESS_SCORE_2_VIEW,
   RENEWAL_1_VIEW,
   RENEWAL_2_VIEW,
@@ -81,7 +81,7 @@ enum class RecyclerViewItemType {
       OPTIONAL_TASKS_VIEW -> R.layout.item_optional_tasks
       POST_PURCHASE_1_VIEW -> R.layout.item_post_purchase_1
       POST_PURCHASE_2_VIEW -> R.layout.item_post_purchase_2
-      READINESS_SCORE_1_VIEW -> R.layout.item_readiness_score_1
+      MY_TODO_LIST_ACTION -> R.layout.item_todo_list_action
       READINESS_SCORE_2_VIEW -> R.layout.item_readiness_score_2
       RENEWAL_1_VIEW -> R.layout.item_renewal_1
       RENEWAL_2_VIEW -> R.layout.item_renewal_2

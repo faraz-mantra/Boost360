@@ -34,7 +34,7 @@
     <androidx.viewpager2.widget.ViewPager2
       android:id="@+id/pager_my_todo_list"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/size_160"
+      android:layout_height="@dimen/size_174"
       android:layout_marginStart="@dimen/size_2"
       android:layout_marginTop="@dimen/size_10"
       android:clipChildren="false"
@@ -46,7 +46,7 @@
       android:layout_height="wrap_content"
       android:layout_centerHorizontal="true"
       android:layout_gravity="center_horizontal"
-      android:layout_marginTop="@dimen/size_10"
+      android:layout_marginTop="@dimen/size_4"
       android:gravity="center"
       app:dotsColor="@color/light_grey_1"
       app:dotsCornerRadius="@dimen/_6dp"

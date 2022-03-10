@@ -53,7 +53,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       OPTIONAL_TASKS_VIEW -> OptionalTasksViewHolder(binding as ItemOptionalTasksBinding)
       POST_PURCHASE_1_VIEW -> PostPurchase1ViewHolder(binding as ItemPostPurchase1Binding)
       POST_PURCHASE_2_VIEW -> PostPurchase2ViewHolder(binding as ItemPostPurchase2Binding)
-      READINESS_SCORE_1_VIEW -> ReadinessScore1ViewHolder(binding as ItemReadinessScore1Binding)
+      MY_TODO_LIST_ACTION -> MyToDoActionItemViewHolder(binding as ItemTodoListActionBinding)
       READINESS_SCORE_2_VIEW -> ReadinessScore2ViewHolder(binding as ItemReadinessScore2Binding)
       RENEWAL_1_VIEW -> Renewal1ViewHolder(binding as ItemRenewal1Binding)
       RENEWAL_2_VIEW -> Renewal2ViewHolder(binding as ItemRenewal2Binding)

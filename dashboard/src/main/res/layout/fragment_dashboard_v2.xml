@@ -88,7 +88,11 @@
           app:layout_constraintRight_toRightOf="parent"
           app:layout_constraintTop_toTopOf="parent">
 
-          <include layout="@layout/item_my_todo_list" />
+          <include
+            android:id="@+id/todo_view"
+            layout="@layout/item_my_todo_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         </com.framework.views.customViews.CustomCardView>
 
         <androidx.legacy.widget.Space

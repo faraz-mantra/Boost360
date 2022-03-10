@@ -157,11 +157,11 @@ class DashboardFragmentV2 : AppBaseFragment<FragmentDashboardV2Binding, Dashboar
     )
     binding?.viewBusinessReport?.title?.text = getString(if (isDoctor(session?.fP_AppExperienceCode)) R.string.patient_enquiries else R.string.customer_enquiries)
     binding?.txtVersion?.text = "Version ${baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName}"
-
     getAllDashboardSummary()
     getPremiumBanner()
     getChannelAccessToken()
     displayFestiveButtonView()
+    todoListItems()
   }
 
   override fun onResume() {
@@ -169,6 +169,16 @@ class DashboardFragmentV2 : AppBaseFragment<FragmentDashboardV2Binding, Dashboar
     setUserData()
     setSummaryDrScore()
     refreshData()
+  }
+
+  private fun todoListItems() {
+    binding?.todoView?.pagerMyTodoList?.apply {
+      val adapterTodo = AppBaseRecyclerViewAdapter(baseActivity, DemoToDoListCardsModel().getDataToDoList(), this@DashboardFragmentV2)
+      offscreenPageLimit = 3
+      adapter = adapterTodo
+      binding?.todoView?.dotIndicator?.setViewPager2(this)
+      setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+    }
   }
 
   private fun displayFestiveButtonView() {
