@@ -31,7 +31,7 @@
         android:layout_marginEnd="10dp"
         android:onClick="onDelete"
         android:padding="6dp"
-        android:src="@drawable/ic_delete" />
+        android:src="@drawable/ic_delete_app_service" />
 
     </FrameLayout>
 
@@ -66,9 +66,8 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="left"
-          android:onClick="onPreviousClick"
           android:padding="5dp"
-          android:src="@drawable/ic_arrow_right_white" />
+          android:src="@drawable/ic_arrow_right_white_app_service" />
 
         <TextView
           android:id="@+id/current"
@@ -108,9 +107,8 @@
           android:layout_height="wrap_content"
           android:layout_gravity="end"
           android:layout_marginStart="10dp"
-          android:onClick="onNextClick"
           android:padding="5dp"
-          android:src="@drawable/ic_arrow_right_white" />
+          android:src="@drawable/ic_arrow_right_white_app_service" />
 
       </FrameLayout>
 

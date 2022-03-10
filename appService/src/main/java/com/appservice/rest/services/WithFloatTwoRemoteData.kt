@@ -12,11 +12,10 @@ import com.appservice.model.updateBusiness.DeleteBizMessageRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
 import com.appservice.rest.EndPoints
 import com.framework.pref.clientId
-import com.framework.pref.clientId1
 import io.reactivex.Observable
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
+import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -188,5 +187,10 @@ interface WithFloatTwoRemoteData {
         @Query("clientId") cId: String?= clientId,
         @Body body: RequestBody,
         ): Observable<Response<ResponseBody>>
+
+    @POST(EndPoints.DELETE_BG_IMAGE)
+    fun deleteBackgroundImages(
+        @Body map: HashMap<String, String?>,
+    ): Observable<Response<ResponseBody>>
 
 }

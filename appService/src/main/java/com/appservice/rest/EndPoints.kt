@@ -73,6 +73,7 @@ object EndPoints {
   const val POST_PRODUCT_CATEGORY_VERB = "Discover/v1/FloatingPoint/update/"
   const val GET_MERCHANT_SUMMARY = "/Support/v1/dashboard/GetMerchantSummary"
   const val CREATE_BG_IMAGE="/Discover/v1/floatingPoint/createBackgroundImage"
+  const val DELETE_BG_IMAGE="/Discover/v1/floatingPoint/backgroundImage/delete"
 
   //TODO PRODUCT API 2 WITH FLOAT
   const val CREATE_PRODUCT = "Product/v1/Create"

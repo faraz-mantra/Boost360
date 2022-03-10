@@ -13,7 +13,6 @@ import com.appservice.rest.apiClients.WithFloatsApiTwoClient
 import com.appservice.rest.services.WithFloatTwoRemoteData
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Retrofit
 
@@ -37,6 +36,9 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
 
   fun createBGImage(body: RequestBody,fpId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.createBGImage(fpId,body=body), TaskCode.CREATE_BG_IMAGE)
+  }
+  fun deleteBGImage(map: HashMap<String, String?>,): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.deleteBackgroundImages(map), TaskCode.CREATE_BG_IMAGE)
   }
 
   fun addUpdateImageProductService(
