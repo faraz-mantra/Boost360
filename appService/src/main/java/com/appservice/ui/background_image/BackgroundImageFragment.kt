@@ -49,9 +49,13 @@ class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, 
         ImagePickerUtil.initLauncher(this)
         sessionLocal = UserSessionManager(baseActivity)
         setOnClickListener(binding?.btnDone)
-        getBackgroundImages()
     }
 
+    override fun onResume() {
+        super.onResume()
+        getBackgroundImages()
+
+    }
     private fun getBackgroundImages() {
 
         showProgress()
