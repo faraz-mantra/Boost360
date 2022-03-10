@@ -37,7 +37,8 @@ class FragmentEcommercePaymentCollectionSetup : AppBaseFragment<FragmentEcommerc
   }
 
   override fun getLayout(): Int {
-    return R.layout.fragment_ecommerce_payment_collection_setup_v2
+//    return R.layout.fragment_ecommerce_payment_collection_setup_v2
+    return R.layout.fragment_ecommerce_payment_collection_setup
   }
 
   override fun getViewModelClass(): Class<AppointmentSettingsViewModel> {

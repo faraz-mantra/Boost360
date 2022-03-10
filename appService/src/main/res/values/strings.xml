@@ -1103,4 +1103,10 @@
   <string name="select_tax_rate">Select tax rate</string>
   <string name="accept_cash_payments">Accept cash payments</string>
   <string name="doctor_list">Doctor List</string>
+  <string name="fee_inclusive_of_taxes">Fee (inclusive of taxes)</string>
+  <string name="note_if_you_want_to_enable_free_appointments_enter_appointment_fee_as_0_zero"><b>Note:</b> If you want to enable FREE appointments, enter appointment fee as ₹0 (Zero).</string>
+  <string name="appointment_slot_duration">Appointment slot duration</string>
+  <string name="minutes">Minutes</string>
+  <string name="note_slot_duration_shown_to_a_customer_book_a_general_appointment"><b>Note:</b> This will be slot duration shown to a customer when he is trying to book a general appointment on your website.</string>
+  <string name="please_appointment_business_hours_create_slots__booking_appointment"><b>Please note:</b> General appointment takes business hours as base to create slots for while booking appointment.</string>
 </resources>
