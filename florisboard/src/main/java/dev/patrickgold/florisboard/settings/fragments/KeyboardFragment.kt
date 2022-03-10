@@ -35,7 +35,7 @@ class KeyboardFragment : PreferenceFragmentCompat(),
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.prefs_keyboard)
-        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+        sharedPrefs = context?.let { PreferenceManager.getDefaultSharedPreferences(it) }
 
         heightFactorCustom = findPreference(PrefHelper.Keyboard.HEIGHT_FACTOR_CUSTOM)
         oneHandedModeScaleFactor = findPreference(PrefHelper.Keyboard.ONE_HANDED_MODE_SCALE_FACTOR)

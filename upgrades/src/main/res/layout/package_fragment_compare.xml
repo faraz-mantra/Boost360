@@ -40,7 +40,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="55dp"
-    android:background="#FF9F00"
+    android:background="@color/addons_toolbar"
     android:contentInsetStart="0dp"
     android:contentInsetEnd="0dp"
     android:visibility="gone"

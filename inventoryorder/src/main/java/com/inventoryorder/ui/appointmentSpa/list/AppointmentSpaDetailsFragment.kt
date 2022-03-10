@@ -106,14 +106,14 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
     var count = 0
     if (orderItem?.Items.isNullOrEmpty().not()) {
       orderItem?.Items?.forEach {
-        viewModel?.getProductDetails(it.Product?._id)?.observeOnce(viewLifecycleOwner, { it1 ->
+        viewModel?.getProductDetails(it.Product?._id)?.observeOnce(viewLifecycleOwner) { it1 ->
           count += 1
           val product = it1 as? ProductResponse
           if (count == orderItem?.Items?.size) {
             product?.let { it2 -> productList?.add(it2) }
             addProductToOrder()
           } else product?.let { it2 -> productList?.add(it2) }
-        })
+        }
       }
     } else addProductToOrder()
   }
@@ -148,7 +148,8 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
       }
     }
 
-    val product = order?.firstItemForAptConsult()?.product()
+    val item = order?.firstItemForAptConsult()
+    val product = item?.product()
     val extraDataSpa = order?.firstItemForAptConsult()?.getAptSpaExtraDetail()
     binding?.ctvAppointmentId?.text = "#${order?.ReferenceNumber}"
     binding?.textDateTime?.text = DateUtils.parseDate(order?.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_3, timeZone = TimeZone.getTimeZone("IST"))
@@ -162,7 +163,7 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
     binding?.textDate?.text = appointmentDate
 
     binding?.textStaff?.text = if (!extraDataSpa?.staffName.isNullOrBlank()) "Staff : ${extraDataSpa?.staffName}" else ""
-    binding?.textAppointmentAmount?.text = "${product?.getCurrencyCodeValue()} ${product?.price()}"
+    binding?.textAppointmentAmount?.text = "${product?.getCurrencyCodeValue()} ${item?.SalePrice?:0.0}"
 
     if (product?.ImageUri.isNullOrEmpty().not()) {
       Picasso.get().load(product?.ImageUri).into(binding?.imageServiceProvider)
@@ -464,59 +465,49 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
 
   private fun startApt(markAsShippedRequest: MarkAsShippedRequest) {
     showProgress()
-    viewModel?.markAsShipped(clientId, markAsShippedRequest)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.markAsShipped(clientId, markAsShippedRequest)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         orderItem?._id?.let { it1 ->
-          apiGetOrderDetails(
-            it1,
-            resources.getString(R.string.apt_start_success)
-          )
+          apiGetOrderDetails(it1, resources.getString(R.string.apt_start_success))
         }
       } else {
         showLongToast(it.message())
         hideProgress()
       }
-    })
+    }
   }
 
   private fun sendReBookingRequestApt() {
     showProgress()
-    viewModel?.sendReBookingReminder(clientId, this.orderItem?._id)
-      ?.observeOnce(viewLifecycleOwner, {
+    viewModel?.sendReBookingReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner) {
         if (it.isSuccess()) {
           orderItem?._id?.let { it1 ->
-            apiGetOrderDetails(
-              it1,
-              resources.getString(R.string.re_booking_reminder)
-            )
+            apiGetOrderDetails(it1, resources.getString(R.string.re_booking_reminder))
           }
         } else {
           showLongToast(it.message())
           hideProgress()
         }
-      })
+      }
   }
 
   private fun sendFeedbackRequestApt(request: FeedbackRequest) {
     showProgress()
-    viewModel?.sendOrderFeedbackRequest(clientId, request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.sendOrderFeedbackRequest(clientId, request)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         orderItem?._id?.let { it1 ->
-          apiGetOrderDetails(
-            it1,
-            resources.getString(R.string.appointment_feedback_requested)
-          )
+          apiGetOrderDetails(it1, resources.getString(R.string.appointment_feedback_requested))
         }
       } else {
         showLongToast(it.message())
         hideProgress()
       }
-    })
+    }
   }
 
   private fun serveCustomer(message: String) {
     showProgress()
-    viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         if (message.isNotEmpty()) {
           updateReason(
@@ -525,16 +516,13 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
             ExtraPropertiesOrder(deliveryRemark = message)
           )
         } else orderItem?._id?.let { it1 ->
-          apiGetOrderDetails(
-            it1,
-            resources.getString(R.string.appointment_serve)
-          )
+          apiGetOrderDetails(it1, resources.getString(R.string.appointment_serve))
         }
       } else {
         showLongToast(it.message())
         hideProgress()
       }
-    })
+    }
   }
 
   private fun apiCancelApt(cancellingEntity: String, reasonText: String) {
@@ -550,10 +538,7 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
               ExtraPropertiesOrder(cancellationRemark = reasonText)
             )
           } else orderItem?._id?.let { it1 ->
-            apiGetOrderDetails(
-              it1,
-              resources.getString(R.string.appointment_cancel)
-            )
+            apiGetOrderDetails(it1, resources.getString(R.string.appointment_cancel))
           }
         } else {
           showLongToast(it.message())
@@ -562,21 +547,16 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
       })
   }
 
-  private fun updateReason(
-    message: String,
-    type: String,
-    extraPropertiesOrder: ExtraPropertiesOrder
-  ) {
+  private fun updateReason(message: String, type: String, extraPropertiesOrder: ExtraPropertiesOrder) {
     val propertyRequest = UpdateOrderNPropertyRequest(
       updateExtraPropertyType = type,
       existingKeyName = "",
       orderId = this.orderItem?._id,
       extraPropertiesOrder = extraPropertiesOrder
     )
-    viewModel?.updateExtraPropertyOrder(clientId, requestCancel = propertyRequest)
-      ?.observeOnce(viewLifecycleOwner, {
+    viewModel?.updateExtraPropertyOrder(clientId, requestCancel = propertyRequest)?.observeOnce(viewLifecycleOwner) {
         orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, message) }
-      })
+      }
   }
 
   private fun apiConfirmApt(isSendPaymentLink: Boolean) {
@@ -586,10 +566,7 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
         if (it.isSuccess()) {
           if (isSendPaymentLink) sendPaymentLinkApt(getString(R.string.appointment_confirmed))
           else orderItem?._id?.let { it1 ->
-            apiGetOrderDetails(
-              it1,
-              getString(R.string.appointment_confirmed)
-            )
+            apiGetOrderDetails(it1, getString(R.string.appointment_confirmed))
           }
         } else {
           showLongToast(it.message())
@@ -600,24 +577,21 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
 
   private fun markReceivedPaymentRequest(request: PaymentReceivedRequest) {
     showProgress()
-    viewModel?.markPaymentReceivedMerchant(clientId, request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.markPaymentReceivedMerchant(clientId, request)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         orderItem?._id?.let { it1 ->
-          apiGetOrderDetails(
-            it1,
-            getString(R.string.payment_confirmed)
-          )
+          apiGetOrderDetails(it1, getString(R.string.payment_confirmed))
         }
       } else {
         showLongToast(it.message())
         hideProgress()
       }
-    })
+    }
   }
 
   private fun sendPaymentLinkApt(message: String) {
-    viewModel?.sendPaymentReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.sendPaymentReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner) {
       orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, message) }
-    })
+    }
   }
 }

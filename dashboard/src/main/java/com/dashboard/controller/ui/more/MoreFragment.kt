@@ -3,7 +3,6 @@ package com.dashboard.controller.ui.more
 import android.content.ActivityNotFoundException
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.view.*
 import android.widget.PopupWindow
@@ -39,7 +38,6 @@ import com.framework.pref.Key_Preferences
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_IMAGE_URI
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
 import com.framework.pref.UserSessionManager
-import com.framework.utils.InAppReviewUtils
 import com.framework.webengageconstant.*
 
 class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(), RecyclerItemClickListener {
@@ -142,10 +140,22 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       val data = it0 as? MoreSettingsResponse
       if (data != null) {
         usefulLinks = data.usefulLinks
+        isPaidUser()
         setHelpfulResources()
         binding?.rvAbout?.adapter = AppBaseRecyclerViewAdapter(baseActivity, data.aboutAppSection ?: arrayListOf(), this)
       } else showShortToast(getString(R.string.error_loading_more_page))
     })
+  }
+
+  private fun isPaidUser() {
+    if (session?.getStoreWidgets().isNullOrEmpty()) {
+      val index = usefulLinks?.indexOfFirst {
+        it.icon == UsefulLinksItem.IconType.refer_and_earn.name
+      }
+      if (index != null) {
+        usefulLinks?.removeAt(index)
+      }
+    }
   }
 
   private fun setHelpfulResources() {

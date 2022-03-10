@@ -512,6 +512,7 @@ fun AppCompatActivity.startListStaff(session: UserSessionManager?) {
 
 fun AppCompatActivity.startListDoctors(session: UserSessionManager?) {
   try {
+    WebEngageController.trackEvent(LIST_DOCTOR_PROFILE_DASHBOARD, CLICK, TO_BE_ADDED)
     startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = getBundleData(session))
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
@@ -642,7 +643,7 @@ fun AppCompatActivity.startOrderAptConsultList(session: UserSessionManager?, isO
 
 fun getSessionOrder(session: UserSessionManager?): Bundle {
   val data = PreferenceData(
-    AppConstant.CLIENT_ID_2, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
+    AppConstant.CLIENT_ID_ORDER, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
     session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
     session?.getFPDetails(Key_Preferences.LONGITUDE), session?.fP_AppExperienceCode
   )

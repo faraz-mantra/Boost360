@@ -39,6 +39,7 @@ open class BaseApplication : MultiDexApplication() {
     fun currentActivity(): AppCompatActivity? {
       return (instance as? BaseApplication)?.mFTActivityLifecycleCallbacks?.currentActivity as? AppCompatActivity
     }
+    fun isInitialised() = ::instance.isInitialized
   }
 
   override fun attachBaseContext(base: Context) {

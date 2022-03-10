@@ -16,10 +16,13 @@ import com.bumptech.glide.Priority
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
@@ -106,7 +109,7 @@ fun Context.loadGifGlide(mImageView: CustomImageView, gif_file: Int?, placeholde
   }
 }
 
-fun Activity.glideLoad(mImageView: CustomImageView, url: String, placeholder: Int, isCenterCrop: Boolean = false, isLoadBitmap: Boolean = false) {
+fun Activity.glideLoad(mImageView: CustomImageView, url: String, placeholder: Int, isCenterCrop: Boolean = false, isLoadBitmap: Boolean = false, isBlur: Boolean = false) {
   try {
     val options: RequestOptions = mImageView.getRequestOptionImage(placeholder)
     var glideImage:RequestBuilder<Drawable> ?=null
@@ -117,7 +120,9 @@ fun Activity.glideLoad(mImageView: CustomImageView, url: String, placeholder: In
       Glide.with(this).load(url).apply(options)
     }
 
+    if (isCenterCrop && isBlur) glideImage.transform(MultiTransformation(CenterCrop(), BlurTransformation(25, 3)))
     if (isCenterCrop) glideImage.centerCrop()
+    if (isBlur) glideImage.transform(BlurTransformation(25,3))
     if (isLoadBitmap) {
       glideImage.into(object : CustomTarget<Drawable>() {
         override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {

@@ -1,0 +1,234 @@
+{
+  "data": [
+    {
+      "type": "DOC",
+      "action_item": [
+        {
+          "title": "Manage everything on your business website",
+          "btnTitle": "Manage my website",
+          "desc": "Make content changes to all the pages of your website including business information, contact details, latest updates, products/services etc.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "All your business enquiries and interactions",
+          "btnTitle": "Manage business enquiries",
+          "desc": "Manage all your customer enquiries like messages, calls and appointments or orders. Respond to the enquiries, fullfit online orders, call back to the customers, add loyal customers to your newsletters etc.",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Explore premium features to get most out of JioOnline",
+          "btnTitle": "View feature marketplace",
+          "desc": "Find what all digital add-ons that can help you grow your business digitally. add-ons such as call tracker, a new website domain and many more relevant to your business category.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    },
+    {
+      "type": "HOS",
+      "action_item": [
+        {
+          "title": "Manage everything on your business website",
+          "btnTitle": "Manage my website",
+          "desc": "Make content changes to all the pages of your website including business information, contact details, latest updates, products/services etc.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "All your business enquiries and interactions",
+          "btnTitle": "Manage business enquiries",
+          "desc": "Manage all your customer enquiries like messages, calls and appointments or orders. Respond to the enquiries, fullfit online orders, call back to the customers, add loyal customers to your newsletters etc.",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Explore premium features to get most out of JioOnline",
+          "btnTitle": "View feature marketplace",
+          "desc": "Find what all digital add-ons that can help you grow your business digitally. add-ons such as call tracker, a new website domain and many more relevant to your business category.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    },
+    {
+      "type": "RTL",
+      "action_item": [
+        {
+          "title": "Manage everything on your business website",
+          "btnTitle": "Manage my website",
+          "desc": "Make content changes to all the pages of your website including business information, contact details, latest updates, products/services etc.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "All your business enquiries and interactions",
+          "btnTitle": "Manage business enquiries",
+          "desc": "Manage all your customer enquiries like messages, calls and appointments or orders. Respond to the enquiries, fullfit online orders, call back to the customers, add loyal customers to your newsletters etc.",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Explore premium features to get most out of JioOnline",
+          "btnTitle": "View feature marketplace",
+          "desc": "Find what all digital add-ons that can help you grow your business digitally. add-ons such as call tracker, a new website domain and many more relevant to your business category.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    },
+    {
+      "type": "EDU",
+      "action_item": [
+        {
+          "title": "Manage everything on your business website",
+          "btnTitle": "Manage my website",
+          "desc": "Make content changes to all the pages of your website including business information, contact details, latest updates, products/services etc.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "All your business enquiries and interactions",
+          "btnTitle": "Manage business enquiries",
+          "desc": "Manage all your customer enquiries like messages, calls and appointments or orders. Respond to the enquiries, fullfit online orders, call back to the customers, add loyal customers to your newsletters etc.",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Explore premium features to get most out of JioOnline",
+          "btnTitle": "View feature marketplace",
+          "desc": "Find what all digital add-ons that can help you grow your business digitally. add-ons such as call tracker, a new website domain and many more relevant to your business category.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    },
+    {
+      "type": "HOT",
+      "action_item": [
+        {
+          "title": "Manage everything on your business website",
+          "btnTitle": "Manage my website",
+          "desc": "Make content changes to all the pages of your website including business information, contact details, latest updates, products/services etc.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "All your business enquiries and interactions",
+          "btnTitle": "Manage business enquiries",
+          "desc": "Manage all your customer enquiries like messages, calls and appointments or orders. Respond to the enquiries, fullfit online orders, call back to the customers, add loyal customers to your newsletters etc.",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Explore premium features to get most out of JioOnline",
+          "btnTitle": "View feature marketplace",
+          "desc": "Find what all digital add-ons that can help you grow your business digitally. add-ons such as call tracker, a new website domain and many more relevant to your business category.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    },
+    {
+      "type": "MFG",
+      "action_item": [
+        {
+          "title": "Manage everything on your business website",
+          "btnTitle": "Manage my website",
+          "desc": "Make content changes to all the pages of your website including business information, contact details, latest updates, products/services etc.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "All your business enquiries and interactions",
+          "btnTitle": "Manage business enquiries",
+          "desc": "Manage all your customer enquiries like messages, calls and appointments or orders. Respond to the enquiries, fullfit online orders, call back to the customers, add loyal customers to your newsletters etc.",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Explore premium features to get most out of JioOnline",
+          "btnTitle": "View feature marketplace",
+          "desc": "Find what all digital add-ons that can help you grow your business digitally. add-ons such as call tracker, a new website domain and many more relevant to your business category.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    },
+    {
+      "type": "CAF",
+      "action_item": [
+        {
+          "title": "Manage everything on your business website",
+          "btnTitle": "Manage my website",
+          "desc": "Make content changes to all the pages of your website including business information, contact details, latest updates, products/services etc.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "All your business enquiries and interactions",
+          "btnTitle": "Manage business enquiries",
+          "desc": "Manage all your customer enquiries like messages, calls and appointments or orders. Respond to the enquiries, fullfit online orders, call back to the customers, add loyal customers to your newsletters etc.",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Explore premium features to get most out of JioOnline",
+          "btnTitle": "View feature marketplace",
+          "desc": "Find what all digital add-ons that can help you grow your business digitally. add-ons such as call tracker, a new website domain and many more relevant to your business category.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    },
+    {
+      "type": "SVC",
+      "action_item": [
+        {
+          "title": "Manage everything on your business website",
+          "btnTitle": "Manage my website",
+          "desc": "Make content changes to all the pages of your website including business information, contact details, latest updates, products/services etc.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "All your business enquiries and interactions",
+          "btnTitle": "Manage business enquiries",
+          "desc": "Manage all your customer enquiries like messages, calls and appointments or orders. Respond to the enquiries, fullfit online orders, call back to the customers, add loyal customers to your newsletters etc.",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Explore premium features to get most out of JioOnline",
+          "btnTitle": "View feature marketplace",
+          "desc": "Find what all digital add-ons that can help you grow your business digitally. add-ons such as call tracker, a new website domain and many more relevant to your business category.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    },
+    {
+      "type": "SAL",
+      "action_item": [
+        {
+          "title": "Manage everything on your business website",
+          "btnTitle": "Manage my website",
+          "desc": "Make content changes to all the pages of your website including business information, contact details, latest updates, products/services etc.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "All your business enquiries and interactions",
+          "btnTitle": "Manage business enquiries",
+          "desc": "Manage all your customer enquiries like messages, calls and appointments or orders. Respond to the enquiries, fullfit online orders, call back to the customers, add loyal customers to your newsletters etc.",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Explore premium features to get most out of JioOnline",
+          "btnTitle": "View feature marketplace",
+          "desc": "Find what all digital add-ons that can help you grow your business digitally. add-ons such as call tracker, a new website domain and many more relevant to your business category.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    },
+    {
+      "type": "SPA",
+      "action_item": [
+        {
+          "title": "Manage everything on your business website",
+          "btnTitle": "Manage my website",
+          "desc": "Make content changes to all the pages of your website including business information, contact details, latest updates, products/services etc.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "All your business enquiries and interactions",
+          "btnTitle": "Manage business enquiries",
+          "desc": "Manage all your customer enquiries like messages, calls and appointments or orders. Respond to the enquiries, fullfit online orders, call back to the customers, add loyal customers to your newsletters etc.",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Explore premium features to get most out of JioOnline",
+          "btnTitle": "View feature marketplace",
+          "desc": "Find what all digital add-ons that can help you grow your business digitally. add-ons such as call tracker, a new website domain and many more relevant to your business category.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    }
+  ]
+}

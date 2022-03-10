@@ -29,6 +29,15 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
   private var progressView: ProgressDialog? = null
   protected lateinit var sessionLocal: UserSessionManager
 
+  protected val isStaffType: Boolean
+    get() {
+      return isStaffType(sessionLocal.fP_AppExperienceCode)
+    }
+  protected val isDoctor: Boolean
+    get() {
+      return isDoctorProfile(sessionLocal.fP_AppExperienceCode)
+    }
+
   protected val pref: SharedPreferences?
     get() {
       return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
@@ -117,7 +126,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
   }
 
 
-  fun showAlertCapLimit(msg: String,buyItemKey: String = "") {
+  fun showAlertCapLimit(msg: String, buyItemKey: String = "") {
     val builder = AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.CustomAlertDialogTheme))
     builder.setCancelable(false)
     builder.setTitle("You have exceeded limit!").setMessage(msg).setPositiveButton("Explore Add-ons") { dialog, which ->
@@ -153,20 +162,16 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
     }
   }
 
-
-  fun getStaffType(category_code:String?):String{
-    return when(category_code){
-      "DOC", "HOS"->"DOCTORS"
-      else ->"STAFF"
+  fun getStaffType(category_code: String?): String {
+    return when (category_code) {
+      "DOC", "HOS" -> "DOCTORS"
+      else -> "STAFF"
     }
   }
+}
 
-  fun isDoctorProfile(category_code:String?): Boolean {
-    return when(category_code){
-      "DOC", "HOS"-> true
-      else ->false
-    }
-  }
+fun isDoctorProfile(category_code: String?): Boolean {
+  return (category_code.equals("DOC", true) || category_code.equals("HOS", true))
 }
 
 fun getProductType(category_code: String?): String {

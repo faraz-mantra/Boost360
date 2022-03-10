@@ -60,7 +60,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
   }
 
   override fun onCreateView() {
-     super.onCreateView()
+    super.onCreateView()
     session = UserSessionManager(baseActivity)
     WebEngageController.trackEvent(BOOST_ADD_ONS_PAGE, PAGE_VIEW, session?.fpTag)
   }
@@ -236,7 +236,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.table_reservations_d -> baseActivity.startBookTable(session)
     ManageBusinessData.BusinessType.sales_analytics -> baseActivity.startAptOrderSummary(session)
 //    ManageBusinessData.BusinessType.search_analytics -> baseActivity.startSearchQuery(session)
-    ManageBusinessData.BusinessType.ic_staff_profile_d -> baseActivity.startListStaff(session)
+    ManageBusinessData.BusinessType.ic_staff_profile_d, ManageBusinessData.BusinessType.doctor_profile -> baseActivity.startListStaff(session)
 
     ManageBusinessData.BusinessType.room_booking_engine_d,
     ManageBusinessData.BusinessType.search_analytics,
@@ -260,9 +260,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.social_sharing_analytics,
     ManageBusinessData.BusinessType.membership_plans,
     ManageBusinessData.BusinessType.restaurant_story_d,
-    ManageBusinessData.BusinessType.doctor_profile,
-    ManageBusinessData.BusinessType.faculty_profiles_d,
-    -> {
+    ManageBusinessData.BusinessType.faculty_profiles_d -> {
       Toast.makeText(baseActivity, AppDashboardApplication.instance.getString(R.string.coming_soon), Toast.LENGTH_SHORT).show()
     }
   }

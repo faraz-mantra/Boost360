@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_1"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorAccentLight"
         app:fontFamily="@font/barlow_medium"
         app:textType="HEADING_7"
         tools:text="3,45,890" />

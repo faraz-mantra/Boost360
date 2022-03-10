@@ -30,6 +30,9 @@ android {
         partone {
             dimension "default"
         }
+        jioonline {
+            dimension "default"
+        }
     }
 
     compileOptions {
@@ -45,8 +48,5 @@ android {
 }
 
 dependencies {
-
     api project(path: ':resources')
-
-
 }

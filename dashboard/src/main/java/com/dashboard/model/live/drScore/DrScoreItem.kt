@@ -25,32 +25,32 @@ class DrScoreItem(
     return if (isUpdate) R.drawable.ic_ok_11_d else R.drawable.ic_alert_error
   }
 
-  enum class DrScoreItemType {
-    boolean_add_business_name,
-    boolean_add_business_description,
-    boolean_add_clinic_logo,
-    boolean_add_featured_image_video,
-    boolean_select_what_you_sell,
-    boolean_add_business_hours,
-    boolean_add_contact_details,
-    boolean_add_custom_domain_name_and_ssl,
-    number_updates_posted,
-    boolean_social_channel_connected,
-    number_services_added,
-    number_products_added,
-    boolean_create_staff,
-    boolean_add_bank_account,
-    boolean_catalog_setup,
-    boolean_general_appointments,
-    boolean_business_verification,
-    boolean_image_uploaded_to_gallery,
-    boolean_create_custom_page,
-    boolean_share_business_card,
-    boolean_create_doctor_e_profile,
-    boolean_create_sample_in_clinic_appointment,
-    boolean_create_sample_video_consultation,
-    boolean_manage_appointment_settings,
-    boolean_respond_to_customer_enquiries;
+  enum class DrScoreItemType(var priority:Int) {
+    boolean_add_business_name(1),
+    boolean_add_business_description(3),
+    boolean_add_clinic_logo(4),
+    boolean_add_featured_image_video(5),
+    boolean_select_what_you_sell(10),
+    boolean_add_business_hours(10),
+    boolean_add_contact_details(2),
+    boolean_add_custom_domain_name_and_ssl(6),
+    number_updates_posted(10),
+    boolean_social_channel_connected(10),
+    number_services_added(10),
+    number_products_added(10),
+    boolean_create_staff(10),
+    boolean_add_bank_account(10),
+    boolean_catalog_setup(10),
+    boolean_general_appointments(10),
+    boolean_business_verification(10),
+    boolean_image_uploaded_to_gallery(10),
+    boolean_create_custom_page(10),
+    boolean_share_business_card(10),
+    boolean_create_doctor_e_profile(10),
+    boolean_create_sample_in_clinic_appointment(10),
+    boolean_create_sample_video_consultation(10),
+    boolean_manage_appointment_settings(10),
+    boolean_respond_to_customer_enquiries(10);
 
     companion object {
       fun fromName(name: String?): DrScoreItemType? =

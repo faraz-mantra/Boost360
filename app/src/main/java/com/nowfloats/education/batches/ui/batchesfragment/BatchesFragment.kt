@@ -29,6 +29,7 @@ import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
+import com.nowfloats.Login.UserSessionManager
 
 import com.nowfloats.education.batches.BatchesActivity
 import com.nowfloats.education.batches.adapter.BatchesAdapter
@@ -46,10 +47,12 @@ class BatchesFragment : BaseFragment<BatchesFragmentBinding, BaseViewModel>(), I
   private val myViewModel by inject<BatchesViewModel>()
   private val batchesAdapter: BatchesAdapter by lazy { BatchesAdapter(this) }
   private lateinit var zeroCaseFragment: AppFragmentZeroCase
+  private lateinit var session: UserSessionManager
 
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+
 
   }
 
@@ -64,7 +67,7 @@ class BatchesFragment : BaseFragment<BatchesFragmentBinding, BaseViewModel>(), I
 
     if (Utils.isConnectedToInternet(requireContext())) {
       showLoader(getString(R.string.loading_batches))
-      myViewModel.getUpcomingBatches()
+      myViewModel.getUpcomingBatches(session.fpTag)
     } else {
       showLongToast(getString(R.string.no_internet))
     }
@@ -92,7 +95,7 @@ class BatchesFragment : BaseFragment<BatchesFragmentBinding, BaseViewModel>(), I
             Toast.makeText(requireContext(), getString(R.string.batch_deleted_successfully), Toast.LENGTH_SHORT).show()
             showLoader(getString(R.string.loading_batches))
             setDeleteBatchesLiveDataValue("")
-            getUpcomingBatches()
+            getUpcomingBatches(session.fpTag)
           }
         }
       })
@@ -188,6 +191,7 @@ class BatchesFragment : BaseFragment<BatchesFragmentBinding, BaseViewModel>(), I
   override fun onCreateView() {
     zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.UPCOMING_BATCHES, this, requireActivity()).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment, false)
+    session = UserSessionManager(requireContext(), requireActivity())
 
     binding?.root?.let {
       setHeader(it)
