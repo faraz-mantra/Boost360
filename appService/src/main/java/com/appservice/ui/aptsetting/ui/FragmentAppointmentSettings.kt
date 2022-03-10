@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.SearchView
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
+import com.appservice.base.isDoctorProfile
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentAppointmentSettingsBinding
@@ -70,14 +71,14 @@ class FragmentAppointmentSettings : AppBaseFragment<FragmentAppointmentSettingsB
 
   private fun getStatusData() {
     if (isFirst) showProgress()
-    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner) {
       val dataItem = it as? AppointmentStatusResponse
       if (dataItem?.isSuccess() == true && dataItem.result != null) {
         setUpRecyclerView(dataItem.result!!.getAppointmentTilesArray(isDoctorProfile(sessionLocal.fP_AppExperienceCode)))
       } else showShortToast("Appointment setting data getting error!")
       isFirst = false
       hideProgress()
-    })
+    }
   }
 
   private fun filterList(newText: String?) {

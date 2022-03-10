@@ -91,7 +91,7 @@
             <com.framework.views.customViews.CustomTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="Fee (inclusive of taxes)"
+              android:text="@string/fee_inclusive_of_taxes"
               android:textColor="@color/black_4a4a4a"
               app:fontFamily="@font/semi_bold"
               app:textType="CAPTION" />
@@ -115,7 +115,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_10"
-              android:text="Note: If you want to enable FREE appointments, enter appointment fee as ₹0 (Zero)."
+              android:text="@string/note_if_you_want_to_enable_free_appointments_enter_appointment_fee_as_0_zero"
               android:textColor="@color/gray_828282"
               app:textType="CAPTION" />
 
@@ -123,7 +123,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_20"
-              android:text="Appointment slot duration"
+              android:text="@string/appointment_slot_duration"
               android:textColor="@color/black_4a4a4a"
               app:fontFamily="@font/semi_bold"
               app:textType="CAPTION" />
@@ -158,7 +158,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
-                android:text="Minutes"
+                android:text="@string/minutes"
                 android:textColor="@color/black_333333"
                 app:fontFamily="@font/semi_bold"
                 app:layout_constraintBottom_toBottomOf="@id/etd_slot_duration"
@@ -173,7 +173,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_10"
-              android:text="Note: This will be slot duration shown to a customer when he is trying to book a general appointment on your website."
+              android:text="@string/note_slot_duration_shown_to_a_customer_book_a_general_appointment"
               android:textColor="@color/gray_828282"
               app:textType="CAPTION" />
 
@@ -185,7 +185,8 @@
           android:layout_height="wrap_content"
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginTop="@dimen/size_16"
-          android:text="Please note: General appointment takes business hours as base to create slots for while booking appointment."
+          android:id="@+id/note_txt"
+          android:text="@string/please_appointment_business_hours_create_slots__booking_appointment"
           android:textColor="@color/gray_828282"
           app:textType="CAPTION" />
 

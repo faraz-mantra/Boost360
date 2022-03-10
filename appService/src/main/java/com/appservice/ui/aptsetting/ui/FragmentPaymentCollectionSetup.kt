@@ -30,7 +30,8 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
   var isEdit: Boolean = false
 
   override fun getLayout(): Int {
-    return R.layout.fragment_payment_collection_setup_v2
+//    return R.layout.fragment_payment_collection_setup_v2
+    return R.layout.fragment_payment_collection_setup
   }
 
   override fun getViewModelClass(): Class<AppointmentSettingsViewModel> {
