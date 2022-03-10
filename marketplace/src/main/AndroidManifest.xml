@@ -39,6 +39,7 @@
       android:name=".ui.webview.WebViewActivity"
       android:screenOrientation="portrait" />
       <activity android:name=".ui.browse.SearchActivity" />
+      <activity android:name=".ui.details.emails.EmailActivity" />
   </application>
 
 </manifest>

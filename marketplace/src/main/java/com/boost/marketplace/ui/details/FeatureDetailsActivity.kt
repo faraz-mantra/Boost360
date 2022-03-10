@@ -9,27 +9,36 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.LearnMoreLink
 import com.boost.dbcenterapi.data.remote.ApiInterface
+import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
-import com.boost.dbcenterapi.utils.*
+import com.boost.dbcenterapi.utils.CircleAnimationUtil
+import com.boost.dbcenterapi.utils.Constants
+import com.boost.dbcenterapi.utils.SharedPrefs
+import com.boost.dbcenterapi.utils.WebEngageController
 import com.boost.marketplace.R
+import com.boost.marketplace.adapter.FeaturePacksAdapter
 import com.boost.marketplace.adapter.ReviewViewPagerAdapter
 import com.boost.marketplace.adapter.SecondaryImagesAdapter
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityFeatureDetailsBinding
 import com.boost.marketplace.infra.utils.Constants.Companion.IMAGE_PREVIEW_POPUP_FRAGMENT
 import com.boost.marketplace.interfaces.DetailsFragmentListener
+import com.boost.marketplace.ui.details.emails.EmailActivity
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
+import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -39,23 +48,10 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
-import androidx.lifecycle.Observer
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
-import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
-import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
-import com.boost.marketplace.adapter.FeaturePacksAdapter
-import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
-import com.boost.marketplace.ui.popup.PackagePopUpFragement
-import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_feature_details.*
 import retrofit2.Retrofit
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class FeatureDetailsActivity :
     AppBaseActivity<ActivityFeatureDetailsBinding, FeatureDetailsViewModel>(),
@@ -281,6 +277,10 @@ class FeatureDetailsActivity :
         }
 
         cost_per_month.setOnClickListener {
+            val intent = Intent(this, EmailActivity::class.java)
+                    startActivity(intent)
+
+
             cost_per_month.background =
                 ContextCompat.getDrawable(applicationContext, R.drawable.rounded_stroke_orange_4)
             cost_per_month_check.setImageResource(R.drawable.ic_checked)

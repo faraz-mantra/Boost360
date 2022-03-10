@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.Result
@@ -16,7 +17,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.Int
 
-class HistoryOrdersChildAdapter(itemList: List<Result>?,) :
+class HistoryOrdersChildAdapter(itemList: List<Result>?) :
     RecyclerView.Adapter<HistoryOrdersChildAdapter.upgradeViewHolder>() {
 
     private var list = ArrayList<Result>()
@@ -40,7 +41,7 @@ class HistoryOrdersChildAdapter(itemList: List<Result>?,) :
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
 
-      //  val itemLists = StringBuilder()
+        //  val itemLists = StringBuilder()
 //        if (list.get(position).orderId != null) {
 //            holder.orderId.setText("Order id #" + list.get(position).orderId!!.replace("order_", ""))
 //        }
@@ -57,13 +58,41 @@ class HistoryOrdersChildAdapter(itemList: List<Result>?,) :
 ////            itemLists.append(list.get(position).purchasedPackageDetails.WidgetPacks.get(0).Name)
 ////            holder.itemCount.visibility = View.GONE
 //        }
-          holder.itemLists.text=list.get(position).NameOfWidget
+
+
+        holder.title1.text =
+            list.get(position).purchasedPackageDetails.WidgetPacks.get(position).Name
+        var default_validity_months= list.get(position).purchasedPackageDetails.WidgetPacks.get(position).ExpiryInMths.toInt()
+        val oneMonthFromNow = Calendar.getInstance()
+        oneMonthFromNow.add(Calendar.MONTH, default_validity_months)
+        val nowFormat = SimpleDateFormat("dd MMM yy")
+        nowFormat.setTimeZone(Calendar.getInstance().getTimeZone())
+        val oneMonthFormat = SimpleDateFormat("dd MMM yy")
+        oneMonthFormat.setTimeZone(oneMonthFromNow.getTimeZone())
+        holder.validity.setText("(Valid till " + nowFormat.format(oneMonthFromNow.time) + ")")
+            list.get(position).purchasedPackageDetails.WidgetPacks.get(position).ExpiryInMths.toString()
+
+
+//        CompositeDisposable().add(
+//            AppDatabase.getInstance(Application())!!
+//                .widgetDao()
+//                .getCartItemById(list.get(position).purchasedPackageDetails.WidgetPacks.get(position).WidgetKey)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({
+//                    Glide.with(context).load(it.get(position).image).into(holder.single_paidaddon_image)
+//                }, {
+//                    it.printStackTrace()
+//                })
+//        )
+
 
         val dataString = list.get(position).CreatedOn
         val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
         val dateFormat = SimpleDateFormat("'Time' hh:mm a")
         holder.itemDate.setText(dateFormat.format(date))
-        holder.validity.text= list.get(position).totalMonthsValidity.toString()
+
+      //  holder.validity.text = list.get(position).totalMonthsValidity.toString()
         /*val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         val output = SimpleDateFormat("dd-MMM-yyyy (hh:mm a)")
 
@@ -76,9 +105,6 @@ class HistoryOrdersChildAdapter(itemList: List<Result>?,) :
         }*/
 
 
-//        holder.amount.setText(
-//            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(list.get(position).paidAmount)
-//        )
         holder.button.setOnClickListener {
             val intent = Intent(context, InvoiceActivity::class.java)
             intent.putExtra("link", list!!.get(position).invoiceUrl)
@@ -94,21 +120,15 @@ class HistoryOrdersChildAdapter(itemList: List<Result>?,) :
         notifyItemRangeInserted(initPosition, list.size)
     }
 
+
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    //    var orderId = itemView.findViewById<TextView>(R.id.item_orderId)!!
-     //   var amount = itemView.findViewById<TextView>(R.id.history_item_amount)!!
-        var itemLists = itemView.findViewById<TextView>(R.id.title)!!
-     //   var itemCount = itemView.findViewById<TextView>(R.id.item_count)!!
+        var title1 = itemView.findViewById<TextView>(R.id.title1)!!
         var itemDate = itemView.findViewById<TextView>(R.id.item_orderId)!!
-        var button=itemView.findViewById<Button>(R.id.btn_invoice)
-        var validity=itemView.findViewById<TextView>(R.id.validity)
-
+        var button = itemView.findViewById<Button>(R.id.btn_invoice)
+        var validity = itemView.findViewById<TextView>(R.id.validity)
+        var single_paidaddon_image = itemView.findViewById<ImageView>(R.id.single_paidaddon_image)
         var context: Context = itemView.context
 
-
-//        fun upgradeListItem(updateModel: UpdatesModel) {
-//
-//        }
     }
 }
