@@ -30,7 +30,7 @@ data class CapLimitFeatureResponseItem(
   }
 
   fun filterProperty(type: PropertiesItem.KeyType): PropertiesItem {
-    return properties?.firstOrNull { it.key == type.name }?:PropertiesItem()
+    return properties?.firstOrNull { it.key == type.name } ?: PropertiesItem()
   }
 }
 
@@ -44,5 +44,6 @@ fun List<CapLimitFeatureResponseItem>.saveCapData() {
 }
 
 fun List<CapLimitFeatureResponseItem>.filterFeature(type: CapLimitFeatureResponseItem.FeatureType): CapLimitFeatureResponseItem? {
-  return this.firstOrNull { it.featureKey == type.name }
+  val unlimited = this.firstOrNull { it.featureKey == CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name }
+  return unlimited ?: this.firstOrNull { it.featureKey == type.name }
 }
