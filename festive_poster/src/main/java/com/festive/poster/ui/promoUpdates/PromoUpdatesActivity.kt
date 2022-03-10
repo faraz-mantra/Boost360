@@ -22,7 +22,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseViewModel>() {
 
-    private var sharedViewModel: FestivePosterSharedViewModel?=null
+    private var sharedViewModel: FestivePosterSharedViewModel? = null
 
     override fun getLayout(): Int {
         return R.layout.activity_promo_updates
@@ -38,10 +38,11 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseVi
         WebEngageController.trackEvent(Post_Promotional_Update_Click)
 
         sharedViewModel = ViewModelProvider(this).get(FestivePosterSharedViewModel::class.java)
-       // sharedViewModel?.shouldRefresh=true
+        // sharedViewModel?.shouldRefresh=true
         observeFragmentStack()
         setOnClickListener(binding?.ivToolbarBack)
-        addFragmentReplace(binding?.container?.id,PromoLandingPageFragment.newInstance(),true)
+        setOnClickListener(binding?.ivLove)
+        addFragmentReplace(binding?.container?.id, PromoLandingPageFragment.newInstance(), true)
     }
 
 
@@ -49,11 +50,15 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseVi
         super.onResume()
         setStatusBarColor(R.color.toolbar_bg)
     }
+
     override fun onClick(v: View?) {
         super.onClick(v)
-        when(v){
-            binding?.ivToolbarBack->{
+        when (v) {
+            binding?.ivToolbarBack -> {
                 onBackPressed()
+            }
+            binding?.ivLove -> {
+                addFragmentReplace(binding?.container?.id, FavouriteListFragment.newInstance(), true)
             }
         }
     }
@@ -61,16 +66,16 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseVi
 
     override fun onBackPressed() {
         super.onBackPressed()
-        if (getTopFragment()==null) finish()
+        if (getTopFragment() == null) finish()
     }
 
-    fun observeFragmentStack(){
+    fun observeFragmentStack() {
         supportFragmentManager.addOnBackStackChangedListener {
-            when(getTopFragment()){
-               is PromoLandingPageFragment->{
-                   binding?.tvToolbarTitle?.text = getString(R.string.update_studios)
-               }
-                is BrowseAllFragment->{
+            when (getTopFragment()) {
+                is PromoLandingPageFragment -> {
+                    binding?.tvToolbarTitle?.text = getString(R.string.update_studios)
+                }
+                is BrowseAllFragment -> {
                     binding?.tvToolbarTitle?.text = getString(R.string.browse_all)
 
                 }
