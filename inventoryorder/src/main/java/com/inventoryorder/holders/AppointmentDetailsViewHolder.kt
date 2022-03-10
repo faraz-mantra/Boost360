@@ -22,21 +22,17 @@ class AppointmentDetailsViewHolder(binding: ItemBookingDetailsBinding) : AppBase
   private fun setDataResponseForOrderDetails(item: ItemN) {
     binding.tvDishName.text = item.Product?.extraItemProductConsultation()?.detailsConsultation()
 //    binding.tvDishName.text = item.Product?.Name?.trim()
-    binding.tvDishQuantity.text =
-      item.Product?.extraItemProductConsultation()?.durationTxt() ?: "0 Minute"
+    binding.tvDishQuantity.text = item.Product?.extraItemProductConsultation()?.durationTxt() ?: "0 Minute"
 
 //    val scheduleDate = item.scheduledStartDate()
 //    if (scheduleDate.isNullOrEmpty().not()) {
 //      binding.tvScheduleDate.visible()
 //      binding.tvScheduleDate.text = "${activity?.resources?.getString(R.string.schedule)}${DateUtils.parseDate(scheduleDate, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2)}"
 //    } else binding.tvScheduleDate.gone()
-
 //    binding.tvDishQuantity.text = "Qty: ${item.Quantity}"
-    val currency = takeIf {
-      item.Product?.CurrencyCode.isNullOrEmpty().not()
-    }?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
-    val actualPrice = item.product().price()
-    val salePrice = actualPrice - item.product().discountAmount()
+    val currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
+    val actualPrice = item.ActualPrice ?: 0.0//item.product().price()
+    val salePrice = item.SalePrice ?: 0.0//actualPrice - item.product().discountAmount()
     binding.tvDishAmount.text = "$currency $salePrice"
     if (actualPrice > 0.0 && actualPrice > salePrice) {
       binding.tvActualPrice.paintFlags =
@@ -46,7 +42,6 @@ class AppointmentDetailsViewHolder(binding: ItemBookingDetailsBinding) : AppBase
     } else binding.tvActualPrice.visibility = View.INVISIBLE
     var url: String? = item.product_detail?.ImageUri?.trim()
     if (url.isNullOrEmpty()) url = item.Product?.ImageUri?.trim()
-    url?.let { activity?.glideLoad(binding.ivDishItem, it, R.drawable.placeholder_image) }
-      ?: (binding.ivDishItem.setImageResource(R.drawable.placeholder_image))
+    url?.let { activity?.glideLoad(binding.ivDishItem, it, R.drawable.placeholder_image) } ?: (binding.ivDishItem.setImageResource(R.drawable.placeholder_image))
   }
 }

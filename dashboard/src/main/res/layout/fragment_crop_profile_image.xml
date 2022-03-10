@@ -55,7 +55,7 @@
           android:layout_height="@dimen/size_15"
           android:src="@drawable/ic_img" />
 
-        <com.google.android.material.slider.Slider
+        <SeekBar
           android:id="@+id/slider"
           android:layout_width="@dimen/size_200"
           android:layout_height="wrap_content"

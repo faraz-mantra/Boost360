@@ -9,8 +9,7 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import java.text.DecimalFormat
 
-class OrderItemDetailsViewHolder(binding: ItemOrderDetailsBinding) :
-  AppBaseRecyclerViewHolder<ItemOrderDetailsBinding>(binding) {
+class OrderItemDetailsViewHolder(binding: ItemOrderDetailsBinding) : AppBaseRecyclerViewHolder<ItemOrderDetailsBinding>(binding) {
 
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
@@ -24,16 +23,13 @@ class OrderItemDetailsViewHolder(binding: ItemOrderDetailsBinding) :
     binding.tvDishName.text = item.Product?.Name?.trim()
     binding.tvDishQuantity.text = "Qty: ${item.Quantity}"
 
-    val currency = takeIf {
-      item.Product?.CurrencyCode.isNullOrEmpty().not()
-    }?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
-    val actualPrice = item.product().price()
-    val salePrice = actualPrice - item.product().discountAmount()
+    val currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
+//    val actualPrice = item.product().price()
+    val salePrice = item.SalePrice ?: 0.0//actualPrice - item.product().discountAmount()
 
     if (item.Quantity != null) {
       val totalPrice = salePrice * item.Quantity
-
-      binding.tvPrice.text = "$currency ${DecimalFormat("##,##,##0").format(item.SalePrice)}"
+      binding.tvPrice.text = "$currency ${DecimalFormat("##,##,##0").format(salePrice)}"
       binding.tvQty.text = " * ${item.Quantity}"
       binding.tvDishAmount.text = "$currency ${DecimalFormat("##,##,##0").format(totalPrice)}"
     } else {

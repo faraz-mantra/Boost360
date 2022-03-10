@@ -76,8 +76,8 @@
         android:enabled="true"
         android:textAllCaps="false"
         android:gravity="center"
-        android:text="@string/contact_support"
-        android:textColor="@color/colorAccent" />
+        android:text="@string/contact_support_n"
+        android:textColor="@color/ButtoncolorAccent" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
   </androidx.appcompat.widget.LinearLayoutCompat>

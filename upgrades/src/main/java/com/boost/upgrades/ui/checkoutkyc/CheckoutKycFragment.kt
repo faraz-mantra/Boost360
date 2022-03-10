@@ -74,6 +74,7 @@ class CheckoutKycFragment : DialogFragment() {
 
     confirm_btn.setOnClickListener {
       if (validateAgreement()) {
+        viewModel.updateCheckoutKycClose(true)
         if (!customerInfoState) { //no customer available
           //create customer payment profile
           viewModel.createCustomerInfo((activity as? UpgradeActivity)?.getAccessToken()?:"",
@@ -146,7 +147,7 @@ class CheckoutKycFragment : DialogFragment() {
     }
 
     close_popup.setOnClickListener {
-      viewModel.updateCheckoutKycClose(true)
+//      viewModel.updateCheckoutKycClose(false)
       dismiss()
     }
     dialog!!.setOnKeyListener { dialog, keyCode, event ->

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -96,20 +97,22 @@ public class AboutFragment extends Fragment {
                         intent.putExtra("WEBSITE_NAME", getString(R.string.setting_faq_url));
                         break;
                     case 2:
-                        WebEngageController.trackEvent(ABOUT_BOOST_FB_LIKE, NO_EVENT_LABLE, NULL);
-                        Methods.likeUsFacebook(mContext, "");
+                        Toast.makeText(mContext, "Coming soon...", Toast.LENGTH_SHORT).show();
+//                        WebEngageController.trackEvent(ABOUT_BOOST_FB_LIKE, NO_EVENT_LABLE, NULL);
+//                        Methods.likeUsFacebook(mContext, "");
                         return;
                     case 3:
-                        WebEngageController.trackEvent(ABOUT_BOOST_TWITTER_LIKE, NO_EVENT_LABLE, NULL);
-                        intent = new Intent(Intent.ACTION_VIEW);
-                        try {
-                            getActivity().getPackageManager().getPackageInfo(getString(R.string.twitter_package), 0);
-                            intent.setData(Uri.parse(Constants.TWITTER_ID_URL));
-                        } catch (PackageManager.NameNotFoundException e1) {
-                            intent.setData(Uri.parse(Constants.TWITTER_URL));
-                            e1.printStackTrace();
-                        }
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        Toast.makeText(mContext, "Coming soon...", Toast.LENGTH_SHORT).show();
+//                        WebEngageController.trackEvent(ABOUT_BOOST_TWITTER_LIKE, NO_EVENT_LABLE, NULL);
+//                        intent = new Intent(Intent.ACTION_VIEW);
+//                        try {
+//                            getActivity().getPackageManager().getPackageInfo(getString(R.string.twitter_package), 0);
+//                            intent.setData(Uri.parse(Constants.TWITTER_ID_URL));
+//                        } catch (PackageManager.NameNotFoundException e1) {
+//                            intent.setData(Uri.parse(Constants.TWITTER_URL));
+//                            e1.printStackTrace();
+//                        }
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
                         break;
                     case 4:
                         WebEngageController.trackEvent(ABOUT_BOOST_PLAY_STORE_RATING, NO_EVENT_LABLE, NULL);
