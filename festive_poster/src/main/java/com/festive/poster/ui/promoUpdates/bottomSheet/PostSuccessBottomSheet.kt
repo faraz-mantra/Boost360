@@ -62,6 +62,7 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
         }
         binding!!.cardBigAnim.isVisible = posterImgPath==null
         binding!!.cardSmallAnim.isVisible = posterImgPath!=null
+        binding!!.ivPosterCard.isVisible = posterImgPath!=null
 
     }
 

@@ -17,10 +17,7 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.festive.poster.ui.promoUpdates.bottomSheet.SubscribePlanBottomSheet
-import com.festive.poster.utils.MarketPlaceUtils
-import com.festive.poster.utils.SvgUtils
-import com.festive.poster.utils.WebEngageController
-import com.festive.poster.utils.isPromoWidgetActive
+import com.festive.poster.utils.*
 import com.festive.poster.viewmodels.PostUpdatesViewModel
 import com.framework.base.BaseActivity
 import com.framework.constants.Constants
@@ -227,46 +224,17 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
                 switchToSelectedItem()
             }
             RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal->{
-                item as PosterModel
-                val variant = item.variants?.firstOrNull()
-                if (isPromoWidgetActive()){
-
-                    SvgUtils.shareUncompressedSvg(variant?.svgUrl,item,
-                        binding.root.context, PackageNames.WHATSAPP)
-                }else{
-                    SubscribePlanBottomSheet.newInstance(object :SubscribePlanBottomSheet.Callbacks{
-                        override fun onBuyClick() {
-                            MarketPlaceUtils.launchCartActivity(requireActivity(),
-                                PromoUpdatesActivity::class.java.name,null,null,item.tags,null)
-
-                        }
-                    }).show(parentFragmentManager, SubscribePlanBottomSheet::class.java.name)
-                }
+                posterWhatsappShareClicked(item as PosterModel,
+                    requireActivity() as BaseActivity<*, *>
+                )
             }
             RecyclerViewActionType.POST_CLICKED.ordinal-> {
-                lifecycleScope.launch {
-                    withContext(Dispatchers.Default) {
-                        val file = SvgUtils.svgToBitmap(item as PosterModel)
-                            ?.saveAsImageToAppFolder(
-                                activity?.getExternalFilesDir(null)?.path +
-                                        File.separator + com.framework.constants.Constants.UPDATE_PIC_FILE_NAME
-                            )
-                        if (file?.exists() == true) {
-                            PostPreviewSocialActivity.launchActivity(
-                                requireActivity(),
-                                item.greeting_message,
-                                file.path,
-                                item.tags,
-                                IntentConstants.UpdateType.UPDATE_PROMO_POST.name
-                            )
-                        }
-
-                    }
+                posterPostClicked(item as PosterModel, requireActivity() as BaseActivity<*, *>)
                 }
             }
 
         }
-    }
+
 
     override fun onChildClick(
         childPosition: Int,
@@ -276,7 +244,18 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
         actionType: Int
     ) {
         when(actionType){
-
+            RecyclerViewActionType.POSTER_LOVE_CLICKED.ordinal->{
+                callFavApi(childItem as PosterModel)
+            }
         }
+    }
+
+    private fun callFavApi(posterModel: PosterModel) {
+        viewModel?.favPoster(session?.fPID,session?.fpTag,posterModel.id,)?.observe(viewLifecycleOwner){
+            if (it.isSuccess()){
+                posterModel.details?.Favourite= posterModel.details?.Favourite?.not() == true
+            }
+        }
+
     }
 }

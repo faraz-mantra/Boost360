@@ -1,6 +1,7 @@
 package com.festive.poster.ui.promoUpdates.holders
 
 import android.content.Intent
+import com.festive.poster.R
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.ListItemTemplateForVpBinding
 import com.festive.poster.models.PosterModel
@@ -30,6 +31,16 @@ class TemplateForVPViewHolder(binding: ListItemTemplateForVpBinding):
             listener?.onItemClick(position,item,RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal)
 
 
+        }
+
+        if (model.details?.Favourite == true){
+            binding.ivLove.setTintColor(getColor(R.color.colorEB5757)!!)
+        }else{
+            binding.ivLove.setTintColor(getColor(R.color.colorDBDBDB)!!)
+
+        }
+        binding.cardLove.setOnClickListener {
+            listener?.onItemClick(position,item,RecyclerViewActionType.POSTER_LOVE_CLICKED.ordinal)
         }
 
         binding.btnPost.setOnClickListener {

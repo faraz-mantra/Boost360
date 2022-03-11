@@ -9,6 +9,8 @@ object EndPoints {
 
     const val TEMPLATE_VIEW_CONFIG="Templates/v1/GetTemplatesViewConfig"
     const val GET_TEMPLATES="Templates/v1/GetTemplates"
+    const val GET_FAV_TEMPLATES="/Templates/v1/GetFavouriteTemplates"
+    const val FAV_TEMPLATE="/Templates/v1/MarkTemplateAsFavourite"
 
     const val FEATURE_PROCESSOR_BASE = "https://featureprocessor.withfloats.com/"
     const val GET_FEATURE_DETAILS="Features/v1/GetFeatureDetils"

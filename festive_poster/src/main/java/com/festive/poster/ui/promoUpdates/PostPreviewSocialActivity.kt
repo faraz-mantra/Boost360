@@ -77,13 +77,14 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     private var connectedChannels: ArrayList<String> = arrayListOf()
     private var session:UserSessionManager?=null
     private var captionIntent :String?=null
+    private var dataloaded=false
     private val updateType by lazy {
         intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IntentConstants.IK_UPDATE_TYPE)
     }
     private val posterImgPath by lazy {
         intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IntentConstants.IK_POSTER)
     }
-    private val tags:ArrayList<String> by lazy {
+    private val tags:ArrayList<String>? by lazy {
         convertJsonToObj(
             intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IntentConstants.IK_TAGS)
         )
@@ -153,7 +154,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                         Key_Preferences.STORE_WIDGETS,
                         convertListObjToString(list)
                     )
-                    isUserPremium(isPromoWidgetActive())
+                    isUserPremium(isPromoWidgetActive()||updateType!=IntentConstants.UpdateType.UPDATE_PROMO_POST.name)
 
                 }
             }
@@ -172,40 +173,43 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         }
 
         binding?.tvPostUpdate?.setOnClickListener {
-            var socialShare = ""
-            val checkedItems = uiChBoxChannelList?.filter { it.isChecked==true }
-            checkedItems?.forEachIndexed { index, socialPlatformModel ->
+            if (dataloaded){
+                var socialShare = ""
+                val checkedItems = uiChBoxChannelList?.filter { it.isChecked==true }
+                checkedItems?.forEachIndexed { index, socialPlatformModel ->
 
-                when(socialPlatformModel.channelType){
-                    SocialPreviewChannel.WEBSITE->{
-                        socialShare += "Website"
-                    }
-                    SocialPreviewChannel.EMAIL->{
-                        socialShare += "Email"
-                    }
-                    SocialPreviewChannel.FACEBOOK->{
-                        socialShare += "Facebook"
-                    }
-                    SocialPreviewChannel.GMB->{
-                        socialShare += "GMB"
-                    }
-                    SocialPreviewChannel.TWITTER->{
-                        socialShare += "Twitter"
-                    }
+                    when(socialPlatformModel.channelType){
+                        SocialPreviewChannel.WEBSITE->{
+                            socialShare += "Website"
+                        }
+                        SocialPreviewChannel.EMAIL->{
+                            socialShare += "Email"
+                        }
+                        SocialPreviewChannel.FACEBOOK->{
+                            socialShare += "Facebook"
+                        }
+                        SocialPreviewChannel.GMB->{
+                            socialShare += "GMB"
+                        }
+                        SocialPreviewChannel.TWITTER->{
+                            socialShare += "Twitter"
+                        }
 
+                    }
+                    if (index==checkedItems.size-1){
+                        socialShare+="."
+                    }else if (index==checkedItems.size-2){
+                        socialShare+=" & "
+                    }
+                    else{
+                        socialShare+=", "
+                    }
                 }
-                if (index==checkedItems.size-1){
-                    socialShare+="."
-                }else if (index==checkedItems.size-2){
-                    socialShare+=" & "
-                }
-                else{
-                    socialShare+=", "
-                }
+                posterProgressSheet =  PostingProgressBottomSheet.newInstance(posterImgPath,socialShare)
+                saveUpdatePost()
+                posterProgressSheet?.show(supportFragmentManager, PostingProgressBottomSheet::class.java.name)
             }
-            posterProgressSheet =  PostingProgressBottomSheet.newInstance(posterImgPath,socialShare)
-            saveUpdatePost()
-            posterProgressSheet?.show(supportFragmentManager, PostingProgressBottomSheet::class.java.name)
+
         }
 
         binding?.ivClosePreview?.setOnClickListener {
@@ -226,6 +230,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             binding?.tvPostUpdate?.gone()
             enableGrayScale(binding?.tvPreviewTitle, binding?.tvSelected, binding?.rvSocialPlatforms)
         }else{
+            binding?.tvPostUpdate?.visible()
             binding?.tvChooseAPromoPack?.gone()
         }
     }
@@ -253,19 +258,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     }
 
     fun setChannels(){
-        val requestFloatsModel = NavigatorManager.getRequest()
-        if (true/*requestFloatsModel==null*/){
-            getChannelsFromJson()
-        }else{
-            val  channelList = requestFloatsModel?.categoryDataModel?.channels
-
-            if (channelList.isNullOrEmpty()){
-                showLongToast(getString(R.string.channel_not_found))
-            }else{
-                setChannelAdapter(/*channelList*/)
-            }
-        }
-
+        getChannelsFromJson()
     }
 
     fun setChannelAdapter(){
@@ -281,7 +274,6 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
         binding?.tvSelected?.text = getString(R.string.placeholder_selected,getCheckedChannelCount())
         binding?.tvPostUpdate?.text = getString(R.string.post_on_placeholder_platform,getCheckedChannelCount())
-        binding?.tvPostUpdate?.visible()
         binding?.shimmerLayout?.gone()
         binding?.shimmerPreviews?.gone()
         binding?.shimmerLayout?.stopShimmer()
@@ -296,6 +288,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
        return uiChBoxChannelList?.filter { it.isChecked==true }?.size?:0
     }
     private fun getChannelsFromJson() {
+        dataloaded=false
         binding?.shimmerLayout?.visible()
         binding?.shimmerPreviews?.visible()
         binding?.shimmerPreviews?.startShimmer()
@@ -529,6 +522,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             adapter  = AppBaseRecyclerViewAdapter(this@PostPreviewSocialActivity, filteredList!!, this@PostPreviewSocialActivity)
         }
 
+
     }
 
     private fun shouldAddToChannelList(channel: ChannelModel): Boolean {
@@ -720,6 +714,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             uiPreviewChannelList?.add(SocialPreviewModel(posterImgPath,session?.fPName,captionIntent,true,SocialPreviewChannel.EMAIL))
             setChannelAdapter()
             setupPreviewList()
+            dataloaded=true
 
 
         }

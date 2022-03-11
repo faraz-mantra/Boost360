@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
+import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.FragmentBrowseAllBinding
 import com.festive.poster.databinding.FragmentFavouriteListBinding
 import com.festive.poster.models.PosterModel
@@ -14,8 +15,13 @@ import com.festive.poster.models.PosterPackModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.festive.poster.utils.WebEngageController
+import com.festive.poster.utils.posterPostClicked
+import com.festive.poster.utils.posterWhatsappShareClicked
 import com.festive.poster.viewmodels.PostUpdatesViewModel
+import com.framework.base.BaseActivity
 import com.framework.pref.UserSessionManager
+import com.framework.webengageconstant.Promotional_Update_Category_Click
 import com.google.gson.Gson
 
 class FavouriteListFragment: AppBaseFragment<FragmentFavouriteListBinding, PostUpdatesViewModel>(), RecyclerItemClickListener {
@@ -36,6 +42,7 @@ class FavouriteListFragment: AppBaseFragment<FragmentFavouriteListBinding, PostU
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
     }
     companion object {
 
@@ -54,9 +61,26 @@ class FavouriteListFragment: AppBaseFragment<FragmentFavouriteListBinding, PostU
 
 
 
+
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        TODO("Not yet implemented")
+        when(actionType){
+            RecyclerViewActionType.BROWSE_ALL_POSTER_CAT_CLICKED.ordinal->{
+                WebEngageController.trackEvent(Promotional_Update_Category_Click)
+
+                categoryList?.forEach { it.isSelected =false }
+                categoryList?.get(position)?.isSelected=true
+                categoryAdapter?.notifyDataSetChanged()
+                selectedPos = position
+            }
+            RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal->{
+                posterWhatsappShareClicked(item as PosterModel,
+                    requireActivity() as BaseActivity<*, *>
+                )
+            }
+            RecyclerViewActionType.POST_CLICKED.ordinal-> {
+                posterPostClicked(item as PosterModel, requireActivity() as BaseActivity<*, *>)
+            }
+        }
+
     }
-
-
 }

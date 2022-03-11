@@ -22,10 +22,7 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.festive.poster.ui.promoUpdates.bottomSheet.SubscribePlanBottomSheet
-import com.festive.poster.utils.MarketPlaceUtils
-import com.festive.poster.utils.SvgUtils
-import com.festive.poster.utils.WebEngageController
-import com.festive.poster.utils.isPromoWidgetActive
+import com.festive.poster.utils.*
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.base.BaseActivity
@@ -198,8 +195,14 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                                 templateList.add(template.clone()!!)
                             }
                         }
-                        val filterdList = templateList.take(5).toArrayList()
-                        filterdList.add(PosterModel(layout_id = RecyclerViewItemType.VIEW_MORE_POSTER.getLayout()))
+                        val filterdList= ArrayList<PosterModel>()
+                        if (templateList.size>=4){
+                            filterdList.addAll(
+                                templateList.take(4))
+                            filterdList.add(PosterModel(layout_id = RecyclerViewItemType.VIEW_MORE_POSTER.getLayout()))
+                        }else{
+                            filterdList.addAll(templateList)
+                        }
                         if (templateList.isNotEmpty()){
                             dataList?.add(
                                 PosterPackModel(
@@ -261,22 +264,12 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
     ) {
         when(actionType){
             RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal->{
-                childItem as PosterModel
-                val variant = childItem.variants?.firstOrNull()
-                if (isPromoWidgetActive()){
-
-                    SvgUtils.shareUncompressedSvg(variant?.svgUrl,childItem,
-                        binding.root.context, PackageNames.WHATSAPP)
-                }else{
-                    SubscribePlanBottomSheet.newInstance(object : SubscribePlanBottomSheet.Callbacks{
-                        override fun onBuyClick() {
-                            MarketPlaceUtils.launchCartActivity(requireActivity(),
-                                PromoUpdatesActivity::class.java.name,null,null,childItem.tags,
-                                null)
-
-                        }
-                    }).show(parentFragmentManager, SubscribePlanBottomSheet::class.java.name)
-                }
+                posterWhatsappShareClicked(childItem as PosterModel,
+                    requireActivity() as BaseActivity<*, *>
+                )
+            }
+            RecyclerViewActionType.POSTER_LOVE_CLICKED.ordinal->{
+                callFavApi(childItem as PosterModel,childPosition)
             }
             RecyclerViewActionType.POSTER_VIEW_MORE_CLICKED.ordinal->{
                 parentItem as PosterPackModel
@@ -288,27 +281,18 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
             }
             RecyclerViewActionType.POST_CLICKED.ordinal-> {
                 Log.i(TAG, "onItemClick: ")
-                lifecycleScope.launch {
-                    withContext(Dispatchers.Default) {
-                        val file = SvgUtils.svgToBitmap(childItem as PosterModel)
-                            ?.saveAsImageToAppFolder(
-                                activity?.getExternalFilesDir(null)?.path +
-                                        File.separator + com.framework.constants.Constants.UPDATE_PIC_FILE_NAME
-                            )
-                        if (file?.exists() == true) {
-                            PostPreviewSocialActivity.launchActivity(
-                                requireActivity(),
-                                childItem.greeting_message,
-                                file.path,
-                                childItem.tags,
-                                IntentConstants.UpdateType.UPDATE_PROMO_POST.name
-
-                            )
-                        }
-
-                    }
-                }
+                posterPostClicked(childItem as PosterModel, requireActivity() as BaseActivity<*, *>)
             }
         }
+    }
+
+    private fun callFavApi(posterModel: PosterModel,position: Int) {
+        viewModel?.favPoster(session?.fPID,session?.fpTag,posterModel.id)?.observe(viewLifecycleOwner){
+            if (it.isSuccess()){
+                posterModel.details?.Favourite= posterModel.details?.Favourite?.not() == true
+                adapter?.notifyItemChanged(position)
+            }
+        }
+
     }
 }

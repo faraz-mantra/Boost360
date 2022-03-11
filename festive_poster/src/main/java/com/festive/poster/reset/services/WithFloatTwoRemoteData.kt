@@ -4,6 +4,7 @@ import com.festive.poster.models.CustomerDetails
 import com.festive.poster.models.MerchantSummaryResponse
 import com.festive.poster.models.PostUpdateTaskRequest
 import com.festive.poster.reset.EndPoints
+import com.framework.base.BaseResponse
 import com.google.gson.JsonObject
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -55,4 +56,6 @@ interface WithFloatTwoRemoteData {
     @Query("clientId") clientId: String?,
     @Query("fpTag") fpTag: String?
   ): Observable<Response<MerchantSummaryResponse>>
+
+
 }
