@@ -59,8 +59,7 @@ class DashboardViewModel : BaseViewModel() {
   }
 
   fun getWhatsappBusiness(request: String?, auth: String): LiveData<BaseResponse> {
-    return WhatsAppRepository.getWhatsappBusiness(request = getJsonRequest(request), auth = auth)
-      .toLiveData()
+    return WhatsAppRepository.getWhatsappBusiness(request = getJsonRequest(request), auth = auth).toLiveData()
   }
 
   fun nfxProcess(request: NFXProcessRequest?): LiveData<BaseResponse> {
