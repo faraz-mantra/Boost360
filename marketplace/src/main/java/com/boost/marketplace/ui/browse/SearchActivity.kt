@@ -80,19 +80,26 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
         clear_text.setOnClickListener {
             search_value.setText("")
         }
+
+        val tempString = SpannableString("Pack(s) having add-on")
+        tempString.setSpan(StyleSpan(Typeface.BOLD), 0, 7, 0)
+        package_title.setText(tempString)
+
         search_value.addTextChangedListener(object: TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if(p0!=null && p0?.length>3){
-                    package_title.text = SpannableString("Pack(s) having add-on named `"+p0.toString()+"`")
-                        .setSpan(StyleSpan(Typeface.BOLD), 0, 7, 0).toString()
+                if(p0!=null && p0.length>3){
+                    val tempString = SpannableString("Pack(s) having add-on named `"+p0.toString()+"`")
+                    tempString.setSpan(StyleSpan(Typeface.BOLD), 0, 7, 0)
+                    package_title.setText(tempString)
                     updateAllItemBySearchValue(p0.toString())
                 } else{
-                    package_title.text = SpannableString("Pack(s) having add-on")
-                        .setSpan(StyleSpan(Typeface.BOLD), 0, 7, 0).toString()
+                    val tempString = SpannableString("Pack(s) having add-on")
+                    tempString.setSpan(StyleSpan(Typeface.BOLD), 0, 7, 0)
+                    package_title.setText(tempString)
                     updateRecyclerViewItems(allFeatures,allBundles)
                 }
             }

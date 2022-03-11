@@ -221,17 +221,10 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
-        try {
-            viewModel.getCartItems()
-        } catch (e: Exception) {
-            SentryController.captureException(e)
-        }
     }
 
 
     private fun initMvvm() {
-
-
         //  initializeFreeAddonsRecyclerView()
         viewModel.cartResult().observe(this, Observer {
             cartList = it
@@ -693,6 +686,15 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
         intent.putExtra("itemId", item.boost_widget_key)
 
         startActivity(intent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        try {
+            viewModel.getCartItems()
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
     }
 
 }

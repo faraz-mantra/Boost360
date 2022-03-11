@@ -19,9 +19,9 @@ import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.BusinessDeta
 import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.TaxDetails
 import com.boost.dbcenterapi.data.api_model.customerId.get.Result
+import com.boost.dbcenterapi.utils.Utils.isValidMobile
 import com.boost.cart.utils.Utils.isValidGSTIN
 import com.boost.cart.utils.Utils.isValidMail
-import com.boost.cart.utils.Utils.isValidMobile
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.splash_fragment.*
 

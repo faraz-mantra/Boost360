@@ -3,6 +3,7 @@ package com.boost.marketplace.adapter
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
@@ -28,15 +29,12 @@ class BrowseParentFeaturesAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.title.setText(upgradeList.get(position))
         getFeaturesByType(holder, position)
-        if(position==0){
-            holder.options.visibility = View.VISIBLE
+        if(position == 0){
+            holder.titleLayout.visibility = View.GONE
         }else{
-            holder.options.visibility = View.GONE
+            holder.titleLayout.visibility = View.VISIBLE
         }
 
-        holder.options.setOnClickListener {
-
-        }
     }
 
     override fun getItemCount(): Int {
@@ -53,26 +51,43 @@ class BrowseParentFeaturesAdapter(
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title = itemView.findViewById<TextView>(R.id.title)
         val desc = itemView.findViewById<TextView>(R.id.desc)
-        val options = itemView.findViewById<ImageView>(R.id.options)
+        val titleLayout = itemView.findViewById<LinearLayout>(R.id.feature_name_ll)
         val recyclerview = itemView.findViewById<RecyclerView>(R.id.recyclerView)
     }
 
 
     fun getFeaturesByType(holder: ViewHolder, position: Int) {
-        CompositeDisposable().add(
-            AppDatabase.getInstance(activity.application)!!
-                .featuresDao()
-                .getFeaturesItemsByType(upgradeList.get(position), "MERCHANT_TRAINING")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    val adapter = BrowseChildFeaturesAdapter(it,addonsListener)
-                    holder.recyclerview.adapter = adapter
-                    adapter.notifyDataSetChanged()
-                }, {
-                    it.printStackTrace()
-                })
-        )
+        if (position == 0) {
+            CompositeDisposable().add(
+                AppDatabase.getInstance(activity.application)!!
+                    .featuresDao()
+                    .getAllFeatures()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        val adapter = BrowseChildFeaturesAdapter(ArrayList(it.subList(0,4)) , addonsListener)
+                        holder.recyclerview.adapter = adapter
+                        adapter.notifyDataSetChanged()
+                    }, {
+                        it.printStackTrace()
+                    })
+            )
+        } else {
+            CompositeDisposable().add(
+                AppDatabase.getInstance(activity.application)!!
+                    .featuresDao()
+                    .getFeaturesItemsByType(upgradeList.get(position), "MERCHANT_TRAINING")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        val adapter = BrowseChildFeaturesAdapter(it, addonsListener)
+                        holder.recyclerview.adapter = adapter
+                        adapter.notifyDataSetChanged()
+                    }, {
+                        it.printStackTrace()
+                    })
+            )
+        }
     }
 
 

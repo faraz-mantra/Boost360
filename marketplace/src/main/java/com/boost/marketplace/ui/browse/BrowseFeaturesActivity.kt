@@ -17,12 +17,14 @@ import com.boost.marketplace.adapter.BrowseParentFeaturesAdapter
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityBrowseFeaturesBinding
 import com.boost.marketplace.interfaces.AddonsListener
+import com.boost.marketplace.interfaces.CategorySelectorListener
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.framework.analytics.SentryController
 import kotlinx.android.synthetic.main.activity_browse_features.*
 
 class BrowseFeaturesActivity :
-    AppBaseActivity<ActivityBrowseFeaturesBinding, BrowseFeaturesViewModel>(),AddonsListener {
+    AppBaseActivity<ActivityBrowseFeaturesBinding, BrowseFeaturesViewModel>(),
+    AddonsListener, CategorySelectorListener {
 
 
     var singleWidgetKey: String? = null
@@ -52,6 +54,7 @@ class BrowseFeaturesActivity :
     lateinit var progressDialog: ProgressDialog
     var userPurchsedWidgets = ArrayList<String>()
     var categoryType = String()
+    lateinit var categorySelectorBottomSheet: CategorySelectorBottomSheet
 
     override fun getLayout(): Int {
         return R.layout.activity_browse_features
@@ -78,6 +81,7 @@ class BrowseFeaturesActivity :
 
 
         progressDialog = ProgressDialog(this)
+        categorySelectorBottomSheet = CategorySelectorBottomSheet(this, this)
 
         adapter = BrowseParentFeaturesAdapter(arrayListOf(), this,this)
         viewModel.setApplicationLifecycle(application,this)
@@ -104,6 +108,9 @@ class BrowseFeaturesActivity :
         }
         binding?.browseFeaturesBack?.setOnClickListener {
             finish()
+        }
+        binding?.options?.setOnClickListener {
+            categorySelectorBottomSheet.show(this.supportFragmentManager, "CATEGORY_SELECTOR")
         }
         binding?.browseCart?.setOnClickListener {
             val intent = Intent(
@@ -163,17 +170,18 @@ class BrowseFeaturesActivity :
 
 
     private fun initializeAddonCategoryRecycler() {
-        val gridLayoutManager = GridLayoutManager(applicationContext, 1)
-        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        browse_features_rv.apply {
-            layoutManager = gridLayoutManager
-            browse_features_rv.adapter = adapter
-        }
+//        val gridLayoutManager = GridLayoutManager(applicationContext, 1)
+//        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+//        browse_features_rv.apply {
+//            layoutManager = gridLayoutManager
+//        }
+        browse_features_rv.adapter = adapter
     }
 
 
     fun updateAddonCategoryRecycler(list: List<FeaturesModel>) {
         val addonsCategoryTypes = arrayListOf<String>()
+        addonsCategoryTypes.add("Trending")
         for (singleFeaturesModel in list) {
             if (singleFeaturesModel.target_business_usecase != null && !addonsCategoryTypes.contains(
                     singleFeaturesModel.target_business_usecase
@@ -237,6 +245,17 @@ class BrowseFeaturesActivity :
 //                startActivity(intent)
         // intent.putExtra("itemId", item!!.cta_feature_key)
         startActivity(intent)
+    }
+
+    override fun onCategoryClicked(item: String) {
+        categorySelectorBottomSheet.dismiss()
+        trend_title.setText(item)
+        val addonsCategoryTypes = arrayListOf<String>()
+        addonsCategoryTypes.add(item)
+        adapter.addupdates(addonsCategoryTypes)
+        browse_features_rv.adapter = adapter
+        adapter.notifyDataSetChanged()
+        browse_features_rv.isFocusable = false
     }
 
 
