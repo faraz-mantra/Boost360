@@ -98,14 +98,14 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun capLimitCheck() {
-    val featureService = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureType.PRODUCTCATALOGUE)
+    val featureService = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureKey.PRODUCTCATALOGUE)
     val capLimitService = featureService?.filterProperty(PropertiesItem.KeyType.LIMIT)
     if (isEdit.not() && capLimitService != null) {
       viewModel?.getSearchListings(sessionLocal.fpTag, sessionLocal.fPID, "", 0, 5)?.observeOnce(viewLifecycleOwner, {
         val data = (it as? ServiceSearchListingResponse)?.result?.paging
         if (data?.count != null && capLimitService.getValueN() != null && data.count >= capLimitService.getValueN()!!) {
           baseActivity.hideKeyBoard()
-          showAlertCapLimit("Can't add the service catalogue, please activate your premium Add-ons plan.",CapLimitFeatureResponseItem.FeatureType.PRODUCTCATALOGUE.name)
+          showAlertCapLimit("Can't add the service catalogue, please activate your premium Add-ons plan.",CapLimitFeatureResponseItem.FeatureKey.PRODUCTCATALOGUE.name)
         }
       })
     }
