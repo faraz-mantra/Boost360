@@ -12,6 +12,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:fitsSystemWindows="true"
+      android:background="@color/white"
       android:orientation="vertical">
 
     <FrameLayout
@@ -73,7 +74,7 @@
               android:layout_marginTop="22dp"
               android:layout_marginLeft="@dimen/_5sdp"
               android:fontFamily="@font/open_sans"
-              android:text="Comparing packs"
+              android:text="Comparing Packs"
               android:textColor="@color/white"
               android:textSize="@dimen/txt_18sp"
               android:textStyle="bold"
@@ -110,7 +111,7 @@
         <RelativeLayout
             android:id="@+id/rl_viewpage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="25dp">
 
           <com.facebook.shimmer.ShimmerFrameLayout
@@ -160,7 +161,7 @@
           <androidx.constraintlayout.widget.ConstraintLayout
               android:id="@+id/package_layout"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="match_parent"
               android:layout_marginTop="0dp"
               android:clickable="true"
               android:focusable="true"
@@ -185,7 +186,7 @@
             <LinearLayout
                 android:id="@+id/ll_package_viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 app:layout_constraintBottom_toTopOf="@+id/upgradeText"
@@ -197,7 +198,7 @@
               <androidx.viewpager2.widget.ViewPager2
                   android:id="@+id/package_viewpager"
                   android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
+                  android:layout_height="match_parent"
                   android:clipChildren="false"
                   android:clipToPadding="false"
                   app:layout_constraintEnd_toEndOf="parent"

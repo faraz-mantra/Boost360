@@ -1400,6 +1400,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     }
 
     fun netbankingSelected(bankCode: String) {
+        clearPayment()
         Log.i("netbankingSelected", bankCode)
         val item = JSONObject()
         item.put("method", "netbanking");
@@ -1417,6 +1418,11 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     override fun walletSelected(data: String) {
         Log.i("walletSelected", data)
         if (paymentProceedFlag) {
+            if(cartCheckoutData.has("upi_app_package_name")){
+                cartCheckoutData.remove("method")
+                cartCheckoutData.remove("_[flow]")
+                cartCheckoutData.remove("upi_app_package_name")
+            }
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_WALLET_SELECTED, data, NO_EVENT_VALUE)
             val item = JSONObject()
             item.put("method", "wallet");
@@ -1563,24 +1569,35 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
 
     override fun moreBankSelected(data: JSONObject) {
+        clearPayment()
         paymentData = data
         payThroughRazorPay()
     }
 
     override fun upiSelected(data: JSONObject) {
-        Log.i("upiSelected >", data.toString())
+        clearPayment()
         paymentData = data
         payThroughRazorPay()
     }
 
     override fun emailSelected(data: JSONObject) {
+        clearPayment()
         paymentData = data
         payViaPaymentLink()
     }
 
     override fun cardSelected(data: JSONObject) {
+        clearPayment()
         paymentData = data
         payThroughRazorPay()
+    }
+
+    fun clearPayment(){
+        if(cartCheckoutData.has("upi_app_package_name")){
+            cartCheckoutData.remove("method")
+            cartCheckoutData.remove("_[flow]")
+            cartCheckoutData.remove("upi_app_package_name")
+        }
     }
 
 

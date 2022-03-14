@@ -46,7 +46,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:itemCount="3"
+                tools:itemCount="1"
                 tools:listitem="@layout/item_child_history_orders"
                 tools:visibility="visible">
 

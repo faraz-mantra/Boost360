@@ -21,6 +21,7 @@ import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.BusinessDeta
 import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.TaxDetails
 import com.boost.dbcenterapi.data.api_model.customerId.get.Result
+import com.boost.dbcenterapi.utils.Utils.isValidMobile
 import com.boost.payment.interfaces.BusinessDetailListener
 import com.boost.payment.ui.payment.PaymentViewModel
 import com.boost.payment.ui.popup.StateListPopFragment
@@ -28,7 +29,6 @@ import com.boost.payment.utils.Constants.Companion.STATE_LIST_FRAGMENT
 import com.boost.payment.utils.SharedPrefs
 import com.boost.payment.utils.Utils.isValidGSTIN
 import com.boost.payment.utils.Utils.isValidMail
-import com.boost.payment.utils.Utils.isValidMobile
 import com.boost.payment.utils.WebEngageController
 import com.boost.payment.utils.observeOnce
 import com.framework.pref.Key_Preferences
