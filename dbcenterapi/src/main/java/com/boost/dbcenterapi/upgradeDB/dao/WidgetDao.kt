@@ -22,5 +22,5 @@ interface WidgetDao {
   fun insertAllUPdates(updates: List<WidgetModel>)
 
   @Query("SELECT * FROM Widget WHERE id IN (:widgetKeys)")
-  fun getCartItemById(widgetKeys: List<String>): Single<List<WidgetModel>>
+  fun getCartItemById(widgetKeys: String): Single<List<WidgetModel>>
 }

@@ -35,6 +35,7 @@ import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.framework.analytics.SentryController
+import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -201,7 +202,7 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
     private fun loadData() {
         val pref = this.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
         val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
-        var code: String = (this).experienceCode!!
+        val code: String = if(experienceCode.isNullOrEmpty()) experienceCode!! else UserSessionManager(this).fP_AppExperienceCode!!
         if (!code.equals("null", true)) {
             viewModel.setCurrentExperienceCode(code, fpTag!!)
         }

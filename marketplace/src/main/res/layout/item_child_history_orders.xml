@@ -70,11 +70,12 @@
                     android:layout_marginLeft="@dimen/_15ssp"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_8sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/imageLayout"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_invoice"
+                    app:layout_constraintTop_toBottomOf="@+id/item_orderId"
                     app:layout_constraintVertical_bias="0.295">
 
                     <LinearLayout
@@ -83,12 +84,12 @@
                         android:gravity="center_vertical">
 
                         <TextView
-                            android:id="@+id/title"
+                            android:id="@+id/title1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans"
                             android:text="In-clinic appointments"
-                            android:maxLines="1"
+                            android:maxLines="4"
                             android:textColor="#2a2a2a"
                             android:textSize="@dimen/_12sdp" />
 
@@ -126,7 +127,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
-                  android:layout_margin="@dimen/_10sdp"
+                    android:layout_margin="@dimen/_10sdp"
                     android:background="@drawable/mp_home_share_click_effect"
                     android:enabled="true"
                     android:gravity="center"
@@ -134,7 +135,8 @@
                     android:textAllCaps="false"
                     android:textColor="#FFB900"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:visibility="gone"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

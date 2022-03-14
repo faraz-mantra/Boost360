@@ -13,7 +13,7 @@ import com.boost.marketplace.interfaces.HistoryFragmentListener
 import java.lang.Long
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
+import kotlin.Int
 
 class HistoryOrdersParentAdapter (itemList: List<Result>?, val listener: HistoryFragmentListener) :
     RecyclerView.Adapter<HistoryOrdersParentAdapter.upgradeViewHolder>() {
@@ -39,26 +39,26 @@ class HistoryOrdersParentAdapter (itemList: List<Result>?, val listener: History
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
 
-        val itemLists = StringBuilder()
+      //  val itemLists = StringBuilder()
 //        if (list.get(position).orderId != null) {
 //            holder.orderId.setText("Order id #" + list.get(position).orderId!!.replace("order_", ""))
 //        }
-        if (list.get(position).purchasedPackageDetails.WidgetPacks.size > 1) {
-            for (item in 0 until list.get(position).purchasedPackageDetails.WidgetPacks.size) {
-                itemLists.append(list.get(position).purchasedPackageDetails.WidgetPacks.get(item).Name)
-                if (item != list.get(position).purchasedPackageDetails.WidgetPacks.size - 1) {
-                    itemLists.append(", ")
-                }
-            }
+//        if (list.get(position).purchasedPackageDetails.WidgetPacks.size > 1) {
+//            for (item in 0 until list.get(position).purchasedPackageDetails.WidgetPacks.size) {
+//                itemLists.append(list.get(position).purchasedPackageDetails.WidgetPacks.get(item).Name)
+//                if (item != list.get(position).purchasedPackageDetails.WidgetPacks.size - 1) {
+//                    itemLists.append(", ")
+//                }
+//            }
 //          //  holder.itemCount.setText("+" + (list.size - 1) + " more")
 //         //   holder.itemCount.visibility = View.VISIBLE
 //        } else {
 //            itemLists.append(list.get(position).purchasedPackageDetails.WidgetPacks.get(0).Name)
 //            holder.itemCount.visibility = View.GONE
-        }
+     //   }
       //  holder.itemLists.setText(itemLists)
 
-        val dataString = list.get(position).CreatedOn
+        val dataString = list.get(position).purchasedPackageDetails.CreatedOn
         val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
         val dateFormat = SimpleDateFormat("dd-MMM-yyyy ")
         holder.itemDate.setText(dateFormat.format(date))
