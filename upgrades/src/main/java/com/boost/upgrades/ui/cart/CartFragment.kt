@@ -225,8 +225,8 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
       prefs.storeCartOrderInfo(null)
       prefs.storeApplyedCouponDetails(null)
 //            totalCalculation()
-//      couponCode = ""
-//      couponServiceModel = null
+      couponCode = ""
+      couponServiceModel = null
 
       totalCalculationAfterCoupon()
     }
