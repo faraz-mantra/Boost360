@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+      >
+
+        <View
+            android:id="@+id/view_tv1"
+            android:layout_width="100dp"
+            android:layout_height="@dimen/placeholderTextHeight"
+            android:background="@color/background2" />
+
+
+        <View
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/custom_domain_radio_btn_bg" />
+
+    </RelativeLayout>
+</RelativeLayout>
+

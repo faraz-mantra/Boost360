@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <View
+        android:id="@+id/view_et"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="@dimen/padding_10"
+        android:layout_marginEnd="@dimen/activityPadding"
+        android:background="@drawable/edit_text_shimmer_bg" />
+
+    <View
+        android:id="@+id/view_tv1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pad_10dp"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/view_et"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/background2" />
+
+    <View
+        android:id="@+id/view_tv2"
+        android:layout_width="200dp"
+        android:layout_height="@dimen/pad_10dp"
+        android:layout_below="@id/view_tv1"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/background2" />
+
+
+</RelativeLayout>
+

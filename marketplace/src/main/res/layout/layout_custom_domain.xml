@@ -136,6 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/btn_select_Domain"
             android:layout_below="@id/toolbar"
+            android:visibility="visible"
 
             >
 
@@ -551,10 +552,11 @@
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmer_view_history"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/toolbar"
-            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_above="@id/btn_select_Domain"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
@@ -572,23 +574,17 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <include layout="@layout/data_place2" />
+                <include layout="@layout/custom_domain_data_layout_1" />
 
-                <include layout="@layout/data_place2" />
+                <include layout="@layout/custom_domain_data_layout_2" />
+                <include layout="@layout/custom_domain_data_layout_2" />
+                <include layout="@layout/custom_domain_data_layout_2" />
+                <include layout="@layout/custom_domain_data_layout_2" />
+                <include layout="@layout/custom_domain_data_layout_2" />
+                <include layout="@layout/custom_domain_data_layout_2" />
+                <include layout="@layout/custom_domain_data_layout_3" />
 
-                <include layout="@layout/data_place2" />
 
-                <include layout="@layout/data_place2" />
-
-                <include layout="@layout/data_place2" />
-
-                <include layout="@layout/data_place2" />
-
-                <include layout="@layout/data_place2" />
-
-                <include layout="@layout/data_place2" />
-
-                <include layout="@layout/data_place2" />
 
 
             </LinearLayout>
