@@ -188,5 +188,6 @@
   <color name="colorLightGrey_jio">#E4E4E4</color>
   <color name="light_grey_boost_jio">#DFDFDF</color>
   <color name="orange_light">#FFF8E5</color>
+  <color name="color_888888">#888888</color>
 
 </resources>

@@ -468,26 +468,24 @@ fun getAppVersionName(): String? {
   return null
 }
 
-inline fun <reified T> convertJsonToObj(json: String?) = Gson().fromJson<T>(json, object : TypeToken<T>() {}.type)
+fun Bitmap.zoom(percent: Float): Bitmap? {
 
-fun Bitmap.zoom(percent:Float): Bitmap? {
-
-      val scaleFactor = percent // Set this to the zoom factor
-      val widthOffset = (scaleFactor / 2 * width).toInt()
-      val heightOffset = (scaleFactor / 2 * height).toInt()
-      val numWidthPixels: Int = width - 2 * widthOffset
-      val numHeightPixels: Int = height - 2 * heightOffset
+  val scaleFactor = percent // Set this to the zoom factor
+  val widthOffset = (scaleFactor / 2 * width).toInt()
+  val heightOffset = (scaleFactor / 2 * height).toInt()
+  val numWidthPixels: Int = width - 2 * widthOffset
+  val numHeightPixels: Int = height - 2 * heightOffset
   return if (widthOffset > 0 && heightOffset > 0 && numHeightPixels > 0 && numWidthPixels > 0) {
-      val rescaledBitmap = Bitmap.createBitmap(
-        this, widthOffset, heightOffset, numWidthPixels, numHeightPixels, null, true
-      )
+    val rescaledBitmap = Bitmap.createBitmap(
+      this, widthOffset, heightOffset, numWidthPixels, numHeightPixels, null, true
+    )
     rescaledBitmap
-  }else{
+  } else {
     this
   }
 }
 
-fun gcd(num1:Int,num2:Int): Int {
+fun gcd(num1: Int, num2: Int): Int {
   var gcd = 1
 
   var i = 1
@@ -497,55 +495,48 @@ fun gcd(num1:Int,num2:Int): Int {
       gcd = i
     ++i
   }
-
   return gcd
 }
 
-fun spanBold(fullText:String,vararg boldTextList:String): SpannableString {
+fun spanBold(fullText: String, vararg boldTextList: String): SpannableString {
   val spannable = SpannableString(fullText)
-  boldTextList.forEach { boldText->
-    spannable.setSpan(StyleSpan(Typeface.BOLD),fullText.indexOf(boldText),fullText.indexOf(boldText)+boldText.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+  boldTextList.forEach { boldText ->
+    spannable.setSpan(StyleSpan(Typeface.BOLD), fullText.indexOf(boldText), fullText.indexOf(boldText) + boldText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
   }
   return spannable
 }
 
-fun copyToClipBoard(text: String){
+fun copyToClipBoard(text: String) {
   val clipboard = BaseApplication.instance.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
   val clip: ClipData = ClipData.newPlainText("boost-label", text)
   clipboard.setPrimaryClip(clip)
   Toast.makeText(BaseApplication.instance, BaseApplication.instance.getString(R.string.copied_to_clipboard), Toast.LENGTH_SHORT).show()
 }
-fun Activity.checkPermission(permString:String): Boolean {
+
+fun Activity.checkPermission(permString: String): Boolean {
   return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-    checkSelfPermission(permString)== PackageManager.PERMISSION_GRANTED
+    checkSelfPermission(permString) == PackageManager.PERMISSION_GRANTED
   } else {
     true
   }
 }
 
-fun Fragment.checkPermission(permString:String): Boolean {
+fun Fragment.checkPermission(permString: String): Boolean {
   return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-    ActivityCompat.checkSelfPermission(requireContext(),permString)== PackageManager.PERMISSION_GRANTED
-  }else{
+    ActivityCompat.checkSelfPermission(requireContext(), permString) == PackageManager.PERMISSION_GRANTED
+  } else {
     true
   }
 }
 
-fun showToast(text:String?,dur:Int=Toast.LENGTH_LONG){
-  if (text != null && text.isNotEmpty())
-    Toast.makeText(BaseApplication.instance, text, dur).show()
+fun showToast(text: String?, dur: Int = Toast.LENGTH_LONG) {
+  if (text != null && text.isNotEmpty()) Toast.makeText(BaseApplication.instance, text, dur).show()
 }
 
-suspend fun runOnUi(func:()->Unit){
-  withContext(Dispatchers.Main){
-    func.invoke()
-  }
+suspend fun runOnUi(func: () -> Unit) {
+  withContext(Dispatchers.Main) { func.invoke() }
 }
 
-fun fetchString(id:Int): String {
+fun fetchString(id: Int): String {
   return BaseApplication.instance.getString(id)
-}
-
-fun Any?.toJson():String{
-  return Gson().toJson(this)
 }
