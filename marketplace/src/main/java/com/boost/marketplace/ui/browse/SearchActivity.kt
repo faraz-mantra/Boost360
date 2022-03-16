@@ -1,6 +1,7 @@
 package com.boost.marketplace.ui.browse
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
@@ -15,6 +16,7 @@ import android.view.WindowManager
 import android.widget.ImageView
 import androidx.lifecycle.Observer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
+import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.upgradeDB.model.YoutubeVideoModel
 import com.boost.dbcenterapi.utils.WebEngageController
@@ -25,6 +27,7 @@ import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivitySearchBinding
 import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.interfaces.HomeListener
+import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.FEATURE_PACKS_CLICKED
@@ -42,6 +45,25 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
     var allBundles: ArrayList<Bundles> = arrayListOf()
     var userPurchsedWidgets = ArrayList<String>()
 
+    var singleWidgetKey: String? = null
+    var badgeNumber = 0
+    var addonDetails: FeaturesModel? = null
+    var cart_list: List<CartModel>? = null
+    var itemInCartStatus = false
+    var widgetLearnMoreLink: String? = null
+
+    var experienceCode: String? = null
+    var fpid: String? = null
+    var email: String? = null
+    var mobileNo: String? = null
+    var profileUrl: String? = null
+    var accountType: String? = null
+    var isDeepLink: Boolean = false
+    var isOpenCardFragment: Boolean = false
+
+    var deepLinkViewType: String = ""
+    var deepLinkDay: Int = 7
+
     override fun getLayout(): Int {
         return R.layout.activity_search
     }
@@ -53,6 +75,20 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
 
     override fun onCreateView() {
         super.onCreateView()
+
+        isDeepLink = intent.getBooleanExtra("isDeepLink", false)
+        deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
+        deepLinkDay = intent.getIntExtra("deepLinkDay", 7)
+        experienceCode = intent.getStringExtra("expCode")
+        fpid = intent.getStringExtra("fpid")
+        email = intent.getStringExtra("email")
+        mobileNo = intent.getStringExtra("mobileNo")
+        profileUrl = intent.getStringExtra("profileUrl")
+        accountType = intent.getStringExtra("accountType")
+        isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
+        userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: java.util.ArrayList()
+        userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
+
         featureAdaptor = CompareItemAdapter(allFeatures,this)
         progressDialog = ProgressDialog(this)
         packageAdaptor = PackageRecyclerAdapter(allBundles, this, this)
@@ -266,6 +302,41 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
     }
 
     override fun onAddonsClicked(item: FeaturesModel) {
-        TODO("Not yet implemented")
+        val intent = Intent(this, FeatureDetailsActivity::class.java)
+
+        intent.putExtra("fpid", fpid)
+        intent.putExtra("expCode", experienceCode)
+        intent.putExtra("isDeepLink", isDeepLink)
+        intent.putExtra("deepLinkViewType", deepLinkViewType)
+        intent.putExtra("deepLinkDay", deepLinkDay)
+        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+        intent.putExtra(
+            "accountType",
+            accountType
+        )
+        intent.putStringArrayListExtra(
+            "userPurchsedWidgets",
+            userPurchsedWidgets
+        )
+        if (email != null) {
+            intent.putExtra("email", email)
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com")
+        }
+        if (mobileNo != null) {
+            intent.putExtra("mobileNo", mobileNo)
+        } else {
+            intent.putExtra("mobileNo", "9160004303")
+        }
+        intent.putExtra("profileUrl", profileUrl)
+        intent.putExtra("itemId", item.feature_code)
+
+//                                                            startActivity(intent)
+
+
+//                intent.putExtra("itemId", it.feature_code)
+//                startActivity(intent)
+        // intent.putExtra("itemId", item!!.cta_feature_key)
+        startActivity(intent)
     }
 }
