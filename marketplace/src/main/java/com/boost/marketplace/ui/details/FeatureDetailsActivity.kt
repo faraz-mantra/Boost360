@@ -156,7 +156,7 @@ class FeatureDetailsActivity :
         }
         )
 
-        abcText.text = getString(R.string.addons_description)
+//        abcText.text = getString(R.string.addons_description)
 
 
         add_item_to_cart.setOnClickListener {
@@ -331,7 +331,7 @@ class FeatureDetailsActivity :
                     .into(details_image_bg)
 
                 if (addonDetails!!.secondary_images.isNullOrEmpty())
-                    secondary_images_panel.visibility = View.GONE
+//                    secondary_images_panel.visibility = View.GONE
                 else {
                     val objectType = object : TypeToken<ArrayList<String>>() {}.type
                     var secondaryImages = Gson().fromJson<ArrayList<String>>(
@@ -381,7 +381,7 @@ class FeatureDetailsActivity :
                 ) {
                     title_bottom2.text = "Less than 100 businesses have added this"
                 } else {
-                    val totalInstall = addonDetails!!.total_installs + " people brought"
+                    val totalInstall = "Used by "+addonDetails!!.total_installs + " + businesses"
                     val businessUses = SpannableString(totalInstall)
                     businessUses.setSpan(
                         ForegroundColorSpan(ContextCompat.getColor(this, R.color.light_blue)),
@@ -401,9 +401,9 @@ class FeatureDetailsActivity :
                 } else {
                     widgetLearnMore.visibility = View.GONE
                 }
-                xheader.text = addonDetails!!.description_title
-                abcText.text = addonDetails!!.description
-//                review_layout.visibility = View.GONE
+//                xheader.text = addonDetails!!.description_title
+//                abcText.text = addonDetails!!.description
+////                review_layout.visibility = View.GONE
                 var event_attributes: HashMap<String, Any> = HashMap()
                 event_attributes.put("Feature details", addonDetails!!.description!!)
                 event_attributes.put("Feature Name", addonDetails!!.name!!)
@@ -501,9 +501,9 @@ class FeatureDetailsActivity :
     fun initializeSecondaryImage() {
         val gridLayoutManager = GridLayoutManager(applicationContext, 1)
         gridLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        secondary_image_recycler.apply {
-            layoutManager = gridLayoutManager
-        }
+//        secondary_image_recycler.apply {
+//            layoutManager = gridLayoutManager
+//        }
     }
 
 
@@ -545,7 +545,7 @@ class FeatureDetailsActivity :
 
     fun addUpdateSecondaryImage(list: ArrayList<String>) {
         secondaryImagesAdapter.addUpdates(list)
-        secondary_image_recycler.adapter = secondaryImagesAdapter
+//        secondary_image_recycler.adapter = secondaryImagesAdapter
         secondaryImagesAdapter.notifyDataSetChanged()
     }
 
