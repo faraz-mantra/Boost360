@@ -36,7 +36,6 @@ import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityFeatureDetailsBinding
 import com.boost.marketplace.infra.utils.Constants.Companion.IMAGE_PREVIEW_POPUP_FRAGMENT
 import com.boost.marketplace.interfaces.DetailsFragmentListener
-import com.boost.marketplace.ui.details.emails.EmailActivity
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.webview.WebViewActivity
@@ -50,8 +49,6 @@ import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_feature_details.*
 import retrofit2.Retrofit
-import java.text.NumberFormat
-import java.util.*
 
 class FeatureDetailsActivity :
     AppBaseActivity<ActivityFeatureDetailsBinding, FeatureDetailsViewModel>(),
@@ -157,7 +154,6 @@ class FeatureDetailsActivity :
         )
 
 //        abcText.text = getString(R.string.addons_description)
-
 
         add_item_to_cart.setOnClickListener {
             if (!itemInCartStatus) {

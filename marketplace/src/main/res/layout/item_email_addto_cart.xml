@@ -41,43 +41,25 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
                     android:textFontWeight="400"
-                    android:text="hello@deltastore.com"
-                    android:textColor="#333333"
+                    android:text="orders@deltastore.com"
+                    android:textColor="#4A4A4A"
                     android:textSize="@dimen/txt_14sp"
                     android:textStyle="normal"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/email_expiry"
+                <ImageView
+                    android:id="@+id/add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:layout_marginEnd="@dimen/_15sdp"
-                    android:textFontWeight="400"
-                    android:text="Expiring on:"
-                    android:textColor="#BBBBBB"
-                    android:textSize="@dimen/txt_12sp"
-                    android:textStyle="normal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/date"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:layout_marginEnd="@dimen/_15sdp"
-                    android:textFontWeight="600"
-                    android:text="10-01-2022"
-                    android:textColor="#BBBBBB"
-                    android:textSize="@dimen/txt_14sp"
-                    android:textStyle="normal"
+                    app:layout_constraintDimensionRatio="1:1"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:padding="16dp"
+                    android:src="@drawable/ic___add"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/email_expiry"/>
+                    app:layout_constraintTop_toTopOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

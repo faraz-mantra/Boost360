@@ -32,4 +32,6 @@
   <string name="added_to_carts">Added to cart</string>
   <string name="how_it_works_text">This feature enables you to display your products on your website. You can easily add detailed information about your products and their prices through the inbuilt product catalogue to enable quick sales.</string>
   <string name="my_order_history">My order history</string>
+  <string name="email_help">Our experts are available from 9am-6pm on working days. You can request a callback and an expert from the team will reach out to you.</string>
+  <string name="zoho_desc">(the tone of the copy should be addressing to the user directly). Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
 </resources>
