@@ -50,8 +50,6 @@ import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_feature_details.*
 import retrofit2.Retrofit
-import java.text.NumberFormat
-import java.util.*
 
 class FeatureDetailsActivity :
     AppBaseActivity<ActivityFeatureDetailsBinding, FeatureDetailsViewModel>(),
@@ -157,6 +155,15 @@ class FeatureDetailsActivity :
         )
 
         abcText.text = getString(R.string.addons_description)
+
+        pack_title.setOnClickListener {
+            val intent = Intent(
+                applicationContext,
+                EmailActivity::class.java
+            )
+            startActivity(intent)
+        }
+
 
 
         add_item_to_cart.setOnClickListener {
