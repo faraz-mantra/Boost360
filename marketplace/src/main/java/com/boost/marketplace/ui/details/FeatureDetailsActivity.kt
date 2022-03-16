@@ -36,7 +36,6 @@ import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityFeatureDetailsBinding
 import com.boost.marketplace.infra.utils.Constants.Companion.IMAGE_PREVIEW_POPUP_FRAGMENT
 import com.boost.marketplace.interfaces.DetailsFragmentListener
-import com.boost.marketplace.ui.details.emails.EmailActivity
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.webview.WebViewActivity
@@ -155,16 +154,6 @@ class FeatureDetailsActivity :
         )
 
         abcText.text = getString(R.string.addons_description)
-
-        pack_title.setOnClickListener {
-            val intent = Intent(
-                applicationContext,
-                EmailActivity::class.java
-            )
-            startActivity(intent)
-        }
-
-
 
         add_item_to_cart.setOnClickListener {
             if (!itemInCartStatus) {
