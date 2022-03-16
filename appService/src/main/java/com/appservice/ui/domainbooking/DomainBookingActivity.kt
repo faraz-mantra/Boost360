@@ -36,6 +36,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureDomainEnable
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_CATEGORY
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
@@ -48,7 +49,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, DomainBookingViewModel>(), RecyclerItemClickListener {
 
-  private lateinit var baseActivity: BaseActivity<*, *>
   private lateinit var existingDomainRequest: ExistingDomainRequest
   private var domainIntegrationUserSelection: Int = 0
 
@@ -62,7 +62,6 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
 
   override fun onCreateView() {
     WebEngageController.trackEvent(DOMAIN_BOOKING_INITIAL_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    baseActivity = this
     session = UserSessionManager(this)
     val domainSplit = getDomainSplitValues(session.getDomainName(true)!!)
     binding?.tvDomainTitle?.text = domainSplit?.domainName
@@ -136,7 +135,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
   private fun addExistingDomainApiCall(enteredDomainName: String, subDomainName: String) {
     showProgress()
     existingDomainRequest = ExistingDomainRequest(clientId, session.fpTag, enteredDomainName, subDomainName)
-    viewModel.addExistingDomain(clientId, session.fpTag, existingDomainRequest).observeOnce(this, {
+    viewModel.addExistingDomain(clientId, session.fpTag, existingDomainRequest).observeOnce(this) {
       if (it.isSuccess()) {
         if (it.parseResponse()) {
           WebEngageController.trackEvent(ADDING_EXISTING_DOMAIN_FLOW_PAGE_LOAD, SUCCESSFULLY_ADDED_EXISTING_DOMAIN, NO_EVENT_VALUE)
@@ -144,7 +143,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
         } else showShortToast(getString(R.string.your_domain_could_not_be_added_please_try_again))
       } else showShortToast(it.message())
       hideProgress()
-    })
+    }
   }
 
   private fun openExistingDomainFragmentFlow(enteredDomainName: String) {
@@ -237,6 +236,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
   }
 
   private fun nonPremiumMode() {
+    onDomainAddedOrUpdated(false)
     binding?.layoutBuyAddon?.visible()
     binding?.ivRiaSteps?.gone()
     binding?.btnBookNewDomain?.gone()
@@ -254,18 +254,29 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
 
   private fun domainDetailsApi() {
     showProgress()
-    viewModel.domainDetails(session.fpTag, clientId).observeOnce(this, {
+    viewModel.domainDetails(session.fpTag, clientId).observeOnce(this) {
       if (it.isSuccess()) {
-        val domainDetailsResponse = it as DomainDetailsResponse
-        if (domainDetailsResponse.domainName != null && domainDetailsResponse.domainName.isNotEmpty()) {
+        val domainDetailsResponse = it as? DomainDetailsResponse
+        if (domainDetailsResponse?.domainName != null && domainDetailsResponse.domainName.isNotEmpty()) {
+          onDomainAddedOrUpdated(true)
           startFragmentDomainBookingActivity(activity = this, type = com.appservice.constant.FragmentType.ACTIVE_NEW_DOMAIN_FRAGMENT, bundle = Bundle(), clearTop = false)
           finish()
-        } else premiumMode()
+        } else {
+          onDomainAddedOrUpdated(false)
+          premiumMode()
+        }
       } else showShortToast(it.message())
       hideProgress()
-    })
+    }
   }
 
+  private fun onDomainAddedOrUpdated(isAdded: Boolean) {
+    val instance = FirestoreManager
+    if (instance.getDrScoreData() != null && instance.getDrScoreData()!!.metricdetail != null) {
+      instance.getDrScoreData()!!.metricdetail!!.boolean_add_custom_domain_name_and_ssl = isAdded
+      instance.updateDocument()
+    }
+  }
 
   private fun isPremium(): Boolean {
     return (session.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false)
