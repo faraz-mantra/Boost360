@@ -1,159 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/grey_f8f8f8">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+  <data>
 
-    </data>
+  </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_smoke"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/layout_top"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:orientation="horizontal"
+      android:padding="@dimen/size_16">
+
+      <com.framework.views.customViews.CustomImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_2"
+        android:src="@drawable/ic_info_black" />
+
+      <com.framework.views.customViews.CustomTextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_8"
+        android:text="@string/image_format_size_1600x700_pixels"
+        android:textColor="@color/black_3333"
+        app:textType="CAPTION" />
 
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
-            android:id="@+id/layout_top"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent">
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_20"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="@dimen/size_20"
-                android:layout_marginBottom="15dp"
-                android:orientation="horizontal">
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layout_default_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/size_60"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-                <com.framework.views.customViews.CustomImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_info_black" />
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/iv_bg_image_for_no_image"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:srcCompat="@drawable/ic_bg_image" />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_8"
-                    android:text="@string/image_should_be_in_jpeg_or_png_format_with_minimum_size_of_1600x700_pixels" />
-            </LinearLayout>
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_no_image"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_20"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="center"
+          android:text="@string/no_custom_background_nimage_added_yet"
+          android:textAlignment="gravity"
+          android:textColor="@color/black_4a4a4a"
+          app:textType="HEADING_6" />
 
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="@dimen/size_300"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_10"
+          android:gravity="center"
+          android:text="@string/image_brand_website_desc"
+          android:textAlignment="gravity"
+          app:textType="CAPTION" />
 
-        </LinearLayout>
+      </androidx.appcompat.widget.LinearLayoutCompat>
 
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/image_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/size_10"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/size_100"
+        android:scrollbars="none"
+        android:tag="com.userexperior.ueSecureView"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="3"
+        tools:listitem="@layout/list_item_background_images" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_default_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/btn_done"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/layout_top">
+      <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/size_60"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/colorAccentLight" />
 
-            <ImageView
-                android:id="@+id/iv_bg_image_for_no_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_bg_image"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white_smoke"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/size_16"
+        android:paddingBottom="@dimen/size_16">
 
-            <TextView
-                android:id="@+id/tv_no_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="No custom background \n       image added yet"
-                android:textAlignment="center"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:textColor="#4A4A4A"
-                android:textSize="18sp"
-                app:layout_constraintTop_toBottomOf="@id/iv_bg_image_for_no_image" />
+        <com.framework.views.customViews.CustomButton
+          android:id="@+id/btn_done"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_42"
+          android:background="@drawable/bg_button_proceed"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="center"
+          android:stateListAnimator="@null"
+          android:text="@string/upload_image"
+          android:textAllCaps="false"
+          android:textColor="@color/white"
+          app:textType="HEADING_6" />
 
-            <TextView
-                app:layout_constraintTop_toBottomOf="@id/tv_no_image"
-                android:layout_width="@dimen/size_300"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="These images can bring a brand feel to your website. Since these stay in the backdrop of your website, please avoid high contrast picture with face and text written in it." />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_bottom_Note"
+          style="@style/TextNormalStyle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_10"
+          android:text="@string/max_file_size_800kb_max_8_images"
+          android:textColor="@color/color_888888"
+          app:textType="CAPTION" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
-        <LinearLayout
-            android:id="@+id/data_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginHorizontal="@dimen/size_20"
-            android:layout_marginVertical="@dimen/size_10"
-            android:layout_marginBottom="1dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/btn_done"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_top">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/image_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:paddingBottom="50dp"
-                android:scrollbars="none"
-                android:tag="com.userexperior.ueSecureView"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:itemCount="3"
-                tools:listitem="@layout/list_item_background_images" />
-
-            <ProgressBar
-                android:id="@+id/pb_loading"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerInParent="true"
-                android:indeterminate="true"
-                android:indeterminateTint="@color/colorAccentLight"
-                android:visibility="gone" />
-
-        </LinearLayout>
-
-        <com.framework.views.customViews.CustomMaterialButton
-            android:id="@+id/btn_done"
-            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_46"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="12dp"
-            android:enabled="true"
-            android:includeFontPadding="false"
-            android:text="Upload image"
-            android:textColor="@color/white"
-            app:backgroundTint="@color/colorAccentLight"
-            app:iconGravity="textStart"
-            app:iconTint="@color/white"
-            app:layout_constraintBottom_toTopOf="@id/tv_bottom_Note"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_bottom_Note"
-            style="@style/TextNormalStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="Max file size: 800kb (max 8 images)"
-            android:textColor="#888888"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

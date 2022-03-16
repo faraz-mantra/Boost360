@@ -1,9 +1,8 @@
-package com.appservice.ui.background_image
+package com.appservice.ui.bgImage
 
 import android.view.View
 import com.appservice.R
 import com.appservice.base.startWebViewPageLoad
-import com.appservice.databinding.BottomSheetServiceCreatedSuccessfullyBinding
 import com.appservice.databinding.BsheetBgImgUploadSuccessBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.constants.PackageNames
@@ -34,8 +33,9 @@ class BGimgUploadSuccessfulSheet : BaseBottomSheetDialog<BsheetBgImgUploadSucces
   }
 
   override fun onCreateView() {
-    setOnClickListener(binding?.civCancel, binding?.visitWebsite,binding?.btnCopyMessage,binding?.btnFb
-      ,binding?.btnWhatsapp,binding?.btnLinkedin,binding?.btnTwitter,binding?.btnMail)
+    setOnClickListener(
+      binding?.civCancel, binding?.visitWebsite, binding?.btnCopyMessage, binding?.btnFb, binding?.btnWhatsapp, binding?.btnLinkedin, binding?.btnTwitter, binding?.btnMail
+    )
     isCancelable = false
 
   }
@@ -43,37 +43,36 @@ class BGimgUploadSuccessfulSheet : BaseBottomSheetDialog<BsheetBgImgUploadSucces
   override fun onClick(v: View) {
     super.onClick(v)
     val sessionManager = UserSessionManager(requireActivity())
-    val url = sessionManager.getDomainName()?:""
+    val url = sessionManager.getDomainName() ?: ""
     when (v) {
       binding?.civCancel -> {
         dismiss()
         onClicked(TypeSuccess.CLOSE.name)
       }
-      binding?.visitWebsite->{
-        baseActivity.startWebViewPageLoad(sessionManager,url)
+      binding?.visitWebsite -> {
+        baseActivity.startWebViewPageLoad(sessionManager, url)
       }
-      binding?.btnFb->{
-        IntentUtils.shareText(requireActivity(),url,PackageNames.FACEBOOK)
+      binding?.btnFb -> {
+        IntentUtils.shareText(requireActivity(), url, PackageNames.FACEBOOK)
       }
-      binding?.btnLinkedin->{
-        IntentUtils.shareText(requireActivity(),url,PackageNames.LINKEDIN)
+      binding?.btnLinkedin -> {
+        IntentUtils.shareText(requireActivity(), url, PackageNames.LINKEDIN)
 
       }
-      binding?.btnTwitter->{
-        IntentUtils.shareText(requireActivity(),url,PackageNames.TWITTER)
+      binding?.btnTwitter -> {
+        IntentUtils.shareText(requireActivity(), url, PackageNames.TWITTER)
 
       }
-      binding?.btnWhatsapp->{
-        IntentUtils.shareText(requireActivity(),url,PackageNames.WHATSAPP)
+      binding?.btnWhatsapp -> {
+        IntentUtils.shareText(requireActivity(), url, PackageNames.WHATSAPP)
 
       }
-      binding?.btnMail->{
-        IntentUtils.composeEmail(requireActivity(),url)
+      binding?.btnMail -> {
+        IntentUtils.composeEmail(requireActivity(), url)
       }
-      binding?.btnCopyMessage->{
+      binding?.btnCopyMessage -> {
         copyToClipBoard(url)
       }
-//      binding?.visitWebsite -> onClicked(TypeSuccess.VISIT_WEBSITE.name)
     }
   }
 }

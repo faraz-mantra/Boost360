@@ -456,21 +456,17 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
             Log.d(ProductDetailFragment::class.java.name, "$it")
           } else showLongToast(getString(R.string.add_secondary_image_data_error_please_try_again))
           if (checkPosition == secondaryImageList.size) {
-            showLongToast(
-              if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
+            showLongToast(if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
                 R.string.product_saved_successfully
-              )
-            )
+              ))
             goBack()
           }
         })
       }
     } else {
-      showLongToast(
-        if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
+      showLongToast(if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
           R.string.product_saved_successfully
-        )
-      )
+        ))
       goBack()
     }
   }

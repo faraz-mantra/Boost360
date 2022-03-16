@@ -11,8 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.appservice.constant.FragmentType;
-import com.appservice.ui.background_image.BackgroundImageContainerActivityKt;
+import com.appservice.ui.bgImage.BackgroundImageContainerActivityKt;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity;
 import com.nowfloats.BusinessProfile.UI.UI.FeaturedImageActivity;

@@ -53,9 +53,9 @@
       android:windowSoftInputMode="adjustResize" />
 
     <activity
-        android:name=".ui.background_image.BackgroundImageContainerActivity"
+        android:name=".ui.bgImage.BackgroundImageContainerActivity"
         android:screenOrientation="portrait"
-        android:theme="@style/UpdateTheme"
+        android:theme="@style/BackgroundImageTheme"
         android:windowSoftInputMode="adjustResize" />
 
     <activity

@@ -17,23 +17,20 @@
       android:layout_gravity="center"
       android:layout_marginTop="@dimen/size_6"
       android:layout_marginEnd="@dimen/size_6"
+      android:layout_marginBottom="16dp"
       android:clickable="true"
       android:focusable="true"
-        android:layout_marginBottom="16dp"
       android:includeFontPadding="false"
-      android:tint="@color/grey_dark_2"
       app:srcCompat="@drawable/ic_close_circle" />
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-        android:padding="@dimen/size_32"
-        android:background="@drawable/bottoms_sheet_top20dp_white"
-
-        android:gravity="center_horizontal"
-      android:orientation="vertical">
-
+      android:background="@drawable/bottoms_sheet_top20dp_white"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      android:padding="@dimen/size_20">
 
       <com.airbnb.lottie.LottieAnimationView
         android:layout_width="@dimen/size_70"
@@ -47,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/size_4"
+        android:layout_marginTop="@dimen/size_16"
         android:fontFamily="@font/regular"
         android:text="@string/upload_successful"
         android:textAllCaps="false"
@@ -59,7 +56,7 @@
         android:id="@+id/txt_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginHorizontal="@dimen/size_16"
         android:layout_marginTop="@dimen/size_8"
         android:fontFamily="@font/regular"
         android:gravity="center"
@@ -69,31 +66,28 @@
         android:textColor="@color/black_4a4a4a"
         android:textSize="12sp" />
 
-      <com.framework.views.customViews.CustomMaterialButton
+      <com.framework.views.customViews.CustomButton
         android:id="@+id/visit_website"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_50"
-          style="@style/PrimaryButtonNonGra"
-        android:layout_gravity="center_horizontal"
+        android:layout_height="@dimen/size_42"
+        android:layout_marginHorizontal="@dimen/size_8"
         android:layout_marginTop="@dimen/size_16"
+        android:background="@drawable/bg_button_proceed"
         android:fontFamily="@font/semi_bold"
         android:gravity="center"
-        android:paddingHorizontal="@dimen/size_20"
+        android:stateListAnimator="@null"
         android:text="@string/view_on_website"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="14sp"
-        />
+        app:textType="HEADING_6" />
 
       <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/size_12"
-        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/size_20"
+        android:gravity="center"
         android:orientation="horizontal"
-        android:padding="@dimen/size_10"
-        >
+        android:padding="@dimen/size_10">
 
         <com.framework.views.customViews.CustomTextView
           android:id="@id/btn_cancel"
@@ -109,7 +103,7 @@
           android:id="@+id/btn_copy_message"
           android:layout_width="@dimen/size_30"
           android:layout_height="@dimen/size_30"
-          android:layout_marginStart="@dimen/size_20"
+          android:layout_marginStart="@dimen/size_10"
           app:cardBackgroundColor="@color/white_one"
           app:cardCornerRadius="@dimen/size_15"
           app:cardElevation="0dp">
@@ -128,7 +122,6 @@
           android:layout_marginStart="@dimen/size_4"
           android:padding="@dimen/size_3"
           app:srcCompat="@drawable/ic_facebook_service" />
-
 
         <com.framework.views.customViews.CustomImageView
           android:id="@+id/btn_twitter"
@@ -164,6 +157,7 @@
 
 
       </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
