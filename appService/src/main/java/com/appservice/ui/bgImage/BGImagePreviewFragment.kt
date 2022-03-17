@@ -10,8 +10,13 @@ import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentPreviewBinding
+import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.BackgroundImageViewModel
 import com.framework.imagepicker.Utility
+import com.framework.webengageconstant.BACKGROUND_IMAGE_UPLOAD_CLICK
+import com.framework.webengageconstant.BACKGROUND_PREVIEW_IMAGE_LOAD
+import com.framework.webengageconstant.CLICK
+import com.framework.webengageconstant.START_VIEW
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
@@ -42,6 +47,7 @@ class BGImagePreviewFragment : AppBaseFragment<FragmentPreviewBinding, Backgroun
 
   override fun onCreateView() {
     super.onCreateView()
+    WebEngageController.trackEvent(BACKGROUND_PREVIEW_IMAGE_LOAD, START_VIEW, sessionLocal.fpTag)
     imagePath = arguments?.getString(BK_IMAGE_PATH)
     bitmap = BitmapFactory.decodeFile(imagePath)
     binding?.image?.setImageBitmap(Utility.rotateImageIfRequired(bitmap!!, imagePath))
@@ -54,6 +60,7 @@ class BGImagePreviewFragment : AppBaseFragment<FragmentPreviewBinding, Backgroun
       binding?.btnDone -> {
         val file = File(imagePath)
         showProgress()
+        WebEngageController.trackEvent(BACKGROUND_IMAGE_UPLOAD_CLICK, CLICK, sessionLocal.fpTag)
         viewModel?.createBGImage(file.asRequestBody(), sessionLocal.fPID)?.observe(viewLifecycleOwner) {
           hideProgress()
           if (it.isSuccess()) {
