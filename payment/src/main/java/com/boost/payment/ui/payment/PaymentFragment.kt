@@ -29,12 +29,14 @@ import com.boost.payment.base_class.BaseFragment
 import com.boost.payment.interfaces.*
 import com.boost.payment.ui.checkoutkyc.BusinessDetailsFragment
 import com.boost.payment.ui.confirmation.OrderConfirmationFragment
-import com.boost.payment.ui.popup.*
+import com.boost.payment.ui.popup.AddCardPopUpFragement
+import com.boost.payment.ui.popup.NetBankingPopUpFragement
+import com.boost.payment.ui.popup.StateListPopFragment
+import com.boost.payment.ui.popup.UPIPopUpFragement
 import com.boost.payment.ui.razorpay.RazorPayWebView
 import com.boost.payment.utils.Constants
 import com.boost.payment.utils.Constants.Companion.ADD_CARD_POPUP_FRAGMENT
 import com.boost.payment.utils.Constants.Companion.BUSINESS_DETAILS_FRAGMENT
-import com.boost.payment.utils.Constants.Companion.EXTERNAL_EMAIL_POPUP_FRAGMENT
 import com.boost.payment.utils.Constants.Companion.NETBANKING_POPUP_FRAGMENT
 import com.boost.payment.utils.Constants.Companion.RAZORPAY_WEBVIEW_POPUP_FRAGMENT
 import com.boost.payment.utils.Constants.Companion.UPI_POPUP_FRAGMENT
@@ -408,20 +410,20 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                     (activity as PaymentActivity).supportFragmentManager,
                     EXTERNAL_EMAIL_POPUP_FRAGMENT
                 )*/
-                val emailPopUpFragement = ExternalEmailPopUpFragement.newInstance(this)
-                emailPopUpFragement.show(
-                        (activity as PaymentActivity).supportFragmentManager,
-                        EXTERNAL_EMAIL_POPUP_FRAGMENT
-                )
+//                val emailPopUpFragement = ExternalEmailPopUpFragement.newInstance(this)
+//                emailPopUpFragement.show(
+//                        (activity as PaymentActivity).supportFragmentManager,
+//                        EXTERNAL_EMAIL_POPUP_FRAGMENT
+//                )
                 payment_submit.visibility = View.VISIBLE
             } else {
                 payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
-                payment_main_layout.smoothScrollTo(0, 0)
-                val businessFragment = BusinessDetailsFragment.newInstance(this)
-                businessFragment.show(
-                    (activity as PaymentActivity).supportFragmentManager,
-                    BUSINESS_DETAILS_FRAGMENT
-                )
+//                payment_main_layout.smoothScrollTo(0, 0)
+//                val businessFragment = BusinessDetailsFragment.newInstance(this)
+//                businessFragment.show(
+//                    (activity as PaymentActivity).supportFragmentManager,
+//                    BUSINESS_DETAILS_FRAGMENT
+//                )
             }
         }
 
