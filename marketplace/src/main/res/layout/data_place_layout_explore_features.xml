@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginStart="10dp"
-    android:layout_marginTop="20dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/_103sdp"
+    android:layout_height="@dimen/_166sdp"
+    android:orientation="vertical">
 
-
-
-    <LinearLayout
-        android:id="@+id/tv_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="160dp"
+    <View
+        android:id="@+id/thumbnail"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="@dimen/padding_10"
+        android:layout_marginEnd="@dimen/activityPadding"
+        android:background="@color/background2" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="@dimen/padding_10"
+        android:layout_toRightOf="@id/thumbnail"
         android:orientation="vertical">
 
         <View
@@ -30,17 +37,8 @@
         <View
             android:layout_width="100dp"
             android:layout_height="@dimen/placeholderTextHeight"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/pad_20dp"
             android:background="@color/background2" />
     </LinearLayout>
-    <View
-        android:id="@+id/thumbnail"
-        android:layout_width="170dp"
-        android:layout_height="160dp"
-        android:layout_marginStart="16dp"
-        android:layout_toEndOf="@id/tv_layout"
-        android:layout_marginTop="@dimen/padding_10"
-        android:layout_marginEnd="@dimen/activityPadding"
-        android:background="@color/background2" />
-</RelativeLayout>
 
+</LinearLayout>

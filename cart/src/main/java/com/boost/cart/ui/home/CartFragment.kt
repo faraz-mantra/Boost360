@@ -549,6 +549,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             } else if (bundles_in_cart && months_validity.text.toString().split(" ").get(0).toInt() < package_validity_months) {
                 months_validity.setBackgroundResource(R.drawable.et_validity_error)
                 Toasty.error(requireContext(), "Validity is not valid", Toast.LENGTH_SHORT).show()
+            } else if (et_email.text.toString().isEmpty()) {
+                et_email.setBackgroundResource(R.drawable.et_validity_error)
+                Toasty.error(requireContext(), "Email is Empty", Toast.LENGTH_SHORT).show()
+
             } else {
                 months_validity.setBackgroundResource(R.drawable.et_validity)
                 if (prefs.getCartOrderInfo() != null) {
@@ -686,7 +690,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                             (activity as CartActivity).clientid,
                                             null,
                                             null,
-                                            null,
+                                            et_email.text.toString(),
                                             (activity as CartActivity).fpid,
                                             null,
                                             null,
@@ -719,7 +723,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                             (activity as CartActivity).clientid,
                                             null,
                                             null,
-                                            null,
+                                            et_email.text.toString(),
                                             (activity as CartActivity).fpid,
                                             null,
                                             null,
@@ -752,7 +756,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                             (activity as CartActivity).clientid,
                                             null,
                                             null,
-                                            null,
+                                            et_email.text.toString(),
                                             (activity as CartActivity).fpid,
                                             null,
                                             null,
@@ -2487,19 +2491,19 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     }
                     if (default_validity_months > 0) {
                         if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
-                            if(Integer.parseInt(prefs.getCartValidityMonths()!!) == 1){
+                            if (Integer.parseInt(prefs.getCartValidityMonths()!!) == 1) {
                                 months_validity.setText(prefs.getCartValidityMonths().toString() + " month")
                                 feature_validity.text = prefs.getCartValidityMonths().toString() + " Month"
-                            }else{
+                            } else {
                                 months_validity.setText(prefs.getCartValidityMonths().toString() + " months")
                                 feature_validity.text = prefs.getCartValidityMonths().toString() + " Months"
                             }
 
                         } else {
-                            if(default_validity_months == 1){
+                            if (default_validity_months == 1) {
                                 months_validity.setText(default_validity_months.toString() + " month")
                                 feature_validity.text = default_validity_months.toString() + " Month"
-                            }else{
+                            } else {
                                 months_validity.setText(default_validity_months.toString() + " months")
                                 feature_validity.text = default_validity_months.toString() + " Months"
                             }
@@ -3069,13 +3073,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 if (validCouponCode != null) {
                     coupon_discount_title.visibility = View.VISIBLE
                     coupon_discount_value.visibility = View.VISIBLE
-                coupon_discount_title.text =
-                        "'" + couponServiceModel?.coupon_key + "'" + " coupon discount"
+                    coupon_discount_title.text =
+                            "'" + couponServiceModel?.coupon_key + "'" + " coupon discount"
                     coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
-                }else {
-                coupon_discount_title.visibility = View.GONE
+                } else {
+                    coupon_discount_title.visibility = View.GONE
                     coupon_discount_value.visibility = View.GONE
-            }
+                }
 
                 overalltotal -= couponDiscountAmount
                 Log.v("cart_amount_value", " " + total)

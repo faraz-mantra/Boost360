@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/cart_billing_details_ll"
         android:layout_width="match_parent"
@@ -15,11 +16,51 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email address*"
+            android:textColor="#4A4A4A"
+            android:textSize="12sp"
+            android:lineHeight="16.34dp"
+            android:textFontWeight="600"
+            android:fontFamily="@font/open_sans_semibold"
+            />
+        <FrameLayout
+            android:id="@+id/layout_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+        >
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_selector1"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:fontFamily="@font/open_sans"
+                android:gravity="bottom"
+                android:imeOptions="actionNext"
+                android:inputType="textCapCharacters"
+                android:maxLength="15"
+                android:textAllCaps="true"
+                android:textColor="#4A4A4A"
+                android:textColorHint="#BBBBBB"
+                android:textFontWeight="400"
+                android:textSize="@dimen/txt_14sp"
+               />
+        </FrameLayout>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cart_checkbox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            >
 
 
             <CheckBox
@@ -57,6 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
+            android:layout_marginTop="16dp"
             tools:visibility="visible">
 
 
@@ -72,6 +114,7 @@
                 android:textSize="@dimen/txt_12sp" />
 
         </RelativeLayout>
+
 
         <FrameLayout
             android:id="@+id/gstfl"
