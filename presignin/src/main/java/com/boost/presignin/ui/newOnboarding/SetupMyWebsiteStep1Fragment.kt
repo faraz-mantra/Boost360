@@ -213,9 +213,10 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
         }?.take(40)
         didYouMeanFilterList = newFilterList.getFinalList(queryString)
       }
-
-      binding?.layoutDidYouMean?.visible()
-      binding?.tvDidYouMean?.text = "${getString(R.string.did_you_mean) + " " + didYouMeanFilterList[0].name}"
+      if (!didYouMeanFilterList.isNullOrEmpty()) {
+        binding?.layoutDidYouMean?.visible()
+        binding?.tvDidYouMean?.text = "${getString(R.string.did_you_mean) + " " + didYouMeanFilterList[0].name}"
+      }
     }
   }
 

@@ -2,7 +2,6 @@ package com.appservice.rest.repository
 
 import com.appservice.base.rest.AppBaseLocalService
 import com.appservice.base.rest.AppBaseRepository
-import com.appservice.model.VmnCallModel
 import com.appservice.model.aptsetting.*
 import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
@@ -13,13 +12,9 @@ import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.WithFloatsApiTwoClient
 import com.appservice.rest.services.WithFloatTwoRemoteData
 import com.framework.base.BaseResponse
-import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
-import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.http.Body
-import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBaseLocalService>() {
@@ -40,13 +35,19 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.getMerchantSummary(clientId, fpTag), TaskCode.GET_MERCHANT_SUMMARY)
   }
 
-  fun trackerCalls(
-    @QueryMap data: Map<String, String?>?):Observable<BaseResponse>{
-    return makeRemoteRequest(remoteDataSource.trackerCalls(data), TaskCode.GET_MERCHANT_SUMMARY)
+  fun createBGImage(body: RequestBody, fpId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.createBGImage(fpId, body = body), TaskCode.CREATE_BG_IMAGE)
   }
 
+  fun deleteBGImage(map: HashMap<String, String?>): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.deleteBackgroundImages(map), TaskCode.CREATE_BG_IMAGE)
+  }
 
-
+  fun trackerCalls(
+    @QueryMap data: Map<String, String?>?
+  ): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.trackerCalls(data), TaskCode.GET_MERCHANT_SUMMARY)
+  }
 
   fun addUpdateImageProductService(
     clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?,
@@ -197,5 +198,9 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
 
   fun updateProductCategoryVerb(request: ProductCategoryVerbRequest): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.updateProductCategoryVerb(request), TaskCode.UPDATE_PRODUCT_CATEGORY_VERB)
+  }
+
+  fun getImages(fpId: String?, clientId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getBackgroundImages(fpId, clientId), TaskCode.GET_BACKGROUND_IMAGES)
   }
 }

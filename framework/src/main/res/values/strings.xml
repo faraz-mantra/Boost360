@@ -157,5 +157,8 @@
   <string name="_280">280</string>
   <string name="something_went_wrong_framework">Something went wrong</string>
   <string name="you_can_try_again_or_report_an_error_by_clicking_on_the_buttons_below">You can try again or report an error by clicking on the buttons below.</string>
-
+    <string name="copied_to_clipboard">Copied to clipboard</string>
+    <string name="no_email_app_installed">No email app installed</string>
+  <string name="req_app_not_installed">Required app not installed</string>
+  <string name="something_went_wrong">Something went wrong</string>
 </resources>

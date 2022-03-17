@@ -98,14 +98,14 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun capLimitCheck() {
-    val featureService = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureType.PRODUCTCATALOGUE)
+    val featureService = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureKey.PRODUCTCATALOGUE)
     val capLimitService = featureService?.filterProperty(PropertiesItem.KeyType.LIMIT)
     if (isEdit.not() && capLimitService != null) {
       viewModel?.getSearchListings(sessionLocal.fpTag, sessionLocal.fPID, "", 0, 5)?.observeOnce(viewLifecycleOwner, {
         val data = (it as? ServiceSearchListingResponse)?.result?.paging
         if (data?.count != null && capLimitService.getValueN() != null && data.count >= capLimitService.getValueN()!!) {
           baseActivity.hideKeyBoard()
-          showAlertCapLimit("Can't add the service catalogue, please activate your premium Add-ons plan.",CapLimitFeatureResponseItem.FeatureType.PRODUCTCATALOGUE.name)
+          showAlertCapLimit("Can't add the service catalogue, please activate your premium Add-ons plan.", CapLimitFeatureResponseItem.FeatureType.PRODUCTCATALOGUE.name)
         }
       })
     }
@@ -456,11 +456,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       }
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
       this.product = data?.getSerializableExtra(IntentConstant.PRODUCT_DATA.name) as? ServiceModelV1
-      this.serviceTimingList =
-        data?.getSerializableExtra(IntentConstant.SERVICE_TIMING_DATA.name) as? ArrayList<ServiceTiming>
-      this.secondaryImage =
-        (data?.getSerializableExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>)
-          ?: ArrayList()
+      this.serviceTimingList = data?.getSerializableExtra(IntentConstant.SERVICE_TIMING_DATA.name) as? ArrayList<ServiceTiming>
+      this.secondaryImage = (data?.getSerializableExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>) ?: ArrayList()
     }
   }
 

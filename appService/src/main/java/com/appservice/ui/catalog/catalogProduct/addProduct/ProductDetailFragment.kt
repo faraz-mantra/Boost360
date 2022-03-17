@@ -132,14 +132,14 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun capLimitCheck() {
-    val featureProduct = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureType.PRODUCTCATALOGUE)
+    val featureProduct = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureKey.PRODUCTCATALOGUE)
     val capLimitProduct = featureProduct?.filterProperty(PropertiesItem.KeyType.LIMIT)
     if (isEdit?.not() == true && capLimitProduct != null && capLimitProduct.getValueN() != null) {
       viewModel?.getAllProducts(getRequestProduct(capLimitProduct.getValueN()!!))?.observeOnce(viewLifecycleOwner, {
         val data = it.arrayResponse as? Array<ProductItemsResponseItem>
         if (data.isNullOrEmpty().not()) {
           baseActivity.hideKeyBoard()
-          showAlertCapLimit("Can't add the product catalogue, please activate your premium Add-ons plan.", CapLimitFeatureResponseItem.FeatureType.PRODUCTCATALOGUE.name)
+          showAlertCapLimit("Can't add the product catalogue, please activate your premium Add-ons plan.", CapLimitFeatureResponseItem.FeatureKey.PRODUCTCATALOGUE.name)
         }
       })
     }
@@ -456,21 +456,17 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
             Log.d(ProductDetailFragment::class.java.name, "$it")
           } else showLongToast(getString(R.string.add_secondary_image_data_error_please_try_again))
           if (checkPosition == secondaryImageList.size) {
-            showLongToast(
-              if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
+            showLongToast(if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
                 R.string.product_saved_successfully
-              )
-            )
+              ))
             goBack()
           }
         })
       }
     } else {
-      showLongToast(
-        if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
+      showLongToast(if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
           R.string.product_saved_successfully
-        )
-      )
+        ))
       goBack()
     }
   }
