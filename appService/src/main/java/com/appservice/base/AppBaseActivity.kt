@@ -20,6 +20,7 @@ import com.framework.pref.UserSessionManager
 import com.onboarding.nowfloats.base.ProgressDialog
 
 abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseActivity<Binding, ViewModel>() {
+
   private var progressView: ProgressDialog? = null
   protected lateinit var session: UserSessionManager
 

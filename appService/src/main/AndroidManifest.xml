@@ -53,6 +53,12 @@
       android:windowSoftInputMode="adjustResize" />
 
     <activity
+        android:name=".ui.bgImage.BackgroundImageContainerActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/BackgroundImageTheme"
+        android:windowSoftInputMode="adjustResize" />
+
+    <activity
       android:name=".ui.domainbooking.DomainBookingContainerActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.domain"

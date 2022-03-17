@@ -66,6 +66,10 @@
     <item name="android:background">@drawable/bg_button_rounded_orange</item>
   </style>
 
+  <style name="ButtonStyle.Rounded.Red" parent="ButtonStyle">
+    <item name="android:background">@drawable/bg_btn_red_background_image</item>
+  </style>
+
   <style name="Onboarding" />
 
   <style name="Onboarding.Registration" parent="Onboarding" />
