@@ -3,10 +3,10 @@ package com.framework.utils
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.PendingIntent
-import android.content.ActivityNotFoundException
-import android.content.ContentValues
+import android.content.*
+import android.content.ClipboardManager
+import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Context.INPUT_METHOD_SERVICE
-import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.graphics.*
@@ -32,9 +32,11 @@ import androidx.annotation.FontRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.SimpleColorFilter
@@ -53,7 +55,7 @@ import java.text.NumberFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import kotlin.collections.ArrayList
+
 
 private const val TAG = "Util"
 
@@ -466,4 +468,75 @@ fun getAppVersionName(): String? {
   return null
 }
 
-inline fun <reified T> convertJsonToObj(json: String?) = Gson().fromJson<T>(json, object : TypeToken<T>() {}.type)
+fun Bitmap.zoom(percent: Float): Bitmap? {
+
+  val scaleFactor = percent // Set this to the zoom factor
+  val widthOffset = (scaleFactor / 2 * width).toInt()
+  val heightOffset = (scaleFactor / 2 * height).toInt()
+  val numWidthPixels: Int = width - 2 * widthOffset
+  val numHeightPixels: Int = height - 2 * heightOffset
+  return if (widthOffset > 0 && heightOffset > 0 && numHeightPixels > 0 && numWidthPixels > 0) {
+    val rescaledBitmap = Bitmap.createBitmap(
+      this, widthOffset, heightOffset, numWidthPixels, numHeightPixels, null, true
+    )
+    rescaledBitmap
+  } else {
+    this
+  }
+}
+
+fun gcd(num1: Int, num2: Int): Int {
+  var gcd = 1
+
+  var i = 1
+  while (i <= num1 && i <= num2) {
+    // Checks if i is factor of both integers
+    if (num1 % i == 0 && num2 % i == 0)
+      gcd = i
+    ++i
+  }
+  return gcd
+}
+
+fun spanBold(fullText: String, vararg boldTextList: String): SpannableString {
+  val spannable = SpannableString(fullText)
+  boldTextList.forEach { boldText ->
+    spannable.setSpan(StyleSpan(Typeface.BOLD), fullText.indexOf(boldText), fullText.indexOf(boldText) + boldText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+  }
+  return spannable
+}
+
+fun copyToClipBoard(text: String) {
+  val clipboard = BaseApplication.instance.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+  val clip: ClipData = ClipData.newPlainText("boost-label", text)
+  clipboard.setPrimaryClip(clip)
+  Toast.makeText(BaseApplication.instance, BaseApplication.instance.getString(R.string.copied_to_clipboard), Toast.LENGTH_SHORT).show()
+}
+
+fun Activity.checkPermission(permString: String): Boolean {
+  return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    checkSelfPermission(permString) == PackageManager.PERMISSION_GRANTED
+  } else {
+    true
+  }
+}
+
+fun Fragment.checkPermission(permString: String): Boolean {
+  return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    ActivityCompat.checkSelfPermission(requireContext(), permString) == PackageManager.PERMISSION_GRANTED
+  } else {
+    true
+  }
+}
+
+fun showToast(text: String?, dur: Int = Toast.LENGTH_LONG) {
+  if (text != null && text.isNotEmpty()) Toast.makeText(BaseApplication.instance, text, dur).show()
+}
+
+suspend fun runOnUi(func: () -> Unit) {
+  withContext(Dispatchers.Main) { func.invoke() }
+}
+
+fun fetchString(id: Int): String {
+  return BaseApplication.instance.getString(id)
+}
