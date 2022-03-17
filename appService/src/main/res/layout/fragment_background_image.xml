@@ -120,7 +120,7 @@
           android:fontFamily="@font/semi_bold"
           android:gravity="center"
           android:stateListAnimator="@null"
-          android:text="@string/upload_image"
+          android:text="@string/upload_image_n"
           android:textAllCaps="false"
           android:textColor="@color/white"
           app:textType="HEADING_6" />

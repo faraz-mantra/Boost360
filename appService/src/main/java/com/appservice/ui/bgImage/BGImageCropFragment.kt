@@ -14,6 +14,7 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentCropZoomBinding
+import com.appservice.utils.WebEngageController
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.imagepicker.Utility
@@ -22,6 +23,8 @@ import com.framework.utils.FileUtils.saveBitmap
 import com.framework.utils.gcd
 import com.framework.utils.spanBold
 import com.framework.utils.zoom
+import com.framework.webengageconstant.BACKGROUND_IMAGE_CROP_LOAD
+import com.framework.webengageconstant.START_VIEW
 
 class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewModel>() {
 
@@ -50,6 +53,7 @@ class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewMod
 
   override fun onCreateView() {
     super.onCreateView()
+    WebEngageController.trackEvent(BACKGROUND_IMAGE_CROP_LOAD, START_VIEW, sessionLocal.fpTag)
     imagePath = arguments?.getString(BK_IMAGE_PATH)
     bitmap = BitmapFactory.decodeFile(imagePath)
     binding?.cropImg?.setImageBitmap(Utility.rotateImageIfRequired(bitmap!!, imagePath))

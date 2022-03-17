@@ -12,10 +12,12 @@ import com.appservice.constant.RecyclerViewItemType
 import com.appservice.databinding.FragmentBgImageFullScreenBinding
 import com.appservice.model.ImageData
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
+import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.BackgroundImageViewModel
 import com.framework.extensions.observeOnce
 import com.framework.pref.clientId
 import com.framework.utils.convertStringToList
+import com.framework.webengageconstant.*
 
 class BGImageFullScreenFragment : AppBaseFragment<FragmentBgImageFullScreenBinding, BackgroundImageViewModel>() {
 
@@ -46,6 +48,7 @@ class BGImageFullScreenFragment : AppBaseFragment<FragmentBgImageFullScreenBindi
 
   override fun onCreateView() {
     super.onCreateView()
+    WebEngageController.trackEvent(BACKGROUND_IMAGE_FULL_SCREEN_LOAD, START_VIEW, sessionLocal.fpTag)
     setOnClickListener(binding?.delete, binding?.previous, binding?.next, binding?.galleryCancel)
     position = arguments?.getInt(BK_IMAGE_POS) ?: 0
     imageList = ArrayList(convertStringToList(arguments?.getString(BK_IMAGE_LIST) ?: "") ?: arrayListOf())
@@ -72,6 +75,7 @@ class BGImageFullScreenFragment : AppBaseFragment<FragmentBgImageFullScreenBindi
     when (v) {
       binding?.delete -> {
         showProgress()
+        WebEngageController.trackEvent(BACKGROUND_IMAGE_DELETE_CLICK, CLICK, sessionLocal.fpTag)
         val currentImage = imageList?.get(binding?.pager?.currentItem!!)
         val map = HashMap<String, String?>()
         map["clientId"] = clientId
