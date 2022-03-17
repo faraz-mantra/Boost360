@@ -34,6 +34,13 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.getMerchantSummary(clientId, fpTag), TaskCode.GET_MERCHANT_SUMMARY)
   }
 
+  fun createBGImage(body: RequestBody,fpId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.createBGImage(fpId,body=body), TaskCode.CREATE_BG_IMAGE)
+  }
+  fun deleteBGImage(map: HashMap<String, String?>,): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.deleteBackgroundImages(map), TaskCode.CREATE_BG_IMAGE)
+  }
+
   fun addUpdateImageProductService(
     clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?,
     currentChunkNumber: Int?, productId: String?, requestBody: RequestBody?,
@@ -183,5 +190,9 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
 
   fun updateProductCategoryVerb(request: ProductCategoryVerbRequest): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.updateProductCategoryVerb(request), TaskCode.UPDATE_PRODUCT_CATEGORY_VERB)
+  }
+
+  fun getImages(fpId: String?, clientId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getBackgroundImages(fpId, clientId), TaskCode.GET_BACKGROUND_IMAGES)
   }
 }

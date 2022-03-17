@@ -75,6 +75,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.appservice.rest.repository.AzureWebsiteNewRepository
 import com.framework.analytics.SentryController
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
@@ -153,7 +154,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
         cart_list = localStorage.getCartItems()
         prefs = SharedPrefs(activity as UpgradeActivity)
         session = UserSessionManager(requireActivity())
-        session?.let { deepLinkUtil = DeepLinkUtil(requireActivity() as AppCompatActivity, it) }
+        session?.let { deepLinkUtil = DeepLinkUtil(requireActivity() as AppCompatActivity, it, Fragment()) }
 
         return root
     }
