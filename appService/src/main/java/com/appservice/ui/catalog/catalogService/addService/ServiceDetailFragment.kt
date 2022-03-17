@@ -101,21 +101,19 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     val featureService = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureKey.PRODUCTCATALOGUE)
     val capLimitService = featureService?.filterProperty(PropertiesItem.KeyType.LIMIT)
     if (isEdit.not() && capLimitService != null) {
-      viewModel?.getSearchListings(sessionLocal.fpTag, sessionLocal.fPID, "", 0, 5)?.observeOnce(viewLifecycleOwner, {
+      viewModel?.getSearchListings(sessionLocal.fpTag, sessionLocal.fPID, "", 0, 5)?.observeOnce(viewLifecycleOwner) {
         val data = (it as? ServiceSearchListingResponse)?.result?.paging
         if (data?.count != null && capLimitService.getValueN() != null && data.count >= capLimitService.getValueN()!!) {
           baseActivity.hideKeyBoard()
-          showAlertCapLimit("Can't add the service catalogue, please activate your premium Add-ons plan.", CapLimitFeatureResponseItem.FeatureType.PRODUCTCATALOGUE.name)
+          showAlertCapLimit("Can't add the service catalogue, please activate your premium Add-ons plan.", CapLimitFeatureResponseItem.FeatureKey.PRODUCTCATALOGUE.name)
         }
-      })
+      }
     }
   }
 
   private fun initServiceToggle() {
-    binding?.payServiceView?.visibility =
-      if (binding?.toggleService?.isOn!!) View.VISIBLE else View.GONE
-    binding?.freeServiceView?.visibility =
-      if (binding?.toggleService?.isOn!!) View.GONE else View.VISIBLE
+    binding?.payServiceView?.visibility = if (binding?.toggleService?.isOn!!) View.VISIBLE else View.GONE
+    binding?.freeServiceView?.visibility = if (binding?.toggleService?.isOn!!) View.GONE else View.VISIBLE
   }
 
   private fun listenerEditText() {
@@ -319,13 +317,13 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   private fun addUpdateServiceTiming() {
     val request = AddServiceTimingRequest(product?.productId, product?.Duration, getTimingRequest(this.serviceTimingList))
     val requestApi = if (isEdit.not()) viewModel?.addServiceTiming(request) else viewModel?.updateServiceTiming(request)
-    requestApi?.observeOnce(viewLifecycleOwner, {
+    requestApi?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         isRefresh = true
         hideProgress()
         openSuccessBottomSheet()
       } else showError(resources.getString(R.string.service_timing_adding_error))
-    })
+    }
   }
 
   private fun getTimingRequest(serviceTimingList: ArrayList<ServiceTiming>?): ArrayList<ServiceTiming>? {
