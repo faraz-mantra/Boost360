@@ -54,7 +54,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginStart="8dp"
-                        app:cardBackgroundColor="#FEEFD1"
+                        app:cardBackgroundColor="@color/colorFEEFD1"
                         app:cardCornerRadius="10dp"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_cat_title"
                         app:layout_constraintStart_toEndOf="@+id/tv_cat_title"
@@ -90,5 +90,20 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.framework.views.customViews.CustomImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_no_fav"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
     </FrameLayout>
 </layout>

@@ -21,7 +21,8 @@ enum class RecyclerViewItemType {
   WEBSITE_PREVIEW,
   EMAIL_PREVIEW,
   GMB_PREVIEW,
-  VIEW_MORE_POSTER;
+  VIEW_MORE_POSTER,
+  FAV_CAT;
 
 
   @LayoutRes
@@ -45,6 +46,7 @@ enum class RecyclerViewItemType {
       GMB_PREVIEW->R.layout.social_preview_gmb
       EMAIL_PREVIEW->R.layout.social_preview_email
       VIEW_MORE_POSTER->R.layout.layout_view_more_template
+      FAV_CAT->R.layout.list_item_fav_cat
 
     }
   }

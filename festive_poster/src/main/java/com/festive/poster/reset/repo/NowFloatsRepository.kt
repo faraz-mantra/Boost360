@@ -43,7 +43,7 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
     }
     return NowFloatsRepository.makeRemoteRequest(
       remoteDataSource.getFavTemp(body),
-      TaskCode.GET_TEMPLATES
+      TaskCode.GET_FAV_TEMPLATES
     )
   }
 

@@ -23,6 +23,10 @@ class PostUpdatesViewModel : BaseViewModel() {
     return WithFloatTwoRepository.putBizMessageUpdate(request).toLiveData()
   }
 
+  fun getFavTemplates(floatingPointId: String?,floatingPointTag: String?,featureKey:String): LiveData<BaseResponse> {
+    return NowFloatsRepository.getFavTemplates(floatingPointId,floatingPointTag,featureKey).toLiveData()
+  }
+
   fun putBizMessageUpdateV2(request: PostUpdateTaskRequest?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.putBizMessageUpdateV2(request).toLiveData()
   }

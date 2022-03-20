@@ -13,6 +13,7 @@ import com.festive.poster.databinding.ListItemBrowseAllCatBinding
 import com.festive.poster.databinding.ListItemBrowseTabTemplateCatBinding
 import com.festive.poster.databinding.ListItemFavCatBinding
 import com.festive.poster.databinding.ListItemPosterPackBinding
+import com.festive.poster.models.FavouriteTemplatesDetail
 import com.festive.poster.models.PosterPackModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
@@ -27,7 +28,7 @@ class FavPosterCatViewHolder(binding: ListItemFavCatBinding) :
   AppBaseRecyclerViewHolder<ListItemFavCatBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
-    val model = item as PosterPackModel
+    val model = item as FavouriteTemplatesDetail
     if (model.isSelected){
          getColor(R.color.color4ACDFF)?.let {
         binding.borderCard.strokeColor=it
@@ -37,10 +38,10 @@ class FavPosterCatViewHolder(binding: ListItemFavCatBinding) :
       binding.borderCard.strokeColor=0
       binding.root.alpha = 0.5F
     }
-    binding.tvTitle.text = model.tagsModel.tag
+    binding.tvTitle.text = model.tagName
 
     binding.root.setOnClickListener {
-      listener?.onItemClick(position,model,RecyclerViewActionType.BROWSE_ALL_POSTER_CAT_CLICKED.ordinal)
+      listener?.onItemClick(position,model,RecyclerViewActionType.FAV_CAT_CLICKED.ordinal)
     }
 
     super.bind(position, item)

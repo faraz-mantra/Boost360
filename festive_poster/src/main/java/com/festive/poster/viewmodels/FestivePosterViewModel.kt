@@ -33,7 +33,7 @@ class FestivePosterViewModel: BaseViewModel() {
     }
 
     fun makeTemplateFav(floatingPointId: String?,floatingPointTag: String?,templateId:String): LiveData<BaseResponse> {
-        return NowFloatsRepository.getFavTemplates(floatingPointId,floatingPointTag,templateId).toLiveData()
+        return NowFloatsRepository.makeTempFav(floatingPointId,floatingPointTag,templateId).toLiveData()
     }
 
 

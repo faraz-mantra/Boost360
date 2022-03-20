@@ -16,7 +16,6 @@ import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.framework.base.BaseActivity
 import com.framework.views.itemdecoration.LineItemDecoration
-import com.google.android.material.tabs.TabLayoutMediator
 
 class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecyclerViewHolder<ListItemPosterPackBinding>(binding) {
 
