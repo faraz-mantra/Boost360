@@ -1,10 +1,5 @@
 package com.appservice.holder
 
-import android.R.color
-import android.graphics.BlendMode
-import android.graphics.BlendModeColorFilter
-import android.graphics.PorterDuff
-import android.os.Build
 import android.view.View
 import android.widget.SeekBar
 import com.appservice.R
@@ -19,20 +14,18 @@ import com.framework.utils.ExoPlayerUtils.player
 import com.framework.utils.makeCall
 import java.util.*
 
-
 class VmnCallViewHolder(binding: SingleItemVmnCallItemV2Binding) : AppBaseRecyclerViewHolder<SingleItemVmnCallItemV2Binding>(binding) {
 
-
   init {
-    binding.seekBar.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
+    binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
       override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-        if (p2){
-          if (player.currentPosition< player.duration){
+        if (p2) {
+          if (player.currentPosition < player.duration) {
             player.seekTo(p1.toLong())
           }
-
         }
       }
+
       override fun onStartTrackingTouch(p0: SeekBar?) {
       }
 
@@ -42,24 +35,20 @@ class VmnCallViewHolder(binding: SingleItemVmnCallItemV2Binding) : AppBaseRecycl
     })
 
     binding.tvPlay.setOnClickListener {
-      listener?.onItemClick(layoutPosition, list?.get(layoutPosition),RecyclerViewActionType.VMN_PLAY_CLICKED.ordinal)
+      listener?.onItemClick(layoutPosition, list?.get(layoutPosition), RecyclerViewActionType.VMN_PLAY_CLICKED.ordinal)
     }
   }
 
 
-
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
-    val model =item as VmnCallModel
+    val model = item as VmnCallModel
     binding.seekBar.progress = model.audioPosition.toInt()
 
-    if (model.audioPosition == 0L && model
-        .audioPosition == 0L && !model.isAudioPlayState
-    ) {
+    if (model.audioPosition == 0L && model.audioPosition == 0L && !model.isAudioPlayState) {
       binding.seekBar.progress = 0
       binding.tvRecTime.text = "0:00"
       binding.tvEndTime.text = " / 0:00"
-
       binding.tvPlay.setImageResource(R.drawable.ic_audio_play)
     } else {
       binding.seekBar.progress = model.audioPosition.toInt()
@@ -73,13 +62,11 @@ class VmnCallViewHolder(binding: SingleItemVmnCallItemV2Binding) : AppBaseRecycl
       }
     }
 
-
-    val longDate = model.callDateTime?.replace("/Date(", "")?.replace(")/", "")?.toLong()?:0
-    val date = getDate(longDate,"dd-MM-yyyy")
-    val time = getDate(longDate,"hh:mm:ss a")
+    val longDate = model.callDateTime?.replace("/Date(", "")?.replace(")/", "")?.toLong() ?: 0
+    val date = getDate(longDate, "dd-MM-yyyy")
+    val time = getDate(longDate, "hh:mm:ss a")
     binding.tvDate.text = date
     binding.tvTime.text = time
-
 
     binding.divider.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
     if (model.callStatus.equals("MISSED", ignoreCase = true)) {
@@ -98,13 +85,7 @@ class VmnCallViewHolder(binding: SingleItemVmnCallItemV2Binding) : AppBaseRecycl
 
     }
     binding.tvNumber.text = model.callerNumber
-    binding.ivCall.setOnClickListener(View.OnClickListener {
-
-      makeCall(model.callerNumber)
-    })
-
-
-
+    binding.ivCall.setOnClickListener { makeCall(model.callerNumber) }
   }
 
   private fun getTimeFromMilliSeconds(pos: Long): String? {
@@ -112,6 +93,4 @@ class VmnCallViewHolder(binding: SingleItemVmnCallItemV2Binding) : AppBaseRecycl
     val minutes = pos / (1000 * 60) % 60
     return String.format(Locale.ENGLISH, "%d:%02d", minutes, seconds)
   }
-
-
 }

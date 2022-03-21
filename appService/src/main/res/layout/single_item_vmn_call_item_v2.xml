@@ -1,81 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <com.framework.views.customViews.CustomCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/size_12"
+    android:layout_marginTop="@dimen/size_10"
+    android:layout_marginBottom="@dimen/size_2"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/size_10">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/item_layout"
-      android:tag="com.userexperior.ueSecureView"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:clipChildren="false"
-      android:layout_marginTop="8dp"
-      android:layout_marginBottom="8dp"
-      android:background="@drawable/all_side_small_curve_bg"
-      android:elevation="2dp"
-      android:orientation="vertical">
+      android:orientation="vertical"
+      android:tag="com.userexperior.ueSecureView">
 
-    <LinearLayout
-        android:orientation="horizontal"
+      <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/llayout_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-      <LinearLayout
-          android:gravity="center_vertical"
-          android:weightSum="1"
+        <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:gravity="center_vertical"
           android:orientation="horizontal"
-          >
+          android:weightSum="1">
 
-        <LinearLayout
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/size_12"
             android:layout_weight="0.8"
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
+            android:orientation="vertical">
 
-          <LinearLayout
-              android:gravity="center"
-              android:orientation="horizontal"
+            <androidx.appcompat.widget.LinearLayoutCompat
               android:layout_width="wrap_content"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:orientation="horizontal">
 
-            <com.framework.views.customViews.CustomImageView
-                android:layout_width="wrap_content"
+              <com.framework.views.customViews.CustomImageView
                 android:id="@+id/iv_call_icon"
-                android:src="@drawable/ic_call_received_app_service"
-                android:layout_height="wrap_content"/>
-
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/tv_call_type"
-                android:layout_marginStart="@dimen/size_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/outgoing"
+                android:src="@drawable/ic_call_received_app_service" />
+
+              <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_call_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_4"
                 android:fontFamily="@font/semi_bold"
+                android:text="@string/outgoing"
                 android:textColor="#BBBBBB" />
-          </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-          <com.framework.views.customViews.CustomTextView
+            <com.framework.views.customViews.CustomTextView
               android:id="@+id/tv_number"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:fontFamily="@font/semi_bold"
               android:gravity="center_vertical"
               android:text="@string/_9695787711"
-              android:fontFamily="@font/semi_bold"
               android:textColor="@color/biz_msg_txt_color"
               android:textSize="18sp" />
-        </LinearLayout>
+          </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
+          <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/size_10"
             android:orientation="vertical">
 
-          <com.framework.views.customViews.CustomTextView
+            <com.framework.views.customViews.CustomTextView
               android:id="@+id/tv_date"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -83,87 +87,80 @@
               android:textColor="#979797"
               android:textSize="12sp" />
 
-          <com.framework.views.customViews.CustomTextView
+            <com.framework.views.customViews.CustomTextView
               android:id="@+id/tv_time"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="@string/_01_17_am"
               android:textColor="#979797"
               android:textSize="12sp" />
-
-          <!--        <TextView-->
-          <!--            android:id="@+id/tv_play"-->
-          <!--            android:layout_width="wrap_content"-->
-          <!--            android:layout_height="wrap_content"-->
-          <!--            android:padding="10dp"-->
-          <!--            android:text="@string/play_with_underline"-->
-          <!--            android:textAllCaps="false"-->
-          <!--            android:textColor="@color/gray" />-->
-        </LinearLayout>
+          </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-        <View
+          <View
             android:id="@+id/divider2"
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="@drawable/dotted_line_vertical" />
 
-        <com.framework.views.customViews.CustomImageView
-            android:layout_width="0dp"
+          <com.framework.views.customViews.CustomImageView
             android:id="@+id/iv_call"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="0.22"
-            android:src="@drawable/ic_call_not_filled"
-            android:layout_height="wrap_content"/>
-      </LinearLayout>
+            android:src="@drawable/ic_call_not_filled" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </LinearLayout>
+      </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <View
+      <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:background="@drawable/dotted_line_horizontal" />
 
-    <LinearLayout
-        android:layout_marginHorizontal="@dimen/size_12"
+      <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/player_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-      <com.framework.views.customViews.CustomImageView
+        <com.framework.views.customViews.CustomImageView
           android:id="@+id/tv_play"
           android:layout_width="@dimen/size_40"
           android:layout_height="@dimen/size_40"
           android:padding="@dimen/size_11"
-          app:tint="@color/colorPrimary"
-          app:srcCompat="@drawable/ic_audio_play" />
+          app:srcCompat="@drawable/ic_audio_play"
+          app:tint="@color/colorPrimary" />
 
-      <SeekBar
-          android:thumbTint="@color/colorPrimary"
+        <SeekBar
           android:id="@+id/seekBar"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_weight="1"
           android:indeterminate="false"
           android:progressBackgroundTint="#979797"
-          android:progressTint="@color/colorPrimary" />
+          android:progressTint="@color/colorPrimary"
+          android:thumbTint="@color/colorPrimary" />
 
-      <com.framework.views.customViews.CustomTextView
+        <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_rec_time"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="@string/_0_00_"
           android:textColor="#979797" />
 
-      <com.framework.views.customViews.CustomTextView
+        <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_end_time"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginEnd="@dimen/size_10"
           android:text="@string/_0_00_back_slash"
           android:textColor="#979797" />
-    </LinearLayout>
-  </LinearLayout>
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+  </com.framework.views.customViews.CustomCardView>
+
 </layout>
