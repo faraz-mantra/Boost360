@@ -64,7 +64,7 @@ import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 /**
  * Created by Admin on 27-04-2017.
  */
-
+@Deprecated
 public class VmnCallCardsActivity extends AppCompatActivity implements View.OnClickListener, AppOnZeroCaseClicked {
 
   private static final String TAG = "VmnCallCardsActivity";

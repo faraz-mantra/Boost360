@@ -1,6 +1,7 @@
 package com.appservice.base
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
@@ -53,6 +54,9 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
     return ContextCompat.getColor(this, R.color.white)
   }
 
+  override fun getNavigationIcon(): Drawable? {
+    return ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
+  }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
