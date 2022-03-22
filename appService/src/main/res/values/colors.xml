@@ -28,4 +28,6 @@
   <color name="smaller_background_red">#EB5757</color>
 
   <color name="ButtoncolorAccent">@color/colorAccent</color>
+  <color name="biz_msg_txt_color">#3c3c3c</color>
+
 </resources>

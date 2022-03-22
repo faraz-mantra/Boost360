@@ -49,6 +49,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       BACKGROUND_IMAGE_RV -> BackgroundImageHolder(binding = binding as ListItemBackgroundImagesBinding)
       BACKGROUND_IMAGE_FULL_SCREEN -> BGImageFullScreenHolder(binding = binding as ListItemBgImageFullScreenBinding)
       GST_SLAB_SETTING -> GstSlabViewHolder(binding as ItemGstSlabBinding)
+      VMN_CALL->VmnCallViewHolder(binding as SingleItemVmnCallItemV2Binding)
     }
   }
 

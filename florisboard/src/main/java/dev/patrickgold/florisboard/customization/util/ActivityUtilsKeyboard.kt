@@ -117,7 +117,7 @@ fun startBusinessEnquiryN(mContext: Context) {
 fun startVmnCallCardN(mContext: Context) {
   try {
     WebEngageController.trackEvent(TRACK_CALL_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val i = Intent(mContext, Class.forName("com.nowfloats.Analytics_Screen.VmnCallCardsActivity"))
+    val i = Intent(mContext, Class.forName("com.appservice.ui.calltracking.VmnCallCardsActivityV2"))
     i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     mContext.startActivity(i)
   } catch (e: Exception) {
