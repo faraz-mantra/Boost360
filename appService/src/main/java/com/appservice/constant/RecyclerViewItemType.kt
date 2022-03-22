@@ -29,7 +29,8 @@ enum class RecyclerViewItemType {
   SIMILAR_DOMAIN_SUGGESTIONS,
   BACKGROUND_IMAGE_RV,
   BACKGROUND_IMAGE_FULL_SCREEN,
-  GST_SLAB_SETTING;
+  GST_SLAB_SETTING,
+  VMN_CALL;
 
 
   @LayoutRes
@@ -61,6 +62,7 @@ enum class RecyclerViewItemType {
       BACKGROUND_IMAGE_RV -> R.layout.list_item_background_images
       BACKGROUND_IMAGE_FULL_SCREEN->R.layout.list_item_bg_image_full_screen
       GST_SLAB_SETTING -> R.layout.item_gst_slab
+      VMN_CALL->R.layout.single_item_vmn_call_item_v2
     }
   }
 }

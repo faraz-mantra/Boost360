@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_f9f9f9"
+    android:orientation="vertical">
+
+    <com.framework.views.customViews.CustomToolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="?attr/colorPrimary"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:navigationIcon="@drawable/ic_back_arrow_new"
+      app:titleTextAppearance="@style/Toolbar.TitleText" />
+
+    <com.framework.views.customViews.CustomImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="16dp"
+      android:src="@drawable/ic_questions_circular_button_white"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+      app:layout_constraintEnd_toEndOf="@+id/toolbar"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/main_info_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginTop="@dimen/size_12"
+      android:layout_marginBottom="@dimen/size_5"
+      android:background="@color/white"
+      android:elevation="3dp"
+      android:orientation="vertical"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+          android:id="@+id/see_more_less"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:padding="@dimen/size_16">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/total_number_of_calls"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/semi_bold"
+            android:text="@string/view_potential_calls_0"
+            app:textType="HEADING_6" />
+
+          <com.framework.views.customViews.CustomImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/total_number_of_calls"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_question_mark" />
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/see_more_less_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:rotation="270"
+            app:srcCompat="@drawable/ic_arrow_right"
+            app:tint="@color/colorPrimary" />
+        </RelativeLayout>
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/grey_bg" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/help_web_phone_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:layout_marginBottom="10dp"
+          android:paddingVertical="8dp"
+          android:visibility="gone"
+          tools:visibility="visible">
+
+          <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/middle_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/phone_helper"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/middle_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.framework.views.customViews.CustomImageView
+              android:layout_width="wrap_content"
+              android:layout_height="@dimen/size_40"
+              app:srcCompat="@drawable/ic_phone_call" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:orientation="vertical">
+
+              <com.framework.views.customViews.CustomTextView
+                android:id="@+id/phone_call_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="com.userexperior.ueSecureView"
+                android:text="@string/zero"
+                android:textSize="20sp" />
+
+              <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mobile" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+          </androidx.appcompat.widget.LinearLayoutCompat>
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/website_helper"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/middle_guideline"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.framework.views.customViews.CustomImageView
+              android:layout_width="wrap_content"
+              android:layout_height="@dimen/size_40"
+              app:srcCompat="@drawable/ic_computer_status" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:orientation="vertical">
+
+              <com.framework.views.customViews.CustomTextView
+                android:id="@+id/web_call_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="com.userexperior.ueSecureView"
+                android:text="@string/zero"
+                app:textType="HEADING_5" />
+
+              <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/desktop" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+          </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/help_website_info"
+      android:layout_width="@dimen/size_150"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/main_info_layout"
+      android:elevation="@dimen/size_5"
+      android:visibility="gone"
+      app:layout_constraintStart_toStartOf="@id/main_info_layout"
+      app:layout_constraintTop_toBottomOf="@id/main_info_layout">
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:background="@drawable/all_side_curve_bg"
+        android:elevation="5dp"
+        android:gravity="center"
+        android:padding="@dimen/size_10"
+        android:text="@string/the_total_number_of_clicks_on_your_contact_number_displayed_on_website" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/help_phone_info"
+      android:layout_width="@dimen/size_150"
+      android:layout_height="wrap_content"
+      android:elevation="5dp"
+      android:visibility="gone"
+      app:layout_constraintEnd_toEndOf="@id/main_info_layout"
+      app:layout_constraintTop_toBottomOf="@id/main_info_layout">
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:background="@drawable/all_side_curve_bg"
+        android:elevation="5dp"
+        android:gravity="center"
+        android:padding="@dimen/size_10"
+        android:text="@string/the_total_number_of_clicks_on_your_contact_number_displayed_on_website" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/main_layout"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:orientation="vertical"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/main_info_layout"
+      tools:visibility="gone">
+
+      <include
+        android:id="@+id/empty_layout"
+        layout="@layout/vmn_empty_screen_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+      <LinearLayout
+        android:id="@+id/calls_details_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:orientation="vertical">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/total_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zero"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/total_calls"
+            android:textSize="15sp" />
+        </LinearLayout>
+
+        <View
+          android:layout_width="1dp"
+          android:layout_height="match_parent"
+          android:background="@color/zui_divider_color" />
+
+        <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:orientation="vertical">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/received_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zero"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/received_calls"
+            android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <View
+          android:layout_width="1dp"
+          android:layout_height="match_parent"
+          android:background="@color/zui_divider_color" />
+
+        <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:orientation="vertical">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/missed_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zero"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/missed_calls"
+            android:textSize="15sp" />
+
+        </LinearLayout>
+
+      </LinearLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/primary_layout"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_marginTop="@dimen/size_12"
+      android:background="@color/white_smoke"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/main_info_layout"
+      tools:visibility="visible">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/first_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_16"
+        app:layout_constraintBottom_toTopOf="@+id/second_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_tracked_call"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/semi_bold"
+          android:tag="com.userexperior.ueSecureView"
+          android:text="@string/tracked_calls"
+          app:textType="HEADING_6" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="8dp"
+          android:src="@drawable/ic_question_mark"
+          android:visibility="gone" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_bg"
+        app:layout_constraintTop_toBottomOf="@id/first_layout" />
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/second_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/first_layout">
+
+        <com.google.android.material.tabs.TabLayout
+          android:id="@+id/table_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:tabTextAppearance="@style/TabTextApperance"
+          app:tabTextColor="@color/black_747474">
+
+          <com.google.android.material.tabs.TabItem
+            android:id="@+id/track_all_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/all" />
+
+          <com.google.android.material.tabs.TabItem
+            android:id="@+id/track_missed_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/missed" />
+
+          <com.google.android.material.tabs.TabItem
+            android:id="@+id/track_connected_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/connected" />
+
+        </com.google.android.material.tabs.TabLayout>
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/call_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/size_20"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/second_layout" />
+
+      <FrameLayout
+        android:id="@+id/child_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <ProgressBar
+      android:id="@+id/pb_loading"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/size_60"
+      android:gravity="center"
+      android:indeterminate="true"
+      android:indeterminateTint="@color/colorAccentLight"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

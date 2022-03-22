@@ -9,7 +9,10 @@ import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.ColorFilter
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -46,6 +49,7 @@ import com.framework.BaseApplication
 import com.framework.R
 import com.framework.constants.PackageNames
 import com.framework.views.customViews.CustomTextView
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
@@ -450,11 +454,12 @@ inline fun <reified T> read(): T {
   }
 }
 
-fun Activity.makeCall(number: String) {
+fun makeCall(number: String?) {
   val callIntent = Intent(Intent.ACTION_DIAL)
   callIntent.addCategory(Intent.CATEGORY_DEFAULT)
   callIntent.data = Uri.parse("tel:$number")
-  this.startActivity(Intent.createChooser(callIntent, "Call by:"))
+  callIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+  BaseApplication.instance.startActivity(callIntent)
 }
 
 fun getAppVersionName(): String? {
@@ -539,4 +544,27 @@ suspend fun runOnUi(func: () -> Unit) {
 
 fun fetchString(id: Int): String {
   return BaseApplication.instance.getString(id)
+}
+
+fun showSnackBarNegative(context: Activity, msg: String?) {
+  val snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg ?: "", Snackbar.LENGTH_INDEFINITE)
+  snackBar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color))
+  snackBar.duration = 4000
+  snackBar.show()
+}
+
+fun spanColor(fullText: String, @ColorRes color: Int, vararg colorTextList: String): SpannableString {
+  val spannable = SpannableString(fullText)
+  try {
+    colorTextList.forEach { text ->
+      spannable.setSpan(
+        ForegroundColorSpan(
+          ContextCompat.getColor(BaseApplication.instance, color)
+        ), fullText.indexOf(text), fullText.indexOf(text) + text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+      )
+    }
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+  return spannable
 }

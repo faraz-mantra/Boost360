@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.databinding.DataBindingUtil;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.appservice.ui.calltracking.VmnCallCardsActivityV2;
 import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.github.florent37.viewtooltip.ViewTooltip;
 import com.google.gson.Gson;
@@ -146,7 +147,7 @@ public class ContactInformationActivity extends BaseActivity {
 
         binding.tvVmnReport.setOnClickListener(v -> {
 
-            Intent i = new Intent(ContactInformationActivity.this, VmnCallCardsActivity.class);
+            Intent i = new Intent(ContactInformationActivity.this, VmnCallCardsActivityV2.class);
             startActivity(i);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });

@@ -40,6 +40,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.framework.analytics.SentryController;
+import com.framework.constants.SupportVideoType;
 import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.framework.views.zero.old.AppFragmentZeroCase;
 import com.framework.views.zero.old.AppOnZeroCaseClicked;
@@ -56,7 +57,6 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
-import com.onboarding.nowfloats.constant.SupportVideoType;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentImageGalleryBinding;
 
