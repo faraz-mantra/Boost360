@@ -55,7 +55,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   }
 
   override fun onCreateView() {
-    WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_PAGE_LOAD_NEW_UPPERCASE, PAGE_VIEW, NO_EVENT_VALUE)
     fullScreenProgress = FullScreenProgressDialog.newInstance()
     this.session = UserSessionManager(baseActivity)
     floatsRequest = arguments?.getSerializable(CATEGORY_DATA) as? CategoryFloatsRequest
@@ -100,7 +100,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
         setData(baseActivity.getString(R.string.get_boost_360_tnc))
         onClicked = {
           floatsRequest?.webSiteUrl = "$website${getString(R.string.nowfloats_dot_com)}"
-          WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK, CLICK, NO_EVENT_VALUE)
+          WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK_NEW_UPPERCASE, CLICK, NO_EVENT_VALUE)
           apiHitCreateMerchantProfile()
         }
         show(
