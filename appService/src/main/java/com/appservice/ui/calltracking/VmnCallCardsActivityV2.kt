@@ -1,7 +1,6 @@
 package com.appservice.ui.calltracking
 
 import android.content.Intent
-import android.os.Handler
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -9,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appservice.R
 import com.appservice.base.AppBaseActivity
+import com.appservice.base.addPlus91
+import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.ActivityVmnCallCardsV2Binding
 import com.appservice.model.VmnCallModel
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
@@ -22,7 +23,6 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.pref.Key_Preferences
-import com.framework.pref.Key_Preferences.GET_FP_DETAILS_CATEGORY
 import com.framework.pref.clientId
 import com.framework.utils.*
 import com.framework.utils.ExoPlayerUtils.play
@@ -80,18 +80,17 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
     addFragment(binding?.childContainer?.id, appFragmentZeroCase, false)
     WebEngageController.trackEvent(BUSINESS_CALLS, EVENT_LABEL_BUSINESS_CALLS, null)
 
-    val phone = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER)
+    val phone = addPlus91(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER))
     binding?.tvTrackedCall?.text = spanColor(getString(R.string.tracked_calls) + " " + phone, R.color.colorPrimary, phone ?: "")
-    setOnClickListener(binding?.seeMoreLess, binding?.websiteHelper, binding?.phoneHelper, binding?.parentLayout)
-
+    setOnClickListener(binding?.seeMoreLess, binding?.websiteHelper, binding?.phoneHelper)
     //tracking calls
     showTrackedCalls()
-    adpaterCallView()
+    adapterCallView()
     websiteCallCount()
     checkPremium()
   }
 
-  private fun adpaterCallView() {
+  private fun adapterCallView() {
     val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     binding?.callRecycler?.layoutManager = linearLayoutManager
     binding?.callRecycler?.setHasFixedSize(true)
@@ -155,6 +154,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
     }
 
   private fun showTrackedCalls() {
+    binding?.parentLayout?.setOnTouchListener { _, _ -> infoCallHide();true }
     binding?.tableLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
       override fun onTabSelected(tab: TabLayout.Tab) {
         if (tab.position == 0) {
@@ -173,6 +173,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
             updateRecyclerData(null)
           }
         }
+        infoCallHide()
       }
 
       override fun onTabUnselected(tab: TabLayout.Tab) {}
@@ -320,7 +321,6 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
   override fun onClick(v: View?) {
     super.onClick(v)
     when (v) {
-
       binding?.seeMoreLess -> {
         if (!seeMoreLessStatus) {
           seeMoreLessStatus = true
@@ -330,13 +330,10 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
           seeMoreLessStatus = false
           binding?.seeMoreLessImage?.rotation = 270F
           binding?.helpWebPhoneLayout?.visibility = View.GONE
-
-          //hide info
-          binding?.helpWebsiteInfo?.visibility = View.GONE
-          binding?.helpPhoneInfo?.visibility = View.GONE
+          infoCallHide()
         }
       }
-      binding?.websiteHelper -> {
+      binding?.phoneHelper -> {
         binding?.helpPhoneInfo?.visibility = View.GONE
         if (binding?.helpWebsiteInfo?.visibility == View.VISIBLE) {
           binding?.helpWebsiteInfo?.visibility = View.GONE
@@ -344,7 +341,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
           binding?.helpWebsiteInfo?.visibility = View.VISIBLE
         }
       }
-      binding?.phoneHelper -> {
+      binding?.websiteHelper -> {
         binding?.helpWebsiteInfo?.visibility = View.GONE
         if (binding?.helpPhoneInfo?.visibility == View.VISIBLE) {
           binding?.helpPhoneInfo?.visibility = View.GONE
@@ -352,44 +349,16 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
           binding?.helpPhoneInfo?.visibility = View.VISIBLE
         }
       }
-      binding?.parentLayout -> {
-        if (seeMoreLessStatus) {
-          seeMoreLessStatus = false
-          binding?.seeMoreLessImage?.setImageResource(R.drawable.vmn_down_arrow)
-          binding?.helpWebPhoneLayout?.visibility = View.GONE
-          //hide info
-          binding?.helpWebsiteInfo?.visibility = View.GONE
-          binding?.helpPhoneInfo?.visibility = View.GONE
-        }
-      }
     }
   }
 
-
-  private fun initiateBuyFromMarketplace() {
-    showProgress()
-    val intent = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
-    intent.putExtra("expCode", session.fP_AppExperienceCode)
-    intent.putExtra("fpName", session.fPName)
-    intent.putExtra("fpid", session.fPID)
-    intent.putExtra("fpTag", session.fpTag)
-    intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY))
-    intent.putStringArrayListExtra("userPurchsedWidgets", session.getStoreWidgets()?.toArrayList())
-    if (session.userPrimaryMobile != null) {
-      intent.putExtra("email", session.userPrimaryMobile)
-    } else {
-      intent.putExtra("email", getString(R.string.ria_customer_mail))
+  private fun infoCallHide() {
+    if (binding?.helpPhoneInfo?.visibility == View.VISIBLE || binding?.helpWebsiteInfo?.visibility == View.VISIBLE) {
+      binding?.helpPhoneInfo?.visibility = View.GONE
+      binding?.helpWebsiteInfo?.visibility = View.GONE
     }
-    if (session.userPrimaryMobile != null) {
-      intent.putExtra("mobileNo", session.userPrimaryMobile)
-    } else {
-      intent.putExtra("mobileNo", getString(R.string.ria_customer_number))
-    }
-    intent.putExtra("profileUrl", session.fPLogo)
-    intent.putExtra("buyItemKey", "CALLTRACKER")
-    startActivity(intent)
-    Handler().postDelayed({ hideProgress() }, 1000)
   }
+
 
   private fun nonEmptyView() {
     binding?.childContainer?.visibility = View.GONE
@@ -400,7 +369,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
   }
 
   override fun primaryButtonClicked() {
-    initiateBuyFromMarketplace()
+    initiateBuyFromMarketplace("CALLTRACKER")
   }
 
   override fun secondaryButtonClicked() {
@@ -434,15 +403,14 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
         if (ExoPlayerUtils.player.isPlaying) {
           ExoPlayerUtils.player.pause()
         } else {
-          val listItem = item as VmnCallModel
+          val listItem = item as? VmnCallModel
           if (position != ExoPlayerUtils.player.currentMediaItem?.mediaId?.toInt() || getCurrentPlayerModel()?.audioPosition == 0L) {
-            listItem.callRecordingUri?.let { it1 -> play(it1, position, listItem.audioPosition) }
-          } else {
-            ExoPlayerUtils.player.play()
-          }
+            listItem?.callRecordingUri?.let { it1 -> play(it1, position, listItem.audioPosition) }
+          } else ExoPlayerUtils.player.play()
         }
       }
     }
+    infoCallHide()
   }
 
   override fun onDestroy() {
