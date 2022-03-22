@@ -119,7 +119,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
   }
 
   private fun storeUserDetail(response: VerificationRequestResult) {
-    hideProgress()
+//    hideProgress()
 //    if (response.profileProperties?.userMobile.isNullOrEmpty().not() && ValidationUtils.isMobileNumberValid(response.profileProperties?.userMobile!!)) {
 //      navigator?.startActivity(LoginActivity::class.java, Bundle().apply {
 //        putInt(FRAGMENT_TYPE, LOGIN_SUCCESS_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)

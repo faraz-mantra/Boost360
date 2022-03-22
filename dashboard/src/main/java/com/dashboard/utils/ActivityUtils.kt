@@ -24,6 +24,7 @@ import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
 import com.festive.poster.ui.FestivePosterContainerActivity
 import com.framework.analytics.SentryController
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureNewOnBoardingFlowEnable
 import com.framework.pref.*
 import com.framework.utils.DateUtils
 import com.framework.webengageconstant.*
@@ -564,7 +565,12 @@ fun AppCompatActivity.startBookTable(session: UserSessionManager?) {
 fun AppCompatActivity.startPreSignUp(session: UserSessionManager?, isClearTask: Boolean = false) {
   try {
     WebEngageController.trackEvent(PRE_SIGN_UP_PAGE, START_VIEW, TO_BE_ADDED)
-    val webIntent = Intent(this, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
+    val webIntent: Intent = if(featureNewOnBoardingFlowEnable()) {
+      Intent(this, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity")).
+              putExtra("FRAGMENT_TYPE","INTRO_SLIDE_SHOW_FRAGMENT")
+    } else {
+      Intent(this, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
+    }
     if (isClearTask) webIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
