@@ -137,7 +137,7 @@ dependencies {
     api 'com.google.android.libraries.places:places:2.5.0'
 
     // Image Cropper Library
-    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 
     //Firebase
     api 'com.google.firebase:firebase-analytics-ktx:19.0.2'
