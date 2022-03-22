@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.view.MenuItem
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -14,10 +15,12 @@ import com.appservice.utils.WebEngageController
 import com.framework.analytics.SentryController
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
+import com.framework.pref.Key_Preferences
 import com.framework.webengageconstant.CLICK
 import com.framework.webengageconstant.WEB_VIEW_PAGE
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
 import com.framework.pref.UserSessionManager
+import com.framework.utils.toArrayList
 import com.onboarding.nowfloats.base.ProgressDialog
 
 abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseActivity<Binding, ViewModel>() {
@@ -74,6 +77,31 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
     window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
     window?.statusBarColor = ContextCompat.getColor(this, taskBarColor)
   }
+
+  open fun initiateBuyFromMarketplace(buyItemKey: String = "") {
+    showProgress()
+    val intent = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
+    intent.putExtra("expCode", session.fP_AppExperienceCode)
+    intent.putExtra("fpName", session.fPName)
+    intent.putExtra("fpid", session.fPID)
+    intent.putExtra("fpTag", session.fpTag)
+    intent.putExtra("accountType", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
+    intent.putStringArrayListExtra("userPurchsedWidgets", session.getStoreWidgets()?.toArrayList())
+    if (session.userPrimaryMobile != null) {
+      intent.putExtra("email", session.userPrimaryMobile)
+    } else {
+      intent.putExtra("email", getString(R.string.ria_customer_mail))
+    }
+    if (session.userPrimaryMobile != null) {
+      intent.putExtra("mobileNo", session.userPrimaryMobile)
+    } else {
+      intent.putExtra("mobileNo", getString(R.string.ria_customer_number))
+    }
+    intent.putExtra("profileUrl", session.fPLogo)
+    intent.putExtra("buyItemKey", buyItemKey)
+    startActivity(intent)
+    Handler().postDelayed({ hideProgress() }, 1000)
+  }
 }
 
 fun AppCompatActivity.startWebViewPageLoad(session: UserSessionManager?, url: String?) {
@@ -90,5 +118,13 @@ fun AppCompatActivity.startWebViewPageLoad(session: UserSessionManager?, url: St
 
 fun isStaffType(category_code: String?): Boolean {
   return (category_code.equals("DOC", true) || category_code.equals("HOS", true)).not()
+}
+
+fun addPlus91(userMobile: String?): String? {
+  return when {
+    userMobile?.contains("+91-") == true -> userMobile.replace("+91-", "+91")
+    userMobile?.contains("+91") == false -> "+91$userMobile"
+    else -> userMobile
+  }
 }
 

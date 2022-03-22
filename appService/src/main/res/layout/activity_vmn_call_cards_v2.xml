@@ -10,7 +10,6 @@
     android:background="@color/grey_f9f9f9"
     android:orientation="vertical">
 
-
     <com.framework.views.customViews.CustomToolbar
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
@@ -32,7 +31,6 @@
       app:layout_constraintEnd_toEndOf="@+id/toolbar"
       app:layout_constraintTop_toTopOf="parent" />
 
-
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/main_info_layout"
       android:layout_width="match_parent"
@@ -46,7 +44,6 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/toolbar">
-
 
       <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -76,8 +73,8 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
             android:layout_toEndOf="@id/total_number_of_calls"
-            android:src="@drawable/ic_question_mark"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_question_mark" />
 
           <com.framework.views.customViews.CustomImageView
             android:id="@+id/see_more_less_image"
@@ -85,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:rotation="270"
-            android:src="@drawable/ic_arrow_right"
+            app:srcCompat="@drawable/ic_arrow_right"
             app:tint="@color/colorPrimary" />
         </RelativeLayout>
 
@@ -191,7 +188,6 @@
           </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.constraintlayout.widget.ConstraintLayout>
       </androidx.appcompat.widget.LinearLayoutCompat>
-
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -419,7 +415,6 @@
           <com.google.android.material.tabs.TabItem
             android:id="@+id/track_missed_call"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
             android:text="@string/missed" />
 
