@@ -40,6 +40,7 @@ import com.dashboard.utils.*
 import com.dashboard.utils.DashboardTabs.Companion.fromUrl
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.analytics.SentryController
+import com.framework.constants.PremiumCode
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -60,10 +61,14 @@ import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.KEY_FP_CART_COUNT
-import com.framework.utils.*
+import com.framework.utils.AppsFlyerUtils
+import com.framework.utils.ConversionUtils
+import com.framework.utils.roundToFloat
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
-import com.framework.webengageconstant.*
+import com.framework.webengageconstant.DASHBOARD_HOME_PAGE
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.PAGE_VIEW
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateInfo
@@ -88,7 +93,6 @@ import zendesk.core.Zendesk
 import zendesk.support.Support
 import java.io.File
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.concurrent.schedule
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
@@ -130,7 +134,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(this)
-    session?.let { deepLinkUtil = DeepLinkUtil(this, it) }
+    session?.let { deepLinkUtil = DeepLinkUtil(this, it, Fragment()) }
     mNavController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
     val graph = mNavController.graph
     graph.addArgument("data", NavArgument.Builder().setDefaultValue("data").build())
@@ -212,12 +216,12 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 //  }
 
   private fun reloadCapLimitData() {
-    viewModel.getCapLimitFeatureDetails(session?.fPID ?: "", clientId).observeOnce(this, {
+    viewModel.getCapLimitFeatureDetails(session?.fPID ?: "", clientId).observeOnce(this) {
       if (it.isSuccess()) {
         val capLimitList = it.arrayResponse as? Array<CapLimitFeatureResponseItem>
         capLimitList?.toCollection(ArrayList())?.saveCapData()
       }
-    })
+    }
   }
 
   private fun UserSessionManager.initializeWebEngageLogin() {
@@ -367,7 +371,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun setDrawerHome() {
-    viewModel.getNavDashboardData(this).observeOnce(this, {
+    viewModel.getNavDashboardData(this).observeOnce(this) {
       val response = it as? DrawerHomeDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         binding?.drawerView?.rvLeftDrawer?.apply {
@@ -375,7 +379,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
           adapter = adapterDrawer
         }
       } else showShortToast(this.getString(R.string.navigation_data_error))
-    })
+    }
   }
 
   private fun checkLockData(data: ArrayList<DrawerHomeData>): ArrayList<DrawerHomeData> {
@@ -415,7 +419,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         toolbarPropertySet(0)
       }
     }
-
   }
 
   private fun checkWelcomeShowScreen(pos: Int) {
@@ -642,7 +645,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     val imageFile = File(path)
     isSecondaryImage = false
     showProgress()
-    viewModel.putUploadSecondaryImage(getRequestImageDate(imageFile)).observeOnce(this, {
+    viewModel.putUploadSecondaryImage(getRequestImageDate(imageFile)).observeOnce(this) {
       if (it.isSuccess()) {
         if (it.stringResponse.isNullOrEmpty().not()) {
           session?.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, it.stringResponse)
@@ -650,7 +653,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         }
       } else showLongToast(it.message())
       hideProgress()
-    })
+    }
   }
 
   private fun getRequestImageDate(businessImage: File): UploadFileBusinessRequest {
@@ -675,13 +678,13 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun getWelcomeData() {
-    viewModel.getWelcomeDashboardData(this).observeOnce(this, {
+    viewModel.getWelcomeDashboardData(this).observeOnce(this) {
       val response = it as? WelcomeDashboardResponse
       val data = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }?.actionItem
       if (response?.isSuccess() == true && data.isNullOrEmpty().not()) {
         data?.saveWelcomeList()
       }
-    })
+    }
   }
 
   override fun onStop() {
@@ -738,7 +741,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
           }
         }
       else {
-//        binding?.navView?.removeBadge(0)
+//      binding?.navView?.removeBadge(0)
         binding?.viewBottomBar?.navView?.removeBadge(1)
         binding?.viewBottomBar?.navView?.removeBadge(2)
         binding?.viewBottomBar?.navView?.removeBadge(3)
@@ -755,10 +758,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun disableBadgeNotification(flagId: String) {
     if (isBadgeCountAvailable(flagId)) {
       val request = DisableBadgeNotificationRequest(session?.fpTag, "BADGE", flagId)
-      viewModel.disableBadgeNotification(request).observeOnce(this, {
+      viewModel.disableBadgeNotification(request).observeOnce(this) {
         Log.i("DisableBadge", "Response: $it")
         readDrScoreDocument()
-      })
+      }
     }
   }
 }

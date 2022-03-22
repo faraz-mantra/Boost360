@@ -26,7 +26,7 @@ class KycDetailNewFragment : AppBaseFragment<FragmentKycDetailNewBinding, BaseVi
     dataKyc = arguments?.getSerializable(IntentConstant.KYC_DETAIL.name) as? DataKyc
     dataKyc?.let { setUi(it) }
     binding?.btnContact?.setOnClickListener {
-      baseActivity.makeCall(getString(R.string.contact_us_number))
+      makeCall(getString(R.string.contact_us_number))
     }
   }
 

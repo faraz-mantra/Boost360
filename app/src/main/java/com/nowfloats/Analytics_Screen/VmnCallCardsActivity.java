@@ -22,6 +22,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.boost.upgrades.UpgradeActivity;
+import com.framework.constants.PremiumCode;
+import com.framework.constants.SupportVideoType;
 import com.boost.marketplace.ui.home.MarketPlaceActivity;
 import com.dashboard.utils.PremiumCode;
 import com.framework.utils.InAppReviewUtils;
@@ -41,7 +44,6 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
-import com.onboarding.nowfloats.constant.SupportVideoType;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityVmnCallCardsBinding;
 
@@ -64,7 +66,7 @@ import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 /**
  * Created by Admin on 27-04-2017.
  */
-
+@Deprecated
 public class VmnCallCardsActivity extends AppCompatActivity implements View.OnClickListener, AppOnZeroCaseClicked {
 
   private static final String TAG = "VmnCallCardsActivity";
