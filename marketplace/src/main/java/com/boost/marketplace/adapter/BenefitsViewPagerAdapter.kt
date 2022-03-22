@@ -2,6 +2,7 @@ package com.boost.marketplace.adapter
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -39,11 +40,13 @@ class BenefitsViewPagerAdapter(
     }
 //    holder.title.setText(list.get(position).title)
 //        checkBannerDetails(position)
+
     when((position+1)%5){
-      2-> holder.cardView.setCardBackgroundColor(Color.parseColor("#FFD7C8"))
-      3-> holder.cardView.setCardBackgroundColor(Color.parseColor("#C7F3DD"))
-      4->holder.cardView.setCardBackgroundColor(Color.parseColor("#D8E3FF"))
-      5->holder.cardView.setCardBackgroundColor(Color.parseColor("#FFEAB3"))
+      0-> holder.cardView.setCardBackgroundColor(Color.parseColor("#B3D6FF"))
+      1-> holder.cardView.setCardBackgroundColor(Color.parseColor("#FFD7C8"))
+      2-> holder.cardView.setCardBackgroundColor(Color.parseColor("#C7F3DD"))
+      3->holder.cardView.setCardBackgroundColor(Color.parseColor("#D8E3FF"))
+      4->holder.cardView.setCardBackgroundColor(Color.parseColor("#FFEAB3"))
       else ->holder.cardView.setCardBackgroundColor(Color.parseColor("#B3D6FF"))
 
     }

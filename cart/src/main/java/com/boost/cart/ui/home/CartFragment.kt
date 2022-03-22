@@ -376,7 +376,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             stateFragment.arguments = args
             stateFragment.show(
                     (activity as CartActivity).supportFragmentManager,
-                    com.boost.cart.utils.Constants.STATE_LIST_FRAGMENT1
+                    Constants.STATE_LIST_FRAGMENT1
             )
         }
 
@@ -772,10 +772,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             } else {
                 Toast.makeText(requireActivity(), "Please wait while data is loading", Toast.LENGTH_SHORT).show()
             }
-
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_Checkout_Proceed_Click,NO_EVENT_LABLE, NO_EVENT_VALUE)
         }
-
-
 
         back_button12.setOnClickListener {
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART_BACK, NO_EVENT_LABLE, event_attributes)
@@ -1004,6 +1002,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //            Toasty.success(requireContext(), "Validity increased by 3 month(s).", Toast.LENGTH_SHORT, true).show()
 //            }
             }
+            val event_attributes: HashMap<String, Any> = HashMap()
+            event_attributes.put("VALIDITY_MONTHS", default_validity_months)
+            WebEngageController.trackEvent(
+                ADDONS_MARKETPLACE_Validity_Increased,
+                EVENT_LABEL_ADDONS_MARKETPLACE_VALIDITY_INCREASED,
+                event_attributes
+            )
         }
 
         months_validity_edit_dsc.setOnClickListener {
@@ -1158,6 +1163,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
         refund_policy.setOnClickListener {
             (activity as CartActivity).addFragment(WebViewFragment, Constants.WEB_VIEW_FRAGMENT)
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_Refund_Policy_Clicked, NO_EVENT_LABLE, NO_EVENT_VALUE)
         }
 
     }
@@ -1251,7 +1257,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             return !gstcheck.isChecked && cart_business_address.text.toString().isNotEmpty()
         }
 
-        if (!business_gstin_number.text.toString().isEmpty() && !com.boost.cart.utils.Utils.isValidGSTIN(
+        if (!business_gstin_number.text.toString().isEmpty() && !Utils.isValidGSTIN(
                         business_gstin_number.text.toString()
                 )) {
             business_gstin_number.setBackgroundResource(com.boost.cart.R.drawable.et_validity_error)
@@ -1323,6 +1329,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     gst_info_tv.visibility = View.GONE
                     cart_business_city_name1.text = gstInfoResult!!.address!!.state
                     isGstApiCalled = true
+                    WebEngageController.trackEvent(ADDONS_MARKETPLACE_GSTIN_Loaded, NO_EVENT_LABLE, NO_EVENT_VALUE)
                 } else {
                     Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
                 }
@@ -1507,7 +1514,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 Toasty.success(requireContext(), "Successfully Updated Profile.", Toast.LENGTH_LONG).show()
                 val event_attributes: HashMap<String, Any> = HashMap()
                 event_attributes.put("", it.Result.CustomerId)
-                com.boost.cart.utils.WebEngageController.trackEvent(
+                WebEngageController.trackEvent(
                         ADDONS_MARKETPLACE_BUSINESS_DETAILS_UPDATE_SUCCESS,
                         ADDONS_MARKETPLACE,
                         event_attributes
@@ -1516,7 +1523,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             } else {
                 Toasty.error(requireContext(), "Something went wrong. Try Later!!", Toast.LENGTH_LONG)
                         .show()
-                com.boost.cart.utils.WebEngageController.trackEvent(
+                WebEngageController.trackEvent(
                         ADDONS_MARKETPLACE_BUSINESS_DETAILS_FAILED,
                         ADDONS_MARKETPLACE,
                         NO_EVENT_VALUE
@@ -1544,7 +1551,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 Toasty.success(requireContext(), "Successfully Created Profile.", Toast.LENGTH_LONG).show()
                 val event_attributes: HashMap<String, Any> = HashMap()
                 event_attributes.put("", it.Result.CustomerId)
-                com.boost.cart.utils.WebEngageController.trackEvent(
+                WebEngageController.trackEvent(
                         ADDONS_MARKETPLACE_BUSINESS_DETAILS_CREATE_SUCCESS,
                         ADDONS_MARKETPLACE,
                         event_attributes
@@ -1553,7 +1560,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             } else {
                 Toasty.error(requireContext(), "Something went wrong. Try Later!!", Toast.LENGTH_LONG)
                         .show()
-                com.boost.cart.utils.WebEngageController.trackEvent(
+                WebEngageController.trackEvent(
                         ADDONS_MARKETPLACE_BUSINESS_DETAILS_FAILED,
                         ADDONS_MARKETPLACE,
                         NO_EVENT_VALUE
@@ -2603,7 +2610,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
                 //store transaction id for cart
                 prefs.storeTransactionIdFromCart(it.Result.TransactionId)
-
+                WebEngageController.trackEvent( ADDONS_MARKETPLACE_Billing_Details_Saved, NO_EVENT_LABLE, NO_EVENT_VALUE)
                 proceedToPayment(it)
             }
         })
@@ -2918,6 +2925,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     tv_Show_less.visibility = VISIBLE
                     tv_Show_more.visibility = GONE
                     System.out.println("TotalMore" + total)
+
+                    WebEngageController.trackEvent(ADDONS_MARKETPLACE_Discount_Coupon_Loaded, NO_EVENT_LABLE, NO_EVENT_VALUE)
 
                     val adapter = CartCouponAdapter(couponData, total, this)
                     cart_coupon_code_rv.adapter = adapter
@@ -3276,8 +3285,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
     }
 
     override fun applycoupon(mList: Data) {
+        val event_attributes: HashMap<String, Any> = HashMap()
+        event_attributes.put("Coupon_code", mList.code!!)
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_Discount_Coupon_Loaded, NO_EVENT_LABLE, NO_EVENT_VALUE)
         mList.code?.let { viewModel.getCouponRedeem(mList.code?.let { RedeemCouponRequest(total, it, (activity as CartActivity).fpid!!) }!!, it) }
-
     }
 
     private fun showPopupWindow(anchor: View) {
