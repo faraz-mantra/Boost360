@@ -22,11 +22,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.boost.upgrades.UpgradeActivity;
 import com.framework.constants.PremiumCode;
 import com.framework.constants.SupportVideoType;
 import com.boost.marketplace.ui.home.MarketPlaceActivity;
-import com.dashboard.utils.PremiumCode;
 import com.framework.utils.InAppReviewUtils;
 import com.framework.views.customViews.CustomToolbar;
 import com.framework.views.zero.old.AppFragmentZeroCase;

@@ -16,10 +16,10 @@
     android:icon="@drawable/ic_enquiry_active_nav"
     android:title="@string/enquiry" />
 
-<!--  <item-->
-<!--    android:id="@+id/navigation_add_ons"-->
-<!--    android:icon="@drawable/ic_add_ons_active_nav"-->
-<!--    android:title="@string/boost_add_ons" />-->
+  <item
+    android:id="@+id/navigation_add_ons"
+    android:icon="@drawable/ic_add_ons_active_nav"
+    android:title="@string/boost_add_ons" />
 
   <item
     android:id="@+id/navigation_more"
