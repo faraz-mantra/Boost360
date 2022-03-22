@@ -77,6 +77,7 @@
     <color name="splash_background">#f1fcfbfa</color>
     <color name="transparent_black">#15000000</color>
     <color name="transparent_black_dark">#65000000</color>
+    <color name="transparent_black_grey">#FF4a4a4a</color>
     <color name="black_letters">#555555</color>
     <color name="global_color_primary_light">#f5f5f5</color>
     <color name="black">#000000</color>

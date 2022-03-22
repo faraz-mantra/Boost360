@@ -18,7 +18,7 @@
             android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:background="@color/globalText"
+            android:background="#4A4A4A"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -26,8 +26,8 @@
                 android:id="@+id/collapsing_toolbar_details"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:contentScrim="@color/transparent_black"
-                app:expandedTitleTextAppearance="@color/transparent"
+                app:contentScrim="@color/transparent_black_grey"
+                app:expandedTitleTextAppearance="@color/transparent_black_grey"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:title="Facebook Lead Ads"
                 app:titleEnabled="true">
@@ -40,7 +40,7 @@
                         android:id="@+id/details_image_bg"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:background="@color/transparent_black"
+                        android:background="#4A4A4A"
                         android:scaleType="centerCrop"
                         android:src="@drawable/feature_details_bg"
                         app:layout_constraintDimensionRatio="2:1.2"
@@ -69,23 +69,41 @@
                         android:layout_height="match_parent"
                         android:background="@color/transparent">
 
-                        <LinearLayout
-                            android:id="@+id/details_title_image_layout"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_margin="@dimen/_4sdp"
-                            android:background="@color/transparent"
-                            android:gravity="center"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintDimensionRatio="1:1"
-                            app:layout_constraintLeft_toRightOf="@+id/imageView121"
-                            app:layout_constraintTop_toTopOf="parent">
+<!--                        <LinearLayout-->
+<!--                            android:id="@+id/details_title_image_layout"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_margin="@dimen/_4sdp"-->
+<!--                            android:background="@color/transparent"-->
+<!--                            android:gravity="center"-->
+<!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                            app:layout_constraintDimensionRatio="1:1"-->
+<!--                            app:layout_constraintLeft_toRightOf="@+id/imageView121"-->
+<!--                            app:layout_constraintTop_toTopOf="parent">-->
 
-                            <ImageView
-                                android:id="@+id/title_image"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-                        </LinearLayout>
+<!--                            <ImageView-->
+<!--                                android:id="@+id/title_image"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content" />-->
+<!--                        </LinearLayout>-->
+
+                        <TextView
+                            android:id="@+id/title_appbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/open_sans_semibold"
+                            android:paddingStart="@dimen/_50sdp"
+                            android:paddingEnd="@dimen/_50sdp"
+                            android:gravity="center_vertical"
+                            android:background="@color/transparent_black_grey"
+                            android:text="@string/facebook_lead_ads_upto_75_leads"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_11sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/imageViewCart121"
+                            app:layout_constraintStart_toEndOf="@+id/imageView121"
+                            app:layout_constraintTop_toTopOf="parent" />
+
 
                         <RelativeLayout
                             android:id="@+id/imageViewCart121"
@@ -122,20 +140,6 @@
                                 android:layout_alignParentEnd="true"
                                 app:nbMaxTextLength="2" />
                         </RelativeLayout>
-
-                        <TextView
-                            android:id="@+id/title_appbar"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/open_sans_semibold"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:text="@string/facebook_lead_ads_upto_75_leads"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_11sdp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/imageViewCart121"
-                            app:layout_constraintStart_toEndOf="@+id/details_title_image_layout"
-                            app:layout_constraintTop_toTopOf="parent" />
 
                         <LinearLayout
                             android:id="@+id/imageView121"
@@ -277,11 +281,11 @@
                                 android:drawableStart="@drawable/ic_used_by"
                                 android:fontFamily="@font/open_sans"
                                 android:text="32,000+ people bought"
-                                android:textColor="#747474"
+                                android:textColor="#7ED321"
                                 android:textFontWeight="400"
                                 android:textSize="12sp"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/title_top" />
+                                app:layout_constraintTop_toBottomOf="@id/pricing_layout" />
 
                             <TextView
                                 android:id="@+id/title_top"
@@ -294,6 +298,32 @@
                                 app:layout_constraintStart_toEndOf="@id/image1222"
                                 app:layout_constraintTop_toBottomOf="@id/title_top_1" />
 
+                            <LinearLayout
+                                android:id="@+id/pricing_layout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                app:layout_constraintStart_toEndOf="@id/image1222"
+                                app:layout_constraintTop_toBottomOf="@id/title_top">
+                                <TextView
+                                    android:id="@+id/price"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="₹2,999"
+                                    android:textSize="16sp"
+                                    android:fontFamily="@font/open_sans_semibold"
+                                    android:textColor="@color/common_text_color"/>
+                                <TextView
+                                    android:id="@+id/mrpPrice"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:text="₹2,999"
+                                    android:textSize="14sp"
+                                    android:textColor="@color/common_text_color"/>
+
+                            </LinearLayout>
+
 
                             <TextView
                                 android:id="@+id/title_bottom3"
@@ -302,7 +332,7 @@
                                 android:layout_marginTop="19dp"
                                 android:fontFamily="@font/open_sans"
                                 android:maxLines="2"
-                                android:text="Create email accounts for your employees. asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf"
+                                android:text="Create email accounts for your employees."
                                 android:textColor="@color/common_text_color"
                                 android:textSize="@dimen/_12sdp"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -333,6 +363,7 @@
                                 android:text="Show less"
                                 android:textColor="#FFB900"
                                 android:textSize="12dp"
+                                android:visibility="gone"
                                 app:layout_constraintEnd_toEndOf="@id/title_bottom3"
                                 app:layout_constraintTop_toBottomOf="@id/title_bottom3" />
 
@@ -574,23 +605,23 @@
 
                             <!--                            </LinearLayout>-->
 
-                            <TextView
-                                android:id="@+id/add_item_to_cart"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:background="@drawable/orange_button_click_effect"
-                                android:fontFamily="@font/open_sans_semibold"
-                                android:gravity="center"
-                                android:paddingStart="@dimen/_30sdp"
-                                android:paddingTop="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_30sdp"
-                                android:paddingBottom="@dimen/_10sdp"
-                                android:text="Add To Cart"
-                                android:textAllCaps="true"
-                                android:textColor="@color/white"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/title_bottom3" />
+<!--                            <TextView-->
+<!--                                android:id="@+id/add_item_to_cart"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginTop="20dp"-->
+<!--                                android:background="@drawable/orange_button_click_effect"-->
+<!--                                android:fontFamily="@font/open_sans_semibold"-->
+<!--                                android:gravity="center"-->
+<!--                                android:paddingStart="@dimen/_30sdp"-->
+<!--                                android:paddingTop="@dimen/_10sdp"-->
+<!--                                android:paddingEnd="@dimen/_30sdp"-->
+<!--                                android:paddingBottom="@dimen/_10sdp"-->
+<!--                                android:text="Add To Cart"-->
+<!--                                android:textAllCaps="true"-->
+<!--                                android:textColor="@color/white"-->
+<!--                                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                                app:layout_constraintTop_toBottomOf="@id/title_bottom3" />-->
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -618,14 +649,14 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.viewpager2.widget.ViewPager2
-                        android:id="@+id/viewpager"
+                        android:id="@+id/benefits_viewpager"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@id/benefit_title" />
 
 
                     <com.framework.views.dotsindicator.DotsIndicator
-                        android:id="@+id/banner_indicator"
+                        android:id="@+id/benefits_indicator"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
@@ -637,7 +668,7 @@
                         app:dotsWidthFactor="2.5"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/viewpager"
+                        app:layout_constraintTop_toBottomOf="@id/benefits_viewpager"
                         app:progressMode="false"
                         app:selectedDotColor="@color/color_primary" />
 
@@ -938,5 +969,59 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+            android:id="@+id/bottom_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/final_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="₹2,999"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:textFontWeight="600"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/mrp_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/staff/month"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/add_item_to_cart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/orange_button_click_effect"
+                android:fontFamily="@font/open_sans_semibold"
+                android:gravity="center"
+                android:paddingStart="@dimen/_30sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_30sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:text="Add To Cart"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_bottom3" />
+
+        </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
