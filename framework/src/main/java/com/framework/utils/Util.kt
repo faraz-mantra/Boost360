@@ -545,19 +545,26 @@ suspend fun runOnUi(func: () -> Unit) {
 fun fetchString(id: Int): String {
   return BaseApplication.instance.getString(id)
 }
+
 fun showSnackBarNegative(context: Activity, msg: String?) {
-  val snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg?:"", Snackbar.LENGTH_INDEFINITE)
+  val snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg ?: "", Snackbar.LENGTH_INDEFINITE)
   snackBar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color))
   snackBar.duration = 4000
   snackBar.show()
 }
 
-fun spanColor(fullText:String,@ColorRes color: Int,vararg colorTextList:String): SpannableString {
+fun spanColor(fullText: String, @ColorRes color: Int, vararg colorTextList: String): SpannableString {
   val spannable = SpannableString(fullText)
-  colorTextList.forEach { text->
-    spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(
-      BaseApplication.instance,color
-    )),fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+  try {
+    colorTextList.forEach { text ->
+      spannable.setSpan(
+        ForegroundColorSpan(
+          ContextCompat.getColor(BaseApplication.instance, color)
+        ), fullText.indexOf(text), fullText.indexOf(text) + text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+      )
+    }
+  } catch (e: Exception) {
+    e.printStackTrace()
   }
   return spannable
 }
