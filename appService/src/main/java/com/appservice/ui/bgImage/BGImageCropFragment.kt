@@ -56,6 +56,11 @@ class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewMod
     WebEngageController.trackEvent(BACKGROUND_IMAGE_CROP_LOAD, START_VIEW, sessionLocal.fpTag)
     imagePath = arguments?.getString(BK_IMAGE_PATH)
     bitmap = BitmapFactory.decodeFile(imagePath)
+    if (bitmap == null || imagePath.isNullOrEmpty()) {
+      showShortToast("File not created, please try again!")
+      baseActivity.finish()
+      return
+    }
     binding?.cropImg?.setImageBitmap(Utility.rotateImageIfRequired(bitmap!!, imagePath))
     val options = BitmapFactory.Options()
     options.inScaled = false

@@ -80,8 +80,9 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
     addFragment(binding?.childContainer?.id, appFragmentZeroCase, false)
     WebEngageController.trackEvent(BUSINESS_CALLS, EVENT_LABEL_BUSINESS_CALLS, null)
 
-    val phone = addPlus91(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER))
-    binding?.tvTrackedCall?.text = spanColor(getString(R.string.tracked_calls) + " " + phone, R.color.colorPrimary, phone ?: "")
+    val phone = addPlus91(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER)) ?: ""
+    binding?.tvTrackedCall?.text = makeSectionOfTextBold(getString(R.string.tracked_calls) + " " + phone, phone, R.color.colorPrimary)
+//    binding?.tvTrackedCall?.text = spanColor(getString(R.string.tracked_calls) + " " + phone, R.color.colorPrimary, phone ?: "")
     setOnClickListener(binding?.seeMoreLess, binding?.websiteHelper, binding?.phoneHelper)
     //tracking calls
     showTrackedCalls()
