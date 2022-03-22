@@ -153,7 +153,7 @@ object EndPoints {
   const val GET_FEATURE_DETAILS = "Features/v1/GetFeatureDetils"
   const val GET_FEATURE_DETAILS_2 = "Features/v1/GetFeatureDetails"
 
-
-
+  // RIA MEMORY APIs
+  const val RIA_MEMORY_BASE_URL="https://riamemory.withfloats.com"
 }
 
