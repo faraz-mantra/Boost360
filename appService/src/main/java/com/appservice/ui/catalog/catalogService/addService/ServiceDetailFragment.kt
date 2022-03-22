@@ -255,7 +255,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun onServiceTiming(it: BaseResponse) {
-    // commenting this as get service timing api is not working
+//    commenting this as get service timing api is not working
 //    this.serviceTimingList = (it as? ServiceTimingResponse)?.result
 //    this.serviceTimingList?.map { it.isToggle = (it.day.isNullOrEmpty().not() && it.time?.from.isNullOrEmpty().not()) }
   }

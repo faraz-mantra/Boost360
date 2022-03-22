@@ -1117,4 +1117,29 @@
   <string name="no_custom_background_nimage_added_yet">No custom background\nimage added yet</string>
   <string name="image_brand_website_desc">These images can bring a brand feel to your website. Since these stay in the backdrop of your website, please avoid high contrast picture with face and text written in it.</string>
 
+  <string name="tracked_calls">Tracked calls on</string>
+  <string name="view_potential_calls_0">Potential calls (0)</string>
+  <string name="zero">0</string>
+  <string name="mobile">Mobile</string>
+  <string name="desktop">Desktop</string>
+  <string name="all">All</string>
+  <string name="missed">Missed</string>
+  <string name="received">Received</string>
+  <string name="connected">Connected</string>
+  <string name="updates_not_found">Updates not found!</string>
+  <string name="outgoing">Outgoing</string>
+  <string name="_01_17_am" translatable="false">01:17 am</string>
+  <string name="_24_jan_2020" translatable="false">24 jan 2020</string>
+  <string name="_9695787711" translatable="false">9695787711</string>
+  <string name="_0_00_" translatable="false">0:00</string>
+  <string name="_0_00_back_slash" translatable="false">/ 0:00</string>
+
+  <string name="missed_call">Missed Call</string>
+  <string name="connected_call">Connected call</string>
+  <string name="you_can_only_play_one_audio_clip">You can only play one audio clip at a time.</string>
+  <string name="business_calls">Business Calls</string>
+  <string name="received_calls">Received Calls</string>
+  <string name="the_total_number_of_clicks_on_your_contact_number_displayed_on_website">The total number of clicks on your contact number displayed on website</string>
+  <string name="total_calls">Total Calls</string>
+  <string name="missed_calls">Missed Calls</string>
 </resources>
