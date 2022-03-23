@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 import com.thinksity.R;
 
+@Deprecated
 public class OtherImagesAdapter extends BaseAdapter {
 
     public Handler handler = null;

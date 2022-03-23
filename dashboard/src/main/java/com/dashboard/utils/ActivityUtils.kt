@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
+import com.appservice.ui.bgImage.BackgroundImageContainerActivity
+import com.appservice.ui.bgImage.setFragmentTypeNew
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.setFragmentType
@@ -24,6 +26,7 @@ import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
 import com.festive.poster.ui.FestivePosterContainerActivity
 import com.framework.analytics.SentryController
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureNewOnBoardingFlowEnable
 import com.framework.pref.*
 import com.framework.utils.DateUtils
 import com.framework.webengageconstant.*
@@ -94,7 +97,7 @@ fun AppCompatActivity.startDigitalChannel(session: UserSessionManager, channelTy
 fun AppCompatActivity.startVmnCallCard(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(TRACK_CALL_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val i = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.VmnCallCardsActivity"))
+    val i = Intent(this, Class.forName("com.appservice.ui.calltracking.VmnCallCardsActivityV2"))
     startActivity(i)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
@@ -148,10 +151,18 @@ fun AppCompatActivity.startAptOrderSummary(session: UserSessionManager?) {
   }
 }
 
+fun Fragment.startBackgroundActivity(session: UserSessionManager?, type: com.appservice.constant.FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+  val intent = Intent(activity, BackgroundImageContainerActivity::class.java)
+  intent.putExtras(bundle)
+  intent.setFragmentTypeNew(type)
+  if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+  if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
+}
+
 fun AppCompatActivity.startBackgroundImageGallery(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(BACKGROUND_IMAGE_GALLERY_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val queries = Intent(this, Class.forName("com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"))
+    val queries = Intent(this, Class.forName("com.appservice.ui.background_image.BackgroundImageContainerActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
@@ -564,7 +575,12 @@ fun AppCompatActivity.startBookTable(session: UserSessionManager?) {
 fun AppCompatActivity.startPreSignUp(session: UserSessionManager?, isClearTask: Boolean = false) {
   try {
     WebEngageController.trackEvent(PRE_SIGN_UP_PAGE, START_VIEW, TO_BE_ADDED)
-    val webIntent = Intent(this, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
+    val webIntent: Intent = if(featureNewOnBoardingFlowEnable()) {
+      Intent(this, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity")).
+              putExtra("FRAGMENT_TYPE","INTRO_SLIDE_SHOW_FRAGMENT")
+    } else {
+      Intent(this, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
+    }
     if (isClearTask) webIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -847,7 +863,8 @@ fun UserSessionManager.getBundleDataKyc(): Bundle {
   session.fpEmail = fPEmail
   session.fpNumber = fPPrimaryContactNumber
   session.isSelfBrandedAdd = isSelfBrandedKycAdd ?: false
-  session.isPaymentGateway = getStoreWidgets()?.contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name) ?: false
+  session.isPaymentGateway = getStoreWidgets()?.contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name)
+    ?: false
   val bundle = Bundle()
   bundle.putSerializable(com.appservice.constant.IntentConstant.SESSION_DATA.name, session)
   return bundle

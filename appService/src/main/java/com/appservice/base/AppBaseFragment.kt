@@ -131,7 +131,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
     builder.setCancelable(false)
     builder.setTitle("You have exceeded limit!").setMessage(msg).setPositiveButton("Explore Add-ons") { dialog, which ->
       dialog.dismiss()
-      startStorePage(CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name)
+      startStorePage(CapLimitFeatureResponseItem.FeatureKey.UNLIMITED_CONTENT.name)
       baseActivity.finish()
     }.setNegativeButton("Close") { dialog, _ ->
       dialog.dismiss()

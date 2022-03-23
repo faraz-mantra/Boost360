@@ -28,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.appservice.ui.calltracking.VmnCallCardsActivityV2;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
 import com.nowfloats.Analytics_Screen.VmnNumberRequestActivity;
@@ -712,7 +713,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
             final String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
 
             if (isVmnEnable) {
-                Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
+                Intent i = new Intent(getActivity(), VmnCallCardsActivityV2.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             } else if ((TextUtils.isDigitsOnly(paymentState) && "1".equalsIgnoreCase(paymentState))) {

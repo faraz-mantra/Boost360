@@ -163,7 +163,7 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
   }
 
   private fun capLimitCheck() {
-    val featureUpdate = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureType.LATESTUPDATES)
+    val featureUpdate = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureKey.LATESTUPDATES)
     val capLimitUpdate = featureUpdate?.filterProperty(PropertiesItem.KeyType.LIMIT)
     if (isUpdate.not() && capLimitUpdate != null) {
       viewModel?.getMessageUpdates(sessionLocal.getRequestUpdate(PaginationScrollListener.PAGE_START))?.observeOnce(viewLifecycleOwner, {
@@ -171,7 +171,7 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
         totalUpdates = data?.totalCount
         if (data?.totalCount != null && capLimitUpdate.getValueN() != null && data.totalCount!! >= capLimitUpdate.getValueN()!!) {
           baseActivity.hideKeyBoard()
-          showAlertCapLimit("Can't add the business update, please activate your premium Add-ons plan.",CapLimitFeatureResponseItem.FeatureType.LATESTUPDATES.name)
+          showAlertCapLimit("Can't add the business update, please activate your premium Add-ons plan.",CapLimitFeatureResponseItem.FeatureKey.LATESTUPDATES.name)
         }
       })
     }
