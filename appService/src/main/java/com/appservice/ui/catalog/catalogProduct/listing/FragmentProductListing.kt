@@ -32,6 +32,7 @@ import com.appservice.model.serviceProduct.service.ItemsItem
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.capitalizeUtil
 import com.appservice.viewmodel.ProductViewModel
+import com.framework.constants.SupportVideoType
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -44,7 +45,6 @@ import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.*
-import com.onboarding.nowfloats.constant.SupportVideoType
 import java.util.*
 
 

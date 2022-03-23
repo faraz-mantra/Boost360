@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
+@Deprecated
 public class FullScreen_Gallery_Image extends AppCompatActivity {
 
     ViewPager viewPager;

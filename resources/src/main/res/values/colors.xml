@@ -152,6 +152,8 @@
   <color name="blue_4A90E2">#4A90E2</color>
   <color name="blue_52AAC6">#52AAC6</color>
   <color name="red_E39595">#E39595</color>
+  <color name="red_EB5757">#EB5757</color>
+
   <color name="red_button">#E39595</color>
   <color name="black_202A2A2A">#202A2A2A</color>
   <color name="black_322A2A2A">#322A2A2A</color>
@@ -186,5 +188,6 @@
   <color name="colorLightGrey_jio">#E4E4E4</color>
   <color name="light_grey_boost_jio">#DFDFDF</color>
   <color name="orange_light">#FFF8E5</color>
+  <color name="color_888888">#888888</color>
 
 </resources>

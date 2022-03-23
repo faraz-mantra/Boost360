@@ -3,6 +3,7 @@ package com.appservice.rest.repository
 import com.appservice.base.rest.AppBaseRepository
 import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
+import com.appservice.model.serviceProduct.service.ServiceListingRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.model.servicev1.DeleteSecondaryImageRequest
 import com.appservice.model.servicev1.DeleteServiceRequest
@@ -11,7 +12,6 @@ import com.appservice.model.servicev1.UploadImageRequest
 import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.NowfloatsApiClient
 import com.appservice.rest.services.NowfloatsRemoteData
-import com.appservice.model.serviceProduct.service.ServiceListingRequest
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import okhttp3.RequestBody
@@ -158,5 +158,7 @@ object NowfloatsApiRepository : AppBaseRepository<NowfloatsRemoteData, CatalogLo
       ), TaskCode.GET_SERVICE_LISTING
     )
   }
+
+
 
 }

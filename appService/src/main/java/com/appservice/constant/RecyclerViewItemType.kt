@@ -27,7 +27,10 @@ enum class RecyclerViewItemType {
   DOMAIN_STEPS,
   DOMAIN_NAME_SUGGESTIONS,
   SIMILAR_DOMAIN_SUGGESTIONS,
-  GST_SLAB_SETTING;
+  BACKGROUND_IMAGE_RV,
+  BACKGROUND_IMAGE_FULL_SCREEN,
+  GST_SLAB_SETTING,
+  VMN_CALL;
 
 
   @LayoutRes
@@ -56,7 +59,10 @@ enum class RecyclerViewItemType {
       DOMAIN_STEPS -> R.layout.list_item_steps_domain
       DOMAIN_NAME_SUGGESTIONS -> R.layout.item_domain_suggestions
       SIMILAR_DOMAIN_SUGGESTIONS -> R.layout.item_similar_domain_suggestions
+      BACKGROUND_IMAGE_RV -> R.layout.list_item_background_images
+      BACKGROUND_IMAGE_FULL_SCREEN->R.layout.list_item_bg_image_full_screen
       GST_SLAB_SETTING -> R.layout.item_gst_slab
+      VMN_CALL->R.layout.single_item_vmn_call_item_v2
     }
   }
 }

@@ -28,6 +28,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.appservice.ui.calltracking.VmnCallCardsActivityV2;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.mikephil.charting.charts.BarChart;
@@ -607,7 +608,7 @@ public class Analytics_Fragment extends Fragment {
             public void onClick(View v) {
 
                 if (vmnTotalCallCount.getVisibility() == View.VISIBLE) {
-                    Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
+                    Intent i = new Intent(getActivity(), VmnCallCardsActivityV2.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 } else {
