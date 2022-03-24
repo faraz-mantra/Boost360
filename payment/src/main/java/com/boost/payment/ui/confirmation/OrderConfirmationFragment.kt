@@ -66,6 +66,11 @@ class OrderConfirmationFragment : BaseFragment() {
 //      } catch (e: Exception) {
 //      }
 //    }
+    WebEngageController.trackEvent(
+            ADDONS_MARKETPLACE_ORDER_CONFIRMATION_LOADED,
+            Order_Confirmation,
+            NO_EVENT_VALUE
+    )
     session = UserSessionManager(activity as PaymentActivity)
     prefs = SharedPrefs(activity as PaymentActivity)
     return inflater.inflate(R.layout.order_confirmation_fragment, container, false)

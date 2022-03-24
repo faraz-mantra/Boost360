@@ -150,6 +150,7 @@ const val EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_CROSS_CLICKED = "ADD-ONS W
 const val EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED = "ADD-ONS Waiting Cart Expert Review Click"
 const val Check_Activation_Status = "Check_Activation_Status"
 const val Auto_Renew_Order_Confirmation = "Auto renew order confirmation"
+const val Order_Confirmation = "order confirmation"
 const val SELF_BRANDED_PAYMENT_GATEWAY = "Self Branded Payment Gateway"
 const val FEATURE_KEY = "Feature_Key"
 const val Feature_Details = "Feature details"

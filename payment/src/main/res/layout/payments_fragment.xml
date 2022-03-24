@@ -1067,7 +1067,7 @@
                             </LinearLayout>
 
                             <TextView
-                                android:id="@+id/tv_cancel"
+                                android:id="@+id/btn_auto_renew_upi"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
