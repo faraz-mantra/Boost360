@@ -32,10 +32,7 @@ import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.*
 import com.boost.marketplace.R
-import com.boost.marketplace.adapter.BenefitsViewPagerAdapter
-import com.boost.marketplace.adapter.FeaturePacksAdapter
-import com.boost.marketplace.adapter.ReviewViewPagerAdapter
-import com.boost.marketplace.adapter.SecondaryImagesAdapter
+import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityFeatureDetailsBinding
 import com.boost.marketplace.infra.utils.Constants.Companion.IMAGE_PREVIEW_POPUP_FRAGMENT
@@ -52,6 +49,9 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_feature_details.*
+import kotlinx.android.synthetic.main.activity_feature_details.app_bar_layout
+import kotlinx.android.synthetic.main.activity_feature_details.bottom_box
+import kotlinx.android.synthetic.main.activity_marketplace.*
 import retrofit2.Retrofit
 import java.text.NumberFormat
 import java.util.*
@@ -90,6 +90,8 @@ class FeatureDetailsActivity :
     lateinit var progressDialog: ProgressDialog
 
     lateinit var reviewAdaptor: ReviewViewPagerAdapter
+    lateinit var howToUseAdapter: HowToUseAdapter
+    lateinit var faqAdapter: FAQAdapter
     lateinit var benefitAdaptor: BenefitsViewPagerAdapter
     lateinit var secondaryImagesAdapter: SecondaryImagesAdapter
     lateinit var featurePacksAdapter: FeaturePacksAdapter
@@ -126,6 +128,8 @@ class FeatureDetailsActivity :
         secondaryImagesAdapter = SecondaryImagesAdapter(ArrayList(), this)
         featurePacksAdapter = FeaturePacksAdapter(ArrayList(), this, this)
         reviewAdaptor = ReviewViewPagerAdapter(ArrayList())
+        howToUseAdapter = HowToUseAdapter(this, ArrayList())
+        faqAdapter = FAQAdapter(this, ArrayList())
         benefitAdaptor = BenefitsViewPagerAdapter(arrayListOf("Testing","Testing1","Testing2","Testing3","Testing4","Testing5"), this)
 //    localStorage = LocalStorage.getInstance(applicationContext)!!
         singleWidgetKey = intent.extras?.getString("itemId")
@@ -142,6 +146,9 @@ class FeatureDetailsActivity :
         initializeSecondaryImage()
         initializePackageRecycler()
         initializeViewPager()
+        initializeHowToUseRecycler()
+        initializeFAQRecycler()
+        initializeCustomerViewPager()
         initMvvm()
 
         val callExpertString = SpannableString("Have a query? Call an expert")
@@ -538,6 +545,23 @@ class FeatureDetailsActivity :
         }
     }
 
+    private fun initializeHowToUseRecycler() {
+        val gridLayoutManager = GridLayoutManager(applicationContext, 1)
+        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        how_to_use_recycler.apply {
+            layoutManager = gridLayoutManager
+            how_to_use_recycler.adapter = howToUseAdapter
+        }
+    }
+
+    private fun initializeFAQRecycler() {
+        val gridLayoutManager = GridLayoutManager(applicationContext, 1)
+        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        faq_recycler.apply {
+            layoutManager = gridLayoutManager
+            faq_recycler.adapter = faqAdapter
+        }
+    }
 
     private fun initializeViewPager() {
         benefits_viewpager.adapter = benefitAdaptor
@@ -552,6 +576,22 @@ class FeatureDetailsActivity :
             R.dimen.viewpager_current_item_horizontal_margin
         )
         benefits_viewpager.addItemDecoration(itemDecoration)
+//        viewpager.setPageTransformer(ZoomOutPageTransformer())
+    }
+
+
+    private fun initializeCustomerViewPager() {
+        what_our_customer_viewpager.adapter = reviewAdaptor
+        what_our_customer_indicator.setViewPager2(what_our_customer_viewpager)
+        what_our_customer_viewpager.offscreenPageLimit = 1
+
+        what_our_customer_viewpager.setPageTransformer(ZoomOutPageTransformer())
+
+        val itemDecoration = HorizontalMarginItemDecoration(
+            applicationContext,
+            R.dimen.viewpager_current_item_horizontal_margin
+        )
+        what_our_customer_viewpager.addItemDecoration(itemDecoration)
 //        viewpager.setPageTransformer(ZoomOutPageTransformer())
     }
 
