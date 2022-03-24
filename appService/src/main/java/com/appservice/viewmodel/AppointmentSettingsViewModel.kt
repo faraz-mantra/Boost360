@@ -2,10 +2,12 @@ package com.appservice.viewmodel
 
 import androidx.lifecycle.LiveData
 import com.appservice.model.aptsetting.*
+import com.appservice.model.generalApt.UpdateRequestGeneralApt
 import com.appservice.rest.repository.BoostNowFloatsRepository
 import com.appservice.rest.repository.NowfloatsApiRepository
 import com.appservice.rest.repository.WithFloatTwoRepository
 import com.appservice.model.serviceProduct.service.ServiceListingRequest
+import com.appservice.rest.repository.StaffNowFloatsRepository
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
@@ -70,5 +72,13 @@ class AppointmentSettingsViewModel : BaseViewModel() {
 
   fun updateProductCategoryVerb(request: ProductCategoryVerbRequest): LiveData<BaseResponse> {
     return WithFloatTwoRepository.updateProductCategoryVerb(request).toLiveData()
+  }
+
+  fun updateGeneralService(request: UpdateRequestGeneralApt?): LiveData<BaseResponse> {
+    return StaffNowFloatsRepository.updateGeneralService(request).toLiveData()
+  }
+
+  fun getGeneralService(fpId: String?, fpTag: String?): LiveData<BaseResponse> {
+    return StaffNowFloatsRepository.getGeneralService(fpId, fpTag).toLiveData()
   }
 }

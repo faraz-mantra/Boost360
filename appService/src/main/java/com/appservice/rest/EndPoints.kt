@@ -24,6 +24,8 @@ object EndPoints {
   const val STAFF_UPDATE_IMAGE = "staff/v1/UpdateStaffImage"
   const val STAFF_DELETE_IMAGE = "staff/v1/DeleteStaffImage"
   const val GET_STAFF_DETAILS = "Staff/v1/GetStaffDetails"
+  const val UPDATE_GENERAL_SERVICE = "Service/v1/UpdateGeneralService"
+  const val GET_GENERAL_SERVICE = "Service/v1/GetGeneralServiceDetails"
 
   //TODO WEEKLY APPOINTMENT APIS
   const val POST_UPDATE_SERVICE_TIMING = "service/v1/UpdateServiceTiming"
