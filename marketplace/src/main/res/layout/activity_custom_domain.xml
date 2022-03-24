@@ -397,6 +397,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/card_list"
+                    android:theme="@style/Theme.MaterialComponents"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -430,6 +431,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/card_free"
+                    android:theme="@style/Theme.MaterialComponents"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -440,7 +442,9 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        >
 
                         <ImageView
                             android:id="@+id/iv1"

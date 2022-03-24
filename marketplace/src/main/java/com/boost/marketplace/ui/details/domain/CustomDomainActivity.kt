@@ -3,6 +3,7 @@ import com.boost.marketplace.R
 import com.boost.marketplace.adapter.CustomDomainListAdapter
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityCustomDomainBinding
+import com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity
 
 
 class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, CustomDomainViewModel>() {
@@ -11,6 +12,11 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
     override fun getLayout(): Int {
         return R.layout.activity_custom_domain
     }
+
+    companion object {
+        fun newInstance() = CustomDomainActivity()
+    }
+
 
     override fun getViewModelClass(): Class<CustomDomainViewModel> {
         return CustomDomainViewModel::class.java
