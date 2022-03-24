@@ -240,23 +240,23 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical">
 
-                                    <include layout="@layout/data_placeholder_layout" />
+                                    <include layout="@layout/data_placeholder_layout_new" />
 
                                     <include layout="@layout/data_place2" />
 
-                                    <include layout="@layout/data_place2" />
+                                    <include layout="@layout/data_place" />
 
-                                    <include layout="@layout/data_place2" />
+                                    <include layout="@layout/data_place" />
 
-                                    <include layout="@layout/data_place2" />
+                                    <include layout="@layout/data_place" />
 
-                                    <include layout="@layout/data_place2" />
+                                    <include layout="@layout/data_place" />
 
-                                    <include layout="@layout/data_place2" />
+                                    <include layout="@layout/data_place" />
 
-                                    <include layout="@layout/data_place2" />
+                                    <include layout="@layout/data_place" />
 
-                                    <include layout="@layout/data_place2" />
+                                    <include layout="@layout/data_place" />
 
 
                                 </LinearLayout>
@@ -451,7 +451,6 @@
                     android:id="@+id/mp_package_rl_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/mp_banner_rl_layout"
                     android:background="#5E5E5E">
 
                     <com.facebook.shimmer.ShimmerFrameLayout
@@ -473,23 +472,23 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
-                            <include layout="@layout/data_placeholder_layout" />
+                            <include layout="@layout/data_placeholder_feature_packs" />
 
-                            <include layout="@layout/data_place2" />
+                            <include layout="@layout/data_place" />
 
-                            <include layout="@layout/data_place2" />
+                            <include layout="@layout/data_place" />
 
-                            <include layout="@layout/data_place2" />
+                            <include layout="@layout/data_place" />
 
-                            <include layout="@layout/data_place2" />
+                            <include layout="@layout/data_place" />
 
-                            <include layout="@layout/data_place2" />
+                            <include layout="@layout/data_place" />
 
-                            <include layout="@layout/data_place2" />
+                            <include layout="@layout/data_place" />
 
-                            <include layout="@layout/data_place2" />
+                            <include layout="@layout/data_place" />
 
-                            <include layout="@layout/data_place2" />
+                            <include layout="@layout/data_place" />
 
 
                         </LinearLayout>
@@ -601,7 +600,7 @@
                         android:id="@+id/mp_home_recommended_addons_rl_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/mp_home_recommended_features_rl_layout">
+>
 
                         <com.facebook.shimmer.ShimmerFrameLayout
                             android:id="@+id/shimmer_view_recomm_addons"
@@ -614,31 +613,32 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            tools:visibility="visible">
+                            tools:visibility="visible"
+                            >
 
                             <!-- Adding 7 rows of placeholders -->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical">
+                                android:orientation="horizontal">
 
-                                <include layout="@layout/data_placeholder_layout" />
+                                <include layout="@layout/data_place_layout_explore_features" />
 
-                                <include layout="@layout/data_placeholder_layout" />
+                                <include layout="@layout/data_place_layout_explore_features" />
 
-                                <include layout="@layout/data_place2" />
+                                <include layout="@layout/data_place_layout_explore_features" />
 
-                                <include layout="@layout/data_place2" />
+                                <include layout="@layout/data_place_layout_explore_features" />
 
-                                <include layout="@layout/data_place2" />
+                                <include layout="@layout/data_place_layout_explore_features" />
 
-                                <include layout="@layout/data_place2" />
+                                <include layout="@layout/data_place_layout_explore_features" />
 
-                                <include layout="@layout/data_place2" />
+                                <include layout="@layout/data_place_layout_explore_features" />
 
-                                <include layout="@layout/data_place2" />
+                                <include layout="@layout/data_place_layout_explore_features" />
 
-                                <include layout="@layout/data_place2" />
+                                <include layout="@layout/data_place_layout_explore_features" />
 
 
                             </LinearLayout>

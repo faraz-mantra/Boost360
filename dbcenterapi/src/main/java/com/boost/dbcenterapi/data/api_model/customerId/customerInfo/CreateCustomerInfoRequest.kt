@@ -6,7 +6,7 @@ data class CreateCustomerInfoRequest(
   val ClientId: String?,
   val CountryCode: String?,
   val DeviceType: String?,
-  val Email: String?,
+  val Email: String,
   val InternalSourceId: String?,
   val MobileNumber: String?,
   val Name: String?,

@@ -11,6 +11,8 @@ import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.util.Log
 import android.view.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -59,7 +61,9 @@ import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
+class
+
+PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         MoreBanksListener, UpiPayListener, EmailPopupListener, AddCardListener {
 
     lateinit var root: View
@@ -495,6 +499,17 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 pay_by_link_section.visibility = View.VISIBLE
                 upi_list_layout.visibility = View.VISIBLE
                 upi_view_dummy.visibility = View.VISIBLE
+                auto_renewal_upi_layout.visibility = GONE
+                add_upi_layout.visibility = VISIBLE
+                layout_auto_renew_bank.visibility = GONE
+                payment_view_dummy.visibility = VISIBLE
+                netbanking_top_banks_layout.visibility = VISIBLE
+                payment_view_dummy2.visibility = VISIBLE
+                show_more_bank.visibility = VISIBLE
+
+
+
+
                 autoRenewState = false
             } else {
                 lotty_progress.pauseAnimation()
@@ -526,12 +541,19 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                         0,
                         0
                 )
+                auto_renewal_upi_layout.visibility = VISIBLE
+                layout_auto_renew_bank.visibility = VISIBLE
+                show_more_bank.visibility = GONE
                 upi_payment_title.text = "UPI Auto Renewal"
                 netbanking_title.text = "Bank Enabled Auto Renewal"
                 saved_cards_layout.visibility = View.GONE
                 pay_by_link_section.visibility = View.GONE
                 upi_list_layout.visibility = View.GONE
+                add_upi_layout.visibility = GONE
+                payment_view_dummy.visibility = GONE
                 upi_view_dummy.visibility = View.GONE
+                netbanking_top_banks_layout.visibility = GONE
+                payment_view_dummy2.visibility = GONE
                 autoRenewState = true
             }
             updateAutoRenewState()
