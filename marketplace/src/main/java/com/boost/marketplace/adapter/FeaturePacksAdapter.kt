@@ -3,6 +3,7 @@ package com.boost.marketplace.adapter
 import android.content.Context
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
+import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,7 +66,9 @@ class FeaturePacksAdapter(
     } catch (e: Exception) {
       SentryController.captureException(e)
     }
-    holder.desc.setText(bundleList.get(position).desc)
+    val temp = SpannableString("View Pack")
+    temp.setSpan(UnderlineSpan(), 0, temp.length, 0)
+    holder.viewPacks.setText(temp)
     holder.viewPacks.setOnClickListener {
       val item: Bundles = Bundles(
         bundleList.get(position).bundle_id,
@@ -99,7 +102,8 @@ class FeaturePacksAdapter(
 
   class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     var title = itemView.findViewById<TextView>(R.id.title)
-    var desc = itemView.findViewById<TextView>(R.id.desc)
+    var mrpPrice = itemView.findViewById<TextView>(R.id.mrpPrice)
+    var price = itemView.findViewById<TextView>(R.id.price)
     var discount = itemView.findViewById<TextView>(R.id.discount)
     var viewPacks = itemView.findViewById<TextView>(R.id.view_packs)
     var image = itemView.findViewById<ImageView>(R.id.imageView2)
@@ -120,7 +124,7 @@ class FeaturePacksAdapter(
     var offeredBundlePrice = 0
     var originalBundlePrice = 0
 //    val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) bundles.min_purchase_months!! else 1
-    val minMonth: Int = 12
+//    val minMonth: Int = 12
     CompositeDisposable().add(
       AppDatabase.getInstance(activity.application)!!
         .featuresDao()
@@ -132,26 +136,23 @@ class FeaturePacksAdapter(
             for (singleItem in it) {
               for (item in includedFeatures) {
                 if (singleItem.feature_code == item.feature_code) {
-                  originalBundlePrice += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt() * minMonth
+//                  originalBundlePrice += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt() * minMonth
+                  originalBundlePrice += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt()
                 }
               }
             }
             if (bundles.overall_discount_percent > 0) {
               offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent / 100)
               holder.discount.visibility = View.VISIBLE
-//                                        holder.bundlePriceLabel.visibility = View.GONE
-              holder.discount.setText(bundles.overall_discount_percent.toString() + "% SAVING")
+              holder.discount.setText(bundles.overall_discount_percent.toString() + "%\nSAVING")
             } else {
               offeredBundlePrice = originalBundlePrice
               holder.discount.visibility = View.GONE
-//                                        holder.bundlePriceLabel.visibility = View.VISIBLE
             }
-
-            holder.desc.setText(
-              "₹" +
-                  NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) +
-                  "/year for " + addonTitle + " + " + (includedFeatures.size - 1) + "more features"
-            )
+            holder.price.setText("₹"+offeredBundlePrice+"/month")
+            val mrpPriceString = SpannableString("₹"+originalBundlePrice+"/month")
+            mrpPriceString.setSpan(StrikethroughSpan(), 0, mrpPriceString.length, 0)
+            holder.mrpPrice.setText(mrpPriceString)
           },
           {
             it.printStackTrace()

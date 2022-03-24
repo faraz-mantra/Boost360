@@ -161,6 +161,10 @@ class AppFragmentZeroCase : Fragment() {
     //  activity?.onBackPressedDispatcher?.addCallback(callback)
   }
 
+  fun setRootBG(@ColorRes color: Int){
+      binding.rootLayout.setBackgroundColor(ContextCompat.getColor(requireActivity(),color))
+  }
+
   var callback = object : OnBackPressedCallback(true) {
     override fun handleOnBackPressed() {
       onZeroCaseClicked?.appOnBackPressed()

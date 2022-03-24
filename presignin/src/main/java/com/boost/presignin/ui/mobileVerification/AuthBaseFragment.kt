@@ -70,7 +70,7 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
       clientId = clientId,
       fpId = this.floatingPointId
     )
-    viewModel?.createAccessToken(request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.createAccessToken(request)?.observeOnce(viewLifecycleOwner) {
       val result = it as? AccessTokenResponse
       if (it?.isSuccess() == true && result?.result != null) {
         session.saveAccessTokenAuth(result.result!!)
@@ -79,11 +79,11 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
         hideProgress()
         showLongToast(getString(R.string.access_token_create_error))
       }
-    })
+    }
   }
 
   private fun registerFirebaseToken(authTokenDataItem: AuthTokenDataItem) {
-    viewModel?.getFirebaseToken()?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getFirebaseToken()?.observeOnce(viewLifecycleOwner) {
       val response = it as? FirebaseTokenResponse
       val token = response?.Result
       Log.i("registerFirebaseToken", "registerFirebaseToken: $token")
@@ -97,14 +97,14 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
         }
         authTokenDataItem.storeFpDetails()
       }
-    })
+    }
   }
 
   private fun AuthTokenDataItem.storeFpDetails() {
     WebEngageController.trackEvent(PS_BUSINESS_ACCOUNT_CHOOSE, CHOOSE_BUSINESS, this.floatingPointId ?: "")
     val map = HashMap<String, String>()
     map["clientId"] = clientId
-    viewModel?.getFpDetails(this.floatingPointId ?: "", map)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getFpDetails(this.floatingPointId ?: "", map)?.observeOnce(viewLifecycleOwner) {
       val response = it as? UserFpDetailsResponse
       if (it.isSuccess() && response != null) {
         ProcessFPDetails(session).storeFPDetails(response)
@@ -117,7 +117,7 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
         hideProgress()
         showShortToast(getString(R.string.error_getting_fp_detail))
       }
-    })
+    }
   }
 
   private fun startService() {

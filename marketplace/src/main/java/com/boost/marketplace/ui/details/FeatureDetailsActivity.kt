@@ -7,8 +7,11 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.text.style.StrikethroughSpan
+import android.text.style.UnderlineSpan
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -17,6 +20,9 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
+import com.boost.cart.adapter.SimplePageTransformer
+import com.boost.cart.adapter.SimplePageTransformerSmall
+import com.boost.cart.adapter.ZoomOutPageTransformer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.LearnMoreLink
@@ -24,11 +30,9 @@ import com.boost.dbcenterapi.data.remote.ApiInterface
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
-import com.boost.dbcenterapi.utils.CircleAnimationUtil
-import com.boost.dbcenterapi.utils.Constants
-import com.boost.dbcenterapi.utils.SharedPrefs
-import com.boost.dbcenterapi.utils.WebEngageController
+import com.boost.dbcenterapi.utils.*
 import com.boost.marketplace.R
+import com.boost.marketplace.adapter.BenefitsViewPagerAdapter
 import com.boost.marketplace.adapter.FeaturePacksAdapter
 import com.boost.marketplace.adapter.ReviewViewPagerAdapter
 import com.boost.marketplace.adapter.SecondaryImagesAdapter
@@ -36,7 +40,6 @@ import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityFeatureDetailsBinding
 import com.boost.marketplace.infra.utils.Constants.Companion.IMAGE_PREVIEW_POPUP_FRAGMENT
 import com.boost.marketplace.interfaces.DetailsFragmentListener
-import com.boost.marketplace.ui.details.emails.EmailActivity
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.webview.WebViewActivity
@@ -52,6 +55,8 @@ import kotlinx.android.synthetic.main.activity_feature_details.*
 import retrofit2.Retrofit
 import java.text.NumberFormat
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class FeatureDetailsActivity :
     AppBaseActivity<ActivityFeatureDetailsBinding, FeatureDetailsViewModel>(),
@@ -85,6 +90,7 @@ class FeatureDetailsActivity :
     lateinit var progressDialog: ProgressDialog
 
     lateinit var reviewAdaptor: ReviewViewPagerAdapter
+    lateinit var benefitAdaptor: BenefitsViewPagerAdapter
     lateinit var secondaryImagesAdapter: SecondaryImagesAdapter
     lateinit var featurePacksAdapter: FeaturePacksAdapter
 
@@ -120,6 +126,7 @@ class FeatureDetailsActivity :
         secondaryImagesAdapter = SecondaryImagesAdapter(ArrayList(), this)
         featurePacksAdapter = FeaturePacksAdapter(ArrayList(), this, this)
         reviewAdaptor = ReviewViewPagerAdapter(ArrayList())
+        benefitAdaptor = BenefitsViewPagerAdapter(arrayListOf("Testing","Testing1","Testing2","Testing3","Testing4","Testing5"), this)
 //    localStorage = LocalStorage.getInstance(applicationContext)!!
         singleWidgetKey = intent.extras?.getString("itemId")
         prefs = SharedPrefs(this)
@@ -131,33 +138,51 @@ class FeatureDetailsActivity :
     private fun initView() {
 
         loadData()
+
         initializeSecondaryImage()
         initializePackageRecycler()
-//        initializeViewPager()
+        initializeViewPager()
         initMvvm()
+
+        val callExpertString = SpannableString("Have a query? Call an expert")
+
+        callExpertString.setSpan(
+            UnderlineSpan(),
+            callExpertString.length-14,
+            callExpertString.length,
+            0
+        )
+        callExpertString.setSpan( ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent)),
+            callExpertString.length-14,
+            callExpertString.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        query_text.setText(callExpertString)
+        query_text.setOnClickListener {
+
+        }
 
         app_bar_layout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             if (Math.abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
                 title_appbar.visibility = View.VISIBLE
-                title_image.visibility = View.VISIBLE
+//                title_image.visibility = View.VISIBLE
                 // Collapsed
                 toolbar_details.background =
                     ColorDrawable(resources.getColor(R.color.fullscreen_color))
             } else if (verticalOffset == 0) {
                 title_appbar.visibility = View.INVISIBLE
-                title_image.visibility = View.INVISIBLE
+//                title_image.visibility = View.INVISIBLE
                 toolbar_details.background = ColorDrawable(resources.getColor(R.color.transparent))
                 // Expanded
             } else {
                 title_appbar.visibility = View.INVISIBLE
-                title_image.visibility = View.INVISIBLE
+//                title_image.visibility = View.INVISIBLE
                 toolbar_details.background = ColorDrawable(resources.getColor(R.color.transparent))
             }
         }
         )
 
-        abcText.text = getString(R.string.addons_description)
-
+//        abcText.text = getString(R.string.addons_description)
 
         add_item_to_cart.setOnClickListener {
             if (!itemInCartStatus) {
@@ -213,6 +238,18 @@ class FeatureDetailsActivity :
 //                    WebEngageController.trackEvent(ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART, FEATURE_KEY , event_attributes)
                 }
             }
+        }
+
+        learn_more_btn.setOnClickListener {
+            learn_more_btn.visibility = View.GONE
+            learn_less_btn.visibility = View.VISIBLE
+            title_bottom3.maxLines = 20
+        }
+
+        learn_less_btn.setOnClickListener {
+            learn_more_btn.visibility = View.VISIBLE
+            learn_less_btn.visibility = View.GONE
+            title_bottom3.maxLines = 2
         }
 
         imageView121.setOnClickListener {
@@ -317,13 +354,6 @@ class FeatureDetailsActivity :
                     )
                 Glide.with(this).load(addonDetails!!.primary_image)
                     .into(image1222)
-//                Glide.with(this).load(addonDetails!!.primary_image)
-//                    .into(image1222Copy)
-
-                Glide.with(this).load(addonDetails!!.primary_image)
-                    .fitCenter()
-                    .into(title_image)
-
 
                 Glide.with(this).load(addonDetails!!.feature_banner)
                     .transition(DrawableTransitionOptions.withCrossFade())
@@ -331,7 +361,7 @@ class FeatureDetailsActivity :
                     .into(details_image_bg)
 
                 if (addonDetails!!.secondary_images.isNullOrEmpty())
-                    secondary_images_panel.visibility = View.GONE
+//                    secondary_images_panel.visibility = View.GONE
                 else {
                     val objectType = object : TypeToken<ArrayList<String>>() {}.type
                     var secondaryImages = Gson().fromJson<ArrayList<String>>(
@@ -369,6 +399,7 @@ class FeatureDetailsActivity :
                 }
                 title_top.text = addonDetails!!.name
                 title_appbar.text = addonDetails!!.name
+                title_bottom3.text = addonDetails!!.description
 //                if (addonDetails!!.discount_percent > 0) {
 //                    details_discount.visibility = View.VISIBLE
 //                    details_discount.text = addonDetails!!.discount_percent.toString() + "% OFF"
@@ -381,19 +412,11 @@ class FeatureDetailsActivity :
                 ) {
                     title_bottom2.text = "Less than 100 businesses have added this"
                 } else {
-                    val totalInstall = addonDetails!!.total_installs + " people brought"
-                    val businessUses = SpannableString(totalInstall)
-                    businessUses.setSpan(
-                        ForegroundColorSpan(ContextCompat.getColor(this, R.color.light_blue)),
-                        0,
-                        addonDetails!!.total_installs!!.length,
-                        0
-                    )
-                    title_bottom2.text = businessUses
+                    title_bottom2.text = "Used by "+addonDetails!!.total_installs + " businesses"
                 }
 
                 loadCostToButtons()
-
+                mrpPrice
                 if (learnMoreLink != null) {
                     widgetLearnMore.text = learnMoreLink.link_description
                     widgetLearnMoreLink = learnMoreLink.link
@@ -401,9 +424,9 @@ class FeatureDetailsActivity :
                 } else {
                     widgetLearnMore.visibility = View.GONE
                 }
-                xheader.text = addonDetails!!.description_title
-                abcText.text = addonDetails!!.description
-//                review_layout.visibility = View.GONE
+//                xheader.text = addonDetails!!.description_title
+//                abcText.text = addonDetails!!.description
+////                review_layout.visibility = View.GONE
                 var event_attributes: HashMap<String, Any> = HashMap()
                 event_attributes.put("Feature details", addonDetails!!.description!!)
                 event_attributes.put("Feature Name", addonDetails!!.name!!)
@@ -501,9 +524,9 @@ class FeatureDetailsActivity :
     fun initializeSecondaryImage() {
         val gridLayoutManager = GridLayoutManager(applicationContext, 1)
         gridLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        secondary_image_recycler.apply {
-            layoutManager = gridLayoutManager
-        }
+//        secondary_image_recycler.apply {
+//            layoutManager = gridLayoutManager
+//        }
     }
 
 
@@ -516,20 +539,21 @@ class FeatureDetailsActivity :
     }
 
 
-//    private fun initializeViewPager() {
-//        reviewViewpager.adapter = reviewAdaptor
-//        dots_indicator.setViewPager2(reviewViewpager)
-//        reviewViewpager.offscreenPageLimit = 1
-//
-//        reviewViewpager.setPageTransformer(ZoomOutPageTransformer())
-//
-//        val itemDecoration = HorizontalMarginItemDecoration(
-//            applicationContext,
-//            R.dimen.viewpager_current_item_horizontal_margin
-//        )
-//        reviewViewpager.addItemDecoration(itemDecoration)
-////        viewpager.setPageTransformer(ZoomOutPageTransformer())
-//    }
+    private fun initializeViewPager() {
+        benefits_viewpager.adapter = benefitAdaptor
+        benefits_indicator.setViewPager2(benefits_viewpager)
+        benefits_viewpager.offscreenPageLimit = 1
+
+//        benefits_viewpager.setPageTransformer(ZoomOutPageTransformer())
+        benefits_viewpager.setPageTransformer(SimplePageTransformerSmall())
+
+        val itemDecoration = HorizontalMarginItemDecoration(
+            applicationContext,
+            R.dimen.viewpager_current_item_horizontal_margin
+        )
+        benefits_viewpager.addItemDecoration(itemDecoration)
+//        viewpager.setPageTransformer(ZoomOutPageTransformer())
+    }
 
 
     fun addUpdatePacks(list: ArrayList<BundlesModel>) {
@@ -545,7 +569,7 @@ class FeatureDetailsActivity :
 
     fun addUpdateSecondaryImage(list: ArrayList<String>) {
         secondaryImagesAdapter.addUpdates(list)
-        secondary_image_recycler.adapter = secondaryImagesAdapter
+//        secondary_image_recycler.adapter = secondaryImagesAdapter
         secondaryImagesAdapter.notifyDataSetChanged()
     }
 
@@ -589,20 +613,24 @@ class FeatureDetailsActivity :
 //                    cost_per_year_discount.visibility = View.GONE
 //                }
 
-//                //hide or show MRP price
-//                if (paymentPrice != addonDetails!!.price) {
-//                    orig_cost.visibility = View.VISIBLE
-//                    spannableString(addonDetails!!.price)
-//                } else {
-//                    orig_cost.visibility = View.INVISIBLE
-//                }
+                //hide or show MRP price
+                if (paymentPrice != addonDetails!!.price) {
+                    mrp_price.visibility = View.VISIBLE
+                    spannableString(addonDetails!!.price)
+                } else {
+                    mrp_price.text = "/month"
+                    mrpPrice.visibility = View.INVISIBLE
+                }
 
+                price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice)
+                final_price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice)
 //                add_item_to_cart.text = "Add for ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/Month"
 //                havent_bought_the_feature.visibility = View.VISIBLE
             } else {
                 add_item_to_cart.visibility = View.GONE
-//                orig_cost.visibility = View.GONE
-//                money.text = "Free Forever"
+                price.visibility = View.GONE
+                bottom_box.visibility = View.GONE
+                mrpPrice.text = "Free Forever"
             }
         } catch (e: Exception) {
             SentryController.captureException(e)
@@ -611,17 +639,18 @@ class FeatureDetailsActivity :
         }
     }
 
-//    fun spannableString(value: Int) {
-//        val origCost = SpannableString("Original cost ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
-//
-//        origCost.setSpan(
-//            StrikethroughSpan(),
-//            14,
-//            origCost.length,
-//            0
-//        )
-//        orig_cost.text = origCost
-//    }
+    fun spannableString(value: Int) {
+        val origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
+
+        origCost.setSpan(
+            StrikethroughSpan(),
+            0,
+            origCost.length,
+            0
+        )
+        mrp_price.text = origCost
+        mrpPrice.text = origCost
+    }
 
     fun loadData() {
         try {

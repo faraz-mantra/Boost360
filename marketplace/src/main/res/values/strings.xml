@@ -18,7 +18,7 @@
   <string name="cart">Cart</string>
   <string name="home_more_menu">Home More Menu</string>
   <string name="save_upto_60_with_feature_packs">Save upto 60% with feature packs</string>
-  <string name="discount_saving">35% SAVING</string>
+  <string name="discount_saving">35% \nSAVING</string>
   <string name="discount_off">35% OFF</string>
   <string name="online_pack">Online pack</string>
   <string name="need_help_desc">Please feel free to <a href="mailto: ria@nowfloats.com">send an email at ria@nowfloats.com</a>. Alternatively you can <a href="tel:18601231233">call us at 1860 123 1233</a>.</string>
@@ -32,6 +32,8 @@
   <string name="added_to_carts">Added to cart</string>
   <string name="how_it_works_text">This feature enables you to display your products on your website. You can easily add detailed information about your products and their prices through the inbuilt product catalogue to enable quick sales.</string>
   <string name="my_order_history">My order history</string>
+  <string name="email_help">Our experts are available from 9am-6pm on working days. You can request a callback and an expert from the team will reach out to you.</string>
+  <string name="zoho_desc">(the tone of the copy should be addressing to the user directly). Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
   <string name="need_help_custom_domain">Need help?</string>
   <string name="call_an_expert"><u>&#160;Call an expert</u></string>
   <string name="learn_more"><u>Learn More</u></string>

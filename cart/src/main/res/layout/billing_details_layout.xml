@@ -56,6 +56,45 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/barathAgri"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/ic_cart_feature_one_image"/>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/barathAgri"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="BarathAgri"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintBottom_toTopOf="@id/desc"
+                android:fontFamily="@font/open_sans_bold"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/barathAgri"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                android:text="Smart Farming App"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cart_checkbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

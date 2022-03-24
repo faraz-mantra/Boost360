@@ -1,105 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cart_packs_FL"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="2dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.cardview.widget.CardView
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/cardViews"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_8sdp"
-        android:layout_marginRight="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:layout_marginBottom="@dimen/_2sdp"
-        android:padding="0dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="0dp">
+        android:clickable="true"
+        android:layout_margin="2dp"
+        android:orientation="horizontal">
 
-        <RelativeLayout
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:layout_height="wrap_content">
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+                android:id="@+id/main_layout1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="vertical">
+                android:layout_marginStart="10dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/email_title"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    android:fontFamily="@font/open_sans"
+                    android:textFontWeight="400"
+                    android:text="hello@deltastore.com"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/txt_14sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
-                     <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/email_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/open_sans"
-                            android:textFontWeight="400"
-                            android:text="hello@deltastore.com"
-                            android:textColor="#333333"
-                            android:textSize="@dimen/txt_14sp"
-                            android:textStyle="normal"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/email_expiry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:textFontWeight="400"
+                    android:text="Expiring on:"
+                    android:textColor="#BBBBBB"
+                    android:textSize="@dimen/txt_12sp"
+                    android:textStyle="normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/date"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/email_expiry"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:textFontWeight="400"
-                        android:text="Expiring on:"
-                        android:textColor="#BBBBBB"
-                        android:textSize="@dimen/txt_12sp"
-                        android:textStyle="normal"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans"
-                        android:textFontWeight="600"
-                        android:text="10-01-2022"
-                        android:textColor="#BBBBBB"
-                        android:textSize="@dimen/txt_14sp"
-                        android:textStyle="normal"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/email_expiry"/>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#F4F4F4"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/date"/>
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:textFontWeight="600"
+                    android:text="10-01-2022"
+                    android:textColor="#BBBBBB"
+                    android:textSize="@dimen/txt_14sp"
+                    android:textStyle="normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/email_expiry"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F4F4F4"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/main_layout1"/>
 
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </androidx.cardview.widget.CardView>
 
-</FrameLayout>
+    </LinearLayout>
+</layout>
 

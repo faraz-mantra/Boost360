@@ -11,12 +11,12 @@ import com.framework.extensions.getDrawable
 import com.framework.extensions.observeOnce
 import com.framework.webengageconstant.BUTTON
 import com.framework.webengageconstant.CLICKED
-import com.framework.webengageconstant.PS_BUSINESS_WEBSITE_CLICK
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessWebsiteBinding
 import com.onboarding.nowfloats.extensions.afterTextChanged
 import com.framework.extensions.drawableEnd
+import com.framework.webengageconstant.PS_BUSINESS_WEBSITE_CLICK_NEW_UPPERCASE
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
 import com.onboarding.nowfloats.model.channel.*
@@ -163,7 +163,7 @@ class RegistrationBusinessWebsiteFragment :
           if ((binding?.textBtn?.visibility == View.VISIBLE)) {
 
             //create my business website Event Tracker.
-            WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK, BUTTON, CLICKED)
+            WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK_NEW_UPPERCASE, BUTTON, CLICKED)
 
             getDotProgress()?.let {
               binding?.textBtn?.visibility = View.GONE
