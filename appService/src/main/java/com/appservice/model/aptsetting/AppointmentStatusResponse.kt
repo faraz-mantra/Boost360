@@ -4,9 +4,9 @@ import android.app.Activity
 import android.text.Spanned
 import com.appservice.AppServiceApplication
 import com.appservice.R
+import com.appservice.base.getProductType
 import com.appservice.constant.RecyclerViewItemType
 import com.appservice.recyclerView.AppBaseRecyclerViewItem
-import com.appservice.base.getProductType
 import com.appservice.utils.capitalizeUtil
 import com.framework.base.BaseResponse
 import com.framework.pref.UserSessionManager
@@ -76,7 +76,7 @@ data class ResultS(
   fun getAppointmentTilesArray(isDoctor: Boolean): ArrayList<AppointmentStatusResponse.TilesModel> {
     return ArrayList<AppointmentStatusResponse.TilesModel>().apply {
       add(AppointmentStatusResponse.TilesModel("catalog_setup", "Service categories, Catalog display text,applicable tax slabs", "Catalog setup", catalogSetup))
-      if (isDoctor) add(AppointmentStatusResponse.TilesModel("consultation_settings", "General appointment: Enabled", "Consultation settings", consultationSetup))
+      if (isDoctor) add(AppointmentStatusResponse.TilesModel("consultation_settings", "General appointment: #", "General appointments", consultationSetup))
       add(AppointmentStatusResponse.TilesModel("payment_collection", "Preferred payment gateway", "Payment collection setup", paymentCollectionSetup))
       add(AppointmentStatusResponse.TilesModel("customer_invoice_setup", "GST declaration, Bank UPI for offline appointments,signature", "Customer invoice setup", customerInvoicesSetup))
       //add(AppointmentStatusResponse.TilesModel("policies", "Refund, cancellation, privacy policies for your customers", "Policies for customers", policiesSetup))    }
@@ -120,11 +120,12 @@ data class PaymentCollectionSetup(
 ) : Serializable {
 
   fun getTitle(): Spanned? {
-    return fromHtml("Payment gateway: <b>${if (paymentGateway.isNullOrEmpty()) "Pending" else "$paymentGateway"}</b>")
+    return fromHtml("Payment gateway: <i><b>${if (paymentGateway.isNullOrEmpty().not()) "$paymentGateway" else "<font color='#${getColorInactive()}'>Pending</font>"}</b></i>")
+
   }
 
   fun getSubtitle(): Spanned? {
-    return fromHtml(if (this.bankAccountNumber == null || this.bankAccountNumber == "" || isBankAccountConnected == false) "<pre> Bank account: <span style=\"color: #EB5757;\"><em>not connected</em></span></pre>" else "Bank account: <b>$bankAccountNumber</b>")
+    return fromHtml("Bank account: <i><b>${if ((this.bankAccountNumber == null || this.bankAccountNumber == "" || isBankAccountConnected == false).not()) "$bankAccountNumber" else "<font color='#${getColorInactive()}'>Not connected</font>"}</b></i>")
   }
 }
 
@@ -164,11 +165,11 @@ data class CatalogSetup(
 
   fun getTitle(activity: Activity?): Spanned? {
     val s = UserSessionManager(activity ?: AppServiceApplication.instance)
-    return fromHtml("Display text: <b>${if (productCategoryVerb.isNullOrEmpty()) getProductType(s.fP_AppExperienceCode) else "${productCategoryVerb?.capitalizeUtil()}"}</b>")
+    return fromHtml("Display text: <i><b>${if (productCategoryVerb.isNullOrEmpty()) getProductType(s.fP_AppExperienceCode) else "${productCategoryVerb?.capitalizeUtil()}"}</b><i>")
   }
 
   fun getSubtitle(): Spanned? {
-    return fromHtml(if (this.isDefaultGSTSlabSelected == false && this.defaultGSTSlab == 0.0) "<pre>Applicable tax slabs: <span style=\"color: #EB5757;\"><em>not selected</em></span></pre>" else "Applicable tax slabs: <b>${this.defaultGSTSlab}</b>")
+    return fromHtml("Tax slab: <i><b>${if ((this.isDefaultGSTSlabSelected == false && this.defaultGSTSlab == 0.0).not()) "${this.defaultGSTSlab}" else "<font color='#${getColorInactive()}'>Not selected</font>"}</b></i>")
   }
 }
 
@@ -183,9 +184,10 @@ data class CustomerInvoicesSetup(
   @field:SerializedName("IsPending")
   var isPending: Boolean? = null
 ) : Serializable {
+
   fun getTitle(): Spanned? {
-    return if (isGSTDeclarationComplete == false || getGstin().isEmpty()) fromHtml("<pre>GST declaration: <span style=\"color: #EB5757;\"><em>incomplete</em></span></pre>")
-    else fromHtml("<pre>GST declaration: <strong>${getGstin()}</strong>&nbsp;</pre>")
+    return fromHtml("GST declaration: <i><b>${if (isGSTDeclarationComplete == true) "${getGstin()}" else "<font color='#${getColorInactive()}'>Setup incomplete</font>"}</b></i>")
+
   }
 
   fun getGstin(): String {
@@ -193,7 +195,8 @@ data class CustomerInvoicesSetup(
   }
 
   fun getSubtitle(): Spanned? {
-    return fromHtml(" ${if (this.isTaxInvoiceSetupComplete == false) "<pre>Tax invoice: <span style=\"color: #EB5757;\"><em>Setup incomplete</em></span></pre>" else "Tax invoice: <b>Setup completed</b>"}")
+    return fromHtml("Tax invoice: <i><b>${if (isTaxInvoiceSetupComplete == true) "Setup completed" else "<font color='#${getColorInactive()}'>Setup incomplete</font>"}</b></i>")
+
   }
 }
 
@@ -203,4 +206,14 @@ data class ConsultationSetup(
   var isGeneralAppointmentEnabled: Boolean? = null,
   @field:SerializedName("IsPending")
   var isPending: Boolean? = null
-) : Serializable
+) : Serializable {
+
+  fun getIsEnableText(): String {
+    return "<i><b>${if (isGeneralAppointmentEnabled == true) "Enabled" else "<font color='#${getColorInactive()}'>Not selected</font>"}</b></i>"
+  }
+}
+
+fun getColorInactive(): String {
+  val labelColor: Int = AppServiceApplication.instance.resources.getColor(R.color.color_error_code)
+  return String.format("%X", labelColor).substring(2)
+}
