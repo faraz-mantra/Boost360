@@ -61,7 +61,7 @@
                 android:layout_width="@dimen/size_78"
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="@dimen/size_10"
-                app:on="true"
+                app:on="false"
                 app:textOff="Disabled"
                 app:textOn="Enabled" />
             </LinearLayout>
@@ -84,6 +84,7 @@
             android:layout_marginHorizontal="@dimen/size_1"
             android:orientation="vertical"
             android:padding="@dimen/size_14"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radio_card">
@@ -105,7 +106,7 @@
               android:drawableStart="@drawable/ic_indian_rupee"
               android:drawablePadding="@dimen/size_15"
               android:hint="@string/_50"
-              android:inputType="number"
+              android:inputType="numberDecimal"
               android:padding="@dimen/size_10"
               android:singleLine="true"
               android:textColor="@color/warm_grey_10"
@@ -181,13 +182,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.framework.views.customViews.CustomTextView
+          android:id="@+id/note_txt"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginTop="@dimen/size_16"
-          android:id="@+id/note_txt"
           android:text="@string/please_appointment_business_hours_create_slots__booking_appointment"
           android:textColor="@color/gray_828282"
+          android:visibility="gone"
           app:textType="CAPTION" />
 
       </androidx.appcompat.widget.LinearLayoutCompat>
