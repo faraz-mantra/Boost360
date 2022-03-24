@@ -481,7 +481,7 @@
   <string name="image_uploading">Uploading image, please wait...</string>
   <string name="error_select_service">Please select at least one service provided by this staff</string>
   <string name="catalog_setup">Catalog Setup</string>
-  <string name="service_categories_catalog_display_text_napplicable_tax_slabs">Service categories, Catalog display text,\napplicable tax slabs</string>
+  <string name="service_categories_catalog_display_text_napplicable_tax_slabs">Service categories,applicable tax slabs</string>
   <string name="decide_what_you_want_to_call_the_catalog_tab_on_your_website_and_the_default_tax_for_your_all_services">Decide what you want to call the catalog tab on your website and the default tax % for your all services.</string>
   <string name="current_display_name">Current display name</string>
   <string name="it_is_not_advised_to_change_it_very_often_with_every_such_change_the_url_of_catalog_page_changes_which_may_cause_search_related_issues_and_a_drop_in_search_rank_leading_to_less_traffic">It is NOT ADVISED to change it very often. With every such change, the URL of catalog page changes, which may cause search related issues and a drop in search rank leading to less traffic.</string>

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.cardview.widget.CardView
     android:id="@+id/main_content"
     style="@style/match_wrap"
+    android:layout_height="@dimen/size_100"
     android:layout_marginBottom="@dimen/size_12"
     app:cardElevation="0dp">
 
@@ -12,6 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/catalog_setup"
       style="@style/match_wrap"
+      android:layout_gravity="center"
       android:background="?attr/selectableItemBackground"
       android:clickable="true"
       android:focusable="true"
@@ -31,12 +34,20 @@
         <com.framework.views.customViews.CustomImageView
           android:id="@+id/civ_setup_icon"
           style="@style/AppointmentSettings_Image"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          android:layout_width="@dimen/size_50"
+          android:layout_height="@dimen/size_50"
           android:layout_gravity="center"
+          android:layout_marginVertical="@dimen/size_8"
           android:layout_marginStart="@dimen/size_0"
-          android:paddingBottom="@dimen/size_10"
           android:src="@drawable/ic_ecom_catalog_setup" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/civ_setup_check"
+          android:layout_width="@dimen/size_24"
+          android:layout_height="@dimen/size_24"
+          android:layout_gravity="top|right"
+          android:src="@drawable/ic_checkcircle"
+          android:visibility="visible" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/ctv_pending"
@@ -49,20 +60,8 @@
           android:paddingHorizontal="@dimen/size_8"
           android:text="@string/pending"
           android:textColor="@color/white"
-          android:textSize="@dimen/size_10" />
-
-
+          app:textType="OVERLINE" />
       </FrameLayout>
-
-      <com.framework.views.customViews.CustomImageView
-        android:id="@+id/civ_setup_check"
-        android:layout_width="@dimen/size_24"
-        android:layout_height="@dimen/size_24"
-        android:src="@drawable/ic_checkcircle"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/civ_catalog_setup_icon"
-        app:layout_constraintEnd_toEndOf="@+id/civ_catalog_setup_icon"
-        app:layout_constraintTop_toTopOf="@+id/civ_catalog_setup_icon" />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/ctv_catalog_setup_title"
@@ -73,33 +72,33 @@
         android:fontFamily="@font/bold"
         android:text="@string/catalog_setup"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.073"
         app:layout_constraintStart_toEndOf="@+id/civ_catalog_setup_icon"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/civ_catalog_setup_icon" />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/ctv_catalog_setup_subheading"
         style="@style/AppointmentSetting_Text_Content"
         android:layout_width="0dp"
-        android:layout_marginStart="@dimen/size_10"
-        android:layout_marginTop="@dimen/size_5"
-        android:text="@string/service_categories_catalog_display_text_napplicable_tax_slabs"
+        android:layout_marginTop="@dimen/size_4"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/civ_catalog_setup_icon"
+        app:layout_constraintStart_toStartOf="@+id/ctv_catalog_setup_title"
         app:layout_constraintTop_toBottomOf="@id/ctv_catalog_setup_title"
-        app:layout_constraintVertical_bias="1" />
+        tools:text="@string/service_categories_catalog_display_text_napplicable_tax_slabs" />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/ctv_catalog_setup_subheading2"
         style="@style/AppointmentSetting_Text_Content"
         android:layout_width="0dp"
-        android:layout_marginStart="@dimen/size_10"
-        android:text="@string/service_categories_catalog_display_text_napplicable_tax_slabs"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/civ_catalog_setup_icon"
-        app:layout_constraintTop_toBottomOf="@+id/ctv_catalog_setup_subheading" />
+        app:layout_constraintStart_toStartOf="@+id/ctv_catalog_setup_title"
+        app:layout_constraintTop_toBottomOf="@id/ctv_catalog_setup_subheading"
+        tools:text="@string/service_categories_catalog_display_text_napplicable_tax_slabs" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
   </androidx.cardview.widget.CardView>
