@@ -34,7 +34,7 @@
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/need_help_custom_domain"
+            android:text="Our experts are out for the day"
             android:textColor="#333333"
             android:textSize="@dimen/txt_16sp"
             android:textFontWeight="700"
