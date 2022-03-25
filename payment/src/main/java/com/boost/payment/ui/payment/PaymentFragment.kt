@@ -61,9 +61,7 @@ import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class
-
-PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
+class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         MoreBanksListener, UpiPayListener, EmailPopupListener, AddCardListener {
 
     lateinit var root: View
@@ -465,6 +463,11 @@ PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
         auto_renew_switch.setOnClickListener {
             if (autoRenewState) {
+                WebEngageController.trackEvent(
+                        MARKETPLACE_AUTO_RENEWAL_OFF,
+                        PAYMENT_SCREEN,
+                        NO_EVENT_VALUE
+                )
                 auto_renew_switch.setImageResource(R.drawable.ic_switch_off)
                 auto_renew_extra_offers.background = ContextCompat.getDrawable(
                         requireActivity(),
@@ -512,6 +515,11 @@ PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
                 autoRenewState = false
             } else {
+                WebEngageController.trackEvent(
+                        MARKETPLACE_AUTO_RENEWAL_ON,
+                        PAYMENT_SCREEN,
+                        NO_EVENT_VALUE
+                )
                 lotty_progress.pauseAnimation()
                 lotty_progress.playAnimation()
                 auto_renew_switch.setImageResource(R.drawable.ic_switch_on)
@@ -557,6 +565,20 @@ PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 autoRenewState = true
             }
             updateAutoRenewState()
+        }
+        btn_auto_renew_upi.setOnClickListener {
+            WebEngageController.trackEvent(
+                    MARKETPLACE_UPI_AUTO_RENEWAL_CLICK,
+                    PAYMENT_SCREEN,
+                    NO_EVENT_VALUE
+            )
+        }
+        btn_setup_bank_auto_renew.setOnClickListener {
+            WebEngageController.trackEvent(
+                    MARKETPLACE_AUTO_RENEW_BANK_CLICK,
+                    PAYMENT_SCREEN,
+                    NO_EVENT_VALUE
+            )
         }
         /*supply_place_button.setOnClickListener{
             stateFragment.show(

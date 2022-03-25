@@ -308,6 +308,7 @@
                             app:layout_constraintTop_toBottomOf="@id/tv_1" />
 
                         <Button
+                            android:id="@+id/btn_Select"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/btn_orange_custom_domain"
@@ -396,6 +397,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/card_list"
+                    android:theme="@style/Theme.MaterialComponents"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -405,6 +407,7 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_title">
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_custom_domain"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:itemCount="4"
@@ -428,6 +431,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/card_free"
+                    android:theme="@style/Theme.MaterialComponents"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -438,7 +442,9 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        >
 
                         <ImageView
                             android:id="@+id/iv1"
@@ -550,46 +556,46 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
-<!--        <com.facebook.shimmer.ShimmerFrameLayout-->
-<!--            android:id="@+id/shimmer_view_history"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/toolbar"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:layout_above="@id/btn_select_Domain"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:layout_marginStart="@dimen/_10sdp"-->
-<!--            android:layout_marginEnd="@dimen/_10sdp"-->
-<!--            android:background="@color/white"-->
-<!--            android:orientation="vertical"-->
-<!--            android:visibility="gone"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            tools:visibility="gone">-->
+        <!--        <com.facebook.shimmer.ShimmerFrameLayout-->
+        <!--            android:id="@+id/shimmer_view_history"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@id/toolbar"-->
+        <!--            android:layout_centerInParent="true"-->
+        <!--            android:layout_above="@id/btn_select_Domain"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_marginStart="@dimen/_10sdp"-->
+        <!--            android:layout_marginEnd="@dimen/_10sdp"-->
+        <!--            android:background="@color/white"-->
+        <!--            android:orientation="vertical"-->
+        <!--            android:visibility="gone"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            tools:visibility="gone">-->
 
-<!--            &lt;!&ndash; Adding 7 rows of placeholders &ndash;&gt;-->
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="@color/white"-->
-<!--                android:orientation="vertical">-->
+        <!--            &lt;!&ndash; Adding 7 rows of placeholders &ndash;&gt;-->
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:background="@color/white"-->
+        <!--                android:orientation="vertical">-->
 
-<!--                <include layout="@layout/custom_domain_data_layout_1" />-->
+        <!--                <include layout="@layout/custom_domain_data_layout_1" />-->
 
-<!--                <include layout="@layout/custom_domain_data_layout_2" />-->
-<!--                <include layout="@layout/custom_domain_data_layout_2" />-->
-<!--                <include layout="@layout/custom_domain_data_layout_2" />-->
-<!--                <include layout="@layout/custom_domain_data_layout_2" />-->
-<!--                <include layout="@layout/custom_domain_data_layout_2" />-->
-<!--                <include layout="@layout/custom_domain_data_layout_2" />-->
-<!--                <include layout="@layout/custom_domain_data_layout_3" />-->
-
-
+        <!--                <include layout="@layout/custom_domain_data_layout_2" />-->
+        <!--                <include layout="@layout/custom_domain_data_layout_2" />-->
+        <!--                <include layout="@layout/custom_domain_data_layout_2" />-->
+        <!--                <include layout="@layout/custom_domain_data_layout_2" />-->
+        <!--                <include layout="@layout/custom_domain_data_layout_2" />-->
+        <!--                <include layout="@layout/custom_domain_data_layout_2" />-->
+        <!--                <include layout="@layout/custom_domain_data_layout_3" />-->
 
 
-<!--            </LinearLayout>-->
 
-<!--        </com.facebook.shimmer.ShimmerFrameLayout>-->
+
+        <!--            </LinearLayout>-->
+
+        <!--        </com.facebook.shimmer.ShimmerFrameLayout>-->
 
 
         <Button

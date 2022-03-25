@@ -13,6 +13,7 @@ import com.boost.payment.utils.Constants.Companion.RAZORPAY_WEBVIEW_POPUP_FRAGME
 import com.boost.payment.utils.WebEngageController
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_FAILED_PAYMENT_TRANSACTION_LOADED
 import com.framework.webengageconstant.FAILED_PAYMENT_TRANSACTION
+import com.framework.webengageconstant.MARKETPLACE_FALIURE_TRY_AGAIN_CLICK
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import kotlinx.android.synthetic.main.failed_transaction_fragment.*
 
@@ -58,6 +59,12 @@ class FailedTransactionPopUpFragment : DialogFragment() {
     }
 
     transaction_failed_retry.setOnClickListener {
+
+      WebEngageController.trackEvent(
+              MARKETPLACE_FALIURE_TRY_AGAIN_CLICK,
+              FAILED_PAYMENT_TRANSACTION,
+              NO_EVENT_VALUE
+      )
       val args = Bundle()
       args.putString("data", data)
       razorPayWebView.arguments = args
