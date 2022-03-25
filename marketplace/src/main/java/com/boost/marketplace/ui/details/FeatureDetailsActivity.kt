@@ -15,6 +15,7 @@ import android.text.style.UnderlineSpan
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -150,6 +151,7 @@ class FeatureDetailsActivity :
         initializeFAQRecycler()
         initializeCustomerViewPager()
         initMvvm()
+        featureEdgeCase()
 
         val callExpertString = SpannableString("Have a query? Call an expert")
 
@@ -721,6 +723,75 @@ class FeatureDetailsActivity :
         args.putStringArrayList("list", list)
         imagePreviewPopUpFragement.arguments = args
         imagePreviewPopUpFragement.show(supportFragmentManager, IMAGE_PREVIEW_POPUP_FRAGMENT)
+    }
+
+    fun featureEdgeCase(){
+        val edgeState = "AutoRenewalOn"
+        when(edgeState){
+            "ActionRequired"->{
+                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                edge_case_title.setText("Action Required")
+                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.red))
+                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_error_red, 0, 0, 0 )
+                edge_case_desc.setText("You need to take action to activate this feature.")
+                edge_case_desc.setText("There is an internal error inside Boost 360. We are working to resolve this issue.")
+            }
+            "SomethingWentWrong!"->{
+                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                edge_case_title.setText("Something went wrong!")
+                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.red))
+                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_error_red, 0, 0, 0 )
+                edge_case_desc.setText("There is an internal error inside Boost 360. We are working to resolve this issue.")
+
+            }
+            "active"->{
+                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
+                edge_case_title.setText("Feature is currently active")
+                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.green))
+                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checked, 0, 0, 0 )
+                edge_case_desc.setText("Feature validity expiring on Aug 23, 2021. You\n" +
+                        "can extend validity by renewing it for a\n" +
+                        "longer duration.")
+
+            }
+            "expired"->{
+                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                edge_case_title.setText("Feature expired on Aug 23, 2021")
+                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.red))
+                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_error_red, 0, 0, 0 )
+                edge_case_desc.setText("You need to renew this feature to continue\n" +
+                        "using a custom domain. Your domain may be\n" +
+                        "lost if you don’t renew it.")
+            }
+            "Syncing"->{
+                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_skyblue_white_bg)
+                edge_case_title.setText("Syncing information")
+                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.light_blue2))
+                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sync_blue, 0, 0, 0 )
+                edge_case_desc.setText("We are working on syncing your information for this feature. It may take some time to get updated. Contact support for help.")
+            }
+            "AutoRenewalOn"->{
+                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
+                edge_case_title.setText("Auto renewal is turned on")
+                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.green))
+                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checked, 0, 0, 0 )
+                edge_case_desc.setText("We are working on syncing your information for this feature. It may take some time to get updated. Contact support for help.")
+            }
+            "AddedToCart"->{
+                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_orange_white_bg)
+                edge_case_title.setText("Feature is currently in cart. ")
+                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.common_text_color))
+                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cart_black, 0, 0, 0 )
+                edge_case_desc.setText("Feature is currently in cart. ")
+            }
+            "PartOfPackage"->{
+                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
+                edge_case_title.setText("Feature is part of “Online Classic”")
+                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.green))
+                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checked, 0, 0, 0 )
+                edge_case_desc.setText("")
+            }
+        }
     }
 
     override fun onPackageClicked(item: Bundles?) {
