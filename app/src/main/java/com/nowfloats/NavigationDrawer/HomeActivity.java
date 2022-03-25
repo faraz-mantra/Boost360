@@ -93,6 +93,7 @@ import com.anachat.chatsdk.AnaChatBuilder;
 import com.anachat.chatsdk.internal.database.PreferencesManager;
 import com.appservice.ui.bgImage.BackgroundImageContainerActivityKt;
 import com.appservice.ui.bankaccount.BankAccountFragment;
+import com.appservice.ui.business_logo.BusinessLogoActivityV2;
 import com.appservice.ui.calltracking.VmnCallCardsActivityV2;
 import com.boost.presignin.ui.intro.IntroActivity;
 import com.boost.presignup.utils.DynamicLinkParams;
@@ -563,7 +564,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         Intent queries = new Intent(HomeActivity.this, BusinessHoursActivity.class);
         startActivity(queries);
       } else if (url.contains(getResources().getString(R.string.deeplink_bizlogo))) {
-        Intent queries = new Intent(HomeActivity.this, Business_Logo_Activity.class);
+        Intent queries = new Intent(HomeActivity.this, BusinessLogoActivityV2.class);
         startActivity(queries);
       } else if (url.contains(getResources().getString(R.string.deeplink_nfstoreDomainTTBCombo))) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

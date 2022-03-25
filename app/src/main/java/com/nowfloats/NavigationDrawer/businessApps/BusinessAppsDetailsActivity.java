@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.appservice.ui.business_logo.BusinessLogoActivityV2;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
@@ -57,7 +58,7 @@ public class BusinessAppsDetailsActivity extends AppCompatActivity {
                         super.onPositive(dialog);
                         finish();
                         dialog.dismiss();
-                        Intent i = new Intent(BusinessAppsDetailsActivity.this, Business_Logo_Activity.class);
+                        Intent i = new Intent(BusinessAppsDetailsActivity.this, BusinessLogoActivityV2.class);
                         startActivity(i);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 

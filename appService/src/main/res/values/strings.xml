@@ -1142,4 +1142,13 @@
   <string name="the_total_number_of_clicks_on_your_contact_number_displayed_on_website">The total number of clicks on your contact number displayed on website</string>
   <string name="total_calls">Total Calls</string>
   <string name="missed_calls">Missed Calls</string>
+    <string name="business_logo_info_text_app_service"><![CDATA[A logo is a Brand identity of your business that appears on top of your business website, at the place pf profile picture on your social media accounts and on your branding kit including Business cards & letter heads.]]></string>
+  <string name="change_logo">Change logo</string>
+  <string name="create_a_new_logo">Create a new logo</string>
+  <string name="free_1_logo_png_powered_by_buildmylogo">*Free 1 logo .png powered by BuildMyLogo</string>
+  <string name="business_logo_instructions_1">Supported format: .jpeg, .png or .gif\nRecommended dimension: Square (400x400 px)\nMax file size: 500 kb</string>
+  <string name="business_logo_instructions_2">Keep the background white or transparant (in png). For bigger display, remove all padding from the main object in your logo.</string>
+  <string name="business_logo">Business logo</string>
+  <string name="add_logo">Add logo</string>
+  <string name="image_upload_failed">Image upload failed</string>
 </resources>

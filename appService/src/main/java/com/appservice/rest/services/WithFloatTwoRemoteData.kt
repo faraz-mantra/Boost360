@@ -13,11 +13,10 @@ import com.appservice.model.updateBusiness.DeleteBizMessageRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
 import com.appservice.rest.EndPoints
 import com.framework.pref.clientId
-import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
-import retrofit2.Callback
+import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -201,5 +200,18 @@ interface WithFloatTwoRemoteData {
     @QueryMap data: Map<String, String?>?):Observable<Response<ArrayList<VmnCallModel?>?>>
 
 
+  @Headers("Accept: application/json", "Content-Type: application/octet-stream")
+  @PUT(EndPoints.PUT_UPLOAD_BUSINESS_LOGO)
+  fun putUploadImageBusiness(
+    @Query("clientId") clientIdParam: String?=clientId,
+    @Query("fpId") fpId: String?,
+    @Query("identifierType") identifierType: String?,
+    @Query("fileName") fileName: String?,
+    @Body requestBody: RequestBody?,
+  ): Observable<Response<String>>
 
+  @POST(EndPoints.CHANGE_NOTIFICATION_STATUS)
+  fun archiveAlert(
+    @QueryMap map: HashMap<String, String?>,
+  ): Observable<Response<String>>
 }

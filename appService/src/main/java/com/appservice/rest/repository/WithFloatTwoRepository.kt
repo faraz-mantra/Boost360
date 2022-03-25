@@ -12,6 +12,7 @@ import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.WithFloatsApiTwoClient
 import com.appservice.rest.services.WithFloatTwoRemoteData
 import com.framework.base.BaseResponse
+import com.framework.pref.clientId
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.Retrofit
@@ -203,4 +204,25 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   fun getImages(fpId: String?, clientId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getBackgroundImages(fpId, clientId), TaskCode.GET_BACKGROUND_IMAGES)
   }
+
+  fun putUploadImageBusiness(fpId: String?,fileName:String?,requestBody: RequestBody?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.putUploadImageBusiness(
+        fpId=fpId,
+        identifierType = "SINGLE",
+        fileName = fileName,
+        requestBody = requestBody
+      ), TaskCode.PUT_FILE_UPLOAD_BUSINESS
+    )
+  }
+
+  fun archieveAlert(fpId: String?,type:String?): Observable<BaseResponse> {
+    val map = HashMap<String, String?>()
+    map["clientId"] = clientId
+    map["fpId"] = fpId
+    map["notificationId"] = ""
+    map["isTargetAchieved"] = "TRUE"
+    map["Type"] = type
+    return makeRemoteRequest(remoteDataSource.archiveAlert(map),TaskCode.ARCHIEVE_ALERT)
+  }
+
 }

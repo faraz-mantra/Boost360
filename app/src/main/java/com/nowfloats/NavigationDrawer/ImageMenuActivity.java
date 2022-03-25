@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appservice.ui.bgImage.BackgroundImageContainerActivityKt;
+import com.appservice.ui.business_logo.BusinessLogoActivityV2;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity;
 import com.nowfloats.BusinessProfile.UI.UI.FeaturedImageActivity;
@@ -72,7 +73,7 @@ public class ImageMenuActivity extends AppCompatActivity {
                     case "Business logo":
 
                         MixPanelController.track(EventKeysWL.LOGO, null);
-                        intent = new Intent(ImageMenuActivity.this, Business_Logo_Activity.class);
+                        intent = new Intent(ImageMenuActivity.this, BusinessLogoActivityV2.class);
                         break;
 
                     case "Featured image":

@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.appservice.ui.business_logo.BusinessLogoActivityV2;
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
@@ -387,7 +388,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                                 @Override
                                 public void onClick(View v) {
                                     MixPanelController.track(EventKeysWL.LOGO, null);
-                                    Intent businessLogoIntent = new Intent(activity, Business_Logo_Activity.class);
+                                    Intent businessLogoIntent = new Intent(activity, BusinessLogoActivityV2.class);
                                     startActivity(businessLogoIntent);
                                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 }

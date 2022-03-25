@@ -41,6 +41,8 @@
       android:windowSoftInputMode="adjustPan" />
 
     <activity android:name=".offers.FragmentOffersContainerActivity" />
+    <activity android:name=".ui.business_logo.BusinessLogoActivityV2"
+        android:theme="@style/BaseTheme"/>
 
     <activity
       android:name=".ui.testimonial.TestimonialContainerActivity"

@@ -14,6 +14,7 @@ import com.appservice.model.StatusKyc
 import com.appservice.ui.bgImage.BackgroundImageContainerActivity
 import com.appservice.ui.bgImage.setFragmentTypeNew
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
+import com.appservice.ui.business_logo.BusinessLogoActivityV2
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.setFragmentType
 import com.appservice.ui.catalog.startFragmentActivity
@@ -671,7 +672,7 @@ fun getSessionOrder(session: UserSessionManager?): Bundle {
 fun AppCompatActivity.startBusinessLogo(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(BUSINESS_LOGO_PAGE, CLICK, TO_BE_ADDED)
-    val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity"))
+    val webIntent = Intent(this, BusinessLogoActivityV2::class.java)
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {

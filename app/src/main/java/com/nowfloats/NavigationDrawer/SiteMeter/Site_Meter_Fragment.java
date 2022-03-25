@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.appservice.ui.business_logo.BusinessLogoActivityV2;
 import com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
@@ -442,7 +443,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
             case logo:
                 MixPanelController.track(EventKeysWL.LOGO, null);
                 if (Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl))) {
-                    Intent in = new Intent(activity, Business_Logo_Activity.class);
+                    Intent in = new Intent(activity, BusinessLogoActivityV2.class);
                     startActivity(in);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
