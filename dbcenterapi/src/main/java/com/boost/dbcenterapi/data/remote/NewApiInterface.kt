@@ -1,19 +1,16 @@
 package com.boost.dbcenterapi.data.remote
 
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
+import com.boost.dbcenterapi.data.api_model.GetFeatureDetails.FeatureDetailsV2Item
 import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsRequest
 import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsResponse
 import com.boost.dbcenterapi.data.api_model.couponRequest.CouponRequest
 import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponRequest
 import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponResponse
-import com.boost.dbcenterapi.data.api_model.helpModule.HelpModule
 import com.boost.dbcenterapi.data.api_model.getCouponResponse.GetCouponResponse
+import com.boost.dbcenterapi.data.api_model.helpModule.HelpModule
 import io.reactivex.Observable
-import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface NewApiInterface {
 
@@ -24,6 +21,13 @@ interface NewApiInterface {
     @Headers("Authorization: 597ee93f5d64370820a6127c", "Content-Type: application/json")
     @GET("https://developer.api.boostkit.dev/language/v1/featurevideos/get-data?website=61278bf6f2e78f0001811865")
     fun GetHelp(): Observable<HelpModule>
+
+    @Headers("Content-Type: application/json")
+    @GET("https://withfloats-feature-processor-api.azurewebsites.net/Features/v1/GetFeatureDetails")
+    fun GetFeatureDetails(
+        @Query("fpId") floatingPointId: String,
+        @Query("clientId") clientId: String
+    ): Observable<ArrayList<FeatureDetailsV2Item>>
 
     @Headers(
             "Authorization: Basic YXBpbW9kaWZpZXI6dkVFQXRudF9yJ0RWZzcofg==",
@@ -39,4 +43,5 @@ interface NewApiInterface {
     @Headers("Content-Type: application/json")
     @POST("https://riarecommendationatmarketplacecheckout.azurewebsites.net/getRecommendationAtCheckout")
     fun getRecommendedAddons(@Body recommendedAddonsRequest: RecommendedAddonsRequest): Observable<RecommendedAddonsResponse>
+
 }

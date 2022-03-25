@@ -3,7 +3,6 @@ package com.boost.dbcenterapi.upgradeDB.dao
 import androidx.room.*
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import io.reactivex.Single
-import kotlin.collections.ArrayList
 
 @Dao
 interface FeaturesDao {
@@ -29,6 +28,9 @@ interface FeaturesDao {
 
   @Query("SELECT * FROM Features WHERE feature_code=:featureCode")
   fun getFeaturesItemByFeatureCode(featureCode: String): Single<FeaturesModel>
+
+  @Query("SELECT * FROM Features WHERE feature_code=:featureCode AND is_premium = :premiumType")
+  fun getFeaturesItemByFeatureCode1(featureCode: String,premiumType: Boolean): Single<FeaturesModel>
 
   @Query("SELECT EXISTS(SELECT * FROM Features)")
   fun checkEmptyFeatureTable(): Single<Int>

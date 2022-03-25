@@ -34,6 +34,7 @@ import com.boost.payment.ui.popup.NetBankingPopUpFragement
 import com.boost.payment.ui.popup.StateListPopFragment
 import com.boost.payment.ui.popup.UPIPopUpFragement
 import com.boost.payment.ui.razorpay.RazorPayWebView
+import com.boost.payment.ui.webview.WebViewFragment
 import com.boost.payment.utils.Constants
 import com.boost.payment.utils.Constants.Companion.ADD_CARD_POPUP_FRAGMENT
 import com.boost.payment.utils.Constants.Companion.BUSINESS_DETAILS_FRAGMENT
@@ -47,6 +48,7 @@ import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
 import com.framework.webengageconstant.*
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -101,6 +103,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     private var lastUsedPaymentMethod: String? = null
     private var autoRenewState = false
     var months:Int = 0
+    val WebViewFragment = WebViewFragment()
 
 
     companion object {
@@ -398,7 +401,6 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         }
 
 
-//    add_external_email.setOnClickListener {
         generate_payment_link.setOnClickListener {
             if (paymentProceedFlag) {
                 WebEngageController.trackEvent(
@@ -406,6 +408,11 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                         ADDONS_MARKETPLACE_PAYMENT_LINK,
                         NO_EVENT_VALUE
                 )
+                final_payment_links.visibility=View.VISIBLE
+                generate_payment_link.visibility=View.GONE
+                payment_main_layout.post {
+                    payment_main_layout.fullScroll(View.FOCUS_DOWN)
+                }
                 /*externalEmailPopUpFragement.show(
                     (activity as PaymentActivity).supportFragmentManager,
                     EXTERNAL_EMAIL_POPUP_FRAGMENT
@@ -675,6 +682,14 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     fun loadData() {
         viewModel.loadpaymentMethods(razorpay)
 //        viewModel.getRazorPayToken(cartCheckoutData.getString("customerId"))
+
+        viewModel.GetPaymentLink((activity as? PaymentActivity)?.getAccessToken() ?: "",
+            (activity as PaymentActivity).fpid!!,
+            (activity as PaymentActivity).clientid,
+            cartCheckoutData.getString("transaction_id"))
+    }
+    fun getAccessToken(): String {
+        return context?.let { UserSessionManager(it).getAccessTokenAuth()?.barrierToken() } ?: ""
     }
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -687,6 +702,26 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             auto_renew_title.text = "Automatically renew every " +months.toString()+"month?"
 
         }
+
+        viewModel.updateLink().observe(viewLifecycleOwner,  Observer {
+//            generate_payment_link.setOnClickListener {
+//                final_payment_links.visibility=View.VISIBLE
+//                generate_payment_link.visibility=View.GONE
+//                payment_main_layout.post {
+//                    payment_main_layout.fullScroll(View.FOCUS_DOWN)
+//                }
+//            }
+            pay_link.text=it.Result
+            val link = it.Result
+            pay_link.setOnClickListener {
+                val payFragment = WebViewFragment
+                val args = Bundle()
+                args.putString("link", link)
+                payFragment.arguments = args
+                (activity as PaymentActivity).addFragment(payFragment, Constants.WEB_VIEW_FRAGMENT)
+            }
+
+        })
 
         viewModel.cardData().observe(this, Observer {
             Log.i("cardObserver >>>>>", it.toString())

@@ -8,7 +8,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.boost.payment.base_class.BaseViewModel
+import com.boost.dbcenterapi.data.api_model.GetPaymentLink.PaymentLink
 import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
 import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
 import com.boost.dbcenterapi.data.api_model.customerId.create.CreateCustomerIDResponse
@@ -19,11 +19,10 @@ import com.boost.dbcenterapi.data.api_model.gst.GSTApiResponse
 import com.boost.dbcenterapi.data.api_model.paymentprofile.GetLastPaymentDetails
 import com.boost.dbcenterapi.data.api_model.stateCode.GetStates
 import com.boost.dbcenterapi.data.remote.ApiInterface
-import com.boost.dbcenterapi.utils.Constants.Companion.RAZORPAY_KEY
-import com.boost.dbcenterapi.utils.Constants.Companion.RAZORPAY_SECREAT
 import com.boost.dbcenterapi.utils.Utils
+import com.boost.payment.BuildConfig
+import com.boost.payment.base_class.BaseViewModel
 import com.framework.analytics.SentryController
-import com.framework.utils.BuildConfigUtil
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.razorpay.BaseRazorpay
@@ -40,7 +39,6 @@ import retrofit2.HttpException
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
-import com.boost.payment.BuildConfig
 
 class PaymentViewModel(application: Application) : BaseViewModel(application) {
   private var _paymentMethods: MutableLiveData<JSONObject> = MutableLiveData()
@@ -79,6 +77,8 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
   var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
   var gstSwitchFlag: MutableLiveData<Boolean> = MutableLiveData()
   var closeBusinessPopupFlag: MutableLiveData<Boolean> = MutableLiveData()
+
+  private var paymentLink: MutableLiveData<PaymentLink> = MutableLiveData()
 
   //    fun getPaymentMethods(): JSONObject {
   fun getPaymentMethods(): LiveData<JSONObject> {
@@ -214,6 +214,10 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
 
   fun updateCheckoutKycClose(checkoutCloseValue: Boolean) {
     _updateCheckoutClose.postValue(checkoutCloseValue)
+  }
+
+  fun updateLink(): LiveData<PaymentLink> {
+    return paymentLink
   }
 
   fun writeStringAsFile(fileContents: String?, fileName: String?) {
@@ -525,6 +529,23 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
             updatesLoader.postValue(false)
           }
         )
+    )
+  }
+
+  fun GetPaymentLink(auth:String,fpid: String, clientId: String,orderNumber:String) {
+    updatesLoader.postValue(true)
+    compositeDisposable.add(
+      ApiService.GetPaymentLink(auth,fpid, clientId,orderNumber)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(
+          {
+            paymentLink.postValue(it)
+            updatesLoader.postValue(false)
+          }, {
+            updatesLoader.postValue(false)
+            updatesError.postValue(it.message)
+          })
     )
   }
 
