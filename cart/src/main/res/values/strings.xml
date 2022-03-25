@@ -32,6 +32,7 @@
     <string name="pack_price_three"> <strike> ₹120/month</strike></string>
     <string name="view_details">View details</string>
   <string name="enter_coupon_code">Enter coupon code</string>
+  <string name="action_required">Action required</string>
 
 
 </resources>

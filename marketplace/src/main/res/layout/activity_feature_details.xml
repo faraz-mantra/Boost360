@@ -634,10 +634,62 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/edge_cases_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_border_red_white_bg"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:padding="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    app:layout_constraintTop_toBottomOf="@id/header">
+
+                    <TextView
+                        android:id="@+id/edge_case_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Something went wrong!"
+                        android:textColor="@color/red"
+                        android:drawableStart="@drawable/ic_error_red"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:drawablePadding="@dimen/_5sdp"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/edge_case_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="There is an internal error inside Boost 360. We are working to resolve this issue."
+                        android:paddingStart="22dp"
+                        android:paddingEnd="5dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/edge_case_title"/>
+
+                    <TextView
+                        android:id="@+id/edge_case_hyperlink"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/action_required"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:textFontWeight="600"
+                        android:textColor="@color/orange"
+                        android:paddingStart="22dp"
+                        android:paddingEnd="5dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/edge_case_desc"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/benefit_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/header">
+                    app:layout_constraintTop_toBottomOf="@id/edge_cases_layout">
 
                     <TextView
                         android:id="@+id/benefit_title"
