@@ -1,8 +1,7 @@
 package com.boost.payment.ui.payment
 
 import android.annotation.SuppressLint
-import android.content.ActivityNotFoundException
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -62,6 +61,7 @@ import org.json.JSONObject
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         MoreBanksListener, UpiPayListener, EmailPopupListener, AddCardListener {
@@ -400,9 +400,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             }
         }
 
-
         generate_payment_link.setOnClickListener {
-            if (paymentProceedFlag) {
                 WebEngageController.trackEvent(
                         ADDONS_MARKETPLACE_PAYMENT_LINK_CLICK,
                         ADDONS_MARKETPLACE_PAYMENT_LINK,
@@ -413,25 +411,23 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 payment_main_layout.post {
                     payment_main_layout.fullScroll(View.FOCUS_DOWN)
                 }
-                /*externalEmailPopUpFragement.show(
-                    (activity as PaymentActivity).supportFragmentManager,
-                    EXTERNAL_EMAIL_POPUP_FRAGMENT
-                )*/
-//                val emailPopUpFragement = ExternalEmailPopUpFragement.newInstance(this)
-//                emailPopUpFragement.show(
-//                        (activity as PaymentActivity).supportFragmentManager,
-//                        EXTERNAL_EMAIL_POPUP_FRAGMENT
-//                )
-                payment_submit.visibility = View.VISIBLE
-            } else {
-                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
-//                payment_main_layout.smoothScrollTo(0, 0)
-//                val businessFragment = BusinessDetailsFragment.newInstance(this)
-//                businessFragment.show(
-//                    (activity as PaymentActivity).supportFragmentManager,
-//                    BUSINESS_DETAILS_FRAGMENT
-//                )
-            }
+                copy_link.setOnClickListener {
+                    val clipboard: ClipboardManager =(activity as PaymentActivity).getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    val clip = ClipData.newPlainText(pay_link?.text, pay_link?.text)
+                    clipboard.setPrimaryClip(clip)
+                    Toast.makeText(
+                        context,
+                        "Link copied!!",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+                share.setOnClickListener {
+                    val txtIntent = Intent(Intent.ACTION_SEND)
+                    txtIntent.type = "text/link"
+                    txtIntent.putExtra(Intent.EXTRA_TEXT, pay_link?.text.toString())
+                    startActivity(Intent.createChooser(txtIntent, "Share via"))
+                }
         }
 
         payment_view_details.setOnClickListener {
@@ -1636,6 +1632,5 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             cartCheckoutData.remove("upi_app_package_name")
         }
     }
-
 
 }
