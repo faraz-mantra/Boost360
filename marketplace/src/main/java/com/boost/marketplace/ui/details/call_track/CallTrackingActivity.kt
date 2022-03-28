@@ -1,17 +1,14 @@
 package com.boost.marketplace.ui.details.call_track
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import com.boost.marketplace.R
-import com.boost.marketplace.adapter.CustomDomainListAdapter
+import com.boost.marketplace.adapter.NumberListAdapter
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityCallTrackingBinding
-import com.boost.marketplace.databinding.ActivityCustomDomainBinding
 import com.boost.marketplace.ui.details.domain.*
 
 
 class CallTrackingActivity : AppBaseActivity<ActivityCallTrackingBinding, CallTrackViewModel>() {
-    lateinit var customDomainListAdapter: CustomDomainListAdapter
+    lateinit var numberListAdapter: NumberListAdapter
 
     override fun getLayout(): Int {
         return R.layout.activity_call_tracking
@@ -25,6 +22,7 @@ class CallTrackingActivity : AppBaseActivity<ActivityCallTrackingBinding, CallTr
     override fun getViewModelClass(): Class<CallTrackViewModel> {
         return CallTrackViewModel::class.java
     }
+
     override fun onCreateView() {
         super.onCreateView()
 

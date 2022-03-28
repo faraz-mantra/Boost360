@@ -1,4 +1,5 @@
 package com.boost.marketplace.ui.details.domain
+
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.CustomDomainListAdapter
 import com.boost.marketplace.base.AppBaseActivity
@@ -21,6 +22,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
     override fun getViewModelClass(): Class<CustomDomainViewModel> {
         return CustomDomainViewModel::class.java
     }
+
     override fun onCreateView() {
         super.onCreateView()
 
