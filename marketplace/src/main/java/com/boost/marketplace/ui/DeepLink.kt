@@ -1,17 +1,24 @@
 package com.boost.marketplace.ui
 
 enum class DeepLink(var screenType:String){
-    PRODUCTCATALOGUE("digital_channels"),
+
     BOOSTKEYBOARD("Keyboard"),
-    CUSTOMERSUPPORT("Testimonials"),
-    FEATURE_CODE_4("contact"),
-    FEATURE_CODE_5("analytics"),
-    FEATURE_CODE_6("profile"),
-    FEATURE_CODE_7("profile"),
-    FEATURE_CODE_8("call_tracker_add_on"),
-    FEATURE_CODE_9("all_custom_pages"),
-    FEATURE_CODE_10("festive_poster"),
-    FEATURE_CODE_11("newsubscriber");
+    TESTIMONIALS("Testimonials"),
+    facebookpage("facebookpage"),
+    addProduct("addProduct"),
+    keyboardSettings("keyboardSettings"),
+    CUSTOMPAGES("addCustomPage"),
+    enquiries("enquiries"),
+    subscribers("subscribers"),
+    new_subscribers("newsubscriber"),
+    IMAGEGALLERY("featuredimage"),
+    SOCIALSHARE("social"),
+    LIMITED_CONTENT("manage_content"),
+    RIASUPPORTTEAM("ria_digital_assistant"),
+    CONTACTDETAILS("contact_details"),
+    STAFFPROFILE("ic_staff_profile_d"),
+    CUSTOMERSUPPORT("premium_boost_support"),
+    visits("visits");
 
     companion object{
         fun getScreenType(featureKey:String?):String?= values().firstOrNull { featureKey == it.name }?.screenType
