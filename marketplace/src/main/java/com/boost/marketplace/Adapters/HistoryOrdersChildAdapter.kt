@@ -60,8 +60,8 @@ class HistoryOrdersChildAdapter(itemList: List<Result>?) :
 //        }
 
 
-        holder.title1.text = list.get(position).purchasedPackageDetails.WidgetPacks.get(position).Name
-        var default_validity_months= list.get(position).purchasedPackageDetails.WidgetPacks.get(position).ExpiryInMths.toInt()
+        holder.title1.text = list.get(position).NameOfWidget
+        var default_validity_months= list.get(position).totalMonthsValidity.toInt()
         val oneMonthFromNow = Calendar.getInstance()
         oneMonthFromNow.add(Calendar.MONTH, default_validity_months)
         val nowFormat = SimpleDateFormat("dd MMM yy")
@@ -69,7 +69,7 @@ class HistoryOrdersChildAdapter(itemList: List<Result>?) :
         val oneMonthFormat = SimpleDateFormat("dd MMM yy")
         oneMonthFormat.setTimeZone(oneMonthFromNow.getTimeZone())
         holder.validity.setText("(Valid till " + nowFormat.format(oneMonthFromNow.time) + ")")
-            list.get(position).purchasedPackageDetails.WidgetPacks.get(position).ExpiryInMths.toString()
+//            list.get(position).purchasedPackageDetails.WidgetPacks.get(position).ExpiryInMths.toString()
 
 
 //        CompositeDisposable().add(

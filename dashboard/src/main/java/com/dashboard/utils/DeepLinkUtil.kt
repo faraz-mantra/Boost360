@@ -119,7 +119,7 @@ const val tag_for_partners = ".nowfloats.com"
 const val VISITS_TABLE = 0
 const val VISITORS_TABLE = 1
 
-class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSessionManager,var baseFragment: Fragment) {
+class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSessionManager,var baseFragment: Fragment?) {
   private val TAG = "DeepLinkUtil"
   fun deepLinkPage(url: String, buyItemKey: String, isFromRia: Boolean) {
     Log.i(TAG, "deepLinkPage: " + url)
@@ -246,7 +246,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_analytics_website_visitors)) {
           baseActivity.startSiteViewAnalytic(session, "UNIQUE")
         } else if (url.contains(deeplink_background_images)) {
-          baseFragment.startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
+          baseFragment!!.startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
         } else if (url.contains(deeplink_favicon)) {
           baseActivity.startFeviconImage(session)
         } else if (url.contains(deeplink_appointment_summary)) {

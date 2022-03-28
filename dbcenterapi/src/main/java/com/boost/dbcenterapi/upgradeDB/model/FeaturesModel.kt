@@ -86,4 +86,10 @@ data class FeaturesModel(
     return RecyclerViewItemType.FEATURES_MODEL.ordinal
 
   }
+
+  var expiryDate: String? = null
+  var activatedDate: String? = null
+  var status :Int?=null
+
+
 }

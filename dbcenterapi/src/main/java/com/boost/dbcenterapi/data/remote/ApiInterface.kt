@@ -1,6 +1,7 @@
 package com.boost.dbcenterapi.data.remote
 
 import com.boost.dbcenterapi.data.api_model.GetFloatingPointWebWidgets.response.GetFloatingPointWebWidgetsResponse
+import com.boost.dbcenterapi.data.api_model.GetPaymentLink.PaymentLink
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
 import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
 import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
@@ -135,6 +136,15 @@ interface ApiInterface {
     @Path("floatingPointId") floatingPointId: String?,
     @Query("clientId") clientId: String?
   ):Observable<GetLastPaymentDetails>
+
+  @Headers("Content-Type: application/json")
+  @GET("https://api.withfloats.com/payment/v1/floatingpoint/paymentLink")
+  fun GetPaymentLink(
+    @Header("Authorization") auth: String,
+    @Query("fpId") floatingPointId: String,
+    @Query("clientId") clientId: String,
+    @Query("orderNumber") orderNumber:String
+  ):Observable<PaymentLink>
 
 
 
