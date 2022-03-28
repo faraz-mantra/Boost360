@@ -3079,15 +3079,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //                couponDiscountAmount = couponServiceModel!!.couponDiscountAmt!!
 
 
-                if (validCouponCode != null) {
-                    coupon_discount_title.visibility = View.VISIBLE
-                    coupon_discount_value.visibility = View.VISIBLE
+                if (couponServiceModel != null) {
+                    coupon_discount_layout.visibility = View.VISIBLE
                     coupon_discount_title.text =
                             "'" + couponServiceModel?.coupon_key + "'" + " coupon discount"
                     coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
                 } else {
-                    coupon_discount_title.visibility = View.GONE
-                    coupon_discount_value.visibility = View.GONE
+                    coupon_discount_layout.visibility = View.GONE
                 }
 
                 overalltotal -= couponDiscountAmount
