@@ -345,6 +345,8 @@ class FeatureDetailsActivity :
 //        }
     }
 
+
+
     @SuppressLint("FragmentLiveDataObserve")
     fun initMvvm() {
         viewModel.addonsResult().observe(this, Observer {

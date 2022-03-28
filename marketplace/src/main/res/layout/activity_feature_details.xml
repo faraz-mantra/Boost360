@@ -267,7 +267,7 @@
                                 android:drawablePadding="@dimen/_5sdp"
                                 android:fontFamily="@font/open_sans"
                                 android:text="Business Identity"
-                                android:textColor="#747474"
+                                android:textColor="#828282"
                                 android:textFontWeight="400"
                                 android:textSize="12sp"
                                 app:layout_constraintStart_toEndOf="@id/image1222"
