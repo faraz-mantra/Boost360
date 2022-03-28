@@ -19,7 +19,7 @@ import com.bumptech.glide.Glide
 
 
 class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
- itemList: List<FeaturesModel>?, var myAddonsListener: MyAddonsListener
+                         itemList: List<FeaturesModel>?, var myAddonsListener: MyAddonsListener
 ) : RecyclerView.Adapter<PaidAddonsAdapter.upgradeViewHolder>(), View.OnClickListener {
 
   private var list = ArrayList<FeaturesModel>()
@@ -48,6 +48,7 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
     val cryptocurrencyItem = list[position]
     holder.upgradeListItem(cryptocurrencyItem)
 
+
 //        holder.itemView.setOnClickListener{
 //            val details = DetailsFragment.newInstance()
 //            val args = Bundle()
@@ -65,7 +66,7 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
     holder.mainlayout.setOnClickListener {
       if (holder.detailsView.visibility==View.GONE) {
         TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
-          holder.detailsView.visibility= View.VISIBLE
+        holder.detailsView.visibility= View.VISIBLE
       } else {
         TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
         holder.detailsView.visibility= View.GONE
@@ -90,8 +91,11 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
         list.get(position).price,
         list.get(position).time_to_activation,
         list.get(position).primary_image)
+        item.expiryDate=list.get(position).expiryDate
+        item.activatedDate= list.get(position).activatedDate
+        item.status=  list.get(position).status
 
-     //   arrayListOf()
+      //   arrayListOf()
       myAddonsListener.onPaidAddonsClicked(item)
     }
 
@@ -104,25 +108,20 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
     notifyItemRangeInserted(initPosition, list.size)
   }
 
-
-//  override fun onClick(item: FeaturesModel) {
-//    myAddonsListener.onPaidAddonsClicked(item)
-//  }
-
   class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     var view = itemView.findViewById<View>(R.id.paid_single_dummy_view)!!
     private var upgradeTitle = itemView.findViewById<TextView>(R.id.paid_addons_name)!!
     private var activateLayout = itemView.findViewById<LinearLayout>(R.id.paid_addons_activate)!!
+    var validity2=itemView.findViewById<TextView>(R.id.validity2)
     private var image = itemView.findViewById<ImageView>(R.id.single_paidaddon_image)!!
-     var mainlayout=itemView.findViewById<ConstraintLayout>(R.id.main_layout)
-     var detailsView=itemView.findViewById<ConstraintLayout>(R.id.detailsView)
-
+    var mainlayout=itemView.findViewById<ConstraintLayout>(R.id.main_layout)
+    var detailsView=itemView.findViewById<ConstraintLayout>(R.id.detailsView)
     private var context: Context = itemView.context
-
 
     fun upgradeListItem(updateModel: FeaturesModel) {
       upgradeTitle.text = updateModel.name
+      validity2.text=updateModel.expiryDate
       Glide.with(context).load(updateModel.primary_image).into(image)
 
     }

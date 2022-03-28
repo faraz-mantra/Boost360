@@ -18,7 +18,7 @@ import com.bumptech.glide.Glide
 
 
 class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
-  itemList: List<FeaturesModel>?, var myAddonsListener: MyAddonsListener
+                         itemList: List<FeaturesModel>?, var myAddonsListener: MyAddonsListener
 ) : RecyclerView.Adapter<FreeAddonsAdapter.upgradeViewHolder>(), View.OnClickListener {
 
   private var list = ArrayList<FeaturesModel>()
@@ -78,13 +78,15 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
           list.get(position).price,
           list.get(position).time_to_activation,
           list.get(position).primary_image)
+          item.expiryDate=list.get(position).expiryDate
+          item.activatedDate= list.get(position).activatedDate
+          item.status=  list.get(position).status
 
-        //   arrayListOf()
         myAddonsListener.onFreeAddonsClicked(item)
       }
 
     }
-   // Glide.with(context).load(cryptocurrencyItem.primary_image).into()
+    // Glide.with(context).load(cryptocurrencyItem.primary_image).into()
 
 //    holder.itemView.setOnClickListener {
 //      val details = DetailsFragment.newInstance()
@@ -95,10 +97,6 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
 //    }
   }
 
-//  override fun onClick(v: View?) {
-//    myAddonsListener.onFreeAddonsClicked(v)
-//  }
-
   fun addupdates(upgradeModel: List<FeaturesModel>) {
     val initPosition = list.size
     list.clear()
@@ -108,8 +106,9 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
 
   class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-     var singleTitle = itemView.findViewById<TextView>(R.id.free_addons_name)!!
-     var image = itemView.findViewById<ImageView>(R.id.single_freeaddon_image)!!
+    var singleTitle = itemView.findViewById<TextView>(R.id.free_addons_name)!!
+    var validity2 = itemView.findViewById<TextView>(R.id.validity2)!!
+    var image = itemView.findViewById<ImageView>(R.id.single_freeaddon_image)!!
     var mainLayout=itemView.findViewById<ConstraintLayout>(R.id.main_layout)
     var detailsView=itemView.findViewById<ConstraintLayout>(R.id.detailsView)
 
@@ -118,6 +117,7 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
 
     fun upgradeListItem(updateModel: FeaturesModel) {
       singleTitle.text = updateModel.name
+      validity2.text=updateModel.expiryDate
       Glide.with(context).load(updateModel.primary_image).into(image)
 
     }

@@ -1,8 +1,7 @@
 package com.boost.payment.ui.payment
 
 import android.annotation.SuppressLint
-import android.content.ActivityNotFoundException
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -31,12 +30,15 @@ import com.boost.payment.base_class.BaseFragment
 import com.boost.payment.interfaces.*
 import com.boost.payment.ui.checkoutkyc.BusinessDetailsFragment
 import com.boost.payment.ui.confirmation.OrderConfirmationFragment
-import com.boost.payment.ui.popup.*
+import com.boost.payment.ui.popup.AddCardPopUpFragement
+import com.boost.payment.ui.popup.NetBankingPopUpFragement
+import com.boost.payment.ui.popup.StateListPopFragment
+import com.boost.payment.ui.popup.UPIPopUpFragement
 import com.boost.payment.ui.razorpay.RazorPayWebView
+import com.boost.payment.ui.webview.WebViewFragment
 import com.boost.payment.utils.Constants
 import com.boost.payment.utils.Constants.Companion.ADD_CARD_POPUP_FRAGMENT
 import com.boost.payment.utils.Constants.Companion.BUSINESS_DETAILS_FRAGMENT
-import com.boost.payment.utils.Constants.Companion.EXTERNAL_EMAIL_POPUP_FRAGMENT
 import com.boost.payment.utils.Constants.Companion.NETBANKING_POPUP_FRAGMENT
 import com.boost.payment.utils.Constants.Companion.RAZORPAY_WEBVIEW_POPUP_FRAGMENT
 import com.boost.payment.utils.Constants.Companion.UPI_POPUP_FRAGMENT
@@ -47,6 +49,7 @@ import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
 import com.framework.webengageconstant.*
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -60,6 +63,7 @@ import org.json.JSONObject
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         MoreBanksListener, UpiPayListener, EmailPopupListener, AddCardListener {
@@ -101,6 +105,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     private var lastUsedPaymentMethod: String? = null
     private var autoRenewState = false
     var months:Int = 0
+    val WebViewFragment = WebViewFragment()
 
 
     companion object {
@@ -397,34 +402,34 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             }
         }
 
-
-//    add_external_email.setOnClickListener {
         generate_payment_link.setOnClickListener {
-            if (paymentProceedFlag) {
                 WebEngageController.trackEvent(
                         ADDONS_MARKETPLACE_PAYMENT_LINK_CLICK,
                         ADDONS_MARKETPLACE_PAYMENT_LINK,
                         NO_EVENT_VALUE
                 )
-                /*externalEmailPopUpFragement.show(
-                    (activity as PaymentActivity).supportFragmentManager,
-                    EXTERNAL_EMAIL_POPUP_FRAGMENT
-                )*/
-                val emailPopUpFragement = ExternalEmailPopUpFragement.newInstance(this)
-                emailPopUpFragement.show(
-                        (activity as PaymentActivity).supportFragmentManager,
-                        EXTERNAL_EMAIL_POPUP_FRAGMENT
-                )
-                payment_submit.visibility = View.VISIBLE
-            } else {
-                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
-                payment_main_layout.smoothScrollTo(0, 0)
-                val businessFragment = BusinessDetailsFragment.newInstance(this)
-                businessFragment.show(
-                    (activity as PaymentActivity).supportFragmentManager,
-                    BUSINESS_DETAILS_FRAGMENT
-                )
-            }
+                final_payment_links.visibility=View.VISIBLE
+                generate_payment_link.visibility=View.GONE
+                payment_main_layout.post {
+                    payment_main_layout.fullScroll(View.FOCUS_DOWN)
+                }
+                copy_link.setOnClickListener {
+                    val clipboard: ClipboardManager =(activity as PaymentActivity).getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    val clip = ClipData.newPlainText(pay_link?.text, pay_link?.text)
+                    clipboard.setPrimaryClip(clip)
+                    Toast.makeText(
+                        context,
+                        "Link copied!!",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+                share.setOnClickListener {
+                    val txtIntent = Intent(Intent.ACTION_SEND)
+                    txtIntent.type = "text/link"
+                    txtIntent.putExtra(Intent.EXTRA_TEXT, pay_link?.text.toString())
+                    startActivity(Intent.createChooser(txtIntent, "Share via"))
+                }
         }
 
         payment_view_details.setOnClickListener {
@@ -717,6 +722,14 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     fun loadData() {
         viewModel.loadpaymentMethods(razorpay)
 //        viewModel.getRazorPayToken(cartCheckoutData.getString("customerId"))
+
+        viewModel.GetPaymentLink((activity as? PaymentActivity)?.getAccessToken() ?: "",
+            (activity as PaymentActivity).fpid!!,
+            (activity as PaymentActivity).clientid,
+            cartCheckoutData.getString("transaction_id"))
+    }
+    fun getAccessToken(): String {
+        return context?.let { UserSessionManager(it).getAccessTokenAuth()?.barrierToken() } ?: ""
     }
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -729,6 +742,26 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             auto_renew_title.text = "Automatically renew every " +months.toString()+"month?"
 
         }
+
+        viewModel.updateLink().observe(viewLifecycleOwner,  Observer {
+//            generate_payment_link.setOnClickListener {
+//                final_payment_links.visibility=View.VISIBLE
+//                generate_payment_link.visibility=View.GONE
+//                payment_main_layout.post {
+//                    payment_main_layout.fullScroll(View.FOCUS_DOWN)
+//                }
+//            }
+            pay_link.text=it.Result
+            val link = it.Result
+            pay_link.setOnClickListener {
+                val payFragment = WebViewFragment
+                val args = Bundle()
+                args.putString("link", link)
+                payFragment.arguments = args
+                (activity as PaymentActivity).addFragment(payFragment, Constants.WEB_VIEW_FRAGMENT)
+            }
+
+        })
 
         viewModel.cardData().observe(this, Observer {
             Log.i("cardObserver >>>>>", it.toString())
@@ -1643,6 +1676,5 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             cartCheckoutData.remove("upi_app_package_name")
         }
     }
-
 
 }

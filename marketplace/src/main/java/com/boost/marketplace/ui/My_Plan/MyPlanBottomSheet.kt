@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
 import com.boost.marketplace.databinding.BottomSheetMyplanBinding
+import com.boost.marketplace.ui.DeepLink.Companion.getScreenType
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.bumptech.glide.Glide
 import com.framework.base.BaseBottomSheetDialog
@@ -13,7 +14,7 @@ import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.util.ArrayList
+import es.dmoral.toasty.Toasty
 
 class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseViewModel>() {
 
@@ -23,6 +24,7 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseVi
     override fun getLayout(): Int {
         return R.layout.bottom_sheet_myplan
     }
+
 
     override fun getViewModelClass(): Class<BaseViewModel> {
         return BaseViewModel::class.java
@@ -34,7 +36,10 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseVi
             object : TypeToken<FeaturesModel>() {}.type
         )
         binding?.addonsTitle?.text = singleAddon.name
+        binding?.title?.text=singleAddon.status.toString()
         binding?.addonsDesc?.text = singleAddon.description_title
+        binding?.title3?.text=singleAddon.activatedDate
+        binding?.title4?.text=singleAddon.expiryDate
         Glide.with(baseActivity).load(singleAddon.primary_image).into(binding!!.addonsIcon)
         dialog.behavior.isDraggable = true
         setOnClickListener(
@@ -60,7 +65,23 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseVi
     }
 
     private fun Usefeature() {
-        Toast.makeText(context, "Clicked on Usefeature", Toast.LENGTH_SHORT).show()
+        val screenType= getScreenType(singleAddon.feature_code)
+        if (screenType.isNullOrEmpty().not()){
+       try {
+           val intent = Intent(requireActivity(), Class.forName("com.dashboard.controller.DeepLinkTransActivity"))
+           intent.putExtra("SCREEN_TYPE",screenType)
+           startActivity(intent)
+       } catch(e:Exception){
+           e.printStackTrace()
+       }
+        }else{
+            Toasty.error(
+                requireContext(),
+                "Coming Soon...",
+                Toast.LENGTH_SHORT,
+                true
+            ).show();
+        }
     }
 
     private fun featuredetails() {
@@ -77,7 +98,6 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseVi
             ArrayList(UserSessionManager(requireActivity()).getStoreWidgets())
         )
         intent.putExtra("email", "ria@nowfloats.com")
-
         intent.putExtra("mobileNo", "9160004303")
         intent.putExtra("itemId", singleAddon.boost_widget_key)
         startActivity(intent)

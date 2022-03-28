@@ -58,7 +58,7 @@ class HistoryOrdersParentAdapter (itemList: List<Result>?, val listener: History
      //   }
       //  holder.itemLists.setText(itemLists)
 
-        val dataString = list.get(position).purchasedPackageDetails.CreatedOn
+        val dataString = list.get(position).CreatedOn
         val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
         val dateFormat = SimpleDateFormat("dd-MMM-yyyy ")
         holder.itemDate.setText(dateFormat.format(date))
@@ -73,10 +73,6 @@ class HistoryOrdersParentAdapter (itemList: List<Result>?, val listener: History
             e.printStackTrace()
         }*/
 
-
-//        holder.amount.setText(
-//            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(list.get(position).paidAmount)
-//        )
         holder.itemView.setOnClickListener {
             listener.viewHistoryItem(list.get(position))
         }
@@ -88,9 +84,7 @@ class HistoryOrdersParentAdapter (itemList: List<Result>?, val listener: History
         holder.recycler.setAdapter(sectionLayout)
         holder.recycler.setLayoutManager(layoutManager1)
 
-
     }
-
 
     fun addupdates(purchaseResult: List<Result>) {
         val initPosition = list.size
@@ -101,18 +95,9 @@ class HistoryOrdersParentAdapter (itemList: List<Result>?, val listener: History
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-//        var orderId = itemView.findViewById<TextView>(R.id.item_orderId)!!
-//        var amount = itemView.findViewById<TextView>(R.id.history_item_amount)!!
-//        var itemLists = itemView.findViewById<TextView>(R.id.item_lists)!!
-//        var itemCount = itemView.findViewById<TextView>(R.id.item_count)!!
         var itemDate = itemView.findViewById<TextView>(R.id.titleDay)!!
         var recycler=itemView.findViewById<RecyclerView>(R.id.order_child_history_recycler)
-
         var context: Context = itemView.context
-//
-//
-//        fun upgradeListItem(updateModel: UpdatesModel) {
-//
-//        }
+
     }
 }
