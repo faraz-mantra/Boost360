@@ -72,7 +72,7 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:drawablePadding="5dp"
-      android:fontFamily="@font/open_sans_semibold"
+      android:fontFamily="@font/semi_bold"
       android:text="Congratulations! Coupon was applied successfully."
       android:textColor="#FFB900"
       android:textSize="@dimen/txt_12sp" />

@@ -26,7 +26,7 @@
       <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:lineSpacingExtra="0sp"
         android:text="Payment failed!"
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="4dp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:gravity="center"
         android:lineSpacingExtra="0sp"
         android:text="Your payment was not successful due to some\n problem with your bank"
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:lineSpacingExtra="0sp"
         android:text="@string/contact_support_for_help"
@@ -79,7 +79,7 @@
             <androidx.appcompat.widget.AppCompatTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:fontFamily="@font/open_sans"
+              android:fontFamily="@font/regular"
               android:text="Order ID"
               android:textColor="#828282"
               android:textSize="@dimen/txt_12sp" />
@@ -93,7 +93,7 @@
               <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_semibold"
+                android:fontFamily="@font/semi_bold"
                 android:text="GK7C4FM"
                 android:textColor="#333333"
                 android:textSize="@dimen/txt_12sp" />
@@ -125,7 +125,7 @@
               <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_semibold"
+                android:fontFamily="@font/semi_bold"
                 android:text="3446758347484"
                 android:textColor="#333333"
                 android:textSize="12sp" />
@@ -157,7 +157,7 @@
               <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_semibold"
+                android:fontFamily="@font/semi_bold"
                 android:text="10 (Ten)"
                 android:textColor="#333333"
                 android:textSize="@dimen/txt_12sp" />
@@ -183,7 +183,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="center"
-              android:fontFamily="@font/open_sans"
+              android:fontFamily="@font/regular"
               android:lineSpacingExtra="1sp"
               android:text="Total amount"
               android:textColor="#828282"
@@ -198,7 +198,7 @@
               <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_bold"
+                android:fontFamily="@font/bold"
                 android:text="₹1,661.00"
                 android:textColor="#4A4A4A"
                 android:textSize="16sp" />
@@ -223,7 +223,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/ic_try_again_bg"
-        android:fontFamily="@font/open_sans_bold"
+        android:fontFamily="@font/bold"
         android:gravity="center"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
@@ -238,7 +238,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
         android:background="@drawable/ic_view_active_features_bg"
-        android:fontFamily="@font/open_sans_bold"
+        android:fontFamily="@font/bold"
         android:gravity="center"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"

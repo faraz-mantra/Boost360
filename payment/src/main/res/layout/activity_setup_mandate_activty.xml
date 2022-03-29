@@ -51,7 +51,7 @@
         <androidx.appcompat.widget.AppCompatTextView
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans_semibold"
+          android:fontFamily="@font/semi_bold"
           android:text="Complete Payment"
           android:textAllCaps="false"
           android:textColor="@color/white"
@@ -81,7 +81,7 @@
       <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_bold"
+        android:fontFamily="@font/bold"
         android:lineSpacingExtra="1sp"
         android:text="Setup Bank Mandate (eNACH)"
         android:textColor="#4A4A4A"
@@ -94,7 +94,7 @@
         android:text="@string/setup_mandate_txt"
         android:textColor="#2A2A2A"
         android:lineSpacingExtra="4sp"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:textSize="@dimen/txt_12sp"/>
 
       <androidx.appcompat.widget.LinearLayoutCompat
@@ -159,7 +159,7 @@
         android:paddingBottom="10dp"
         android:textColor="@color/white"
         android:textSize="@dimen/txt_14sp"
-        android:fontFamily="@font/open_sans_bold"
+        android:fontFamily="@font/bold"
         android:gravity="center"/>
 
       <androidx.appcompat.widget.AppCompatTextView

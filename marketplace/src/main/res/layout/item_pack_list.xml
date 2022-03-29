@@ -58,7 +58,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
-                            android:fontFamily="@font/open_sans"
+                            android:fontFamily="@font/regular"
                             android:gravity="center"
                             android:lineSpacingExtra="1.3sp"
                             android:lines="2"

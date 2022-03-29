@@ -10,9 +10,7 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
 
-class AppointmentTypeBottomSheetDialog :
-  BaseBottomSheetDialog<BottomSheetAppointmentTypeBinding, BaseViewModel>(),
-  RecyclerItemClickListener {
+class AppointmentTypeBottomSheetDialog : BaseBottomSheetDialog<BottomSheetAppointmentTypeBinding, BaseViewModel>(), RecyclerItemClickListener {
 
   private var list = ArrayList<AppointMentTypeModel>()
   private var adapter: AppBaseRecyclerViewAdapter<AppointMentTypeModel>? = null

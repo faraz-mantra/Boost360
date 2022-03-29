@@ -74,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_25sdp"
         android:ellipsize="end"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:lineSpacingExtra="1.3sp"
         android:maxLines="3"
         android:textColor="#4A4A4A"

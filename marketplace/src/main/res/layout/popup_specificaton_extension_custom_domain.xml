@@ -34,7 +34,7 @@
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_bold"
+            android:fontFamily="@font/bold"
             android:lineHeight="26dp"
             android:text="Why only .com, .in, and .net?"
             android:textColor="#333333"
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/regular"
             android:lineHeight="16.34dp"
             android:text="The domain names are provided by “Reseller Club” and due to XYZ reason only .com, .in, and .net domains are available. More copy needs to be added here by the content team.
 

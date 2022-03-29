@@ -26,7 +26,7 @@
       <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:lineSpacingExtra="0sp"
         android:text="Congratulations!"
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="4dp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:gravity="center"
         android:lineSpacingExtra="0sp"
         android:text="Your payment was successful."
@@ -67,7 +67,7 @@
             <androidx.appcompat.widget.AppCompatTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:fontFamily="@font/open_sans"
+              android:fontFamily="@font/regular"
               android:text="Order ID"
               android:textColor="#828282"
               android:textSize="@dimen/txt_12sp" />
@@ -81,7 +81,7 @@
               <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_semibold"
+                android:fontFamily="@font/semi_bold"
                 android:text="GK7C4FM"
                 android:textColor="#333333"
                 android:textSize="@dimen/txt_12sp" />
@@ -113,7 +113,7 @@
               <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_semibold"
+                android:fontFamily="@font/semi_bold"
                 android:text="3446758347484"
                 android:textColor="#333333"
                 android:textSize="12sp" />
@@ -145,7 +145,7 @@
               <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_semibold"
+                android:fontFamily="@font/semi_bold"
                 android:text="10 (Ten)"
                 android:textColor="#333333"
                 android:textSize="@dimen/txt_12sp" />
@@ -177,7 +177,7 @@
               <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_semibold"
+                android:fontFamily="@font/semi_bold"
                 android:text="3 months"
                 android:textColor="#333333"
                 android:textSize="@dimen/txt_12sp" />
@@ -209,7 +209,7 @@
               <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_semibold"
+                android:fontFamily="@font/semi_bold"
                 android:text="17 Nov ‘21 - 16 Feb ‘22"
                 android:textColor="#333333"
                 android:textSize="@dimen/txt_12sp" />
@@ -237,7 +237,7 @@
               android:layout_height="wrap_content"
               android:drawableStart="@drawable/ic_invoice_paper"
               android:drawablePadding="5dp"
-              android:fontFamily="@font/open_sans_bold"
+              android:fontFamily="@font/bold"
               android:lineSpacingExtra="1sp"
               android:text="Download Invoice"
               android:textColor="#FFB900"
@@ -252,7 +252,7 @@
               <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_bold"
+                android:fontFamily="@font/bold"
                 android:text="₹1,661.00"
                 android:textColor="#4A4A4A"
                 android:textSize="16sp" />
@@ -277,7 +277,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/ic_view_active_features_bg"
-        android:fontFamily="@font/open_sans_bold"
+        android:fontFamily="@font/bold"
         android:gravity="center"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
@@ -291,7 +291,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:gravity="center"
         android:lineSpacingExtra="2sp"
         android:text="@string/invoice_txt"

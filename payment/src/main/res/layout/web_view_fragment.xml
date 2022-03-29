@@ -49,7 +49,7 @@
         android:id="@+id/browser_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:maxLines="1"
         android:text="Browser"
         android:textColor="@color/white"

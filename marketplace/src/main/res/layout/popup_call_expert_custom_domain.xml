@@ -39,7 +39,7 @@
             android:textSize="@dimen/txt_16sp"
             android:textFontWeight="700"
             android:lineHeight="26dp"
-            android:fontFamily="@font/open_sans_bold"
+            android:fontFamily="@font/bold"
             app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/regular"
             android:lineHeight="16.34dp"
             android:text="Please feel free speak to our expert to get the help you need."
             android:textColor="#4A4A4A"
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:background="@drawable/cta_button_click_effect"
-            android:fontFamily="@font/open_sans_bold"
+            android:fontFamily="@font/bold"
             android:gravity="center"
             android:paddingStart="@dimen/_30sdp"
             android:paddingTop="@dimen/_10sdp"
