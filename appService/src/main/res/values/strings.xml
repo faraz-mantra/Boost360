@@ -992,7 +992,7 @@
   <string name="rcm_text"> means the liability to pay tax is on the recipient of goods or services instead of the supplier of such goods or services in respect of notified categories of supply. If you are providing any service or supplying any goods which are covered in the notification issued by the government to be covered in RCM, then you need not charge GST on your invoice instead your customer will have to pay GST on those services/goods and claim input tax credit)</string>
   <string name="rcm_bold_text">RCM (Reverse charge mechanism) </string>
   <string name="pending">Pending</string>
-  <string name="rcm_applies_to_my_sales">RCM applies to my sales</string>
+  <string name="rcm_applies_to_my_sales">RCM applies to my sales.</string>
   <string name="what_s_this">(what’s this?)</string>
   <string name="out_of_stock">Out of stock</string>
   <string name="stock">Stock</string>
@@ -1151,4 +1151,10 @@
   <string name="minutes">Minutes</string>
   <string name="note_slot_duration_shown_to_a_customer_book_a_general_appointment"><b>Note:</b> This will be slot duration shown to a customer when he is trying to book a general appointment on your website.</string>
   <string name="please_appointment_business_hours_create_slots__booking_appointment"><b>Please note:</b> General appointment takes business hours as base to create slots for while booking appointment.</string>
+  <string name="what_s_this_n">(<u>what’s this?</u>)</string>
+  <string name="pan_number_individual_business">PAN number (Individual/business)*</string>
+  <string name="enter_pan_card_number">Enter PAN card number</string>
+  <string name="name_as_per_pan_card">Name as per PAN card*</string>
+  <string name="enter_name_as_per_pan_card">Enter name as per PAN card</string>
+  <string name="gstin_information">GSTIN Information*</string>
 </resources>
