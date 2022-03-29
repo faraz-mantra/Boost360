@@ -13,7 +13,7 @@ class DeepLinkTransActivity : AppCompatActivity() {
         val screenType=intent.extras?.getString("SCREEN_TYPE")
         val session=UserSessionManager(this)
         if (screenType != null) {
-            DeepLinkUtil(this,session).deepLinkPage(screenType,"",false)
+            DeepLinkUtil(this,session,null).deepLinkPage(screenType,"",false)
         }
         finish()
 

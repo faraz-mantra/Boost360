@@ -86,7 +86,7 @@ public class NotificationFragment extends Fragment implements DeepLinkInterface 
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
         alertInterface = Constants.restAdapter.create(NotificationInterface.class);
-        deepLinkUtil = new DeepLinkUtil((AppCompatActivity) activity, new com.framework.pref.UserSessionManager(activity));
+        deepLinkUtil = new DeepLinkUtil((AppCompatActivity) activity, new com.framework.pref.UserSessionManager(activity),new Fragment());
     }
 
     @Override

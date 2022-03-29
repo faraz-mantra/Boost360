@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data></data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/civ_cancel"
+      android:layout_width="@dimen/size_38"
+      android:layout_height="@dimen/size_38"
+      android:layout_alignParentEnd="true"
+      android:layout_gravity="center"
+      android:layout_marginTop="@dimen/size_6"
+      android:layout_marginEnd="@dimen/size_6"
+      android:layout_marginBottom="16dp"
+      android:clickable="true"
+      android:focusable="true"
+      android:includeFontPadding="false"
+      app:srcCompat="@drawable/ic_close_circle" />
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/bottoms_sheet_top20dp_white"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      android:padding="@dimen/size_20">
+
+      <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="@dimen/size_70"
+        android:layout_height="@dimen/size_70"
+        android:layout_gravity="center_horizontal"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/green_success" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/txt_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/size_16"
+        android:fontFamily="@font/regular"
+        android:text="@string/upload_successful"
+        android:textAllCaps="false"
+        android:textColor="@color/black_4a4a4a"
+        app:fontFamily="@font/semi_bold"
+        app:textType="HEADING_5" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/txt_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_16"
+        android:layout_marginTop="@dimen/size_8"
+        android:fontFamily="@font/regular"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/the_image_has_been_saved_in_the_background_image_gallery"
+        android:textAlignment="center"
+        android:textColor="@color/black_4a4a4a"
+        android:textSize="12sp" />
+
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/visit_website"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_42"
+        android:layout_marginHorizontal="@dimen/size_8"
+        android:layout_marginTop="@dimen/size_16"
+        android:background="@drawable/bg_button_proceed"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:stateListAnimator="@null"
+        android:text="@string/view_on_website"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:textType="HEADING_6" />
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_20"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@id/btn_cancel"
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/size_36"
+          android:layout_gravity="center_horizontal"
+          android:gravity="center"
+          android:text="@string/share_"
+          android:textColor="@color/warm_grey"
+          app:textType="HEADING_6" />
+
+        <com.framework.views.customViews.CustomCardView
+          android:id="@+id/btn_copy_message"
+          android:layout_width="@dimen/size_30"
+          android:layout_height="@dimen/size_30"
+          android:layout_marginStart="@dimen/size_10"
+          app:cardBackgroundColor="@color/white_one"
+          app:cardCornerRadius="@dimen/size_15"
+          app:cardElevation="0dp">
+
+          <com.framework.views.customViews.CustomImageView
+            android:layout_width="@dimen/size_16"
+            android:layout_height="@dimen/size_16"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/ic_copy_service" />
+        </com.framework.views.customViews.CustomCardView>
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/btn_fb"
+          android:layout_width="@dimen/size_36"
+          android:layout_height="@dimen/size_36"
+          android:layout_marginStart="@dimen/size_4"
+          android:padding="@dimen/size_3"
+          app:srcCompat="@drawable/ic_facebook_service" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/btn_twitter"
+          android:layout_width="@dimen/size_36"
+          android:layout_height="@dimen/size_36"
+          android:layout_marginStart="@dimen/size_4"
+          android:padding="@dimen/size_3"
+          app:srcCompat="@drawable/ic_twitter_service" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/btn_whatsapp"
+          android:layout_width="@dimen/size_36"
+          android:layout_height="@dimen/size_36"
+          android:layout_marginStart="@dimen/size_4"
+          android:padding="@dimen/size_3"
+          app:srcCompat="@drawable/ic_whats_app_service" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/btn_linkedin"
+          android:layout_width="@dimen/size_36"
+          android:layout_height="@dimen/size_36"
+          android:layout_marginStart="@dimen/size_4"
+          android:padding="@dimen/size_3"
+          app:srcCompat="@drawable/ic_linkedin_service" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/btn_mail"
+          android:layout_width="@dimen/size_36"
+          android:layout_height="@dimen/size_36"
+          android:layout_marginStart="@dimen/size_4"
+          android:padding="@dimen/size_3"
+          app:srcCompat="@drawable/ic_email_service" />
+
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/cardView"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:focusable="true">
+
+  <View
+      android:id="@+id/bottom_line"
+      android:layout_width="@dimen/_50sdp"
+      android:layout_height="0dp"
+      app:layout_constraintStart_toStartOf="@id/position"
+      app:layout_constraintEnd_toEndOf="@id/position"
+      app:layout_constraintTop_toTopOf="@id/position"
+      app:layout_constraintBottom_toBottomOf="parent"
+      android:background="@drawable/dotted_line_vertical"/>
+
+
+  <View
+      android:id="@+id/top_line"
+      android:layout_width="@dimen/_50sdp"
+      android:layout_height="0dp"
+      app:layout_constraintStart_toStartOf="@id/position"
+      app:layout_constraintEnd_toEndOf="@id/position"
+      app:layout_constraintTop_toTopOf="parent"
+      android:padding="0dp"
+      app:layout_constraintBottom_toBottomOf="@id/position"
+      android:background="@drawable/dotted_line_vertical"/>
+
+  <TextView
+      android:id="@+id/position"
+      android:layout_width="wrap_content"
+      android:layout_height="0dp"
+      app:layout_constraintDimensionRatio="1:1"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      android:background="@drawable/rounded_point_grey"
+      android:gravity="center"
+      android:fontFamily="@font/open_sans_bold"
+      android:textSize="14sp"
+      android:layout_marginStart="@dimen/_10sdp"
+      android:layout_marginTop="@dimen/_10sdp"
+      android:textFontWeight="700"
+      android:maxLines="1"
+      android:padding="2dp"
+      android:textColor="@color/common_text_color"
+      android:text="1"/>
+
+  <TextView
+      android:id="@+id/title"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      app:layout_constraintStart_toEndOf="@id/position"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      android:textColor="@color/black"
+      android:layout_marginTop="@dimen/_10sdp"
+      android:layout_marginStart="@dimen/_10sdp"
+      android:textSize="14sp"
+      android:textFontWeight="600"
+      android:text="Choose available domain"/>
+
+
+  <TextView
+      android:id="@+id/desc"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      app:layout_constraintStart_toStartOf="@id/title"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/title"
+      android:layout_marginTop="8dp"
+      android:text="Buy numbers from around the world Buy numbers from around the world."
+      />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

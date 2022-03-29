@@ -181,7 +181,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_mp_zeroeth_shopping_cart" />
+                android:src="@drawable/ic_cart_empty" />
 
             <TextView
                 android:id="@+id/empty_cart_title1"
@@ -786,7 +786,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
                             android:visibility="visible"
                             tools:itemCount="1"
                             tools:listitem="@layout/item_coupon_code" />
@@ -797,9 +796,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
                             android:layout_marginEnd="15dp"
-                            android:layout_marginBottom="15dp"
                             android:drawableEnd="@drawable/ic_cart_more_coupons"
                             android:gravity="center"
+                            android:padding="@dimen/_10sdp"
                             android:drawablePadding="@dimen/pad_5dp"
                             android:text="Show more"
                             android:textColor="#FFB900"
@@ -811,10 +810,10 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
                             android:layout_marginEnd="15dp"
-                            android:layout_marginBottom="15dp"
                             android:drawableEnd="@drawable/ic_top_arrow"
                             android:gravity="center"
                             android:drawablePadding="@dimen/pad_5dp"
+                            android:padding="@dimen/_10sdp"
                             android:text="Show less"
                             android:textColor="#FFB900"
                             android:textSize="@dimen/txt_12sp"
@@ -1022,6 +1021,58 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/cart_billing_details_edit_layout">
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Email address*"
+                                android:textColor="#828282"
+                                android:textSize="@dimen/txt_12sp" />
+
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end"
+                                android:gravity="end">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/email_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Not Provided"
+                                    android:textColor="#333333"
+                                    android:lineHeight="16dp"
+                                    android:textFontWeight="600"
+                                    android:fontFamily="@font/open_sans_semibold"
+                                    android:textSize="@dimen/txt_12sp"
+                                    android:visibility="visible"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/cart_email_missing"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Not Provided"
+                                    android:textColor="#EB5757"
+                                    android:lineHeight="16dp"
+                                    android:textFontWeight="600"
+                                    android:fontFamily="@font/open_sans_semibold"
+                                    android:textSize="@dimen/txt_12sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
@@ -1047,7 +1098,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Not Provided"
-                                    android:textColor="#BBBBBB"
+                                    android:textColor="#333333"
                                     android:textSize="@dimen/txt_12sp"
                                     android:visibility="visible"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -1069,6 +1120,8 @@
 
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
+
+
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
@@ -1323,12 +1376,13 @@
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
                         <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/long_validity_discount_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:orientation="horizontal"
                             android:visibility="gone"
-                            tools:visibility="gone">
+                            tools:visibility="visible">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
@@ -1367,6 +1421,7 @@
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
                         <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/coupon_discount_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
