@@ -83,7 +83,7 @@
                             android:fontFamily="@font/bold"
                             android:gravity="center"
                             android:text="60/month"
-                            android:textColor="#FFB900"
+                            android:textColor="@color/colorAccent"
                             android:textFontWeight="600"
                             android:textSize="@dimen/txt_9sp"
 

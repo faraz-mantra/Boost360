@@ -76,7 +76,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:layout_marginHorizontal="@dimen/size_10"
-                android:background="@drawable/orange_button_click_effect"
+                android:background="@drawable/cta_button_click_effect"
                 android:enabled="true"
                 android:fontFamily="@font/open_sans"
                 android:textSize="16sp"

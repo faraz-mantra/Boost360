@@ -125,7 +125,7 @@
                       android:paddingStart="0dp"
                       android:paddingEnd="@dimen/_5sdp"
                       android:text="₹2,559/month"
-                      android:textColor="#FFB900"
+                      android:textColor="@color/colorAccent"
                       android:textFontWeight="600"
                       android:textSize="@dimen/txt_12sp"
                       android:textStyle="bold" />

@@ -20,9 +20,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
-import com.boost.cart.adapter.SimplePageTransformer
 import com.boost.cart.adapter.SimplePageTransformerSmall
-import com.boost.cart.adapter.ZoomOutPageTransformer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.LearnMoreLink
@@ -597,7 +595,7 @@ class FeatureDetailsActivity :
                 add_item_to_cart.visibility = View.VISIBLE
                 add_item_to_cart.background = ContextCompat.getDrawable(
                     applicationContext,
-                    R.drawable.orange_button_click_effect
+                    R.drawable.cta_button_click_effect
                 )
                 add_item_to_cart.setTextColor(Color.WHITE)
                 val discount = 100 - addonDetails!!.discount_percent

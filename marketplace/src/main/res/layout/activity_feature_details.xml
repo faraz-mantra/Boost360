@@ -18,7 +18,7 @@
             android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:background="#4A4A4A"
+            android:background="@color/colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -26,8 +26,8 @@
                 android:id="@+id/collapsing_toolbar_details"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:contentScrim="@color/transparent_black_grey"
-                app:expandedTitleTextAppearance="@color/transparent_black_grey"
+                app:contentScrim="@color/colorTransparentPrimary"
+                app:expandedTitleTextAppearance="@color/colorTransparentPrimary"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:title="Facebook Lead Ads"
                 app:titleEnabled="true">
@@ -40,7 +40,7 @@
                         android:id="@+id/details_image_bg"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:background="#4A4A4A"
+                        android:background="@color/colorPrimary"
                         android:scaleType="centerCrop"
                         android:src="@drawable/feature_details_bg"
                         app:layout_constraintDimensionRatio="2:1.2"
@@ -95,7 +95,7 @@
                             android:paddingStart="@dimen/_50sdp"
                             android:paddingEnd="@dimen/_50sdp"
                             android:gravity="center_vertical"
-                            android:background="@color/transparent_black_grey"
+                            android:background="@color/colorTransparentPrimary"
                             android:text="@string/facebook_lead_ads_upto_75_leads"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_11sdp"
@@ -121,7 +121,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:background="@drawable/upgrade_nav_icon_background_dark"
+                                android:background="@drawable/mp_nav_icon_background"
                                 android:gravity="center">
 
                                 <ImageView
@@ -162,7 +162,7 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/upgrade_nav_icon_background_dark"
+                                android:background="@drawable/mp_nav_icon_background"
                                 android:src="@drawable/arrow_white" />
                         </LinearLayout>
 
@@ -346,7 +346,7 @@
                                 android:fontFamily="@font/open_sans_bold"
                                 android:paddingStart="10dp"
                                 android:text="Learn more"
-                                android:textColor="#FFB900"
+                                android:textColor="@color/colorAccent"
                                 android:textSize="12dp"
                                 app:layout_constraintBottom_toBottomOf="@id/title_bottom3"
                                 app:layout_constraintEnd_toEndOf="@id/title_bottom3" />
@@ -361,7 +361,7 @@
                                 android:padding="5dp"
                                 android:paddingStart="10dp"
                                 android:text="Show less"
-                                android:textColor="#FFB900"
+                                android:textColor="@color/colorAccent"
                                 android:textSize="12dp"
                                 android:visibility="gone"
                                 app:layout_constraintEnd_toEndOf="@id/title_bottom3"
@@ -661,7 +661,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:dotsColor="#ffb900"
+                        app:dotsColor="@color/dot_grey"
                         app:dotsCornerRadius="8dp"
                         app:dotsSize="6dp"
                         app:dotsSpacing="4dp"
@@ -670,7 +670,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/benefits_viewpager"
                         app:progressMode="false"
-                        app:selectedDotColor="@color/color_primary" />
+                        app:selectedDotColor="@color/colorAccent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -905,7 +905,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:dotsColor="#ffb900"
+                        app:dotsColor="@color/dot_grey"
                         app:dotsCornerRadius="8dp"
                         app:dotsSize="6dp"
                         app:dotsSpacing="4dp"
@@ -914,7 +914,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/viewpager1"
                         app:progressMode="false"
-                        app:selectedDotColor="@color/color_primary" />
+                        app:selectedDotColor="@color/colorAccent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -1009,7 +1009,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:background="@drawable/orange_button_click_effect"
+                android:background="@drawable/cta_button_click_effect"
                 android:fontFamily="@font/open_sans_semibold"
                 android:gravity="center"
                 android:paddingStart="@dimen/_30sdp"

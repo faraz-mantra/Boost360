@@ -78,7 +78,7 @@ Consider using keywords that may help with SEO
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_marginTop="24dp"
-            android:background="@drawable/btn_bg_yellow_border"
+            android:background="@drawable/btn_bg_accent_border"
 
             >
             <TextView
@@ -100,7 +100,7 @@ Consider using keywords that may help with SEO
                 android:fontFamily="@font/open_sans_semibold"
                 android:gravity="center"
                 android:text="@string/call_an_expert"
-                android:textColor="#FFB900"
+                android:textColor="@color/colorAccent"
                 android:textFontWeight="700"
                 android:textSize="@dimen/txt_14sp"
                 android:lineHeight="20dp"
