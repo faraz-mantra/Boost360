@@ -10,7 +10,7 @@
         android:background="#1d000000"
         android:clickable="true"
         android:focusable="true"
-        android:orientation="vertical">
+        >
 
         <ImageView
             android:id="@+id/back_btn"
@@ -20,8 +20,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/_10sdp"
             android:src="@drawable/ic_close_circle_gray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/upi_popup_container_layout"

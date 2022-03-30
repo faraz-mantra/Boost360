@@ -40,7 +40,7 @@
     android:id="@+id/preview_current_position"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fontFamily="@font/open_sans_semibold"
+    android:fontFamily="@font/semi_bold"
     android:gravity="center"
     android:text="1/1"
     android:textColor="@color/white"

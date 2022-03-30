@@ -39,7 +39,7 @@
             android:textSize="@dimen/txt_16sp"
             android:textFontWeight="700"
             android:lineHeight="26dp"
-            android:fontFamily="@font/open_sans_bold"
+            android:fontFamily="@font/bold"
             app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/regular"
             android:lineHeight="22dp"
             android:text="(the tone of the copy should be addressing to the user directly). Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.\n\n
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry."
@@ -71,7 +71,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_marginTop="24dp"
-            android:background="@drawable/btn_bg_yellow_border"
+            android:background="@drawable/btn_bg_accent_border"
 
             >
 
@@ -79,7 +79,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
                 android:id="@+id/tv_call_expert"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_bold"
+                android:fontFamily="@font/bold"
                 android:gravity="center"
                 android:text="Go to Zoho Dashboard"
                 android:textColor="#FFB900"

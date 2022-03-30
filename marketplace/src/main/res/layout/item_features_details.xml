@@ -72,7 +72,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:text="View Pack"
-            android:textColor="#FFB900"
+            android:textColor="@color/colorAccent"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@id/view_packs_arrow"
             app:layout_constraintBottom_toBottomOf="parent" />
@@ -127,7 +127,7 @@
             android:textSize="14sp"
             android:layout_marginStart="@dimen/_10sdp"
             android:textFontWeight="700"
-            android:fontFamily="@font/open_sans_bold"
+            android:fontFamily="@font/bold"
             app:layout_constraintStart_toEndOf="@id/package_img"
             app:layout_constraintTop_toBottomOf="@id/mrpPrice" />
 

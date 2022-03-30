@@ -4,6 +4,7 @@
     <color name="colorPrimary">#4A4A4A</color>
     <color name="colorPrimaryDark">#0F000000</color>
     <color name="colorAccent">#ffb900</color>
+    <color name="colorTransparentPrimary">#FF4A4A4A</color>
 
 
     <color name="primary">#FFFFFF</color>
@@ -357,5 +358,7 @@
 
     <color name="colorAccentPositive">@color/colorAccent</color>
     <color name="colorAccentNegative">@color/black_4a4a4a</color>
+
+    <color name="offer_border">#7ED321</color>
 
 </resources>

@@ -45,6 +45,13 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    sourceSets {
+        jioonline {
+            res {
+                srcDirs 'src/jioonline/res'
+            }
+        }
+    }
 }
 
 dependencies {
