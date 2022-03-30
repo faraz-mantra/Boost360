@@ -134,7 +134,7 @@
         <!--    <TextView-->
         <!--      android:layout_width="wrap_content"-->
         <!--      android:layout_height="wrap_content"-->
-        <!--      android:fontFamily="@font/open_sans"-->
+        <!--      android:fontFamily="@font/regular"-->
         <!--      android:gravity="center"-->
         <!--      android:text="There's nothing in your bag, why don't \n you add something."-->
         <!--      android:textColor="#9b9b9b"-->
@@ -215,7 +215,7 @@
             <!--        android:clickable="true"-->
             <!--        android:elevation="@dimen/_2sdp"-->
             <!--        android:focusable="true"-->
-            <!--        android:fontFamily="@font/open_sans_bold"-->
+            <!--        android:fontFamily="@font/bold"-->
             <!--        android:gravity="center"-->
             <!--        android:paddingStart="@dimen/_20sdp"-->
             <!--        android:paddingTop="@dimen/_10sdp"-->
@@ -237,7 +237,7 @@
             <!--        android:background="@drawable/share_helper_click_effect"-->
             <!--        android:clickable="true"-->
             <!--        android:focusable="true"-->
-            <!--        android:fontFamily="@font/open_sans"-->
+            <!--        android:fontFamily="@font/regular"-->
             <!--        android:gravity="center"-->
             <!--        android:paddingStart="@dimen/_50sdp"-->
             <!--        android:paddingTop="@dimen/_10sdp"-->
@@ -1048,7 +1048,7 @@
                                     android:textColor="#333333"
                                     android:lineHeight="16dp"
                                     android:textFontWeight="600"
-                                    android:fontFamily="@font/open_sans_semibold"
+                                    android:fontFamily="@font/semi_bold"
                                     android:textSize="@dimen/txt_12sp"
                                     android:visibility="visible"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -1063,7 +1063,7 @@
                                     android:textColor="#EB5757"
                                     android:lineHeight="16dp"
                                     android:textFontWeight="600"
-                                    android:fontFamily="@font/open_sans_semibold"
+                                    android:fontFamily="@font/semi_bold"
                                     android:textSize="@dimen/txt_12sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"

@@ -421,7 +421,7 @@
                             <!--                                        android:background="@drawable/rounded_border_red"-->
                             <!--                                        android:drawableStart="@drawable/ic_error_red"-->
                             <!--                                        android:drawablePadding="@dimen/_10sdp"-->
-                            <!--                                        android:fontFamily="@font/open_sans"-->
+                            <!--                                        android:fontFamily="@font/regular"-->
                             <!--                                        android:paddingStart="@dimen/_10sdp"-->
                             <!--                                        android:paddingTop="@dimen/_8sdp"-->
                             <!--                                        android:paddingEnd="@dimen/_10sdp"-->
@@ -447,7 +447,7 @@
                             <!--                                            android:layout_marginTop="2dp"-->
                             <!--                                            android:drawableStart="@drawable/ic_error_red"-->
                             <!--                                            android:drawablePadding="@dimen/_10sdp"-->
-                            <!--                                            android:fontFamily="@font/open_sans"-->
+                            <!--                                            android:fontFamily="@font/regular"-->
                             <!--                                            android:paddingStart="@dimen/_10sdp"-->
                             <!--                                            android:paddingTop="@dimen/_8sdp"-->
                             <!--                                            android:paddingEnd="@dimen/_10sdp"-->
@@ -465,7 +465,7 @@
                             <!--                                            android:layout_marginTop="2dp"-->
                             <!--                                            android:background="#F8F8F8"-->
                             <!--                                            android:drawablePadding="@dimen/_10sdp"-->
-                            <!--                                            android:fontFamily="@font/open_sans"-->
+                            <!--                                            android:fontFamily="@font/regular"-->
                             <!--                                            android:padding="@dimen/_10sdp"-->
                             <!--                                            android:text="You need to take action to activate this add-on.Go to in-app page."-->
                             <!--                                            android:textFontWeight="600"-->
@@ -488,7 +488,7 @@
                             <!--                                            android:layout_marginTop="2dp"-->
                             <!--                                            android:drawableStart="@drawable/ic_sync_blue"-->
                             <!--                                            android:drawablePadding="@dimen/_10sdp"-->
-                            <!--                                            android:fontFamily="@font/open_sans"-->
+                            <!--                                            android:fontFamily="@font/regular"-->
                             <!--                                            android:paddingStart="@dimen/_10sdp"-->
                             <!--                                            android:paddingTop="@dimen/_8sdp"-->
                             <!--                                            android:paddingEnd="@dimen/_10sdp"-->
@@ -506,7 +506,7 @@
                             <!--                                            android:layout_marginTop="2dp"-->
                             <!--                                            android:background="#F8F8F8"-->
                             <!--                                            android:drawablePadding="@dimen/_10sdp"-->
-                            <!--                                            android:fontFamily="@font/open_sans"-->
+                            <!--                                            android:fontFamily="@font/regular"-->
                             <!--                                            android:padding="@dimen/_10sdp"-->
                             <!--                                            android:text="We are working on syncing your information with this add-on. It may take some time to get updated.Contact support for help"-->
                             <!--                                            android:textFontWeight="600"-->
