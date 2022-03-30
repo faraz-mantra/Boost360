@@ -1,9 +1,11 @@
 package com.framework.models
 
+import androidx.annotation.Keep
 import com.google.firebase.firestore.IgnoreExtraProperties
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+@Keep
 data class UpdateDraftBody(
     @SerializedName("clientId")
     var clientId: String?=null,

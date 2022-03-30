@@ -22,7 +22,7 @@ import java.io.File
 
 fun isPromoWidgetActive(): Boolean{
     val session = UserSessionManager(BaseApplication.instance)
-    return session.getStoreWidgets()?.contains(Constants.PROMO_WIDGET_KEY)==true
+    return /*session.getStoreWidgets()?.contains(Constants.PROMO_WIDGET_KEY)==true*/ true
 }
 
 fun posterWhatsappShareClicked(childItem:PosterModel,activity: BaseActivity<*,*>){

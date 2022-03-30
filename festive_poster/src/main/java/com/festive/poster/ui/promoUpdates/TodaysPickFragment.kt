@@ -27,16 +27,18 @@ import com.framework.extensions.visible
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.utils.convertJsonToObj
 import com.framework.utils.convertListObjToString
 import com.framework.webengageconstant.Promotional_Update_View_More_Click
+import com.google.gson.Gson
 
 class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePosterViewModel>(),RecyclerItemClickListener {
 
     private var adapter: AppBaseRecyclerViewAdapter<PosterPackModel>?=null
     private var sharedViewModel: FestivePosterSharedViewModel? = null
-    private var callbacks:TodaysPickFragment.Callbacks?=null
     private var session: UserSessionManager? = null
-    var dataList: ArrayList<PosterPackModel>? = null
+    var uiList: ArrayList<PosterPackModel>? = null
+    var originalList: ArrayList<PosterPackModel>? = null
     private  val TAG = "TodaysPickFragment"
     override fun getLayout(): Int {
         return R.layout.fragment_todays_pick
@@ -46,10 +48,9 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
         return FestivePosterViewModel::class.java
     }
     companion object {
-        fun newInstance(bundle: Bundle = Bundle(),callbacks: Callbacks): TodaysPickFragment {
+        fun newInstance(bundle: Bundle = Bundle()): TodaysPickFragment {
             val fragment = TodaysPickFragment()
             fragment.arguments = bundle
-            fragment.callbacks = callbacks
             return fragment
         }
 
@@ -98,9 +99,9 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
         when(v){
             binding?.cardBrowseAllTemplate->{
                 WebEngageController.trackEvent(Promotional_Update_View_More_Click)
-                val dataList = sharedViewModel?.browseAllPosterPackList
-                if (dataList!=null){
-                    addFragment(R.id.container,BrowseAllFragment.newInstance(dataList,0),
+
+                if (originalList!=null){
+                    addFragment(R.id.container,BrowseAllFragment.newInstance(originalList!!,0),
                         true,true)
                 }
 
@@ -164,7 +165,9 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
     private fun fetchTemplates(tagArray: ArrayList<String>, response: GetTemplateViewConfigResponse) {
         viewModel?.getTemplates(session?.fPID, session?.fpTag, tagArray)
             ?.observeOnce(viewLifecycleOwner) {
-                dataList = ArrayList()
+                uiList = ArrayList()
+                originalList = ArrayList()
+
                 val templates_response = it as? GetTemplatesResponse
                 templates_response?.let {
                     response.Result.todayPick.tags.forEach { pack_tag ->
@@ -187,8 +190,8 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                         }else{
                             filterdList.addAll(templateList)
                         }
-                        if (templateList.isNotEmpty()){
-                            dataList?.add(
+
+                            uiList?.add(
                                 PosterPackModel(
                                     pack_tag,
                                     filterdList,
@@ -196,16 +199,20 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                                     list_layout = RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()
                                 )
                             )
-                        }
 
+                            originalList?.add(
+                                PosterPackModel(
+                                    pack_tag,
+                                    templateList,
+                                    isPurchased = pack_tag.isPurchased,
+                                    list_layout = RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()
+                                )
+                            )
 
                     }
 
 
-                    // getPriceOfPosterPacks()
-                    callbacks?.onDataLoaded(dataList!!)
-                    // rearrangeList()
-                    adapter = AppBaseRecyclerViewAdapter(baseActivity, dataList!!, this)
+                    adapter = AppBaseRecyclerViewAdapter(baseActivity, uiList!!, this)
                     binding?.rvTemplates?.adapter = adapter
                     binding?.rvTemplates?.layoutManager = LinearLayoutManager(requireActivity())
                     stopShimmer()
@@ -259,7 +266,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                 parentItem as PosterPackModel
 
                 addFragment(R.id.container,
-                    BrowseAllFragment.newInstance(dataList!!,parentPosition),
+                    BrowseAllFragment.newInstance(originalList!!,parentPosition),
                     true,true)
 
             }
@@ -271,7 +278,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
     }
 
     private fun callFavApi(posterModel: PosterModel,position: Int) {
-        viewModel?.favPoster(session?.fPID,session?.fpTag,posterModel.id)?.observe(viewLifecycleOwner){
+        viewModel?.makeTemplateFav(session?.fPID,session?.fpTag,posterModel.id)?.observe(viewLifecycleOwner){
             if (it.isSuccess()){
                 posterModel.details?.Favourite= posterModel.details?.Favourite?.not() == true
                 adapter?.notifyItemChanged(position)

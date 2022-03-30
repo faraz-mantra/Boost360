@@ -8,6 +8,7 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.framework.base.BaseActivity
+import com.squareup.picasso.Picasso
 
 class TodaysPickTemplateListViewHolder(binding: ListItemTodaysPickTemplateBinding):
     AppBaseRecyclerViewHolder<ListItemTodaysPickTemplateBinding>(binding) {
@@ -16,8 +17,10 @@ class TodaysPickTemplateListViewHolder(binding: ListItemTodaysPickTemplateBindin
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as PosterPackModel
         binding.tvCatTitle.text = model.tagsModel.name
-        binding.ivCategoryIcon.setImageResource(R.drawable.ic_dummy_poster_cat_icon)
-        binding.tvCatDesc.text = "Post about offers or friday sale upto 50% discount  on selected products"
+//        Picasso.get().load(model.tagsModel.icon).into(binding.ivCategoryIcon)
+        binding.tvCatDesc.text = model.tagsModel.description
+        //binding.ivCategoryIcon.setImageResource(R.drawable.ic_dummy_poster_cat_icon)
+        //binding.tvCatDesc.text = "Post about offers or friday sale upto 50% discount  on selected products"
         model.posterList?.let {
             val adapter = AppBaseRecyclerViewAdapter(binding.root.context as BaseActivity<*, *>, it,object :
                 RecyclerItemClickListener {

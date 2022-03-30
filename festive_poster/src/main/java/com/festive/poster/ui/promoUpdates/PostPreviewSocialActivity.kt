@@ -664,7 +664,9 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     }
 
     fun showSuccessSheet(){
-        viewModel.updateDraft(UpdateDraftBody(clientId,"",session?.fpTag,""))
+        viewModel.updateDraft(UpdateDraftBody(clientId,"",session?.fpTag,"")).observe(this){
+
+        }
         posterProgressSheet?.dismiss()
         if (PreferencesUtils.instance.getData(
                 com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE,

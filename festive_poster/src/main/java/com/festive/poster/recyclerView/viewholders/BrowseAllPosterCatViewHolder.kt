@@ -21,13 +21,16 @@ import com.framework.BaseApplication
 import com.framework.base.BaseActivity
 import com.framework.views.itemdecoration.LineItemDecoration
 import com.google.android.material.tabs.TabLayoutMediator
+import com.squareup.picasso.Picasso
 
 class BrowseAllPosterCatViewHolder(binding: ListItemBrowseAllCatBinding) :
   AppBaseRecyclerViewHolder<ListItemBrowseAllCatBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     val model = item as PosterPackModel
-    if (model.isSelected){
+//      Picasso.get().load(model.tagsModel.icon).into(binding.ivIcon)
+
+      if (model.isSelected){
          getColor(R.color.color4ACDFF)?.let {
         binding.borderCard.strokeColor=it
         }

@@ -46,6 +46,7 @@ import com.framework.pref.Key_Preferences.PREF_NAME_TWITTER
 import com.framework.utils.*
 import com.google.firebase.firestore.ListenerRegistration
 import com.onboarding.nowfloats.bottomsheet.util.runOnUi
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -126,6 +127,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
       val bitMapOption: BitmapFactory.Options = BitmapFactory.Options()
       bitMapOption.inJustDecodeBounds = true
+      bitMapOption.inScaled = false
       BitmapFactory.decodeFile(imgFile.path, bitMapOption)
       val imageWidth: Int = bitMapOption.outWidth
       val imageHeight: Int = bitMapOption.outHeight
@@ -236,7 +238,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       getString(R.string.add_image_optional),
       "Add image"
     )
-    lisReg = FirestoreManager.readDraft {
+    FirestoreManager.readDraft {
       if (activity != null && isAdded) {
 
         binding!!.etUpdate.setText(highlightHashTag(it?.content, R.color.black_4a4a4a))
@@ -246,16 +248,19 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
         lifecycleScope.launch {
           withContext(Dispatchers.IO) {
             if (it?.imageUri.isNullOrEmpty().not()) {
-              val imageurl = URL(it!!.imageUri)
-              val bitmap = BitmapFactory.decodeStream(imageurl.openConnection().getInputStream())
+              Log.i(TAG, "initUI: ${it?.imageUri}")
+              val bitmap = Picasso.get().load(it?.imageUri).get()
               val imgFile = File(
                 requireActivity().getExternalFilesDir(null)?.path + File.separator
                         + Constants.UPDATE_PIC_FILE_NAME
               )
               bitmap.saveAsImageToAppFolder(imgFile.path)
+
               runOnUi {
                 loadImage(imgFile.path)
               }
+            }else{
+              loadImage(null)
             }
             runOnUi {
               toggleContinue()

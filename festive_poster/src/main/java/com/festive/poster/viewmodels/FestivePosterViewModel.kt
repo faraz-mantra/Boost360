@@ -32,7 +32,7 @@ class FestivePosterViewModel: BaseViewModel() {
         return NowFloatsRepository.getFavTemplates(floatingPointId,floatingPointTag,featureKey).toLiveData()
     }
 
-    fun makeTemplateFav(floatingPointId: String?,floatingPointTag: String?,templateId:String): LiveData<BaseResponse> {
+    fun makeTemplateFav(floatingPointId: String?,floatingPointTag: String?,templateId:String?): LiveData<BaseResponse> {
         return NowFloatsRepository.makeTempFav(floatingPointId,floatingPointTag,templateId).toLiveData()
     }
 
@@ -95,8 +95,5 @@ class FestivePosterViewModel: BaseViewModel() {
         return NowFloatsRepository.updatePurchaseStatus(floatingPointId,fpTag,posterTag,templateIds).toLiveData()
     }
 
-    fun favPoster(floatingPointId: String?,posterId:String?,templateId: String?): LiveData<BaseResponse> {
-        return NowFloatsRepository.makeTempFav(floatingPointId,posterId,templateId).toLiveData()
-    }
 
 }
