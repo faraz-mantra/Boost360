@@ -45,7 +45,6 @@
                 android:gravity="bottom"
                 android:imeOptions="actionNext"
                 android:inputType="textCapCharacters"
-                android:maxLength="15"
                 android:textAllCaps="true"
                 android:textColor="#4A4A4A"
                 android:textColorHint="#BBBBBB"

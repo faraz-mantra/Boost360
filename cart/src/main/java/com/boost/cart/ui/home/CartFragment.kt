@@ -225,7 +225,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             window.setStatusBarColor(getResources().getColor(R.color.common_text_color))
         }
 
-
         cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, ArrayList(), requireActivity().application)
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
         cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
@@ -552,7 +551,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             } else if (et_email.text.toString().isEmpty()) {
                 et_email.setBackgroundResource(R.drawable.et_validity_error)
                 Toasty.error(requireContext(), "Email is Empty", Toast.LENGTH_SHORT).show()
-
+                cart_billing_details_edit_layout.visibility = View.VISIBLE
+                billing_details.visibility = View.VISIBLE
+                edit.visibility = View.GONE
+                billing_details.visibility = View.GONE
+                prefs.storeCartOrderInfo(null)
             } else {
                 months_validity.setBackgroundResource(R.drawable.et_validity)
                 if (prefs.getCartOrderInfo() != null) {
@@ -944,6 +947,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //                months_validity.text = default_validity_months.toString() + " months"
 
                 prefs.storeCartOrderInfo(null)
+                prefs.storeAutoRenewSubscriptionID(null)
 //                totalCalculation()
                 totalCalculationAfterCoupon()
                 Log.v("cart_amount_value1", " " + total)
@@ -996,6 +1000,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 }
 
                 prefs.storeCartOrderInfo(null)
+                prefs.storeAutoRenewSubscriptionID(null)
 //                totalCalculation()
                 totalCalculationAfterCoupon()
                 Log.v("cart_amount_value1", " " + total)
@@ -1046,6 +1051,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     totalValidityDays = 30 * default_validity_months
                     prefs.storeMonthsValidity(totalValidityDays)
                     prefs.storeCartOrderInfo(null)
+                    prefs.storeAutoRenewSubscriptionID(null)
                     feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
 //                    totalCalculation()
                     totalCalculationAfterCoupon()
@@ -1091,6 +1097,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     totalValidityDays = 30 * default_validity_months
                     prefs.storeMonthsValidity(totalValidityDays)
                     prefs.storeCartOrderInfo(null)
+                    prefs.storeAutoRenewSubscriptionID(null)
                     feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
 //                    totalCalculation()
                     totalCalculationAfterCoupon()
@@ -1141,6 +1148,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         totalValidityDays = 30 * default_validity_months
                         prefs.storeMonthsValidity(totalValidityDays)
                         prefs.storeCartOrderInfo(null)
+                        prefs.storeAutoRenewSubscriptionID(null)
                         totalCalculationAfterCoupon()
                         if (couponCode.isNotEmpty())
                             viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as CartActivity).fpid!!), couponCode)
@@ -1151,6 +1159,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         totalValidityDays = 30 * default_validity_months
                         prefs.storeMonthsValidity(totalValidityDays)
                         prefs.storeCartOrderInfo(null)
+                        prefs.storeAutoRenewSubscriptionID(null)
                         totalCalculationAfterCoupon()
                         if (couponCode.isNotEmpty())
                             viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as CartActivity).fpid!!), couponCode)
@@ -1373,6 +1382,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 if (createCustomerInfoRequest!!.BusinessDetails != null) {
 //          business_contact_number.setText(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber)
 //          business_email_address.setText(createCustomerInfoRequest!!.BusinessDetails!!.Email)
+                }
+                if(!createCustomerInfoRequest!!.BusinessDetails.Email.isNullOrEmpty()){
+                    et_email.setText(createCustomerInfoRequest!!.BusinessDetails.Email)
+                    email_value.setText(createCustomerInfoRequest!!.BusinessDetails.Email)
+                    cart_email_missing.visibility = View.GONE
                 }
                 if (createCustomerInfoRequest!!.AddressDetails != null) {
                     cart_business_city_name.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
@@ -2449,6 +2463,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 cartList = it as ArrayList<CartModel>
                 empty_cart.visibility = View.GONE
                 cart_main_layout.visibility = View.VISIBLE
+                item_count.visibility = View.VISIBLE
+                title.setGravity(Gravity.BOTTOM)
+                item_count.text = cartList.size.toString()+" items"
                 val features = arrayListOf<CartModel>()
                 val bundles = arrayListOf<CartModel>()
                 for (items in it) {
@@ -2586,12 +2603,15 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 months_validity_edit_dsc.visibility = View.GONE
 //                months_validity.text = "- -"
                 months_validity.setText("- -")
+                item_count.visibility = View.GONE
+                title.setGravity(Gravity.CENTER_VERTICAL)
 
                 //clear coupon
                 validCouponCode = null
 
                 //remove saved orderdetails from prefs
                 prefs.storeCartOrderInfo(null)
+                prefs.storeAutoRenewSubscriptionID(null)
                 prefs.storeApplyedCouponDetails(null)
                 prefs.storeCartValidityMonths(null)
 
@@ -2798,6 +2818,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             if (it != null) {
                 //clear stored cartOrderInfo
                 prefs.storeCartOrderInfo(null)
+                prefs.storeAutoRenewSubscriptionID(null)
 
                 //save coupon Details
                 prefs.storeApplyedCouponDetails(it)
@@ -2823,6 +2844,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 if (it != null) {
                     //clear stored cartOrderInfo
                     prefs.storeCartOrderInfo(null)
+                    prefs.storeAutoRenewSubscriptionID(null)
 
                     //save coupon Details
                     //         prefs.storeApplyedCouponDetails(it)
@@ -3122,6 +3144,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         couponDiwaliRedundant.remove(itemID)
         //remove saved orderdetails from prefs
         prefs.storeCartOrderInfo(null)
+        prefs.storeAutoRenewSubscriptionID(null)
         prefs.storeCartValidityMonths(null)
         //remove item from firebase
         CartFirestoreManager.removeDocument(itemID)
@@ -3169,6 +3192,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //                    totalCalculation()
                     totalCalculationAfterCoupon()
                     prefs.storeCartOrderInfo(null)
+                    prefs.storeAutoRenewSubscriptionID(null)
                     if (cartList.isEmpty()) {
                         empty_cart.visibility = View.VISIBLE
                         cart_main_layout.visibility = View.GONE

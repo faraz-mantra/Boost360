@@ -3,9 +3,14 @@ package com.boost.payment.ui.payment
 import android.annotation.SuppressLint
 import android.content.*
 import android.content.pm.PackageManager
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StyleSpan
+import android.text.style.UnderlineSpan
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.util.Log
@@ -20,6 +25,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
+import com.boost.dbcenterapi.data.api_model.autorenew.OrderAutoRenewRequest
 import com.boost.dbcenterapi.data.api_model.customerId.get.Result
 import com.boost.dbcenterapi.data.api_model.datamodule.SingleNetBankData
 import com.boost.payment.PaymentActivity
@@ -106,6 +112,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     private var autoRenewState = false
     var months:Int = 0
     val WebViewFragment = WebViewFragment()
+//    var subscriptionID = ""
 
 
     companion object {
@@ -199,7 +206,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     private fun updateAutoRenewState() {
         if (autoRenewState) {
             //for auto renew sent subscription_id
-            cartCheckoutData.put("subscription_id", requireArguments().getString("subscription_id"))
+//            cartCheckoutData.put("subscription_id", subscriptionID)
+            cartCheckoutData.put("subscription_id", prefs.getAutoRenewSubscriptionID())
 //      cartCheckoutData.put("subscription_id", "sub_Io6LDbGj1FT515")
             if (cartCheckoutData.has("order_id")) cartCheckoutData.remove("order_id")
         } else {
@@ -468,6 +476,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
         auto_renew_switch.setOnClickListener {
             if (autoRenewState) {
+                autoRenewState = false
                 WebEngageController.trackEvent(
                         MARKETPLACE_AUTO_RENEWAL_OFF,
                         PAYMENT_SCREEN,
@@ -493,14 +502,24 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 val oneMonthFormat = SimpleDateFormat("dd MMM yy")
                 oneMonthFormat.setTimeZone(oneMonthFromNow.getTimeZone())
 
-
-                auto_renew_description.setText(
-                        "You are paying ₹" + totalAmount + " only for " +
-                                if (prefs.getValidityMonths()!!.toInt() > 1) prefs.getValidityMonths() + " Months"
-                                else prefs.getValidityMonths() + " Month"
-                                        + ". Your subscription will end on " +
-                                        nowFormat.format(oneMonthFromNow.time)
+                val spannableText = SpannableString("You are paying ₹" + totalAmount + " only for " +
+                        if (prefs.getValidityMonths()!!.toInt() > 1) prefs.getValidityMonths() + " Months"
+                        else prefs.getValidityMonths() + " Month"+ ". Your subscription will end on " +
+                                nowFormat.format(oneMonthFromNow.time))
+                spannableText.setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    15,
+                    15+totalAmount.toString().length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
+                spannableText.setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    spannableText.length-nowFormat.format(oneMonthFromNow.time).length,
+                    spannableText.length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+
+                auto_renew_description.setText(spannableText)
                 upi_payment_title.text = "UPI"
                 netbanking_title.text = "Net Banking"
                 saved_cards_layout.visibility = View.VISIBLE
@@ -515,11 +534,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 payment_view_dummy2.visibility = VISIBLE
                 show_more_bank.visibility = VISIBLE
 
-
-
-
-                autoRenewState = false
+                updateAutoRenewState()
             } else {
+                autoRenewState = true
                 WebEngageController.trackEvent(
                         MARKETPLACE_AUTO_RENEWAL_ON,
                         PAYMENT_SCREEN,
@@ -539,14 +556,40 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 val oneMonthFormat = SimpleDateFormat("dd MMM yy")
                 oneMonthFormat.setTimeZone(oneMonthFromNow.getTimeZone())
 
+                if(prefs.getAutoRenewSubscriptionID().isNullOrEmpty()) {
+                    viewModel.markOrderForAutoRenewal(
+                        (activity as? PaymentActivity)?.getAccessToken() ?: "",
+                        OrderAutoRenewRequest(
+                            true,
+                            (activity as PaymentActivity).clientid,
+                            (activity as PaymentActivity).fpid!!,
+                            requireArguments().getString("transaction_id")!!
+                        )
+                    )
+                }else{
+                    updateAutoRenewState()
+                }
 
-                auto_renew_description.setText(
-                        "Your account will be automatically charged ₹" + totalAmount + " every " +
-                                if (prefs.getValidityMonths()!!.toInt() > 1) prefs.getValidityMonths() + " Months"
-                                else prefs.getValidityMonths() + " Month"
-                                        + ". Your next billing date is " +
-                                        nowFormat.format(oneMonthFromNow.time)
+
+                val spannableText = SpannableString("Your account will be automatically charged ₹" + totalAmount + " every " +
+                        if (prefs.getValidityMonths()!!.toInt() > 1) prefs.getValidityMonths() + " Months"
+                        else prefs.getValidityMonths() + " Month"
+                                + ". Your next billing date is " +
+                                nowFormat.format(oneMonthFromNow.time))
+                spannableText.setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    43,
+                    43+totalAmount.toString().length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
+                spannableText.setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    spannableText.length-nowFormat.format(oneMonthFromNow.time).length,
+                    spannableText.length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                auto_renew_description.setText(spannableText)
+
                 auto_renew_extra_offers.setTextColor(resources.getColor(R.color.green))
                 auto_renew_extra_offers.setCompoundDrawablesWithIntrinsicBounds(
                         R.drawable.ic_checked,
@@ -567,11 +610,35 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 upi_view_dummy.visibility = View.GONE
                 netbanking_top_banks_layout.visibility = GONE
                 payment_view_dummy2.visibility = GONE
-                autoRenewState = true
+
             }
-            updateAutoRenewState()
         }
         btn_auto_renew_upi.setOnClickListener {
+            if (paymentProceedFlag) {
+                WebEngageController.trackEvent(
+                    ADDONS_MARKETPLACE_UPI_CLICK,
+                    ADDONS_MARKETPLACE_UPI,
+                    NO_EVENT_VALUE
+                )
+                /* upiPopUpFragement.show(
+                     (activity as PaymentActivity).supportFragmentManager,
+                     UPI_POPUP_FRAGMENT
+                 )*/
+                val upiFragment = UPIPopUpFragement.newInstance(this)
+                upiFragment.show(
+                    (activity as PaymentActivity).supportFragmentManager,
+                    UPI_POPUP_FRAGMENT
+                )
+                payment_submit.visibility = View.VISIBLE
+            } else {
+                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+                payment_main_layout.smoothScrollTo(0, 0)
+                val businessFragment = BusinessDetailsFragment.newInstance(this)
+                businessFragment.show(
+                    (activity as PaymentActivity).supportFragmentManager,
+                    BUSINESS_DETAILS_FRAGMENT
+                )
+            }
             WebEngageController.trackEvent(
                     MARKETPLACE_UPI_AUTO_RENEWAL_CLICK,
                     PAYMENT_SCREEN,
@@ -726,7 +793,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         viewModel.GetPaymentLink((activity as? PaymentActivity)?.getAccessToken() ?: "",
             (activity as PaymentActivity).fpid!!,
             (activity as PaymentActivity).clientid,
-            cartCheckoutData.getString("transaction_id"))
+            requireArguments().getString("transaction_id")!!)
     }
     fun getAccessToken(): String {
         return context?.let { UserSessionManager(it).getAccessTokenAuth()?.barrierToken() } ?: ""
@@ -742,6 +809,13 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             auto_renew_title.text = "Automatically renew every " +months.toString()+"month?"
 
         }
+
+        viewModel.orderForAutoRenewalResult().observe(viewLifecycleOwner, Observer {
+            //auto renew switch API call for payment
+//            subscriptionID = it.Result.SubscriptionId
+            prefs.storeAutoRenewSubscriptionID(it.Result.SubscriptionId)
+            updateAutoRenewState()
+        })
 
         viewModel.updateLink().observe(viewLifecycleOwner,  Observer {
 //            generate_payment_link.setOnClickListener {

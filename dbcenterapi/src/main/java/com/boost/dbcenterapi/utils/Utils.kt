@@ -7,6 +7,7 @@ import android.net.NetworkInfo
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import com.boost.dbcenterapi.BuildConfig
 import com.boost.dbcenterapi.data.api_model.GetAllWidgets.GetAllWidgets
 import com.boost.dbcenterapi.utils.Constants.Companion.BASE_URL
 import com.framework.analytics.SentryController
@@ -14,6 +15,7 @@ import com.framework.rest.TokenAuthenticator
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -47,7 +49,18 @@ object Utils {
       .connectTimeout(2, TimeUnit.MINUTES)
       .writeTimeout(2, TimeUnit.MINUTES)
     httpClient.authenticator(tokenAuthenticator)
+    httpClient.addInterceptor(getHttpLoggingInterceptor())
     return httpClient.build()
+  }
+
+  private fun getHttpLoggingInterceptor(): HttpLoggingInterceptor {
+    val loggingInterceptor = HttpLoggingInterceptor()
+    if (BuildConfig.DEBUG) {
+      loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+    } else {
+      loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE)
+    }
+    return loggingInterceptor
   }
 
   fun hideSoftKeyboard(activity: Activity) {

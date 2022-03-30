@@ -64,17 +64,33 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/title"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:text="Cart Summary"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18sp"
+                android:gravity="bottom"
                 android:layout_marginStart="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/item_count"
                 app:layout_constraintEnd_toStartOf="@+id/imageViewCart1"
                 app:layout_constraintStart_toEndOf="@+id/back_button12"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/item_count"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:fontFamily="@font/open_sans"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageViewCart1"
+                app:layout_constraintStart_toEndOf="@+id/back_button12" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -576,6 +592,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/ic_increment"
+
                             android:orientation="horizontal">
 
                             <ImageView
@@ -595,6 +612,8 @@
                                 android:paddingStart="14dp"
                                 android:paddingEnd="14dp"
                                 android:paddingTop="6dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_marginBottom="1dp"
                                 android:paddingBottom="6dp"
                                 android:background="@color/white"
                                 android:fontFamily="@font/open_sans_bold"
@@ -626,6 +645,8 @@
                         android:background="@drawable/ic_cart_extra_off_bg"
                         android:gravity="center"
                         android:orientation="horizontal"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         app:layout_constraintEnd_toEndOf="@+id/ly1"
                         app:layout_constraintStart_toStartOf="@+id/ly1"
                         app:layout_constraintTop_toBottomOf="@+id/ly1">
