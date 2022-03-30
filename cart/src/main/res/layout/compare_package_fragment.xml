@@ -63,7 +63,7 @@
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans_bold"
+          android:fontFamily="@font/bold"
           android:text="Pick a premium pack"
           android:textAllCaps="true"
           android:textColor="@color/white"
@@ -134,7 +134,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:text="Featured Packs"
         android:textColor="#4a4a4a"
         android:textFontWeight="600"

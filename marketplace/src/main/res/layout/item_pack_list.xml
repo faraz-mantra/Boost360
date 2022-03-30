@@ -58,7 +58,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
-                            android:fontFamily="@font/open_sans"
+                            android:fontFamily="@font/regular"
                             android:gravity="center"
                             android:lineSpacingExtra="1.3sp"
                             android:lines="2"
@@ -83,7 +83,7 @@
                             android:fontFamily="@font/bold"
                             android:gravity="center"
                             android:text="60/month"
-                            android:textColor="#FFB900"
+                            android:textColor="@color/colorAccent"
                             android:textFontWeight="600"
                             android:textSize="@dimen/txt_9sp"
 

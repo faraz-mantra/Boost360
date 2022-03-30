@@ -20,7 +20,7 @@
       android:ellipsize="end"
     android:text="Custom Domain With HTTPS Security"
     android:gravity="center"
-      android:fontFamily="@font/open_sans"
+      android:fontFamily="@font/regular"
     android:textSize="@dimen/txt_12sp"
     android:textColor="#4A4A4A"/>
 

@@ -49,6 +49,16 @@ android {
     }
 
     dataBinding.enabled = true
+    sourceSets {
+        jioonline {
+            java {
+                srcDirs 'src/jioonline/java'
+            }
+            res {
+                srcDirs 'src/jioonline/res'
+            }
+        }
+    }
 }
 
 dependencies {

@@ -123,7 +123,7 @@
         <!--      android:id="@+id/empty_cart_title1"-->
         <!--      android:layout_width="wrap_content"-->
         <!--      android:layout_height="wrap_content"-->
-        <!--      android:fontFamily="@font/open_sans_semibold"-->
+        <!--      android:fontFamily="@font/semi_bold"-->
         <!--      android:text="Ohh! it feels so light"-->
         <!--      android:textColor="@color/common_text_color"-->
         <!--      android:textSize="@dimen/_13sdp"-->
@@ -154,7 +154,7 @@
         <!--      android:clickable="true"-->
         <!--      android:elevation="@dimen/_2sdp"-->
         <!--      android:focusable="true"-->
-        <!--      android:fontFamily="@font/open_sans_semibold"-->
+        <!--      android:fontFamily="@font/semi_bold"-->
         <!--      android:gravity="center"-->
         <!--      android:paddingStart="@dimen/_20sdp"-->
         <!--      android:paddingTop="@dimen/_10sdp"-->
@@ -188,7 +188,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:fontFamily="@font/open_sans_semibold"
+                android:fontFamily="@font/semi_bold"
                 android:text="Nothing added to cart"
                 android:textColor="@color/common_text_color"
                 android:textSize="23sp" />
@@ -197,7 +197,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:fontFamily="@font/open_sans"
+                android:fontFamily="@font/regular"
                 android:gravity="center"
                 android:text="Compare &amp; add a pack that suites your\n growing business needs."
                 android:textColor="#4A4A4A"
@@ -276,7 +276,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans_bold"
+                        android:fontFamily="@font/bold"
                         android:gravity="center"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingTop="@dimen/_10sdp"
@@ -309,7 +309,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/open_sans_bold"
+                        android:fontFamily="@font/bold"
                         android:gravity="center"
                         android:paddingStart="10dp"
                         android:paddingTop="@dimen/_10sdp"
@@ -380,7 +380,7 @@
                     <!--                        android:layout_width="wrap_content"-->
                     <!--                        android:layout_height="wrap_content"-->
                     <!--                        android:layout_marginStart="@dimen/_5sdp"-->
-                    <!--                        android:fontFamily="@font/open_sans_semibold"-->
+                    <!--                        android:fontFamily="@font/semi_bold"-->
                     <!--                        android:paddingStart="@dimen/_5sdp"-->
                     <!--                        android:paddingTop="@dimen/_3sdp"-->
                     <!--                        android:paddingEnd="@dimen/_5sdp"-->
@@ -429,7 +429,7 @@
                     <!--              android:layout_width="wrap_content"-->
                     <!--              android:layout_height="wrap_content"-->
                     <!--              android:layout_marginStart="@dimen/_5sdp"-->
-                    <!--              android:fontFamily="@font/open_sans_semibold"-->
+                    <!--              android:fontFamily="@font/semi_bold"-->
                     <!--              android:paddingStart="@dimen/_5sdp"-->
                     <!--              android:paddingTop="@dimen/_3sdp"-->
                     <!--              android:paddingEnd="@dimen/_5sdp"-->
@@ -486,7 +486,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
-                        android:fontFamily="@font/open_sans_semibold"
+                        android:fontFamily="@font/semi_bold"
                         android:paddingStart="@dimen/_5sdp"
                         android:paddingTop="@dimen/_3sdp"
                         android:paddingEnd="@dimen/_5sdp"
@@ -597,7 +597,7 @@
                                 android:paddingTop="6dp"
                                 android:paddingBottom="6dp"
                                 android:background="@color/white"
-                                android:fontFamily="@font/open_sans_bold"
+                                android:fontFamily="@font/bold"
                                 tools:text="0 months"
                                 android:textColor="@color/orange"
                                 android:textSize="@dimen/_13sdp" />
@@ -741,7 +741,7 @@
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans"
+                                android:fontFamily="@font/regular"
                                 android:lineSpacingExtra="1sp"
                                 android:text="DISCOUNT COUPONS"
                                 android:textColor="#4A4A4A"
@@ -841,7 +841,7 @@
                     <!--                        android:layout_width="wrap_content"-->
                     <!--                        android:layout_height="wrap_content"-->
                     <!--                        android:layout_marginStart="@dimen/_5sdp"-->
-                    <!--                        android:fontFamily="@font/open_sans_semibold"-->
+                    <!--                        android:fontFamily="@font/semi_bold"-->
                     <!--                        android:paddingStart="@dimen/_5sdp"-->
                     <!--                        android:paddingTop="@dimen/_3sdp"-->
                     <!--                        android:paddingEnd="@dimen/_5sdp"-->
@@ -875,7 +875,7 @@
                     <!--                            android:layout_width="0dp"-->
                     <!--                            android:layout_height="wrap_content"-->
                     <!--                            android:layout_weight="1"-->
-                    <!--                            android:fontFamily="@font/open_sans_semibold"-->
+                    <!--                            android:fontFamily="@font/semi_bold"-->
                     <!--                            android:paddingStart="@dimen/_5sdp"-->
                     <!--                            android:text="Fill in GSTIN"-->
                     <!--                            android:textColor="@color/common_text_color" />-->
@@ -909,7 +909,7 @@
                     <!--                            android:layout_width="0dp"-->
                     <!--                            android:layout_height="wrap_content"-->
                     <!--                            android:layout_weight="1"-->
-                    <!--                            android:fontFamily="@font/open_sans_semibold"-->
+                    <!--                            android:fontFamily="@font/semi_bold"-->
                     <!--                            android:paddingStart="@dimen/_10sdp"-->
                     <!--                            android:paddingTop="@dimen/_5sdp"-->
                     <!--                            android:paddingBottom="@dimen/_5sdp"-->
@@ -943,7 +943,7 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/open_sans"
+                            android:fontFamily="@font/regular"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:layout_marginStart="@dimen/_5sdp"
                             android:paddingTop="@dimen/_10sdp"
@@ -1561,7 +1561,7 @@
                             android:id="@+id/cart_total_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/open_sans_bold"
+                            android:fontFamily="@font/bold"
                             android:lineSpacingExtra="1sp"
                             android:text="Payable amount"
                             android:textFontWeight="700"
@@ -1579,7 +1579,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="end"
-                                android:fontFamily="@font/open_sans_bold"
+                                android:fontFamily="@font/bold"
                                 android:gravity="end"
                                 android:text="₹4,399"
                                 android:textFontWeight="700"
@@ -1668,7 +1668,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp"
-                    android:fontFamily="@font/open_sans_semibold"
+                    android:fontFamily="@font/semi_bold"
                     android:gravity="center"
                     android:text="Hooray! You save ₹198 with coupon &amp; long validity discount"
                     android:textColor="@color/white"
@@ -1692,7 +1692,7 @@
                     android:id="@+id/footer_grand_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_bold"
+                    android:fontFamily="@font/bold"
                     android:text="₹0"
                     android:textColor="#333333"
                     android:textSize="20sp"
@@ -1706,7 +1706,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:drawablePadding="5dp"
-                    android:fontFamily="@font/open_sans"
+                    android:fontFamily="@font/regular"
                     android:text="@string/view_details"
                     android:textColor="#333333"
                     android:textSize="10sp"

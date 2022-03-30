@@ -415,7 +415,7 @@
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_20sdp"
-        android:background="@drawable/orange_button_click_effect"
+        android:background="@drawable/cta_button_click_effect"
         android:elevation="@dimen/_2sdp"
         android:fontFamily="@font/semi_bold"
         android:gravity="center"

@@ -41,7 +41,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="15dp"
                     android:ellipsize="end"
-                    android:fontFamily="@font/open_sans"
+                    android:fontFamily="@font/regular"
                     android:gravity="center"
                     android:maxLines="2"
                     android:lineSpacingExtra="1.3sp"
