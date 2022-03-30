@@ -9,7 +9,6 @@
   <color name="colorPrimary_10">#1AFFB900</color>
   <color name="colorPrimary_20">#33FFB900</color>
   <color name="colorPrimaryDark">#d99d00</color>
-  <color name="colorPrimaryDark">#ffb900</color>
   <color name="colorAccentLightDark">@color/colorPrimaryDark</color>
   <color name="accentLight_1">#FFD461</color>
   <color name="accentLight_2">#FFF1CC</color>

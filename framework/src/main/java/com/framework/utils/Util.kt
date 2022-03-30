@@ -50,7 +50,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.SimpleColorFilter
@@ -500,12 +499,7 @@ fun Drawable.setColorFilterApiQ(color: Int, blendMode:BlendMode){
     colorFilter = BlendModeColorFilter(color, blendMode)
 }
 
-fun showToast(text: String?,duration:Int =Toast.LENGTH_LONG){
-  if (text==null){
-    return
-  }
-  Toast.makeText(BaseApplication.instance, text, duration).show()
-}
+
 
 fun highlightHashTag(text: String?,@ColorRes colorId:Int): SpannableString {
 
@@ -744,18 +738,3 @@ fun showSnackBarNegative(context: Activity, msg: String?) {
   snackBar.show()
 }
 
-fun spanColor(fullText: String, @ColorRes color: Int, vararg colorTextList: String): SpannableString {
-  val spannable = SpannableString(fullText)
-  try {
-    colorTextList.forEach { text ->
-      spannable.setSpan(
-        ForegroundColorSpan(
-          ContextCompat.getColor(BaseApplication.instance, color)
-        ), fullText.indexOf(text), fullText.indexOf(text) + text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-      )
-    }
-  } catch (e: Exception) {
-    e.printStackTrace()
-  }
-  return spannable
-}

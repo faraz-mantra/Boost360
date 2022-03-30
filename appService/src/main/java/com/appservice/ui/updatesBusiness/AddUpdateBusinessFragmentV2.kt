@@ -32,8 +32,8 @@ import com.appservice.viewmodel.UpdatesViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.framework.constants.Constants
 import com.framework.constants.IntentConstants
+import com.framework.constants.UPDATE_PIC_FILE_NAME
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -101,7 +101,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
           result: ActivityResult ->
         if (result.resultCode==Activity.RESULT_OK){
           val imgFile = File(
-          requireActivity().getExternalFilesDir(null)?.path+File.separator+Constants.UPDATE_PIC_FILE_NAME)
+          requireActivity().getExternalFilesDir(null)?.path+File.separator+UPDATE_PIC_FILE_NAME)
         if (imgFile.exists()&&isImageValid(imgFile)){
             loadImage(imgFile.path)
         }else{
@@ -152,14 +152,15 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
 
   private fun capLimitCheck() {
-    val featureUpdate = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureType.LATESTUPDATES)
+    val featureUpdate = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureKey.LATESTUPDATES)
     val capLimitUpdate = featureUpdate?.filterProperty(PropertiesItem.KeyType.LIMIT)
     if (/*isUpdate.not() && */capLimitUpdate != null) {
       viewModel?.getMessageUpdates(sessionLocal.getRequestUpdate(PaginationScrollListener.PAGE_START))?.observeOnce(viewLifecycleOwner, {
         val data = it as? BusinessUpdateResponse
         if (data?.totalCount != null && capLimitUpdate.getValueN() != null && data.totalCount!! >= capLimitUpdate.getValueN()!!) {
           baseActivity.hideKeyBoard()
-          showAlertCapLimit("Can't add the business update, please activate your premium Add-ons plan.",CapLimitFeatureResponseItem.FeatureType.LATESTUPDATES.name)
+          showAlertCapLimit("Can't add the business update, please activate your premium Add-ons plan.",
+            CapLimitFeatureResponseItem.FeatureKey.LATESTUPDATES.name)
         }
       })
     }
@@ -252,7 +253,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
               val bitmap = Picasso.get().load(it?.imageUri).get()
               val imgFile = File(
                 requireActivity().getExternalFilesDir(null)?.path + File.separator
-                        + Constants.UPDATE_PIC_FILE_NAME
+                        + UPDATE_PIC_FILE_NAME
               )
               bitmap.saveAsImageToAppFolder(imgFile.path)
 

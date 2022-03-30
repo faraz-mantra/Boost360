@@ -12,6 +12,7 @@ import com.framework.BaseApplication
 import com.framework.base.BaseActivity
 import com.framework.constants.IntentConstants
 import com.framework.constants.PackageNames
+import com.framework.constants.UPDATE_PIC_FILE_NAME
 import com.framework.pref.UserSessionManager
 import com.framework.utils.saveAsImageToAppFolder
 import kotlinx.coroutines.Dispatchers
@@ -49,7 +50,7 @@ fun posterPostClicked(childItem:PosterModel,activity: BaseActivity<*,*>){
             val file = SvgUtils.svgToBitmap(childItem as PosterModel)
                 ?.saveAsImageToAppFolder(
                     activity?.getExternalFilesDir(null)?.path +
-                            File.separator + com.framework.constants.Constants.UPDATE_PIC_FILE_NAME
+                            File.separator + UPDATE_PIC_FILE_NAME
                 )
             if (file?.exists() == true) {
                 PostPreviewSocialActivity.launchActivity(
