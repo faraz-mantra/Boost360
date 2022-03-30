@@ -303,7 +303,7 @@ class MyAddonsFragment : BaseFragment("MarketPlaceMyAddonsFragment"), MyAddonsLi
           shimmer_view_paidaddon.stopShimmer()
           shimmer_view_paidaddon.visibility = View.GONE
         }
-        paid_title.setText(totalPaidItemList!!.size.toString() + " Premium add-ons")
+        paid_title.setText(totalPaidItemList!!.size.toString() + " Premium Add-ons")
         paid_subtitle.setText(totalPaidItemList!!.size.toString() + " Activated, 0 Syncing and 0 needs Attention")
         read_more_less_paid_addons.visibility = View.VISIBLE
         premium_account_flag.visibility = View.VISIBLE
@@ -312,8 +312,8 @@ class MyAddonsFragment : BaseFragment("MarketPlaceMyAddonsFragment"), MyAddonsLi
           shimmer_view_paidaddon.stopShimmer()
           shimmer_view_paidaddon.visibility = View.GONE
         }
-        paid_title.setText("No Premium add-ons active.")
-        paid_subtitle.setText("check out the recommended add-ons for your business")
+        paid_title.setText("No Premium Add-ons active.")
+        paid_subtitle.setText("check out the recommended Add-ons for your business")
         read_more_less_paid_addons.visibility = View.GONE
       }
 
@@ -343,7 +343,7 @@ class MyAddonsFragment : BaseFragment("MarketPlaceMyAddonsFragment"), MyAddonsLi
   }
 
   private fun setHeadlineTexts() {
-    free_addons_name.setText("Currently using\n" + totalActiveWidgetCount + " add-ons")
+    free_addons_name.setText("Currently using\n" + totalActiveWidgetCount + " Add-ons")
     bottom_free_addons.setText(totalActiveFreeWidgetCount.toString() + " free, " + totalActivePremiumWidgetCount.toString() + " premium")
     free_addons_title.setText(totalActiveFreeWidgetCount.toString() + " Free Add-ons")
   }

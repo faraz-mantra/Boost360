@@ -77,7 +77,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
   override fun onCreateView() {
     showSimmer(true)
     session = UserSessionManager(baseActivity)
-    viewModel?.getMerchantProfile(session?.fPID)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getMerchantProfile(session?.fPID)?.observeOnce(viewLifecycleOwner) {
 //        if (it.isSuccess()) {
       val response = it as? MerchantProfileResponse
       val userDetail = response?.result?.getUserDetail()
@@ -182,7 +182,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
       showSimmer(false)
       binding?.btnMainView?.visible()
       binding?.borderView?.visible()
-    })
+    }
     binding?.backBtn?.setOnClickListener {
       val popup = PopupMenu(baseActivity, it)
       popup.menuInflater.inflate(R.menu.popup_menu_card, popup.menu)

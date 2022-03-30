@@ -2,6 +2,7 @@ package com.boost.presignin.ui.newOnboarding
 
 import android.os.Bundle
 import android.text.Editable
+import android.text.SpannableStringBuilder
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import com.boost.presignin.R
@@ -27,9 +28,7 @@ import com.framework.utils.hideKeyBoard
 import com.framework.utils.onDone
 import com.framework.utils.onRightDrawableClicked
 import com.framework.utils.showKeyBoard
-import com.framework.webengageconstant.NO_EVENT_VALUE
-import com.framework.webengageconstant.PAGE_VIEW
-import com.framework.webengageconstant.PS_BUSINESS_CATEGORY_LOAD
+import com.framework.webengageconstant.*
 
 class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Binding, CategoryVideoModel>(), RecyclerItemClickListener {
 
@@ -73,7 +72,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
 
   override fun onCreateView() {
     super.onCreateView()
-    WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_SELECTION_SCREEN_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListeners()
     initialize()
     loadLocalCategoryData()
@@ -160,8 +159,11 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     val newFilterList = getFinalList(str)
     if (newFilterList.isNullOrEmpty().not()) {
       binding?.tvNoResultFound?.gone()
+      binding?.layoutDidYouMean?.gone()
       binding?.includeNoSearchResultFound?.root?.gone()
-    } else handleSuggestionNoResult()
+    } else {
+      handleSuggestionNoResult(str)
+    }
     setAdapterSearch(newFilterList)
   }
 
@@ -182,16 +184,40 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
   }
 
   private fun setAdapterSearch(filteredList: ArrayList<ApiCategoryResponseCategory>) {
-    AppBaseRecyclerViewAdapter(baseActivity, filteredList, this).apply { binding?.rvCatSuggestion?.adapter = this }
+    AppBaseRecyclerViewAdapter(baseActivity, filteredList, this).apply {
+      binding?.rvCatSuggestion?.adapter = this
+    }
   }
 
-  private fun handleSuggestionNoResult() {
+  private fun handleSuggestionNoResult(str: Editable?) {
     binding?.tvNoResultFound?.visible()
     binding?.includeNoSearchResultFound?.root?.visible()
     val list = ArrayList<CategoryDataModel>()
     list.addAll(categoryNoDataList)
     noCatListAdapter = AppBaseRecyclerViewAdapter(baseActivity, ArrayList(list.map { it.textChangeRTLAndSVC = true;it }), this)
     binding?.includeNoSearchResultFound?.rvCategories?.adapter = noCatListAdapter
+
+    didYouMeanAlgorithm(str)
+  }
+
+  private fun didYouMeanAlgorithm(str: Editable?) {
+    var queryString = str
+    if (str?.length ?: 0 >= 3) {
+      var newFilterList: List<ApiCategoryResponseCategory>?
+
+      var didYouMeanFilterList = arrayListOf<ApiCategoryResponseCategory>()
+      while (didYouMeanFilterList.isNullOrEmpty() && queryString?.length?:0 >= 3) {
+        queryString = SpannableStringBuilder(queryString.toString().dropLast(1))
+        newFilterList = categoryListLive?.filter {
+          it.getNameLower().startsWith(queryString.toString().lowercase())
+        }?.take(40)
+        didYouMeanFilterList = newFilterList.getFinalList(queryString)
+      }
+      if (!didYouMeanFilterList.isNullOrEmpty()) {
+        binding?.layoutDidYouMean?.visible()
+        binding?.tvDidYouMean?.text = "${getString(R.string.did_you_mean) + " " + didYouMeanFilterList[0].name}"
+      }
+    }
   }
 
   private fun setOnClickListeners() {
@@ -204,11 +230,18 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
       selectedCategory = null
       baseActivity.showKeyBoard(binding?.autocompleteSearchCategory)
     }
+    binding?.tvClickHereStill?.setOnClickListener {
+      WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_CANT_FIND_CLICK, CLICK, NO_EVENT_VALUE)
+    }
+    binding?.layoutDidYouMean?.setOnClickListener {
+      WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_DID_YOU_MEAN_CLICK, CLICK, NO_EVENT_VALUE)
+    }
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.CATEGORY_ITEM_CLICKED.ordinal -> {
+        WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_SELECTION_MAIN_LOAD, CLICK, NO_EVENT_VALUE)
         val dataCategory = (item as? CategoryDataModel) ?: return
         if (binding?.includeNoSearchResultFound?.root?.visibility == View.VISIBLE) {
           categoryNoDataList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
@@ -221,6 +254,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
         setSelectedCat(dataCategory)
       }
       RecyclerViewActionType.CATEGORY_SUGGESTION_CLICKED.ordinal -> {
+        WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_SELECTION_LIST_LOAD, CLICK, NO_EVENT_VALUE)
         selectedCategoryLive = (item as? ApiCategoryResponseCategory) ?: return
         baseActivity.hideKeyBoard()
         val dataCategory = categoryList.firstOrNull { it.experience_code == selectedCategoryLive?.fpExperienceCode?.name }

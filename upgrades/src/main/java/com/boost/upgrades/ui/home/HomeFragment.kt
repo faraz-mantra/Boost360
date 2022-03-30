@@ -69,8 +69,13 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import com.appservice.rest.repository.AzureWebsiteNewRepository
 import com.boost.cart.CartActivity
 import com.framework.analytics.SentryController
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.models.toLiveData
+import java.text.SimpleDateFormat
 
 
 class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, CompareBackListener {
@@ -144,7 +149,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
 //        cart_list = localStorage.getCartItems()
         prefs = SharedPrefs(activity as UpgradeActivity)
         session = UserSessionManager(requireActivity())
-        session?.let { deepLinkUtil = DeepLinkUtil(requireActivity() as AppCompatActivity, it) }
+        session?.let { deepLinkUtil = DeepLinkUtil(requireActivity() as AppCompatActivity, it, Fragment()) }
 
         return root
     }
@@ -592,6 +597,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
          ref_txt.text = "Get special discounts for you and your friends after successful signup."*/
     }
 
+    @SuppressLint("LongLogTag")
     fun loadData() {
         val pref = requireActivity().getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
         val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
@@ -607,6 +613,38 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             (activity as UpgradeActivity).experienceCode,
             (activity as UpgradeActivity).fpTag
         )
+
+        //check if there is a active addons
+        AzureWebsiteNewRepository.getFeatureDetails((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid).toLiveData()
+            .observeForever {
+                var paidUser = false
+                if (it.isSuccess() || it != null) {
+                    val data = it.arrayResponse as? Array<CapLimitFeatureResponseItem>
+                    Log.e("checkExpiryAddonsPackages >>", Gson().toJson(data))
+                    for (singleitem in data!!) {
+                        val date1: Date =
+                            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(singleitem.expiryDate!!)
+
+                        val diff: Long = date1.getTime() - Date().getTime()
+                        val seconds = diff / 1000
+                        val minutes = seconds / 60
+                        val hours = minutes / 60
+                        val days = hours / 24
+
+                        if(days>0){
+                            paidUser = true
+                            break
+                        }
+                    }
+                }
+                if(paidUser){
+                    bottom_box.visibility = View.VISIBLE
+                    footer.visibility = View.VISIBLE
+                }else{
+                    bottom_box.visibility = View.GONE
+                    footer.visibility = View.GONE
+                }
+            }
     }
 
     @SuppressLint("FragmentLiveDataObserve")

@@ -79,27 +79,26 @@ class MainFragment : Fragment() {
 //
 //        })
 
-    //NOTE: Both videoURLs and splashImageResources should always be of the same length.
-    //each videoURL has the corresponding SplashImageResource stored in the corresponding index of the other array
-    videoURLs = mutableListOf<String>(
-      "https://cdn.withfloats.com/boost/videos/en/intro.mp4",
-      "https://cdn.withfloats.com/boost/videos/hi/intro.mp4",
-      "https://cdn.withfloats.com/boost/videos/te/intro.mp4",
-      "https://cdn.withfloats.com/boost/videos/ta/intro.mp4",
-      "https://cdn.withfloats.com/boost/boost_01.mp4",
-      "https://cdn.withfloats.com/boost/boost_01.mp4",
-      "https://cdn.withfloats.com/boost/boost_01.mp4"
-    )
-    splashImageResources = mutableListOf<Int>(
-      R.drawable.intro_video_splash_en,
-      R.drawable.intro_video_splash_hi,
-      R.drawable.intro_video_splash_telegu,
-      R.drawable.intro_video_splash_tamil,
-      R.drawable.intro_video_splash_en,
-      R.drawable.intro_video_splash_en,
-      R.drawable.intro_video_splash_en
-    )
-
+      //NOTE: Both videoURLs and splashImageResources should always be of the same length.
+      //each videoURL has the corresponding SplashImageResource stored in the corresponding index of the other array
+      videoURLs = mutableListOf<String>(
+          "https://cdn.nowfloats.com/jioonline/android/videos/JioOnlineHighResolution.mp4",
+          "https://cdn.nowfloats.com/jioonline/android/videos/JioOnlineHighResolution.mp4",
+          "https://cdn.nowfloats.com/jioonline/android/videos/JioOnlineHighResolution.mp4",
+          "https://cdn.nowfloats.com/jioonline/android/videos/JioOnlineHighResolution.mp4",
+          "https://cdn.withfloats.com/boost/boost_01.mp4",
+          "https://cdn.withfloats.com/boost/boost_01.mp4",
+          "https://cdn.withfloats.com/boost/boost_01.mp4"
+      )
+      splashImageResources = mutableListOf<Int>(
+          R.drawable.intro_video_splash_en,
+          R.drawable.intro_video_splash_hi,
+          R.drawable.intro_video_splash_telegu,
+          R.drawable.intro_video_splash_tamil,
+          R.drawable.intro_video_splash_en,
+          R.drawable.intro_video_splash_en,
+          R.drawable.intro_video_splash_en
+      )
     if (::localeManager.isInitialized && !localeManager.getLanguage()!!.isEmpty()) {
       val langType = localeManager.getLanguage()
       when (langType) {

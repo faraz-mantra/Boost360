@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.appservice.constant.FragmentType;
 import com.appservice.constant.IntentConstant;
+import com.framework.constants.SupportVideoType;
 import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.framework.utils.ContentSharing;
 import com.framework.views.zero.old.AppFragmentZeroCase;
@@ -38,7 +39,6 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.nowfloats.widget.WidgetKey;
-import com.onboarding.nowfloats.constant.SupportVideoType;
 import com.squareup.picasso.Target;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityProductCatalogBinding;

@@ -61,7 +61,7 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
         binding?.videoViewContainer?.isVisible = true;
         binding?.introImgContainer?.isVisible = false;
         binding?.progressBar?.isVisible = true
-        val mediaItem = MediaItem.fromUri("https://cdn.nowfloats.com/manage/assets/Content/videos/MobileIntroVideo.mp4")
+        val mediaItem = MediaItem.fromUri(getString(R.string.intro_video_url))
         player?.setMediaItem(mediaItem)
         player?.prepare()
         player?.play()
@@ -106,7 +106,7 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
           mediaPlayer = it
           videoDuration = mediaPlayer?.duration ?: 0
         }
-        binding?.videoView?.setVideoPath("https://cdn.nowfloats.com/manage/assets/Content/videos/MobileIntroVideo.mp4")
+        binding?.videoView?.setVideoPath(getString(R.string.intro_video_url))
         binding?.videoView?.start()
         binding?.videoView?.setOnInfoListener { p0, p1, p2 ->
           when (p1) {

@@ -1,7 +1,8 @@
 buildscript {
-    ext {
-        kotlin_version = '1.4.10'
-    }
+
+    ext.kotlin_version = '1.6.10'
+    ext.lifecycle_version = "2.2.0"
+
     repositories {
         jcenter()
         google()
@@ -12,7 +13,7 @@ buildscript {
         // in the individual module build.gradle files
         classpath 'com.google.gms:google-services:4.3.3'
         // kotlin support
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
         // Add the Crashlytics Gradle plugin
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'
     }
@@ -32,9 +33,6 @@ allprojects {
         maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
         maven {
             url "https://sdk.smartlook.com/android/release"
-        }
-        maven {
-            url "https://dl.bintray.com/notifyvisitors/invitereferrals"
         }
     }
 }
@@ -56,8 +54,6 @@ ext {
     targetSdkVersion = 30
     buildToolsVersion = "30.0.0"
     koin_version = "2.1.6"
-
-
 }
 
 task clean(type: Delete) {

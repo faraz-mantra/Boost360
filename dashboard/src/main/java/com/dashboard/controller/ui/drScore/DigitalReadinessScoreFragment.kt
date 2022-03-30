@@ -85,7 +85,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         val drScoreData = FirestoreManager.getDrScoreData()
         isHigh = (drScoreData != null && drScoreData.getDrsTotal() >= 85)
-        val drScoreSetupList = drScoreData?.getDrScoreData(response.data)
+        val drScoreSetupList = drScoreData?.getDrScoreData(response.getActionItem(session?.fP_AppExperienceCode))
         if (drScoreSetupList.isNullOrEmpty().not()) {
           drScoreSetupList?.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_CONTENT_SETUP_ITEM_VIEW.getLayout() }
           if (adapterPager == null) {
@@ -105,7 +105,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
 //        binding?.txtPercentage?.setTextColor(getColor(if (isHigh) R.color.light_green_3 else R.color.accent_dark))
         binding?.txtReadinessScore?.text = "${drScoreData?.getDrsTotal() ?: 0}"
 //        binding?.progressBar?.progress = drScoreData?.getDrsTotal() ?: 0
-        val percentage = ((100 - (drScoreData?.getDrsTotal()?:0)).toDouble() / 100).roundToFloat(2)
+        val percentage = ((100 - (drScoreData?.getDrsTotal() ?: 0)).toDouble() / 100).roundToFloat(2)
         (binding?.progressBar?.layoutParams as? ConstraintLayout.LayoutParams)?.matchConstraintPercentWidth = percentage
         binding?.progressBar?.requestLayout()
 //        binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
@@ -249,7 +249,17 @@ fun clickEventUpdateScoreN(type: DrScoreItem.DrScoreItemType?, baseActivity: App
       baseActivity.startListServiceProduct(session)
     }
     DrScoreItem.DrScoreItemType.boolean_add_bank_account -> {
-      baseActivity.startMyBankAccount(session)
+//      baseActivity.startMyBankAccount(session)
+      baseActivity.startPaymentCatalogSetup(session)
+    }
+    DrScoreItem.DrScoreItemType.boolean_catalog_setup -> {
+      baseActivity.startCatalogSetup(session)
+    }
+    DrScoreItem.DrScoreItemType.boolean_general_appointments -> {
+      baseActivity.startCatalogAppointment(session)
+    }
+    DrScoreItem.DrScoreItemType.boolean_business_verification -> {
+      baseActivity.startBusinessVerification(session)
     }
     DrScoreItem.DrScoreItemType.boolean_image_uploaded_to_gallery -> {
       baseActivity.startAddImageGallery(session, false)
@@ -278,7 +288,8 @@ fun clickEventUpdateScoreN(type: DrScoreItem.DrScoreItemType?, baseActivity: App
 
 fun alertDialogBusinessHours(baseActivity: AppCompatActivity, session: UserSessionManager?) {
   AlertDialog.Builder(
-    ContextThemeWrapper(baseActivity,R.style.CustomAlertDialogTheme))
+    ContextThemeWrapper(baseActivity, R.style.CustomAlertDialogTheme)
+  )
     .setTitle(baseActivity.getString(R.string.features_not_available))
     .setMessage(baseActivity.getString(R.string.check_store_for_upgrade_info))
     .setPositiveButton(baseActivity.getString(R.string.goto_store)) { dialogInterface, i ->

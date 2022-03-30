@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
+@Deprecated
 public class FullScreen_Gallery_Image extends AppCompatActivity {
 
     ViewPager viewPager;
@@ -134,7 +136,7 @@ public class FullScreen_Gallery_Image extends AppCompatActivity {
         deleteImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(FullScreen_Gallery_Image.this)
+                new AlertDialog.Builder(new ContextThemeWrapper(FullScreen_Gallery_Image.this, R.style.CustomAlertDialogTheme))
                         .setMessage(R.string.are_you_sure_you_want_to_delete)
                         .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                             @Override

@@ -10,7 +10,9 @@ import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentEcomCatalogSettingBinding
 import com.appservice.model.aptsetting.AppointmentStatusResponse
 import com.appservice.model.aptsetting.CatalogSetup
+import com.appservice.model.aptsetting.GstSlabRequest
 import com.appservice.ui.aptsetting.widgets.BottomSheetConfirmingChange
+import com.appservice.ui.aptsetting.widgets.BottomSheetGstSlab
 import com.appservice.ui.aptsetting.widgets.BottomSheetSuccessfullyUpdated
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.capitalizeUtil
@@ -27,6 +29,8 @@ import java.util.*
 class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSettingBinding, AppointmentSettingsViewModel>() {
 
   private var response: UserFpDetailsResponse? = null
+  private var catalogSetup: CatalogSetup? = null
+  private var gstSlab: Int = 0
 
   companion object {
     fun newInstance(): FragmentEcommerceCatalogSettings {
@@ -46,15 +50,26 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
     super.onCreateView()
     sessionLocal = UserSessionManager(requireActivity())
     WebEngageController.trackEvent(ECOMMERCE_CATLOG_SETUP_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    setOnClickListener(binding?.ctvChangeServices, binding?.ctvProductVerbUrl)
-    val data=arguments?.getSerializable(IntentConstant.OBJECT_DATA.name) as?  AppointmentStatusResponse.TilesModel
-    val catalogSetup = data?.tile as? CatalogSetup
-    setData(catalogSetup)
+    setOnClickListener(binding?.ctvChangeServices, binding?.ctvProductVerbUrl, binding?.edtTextSlab)
+    val data = arguments?.getSerializable(IntentConstant.OBJECT_DATA.name) as? AppointmentStatusResponse.TilesModel
+    catalogSetup = data?.tile as? CatalogSetup
+    if (catalogSetup != null) setData(catalogSetup) else catalogApiGetGstData()
     getFpDetails()
   }
 
+  private fun catalogApiGetGstData() {
+    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, {
+      val dataItem = it as? AppointmentStatusResponse
+      if (dataItem?.isSuccess() == true && dataItem.result != null) {
+        catalogSetup = dataItem.result?.catalogSetup
+        setData(catalogSetup)
+      }
+    })
+  }
+
   private fun setData(catalogSetup: CatalogSetup?) {
-    binding?.edtTextSlab?.hint = "${(catalogSetup?.defaultGSTSlab?:0).toString()}%"
+    gstSlab = catalogSetup?.getGstSlabInt() ?: 0
+    binding?.edtTextSlab?.setText("${(catalogSetup?.getGstSlabInt() ?: 0)}%")
   }
 
   private fun getFpDetails() {
@@ -68,6 +83,7 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
         binding?.ctvProductVerb?.text = response?.productCategory(baseActivity)?.capitalizeUtil()
         binding?.ctvProductVerbUrl?.text = fromHtml("<pre>URL: <span style=\"color: #4a4a4a;\"><u>${sessionLocal.getDomainName()}<b>/${response?.productCategoryVerb(baseActivity)}</b></u></span></pre>")
         sessionLocal.storeFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB, response?.productCategoryVerb)
+        onCatalogSetupAddedOrUpdated(response?.productCategoryVerb.isNullOrEmpty().not())
       }
     })
   }
@@ -79,7 +95,27 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
         WebEngageController.trackEvent(CATLOG_SETUP_CHANGE_PRODUCT, CLICK, NO_EVENT_VALUE)
         showCatalogDisplayName()
       }
+      binding?.edtTextSlab -> {
+        WebEngageController.trackEvent(CATLOG_SETUP_CHANGE_GST, CLICK, NO_EVENT_VALUE)
+        BottomSheetGstSlab().apply {
+          arguments = Bundle().apply { putInt(IntentConstant.GST_DATA.name, gstSlab) }
+          onClicked = { gstSlab ->
+            this@FragmentEcommerceCatalogSettings.gstSlab = gstSlab
+            updateGstData()
+          }
+          show(this@FragmentEcommerceCatalogSettings.parentFragmentManager, BottomSheetGstSlab::class.java.name)
+        }
+      }
     }
+  }
+
+  private fun updateGstData() {
+    showProgress()
+    viewModel?.updateGstSlab(GstSlabRequest(clientId, sessionLocal.fPID, gstSlab))?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) binding?.edtTextSlab?.setText("$gstSlab%")
+      else showShortToast(it.messageN())
+      hideProgress()
+    })
   }
 
   private fun showCatalogDisplayName() {

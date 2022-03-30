@@ -196,7 +196,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
 
   private fun createAppointment() {
     showProgress()
-    viewModel?.postAppointment(AppConstant.CLIENT_ID_2, orderInitiateRequest)
+    viewModel?.postAppointment(AppConstant.CLIENT_ID_ORDER, orderInitiateRequest)
       ?.observeOnce(viewLifecycleOwner, {
         if (it.isSuccess()) {
           hideProgress()

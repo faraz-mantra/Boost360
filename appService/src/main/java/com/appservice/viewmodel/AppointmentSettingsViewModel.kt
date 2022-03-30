@@ -11,16 +11,6 @@ import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
 
 class AppointmentSettingsViewModel : BaseViewModel() {
-  //    fun updateCODPreferences(request: RequestCODPreference?) {
-//
-//    }
-//  fun getAppointmentSettingsTiles(context: Context): LiveData<BaseResponse> {
-//    return NowfloatsApiRepository.getSettingsTiles(context).toLiveData()
-//  }
-//
-//  fun getEcommerceSettingsTiles(context: Context): LiveData<BaseResponse> {
-//    return NowfloatsApiRepository.getSettingsTiles(context).toLiveData()
-//  }
 
   fun getServiceListing(request: ServiceListingRequest): LiveData<BaseResponse> {
     return NowfloatsApiRepository.getServiceListing(request).toLiveData()
@@ -72,6 +62,10 @@ class AppointmentSettingsViewModel : BaseViewModel() {
 
   fun getAppointmentCatalogStatus(floatingPointId: String?, clientId: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getAppointmentCatalogStatus(floatingPointId, clientId).toLiveData()
+  }
+
+  fun updateGstSlab(request: GstSlabRequest): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.updateGstSlab(request).toLiveData()
   }
 
   fun updateProductCategoryVerb(request: ProductCategoryVerbRequest): LiveData<BaseResponse> {

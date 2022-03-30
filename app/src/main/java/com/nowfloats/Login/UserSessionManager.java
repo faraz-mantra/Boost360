@@ -761,10 +761,13 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
   }
 
   public List<String> getStoreWidgets() {
-    String str = pref.getString(Key_Preferences.STORE_WIDGETS, "");
-    if (TextUtils.isEmpty(str)) return new ArrayList();
-    return new Gson().fromJson(str, new TypeToken<List<String>>() {
-    }.getType());
+    if (!AppController.getInstance().getPackageName().equals(Constants.APPLICATION_JIO_ID)) {
+      String str = pref.getString(Key_Preferences.STORE_WIDGETS, "");
+      if (TextUtils.isEmpty(str)) return new ArrayList();
+      return new Gson().fromJson(str, new TypeToken<List<String>>() {}.getType());
+    }else {
+      return new ArrayList<>(Arrays.asList("BOOSTKEYBOARD"));
+    }
   }
 
   public boolean isBoostBubbleEnabled() {

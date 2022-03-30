@@ -63,6 +63,9 @@ import com.boost.cart.base_class.BaseFragment
 import com.boost.cart.interfaces.CartFragmentListener
 import com.boost.cart.ui.compare.ComparePackageFragment
 import com.boost.payment.PaymentActivity
+import com.boost.upgrades.data.api_model.paymentprofile.LastPaymentMethodDetails
+import com.boost.upgrades.ui.compare.ComparePackageFragment
+import com.boost.upgrades.utils.Constants.Companion.CHECKOUT_KYC_FRAGMENT
 import com.framework.analytics.SentryController
 import com.boost.dbcenterapi.upgradeDB.model.*
 import com.framework.constants.IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA
@@ -221,21 +224,23 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       prefs.storeCartOrderInfo(null)
       prefs.storeApplyedCouponDetails(null)
 //            totalCalculation()
-//      couponCode = ""
-//      couponServiceModel = null
+      couponCode = ""
+      couponServiceModel = null
 
       totalCalculationAfterCoupon()
     }
 
     cart_continue_submit.setOnClickListener {
 
-//            if (prefs.getInitialLoadMarketPlace() && proceedCheckoutPopup == false) {
-//
-//                checkoutKycFragment.show(
-//                        (activity as CartActivity).supportFragmentManager,
-//                        CHECKOUT_KYC_FRAGMENT
-//                )
-//            }else{
+            if (prefs.getInitialLoadMarketPlace() && proceedCheckoutPopup == false) {
+
+                checkoutKycFragment.show(
+                        (activity as UpgradeActivity).supportFragmentManager,
+                        CHECKOUT_KYC_FRAGMENT
+                )
+              return@setOnClickListener
+            }
+//            else{
       /*       renewPopUpFragment.show(
              (activity as CartActivity).supportFragmentManager,
              RENEW_POPUP_FRAGEMENT

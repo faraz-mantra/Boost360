@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
+import com.appservice.ui.bgImage.BackgroundImageContainerActivity
+import com.appservice.ui.bgImage.setFragmentTypeNew
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.setFragmentType
@@ -25,6 +27,7 @@ import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
 import com.festive.poster.ui.festivePoster.FestivePosterContainerActivity
 import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
 import com.framework.analytics.SentryController
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureNewOnBoardingFlowEnable
 import com.framework.pref.*
 import com.framework.utils.DateUtils
 import com.framework.webengageconstant.*
@@ -39,7 +42,6 @@ import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentChannelActivity
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
 import java.util.*
-
 
 const val VISITS_TYPE_STRING = "visits_type_string"
 
@@ -96,7 +98,7 @@ fun AppCompatActivity.startDigitalChannel(session: UserSessionManager, channelTy
 fun AppCompatActivity.startVmnCallCard(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(TRACK_CALL_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val i = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.VmnCallCardsActivity"))
+    val i = Intent(this, Class.forName("com.appservice.ui.calltracking.VmnCallCardsActivityV2"))
     startActivity(i)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
@@ -150,10 +152,18 @@ fun AppCompatActivity.startAptOrderSummary(session: UserSessionManager?) {
   }
 }
 
+fun Fragment.startBackgroundActivity(session: UserSessionManager?, type: com.appservice.constant.FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+  val intent = Intent(activity, BackgroundImageContainerActivity::class.java)
+  intent.putExtras(bundle)
+  intent.setFragmentTypeNew(type)
+  if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+  if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
+}
+
 fun AppCompatActivity.startBackgroundImageGallery(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(BACKGROUND_IMAGE_GALLERY_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val queries = Intent(this, Class.forName("com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"))
+    val queries = Intent(this, Class.forName("com.appservice.ui.background_image.BackgroundImageContainerActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
@@ -461,6 +471,49 @@ fun AppCompatActivity.startEcommerceAppointmentSetting(session: UserSessionManag
   }
 }
 
+fun AppCompatActivity.startCatalogSetup(session: UserSessionManager?) {
+  try {
+    val type = if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
+      com.appservice.constant.FragmentType.APPOINTMENT_CATALOG_SETTINGS
+    } else {
+      com.appservice.constant.FragmentType.ECOMMERCE_CATALOG_SETTINGS
+    }
+    startFragmentActivity(type)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startPaymentCatalogSetup(session: UserSessionManager?) {
+  try {
+    val type = if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
+      com.appservice.constant.FragmentType.APPOINTMENT_PAYMENT_SETTINGS
+    } else {
+      com.appservice.constant.FragmentType.ECOMMERCE_PAYMENT_SETTINGS
+    }
+    startFragmentActivity(type)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startCatalogAppointment(session: UserSessionManager?) {
+  Toast.makeText(this, "Coming soon.. ", Toast.LENGTH_SHORT).show()
+}
+
+fun AppCompatActivity.startBusinessVerification(session: UserSessionManager?) {
+  try {
+    val type = if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
+      com.appservice.constant.FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE
+    } else {
+      com.appservice.constant.FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE
+    }
+    startFragmentActivity(type)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
 fun AppCompatActivity.startListStaff(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(LIST_STAFF_DASHBOARD, CLICK, TO_BE_ADDED)
@@ -472,6 +525,7 @@ fun AppCompatActivity.startListStaff(session: UserSessionManager?) {
 
 fun AppCompatActivity.startListDoctors(session: UserSessionManager?) {
   try {
+    WebEngageController.trackEvent(LIST_DOCTOR_PROFILE_DASHBOARD, CLICK, TO_BE_ADDED)
     startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = getBundleData(session))
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
@@ -523,7 +577,12 @@ fun AppCompatActivity.startBookTable(session: UserSessionManager?) {
 fun AppCompatActivity.startPreSignUp(session: UserSessionManager?, isClearTask: Boolean = false) {
   try {
     WebEngageController.trackEvent(PRE_SIGN_UP_PAGE, START_VIEW, TO_BE_ADDED)
-    val webIntent = Intent(this, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
+    val webIntent: Intent = if(featureNewOnBoardingFlowEnable()) {
+      Intent(this, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity")).
+              putExtra("FRAGMENT_TYPE","INTRO_SLIDE_SHOW_FRAGMENT")
+    } else {
+      Intent(this, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
+    }
     if (isClearTask) webIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -602,7 +661,7 @@ fun AppCompatActivity.startOrderAptConsultList(session: UserSessionManager?, isO
 
 fun getSessionOrder(session: UserSessionManager?): Bundle {
   val data = PreferenceData(
-    AppConstant.CLIENT_ID_2, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
+    AppConstant.CLIENT_ID_ORDER, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
     session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
     session?.getFPDetails(Key_Preferences.LONGITUDE), session?.fP_AppExperienceCode
   )
@@ -806,7 +865,8 @@ fun UserSessionManager.getBundleDataKyc(): Bundle {
   session.fpEmail = fPEmail
   session.fpNumber = fPPrimaryContactNumber
   session.isSelfBrandedAdd = isSelfBrandedKycAdd ?: false
-  session.isPaymentGateway = getStoreWidgets()?.contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name) ?: false
+  session.isPaymentGateway = getStoreWidgets()?.contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name)
+    ?: false
   val bundle = Bundle()
   bundle.putSerializable(com.appservice.constant.IntentConstant.SESSION_DATA.name, session)
   return bundle

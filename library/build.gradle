@@ -20,10 +20,12 @@ android {
         partone {
             dimension "default"
         }
+        jioonline {
+            dimension "default"
+        }
     }
 }
 
 dependencies {
-
     implementation 'androidx.legacy:legacy-support-v13:1.0.0'
 }

@@ -154,6 +154,8 @@
   <color name="blue_4A90E2">#4A90E2</color>
   <color name="blue_52AAC6">#52AAC6</color>
   <color name="red_E39595">#E39595</color>
+  <color name="red_EB5757">#EB5757</color>
+
   <color name="red_button">#E39595</color>
   <color name="black_202A2A2A">#202A2A2A</color>
   <color name="black_322A2A2A">#322A2A2A</color>
@@ -177,10 +179,18 @@
   <color name="white_F7F7F4">#F7F7F4</color>
   <color name="grey_4C4C4C">#4C4C4C</color>
   <color name="light_grey_0068E01A">#0068E01A</color>
+  <color name="color_747474">#747474</color>
 
   <color name="black_4a4a4a_jio">@color/black_4a4a4a</color>
   <color name="primary_4a4a4a_jio">@color/black_4a4a4a</color>
   <color name="gray_white_text_jio">@color/gray_text_hint</color>
+
+  <color name="dashboard_business_url">#4A4A4A</color>
+  <color name="colorLightGrey_jio">#E4E4E4</color>
+  <color name="light_grey_boost_jio">#DFDFDF</color>
+  <color name="orange_light">#FFF8E5</color>
+  <color name="color_888888">#888888</color>
+
   <color name="white_F5F8FD">#F5F8FD</color>
   <color name="black_09121F">#09121F</color>
   <color name="grey_09121F">#ECEFF1</color>

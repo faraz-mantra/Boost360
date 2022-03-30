@@ -14,6 +14,8 @@ import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.FragmentType
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.LayoutSetUpMyWebsiteStep3Binding
+import com.boost.presignin.extensions.removeSymbols
+import com.boost.presignin.extensions.validateLetters
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.BusinessInfoModel
 import com.boost.presignin.model.authToken.saveAuthTokenData
@@ -32,9 +34,7 @@ import com.framework.extensions.visible
 import com.framework.pref.*
 import com.framework.utils.showKeyBoard
 import com.framework.views.blur.setBlur
-import com.framework.webengageconstant.NO_EVENT_VALUE
-import com.framework.webengageconstant.PS_SIGNUP_SUCCESS
-import com.framework.webengageconstant.SIGNUP_SUCCESS
+import com.framework.webengageconstant.*
 import com.invitereferrals.invitereferrals.InviteReferralsApi
 
 class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Binding, LoginSignUpViewModel>() {
@@ -92,6 +92,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
 
   override fun onCreateView() {
     super.onCreateView()
+    WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_PAGE_LOAD_NEW_UPPERCASE, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.includeMobileView?.blurView?.setBlur(baseActivity, 1F)
     session = UserSessionManager(baseActivity)
     binding?.includeMobileView?.tvCategoryName?.text = categoryModel?.getCategoryWithoutNewLine() ?: ""
@@ -115,7 +116,6 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         } else {
           websiteNameFieldUiVisibility(websiteNameFieldVisibility = 2)
         }
-
       })
     } else {
       websiteNameFieldUiVisibility(websiteNameFieldVisibility = 2)
@@ -125,25 +125,36 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
 
   private fun setOnClickListeners() {
     binding?.tvNextStep3?.setOnClickListener {
-      apiCheckDomain {
-        apiHitCreateMerchantProfile()
+      if (binding?.addressInputLayout?.etInput?.text?.trim().toString().validateLetters()) {
+        if (binding?.tvNextStep3?.text == getString(R.string.launch_my_website)){
+          WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK_NEW_UPPERCASE, CLICK, NO_EVENT_VALUE)
+        }
+        apiCheckDomain {
+          apiHitCreateMerchantProfile()
+        }
+      } else {
+        showShortToast(getString(R.string.website_name_format_invalid_toast))
       }
     }
 
     binding?.addressInputLayout?.etInput?.afterTextChanged {
-      binding?.tvNextStep3?.isEnabled = it.isEmpty().not()
-      binding?.includeMobileView?.tvWebsiteName?.text = it
+        binding?.tvNextStep3?.isEnabled = it.isEmpty().not()
+        binding?.includeMobileView?.tvWebsiteName?.text = it
     }
 
     binding?.addressInputLayout?.etInput?.setOnEditorActionListener { _, actionId, _ ->
       if (actionId == EditorInfo.IME_ACTION_DONE) {
-        if (binding?.addressInputLayout?.etInput?.text?.trim()?.isEmpty() == false) {
-          binding?.addressInputLayout?.etInput?.isEnabled = false
-          binding?.addressInputLayout?.ivIcon?.visible()
-          apiCheckDomain {
-            websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1)
+        if (binding?.addressInputLayout?.etInput?.text?.trim().toString().validateLetters()) {
+          if (binding?.addressInputLayout?.etInput?.text?.trim()?.isEmpty() == false) {
+            binding?.addressInputLayout?.etInput?.isEnabled = false
+            binding?.addressInputLayout?.ivIcon?.visible()
+            apiCheckDomain {
+              websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1)
+            }
+            //websiteNameFieldUiVisibility()
           }
-          //websiteNameFieldUiVisibility()
+        } else {
+          showShortToast(getString(R.string.website_name_format_invalid_toast))
         }
       }
       false
@@ -261,6 +272,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
 
   private fun apiHitCreateMerchantProfile() {
     initRequest()
+    WebEngageController.trackEvent(PS_SIGNUP_LAUNCHING_TRANSITION, PAGE_VIEW, NO_EVENT_VALUE)
     showProgress("We're creating your online ${businessName}...")
     //showProgress("We're creating your online ${categoryFloatsReq?.categoryDataModel?.getCategoryWithoutNewLine()}...")
     if (this.responseCreateProfile == null) {
@@ -291,6 +303,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         val layoutParams = binding?.addressInputLayout?.etInput?.layoutParams as? ConstraintLayout.LayoutParams
         layoutParams?.width = ConstraintSet.WRAP_CONTENT
         binding?.addressInputLayout?.etInput?.isEnabled = false
+        binding?.addressInputLayout?.etInput?.isFocusable = false
         binding?.tvNextStep3?.isEnabled = true
         binding?.tvNameNotAvailableError?.gone()
         binding?.linearSecureWrapper?.visible()
@@ -304,6 +317,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         val layoutParams = binding?.addressInputLayout?.etInput?.layoutParams as? ConstraintLayout.LayoutParams
         layoutParams?.width = ConstraintSet.WRAP_CONTENT
         binding?.addressInputLayout?.etInput?.isEnabled = false
+        binding?.addressInputLayout?.etInput?.isFocusable = false
         binding?.tvNextStep3?.isEnabled = false
         binding?.tvNameNotAvailableError?.visible()
         binding?.linearSecureWrapper?.gone()
@@ -318,6 +332,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         layoutParams?.width = ConstraintSet.MATCH_CONSTRAINT
         binding?.addressInputLayout?.etInput?.layoutParams = layoutParams
         binding?.addressInputLayout?.etInput?.isEnabled = true
+        binding?.addressInputLayout?.etInput?.isFocusable = true
         binding?.tvNameNotAvailableError?.gone()
         binding?.linearSecureWrapper?.gone()
         binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_grey_stroke_et)
