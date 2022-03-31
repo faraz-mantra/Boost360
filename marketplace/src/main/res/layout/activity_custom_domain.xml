@@ -397,12 +397,12 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/card_list"
-                    android:theme="@style/Theme.MaterialComponents"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:background="@color/white"
                     android:elevation="8dp"
+                    android:theme="@style/Theme.MaterialComponents"
                     app:cardCornerRadius="@dimen/pad_10dp"
                     app:layout_constraintTop_toBottomOf="@id/tv_title">
 
@@ -431,20 +431,19 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/card_free"
-                    android:theme="@style/Theme.MaterialComponents"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:background="@color/white"
+                    android:theme="@style/Theme.MaterialComponents"
                     app:layout_constraintTop_toBottomOf="@id/tv_title_free">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        >
+                        android:background="@color/white">
 
                         <ImageView
                             android:id="@+id/iv1"
@@ -589,8 +588,6 @@
         <!--                <include layout="@layout/custom_domain_data_layout_2" />-->
         <!--                <include layout="@layout/custom_domain_data_layout_2" />-->
         <!--                <include layout="@layout/custom_domain_data_layout_3" />-->
-
-
 
 
         <!--            </LinearLayout>-->

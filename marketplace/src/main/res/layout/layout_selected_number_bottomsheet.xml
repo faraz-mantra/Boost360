@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+>
 
-
-    <data>
-
-    </data>
-<RelativeLayout
-    android:id="@+id/upi_popup_outer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#1d000000"
-    android:clickable="true"
-    android:focusable="true"
-    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/upi_popup_outer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#1d000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/back_btn"
@@ -24,7 +20,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/_10sdp"
             android:src="@drawable/ic_close_circle_gray"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/upi_popup_container_layout"
@@ -39,11 +36,11 @@
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_globe"
+                android:drawableStart="@drawable/ic_call_track"
                 android:drawablePadding="8dp"
-                android:fontFamily="@font/regular"
-                android:lineHeight="24dp"
-                android:text="www.deltastore.com"
+                android:fontFamily="@font/open_sans_semibold"
+                android:lineHeight="21.79dp"
+                android:text="+91 8012-345-673"
                 android:textColor="#333333"
                 android:textFontWeight="600"
                 android:textSize="@dimen/txt_16sp"
@@ -55,9 +52,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:fontFamily="@font/regular"
-                android:lineHeight="17.42dp"
-                android:text="Do you wish to purchase “Custom Domain” feature with the selected domain name?"
+                android:fontFamily="@font/open_sans"
+                android:lineHeight="16.34dp"
+                android:text="You have successfully selected a virtual number for your business."
                 android:textColor="#4A4A4A"
                 android:textFontWeight="400"
                 android:textSize="@dimen/txt_12sp"
@@ -72,9 +69,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/orange_button_click_effect"
-                android:fontFamily="@font/bold"
+                android:fontFamily="@font/open_sans_bold"
                 android:gravity="center"
-                android:lineHeight="21.79dp"
+                android:lineHeight="24dp"
                 android:paddingStart="@dimen/_30sdp"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_30sdp"
@@ -90,5 +87,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-</RelativeLayout>
+
+    </RelativeLayout>
 </layout>
