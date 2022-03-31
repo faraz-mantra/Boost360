@@ -180,7 +180,7 @@
                                 android:paddingEnd="@dimen/_10sdp"
                                 android:paddingBottom="@dimen/_5sdp"
                                 android:text="Coupon Code"
-                                android:textColor="@color/colorAccent"
+                                android:textColor="@color/yellow"
                                 android:textFontWeight="600"
                                 android:textSize="@dimen/txt_12sp"
                                 android:textStyle="bold"
@@ -237,7 +237,7 @@
                                 android:paddingEnd="@dimen/_10sdp"
                                 android:paddingBottom="@dimen/_5sdp"
                                 android:text="Offer Valid till"
-                                android:textColor="@color/colorAccent"
+                                android:textColor="@color/yellow"
                                 android:textFontWeight="600"
                                 android:textSize="@dimen/txt_12sp"
                                 android:textStyle="bold"
@@ -319,7 +319,7 @@
                                 android:fontFamily="@font/regular"
                                 android:paddingStart="@dimen/_10sdp"
                                 android:text="COPY COUPON CODE "
-                                android:textColor="#828282"
+                                android:textColor="@color/copy_coupon_text_color"
                                 android:textFontWeight="400"
                                 android:textSize="@dimen/txt_14sp" />
 

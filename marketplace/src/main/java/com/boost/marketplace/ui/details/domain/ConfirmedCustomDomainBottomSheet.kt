@@ -1,12 +1,11 @@
 package com.boost.marketplace.ui.details.domain
 
 import com.boost.marketplace.R
-import com.boost.marketplace.databinding.BottomSheetHelpEmailBinding
-import com.boost.marketplace.databinding.PopupCallExpertCustomDomainBinding
+import com.boost.marketplace.databinding.PopupConfirmedCustomDomainBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
-class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupCallExpertCustomDomainBinding, BaseViewModel>() {
+class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCustomDomainBinding, BaseViewModel>() {
 
 
     override fun getLayout(): Int {

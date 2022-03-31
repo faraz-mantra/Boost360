@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.SimplePageTransformerSmall
+import com.boost.cart.adapter.ZoomOutPageTransformer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.LearnMoreLink

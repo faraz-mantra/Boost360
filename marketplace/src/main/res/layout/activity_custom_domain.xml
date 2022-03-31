@@ -16,7 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@color/common_text_color"
             android:contentInsetStart="0dp"
             android:contentInsetEnd="0dp"
             app:contentInsetEnd="0dp"
@@ -266,7 +266,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:padding="16dp"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
@@ -337,7 +337,7 @@
                         android:padding="16dp"
                         android:visibility="gone"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:visibility="visible">
+                        tools:visibility="gone">
 
                         <ImageView
                             android:id="@+id/iv_info"
@@ -357,7 +357,7 @@
                             android:fontFamily="@font/bold"
                             android:lineHeight="21.79dp"
                             android:text="deltastore.com"
-                            android:textColor="#EB5757"
+                            android:textColor="@color/not_available_text_color"
                             android:textFontWeight="700"
                             android:textSize="@dimen/txt_16sp"
                             app:layout_constraintStart_toEndOf="@id/iv_info"
@@ -371,7 +371,7 @@
                             android:fontFamily="@font/regular"
                             android:lineHeight="16.34dp"
                             android:text="Available"
-                            android:textColor="#EB5757"
+                            android:textColor="@color/not_available_text_color"
                             android:textFontWeight="400"
                             android:textSize="@dimen/txt_12sp"
                             app:layout_constraintStart_toEndOf="@id/iv_info"

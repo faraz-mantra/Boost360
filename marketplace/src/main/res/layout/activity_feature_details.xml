@@ -631,10 +631,66 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/edge_cases_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_border_red_white_bg"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:padding="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    app:layout_constraintTop_toBottomOf="@id/header">
+
+                    <TextView
+                        android:id="@+id/edge_case_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Something went wrong!"
+                        android:textColor="@color/red"
+                        android:drawableStart="@drawable/ic_error_red"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:textFontWeight="600"
+                        android:fontFamily="@font/semi_bold"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/edge_case_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="There is an internal error inside Boost 360. We are working to resolve this issue."
+                        android:paddingStart="22dp"
+                        android:paddingEnd="5dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:textFontWeight="600"
+                        android:fontFamily="@font/semi_bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/edge_case_title"/>
+
+                    <TextView
+                        android:id="@+id/edge_case_hyperlink"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/action_required"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/semi_bold"
+                        android:textFontWeight="600"
+                        android:textColor="@color/orange"
+                        android:paddingStart="22dp"
+                        android:paddingEnd="5dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/edge_case_desc"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/benefit_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/header">
+                    app:layout_constraintTop_toBottomOf="@id/edge_cases_layout">
 
                     <TextView
                         android:id="@+id/benefit_title"
@@ -870,7 +926,8 @@
                         android:id="@+id/how_to_use_recycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/how_to_use_title_layout"/>
+                        tools:listitem="@layout/how_to_use_item"
+                        app:layout_constraintTop_toBottomOf="@id/how_to_use_title_layout" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -893,26 +950,26 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.viewpager2.widget.ViewPager2
-                        android:id="@+id/viewpager1"
+                        android:id="@+id/what_our_customer_viewpager"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@id/what_our_customer_title" />
 
 
                     <com.framework.views.dotsindicator.DotsIndicator
-                        android:id="@+id/banner_indicator1"
+                        android:id="@+id/what_our_customer_indicator"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:dotsColor="@color/dot_grey"
+                        app:dotsColor="#ffb900"
                         app:dotsCornerRadius="8dp"
                         app:dotsSize="6dp"
                         app:dotsSpacing="4dp"
                         app:dotsWidthFactor="2.5"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/viewpager1"
+                        app:layout_constraintTop_toBottomOf="@id/what_our_customer_viewpager"
                         app:progressMode="false"
                         app:selectedDotColor="@color/colorAccent" />
 
@@ -941,6 +998,11 @@
                         android:id="@+id/faq_recycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_curve_bg"
+                        android:layout_margin="@dimen/_15sdp"
+                        tools:listitem="@layout/faq_item"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/faq_title" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -1013,9 +1075,9 @@
                 android:fontFamily="@font/semi_bold"
                 android:gravity="center"
                 android:paddingStart="@dimen/_30sdp"
-                android:paddingTop="@dimen/_10sdp"
+                android:paddingTop="10dp"
                 android:paddingEnd="@dimen/_30sdp"
-                android:paddingBottom="@dimen/_10sdp"
+                android:paddingBottom="10dp"
                 android:text="Add To Cart"
                 android:textAllCaps="true"
                 android:textColor="@color/white"

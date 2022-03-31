@@ -90,7 +90,7 @@
                             android:fontFamily="@font/regular"
                             android:text="In-clinic appointments"
                             android:maxLines="4"
-                            android:textColor="#2a2a2a"
+                            android:textColor="@color/textcolor_2a2a"
                             android:textSize="@dimen/_12sdp" />
 
                     </LinearLayout>
@@ -101,7 +101,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
                         android:lineSpacingExtra="1.3sp"
-                        android:textColor="#2a2a2a"
+                        android:textColor="@color/textcolor_2a2a"
                         android:textSize="@dimen/_10sdp"
                         tools:text="Valid till jun 23,2022" />
 
@@ -114,7 +114,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/semi_bold"
                     android:text="Time 1:10 PM"
-                    android:textColor="#747474"
+                    android:textColor="@color/coupon_text_color"
                     android:textSize="@dimen/_10sdp"
                     app:layout_constraintBottom_toTopOf="@+id/imageLayout"
                     app:layout_constraintEnd_toStartOf="@+id/btn_invoice"

@@ -82,10 +82,10 @@
                             android:id="@+id/help"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            app:layout_constraintDimensionRatio="1:1"
                             android:padding="16dp"
                             android:src="@drawable/ic_info_offers"
                             app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -94,13 +94,13 @@
                             android:id="@+id/search"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            app:layout_constraintDimensionRatio="1:1"
                             android:padding="16dp"
                             android:src="@drawable/ic_search_white"
+                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toStartOf="@+id/help"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:visibility="gone" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -144,7 +144,7 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/regular"
                 android:text="There is nothing in your order history"
-                android:textColor="#9b9b9b"
+                android:textColor="@color/text_color_9b9b"
                 android:textSize="@dimen/_12sdp" />
 
         </LinearLayout>

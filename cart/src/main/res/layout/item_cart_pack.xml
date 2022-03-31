@@ -5,14 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cart_packs_FL"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="2dp">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginLeft="@dimen/_8sdp"
-      android:layout_marginRight="@dimen/_8sdp"
+      android:layout_marginStart="16dp"
+      android:layout_marginEnd="16dp"
       android:layout_marginTop="@dimen/_2sdp"
       android:layout_marginBottom="@dimen/_2sdp"
       android:padding="0dp"
@@ -105,6 +104,7 @@
               android:fontFamily="@font/regular"
               android:text="Includes 4 addons"
               android:textColor="#4A4A4A"
+              android:textFontWeight="600"
               android:textSize="@dimen/txt_12sp"
               android:textStyle="normal" />
 
@@ -114,7 +114,7 @@
               android:layout_marginStart="55dp"
               android:layout_marginTop="5dp"
               android:layout_marginEnd="@dimen/_15sdp"
-              android:background="#F8F8F8">
+              android:background="@drawable/rounded_curve_bg_grey">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/child_recyclerview"
@@ -131,25 +131,17 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginStart="55dp"
-              android:layout_marginTop="20dp"
+              android:layout_marginTop="24dp"
               android:drawableStart="@drawable/ic_cart_pack_business_count_image"
               android:drawablePadding="5dp"
               android:gravity="center"
-              android:visibility="visible"
               android:text="Used by 10,000+ businesses"
               android:textColor="#7ED321"
-              android:textSize="@dimen/txt_12sp" />
+              android:textSize="@dimen/txt_12sp"
+              android:visibility="visible" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/package_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:padding="@dimen/_12sdp"
-            android:src="@drawable/ic_cart_pack_cross" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -170,6 +162,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="25dp"
+        android:layout_marginStart="6dp"
       android:fontFamily="@font/regular"
       android:textStyle="normal"
       android:background="@drawable/ic_super_value_pack"
@@ -177,5 +170,17 @@
       android:gravity="center"
       android:textColor="@color/white"
       android:textSize="10sp" />
-  </FrameLayout>
+
+
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/package_close"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="end"
+      android:padding="@dimen/_12sdp"
+      android:layout_marginTop="13dp"
+      android:layout_marginEnd="13dp"
+      android:src="@drawable/ic_cart_pack_cross" />
+
+</FrameLayout>
 
