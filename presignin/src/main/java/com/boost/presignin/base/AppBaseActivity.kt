@@ -1,23 +1,18 @@
 package com.boost.presignin.base
 
-import android.app.Activity
 import android.content.DialogInterface
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
-import android.view.Gravity
 import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.ViewDataBinding
 import com.boost.presignin.R
 import com.framework.base.BaseActivity

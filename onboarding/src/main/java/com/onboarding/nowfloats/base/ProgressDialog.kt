@@ -45,6 +45,7 @@ class ProgressDialog : BaseDialogFragment<DialogProgressBinding, BaseViewModel>(
 
   fun showProgress(manager: FragmentManager) {
     try {
+      hideProgress()
       if (this.isVisible.not()) show(manager, "")
     } catch (e: IllegalStateException) {
       e.printStackTrace()
