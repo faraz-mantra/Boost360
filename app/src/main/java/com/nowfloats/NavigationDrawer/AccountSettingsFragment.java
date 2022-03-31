@@ -151,7 +151,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         } else
                             startFragmentPaymentActivityNew(getActivity(), FragmentType.BUSINESS_KYC_VIEW, b1, false);
                         break;
-                    case "Boost extensions":
+                    case "JioOnline extensions":
                         intent = new Intent(mContext, Boost360ExtensionsActivity.class);
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

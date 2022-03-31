@@ -36,6 +36,8 @@ open class AppServiceApplication : BaseApplication() {
       RiaNowFloatsApiClient.shared.init(EndPoints.RIA_WITH_FLOATS_BASE)
       AzureWebsiteNetApiClient.shared.init(EndPoints.AZURE_WEBSITE_NET_URL)
       UsCentralNowFloatsCloudApiClient.shared.init(EndPoints.US_CENTRAL_BASE)
+      RiaMemoryWithFloatsApiClient.shared.init(EndPoints.RIA_MEMORY_BASE_URL)
+
     }
   }
 }

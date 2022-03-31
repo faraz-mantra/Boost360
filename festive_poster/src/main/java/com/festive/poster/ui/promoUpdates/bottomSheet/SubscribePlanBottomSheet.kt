@@ -147,7 +147,7 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
             val discountedPrice = price.minus(discountPrice)
 
             val cartItem = CartModel(it._kid,it.boost_widget_key,it.feature_code,it.name,
-                it.description_title,null,1.0,10.0,discountPrice.toInt(),
+                it.description_title,null,discountedPrice,price,discountPrice.toInt(),
                 1,minPurchaseMonth,"features")
 
             Completable.fromAction {

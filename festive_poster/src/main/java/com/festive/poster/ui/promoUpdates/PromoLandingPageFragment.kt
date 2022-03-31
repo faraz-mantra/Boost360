@@ -33,7 +33,7 @@ import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
 import kotlin.math.abs
 
-class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding, BaseViewModel>(),TodaysPickFragment.Callbacks {
+class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding, BaseViewModel>() {
 
     val browseTabFragment =BrowseTabFragment.newInstance()
     var currentPage:Int=0
@@ -108,7 +108,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
     private fun setupViewPager() {
 
         val fragmentList = arrayListOf(
-            TodaysPickFragment.newInstance(callbacks = this),
+            TodaysPickFragment.newInstance(),
             browseTabFragment,
             BlankFragment()
         )
@@ -189,7 +189,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
         }.attach()
 
         if (PreferencesUtils.instance.getData(PreferenceConstant.FIRST_LAUNCH_PROMO,true)){
-            setupTabBaloons(ToolTipType.FOR_TODAY)
+          //  setupTabBaloons(ToolTipType.FOR_TODAY)
             PreferencesUtils.instance.saveData(PreferenceConstant.FIRST_LAUNCH_PROMO,false)
         }
 
@@ -244,9 +244,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
 
     }
 
-    override fun onDataLoaded(data: ArrayList<PosterPackModel>) {
-       // browseTabFragment.setRealData(data)
-    }
+
 
     override fun onResume() {
         super.onResume()

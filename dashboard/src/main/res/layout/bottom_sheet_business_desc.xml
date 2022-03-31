@@ -50,6 +50,7 @@
         android:lines="10"
         android:minLines="6"
         android:scrollbars="vertical"
+        android:textColor="@color/black_4a4a4a"
         android:textSize="14sp" />
 
       <com.framework.views.customViews.CustomButton

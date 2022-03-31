@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.framework.base.BaseBottomSheetDialog
-import com.framework.constants.Constants
+import com.framework.constants.UPDATE_PIC_FILE_NAME
 import com.framework.models.BaseViewModel
 import com.framework.utils.saveAsImageToAppFolder
 import com.framework.utils.saveAsTempFile
@@ -98,14 +98,14 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
 
             binding!!.layoutTick->{
                 binding!!.ivCrop.croppedImage.saveAsImageToAppFolder(getExternalFilesDir(null)?.path+File.separator
-                + Constants.UPDATE_PIC_FILE_NAME)
+                + UPDATE_PIC_FILE_NAME)
                 setResult(Activity.RESULT_OK)
 
                 finish()
             }
             binding!!.ivDelete->{
                 File(getExternalFilesDir(null)?.path+File.separator
-                        + Constants.UPDATE_PIC_FILE_NAME).delete()
+                        + UPDATE_PIC_FILE_NAME).delete()
                 setResult(Activity.RESULT_OK)
                 finish()
             }

@@ -17,8 +17,8 @@ import com.framework.pref.UserSessionManager
 import kotlinx.android.synthetic.main.fragment_kyc_details.*
 import java.util.*
 
-class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, StaffViewModel>(),
-  RecyclerItemClickListener {
+class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, StaffViewModel>(), RecyclerItemClickListener {
+
   private var isEdit: Boolean? = null
   lateinit var data: List<DataItemService?>
   var adapter: AppBaseRecyclerViewAdapter<DataItemService>? = null
@@ -43,7 +43,6 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
     sessionLocal = UserSessionManager(requireActivity())
     init()
     getBundleData()
-
   }
 
   private fun getBundleData() {
@@ -57,7 +56,7 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
     showProgress(getString(R.string.loading_))
     val request =
       ServiceListRequest(FilterBy("ALL", 0, 0), "", floatingPointTag = sessionLocal.fpTag)
-    viewModel?.getServiceListing(request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getServiceListing(request)?.observeOnce(viewLifecycleOwner) {
       hideProgress()
       data = (it as? ServiceListResponse)?.result?.data ?: return@observeOnce
       setServiceCount()
@@ -79,10 +78,12 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
       }
       setServiceCount()
       adapter?.notifyDataSetChanged()
-    })
+    }
   }
 
   private fun init() {
+    binding?.ctvHeading?.text = if (isDoctor) getString(R.string.select_what_services_that_the_doctor_will_provide) else getString(R.string.select_what_services_that_the_staff_will_provide)
+    binding?.ctvSubheading?.text = if (isDoctor) getString(R.string.doctor_service_customer_know_provide_service_looking_for) else getString(R.string.staff_service_customer_know_provide_service_looking_for)
     fetchServices()
     setOnClickListener(binding?.flConfirmServices)
   }
@@ -109,18 +110,18 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
   private fun setServiceCount() {
     val serviceMsg = getString(R.string.service_selected)
     val servicesMsg = getString(R.string.services_selected)
-    val serviceButtonText = getString(R.string.service)
-    val servicesButtonText = getString(R.string.services)
+    val serviceButtonText = getString(R.string.service).lowercase(Locale.getDefault())
+    val servicesButtonText = getString(R.string.services).lowercase(Locale.getDefault())
     var serviceCount = ""
     var serviceConfirm = ""
     when {
       listServices?.size ?: 0 < 2 -> {
         serviceCount = "${listServices?.size}/${data.size} $serviceMsg"
-        serviceConfirm = "CONFIRM ${listServices?.size} $serviceButtonText"
+        serviceConfirm = "Confirm ${listServices?.size} $serviceButtonText"
       }
       else -> {
         serviceCount = "${listServices?.size}/${data.size} $servicesMsg"
-        serviceConfirm = "CONFIRM ${listServices?.size} $servicesButtonText"
+        serviceConfirm = "Confirm ${listServices?.size} $servicesButtonText"
       }
     }
 

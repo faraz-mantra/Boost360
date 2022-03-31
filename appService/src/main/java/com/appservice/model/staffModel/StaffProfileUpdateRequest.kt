@@ -1,7 +1,8 @@
 package com.appservice.model.staffModel
 
-import com.appservice.model.staffModel.SpecialisationsItem
+import com.framework.base.BaseRequest
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class StaffProfileUpdateRequest(
   @field:SerializedName("isAvailable")
@@ -34,32 +35,32 @@ data class StaffProfileUpdateRequest(
   var specialisations: ArrayList<SpecialisationsItem>? = null,
 
   @field:SerializedName("Memberships")
-  val memberships: String? = null,
+  var memberships: String? = null,
 
   @field:SerializedName("BusinessLicence")
-  val businessLicence: String? = null,
+  var businessLicence: String? = null,
 
 
   @field:SerializedName("Speciality")
-  val speciality: String? = null,
+  var speciality: String? = null,
 
   @field:SerializedName("BookingWindow")
-  val bookingWindow: String? = null,
+  var bookingWindow: Int? = null,
 
 
   @field:SerializedName("AppointmentType")
-  val appointmentType: String? = null,
+  var appointmentType: Int? = null,
 
 
   @field:SerializedName("Education")
-  val education: String? = null,
+  var education: String? = null,
 
   @field:SerializedName("Registration")
-  val registration: String? = null,
+  var registration: String? = null,
 
 
   @field:SerializedName("ContactNumber")
-  val contactNumber: String? = null
-)
+  var contactNumber: String? = null
+) : BaseRequest(), Serializable
 
 

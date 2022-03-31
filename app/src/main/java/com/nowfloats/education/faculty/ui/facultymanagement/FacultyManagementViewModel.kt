@@ -38,8 +38,8 @@ class FacultyManagementViewModel(private val service: IEducationService) : BaseV
 
   private var _deleteFacultyResponse = MutableLiveData<String>()
 
-  fun getOurFaculty() {
-    val value = "{WebsiteId:'" + WEBSITE_ID_EDUCATION + "'}"
+  fun getOurFaculty(fpTag: String) {
+    val value = "{WebsiteId:'" + fpTag + "'}"
     compositeDisposable.add(service.getOurFaculty(AUTH_CODE, value, LIMIT, SKIP).processRequest(
       {
         _ourFacultyResponse.value = it

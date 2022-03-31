@@ -18,6 +18,5 @@ class FestivePosterSharedViewModel: BaseViewModel() {
     var shouldRefresh = false
 
     var todaysPosterPackList:ArrayList<PosterPackModel>?=null
-    var browseAllPosterPackList:ArrayList<PosterPackModel>?=null
 
 }

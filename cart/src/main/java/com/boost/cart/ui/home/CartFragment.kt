@@ -65,7 +65,7 @@ import com.boost.cart.ui.compare.ComparePackageFragment
 import com.boost.payment.PaymentActivity
 import com.framework.analytics.SentryController
 import com.boost.dbcenterapi.upgradeDB.model.*
-import com.framework.constants.Constants.MARKET_PLACE_ORIGIN_NAV_DATA
+import com.framework.constants.IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_title
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_value
 import kotlinx.android.synthetic.main.cart_fragment.igst_value
@@ -221,8 +221,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       prefs.storeCartOrderInfo(null)
       prefs.storeApplyedCouponDetails(null)
 //            totalCalculation()
-//      couponCode = ""
-//      couponServiceModel = null
+      couponCode = ""
+      couponServiceModel = null
 
       totalCalculationAfterCoupon()
     }

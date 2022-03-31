@@ -2,6 +2,7 @@
 <layout>
     <com.framework.views.customViews.CustomCardView
         app:cardCornerRadius="@dimen/size_15"
+        app:cardBackgroundColor="@color/colorPrimary"
         android:layout_marginHorizontal="@dimen/size_12"
         android:layout_marginVertical="@dimen/size_8"
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,11 +14,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
+            <com.framework.views.customViews.CustomImageView
                 android:layout_width="match_parent"
+                android:id="@+id/iv_icon"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_dummy_browse_cat_icon" />
+                 />
             <LinearLayout
                 android:gravity="center"
                 android:layout_centerInParent="true"

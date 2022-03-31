@@ -32,7 +32,8 @@ import com.appservice.viewmodel.UpdatesViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.framework.constants.Constants
+import com.framework.constants.IntentConstants
+import com.framework.constants.UPDATE_PIC_FILE_NAME
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -45,6 +46,7 @@ import com.framework.pref.Key_Preferences.PREF_NAME_TWITTER
 import com.framework.utils.*
 import com.google.firebase.firestore.ListenerRegistration
 import com.onboarding.nowfloats.bottomsheet.util.runOnUi
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -99,7 +101,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
           result: ActivityResult ->
         if (result.resultCode==Activity.RESULT_OK){
           val imgFile = File(
-          requireActivity().getExternalFilesDir(null)?.path+File.separator+Constants.UPDATE_PIC_FILE_NAME)
+          requireActivity().getExternalFilesDir(null)?.path+File.separator+UPDATE_PIC_FILE_NAME)
         if (imgFile.exists()&&isImageValid(imgFile)){
             loadImage(imgFile.path)
         }else{
@@ -125,6 +127,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
       val bitMapOption: BitmapFactory.Options = BitmapFactory.Options()
       bitMapOption.inJustDecodeBounds = true
+      bitMapOption.inScaled = false
       BitmapFactory.decodeFile(imgFile.path, bitMapOption)
       val imageWidth: Int = bitMapOption.outWidth
       val imageHeight: Int = bitMapOption.outHeight
@@ -149,14 +152,15 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
 
   private fun capLimitCheck() {
-    val featureUpdate = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureType.LATESTUPDATES)
+    val featureUpdate = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureKey.LATESTUPDATES)
     val capLimitUpdate = featureUpdate?.filterProperty(PropertiesItem.KeyType.LIMIT)
     if (/*isUpdate.not() && */capLimitUpdate != null) {
       viewModel?.getMessageUpdates(sessionLocal.getRequestUpdate(PaginationScrollListener.PAGE_START))?.observeOnce(viewLifecycleOwner, {
         val data = it as? BusinessUpdateResponse
         if (data?.totalCount != null && capLimitUpdate.getValueN() != null && data.totalCount!! >= capLimitUpdate.getValueN()!!) {
           baseActivity.hideKeyBoard()
-          showAlertCapLimit("Can't add the business update, please activate your premium Add-ons plan.",CapLimitFeatureResponseItem.FeatureType.LATESTUPDATES.name)
+          showAlertCapLimit("Can't add the business update, please activate your premium Add-ons plan.",
+            CapLimitFeatureResponseItem.FeatureKey.LATESTUPDATES.name)
         }
       })
     }
@@ -235,7 +239,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       getString(R.string.add_image_optional),
       "Add image"
     )
-    lisReg = FirestoreManager.readDraft {
+    FirestoreManager.readDraft {
       if (activity != null && isAdded) {
 
         binding!!.etUpdate.setText(highlightHashTag(it?.content, R.color.black_4a4a4a))
@@ -245,16 +249,19 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
         lifecycleScope.launch {
           withContext(Dispatchers.IO) {
             if (it?.imageUri.isNullOrEmpty().not()) {
-              val imageurl = URL(it!!.imageUri)
-              val bitmap = BitmapFactory.decodeStream(imageurl.openConnection().getInputStream())
+              Log.i(TAG, "initUI: ${it?.imageUri}")
+              val bitmap = Picasso.get().load(it?.imageUri).get()
               val imgFile = File(
                 requireActivity().getExternalFilesDir(null)?.path + File.separator
-                        + Constants.UPDATE_PIC_FILE_NAME
+                        + UPDATE_PIC_FILE_NAME
               )
               bitmap.saveAsImageToAppFolder(imgFile.path)
+
               runOnUi {
                 loadImage(imgFile.path)
               }
+            }else{
+              loadImage(null)
             }
             runOnUi {
               toggleContinue()
@@ -396,9 +403,12 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       binding!!.tvPreviewAndPost->{
         startActivity(Intent(requireActivity(), Class.forName(
           "com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity"))
-          .putExtra(Constants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
-            putString("IK_CAPTION_KEY",binding!!.etUpdate.text.toString())
-            putString("IK_POSTER", posterImagePath)
+          .putExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
+            putString(IntentConstants.IK_CAPTION_KEY,binding!!.etUpdate.text.toString())
+            putString(IntentConstants.IK_POSTER, posterImagePath)
+            putString(IntentConstants.IK_UPDATE_TYPE,
+              if (posterImagePath==null) IntentConstants.UpdateType.UPDATE_TEXT.name
+              else IntentConstants.UpdateType.UPDATE_IMAGE_TEXT.name)
           }))
         Log.i(TAG, "onClick: ${binding!!.etUpdate.text.toString().extractHashTag()}")
       }

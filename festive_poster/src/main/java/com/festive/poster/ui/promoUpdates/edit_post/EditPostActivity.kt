@@ -25,8 +25,9 @@ import com.festive.poster.ui.promoUpdates.bottomSheet.DeleteDraftBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.EditTemplateBottomSheet
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.viewmodels.FestivePosterViewModel
-import com.framework.constants.Constants
 import com.framework.analytics.SentryController
+import com.framework.constants.IntentConstants
+import com.framework.constants.UPDATE_PIC_FILE_NAME
 import com.framework.extensions.gone
 import com.framework.pref.UserSessionManager
 import com.framework.utils.STTUtils
@@ -231,11 +232,14 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
                     lifecycleScope.launch {
                         withContext(Dispatchers.Default){
                            val file =  SvgUtils.svgToBitmap(it)
-                                ?.saveAsImageToAppFolder(getExternalFilesDir(null)?.path+File.separator+Constants.UPDATE_PIC_FILE_NAME)
+                                ?.saveAsImageToAppFolder(getExternalFilesDir(null)?.path+File.separator+UPDATE_PIC_FILE_NAME)
                             if (file?.exists() == true){
-                                PostPreviewSocialActivity.launchActivity(this@EditPostActivity,binding?.captionLayout?.etInput?.text.toString(),
-                                    file.path
-                                    )
+                                PostPreviewSocialActivity.launchActivity(
+                                    this@EditPostActivity,binding?.captionLayout?.etInput?.text.toString(),
+                                    file.path,
+                                posterModel?.tags,
+                                    IntentConstants.UpdateType.UPDATE_PROMO_POST.name
+                                )
                             }
 
                         }

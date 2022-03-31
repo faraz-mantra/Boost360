@@ -17,6 +17,7 @@ import com.framework.firebaseUtils.firestore.restApi.repository.DrScoreRepositor
 import com.framework.models.UpdateDraftBody
 import com.framework.models.toLiveData
 import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.ktx.toObject
 import io.reactivex.Observable
 import com.google.gson.reflect.TypeToken
 
@@ -79,15 +80,16 @@ object FirestoreManager {
     }
   }
 
-  fun readDraft(listener:((UpdateDraftBody?)->Unit)): ListenerRegistration? {
-    return db?.collection(DRAFT_COLLECTION)?.document(this.fpTag)?.
-    addSnapshotListener { value, error ->
-              if (error == null) {
-                listener.invoke(value?.data?.toDataClass<UpdateDraftBody>())
-              }else{
-                listener.invoke(null)
-              }
-            }
+  fun readDraft(listener:((UpdateDraftBody?)->Unit)) {
+    db?.collection(DRAFT_COLLECTION)?.document(this.fpTag)?.
+      get()?.addOnCompleteListener {
+      if (it.isSuccessful) {
+        listener.invoke(it.result.toObject<UpdateDraftBody>())
+      }else{
+        listener.invoke(null)
+      }
+    }
+
 
   }
 

@@ -1,5 +1,6 @@
 package com.festive.poster.ui.promoUpdates.holders
 
+import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.LayoutViewMoreTemplateBinding
 import com.festive.poster.databinding.ListItemSocialConnBinding
 import com.festive.poster.models.promoModele.SocialConnModel
@@ -14,5 +15,9 @@ class ViewMoreViewHolder(binding: LayoutViewMoreTemplateBinding):
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
 
+        binding.btnMore.setOnClickListener {
+            listener?.onItemClick(position,item,
+                RecyclerViewActionType.POSTER_VIEW_MORE_CLICKED.ordinal)
+        }
     }
 }

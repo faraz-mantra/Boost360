@@ -33,14 +33,7 @@
 
         <include
           android:id="@+id/service_empty"
-          layout="@layout/fragment_service_listing_empty"
-          android:visibility="gone" />
-
-<!--        <include-->
-<!--          android:id="@+id/staff_empty"-->
-<!--          layout="@layout/fragment_staff_listing_empty"-->
-<!--          android:visibility="gone" />-->
-
+          layout="@layout/fragment_service_listing_empty" />
 
         <ProgressBar
           android:id="@+id/progress"
@@ -53,14 +46,26 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <FrameLayout
-        android:visibility="gone"
-        android:id="@+id/child_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-<!--    <include-->
-<!--      android:id="@+id/staff_lock"-->
-<!--      layout="@layout/staff_lock_view"-->
-<!--      android:visibility="visible" />-->
+      android:id="@+id/child_container"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:visibility="gone" />
+
+    <com.framework.views.fabButton.FloatingActionButton
+      android:id="@+id/add_staff_doctor"
+      style="@style/wrap_wrap"
+      android:layout_gravity="bottom|end"
+      android:layout_margin="16dp"
+      android:backgroundTint="@color/colorAccentLight"
+      android:clickable="true"
+      android:focusable="true"
+      android:fontFamily="@font/semi_bold"
+      android:gravity="center"
+      android:textColor="@color/white"
+      app:fabIcon="@drawable/ic_add_white"
+      app:fabIconPosition="start"
+      app:fabSize="normal"
+      app:fabType="circle" />
   </FrameLayout>
 
 </layout>

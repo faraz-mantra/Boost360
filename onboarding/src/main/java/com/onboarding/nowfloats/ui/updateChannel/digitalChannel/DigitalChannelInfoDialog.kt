@@ -111,7 +111,7 @@ class DigitalChannelInfoDialog :
     when (v) {
       binding?.confirm -> this.dismiss()
       binding?.dismiss -> this.dismiss()
-      binding?.clickHelp -> baseActivity.makeCall(getString(R.string.contact_us_number_n))
+      binding?.clickHelp -> makeCall(getString(R.string.contact_us_number))
       binding?.disableBtn, binding?.optInOutBtn -> showLongToast(getString(R.string.coming_soon))
       binding?.disconnectBtn -> {
         channelModel?.let { onClickedDisconnect(it) }

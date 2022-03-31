@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.framework.R
 import com.framework.utils.InAppReviewUtils
+import com.framework.utils.convertJsonToObj
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfig
@@ -17,6 +18,8 @@ const val IN_APP_UPDATE_TYPE_IMMEDIATE = "in_app_update_type_immediate"
 const val K_ADMIN_URL = "k_admin_url"
 const val NEW_ONBOARDING_WITH_UPDATED_CATEGORIES_AND_GUI_ACTIVE = "new_onboarding_with_updated_categories_and_gui_active"
 const val FEATURE_ERROR_HANDLING_ENABLE = "feature_error_handling_enable"
+const val FEATURE_UPDATE_STUDIO_SELECTED_USERS="feature_update_studio_selected_users"
+const val PERMISSION_FACEBOOK = "permissions_facebook"
 
 object FirebaseRemoteConfigUtil {
 
@@ -79,13 +82,25 @@ object FirebaseRemoteConfigUtil {
     }
   }
 
-  fun isInAppReviewFlagEnabled(event:InAppReviewUtils.Events): Boolean {
-    val status =remoteConfig?.getBoolean(event.name)
+  fun permissionListFacebookPage(): List<String> {
+    Log.d(TAG, "permission list facebook page: ${remoteConfig?.getString(PERMISSION_FACEBOOK) ?: ""}")
+    return (remoteConfig?.getString(PERMISSION_FACEBOOK) ?: "").split(",")
+  }
+
+  fun isInAppReviewFlagEnabled(event: InAppReviewUtils.Events): Boolean {
+    val status = remoteConfig?.getBoolean(event.name)
     return status ?: false
   }
+
+  fun featureUpdateStudioSelectedUsers(fpId:String?): Boolean {
+    val selectedFps =remoteConfig?.getString(FEATURE_UPDATE_STUDIO_SELECTED_USERS)
+
+    return fpId?.let { selectedFps?.contains(it) } == true
+  }
+
 }
 
-enum class UpdateType{
+enum class UpdateType {
   FLEXIBLE,
   IMMEDIATE
 }

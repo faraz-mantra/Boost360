@@ -3,7 +3,6 @@ package com.festive.poster.ui.promoUpdates
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.Constants
@@ -24,7 +23,6 @@ import com.framework.base.BaseActivity
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.utils.toArrayList
 
@@ -164,7 +162,6 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
                         )
 
                     }
-                    sharedViewModel?.browseAllPosterPackList = dataList
                     // getPriceOfPosterPacks()
                     // rearrangeList()
                     val adapter = AppBaseRecyclerViewAdapter(

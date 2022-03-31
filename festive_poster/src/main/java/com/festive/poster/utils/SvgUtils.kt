@@ -19,7 +19,6 @@ import com.festive.poster.models.PosterModel
 import com.festive.poster.utils.SvgUtils.getSvgAsAString
 import com.framework.BaseApplication
 import com.framework.analytics.SentryController
-import com.framework.constants.Constants
 import com.framework.constants.PackageNames
 import com.framework.glide.customsvgloader.*
 import com.framework.utils.RegexUtils

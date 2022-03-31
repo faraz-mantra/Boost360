@@ -90,7 +90,7 @@ public class VmnCall_v2Adapter extends RecyclerView.Adapter<VmnCall_v2Adapter.My
         } else {
             holder.date.setText(getDate(Methods.getFormattedDate(childModel.getCallDateTime())));
             if (childModel.getCallStatus().equalsIgnoreCase("MISSED")) {
-                holder.date.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(mContext, R.drawable.ic_call_missed), null, null, null);
+                holder.date.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(mContext, R.drawable.ic_call_missed_app_service), null, null, null);
                 holder.play.setText("Missed\nCall");
                 holder.play.setTextColor(ContextCompat.getColor(mContext, R.color.gray_transparent));
                 holder.play.setPaintFlags(holder.play.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
@@ -100,7 +100,7 @@ public class VmnCall_v2Adapter extends RecyclerView.Adapter<VmnCall_v2Adapter.My
                 } else {
                     holder.play.setTextColor(ContextCompat.getColor(mContext, R.color.gray));
                 }
-                holder.date.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(mContext, R.drawable.ic_call_received), null, null, null);
+                holder.date.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(mContext, R.drawable.ic_call_received_app_service), null, null, null);
                 holder.play.setText(mContext.getString(R.string.play_with_underline));
                 holder.play.setPaintFlags(holder.play.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                 holder.play.setOnClickListener(new View.OnClickListener() {

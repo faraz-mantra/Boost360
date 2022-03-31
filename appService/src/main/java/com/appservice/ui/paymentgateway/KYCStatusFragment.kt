@@ -90,7 +90,8 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
       activity?.glideLoad(
         binding?.ivPanCardImage!!,
         it,
-        R.drawable.placeholder_image
+        R.drawable.placeholder_image,
+        isBlur = true
       )
     }
     binding?.tvPanNumber?.text = dataKyc.panNumber?.toUpperCase(Locale.ROOT)
