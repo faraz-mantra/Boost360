@@ -109,17 +109,17 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     val subDomain = binding?.addressInputLayout?.etInput?.text.toString().lowercase()
     if (!TextUtils.isEmpty(subDomain)) {
       val data = BusinessDomainRequest(clientId2, subDomain, subDomain)
-      viewModel?.postCheckBusinessDomain(data)?.observeOnce(viewLifecycleOwner, { response ->
+      viewModel?.postCheckBusinessDomain(data)?.observeOnce(viewLifecycleOwner) { response ->
         hideProgress()
         if (response.isSuccess() && response.stringResponse.isNullOrEmpty().not()) {
           onSuccess.invoke()
         } else {
           websiteNameFieldUiVisibility(websiteNameFieldVisibility = 2)
         }
-      })
+      }
     } else {
+      hideProgress()
       websiteNameFieldUiVisibility(websiteNameFieldVisibility = 2)
-      //errorSet()
     }
   }
 
@@ -180,7 +180,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
   private fun putCreateBusinessOnBoarding(response: BusinessProfileResponse) {
     this.responseCreateProfile = response
     val request = getBusinessRequest()
-    viewModel?.putCreateBusinessV6(response.result?.loginId, request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.putCreateBusinessV6(response.result?.loginId, request)?.observeOnce(viewLifecycleOwner) {
       val result = it as? FloatingPointCreateResponse
       if (result?.isSuccess() == true && result.authTokens.isNullOrEmpty().not()) {
         val authToken = result.authTokens?.firstOrNull()
@@ -213,7 +213,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         showShortToast(if (msg.isNotEmpty()) msg else getString(R.string.error_create_business_fp))
       }
       hideProgress()
-    })
+    }
   }
 
   private fun initRequest() {
@@ -274,9 +274,8 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     initRequest()
     WebEngageController.trackEvent(PS_SIGNUP_LAUNCHING_TRANSITION, PAGE_VIEW, NO_EVENT_VALUE)
     showProgress("We're creating your online ${businessName}...")
-    //showProgress("We're creating your online ${categoryFloatsReq?.categoryDataModel?.getCategoryWithoutNewLine()}...")
     if (this.responseCreateProfile == null) {
-      viewModel?.createMerchantProfile(request = categoryFloatsReq?.requestProfile)?.observeOnce(viewLifecycleOwner, {
+      viewModel?.createMerchantProfile(request = categoryFloatsReq?.requestProfile)?.observeOnce(viewLifecycleOwner) {
         val businessProfileResponse = it as? BusinessProfileResponse
         if (it.isSuccess() && businessProfileResponse != null && businessProfileResponse.result?.loginId.isNullOrEmpty().not()) {
           apiHitBusiness(businessProfileResponse)
@@ -285,7 +284,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
           val msg = it?.errorNMessage()
           showShortToast(if (msg.isNullOrEmpty().not()) msg else getString(R.string.unable_to_create_profile))
         }
-      })
+      }
     } else apiHitBusiness(this.responseCreateProfile!!)
   }
 

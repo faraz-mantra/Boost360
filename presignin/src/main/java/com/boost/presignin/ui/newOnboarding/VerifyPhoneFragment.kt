@@ -190,12 +190,12 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
 
   private fun sendOtp(phoneNumber: String?) {
     showProgress(getString(R.string.sending_otp))
-    viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess() && it.parseResponse()) {
         onCodeSent()
       } else showShortToast(if (it.message.isNullOrEmpty().not()) it.message else getString(R.string.otp_not_sent))
       hideProgress()
-    })
+    }
   }
 
   fun verify() {
@@ -205,7 +205,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
       showProgress(getString(R.string.verify_otp))
       WebEngageController.trackEvent(PS_VERIFY_OTP_VERIFY, OTP_VERIFY_CLICK, NO_EVENT_VALUE)
       val otp = binding?.pinOtpVerify?.otp
-      viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId)?.observeOnce(viewLifecycleOwner, {
+      viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId)?.observeOnce(viewLifecycleOwner) {
         hideProgress()
         this.resultLogin = null
         if (it.isSuccess()) {
@@ -219,7 +219,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
             if (binding?.linearWhatsApp?.visibility == View.VISIBLE) moveToWelcomeScreen(phoneNumber) else showBusinessWhatsapp()
           }
         } else showLongToast(getString(R.string.wrong_otp_tv))
-      })
+      }
     }
   }
 
@@ -231,10 +231,10 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
   private fun apiWhatsappOptin() {
     if (binding?.chkWhatsapp?.isChecked == true) {
       showProgress()
-      viewModel?.whatsappOptIn(0, phoneNumber, customerId = loginId)?.observeOnce(viewLifecycleOwner, {
+      viewModel?.whatsappOptIn(0, phoneNumber, customerId = loginId)?.observeOnce(viewLifecycleOwner) {
         hideProgress()
         if (it.isSuccess()) loadNextPage() else showShortToast(it.message())
-      })
+      }
     } else loadNextPage()
   }
 
