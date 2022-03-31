@@ -9,9 +9,10 @@ object IntentConstants {
     val IK_TAGS="IK_TAGS"
     val IK_UPDATE_TYPE="IK_UPDATE_TYPE"
 
-    enum class UpdateType{
-        UPDATE_PROMO_POST,
-        UPDATE_IMAGE_TEXT,
-        UPDATE_TEXT
+    enum class UpdateType(val value:Int){
+        ALL(0),
+        UPDATE_PROMO_POST(1),
+        UPDATE_IMAGE_TEXT(2),
+        UPDATE_TEXT(3)
     }
 }

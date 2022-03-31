@@ -93,9 +93,9 @@ object FirebaseRemoteConfigUtil {
   }
 
   fun featureUpdateStudioSelectedUsers(fpId:String?): Boolean {
-//    val selectedFps:ArrayList<String>? = convertJsonToObj(remoteConfig?.getString(FEATURE_UPDATE_STUDIO_SELECTED_USERS))
-    val selectedFps = arrayListOf("BCB","MANUFACTURING","ECONOMYHOTELS","DOCTORS","TANZO","EDUCATION","CLINICS")
-    return selectedFps?.contains(fpId) == true
+    val selectedFps =remoteConfig?.getString(FEATURE_UPDATE_STUDIO_SELECTED_USERS)
+
+    return fpId?.let { selectedFps?.contains(it) } == true
   }
 
 }
