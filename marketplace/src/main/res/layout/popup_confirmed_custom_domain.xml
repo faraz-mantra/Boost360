@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <data>
 
     </data>
+
 <RelativeLayout
     android:id="@+id/upi_popup_outer_layout"
     android:layout_width="match_parent"
@@ -58,7 +58,7 @@
                 android:fontFamily="@font/regular"
                 android:lineHeight="17.42dp"
                 android:text="Do you wish to purchase “Custom Domain” feature with the selected domain name?"
-                android:textColor="#4A4A4A"
+                android:textColor="@color/common_text_color"
                 android:textFontWeight="400"
                 android:textSize="@dimen/txt_12sp"
                 app:layout_constraintEnd_toEndOf="parent"
