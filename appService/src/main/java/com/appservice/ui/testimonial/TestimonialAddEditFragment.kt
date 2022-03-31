@@ -10,8 +10,6 @@ import com.appservice.model.SessionData
 
 class TestimonialAddEditFragment : BaseTestimonialFragment<FragmentTestimonialAddEditBinding>() {
 
-  private var session: SessionData? = null
-  private var isEdit: Boolean = false
   private var menuDelete: MenuItem? = null
 
   companion object {
@@ -21,10 +19,6 @@ class TestimonialAddEditFragment : BaseTestimonialFragment<FragmentTestimonialAd
       fragment.arguments = bundle
       return fragment
     }
-  }
-
-
-  fun onNavPressed() {
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
