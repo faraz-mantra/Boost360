@@ -100,6 +100,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     setOnClickListeners()
     binding?.addressInputLayout?.etInput?.setText(businessName?.replace("\\s+".toRegex(), "")?.lowercase())
     apiCheckDomain {
+      hideProgress()
       websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1)
     }
   }
@@ -110,7 +111,6 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     if (!TextUtils.isEmpty(subDomain)) {
       val data = BusinessDomainRequest(clientId2, subDomain, subDomain)
       viewModel?.postCheckBusinessDomain(data)?.observeOnce(viewLifecycleOwner) { response ->
-        hideProgress()
         if (response.isSuccess() && response.stringResponse.isNullOrEmpty().not()) {
           onSuccess.invoke()
         } else {
@@ -149,6 +149,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
             binding?.addressInputLayout?.etInput?.isEnabled = false
             binding?.addressInputLayout?.ivIcon?.visible()
             apiCheckDomain {
+              hideProgress()
               websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1)
             }
             //websiteNameFieldUiVisibility()
@@ -273,7 +274,6 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
   private fun apiHitCreateMerchantProfile() {
     initRequest()
     WebEngageController.trackEvent(PS_SIGNUP_LAUNCHING_TRANSITION, PAGE_VIEW, NO_EVENT_VALUE)
-    showProgress("We're creating your online ${businessName}...")
     if (this.responseCreateProfile == null) {
       viewModel?.createMerchantProfile(request = categoryFloatsReq?.requestProfile)?.observeOnce(viewLifecycleOwner) {
         val businessProfileResponse = it as? BusinessProfileResponse
