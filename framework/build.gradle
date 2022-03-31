@@ -46,6 +46,13 @@ android {
     }
 
     flavorDimensions "default"
+    sourceSets {
+        jioonline {
+            res {
+                srcDirs 'src/jioonline/res'
+            }
+        }
+    }
     productFlavors {
         partone {
             dimension "default"

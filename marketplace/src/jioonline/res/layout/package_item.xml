@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_2sdp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:padding="0dp"
+            app:cardCornerRadius="@dimen/_15sdp"
+            app:cardElevation="@dimen/_2sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <RelativeLayout
+                    android:id="@+id/package_primary_image_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <View
+                        android:layout_width="@dimen/_65sdp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_ellipse" />
+
+                    <ImageView
+                        android:id="@+id/package_primary_image"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:src="@drawable/rectangle_copy_18" />
+
+                    <ImageView
+                        android:id="@+id/package_primary_image_copy"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:src="@drawable/rectangle_copy_18"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/package_primary_image_layout"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/package_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="2.3sp"
+                        android:text="Get 6 more add-ons"
+                        android:fontFamily="@font/regular"
+                        android:textColor="@color/common_text_color"
+                        android:textFontWeight="600"
+                        android:textSize="@dimen/txt_16sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/package_amount_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/package_count">
+
+                        <TextView
+                            android:id="@+id/bundle_price_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="0dp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:text="Just for"
+                            android:textColor="#9b9b9b"
+                            android:textSize="@dimen/_8sdp"
+                            tools:visibility="visible"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/bundle_level_discount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_7sdp"
+                            android:background="@drawable/all_side_curve_percentage_bg"
+                            android:fontFamily="@font/semi_bold"
+                            android:gravity="center"
+                            android:text="0%"
+                            android:textColor="@color/common_text_color"
+                            android:textSize="@dimen/txt_10sp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/offer_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="0dp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:text="₹2,099/month"
+                            android:textColor="#828282"
+                            android:fontFamily="@font/semi_bold"
+                            android:textFontWeight="600"
+                            android:textSize="@dimen/txt_11sp" />
+
+                        <TextView
+                            android:id="@+id/orig_cost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="0dp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:text="₹2,559/month"
+                            android:textColor="#828282"
+                            android:textFontWeight="400"
+                            android:fontFamily="@font/regular"
+                            android:textSize="@dimen/txt_11sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/package_button_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/getnow_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/recycler"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/cta_button_click_effect"
+                            android:fontFamily="@font/semi_bold"
+                            android:gravity="center"
+                            android:paddingStart="@dimen/_15sdp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingEnd="@dimen/_15sdp"
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:text="Add To Cart"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textFontWeight="800"
+                            android:textSize="@dimen/txt_10sp" />
+
+                        <TextView
+                            android:id="@+id/details_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/recycler"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/share_helper_click_effect"
+                            android:fontFamily="@font/semi_bold"
+                            android:gravity="center"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:paddingStart="@dimen/_15sdp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingEnd="@dimen/_15sdp"
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:text="Details"
+                            android:textAllCaps="false"
+                            android:textColor="#FFB900"
+                            android:textFontWeight="800"
+                            android:textSize="@dimen/txt_10sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

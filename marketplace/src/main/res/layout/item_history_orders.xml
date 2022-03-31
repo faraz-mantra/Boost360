@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/semi_bold"
             android:text="Today"
             android:textColor="#4A4A4A"
             android:textSize="@dimen/_15sdp"
