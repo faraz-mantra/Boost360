@@ -22,11 +22,8 @@ import java.util.*
 
 class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListBinding>(), AppOnZeroCaseClicked {
 
-  private var isEdit: Boolean = false
-  private var headerToken = "59c89bbb5d64370a04c9aea1"
-  private var testimonialType = "testimonials"
-  private val allTestimonialType = listOf("testimonials", "testimonial", "guestreviews")
   private val TAG = "TestimonialListFragment"
+
   companion object {
     @JvmStatic
     fun newInstance(bundle: Bundle? = null): TestimonialListFragment {
@@ -39,49 +36,22 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
   override fun onCreateView() {
     super.onCreateView()
     Log.i(TAG, "onCreateView: ")
-    hitApi(viewModel?.getWebActionList(webTemplateId, fpTag), R.string.error_getting_web_action)
+//    hitApi(viewModel?.getWebActionList(webTemplateId, fpTag), R.string.error_getting_web_action)
   }
 
   override fun onSuccess(it: BaseResponse) {
     when (it.taskcode) {
       TaskCode.GET_WEB_ACTION_TESTIMONIAL.ordinal -> {
         val data = (it as? TestimonialWebActionResponse)
-        if (data?.webActions.isNullOrEmpty().not()) {
-          loopBreak@ for (action in data?.webActions!!) {
-            for (type in allTestimonialType) {
-              if (action?.name.equals(type, ignoreCase = true)) {
-                testimonialType = action?.name!!
-                break@loopBreak
-              }
-            }
-          }
-        }
-        data?.token?.let { headerToken = it }
-        val query = JSONObject()
-        query.put("WebsiteId", fpTag)
-        hitApi(
-          viewModel?.getTestimonialsList(headerToken, testimonialType, query, 0, 10000),
-          R.string.error_getting_web_action
-        )
+//        hitApi(
+//          viewModel?.getTestimonialsList(headerToken, testimonialType, query, 0, 10000),
+//          R.string.error_getting_web_action
+//        )
       }
       TaskCode.GET_TESTIMONIAL.ordinal -> {
         val response = (it as? TestimonialDataResponse)
-        if (response?.data.isNullOrEmpty().not()) {
-//          binding?.emptyLayout?.gone()
-          binding?.rvTestimonial?.visible()
-          setTestimonialAdapter(response?.data!!)
-        } else {
-          binding?.rvTestimonial?.gone()
-//          binding?.emptyLayout?.visible()
-         
-
-        }
       }
     }
-  }
-
-  private fun setTestimonialAdapter(data: ArrayList<TestimonialData>) {
-
   }
 
   override fun onFailure(it: BaseResponse) {
@@ -93,24 +63,10 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
     super.onCreateOptionsMenu(menu, inflater)
   }
 
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    return when (item.itemId) {
-      R.id.menu_add -> {
-        addTestimonial()
-        true
-      }
-      else -> super.onOptionsItemSelected(item)
-    }
-  }
 
   private fun addTestimonial() {
     val bundle: Bundle = Bundle.EMPTY
-    startTestimonialFragmentActivity(
-      FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT,
-      bundle,
-      clearTop = false,
-      isResult = true
-    )
+    startTestimonialFragmentActivity(FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT, bundle, clearTop = false, isResult = true)
   }
 
   override fun primaryButtonClicked() {
@@ -127,6 +83,5 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
   override fun appOnBackPressed() {
 
   }
-
 
 }
