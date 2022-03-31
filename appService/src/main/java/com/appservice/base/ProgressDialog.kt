@@ -46,6 +46,7 @@ class ProgressDialog : BaseDialogFragment<ProgressDialogBinding, BaseViewModel>(
 
   fun showProgress(manager: FragmentManager) {
     try {
+      hideProgress()
       if (this.isVisible.not()) show(manager, ProgressDialog::class.java.simpleName)
     } catch (e: Exception) {
       SentryController.captureException(e)
