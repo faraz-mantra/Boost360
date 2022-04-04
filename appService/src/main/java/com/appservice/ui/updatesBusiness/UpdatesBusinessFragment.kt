@@ -31,6 +31,7 @@ import com.framework.base.BaseResponse
 import com.framework.constants.SupportVideoType
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
@@ -82,7 +83,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
     scrollPagingListener()
     listUpdateApi(offSet = offSet)
     binding?.btnAdd?.setOnClickListener {
-      startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2, isResult = true)
+      goToAddUpdate()
     }
     this.zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.LATEST_NEWS_UPADATES, this, baseActivity).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
@@ -264,8 +265,17 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
   }
 
   override fun primaryButtonClicked() {
-    startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2, isResult = true)
+    goToAddUpdate()
 
+  }
+
+  private fun goToAddUpdate() {
+    if (FirebaseRemoteConfigUtil.featureUpdateStudioSelectedUsers(UserSessionManager(requireActivity())?.fpTag)){
+      val posterIntent = Intent(requireActivity(), Class.forName("com.festive.poster.ui.promoUpdates.PromoUpdatesActivity"))
+      startActivity(posterIntent)
+    }
+    else
+      startUpdateFragmentActivity(com.appservice.constant.FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT)
   }
 
   override fun secondaryButtonClicked() {

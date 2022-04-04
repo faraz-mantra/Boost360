@@ -38,13 +38,15 @@ class FavouriteListFragment: AppBaseFragment<FragmentFavouriteListBinding, PostU
         return PostUpdatesViewModel::class.java
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+
+    override fun onCreateView() {
+        super.onCreateView()
         binding.rvCat.layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false)
         binding.rvPosters.layoutManager = LinearLayoutManager(requireActivity())
         getFavTemp()
-
     }
+
 
     private fun getFavTemp() {
         viewModel?.getFavTemplates(session?.fPID,session?.fpTag,Constants.PROMO_WIDGET_KEY)

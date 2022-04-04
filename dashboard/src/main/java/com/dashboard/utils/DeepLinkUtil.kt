@@ -145,7 +145,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(facebookpage)) {
           likeUsFacebook(baseActivity, "/reviews/")
         } else if (url.contains(deeplink_update)) {
-          baseActivity.startPostUpdate()
+          baseActivity.startPostUpdate(session)
         } else if (url.contains(deeplink_featuredimage)) {
           baseActivity.startBusinessProfileDetailEdit(session)
         } else if (url.contains(addProduct)) {

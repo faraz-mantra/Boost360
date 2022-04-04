@@ -95,7 +95,8 @@ object FirebaseRemoteConfigUtil {
   fun featureUpdateStudioSelectedUsers(fpId:String?): Boolean {
     val selectedFps =remoteConfig?.getString(FEATURE_UPDATE_STUDIO_SELECTED_USERS)
 
-    return fpId?.let { selectedFps?.contains(it) } == true
+//    return fpId?.let { selectedFps?.contains(it) } == true
+    return true
   }
 
 }
