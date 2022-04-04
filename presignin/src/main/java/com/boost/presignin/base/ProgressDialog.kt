@@ -50,7 +50,6 @@ class ProgressDialog : BaseDialogFragment<PresigninProgressDialogBinding, BaseVi
       if (this.isVisible.not()) show(manager, ProgressDialog::class.java.simpleName)
     } catch (e: Exception) {
       Log.e(ProgressDialog::class.java.name, e.localizedMessage ?: "")
-      SentryController.captureException(e)
     }
   }
 
@@ -59,7 +58,6 @@ class ProgressDialog : BaseDialogFragment<PresigninProgressDialogBinding, BaseVi
       if (isRemoving.not()) dismiss()
     } catch (e: Exception) {
       Log.e(ProgressDialog::class.java.name, e.localizedMessage ?: "")
-      SentryController.captureException(e)
     }
   }
 }
