@@ -9,6 +9,8 @@
 
 
     <color name="primary">#FFFFFF</color>
+    <color name="offer_border">#7ED321</color>
+
     <color name="primaryDark">#FFFFFF</color>
     <color name="accent">#eeff41</color>
     <color name="common_text_color">#4a4a4a</color>
@@ -17,6 +19,10 @@
     <color name="globalText">#3c3c3c</color>
     <color name="globaLightSuperText">#d8d8d8</color>
     <color name="white_eighty_opacity">#D9FFFFFF</color>
+    <color name="btn_bg_color_disabled">#D6D6D6</color>
+
+    <color name="not_available_text_color">#EB5757</color>
+    <color name="tv_color_BB">#BBBBBB</color>
     <color name="globalLight">#9b9b9b</color>
     <color name="globalPurple">#643c99</color>
     <color name="globalHeadTile">#343434</color>

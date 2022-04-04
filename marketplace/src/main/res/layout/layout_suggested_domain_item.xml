@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="deltaretail.com"
-        android:textColor="#4a4a4a"
+        android:textColor="@color/common_text_color"
         android:textFontWeight="400"
         android:textSize="@dimen/txt_14sp"
         android:lineHeight="19.07dp"
@@ -63,7 +63,7 @@
         android:textFontWeight="600"
         android:textSize="@dimen/txt_14sp"
         android:lineHeight="19.07dp"
-        android:textColor="#EB5757"
+        android:textColor="@color/not_available_text_color"
         />
     <View
         android:layout_width="match_parent"
@@ -71,7 +71,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/tv_recommend"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="#F4F4F4"
+        android:background="@color/bg_color_f4"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
