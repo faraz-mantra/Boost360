@@ -163,7 +163,6 @@ public class Business_Enquiries_Fragment extends Fragment implements AppOnZeroCa
         binding.childContainer.setVisibility(View.GONE);
     }
 
-
     private void emptyView() {
         binding.mainlayout.setVisibility(View.GONE);
         binding.childContainer.setVisibility(View.VISIBLE);
@@ -201,6 +200,7 @@ public class Business_Enquiries_Fragment extends Fragment implements AppOnZeroCa
         super.onStop();
         if (adapter != null && adapter.getItemCount() > 1) {
             InAppReviewUtils.INSTANCE.showInAppReview(requireActivity(), InAppReviewUtils.Events.in_app_review_out_of_customer_messages);
+
         }
     }
 }
