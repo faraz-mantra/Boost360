@@ -150,7 +150,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="@dimen/_6dp"
-                    android:fontFamily="@font/regular"
                     android:textFontWeight="700"
                     android:textSize="@dimen/txt_12sp"
                     android:drawableStart="@drawable/ic_calendar_auto_renew"

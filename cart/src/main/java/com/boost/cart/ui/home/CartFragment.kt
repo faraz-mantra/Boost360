@@ -254,6 +254,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity()).get(CartViewModel::class.java)
+        showProgress("Please wait...")
         Constants.COMPARE_BACK_VALUE = 1
 //    val list = arrayListOf<Bundles>()
         prefs.storeCompareState(1)
@@ -2618,6 +2619,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 //clear viewModel data
                 viewModel.clearValidCouponResult()
             }
+            viewModel.updatesLoader.postValue(false)
         })
 
         viewModel.getPurchaseOrderResponse().observe(this, Observer {
@@ -3072,7 +3074,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
     fun totalCalculationAfterCoupon() {
         if (::cartList.isInitialized) {
             total = 0.0
-            overalltotal = 0.0
             couponDiscountAmount = 0.0
             var couponDisount = 0
 //            if (validCouponCode != null) {
@@ -3088,33 +3089,29 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     else
                         total += ((item.price / package_validity_months) * default_validity_months)
                 }
-                cart_amount_title.text = "Cart total (" + cartList.size + " items)"
-                overalltotal = total + taxValue
-                cart_amount.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(overalltotal)
-                coupontotal = total
 
-                if (couponServiceModel != null)
-                    couponDiscountAmount = couponServiceModel?.couponDiscountAmt!!
-                else
-                    couponServiceModel = null
 //                couponDiscountAmount = total * couponDisount / 100
 //                couponDiscountAmount = couponServiceModel!!.couponDiscountAmt!!
 
 
                 if (couponServiceModel != null) {
+                    couponDiscountAmount = couponServiceModel?.couponDiscountAmt!!
                     coupon_discount_layout.visibility = View.VISIBLE
-                    coupon_discount_title.text =
-                            "'" + couponServiceModel?.coupon_key + "'" + " coupon discount"
+                    coupon_discount_title.text = "'" + couponServiceModel?.coupon_key + "'" + " coupon discount"
                     coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
                 } else {
+                    couponServiceModel = null
                     coupon_discount_layout.visibility = View.GONE
                 }
 
-                overalltotal -= couponDiscountAmount
                 Log.v("cart_amount_value", " " + total)
                 val temp = (total * 18) / 100
                 taxValue = Math.round(temp * 100) / 100.0
-                grandTotal = (Math.round((overalltotal) * 100) / 100.0)
+                grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
+                grandTotal -= couponDiscountAmount
+                cart_amount_title.text = "Cart total (" + cartList.size + " items)"
+                cart_amount.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total + taxValue)
+                coupontotal = total
                 //       igst_value.text = "+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue)
 //                order_total_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
                 cart_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
@@ -3244,6 +3241,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         intent.putExtra("customerId", customerId)
         intent.putExtra("amount", result.Result.TotalPrice)// pass in currency subunits. For example, paise. Amount: 1000 equals ₹10
         intent.putExtra("order_id", result.Result.OrderId)
+        intent.putExtra("netPrice", total)
+        if(couponServiceModel!=null) {
+            intent.putExtra("couponTitle","'" + couponServiceModel?.coupon_key + "'" + " coupon discount")
+            intent.putExtra("couponAmount", couponDiscountAmount)
+        }
+        intent.putExtra("discountText", total)
         intent.putExtra("transaction_id", result.Result.TransactionId)
         intent.putExtra("email", (activity as CartActivity).email)
         intent.putExtra("currency", "INR")

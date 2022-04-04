@@ -31,7 +31,10 @@ class PaymentActivity : AppCompatActivity() {
     var transaction_id: String = ""
     var email: String = ""
     var contact: String = ""
+    var couponTitle: String = ""
+    var couponAmount: Double = 0.0
     var amount: Double = 0.0
+    var netPrice: Double = 0.0
     var months:Int = -1
 
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
@@ -47,6 +50,11 @@ class PaymentActivity : AppCompatActivity() {
         email = intent.getStringExtra("email")!!
         contact = intent.getStringExtra("contact")!!
         amount = intent.getDoubleExtra("amount",0.0)
+        netPrice = intent.getDoubleExtra("netPrice",0.0)
+        if(intent.hasExtra("couponTitle")) {
+            couponTitle = intent.getStringExtra("couponTitle")!!
+            couponAmount = intent.getDoubleExtra("couponAmount",0.0)
+        }
         months = intent.getIntExtra("months",0)
 
         prefs = SharedPrefs(this)
@@ -74,6 +82,9 @@ class PaymentActivity : AppCompatActivity() {
         val args = Bundle()
         args.putString("customerId", customerId)
         args.putDouble("amount", amount)// pass in currency subunits. For example, paise. Amount: 1000 equals ₹10
+        args.putDouble("netPrice", netPrice)
+        args.putString("couponTitle", couponTitle)
+        args.putDouble("couponAmount", couponAmount)
         args.putString("order_id", order_id)
         args.putString("transaction_id", transaction_id)
         args.putString("email", email)

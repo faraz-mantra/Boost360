@@ -366,7 +366,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                 Log.i("renewal purchased >>", it.toString())
                                 val data = it as RenewalPurchasedResponse
                                 renewalPurchaseList.postValue(data.result ?: ArrayList())
-                                updatesLoader.postValue(false)
+//                                updatesLoader.postValue(false)
                             }, {
                                 renewalPurchaseList.postValue(ArrayList())
                                 updatesLoader.postValue(false)
@@ -512,7 +512,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnSuccess {
                             cartResult.postValue(it)
-                            updatesLoader.postValue(false)
+//                            updatesLoader.postValue(false)
                         }
                         .doOnError {
 //                            updatesError.postValue(it.message)
@@ -532,7 +532,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
                             allFeatures.postValue(it)
-                            updatesLoader.postValue(false)
+//                            updatesLoader.postValue(false)
                         }, {
 //                            updatesError.postValue(it.message)
                             updatesLoader.postValue(false)
@@ -550,7 +550,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
                             allBundles.postValue(it)
-                            updatesLoader.postValue(false)
+//                            updatesLoader.postValue(false)
                         }, {
 //                            updatesError.postValue(it.message)
                             updatesLoader.postValue(false)
@@ -640,7 +640,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                         Log.i("getCustomerId>>", it.toString())
                                         updateCustomerInfo.postValue(it)
                                         customerInfoState.postValue(true)
-                                        updatesLoader.postValue(false)
+//                                        updatesLoader.postValue(false)
                                     },
                                     {
                                         val temp = (it as HttpException).response()!!.errorBody()!!.string()
