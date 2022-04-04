@@ -5,7 +5,7 @@
     android:id="@+id/upi_popup_outer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1d000000"
+    android:background="@color/background_colour"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical">
@@ -25,21 +25,21 @@
         android:id="@+id/upi_popup_container_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/curve_top_bg">
+        android:background="@drawable/curve_top_bg"
+        android:padding="24dp">
 
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/need_help_custom_domain"
-            android:textColor="#333333"
-            android:textSize="@dimen/txt_16sp"
-            android:textFontWeight="700"
-            android:lineHeight="26dp"
             android:fontFamily="@font/bold"
+            android:lineHeight="26dp"
+            android:text="@string/need_help_custom_domain"
+            android:textColor="@color/main_color_gray_dk"
+            android:textFontWeight="700"
+            android:textSize="@dimen/txt_16sp"
             app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -59,55 +59,53 @@ Avoid generic terms and words
 Consider using keywords that may help with SEO
 
 (the tone of the copy should be addressing to the user directly) Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-            android:textColor="#4A4A4A"
+            android:textColor="@color/common_text_color"
             android:textFontWeight="400"
             android:textSize="@dimen/txt_12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
-            />
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
 
         <LinearLayout
             android:id="@+id/layout_btn"
             android:layout_width="0dp"
             android:layout_height="52dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/btn_bg_accent_border"
+            android:gravity="center"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_need_help_msg"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/btn_bg_accent_border"
 
             >
+
             <TextView
                 android:id="@+id/tv_query"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/semi_bold"
                 android:gravity="center"
-                android:text="Have a query?"
-                android:textColor="#4A4A4A"
-                android:textFontWeight="600"
-                android:textSize="@dimen/txt_14sp"
                 android:lineHeight="20dp"
-          />
+                android:text="Have a query?"
+                android:textColor="@color/common_text_color"
+                android:textFontWeight="600"
+                android:textSize="@dimen/txt_14sp" />
+
             <TextView
                 android:id="@+id/tv_call_expert"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/semi_bold"
                 android:gravity="center"
+                android:lineHeight="20dp"
                 android:text="@string/call_an_expert"
                 android:textColor="@color/colorAccent"
                 android:textFontWeight="700"
-                android:textSize="@dimen/txt_14sp"
-                android:lineHeight="20dp"
-                />
+                android:textSize="@dimen/txt_14sp" />
 
         </LinearLayout>
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,7 +11,7 @@
         android:id="@+id/upi_popup_outer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#1d000000"
+        android:background="@color/background_colour"
         android:clickable="true"
         android:focusable="true"
         android:orientation="vertical">
@@ -43,7 +43,7 @@
                 android:fontFamily="@font/bold"
                 android:lineHeight="26dp"
                 android:text="@string/need_help_custom_domain"
-                android:textColor="#333333"
+                android:textColor="@color/main_color_gray_dk"
                 android:textFontWeight="700"
                 android:textSize="@dimen/txt_16sp"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -57,7 +57,7 @@
                 android:fontFamily="@font/regular"
                 android:lineHeight="16.34dp"
                 android:text="Please feel free speak to our expert to get the help you need."
-                android:textColor="#4A4A4A"
+                android:textColor="@color/common_text_color"
                 android:textFontWeight="400"
                 android:textSize="@dimen/txt_12sp"
                 app:layout_constraintEnd_toEndOf="parent"

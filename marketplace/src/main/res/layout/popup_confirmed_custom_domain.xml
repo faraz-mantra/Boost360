@@ -11,7 +11,7 @@
         android:id="@+id/upi_popup_outer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#1d000000"
+        android:background="@color/background_colour"
         android:clickable="true"
         android:focusable="true"
         >
@@ -44,7 +44,7 @@
                 android:fontFamily="@font/regular"
                 android:lineHeight="24dp"
                 android:text="www.deltastore.com"
-                android:textColor="#333333"
+                android:textColor="@color/main_color_gray_dk"
                 android:textFontWeight="600"
                 android:textSize="@dimen/txt_16sp"
                 app:layout_constraintTop_toTopOf="parent" />
