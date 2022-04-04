@@ -4,25 +4,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.MenuItem
 import android.widget.Toast
 import com.appservice.R
 import com.appservice.constant.FragmentType
 import com.appservice.databinding.FragmentTestimonialListBinding
-import com.appservice.model.account.testimonial.TestimonialData
-import com.appservice.model.account.testimonial.TestimonialDataResponse
-import com.appservice.model.account.testimonial.webActionList.TestimonialWebActionResponse
-import com.appservice.rest.TaskCode
 import com.framework.base.BaseResponse
-import com.framework.extensions.gone
-import com.framework.extensions.visible
 import com.framework.views.zero.old.AppOnZeroCaseClicked
-import org.json.JSONObject
-import java.util.*
 
 class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListBinding>(), AppOnZeroCaseClicked {
-
-  private val TAG = "TestimonialListFragment"
 
   companion object {
     @JvmStatic
@@ -35,22 +24,10 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
 
   override fun onCreateView() {
     super.onCreateView()
-    Log.i(TAG, "onCreateView: ")
-//    hitApi(viewModel?.getWebActionList(webTemplateId, fpTag), R.string.error_getting_web_action)
   }
 
   override fun onSuccess(it: BaseResponse) {
     when (it.taskcode) {
-      TaskCode.GET_WEB_ACTION_TESTIMONIAL.ordinal -> {
-        val data = (it as? TestimonialWebActionResponse)
-//        hitApi(
-//          viewModel?.getTestimonialsList(headerToken, testimonialType, query, 0, 10000),
-//          R.string.error_getting_web_action
-//        )
-      }
-      TaskCode.GET_TESTIMONIAL.ordinal -> {
-        val response = (it as? TestimonialDataResponse)
-      }
     }
   }
 
@@ -83,5 +60,4 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
   override fun appOnBackPressed() {
 
   }
-
 }

@@ -10,18 +10,17 @@
   <com.framework.views.customViews.CustomCardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/size_10"
-    android:layout_marginTop="@dimen/size_10"
-    android:layout_marginEnd="@dimen/size_10"
-    app:cardElevation="@dimen/size_12"
-    app:cardUseCompatPadding="true">
+    android:layout_marginHorizontal="@dimen/size_12"
+    android:layout_marginTop="@dimen/size_12"
+    app:cardCornerRadius="@dimen/size_10">
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:background="@drawable/bg_stroke_grey_10"
       android:orientation="vertical">
 
-      <androidx.appcompat.widget.LinearLayoutCompat
+      <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -30,44 +29,76 @@
 
         <com.framework.views.roundedimageview.RoundedImageView
           android:id="@+id/image_icon"
-          android:layout_width="@dimen/size_60"
-          android:layout_height="@dimen/size_60"
+          android:layout_width="@dimen/size_44"
+          android:layout_height="@dimen/size_44"
           android:scaleType="centerCrop"
-          app:riv_corner_radius="@dimen/size_4"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:riv_corner_radius="@dimen/size_22"
           app:srcCompat="@drawable/placeholder_image_n" />
 
         <com.framework.views.customViews.CustomTextView
-          android:layout_width="wrap_content"
+          android:id="@+id/title_txt"
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_10"
-          android:text="Abhishek Arora"
+          android:layout_marginTop="@dimen/size_2"
+          android:fontFamily="@font/bold"
           android:textColor="@color/black_4a4a4a"
-          app:textType="HEADING_4" />
-      </androidx.appcompat.widget.LinearLayoutCompat>
+          app:layout_constraintEnd_toStartOf="@+id/edit_img"
+          app:layout_constraintStart_toEndOf="@+id/image_icon"
+          app:layout_constraintTop_toTopOf="parent"
+          app:textType="HEADING_6"
+          tools:text="Abhishek Arora" />
 
-      <com.framework.views.DashedDividerView
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_10"
+          android:fontFamily="@font/semi_bold"
+          android:textColor="@color/gray_828282"
+          app:layout_constraintEnd_toStartOf="@+id/edit_img"
+          app:layout_constraintStart_toEndOf="@+id/image_icon"
+          app:layout_constraintTop_toBottomOf="@+id/title_txt"
+          app:textType="CAPTION"
+          tools:text="Tech Mahindra" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/edit_img"
+          android:layout_width="@dimen/size_20"
+          android:layout_height="@dimen/size_20"
+          android:layout_marginTop="@dimen/size_4"
+          android:padding="@dimen/size_2"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:srcCompat="@drawable/ic_edit_new_accent" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+      <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_1"
-        app:dividerDashColor="@color/gray_bbb"
-        app:dividerDashGap="@dimen/size_5"
-        app:dividerDashWidth="@dimen/size_5" />
+        android:background="@color/white_smoke" />
 
       <com.framework.views.customViews.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/size_10"
-        android:layout_marginTop="@dimen/size_16"
+        android:layout_marginTop="@dimen/size_14"
         android:layout_marginEnd="@dimen/size_10"
+        android:fontFamily="@font/semi_bold"
         android:text="Abhishek Arora"
         android:textColor="@color/black_4a4a4a"
-        app:textType="HEADING_5" />
+        app:textType="BODY_1" />
 
       <com.framework.views.customViews.CustomTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/size_10"
-        android:textColor="@color/black_4a4a4a"
-        app:textType="BODY_2"
+        android:layout_marginHorizontal="@dimen/size_10"
+        android:layout_marginBottom="@dimen/size_10"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/warm_grey"
+        app:textType="CAPTION"
         tools:text="Very happy with the treatment of Dr Lohia. Getting treatment under him from last one month there is tremendous relief .. Thank you doctor and thanks hospital for the good services" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </com.framework.views.customViews.CustomCardView>
