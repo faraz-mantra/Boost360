@@ -70,7 +70,7 @@ class AddonsCategorySelectorAdapter(
     CompositeDisposable().add(
       AppDatabase.getInstance(activity.application)!!
         .featuresDao()
-        .getFeatureTypeCount(upgradeList.get(position), "MERCHANT_TRAINING")
+        .getFeatureTypeCountPremium(upgradeList.get(position), "MERCHANT_TRAINING", true)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({

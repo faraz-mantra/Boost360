@@ -374,4 +374,8 @@
     <color name="btn_bg_color_disabled">#D6D6D6</color>
     <color name="tv_color_BB">#BBBBBB</color>
 
+    <color name="colorPrimaryLight">@color/colorPrimary</color>
+    <color name="colorAccentLight">#FDD835</color>
+    <color name="yellowBorder">@color/yellow</color>
+
 </resources>

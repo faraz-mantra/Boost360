@@ -9,7 +9,6 @@
 
 
     <color name="primary">#FFFFFF</color>
-    <color name="offer_border">#7ED321</color>
 
     <color name="primaryDark">#FFFFFF</color>
     <color name="accent">#eeff41</color>
@@ -369,5 +368,10 @@
     <color name="jio_magenta">#EC008C</color>
 
     <color name="offer_border">@color/colorPrimary</color>
+
+    <color name="colorPrimaryLight">#EE1998</color>
+    <color name="colorAccentLight">#3633B8</color>
+
+    <color name="yellowBorder">@color/white</color>
 
 </resources>

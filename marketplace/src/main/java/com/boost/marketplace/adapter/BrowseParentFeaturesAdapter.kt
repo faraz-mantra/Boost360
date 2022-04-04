@@ -57,7 +57,7 @@ class BrowseParentFeaturesAdapter(
 
 
     fun getFeaturesByType(holder: ViewHolder, position: Int) {
-        if (position == 0) {
+        if (position == 0 && upgradeList.size!=1) {
             CompositeDisposable().add(
                 AppDatabase.getInstance(activity.application)!!
                     .featuresDao()
@@ -76,7 +76,7 @@ class BrowseParentFeaturesAdapter(
             CompositeDisposable().add(
                 AppDatabase.getInstance(activity.application)!!
                     .featuresDao()
-                    .getFeaturesItemsByType(upgradeList.get(position), "MERCHANT_TRAINING")
+                    .getFeaturesItemsByTypePremium(upgradeList.get(position), "MERCHANT_TRAINING", true)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
