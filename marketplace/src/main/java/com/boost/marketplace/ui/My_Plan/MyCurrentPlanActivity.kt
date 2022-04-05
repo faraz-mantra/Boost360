@@ -112,6 +112,12 @@ class MyCurrentPlanActivity :
 
         }
 
+        binding?.renwhistry?.setOnClickListener {
+            val intent= Intent(this, HistoryOrdersActivity::class.java)
+            intent.putExtra("fpid",fpid)
+            startActivity(intent)
+        }
+
            WebEngageController.trackEvent(ADDONS_MARKETPLACE_MY_ADDONS_LOADED, MY_ADDONS, NO_EVENT_VALUE)
 
         search_icon.setOnClickListener {

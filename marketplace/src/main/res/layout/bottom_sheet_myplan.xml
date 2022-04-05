@@ -169,7 +169,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:text="Active"
+                        android:text=""
                         android:textColor="#15c216"
                         android:textSize="@dimen/_8sdp"
                         app:layout_constraintBottom_toBottomOf="@+id/txt_message"

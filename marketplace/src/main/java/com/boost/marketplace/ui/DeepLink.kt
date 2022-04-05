@@ -8,7 +8,7 @@ enum class DeepLink(var screenType:String){
     addProduct("addProduct"),
     keyboardSettings("keyboardSettings"),
     CUSTOMPAGES("addCustomPage"),
-    enquiries("enquiries"),
+    enquiries("enquiries_tab"),
     subscribers("subscribers"),
     new_subscribers("newsubscriber"),
     IMAGEGALLERY("featuredimage"),
@@ -18,6 +18,7 @@ enum class DeepLink(var screenType:String){
     CONTACTDETAILS("contact_details"),
     STAFFPROFILE("ic_staff_profile_d"),
     CUSTOMERSUPPORT("premium_boost_support"),
+    ANALYTICS("search_analytics"),
     visits("visits");
 
     companion object{
