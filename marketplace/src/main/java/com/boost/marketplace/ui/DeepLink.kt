@@ -19,6 +19,7 @@ enum class DeepLink(var screenType:String){
     STAFFPROFILE("ic_staff_profile_d"),
     CUSTOMERSUPPORT("premium_boost_support"),
     ANALYTICS("search_analytics"),
+    PRODUCTCATALOGUE("productGallery"),
     visits("visits");
 
     companion object{
