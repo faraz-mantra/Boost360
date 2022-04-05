@@ -28,7 +28,7 @@
             android:id="@+id/main_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_15sdp"
+            android:padding="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/bottoms_sheet_top20dp_white">
 
@@ -42,6 +42,7 @@
                 android:layout_marginBottom="@dimen/_15sdp"/>
 
             <LinearLayout
+                android:id="@+id/tv_container"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintStart_toEndOf="@id/addons_icon"
@@ -80,97 +81,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </LinearLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_email_list"
                 android:layout_width="match_parent"
-                android:id="@+id/cslayout"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@id/addons_icon">
+                android:layout_marginTop="24dp"
+                tools:listitem="@layout/item_email"
+                tools:itemCount="3"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/tv_container"
+                />
 
-
-                <TextView
-                    android:id="@+id/txt_message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/regular"
-                    android:text="admin@deltastore.com"
-                    android:textAllCaps="false"
-                    android:textColor="@color/common_text_color"
-                    android:textFontWeight="400"
-                    android:textSize="14sp"
-                    android:textStyle="normal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <View
-                    android:id="@+id/paid_single_dummy_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="#F4F4F4"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    app:layout_constraintBottom_toTopOf="@+id/txt_desc"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_message"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/txt_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textFontWeight="400"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:fontFamily="@font/regular"
-                    android:gravity="start"
-                    android:includeFontPadding="false"
-                    android:text="admin@deltastore.com"
-                    android:textStyle="normal"
-                    android:textColor="@color/common_text_color"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/txt_desc2"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_message" />
-
-                <View
-                    android:id="@+id/paid_single_dummy_view1"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="#F4F4F4"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    app:layout_constraintBottom_toTopOf="@+id/txt_desc2"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_desc"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-
-
-                <TextView
-                    android:id="@+id/txt_desc2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textFontWeight="400"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:fontFamily="@font/regular"
-                    android:textStyle="normal"
-                    android:gravity="start"
-                    android:includeFontPadding="false"
-                    android:text="contact@deltastore.com"
-                    android:textColor="@color/common_text_color"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_desc" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
                 android:id="@+id/btn_Use_this_feature"
@@ -180,9 +101,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:textFontWeight="700"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:layout_marginHorizontal="@dimen/size_16"
+                android:layout_marginTop="24dp"
                 android:background="@drawable/cta_button_click_effect"
                 android:enabled="true"
                 android:fontFamily="@font/regular"
@@ -193,7 +112,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cslayout" />
+                app:layout_constraintTop_toBottomOf="@+id/rv_email_list" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
