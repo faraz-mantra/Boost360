@@ -37,7 +37,7 @@
             android:fontFamily="@font/bold"
             android:lineHeight="21.79dp"
             android:text="Replace cart item?"
-            android:textColor="#333333"
+            android:textColor="@color/main_color_gray_dk"
             android:textFontWeight="700"
             android:textSize="@dimen/txt_16sp"
             app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +51,7 @@
             android:fontFamily="@font/regular"
             android:lineHeight="16.34dp"
             android:text="Your cart contains Custom Domain with HTTPS Security. This pack also contains the same feature. Do you want to remove the feature and add this pack?"
-            android:textColor="#4A4A4A"
+            android:textColor="@color/common_text_color"
             android:textFontWeight="400"
             android:textSize="@dimen/txt_12sp"
             app:layout_constraintEnd_toEndOf="parent"

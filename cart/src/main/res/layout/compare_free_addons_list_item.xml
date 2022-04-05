@@ -68,7 +68,7 @@
           android:layout_height="wrap_content"
           android:fontFamily="@font/semi_bold"
           android:text="SECURITY"
-          android:textColor="#FFB900"
+          android:textColor="@color/yellow"
           android:textSize="@dimen/_8sdp" />
       </LinearLayout>
 
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"
         android:lineSpacingExtra="1.3sp"
-        android:textColor="#2a2a2a"
+        android:textColor="@color/common_bold_text_color"
         android:textSize="@dimen/_10sdp"
         tools:text="Facebook Ads (upto 75 leads)" />
 

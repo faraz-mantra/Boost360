@@ -84,7 +84,7 @@
         android:fontFamily="@font/bold"
         android:lineSpacingExtra="1sp"
         android:text="Setup Bank Mandate (eNACH)"
-        android:textColor="#4A4A4A"
+        android:textColor="@color/common_text_color"
         android:textSize="@dimen/txt_18sp" />
 
       <androidx.appcompat.widget.AppCompatTextView
@@ -92,7 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/setup_mandate_txt"
-        android:textColor="#2A2A2A"
+        android:textColor="@color/common_bold_text_color"
         android:lineSpacingExtra="4sp"
         android:fontFamily="@font/semi_bold"
         android:textSize="@dimen/txt_12sp"/>
@@ -116,7 +116,7 @@
           android:drawablePadding="12dp"
           android:lineSpacingExtra="4sp"
           android:drawableStart="@drawable/ic_setup_mandate_img1"
-          android:textColor="#2A2A2A"/>
+            android:textColor="@color/common_bold_text_color"/>
 
         <androidx.appcompat.widget.AppCompatTextView
           android:layout_width="wrap_content"
@@ -130,7 +130,7 @@
           android:drawablePadding="12dp"
           android:lineSpacingExtra="4sp"
           android:drawableStart="@drawable/ic_setup_mandate_img2"
-          android:textColor="#2A2A2A"/>
+            android:textColor="@color/common_bold_text_color"/>
 
         <androidx.appcompat.widget.AppCompatTextView
           android:layout_width="wrap_content"
@@ -144,7 +144,7 @@
           android:drawablePadding="12dp"
           android:lineSpacingExtra="4sp"
           android:drawableStart="@drawable/ic_setup_mandate_img3"
-          android:textColor="#2A2A2A"/>
+            android:textColor="@color/common_bold_text_color"/>
 
 
       </androidx.appcompat.widget.LinearLayoutCompat>
@@ -168,7 +168,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/setup_mandate_note"
         android:textSize="@dimen/txt_12sp"
-        android:textColor="#828282"
+        android:textColor="@color/body_grey"
         android:lineSpacingExtra="0sp"/>
 
 

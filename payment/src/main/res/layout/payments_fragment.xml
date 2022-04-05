@@ -12,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/common_text_color"
+        android:background="@color/colorPrimary"
         android:contentInsetStart="0dp"
         android:contentInsetEnd="0dp"
         android:elevation="@dimen/cardview_default_elevation"
@@ -989,7 +989,7 @@
                                     android:fontFamily="@font/regular"
                                     android:lineHeight="16dp"
                                     android:text="Supported: "
-                                    android:textColor="#4A4A4A"
+                                    android:textColor="@color/common_text_color"
                                     android:textFontWeight="400"
                                     android:textSize="@dimen/txt_12sp" />
 
@@ -1002,7 +1002,7 @@
                                     android:lineHeight="16dp"
                                     android:padding="4dp"
                                     android:text="\@upi"
-                                    android:textColor="#4A4A4A"
+                                    android:textColor="@color/common_text_color"
                                     android:textFontWeight="400"
                                     android:textSize="@dimen/txt_12sp"
 
@@ -1017,7 +1017,7 @@
                                     android:lineHeight="16dp"
                                     android:padding="4dp"
                                     android:text="@string/paytm"
-                                    android:textColor="#4A4A4A"
+                                    android:textColor="@color/common_text_color"
                                     android:textFontWeight="400"
                                     android:textSize="@dimen/txt_12sp" />
 
@@ -1030,7 +1030,7 @@
                                     android:lineHeight="16dp"
                                     android:padding="4dp"
                                     android:text="\@ibl"
-                                    android:textColor="#4A4A4A"
+                                    android:textColor="@color/common_text_color"
                                     android:textFontWeight="400"
                                     android:textSize="@dimen/txt_12sp" />
 
@@ -1043,7 +1043,7 @@
                                     android:lineHeight="16dp"
                                     android:padding="4dp"
                                     android:text="\@axl"
-                                    android:textColor="#4A4A4A"
+                                    android:textColor="@color/common_text_color"
                                     android:textFontWeight="400"
                                     android:textSize="@dimen/txt_12sp" />
 
@@ -1056,7 +1056,7 @@
                                     android:lineHeight="16dp"
                                     android:padding="4dp"
                                     android:text="\@ybl"
-                                    android:textColor="#4A4A4A"
+                                    android:textColor="@color/common_text_color"
                                     android:textFontWeight="400"
                                     android:textSize="@dimen/txt_12sp" />
 
@@ -1069,7 +1069,7 @@
                                     android:lineHeight="16dp"
                                     android:padding="4dp"
                                     android:text="\@apl"
-                                    android:textColor="#4A4A4A"
+                                    android:textColor="@color/common_text_color"
                                     android:textFontWeight="400"
                                     android:textSize="@dimen/txt_12sp" />
                             </LinearLayout>
@@ -1308,7 +1308,7 @@
                             android:paddingEnd="@dimen/_30sdp"
                             android:paddingBottom="16dp"
                             android:text="Add new UPI id"
-                            android:textColor="#FFB900" />
+                            android:textColor="@color/yellow" />
                     </LinearLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -1524,7 +1524,7 @@
                                 android:layout_marginTop="16dp"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                android:textColor="#4A4A4A"
+                                android:textColor="@color/common_text_color"
                                 android:textSize="@dimen/txt_12sp"
                                 android:lineHeight="16dp"
                                 android:fontFamily="@font/regular"
@@ -1595,7 +1595,7 @@
                                     android:textSize="@dimen/txt_12sp"
                                     android:lineHeight="16dp"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    android:textColor="#4A4A4A"
+                                    android:textColor="@color/common_text_color"
                                     app:layout_constraintTop_toTopOf="parent"/>
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -2039,7 +2039,7 @@
                             android:textSize="12sp"
                             android:fontFamily="@font/regular"
                             android:textFontWeight="400"
-                            android:textColor="#747474" />
+                            android:textColor="@color/dot_grey" />
 
 
                         <TextView
@@ -2055,7 +2055,7 @@
                             android:paddingEnd="@dimen/_10sdp"
                             android:textSize="12sp"
                             android:textFontWeight="400"
-                            android:textColor="#747474" />
+                            android:textColor="@color/dot_grey" />
 
                     </LinearLayout>
 
@@ -2109,7 +2109,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
                 android:text="VIEW DETAILS"
-                android:textColor="#0068e0"
+                android:textColor="@color/light_blue"
                 android:textSize="@dimen/_6sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/items_cost" />

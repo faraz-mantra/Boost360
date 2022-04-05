@@ -243,7 +243,7 @@
             android:drawableStart="@drawable/ic_gst_text_info"
             android:drawablePadding="5dp"
             android:text="@string/gst_text"
-            android:textColor="#4A4A4A"
+            android:textColor="@color/common_text_color"
             android:textSize="11sp"
             android:visibility="gone"
             tools:visibility="gone" />

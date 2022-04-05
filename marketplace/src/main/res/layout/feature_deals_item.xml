@@ -37,7 +37,7 @@
         android:drawablePadding="@dimen/_5sdp"
         android:fontFamily="@font/regular"
         android:text="Ends in "
-        android:textColor="#747474"
+        android:textColor="@color/dot_grey"
         android:textSize="@dimen/_9sdp"
         app:layout_constraintStart_toStartOf="@id/deal_title"
         app:layout_constraintTop_toBottomOf="@id/deal_title" />
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"
         android:text="00h : 00m : 00s"
-        android:textColor="#FFB900"
+        android:textColor="@color/yellow"
         android:textSize="@dimen/_9sdp"
         app:layout_constraintStart_toEndOf="@id/deal_ending"
         app:layout_constraintTop_toBottomOf="@id/deal_title" />
@@ -118,7 +118,7 @@
           android:ellipsize="end"
           android:lineSpacingExtra="1.3sp"
           android:maxLines="2"
-          android:textColor="#2a2a2a"
+          android:textColor="@color/textcolor_2a2a"
           android:textFontWeight="600"
           android:textSize="@dimen/_14sdp"
           tools:text="Facebook Ads (upto 75 leads)" />
@@ -146,7 +146,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_7sdp"
-            android:textColor="#0068e0"
+            android:textColor="@color/light_blue"
             android:textSize="@dimen/_9sdp"
             android:fontFamily="@font/bold"
             tools:text="₹400/month" />
@@ -156,7 +156,7 @@
             android:id="@+id/orig_cost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#9b9b9b"
+            android:textColor="@color/globalLight"
             android:textSize="@dimen/_9sdp"
             app:layout_constraintStart_toStartOf="@+id/money"
             app:layout_constraintTop_toBottomOf="@+id/money"

@@ -136,7 +136,7 @@
         android:layout_marginStart="@dimen/_15sdp"
         android:fontFamily="@font/regular"
         android:text="Featured Packs"
-        android:textColor="#4a4a4a"
+        android:textColor="@color/common_text_color"
         android:textFontWeight="600"
         android:textSize="@dimen/_14sdp"
         android:textStyle="bold"

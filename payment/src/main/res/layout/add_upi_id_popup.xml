@@ -136,7 +136,7 @@
                 android:layout_marginStart="@dimen/_3sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="UPI Autopay is available for: @upi, @paytm, @ibl, @axl, @ybl, @apl"
-                android:textColor="#747474"
+                android:textColor="@color/dot_grey"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

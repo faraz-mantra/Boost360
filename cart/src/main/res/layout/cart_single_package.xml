@@ -84,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_5sdp"
-        android:textColor="#0068e0"
+        android:textColor="@color/light_blue"
         android:textSize="@dimen/_8sdp"
         tools:text="₹499/month" />
 
@@ -92,7 +92,7 @@
         android:id="@+id/package_orig_cost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#9b9b9b"
+        android:textColor="@color/globalLight"
         android:textSize="@dimen/_8sdp"
         tools:text="₹899/month" />
 
@@ -107,7 +107,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"
         android:text="View included Add-ons"
-        android:textColor="#747474"
+        android:textColor="@color/dot_grey"
         android:textSize="@dimen/_8sdp" />
 
       <ImageView

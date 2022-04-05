@@ -1,5 +1,6 @@
 package com.boost.marketplace.adapter
 
+import android.content.Context
 import android.graphics.Color
 import android.os.CountDownTimer
 import android.text.SpannableString
@@ -35,12 +36,15 @@ class FeatureDealsAdapter(
   val homeListener: HomeListener
 ) : RecyclerView.Adapter<FeatureDealsAdapter.PagerViewHolder>() {
 
+  lateinit var context: Context
+
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {
     val item = View.inflate(parent.context, R.layout.feature_deals_item, null)
     val lp = ViewGroup.LayoutParams(
       ViewGroup.LayoutParams.MATCH_PARENT,
       ViewGroup.LayoutParams.MATCH_PARENT
     )
+    context = item.context
     item.layoutParams = lp
     return PagerViewHolder(item)
   }
@@ -73,7 +77,7 @@ class FeatureDealsAdapter(
             activity.applicationContext,
             R.drawable.added_to_cart_grey
           )
-          holder.submit.setTextColor(Color.parseColor("#bbbbbb"))
+          holder.submit.setTextColor(context.getResources().getColor(R.color.tv_color_BB))
           holder.submit.setText("DEAL HAS EXPIRED!!")
           holder.submit.isClickable = false
         }
@@ -98,7 +102,7 @@ class FeatureDealsAdapter(
         activity.applicationContext,
         R.drawable.added_to_cart_grey
       )
-      holder.submit.setTextColor(Color.parseColor("#bbbbbb"))
+      holder.submit.setTextColor(context.getResources().getColor(R.color.tv_color_BB))
       holder.submit.setText("DEAL HAS EXPIRED!!")
       holder.submit.isClickable = false
     }
@@ -185,7 +189,7 @@ class FeatureDealsAdapter(
                             activity.applicationContext,
                             R.drawable.added_to_cart_grey
                           )
-                          holder.submit.setTextColor(Color.parseColor("#bbbbbb"))
+                          holder.submit.setTextColor(context.getResources().getColor(R.color.tv_color_BB))
                           holder.submit.setText(activity.getString(R.string.added_to_cart))
                           holder.submit.isClickable = false
                         }
@@ -210,7 +214,7 @@ class FeatureDealsAdapter(
                           activity.applicationContext,
                           R.drawable.added_to_cart_grey
                         )
-                        holder.submit.setTextColor(Color.parseColor("#bbbbbb"))
+                        holder.submit.setTextColor(context.getResources().getColor(R.color.tv_color_BB))
                         holder.submit.setText(activity.getString(R.string.added_to_cart))
                         holder.submit.isClickable = false
                       }

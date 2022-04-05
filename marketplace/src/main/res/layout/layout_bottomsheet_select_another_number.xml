@@ -55,7 +55,7 @@
                 android:fontFamily="@font/regular"
                 android:lineHeight="16.34dp"
                 android:text="We have selected the above virtual phone number for you. You can also select another number."
-                android:textColor="#4A4A4A"
+                android:textColor="@color/common_text_color"
                 android:textFontWeight="400"
                 android:textSize="@dimen/txt_12sp"
                 app:layout_constraintEnd_toEndOf="parent"

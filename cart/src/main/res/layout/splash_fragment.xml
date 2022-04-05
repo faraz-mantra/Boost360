@@ -335,7 +335,7 @@
             android:gravity="center"
             android:padding="@dimen/_10sdp"
             android:text="I'll do it later"
-            android:textColor="#9b9b9b"
+            android:textColor="@color/globalLight"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/middle_guideline1"

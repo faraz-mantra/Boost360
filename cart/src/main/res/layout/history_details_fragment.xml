@@ -435,7 +435,7 @@
           android:paddingTop="@dimen/_30sdp"
           android:paddingBottom="@dimen/_20sdp"
           android:text="Print Invoice"
-          android:textColor="#9B9B9B" />
+          android:textColor="@color/globalLight" />
       </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

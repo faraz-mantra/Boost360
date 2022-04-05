@@ -49,7 +49,7 @@
             android:fontFamily="@font/semi_bold"
             android:lineHeight="24dp"
             android:text="Finding a number for you"
-            android:textColor="#333333"
+            android:textColor="@color/main_color_gray_dk"
             android:textFontWeight="600"
             android:textSize="@dimen/txt_16sp"
             app:layout_constraintEnd_toEndOf="parent"

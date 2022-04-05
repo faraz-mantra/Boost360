@@ -139,7 +139,7 @@
         android:gravity="center"
         android:lineSpacingExtra="@dimen/_3sdp"
         android:text="--"
-        android:textColor="#747474" />
+        android:textColor="@color/dot_grey" />
 
     </LinearLayout>
 
@@ -160,7 +160,7 @@
         android:gravity="center"
         android:lineSpacingExtra="@dimen/_3sdp"
         android:text="-- Order Date, Order ID, transaction Id, "
-        android:textColor="#747474"
+        android:textColor="@color/dot_grey"
         android:textSize="@dimen/_8sdp" />
     </LinearLayout>
 
@@ -196,7 +196,7 @@
       android:padding="@dimen/_10sdp"
       android:text="Need help?"
       android:textAllCaps="true"
-      android:textColor="#9b9b9b"
+      android:textColor="@color/globalLight"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />

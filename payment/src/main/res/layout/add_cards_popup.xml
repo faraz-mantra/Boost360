@@ -105,7 +105,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:padding="@dimen/_5sdp"
         android:text="Card Number*"
-        android:textColor="#747474"
+        android:textColor="@color/dot_grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -159,7 +159,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:padding="@dimen/_5sdp"
         android:text="Name on Card*"
-        android:textColor="#747474"
+          android:textColor="@color/dot_grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/invalid_cardnumber" />
 
@@ -207,7 +207,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:padding="@dimen/_5sdp"
         android:text="Expiry*"
-        android:textColor="#747474"
+          android:textColor="@color/dot_grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name_on_card_value" />
 
@@ -246,7 +246,7 @@
         android:fontFamily="@font/regular"
         android:padding="@dimen/_5sdp"
         android:text="CVV*"
-        android:textColor="#747474"
+          android:textColor="@color/dot_grey"
         app:layout_constraintStart_toEndOf="@id/expiry_mm_yyyy_title"
           app:layout_constraintTop_toBottomOf="@id/name_on_card_value"/>
 
@@ -297,7 +297,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_10sdp"
         android:text="3 digits printed on the back of the card"
-        android:textColor="#747474"
+          android:textColor="@color/dot_grey"
         android:textSize="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="@id/add_card_cvv_image"
         app:layout_constraintEnd_toEndOf="parent"

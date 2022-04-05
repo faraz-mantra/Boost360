@@ -1192,7 +1192,7 @@
                             android:paddingEnd="30dp"
                             android:paddingBottom="10dp"
                             android:text="@string/give_feedback"
-                            android:textColor="@color/yellow"
+                            android:textColor="@color/yellowBorder"
                             android:textFontWeight="700"
                             android:textSize="14sp"
                             android:textStyle="bold" />

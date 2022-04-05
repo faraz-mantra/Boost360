@@ -190,7 +190,7 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
                 context,
                 R.drawable.button_added_to_cart
             )
-            parentViewHolder.package_submit.setTextColor(Color.parseColor("#bbbbbb"))
+            parentViewHolder.package_submit.setTextColor(context.getResources().getColor(R.color.tv_color_BB))
             parentViewHolder.package_submit.setText(context.getString(R.string.added_to_cart))
             homeListener.onPackageClicked(parentItem,parentViewHolder.package_profile_image_compare_new)
         }
@@ -396,7 +396,7 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
                                 context,
                                 R.drawable.button_added_to_cart
                             )
-                            holder.package_submit.setTextColor(Color.parseColor("#bbbbbb"))
+                            holder.package_submit.setTextColor(context.getResources().getColor(R.color.tv_color_BB))
                             holder.package_submit.setText(context.getString(R.string.added_to_cart))
                         }
 //                                }

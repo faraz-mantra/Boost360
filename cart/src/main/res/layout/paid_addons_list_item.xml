@@ -83,7 +83,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"
         android:lineSpacingExtra="1.3sp"
-        android:textColor="#2a2a2a"
+        android:textColor="@color/common_bold_text_color"
         android:textSize="@dimen/_10sdp"
         tools:text="Facebook Ads (upto 75 leads)" />
 
@@ -100,7 +100,7 @@
           android:fontFamily="@font/regular"
           android:gravity="start"
           android:text="Active upto: "
-          android:textColor="#bbbbbb"
+          android:textColor="@color/tv_color_BB"
           android:textSize="@dimen/_8sdp" />
 
         <TextView
@@ -109,7 +109,7 @@
           android:fontFamily="@font/semi_bold"
           android:gravity="start"
           android:text="29th March, 2020"
-          android:textColor="#747474"
+          android:textColor="@color/dot_grey"
           android:textSize="@dimen/_8sdp" />
       </LinearLayout>
 

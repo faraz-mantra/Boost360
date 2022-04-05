@@ -68,7 +68,7 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#747474"
+        android:textColor="@color/dot_grey"
         android:textSize="@dimen/_8sdp"
         tools:text="Marketing" />
 
@@ -79,7 +79,7 @@
         android:ellipsize="end"
         android:lineSpacingExtra="1.3sp"
         android:maxLines="2"
-        android:textColor="#2a2a2a"
+        android:textColor="@color/common_bold_text_color"
         android:textSize="@dimen/_12ssp"
         tools:text="Facebook Ads (upto 75 leads)" />
 
@@ -105,7 +105,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginEnd="@dimen/_7sdp"
-          android:textColor="#0068e0"
+          android:textColor="@color/light_blue"
           android:textSize="@dimen/_8sdp"
           tools:text="₹400/month" />
 
@@ -115,7 +115,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginEnd="@dimen/_7sdp"
-          android:textColor="#9b9b9b"
+          android:textColor="@color/globalLight"
           android:textSize="@dimen/_8sdp"
           app:layout_constraintStart_toStartOf="@+id/money"
           app:layout_constraintTop_toBottomOf="@+id/money"
@@ -129,7 +129,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Activated for You"
-        android:textColor="#9b9b9b"
+        android:textColor="@color/globalLight"
         android:textSize="@dimen/_8sdp" />
 
 

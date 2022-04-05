@@ -20,7 +20,7 @@
             android:background="@drawable/ic_cart_coupon_bg"
             android:gravity="center"
             android:text="FESTIVE"
-            android:textColor="#4A4A4A"
+            android:textColor="@color/common_text_color"
             android:textSize="@dimen/txt_14sp"
             android:textStyle="bold" />
 
@@ -31,7 +31,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="16dp"
             android:text="Save: ₹98"
-            android:textColor="#4A4A4A"
+            android:textColor="@color/common_text_color"
             android:textSize="@dimen/txt_12sp" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -48,7 +48,7 @@
                 android:layout_marginEnd="7dp"
                 android:layout_marginBottom="7dp"
                 android:text="APPLY"
-                android:textColor="#7ED321"
+                android:textColor="@color/offer_border"
                 android:textSize="@dimen/txt_12sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -71,7 +71,7 @@
             android:layout_gravity="center"
             android:drawablePadding="5dp"
             android:text="Extra 20% off if you purchase a pack. Cannot be combined with any other offer, expires on 31/12/21."
-            android:textColor="#828282"
+            android:textColor="@color/copy_coupon_text_color"
             android:textSize="@dimen/txt_12sp" />
 
 

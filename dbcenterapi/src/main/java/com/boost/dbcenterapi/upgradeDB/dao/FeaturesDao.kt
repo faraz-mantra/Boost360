@@ -14,6 +14,13 @@ interface FeaturesDao {
   fun getFeaturesItems(premiumType: Boolean): Single<List<FeaturesModel>>
 
   //    @Query("SELECT * FROM Features WHERE target_business_usecase = :categoryType  ORDER BY feature_importance DESC")
+  @Query("SELECT * FROM Features WHERE target_business_usecase = :categoryType AND feature_code != :excludeFeature AND is_premium = :premiumType ORDER BY feature_importance DESC")
+  fun getFeaturesItemsByTypePremium(
+    categoryType: String,
+    excludeFeature: String,
+    premiumType: Boolean
+  ): Single<List<FeaturesModel>>
+
   @Query("SELECT * FROM Features WHERE target_business_usecase = :categoryType AND feature_code != :excludeFeature ORDER BY feature_importance DESC")
   fun getFeaturesItemsByType(
     categoryType: String,
@@ -66,6 +73,9 @@ interface FeaturesDao {
   @Query("SELECT COUNT(*) FROM Features Where boost_widget_key IN (:list)")
 //    @Query("SELECT COUNT(*) FROM Features Where feature_code IN (:list)")
   fun getallActivefeatureCount(list: List<String>): Single<Int>
+
+  @Query("SELECT COUNT(*) FROM Features Where target_business_usecase = :featureType AND feature_code != :excludeFeature AND is_premium = :premiumType")
+  fun getFeatureTypeCountPremium(featureType: String, excludeFeature: String, premiumType: Boolean): Single<Int>
 
   @Query("SELECT COUNT(*) FROM Features Where target_business_usecase = :featureType AND feature_code != :excludeFeature")
   fun getFeatureTypeCount(featureType: String, excludeFeature: String): Single<Int>

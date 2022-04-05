@@ -243,7 +243,7 @@
           android:fontFamily="@font/semi_bold"
           android:padding="@dimen/_10sdp"
           android:text="-- Free Add-ons"
-          android:textColor="#2a2a2a"
+          android:textColor="@color/common_bold_text_color"
           android:textSize="@dimen/_12sdp"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
