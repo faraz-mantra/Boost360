@@ -81,7 +81,7 @@ class ComparePacksViewHolder(binding: ItemComparePacksBinding)  :
                     R.drawable.button_added_to_cart
                 )
             }
-            binding.packageAddCartNew.setTextColor(Color.parseColor("#bbbbbb"))
+            binding.packageAddCartNew.setTextColor(getResources()!!.getColor(R.color.tv_color_BB))
             binding.packageAddCartNew.setText((R.string.added_to_carts))
         }
 

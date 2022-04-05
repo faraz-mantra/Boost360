@@ -30,7 +30,7 @@
         android:fontFamily="@font/semi_bold"
         android:maxLines="1"
         android:text="Order id #####"
-        android:textColor="#0068e0"
+        android:textColor="@color/light_blue"
         android:textSize="@dimen/_10sdp" />
 
       <LinearLayout
@@ -78,7 +78,7 @@
       android:gravity="center"
       android:paddingStart="@dimen/_10sdp"
       android:paddingEnd="@dimen/_10sdp"
-      android:textColor="#0068e0"
+      android:textColor="@color/light_blue"
       android:textSize="@dimen/_12sdp"
       tools:text="₹2000" />
   </LinearLayout>

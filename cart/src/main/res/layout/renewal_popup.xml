@@ -73,7 +73,7 @@
         android:paddingTop="@dimen/_5sdp"
         android:paddingBottom="@dimen/_10sdp"
         android:text="Your next auto-renewal date will be 12th july 2020. You can disable auto renewal of any feature/package at anytime."
-        android:textColor="#747474"
+        android:textColor="@color/dot_grey"
         android:textSize="@dimen/_10sdp" />
 
       <androidx.appcompat.widget.AppCompatRadioButton
@@ -98,7 +98,7 @@
         android:paddingTop="@dimen/_5sdp"
         android:paddingBottom="@dimen/_10sdp"
         android:text="We’ll send renewal reminder SMS and emailer 7 day prior to the day of expiry."
-        android:textColor="#747474"
+        android:textColor="@color/dot_grey"
         android:textSize="@dimen/_10sdp" />
 
 

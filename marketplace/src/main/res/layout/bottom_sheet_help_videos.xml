@@ -133,7 +133,7 @@
         android:layout_marginTop="15dp"
         android:lineSpacingExtra="1sp"
         android:text="@string/how_it_works_text"
-        android:textColor="#4A4A4A"
+        android:textColor="@color/common_text_color"
         android:textSize="@dimen/txt_16sp" />
 
       <androidx.appcompat.widget.LinearLayoutCompat

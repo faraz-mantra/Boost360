@@ -52,7 +52,7 @@
         android:fontFamily="@font/semi_bold"
         android:lineSpacingExtra="1.3sp"
         android:text="SBI Debit Card"
-        android:textColor="#2a2a2a" />
+        android:textColor="@color/common_bold_text_color" />
 
       <TextView
         android:id="@+id/card_number"
@@ -61,7 +61,7 @@
         android:fontFamily="@font/regular"
         android:lineSpacingExtra="1.3sp"
         android:text="***1854"
-        android:textColor="#2a2a2a"
+        android:textColor="@color/common_bold_text_color"
         android:textSize="@dimen/_8sdp" />
 
     </LinearLayout>

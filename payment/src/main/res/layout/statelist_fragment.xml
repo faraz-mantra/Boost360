@@ -62,7 +62,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/regular"
             android:text="Select where your business is located"
-            android:textColor="#747474"
+            android:textColor="@color/dot_grey"
             android:textFontWeight="400"
             android:textSize="@dimen/txt_12sp"
             app:layout_constraintEnd_toStartOf="@+id/close"

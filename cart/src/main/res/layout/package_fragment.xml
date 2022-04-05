@@ -245,7 +245,7 @@
                 android:paddingStart="0dp"
                 android:paddingEnd="@dimen/_5sdp"
                 android:text="Just for"
-                android:textColor="#9b9b9b"
+                android:textColor="@color/globalLight"
                 android:textSize="@dimen/_8sdp" />
 
               <TextView
@@ -255,7 +255,7 @@
                 android:paddingStart="0dp"
                 android:paddingEnd="@dimen/_5sdp"
                 android:text="₹2,099/month"
-                android:textColor="#0068e0"
+                android:textColor="@color/light_blue"
                 android:textSize="@dimen/_8sdp" />
 
               <!--                <TextView
@@ -265,7 +265,7 @@
                                   android:paddingStart="0dp"
                                   android:paddingEnd="@dimen/_5sdp"
                                   android:text="₹2,559/month"
-                                  android:textColor="#9b9b9b"
+                                  android:textColor="@color/globalLight"
                                   android:textSize="@dimen/_8sdp" />-->
 
             </LinearLayout>
@@ -277,7 +277,7 @@
               android:paddingStart="0dp"
               android:paddingEnd="@dimen/_5sdp"
               android:text="₹2,559/month"
-              android:textColor="#9b9b9b"
+              android:textColor="@color/globalLight"
               android:textSize="@dimen/_8sdp"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toBottomOf="@id/package_amount_layout" />
@@ -309,7 +309,7 @@
             android:layout_marginEnd="@dimen/_9sdp"
             android:fontFamily="@font/regular"
             android:text="Includes all free forever add-ons. Ideal for small businesses that want to get started with online sales."
-            android:textColor="#4A4A4A"
+            android:textColor="@color/common_text_color"
             android:textFontWeight="400"
             android:textSize="@dimen/txt_10sp" />
         </LinearLayout>

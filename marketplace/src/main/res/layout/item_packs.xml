@@ -93,7 +93,7 @@
                         android:paddingStart="0dp"
                         android:paddingEnd="5dp"
                         android:text="₹2,099/month"
-                        android:textColor="#828282"
+                        android:textColor="@color/copy_coupon_text_color"
                         android:textFontWeight="600"
                         android:textSize="13sp" />
 
@@ -105,7 +105,7 @@
                         android:paddingStart="0dp"
                         android:paddingEnd="5dp"
                         android:text="₹2,559/month"
-                        android:textColor="#828282"
+                        android:textColor="@color/copy_coupon_text_color"
                         android:textFontWeight="400"
                         android:textSize="13sp" />
 

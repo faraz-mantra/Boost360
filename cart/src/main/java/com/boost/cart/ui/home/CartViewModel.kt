@@ -640,7 +640,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                         Log.i("getCustomerId>>", it.toString())
                                         updateCustomerInfo.postValue(it)
                                         customerInfoState.postValue(true)
-//                                        updatesLoader.postValue(false)
+                                        updatesLoader.postValue(false)
                                     },
                                     {
                                         val temp = (it as HttpException).response()!!.errorBody()!!.string()

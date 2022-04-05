@@ -45,7 +45,7 @@
         app:contentInsetStart="0dp"
         android:contentInsetEnd="0dp"
         app:contentInsetEnd="0dp"
-        android:background="#FF9F00"
+        android:background="@color/yellow"
         app:layout_collapseMode="parallax"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -228,7 +228,7 @@
                             android:paddingEnd="@dimen/_5sdp"
                             android:textStyle="bold"
                             android:text="₹2,559/month"
-                            android:textColor="#4A4A4A"
+                            android:textColor="@color/common_text_color"
                             android:textFontWeight="600"
                             android:textSize="@dimen/txt_12sp" />
 
@@ -258,7 +258,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
                         android:text="Includes all free forever add-ons. Ideal for small businesses that want to get started with online sales."
-                        android:textColor="#4A4A4A"
+                        android:textColor="@color/common_text_color"
                         android:textFontWeight="400"
                         android:layout_marginStart="@dimen/_7sdp"
                         android:layout_marginEnd="@dimen/_9sdp"

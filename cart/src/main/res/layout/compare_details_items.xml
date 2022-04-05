@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/bold"
         android:textAllCaps="true"
-        android:textColor="#FFB900"
+        android:textColor="@color/yellow"
         android:textFontWeight="600"
         android:textSize="@dimen/txt_9sp"
         tools:text="Marketing" />
@@ -77,7 +77,7 @@
         android:fontFamily="@font/regular"
         android:lineSpacingExtra="1.3sp"
         android:maxLines="3"
-        android:textColor="#4A4A4A"
+        android:textColor="@color/common_text_color"
         android:textFontWeight="600"
         android:textSize="@dimen/txt_12sp"
         android:textStyle="bold"

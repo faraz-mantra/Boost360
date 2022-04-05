@@ -133,7 +133,7 @@
                     android:gravity="center"
                     android:text="Invoice"
                     android:textAllCaps="false"
-                    android:textColor="#FFB900"
+                    android:textColor="@color/yellow"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:visibility="gone"/>

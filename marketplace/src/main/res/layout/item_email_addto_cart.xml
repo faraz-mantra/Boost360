@@ -42,7 +42,7 @@
                     android:fontFamily="@font/regular"
                     android:textFontWeight="400"
                     android:text="orders@deltastore.com"
-                    android:textColor="#4A4A4A"
+                    android:textColor="@color/common_text_color"
                     android:textSize="@dimen/txt_14sp"
                     android:textStyle="normal"
                     app:layout_constraintStart_toStartOf="parent"

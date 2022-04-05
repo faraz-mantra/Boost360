@@ -371,6 +371,7 @@
 
     <color name="colorPrimaryLight">#EE1998</color>
     <color name="colorAccentLight">#3633B8</color>
+    <color name="copy_coupon_text_color">#828282</color>
 
     <color name="yellowBorder">@color/white</color>
 

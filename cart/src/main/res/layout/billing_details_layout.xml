@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email address*"
-            android:textColor="#4A4A4A"
+            android:textColor="@color/common_text_color"
             android:textSize="12sp"
             android:lineHeight="16.34dp"
             android:textFontWeight="600"
@@ -46,7 +46,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="textCapCharacters"
                 android:textAllCaps="true"
-                android:textColor="#4A4A4A"
+                android:textColor="@color/common_text_color"
                 android:textColorHint="#BBBBBB"
                 android:textFontWeight="400"
                 android:textSize="@dimen/txt_14sp"
@@ -68,7 +68,7 @@
                 android:buttonTint="#FFB900"
                 android:fontFamily="@font/regular"
                 android:text="Want to claim GST input credit?"
-                android:textColor="#747474"
+                android:textColor="@color/dot_grey"
                 android:textSize="@dimen/txt_12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +82,7 @@
                 android:checked="true"
                 android:fontFamily="@font/regular"
                 android:text="Want to claim GST input credit?"
-                android:textColor="#747474"
+                android:textColor="@color/dot_grey"
                 android:textSize="@dimen/txt_12sp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -108,7 +108,7 @@
                 android:paddingTop="@dimen/_4sdp"
                 android:paddingBottom="@dimen/_4sdp"
                 android:text="GSTIN"
-                android:textColor="#4A4A4A"
+                android:textColor="@color/common_text_color"
                 android:textSize="@dimen/txt_12sp" />
 
         </RelativeLayout>
@@ -134,7 +134,7 @@
                 android:inputType="textCapCharacters"
                 android:maxLength="15"
                 android:textAllCaps="true"
-                android:textColor="#4A4A4A"
+                android:textColor="@color/common_text_color"
                 android:textColorHint="#BBBBBB"
                 android:textFontWeight="400"
                 android:textSize="@dimen/txt_14sp"
@@ -165,7 +165,7 @@
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_4sdp"
             android:text="Place of supply (state)*"
-            android:textColor="#4A4A4A"
+            android:textColor="@color/common_text_color"
             android:textSize="@dimen/txt_12sp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -264,7 +264,7 @@
             android:drawablePadding="5dp"
             android:fontFamily="@font/regular"
             android:text="@string/cart_gst_text"
-            android:textColor="#828282"
+            android:textColor="@color/copy_coupon_text_color"
             android:textSize="@dimen/txt_12sp"
             android:visibility="gone"
             tools:visibility="visible" />
@@ -278,7 +278,7 @@
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_4sdp"
             android:text="Complete billing address*"
-            android:textColor="#4A4A4A"
+            android:textColor="@color/common_text_color"
             android:textFontWeight="400"
             android:textSize="@dimen/txt_12sp" />
 
@@ -295,7 +295,7 @@
             android:hint="Enter complete address"
             android:imeOptions="actionDone"
             android:inputType="textCapWords"
-            android:textColor="#4A4A4A"
+            android:textColor="@color/common_text_color"
             android:textColorHint="#BBBBBB"
             android:textSize="@dimen/txt_14sp" />
 
@@ -311,7 +311,7 @@
             android:hint="Enter complete address"
             android:imeOptions="actionDone"
             android:inputType="textCapWords"
-            android:textColor="#4A4A4A"
+            android:textColor="@color/common_text_color"
             android:textColorHint="#BBBBBB"
             android:textSize="@dimen/txt_14sp"
             android:visibility="gone"

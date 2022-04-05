@@ -44,7 +44,7 @@
       android:paddingStart="@dimen/_5sdp"
       android:paddingEnd="@dimen/_15sdp"
       android:text="Any amount deducted will be refunded within 5-7 days. How do you want to proceed?"
-      android:textColor="#747474"
+      android:textColor="@color/dot_grey"
       android:textSize="@dimen/_8sdp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="@id/transaction_failed_title"
@@ -83,7 +83,7 @@
       android:paddingBottom="@dimen/_10sdp"
       android:text="retry"
       android:textAllCaps="true"
-      android:textColor="#9b9b9b"
+      android:textColor="@color/globalLight"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/check_activation_status" />

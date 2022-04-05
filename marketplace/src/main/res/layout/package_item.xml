@@ -108,7 +108,7 @@
                             android:paddingStart="0dp"
                             android:paddingEnd="@dimen/_5sdp"
                             android:text="Just for"
-                            android:textColor="#9b9b9b"
+                            android:textColor="@color/globalLight"
                             android:textSize="@dimen/_8sdp"
                             tools:visibility="visible"
                             android:visibility="gone" />
@@ -133,7 +133,7 @@
                             android:paddingStart="0dp"
                             android:paddingEnd="@dimen/_5sdp"
                             android:text="₹2,099/month"
-                            android:textColor="#828282"
+                            android:textColor="@color/copy_coupon_text_color"
                             android:fontFamily="@font/semi_bold"
                             android:textFontWeight="600"
                             android:textSize="@dimen/txt_11sp" />
@@ -145,7 +145,7 @@
                             android:paddingStart="0dp"
                             android:paddingEnd="@dimen/_5sdp"
                             android:text="₹2,559/month"
-                            android:textColor="#828282"
+                            android:textColor="@color/copy_coupon_text_color"
                             android:textFontWeight="400"
                             android:fontFamily="@font/regular"
                             android:textSize="@dimen/txt_11sp" />

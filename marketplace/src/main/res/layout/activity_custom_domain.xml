@@ -423,7 +423,7 @@
                     android:fontFamily="@font/semi_bold"
                     android:lineHeight="21.79dp"
                     android:text="With every domain you also get"
-                    android:textColor="#333333"
+                    android:textColor="@color/main_color_gray_dk"
                     android:textFontWeight="600"
                     android:textSize="@dimen/txt_16sp"
                     app:layout_constraintStart_toStartOf="parent"

@@ -14,7 +14,7 @@
     android:layout_marginTop="25dp"
     android:fontFamily="@font/semi_bold"
     android:text="Have a coupon code?"
-    android:textColor="#4A4A4A"
+    android:textColor="@color/common_text_color"
     android:textSize="@dimen/txt_16sp" />
 
   <androidx.appcompat.widget.AppCompatImageView
@@ -50,7 +50,7 @@
     android:layout_height="wrap_content"
     android:layout_below="@id/cart_filled_Text_Field"
     android:layout_marginTop="25dp"
-    android:background="#FFB900"
+    android:background="@color/yellow"
     android:fontFamily="@font/semi_bold"
     android:gravity="center"
     android:paddingTop="15dp"

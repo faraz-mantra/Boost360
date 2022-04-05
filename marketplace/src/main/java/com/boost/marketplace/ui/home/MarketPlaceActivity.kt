@@ -2559,7 +2559,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                        applicationContext,
 //                        R.drawable.added_to_cart_grey
 //                )
-//                package_submit.setTextColor(Color.parseColor("#bbbbbb"))
+//                package_submit.setTextColor(context.getResources().getColor(R.color.tv_color_BB))
 //                package_submit.setText(getString(R.string.added_to_cart))
                                 badgeNumber = badgeNumber + 1
 //                badge121.setText(badgeNumber.toString())

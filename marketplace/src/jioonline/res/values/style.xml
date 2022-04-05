@@ -47,13 +47,13 @@
   </style>
 
   <style name="SaveCardCheckBox" parent="Theme.AppCompat.NoActionBar">
-    <item name="colorControlNormal">#747474</item>   <!-- normal border color change as you wish -->
+    <item name="colorControlNormal">@color/dot_grey</item>   <!-- normal border color change as you wish -->
     <item name="colorControlActivated">#6DCB34</item> <!-- activated color change as you wish -->
     <item name="android:textColor">#FF3F3C</item> <!-- checkbox text color -->
   </style>
 
   <style name="SelectCardPayment" parent="Theme.AppCompat.NoActionBar">
-    <item name="colorControlNormal">#747474</item>   <!-- normal border color change as you wish -->
+    <item name="colorControlNormal">@color/dot_grey</item>   <!-- normal border color change as you wish -->
     <item name="colorControlActivated">#4a90e2</item> <!-- activated color change as you wish -->
     <item name="android:textColor">#FF3F3C</item> <!-- checkbox text color -->
   </style>

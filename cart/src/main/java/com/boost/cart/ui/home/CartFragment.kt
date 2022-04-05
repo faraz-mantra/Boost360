@@ -2591,7 +2591,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 }
                 event_attributes.put("cart ids", Utils.filterBraces(cartFullItems.toString()))
                 Log.v("events", event_attributes.toString())
-                viewModel.getRecommendedAddons(RecommendedAddonsRequest(recommendedAddonsWidgetKey, (activity as CartActivity).fpid, (activity as CartActivity).experienceCode))
+//                viewModel.getRecommendedAddons(RecommendedAddonsRequest(recommendedAddonsWidgetKey, (activity as CartActivity).fpid, (activity as CartActivity).experienceCode))
 //                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", event_attributes)
                 WebEngageController.trackEvent(event_name = EVENT_NAME_ADDONS_MARKETPLACE_FULL_CART_LOADED, EVENT_LABEL_ADDONS_MARKETPLACE_FULL_CART_LOADED, event_attributes)
 

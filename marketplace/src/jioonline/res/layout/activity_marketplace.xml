@@ -358,7 +358,7 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:fontFamily="@font/bold"
-                                                    android:textColor="#333333"
+                                                    android:textColor="@color/main_color_gray_dk"
                                                     android:textSize="18sp"
                                                     tools:text="6 items waiting in cart" />
 
@@ -970,7 +970,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Need help to decide?"
-                                android:textColor="#FFFFFF"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
 
                             <TextView
@@ -979,7 +979,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/regular"
                                 android:text="Speak to our expert!"
-                                android:textColor="#FFFFFF"
+                                android:textColor="@color/white"
                                 android:textFontWeight="700"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
@@ -1125,7 +1125,7 @@
                             android:paddingEnd="30dp"
                             android:paddingBottom="10dp"
                             android:text="@string/view_referral_items"
-                            android:textColor="#FFB900"
+                            android:textColor="@color/yellow"
                             android:textFontWeight="700"
                             android:textSize="13sp"
                             android:textStyle="bold"
