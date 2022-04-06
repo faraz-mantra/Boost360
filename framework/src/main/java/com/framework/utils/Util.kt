@@ -510,11 +510,11 @@ fun highlightHashTag(text: String?,@ColorRes colorId:Int): SpannableString {
     text?.trim()?.split(Regex("\\s+"))?.forEach {
       Log.i(TAG, "addHashTagFunction: $it")
       if (it.isNotEmpty() && it[0] == '#'){
-        val boldSpan = StyleSpan(Typeface
-          .BOLD)
+//        val boldSpan = StyleSpan(Typeface
+//          .BOLD)
         val foregroundSpan = ForegroundColorSpan(ContextCompat.getColor(BaseApplication.instance, colorId))
         spannable.setSpan(foregroundSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannable.setSpan(boldSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+//        spannable.setSpan(boldSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
       }
 

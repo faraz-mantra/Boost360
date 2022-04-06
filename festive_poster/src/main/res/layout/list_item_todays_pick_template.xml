@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:padding="16dp"
+        android:layout_marginVertical="@dimen/size_16"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -29,43 +29,28 @@
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_cat_desc"
-            style="@style/BlackRegularS"
+            style="@style/BlackRegularSS"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_category_icon"
             app:layout_constraintTop_toBottomOf="@+id/tv_cat_title"
             tools:text="Post about offers or friday sale upto 50% discount  on selected products" />
 
 
-        <androidx.viewpager2.widget.ViewPager2
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/vp_template"
+            app:layout_constraintHorizontal_bias="0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_cat_desc"
-            tools:layout_editor_absoluteX="16dp" />
-
-
-        <com.framework.views.dotsindicator.NoAnimDotsIndicator
-            android:id="@+id/intro_indicator_new"
-            android:layout_width="wrap_content"
-            android:layout_height="4dp"
-            android:layout_marginVertical="@dimen/size_16"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/size_25"
-            app:dotsColor="@color/black_4a4a4a_30"
-            app:dotsCornerRadius="@dimen/_6dp"
-            app:dotsSize="@dimen/size_30"
-            app:dampingRatio="0.5"
-            app:stiffness="300"
-            app:dotsSpacing="@dimen/size_8"
-            app:selectedDotColor="@color/colorPrimary"
+            android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vp_template"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_cat_desc" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
