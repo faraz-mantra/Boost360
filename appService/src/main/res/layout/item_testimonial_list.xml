@@ -38,12 +38,14 @@
           app:srcCompat="@drawable/placeholder_image_n" />
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/title_txt"
+          android:id="@+id/title_name"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_10"
           android:layout_marginTop="@dimen/size_2"
+          android:ellipsize="end"
           android:fontFamily="@font/bold"
+          android:maxLines="1"
           android:textColor="@color/black_4a4a4a"
           app:layout_constraintEnd_toStartOf="@+id/edit_img"
           app:layout_constraintStart_toEndOf="@+id/image_icon"
@@ -52,14 +54,17 @@
           tools:text="Abhishek Arora" />
 
         <com.framework.views.customViews.CustomTextView
+          android:id="@+id/title_dec"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_10"
+          android:ellipsize="end"
           android:fontFamily="@font/semi_bold"
+          android:maxLines="1"
           android:textColor="@color/gray_828282"
           app:layout_constraintEnd_toStartOf="@+id/edit_img"
           app:layout_constraintStart_toEndOf="@+id/image_icon"
-          app:layout_constraintTop_toBottomOf="@+id/title_txt"
+          app:layout_constraintTop_toBottomOf="@+id/title_name"
           app:textType="CAPTION"
           tools:text="Tech Mahindra" />
 
@@ -77,20 +82,24 @@
       <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_1"
-        android:background="@color/white_smoke" />
+        android:layout_marginBottom="@dimen/size_14"
+        android:background="@color/white_light" />
 
       <com.framework.views.customViews.CustomTextView
+        android:id="@+id/testimonial_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/size_10"
-        android:layout_marginTop="@dimen/size_14"
         android:layout_marginEnd="@dimen/size_10"
+        android:ellipsize="end"
         android:fontFamily="@font/semi_bold"
+        android:maxLines="2"
         android:text="Abhishek Arora"
         android:textColor="@color/black_4a4a4a"
         app:textType="BODY_1" />
 
       <com.framework.views.customViews.CustomTextView
+        android:id="@+id/testimonial_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/size_10"

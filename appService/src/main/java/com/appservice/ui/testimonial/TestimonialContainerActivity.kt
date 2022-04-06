@@ -49,28 +49,28 @@ open class TestimonialContainerActivity : AppBaseActivity<ActivityFragmentContai
 
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
-      FragmentType.SERVICE_INFORMATION, FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT -> ContextCompat.getColor(this, R.color.orange)
+      FragmentType.TESTIMONIAL_LIST_FRAGMENT, FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT -> ContextCompat.getColor(this, R.color.orange)
       else -> super.getToolbarBackgroundColor()
     }
   }
 
   override fun getToolbarTitleColor(): Int? {
     return when (type) {
-      FragmentType.SERVICE_INFORMATION, FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT -> ContextCompat.getColor(this, R.color.white)
+      FragmentType.TESTIMONIAL_LIST_FRAGMENT, FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT -> ContextCompat.getColor(this, R.color.white)
       else -> super.getToolbarTitleColor()
     }
   }
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.SERVICE_INFORMATION, FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
+      FragmentType.TESTIMONIAL_LIST_FRAGMENT, FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
       else -> super.getNavigationIcon()
     }
   }
 
   override fun getToolbarTitle(): String? {
     return when (type) {
-      FragmentType.SERVICE_INFORMATION -> resources.getString(R.string.testimonial_title)
+      FragmentType.TESTIMONIAL_LIST_FRAGMENT -> resources.getString(R.string.testimonial_title)
       FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT -> resources.getString(R.string.testimonial_add)
       else -> super.getToolbarTitle()
     }

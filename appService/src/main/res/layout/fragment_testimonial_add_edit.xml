@@ -14,6 +14,7 @@
     <androidx.core.widget.NestedScrollView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:fillViewport="true"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent">
@@ -27,7 +28,7 @@
         <com.framework.views.customViews.CustomTextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="Add customer image"
+          android:text="@string/add_customer_image"
           android:textColor="@color/warm_grey"
           app:textType="CAPTION" />
 
@@ -55,7 +56,7 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_4"
               android:gravity="center"
-              android:text="Jpg/png\n(800x800px)"
+              android:text="@string/jpg_png_n_800x800px"
               android:textColor="@color/warm_grey"
               app:textType="BODY_1" />
           </androidx.appcompat.widget.LinearLayoutCompat>
@@ -70,7 +71,8 @@
             <com.framework.views.customViews.CustomImageView
               android:id="@+id/image_testimonial"
               android:layout_width="match_parent"
-              android:layout_height="match_parent" />
+              android:layout_height="match_parent"
+              android:scaleType="centerCrop" />
           </com.framework.views.customViews.CustomCardView>
         </FrameLayout>
 
@@ -84,7 +86,7 @@
           <com.framework.views.customViews.CustomTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Customer Name"
+            android:text="@string/customer_name"
             android:textColor="@color/warm_grey"
             app:textType="CAPTION" />
 
@@ -97,12 +99,12 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.framework.views.customViews.CustomEditText
-          android:id="@+id/edt_name"
+          android:id="@+id/edt_title_name"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_4"
           android:background="@drawable/rounded_edit_stroke"
-          android:hint="Enter Name"
+          android:hint="@string/enter_name"
           android:inputType="textPersonName"
           android:singleLine="true" />
 
@@ -116,7 +118,7 @@
           <com.framework.views.customViews.CustomTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Company/ Occupation"
+            android:text="@string/company_occupation"
             android:textColor="@color/warm_grey"
             app:textType="CAPTION" />
 
@@ -129,12 +131,12 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.framework.views.customViews.CustomEditText
-          android:id="@+id/edt_company"
+          android:id="@+id/edt_title_dec"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_4"
           android:background="@drawable/rounded_edit_stroke"
-          android:hint="Enter company/ occupation..."
+          android:hint="@string/enter_company_occupation"
           android:inputType="textCapSentences"
           android:singleLine="true" />
 
@@ -148,7 +150,7 @@
           <com.framework.views.customViews.CustomTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Testimonial title"
+            android:text="@string/testimonial_title_n"
             android:textColor="@color/warm_grey"
             app:textType="CAPTION" />
 
@@ -161,12 +163,12 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.framework.views.customViews.CustomEditText
-          android:id="@+id/edt_testimonial"
+          android:id="@+id/edt_testimonial_title"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_4"
           android:background="@drawable/rounded_edit_stroke"
-          android:hint="Enter testimonial title"
+          android:hint="@string/enter_testimonial_title"
           android:inputType="textCapSentences"
           android:singleLine="true" />
 
@@ -180,31 +182,35 @@
           <com.framework.views.customViews.CustomTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Testimonial Description"
+            android:text="@string/testimonial_description"
             android:textColor="@color/warm_grey"
             app:textType="CAPTION" />
 
           <com.framework.views.customViews.CustomTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" *"
+            android:text="@string/space_start"
             android:textColor="@color/colorAccent"
             app:textType="BODY_1" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.framework.views.customViews.CustomEditText
-          android:id="@+id/edt_desc"
+          android:id="@+id/edt_testimonial_desc"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_4"
           android:background="@drawable/rounded_edit_stroke"
           android:gravity="top|start"
-          android:hint="Enter description"
+          android:hint="@string/enter_description"
           android:inputType="textMultiLine"
-          android:lines="6"
-          android:maxLines="8"
+          android:lines="16"
+          android:maxLines="12"
           android:minLines="4"
           android:scrollbars="vertical" />
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_60" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.core.widget.NestedScrollView>
@@ -217,7 +223,7 @@
       android:layout_marginEnd="@dimen/size_20"
       android:layout_marginBottom="@dimen/size_14"
       android:gravity="center"
-      android:text="Save testimonial"
+      android:text="@string/save_testimonial"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
