@@ -1,128 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:padding="5dp">
 
-  <androidx.cardview.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    app:cardCornerRadius="15dp"
-    app:cardElevation="2dp">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="2dp">
 
-    <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="10dp">
-
-      <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="20dp"
-          android:orientation="vertical">
-
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
-
-          <androidx.appcompat.widget.AppCompatImageView
-              android:id="@+id/imageView2"
-              android:layout_width="@dimen/_38sdp"
-              android:layout_height="@dimen/_38sdp"
-              android:src="@drawable/ic_cart_others_image" />
-
-          <androidx.appcompat.widget.LinearLayoutCompat
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_gravity="center"
-              android:layout_marginStart="10dp"
-              android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Custom domain with HTTPS security"
-                android:textColor="@color/common_text_color"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+            android:layout_marginTop="10dp">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/package_amount_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:gravity="center_vertical">
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
 
-              <androidx.appcompat.widget.AppCompatTextView
-                  android:id="@+id/package_price"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginEnd="5dp"
-                  android:text="@string/pack_price"
-                  android:textColor="@color/dot_grey"
-                  android:textSize="12sp" />
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
 
-              <androidx.appcompat.widget.AppCompatTextView
-                  android:id="@+id/package_orig_cost"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="10% off"
-                  android:textColor="@color/yellow"
-                  android:textSize="12sp" />
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="@dimen/_38sdp"
+                        android:layout_height="@dimen/_38sdp"
+                        android:src="@drawable/ic_cart_others_image" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/semi_bold"
+                            android:text="Custom domain with HTTPS security"
+                            android:textColor="@color/tv_color_4d"
+                            android:textFontWeight="600"
+                            android:textSize="14sp" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/package_amount_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center_vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/package_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
+                                android:fontFamily="@font/regular"
+                                android:text="@string/pack_price"
+                                android:textColor="@color/dot_grey"
+                                android:textFontWeight="400"
+                                android:textSize="12sp" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/package_orig_cost"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/regular"
+                                android:text="10% off"
+                                android:textColor="@color/yellow"
+                                android:textFontWeight="400"
+                                android:textSize="12sp" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="55dp"
+                    android:fontFamily="@font/semi_bold"
+                    android:text="₹497/month"
+                    android:textColor="@color/tv_color_4d"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/txt_14sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/add_to_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="55dp"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/ic_cart_add_bg"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Add To Cart"
+                    android:textColor="@color/white"
+                    android:textFontWeight="700"
+                    android:textSize="@dimen/txt_12sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="55dp"
+                    android:layout_marginTop="20dp"
+                    android:drawableStart="@drawable/ic_cart_pack_business_count_image"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/regular"
+                    android:text="Used by 10,000+ businesses"
+                    android:textColor="@color/offer_border"
+                    android:textFontWeight="400"
+                    android:textSize="@dimen/txt_12sp" />
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-          </androidx.appcompat.widget.LinearLayoutCompat>
+        </RelativeLayout>
 
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="55dp"
-            android:text="₹497/month"
-            android:textColor="#4D4D4D"
-            android:textSize="@dimen/txt_14sp" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/add_to_cart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="55dp"
-            android:layout_marginTop="14dp"
-            android:background="@drawable/ic_cart_add_bg"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="Add To Cart"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="55dp"
-            android:layout_marginTop="20dp"
-            android:drawableStart="@drawable/ic_cart_pack_business_count_image"
-            android:drawablePadding="5dp"
-            android:text="Used by 10,000+ businesses"
-            android:textColor="@color/offer_border" />
-
-
-      </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-    </RelativeLayout>
-
-
-  </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>
