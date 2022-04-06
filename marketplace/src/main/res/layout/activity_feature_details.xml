@@ -18,7 +18,7 @@
             android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorPrimary1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -26,8 +26,8 @@
                 android:id="@+id/collapsing_toolbar_details"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:contentScrim="@color/colorTransparentPrimary"
-                app:expandedTitleTextAppearance="@color/colorTransparentPrimary"
+                app:contentScrim="@color/colorTransparentPrimary1"
+                app:expandedTitleTextAppearance="@color/colorTransparentPrimary1"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:title="Facebook Lead Ads"
                 app:titleEnabled="true">
@@ -40,7 +40,7 @@
                         android:id="@+id/details_image_bg"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:background="@color/colorPrimary"
+                        android:background="@color/colorPrimary1"
                         android:scaleType="centerCrop"
                         android:src="@drawable/feature_details_bg"
                         app:layout_constraintDimensionRatio="2:1.2"
@@ -95,7 +95,7 @@
                             android:paddingStart="@dimen/_50sdp"
                             android:paddingEnd="@dimen/_50sdp"
                             android:gravity="center_vertical"
-                            android:background="@color/colorTransparentPrimary"
+                            android:background="@color/colorTransparentPrimary1"
                             android:text="@string/facebook_lead_ads_upto_75_leads"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_11sdp"
@@ -346,7 +346,7 @@
                                 android:fontFamily="@font/bold"
                                 android:paddingStart="10dp"
                                 android:text="Learn more"
-                                android:textColor="@color/colorAccent"
+                                android:textColor="@color/colorAccent1"
                                 android:textSize="12dp"
                                 app:layout_constraintBottom_toBottomOf="@id/title_bottom3"
                                 app:layout_constraintEnd_toEndOf="@id/title_bottom3" />
@@ -361,7 +361,7 @@
                                 android:padding="5dp"
                                 android:paddingStart="10dp"
                                 android:text="Show less"
-                                android:textColor="@color/colorAccent"
+                                android:textColor="@color/colorAccent1"
                                 android:textSize="12dp"
                                 android:visibility="gone"
                                 app:layout_constraintEnd_toEndOf="@id/title_bottom3"
@@ -726,7 +726,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/benefits_viewpager"
                         app:progressMode="false"
-                        app:selectedDotColor="@color/colorAccent" />
+                        app:selectedDotColor="@color/colorAccent1" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -971,7 +971,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/what_our_customer_viewpager"
                         app:progressMode="false"
-                        app:selectedDotColor="@color/colorAccent" />
+                        app:selectedDotColor="@color/colorAccent1" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

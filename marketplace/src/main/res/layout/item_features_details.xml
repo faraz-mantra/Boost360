@@ -72,7 +72,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:text="View Pack"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorAccent1"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@id/view_packs_arrow"
             app:layout_constraintBottom_toBottomOf="parent" />

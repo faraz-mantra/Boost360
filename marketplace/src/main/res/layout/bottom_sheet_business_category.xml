@@ -77,7 +77,7 @@
         android:textAllCaps="false"
         android:gravity="center"
         android:text="@string/contact_support"
-        android:textColor="@color/colorAccent" />
+        android:textColor="@color/colorAccent1" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
   </androidx.appcompat.widget.LinearLayoutCompat>

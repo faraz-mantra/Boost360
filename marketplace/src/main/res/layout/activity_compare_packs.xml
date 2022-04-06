@@ -58,13 +58,13 @@
               android:background="@drawable/ic_cart" />
 
 
-              <com.nex3z.notificationbadge.NotificationBadge
-                  android:id="@+id/badge121"
-                  android:layout_width="28dp"
-                  android:layout_height="28dp"
-                  android:layout_alignParentTop="true"
-                  android:layout_alignParentEnd="true"
-                  app:nbMaxTextLength="2" />
+            <com.nex3z.notificationbadge.NotificationBadge
+                android:id="@+id/badge121"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                app:nbMaxTextLength="2" />
           </RelativeLayout>
 
 
@@ -247,7 +247,7 @@
         app:dotsWidthFactor="2.5"
         app:layout_constraintTop_toBottomOf="@+id/ly_content"
         app:progressMode="false"
-        app:selectedDotColor="@color/colorAccent"
+        app:selectedDotColor="@color/colorAccent1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

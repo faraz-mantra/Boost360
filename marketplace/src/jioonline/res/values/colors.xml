@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#EC008C</color>
-    <color name="colorAccent">#0400A6</color>
-    <color name="colorPrimaryDark">#EC008C</color>
-    <color name="colorPrimaryDarkBlue">#0400A6</color>
-    <color name="colorTransparentPrimary">#FFEC008C</color>
+    <color name="colorPrimary1">#EC008C</color>
+    <color name="colorAccent1">#0400A6</color>
+    <color name="colorPrimaryDark1">#EC008C</color>
+    <color name="colorPrimaryDarkBlue1">#0400A6</color>
+    <color name="colorTransparentPrimary1">#FFEC008C</color>
 
 
     <color name="primary">#FFFFFF</color>
@@ -361,18 +361,19 @@
     <color name="fullscreen_color">#a5000000</color>
     <color name="light_blue">#0068e0</color>
 
-    <color name="colorAccentPositive">@color/colorAccent</color>
+    <color name="colorAccentPositive">@color/colorAccent1</color>
     <color name="colorAccentNegative">@color/black_4a4a4a</color>
 
     <color name="jio_blue_90">#0400A6</color>
     <color name="jio_magenta">#EC008C</color>
 
-    <color name="offer_border">@color/colorPrimary</color>
+    <color name="offer_border">@color/colorPrimary1</color>
 
     <color name="colorPrimaryLight">#EE1998</color>
     <color name="colorAccentLight">#3633B8</color>
     <color name="copy_coupon_text_color">#828282</color>
 
     <color name="yellowBorder">@color/white</color>
+    <color name="searchBGborder">@color/white</color>
 
 </resources>

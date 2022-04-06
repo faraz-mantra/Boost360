@@ -29,7 +29,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:background="@color/colorAccent"
+            android:background="@color/colorAccent1"
             android:contentInsetStart="0dp"
             android:contentInsetEnd="0dp"
             app:contentInsetEnd="0dp"
