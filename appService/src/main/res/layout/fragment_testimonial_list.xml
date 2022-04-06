@@ -12,11 +12,11 @@
     <com.framework.views.viewgroups.BaseRecyclerView
       android:id="@+id/rv_testimonial"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      android:layout_height="wrap_content"
       android:clipToPadding="false"
       android:orientation="vertical"
-      android:paddingBottom="@dimen/size_30"
-      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      android:paddingBottom="@dimen/size_70"
+      tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
       tools:itemCount="3"
       tools:listitem="@layout/item_testimonial_list" />
 
@@ -25,6 +25,8 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
+      tools:visibility="visible"
+      android:visibility="gone"
       android:layout_marginBottom="@dimen/size_30"
       android:indeterminate="true"
       android:theme="@style/progressBar" />
@@ -39,10 +41,12 @@
       android:id="@+id/add_testimonial"
       style="@style/wrap_wrap"
       android:layout_gravity="bottom|end"
-      android:layout_margin="16dp"
+      android:layout_margin="@dimen/size_12"
       android:backgroundTint="@color/colorAccentLight"
       android:clickable="true"
       android:focusable="true"
+      tools:visibility="visible"
+      android:visibility="gone"
       android:fontFamily="@font/semi_bold"
       android:gravity="center"
       android:textColor="@color/white"
