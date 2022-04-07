@@ -20,7 +20,7 @@
         android:layout_width="@dimen/size_42"
         android:layout_height="@dimen/size_42"
         android:layout_marginEnd="@dimen/size_20"
-        android:indeterminateTint="@color/colorPrimary" />
+        android:indeterminateTint="@color/colorPrimary1" />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/title"

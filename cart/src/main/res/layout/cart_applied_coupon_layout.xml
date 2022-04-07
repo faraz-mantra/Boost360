@@ -74,7 +74,7 @@
       android:drawablePadding="5dp"
       android:fontFamily="@font/semi_bold"
       android:text="Congratulations! Coupon was applied successfully."
-      android:textColor="@color/yellow"
+      android:textColor="@color/colorAccent1"
       android:textSize="@dimen/txt_12sp" />
 
 

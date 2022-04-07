@@ -192,7 +192,7 @@
                             android:paddingBottom="@dimen/_5sdp"
                             android:text="Details"
                             android:textAllCaps="false"
-                            android:textColor="@color/yellow"
+                            android:textColor="@color/colorAccent1"
                             android:textFontWeight="800"
                             android:textSize="@dimen/txt_10sp" />
                     </LinearLayout>

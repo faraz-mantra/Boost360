@@ -101,7 +101,7 @@ Consider using keywords that may help with SEO
                 android:gravity="center"
                 android:lineHeight="20dp"
                 android:text="@string/call_an_expert"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorAccent1"
                 android:textFontWeight="700"
                 android:textSize="@dimen/txt_14sp" />
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#EC008C</color>
-    <color name="colorAccent">#0400A6</color>
-    <color name="colorPrimaryDark">#EC008C</color>
-    <color name="colorPrimaryDarkBlue">#0400A6</color>
-    <color name="colorTransparentPrimary">#FFEC008C</color>
+    <color name="colorPrimary1">#EC008C</color>
+    <color name="colorAccent1">#0400A6</color>
+    <color name="colorPrimaryDark1">#EC008C</color>
+    <color name="colorPrimaryDarkBlue1">#0400A6</color>
+    <color name="colorTransparentPrimary1">#FFEC008C</color>
 
     <color name="primary">#FFFFFF</color>
     <color name="primaryDark">#FFFFFF</color>
@@ -358,5 +358,6 @@
     <color name="addons_text_color">#ffb900</color>
     <color name="copy_coupon_text_color">#828282</color>
     <color name="tv_color_BB">#BBBBBB</color>
+    <color name="colorLightAccent">#c9d7ff</color>
 
 </resources>

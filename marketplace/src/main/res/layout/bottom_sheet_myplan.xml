@@ -252,7 +252,7 @@
                 android:textSize="@dimen/_12sdp"
                 android:text="View feature details"
                 android:textAllCaps="false"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorAccent1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.228"

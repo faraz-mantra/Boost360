@@ -16,7 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorPrimary1"
             android:contentInsetStart="0dp"
             android:contentInsetEnd="0dp"
             android:elevation="@dimen/cardview_default_elevation"
