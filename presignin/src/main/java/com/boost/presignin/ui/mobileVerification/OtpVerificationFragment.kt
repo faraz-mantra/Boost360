@@ -62,9 +62,7 @@ class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>
   }
 
   override fun authTokenData(): AuthTokenDataItem? {
-    return if (resultLogin()?.authTokens.isNullOrEmpty()
-        .not()
-    ) resultLogin()?.authTokens!![0] else null
+    return if (resultLogin()?.authTokens.isNullOrEmpty().not()) resultLogin()?.authTokens!![0] else null
   }
 
   override fun onCreateView() {
@@ -160,20 +158,20 @@ class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>
   private fun sendOtp(phoneNumber: String?) {
     showProgress(getString(R.string.sending_otp))
     WebEngageController.trackEvent(PS_VERIFY_OTP_RESEND, OTP_RESEND_CLICK, NO_EVENT_VALUE)
-    viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess() && it.parseResponse()) {
         binding?.wrongOtpErrorTv?.isVisible = false
         onCodeSent()
       } else showShortToast(getString(R.string.otp_not_sent))
       hideProgress()
-    })
+    }
   }
 
   fun verify() {
     showProgress(getString(R.string.verify_otp))
     WebEngageController.trackEvent(PS_VERIFY_OTP_VERIFY, OTP_VERIFY_CLICK, NO_EVENT_VALUE)
     val otp = binding?.pinTv?.otp
-    viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId2)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId2)?.observeOnce(viewLifecycleOwner) {
       hideProgress()
       if (it.isSuccess()) {
         val result = it as? VerifyOtpResponse
@@ -182,22 +180,20 @@ class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>
             this.resultLogin = result.Result
             authTokenData()?.createAccessTokenAuth()
           } else {
-            navigator?.startActivityFinish(
-              MobileVerificationActivity::class.java,
+            navigator?.startActivityFinish(MobileVerificationActivity::class.java,
               Bundle().apply {
                 putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, result.Result)
               })
           }
         } else {
-          navigator?.startActivityFinish(
-            RegistrationActivity::class.java,
+          navigator?.startActivityFinish(RegistrationActivity::class.java,
             args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }
           )
         }
       } else {
         binding?.wrongOtpErrorTv?.isVisible = true;
       }
-    })
+    }
   }
 
   override fun onOTPReceived(otp: String?) {

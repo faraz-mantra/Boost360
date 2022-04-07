@@ -50,7 +50,6 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
   }
 
   override fun onCreateView() {
-    progressView = ProgressDialog.newInstance()
   }
 
   protected open fun hideProgress() {

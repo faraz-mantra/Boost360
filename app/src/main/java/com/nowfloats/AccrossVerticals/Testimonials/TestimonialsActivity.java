@@ -59,6 +59,7 @@ import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
+@Deprecated
 public class TestimonialsActivity extends AppCompatActivity implements TestimonialsListener, AppOnZeroCaseClicked {
 
     public static List<String> allTestimonialType = Arrays.asList("testimonials", "testimonial", "guestreviews");
@@ -449,6 +450,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     }
 }
 
+@Deprecated
 enum TestimonialType{
     TESTIMONIAL_TYPE,TESTIMONIAL_HEADER
 }

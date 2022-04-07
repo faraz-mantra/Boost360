@@ -1,13 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <data>
 
   </data>
 
-  <androidx.appcompat.widget.LinearLayoutCompat
+  <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
-  </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:fillViewport="true"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/size_20">
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/add_customer_image"
+          android:textColor="@color/warm_grey"
+          app:textType="CAPTION" />
+
+        <FrameLayout
+          android:layout_width="@dimen/size_180"
+          android:layout_height="@dimen/size_130"
+          android:layout_marginTop="@dimen/size_4"
+          android:background="@drawable/bg_rect_grey_rounded">
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/add_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.framework.views.customViews.CustomImageView
+              android:layout_width="@dimen/size_36"
+              android:layout_height="@dimen/size_36"
+              app:srcCompat="@drawable/ic_add_image" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_4"
+              android:gravity="center"
+              android:text="@string/jpg_png_n_800x800px"
+              android:textColor="@color/warm_grey"
+              app:textType="BODY_1" />
+          </androidx.appcompat.widget.LinearLayoutCompat>
+
+          <com.framework.views.customViews.CustomCardView
+            android:id="@+id/view_testimonial"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:cardCornerRadius="@dimen/size_4">
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/image_testimonial"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:scaleType="centerCrop" />
+          </com.framework.views.customViews.CustomCardView>
+        </FrameLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_1"
+          android:layout_marginTop="@dimen/size_18"
+          android:orientation="horizontal">
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/customer_name"
+            android:textColor="@color/warm_grey"
+            app:textType="CAPTION" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" *"
+            android:textColor="@color/colorAccent"
+            app:textType="BODY_1" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/edt_title_name"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_4"
+          android:background="@drawable/rounded_edit_stroke"
+          android:hint="@string/enter_name"
+          android:inputType="textPersonName"
+          android:singleLine="true" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_1"
+          android:layout_marginTop="@dimen/size_18"
+          android:orientation="horizontal">
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/company_occupation"
+            android:textColor="@color/warm_grey"
+            app:textType="CAPTION" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" *"
+            android:textColor="@color/colorAccent"
+            app:textType="BODY_1" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/edt_title_dec"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_4"
+          android:background="@drawable/rounded_edit_stroke"
+          android:hint="@string/enter_company_occupation"
+          android:inputType="textCapSentences"
+          android:singleLine="true" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_1"
+          android:layout_marginTop="@dimen/size_18"
+          android:orientation="horizontal">
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/testimonial_title_n"
+            android:textColor="@color/warm_grey"
+            app:textType="CAPTION" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" *"
+            android:textColor="@color/colorAccent"
+            app:textType="BODY_1" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/edt_testimonial_title"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_4"
+          android:background="@drawable/rounded_edit_stroke"
+          android:hint="@string/enter_testimonial_title"
+          android:inputType="textCapSentences"
+          android:singleLine="true" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_1"
+          android:layout_marginTop="@dimen/size_18"
+          android:orientation="horizontal">
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/testimonial_description"
+            android:textColor="@color/warm_grey"
+            app:textType="CAPTION" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/space_start"
+            android:textColor="@color/colorAccent"
+            app:textType="BODY_1" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/edt_testimonial_desc"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_4"
+          android:background="@drawable/rounded_edit_stroke"
+          android:gravity="top|start"
+          android:hint="@string/enter_description"
+          android:inputType="textMultiLine"
+          android:lines="16"
+          android:maxLines="12"
+          android:minLines="4"
+          android:scrollbars="vertical" />
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_60" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/btn_save"
+      style="@style/ButtonStyle.Rounded.Solid"
+      android:layout_width="match_parent"
+      android:layout_marginStart="@dimen/size_20"
+      android:layout_marginEnd="@dimen/size_20"
+      android:layout_marginBottom="@dimen/size_14"
+      android:gravity="center"
+      android:text="@string/save_testimonial"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:textType="HEADING_6" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
