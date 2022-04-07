@@ -43,6 +43,7 @@ import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_DOMAIN_AN
 import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_CONFIRM_BOOK_A_NEW_DOMAIN;
 import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
 
+@Deprecated
 public class NewDomainFragment extends Fragment {
 
     ProgressDialog vmnProgressBar;
