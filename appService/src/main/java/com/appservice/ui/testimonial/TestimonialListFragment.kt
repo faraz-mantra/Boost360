@@ -1,10 +1,10 @@
 package com.appservice.ui.testimonial
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
 import com.appservice.constant.FragmentType
@@ -19,6 +19,8 @@ import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.RecyclerItemClickListener
+import com.appservice.utils.WebEngageController
+import com.framework.constants.SupportVideoType
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -26,6 +28,7 @@ import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
+import com.framework.webengageconstant.*
 
 class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListBinding>(), AppOnZeroCaseClicked, RecyclerItemClickListener {
 
@@ -54,6 +57,7 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
     super.onCreateView()
     setOnClickListener(binding?.addTestimonial)
     layoutManagerN = LinearLayoutManager(baseActivity)
+    WebEngageController.trackEvent(TESTIMONIAL_PAGE_VIEW, PAGE_VIEW, sessionLocal.fpTag)
     this.fragmentZeroCase = AppRequestZeroCaseBuilder(AppZeroCases.TESTIMONIAL, this, baseActivity).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, fragmentZeroCase, false)
     loadData(isFirst = true, offSet = offSet, limit = limit)
@@ -151,6 +155,7 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
   }
 
   private fun addTestimonial() {
+    WebEngageController.trackEvent(TESTIMONIAL_ADD_CLICK, CLICK, sessionLocal.fpTag)
     startTestimonialFragmentActivity(FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT, isResult = true)
   }
 
@@ -159,7 +164,8 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
   }
 
   override fun secondaryButtonClicked() {
-    Toast.makeText(activity, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
+    WebEngageController.trackEvent(TESTIMONIAL_ADD_CLICK, CLICK, sessionLocal.fpTag)
+   baseActivity.startHelpSupportVideoActivity(SupportVideoType.TESTIMONIALS.value)
   }
 
   override fun ternaryButtonClicked() {
@@ -197,6 +203,16 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
         isLastPageD = false
         loadData(isFirst = true, offSet = offSet, limit = limit)
       }
+    }
+  }
+
+  fun Context.startHelpSupportVideoActivity(supportType: String) {
+    try {
+      val i = Intent(this, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
+      i.putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name, supportType)
+      this.startActivity(i)
+    } catch (e: Exception) {
+      e.printStackTrace()
     }
   }
 }
