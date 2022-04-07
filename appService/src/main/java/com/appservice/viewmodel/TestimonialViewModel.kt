@@ -1,50 +1,41 @@
 package com.appservice.viewmodel
 
 import androidx.lifecycle.LiveData
-import com.appservice.model.account.AccountCreateRequest
-import com.appservice.model.account.BankAccountDetailsN
-import com.appservice.model.account.testimonial.addEdit.DeleteTestimonialRequest
-import com.appservice.model.updateBusiness.PostUpdateTaskRequest
-import com.appservice.rest.repository.BoostKitDevRepository
-import com.appservice.rest.repository.RazorRepository
-import com.appservice.rest.repository.WithFloatRepository
-import com.appservice.rest.repository.WithFloatTwoRepository
+import com.appservice.model.testimonial.AddTestimonialImageRequest
+import com.appservice.model.testimonial.AddUpdateTestimonialRequest
+import com.appservice.model.testimonial.ListTestimonialRequest
+import com.appservice.rest.repository.NowfloatsApiRepository
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
-import okhttp3.RequestBody
-import org.json.JSONObject
 
 class TestimonialViewModel : BaseViewModel() {
 
-  fun getWebActionList(themeID: String?, websiteId: String?): LiveData<BaseResponse> {
-    return BoostKitDevRepository.getWebActionList(themeID, websiteId).toLiveData()
+  fun getTestimonialList(request: ListTestimonialRequest?): LiveData<BaseResponse> {
+    return NowfloatsApiRepository.getTestimonialList(request).toLiveData()
   }
 
-  fun getTestimonialsList(
-    token: String?,
-    testimonialType: String?,
-    query: JSONObject?,
-    skip: Int,
-    limit: Int
-  ): LiveData<BaseResponse> {
-    return BoostKitDevRepository.getTestimonialsList(token, testimonialType, query, skip, limit)
-      .toLiveData()
+  fun getTestimonialDetail(testimonialId: String?): LiveData<BaseResponse> {
+    return NowfloatsApiRepository.getTestimonialDetail(testimonialId).toLiveData()
   }
 
-//  fun addTestimonials(token: String?, testimonialType: String?, body: AddTestimonialsData?): LiveData<BaseResponse> {
-//    return BoostKitDevRepository.addTestimonials(token, testimonialType, body).toLiveData()
-//  }
-//
-//  fun updateTestimonials(token: String?, testimonialType: String?, body: UpdateTestimonialsData?): LiveData<BaseResponse> {
-//    return BoostKitDevRepository.updateTestimonials(token, testimonialType, body).toLiveData()
-//  }
+  fun addTestimonial(request: AddUpdateTestimonialRequest?): LiveData<BaseResponse> {
+    return NowfloatsApiRepository.addTestimonial(request).toLiveData()
+  }
 
-  fun deleteTestimonials(
-    token: String?,
-    testimonialType: String?,
-    body: DeleteTestimonialRequest?
-  ): LiveData<BaseResponse> {
-    return BoostKitDevRepository.deleteTestimonials(token, testimonialType, body).toLiveData()
+  fun updateTestimonial(request: AddUpdateTestimonialRequest?): LiveData<BaseResponse> {
+    return NowfloatsApiRepository.updateTestimonial(request).toLiveData()
+  }
+
+  fun updateTestimonialImage(request: AddTestimonialImageRequest?): LiveData<BaseResponse> {
+    return NowfloatsApiRepository.updateTestimonialImage(request).toLiveData()
+  }
+
+  fun deleteTestimonial(testimonialId: String?): LiveData<BaseResponse> {
+    return NowfloatsApiRepository.deleteTestimonial(testimonialId).toLiveData()
+  }
+
+  fun deleteTestimonialImage(testimonialId: String?): LiveData<BaseResponse> {
+    return NowfloatsApiRepository.deleteTestimonialImage(testimonialId).toLiveData()
   }
 }
