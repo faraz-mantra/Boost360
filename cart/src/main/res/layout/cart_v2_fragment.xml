@@ -1690,6 +1690,9 @@
                             android:drawableStart="@drawable/ic_cart_refund_policy"
                             android:gravity="center"
                             android:paddingTop="5dp"
+                            android:textSize="@dimen/txt_12sp"
+                            android:textFontWeight="600"
+                            android:fontFamily="@font/semi_bold"
                             android:text="Applicable on all add-ons except “Domain\n Name” &amp; “Email ID”. Read policy."
                             android:textColor="@color/white" />
 
@@ -1732,6 +1735,7 @@
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp"
                     android:fontFamily="@font/semi_bold"
+                    android:textFontWeight="600"
                     android:gravity="center"
                     android:text="Hooray! You save ₹198 with coupon &amp; long validity discount"
                     android:textColor="@color/white"
