@@ -22,11 +22,13 @@ import com.appservice.model.testimonial.TestimonialAddResponse
 import com.appservice.model.testimonial.response.TestimonialData
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.appservice.utils.WebEngageController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.webengageconstant.*
 import java.io.ByteArrayOutputStream
 
 class TestimonialAddEditFragment : BaseTestimonialFragment<FragmentTestimonialAddEditBinding>() {
@@ -51,6 +53,7 @@ class TestimonialAddEditFragment : BaseTestimonialFragment<FragmentTestimonialAd
     testimonialData = arguments?.getSerializable(IntentConstant.OBJECT_DATA.name) as? TestimonialData
     isUpdate = testimonialData != null && testimonialData?.testimonialId.isNullOrEmpty().not()
     setOnClickListener(binding?.btnSave, binding?.addImage, binding?.viewTestimonial)
+    WebEngageController.trackEvent(TESTIMONIAL_ADD_EDIT_PAGE, PAGE_VIEW, sessionLocal.fpTag)
     if (isUpdate) uiUpdate()
   }
 
@@ -100,6 +103,7 @@ class TestimonialAddEditFragment : BaseTestimonialFragment<FragmentTestimonialAd
       val data = it as? TestimonialAddResponse
       if (data?.isSuccess() == true && data.result.isNullOrEmpty().not()) {
         if (isUpdate.not()) addImageTestimonial(imageRequest, data.result!!) else {
+          WebEngageController.trackEvent(TESTIMONIAL_UPDATED, EVENT_LABEL_UPDATE, sessionLocal.fpTag)
           setResult(getString(R.string.testimonial_update_success))
           hideProgress()
         }
@@ -112,6 +116,7 @@ class TestimonialAddEditFragment : BaseTestimonialFragment<FragmentTestimonialAd
 
   private fun addImageTestimonial(imageRequest: ProfileImage?, id: String) {
     viewModel?.updateTestimonialImage(AddTestimonialImageRequest(imageRequest, id))?.observeOnce(viewLifecycleOwner) {
+      WebEngageController.trackEvent(TESTIMONIAL_ADDED, ADDED, sessionLocal.fpTag)
       setResult(getString(R.string.testimonial_add_success))
       hideProgress()
     }
@@ -213,6 +218,7 @@ class TestimonialAddEditFragment : BaseTestimonialFragment<FragmentTestimonialAd
     showProgress()
     viewModel?.deleteTestimonial(testimonialData?.testimonialId)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
+        WebEngageController.trackEvent(TESTIMONIAL_DELETED, DELETE, sessionLocal.fpTag)
         setResult(getString(R.string.testimonial_delete_success))
       } else showShortToast(it.errorFlowMessage() ?: getString(R.string.something_went_wrong))
       hideProgress()
