@@ -731,6 +731,9 @@ fun fetchString(id: Int): String {
   return BaseApplication.instance.getString(id)
 }
 
+fun fetchColor(id: Int): Int {
+  return ContextCompat.getColor(BaseApplication.instance,id)
+}
 fun showSnackBarNegative(context: Activity, msg: String?) {
   val snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg ?: "", Snackbar.LENGTH_INDEFINITE)
   snackBar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color))

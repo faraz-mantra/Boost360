@@ -206,7 +206,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
         }
 
-        binding?.ivClosePreview?.setOnClickListener {
+        binding?.ivCloseEditing?.setOnClickListener {
             onBackPressed()
         }
 
@@ -267,7 +267,11 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         }
 
         binding?.tvSelected?.text = getString(R.string.placeholder_selected,getCheckedChannelCount())
-        binding?.tvPostUpdate?.text = getString(R.string.post_on_placeholder_platform,getCheckedChannelCount())
+        binding?.tvPostUpdate?.text = if (getCheckedChannelCount()>1){
+            getString(R.string.post_on_placeholder_platforms,getCheckedChannelCount())
+        }else{
+            getString(R.string.post_on_placeholder_platform,getCheckedChannelCount())
+        }
         binding?.shimmerLayout?.gone()
         binding?.shimmerPreviews?.gone()
         binding?.shimmerLayout?.stopShimmer()
@@ -494,7 +498,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                         generateImageResource(this@PostPreviewSocialActivity)
                     })
 
-                    uiPreviewChannelList?.add(SocialPreviewModel(posterImgPath,title,captionIntent,isConnected,channelType!!))
+                    uiPreviewChannelList?.add(SocialPreviewModel(posterImgPath,title,captionIntent,true,channelType!!))
                 }
 
 

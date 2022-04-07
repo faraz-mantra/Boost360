@@ -4,15 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="@dimen/size_250"
+        android:layout_width="195dp"
+        android:layout_margin="@dimen/size_8"
+
         android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:cardCornerRadius="@dimen/size_10"
+            android:layout_height="288dp"
+            app:cardUseCompatPadding="true"
+            app:cardElevation="@dimen/size_4"
+            app:cardCornerRadius="@dimen/size_8"
+            app:layout_constraintVertical_bias="0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             >
@@ -21,15 +25,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/layout_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="32dp"
-                android:layout_marginHorizontal="16dp">
+                android:layout_marginTop="12dp"
+                >
 
                 <com.framework.views.customViews.CustomCardView
                     android:id="@+id/customCardView"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    app:cardCornerRadius="@dimen/size_15"
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    app:cardCornerRadius="@dimen/size_8"
+                    android:layout_marginStart="@dimen/_6dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -45,6 +49,7 @@
                     android:id="@+id/customImageView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/size_12"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:tint="#BDC5CD" />
@@ -79,9 +84,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="@dimen/size_9"
                     android:textColor="@color/black_4a4a4a"
-
-                    android:textSize="6sp"
+                    android:textSize="7sp"
+                    android:maxLines="3"
+                    android:ellipsize="end"
                     app:fontFamily="@font/regular_medium"
                     app:layout_constraintTop_toBottomOf="@+id/iv_poster"
                     tools:text="50 to 60 percent off the entire site and store for Black Friday. Above that, you have free shipiing on all orders, plus an extra 20.
@@ -103,8 +110,9 @@
                     android:id="@+id/customTextView14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="11dp"
                     android:text="@string/buy"
+                    android:layout_marginStart="@dimen/size_10"
                     android:textColor="@color/color4285F4"
                     android:textSize="8sp"
                     app:fontFamily="@font/regular_medium"
@@ -114,6 +122,7 @@
                 <com.framework.views.customViews.CustomImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/size_8"
                     android:src="@drawable/ic_gmb_share"
                     app:layout_constraintBottom_toBottomOf="@+id/customTextView14"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -125,9 +134,10 @@
 
         <com.framework.views.customViews.CustomImageView
             android:id="@+id/customImageView6"
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:elevation="@dimen/size_4"
-            android:layout_height="@dimen/size_50"
+            android:translationY="-4dp"
+            android:layout_height="@dimen/size_40"
             android:src="@drawable/ic_gmb_preview"
             app:layout_constraintBottom_toBottomOf="@+id/materialCardView"
             app:layout_constraintEnd_toEndOf="parent"

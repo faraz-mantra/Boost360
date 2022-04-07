@@ -11,32 +11,32 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/toolbar"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:layout_gravity="top"
             android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/size_9"
-            android:paddingVertical="@dimen/size_18"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
 
             <com.framework.views.customViews.CustomImageView
-                android:id="@+id/iv_close_preview"
-                android:layout_width="@dimen/size_15"
-                android:layout_height="@dimen/size_15"
-                android:layout_marginHorizontal="@dimen/size_8"
+                android:id="@+id/iv_close_editing"
+                android:layout_width="@dimen/size_32"
+                android:layout_height="@dimen/size_32"
+                android:layout_marginStart="@dimen/size_8"
+                android:padding="8dp"
                 android:src="@drawable/ic_close_black" />
 
             <com.framework.views.customViews.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_12"
+                android:layout_marginStart="13dp"
                 android:fontFamily="@font/bold"
                 android:text="@string/preview"
-                android:textColor="@color/black"
+                android:textColor="@color/black_4a4a4a"
                 android:textSize="@dimen/text_18" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -71,8 +71,6 @@
                         android:layout_height="wrap_content"
                         android:visibility="gone"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginStart="@dimen/size_10"
-                        android:layout_marginBottom="@dimen/size_24"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:itemCount="6"
@@ -117,7 +115,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="24dp"
-                        android:fontFamily="@font/bold"
+                        android:fontFamily="@font/semi_bold"
                         android:text="@string/post_on"
                         android:textColor="@color/black_4a4a4a"
                         android:textSize="@dimen/text_16"
@@ -126,15 +124,16 @@
 
                     <com.framework.views.customViews.CustomTextView
                         android:id="@+id/tv_selected"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/size_96"
+                        android:layout_height="27dp"
                         android:layout_marginEnd="@dimen/size_26"
                         android:background="@drawable/rounded_orange_background_transparent"
-                        android:fontFamily="@font/regular_medium"
+                        android:fontFamily="@font/semi_bold"
                         android:textAllCaps="true"
+                        android:gravity="center"
                         android:paddingHorizontal="@dimen/size_10"
                         android:paddingVertical="@dimen/size_6"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorFCAF17"
                         android:textSize="@dimen/text_12"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_preview_title"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -188,6 +187,7 @@
             style="@style/yellow_squared_button"
             android:layout_gravity="bottom"
             android:visibility="gone"
+            android:layout_height="59dp"
             android:text="@string/choose_a_promo_updates_pack"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -198,7 +198,8 @@
             android:id="@+id/tv_post_update"
             style="@style/yellow_squared_button"
             android:layout_gravity="bottom"
-            android:visibility="gone"
+            android:background="@drawable/yellow_bg_with_drop_shadow"
+            android:layout_height="59dp"
             tools:text="Post on 5 platforms"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

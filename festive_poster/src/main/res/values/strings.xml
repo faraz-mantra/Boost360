@@ -85,6 +85,7 @@
     <string name="placeholder_recipients">%1$d recipients</string>
     <string name="no_recipients">%1$d recipients</string>
     <string name="post_on_placeholder_platform">Post on %1$d platform</string>
+    <string name="post_on_placeholder_platforms">Post on %1$d platforms</string>
     <string name="now">Now</string>
     <string name="placeholder_per_month">₹%1$d/month</string>
     <string name="placeholder_per_year">₹%1$d/year</string>
@@ -107,5 +108,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="view_more2">View more</string>
     <string name="hashtags_help_improve_brand_visibility">Hashtags help improve brand visibility</string>
+    <string name="visit_website">Visit website</string>
+    <string name="_4m">4m</string>
+    <string name="not_connected">Not connected</string>
 
 </resources>
