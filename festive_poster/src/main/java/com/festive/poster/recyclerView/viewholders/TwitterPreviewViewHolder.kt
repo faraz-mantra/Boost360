@@ -17,15 +17,19 @@ class TwitterPreviewViewHolder(binding: SocialPreviewTwitterBinding) :
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as SocialPreviewModel
+        binding.imageExist = model.posterImg.isNullOrEmpty().not()
+
         if (model.posterImg.isNullOrEmpty()){
             binding.materialCardView.minimumHeight=400
-            binding.ivSvg.gone()
+            binding.cardSvg.gone()
+            binding.tvCaption.maxLines=3
         }else{
+            binding.tvCaption.maxLines=7
             binding.materialCardView.minimumHeight=800
             binding.ivSvg.loadUsingGlide(model.posterImg,false)
         }
         binding.materialCardView.requestLayout()
-        binding.tvCaption.text = highlightHashTag(model.desc, R.color.color4C9EEB)
+        binding.tvCaption.text = highlightHashTag(model.desc, R.color.color395996,R.font.regular_medium)
         binding.tvTitle.text = model.title
         super.bind(position, item)
     }

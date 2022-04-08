@@ -18,6 +18,8 @@ class FBPreviewViewHolder(binding: SocialPreviewFbBinding) :
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as SocialPreviewModel
+        binding.imageExist = model.posterImg.isNullOrEmpty().not()
+
         if (model.posterImg.isNullOrEmpty()){
             binding.materialCardView.minimumHeight=400
 
@@ -27,7 +29,7 @@ class FBPreviewViewHolder(binding: SocialPreviewFbBinding) :
             binding.ivPoster.loadUsingGlide(model.posterImg,false)
         }
         binding.materialCardView.requestLayout()
-        binding.tvCaption.text = highlightHashTag(model.desc, R.color.color395996)
+        binding.tvCaption.text = highlightHashTag(model.desc, R.color.color395996,R.font.regular_medium)
         binding.tvName.text = model.title
 
         super.bind(position, item)

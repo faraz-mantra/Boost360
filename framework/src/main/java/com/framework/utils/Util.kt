@@ -501,7 +501,7 @@ fun Drawable.setColorFilterApiQ(color: Int, blendMode:BlendMode){
 
 
 
-fun highlightHashTag(text: String?,@ColorRes colorId:Int): SpannableString {
+fun highlightHashTag(text: String?,@ColorRes colorId: Int,@FontRes fontId:Int): SpannableString {
 
   val spannable = SpannableString(text?:"")
 
@@ -510,6 +510,14 @@ fun highlightHashTag(text: String?,@ColorRes colorId:Int): SpannableString {
     text?.trim()?.split(Regex("\\s+"))?.forEach {
       Log.i(TAG, "addHashTagFunction: $it")
       if (it.isNotEmpty() && it[0] == '#'){
+
+        spannable.setSpan(object : TypefaceSpan(null) {
+          override fun updateDrawState(ds: TextPaint) {
+            ds.typeface = Typeface.create(ResourcesCompat.getFont(BaseApplication.instance,
+              fontId), Typeface.NORMAL) // To change according to your need
+          }
+        }, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE) // To change according to your need
+
 //        val boldSpan = StyleSpan(Typeface
 //          .BOLD)
         val foregroundSpan = ForegroundColorSpan(ContextCompat.getColor(BaseApplication.instance, colorId))

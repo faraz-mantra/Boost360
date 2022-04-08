@@ -150,7 +150,7 @@ class CaptionBottomSheet : BaseBottomSheetDialog<BsheetAddCaptionBinding, BaseVi
     }
 
     private fun addHashTagFunction() {
-        binding?.captionLayout?.etInput?.setText(highlightHashTag(captionText,R.color.black_4a4a4a))
+        binding?.captionLayout?.etInput?.setText(highlightHashTag(captionText,R.color.black_4a4a4a,R.font.bold))
 
 
         Log.i(TAG, "addHashTagFunction: "+"hi hello")

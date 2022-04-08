@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="imageExist"
+            type="Boolean" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="195dp"
         android:layout_margin="@dimen/size_8"
@@ -12,8 +17,8 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
             android:layout_width="match_parent"
-            android:layout_height="288dp"
-            app:cardUseCompatPadding="true"
+            android:layout_height="wrap_content"
+            layout_height="@{imageExist?@dimen/size_288:@dimen/size_130, default=wrap_content}"            app:cardUseCompatPadding="true"
             app:cardElevation="@dimen/size_4"
             app:cardCornerRadius="@dimen/size_8"
             app:layout_constraintVertical_bias="0"
@@ -84,10 +89,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    app:layout_goneMarginTop="14dp"
                     android:layout_marginHorizontal="@dimen/size_9"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="7sp"
-                    android:maxLines="3"
+                    android:maxLines="5"
                     android:ellipsize="end"
                     app:fontFamily="@font/regular_medium"
                     app:layout_constraintTop_toBottomOf="@+id/iv_poster"

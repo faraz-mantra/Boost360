@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="imageExist"
+            type="Boolean" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="195dp"
         android:layout_margin="@dimen/size_8"
@@ -12,7 +17,8 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
             android:layout_width="match_parent"
-            android:layout_height="288dp"
+            android:layout_height="wrap_content"
+            layout_height="@{imageExist?@dimen/size_288:@dimen/size_130, default=wrap_content}"
             app:cardUseCompatPadding="true"
             app:cardElevation="@dimen/size_4"
             app:cardCornerRadius="@dimen/size_8"
@@ -112,7 +118,7 @@
                     android:lineHeight="@dimen/size_10"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:maxLines="3"
+                    android:maxLines="7"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="6sp"
                     app:fontFamily="@font/regular_medium"
@@ -150,7 +156,7 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/card_svg"
+                    app:layout_constraintStart_toStartOf="@+id/tv_caption"
                     app:layout_constraintTop_toBottomOf="@+id/card_svg">
 
                     <com.framework.views.customViews.CustomImageView

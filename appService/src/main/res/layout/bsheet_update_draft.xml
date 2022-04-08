@@ -18,9 +18,11 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:elevation="@dimen/size_4"
             android:background="@drawable/bottoms_sheet_top20dp_white"
             android:orientation="vertical"
-            android:padding="@dimen/size_24">
+            android:paddingHorizontal="@dimen/size_16"
+            android:paddingVertical="@dimen/size_24">
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tv_heading"
@@ -36,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/closing_this_page_will_not_save_the_changes_you_ve_made_do_you_want_to_save_a_draft_or_discard_this_post"
-                android:textColor="@color/grey_828282"
+                android:textColor="@color/black_4a4a4a"
                 app:fontFamily="@font/regular"
                android:textSize="@dimen/text_12" />
 
@@ -44,7 +46,7 @@
                 android:id="@+id/btn_save_draft"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="23dp"
                 android:letterSpacing="0"
                 android:backgroundTint="@color/colorPrimary"
                 android:fontFamily="@font/semi_bold"
@@ -59,8 +61,8 @@
                 android:id="@+id/btn_discard"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:layout_marginTop="@dimen/size_10"
                 android:backgroundTint="@color/white"
+                android:layout_marginTop="@dimen/size_4"
                 android:fontFamily="@font/semi_bold"
                 android:text="@string/yes_discard"
                 android:letterSpacing="0"

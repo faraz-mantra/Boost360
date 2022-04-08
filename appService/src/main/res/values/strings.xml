@@ -1164,4 +1164,5 @@
   <string name="image_resolution_is_smaller_than_800_x_800_px">Image resolution is smaller than 800 X 800 px</string>
   <string name="image_file_size_is_bigger_than_2mb">Image file size is bigger than 2MB</string>
     <string name="describe_what_you_want_to_say_in_the_picture_added_above">Describe what you want to say in the picture added above...</string>
+    <string name="your_post_was_saved_as_draft">Your post was saved as Draft</string>
 </resources>

@@ -11,8 +11,9 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar2"
+            android:elevation="@dimen/size_4"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_50"
+            android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -20,9 +21,11 @@
 
         <com.framework.views.customViews.CustomImageView
             android:id="@+id/iv_cross"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginStart="24dp"
+            android:elevation="@dimen/size_5"
+            android:layout_width="@dimen/size_32"
+            android:layout_height="@dimen/size_32"
+            android:layout_marginStart="@dimen/size_8"
+            android:padding="8dp"
             android:src="@drawable/ic_close_black"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,12 +35,15 @@
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/customTextView8"
             android:layout_width="wrap_content"
+            android:elevation="@dimen/size_5"
+            android:scrollbars="vertical"
+            android:inputType="textMultiLine"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:text="@string/create_an_update"
+            android:layout_marginStart="13dp"
+            android:fontFamily="@font/bold"
             android:textColor="@color/black_4a4a4a"
-            android:textSize="17sp"
-            app:fontFamily="@font/bold"
+            android:textSize="@dimen/text_18"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
             app:layout_constraintStart_toEndOf="@+id/iv_cross"
             app:layout_constraintTop_toTopOf="@+id/toolbar2" />
@@ -47,6 +53,7 @@
             android:id="@+id/customImageView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:elevation="@dimen/size_5"
             android:layout_marginEnd="24dp"
             android:src="@drawable/ic_help_white"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
@@ -58,7 +65,7 @@
             android:layout_width="match_parent"
             android:fillViewport="true"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/size_16"
+            android:layout_marginTop="@dimen/size_18"
             app:layout_constraintBottom_toTopOf="@+id/tv_preview_and_post"
             app:layout_constraintTop_toBottomOf="@+id/toolbar2">
 
@@ -72,7 +79,7 @@
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/iv_img"
                     android:layout_width="match_parent"
-                    android:layout_height="330dp"
+                    android:layout_height="341dp"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="8dp"
                     android:scaleType="fitXY"
@@ -80,39 +87,47 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:layout_editor_absoluteX="24dp" />
 
-                <LinearLayout
+                <com.framework.views.customViews.CustomCardView
+                    app:cardBackgroundColor="#66000000"
                     android:id="@+id/btn_edit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_width="106dp"
+                    android:layout_height="@dimen/size_31"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="24dp"
-                    android:background="@drawable/ic_trasparent_bg"
-                    android:elevation="4dp"
+                    app:cardCornerRadius="@dimen/size_16"
                     android:gravity="center"
-                    android:visibility="gone"
+                    app:cardElevation="@dimen/size_0"
                     android:orientation="horizontal"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="8dp"
                     app:layout_constraintEnd_toEndOf="@+id/iv_img"
                     app:layout_constraintTop_toTopOf="@+id/iv_img">
 
-                    <com.framework.views.customViews.CustomImageView
-                        android:layout_width="@dimen/_14dp"
-                        android:layout_height="@dimen/_14dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ic_crop" />
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <com.framework.views.customViews.CustomImageView
+                            android:layout_width="@dimen/size_18"
+                            android:layout_height="@dimen/size_18"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_crop" />
 
 
-                    <com.framework.views.customViews.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="2dp"
-                        android:text="@string/tap_to_edit"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        app:fontFamily="@font/semi_bold" />
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:text="@string/tap_to_edit"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            app:fontFamily="@font/semi_bold" />
+                    </LinearLayout>
 
-                </LinearLayout>
+
+                </com.framework.views.customViews.CustomCardView>
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/customTextView10"
@@ -135,6 +150,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
                     android:text="0"
+                    android:textSize="@dimen/size_12"
+                    android:fontFamily="@font/regular"
                     app:layout_constraintBottom_toBottomOf="@+id/customTextView10"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/customTextView10" />
@@ -165,11 +182,13 @@
                         <com.framework.views.customViews.CustomEditText
                             android:id="@+id/et_update"
                             android:layout_width="match_parent"
-                            android:textCursorDrawable="@color/black_4a4a4a"
-                            android:layout_height="@dimen/size_150"
+                            android:textCursorDrawable="@color/yellow_ffb900"
+                            android:layout_height="133dp"
+                            android:textColor="@color/black_4a4a4a"
                             android:background="@color/white"
                             android:fontFamily="@font/regular"
                             android:gravity="start"
+                            android:textColorHint="@color/gray_DADADA"
                             android:hint="@string/write_about_your_customer_location_recent_updates_timing_etc"
                             android:imeOptions="actionDone"
                             android:padding="8dp"
@@ -183,17 +202,17 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
-                            android:src="@drawable/ic_voice_over_mic"
+                            android:src="@drawable/ic_recorder_appservice"
                             app:layout_constraintBottom_toBottomOf="@+id/et_update"
                             app:layout_constraintEnd_toEndOf="@+id/et_update" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/layout_hashtag_tip"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/size_33"
                             android:background="@color/colorFFF8E6"
                             android:orientation="horizontal"
-                            android:padding="6dp"
+                            android:paddingVertical="9dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/et_update">
 
@@ -202,7 +221,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:text="@string/type_in_the_caption_to_create_your_own_hashtags"
-                                android:textSize="10sp"
+                                android:textSize="11sp"
+                                android:layout_marginStart="@dimen/size_15"
                                 app:fontFamily="@font/regular"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@+id/iv_hashtag_cross"
@@ -213,7 +233,7 @@
                                 android:id="@+id/iv_hashtag_cross"
                                 android:layout_width="10dp"
                                 android:layout_height="10dp"
-                                android:layout_marginEnd="8dp"
+                                android:layout_marginEnd="12dp"
                                 android:src="@drawable/cross_nv_new"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -239,13 +259,15 @@
                     android:text="@string/add_image_optional"
                     android:textAllCaps="false"
                     app:cornerRadius="10dp"
-                    app:icon="@drawable/ic_gallery_round"
+                    app:iconPadding="@dimen/size_12"
+                    android:textColor="@color/yellow_ffb900"
+                    app:icon="@drawable/ic_img_gallery"
                     app:iconGravity="textStart"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/card_input"
                     app:strokeColor="@color/colorAFAFAF" />
-
 
                 <com.framework.views.customViews.CustomTextView
                     android:layout_width="match_parent"
@@ -276,6 +298,7 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:gravity="center"
+            android:textSize="@dimen/size_16"
             android:text="@string/preview_and_post2"
             android:foreground="?android:attr/selectableItemBackground"
             app:layout_constraintEnd_toEndOf="parent"
