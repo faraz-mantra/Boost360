@@ -32,6 +32,7 @@ import com.appservice.model.serviceProduct.service.ItemsItem
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.capitalizeUtil
 import com.appservice.viewmodel.ProductViewModel
+import com.framework.constants.SupportVideoType
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -44,7 +45,6 @@ import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.*
-import com.onboarding.nowfloats.constant.SupportVideoType
 import java.util.*
 
 
@@ -147,13 +147,13 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
 
   private fun getProductListing(isFirst: Boolean = false, skipBy: Int? = null) {
     if (isFirst) showProgress()
-    viewModel?.getProductListingCount(fpTag, clientId, skipBy)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getProductListingCount(fpTag, clientId, skipBy)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         val data = it as? CatalogProductCountResponse
         setProductDataItems(data?.Products, data?.TotalCount, isFirst)
       } else if (isFirst) showShortToast(it.message())
       if (isFirst) hideProgress()
-    })
+    }
   }
 
   private fun setProductDataItems(resultProduct: ArrayList<CatalogProduct>?, totalCount: Int?, isFirstLoad: Boolean) {

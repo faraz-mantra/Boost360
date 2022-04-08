@@ -111,15 +111,4 @@ fun getRoiSummaryType(category_code: String?): String? {
 //  }
 }
 
-enum class PremiumCode(val value: String) {
-  OUR_TOPPERS("OUR-TOPPERS"), FACULTY("FACULTY"), WILDFIRE_FB_LEAD_ADS(" WILDFIRE_FB_LEAD_ADS"),
-  userPurchsedWidgets("userPurchsedWidgets"), DOMAINPURCHASE("DOMAINPURCHASE"),
-  CALLTRACKER("CALLTRACKER"), MERCHANT_TRAINING("MERCHANT_TRAINING"), CUSTOM_PAYMENTGATEWAY("CUSTOM_PAYMENTGATEWAY"),
-  CUSTOMERSUPPORT("CUSTOMERSUPPORT"), StoreWidgets("StoreWidgets"), BOOSTKEYBOARD("BOOSTKEYBOARD"),
-  BOOKTABLE("BOOKTABLE"), BROCHURE("BROCHURE"), TRIPADVISOR_REVIEWS("TRIPADVISOR-REVIEWS"),
-  PLACES_TO_LOOK_AROUND("PLACES-TO-LOOK-AROUND"), PROJECTTEAM("PROJECTTEAM"), get_fp_details_mode("get_fp_details_mode");
 
-  companion object {
-    fun fromValue(value: String?): PremiumCode? = values().firstOrNull { it.value == value }
-  }
-}

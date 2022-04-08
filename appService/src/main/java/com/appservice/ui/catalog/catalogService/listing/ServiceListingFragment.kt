@@ -39,6 +39,7 @@ import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.capitalizeUtil
 import com.appservice.viewmodel.ServiceViewModel
+import com.framework.constants.SupportVideoType
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -55,7 +56,6 @@ import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.*
 import com.google.android.material.snackbar.Snackbar
-import com.onboarding.nowfloats.constant.SupportVideoType
 import com.squareup.picasso.Target
 import kotlinx.android.synthetic.main.fragment_add_account_start.view.*
 import kotlinx.android.synthetic.main.fragment_service_detail.*
@@ -146,12 +146,12 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   private fun getListServiceFilterApi(searchString: String = "", isFirst: Boolean = false, offSet: Int? = null, limit: Int? = null) {
     if (isFirst || searchString.isNotEmpty()) showProgress()
-    viewModel?.getSearchListings(sessionLocal.fpTag, sessionLocal.fPID, searchString, offSet, limit)?.observeOnce(baseActivity, {
+    viewModel?.getSearchListings(sessionLocal.fpTag, sessionLocal.fPID, searchString, offSet, limit)?.observeOnce(baseActivity) {
       if (it.isSuccess()) {
         setServiceDataItems((it as? ServiceSearchListingResponse)?.result, searchString.isNotEmpty(), isFirst)
       } else if (isFirst) showShortToast(it.message())
-      if (isFirst || searchString.isNotEmpty()) hideProgress()
-    })
+      hideProgress()
+    }
   }
 
 
@@ -257,8 +257,10 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         return true
       }
       R.id.menu_item_help_service -> {
-        startActivity(Intent(baseActivity, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
-          .putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name, SupportVideoType.PRODUCT_CATALOGUE.value))
+        startActivity(
+          Intent(baseActivity, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
+            .putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name, SupportVideoType.PRODUCT_CATALOGUE.value)
+        )
         return true
       }
       else -> super.onOptionsItemSelected(item)
@@ -335,7 +337,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     bundle.putString(IntentConstant.FP_TAG.name, sessionLocal.fpTag)
     bundle.putString(IntentConstant.USER_PROFILE_ID.name, sessionLocal.userProfileId)
     bundle.putString(IntentConstant.CLIENT_ID.name, clientId)
-    bundle.putString(IntentConstant.EXTERNAL_SOURCE_ID.name,sessionLocal.getFPDetails(Key_Preferences.EXTERNAL_SOURCE_ID))
+    bundle.putString(IntentConstant.EXTERNAL_SOURCE_ID.name, sessionLocal.getFPDetails(Key_Preferences.EXTERNAL_SOURCE_ID))
     bundle.putString(IntentConstant.APPLICATION_ID.name, sessionLocal.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID))
     return bundle
   }
@@ -429,14 +431,15 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   }
 
   override fun ternaryButtonClicked() {
-    startActivity(Intent(baseActivity, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
-      .putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name, SupportVideoType.PRODUCT_CATALOGUE.value))
+    startActivity(
+      Intent(baseActivity, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
+        .putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name, SupportVideoType.PRODUCT_CATALOGUE.value)
+    )
   }
 
   override fun appOnBackPressed() {
 
   }
-
 }
 
 

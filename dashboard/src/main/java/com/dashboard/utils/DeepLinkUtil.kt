@@ -7,6 +7,8 @@ import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.appservice.constant.FragmentType
 import com.dashboard.R
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
@@ -109,6 +111,7 @@ const val deeplink_enquiries_tab = "enquiries_tab"
 const val deeplink_more_tab = "more_tab"
 const val deeplink_owner_info = "owner_info"
 const val deeplink_festive_poster = "festive_poster"
+const val deeplink_domain_booking = "domain_booking"
 const val deeplink_user_merchant_profile = "user_merchant_profile"
 const val visit_to_new_website = "Woohoo! We have a new website. Visit it at"
 const val tag_for_partners = ".nowfloats.com"
@@ -116,8 +119,7 @@ const val tag_for_partners = ".nowfloats.com"
 const val VISITS_TABLE = 0
 const val VISITORS_TABLE = 1
 
-class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSessionManager) {
-
+class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSessionManager,var baseFragment: Fragment) {
   private val TAG = "DeepLinkUtil"
   fun deepLinkPage(url: String, buyItemKey: String, isFromRia: Boolean) {
     Log.i(TAG, "deepLinkPage: " + url)
@@ -244,7 +246,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_analytics_website_visitors)) {
           baseActivity.startSiteViewAnalytic(session, "UNIQUE")
         } else if (url.contains(deeplink_background_images)) {
-          baseActivity.startBackgroundImageGallery(session)
+          baseFragment.startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
         } else if (url.contains(deeplink_favicon)) {
           baseActivity.startFeviconImage(session)
         } else if (url.contains(deeplink_appointment_summary)) {
@@ -279,6 +281,8 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.initiateAddonMarketplace(session, false, "expertContact", "")
         } else if (url.contains(deeplink_owner_info)) {
           baseActivity.startOwnersInfo(session)
+        } else if (url.contains(deeplink_domain_booking)) {
+          baseActivity.startDomainDetail(session)
         } else if (url.contains(deeplink_festive_poster)) {
           baseActivity.startFestivePosterActivity(true)
         } else if (url.contains(deeplink_user_merchant_profile)) {

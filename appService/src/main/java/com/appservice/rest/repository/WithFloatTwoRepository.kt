@@ -15,6 +15,7 @@ import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.Retrofit
+import retrofit2.http.QueryMap
 
 object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBaseLocalService>() {
 
@@ -32,6 +33,20 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
 
   fun getMerchantSummary(clientId: String?, fpTag: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getMerchantSummary(clientId, fpTag), TaskCode.GET_MERCHANT_SUMMARY)
+  }
+
+  fun createBGImage(body: RequestBody, fpId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.createBGImage(fpId, body = body), TaskCode.CREATE_BG_IMAGE)
+  }
+
+  fun deleteBGImage(map: HashMap<String, String?>): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.deleteBackgroundImages(map), TaskCode.CREATE_BG_IMAGE)
+  }
+
+  fun trackerCalls(
+    @QueryMap data: Map<String, String?>?
+  ): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.trackerCalls(data), TaskCode.GET_MERCHANT_SUMMARY)
   }
 
   fun addUpdateImageProductService(
@@ -183,5 +198,9 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
 
   fun updateProductCategoryVerb(request: ProductCategoryVerbRequest): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.updateProductCategoryVerb(request), TaskCode.UPDATE_PRODUCT_CATEGORY_VERB)
+  }
+
+  fun getImages(fpId: String?, clientId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getBackgroundImages(fpId, clientId), TaskCode.GET_BACKGROUND_IMAGES)
   }
 }
