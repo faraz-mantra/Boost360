@@ -5,16 +5,14 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import com.appservice.utils.capitalizeUtil
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.FragmentType
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.LayoutSetUpMyWebsiteStep3Binding
-import com.boost.presignin.extensions.removeSymbols
 import com.boost.presignin.extensions.validateLetters
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.BusinessInfoModel
@@ -149,8 +147,9 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
       }
 
     binding?.addressInputLayout?.ivIcon?.setOnClickListener {
-      websiteNameFieldUiVisibility()
-      baseActivity.showKeyBoard(binding?.addressInputLayout?.etInput)
+//      websiteNameFieldUiVisibility()
+//      baseActivity.showKeyBoard(binding?.addressInputLayout?.etInput)
+      baseActivity.onNavPressed()
     }
   }
 
@@ -272,45 +271,47 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     hideProgress()
     when (websiteNameFieldVisibility) {
       1 -> {
-        val layoutParams = binding?.addressInputLayout?.etInput?.layoutParams as? ConstraintLayout.LayoutParams
-        layoutParams?.width = ConstraintSet.WRAP_CONTENT
-        binding?.addressInputLayout?.etInput?.isEnabled = false
-        binding?.addressInputLayout?.etInput?.isFocusable = false
+        binding?.addressInputLayout?.tvWebsiteExtension?.visible()
+        binding?.addressInputLayout?.ivStatus?.visible()
+        binding?.addressInputLayout?.ivIcon?.visible()
+        binding?.addressInputLayout?.ivStatus?.setImageResource(R.drawable.ic_domain_tick)
+        binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_green_stroke_et)
         binding?.tvNextStep3?.isEnabled = true
         binding?.tvNameNotAvailableError?.gone()
         binding?.linearSecureWrapper?.visible()
-        binding?.addressInputLayout?.ivStatus?.setImageResource(R.drawable.ic_domain_tick)
-        binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_green_stroke_et)
-        binding?.addressInputLayout?.ivStatus?.visible()
-        binding?.addressInputLayout?.ivIcon?.visible()
         binding?.tvNextStep3?.text = getString(R.string.launch_my_website)
+        binding?.addressInputLayout?.etInput?.apply {
+          layoutParams?.width = ViewGroup.LayoutParams.WRAP_CONTENT
+          isEnabled = false
+        }
       }
       2 -> {
-        val layoutParams = binding?.addressInputLayout?.etInput?.layoutParams as? ConstraintLayout.LayoutParams
-        layoutParams?.width = ConstraintSet.WRAP_CONTENT
-        binding?.addressInputLayout?.etInput?.isEnabled = false
-        binding?.addressInputLayout?.etInput?.isFocusable = false
+        binding?.addressInputLayout?.tvWebsiteExtension?.visible()
+        binding?.addressInputLayout?.ivStatus?.visible()
+        binding?.addressInputLayout?.ivIcon?.visible()
+        binding?.addressInputLayout?.ivStatus?.setImageResource(R.drawable.ic_tick_red_error)
+        binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_red_stroke_et)
         binding?.tvNextStep3?.isEnabled = false
         binding?.tvNameNotAvailableError?.visible()
         binding?.linearSecureWrapper?.gone()
-        binding?.addressInputLayout?.ivStatus?.setImageResource(R.drawable.ic_tick_red_error)
-        binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_red_stroke_et)
-        binding?.addressInputLayout?.ivStatus?.visible()
-        binding?.addressInputLayout?.ivIcon?.visible()
         binding?.tvNextStep3?.text = getString(R.string.launch_my_website)
+        binding?.addressInputLayout?.etInput?.apply {
+          layoutParams?.width = ViewGroup.LayoutParams.WRAP_CONTENT
+          isEnabled = false
+        }
       }
       else -> {
-        val layoutParams = binding?.addressInputLayout?.etInput?.layoutParams as? ConstraintLayout.LayoutParams
-        layoutParams?.width = ConstraintSet.MATCH_CONSTRAINT
-        binding?.addressInputLayout?.etInput?.layoutParams = layoutParams
-        binding?.addressInputLayout?.etInput?.isEnabled = true
-        binding?.addressInputLayout?.etInput?.isFocusable = true
+        binding?.addressInputLayout?.tvWebsiteExtension?.gone()
+        binding?.addressInputLayout?.ivIcon?.gone()
+        binding?.addressInputLayout?.ivStatus?.gone()
         binding?.tvNameNotAvailableError?.gone()
         binding?.linearSecureWrapper?.gone()
         binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_grey_stroke_et)
-        binding?.addressInputLayout?.ivIcon?.gone()
-        binding?.addressInputLayout?.ivStatus?.gone()
         binding?.tvNextStep3?.text = getString(R.string.next)
+        binding?.addressInputLayout?.etInput?.apply {
+          layoutParams?.width = ViewGroup.LayoutParams.MATCH_PARENT
+          isEnabled = true
+        }
       }
     }
   }
