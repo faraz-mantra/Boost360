@@ -11,12 +11,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
+import com.appservice.ui.bgImage.BackgroundImageContainerActivity
+import com.appservice.ui.bgImage.setFragmentTypeNew
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.setFragmentType
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
 import com.appservice.ui.staffs.ui.startStaffFragmentActivity
+import com.appservice.ui.testimonial.startTestimonialFragmentActivity
 import com.appservice.ui.updatesBusiness.startUpdateFragmentActivity
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
@@ -95,7 +98,7 @@ fun AppCompatActivity.startDigitalChannel(session: UserSessionManager, channelTy
 fun AppCompatActivity.startVmnCallCard(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(TRACK_CALL_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val i = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.VmnCallCardsActivity"))
+    val i = Intent(this, Class.forName("com.appservice.ui.calltracking.VmnCallCardsActivityV2"))
     startActivity(i)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
@@ -149,10 +152,18 @@ fun AppCompatActivity.startAptOrderSummary(session: UserSessionManager?) {
   }
 }
 
+fun Fragment.startBackgroundActivity(session: UserSessionManager?, type: com.appservice.constant.FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+  val intent = Intent(activity, BackgroundImageContainerActivity::class.java)
+  intent.putExtras(bundle)
+  intent.setFragmentTypeNew(type)
+  if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+  if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
+}
+
 fun AppCompatActivity.startBackgroundImageGallery(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(BACKGROUND_IMAGE_GALLERY_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val queries = Intent(this, Class.forName("com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"))
+    val queries = Intent(this, Class.forName("com.appservice.ui.background_image.BackgroundImageContainerActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
@@ -406,16 +417,14 @@ fun AppCompatActivity.startProductGallery(session: UserSessionManager?) {
 }
 
 fun AppCompatActivity.startTestimonial(session: UserSessionManager?, isAdd: Boolean = false) {
-  try {
-    val text = if (isAdd) ADD_TESTIMONIAL_PAGE else TESTIMONIAL_PAGE
-    WebEngageController.trackEvent(text, CLICK, TO_BE_ADDED)
-    val webIntent = Intent(this, Class.forName("com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity"))
-    webIntent.putExtra("IS_ADD", isAdd)
-    startActivity(webIntent)
-    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-  } catch (e: ClassNotFoundException) {
-    e.printStackTrace()
-  }
+  val text = if (isAdd) ADD_TESTIMONIAL_PAGE else TESTIMONIAL_PAGE
+  WebEngageController.trackEvent(text, CLICK, TO_BE_ADDED)
+//    val webIntent = Intent(this, Class.forName("com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity"))
+//    webIntent.putExtra("IS_ADD", isAdd)
+//    startActivity(webIntent)
+//    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  val type = if (isAdd) com.appservice.constant.FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT else com.appservice.constant.FragmentType.TESTIMONIAL_LIST_FRAGMENT
+  this.startTestimonialFragmentActivity(type)
 }
 
 fun AppCompatActivity.startCustomPage(session: UserSessionManager?, isAdd: Boolean = false) {
@@ -565,9 +574,8 @@ fun AppCompatActivity.startBookTable(session: UserSessionManager?) {
 fun AppCompatActivity.startPreSignUp(session: UserSessionManager?, isClearTask: Boolean = false) {
   try {
     WebEngageController.trackEvent(PRE_SIGN_UP_PAGE, START_VIEW, TO_BE_ADDED)
-    val webIntent: Intent = if(featureNewOnBoardingFlowEnable()) {
-      Intent(this, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity")).
-              putExtra("FRAGMENT_TYPE","INTRO_SLIDE_SHOW_FRAGMENT")
+    val webIntent: Intent = if (featureNewOnBoardingFlowEnable()) {
+      Intent(this, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity")).putExtra("FRAGMENT_TYPE", "INTRO_SLIDE_SHOW_FRAGMENT")
     } else {
       Intent(this, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
     }

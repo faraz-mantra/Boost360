@@ -52,8 +52,18 @@ object EndPoints {
   const val GET_SERVICE_DETAILS = "Service/v1/GetServiceDetails"
   const val DELETE_SECONDARY_IMAGE = "service/v1/DeleteSecondaryImage"
 
+  //TODO Testimonial
+  const val GET_TESTIMONIAL_LIST = "Testimonial/v1/GetListing"
+  const val GET_TESTIMONIAL_DETAIL = "Testimonial/v1/GetDetails"
+  const val ADD_TESTIMONIAL = "Testimonial/v1/Create"
+  const val UPDATE_TESTIMONIAL = "Testimonial/v1/Update"
+  const val ADD_IMAGE_TESTIMONIAL = "Testimonial/v1/UpdateImage"
+  const val DELETE_TESTIMONIAL = "Testimonial/v1/Delete"
+  const val DELETE_IMAGE_TESTIMONIAL = "Testimonial/v1/DeleteImage"
+
   //TODO NFX API 2 WITH FLOAT
   const val WITH_FLOATS_TWO_BASE = "https://api2.withfloats.com/"
+  const val BACKGROUND_IMAGE = "discover/v1/floatingpoint/getBackgroundImages"
   const val CREATE_SERVICE = "Product/v1/Create"
   const val UPDATE_SERVICE = "Product/v1/Update"
   const val DELETE_SERVICE = "Product/v1/Delete"
@@ -71,6 +81,8 @@ object EndPoints {
   const val UPDATE_GST_SLAB = "discover/v9/business/paymentProfile/gstSlab/update"
   const val POST_PRODUCT_CATEGORY_VERB = "Discover/v1/FloatingPoint/update/"
   const val GET_MERCHANT_SUMMARY = "/Support/v1/dashboard/GetMerchantSummary"
+  const val CREATE_BG_IMAGE="/Discover/v1/floatingPoint/createBackgroundImage"
+  const val DELETE_BG_IMAGE="/Discover/v1/floatingPoint/backgroundImage/delete"
 
   //TODO PRODUCT API 2 WITH FLOAT
   const val CREATE_PRODUCT = "Product/v1/Create"
@@ -129,11 +141,6 @@ object EndPoints {
 
   //TODO BOOST KIT DEV API
   const val BOOST_KIT_DEV_BASE = "https://developer.api.boostkit.dev/"
-  const val WEB_ACTION_TESTIMONIAL = "kitsune/v1/ListWebActionDetails/{themeID}"
-  const val GET_TESTIMONIAL = "api/v1/{testimonials}/get-data"
-  const val ADD_TESTIMONIAL = "api/v1/{testimonials}/add-data"
-  const val UPDATE_TESTIMONIAL = "api/v1/{testimonials}/update-data"
-  const val DELETE_TESTIMONIAL = "api/v1/{testimonials}/update-data"
 
   //TODO BOOST PLUGIN with floats APIs
   const val BOOST_KIT_PLUGIN_WITH_FLOATS_NEW_BASE = "https://plugin.withfloats.com/"
@@ -149,5 +156,8 @@ object EndPoints {
   const val AZURE_WEBSITE_NET_URL = "https://withfloats-feature-processor-api.azurewebsites.net/"
   const val GET_FEATURE_DETAILS = "Features/v1/GetFeatureDetils"
   const val GET_FEATURE_DETAILS_2 = "Features/v1/GetFeatureDetails"
+
+  // RIA MEMORY APIs
+  const val RIA_MEMORY_BASE_URL="https://riamemory.withfloats.com"
 }
 

@@ -45,7 +45,11 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       DOMAIN_STEPS -> DomainStepsViewHolder(binding as ListItemStepsDomainBinding)
       DOMAIN_NAME_SUGGESTIONS -> DomainSuggestionsViewHolder(binding as ItemDomainSuggestionsBinding)
       SIMILAR_DOMAIN_SUGGESTIONS -> SimilarDomainSuggestionViewHolder(binding as ItemSimilarDomainSuggestionsBinding)
+      BACKGROUND_IMAGE_RV -> BackgroundImageHolder(binding = binding as ListItemBackgroundImagesBinding)
+      BACKGROUND_IMAGE_FULL_SCREEN -> BGImageFullScreenHolder(binding = binding as ListItemBgImageFullScreenBinding)
       GST_SLAB_SETTING -> GstSlabViewHolder(binding as ItemGstSlabBinding)
+      VMN_CALL -> VmnCallViewHolder(binding as SingleItemVmnCallItemV2Binding)
+      TESTIMONIAL_ITEM -> TestimonialViewHolder(binding as ItemTestimonialListBinding)
     }
   }
 

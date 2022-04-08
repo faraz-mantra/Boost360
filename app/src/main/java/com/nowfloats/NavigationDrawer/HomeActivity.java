@@ -91,7 +91,9 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anachat.chatsdk.AnaChatBuilder;
 import com.anachat.chatsdk.internal.database.PreferencesManager;
+import com.appservice.ui.bgImage.BackgroundImageContainerActivityKt;
 import com.appservice.ui.bankaccount.BankAccountFragment;
+import com.appservice.ui.calltracking.VmnCallCardsActivityV2;
 import com.boost.presignin.ui.intro.IntroActivity;
 import com.boost.presignup.utils.DynamicLinkParams;
 import com.boost.presignup.utils.FirebaseDynamicLinksManager;
@@ -105,8 +107,6 @@ import com.inventoryorder.constant.AppConstant;
 import com.inventoryorder.constant.FragmentType;
 import com.inventoryorder.constant.IntentConstant;
 import com.inventoryorder.model.PreferenceData;
-import com.invitereferrals.invitereferrals.IRInterfaces.UserDetailsCallback;
-import com.invitereferrals.invitereferrals.InviteReferralsApi;
 import com.nineoldandroids.animation.Animator;
 import com.nowfloats.AccrossVerticals.FacebookLeads.FacebookLeadsFragment;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
@@ -134,7 +134,6 @@ import com.nowfloats.CustomPage.CustomPageDeleteInterface;
 import com.nowfloats.CustomPage.CustomPageFragment;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
-import com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Login.API_Login;
 import com.nowfloats.Login.Login_Interface;
@@ -617,7 +616,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         DigitalChannelUtil.startDigitalChannel(HomeActivity.this, session);
       } else if (url.contains(getResources().getString(R.string.deeplink_call_tracker_add_on))) {
 //                WebEngageController.trackEvent("NAV - CALLS", "CALLS", null);
-        Intent i = new Intent(HomeActivity.this, VmnCallCardsActivity.class);
+        Intent i = new Intent(HomeActivity.this, VmnCallCardsActivityV2.class);
         startActivity(i);
       } else if (url.contains(getResources().getString(R.string.deeplink_service_catalogue))) {
         Intent serviceCatalogue = new Intent(HomeActivity.this, ProductCatalogActivity.class);
@@ -640,7 +639,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         startActivity(q);
         HomeActivity.this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
       } else if (url.contains(getResources().getString(R.string.deeplink_background_images))) {
-        Intent i = new Intent(this, BackgroundImageGalleryActivity.class);
+        Intent i = new Intent(this, BackgroundImageContainerActivityKt.class);
         startActivity(i);
       } else if (url.contains(getResources().getString(R.string.deeplink_favicon))) {
         Intent i = new Intent(this, FaviconImageActivity.class);
@@ -1419,7 +1418,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
           startActivity(queries);
         } else if (nextScreen.equals(getString(R.string.manage_customer_calls))) {
           WebEngageController.trackEvent(NAV_CALLS, CALLS, NULL);
-          Intent i = new Intent(HomeActivity.this, VmnCallCardsActivity.class);
+          Intent i = new Intent(HomeActivity.this, VmnCallCardsActivityV2.class);
           startActivity(i);
           overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         } else if (nextScreen.equals(getString(R.string.upgrades))) {

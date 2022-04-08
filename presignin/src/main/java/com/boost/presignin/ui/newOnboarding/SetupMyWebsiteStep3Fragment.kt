@@ -275,6 +275,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         val layoutParams = binding?.addressInputLayout?.etInput?.layoutParams as? ConstraintLayout.LayoutParams
         layoutParams?.width = ConstraintSet.WRAP_CONTENT
         binding?.addressInputLayout?.etInput?.isEnabled = false
+        binding?.addressInputLayout?.etInput?.isFocusable = false
         binding?.tvNextStep3?.isEnabled = true
         binding?.tvNameNotAvailableError?.gone()
         binding?.linearSecureWrapper?.visible()
@@ -288,6 +289,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         val layoutParams = binding?.addressInputLayout?.etInput?.layoutParams as? ConstraintLayout.LayoutParams
         layoutParams?.width = ConstraintSet.WRAP_CONTENT
         binding?.addressInputLayout?.etInput?.isEnabled = false
+        binding?.addressInputLayout?.etInput?.isFocusable = false
         binding?.tvNextStep3?.isEnabled = false
         binding?.tvNameNotAvailableError?.visible()
         binding?.linearSecureWrapper?.gone()
@@ -302,6 +304,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         layoutParams?.width = ConstraintSet.MATCH_CONSTRAINT
         binding?.addressInputLayout?.etInput?.layoutParams = layoutParams
         binding?.addressInputLayout?.etInput?.isEnabled = true
+        binding?.addressInputLayout?.etInput?.isFocusable = true
         binding?.tvNameNotAvailableError?.gone()
         binding?.linearSecureWrapper?.gone()
         binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_grey_stroke_et)

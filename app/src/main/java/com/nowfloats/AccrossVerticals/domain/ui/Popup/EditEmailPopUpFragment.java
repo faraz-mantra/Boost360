@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.thinksity.R;
 
-
+@Deprecated
 public class EditEmailPopUpFragment extends DialogFragment {
 
     private ImageView closeButton;
