@@ -244,10 +244,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
     } else {
       navigator?.startActivityFinish(
         MobileVerificationActivity::class.java,
-        Bundle().apply {
-          putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);
-          putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, resultLogin())
-        })
+        Bundle().apply { putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, resultLogin()) })
     }
   }
 
