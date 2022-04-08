@@ -7,37 +7,38 @@
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_F5F8FD">
+    android:background="@color/white_F5F8FD"
+    android:focusable="true">
 
     <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tv_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_20"
-        android:fontFamily="@font/semi_bold"
-        android:gravity="start"
-        android:text="@string/your_website_is_almost_ready"
-        android:textAlignment="gravity"
-        android:textColor="@color/black_4a4a4a"
-        android:textSize="@dimen/text_18"
-        app:layout_constraintEnd_toStartOf="@id/endGuide"
-        app:layout_constraintStart_toEndOf="@id/startGuide"
-        app:layout_constraintTop_toTopOf="parent" />
+      android:id="@+id/tv_title"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/size_20"
+      android:fontFamily="@font/semi_bold"
+      android:gravity="start"
+      android:text="@string/your_website_is_almost_ready"
+      android:textAlignment="gravity"
+      android:textColor="@color/black_4a4a4a"
+      android:textSize="@dimen/text_18"
+      app:layout_constraintEnd_toStartOf="@id/endGuide"
+      app:layout_constraintStart_toEndOf="@id/startGuide"
+      app:layout_constraintTop_toTopOf="parent" />
 
     <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tv_subtitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_4"
-        android:fontFamily="@font/regular"
-        android:gravity="start"
-        android:text="@string/found_website_address_des"
-        android:textAlignment="gravity"
-        android:textColor="@color/black_2A2A2A"
-        android:textSize="@dimen/text_13"
-        app:layout_constraintEnd_toStartOf="@id/endGuide"
-        app:layout_constraintStart_toEndOf="@id/startGuide"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+      android:id="@+id/tv_subtitle"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/size_4"
+      android:fontFamily="@font/regular"
+      android:gravity="start"
+      android:text="@string/found_website_address_des"
+      android:textAlignment="gravity"
+      android:textColor="@color/black_2A2A2A"
+      android:textSize="@dimen/text_13"
+      app:layout_constraintEnd_toStartOf="@id/endGuide"
+      app:layout_constraintStart_toEndOf="@id/startGuide"
+      app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
 
     <include
@@ -52,79 +53,79 @@
       app:layout_constraintTop_toBottomOf="@+id/tv_subtitle" />
 
     <LinearLayout
-        android:id="@+id/linear_secure_wrapper"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/endGuide"
-        app:layout_constraintStart_toStartOf="@+id/startGuide"
-        app:layout_constraintTop_toBottomOf="@+id/address_input_layout">
+      android:id="@+id/linear_secure_wrapper"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:orientation="horizontal"
+      android:visibility="gone"
+      app:layout_constraintEnd_toStartOf="@+id/endGuide"
+      app:layout_constraintStart_toStartOf="@+id/startGuide"
+      app:layout_constraintTop_toBottomOf="@+id/address_input_layout">
 
 
       <com.google.android.material.card.MaterialCardView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:paddingHorizontal="@dimen/size_2"
-          app:cardBackgroundColor="@color/green_61CF96"
-          app:cardCornerRadius="@dimen/size_8"
-          app:cardElevation="0dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/size_2"
+        app:cardBackgroundColor="@color/green_61CF96"
+        app:cardCornerRadius="@dimen/size_8"
+        app:cardElevation="0dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="4dp"
+          android:gravity="center"
+          android:orientation="horizontal">
 
           <ImageView
-              android:layout_width="12dp"
-              android:layout_height="12dp"
-              android:src="@drawable/ic_presignin_https_lock" />
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@drawable/ic_presignin_https_lock" />
 
           <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginStart="4dp"
-              android:text="@string/secure"
-              android:textColor="@color/white"
-              android:textFontWeight="500"
-              android:textSize="12sp"
-              app:fontFamily="@font/regular" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/secure"
+            android:textColor="@color/white"
+            android:textFontWeight="500"
+            android:textSize="12sp"
+            app:fontFamily="@font/regular" />
         </LinearLayout>
       </com.google.android.material.card.MaterialCardView>
 
 
       <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tv_secure"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="8dp"
-          android:gravity="start"
-          android:text="@string/this_url_is_completely_secure"
-          android:textAlignment="gravity"
-          android:textColor="@color/grey_676767"
-          android:textFontWeight="500"
-          android:textSize="@dimen/text_12" />
+        android:id="@+id/tv_secure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:gravity="start"
+        android:text="@string/this_url_is_completely_secure"
+        android:textAlignment="gravity"
+        android:textColor="@color/grey_676767"
+        android:textFontWeight="500"
+        android:textSize="@dimen/text_12" />
 
     </LinearLayout>
 
     <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tv_name_not_available_error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_2"
-        android:text="@string/this_link_is_already_in_use_please_choose_another"
-        android:textColor="@color/input_error_color"
-        android:textSize="12sp"
-        android:visibility="gone"
-        app:fontFamily="@font/regular"
-        app:layout_constraintEnd_toEndOf="@+id/address_input_layout"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/address_input_layout"
-        app:layout_constraintTop_toBottomOf="@+id/address_input_layout" />
+      android:id="@+id/tv_name_not_available_error"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/size_12"
+      android:layout_marginTop="@dimen/size_2"
+      android:text="@string/this_link_is_already_in_use_please_choose_another"
+      android:textColor="@color/input_error_color"
+      android:textSize="12sp"
+      android:visibility="gone"
+      app:fontFamily="@font/regular"
+      app:layout_constraintEnd_toEndOf="@+id/address_input_layout"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="@+id/address_input_layout"
+      app:layout_constraintTop_toBottomOf="@+id/address_input_layout" />
 
     <include
       android:id="@+id/include_mobile_view"
