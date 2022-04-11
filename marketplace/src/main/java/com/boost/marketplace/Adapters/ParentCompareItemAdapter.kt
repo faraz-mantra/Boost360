@@ -23,6 +23,7 @@ import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.interfaces.CompareListener
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
+import com.framework.utils.RootUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -278,8 +279,8 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
             itemsIds.add(item.feature_code)
         }
 
-        var offeredBundlePrice = 0
-        var originalBundlePrice = 0
+        var offeredBundlePrice = 0.0
+        var originalBundlePrice = 0.0
         val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) bundles.min_purchase_months!! else 1
         CompositeDisposable().add(
             AppDatabase.getInstance(Application())!!
@@ -292,20 +293,13 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
                         for (singleItem in it) {
                             for (item in bundles.included_features) {
                                 if (singleItem.feature_code == item.feature_code) {
-                                    originalBundlePrice += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt() * minMonth
+                                    originalBundlePrice += RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)) * minMonth, 2)
                                 }
                             }
                         }
 
                         if(bundles.overall_discount_percent > 0){
-                            offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100)
-
-                        } else {
-                            offeredBundlePrice = originalBundlePrice
-
-                        }
-                        if(bundles.overall_discount_percent > 0){
-                            offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100)
+                            offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100),2)
                             holder.bundleDiscount.visibility = View.VISIBLE
 //                                        holder.bundlePriceLabel.visibility = View.GONE
                             holder.bundleDiscount.setText(bundles.overall_discount_percent.toString() + "% OFF")
@@ -356,7 +350,7 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
                 )
         )
     }
-    fun spannableString(holder: ParentViewHolder, value: Int, minMonth: Int) {
+    fun spannableString(holder: ParentViewHolder, value: Double, minMonth: Int) {
         val origCost: SpannableString
         if(minMonth > 1){
             origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")
