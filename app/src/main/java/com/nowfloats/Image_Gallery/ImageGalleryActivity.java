@@ -30,7 +30,6 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 @SuppressLint("ValidFragment")
-@Deprecated
 public class ImageGalleryActivity extends AppCompatActivity {
 
     public static final String TAG_IMAGE = "TAG_IMAGE";

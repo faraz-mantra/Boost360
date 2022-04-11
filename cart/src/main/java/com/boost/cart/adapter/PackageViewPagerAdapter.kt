@@ -14,6 +14,7 @@ import com.boost.cart.R
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.bumptech.glide.Glide
+import com.framework.utils.RootUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -72,8 +73,8 @@ class PackageViewPagerAdapter(
             itemsIds.add(item.feature_code)
         }
 
-        var offeredBundlePrice = 0
-        var originalBundlePrice = 0
+        var offeredBundlePrice = 0.0
+        var originalBundlePrice = 0.0
         val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) bundles.min_purchase_months!! else 1
         CompositeDisposable().add(
                 AppDatabase.getInstance(Application())!!
@@ -86,12 +87,12 @@ class PackageViewPagerAdapter(
                                     for (singleItem in it) {
                                         for (item in bundles.included_features) {
                                             if (singleItem.feature_code == item.feature_code) {
-                                                originalBundlePrice += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt() * minMonth
+                                                originalBundlePrice += RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),2) * minMonth
                                             }
                                         }
                                     }
                                     if(bundles.overall_discount_percent > 0){
-                                        offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100)
+                                        offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100),2)
                                         holder.bundleDiscount.visibility = View.VISIBLE
                                         holder.bundlePriceLabel.visibility = View.GONE
                                         holder.bundleDiscount.setText(bundles.overall_discount_percent.toString() + "%")
@@ -178,7 +179,7 @@ class PackageViewPagerAdapter(
         )
     }
 
-    fun spannableString(holder: PagerViewHolder, value: Int, minMonth: Int) {
+    fun spannableString(holder: PagerViewHolder, value: Double, minMonth: Int) {
         val origCost: SpannableString
         if(minMonth > 1){
             origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")

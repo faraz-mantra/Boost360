@@ -181,6 +181,7 @@
   <string name="product_details">Product Details</string>
   <string name="product_details_n">Product Details</string>
   <string name="additional_information">Additional Info</string>
+  <string name="testimonial_">Testimonial</string>
   <string name="testimonial_title">Testimonials</string>
   <string name="updates_title">Latest Updates</string>
   <string name="testimonial_add">Add Testimonial</string>
@@ -1142,4 +1143,22 @@
   <string name="the_total_number_of_clicks_on_your_contact_number_displayed_on_website">The total number of clicks on your contact number displayed on website</string>
   <string name="total_calls">Total Calls</string>
   <string name="missed_calls">Missed Calls</string>
+  <string name="testimonial_update_success">Testimonial update successfully!</string>
+  <string name="testimonial_add_success">Testimonial add successfully!</string>
+  <string name="testimonial_delete_success">Testimonial delete successfully!</string>
+  <string name="name_field_can_not_empty">Name field can\'t be empty</string>
+  <string name="company_field_can_not_empty">Company/Occupation field can\'t be empty</string>
+  <string name="testimonial_title_field_can_not_empty">Testimonial title field can\'t be empty</string>
+  <string name="testimonial_description_field_can_not_empty">Testimonial description field can\'t be empty</string>
+  <string name="enter_description">Enter description</string>
+  <string name="save_testimonial">Save testimonial</string>
+  <string name="testimonial_description">Testimonial Description</string>
+  <string name="enter_testimonial_title">Enter testimonial title</string>
+  <string name="testimonial_title_n">Testimonial title</string>
+  <string name="enter_company_occupation">Enter company/ occupation...</string>
+  <string name="company_occupation">Company/ Occupation</string>
+  <string name="customer_name">Customer Name</string>
+  <string name="jpg_png_n_800x800px">Jpg/png\n(800x800px)</string>
+  <string name="add_customer_image">Add customer image</string>
+  <string name="space_start"> *</string>
 </resources>

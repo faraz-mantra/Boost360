@@ -10,89 +10,89 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-      android:id="@+id/input_layout"
-      android:layout_width="match_parent"
-      android:layout_height="45dp"
-      android:background="@drawable/bg_grey_stroke_et"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
-
-      <com.framework.views.customViews.CustomEditText
-        android:id="@+id/et_input"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginVertical="@dimen/size_4"
-        android:layout_marginStart="@dimen/size_8"
-        android:layout_marginEnd="0dp"
-        android:background="@color/white_F5F8FD"
-        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-        android:ellipsize="start"
-        android:fontFamily="@font/semi_bold"
-        android:gravity="center_vertical"
-        android:imeOptions="actionDone"
-        android:inputType="textFilter"
-        android:paddingStart="@dimen/size_4"
-        android:paddingEnd="0dp"
-        android:scrollHorizontally="true"
-        android:singleLine="true"
-        android:textAlignment="gravity"
-        android:textColor="@color/black_4a4a4a"
-        android:textSize="@dimen/text_14"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tv_website_extension"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="xyzjbcjhscc" />
-
-      <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tv_website_extension"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="@dimen/size_16"
-        android:fontFamily="@font/regular"
-        android:gravity="start|center_vertical"
-        android:singleLine="true"
-        android:text="@string/nowfloats_dot_com"
-        android:textAlignment="gravity"
-        android:textColor="@color/gray_9DA4B2"
-        android:textSize="@dimen/text_14"
-        app:fontFamily="@font/semi_bold"
-        app:layout_constraintBottom_toBottomOf="@+id/et_input"
-        app:layout_constraintEnd_toStartOf="@+id/linear_website_extension_wrapper"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/et_input"
-        app:layout_constraintTop_toTopOf="@+id/et_input" />
-
-      <LinearLayout
-        android:id="@+id/linear_website_extension_wrapper"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center|end"
-        android:orientation="horizontal"
+        android:id="@+id/input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/bg_grey_stroke_et"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.framework.views.customViews.CustomImageView
-          android:id="@+id/iv_icon"
-          android:layout_width="@dimen/size_15"
-          android:layout_height="@dimen/size_15"
-          android:layout_marginHorizontal="@dimen/size_16"
-          android:src="@drawable/ic_presignin_edit_input"
-          android:visibility="gone" />
+      <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:layout_marginVertical="@dimen/size_4"
+          android:orientation="horizontal"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toStartOf="@+id/linear_website_extension_wrapper"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
 
-        <com.framework.views.customViews.CustomImageView
-          android:id="@+id/iv_status"
+        <com.framework.views.customViews.CustomEditText
+            android:id="@+id/et_input"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/size_8"
+            android:layout_marginEnd="0dp"
+            android:background="@color/white_F5F8FD"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+            android:fontFamily="@font/semi_bold"
+            android:gravity="center_vertical"
+            android:imeOptions="actionDone"
+            android:inputType="textFilter"
+            android:paddingStart="@dimen/size_4"
+            android:paddingEnd="0dp"
+            android:ellipsize="start"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textAlignment="gravity"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="@dimen/text_14"
+            tools:text="xyzjbcjhsccsfsfbsjsjfhvfsvfsjfhgfhfhhfhhhgvhhcvhggchc" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_website_extension"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/size_16"
+            android:fontFamily="@font/regular"
+            android:gravity="start|center_vertical"
+            android:singleLine="true"
+            android:text="@string/nowfloats_dot_com"
+            android:textAlignment="gravity"
+            android:textColor="@color/gray_9DA4B2"
+            android:textSize="@dimen/text_14"
+            app:fontFamily="@font/semi_bold" />
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <LinearLayout
+          android:id="@+id/linear_website_extension_wrapper"
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
-          android:scaleType="centerCrop"
-          android:src="@drawable/ic_domain_tick"
-          android:visibility="gone" />
+          android:gravity="center|end"
+          android:orientation="horizontal"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="1"
+          app:layout_constraintTop_toTopOf="parent">
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="@dimen/size_15"
+            android:layout_height="@dimen/size_15"
+            android:layout_marginHorizontal="@dimen/size_16"
+            android:src="@drawable/ic_presignin_edit_input"
+            android:visibility="gone" />
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/iv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_domain_tick"
+            android:visibility="gone" />
       </LinearLayout>
 
 

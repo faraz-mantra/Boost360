@@ -48,7 +48,7 @@ class ProgressDialog : BaseDialogFragment<ProgressInventoryDialogBinding, BaseVi
       hideProgress()
       if (this.isVisible.not()) show(manager, ProgressDialog::class.java.simpleName)
     } catch (e: Exception) {
-      Log.e(ProgressDialog::class.java.name, "${e.localizedMessage}")
+      Log.e(ProgressDialog::class.java.name, e.localizedMessage ?: "")
     }
   }
 
@@ -56,7 +56,7 @@ class ProgressDialog : BaseDialogFragment<ProgressInventoryDialogBinding, BaseVi
     try {
       if (isRemoving.not()) dismiss()
     } catch (e: Exception) {
-      Log.e(ProgressDialog::class.java.name, "${e.localizedMessage}")
+      Log.e(ProgressDialog::class.java.name, e.localizedMessage ?: "")
     }
   }
 }
