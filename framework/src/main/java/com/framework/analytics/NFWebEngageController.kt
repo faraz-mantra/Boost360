@@ -41,7 +41,7 @@ object NFWebEngageController {
     //AppsFlyerEvent...
     try {
       AppsFlyerLib.getInstance()
-        .logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent.toMap())
+        .logEvent(weAnalytics.activity?.get()?.applicationContext, event_name, trackEvent.toMap())
     } catch (e: Exception) {
       e.printStackTrace()
     }
@@ -86,7 +86,7 @@ object NFWebEngageController {
 
       //AppsFlyerEvent...
       try {
-        AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, event_value.toMap())
+        AppsFlyerLib.getInstance().logEvent(weAnalytics.activity?.get()?.applicationContext, event_name, event_value.toMap())
       } catch (e: Exception) {
         e.printStackTrace()
       }
@@ -151,7 +151,7 @@ object NFWebEngageController {
 
       //AppsFlyer Analytics User Session Event
       if (weAnalytics.activity != null) {
-        AppsFlyerLib.getInstance().logSession(weAnalytics.activity.get()?.applicationContext)
+        AppsFlyerLib.getInstance().logSession(weAnalytics.activity?.get()?.applicationContext)
       }
       AppsFlyerLib.getInstance().setCustomerUserId(userId)
       isUserLoggedIn = true

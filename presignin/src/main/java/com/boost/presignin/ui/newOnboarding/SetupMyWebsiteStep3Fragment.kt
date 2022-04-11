@@ -99,10 +99,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     binding?.includeMobileView?.tvTitle?.text = businessName?.capitalizeUtil()
     setOnClickListeners()
     binding?.addressInputLayout?.etInput?.setText(businessName?.replace("\\s+".toRegex(), "")?.lowercase())
-    apiCheckDomain {
-      hideProgress()
-      websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1)
-    }
+    apiCheckDomain { websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1) }
   }
 
   private fun apiCheckDomain(onSuccess: () -> Unit) {
@@ -113,33 +110,24 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
       viewModel?.postCheckBusinessDomain(data)?.observeOnce(viewLifecycleOwner) { response ->
         if (response.isSuccess() && response.stringResponse.isNullOrEmpty().not()) {
           onSuccess.invoke()
-        } else {
-          websiteNameFieldUiVisibility(websiteNameFieldVisibility = 2)
-        }
+        } else websiteNameFieldUiVisibility(websiteNameFieldVisibility = 2)
       }
-    } else {
-      hideProgress()
-      websiteNameFieldUiVisibility(websiteNameFieldVisibility = 2)
-    }
+    } else websiteNameFieldUiVisibility(websiteNameFieldVisibility = 2)
   }
 
   private fun setOnClickListeners() {
     binding?.tvNextStep3?.setOnClickListener {
       if (binding?.addressInputLayout?.etInput?.text?.trim().toString().validateLetters()) {
-        if (binding?.tvNextStep3?.text == getString(R.string.launch_my_website)){
+        if (binding?.tvNextStep3?.text == getString(R.string.launch_my_website)) {
           WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK_NEW_UPPERCASE, CLICK, NO_EVENT_VALUE)
         }
-        apiCheckDomain {
-          apiHitCreateMerchantProfile()
-        }
-      } else {
-        showShortToast(getString(R.string.website_name_format_invalid_toast))
-      }
+        apiCheckDomain { apiHitCreateMerchantProfile() }
+      } else showShortToast(getString(R.string.website_name_format_invalid_toast))
     }
 
     binding?.addressInputLayout?.etInput?.afterTextChanged {
-        binding?.tvNextStep3?.isEnabled = it.isEmpty().not()
-        binding?.includeMobileView?.tvWebsiteName?.text = it
+      binding?.tvNextStep3?.isEnabled = it.isEmpty().not()
+      binding?.includeMobileView?.tvWebsiteName?.text = it
     }
 
     binding?.addressInputLayout?.etInput?.setOnEditorActionListener { _, actionId, _ ->
@@ -148,34 +136,22 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
           if (binding?.addressInputLayout?.etInput?.text?.trim()?.isEmpty() == false) {
             binding?.addressInputLayout?.etInput?.isEnabled = false
             binding?.addressInputLayout?.ivIcon?.visible()
-            apiCheckDomain {
-              hideProgress()
-              websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1)
-            }
-            //websiteNameFieldUiVisibility()
+            apiCheckDomain { websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1) }
           }
-        } else {
-          showShortToast(getString(R.string.website_name_format_invalid_toast))
-        }
+        } else showShortToast(getString(R.string.website_name_format_invalid_toast))
       }
       false
     }
 
     binding?.addressInputLayout?.etInput?.onFocusChangeListener =
       View.OnFocusChangeListener { _, hasFocus ->
-        if (hasFocus){
-          binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_dark_stroke_et_onboard)
-        }
+        if (hasFocus) binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_dark_stroke_et_onboard)
       }
 
     binding?.addressInputLayout?.ivIcon?.setOnClickListener {
       websiteNameFieldUiVisibility()
       baseActivity.showKeyBoard(binding?.addressInputLayout?.etInput)
     }
-  }
-
-  private fun apiHitBusiness(businessProfileResponse: BusinessProfileResponse) {
-    putCreateBusinessOnBoarding(businessProfileResponse)
   }
 
   private fun putCreateBusinessOnBoarding(response: BusinessProfileResponse) {
@@ -209,10 +185,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         session?.saveAuthTokenData(authToken)
         session?.setUserSignUpComplete(true)
         startFragmentFromNewOnBoardingActivity(activity = baseActivity, type = FragmentType.LOADING_ANIMATION_DASHBOARD_FRAGMENT, bundle = arguments ?: Bundle(), clearTop = true)
-      } else {
-        val msg = it.message()
-        showShortToast(if (msg.isNotEmpty()) msg else getString(R.string.error_create_business_fp))
-      }
+      } else showShortToast(it.message().ifEmpty { getString(R.string.error_create_business_fp) })
       hideProgress()
     }
   }
@@ -278,14 +251,13 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
       viewModel?.createMerchantProfile(request = categoryFloatsReq?.requestProfile)?.observeOnce(viewLifecycleOwner) {
         val businessProfileResponse = it as? BusinessProfileResponse
         if (it.isSuccess() && businessProfileResponse != null && businessProfileResponse.result?.loginId.isNullOrEmpty().not()) {
-          apiHitBusiness(businessProfileResponse)
+          putCreateBusinessOnBoarding(businessProfileResponse)
         } else {
           hideProgress()
-          val msg = it?.errorNMessage()
-          showShortToast(if (msg.isNullOrEmpty().not()) msg else getString(R.string.unable_to_create_profile))
+          showShortToast(it?.errorFlowMessage() ?: getString(R.string.unable_to_create_profile))
         }
       }
-    } else apiHitBusiness(this.responseCreateProfile!!)
+    } else putCreateBusinessOnBoarding(this.responseCreateProfile!!)
   }
 
 
@@ -297,11 +269,13 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
    *  2 : Red Error Mode
    * */
   private fun websiteNameFieldUiVisibility(websiteNameFieldVisibility: Int = 0) {
+    hideProgress()
     when (websiteNameFieldVisibility) {
       1 -> {
         val layoutParams = binding?.addressInputLayout?.etInput?.layoutParams as? ConstraintLayout.LayoutParams
         layoutParams?.width = ConstraintSet.WRAP_CONTENT
         binding?.addressInputLayout?.etInput?.isEnabled = false
+        binding?.addressInputLayout?.etInput?.isFocusable = false
         binding?.tvNextStep3?.isEnabled = true
         binding?.tvNameNotAvailableError?.gone()
         binding?.linearSecureWrapper?.visible()
@@ -315,6 +289,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         val layoutParams = binding?.addressInputLayout?.etInput?.layoutParams as? ConstraintLayout.LayoutParams
         layoutParams?.width = ConstraintSet.WRAP_CONTENT
         binding?.addressInputLayout?.etInput?.isEnabled = false
+        binding?.addressInputLayout?.etInput?.isFocusable = false
         binding?.tvNextStep3?.isEnabled = false
         binding?.tvNameNotAvailableError?.visible()
         binding?.linearSecureWrapper?.gone()
@@ -329,6 +304,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         layoutParams?.width = ConstraintSet.MATCH_CONSTRAINT
         binding?.addressInputLayout?.etInput?.layoutParams = layoutParams
         binding?.addressInputLayout?.etInput?.isEnabled = true
+        binding?.addressInputLayout?.etInput?.isFocusable = true
         binding?.tvNameNotAvailableError?.gone()
         binding?.linearSecureWrapper?.gone()
         binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_grey_stroke_et)

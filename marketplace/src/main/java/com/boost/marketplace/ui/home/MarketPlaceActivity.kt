@@ -53,6 +53,7 @@ import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.getAccessTokenAuth
+import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -87,8 +88,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     var feedBackLink: String? = null
     lateinit var prefs: SharedPrefs
     var packageInCartStatus = false
-    var offeredBundlePrice = 0
-    var originalBundlePrice = 0
+    var offeredBundlePrice = 0.0
+    var originalBundlePrice = 0.0
     var featuresList: List<FeaturesModel>? = null
     private var itemsArrayList: ArrayList<String>? = ArrayList()
     private var packsArrayList: ArrayList<String>? = ArrayList()
@@ -828,13 +829,16 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                         }
                     }
                 }
-                if(paidUser){
+                runOnUiThread {
+                  if(paidUser){
                     bottom_box.visibility = View.VISIBLE
                     footer.visibility = View.VISIBLE
-                }else{
+                  }else{
                     bottom_box.visibility = View.GONE
                     footer.visibility = View.GONE
+                  }
                 }
+
             }
     }
 
@@ -2677,20 +2681,20 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 .subscribe(
                     {
                         featuresList = it
-                        var bundleMonthlyMRP = 0
+                        var bundleMonthlyMRP = 0.0
                         val minMonth: Int =
                             if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
 
                         for (singleItem in it) {
                             for (item in item!!.included_features) {
                                 if (singleItem.feature_code == item.feature_code) {
-                                    bundleMonthlyMRP += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt()
+                                    bundleMonthlyMRP += RootUtil.round(singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),2)
                                 }
                             }
                         }
 
-                        offeredBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
-                        originalBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
+                        offeredBundlePrice = (bundleMonthlyMRP * minMonth).toDouble()
+                        originalBundlePrice = (bundleMonthlyMRP * minMonth).toDouble()
 
                         if (item!!.overall_discount_percent > 0)
                             offeredBundlePrice =
@@ -3104,7 +3108,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             )
         }
     }
-
 
 }
 

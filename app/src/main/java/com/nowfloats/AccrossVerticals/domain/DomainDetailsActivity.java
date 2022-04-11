@@ -68,7 +68,7 @@ import java.util.Locale;
 
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
-
+@Deprecated
 public class DomainDetailsActivity extends AppCompatActivity implements View.OnClickListener, DomainApiService.DomainCallback {
 
     private static final int DOMAIN_EXPIRY_GRACE_PERIOD = 30;

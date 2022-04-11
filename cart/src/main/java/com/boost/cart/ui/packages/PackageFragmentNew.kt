@@ -30,6 +30,7 @@ import com.boost.cart.utils.Constants
 import com.boost.cart.utils.SharedPrefs
 import com.boost.cart.utils.WebEngageController
 import com.bumptech.glide.Glide
+import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -59,8 +60,8 @@ class PackageFragmentNew : BaseFragment() {
     var cartList: List<CartModel>? = null
 
     var badgeNumber = 0
-    var offeredBundlePrice = 0
-    var originalBundlePrice = 0
+    var offeredBundlePrice = 0.0
+    var originalBundlePrice = 0.0
 
     var packageInCartStatus = false
     lateinit var prefs: SharedPrefs
@@ -138,8 +139,8 @@ class PackageFragmentNew : BaseFragment() {
                             bundleData!!.name,
                             "",
                             bundleData!!.primary_image!!.url,
-                            offeredBundlePrice.toDouble(),
-                            originalBundlePrice.toDouble(),
+                            offeredBundlePrice,
+                            originalBundlePrice,
                             bundleData!!.overall_discount_percent,
                             1,
                             if (bundleData!!.min_purchase_months != null) bundleData!!.min_purchase_months!! else 1,
@@ -191,21 +192,21 @@ class PackageFragmentNew : BaseFragment() {
         viewModel.getUpgradeResult().observe(this, Observer {
             if (it.size > 0) {
                 featuresList = it
-                var bundleMonthlyMRP = 0
+                var bundleMonthlyMRP = 0.0
                 val minMonth:Int = if (bundleData!!.min_purchase_months != null && bundleData!!.min_purchase_months!! > 1) bundleData!!.min_purchase_months!! else 1
                 for (singleItem in it) {
                     for (item in bundleData!!.included_features) {
                         if (singleItem.feature_code == item.feature_code) {
-                            bundleMonthlyMRP += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt()
+                            bundleMonthlyMRP += RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),2)
                         }
                     }
                 }
 
-                offeredBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
-                originalBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
+                offeredBundlePrice = (bundleMonthlyMRP * minMonth)
+                originalBundlePrice = (bundleMonthlyMRP * minMonth)
 
                 if(bundleData!!.overall_discount_percent > 0)
-                    offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent/100)
+                    offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent/100),2)
                 else
                     offeredBundlePrice = originalBundlePrice
 
@@ -307,7 +308,7 @@ class PackageFragmentNew : BaseFragment() {
         }
     }
 
-    fun spannableString(value: Int, minMonth: Int) {
+    fun spannableString(value: Double, minMonth: Int) {
         val origCost: SpannableString
         if (minMonth > 1) {
             origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")
