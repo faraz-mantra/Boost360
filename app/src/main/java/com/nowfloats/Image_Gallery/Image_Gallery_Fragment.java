@@ -66,7 +66,6 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 @SuppressLint("ValidFragment")
-@Deprecated
 public class Image_Gallery_Fragment extends Fragment implements
         UploadPictureAsyncTask.UploadPictureInterface,
         DeleteGalleryImages.DeleteGalleryInterface,
