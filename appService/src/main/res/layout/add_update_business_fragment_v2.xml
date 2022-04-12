@@ -182,7 +182,7 @@
                         <com.framework.views.customViews.CustomEditText
                             android:id="@+id/et_update"
                             android:layout_width="match_parent"
-                            android:textCursorDrawable="@color/yellow_ffb900"
+                            android:textCursorDrawable="@drawable/text_cursor_yellow"
                             android:layout_height="133dp"
                             android:textColor="@color/black_4a4a4a"
                             android:background="@color/white"

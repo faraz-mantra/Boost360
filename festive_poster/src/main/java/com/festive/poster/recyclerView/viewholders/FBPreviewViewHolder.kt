@@ -1,7 +1,6 @@
 package com.festive.poster.recyclerView.viewholders
 
 import com.festive.poster.R
-import com.festive.poster.databinding.ItemSocialPreviewViewpagerBinding
 import com.festive.poster.databinding.SocialPreviewFbBinding
 import com.festive.poster.databinding.SocialPreviewTwitterBinding
 import com.festive.poster.models.promoModele.SocialPreviewModel

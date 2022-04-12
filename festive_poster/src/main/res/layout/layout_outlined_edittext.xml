@@ -26,6 +26,7 @@
                 android:layout_width="match_parent"
                 android:gravity="start"
                 android:inputType="textMultiLine"
+                android:textCursorDrawable="@drawable/text_cursor_yellow"
                 android:scrollbarThumbVertical="@drawable/scroll_fill_bg"
                 android:scrollbarTrackVertical="@drawable/scroll_blank_bg"
                 android:layout_height="match_parent"

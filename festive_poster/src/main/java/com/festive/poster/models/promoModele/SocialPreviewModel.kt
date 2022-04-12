@@ -13,7 +13,7 @@ class SocialPreviewModel(
     val title:String?,
     val desc:String?,
     var shouldShow:Boolean,
-    var channelType:SocialPreviewChannel
+    var channelType:SocialPreviewChannel,
 ) : Serializable, AppBaseRecyclerViewItem {
 
     companion object{

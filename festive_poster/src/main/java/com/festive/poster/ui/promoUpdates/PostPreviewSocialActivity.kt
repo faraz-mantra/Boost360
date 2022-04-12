@@ -245,7 +245,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                 val model = uiChBoxChannelList?.get(position)
                 uiPreviewChannelList?.find { it.channelType==model?.channelType }?.shouldShow = model?.isChecked == true
                 setupPreviewList()
-                binding?.tvSelected?.text = getString(R.string.placeholder_selected,getCheckedChannelCount())
+                setupCountsUI()
 
             }
         }
@@ -266,12 +266,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             adapter = chkChannelAdapter
         }
 
-        binding?.tvSelected?.text = getString(R.string.placeholder_selected,getCheckedChannelCount())
-        binding?.tvPostUpdate?.text = if (getCheckedChannelCount()>1){
-            getString(R.string.post_on_placeholder_platforms,getCheckedChannelCount())
-        }else{
-            getString(R.string.post_on_placeholder_platform,getCheckedChannelCount())
-        }
+       setupCountsUI()
         binding?.shimmerLayout?.gone()
         binding?.shimmerPreviews?.gone()
         binding?.shimmerLayout?.stopShimmer()
@@ -280,6 +275,15 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         binding?.layoutSocialConn?.visible()
         binding?.rvPostPreview?.visible()
 
+    }
+
+    fun setupCountsUI(){
+        binding?.tvSelected?.text = getString(R.string.placeholder_selected,getCheckedChannelCount())
+        binding?.tvPostUpdate?.text = if (getCheckedChannelCount()>1){
+            getString(R.string.post_on_placeholder_platforms,getCheckedChannelCount())
+        }else{
+            getString(R.string.post_on_placeholder_platform,getCheckedChannelCount())
+        }
     }
 
     fun getCheckedChannelCount(): Int {

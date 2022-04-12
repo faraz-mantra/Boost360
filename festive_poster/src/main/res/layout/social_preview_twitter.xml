@@ -223,30 +223,37 @@
                 </LinearLayout>
 
 
-
                 <View
-                    android:layout_marginTop="@dimen/size_8"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-                    android:background="@color/colorEDF0F4"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:background="@color/colorEDF0F4"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
 
-        <com.framework.views.customViews.CustomImageView
-            android:id="@+id/customImageView6"
+        <com.framework.views.customViews.CustomCardView
             android:layout_width="40dp"
-            android:elevation="@dimen/size_4"
-            android:translationY="-4dp"
+            app:cardCornerRadius="@dimen/size_20"
             android:layout_height="@dimen/size_40"
-            android:src="@drawable/ic_twitter_social_preview"
             app:layout_constraintBottom_toBottomOf="@+id/materialCardView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView"
+            app:cardElevation="@dimen/size_4"
+            android:translationY="-4dp">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/customImageView6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_twitter_social_preview"
+                />
+        </com.framework.views.customViews.CustomCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
