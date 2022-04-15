@@ -18,6 +18,7 @@ import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.interfaces.CompareListener
 import com.bumptech.glide.Glide
+import com.framework.utils.RootUtil
 //import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -260,8 +261,8 @@ parentViewHolder.package_submit.setOnClickListener{
             itemsIds.add(item.feature_code)
         }
 
-        var offeredBundlePrice = 0
-        var originalBundlePrice = 0
+        var offeredBundlePrice = 0.0
+        var originalBundlePrice = 0.0
         val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1) bundles.min_purchase_months else 1
         CompositeDisposable().add(
                 AppDatabase.getInstance(activity.application)!!
@@ -274,13 +275,13 @@ parentViewHolder.package_submit.setOnClickListener{
                                     for (singleItem in it) {
                                         for (item in bundles.included_features) {
                                             if (singleItem.feature_code == item.feature_code) {
-                                                originalBundlePrice += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt() * minMonth
+                                                originalBundlePrice += RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),2) * minMonth
                                             }
                                         }
                                     }
 
                                     if(bundles.overall_discount_percent > 0){
-                                        offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100)
+                                        offeredBundlePrice = RootUtil.round((originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100)),2)
 
                                     } else {
                                         offeredBundlePrice = originalBundlePrice

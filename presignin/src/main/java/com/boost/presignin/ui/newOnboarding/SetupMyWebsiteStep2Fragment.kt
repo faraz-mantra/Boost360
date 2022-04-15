@@ -2,7 +2,6 @@ package com.boost.presignin.ui.newOnboarding
 
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.capitalizeUtil
 import com.boost.presignin.R
@@ -12,8 +11,6 @@ import com.boost.presignin.databinding.LayoutSetUpMyWebsiteStep2Binding
 import com.boost.presignin.extensions.validateLetters
 import com.boost.presignin.model.category.CategoryDataModel
 import com.framework.extensions.afterTextChanged
-import com.framework.extensions.gone
-import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.framework.utils.fromHtml
 import com.framework.utils.showKeyBoard
@@ -75,7 +72,8 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
     binding?.tvNextStep2?.setOnClickListener {
       if (binding?.businessNameInputLayout?.etInput?.text.toString().validateLetters()) {
         WebEngageController.trackEvent(PS_BUSINESS_PROFILE_CLICK_NEW_UPPERCASE, CLICK, NO_EVENT_VALUE)
-        addFragment(R.id.inner_container, SetupMyWebsiteStep3Fragment.newInstance(
+        addFragment(
+          R.id.inner_container, SetupMyWebsiteStep3Fragment.newInstance(
             Bundle().apply {
               putString(IntentConstant.DESKTOP_PREVIEW.name, desktopPreview)
               putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
@@ -86,9 +84,7 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
               putString(IntentConstant.EXTRA_BUSINESS_NAME.name, binding?.businessNameInputLayout?.etInput?.text.toString())
             }), true
         )
-      } else {
-        showShortToast(getString(R.string.business_name_format_invalid_toast))
-      }
+      } else showShortToast(getString(R.string.business_name_format_invalid_toast))
     }
 
     binding?.businessNameInputLayout?.etInput?.afterTextChanged {
@@ -97,29 +93,32 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
       binding?.businessNameInputLayout?.tvWordCount?.text = fromHtml("<font color=${if (it.isEmpty()) "#9DA4B2" else "#09121F"}>${it.length}</font><font color=#9DA4B2> /40</font>")
     }
 
-    binding?.businessNameInputLayout?.etInput?.setOnEditorActionListener { v, actionId, _ ->
-      if (actionId == EditorInfo.IME_ACTION_DONE) {
-        if (binding?.businessNameInputLayout?.etInput!!.text?.trim()?.isEmpty() == false) {
-            binding?.businessNameInputLayout?.etInput?.isEnabled = false
-            binding?.businessNameInputLayout?.tvWordCount?.gone()
-            binding?.businessNameInputLayout?.ivIcon?.visible()
-        }
-      }
-      false
+//    binding?.businessNameInputLayout?.etInput?.setOnEditorActionListener { v, actionId, _ ->
+//      if (actionId == EditorInfo.IME_ACTION_DONE) {
+//        if (binding?.businessNameInputLayout?.etInput!!.text?.trim()?.isEmpty() == false) {
+//          binding?.businessNameInputLayout?.etInput?.isEnabled = false
+//          binding?.businessNameInputLayout?.tvWordCount?.gone()
+//          binding?.businessNameInputLayout?.ivIcon?.visible()
+//        }
+//      }
+//      false
+//    }
+
+    binding?.businessNameInputLayout?.etInput?.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+      if (hasFocus) binding?.businessNameInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_dark_stroke_et_onboard)
     }
 
-    binding?.businessNameInputLayout?.etInput?.onFocusChangeListener =
-      View.OnFocusChangeListener { _, hasFocus ->
-        if (hasFocus){
-          binding?.businessNameInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_dark_stroke_et_onboard)
-        }
-    }
-
-    binding?.businessNameInputLayout?.ivIcon?.setOnClickListener {
-      baseActivity.showKeyBoard(binding?.businessNameInputLayout?.etInput)
-      binding?.businessNameInputLayout?.etInput?.isEnabled = true
-      binding?.businessNameInputLayout?.tvWordCount?.visible()
-      binding?.businessNameInputLayout?.ivIcon?.gone()
-    }
+//    binding?.businessNameInputLayout?.ivIcon?.setOnClickListener {
+//      baseActivity.showKeyBoard(binding?.businessNameInputLayout?.etInput)
+//      binding?.businessNameInputLayout?.etInput?.isEnabled = true
+//      binding?.businessNameInputLayout?.tvWordCount?.visible()
+//      binding?.businessNameInputLayout?.ivIcon?.gone()
+//    }
   }
+
+  override fun onResume() {
+    super.onResume()
+    binding?.businessNameInputLayout?.etInput?.run { baseActivity.showKeyBoard(this) }
+  }
+
 }

@@ -54,6 +54,15 @@ object EndPoints {
   const val GET_SERVICE_DETAILS = "Service/v1/GetServiceDetails"
   const val DELETE_SECONDARY_IMAGE = "service/v1/DeleteSecondaryImage"
 
+  //TODO Testimonial
+  const val GET_TESTIMONIAL_LIST = "Testimonial/v1/GetListing"
+  const val GET_TESTIMONIAL_DETAIL = "Testimonial/v1/GetDetails"
+  const val ADD_TESTIMONIAL = "Testimonial/v1/Create"
+  const val UPDATE_TESTIMONIAL = "Testimonial/v1/Update"
+  const val ADD_IMAGE_TESTIMONIAL = "Testimonial/v1/UpdateImage"
+  const val DELETE_TESTIMONIAL = "Testimonial/v1/Delete"
+  const val DELETE_IMAGE_TESTIMONIAL = "Testimonial/v1/DeleteImage"
+
   //TODO NFX API 2 WITH FLOAT
   const val WITH_FLOATS_TWO_BASE = "https://api2.withfloats.com/"
   const val BACKGROUND_IMAGE = "discover/v1/floatingpoint/getBackgroundImages"
@@ -134,11 +143,6 @@ object EndPoints {
 
   //TODO BOOST KIT DEV API
   const val BOOST_KIT_DEV_BASE = "https://developer.api.boostkit.dev/"
-  const val WEB_ACTION_TESTIMONIAL = "kitsune/v1/ListWebActionDetails/{themeID}"
-  const val GET_TESTIMONIAL = "api/v1/{testimonials}/get-data"
-  const val ADD_TESTIMONIAL = "api/v1/{testimonials}/add-data"
-  const val UPDATE_TESTIMONIAL = "api/v1/{testimonials}/update-data"
-  const val DELETE_TESTIMONIAL = "api/v1/{testimonials}/update-data"
 
   //TODO BOOST PLUGIN with floats APIs
   const val BOOST_KIT_PLUGIN_WITH_FLOATS_NEW_BASE = "https://plugin.withfloats.com/"

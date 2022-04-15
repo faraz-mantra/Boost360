@@ -21,52 +21,26 @@ open class BaseResponse(
 
   //Deprecate
   fun message(): String {
-    val message = message ?: "Something went wrong!"
-    return try {
-      val jsonObj = JSONObject(message)
-      jsonObj.getString("Message") ?: jsonObj.getString("message") ?: message
-    } catch (ex: Exception) {
-      message
-    }
+   return errorFlowMessage() ?: "Something went wrong!"
   }
 
   //Deprecate
   fun errorMessage(): String? {
-    val message = message ?: "Something went wrong!"
-    return try {
-      val jsonObj = JSONObject(message)
-      val error = jsonObj.getJSONObject("Error")
-      error.getString("ErrorDescription") ?: jsonObj.getString("errorDescription") ?: message
-    } catch (ex: Exception) {
-      message
-    }
+    return errorFlowMessage()
   }
 
   //Deprecate
   fun errorNMessage(): String? {
-    val message = message ?: "Something went wrong!"
-    return try {
-      val jsonObj = JSONObject(message)
-      val error = jsonObj.getJSONObject("Error").getJSONObject("ErrorList")
-      return error.getString("EXCEPTION")
-    } catch (ex: Exception) {
-      message
-    }
+    return errorFlowMessage()
   }
 
   //Deprecate
   fun errorIPMessage(): String? {
-    val message = message
-    return try {
-      val jsonObj = JSONObject(message)
-      val error = jsonObj.getJSONObject("Error").getJSONObject("ErrorList")
-      return error.getString("INVALID PARAMETERS")
-    } catch (ex: Exception) {
-      message
-    }
+    return errorFlowMessage()
   }
 
-  //New Error message filter
+  //TODO New Error message filter (Use this function get error message)
+
   fun errorFlowMessage(): String? {
     val message = message
     return try {

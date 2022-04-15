@@ -26,7 +26,7 @@ data class VmnCallModel(
 
   @SerializedName("callDuration")
   @Expose
-  var callDuration: Long? = null,
+  var callDuration: Any? = null,
 
   @SerializedName("callRecordingUri")
   @Expose
