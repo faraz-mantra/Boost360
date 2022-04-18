@@ -1176,4 +1176,18 @@
   <string name="name_as_per_pan_card">Name as per PAN card*</string>
   <string name="enter_name_as_per_pan_card">Enter name as per PAN card</string>
   <string name="gstin_information">GSTIN Information*</string>
+  <string name="accept_payment_after_service">Accept payment after service</string>
+  <string name="customers_allowed_cash_qr_code_payment_time_service">Customers are allowed to make cash/QR code payment at the time of service completion.</string>
+  <string name="select_payment_cash_qr_code_time_service">Select, if you want to allow customers to make cash/QR code payment at the time of service completion.</string>
+  <string name="accept_payments_during_booking">Accept payments during booking</string>
+  <string name="customers_payments_website_appointment_booking">Customers are allowed to make payments on the website during appointment booking.</string>
+  <string name="select_payments_website_appointment_booking">Select, if you want customer to make payments on the website during checkout.</string>
+  <string name="bank_account_is_mandatory_to_enable_online_payments">Bank account is mandatory to enable online payments.</string>
+  <string name="boost_payment_gateway_services_read_tnc">This bank account will be used for monetary transactions in case of online payment. We charge <b>3% as convenience fees</b> which includes bank charges for providing the Boost payment gateway services). <font color='#FFB900'><b><u>Read TnC.</u></b></font> </string>
+  <string name="note_bank_account_deposit_money"><b>Note:</b> This bank account will be used to deposit money in case of online payment.</string>
+  <string name="note_bank_account_deposit_money_verification"><b>Note:</b> This bank account will be used to deposit money in case of online payment. The bank account verification takes usually 24 hours.</string>
+  <string name="enable_website_payment_switched_desc">To enable service booking on your business website, at least one of the payment collection method needs to be switched on.</string>
+  <string name="pending_verification">(Pending verification)</string>
+  <string name="verify_">(Verify)</string>
+  <string name="added_payment_setup">Added payment setup!</string>
 </resources>

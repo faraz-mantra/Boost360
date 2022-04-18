@@ -106,6 +106,7 @@ object EndPoints {
   const val UPLOAD_MERCHANT_SIGNATURE = "discover/v9/business/paymentProfile/uploadSignature"
   const val ADD_MERCHANT_UPI = "discover/v9/business/paymentProfile/upiid/update"
   const val GET_PAYMENT_PROFILE_DETAILS = "discover/v9/business/paymentProfile"
+  const val POST_PAYMENT_ACCEPT_PROFILE = "discover/v9/business/paymentProfile/paymentAcceptance/update"
 
   //TODO SERVICE API WITH NOWFLOATS API
   const val GET_SERVICE_LISTING = "product/v13/GetAllServiceListings"

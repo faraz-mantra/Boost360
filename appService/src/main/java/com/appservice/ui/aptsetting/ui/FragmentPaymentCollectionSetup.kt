@@ -25,12 +25,12 @@ import com.framework.pref.clientId
 import com.framework.webengageconstant.*
 import com.framework.webengageconstant.PAYMENT_COLLECTION_SETUP_PAGE_LOAD
 
+@Deprecated("Migrated this class FragmentPaymentCollectionSetupV2")
 class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollectionSetupBinding, AppointmentSettingsViewModel>() {
 
   var isEdit: Boolean = false
 
   override fun getLayout(): Int {
-//    return R.layout.fragment_payment_collection_setup_v2
     return R.layout.fragment_payment_collection_setup
   }
 

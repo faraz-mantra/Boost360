@@ -203,4 +203,8 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   fun getImages(fpId: String?, clientId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getBackgroundImages(fpId, clientId), TaskCode.GET_BACKGROUND_IMAGES)
   }
+
+  fun addUpdatePaymentProfile(request: AddPaymentAcceptProfileRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.addUpdatePaymentProfile(request), TaskCode.ADD_PAYMENT_ACCEPT_PROFILE)
+  }
 }
