@@ -191,15 +191,11 @@ interface WithFloatTwoRemoteData {
   ): Observable<Response<ResponseBody>>
 
   @POST(EndPoints.DELETE_BG_IMAGE)
-  fun deleteBackgroundImages(
-    @Body map: HashMap<String, String?>,
-  ): Observable<Response<ResponseBody>>
+  fun deleteBackgroundImages(@Body map: HashMap<String, String?>): Observable<Response<ResponseBody>>
 
+  @POST(EndPoints.POST_PAYMENT_ACCEPT_PROFILE)
+  fun addUpdatePaymentProfile(@Body request: AddPaymentAcceptProfileRequest?): Observable<Response<ResponseBody>>
 
   @GET("/Wildfire/v1/calls/tracker")
-  fun trackerCalls(
-    @QueryMap data: Map<String, String?>?):Observable<Response<ArrayList<VmnCallModel?>?>>
-
-
-
+  fun trackerCalls(@QueryMap data: Map<String, String?>?): Observable<Response<ArrayList<VmnCallModel?>?>>
 }

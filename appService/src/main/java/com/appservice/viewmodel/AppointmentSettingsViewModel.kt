@@ -30,6 +30,10 @@ class AppointmentSettingsViewModel : BaseViewModel() {
     return WithFloatTwoRepository.getDeliveryDetails(floatingPointId, clientId).toLiveData()
   }
 
+  fun addUpdatePaymentProfile(request: AddPaymentAcceptProfileRequest): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.addUpdatePaymentProfile(request).toLiveData()
+  }
+
   fun invoiceSetup(request: InvoiceSetupRequest): LiveData<BaseResponse> {
     return WithFloatTwoRepository.invoiceSetup(request).toLiveData()
   }
