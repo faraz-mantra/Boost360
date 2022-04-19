@@ -4,11 +4,12 @@
     <com.framework.views.customViews.CustomCardView
         app:cardCornerRadius="@dimen/size_15"
         app:cardElevation="@dimen/size_4"
-        app:cardBackgroundColor="@color/colorPrimary"
         android:layout_marginHorizontal="@dimen/size_12"
         android:layout_marginVertical="@dimen/size_8"
         android:layout_width="@dimen/size_150"
         android:layout_height="@dimen/size_140">
+
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -16,6 +17,7 @@
 
             <com.framework.views.customViews.CustomImageView
                 android:id="@+id/iv_icon"
+                android:src="@drawable/dummy_post_cat_icon"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY" />

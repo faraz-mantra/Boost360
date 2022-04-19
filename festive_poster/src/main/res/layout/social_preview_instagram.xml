@@ -9,17 +9,18 @@
             type="Boolean" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="195dp"
-        android:layout_margin="@dimen/size_8"
-
+        android:layout_width="190dp"
+        android:layout_marginTop="@dimen/size_20"
+        android:layout_marginBottom="@dimen/size_15"
+        android:layout_marginHorizontal="@dimen/size_10"
         android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout_height="@{imageExist?@dimen/size_288:@dimen/size_130, default=wrap_content}"            app:cardUseCompatPadding="true"
+            android:layout_height="284dp"
             app:cardElevation="@dimen/size_4"
+            app:cardPreventCornerOverlap="false"
             app:cardCornerRadius="@dimen/size_8"
             app:layout_constraintVertical_bias="0"
             app:layout_constraintBottom_toBottomOf="parent"

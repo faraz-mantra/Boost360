@@ -11,18 +11,17 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/r_layout"
-        android:layout_width="190dp"
-        android:layout_marginTop="@dimen/size_20"
-        android:layout_marginBottom="@dimen/size_15"
-        android:layout_marginHorizontal="@dimen/size_10"
+        android:layout_width="@dimen/size_190"
+        android:layout_marginTop="@dimen/size_19"
+        android:layout_marginBottom="@dimen/size_25"
+        android:layout_marginHorizontal="@dimen/size_8"
         android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
             android:layout_width="match_parent"
-            android:layout_height="284dp"
+            android:layout_height="@dimen/size_130"
             app:cardUseCompatPadding="true"
-            app:cardPreventCornerOverlap="false"
             app:cardElevation="@dimen/size_4"
             app:cardCornerRadius="@dimen/size_8"
             app:layout_constraintVertical_bias="0"
@@ -31,42 +30,35 @@
             >
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:orientation="vertical"
                 android:id="@+id/layout_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="9dp"
                 android:layout_marginTop="13dp"
-                android:orientation="vertical">
+                android:layout_marginHorizontal="9dp">
+
 
 
                 <com.framework.views.customViews.CustomTextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:textSize="7sp"
+                    android:gravity="center"
                     android:fontFamily="@font/regular"
-                    android:gravity="center"
-                    android:text="@string/you_ve_new_email_update_from"
                     android:textColor="@color/color395996"
-                    android:textSize="7sp" />
+                    android:text="@string/you_ve_new_email_update_from"
+                    android:layout_height="wrap_content"/>
 
                 <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tv_title"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/bold"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textColor="@color/black_4a4a4a"
                     android:textSize="10sp"
-                    tools:text="Smiley Dent Clinic" />
+                    android:gravity="center"
+                    android:id="@+id/tv_title"
+                    android:fontFamily="@font/bold"
+                    android:textColor="@color/black_4a4a4a"
+                    tools:text="Smiley Dent Clinic"
+                    android:layout_height="wrap_content"/>
 
-                <com.framework.views.customViews.CustomImageView
-                    android:id="@+id/iv_svg"
-                    android:layout_width="match_parent"
-                    android:layout_height="152dp"
-                    android:layout_marginTop="8dp"
-                    android:scaleType="fitXY"
-                    app:layout_constraintTop_toTopOf="parent" />
+
 
 
                 <com.framework.views.customViews.CustomTextView
@@ -74,9 +66,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:ellipsize="end"
                     android:gravity="center"
-                    android:maxLines="3"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="6sp"
                     app:fontFamily="@font/regular"
@@ -87,22 +79,22 @@
 
                 <com.framework.views.customViews.CustomCardView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/size_4"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/size_5"
                     app:cardBackgroundColor="@color/color_border_ffb900"
-                    app:cardCornerRadius="@dimen/size_4">
+                    android:layout_height="wrap_content">
 
                     <com.framework.views.customViews.CustomTextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_14dp"
+                        android:textSize="6sp"
+                        android:textAllCaps="true"
                         android:layout_marginVertical="@dimen/size_4"
+                        android:layout_marginHorizontal="@dimen/_14dp"
+                        android:textColor="@color/white"
                         android:fontFamily="@font/regular_medium"
                         android:text="@string/visit_website"
-                        android:textAllCaps="true"
-                        android:textColor="@color/white"
-                        android:textSize="6sp" />
+                        android:layout_height="wrap_content"/>
                 </com.framework.views.customViews.CustomCardView>
             </androidx.appcompat.widget.LinearLayoutCompat>
 

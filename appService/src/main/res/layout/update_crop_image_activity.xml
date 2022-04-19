@@ -9,7 +9,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar2"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             android:background="@color/black_333333"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -112,6 +112,7 @@
                 android:layout_width="60dp"
                 android:id="@+id/layout_tick"
                 android:layout_height="60dp"
+                android:layout_marginBottom="@dimen/size_11"
                 android:layout_marginHorizontal="24dp"
                 app:cardBackgroundColor="@color/colorPrimary"
                 app:cardCornerRadius="30dp">

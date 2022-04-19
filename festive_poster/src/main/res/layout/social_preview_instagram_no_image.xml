@@ -10,27 +10,25 @@
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="190dp"
-        android:layout_marginTop="@dimen/size_20"
-        android:layout_marginBottom="@dimen/size_15"
-        android:layout_marginHorizontal="@dimen/size_10"
+        android:layout_marginTop="@dimen/size_19"
+        android:layout_marginBottom="@dimen/size_25"
+        android:layout_marginHorizontal="@dimen/size_8"
         android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
             android:layout_width="match_parent"
-            android:layout_height="284dp"
-            app:cardUseCompatPadding="true"
+            android:layout_height="@dimen/size_130"
             app:cardElevation="@dimen/size_4"
-            app:cardPreventCornerOverlap="false"
             app:cardCornerRadius="@dimen/size_8"
             app:layout_constraintVertical_bias="0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             >
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/layout_content"
                 android:layout_marginTop="12dp"
                 >
 
@@ -39,9 +37,9 @@
                     android:layout_width="17dp"
                     android:layout_height="17dp"
                     app:cardCornerRadius="@dimen/size_8"
-                    android:layout_marginStart="@dimen/_6dp"
+                    android:layout_marginStart="@dimen/size_10"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent" >
 
                     <com.framework.views.customViews.CustomImageView
                         android:layout_width="match_parent"
@@ -69,75 +67,83 @@
                     android:fontFamily="@font/bold"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/customCardView"
                     app:layout_constraintStart_toEndOf="@+id/customCardView"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Payal Jain" />
 
 
                 <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/customTextView12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/regular"
-                    android:textSize="4dp"
-                    app:layout_constraintStart_toStartOf="@+id/tv_name"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_name"
-                    android:text="15 mins" />
-
-
-                <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tv_caption"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:layout_goneMarginTop="14dp"
-                    android:layout_marginHorizontal="@dimen/size_9"
-                    android:textColor="@color/black_4a4a4a"
-                    android:textSize="7sp"
-                    android:maxLines="5"
+                    android:layout_marginHorizontal="@dimen/size_10"
                     android:ellipsize="end"
+                    android:maxLines="3"
+                    android:textColor="@color/black_4a4a4a"
+
+                    android:textSize="6sp"
                     app:fontFamily="@font/regular_medium"
-                    app:layout_constraintTop_toBottomOf="@+id/iv_poster"
+                    app:layout_constraintTop_toBottomOf="@+id/customCardView"
                     tools:text="50 to 60 percent off the entire site and store for Black Friday. Above that, you have free shipiing on all orders, plus an extra 20.
 
 #bigbilliondays #smile #2020 " />
 
-                <com.framework.views.customViews.CustomImageView
-                    android:id="@+id/iv_poster"
-                    android:layout_width="match_parent"
-                    android:layout_height="152dp"
-                    android:scaleType="fitXY"
 
+
+                <LinearLayout
+                    app:layout_constraintTop_toBottomOf="@+id/tv_caption"
+                    android:layout_marginHorizontal="@dimen/size_10"
+                    android:gravity="center_vertical"
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintHeight_percent="0.65"
-                    app:layout_constraintTop_toBottomOf="@+id/customCardView" />
-
-
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/customTextView14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="11dp"
-                    android:text="@string/buy"
-                    android:layout_marginStart="@dimen/size_10"
-                    android:textColor="@color/color4285F4"
-                    android:textSize="8sp"
-                    app:fontFamily="@font/regular_medium"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toStartOf="@+id/customImageView4"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_caption" />
+                    >
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="@dimen/size_10"
+                        android:layout_height="@dimen/size_9"
+                        android:src="@drawable/ic_instagram_like" />
+
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="@dimen/size_10"
+                        android:layout_height="@dimen/size_9"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/ic_instagram_comment" />
+
+
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="@dimen/size_10"
+                        android:layout_height="@dimen/size_9"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/ic_instagram_comment" />
+
+
+
+
+
+                </LinearLayout>
 
                 <com.framework.views.customViews.CustomImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/size_8"
-                    android:src="@drawable/ic_gmb_share"
-                    app:layout_constraintBottom_toBottomOf="@+id/customTextView14"
+                    app:fontFamily="@font/regular"
+                    android:id="@+id/customImageView4"
+                    android:layout_marginEnd="@dimen/size_10"
+                    android:layout_width="@dimen/size_10"
+                    android:layout_height="@dimen/size_9"
+                    android:src="@drawable/ic_instagram_save"
+                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/customTextView14" />
+                    app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
 
 
         <com.framework.views.customViews.CustomCardView
@@ -155,7 +161,7 @@
                 android:id="@+id/customImageView6"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_gmb_preview"
+                android:src="@drawable/ic_instagram_preview"
                 />
         </com.framework.views.customViews.CustomCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

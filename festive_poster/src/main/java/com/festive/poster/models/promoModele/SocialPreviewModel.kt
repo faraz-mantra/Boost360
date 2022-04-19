@@ -31,23 +31,35 @@ class SocialPreviewModel(
 
     override fun getViewType(): Int {
        return when(channelType){
-            SocialPreviewChannel.INSTAGRAM->{
+            SocialPreviewChannel.INSTAGRAM-> if (posterImg!=null){
                 RecyclerViewItemType.INSTAGRAM_PREVIEW.getLayout()
+            }else{
+                -1
             }
-           SocialPreviewChannel.TWITTER->{
-               RecyclerViewItemType.VIEWPAGER_TWITTER_PREVIEW.getLayout()
+           SocialPreviewChannel.TWITTER->if (posterImg!=null){
+               RecyclerViewItemType.TWITTER_PREVIEW.getLayout()
+           }else{
+               RecyclerViewItemType.TWITTER_PREVIEW_NO_IMAGE.getLayout()
            }
-           SocialPreviewChannel.GMB->{
+           SocialPreviewChannel.GMB->if (posterImg!=null){
                RecyclerViewItemType.GMB_PREVIEW.getLayout()
+           }else{
+               RecyclerViewItemType.GMB_PREVIEW_NO_IMAGE.getLayout()
            }
-           SocialPreviewChannel.FACEBOOK->{
+           SocialPreviewChannel.FACEBOOK->if (posterImg!=null){
                RecyclerViewItemType.FB_PREVIEW.getLayout()
+           }else{
+               RecyclerViewItemType.FB_PREVIEW_NO_IMAGE.getLayout()
            }
-           SocialPreviewChannel.WEBSITE->{
+           SocialPreviewChannel.WEBSITE->if (posterImg!=null){
                RecyclerViewItemType.WEBSITE_PREVIEW.getLayout()
+           }else{
+               RecyclerViewItemType.WEBSITE_PREVIEW_NO_IMAGE.getLayout()
            }
-           SocialPreviewChannel.EMAIL->{
+           SocialPreviewChannel.EMAIL->if (posterImg!=null){
                RecyclerViewItemType.EMAIL_PREVIEW.getLayout()
+           }else{
+               RecyclerViewItemType.EMAIL_PREVIEW_NO_IMAGE.getLayout()
            }
            else->{
                RecyclerViewItemType.WEBSITE_PREVIEW.getLayout()

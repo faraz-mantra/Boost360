@@ -18,17 +18,8 @@ class GMBPreviewViewHolder(binding: SocialPreviewGmbBinding) :
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as SocialPreviewModel
         binding.imageExist = model.posterImg.isNullOrEmpty().not()
+        binding.ivPoster.loadUsingGlide(model.posterImg,false)
 
-        if (model.posterImg.isNullOrEmpty()){
-            binding.materialCardView.minimumHeight=400
-            binding.ivPoster.gone()
-            binding.tvCaption.maxLines=3
-        }else{
-            binding.tvCaption.maxLines=5
-            binding.materialCardView.minimumHeight=800
-            binding.ivPoster.loadUsingGlide(model.posterImg,false)
-        }
-        binding.materialCardView.requestLayout()
         binding.tvCaption.text = highlightHashTag(model.desc, R.color.color395996,R.font.regular_medium)
         binding.tvName.text = model.title
         super.bind(position, item)

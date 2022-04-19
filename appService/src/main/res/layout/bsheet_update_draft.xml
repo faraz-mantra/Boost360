@@ -22,7 +22,7 @@
             android:background="@drawable/bottoms_sheet_top20dp_white"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/size_16"
-            android:paddingVertical="@dimen/size_24">
+            android:paddingVertical="@dimen/size_25">
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tv_heading"
@@ -46,7 +46,7 @@
                 android:id="@+id/btn_save_draft"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:layout_marginTop="23dp"
+                android:layout_marginTop="28dp"
                 android:letterSpacing="0"
                 android:backgroundTint="@color/colorPrimary"
                 android:fontFamily="@font/semi_bold"
@@ -62,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:backgroundTint="@color/white"
-                android:layout_marginTop="@dimen/size_4"
+                android:layout_marginTop="@dimen/size_12"
                 android:fontFamily="@font/semi_bold"
                 android:text="@string/yes_discard"
                 android:letterSpacing="0"

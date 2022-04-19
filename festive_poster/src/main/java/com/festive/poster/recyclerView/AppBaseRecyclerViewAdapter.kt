@@ -34,12 +34,17 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.BROWSE_TAB_TEMPLATE_CAT->BrowseTabPosterCatViewHolder(binding as ListItemBrowseTabTemplateCatBinding)
       RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT->BrowseAllPosterCatViewHolder(binding as ListItemBrowseAllCatBinding)
       RecyclerViewItemType.SOCIAL_PLATFORM_POST_OPTIONS_LIST->SocialPlatformOptionListViewHolder(binding as ItemSocialPlatformPromoAdapBinding)
-      RecyclerViewItemType.VIEWPAGER_TWITTER_PREVIEW->TwitterPreviewViewHolder(binding as SocialPreviewTwitterBinding)
+      RecyclerViewItemType.TWITTER_PREVIEW->TwitterPreviewViewHolder(binding as SocialPreviewTwitterBinding)
       RecyclerViewItemType.FB_PREVIEW->FBPreviewViewHolder(binding as SocialPreviewFbBinding)
       RecyclerViewItemType.INSTAGRAM_PREVIEW->InstagramPreviewViewHolder(binding as SocialPreviewInstagramBinding)
       RecyclerViewItemType.GMB_PREVIEW->GMBPreviewViewHolder(binding as SocialPreviewGmbBinding)
       RecyclerViewItemType.WEBSITE_PREVIEW->WebsitePreviewViewHolder(binding as SocialPreviewWebsiteBinding)
       RecyclerViewItemType.EMAIL_PREVIEW->EmailPreviewViewHolder(binding as SocialPreviewEmailBinding)
+      RecyclerViewItemType.TWITTER_PREVIEW_NO_IMAGE->TwitterPreviewNoImageViewHolder(binding as SocialPreviewTwitterNoImageBinding)
+      RecyclerViewItemType.FB_PREVIEW_NO_IMAGE->FBPreviewNoImageViewHolder(binding as SocialPreviewFbNoImageBinding)
+      RecyclerViewItemType.GMB_PREVIEW_NO_IMAGE->GMBPreviewNoImageViewHolder(binding as SocialPreviewGmbNoImageBinding)
+      RecyclerViewItemType.WEBSITE_PREVIEW_NO_IMAGE->WebsitePreviewNoImageViewHolder(binding as SocialPreviewWebsiteNoImageBinding)
+      RecyclerViewItemType.EMAIL_PREVIEW_NO_IMAGE->EmailPreviewNoImageViewHolder(binding as SocialPreviewEmailNoImageBinding)
       RecyclerViewItemType.FAV_CAT->FavPosterCatViewHolder(binding as  ListItemFavCatBinding)
 
     }

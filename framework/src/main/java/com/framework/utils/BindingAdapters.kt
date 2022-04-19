@@ -11,3 +11,11 @@ fun setLayoutHeight(view: View, height: Float) {
     view.setLayoutParams(layoutParams)
 }
 
+@BindingAdapter("layout_width")
+fun setLayoutWidth(view: View, width: Float) {
+    val layoutParams = view.getLayoutParams()
+    layoutParams.width = width.toInt()
+    view.setLayoutParams(layoutParams)
+}
+
+

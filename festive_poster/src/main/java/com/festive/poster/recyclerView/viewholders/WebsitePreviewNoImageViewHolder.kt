@@ -11,17 +11,16 @@ import com.framework.extensions.gone
 import com.framework.utils.highlightHashTag
 import java.io.File
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.festive.poster.databinding.SocialPreviewWebsiteNoImageBinding
 import com.framework.utils.loadUsingGlide
 
 
-class WebsitePreviewViewHolder(binding: SocialPreviewWebsiteBinding) :
-    AppBaseRecyclerViewHolder<SocialPreviewWebsiteBinding>(binding) {
+class WebsitePreviewNoImageViewHolder(binding: SocialPreviewWebsiteNoImageBinding) :
+    AppBaseRecyclerViewHolder<SocialPreviewWebsiteNoImageBinding>(binding) {
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as SocialPreviewModel
         binding.imageExist = model.posterImg.isNullOrEmpty().not()
-        binding.ivSvg.loadUsingGlide(model.posterImg,false)
-
 
         binding.tvCaption.text = highlightHashTag(model.desc, R.color.color395996,R.font.regular)
 
